@@ -374,8 +374,12 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this represents the state of a checkbox.
+            #
             checkedState = _("checked")
         else:
+            # Translators: this represents the state of a checkbox.
+            #
             checkedState = _("not checked")
 
         # If it's not already focused, say it's name
@@ -954,8 +958,14 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this is in reference to a radio button being
+            # selected or not.
+            #
             selectionState = _("selected")
         else:
+            # Translators: this is in reference to a radio button being
+            # selected or not.
+            #
             selectionState = _("not selected")
 
         # If it's not already focused, say it's name

@@ -1,5 +1,13 @@
 2007-04-04  Willie Walker <william.walker@sun.com>
 
+	* src/orca/where_am_I.py, src/orca/scripts/StarOffice.py,
+	src/orca/speechgenerator.py: more work on bug 412200 to
+	remove bizarre '_("%s") % text' constructs.  Also added
+	more docs as appropriate as a means to finish out the
+	work on where_am_I.py.
+	
+2007-04-04  Willie Walker <william.walker@sun.com>
+
 	* docs/planning.ods: well...I didn't get much of a chance
 	to do too much with this today, but I'm checking what I 
 	was able to do between phone calls.

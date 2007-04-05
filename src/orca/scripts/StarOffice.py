@@ -112,10 +112,13 @@ class WhereAmI(where_am_I.WhereAmI):
 
         [textContents, startOffset, endOffset, selected] = \
             self._getTextContents(obj, doubleClick)
-        text = _("%s") % textContents
+        text = textContents
         utterances.append(text)
         if selected:
-            text = _("%s") % "selected"
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca lets them know this.
+            #
+            text = _("selected")
             utterances.append(text)
 
         debug.println(self._debugLevel, "editable table cell utterances=%s" % \
@@ -147,10 +150,10 @@ class WhereAmI(where_am_I.WhereAmI):
                     self._speakCalcStatusBar()
         else:
             if list[0]:
-                text = _("%s") % self._getObjLabelAndName(list[0])
+                text = self._getObjLabelAndName(list[0])
                 utterances.append(text)
             if list[1]:
-                text = _("%s") % self._getObjLabelAndName(list[1])
+                text = self._getObjLabelAndName(list[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel,

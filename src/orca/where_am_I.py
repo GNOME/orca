@@ -25,21 +25,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import string
-
 import atspi
-import chnames
 import debug
-import default
-import input_event
-import orca_prefs
 import orca_state
 import rolenames
 import settings
 import speech
-import speechserver
-import Accessibility
-import math
+
 from orca_i18n import _ # for gettext support
 
 class WhereAmI:
@@ -165,20 +157,24 @@ class WhereAmI:
         text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this represents the state of a checkbox.
+            #
             text = _("checked")
         else:
+            # Translators: this represents the state of a checkbox.
+            #
             text = _("not checked")
-            utterances.append(text)
-
-        text = _("%s") % self._getObjMnemonic(obj)
         utterances.append(text)
 
-        debug.println(self._debugLevel, "check box utterances=%s" % \
-                      utterances)
+        text = self._getObjMnemonic(obj)
+        utterances.append(text)
+
+        debug.println(self._debugLevel, "check box utterances=%s" \
+                      % utterances)
         speech.speakUtterances(utterances)
 
     def _speakRadioButton(self, obj, doubleClick):
@@ -194,30 +190,34 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getGroupLabel(obj)
+        text = self._getGroupLabel(obj)
         utterances.append(text)
 
         if doubleClick:
-            text = _("%s") % self._getPositionInGroup(obj)
+            text = self._getPositionInGroup(obj)
             utterances.append(text)
 
-        text = _("%s") % self._getObjLabelAndName(obj)
+        text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this represents the state of a checkbox.
+            #
             text = _("checked")
         else:
+            # Translators: this represents the state of a checkbox.
+            #
             text = _("not checked")
         utterances.append(text)
 
         if not doubleClick:
-            text = _("%s") % self._getPositionInGroup(obj)
+            text = self._getPositionInGroup(obj)
             utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "radio button utterances=%s" % \
@@ -236,28 +236,28 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabel(obj)
+        text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if doubleClick:
             # child(0) is the popup list
-            name = _("%s") % self._getObjName(obj)
-            text = _("%s") % self._getPositionInList(obj.child(0), name)
+            name = self._getObjName(obj)
+            text = self._getPositionInList(obj.child(0), name)
             utterances.append(text)
 
             utterances.append(name)
         else:
-            name = _("%s") % self._getObjName(obj)
+            name = self._getObjName(obj)
             utterances.append(name)
 
             # child(0) is the popup list
-            text = _("%s") % self._getPositionInList(obj.child(0), name)
+            text = self._getPositionInList(obj.child(0), name)
             utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "combo box utterances=%s" % \
@@ -275,10 +275,10 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabelAndName(obj)
+        text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         value = obj.value
@@ -286,7 +286,7 @@ class WhereAmI:
             text = "%.1f" % value.currentValue
             utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "spin button utterances=%s" % \
@@ -303,13 +303,13 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabelAndName(obj)
+        text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "push button utterances=%s" % \
@@ -328,17 +328,19 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabel(obj)
+        text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         values = self._getSliderValues(obj)
-        utterances.append(_("%s") % values[0])
+        utterances.append(values[0])
+        # Translators: this is the percentage value of a slider.
+        #
         utterances.append(_("%s percent") % values[1])
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "slider utterances=%s" % \
@@ -358,31 +360,31 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabelAndName(obj.parent)
+        text = self._getObjLabelAndName(obj.parent)
         utterances.append(text)
 
         if doubleClick:
             # parent is the page tab list
-            name = _("%s") % self._getObjName(obj)
-            text = _("%s") % self._getPositionInList(obj.parent, name)
+            name = self._getObjName(obj)
+            text = self._getPositionInList(obj.parent, name)
             utterances.append(text)
 
-        text = _("%s") % self._getObjLabelAndName(obj)
+        text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = _("%s") % self._getObjAccelerator(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if not doubleClick:
             # parent is the page tab list
-            name = _("%s") % self._getObjName(obj)
-            text = _("%s") % self._getPositionInList(obj.parent, name)
+            name = self._getObjName(obj)
+            text = self._getPositionInList(obj.parent, name)
             utterances.append(text)
 
-        text = _("%s") % self._getObjShortcut(obj)
+        text = self._getObjShortcut(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "menu item utterances=%s" % \
@@ -400,25 +402,29 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if doubleClick:
+            # Translators: "page" is the word for a page tab in a tab list.
+            #
             text = _("%s page") % self._getObjLabelAndName(obj)
             utterances.append(text)
 
-            name = _("%s") % self._getObjName(obj)
-            text = _("%s") % self._getPositionInList(obj.parent, name)
+            name = self._getObjName(obj)
+            text = self._getPositionInList(obj.parent, name)
             utterances.append(text)
         else:
-            name = _("%s") % self._getObjName(obj)
-            text = _("%s") % self._getPositionInList(obj.parent, name)
+            name = self._getObjName(obj)
+            text = self._getPositionInList(obj.parent, name)
             utterances.append(text)
 
+            # Translators: "page" is the word for a page tab in a tab list.
+            #
             text = _("%s page") % self._getObjLabelAndName(obj)
             utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "page utterances=%s" % \
@@ -443,10 +449,10 @@ class WhereAmI:
         """
 
         utterances = []
-        text = _("%s") % self._getObjLabel(obj)
+        text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         [textContents, startOffset, endOffset, selected] = \
@@ -459,7 +465,7 @@ class WhereAmI:
             savedStyle = settings.verbalizePunctuationStyle
             settings.verbalizePunctuationStyle = settings.PUNCTUATION_STYLE_SOME
 
-        text = _("%s") % textContents
+        text = textContents
         utterances.append(text)
         debug.println(self._debugLevel, "first text utterances=%s" % \
                       utterances)
@@ -470,10 +476,10 @@ class WhereAmI:
 
         utterances = []
         if selected:
-            text = _("%s") % "selected"
+            text = _("selected")
             utterances.append(text)
 
-        text = _("%s") % self._getObjMnemonic(obj)
+        text = self._getObjMnemonic(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "text utterances=%s" % \
@@ -500,10 +506,10 @@ class WhereAmI:
             obj = obj.parent
         parent = obj.parent
 
-        text = _("%s") % self._getObjLabel(obj)
+        text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
         debug.println(self._debugLevel, "first table cell utterances=%s" % \
                       utterances)
@@ -513,6 +519,8 @@ class WhereAmI:
         if doubleClick:
             table = parent.table
             row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+            # Translators: this in reference to a row in a table.
+            #
             text = _("row %d of %d") % ((row+1), parent.table.nRows)
             utterances.append(text)
             speech.speakUtterances(utterances)
@@ -533,6 +541,8 @@ class WhereAmI:
                 return
 
             row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+            # Translators: this in reference to a row in a table.
+            #
             text = _("row %d of %d") % ((row+1), parent.table.nRows)
             utterances.append(text)
 
@@ -578,7 +588,7 @@ class WhereAmI:
             name = obj.description
 
         if name and name != "None":
-            text = _("%s") % name
+            text = name
         # debug.println(self._debugLevel, "%s name=<%s>" % (obj.role, text))
 
         return text
@@ -591,7 +601,7 @@ class WhereAmI:
         label = self._script.getDisplayedLabel(obj)
 
         if label and label != "None":
-            text = _("%s") % label
+            text = label
         # debug.println(self._debugLevel, "%s label=<%s>" % (obj.role, text))
 
         return text
@@ -603,9 +613,9 @@ class WhereAmI:
         name = self._getObjName(obj)
         label = self._getObjLabel(obj)
         if name != label:
-            text = _("%s %s") % (label, name)
+            text = label + " " + name
         else:
-            text = _("%s") % label
+            text = label
 
         if obj.text:
             [string, startOffset, endOffset] = obj.text.getTextAtOffset(0,
@@ -654,7 +664,7 @@ class WhereAmI:
 
         relations = obj.relations
         for relation in relations:
-            if relation.getRelationType() == Accessibility.RELATION_MEMBER_OF:
+            if relation.getRelationType() == atspi.Accessibility.RELATION_MEMBER_OF:
                 total = relation.getNTargets()
                 for i in range(0, total):
                     target = atspi.Accessible.makeAccessible( \
@@ -664,6 +674,8 @@ class WhereAmI:
                         break
 
         if position >= 0:
+            # Translators: this is an item in a list.
+            #
             text += _("item %d of %d") % (position, total)
 
         return text
@@ -692,6 +704,8 @@ class WhereAmI:
                 position = index
 
         if position >= 0:
+            # Translators: this is an item in a list.
+            #
             text = _("item %d of %d") % (position, total)
 
         return text
@@ -705,9 +719,9 @@ class WhereAmI:
 
         text = ""
         if not list[1]:
-            text = _("%s") % list[0]
+            text = list[0]
         else:
-            text = _("%s %s") % (list[0], list[1])
+            text = list[0] + " " +  list[1]
 
         return text
 
@@ -719,7 +733,7 @@ class WhereAmI:
 
         text = ""
         if list[0]:
-            text = _("%s") % list[0]
+            text = list[0]
 
         return text
 
@@ -731,7 +745,7 @@ class WhereAmI:
 
         text = ""
         if list[1]:
-            text = _("%s") % list[1]
+            text = list[1]
 
         return text
 
@@ -806,6 +820,9 @@ class WhereAmI:
 
         # For Evolution mail header list.
         if self._getAppName().startswith("evolution") and text == "Status":
+            # Translators: this in reference to an e-mail message status of
+            # having been read or unread.
+            #
             text = _("Read")
 
         debug.println(self._debugLevel, "cell=<%s>" % text)
@@ -926,6 +943,8 @@ class WhereAmI:
                         #
                         if key == "weight" and int(attribute) > 400:
                             attribStr += " "
+                            # Translators: bold as in the font sense.
+                            #
                             attribStr += _("bold")
 
                         elif key == "underline":
@@ -1010,10 +1029,10 @@ class WhereAmI:
                     self._speakStatusBar()
         else:
             if list[0]:
-                text = _("%s") % self._getObjLabelAndName(list[0])
+                text = self._getObjLabelAndName(list[0])
                 utterances.append(text)
             if list[1]:
-                text = _("%s") % self._getObjLabelAndName(list[1])
+                text = self._getObjLabelAndName(list[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel, "titlebar utterances=%s" % \
@@ -1076,12 +1095,12 @@ class WhereAmI:
         utterances = []
 
         if self._statusBar.childCount == 0:
-            text = _("%s") % self._getObjName(self._statusBar)
+            text = self._getObjName(self._statusBar)
             utterances.append(text)
         else:
             for i in range(0, self._statusBar.childCount):
                 child = self._statusBar.child(i)
-                text = _("%s") % self._getObjName(child)
+                text = self._getObjName(child)
                 utterances.append(text)
 
         debug.println(self._debugLevel, "statusbar utterances=%s" % \
