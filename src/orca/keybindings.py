@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@ events."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 try:
@@ -108,20 +108,41 @@ def getModifierNames(mods):
     #if mods & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:
+        # Translators: this is presented in a GUI to represent the
+        # "right alt" modifier.
+        #
         text += _("Alt_R") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_META3):
+        # Translators: this is presented in a GUI to represent the
+        # "super" modifier.
+        #
         text += _("Super") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_META2):
+        # Translators: this is presented in a GUI to represent the
+        # "meta 2" modifier.
+        #
         text += _("Meta2") + "+"
     #if mods & (1 << atspi.Accessibility.MODIFIER_META):
     #    text += _("Meta") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_ALT):
+        # Translators: this is presented in a GUI to represent the
+        # "left alt" modifier.
+        #
         text += _("Alt_L") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_CONTROL):
+        # Translators: this is presented in a GUI to represent the
+        # "control" modifier.
+        #
         text += _("Ctrl") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
+        # Translators: this is presented in a GUI to represent the
+        # "caps lock" modifier.
+        #
         text += _("Caps_Lock") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_SHIFT):
+        # Translators: this is presented in a GUI to represent the
+        # "shift " modifier.
+        #
         text += _("Shift") + "+"
     return text
 

@@ -63,8 +63,6 @@ import rolenames
 import settings
 import speech
 
-import threading
-
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
@@ -574,7 +572,7 @@ def _keyEcho(event):
                 return
 
             modifiers = event.modifiers
-            if event_string == _("Caps_Lock"):
+            if event_string == "Caps_Lock":
                 if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
                     lockState = _(" off")
                 else:

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@ into localized words."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import chnames
@@ -35,22 +35,69 @@ from orca_i18n import _ # for gettext support
 # phrase used to describe the key.
 #
 __keynames = {}
+
+# Translators: this is how someone would speak the name of the left shift key
+#
 __keynames["Shift_L"]      = _("left shift")
+
+# Translators: this is how someone would speak the name of the left alt key
+#
 __keynames["Alt_L"]        = _("left alt")
+
+# Translators: this is how someone would speak the name of the left ctrl key
+#
 __keynames["Control_L"]    = _("left control")
-__keynames["Shift_L"]      = _("left shift")
+
+# Translators: this is how someone would speak the name of the right shift key
+#
 __keynames["Shift_R"]      = _("right shift")
+
+# Translators: this is how someone would speak the name of the right alt key
+#
 __keynames["Alt_R"]        = _("right alt")
+
+# Translators: this is how someone would speak the name of the right ctrl key
+#
 __keynames["Control_R"]    = _("right control")
+
+# Translators: this is how someone would speak the name of the left meta key
+#
 __keynames["Meta_L"]       = _("left meta")
+
+# Translators: this is how someone would speak the name of the right meta key
+#
 __keynames["Meta_R"]       = _("right meta")
+
+# Translators: this is how someone would speak the name of the num lock key
+#
 __keynames["Num_Lock"]     = _("num lock")
+
+# Translators: this is how someone would speak the name of the caps lock key
+#
 __keynames["Caps_Lock"]    = _("caps lock")
+
+# Translators: this is how someone would speak the name of the scroll lock key
+#
 __keynames["Scroll_Lock"]  = _("scroll lock")
+
+# Translators: this is how someone would speak the name of the page up key
+#
 __keynames["Page_Up"]      = _("page up")
+
+# Translators: this is how someone would speak the name of the page down key
+#
 __keynames["Page_Down"]    = _("page down")
+
+# Translators: this is how someone would speak the name of the left tab key
+#
 __keynames["ISO_Left_Tab"] = _("left tab")
+
+# Translators: this is how someone would speak the name of the F11 key
+#
 __keynames["SunF36"]       = _("F 11")
+
+# Translators: this is how someone would speak the name of the F12 key
+#
 __keynames["SunF37"]       = _("F 12")
 
 def getKeyName(key):

@@ -1162,9 +1162,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.kbindings = keybindings.KeyBindings()
 
+        iterOrca = self._createNode(_("Orca"))
+
         # KeyBindings from the default script, in default.py (Orca's default)
         #
-        iterOrca = self._createNode(_("Orca"))
         defScript = default.Script(None)
         self.kbindingsDef = defScript.getKeyBindings()
 
