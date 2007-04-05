@@ -1,3 +1,9 @@
+2007-04-05  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Fix for bug #423198 – Orca should not speak
+        "text" repeatedly when moving around in a text entry area on a 
+        web page. 
+
 2007-04-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_console_prefs.py: more work on bug 412200 to

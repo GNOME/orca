@@ -2234,7 +2234,11 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
 
-        self.speakContents(self.getWordContentsAtOffset(obj, characterOffset))
+        # We don't want to speak the role if we're in an entry.
+        #
+        speakRole = (obj.role != rolenames.ROLE_ENTRY)
+        self.speakContents(self.getWordContentsAtOffset(obj, characterOffset),
+                           speakRole)
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -2261,7 +2265,11 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayLine!"
                 characterOffset -= 1
 
-        self.speakContents(self.getLineContentsAtOffset(obj, characterOffset))
+        # We don't want to speak the role if we're in an entry.
+        #
+        speakRole = (obj.role != rolenames.ROLE_ENTRY)
+        self.speakContents(self.getLineContentsAtOffset(obj, characterOffset),
+                           speakRole)
 
     ####################################################################
     #                                                                  #
@@ -3657,7 +3665,8 @@ class Script(default.Script):
 
             if obj.text:
                 strings = [self.getText(obj, startOffset, endOffset)]
-                if not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
+                if speakRole and \
+                   not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
                                     rolenames.ROLE_TABLE_CELL]:
                     strings.extend(\
                         self.speechGenerator._getSpeechForObjectRole(obj))
@@ -3681,8 +3690,8 @@ class Script(default.Script):
 
         return utterances
 
-    def speakContents(self, contents):
-        utterances = self.getUtterancesFromContents(contents)
+    def speakContents(self, contents, speakRole=True):
+        utterances = self.getUtterancesFromContents(contents, speakRole)
 
         # Now...clump utterances together by acss.
         #
