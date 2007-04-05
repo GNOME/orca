@@ -1,5 +1,11 @@
 2007-04-05  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca_console_prefs.py: more work on bug 412200 to
+	better handle 'y'/'n' type questions on the command line and
+	to add more comments for translators.
+	
+2007-04-05  Willie Walker <william.walker@sun.com>
+
 	* src/orca/keynames.py, src/orca/orca.py, src/orca/keybindings.py,
 	src/orca/orca_gui_prefs.py: more work on bug 412200 to add
 	documentation where needed and to unflag some things for

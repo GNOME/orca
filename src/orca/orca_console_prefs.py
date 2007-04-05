@@ -23,8 +23,10 @@ user preferences."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+import re
 
 import acss
 import settings
@@ -47,6 +49,34 @@ from orca_i18n import _  # for gettext support
 workingFactories   = []
 speechServerChoice = None
 speechVoiceChoice  = None
+
+# Translators: this is a regular expression that is intended to match
+# a positive 'yes' response from a user at the command line.  The expression
+# as given means - does it begin with (that's the '^' character) any of
+# the characters in the '[' ']'?  In this case, we've chosen 'Y', 'y', and
+# '1' to mean positive answers, so any string beginning with 'Y', 'y', or
+# '1' will match.  For an example of translation, assume your language has
+# the words 'posolutely' and 'absitively' as common words that mean the
+# equivalent of 'yes'.  You might make the expression match the upper and
+# lower case forms: "^[aApP1]".  If the 'yes' and 'no' words for your
+# locale begin with the same character, the regular expression should be
+# modified to use words.  For example: "^(yes|Yes)" (note the change from
+# using '[' and ']' to '(' and ')').
+#
+# Finally, this expression should match what you've chosen for the
+# translation of the "Enter y or n:" strings for this file.
+#
+YESEXPR = re.compile(_("^[Yy1]"))
+
+def checkYes(value) :
+     """Checks if a string represents a yes.
+
+     Arguments:
+     - value: a string read from the console
+
+     Returns True if the argument represents a yes
+     """
+     return YESEXPR.match(value) != None
 
 def sayAndPrint(text,
                 stop=False,
@@ -100,6 +130,9 @@ def setupSpeech(prefsDict):
 
     factories = speech.getSpeechServerFactories()
     if len(factories) == 0:
+        # Translators: this means speech synthesis (i.e., the machine
+        # speaks to you from its speakers) is not installed or working.
+        #
         print _("Speech is unavailable.")
         return False
 
@@ -116,19 +149,33 @@ def setupSpeech(prefsDict):
             pass
 
     if len(workingFactories) == 0:
+        # Translators: this means speech synthesis (i.e., the machine
+        # speaks to you from its speakers) is not installed or working.
+        #
         print _("Speech is unavailable.")
         return False
     elif len(workingFactories) > 1:
+        # Translators: the speech system represents what general
+        # speech wrapper is going to be used.  For example,
+        # gnome-speech is a speech system, speech dispatcher is
+        # another, emacspeak is another.  These all then provide
+        # wrappers around specific speech servers (engines).
+        #
         sayAndPrint(_("Select desired speech system:"))
         choices = {}
         i = 1
         for workingFactory in workingFactories:
             choices[i] = workingFactory
-            sayAndPrint(_("%d. %s")
+            sayAndPrint("%d. %s" \
                         % (i, workingFactory[0].SpeechServer.getFactoryName()))
             i += 1
+
+        # Translators: this is prompting for a numerical choice.
+        #
         choice = int(sayAndPrint(_("Enter choice: "), False, True))
         if (choice <= 0) or (choice >= i):
+            # Translators: this means speech synthesis will not be used.
+            #
             sayAndPrint(_("Speech will not be used.\n"))
             return False
         [factory, servers] = choices[choice]
@@ -136,20 +183,31 @@ def setupSpeech(prefsDict):
         [factory, servers] = workingFactories[0]
 
     if len(servers) == 0:
+        # Translators: this means no working speech servers (speech
+        # synthesis engines) can be found.
+        #
         sayAndPrint(_("No servers available.\n"))
         sayAndPrint(_("Speech will not be used.\n"))
         return False
     if len(servers) > 1:
+        # Translators: this is prompting for a numerical choice from a list
+        # of available speech synthesis engines.
+        #
         sayAndPrint(_("Select desired speech server."),
                     len(workingFactories) > 1)
         i = 1
         choices = {}
         for server in servers:
-            sayAndPrint(_("%d. %s") % (i, server.getInfo()[0]))
+            sayAndPrint("%d. %s" % (i, server.getInfo()[0]))
             choices[i] = server
             i += 1
+
+        # Translators: this is prompting for a numerical choice.
+        #
         choice = int(sayAndPrint(_("Enter choice: "), False, True))
         if (choice <= 0) or (choice >= i):
+            # Translators: this means speech synthesis will not be used.
+            #
             sayAndPrint(_("Speech will not be used.\n"))
             return False
         speechServerChoice = choices[choice]
@@ -158,10 +216,21 @@ def setupSpeech(prefsDict):
 
     families = speechServerChoice.getVoiceFamilies()
     if len(families) == 0:
+        # Translators: this means the speech server (speech synthesis
+        # engine) is not working properly and no voices (e.g., male,
+        # female, child) are available.
+        #
         sayAndPrint(_("No voices available.\n"))
+
+        # Translators: this means speech synthesis will not be used.
+        #
         sayAndPrint(_("Speech will not be used.\n"))
         return False
     if len(families) > 1:
+        # Translators: this is prompting for a numerical value from a
+        # list of choices of speech synthesis voices (e.g., male,
+        # female, child).
+        #
         sayAndPrint(_("Select desired voice:"),
                     True,               # stop
                     False,              # getInput
@@ -172,18 +241,23 @@ def setupSpeech(prefsDict):
             name = family[speechserver.VoiceFamily.NAME] \
                 + " (%s)" %  family[speechserver.VoiceFamily.LOCALE]
             voice = acss.ACSS({acss.ACSS.FAMILY : family})
-            sayAndPrint(_("%d. %s") % (i, name),
+            sayAndPrint("%d. %s" % (i, name),
                         False,              # stop
                         False,              # getInput
                         speechServerChoice, # speech server
                         voice)              # voice
             choices[i] = voice
             i += 1
+
+        # Translators: this is prompting for a numerical choice.
+        #
         choice = int(sayAndPrint(_("Enter choice: "),
                                  False,               # stop
                                  True,                # getInput
                                  speechServerChoice)) # speech server
         if (choice <= 0) or (choice >= i):
+            # Translators: this means speech synthesis will not be used.
+            #
             sayAndPrint(_("Speech will not be used.\n"))
             return False
         defaultACSS = choices[choice]
@@ -215,79 +289,78 @@ def setupSpeech(prefsDict):
     prefsDict["speechServerInfo"] = speechServerChoice
     prefsDict["voices"] = voices
 
-    # Ask the user if they would like to enable echoing by word.
+    # Translators: the word echo feature of Orca will speak the word
+    # prior to the caret when the user types a word delimiter.
     #
     answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "),
                          True,
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
-    state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-    prefsDict["enableEchoByWord"] = state
+    prefsDict["enableEchoByWord"] = checkYes(answer)
 
-    # Ask the user if they would like to enable key echo. If they say
-    # yes, then for each of the five different types of keys, ask the
-    # user if they would like to enable them.
-    #
-    # These key types are:
-    #
-    #   o Alphanumeric and punctuation keys
-    #
-    #   o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
-    #
-    #   o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
-    #
-    #   o Function keys: The keys at the top of the keyboard.
-    #
-    #   o Action keys: space, enter, escape, tab, backspace, delete, arrow
-    #     keys, page up, page down, etc.
+    # Translators: if key echo is enabled, Orca will speak the name of a key
+    # as the user types on the keyboard.  If the user wants key echo, they
+    # will then be prompted for which classes of keys they want echoed.
     #
     answer = sayAndPrint(_("Enable key echo?  Enter y or n: "),
                          True,
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
-    if answer[0:1] == 'Y' or answer[0:1] == 'y':
+    if checkYes(answer):
         prefsDict["enableKeyEcho"] = True
+
+        # Translators: this is in reference to key echo for
+        # normal text entry keys.
+        #
         answer = sayAndPrint(_("Enable alphanumeric and punctuation keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
                              speechVoiceChoice)
-        state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-        prefsDict["enablePrintableKeys"] = state
+        prefsDict["enablePrintableKeys"] = checkYes(answer)
 
+        # Translators: this is in reference to key echo for
+        # CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+        #
         answer = sayAndPrint(_("Enable modifier keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
                              speechVoiceChoice)
-        state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-        prefsDict["enableModifierKeys"] = state
+        prefsDict["enableModifierKeys"] = checkYes(answer)
 
+        # Translators: this is in reference to key echo for
+        # Caps Lock, Num Lock, Scroll Lock, etc.
+        #
         answer = sayAndPrint(_("Enable locking keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
                              speechVoiceChoice)
-        state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-        prefsDict["enableLockingKeys"] = state
+        prefsDict["enableLockingKeys"] = checkYes(answer)
 
+        # Translators: this is in reference to key echo for
+        # the keys at the top of the keyboard.
+        #
         answer = sayAndPrint(_("Enable function keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
                              speechVoiceChoice)
-        state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-        prefsDict["enableFunctionKeys"] = state
+        prefsDict["enableFunctionKeys"] = checkYes(answer)
 
+        # Translators: this is in reference to key echo for
+        # space, enter, escape, tab, backspace, delete, arrow
+        # keys, page up, page down, etc.
+        #
         answer = sayAndPrint(_("Enable action keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
                              speechVoiceChoice)
-        state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-        prefsDict["enableActionKeys"] = state
+        prefsDict["enableActionKeys"] = checkYes(answer)
 
     else:
         prefsDict["enableKeyEcho"]       = False
@@ -297,6 +370,10 @@ def setupSpeech(prefsDict):
         prefsDict["enableFunctionKeys"]  = False
         prefsDict["enableActionKeys"]    = False
 
+    # Translators: we allow the user to choose between the desktop (i.e.,
+    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
+    # layouts for how they might control Orca.
+    #
     sayAndPrint(_("Select desired keyboard layout."),
                 False,
                 False,
@@ -304,9 +381,25 @@ def setupSpeech(prefsDict):
                 speechVoiceChoice)
     i = 1
     choices = {}
+
+    # Translators: we allow the user to choose between the desktop (i.e.,
+    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
+    # layouts for how they might control Orca.
+    #
     sayAndPrint(_("1. Desktop"))
+
+    # Translators: we allow the user to choose between the desktop (i.e.,
+    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
+    # layouts for how they might control Orca.
+    #
     sayAndPrint(_("2. Laptop"))
-    choice = int(sayAndPrint(_("Enter choice: "), False, True))
+
+    try:
+        # Translators: this is prompting for a numerical choice.
+        #
+        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+    except:
+        choice = -1
     if choice == 2:
         prefsDict["keyboardLayout"] = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
         prefsDict["orcaModifierKeys"] = settings.LAPTOP_MODIFIER_KEYS
@@ -324,7 +417,7 @@ def logoutUser():
     import gnome
     import gnome.ui
 
-    program = gnome.init(platform.package, platform.version)
+    gnome.init(platform.package, platform.version)
     client = gnome.ui.master_client()
 
     client.request_save(gnome.ui.SAVE_GLOBAL,  # Save style
@@ -343,21 +436,27 @@ def showPreferencesUI():
         prefsDict["enableEchoByWord"] = False
         prefsDict["enableKeyEcho"]    = False
 
+    # Translators: this is prompting for whether the user wants to use a
+    # refreshable braille display (an external hardware device) or not.
+    #
     answer = sayAndPrint(_("Enable Braille?  Enter y or n: "),
                          True,
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
-    state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-    prefsDict["enableBraille"] = state
+    prefsDict["enableBraille"] = checkYes(answer)
 
+    # Translators: the braille monitor is a graphical display on the screen
+    # that is used for debugging and demoing purposes.  It presents what
+    # would be (or is being) shown on the external refreshable braille
+    # display.
+    #
     answer = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "),
                          True,
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
-    state = answer[0:1] == 'Y' or answer[0:1] == 'y'
-    prefsDict["enableBrailleMonitor"] = state
+    prefsDict["enableBrailleMonitor"] = checkYes(answer)
 
     logoutNeeded = orca_prefs.writePreferences(prefsDict)
     if logoutNeeded:
@@ -378,7 +477,7 @@ def showPreferencesUI():
                                  True,
                                  speechServerChoice,
                                  speechVoiceChoice)
-            if answer[0:1] == 'Y' or answer[0:1] == 'y':
+            if checkYes(answer):
                 sayAndPrint(_("Setup complete. Logging out now."),
                             False,
                             False,
