@@ -1,3 +1,10 @@
+2007-04-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Removed the partial fix for bug #422487 – Ability to jump to 
+          the start of the message in Evolution. We will wait for the
+          Evolution folks to implement bug #423395.
+
 2007-04-05  Lynn Monsanto <lynn.monsanto@sun.com>
 	* src/orca/default.py, src/orca/settings.py, 
 	src/orca/scripts/gnome-panel.py: removed extra double-space

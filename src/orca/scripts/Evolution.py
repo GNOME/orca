@@ -341,7 +341,6 @@ class Script(default.Script):
     # 9) Spell Checking Dialog
     # 10) Mail view: message area - attachments.
     # 11) Setup Assistant
-    # 12) Mail view: current message pane: initial focus.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1006,39 +1005,6 @@ class Script(default.Script):
                 self.setupLabels = {}
                 break
             obj = obj.parent
-
-        # 12) Mail view: current message pane: initial focus.
-        #
-        # If the user has just displayed a new mail message window, move
-        # the focus to the first line of text within the body of the mail 
-        # message and speak it. See Orca bug #422487.
-        #
-        rolesList = [rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(self.debugLevel,
-                          "evolution.locusOfFocusChanged - mail view: " \
-                          + "current message pane: initial focus.")
-            allTexts = self.findByRole(event.source, rolenames.ROLE_TEXT)
-            rolesList = [rolenames.ROLE_TEXT, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_UNKNOWN, \
-                         rolenames.ROLE_UNKNOWN]
-            for textObj in allTexts:
-                if self.isDesiredFocusedItem(textObj, rolesList):
-                    [string, caretOffset, startOffset] = \
-                        self.getTextLineAtCaret(textObj)
-                    focusGrabbed = textObj.component.grabFocus()
-                    caretSet = textObj.text.setCaretOffset(0)
-                    braille.displayMessage(string)
-                    speech.speak(string)
-                    return
 
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
