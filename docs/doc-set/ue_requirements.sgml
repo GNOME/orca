@@ -986,24 +986,6 @@
       </section>
     </section>
 
-    <section id="urjumpto"><title>"Jump to Well Known Object" Commands</title>
-      <para>There are common locations a user wants to jump to at any
-        given time.  These include the title bar, the status bar, the
-        toolbar, the beginning of a window, the end of a window, the
-        system applet tray, etc.  Orca will provide &wkc;s for Orca to
-        enter review mode and set the current well known object to
-        one of these objects.  From this point, the user can use a
-        &wkc; to go back to the object with focus, give the jumped-to
-        object focus if possible, or perform the equivalent of a mouse
-        click on the jumped-to object.</para>
-
-      <section><title>Functional Description and Status</title>
-
-        <para>&incomplete; &shoulddeliver; V1.1.</para>
-
-      </section>
-
-    </section>
 
     <section id="urfind"><title>"Find" Command</title>
       <para>Orca will allow users to enter a string to search for a
