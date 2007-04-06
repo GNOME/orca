@@ -32,8 +32,10 @@ import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames
+import orca.settings as settings
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
+import orca.speechserver as speechserver
 
 from orca.orca_i18n import _
 
@@ -108,6 +110,119 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def __sayAllProgressCallback(self, context, type):
+        """Provide feedback during the sayAll operation.
+        """
+
+        if type == speechserver.SayAllContext.PROGRESS:
+            #print "PROGRESS", context.utterance, context.currentOffset
+            pass
+        elif type == speechserver.SayAllContext.INTERRUPTED:
+            #print "INTERRUPTED", context.utterance, context.currentOffset
+            offset = context.currentOffset
+            for i in range(0, len(context.obj)):
+                obj = context.obj[i]
+                charCount = obj.text.characterCount
+                if offset > charCount:
+                    offset -= charCount
+                else:
+                    obj.text.setCaretOffset(offset)
+                    break
+        elif type == speechserver.SayAllContext.COMPLETED:
+            #print "COMPLETED", context.utterance, context.currentOffset
+            obj = context.obj[len(context.obj)-1]
+            obj.text.setCaretOffset(context.currentOffset)
+            orca.setLocusOfFocus(None, obj, False)
+
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        Arguments:
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
+        """
+        if not obj:
+            return
+
+        text = obj.text
+        if not text:
+            return
+
+        length = text.characterCount
+        offset = text.caretOffset
+        string = ""
+        textObjs = []
+        textObjs.append(obj)
+        startOffset = obj.text.caretOffset
+
+        # Get the next line of text to read
+        #
+        done = False
+        while not done:
+            lastEndOffset = -1
+            while offset < length:
+                [str, start, end] = text.getTextAtOffset(offset,
+                          atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
+
+                if len(str) != 0:
+                    string += str
+
+                if len(str) == 0 or str[len(str)-1] in '.?!':
+                    endOffset = end
+
+                    string = self.adjustForRepeats(string)
+                    if string.isupper():
+                        voice = settings.voices[settings.UPPERCASE_VOICE]
+                    else:
+                        voice = settings.voices[settings.DEFAULT_VOICE]
+
+                    yield [speechserver.SayAllContext(textObjs, string,
+                                                      startOffset, endOffset),
+                           voice]
+                    string = ""
+                    startOffset = endOffset
+
+                if len(str) == 0:
+                    break
+                else:
+                    offset = end
+
+            moreLines = False
+            relations = obj.relations
+            for relation in relations:
+                if relation.getRelationType()  \
+                       == atspi.Accessibility.RELATION_FLOWS_TO:
+                    obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
+
+                    text = obj.text
+                    if not text:
+                        return
+
+                    textObjs.append(obj)
+                    length = text.characterCount
+                    offset = 0
+                    moreLines = True
+                    break
+            if not moreLines:
+                done = True
+
+        # If there is anything left unspoken, speak it now.
+        #
+        if len(string) != 0:
+            string = self.adjustForRepeats(string)
+            if string.isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = settings.voices[settings.DEFAULT_VOICE]
+
+            yield [speechserver.SayAllContext(textObjs, string,
+                                              startOffset, endOffset),
+                   voice]
 
     def readMisspeltWord(self, event, panel):
         """Speak/braille the current misspelt word plus its context.

@@ -1,3 +1,19 @@
+2007-04-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/gedit.py:
+          src/orca/scripts/Evolution.py:
+          Fix for bug #400716 – [requirement] sayAll should be done by
+          sentences..
+          textLines() now uses TEXT_BOUNDARY_SENTENCE_END instead of
+          TEXT_BOUNDARY_LINE_START to break apart chunks to read (thanks
+          Will!)
+
+          Fix appears to work nicely for gedit, OOo Writer and Evolution.
+
+          It still needs to be implemented for Firefox, but that's a
+          separate bug (http://bugzilla.gnome.org/show_bug.cgi?id=426360).
+
 2007-04-06  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,

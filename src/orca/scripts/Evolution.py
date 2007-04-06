@@ -32,8 +32,10 @@ import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.rolenames as rolenames
 import orca.braille as braille
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
+import orca.speechserver as speechserver
 import orca.settings as settings
 import orca.chnames as chnames
 
@@ -289,25 +291,109 @@ class Script(default.Script):
 
         return hrs + ' ' + mins + ' ' + suffix
 
-    def readTextLines(self):
-        """This an iterator that produces elements of the form:
-        [SayAllContext, acss], where SayAllContext has the text to be
-        spoken and acss is an ACSS instance for speaking the text.  We
-        do this because of the way Evolution lays out its messages:
-        each paragraph tends to be in its own panel, each of which is
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        We have to subclass this because Evolution lays out its messages
+        such that each paragraph is in its own panel, each of which is
         in a higher level panel.  So, we just traverse through the
         children.
+
+        Arguments:
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
         """
-        panel = orca_state.locusOfFocus.parent
-        htmlPanel = orca_state.locusOfFocus.parent.parent
+
+        if not obj:
+            return
+
+        text = obj.text
+        if not text:
+            return
+
+        panel = obj.parent
+        htmlPanel = panel.parent
         startIndex = panel.index
-        for i in range(startIndex, htmlPanel.childCount):
+        i = startIndex
+        total = htmlPanel.childCount
+        textObjs = []
+        startOffset = obj.text.caretOffset
+        offset = obj.text.caretOffset
+        string = ""
+        done = False
+
+        while not done:
             accPanel = htmlPanel.accessible.getChildAtIndex(i)
             panel = atspi.Accessible.makeAccessible(accPanel)
             accTextObj = panel.accessible.getChildAtIndex(0)
             textObj = atspi.Accessible.makeAccessible(accTextObj)
-            for [context, acss] in self.textLines(textObj):
-                yield [context, acss]
+            text = textObj.text
+            if not text:
+                return
+            textObjs.append(textObj)
+            length = text.characterCount
+
+            while offset <= length:
+                [str, start, end] = textObj.text.getTextAtOffset(offset,
+                               atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
+                if len(str) != 0:
+                    string += str
+
+                if len(str) == 0 or str[len(str)-1] in '.?!':
+                    endOffset = end
+
+                    string = self.adjustForRepeats(string)
+                    if string.isupper():
+                        voice = settings.voices[settings.UPPERCASE_VOICE]
+                    else:
+                        voice = settings.voices[settings.DEFAULT_VOICE]
+
+                    if not textObjs:
+                        textObjs.append(textObj)
+                    yield [speechserver.SayAllContext(textObjs, string,
+                                                      startOffset, endOffset),
+                           voice]
+                    textObjs = []
+                    string = ""
+                    startOffset = endOffset
+
+                if len(str) == 0 or end == length:
+                    break
+                else:
+                    offset = end
+
+            offset = 0
+            i += 1
+            if i == total:
+                done = True
+
+    def __sayAllProgressCallback(self, context, type):
+        """Provide feedback during the sayAll operation.
+        """
+
+        if type == speechserver.SayAllContext.PROGRESS:
+            #print "PROGRESS", context.utterance, context.currentOffset
+            pass
+        elif type == speechserver.SayAllContext.INTERRUPTED:
+            #print "INTERRUPTED", context.utterance, context.currentOffset
+            offset = context.currentOffset
+            for i in range(0, len(context.obj)):
+                obj = context.obj[i]
+                charCount = obj.text.characterCount
+                if offset > charCount:
+                    offset -= charCount
+                else:
+                    obj.text.setCaretOffset(offset)
+                    break
+        elif type == speechserver.SayAllContext.COMPLETED:
+            #print "COMPLETED", context.utterance, context.currentOffset
+            obj = context.obj[len(context.obj)-1]
+            obj.text.setCaretOffset(context.currentOffset)
+            orca.setLocusOfFocus(None, obj, False)
 
     def sayAll(self, inputEvent):
         """Speak all the text associated with the text object that has
@@ -322,7 +408,7 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "evolution.sayAll.")
         if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
-            speech.sayAll(self.readTextLines(),
+            speech.sayAll(self.textLines(orca_state.locusOfFocus), 
                           self.__sayAllProgressCallback)
         else:
             default.Script.sayAll(self, inputEvent)

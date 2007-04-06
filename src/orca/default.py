@@ -4442,7 +4442,7 @@ class Script(script.Script):
             while offset < length:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
                     offset,
-                    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                    atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
 
                 # [[[WDW - HACK: well...gnome-terminal sometimes wants to
                 # give us outrageous values back from getTextAtOffset
