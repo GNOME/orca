@@ -4444,6 +4444,15 @@ class Script(script.Script):
                     offset,
                     atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
 
+                # Some applications that don't support sentence boundaries
+                # will provide the line boundary results instead; others
+                # will return nothing.
+                #
+                if not string:
+                    [string, startOffset, endOffset] = text.getTextAtOffset(
+                        offset,
+                        atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
                 # [[[WDW - HACK: well...gnome-terminal sometimes wants to
                 # give us outrageous values back from getTextAtOffset
                 # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),

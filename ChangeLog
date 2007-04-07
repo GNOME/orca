@@ -1,3 +1,14 @@
+2007-04-07  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/default.py: slight modification to the fix for bug 
+        #400716 - [requirement] sayAll should be done by sentences.
+        textLines() tries TEXT_BOUNDARY_SENTENCE_END and if it gets
+        absolutely nothing in response, it falls back on the old
+        TEXT_BOUNDARY_LINE_START that we were using.  What this means
+        is that some applications, such as gnome-terminal, will once
+        again have a functional sayAll but will need special handling
+        added to have sayAll by sentence.
+
 2007-04-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
