@@ -2157,6 +2157,16 @@ class Script(default.Script):
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
+                elif obj.role == rolenames.ROLE_HEADING:
+                    level = self.getHeadingLevel(obj)
+                    # Translators: the 'h' below represents a heading level
+                    # attribute for content that you might find in something
+                    # such as HTML content (e.g., <h1>). The translated form
+                    # is mean to be a single character followed by a numeric
+                    # heading level, where the single character is to indicate
+                    # 'heading'.
+                    #
+                    regions.append(braille.Region(" " + _("h%d" % level)))
 
                 if isFocusedObj \
                    and (focusedCharacterOffset >= startOffset) \
