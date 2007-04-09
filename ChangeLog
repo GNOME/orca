@@ -1,3 +1,9 @@
+2007-04-09  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+
+          Updated more specs I'll update the web site docs when I'm done
+
 2007-04-07  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/default.py: slight modification to the fix for bug 
