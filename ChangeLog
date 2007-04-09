@@ -1,3 +1,7 @@
+2007-04-09  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for v2.18.1.
+
 2007-03-12  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for v2.18.0.

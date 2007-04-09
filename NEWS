@@ -1,3 +1,19 @@
+2.18.1 - 09-Apr-2007
+
+* New and updated translations (THANKS EVERYONE!!!):
+
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    da      Danish               Peter Bach
+    de      German               Jochen Skulj
+    dz      Dzongkha             Pema Geyleg
+    es      Spanish              Francisco Javier Dorado Martínez
+    gl      Galician             Ignacio Casal Quinteiro
+    gu      Gujarati             Ankit Patel
+    nb      Norwegian Bokmål     Kjartan Maraas and Sigurd Gartmann
+    tr      Turkish              Deniz Kocak and Baris Cicek
+
+==========
+
 2.18.0 - 12-Mar-2007
 
 * See http://live.gnome.org/TwoPointSeventeen/ReleaseNotes/Orca for a 
@@ -714,7 +730,6 @@ the attributes of an AT-SPI object.
 
 * New and updated translations (THANKS!):
 
-    dz      Dzongkha             Pema Geyleg
     el      Greek                Simos Xenitellis
     es      Spanish              Francisco Javier F. Serrador
     et      Estonian             Priit Laes
