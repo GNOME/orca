@@ -1029,12 +1029,7 @@
       <para>Orca will allow users to indicate interest in an object.
 	Once interest has been given, Orca will notify the user of
 	changes to that object, whether it or its window has focus or
-	not.  Orca will also provide an option to automatically enter
-	review mode and make the watched object the object of
-	interest.  From this point, the user can use a &wkc; to go
-	back to the object with focus, give the watched object focus
-	if possible, or perform the equivalent of a mouse click on the
-	watched object. A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will double press insert+w to actually set a watched object. </para>
+	not.  A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will  press CTRLinsert+w to actually set a watched object and doublepress CTRL+Insert+w to unset it. </para>
 
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
@@ -1044,7 +1039,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &shoulddeliver; V1.1.</para>
+        <para>&incomplete; &shoulddeliver; V2.2.20.</para>
 
       </section>
 
