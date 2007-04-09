@@ -1,5 +1,11 @@
 2007-04-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/speechgenerator.py, src/orca/Gecko.py,
+	src/orca/scripts/Thunderbird.py: fix for bug 423439 to reduce
+	chattiness of speech context.
+	
+2007-04-09  Willie Walker <william.walker@sun.com>
+
 	* src/orca/scripts/metacity.py: fix for bug 427880 to restore
 	the metcity behavior of speaking the name of the window to get
 	focus when you're doing an Alt+Tab.

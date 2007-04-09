@@ -26,7 +26,7 @@ as they see fit."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import math
@@ -1562,17 +1562,6 @@ class SpeechGenerator:
         if obj is stopAncestor:
             return utterances
 
-        # We try to ignore fillers and panels without names.
-        # [[[TODO: WDW - HACK sometimes table cells can be children
-        # of table cells (see the "Browse" dialog of gnome-terminal
-        # via "Edit" -> "Current Profile" -> "General" Tab ->
-        # "Profile icon:" button -> "Browse..." button - each element
-        # in the list is a compound table cell where the icon and
-        # text are child table cells of the table cell).  So...
-        # we happily ignore those as well.  One thing we might
-        # want to do is treat the parent as a compound object.
-        # Logged as bugzilla bug 319751.]]]
-        #
         parent = obj.parent
         if parent \
             and (obj.role == rolenames.ROLE_TABLE_CELL) \
@@ -1582,45 +1571,21 @@ class SpeechGenerator:
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
-            if (parent.role != rolenames.ROLE_FILLER) \
-                and (parent.role != rolenames.ROLE_SECTION) \
-                and (parent.role != rolenames.ROLE_LAYERED_PANE) \
-                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
-                and (parent.role != rolenames.ROLE_SCROLL_PANE) \
-                and (parent.role != rolenames.ROLE_UNKNOWN) \
-                and (not self._script.isLayoutOnly(parent)):
-
-                # Announce the label and text of the object in the hierarchy.
-                #
-                text = self._script.getDisplayedText(parent)
-                label = self._script.getDisplayedLabel(parent)
-
-                # Push announcement of cell after text and label.
-                #
-                if parent.role != rolenames.ROLE_TABLE_CELL:
-                    utterances.append(rolenames.getSpeechForRoleName(parent))
-
-                if text and len(text):
+            if not self._script.isLayoutOnly(parent):
+                text = self._script.getDisplayedLabel(parent)
+                if not text and parent.text:
+                    text = self._script.getDisplayedText(parent)
+                if text and len(text.strip()):
+                    # Push announcement of cell to the end
+                    #
+                    if not parent.role in [rolenames.ROLE_TABLE_CELL,
+                                           rolenames.ROLE_FILLER]:
+                        utterances.append(\
+                            rolenames.getSpeechForRoleName(parent))
                     utterances.append(text)
-                if label and len(label):
-                    utterances.append(label)
-
-                if parent.role == rolenames.ROLE_TABLE_CELL:
-                    utterances.append(rolenames.getSpeechForRoleName(parent))
-
-            # [[[TODO: HACK - we've discovered oddness in hierarchies
-            # such as the gedit Edit->Preferences dialog.  In this
-            # dialog, we have labeled groupings of objects.  The
-            # grouping is done via a FILLER with two children - one
-            # child is the overall label, and the other is the
-            # container for the grouped objects.  When we detect this,
-            # we add the label to the overall context.]]]
-            #
-            if parent.role == rolenames.ROLE_FILLER:
-                label = self._script.getDisplayedLabel(parent)
-                if label and len (label):
-                    utterances.append(label)
-
+                    if parent.role == rolenames.ROLE_TABLE_CELL:
+                        utterances.append(\
+                            rolenames.getSpeechForRoleName(parent))
             parent = parent.parent
 
         utterances.reverse()

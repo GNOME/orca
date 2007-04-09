@@ -629,20 +629,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if parent == stopAncestor:
                 break
 
-            # We try to omit things like fillers off the bat...
+            # We try to omit layout things right off the bat.
             #
-            if (parent.role == rolenames.ROLE_FILLER) \
-                or (parent.role == rolenames.ROLE_FORM) \
-                or (parent.role == rolenames.ROLE_LINK) \
-                or (parent.role == rolenames.ROLE_LIST_ITEM) \
-                or (parent.role == rolenames.ROLE_LIST) \
-                or (parent.role == rolenames.ROLE_PARAGRAPH) \
-                or (parent.role == rolenames.ROLE_SECTION) \
-                or (parent.role == rolenames.ROLE_LAYERED_PANE) \
-                or (parent.role == rolenames.ROLE_SPLIT_PANE) \
-                or (parent.role == rolenames.ROLE_SCROLL_PANE) \
-                or (parent.role == rolenames.ROLE_UNKNOWN) \
-                or (self._script.isLayoutOnly(parent)):
+            if self._script.isLayoutOnly(parent):
                 parent = parent.parent
                 continue
 
@@ -654,12 +643,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                and not parent.state.count(atspi.Accessibility.STATE_FOCUSABLE):
                 parent = parent.parent
                 continue
-
-            # Well...if we made it this far, we will now append the
-            # role, then the text, and then the label.
-            #
-            if parent.role != rolenames.ROLE_TABLE_CELL:
-                utterances.append(rolenames.getSpeechForRoleName(parent))
 
             # Now...autocompletes are wierd.  We'll let the handling of
             # the entry give us the name.
@@ -688,11 +671,23 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             #
             text = self._script.getDisplayedText(parent)
             label = self._script.getDisplayedLabel(parent)
-            if text and (text != label) and len(text):
-                utterances.append(text)
-            if label and len(label):
-                utterances.append(label)
+            newUtterances = []
+            if text and (text != label) and len(text.strip()) \
+                and (not text.startswith("chrome://")):
+                newUtterances.append(text)
+            if label and len(label.strip()):
+                newUtterances.append(label)
 
+            # Well...if we made it this far, we will now append the
+            # role, then the text, and then the label.
+            #
+            if not parent.role in [rolenames.ROLE_TABLE_CELL,
+                                   rolenames.ROLE_FILLER] \
+                and len(newUtterances):
+                    utterances.append(rolenames.getSpeechForRoleName(parent))
+                    
+            utterances.extend(newUtterances)            
+                
             parent = parent.parent
 
         utterances.reverse()
