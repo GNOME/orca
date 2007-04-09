@@ -2157,7 +2157,7 @@ class Script(default.Script):
                     # Translators: the 'h' below represents a heading level
                     # attribute for content that you might find in something
                     # such as HTML content (e.g., <h1>). The translated form
-                    # is mean to be a single character followed by a numeric
+                    # is meant to be a single character followed by a numeric
                     # heading level, where the single character is to indicate
                     # 'heading'.
                     #
@@ -2252,7 +2252,8 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() or \
+           obj.role == rolenames.ROLE_ENTRY:
             default.Script.sayLine(self, obj)
             return
 
@@ -2270,11 +2271,7 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayLine!"
                 characterOffset -= 1
 
-        # We don't want to speak the role if we're in an entry.
-        #
-        speakRole = (obj.role != rolenames.ROLE_ENTRY)
-        self.speakContents(self.getLineContentsAtOffset(obj, characterOffset),
-                           speakRole)
+        self.speakContents(self.getLineContentsAtOffset(obj, characterOffset))
 
     ####################################################################
     #                                                                  #
@@ -2803,10 +2800,12 @@ class Script(default.Script):
     def isHeader(self, obj):
         """Returns True if the table cell is a header"""
 
-        if obj.attributes:
+        if obj and obj.attributes:
             for attribute in obj.attributes:
                 if attribute == "tag:TH":
                     return True
+
+        return False
 
     def getRowHeader(self, obj):
         """Returns the row header of a ROLE_TABLE_CELL or None if the
@@ -2967,6 +2966,67 @@ class Script(default.Script):
                           "Object deemed to be useless: " \
                           + obj.toString("", True))
             return True
+
+        elif obj.role == rolenames.ROLE_TABLE:
+            # [[[TODO: JD - We cannot currently count on Firefox's 
+            # layout-guess attribute when it comes to the correct 
+            # identification of data tables. See GNOME bug #413990.  
+            # We'll trust the attribute if it's set, otherwise, we'll
+            # do our own "heuristics."]]]
+            #
+            if obj.attributes:
+                for attribute in obj.attributes:
+                    if attribute == "layout-guess":
+                        return True
+
+            # If a table has a headers, it's probably a data table.
+            #
+            for i in range(0, obj.childCount):
+                colHeader = self.getColumnHeader(obj.child(i))
+                rowHeader = self.getRowHeader(obj.child(i))
+                if colHeader or rowHeader:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "Probably a data table:  Has headers")
+                    return False
+
+            # Non-zero-length summaries and captions are exposed as the
+            # table's name.  A non-zero-length caption will be "adopted" by
+            # all parent tables as the name; however, only a table with its
+            # own caption will have a child of ROLE_CAPTION.  Thus:
+            #
+            caption = self.getTableCaption(obj)
+            if not obj.name:
+                # It lacks a summary and a caption
+                #
+                debug.println(debug.LEVEL_FINEST,
+                            "Probably a layout table: Lacks name")
+                return True
+            elif not caption:
+                # It either has a summary or has adopted the name of a child
+                # table -- or both. We can't distinguish when both has
+                # occurred from when the name has been adopted. :-(
+                # And, unfortunately, the summary is only exposed through
+                # the name so we have to look for nested tables.
+                #
+                found = False
+                candidate = obj
+                while candidate and not found:
+                    candidate = self.findNextObject(candidate)
+                    if candidate:
+                        found = (candidate.role == rolenames.ROLE_TABLE)
+                if found and (candidate.name == obj.name):
+                    debug.println(debug.LEVEL_FINEST,
+                           "Probably a layout table: Name adopted from child")
+                    return True
+                else:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "Probably a data table: Has summary")
+                    return False
+            else:
+                debug.println(debug.LEVEL_FINEST,
+                              "Probably a data table: Has valid caption")
+                return False
+
         else:
             return default.Script.isLayoutOnly(self, obj)
 
@@ -3339,15 +3399,17 @@ class Script(default.Script):
 
         return nextObj
 
-    def findPreviousRole(self, roles):
+    def findPreviousRole(self, roles, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match.
 
         Arguments:
         -roles: a list of roles from rolenames.py
+        -currentObj: the object from which the search should begin
         """
 
-        [currentObj, characterOffset] = self.getCaretContext()
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
         nestableRoles = [rolenames.ROLE_LIST, rolenames.ROLE_TABLE]
@@ -3364,23 +3426,23 @@ class Script(default.Script):
             if ((not obj in ancestors) or isNestedItem) \
                and (obj.role in roles) \
                and (not self.isLayoutOnly(obj)):
-                return self.findFirstCaretContext(obj, 0)
+                return obj
             else:
                 obj = self.findPreviousObject(obj)
 
-        return [None, -1]
+        return None
 
-    def findNextRole(self, roles):
+    def findNextRole(self, roles, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
         Arguments:
         -roles: a list of roles from rolenames.py
-        -match: if True, the found object will have a role from roles;
-                if False, the found object will not have a role from roles
+        -currentObj: the object from which the search should begin
         """
 
-        [currentObj, characterOffset] = self.getCaretContext()
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
         obj = currentObj.parent
@@ -3392,11 +3454,11 @@ class Script(default.Script):
         while obj:
             if (not obj in ancestors) and (obj.role in roles) \
                 and (not self.isLayoutOnly(obj)):
-                return self.findFirstCaretContext(obj, 0)
+                return obj
             else:
                 obj = self.findNextObject(obj)
 
-        return [None, -1]
+        return None
 
     ####################################################################
     #                                                                  #
@@ -4095,8 +4157,7 @@ class Script(default.Script):
         #self.dumpContents(inputEvent, contents)
 
     def goPreviousHeading(self, inputEvent):
-        [obj, characterOffset] = self.findPreviousRole(
-            [rolenames.ROLE_HEADING])
+        obj = self.findPreviousRole([rolenames.ROLE_HEADING])
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4110,7 +4171,7 @@ class Script(default.Script):
             speech.speak(_("No more headings."))
 
     def goNextHeading(self, inputEvent):
-        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_HEADING])
+        obj = self.findNextRole([rolenames.ROLE_HEADING])
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4130,8 +4191,8 @@ class Script(default.Script):
         if obj.parent.role == rolenames.ROLE_HEADING:
             obj = obj.parent
         while obj and not found:
-            obj = self.findPreviousObject(obj)
-            if obj and (obj.role == rolenames.ROLE_HEADING):
+            obj = self.findPreviousRole([rolenames.ROLE_HEADING], obj)
+            if obj:
                 level = self.getHeadingLevel(obj)
                 if level == desiredLevel:
                     found = True
@@ -4152,8 +4213,8 @@ class Script(default.Script):
         level = 0
         [obj, characterOffset] = self.getCaretContext()
         while obj and not found:
-            obj = self.findNextObject(obj)
-            if obj and (obj.role == rolenames.ROLE_HEADING):
+            obj = self.findNextRole([rolenames.ROLE_HEADING], obj)
+            if obj:
                 level = self.getHeadingLevel(obj)
                 if level == desiredLevel:
                     found = True
@@ -4206,7 +4267,7 @@ class Script(default.Script):
         self.goPreviousHeadingAtLevel(inputEvent, 6)
 
     def goPreviousChunk(self, inputEvent):
-        [obj, characterOffset] = self.findPreviousRole(OBJECT_ROLES)
+        obj = self.findPreviousRole(OBJECT_ROLES)
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4221,7 +4282,7 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
-        [obj, characterOffset] = self.findNextRole(OBJECT_ROLES)
+        obj = self.findNextRole(OBJECT_ROLES)
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4236,15 +4297,22 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goPreviousList(self, inputEvent):
-        [obj, characterOffset] = self.findPreviousRole([rolenames.ROLE_LIST])
+        [obj, characterOffset] = self.getCaretContext()
+        found = False
+        while obj and not found:
+            obj = self.findPreviousRole([rolenames.ROLE_LIST], obj)
+            # We need to be sure that the list in question is an (un)ordered
+            # list rather than a list in a form field. Form field lists are
+            # focusable; (un)ordered lists are not.
+            #
+            if obj and \
+               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                found = True
+
         if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            parent = obj.parent
-            while parent.role != rolenames.ROLE_LIST:
-                parent = parent.parent
             nItems = 0
-            for i in range(0, parent.childCount):
-                if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
+            for i in range(0, obj.childCount):
+                if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -4253,7 +4321,8 @@ class Script(default.Script):
                                   nItems) % nItems
             speech.speak(itemString)
             nestingLevel = 0
-            while parent.parent.role == rolenames.ROLE_LIST:
+            parent = obj.parent
+            while parent.role == rolenames.ROLE_LIST:
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
@@ -4263,6 +4332,7 @@ class Script(default.Script):
                 # that's inside another list).
                 #
                 speech.speak(_("Nesting level %d") % nestingLevel)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
@@ -4274,26 +4344,42 @@ class Script(default.Script):
             speech.speak(_("No more lists."))
 
     def goNextList(self, inputEvent):
-        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_LIST])
+        [obj, characterOffset] = self.getCaretContext()
+        found = False
+        while obj and not found:
+            obj = self.findNextRole([rolenames.ROLE_LIST], obj)
+            # We need to be sure that the list in question is an (un)ordered
+            # list rather than a list in a form field. Form field lists are
+            # focusable; (un)ordered lists are not.
+            #
+            if obj and \
+               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                found = True
+
         if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            parent = obj.parent
-            while parent.role != rolenames.ROLE_LIST:
-                parent = parent.parent
             nItems = 0
-            for i in range(0, parent.childCount):
-                if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
+            for i in range(0, obj.childCount):
+                if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
                     nItems += 1
+            # Translators: this represents a list in HTML.
+            #
             itemString = ngettext("List with %d item",
                                   "List with %d items",
                                   nItems) % nItems
             speech.speak(itemString)
             nestingLevel = 0
-            while parent.parent.role == rolenames.ROLE_LIST:
+            parent = obj.parent
+            while parent.role == rolenames.ROLE_LIST:
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
+                # Translators: this represents a list item in HTML.
+                # The nesting level is how 'deep' the item is (e.g.,
+                # a level of 2 represents a list item inside a list
+                # that's inside another list).
+                #
                 speech.speak(_("Nesting level %d") % nestingLevel)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
@@ -4305,8 +4391,7 @@ class Script(default.Script):
             speech.speak(_("No more lists."))
 
     def goPreviousListItem(self, inputEvent):
-        [obj, characterOffset] = self.findPreviousRole(
-            [rolenames.ROLE_LIST_ITEM])
+        obj = self.findPreviousRole([rolenames.ROLE_LIST_ITEM])
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4321,7 +4406,7 @@ class Script(default.Script):
             speech.speak(_("No more list items."))
 
     def goNextListItem(self, inputEvent):
-        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_LIST_ITEM])
+        obj = self.findNextRole([rolenames.ROLE_LIST_ITEM])
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4340,18 +4425,18 @@ class Script(default.Script):
         # already started out on a link and need to move off of
         # it else we'll get stuck.
         #
-        [currentObj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingLink(currentObj)
+        [obj, characterOffset] = self.getCaretContext()
+        containingLink = self.getContainingLink(obj)
         if containingLink:
-            obj = self.findPreviousObject(containingLink)
-        else:
-            obj = self.findPreviousObject(currentObj)
+            obj = containingLink
 
-        while obj and \
-              (obj.role != rolenames.ROLE_LINK or \
-               (obj.role == rolenames.ROLE_LINK and \
-                obj.state.count(atspi.Accessibility.STATE_VISITED))):
-            obj = self.findPreviousObject(obj)
+        found = False
+        while obj and not found:
+            obj = self.findPreviousRole([rolenames.ROLE_LINK], obj)
+            if obj and \
+               not obj.state.count(atspi.Accessibility.STATE_VISITED):
+                found = True
+
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4366,12 +4451,13 @@ class Script(default.Script):
 
     def goNextUnvisitedLink(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        obj = self.findNextObject(obj)
-        while obj and \
-              (obj.role != rolenames.ROLE_LINK or \
-               (obj.role == rolenames.ROLE_LINK and \
-                obj.state.count(atspi.Accessibility.STATE_VISITED))):
-            obj = self.findNextObject(obj)
+        found = False
+        while obj and not found:
+            obj = self.findNextRole([rolenames.ROLE_LINK], obj)
+            if obj and \
+               not obj.state.count(atspi.Accessibility.STATE_VISITED):
+                found = True
+
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4389,17 +4475,18 @@ class Script(default.Script):
         # already started out on a link and need to move off of
         # it else we'll get stuck.
         #
-        [currentObj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingLink(currentObj)
+        [obj, characterOffset] = self.getCaretContext()
+        containingLink = self.getContainingLink(obj)
         if containingLink:
-            obj = self.findPreviousObject(containingLink)
-        else:
-            obj = self.findPreviousObject(currentObj)
+            obj = containingLink
 
-        while obj and \
-              (obj.role != rolenames.ROLE_LINK or not \
-               obj.state.count(atspi.Accessibility.STATE_VISITED)):
-            obj = self.findPreviousObject(obj)
+        found = False
+        while obj and not found:
+            obj = self.findPreviousRole([rolenames.ROLE_LINK], obj)
+            if obj and \
+               obj.state.count(atspi.Accessibility.STATE_VISITED):
+                found = True
+
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4414,11 +4501,12 @@ class Script(default.Script):
 
     def goNextVisitedLink(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        obj = self.findNextObject(obj)
-        while obj and \
-              (obj.role != rolenames.ROLE_LINK or not \
-               obj.state.count(atspi.Accessibility.STATE_VISITED)):
-            obj = self.findNextObject(obj)
+        found = False
+        while obj and not found:
+            obj = self.findNextRole([rolenames.ROLE_LINK], obj)
+            if obj and \
+               obj.state.count(atspi.Accessibility.STATE_VISITED):
+                found = True
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -4432,7 +4520,7 @@ class Script(default.Script):
             speech.speak(_("No more visited links."))
 
     def goPreviousTable(self, inputEvent):
-        [obj, characterOffset] = self.findPreviousRole([rolenames.ROLE_TABLE])
+        obj = self.findPreviousRole([rolenames.ROLE_TABLE])
         if obj:
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns
@@ -4471,7 +4559,7 @@ class Script(default.Script):
             speech.speak(_("No more tables."))
 
     def goNextTable(self, inputEvent):
-        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_TABLE])
+        obj = self.findNextRole([rolenames.ROLE_TABLE])
         if obj:
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns

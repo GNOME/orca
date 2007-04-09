@@ -1,3 +1,21 @@
+2007-04-09  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Several fixes:
+        1) Bug 426336 – refactor Gecko.py's find{Next, Previous}Role.
+           Also, L and Shift+L will only move you among ordered/unordered
+           lists.  Before, form field lists were included because they,
+           too, have a role of ROLE_LIST.
+
+        2) Bug 426684 – Orca does not speak entry text in Firefox when the
+           caret is at the end of line.   This fix also solves Bug 426687 
+           – Orca should only speak entry text when arrowing Up/Down in an
+           entry in Firefox.
+
+        3) Bug 413990 – [blocked] orca should not speak table over and over
+           again when tabbing through a web page.  This fix should also
+           make it less likely that T and Shift+T will land on layout
+           tables.
+
 2007-04-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechgenerator.py, src/orca/Gecko.py,
