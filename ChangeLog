@@ -1,3 +1,9 @@
+2007-04-09  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/metacity.py: fix for bug 427880 to restore
+	the metcity behavior of speaking the name of the window to get
+	focus when you're doing an Alt+Tab.
+	
 2007-04-09  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: The remainder of the fix for bug #414926:
