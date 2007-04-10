@@ -478,7 +478,10 @@
         display.</para>
       <para>Play audio cues across line boundaries.</para>
       <para>In addition, when in flat review mode, Orca will
-        optionally allow the mouse to follow the object of interest.  This will be added in a future release.</para>
+        optionally allow the mouse to follow the object of interest.  This feature will be toggled by a checkbox in the general tab of the orca config UI.</para>
+      <para>If the user is moving the mouse with flat review they will also be able to move by small increments.  If the user holds down shift while pressing flat review up, down, character previus or next they will move the mouse 5 pixels in that direction.            
+      </para>
+      <para> If the process of moving the mouse should cause a tooltip to appear, orca should speak it.</para>
       <para>The review of the desktop will follow the &styleguidelink;,
         and will at least provide a short summary of the available
         applications.  While the review of an application will also
