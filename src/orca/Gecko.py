@@ -2967,66 +2967,6 @@ class Script(default.Script):
                           + obj.toString("", True))
             return True
 
-        elif obj.role == rolenames.ROLE_TABLE:
-            # [[[TODO: JD - We cannot currently count on Firefox's 
-            # layout-guess attribute when it comes to the correct 
-            # identification of data tables. See GNOME bug #413990.  
-            # We'll trust the attribute if it's set, otherwise, we'll
-            # do our own "heuristics."]]]
-            #
-            if obj.attributes:
-                for attribute in obj.attributes:
-                    if attribute == "layout-guess":
-                        return True
-
-            # If a table has a headers, it's probably a data table.
-            #
-            for i in range(0, obj.childCount):
-                colHeader = self.getColumnHeader(obj.child(i))
-                rowHeader = self.getRowHeader(obj.child(i))
-                if colHeader or rowHeader:
-                    debug.println(debug.LEVEL_FINEST,
-                                  "Probably a data table:  Has headers")
-                    return False
-
-            # Non-zero-length summaries and captions are exposed as the
-            # table's name.  A non-zero-length caption will be "adopted" by
-            # all parent tables as the name; however, only a table with its
-            # own caption will have a child of ROLE_CAPTION.  Thus:
-            #
-            caption = self.getTableCaption(obj)
-            if not obj.name:
-                # It lacks a summary and a caption
-                #
-                debug.println(debug.LEVEL_FINEST,
-                            "Probably a layout table: Lacks name")
-                return True
-            elif not caption:
-                # It either has a summary or has adopted the name of a child
-                # table -- or both. We can't distinguish when both has
-                # occurred from when the name has been adopted. :-(
-                # And, unfortunately, the summary is only exposed through
-                # the name so we have to look for nested tables.
-                #
-                found = False
-                candidate = obj
-                while candidate and not found:
-                    candidate = self.findNextObject(candidate)
-                    if candidate:
-                        found = (candidate.role == rolenames.ROLE_TABLE)
-                if found and (candidate.name == obj.name):
-                    debug.println(debug.LEVEL_FINEST,
-                           "Probably a layout table: Name adopted from child")
-                    return True
-                else:
-                    debug.println(debug.LEVEL_FINEST,
-                                  "Probably a data table: Has summary")
-                    return False
-            else:
-                debug.println(debug.LEVEL_FINEST,
-                              "Probably a data table: Has valid caption")
-                return False
-
         else:
             return default.Script.isLayoutOnly(self, obj)
 

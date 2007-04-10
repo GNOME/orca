@@ -1,3 +1,11 @@
+2007-04-09  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Ripping out the layout table guesswork.
+        As a result, you may land on layout tables that Firefox claims
+        are data tables due to misidentification.  The good news is that
+        Aaron Levanthal has proposed a patch to fix at least some of that
+        on the Firefox side of things.
+
 2007-04-09  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
