@@ -1,3 +1,10 @@
+2007-04-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_gui_prefs.py, src/orca/orca-setup.glade: more
+	work on bug 412200.  This completes work on orca_gui_prefs.py
+	and gets rid of some of the more confusing strings that we
+	received questions on.
+	
 2007-04-09  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: Ripping out the layout table guesswork.

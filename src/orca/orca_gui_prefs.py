@@ -91,15 +91,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.keyBindView.set_model(self.keyBindingsModel)
         self.keyBindView.set_headers_visible(True)
 
-        # Treeview Column Implementation:
-        #      (HANDLER,    DESCRIP,
-        #       MOD_MASK1,  MOD_USED1,  KEY1,   TEXT1,
-        #       MOD_MASK2,  MOD_USED2,  KEY2,   TEXT2,
-        #       MODIF,      EDITABLE)
-
-        # HANDLER
+        # HANDLER - invisble column
         #
-        column = gtk.TreeViewColumn(_("Handler"),
+        column = gtk.TreeViewColumn("Handler",
                                     gtk.CellRendererText(),
                                     text=HANDLER)
         column.set_resizable(True)
@@ -111,15 +105,21 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         rendererText = gtk.CellRendererText()
         rendererText.set_property("ellipsize", pango.ELLIPSIZE_END)
+
+        # Translators: Function is a table column header where the
+        # cells in the column are a sentence that briefly describes
+        # what action Orca will take when the user invokes an Orca-specific
+        # keyboard command.
+        #
         column = gtk.TreeViewColumn(_("Function"), rendererText, text=DESCRIP)
         column.set_resizable(True)
         column.set_min_width(380)
         column.set_sort_column_id(DESCRIP)
         self.keyBindView.append_column(column)
 
-        # MOD_MASK1
+        # MOD_MASK1 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Mod.Mask 1"),
+        column = gtk.TreeViewColumn("Mod.Mask 1",
                                     gtk.CellRendererText(),
                                     text=MOD_MASK1)
         column.set_visible(False)
@@ -127,9 +127,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(MOD_MASK1)
         self.keyBindView.append_column(column)
 
-        # MOD_USED1
+        # MOD_USED1 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Use Mod.1"),
+        column = gtk.TreeViewColumn("Use Mod.1",
                                     gtk.CellRendererText(),
                                     text=MOD_USED1)
         column.set_visible(False)
@@ -137,9 +137,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(MOD_USED1)
         self.keyBindView.append_column(column)
 
-        # KEY1
+        # KEY1 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Key1"),
+        column = gtk.TreeViewColumn("Key1",
                                     gtk.CellRendererText(),
                                     text=KEY1)
         column.set_resizable(True)
@@ -157,6 +157,11 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                              self.editedKey,
                              self.keyBindingsModel,
                              MOD_MASK1, MOD_USED1, KEY1, TEXT1)
+
+        # Translators: Key Binding is a table column header where
+        # the cells in the column represent keyboard combinations
+        # the user can press to invoke Orca commands.
+        #
         column = gtk.TreeViewColumn(_("Key Binding"),
                                     rendererText,
                                     text=TEXT1,
@@ -165,9 +170,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(TEXT1)
         self.keyBindView.append_column(column)
 
-        # MOD_MASK2
+        # MOD_MASK2 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Mod.Mask 2"),
+        column = gtk.TreeViewColumn("Mod.Mask 2",
                                     gtk.CellRendererText(),
                                     text=MOD_MASK2)
         column.set_visible(False)
@@ -175,9 +180,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(MOD_MASK2)
         self.keyBindView.append_column(column)
 
-        # MOD_USED2
+        # MOD_USED2 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Use Mod.2"),
+        column = gtk.TreeViewColumn("Use Mod.2",
                                     gtk.CellRendererText(),
                                     text=MOD_USED2)
         column.set_visible(False)
@@ -185,9 +190,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(MOD_USED2)
         self.keyBindView.append_column(column)
 
-        # KEY2
+        # KEY2 - invisble column
         #
-        column = gtk.TreeViewColumn(_("Key2"), rendererText, text=KEY2)
+        column = gtk.TreeViewColumn("Key2", rendererText, text=KEY2)
         column.set_resizable(True)
         column.set_visible(False)
         column.set_sort_column_id(KEY2)
@@ -203,6 +208,14 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                              self.editedKey,
                              self.keyBindingsModel,
                              MOD_MASK2, MOD_USED2, KEY2, TEXT2)
+
+        # Translators: Alternate is a table column header where
+        # the cells in the column represent keyboard combinations
+        # the user can press to invoke Orca commands.  These
+        # represent alternative key bindings that are used in
+        # addition to the key bindings in the "Key Bindings"
+        # column.
+        #
         column = gtk.TreeViewColumn(_("Alternate"),
                                     rendererText,
                                     text=TEXT2,
@@ -218,7 +231,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                                self.keyModifiedToggle,
                                self.keyBindingsModel,
                                MODIF)
-        column = gtk.TreeViewColumn(_("Modified"),
+
+        column = gtk.TreeViewColumn("Modified",
                                     rendererToggle,
                                     active=MODIF,
                                     activatable=EDITABLE)
@@ -227,10 +241,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(MODIF)
         self.keyBindView.append_column(column)
 
-        # EDITABLE
+        # EDITABLE - invisble column
         #
         rendererToggle = gtk.CellRendererToggle()
         rendererToggle.set_property('activatable',False)
+
+        # Translators: Modified is a table column header where the
+        # cells represent whether a key binding has been modified
+        # from the default key binding.
+        #
         column = gtk.TreeViewColumn(_("Modified"),
                                     rendererToggle,
                                     active=EDITABLE)
@@ -267,12 +286,24 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         Returns the voice dictionary for the given voice type.
         """
 
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use most of the time.
+        #
         if voiceType == _("Default"):
             voiceACSS = self.defaultVoice
+
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use to speak capitalized words and letters.
+        #
         elif voiceType == _("Uppercase"):
             voiceACSS = self.uppercaseVoice
+
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use to speak text associated with hyperlinks in HTML content.
+        #
         elif voiceType == _("Hyperlink"):
             voiceACSS = self.hyperlinkVoice
+
         else:
             voiceACSS = self.defaultVoice
 
@@ -292,14 +323,25 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         Returns the value of the given key, or None if it's not set.
         """
 
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use most of the time.
+        #
         if voiceType == _("Default"):
             voice = self.defaultVoice
+
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use to speak capitalized words and letters.
+        #
         elif voiceType == _("Uppercase"):
             voice = self.uppercaseVoice
             if not voice.has_key(key):
                 if not useDefault:
                     return None
                 voice = self.defaultVoice
+
+        # Translators: this refers to the speech synthesis voice that Orca
+        # will use to speak text associated with hyperlinks in HTML content.
+        #
         elif voiceType == _("Hyperlink"):
             voice = self.hyperlinkVoice
             if not voice.has_key(key):
@@ -493,7 +535,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         families = self.speechServersChoice.getVoiceFamilies()
         self.speechFamiliesChoices = []
         if len(families) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             self.speechFamiliesChoice = None
@@ -565,7 +607,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.speechServersChoices = \
                 self.speechSystemsChoice.SpeechServer.getSpeechServers()
         if len(self.speechServersChoices) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             self.speechServersChoice = None
@@ -639,7 +681,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.speechSystemsChoices = []
         if len(self.workingFactories) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             self.speechSystemsChoice = None
@@ -864,10 +906,19 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         smoothingMode = prefs["magSmoothingMode"]
         if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
+            # Translators: this is an algorithm for magnifying pixels
+            # on the screen.
+            #
             mode = _("Bilinear")
         elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  None means that Orca does nothing to
+            # track the mouse.
+            #
             mode = _("None")
         else:
+            # Translators: this is an algorithm for magnification.
+            #
             mode = _("Bilinear")
         index = self._getComboBoxIndex(self.magSmoothingComboBox, mode)
         self.magSmoothingComboBox.set_active(index)
@@ -877,14 +928,35 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         mouseTrackingMode = prefs["magMouseTrackingMode"]
         if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  Centered means that Orca attempts to
+            # keep the mouse in the center of the magnified window.
+            #
             mode = _("Centered")
         elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_NONE:
             mode = _("None")
         elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  Proportional means that Orca attempts
+            # to position the mouse in the magnifier window in a way
+            # such that it helps represent where on the desktop the mouse
+            # is.  For example, if the mouse is 25% from the left edge of
+            # the desktop, Orca positions the mouse 25% from the left edge
+            # of the magnified region.
+            #
             mode = _("Proportional")
         elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  Push means that Orca will not move
+            # the magnified region until the mouse hits an edge of the
+            # magnified region.
+            #
             mode = _("Push")
         else:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  Centered means that Orca attempts to
+            # keep the mouse in the center of the magnified window.
+            #
             mode = _("Centered")
         index = self._getComboBoxIndex(self.magMouseTrackingComboBox, mode)
         self.magMouseTrackingComboBox.set_active(index)
@@ -923,12 +995,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         model = combobox.get_model()
-        iter = model.get_iter_first()
+        myiter = model.get_iter_first()
         for i in range(0, len(model)):
-            name = model.get_value(iter, 0)
+            name = model.get_value(myiter, 0)
             if name == str:
                 return i
-            iter = model.iter_next(iter)
+            myiter = model.iter_next(myiter)
 
         return 0
 
@@ -1011,12 +1083,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         model = self.keyBindingsModel
 
-        iter = model.append(None)
-        model.set(iter,
+        myiter = model.append(None)
+        model.set(myiter,
                   DESCRIP, appName,
                   MODIF, False)
 
-        return iter
+        return myiter
 
     def _getIterOf(self, appName):
         """Returns the gtk.TreeIter of the TreeStore model
@@ -1046,11 +1118,11 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         model = self.keyBindingsModel
-        iter = model.get_iter_first()
+        myiter = model.get_iter_first()
         exist = False
 
-        while iter != None:
-            iterChild = model.iter_children(iter)
+        while myiter != None:
+            iterChild = model.iter_children(myiter)
             while iterChild != None:
                 if model.get(iterChild,DESCRIP)[0] == kb.handler._description:
                     exist = True
@@ -1061,7 +1133,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                               TEXT2,keybindings.getModifierNames(kb.modifiers)\
                                   + kb.keysymstring)
                 iterChild = model.iter_next(iterChild)
-            iter = model.iter_next(iter)
+            myiter = model.iter_next(myiter)
 
         return exist
 
@@ -1114,6 +1186,11 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         model = self.keyBindingsModel
 
         if parent == None:
+            # Translators: an external braille device has buttons on it that
+            # permit the user to create input gestures from the braille device.
+            # The braille bindings are what determine the actions Orca will
+            # take when the user presses these buttons.
+            #
             parent = self._getIterOf(_("Braille Bindings"))
 
         if parent != None:
@@ -1141,9 +1218,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             keyBind = keybindings.KeyBinding(None,None,None,None)
             treeModel = self.keyBindingsModel
 
-            iter = treeModel.get_iter_first()
-            while iter != None:
-                iterChild = treeModel.iter_children(iter)
+            myiter = treeModel.get_iter_first()
+            while myiter != None:
+                iterChild = treeModel.iter_children(myiter)
                 while iterChild != None:
                     descrip = treeModel.get_value(iterChild, DESCRIP)
                     keyBind.handler=input_event.InputEventHandler(None,descrip)
@@ -1151,7 +1228,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                                               typeOfSearch="description"):
                         treeModel.set_value(iterChild, MODIF, True)
                     iterChild = treeModel.iter_next(iterChild)
-                iter = treeModel.iter_next(iter)
+                myiter = treeModel.iter_next(myiter)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
@@ -1181,7 +1258,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self._markModified()
 
-        # Braille Bindings from default script, in default.py
+        # Translators: an external braille device has buttons on it that
+        # permit the user to create input gestures from the braille device.
+        # The braille bindings are what determine the actions Orca will
+        # take when the user presses these buttons.
         #
         iterBB = self._createNode(_("Braille Bindings"))
 
@@ -1533,6 +1613,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: when users are navigating a table, they
+            # sometimes want the entire row of a table read, or
+            # they just want the current cell to be presented to them.
+            #
             if widget.get_label() == _("Speak current _cell"):
                 self.prefsDict["readTableCellRow"] = False
             else:
@@ -1765,6 +1849,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         smoothingMode = widget.get_active_text()
+        # Translators: this is an algorithm for magnifying pixels
+        # on the screen.
+        #
         if smoothingMode ==  _("Bilinear"):
             mode = settings.MAG_SMOOTHING_MODE_BILINEAR
         elif smoothingMode == _("None"):
@@ -1784,16 +1871,38 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         mouseTrackingMode = widget.get_active_text()
+        # Translators: this is an algorithm for tracking the mouse
+        # with the magnifier.  Centered means that Orca attempts to
+        # keep the mouse in the center of the magnified window.
+        #
         if mouseTrackingMode ==  _("Centered"):
             mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+
+        # Translators: this is an algorithm for tracking the mouse
+        # with the magnifier.  Push means that Orca will not move
+        # the magnified region until the mouse hits an edge of the
+        # magnified region.
+        #
         elif mouseTrackingMode == _("Push"):
             mode = settings.MAG_MOUSE_TRACKING_MODE_PUSH
+
+        # Translators: this is an algorithm for tracking the mouse
+        # with the magnifier.  Proportional means that Orca attempts
+        # to position the mouse in the magnifier window in a way
+        # such that it helps represent where on the desktop the mouse
+        # is.  For example, if the mouse is 25% from the left edge of
+        # the desktop, Orca positions the mouse 25% from the left edge
+        # of the magnified region.
+        #
         elif mouseTrackingMode == _("Proportional"):
             mode = settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL
+
         elif mouseTrackingMode == _("None"):
             mode = settings.MAG_MOUSE_TRACKING_MODE_NONE
+
         else:
             mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+
         self.prefsDict["magMouseTrackingMode"] = mode
 
     def magInvertColorsChecked(self, widget):
@@ -1818,6 +1927,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
     def editingKey(self, cell, editable, path, treeModel):
         """Starts user input of a Key for a selected key binding"""
 
+        # Translators: this is a spoken prompt asking the user to press
+        # a new key combination (e.g., Alt+Ctrl+g) to create a new
+        # key bindings.
+        #
         editable.set_text(_("enter new key"))
         orca_state.capturingKeys = True
         return
@@ -1835,17 +1948,26 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         if (newKey != treeModel[path][key]) \
            or (newKeyEvent.modifiers != int(treeModel[path][modUsed])):
-            iter = treeModel.get_iter_from_string(path)
-            treeModel.set(iter,
+            myiter = treeModel.get_iter_from_string(path)
+            treeModel.set(myiter,
                           modMask, newKeyEvent.modifiers,
                           modUsed, newKeyEvent.modifiers,
                           key, newKey,
                           text, mods + newKey,
                           MODIF, True)
             speech.stop()
+            # Translators: this is a spoken prompt confirming the key
+            # combination (e.g., Ctrl+Alt+f) the user just typed when
+            # creating a new key binding.
+            #
             speech.speak(_("The new key is: %s") % newKey)
         else:
             speech.stop()
+            # Translators: this is a spoken prompt letting the user
+            # know that the key combination (e.g., Ctrl+Alt+f) they
+            # just entered for defining a new key binding was already
+            # defined.
+            #
             speech.speak(_("The key entered is the same. Nothing changed."))
 
         return
@@ -1892,8 +2014,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
     def confirmQuitChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            confirmQuitCheckButton GtkCheckButton widget.
-           The user has [un]checked the 'Quit Orca without 
-           confirmation' checkbox. Set the 'quitOrcaNoConfirmation' 
+           The user has [un]checked the 'Quit Orca without
+           confirmation' checkbox. Set the 'quitOrcaNoConfirmation'
            preference to the new value.
 
         Arguments:
@@ -1929,6 +2051,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: this refers to the keyboard layout (desktop
+            # or laptop).
+            #
             if widget.get_label() == _("_Desktop"):
                 self.prefsDict["keyboardLayout"] = \
                     settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
@@ -2031,6 +2156,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 def showPreferencesUI():
     global OS
 
+    # Translators: Orca Preferences is the configuration GUI for Orca.
+    #
     line = _("Starting Orca Preferences. This may take a while.")
     braille.displayMessage(line)
     speech.speak(line)
