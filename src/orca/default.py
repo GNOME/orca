@@ -25,7 +25,7 @@ for GTK."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 try:
@@ -3542,11 +3542,12 @@ class Script(script.Script):
         - string: the string to spell.
         """
 
-        for (index, character) in enumerate(string):
+        for (index, character) in enumerate(string.decode("UTF-8")):
             if character.isupper():
-                speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
+                speech.speak(character.encode("UTF-8"),
+                             self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(character)
+                speech.speak(character.encode("UTF-8"))
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            clickCount=1):
