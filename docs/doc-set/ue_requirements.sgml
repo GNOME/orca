@@ -394,7 +394,7 @@
         column or row, the appropriate headings should also be
         read.</para>
 
-	<para>The letters "f" and "Shift+f" will be used to move
+	<para>The keys "orca+tab" and "shift+orca+tab"  will be used to move
         between form fields.</para>
 
 	<para>The letters "l" and "Shift+l" will allow the user to
