@@ -354,15 +354,6 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
 ########################################################################
 
 def cycleDebugLevel(script=None, inputEvent=None):
-    """Cycles the debug level at run time.
-
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-def cycleDebugLevel(script=None, inputEvent=None):
     global _debugLevel
 
     level = debug.debugLevel
@@ -389,13 +380,13 @@ def cycleDebugLevel(script=None, inputEvent=None):
     debug.debugLevel = level
 
     if level == debug.LEVEL_ALL:
-        speech.speak(_("Debug level all."))
+        speech.speak("Debug level all.")
     elif level == debug.LEVEL_FINEST:
-        speech.speak(_("Debug level finest."))
+        speech.speak("Debug level finest.")
     elif level == debug.LEVEL_FINER:
-        speech.speak(_("Debug level finer."))
+        speech.speak("Debug level finer.")
     elif level == debug.LEVEL_FINE:
-        speech.speak(("Debug level fine."))
+        speech.speak("Debug level fine.")
     elif level == debug.LEVEL_CONFIGURATION:
         speech.speak("Debug level configuration.")
     elif level == debug.LEVEL_INFO:
@@ -574,20 +565,20 @@ def _keyEcho(event):
             modifiers = event.modifiers
             if event_string == "Caps_Lock":
                 if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
-                    lockState = _(" off")
+                    lockState = " " + _("off")
                 else:
-                    lockState = _(" on")
+                    lockState = " " + _("on")
 
-            elif event_string == _("Num_Lock"):
+            elif event_string == "Num_Lock":
                 # [[[TODO: richb - we are not getting a correct modifier
                 # state value returned when Num Lock is turned off.
                 # Commenting out the speaking of the bogus on/off state
                 # until this can be fixed.]]]
                 #
                 #if modifiers & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
-                #    event_string += _(" off")
+                #    event_string += " " + _("off")
                 #else:
-                #    event_string += _(" on")
+                #    event_string += " " + _("on")
                 pass
 
         elif _isFunctionKey(event_string):
@@ -633,6 +624,10 @@ def _processKeyCaptured(event):
         elif event.event_string == "Escape":
             orca_state.capturingKeys = False
         else:
+            # Translators: this is a spoken prompt letting the user know
+            # Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
+            # based upon their input.
+            #
             speech.speak(_("Key captured: %s. Press enter to confirm.") \
                          % str(event.event_string))
             orca_state.lastCapturedKey = event
@@ -698,7 +693,9 @@ def _processKeyboardEvent(event):
         _orcaModifierPressed = False
 
     if _orcaModifierPressed:
-        keyboardEvent.modifiers |= (1 << settings.MODIFIER_ORCA)
+        keyboardEvent.modifiers = keyboardEvent.modifiers \
+                                  | (1 << settings.MODIFIER_ORCA)
+
 
     # Orca gets first stab at the event.  Then, the presenter gets
     # a shot. [[[TODO: WDW - might want to let the presenter try first?
@@ -790,8 +787,14 @@ def _toggleSilenceSpeech(script=None, inputEvent=None):
     speech.stop()
     if settings.silenceSpeech:
         settings.silenceSpeech = False
+        # Translators: this is a spoken prompt letting the user know
+        # that speech synthesis has been turned back on.
+        #
         speech.speak(_("Speech enabled."))
     else:
+        # Translators: this is a spoken prompt letting the user know
+        # that speech synthesis has been temporarily turned off.
+        #
         speech.speak(_("Speech disabled."))
         settings.silenceSpeech = True
     return True
@@ -840,6 +843,10 @@ def loadUserSettings(script=None, inputEvent=None):
         try:
             speech.init()
             if reloaded:
+                # Translators: there is a keystroke to reload the user
+                # preferences.  This is a spoken prompt to let the user
+                # know when the preferences has been reloaded.
+                #
                 speech.speak(_("Orca user settings reloaded."))
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Speech module has been initialized.")
@@ -1088,7 +1095,9 @@ def shutdown(script=None, inputEvent=None):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    speech.speak(_("goodbye."))
+    # Translators: this is what Orca speaks and brailles when it quits.
+    #
+    speech.speak(_("Goodbye."))
     braille.displayMessage(_("Goodbye."))
 
     # Deregister our event listeners

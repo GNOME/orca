@@ -917,7 +917,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             #
             mode = _("None")
         else:
-            # Translators: this is an algorithm for magnification.
+            # Translators: this is an algorithm for magnifying pixels
+            # on the screen.
             #
             mode = _("Bilinear")
         index = self._getComboBoxIndex(self.magSmoothingComboBox, mode)
