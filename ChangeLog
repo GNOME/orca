@@ -1,3 +1,10 @@
+2007-04-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/rolenames.py: more work on bug 412200 to clarify just
+	what short braille, long braille, and spoken words mean, and to
+	tag various things as being for each.  Poor translators for 
+	GNOME 2.18 had no clue.  My apologies.
+	
 2007-04-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_gui_prefs.py: fix a typo in a comment.
