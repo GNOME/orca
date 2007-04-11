@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
@@ -75,11 +75,18 @@ class WhereAmI(where_am_I.WhereAmI):
         """
 
         utterances = []
-        utterances.append(_("Cell"))
+        utterances.append(_("cell"))
 
         table = obj.parent.table
+
+        # Translators: this represents the column we're
+        # on in a table.
+        #
         text = _("column %d") % (table.getColumnAtIndex(obj.index) + 1)
         utterances.append(text)
+
+        # Translators: this represents the row number of a table.
+        #
         text = _("row %d") % (table.getRowAtIndex(obj.index) + 1)
         utterances.append(text)
 
@@ -106,7 +113,7 @@ class WhereAmI(where_am_I.WhereAmI):
         """
 
         utterances = []
-        utterances.append(_("Cell"))
+        utterances.append(_("cell"))
 
         # No way to get cell coordinates?
 
@@ -129,7 +136,7 @@ class WhereAmI(where_am_I.WhereAmI):
         """Returns the Calc frame and sheet
         """
 
-        list = [None, None]
+        mylist = [None, None]
 
         parent = obj.parent
         while parent and (parent.parent != parent):
@@ -137,12 +144,12 @@ class WhereAmI(where_am_I.WhereAmI):
             #               "_getCalcFrameAndSheet: parent=%s, %s" % \
             #               (parent.role, self._getObjLabelAndName(parent)))
             if parent.role == rolenames.ROLE_FRAME:
-                list[0] = parent
+                mylist[0] = parent
             if parent.role == rolenames.ROLE_TABLE:
-                list[1] = parent
+                mylist[1] = parent
             parent = parent.parent
 
-        return list
+        return mylist
 
     def _speakCalcStatusBar(self):
         """Speaks the OpenOffice Calc statusbar.
@@ -154,7 +161,7 @@ class WhereAmI(where_am_I.WhereAmI):
         utterances = []
         for i in range(0, self._statusBar.childCount):
             child = self._statusBar.child(i)
-            text = _("%s") % self._getObjName(child)
+            text = self._getObjName(child)
             utterances.append(text)
 
         debug.println(self._debugLevel, "Calc statusbar utterances=%s" % \
@@ -177,19 +184,19 @@ class WhereAmI(where_am_I.WhereAmI):
 
         utterances = []
 
-        list = self._getCalcFrameAndSheet(obj)
+        mylist = self._getCalcFrameAndSheet(obj)
         if doubleClick:
-            if list[0]:
+            if mylist[0]:
                 self._statusBar = None
-                self._getStatusBar(list[0])
+                self._getStatusBar(mylist[0])
                 if self._statusBar:
                     self._speakCalcStatusBar()
         else:
-            if list[0]:
-                text = self._getObjLabelAndName(list[0])
+            if mylist[0]:
+                text = self._getObjLabelAndName(mylist[0])
                 utterances.append(text)
-            if list[1]:
-                text = self._getObjLabelAndName(list[1])
+            if mylist[1]:
+                text = self._getObjLabelAndName(mylist[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel,
@@ -348,7 +355,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
             # If the spread sheet table cell has something in it, then we
             # want to append the name of the cell (which will be its location).
-            # Note that if the cell was empty, then 
+            # Note that if the cell was empty, then
             # self._script.getDisplayedText will have already done this for us.
             #
             if obj.text:
@@ -363,7 +370,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # just one (or none), then pass it on to the superclass to be
             # processed.
             #
-            # If it's more than one, then get the braille regions for each 
+            # If it's more than one, then get the braille regions for each
             # child, and call this method again.
             #
             if obj.childCount <= 1:
@@ -483,7 +490,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                parent.lastRow != parent.table.getRowAtIndex(obj.index):
                 if self._script.dynamicRowHeaders.has_key(table):
                     column = self._script.dynamicRowHeaders[table]
-                    header = self._script.getDynamicColumnHeaderCell(obj, 
+                    header = self._script.getDynamicColumnHeaderCell(obj,
                                                                      column)
                     if header.childCount > 0:
                         for i in range(0, header.childCount):
@@ -564,7 +571,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(nameList[1])
         else:
             # Check to see how many children this table cell has. If it's
-            # just one (or none), then pass it on to the superclass to be 
+            # just one (or none), then pass it on to the superclass to be
             # processed.
             #
             # If it's more than one, then get the speech for each child,
@@ -703,7 +710,7 @@ class Script(default.Script):
 
         # [[[TODO: JD - HACK because we won't get events from toggle
         # buttons on the Formatting toolbar until we "tickle/poke"
-        # the hierarchy. But we only want to do it once.  
+        # the hierarchy. But we only want to do it once.
         # See bug #363830 and OOo issue #70872.]]]
         #
         self.tickled = None
@@ -738,16 +745,25 @@ class Script(default.Script):
         self.inputEventHandlers["speakInputLineHandler"] = \
             input_event.InputEventHandler(
                 Script.speakInputLine,
+                # Translators: this is the input line of a spreadsheet
+                # (i.e., the place where enter formulas)
+                #
                 _("Speaks the contents of the input line."))
 
         self.inputEventHandlers["setDynamicColumnHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.setDynamicColumnHeaders,
+                # Translators: Orca allows you to dynamically define which
+                # row of a spreadsheet or table counts as column headers.
+                #
                 _("Set the row to use as dynamic column headers when speaking calc cells."))
 
         self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.setDynamicRowHeaders,
+                # Translators: Orca allows you to dynamically define which
+                # column of a spreadsheet or table counts as row headers.
+                #
                 _("Set the column to use as dynamic row headers to use when speaking calc cells."))
 
     def getKeyBindings(self):
@@ -783,14 +799,14 @@ class Script(default.Script):
         return keyBindings
 
     def adjustForWriterTable(self, obj):
-        """Check to see if we are in Writer, where the object with focus 
-        is a paragraph, and the parent is the table cell. If it is, then, 
+        """Check to see if we are in Writer, where the object with focus
+        is a paragraph, and the parent is the table cell. If it is, then,
         return the parent table cell otherwise return the current object.
 
         Arguments:
         - obj: the accessible object to check.
 
-        Returns parent table cell (if in a Writer table ) or the current 
+        Returns parent table cell (if in a Writer table ) or the current
         object.
         """
 
@@ -818,14 +834,14 @@ class Script(default.Script):
         return table
 
     def getDynamicColumnHeaderCell(self, obj, column):
-        """Given a table cell, return the dynamic column header cell 
+        """Given a table cell, return the dynamic column header cell
         associated with it.
 
         Arguments:
         - obj: the table cell.
         - column: the column that this dynamic header is on.
 
-        Return the dynamic column header cell associated with the given 
+        Return the dynamic column header cell associated with the given
         table cell.
         """
 
@@ -840,14 +856,14 @@ class Script(default.Script):
         return accCell
 
     def getDynamicRowHeaderCell(self, obj, row):
-        """Given a table cell, return the dynamic row header cell 
+        """Given a table cell, return the dynamic row header cell
         associated with it.
 
         Arguments:
         - obj: the table cell.
         - row: the row that this dynamic header is on.
 
-        Return the dynamic row header cell associated with the given 
+        Return the dynamic row header cell associated with the given
         table cell.
         """
 
@@ -858,7 +874,7 @@ class Script(default.Script):
             column = parent.table.getColumnAtIndex(obj.index)
             cell = parent.table.getAccessibleAt(row, column)
             accCell = atspi.Accessible.makeAccessible(cell)
-    
+
         return accCell
 
     def locateInputLine(self, obj):
@@ -875,7 +891,7 @@ class Script(default.Script):
         Returns the spread sheet input line component.
         """
 
-        inputLine = None 
+        inputLine = None
         panel = obj.parent.parent.parent.parent
         if panel and panel.role == rolenames.ROLE_PANEL:
             allParagraphs = self.findByRole(panel, rolenames.ROLE_PARAGRAPH)
@@ -884,7 +900,7 @@ class Script(default.Script):
             else:
                 debug.println(debug.LEVEL_SEVERE,
                     "StarOffice: locateInputLine: incorrect paragraph count.")
-        else: 
+        else:
             debug.println(debug.LEVEL_SEVERE,
                   "StarOffice: locateInputLine: couldn't find common panel.")
 
@@ -916,6 +932,12 @@ class Script(default.Script):
             #
             current = obj.parent
             while current.role != rolenames.ROLE_APPLICATION:
+                # Translators: this represents a match on a window title.
+                # We're looking for frame that ends in "Calc", representing
+                # an OpenOffice or StarOffice spreadsheet window.  We
+                # really try to avoid doing this kind of thing, but sometimes
+                # it is necessary and we apologize.
+                #
                 if current.role == rolenames.ROLE_FRAME and \
                    (current.name and current.name.endswith(_("Calc"))):
                     found = True
@@ -936,12 +958,12 @@ class Script(default.Script):
         if oldFocus == None or newFocus == None:
             return
 
-        oldFocusIsTable = None 
+        oldFocusIsTable = None
         while oldFocus.role != rolenames.ROLE_APPLICATION:
             if oldFocus.role == rolenames.ROLE_TABLE:
                 oldFocusIsTable = oldFocus
                 break
-            oldFocus = oldFocus.parent 
+            oldFocus = oldFocus.parent
 
         newFocusIsTable = None
         while newFocus.role != rolenames.ROLE_APPLICATION:
@@ -953,9 +975,13 @@ class Script(default.Script):
         if oldFocusIsTable == None and newFocusIsTable != None:
             rows = newFocusIsTable.table.nRows
             columns = newFocusIsTable.table.nColumns
+            # We've entered a table.  Announce the dimensions.
+            #
             line = _("table with %d rows and %d columns.") % (rows, columns)
             speech.speak(line)
         elif oldFocusIsTable != None and newFocusIsTable == None:
+            # We've left a table.  Announce this fact.
+            #
             speech.speak(_("leaving table."))
 
     def speakInputLine(self, inputEvent):
@@ -978,6 +1004,9 @@ class Script(default.Script):
             if self.inputLineForCell and self.inputLineForCell.text:
                 inputLine = self.getText(self.inputLineForCell, 0, -1)
                 if not inputLine:
+                    # Translators: this is used to announce that the
+                    # current input line in a spreadsheet is blank/empty.
+                    #
                     inputLine = _("empty")
                 debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
@@ -1045,6 +1074,9 @@ class Script(default.Script):
             if clickCount == 2:
                 try:
                     del self.dynamicColumnHeaders[table]
+                    # Translators: Orca allows you to dynamically define which
+                    # row of a spreadsheet or table counts as column headers.
+                    #
                     line = _("Dynamic column header cleared.")
                     speech.speak(line)
                     braille.displayMessage(line)
@@ -1052,6 +1084,9 @@ class Script(default.Script):
                     pass
             else:
                 self.dynamicColumnHeaders[table] = row
+                # Translators: Orca allows you to dynamically define which
+                # row of a spreadsheet or table counts as column headers.
+                #
                 line = _("Dynamic column header set for row ") + str(row+1)
                 speech.speak(line)
                 braille.displayMessage(line)
@@ -1106,6 +1141,9 @@ class Script(default.Script):
             if clickCount == 2:
                 try:
                     del self.dynamicRowHeaders[table]
+                    # Translators: Orca allows you to dynamically define which
+                    # column of a spreadsheet or table counts as row headers.
+                    #
                     line = _("Dynamic row header cleared.")
                     speech.speak(line)
                     braille.displayMessage(line)
@@ -1113,8 +1151,11 @@ class Script(default.Script):
                     pass
             else:
                 self.dynamicRowHeaders[table] = column
-                line = _("Dynamic row header set for column %s") % \
-                       self.columnConvert(column+1)
+                # Translators: Orca allows you to dynamically define which
+                # column of a spreadsheet or table counts as row headers.
+                #
+                line = _("Dynamic row header set for column %s") \
+                       % self.columnConvert(column+1)
                 speech.speak(line)
                 braille.displayMessage(line)
 
@@ -1258,6 +1299,12 @@ class Script(default.Script):
 
         found = False
         while obj and obj.role != rolenames.ROLE_APPLICATION:
+            # Translators: this is the title of the window that
+            # you get when starting StarOffice.  The translated
+            # form has to match what StarOffice/OpenOffice is
+            # using.  We hate keying off stuff like this, but
+            # we're forced to do so in this case.
+            #
             if obj.role == rolenames.ROLE_DIALOG and \
                 (obj.name and obj.name.startswith(_("Welcome to StarOffice"))):
                 debug.println(self.debugLevel,
@@ -1318,7 +1365,7 @@ class Script(default.Script):
 
         # 0) Writer: find command
         #
-        # Check to see if this is this is for the find command. See 
+        # Check to see if this is this is for the find command. See
         # comment #18 of bug #354463.
         #
         if self.findCommandRun and \
@@ -1353,6 +1400,13 @@ class Script(default.Script):
             result = self.getTextLineAtCaret(event.source)
             result[0] = result[0].decode("UTF-8")
 
+            # Translators: this is the name of the menu item people
+            # use in StarOffice to create a new text document.  It's
+            # at File->New->Text Document.  The translated form has to
+            # match what StarOffice/OpenOffice is using. We hate
+            # keying off stuff like this, but we're forced to do so in
+            # this case.
+            #
             if oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \
                oldLocusOfFocus.name == _("Text Document") and \
                len(result[0]) == 0:
@@ -1414,6 +1468,12 @@ class Script(default.Script):
                      rolenames.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source.parent
+            # Translators: this is what the name of spell checking
+            # window in StarOffice begins with.  The translated form
+            # has to match what StarOffice/OpenOffice is using.  We
+            # hate keying off stuff like this, but we're forced to do
+            # so in this case.
+            #
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - " \
@@ -1478,6 +1538,12 @@ class Script(default.Script):
                         rolenames.ROLE_OPTION_PANE, \
                         rolenames.ROLE_DIALOG, \
                         rolenames.ROLE_APPLICATION]
+            # Translators: this is the name of the field in the StarOffice
+            # setup dialog that is asking for the first name of the user.
+            # The translated form has to match what StarOffice/OpenOffice
+            # is using.  We hate keying off stuff like this, but we're
+            # forced to in this case.
+            #
             if self.isDesiredFocusedItem(event.source, rolesList) and \
                event.source.name == _("First name"):
                 debug.println(self.debugLevel,
@@ -1534,7 +1600,7 @@ class Script(default.Script):
         #
         # Check to see if the focus has just moved to the Name Box combo
         # box in Calc. If so, then replace the non-existent name with a
-        # simple one before falling through and calling the default 
+        # simple one before falling through and calling the default
         # locusOfFocusChanged method, which in turn will result in our
         # _getSpeechForComboBox() method being called.
         #
@@ -1549,7 +1615,10 @@ class Script(default.Script):
             and (not event.source.name or len(event.source.name) == 0):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: name box.")
-
+            # Translators: this is our made up name for the nameless field
+            # in StarOffice/OpenOffice calc that allows you to type in a
+            # cell coordinate (e.g., A4) and then move to it.
+            #
             event.source.name = _("Move to cell")
 
         # Pass the event onto the parent class to be handled in the default way.
@@ -1635,6 +1704,12 @@ class Script(default.Script):
                      rolenames.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source
+            # Translators: this is what the name of spell checking
+            # window in StarOffice begins with.  The translated form
+            # has to match what StarOffice/OpenOffice is using.  We
+            # hate keying off stuff like this, but we're forced to do
+            # so in this case.
+            #
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
                       "StarOffice.onNameChanged - Writer: spell check dialog.")
@@ -1649,10 +1724,10 @@ class Script(default.Script):
 
 
     def onFocus(self, event):
-        """Called whenever an object gets focus. Overridden in this script 
-        so that we can adjust "focus:" events for children of a combo-box 
-        to just set the focus to the combo box. This is needed to help 
-        reduce the verbosity of focusing on the Calc Name combo box (see 
+        """Called whenever an object gets focus. Overridden in this script
+        so that we can adjust "focus:" events for children of a combo-box
+        to just set the focus to the combo box. This is needed to help
+        reduce the verbosity of focusing on the Calc Name combo box (see
         bug #364407).
 
         Arguments:
@@ -1684,15 +1759,22 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # If this is a state change "focused" event that we care about, and 
+        # If this is a state change "focused" event that we care about, and
         # we are in Writer, check to see if we are entering or leaving a table.
         #
         if event.type == "object:state-changed:focused" and event.detail1 == 1:
             current = event.source.parent
             while current.role != rolenames.ROLE_APPLICATION:
+                # Translators: this is the title of the window that
+                # you get when using StarOffice Writer.  The
+                # translated form has to match what
+                # StarOffice/OpenOffice is using.  We hate keying off
+                # stuff like this, but we're forced to do so in this
+                # case.
+                #
                 if current.role == rolenames.ROLE_FRAME and \
                    (current.name and current.name.endswith(_("Writer"))):
-                    self.checkForTableBoundry(orca_state.locusOfFocus, 
+                    self.checkForTableBoundry(orca_state.locusOfFocus,
                                               event.source)
                     break
                 current = current.parent
@@ -1726,7 +1808,7 @@ class Script(default.Script):
                 weToggledIt = event.source.component.contains(x, y, 0)
 
             elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                keyString = orca_state.lastInputEvent.event_string  
+                keyString = orca_state.lastInputEvent.event_string
                 navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
                              & (1 << atspi.Accessibility.MODIFIER_CONTROL \
@@ -1774,7 +1856,7 @@ class Script(default.Script):
         # (in the form of object:state-changed:focused
         # instead of focus:). The second is a caret-moved
         # event. Just set the locusOfFocus for the first event.
-        # 
+        #
         if event.type == "object:state-changed:focused" and \
            event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source != self.currentParagraph:
@@ -1782,9 +1864,9 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source, False)
             return
 
-        # If we get "object:state-changed:focused" events for children of 
-        # a combo-box, just set the focus to the combo box. This is needed 
-        # to help reduce the verbosity of focusing on the Calc Name combo 
+        # If we get "object:state-changed:focused" events for children of
+        # a combo-box, just set the focus to the combo box. This is needed
+        # to help reduce the verbosity of focusing on the Calc Name combo
         # box (see bug #364407).
         #
         if event.source.parent and \
@@ -1845,18 +1927,21 @@ class Script(default.Script):
                             if self.inputLineForCell and \
                                self.inputLineForCell.text:
                                 inputLine = self.getText(self.inputLineForCell,0,-1)
-                                if inputLine and \
-                                    (len(inputLine) > 1) and \
-                                    (inputLine[0] == "="):
-                                        hf = _(" has formula")
-                                        speech.speak(hf, None, False)
+                                if inputLine and (len(inputLine) > 1) \
+                                    and (inputLine[0] == "="):
+                                    # Translators: this means a particular
+                                    # cell in a spreadsheet has a formula
+                                    # (e.g., "=sum(a1:d1)")
+                                    #
+                                    hf = " " + _("has formula")
+                                    speech.speak(hf, None, False)
 
-                                        line = braille.getShowingLine()
-                                        line.addRegion(braille.Region(hf))
-                                        braille.refresh()
-                                        #
-                                        # Fall-thru to process the event with
-                                        # the default handler.
+                                    line = braille.getShowingLine()
+                                    line.addRegion(braille.Region(hf))
+                                    braille.refresh()
+                                    #
+                                    # Fall-thru to process the event with
+                                    # the default handler.
 
         default.Script.onSelectionChanged(self, event)
 
@@ -1894,7 +1979,9 @@ class Script(default.Script):
         - name: the name of the cell
         """
 
-        line = _("Cell ") + name
+        # Translators: this is the name of a cell in a spreadsheet.
+        #
+        line = _("Cell %s") % name
         speech.speak(line)
 
     def onCaretMoved(self, event):
@@ -1905,8 +1992,8 @@ class Script(default.Script):
         """
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
-        # then just return (modulo the special cases below). Speaking and 
-        # brailling will have been done in the onStateChanged() routine 
+        # then just return (modulo the special cases below). Speaking and
+        # brailling will have been done in the onStateChanged() routine
         # (see bug #382415).
         #
         if event.source.role == rolenames.ROLE_PARAGRAPH and \
@@ -1919,7 +2006,7 @@ class Script(default.Script):
             # just return.
             #
             if (event_string == "Up" or event_string == "Down"):
-                if settings.readTableCellRow == False:
+                if not settings.readTableCellRow:
                     if event.detail1 != -1:
                         self.speakCellName(event.source.parent.name)
                 return
@@ -1934,9 +2021,9 @@ class Script(default.Script):
             caretOffset = event.source.text.caretOffset
             len = event.source.text.characterCount
 
-            # If you are in a table cell and you arrow Right, the caret 
-            # will focus at the end of the current paragraph before moving 
-            # into the next cell. To be similar to the way that caret 
+            # If you are in a table cell and you arrow Right, the caret
+            # will focus at the end of the current paragraph before moving
+            # into the next cell. To be similar to the way that caret
             # navigation works in other paragraphs in OOo, just return.
             #
             if event_string == "Right" and caretOffset == len:
@@ -1945,14 +2032,14 @@ class Script(default.Script):
             # If we have moved left and the caret position is at the end of
             # the paragraph or if we have moved right and the caret position
             # is at the start of the text string, or the last key input was
-            # Tab or Shift-Tab, and if we are speaking-by-cell (as opposed 
-            # to by-row), then speak the cell name, otherwise just return 
+            # Tab or Shift-Tab, and if we are speaking-by-cell (as opposed
+            # to by-row), then speak the cell name, otherwise just return
             # (see bug #382418).
             #
             if (event_string == "Left" and caretOffset == len) or \
                (event_string == "Right" and caretOffset == 0) or \
                (event_string == "Tab" or event_string == "ISO_Left_Tab"):
-                if settings.readTableCellRow == False:
+                if not settings.readTableCellRow:
                     if event.detail1 != -1:
                         self.speakCellName(event.source.parent.name)
 
@@ -1992,7 +2079,7 @@ class Script(default.Script):
         if not (orca_state.lastInputEvent and \
                 orca_state.lastInputEvent.__dict__.has_key("event_string")):
             return False
-        
+
         lastKey = orca_state.lastInputEvent.event_string
         if lastKey != "Left" and lastKey != "Right":
             return False
@@ -2000,7 +2087,7 @@ class Script(default.Script):
         # Was a control key pressed?
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
-        
+
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
@@ -2015,20 +2102,20 @@ class Script(default.Script):
                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
             wordStart = word[1]
             wordEnd = word[2]
-            
+
             if lastKey == "Right":
                 if wordStart == lineStart:
                     return True
-            else: 
+            else:
                 if wordEnd == lineEnd:
                     return True
-                
+
         else:  # right arrow or left arrow
-            
+
             if lastKey == "Right":
                 if caretOffset == lineStart:
                     return True
-            else: 
+            else:
                 if caretOffset == lineEnd:
                     return True
 
@@ -2039,8 +2126,8 @@ class Script(default.Script):
         """Returns True if a blank line should be spoken.
         Otherwise, returns False.
         """
-        
-        # Get the the AccessibleText interrface. 
+
+        # Get the the AccessibleText interrface.
         text = obj.text
         if not text:
             return False
@@ -2069,7 +2156,7 @@ class Script(default.Script):
         # will return without speaking the text that was pasted.
         #
         text = event.any_data
-        if isinstance(orca_state.lastInputEvent, 
+        if isinstance(orca_state.lastInputEvent,
                         input_event.MouseButtonEvent) and \
              orca_state.lastInputEvent.button == "2":
             if text.isupper():

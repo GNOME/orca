@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@ alphabet into its localized phonetic equivalent."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
@@ -33,31 +33,135 @@ from orca_i18n import _ # for gettext support
 # 'military' term used for the character.
 #
 __phonnames = {}
+
+# Translators: alpha is the spoken military/phonetic spelling for the
+# letter a
+#
 __phonnames["a"] = _("alpha")
+
+# Translators: bravo is the spoken military/phonetic spelling for the
+# letter b
+#
 __phonnames["b"] = _("bravo")
+
+# Translators: charlie is the spoken military/phonetic spelling for
+# the letter c
+#
 __phonnames["c"] = _("charlie")
+
+# Translators: delta is the spoken military/phonetic spelling for the
+# letter d
+#
 __phonnames["d"] = _("delta")
+
+# Translators: echo is the spoken military/phonetic spelling for the
+# letter e
+#
 __phonnames["e"] = _("echo")
+
+# Translators: foxtrot is the spoken military/phonetic spelling for
+# the letter f
+#
 __phonnames["f"] = _("foxtrot")
+
+# Translators: golf is the spoken military/phonetic spelling for the
+# letter g
+#
 __phonnames["g"] = _("golf")
+
+# Translators: hotel is the spoken military/phonetic spelling for the
+# letter h
+#
 __phonnames["h"] = _("hotel")
+
+# Translators: india is the spoken military/phonetic spelling for the
+# letter i
+#
 __phonnames["i"] = _("india")
+
+# Translators: juliet is the spoken military/phonetic spelling for the
+# letter j
+#
 __phonnames["j"] = _("juliet")
+
+# Translators: kilo is the spoken military/phonetic spelling for the
+# letter k
+#
 __phonnames["k"] = _("kilo")
+
+# Translators: lima is the spoken military/phonetic spelling for the
+# letter l
+#
 __phonnames["l"] = _("lima")
+
+# Translators: mike is the spoken military/phonetic spelling for the
+# letter m
+#
 __phonnames["m"] = _("mike")
+
+# Translators: november is the spoken military/phonetic spelling for
+# the letter n
+#
 __phonnames["n"] = _("november")
+
+# Translators: oscar is the spoken military/phonetic spelling for the
+# letter o
+#
 __phonnames["o"] = _("oscar")
+
+# Translators: papa is the spoken military/phonetic spelling for the
+# letter p
+#
 __phonnames["p"] = _("papa")
+
+# Translators: quebec is the spoken military/phonetic spelling for the
+# letter q
+#
 __phonnames["q"] = _("quebec")
+
+# Translators: romeo is the spoken military/phonetic spelling for the
+# letter r
+#
 __phonnames["r"] = _("romeo")
+
+# Translators: sierra is the spoken military/phonetic spelling for the
+# letter s
+#
 __phonnames["s"] = _("sierra")
+
+# Translators: tango is the spoken military/phonetic spelling for the
+# letter t
+#
 __phonnames["t"] = _("tango")
+
+# Translators: uniform is the spoken military/phonetic spelling for
+# the letter u
+#
 __phonnames["u"] = _("uniform")
+
+# Translators: victor is the spoken military/phonetic spelling for the
+# letter v
+#
 __phonnames["v"] = _("victor")
+
+# Translators: whiskey is the spoken military/phonetic spelling for
+# the letter w
+#
 __phonnames["w"] = _("whiskey")
+
+# Translators: xray is the spoken military/phonetic spelling for the
+# letter x
+#
 __phonnames["x"] = _("xray")
+
+# Translators: yankee is the spoken military/phonetic spelling for the
+# letter y
+#
 __phonnames["y"] = _("yankee")
+
+# Translators: zulu is the spoken military/phonetic spelling for the
+# letter z
+#
 __phonnames["z"] = _("zulu")
 
 def getPhoneticName(character):

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -30,7 +30,7 @@ The following script specific key sequences are supported:
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.atspi as atspi
@@ -213,7 +213,7 @@ class Script(default.Script):
         text = ""
         if self.prefixChatMessage:
             if chatRoomName and chatRoomName != "":
-                text += _("Message from chat room ") + chatRoomName + " "
+                text += _("Message from chat room %s") % chatRoomName + " "
         if message and message != "":
             text += message
 

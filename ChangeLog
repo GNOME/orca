@@ -1,5 +1,24 @@
 2007-04-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/gedit.py, src/orca/scripts/liferea.py,
+	src/orca/scripts/Thunderbird.py, src/orca/scripts/gaim.py,
+	src/orca/scripts/acroread.py,
+	src/orca/scripts/gnome-search-tool.py,
+	src/orca/scripts/Evolution.py, src/orca/scripts/StarOffice.py,
+	src/orca/scripts/gnome-mud.py, src/orca/scripts/users-admin.py,
+	src/orca/phonnames.py: more work on bug 412200 to clarify things
+	for translators and to fix up some ngettext and other stuff.  The
+	remaining modules for 412200 are phonnames.py,
+	pronunciation_dict.py, and orca.py.  These might be a bit tricky
+	(phonenames because other languages may have military spelling for
+	more than just a-z, and pronunciation_dict because we may want to
+	allow translators to include common things for their language), so
+	I have a couple questions into gnome-i18n.  orca.py remains because
+	I also have a question into gnome-i18n about the appropriateness 
+	of translating command line options.
+
+2007-04-11  Willie Walker <william.walker@sun.com>
+
 	* src/orca/speechgenerator.py, src/orca/settings.py: more work
 	on bug 412200 to clarify things for translators.
 	

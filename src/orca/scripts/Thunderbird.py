@@ -33,9 +33,7 @@ import orca.default as default
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.braille as braille
-import orca.braillegenerator as braillegenerator
 import orca.speech as speech
-import orca.speechgenerator as speechgenerator
 import orca.Gecko as Gecko
 
 from orca.orca_i18n import _
@@ -116,7 +114,7 @@ class Script(Gecko.Script):
 
         # Don't speak chrome URLs.
         #
-        if obj.name.startswith(_("chrome://")):
+        if obj.name.startswith("chrome://"):
             return
 
         # This is a better fix for bug #405541. Thunderbird gives
@@ -196,7 +194,7 @@ class Script(Gecko.Script):
             return
 
         if parent.name != "" \
-            and (not parent.name.startswith(_("chrome://"))) \
+            and (not parent.name.startswith("chrome://")) \
             and (parent.role == rolenames.ROLE_PANEL):
 
             # Speak the parent panel name, but only once.
@@ -204,6 +202,8 @@ class Script(Gecko.Script):
             if parent.name != self._containingPanelName:
                 self._containingPanelName = parent.name
                 utterances = []
+                # Translators: this is the name of a panel in Thunderbird.
+                #
                 text = _("%s panel") % parent.name
                 utterances.append(text)
                 speech.speakUtterances(utterances)
@@ -211,7 +211,7 @@ class Script(Gecko.Script):
             grandparent = parent.parent
             if grandparent \
                 and (grandparent.name != "") \
-                and (not grandparent.name.startswith(_("chrome://"))) \
+                and (not grandparent.name.startswith("chrome://")) \
                 and (grandparent.role == rolenames.ROLE_PANEL):
 
                 # Speak the grandparent panel name, but only once.
@@ -219,6 +219,8 @@ class Script(Gecko.Script):
                 if grandparent.name != self._containingPanelName:
                     self._containingPanelName = grandparent.name
                     utterances = []
+                    # Translators: this is the name of a panel in Thunderbird.
+                    #
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
                     speech.speakUtterances(utterances)

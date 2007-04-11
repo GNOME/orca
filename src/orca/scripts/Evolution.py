@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
@@ -88,18 +88,31 @@ class Script(default.Script):
         # to Orca for Speech and Braille output.
 
         rolenames.ROLE_CALENDAR_VIEW = "Calendar View"
-        rolenames.rolenames[rolenames.ROLE_CALENDAR_VIEW] = \
-            rolenames.Rolename(rolenames.ROLE_CALENDAR_VIEW,
-                               _("calv"),
-                               _("CalendarView"),
-                               _("calendar view"))
+        rolenames.rolenames[rolenames.ROLE_CALENDAR_VIEW] = rolenames.Rolename(
+            rolenames.ROLE_CALENDAR_VIEW,
+            # Translators: short braille for the rolename of a calendar view.
+            #
+            _("calv"),
+            # Translators: long braille for the rolename of a calendar view.
+            #
+            _("CalendarView"),
+            # Translators: spoken words for the rolename of a calendar view.
+            #
+            _("calendar view"))
 
         rolenames.ROLE_CALENDAR_EVENT = "Calendar Event"
         rolenames.rolenames[rolenames.ROLE_CALENDAR_EVENT] = \
-            rolenames.Rolename(rolenames.ROLE_CALENDAR_EVENT,
-                               _("cale"),
-                               _("CalendarEvent"),
-                               _("calendar event"))
+            rolenames.Rolename(
+            rolenames.ROLE_CALENDAR_EVENT,
+            # Translators: short braille for the rolename of a calendar event.
+            #
+            _("cale"),
+            # Translators: long braille for the rolename of a calendar event.
+            #
+            _("CalendarEvent"),
+            # Translators: spoken words for the rolename of a calendar event.
+            #
+            _("calendar event"))
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -117,6 +130,10 @@ class Script(default.Script):
         self.inputEventHandlers["toggleReadMailHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleReadMail,
+                # Translators: this tells Orca to act like 'biff', or let
+                # the user know when new mail has arrived, even if Evolution
+                # doesn't have focus.
+                #
                 _("Toggle whether we present new mail if we are not the active script."))
 
     def getKeyBindings(self):
@@ -147,9 +164,17 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "Evolution.toggleReadMail.")
 
+        # Translators: this tells Orca to act like 'biff', or let
+        # the user know when new mail has arrived, even if Evolution
+        # doesn't have focus.
+        #
         line = _("present new mail if this script is not active.")
         self.presentIfInactive = not self.presentIfInactive
         if not self.presentIfInactive:
+            # Translators: this tells Orca to act like 'biff', or let
+            # the user know when new mail has arrived, even if Evolution
+            # doesn't have focus.
+            #
             line = _("do not present new mail if this script is not active.")
 
         speech.speak(line)
@@ -197,7 +222,10 @@ class Script(default.Script):
                         # done so.
                         #
                         if text and not self.setupLabels.has_key(label):
-                            speech.speak(text + _(" screen"), None, False)
+                            # Translators: this is the name of a setup
+                            # assistant window/screen in Evolution.
+                            #
+                            speech.speak(_("%s screen") % text, None, False)
                             self.setupLabels[label] = True
 
                             # If the locus of focus is a push button that's
@@ -225,6 +253,10 @@ class Script(default.Script):
                 # these. For the first screen, the useful piece of text
                 # starts with "Welcome". For the last screen, it starts
                 # with "Congratulations". Speak those too.
+                #
+                # Translators: we regret having to do this, but the
+                # translated string here has to match what the translated
+                # string is for Evolution.
                 #
                 if text.startswith(_("Please")) or \
                     text.startswith(_("Welcome")) or \
@@ -338,12 +370,12 @@ class Script(default.Script):
             length = text.characterCount
 
             while offset <= length:
-                [str, start, end] = textObj.text.getTextAtOffset(offset,
+                [mystr, start, end] = textObj.text.getTextAtOffset(offset,
                                atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
-                if len(str) != 0:
-                    string += str
+                if len(mystr) != 0:
+                    string += mystr
 
-                if len(str) == 0 or str[len(str)-1] in '.?!':
+                if len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                     endOffset = end
 
                     string = self.adjustForRepeats(string)
@@ -361,7 +393,7 @@ class Script(default.Script):
                     string = ""
                     startOffset = endOffset
 
-                if len(str) == 0 or end == length:
+                if len(mystr) == 0 or end == length:
                     break
                 else:
                     offset = end
@@ -408,7 +440,7 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "evolution.sayAll.")
         if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus), 
+            speech.sayAll(self.textLines(orca_state.locusOfFocus),
                           self.__sayAllProgressCallback)
         else:
             default.Script.sayAll(self, inputEvent)
@@ -474,10 +506,10 @@ class Script(default.Script):
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, string)
             line = self.adjustForRepeats(string)
-                
+
             if self.speakNewLine(event.source):
                 speech.speak(chnames.getCharacterName("\n"), None, False)
- 
+
             if self.speakBlankLine(event.source):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
@@ -487,7 +519,7 @@ class Script(default.Script):
                 speech.speak(line, None, False)
 
             return
-        
+
 
         # 2) Mail view: current message pane: "standard" mail header lines.
         #
@@ -646,6 +678,11 @@ class Script(default.Script):
                                 checked = cell.state.count( \
                                     atspi.Accessibility.STATE_CHECKED)
                                 if speakAll:
+                                    # Translators: this is the name of the
+                                    # status column header in the message
+                                    # list in Evolution.  The name needs to
+                                    # match what Evolution is using.
+                                    #
                                     if header.name == _("Status"):
                                         toRead = not checked
                                         break
@@ -693,11 +730,25 @@ class Script(default.Script):
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
 
+                        # Translators: this is the name of the
+                        # status column header in the message
+                        # list in Evolution.  The name needs to
+                        # match what Evolution is using.
+                        #
                         if header.name == _("Status"):
+                            # Translators: we present this to the user to
+                            # indicate that an email message has not been
+                            # marked as having been read.
+                            #
                             text = _("unread")
                             utterances = [ text ]
                             brailleRegions.append(braille.Region(text))
                             brailleRegions.append(braille.Region(" "))
+                        # Translators: this is the name of the
+                        # attachment column header in the message
+                        # list in Evolution.  The name needs to
+                        # match what Evolution is using.
+                        #
                         elif header.name == _("Attachment"):
                             text = header.name
                             utterances = [ text ]
@@ -859,6 +910,9 @@ class Script(default.Script):
                 brailleRegions.append(braille.Region(startTime))
                 speech.speak(startTime)
 
+                # Translators: this means there are no scheduled entries
+                # in the calendar.
+                #
                 utterance = _("No appointments")
                 speech.speak(utterance)
                 brailleRegions.append(braille.Region(utterance))
@@ -933,6 +987,10 @@ class Script(default.Script):
                           + "attachment dialog: unlabelled button.")
 
             brailleRegions = []
+            # Translators: this is the unlabelled arrow button near the
+            # top of the mail view Insert Attachment dialog in Evolution.
+            # We give it a name.
+            #
             utterance = _("Directories button")
             speech.speak(utterance)
             brailleRegions.append(braille.Region(utterance))
@@ -961,7 +1019,7 @@ class Script(default.Script):
                           + "compose window: message area.")
 
             self.message_panel = event.source.parent.parent
-            
+
             if self.speakNewLine(event.source):
                 speech.speak(chnames.getCharacterName("\n"), None, False)
 
@@ -972,7 +1030,7 @@ class Script(default.Script):
                 #
                 speech.speak(_("blank"), None, False)
 
-                
+
         # 9) Spell Checking Dialog
         #
         # This works in conjunction with code in section 8). Check to see if
@@ -1082,6 +1140,12 @@ class Script(default.Script):
 
         obj = event.source.parent
         while obj and obj.role != rolenames.ROLE_APPLICATION:
+            # Translators: this is the ending of the name of the
+            # Evolution Setup Assistant window.  The translated
+            # form has to match what Evolution is using.  We hate
+            # keying off stuff like this, but we're forced to do
+            # so in this case.
+            #
             if obj.role == rolenames.ROLE_FRAME and \
                 obj.name.endswith(_("Assistant")):
                 debug.println(self.debugLevel,
@@ -1115,7 +1179,7 @@ class Script(default.Script):
         if not (orca_state.lastInputEvent and \
                 orca_state.lastInputEvent.__dict__.has_key("event_string")):
             return False
-        
+
         lastKey = orca_state.lastInputEvent.event_string
         if lastKey != "Left" and lastKey != "Right":
             return False
@@ -1123,14 +1187,14 @@ class Script(default.Script):
         # Was a control key pressed?
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
-        
+
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
             atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
         lineStart = line[1]
         lineEnd = line[2]
-        
+
         if isControlKey:  # control-right-arrow or control-left-arrow
 
             # Get the word containing the caret.
@@ -1138,20 +1202,20 @@ class Script(default.Script):
                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
             wordStart = word[1]
             wordEnd = word[2]
-            
+
             if lastKey == "Right":
                 if wordStart == lineStart:
                     return True
-            else: 
+            else:
                 if wordEnd == lineEnd:
                     return True
-                
+
         else:  # right arrow or left arrow
-            
+
             if lastKey == "Right":
                 if caretOffset == lineStart:
                     return True
-            else: 
+            else:
                 if caretOffset == lineEnd:
                     return True
 
@@ -1160,8 +1224,8 @@ class Script(default.Script):
         """Returns True if a blank line should be spoken.
         Otherwise, returns False.
         """
-        
-        # Get the the AccessibleText interrface. 
+
+        # Get the the AccessibleText interrface.
         text = obj.text
         if not text:
             return False
@@ -1180,7 +1244,7 @@ class Script(default.Script):
         else:
             return False
 
-        
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
         interested in "object:state-changed:showing" events for any
@@ -1200,6 +1264,12 @@ class Script(default.Script):
             #
             obj = event.source.parent
             while obj and obj.role != rolenames.ROLE_APPLICATION:
+                # Translators: this is the ending of the name of the
+                # Evolution Setup Assistant window.  The translated
+                # form has to match what Evolution is using.  We hate
+                # keying off stuff like this, but we're forced to do
+                # so in this case.
+                #
                 if obj.role == rolenames.ROLE_FRAME and \
                     obj.name.endswith(_("Assistant")):
                     debug.println(self.debugLevel,

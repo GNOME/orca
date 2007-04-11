@@ -170,7 +170,7 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
             message=event.any_data
-            if message and message.isspace()==False and message != "\n":
+            if message and (not message.isspace()) and message != "\n":
                 debug.println(debug.LEVEL_FINEST, \
                     message + " inserted in ringlist:")
                 self.previousMessages.append(message)

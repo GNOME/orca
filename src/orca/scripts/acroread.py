@@ -64,16 +64,23 @@ class Script(default.Script):
         self.ROLE_DOCUMENT = "Document"
         rolenames.rolenames[self.ROLE_DOCUMENT] = \
             rolenames.Rolename(self.ROLE_DOCUMENT,
+                               # Translators: short braille for the
+                               # rolename of a document.
+                               #
                                _("doc"),
+                               # Translators: long braille for the
+                               # rolename of a document.
+                               #
                                _("Document"),
+                               # Translators: spoken words for the
+                               # rolename of a document.
+                               #
                                _("document"))
 
         self.ROLE_LINK = "Link"
         rolenames.rolenames[self.ROLE_LINK] = \
-            rolenames.Rolename(self.ROLE_LINK,
-                                _("lnk"),
-                                _("Link"),
-                                _("link"))
+            rolenames.rolenames[rolenames.ROLE_LINK]
+
         # To handle the multiple, identical object:text-caret-moved events
         # and possible focus events that result from a single key press
         #
@@ -270,14 +277,20 @@ class Script(default.Script):
                    self.getCellCoordinates(oldFocusIsTable, oldFocus)
             [newRow, newCol] = \
                    self.getCellCoordinates(newFocusIsTable, newFocus)
+            # We can't count on being in the first/last cell
+            # of the new row -- only the first/last cell of
+            # the new row that contains data.
+            #
             if newRow != oldRow:
-                # We can't count on being in the first/last cell
-                # of the new row -- only the first/last cell of
-                # the new row that contains data.
+                # Translators: this represents the row and column we're
+                # on in a table.
                 #
                 line = _("row %d, column %d") % (newRow, newCol)
                 speech.speak(line)
             elif newCol != oldCol:
+                # Translators: this represents the column we're
+                # on in a table.
+                #
                 line = _("column %d") % newCol
                 speech.speak(line)
 

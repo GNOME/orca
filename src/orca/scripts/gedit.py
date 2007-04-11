@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
@@ -166,13 +166,13 @@ class Script(default.Script):
         while not done:
             lastEndOffset = -1
             while offset < length:
-                [str, start, end] = text.getTextAtOffset(offset,
+                [mystr, start, end] = text.getTextAtOffset(offset,
                           atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
 
-                if len(str) != 0:
-                    string += str
+                if len(mystr) != 0:
+                    string += mystr
 
-                if len(str) == 0 or str[len(str)-1] in '.?!':
+                if len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                     endOffset = end
 
                     string = self.adjustForRepeats(string)
@@ -187,7 +187,7 @@ class Script(default.Script):
                     string = ""
                     startOffset = endOffset
 
-                if len(str) == 0:
+                if len(mystr) == 0:
                     break
                 else:
                     offset = end
@@ -249,6 +249,11 @@ class Script(default.Script):
         #
         allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
         for label in allLabels:
+            # Translators: these are labels from the gedit spell checking
+            # dialog and must be the same strings gedit uses.  We hate
+            # keying off stuff like this, but we're forced to do so in
+            # in this case.
+            #
             if label.name.startswith(_("Change to:")) or \
                label.name.startswith(_("Misspelled word:")):
                 continue
@@ -278,7 +283,11 @@ class Script(default.Script):
             # The indication that spell checking is complete is when the
             # "misspelt" word is set to "Completed spell checking". Ugh!
             # Try to detect this and let the user know.
-
+            #
+            # Translators: this string must be the same that is used by
+            # gedit.  We hate keying off stuff like this, but we're
+            # forced to do so in this case.
+            #
             if badWord == _("Completed spell checking"):
                 utterance = _("Spell checking is complete.")
                 speech.speak(utterance)
@@ -324,6 +333,11 @@ class Script(default.Script):
                      rolenames.ROLE_DIALOG,
                      rolenames.ROLE_APPLICATION]
 
+        # Translators: this is used to tell us if the focus is on the
+        # "Find" button in gedit's Find dialog.  It must match what
+        # gedit is using.  We hate keying off stuff like this, but
+        # we're forced to do so in this case.
+        #
         if (self.isDesiredFocusedItem(obj, rolesList1) \
             and obj.name == _("Find")) \
             or (self.isDesiredFocusedItem(obj, rolesList2) \
@@ -396,6 +410,11 @@ class Script(default.Script):
                      rolenames.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent.parent
+            # Translators: this is the name of the "Check Spelling" window
+            # in gedit and must be the same as what gedit uses.  We hate
+            # keying off stuff like this, but we're forced to do so in this
+            # case.
+            #
             if frame.name.startswith(_("Check Spelling")):
                 debug.println(self.debugLevel,
                         "gedit.locusOfFocusChanged - check spelling dialog.")
@@ -450,6 +469,11 @@ class Script(default.Script):
                      rolenames.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent
+            # Translators: this is the name of the "Check Spelling" window
+            # in gedit and must be the same as what gedit uses.  We hate
+            # keying off stuff like this, but we're forced to do so in this
+            # case.
+            #
             if frame.name.startswith(_("Check Spelling")):
                 debug.println(self.debugLevel,
                       "gedit.onNameChanged - check spelling dialog.")
@@ -469,6 +493,11 @@ class Script(default.Script):
         # apparently get two identical "object:property-change:accessible-name"
         # events.]]]
 
+        # Translators: the "Phrase not found" is the result of a failed
+        # find command.  It must be the same as what gedit uses.  We hate
+        # keying off stuff like this, but we're forced to do so in this
+        # case.
+        #
         if event.source.role == rolenames.ROLE_STATUSBAR \
            and self.isFocusOnFindDialog() \
            and orca_state.lastInputEvent.event_string == "Return" \
@@ -535,6 +564,9 @@ class Script(default.Script):
             [text, caretOffset, startOffset] = \
                 self.getTextLineAtCaret(event.source)
             if text.lower().find(phrase) != -1:
+                # Translators: this indicates a find command succeeded in
+                # finding something.
+                #
                 speech.speak(_("Phrase found."))
                 utterances = self.speechGenerator.getSpeech(event.source, True)
                 speech.speakUtterances(utterances)

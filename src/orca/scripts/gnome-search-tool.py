@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
@@ -34,7 +34,8 @@ import orca.braille as braille
 import orca.speech as speech
 import orca.settings as settings
 
-from orca.orca_i18n import _ # for gettext support
+from orca.orca_i18n import _        # for gettext support
+from orca.orca_i18n import ngettext # for gettext support
 
 import time
 import gobject
@@ -84,7 +85,7 @@ class Script(default.Script):
         timer to go off again and repeat this process.
         """
 
-        if self.searching == False:
+        if not self.searching:
             return False
 
         currentTime = time.time()
@@ -123,6 +124,10 @@ class Script(default.Script):
         # search progresses, regularly inform the user of this by speaking
         # "Searching" (assuming the search tool has focus).
         #
+        # Translators: the "Stop" string must match what gnome-search-tool
+        # is using.  We hate keying off stuff like this, but we're forced
+        # to do so in this case.
+        #
         if self.isDesiredFocusedItem(event.source, rolesList) and \
            event.source.name == _("Stop") and visible:
             debug.println(self.debugLevel,
@@ -147,6 +152,10 @@ class Script(default.Script):
         # have just stopped a search. Inform the user that the search is
         # complete and tell them how many files were found.
         #
+        # Translators: the "Find" string must match what gnome-search-tool
+        # is using.  We hate keying off stuff like this, but we're forced
+        # to do so in this case.
+        #
         if self.isDesiredFocusedItem(event.source, rolesList) and \
            event.source.name == _("Find") and visible and self.searching:
             debug.println(self.debugLevel,
@@ -159,7 +168,10 @@ class Script(default.Script):
                                atspi.Accessibility.STATE_SENSITIVE)
             if sensitive:
                 fileCount = self.fileTable.table.nRows
-                speech.speak(str(fileCount) + _(" files found"))
+                noFilesString = ngettext("%d file found",
+                                         "%d files found",
+                                         fileCount) % fileCount
+                speech.speak(noFilesString)
             else:
                 speech.speak(_("No files found."))
 

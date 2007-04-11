@@ -127,7 +127,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 i -= 1
         else:
             utterances = speechGen._getSpeechForTableCell(self, \
-                           self.getRealActiveDescendant(obj), already_focused)
+                self._script.getRealActiveDescendant(obj), already_focused)
 
         return utterances
 
