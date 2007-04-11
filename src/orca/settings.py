@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,12 +24,11 @@ case of gdm) or doesn't have the specified attribute."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
 import re
-import sys
 
 screenWidth = 640
 screenHeight = 480
@@ -578,22 +577,66 @@ def getScriptModuleName(app):
 
     return app.name
 
-# Note to translators: the regular expression here represents a
-# string to match in the localized application name as seen by
-# at-poke.  For most cases, the application name is the name of
-# the binary used to start the application, but this is an
-# unreliable assumption.  The only reliable way to do the
-# translation is by running the application and then viewing its
-# name in the main window of at-poke.
+# Translators: the regular expression here represents a string to
+# match in the localized application name as seen by at-poke.  For
+# most cases, the application name is the name of the binary used to
+# start the application, but this is an unreliable assumption.  The
+# only reliable way to do the translation is by running the
+# application and then viewing its name in the main window of at-poke.
+# I wish the AT-SPI spec'd this out as machine readable (unlocalized)
+# names, but it's what we're stuck with (unfortunately).
 #
 setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "StarOffice")
+
+# Translators: see the regular expression note above.  This is for
+# OpenOffice and StarOffice.
+#
 setScriptMapping(re.compile(_('soffice.bin')), "StarOffice")
+
+# Translators: see the regular expression note above.  This is for the
+# Evolution mail application.
+#
 setScriptMapping(re.compile(_('[Ee]volution')), "Evolution")
-setScriptMapping(re.compile(_('Deer Park')), "Mozilla")
+
+# Translators: see the regular expression note above.  This is for the
+# help application (yelp).
+#
 setScriptMapping(re.compile(_('yelp')), "Mozilla")
+
+# Translators: see the regular expression note above.  This is for a
+# version of Mozilla Firefox, which chooses to create strange names
+# for itself at the drop of a hat.
+#
+setScriptMapping(re.compile(_('Deer Park')), "Mozilla")
+
+# Translators: see the regular expression note above.  This is for a
+# version of Mozilla Firefox, which chooses to create strange names
+# for itself at the drop of a hat.
+#
 setScriptMapping(re.compile(_('Bon Echo')), "Mozilla")
+
+# Translators: see the regular expression note above.  This is for a
+# version of Mozilla Firefox, which chooses to create strange names
+# for itself at the drop of a hat.
+#
 setScriptMapping(re.compile(_('Minefield')), "Mozilla")
+
+# Translators: see the regular expression note above.  This is for
+# the Thunderbird e-mail application.
+#
 setScriptMapping(re.compile(_('Mail/News')), "Thunderbird")
+
+# Translators: see the regular expression note above.  This is for
+# gnome_segv2, which calls itself bug-buddy in at-poke.
+#
 setScriptMapping(re.compile(_('bug-buddy')), "gnome_segv2")
+
+# Translators: see the regular expression note above.  This is for
+# the underlying terminal support in gnome-terminal.
+#
 setScriptMapping(re.compile(_('vte')), "gnome-terminal")
+
+# Translators: see the regular expression note above.  This is for
+# the time-admin application.
+#
 setScriptMapping(re.compile(_('time-admin')), "users-admin")

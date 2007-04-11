@@ -706,6 +706,9 @@ class SpeechGenerator:
                 hasItems = True
                 break
         if not hasItems:
+            # Translators: this is the number of items in a layered pane
+            # or table.
+            #
             utterances.append(_("0 items"))
 
         return utterances
@@ -904,8 +907,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        percentage = ("%d" % obj.value.currentValue) + " " \
-                     + _("percent") + ". "
+        # Translators: this is the percentage value of a progress bar.
+        #
+        percentage = _("%d percent.") % obj.value.currentValue + " "
 
         utterances = []
 
@@ -1198,6 +1202,9 @@ class SpeechGenerator:
                 hasItems = True
                 break
         if not hasItems:
+            # Translators: this is the number of items in a layered pane
+            # or table.
+            #
             utterances.append(_("0 items"))
 
         return utterances
@@ -1256,6 +1263,9 @@ class SpeechGenerator:
             # let the user know.
             #
             if obj.childCount == 0:
+                # Translators: this is the number of items in a layered pane
+                # or table.
+                #
                 utterances.append(_("0 items"))
 
         self._debugGenerator("_getSpeechForTableCell",
@@ -1370,8 +1380,11 @@ class SpeechGenerator:
         """
 
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances = [_("tear off menu item")]
+            utterances = [rolenames.getSpeechForRoleName(obj)]
         else:
+            # Translators: brief spoken words for the rolename of a tear off
+            # menu item.
+            #
             utterances = [_("tear off")]
 
         self._debugGenerator("_getSpeechForTearOffMenuItem",
@@ -1420,8 +1433,12 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: the state of a toggle button.
+            #
             checkedState = _("pressed")
         else:
+            # Translators: the state of a toggle button.
+            #
             checkedState = _("not pressed")
 
         # If it's not already focused, say it's name
