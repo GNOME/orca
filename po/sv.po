@@ -5119,7 +5119,7 @@ msgstr "0 objekt"
 #: ../src/orca/speechgenerator.py:912
 #, python-format
 msgid "%d percent."
-msgstr "%s procent."
+msgstr "%d procent."
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
