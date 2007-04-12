@@ -46,6 +46,7 @@ src/orca/scripts/StarOffice.py
 src/orca/scripts/Thunderbird.py
 src/orca/scripts/users-admin.py
 src/orca/settings.py
+src/orca/speechdispatcherfactory.py
 src/orca/speechgenerator.py
 src/orca/speech.py
 src/orca/where_am_I.py
