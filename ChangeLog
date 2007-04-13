@@ -1,3 +1,10 @@
+2007-04-13  Willie Walker <william.walker@sun.com>
+
+        * src/orca/phonnames.py: work on bug 412200 to provide a more
+        flexible means to define the military spelling dictionary.
+        The new means allows translators to better support the nuances
+        of their particular language.
+
 2007-04-11  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/gedit.py, src/orca/scripts/liferea.py,
