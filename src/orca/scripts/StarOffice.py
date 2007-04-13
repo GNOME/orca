@@ -45,6 +45,12 @@ from orca.orca_i18n import _ # for gettext support
 
 class WhereAmI(where_am_I.WhereAmI):
 
+    def __init__(self, script):
+        """Create a new WhereAmI that will be used to speak information
+        about the current object of interest.
+        """
+        where_am_I.WhereAmI.__init__(self, script)
+
     def _processOrcaKey(self, obj, doubleClick):
         """Test to see if the Orca modifier key has been pressed.
         """
@@ -57,7 +63,7 @@ class WhereAmI(where_am_I.WhereAmI):
             else:
                 where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
         else:
-            where_am_I.WhereAmI_handleOrcaKey(self, obj, doubleClick)
+            where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
 
     def _speakTableCell(self, obj, doubleClick):
         """Given the nature of OpenOffice Calc, Orca should override the
