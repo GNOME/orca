@@ -1,5 +1,12 @@
 2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: Fix for bug 427722 - Web page separators 
+        cause Orca to get stuck with go{Next,Previous}Line. More work
+        on bug 411261 - Some HTML constructs cause Orca to say just 
+        "Link" when arrowing up and down by line.
+
+2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/scripts/Evolution.py: Workaround for Evolution bug 
         347964 – When deleting messages in Evolution, Orca initially 
         speaks the wrong tree item.

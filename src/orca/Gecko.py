@@ -2701,6 +2701,11 @@ class Script(default.Script):
         Returns True if a and b are on the same line.
         """
 
+        # If a and b are identical, by definition they are on the same line.
+        #
+        if a == b:
+            return True
+
         # For now, we'll just take a look at the bottom of the area.
         # The code after this takes the whole extents into account,
         # but that logic has issues in the case where we have
@@ -2941,9 +2946,13 @@ class Script(default.Script):
 
         useless = False
 
-        if obj.role in [rolenames.ROLE_IMAGE, \
-                        rolenames.ROLE_TABLE_CELL, \
-                        rolenames.ROLE_SECTION]:
+        if obj and not obj.text and \
+           obj.role == rolenames.ROLE_PARAGRAPH:
+            useless = True
+
+        elif obj.role in [rolenames.ROLE_IMAGE, \
+                          rolenames.ROLE_TABLE_CELL, \
+                          rolenames.ROLE_SECTION]:
             text = self.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
                 text = self.getDisplayedLabel(obj)
@@ -2958,8 +2967,7 @@ class Script(default.Script):
         return useless
 
     def isLayoutOnly(self, obj):
-        """Returns True if the given object is a table and is for layout
-        purposes only."""
+        """Returns True if the given object is for layout purposes only."""
 
         if self.isUselessObject(obj):
             debug.println(debug.LEVEL_FINEST,
@@ -3955,7 +3963,7 @@ class Script(default.Script):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
-                        if currentChar != "\n":
+                        if currentChar != "\n" and extents[1] >= 0:
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
@@ -4058,7 +4066,7 @@ class Script(default.Script):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
-                        if currentChar != "\n":
+                        if currentChar != "\n" and extents[1] >= 0:
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
