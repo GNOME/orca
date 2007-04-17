@@ -777,6 +777,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.speakBlankLinesCheckButton.set_active(\
             prefs["speakBlankLines"])
 
+        self.sayAllStyle.set_active(prefs["sayAllStyle"])
+
         # Braille pane.
         #
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
@@ -1580,6 +1582,21 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             else:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_ALL
+
+    def sayAllStyleChanged(self, widget):
+        """Signal handler for the "changed" signal for the sayAllStyle
+           GtkComboBox widget. Set the 'sayAllStyle' preference to the 
+           new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        sayAllStyle = widget.get_active_text()
+        if sayAllStyle == _("Line"):
+            self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_LINE
+        elif sayAllStyle == _("Sentence"):
+            self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE
 
     def speechVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the speechBriefButton,

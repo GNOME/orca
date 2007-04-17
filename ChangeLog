@@ -1,3 +1,17 @@
+2007-04-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          src/orca/scripts/gedit.py:
+          src/orca/scripts/Evolution.py:
+          More work on bug #400716 – sayAll should be done by sentences.
+          Added a "Say All By" combo box to the speech pane of the Orca
+          Preferences dialog (accelerator is Alt-y). Current valid choices 
+          are "Line" and "Sentence". Adjusted the existing textLines() 
+          routines to use it.
+
 2007-04-13  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/StarOffice.py: minor bug fix and pychecker

@@ -4435,6 +4435,15 @@ class Script(script.Script):
         length = text.characterCount
         offset = text.caretOffset
 
+        # Determine the correct "say all by" mode to use.
+        #        
+        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
+        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+        else:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+
         # Get the next line of text to read
         #
         done = False
@@ -4442,17 +4451,16 @@ class Script(script.Script):
             lastEndOffset = -1
             while offset < length:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
-                    offset,
-                    atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
+                    offset, mode)
 
                 # Some applications that don't support sentence boundaries
                 # will provide the line boundary results instead; others
                 # will return nothing.
                 #
                 if not string:
+                    mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
                     [string, startOffset, endOffset] = text.getTextAtOffset(
-                        offset,
-                        atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                                                               offset, mode)
 
                 # [[[WDW - HACK: well...gnome-terminal sometimes wants to
                 # give us outrageous values back from getTextAtOffset

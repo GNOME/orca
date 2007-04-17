@@ -125,6 +125,7 @@ userCustomizableSettings = [
     "verbalizePunctuationStyle",
     "showMainWindow",
     "quitOrcaNoConfirmation",
+    "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
 ]
@@ -192,6 +193,12 @@ PUNCTUATION_STYLE_SOME = 2
 PUNCTUATION_STYLE_MOST = 1
 PUNCTUATION_STYLE_ALL  = 0
 verbalizePunctuationStyle = PUNCTUATION_STYLE_MOST
+
+# Say All styles (see sayAllStyle).
+#
+SAYALL_STYLE_LINE     = 0
+SAYALL_STYLE_SENTENCE = 1
+sayAllStyle = SAYALL_STYLE_SENTENCE
 
 # The absolue amount to change the speech rate when
 # increasing or decreasing speech.  This is a numerical

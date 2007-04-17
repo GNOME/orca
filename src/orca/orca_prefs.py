@@ -233,6 +233,13 @@ def _getVerbalizePunctuationStyleString(punctuationStyle):
     else:
         return "orca.settings.PUNCTUATION_STYLE_ALL"
 
+def _getSayAllStyleString(sayAllStyle):
+    """Returns a string that represents the say all style passed in."""
+    if sayAllStyle == settings.SAYALL_STYLE_LINE:
+        return "orca.settings.SAYALL_STYLE_LINE"
+    elif sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+        return "orca.settings.SAYALL_STYLE_SENTENCE"
+
 def _getMagCursorColorString(cursorColor):
     """Returns a string that represents the magnification cursor color
     passed in.
@@ -421,6 +428,8 @@ def writePreferences(prefsDict, treeModel=None):
                 value = _getBrailleRolenameStyleString(prefsDict[key])
             elif key == "verbalizePunctuationStyle":
                 value = _getVerbalizePunctuationStyleString(prefsDict[key])
+            elif key == "sayAllStyle":
+                value = _getSayAllStyleString(prefsDict[key])
             elif key == "magCursorColor":
                 value = _getMagCursorColorString(prefsDict[key])
             elif key == "magSmoothingMode":

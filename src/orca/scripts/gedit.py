@@ -160,19 +160,28 @@ class Script(default.Script):
         textObjs.append(obj)
         startOffset = obj.text.caretOffset
 
+        # Determine the correct "say all by" mode to use.
+        #        
+        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
+        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+        else:
+            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+
         # Get the next line of text to read
         #
         done = False
         while not done:
             lastEndOffset = -1
             while offset < length:
-                [mystr, start, end] = text.getTextAtOffset(offset,
-                          atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END)
+                [mystr, start, end] = text.getTextAtOffset(offset, mode)
 
                 if len(mystr) != 0:
                     string += mystr
 
-                if len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
+                if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
+                   len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                     endOffset = end
 
                     string = self.adjustForRepeats(string)
