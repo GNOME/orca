@@ -53,7 +53,7 @@ from orca_i18n import ngettext  # for ngettext support
 # import orca.Gecko
 # orca.Gecko.controlCaretNavigation = True
 #
-controlCaretNavigation = False
+controlCaretNavigation = True
 
 # If True, it tells us to position the caret at the beginning of a
 # line when arrowing up and down.  If False, we'll try to position the
@@ -685,9 +685,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                    rolenames.ROLE_FILLER] \
                 and len(newUtterances):
                     utterances.append(rolenames.getSpeechForRoleName(parent))
-                    
-            utterances.extend(newUtterances)            
-                
+
+            utterances.extend(newUtterances)
+
             parent = parent.parent
 
         utterances.reverse()
@@ -1508,6 +1508,13 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "F12",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["toggleCaretNavigationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "SunF37",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["toggleCaretNavigationHandler"]))
