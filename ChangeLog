@@ -1,19 +1,24 @@
+2007-04-17  Nickolay V. Shmyrev <via william.walker@sun.com>
+
+        * src/orca/phonnames.py: work on bug 412200 to provide a
+        translatable string that is nicer to translators.
+
 2007-04-17  Willie Walker <william.walker@sun.com>
 
         * src/orca/settings.py: Fix for bug 430434 to make the key echo
         (but not word echo) be turned on by default.
-        
+
 2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug 427722 - Web page separators 
+        * src/orca/Gecko.py: Fix for bug 427722 - Web page separators
         cause Orca to get stuck with go{Next,Previous}Line. More work
-        on bug 411261 - Some HTML constructs cause Orca to say just 
+        on bug 411261 - Some HTML constructs cause Orca to say just
         "Link" when arrowing up and down by line.
 
 2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/scripts/Evolution.py: Workaround for Evolution bug 
-        347964 – When deleting messages in Evolution, Orca initially 
+        * src/orca/scripts/Evolution.py: Workaround for Evolution bug
+        347964 – When deleting messages in Evolution, Orca initially
         speaks the wrong tree item.
 
 2007-04-17  Rich Burridge <rich.burridge@sun.com>
@@ -26,8 +31,8 @@
           src/orca/scripts/Evolution.py:
           More work on bug #400716 – sayAll should be done by sentences.
           Added a "Say All By" combo box to the speech pane of the Orca
-          Preferences dialog (accelerator is Alt-y). Current valid choices 
-          are "Line" and "Sentence". Adjusted the existing textLines() 
+          Preferences dialog (accelerator is Alt-y). Current valid choices
+          are "Line" and "Sentence". Adjusted the existing textLines()
           routines to use it.
 
 2007-04-13  Willie Walker <william.walker@sun.com>

@@ -28,59 +28,38 @@ __license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 
-try:
-    # Translators: this is a structure to assist in the generation of
-    # military-style spelling.  For example, 'abc' becomes 'alpha bravo
-    # charlie'.
-    #
-    # It is a simple structure that consists of pairs of
-    #
-    # 'letter': 'word(s)'
-    #
-    # where the 'letter' and 'word(s)' are separate by colons and each
-    # pair is separated by commas.  For example, we see:
-    #
-    # 'c': 'charlie'
-    #
-    # The complete set should consist of all the letters from the alphabet
-    # for your language paired with the common military/phonetic word(s)
-    # used to describe that letter. If more than one word is to be used,
-    # they should all be inside the single quotes.  For example:
-    #
-    # 'w': 'double bourbon'
-    #
-    # Note that the form of this string is a Python programming language
-    # construct, so you need to get the syntax right.  If you want to test
-    # the syntax, build/install Orca and then type the following command
-    # in a terminal with the locale set to the locale you're translating
-    # to.  If no errors are emitted, and you get the correct name for
-    # the character you type in (e.g., we choose "a" here and we should
-    # get back "alpha" for English) you got it right:
-    #
-    # python -c 'import orca.phonnames; \
-    #            print orca.phonnames.getPhoneticName("a")'
-    #
-    __phonnames = eval(_("{'a': 'alpha', 'b': 'bravo', 'c': 'charlie', "
-                          "'d': 'delta', 'e': 'echo', 'f': 'foxtrot', "
-                          "'g': 'golf', 'h': 'hotel', 'i': 'india', "
-                          "'j': 'juliet', 'k': 'kilo', 'l': 'lima', "
-                          "'m': 'mike', 'n': 'november', 'o': 'oscar', "
-                          "'p': 'papa', 'q': 'quebec', 'r': 'romeo', "
-                          "'s': 'sierra', 't': 'tango', 'u': 'uniform', "
-                          "'v': 'victor', 'w': 'whiskey', 'x': 'xray', "
-                          "'y': 'yankee', 'z': 'zulu'}"))
-except:
-    print "WARNING: Translation problem with phonnames.py dictionary."
-    print "WARNING: Reverting to English military spelling."
-    __phonnames = eval(   "{'a': 'alpha', 'b': 'bravo', 'c': 'charlie', "
-                          "'d': 'delta', 'e': 'echo', 'f': 'foxtrot', "
-                          "'g': 'golf', 'h': 'hotel', 'i': 'india', "
-                          "'j': 'juliet', 'k': 'kilo', 'l': 'lima', "
-                          "'m': 'mike', 'n': 'november', 'o': 'oscar', "
-                          "'p': 'papa', 'q': 'quebec', 'r': 'romeo', "
-                          "'s': 'sierra', 't': 'tango', 'u': 'uniform', "
-                          "'v': 'victor', 'w': 'whiskey', 'x': 'xray', "
-                          "'y': 'yankee', 'z': 'zulu'}")
+# Translators: this is a structure to assist in the generation of
+# spoken military-style spelling.  For example, 'abc' becomes 'alpha
+# bravo charlie'.
+#
+# It is a simple structure that consists of pairs of
+#
+# letter : word(s)
+#
+# where the letter and word(s) are separate by colons and each
+# pair is separated by commas.  For example, we see:
+#
+# a : alpha, b : bravo, c : charlie,
+#
+# And so on.  The complete set should consist of all the letters from
+# the alphabet for your language paired with the common
+# military/phonetic word(s) used to describe that letter.
+#
+__phonlist = _("a : alpha, b : bravo, c : charlie, "
+               "d : delta, e : echo, f : foxtrot, "
+               "g : golf, h : hotel, i : india, "
+               "j : juliet, k : kilo, l : lima, "
+               "m : mike, n : november, o : oscar, "
+               "p : papa, q : quebec, r : romeo, "
+               "s : sierra, t : tango, u : uniform, "
+               "v : victor, w : whiskey, x : xray, "
+               "y : yankee, z : zulu")
+
+__phonnames = {}
+
+for __pair in __phonlist.split(','):
+    __w = __pair.split(':')
+    __phonnames [__w[0].strip()] = __w[1].strip()
 
 def getPhoneticName(character):
     """Given a character, return its phonetic name, which is typically
