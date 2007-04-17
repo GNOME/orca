@@ -1,3 +1,8 @@
+2007-04-17  Willie Walker <william.walker@sun.com>
+
+        * src/orca/settings.py: Fix for bug 430434 to make the key echo
+        (but not word echo) be turned on by default.
+        
 2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 427722 - Web page separators 

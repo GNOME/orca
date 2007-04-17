@@ -340,7 +340,7 @@ enableEchoByWord        = False
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho
 # to be True
 #
-enableKeyEcho           = False
+enableKeyEcho           = True
 
 # If True and key echo is enabled, echo Alphanumeric and punctuation keys.
 #
