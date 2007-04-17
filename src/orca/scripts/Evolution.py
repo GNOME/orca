@@ -1309,6 +1309,42 @@ class Script(default.Script):
         #
         default.Script.onStateChanged(self, event)
 
+    def onFocus(self, event):
+        """Called whenever an object gets focus.  
+
+        Arguments:
+        - event: the Event
+        """
+
+        # When a message is deleted from within the table of messages, we get
+        # two focus events:  One for the index of the new message prior to
+        # deletion and one for the index of the new message after deletion.
+        # This causes us to speak the message after the one that gets focus
+        # prior to speaking the actual message that gets focus. 
+        # See bug #347964.
+        # 
+        if isinstance(orca_state.lastInputEvent,
+                      input_event.KeyboardEvent):
+            string = orca_state.lastInputEvent.event_string
+            if string == "Delete":
+                rolesList = [rolenames.ROLE_TABLE_CELL, \
+                             rolenames.ROLE_TREE_TABLE, \
+                             rolenames.ROLE_UNKNOWN, \
+                             rolenames.ROLE_SCROLL_PANE]
+                oldLocusOfFocus = orca_state.locusOfFocus
+                if self.isDesiredFocusedItem(event.source, rolesList) and \
+                   self.isDesiredFocusedItem(oldLocusOfFocus, rolesList):
+                    parent = event.source.parent
+                    newRow = parent.table.getRowAtIndex(event.source.index)
+                    oldRow = parent.table.getRowAtIndex(oldLocusOfFocus.index)
+                    nRows = parent.table.nRows
+                    if (newRow != oldRow) and (oldRow != nRows):
+                        return
+
+        # For everything else, pass the event onto the parent class
+        # to be handled in the default way.
+        #
+        default.Script.onFocus(self, event)
 
 # Values used to construct a time string for calendar appointments.
 #

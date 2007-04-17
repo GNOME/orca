@@ -1,3 +1,9 @@
+2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/scripts/Evolution.py: Workaround for Evolution bug 
+        347964 – When deleting messages in Evolution, Orca initially 
+        speaks the wrong tree item.
+
 2007-04-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:
