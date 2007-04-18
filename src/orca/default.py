@@ -4091,13 +4091,20 @@ class Script(script.Script):
             if ((object.role == rolenames.ROLE_FILLER) \
                     or (object.role == rolenames.ROLE_PANEL)) \
                 and (object.childCount == 2):
-
-                potentialLabel = object.child(0)
-                secondChild = object.child(1)
-                useLabel = potentialLabel.role == rolenames.ROLE_LABEL \
-                        and ((secondChild.role == rolenames.ROLE_FILLER) \
-                                or (secondChild.role == rolenames.ROLE_PANEL)) \
-                        and not self.__hasLabelForRelation(potentialLabel)
+                child0 = object.child(0)
+                child1 = object.child(1)
+                if child0.role == rolenames.ROLE_LABEL \
+                    and not self.__hasLabelForRelation(child0) \
+                    and child1.role in [rolenames.ROLE_FILLER, \
+                                        rolenames.ROLE_PANEL]:
+                    useLabel = True
+                    potentialLabel = child0
+                elif child1.role == rolenames.ROLE_LABEL \
+                    and not self.__hasLabelForRelation(child1) \
+                    and child0.role in [rolenames.ROLE_FILLER, \
+                                        rolenames.ROLE_PANEL]:
+                    useLabel = True
+                    potentialLabel = child1
             else:
                 parent = object.parent
                 if parent and \
@@ -4433,7 +4440,7 @@ class Script(script.Script):
         offset = text.caretOffset
 
         # Determine the correct "say all by" mode to use.
-        #        
+        #
         if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
         elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:

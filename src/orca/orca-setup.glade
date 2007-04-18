@@ -749,9 +749,6 @@ Hyperlink</property>
 					  <property name="width_chars">-1</property>
 					  <property name="single_line_mode">False</property>
 					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="noneButton" type="label-for"/>
-					  </accessibility>
 					</widget>
 					<packing>
 					  <property name="type">label_item</property>
@@ -867,9 +864,6 @@ Hyperlink</property>
 					  <property name="width_chars">-1</property>
 					  <property name="single_line_mode">False</property>
 					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="speechBriefButton" type="label-for"/>
-					  </accessibility>
 					</widget>
 					<packing>
 					  <property name="type">label_item</property>
@@ -1471,9 +1465,6 @@ Sentence</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
-			  <accessibility>
-			    <atkrelation target="brailleBriefButton" type="label-for"/>
-			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="type">label_item</property>
