@@ -1,5 +1,10 @@
 2007-04-18  Willie Walker <william.walker@sun.com>
 
+        * Makefile.am: fix for bug 430726 to implement GNOME GOAL #4,
+        which is to run gtk-update-icon-cache in the uninstall-hook.
+        
+2007-04-18  Willie Walker <william.walker@sun.com>
+
         * docs/planning.ods: reconciliation with Bugzilla and include
 	priorities discussed in team meeting.
         
