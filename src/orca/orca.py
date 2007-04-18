@@ -225,7 +225,7 @@ def _onChildrenChanged(e):
         #
         try:
             if registry.desktop.childCount == 0:
-                speech.speak(_("User logged out - shutting down."))
+                speech.speak(_("Goodbye."))
                 shutdown()
                 return
         except: # could be a CORBA.COMM_FAILURE
@@ -1180,21 +1180,21 @@ def abortOnSignal(signum, frame):
 
 def usage():
     """Prints out usage information."""
-    print _("Usage: orca [OPTION...]")
+    print "Usage: orca [OPTION...]"
     print
-    print _("-?, --help                   Show this help message")
-    print _("-v, --version                %s") % platform.version
-    print _("-s, --setup, --gui-setup     Set up user preferences")
-    print _("-t, --text-setup             Set up user preferences (text version)")
-    print _("-n, --no-setup               Skip set up of user preferences")
-    print _("-u, --user-prefs-dir=dirname Use alternate directory for user preferences")
-    print _("-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option")
-    print _("-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option")
-    print _("-q, --quit                   Quits Orca (if shell script used)")
+    print "-?, --help                   Show this help message"
+    print "-v, --version                %s" % platform.version
+    print "-s, --setup, --gui-setup     Set up user preferences"
+    print "-t, --text-setup             Set up user preferences (text version)"
+    print "-n, --no-setup               Skip set up of user preferences"
+    print "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
+    print "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
+    print "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
+    print "-q, --quit                   Quits Orca (if shell script used)"
     print
-    print _("If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used.")
+    print "If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used."
     print
-    print _("Report bugs to orca-list@gnome.org.")
+    print "Report bugs to orca-list@gnome.org."
     pass
 
 def main():
@@ -1223,7 +1223,6 @@ def main():
     #
     desktopRunning = False
     try:
-        import gtk
         if gtk.gdk.display_get_default():
             desktopRunning = True
     except:
