@@ -45,6 +45,11 @@ from orca_i18n import _ # for gettext support
 # the alphabet for your language paired with the common
 # military/phonetic word(s) used to describe that letter.
 #
+# The Wikipedia entry
+# http://en.wikipedia.org/wiki/NATO_phonetic_alphabet has a few
+# interesting tidbits about local conventions in the sections
+# "Additions in German, Danish and Norwegian" and "Variants".
+#
 __phonlist = _("a : alpha, b : bravo, c : charlie, "
                "d : delta, e : echo, f : foxtrot, "
                "g : golf, h : hotel, i : india, "

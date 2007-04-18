@@ -1,5 +1,10 @@
 2007-04-17  Willie Walker <william.walker@sun.com>
 
+        * src/orca/phonnames.py: add a URL to point to a Wikipedia 
+        entry on the NATO alphabet.
+        
+2007-04-17  Willie Walker <william.walker@sun.com>
+
         * src/orca/Gecko.py: Add SunF37 as Solaris equivalent for F12.
         Also turn on Orca's caret navigation mode by default.
         
