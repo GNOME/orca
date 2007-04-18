@@ -1,5 +1,10 @@
 2007-04-18  Willie Walker <william.walker@sun.com>
 
+        * docs/planning.ods: reconciliation with Bugzilla and include
+	priorities discussed in team meeting.
+        
+2007-04-18  Willie Walker <william.walker@sun.com>
+
         * src/orca/orca.py: work on bug 412200 to unmark usage text and
         command line options for translation per gnome-i18n discussion.
         
