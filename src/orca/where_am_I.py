@@ -43,11 +43,10 @@ class WhereAmI:
 
         self._script = script
         self._debugLevel = debug.LEVEL_FINEST
-        self._appName = None
         self._statusBar = None
         self._lastAttributeString = ""
 
-    def whereAmI(self, obj, context, doubleClick, orcaKey):
+    def whereAmI(self, obj, doubleClick, orcaKey):
         """Speaks information about the current object of interest, including
         the object itself, which window it is in, which application, which
         workspace, etc.
@@ -59,12 +58,11 @@ class WhereAmI:
         whether it has keyboard focus or not.
         """
 
-        if (not obj) or (not context):
+        if (not obj):
             return False
 
         debug.println(self._debugLevel,
             "whereAmI: \
-           \n  context= %s \
            \n  label=%s \
            \n  name=%s \
            \n  role=%s \
@@ -74,8 +72,7 @@ class WhereAmI:
            \n  parent role=%s \
            \n  double-click=%s \
            \n  orca-key=%s" % \
-            (context,
-             self._getObjLabel(obj),
+            (self._getObjLabel(obj),
              self._getObjName(obj),
              obj.role,
              self._script.getAcceleratorAndShortcut(obj),
@@ -85,7 +82,6 @@ class WhereAmI:
              doubleClick,
              orcaKey))
 
-        self._appName = context[0]
         role = obj.role
 
         if orcaKey:
@@ -130,6 +126,9 @@ class WhereAmI:
         elif role == rolenames.ROLE_PARAGRAPH:
             self._speakParagraph(obj, doubleClick)
 
+        else:
+            self._speakGenericObject(obj, doubleClick)
+
         return True
 
     def _processOrcaKey(self, obj, doubleClick):
@@ -137,12 +136,6 @@ class WhereAmI:
         """
 
         self._handleOrcaKey(obj, doubleClick)
-
-    def _getAppName(self):
-        """Returns the application name.
-        """
-
-        return self._appName
 
     def _speakCheckBox(self, obj, doubleClick):
         """Checkboxes present the following information
@@ -578,6 +571,19 @@ class WhereAmI:
 
         self._speakText(obj, doubleClick)
 
+    def _speakGenericObject(self, obj, doubleClick):
+        """Speak a generic object; one not specifically handled by
+        other methods.
+        """
+
+        utterances = []
+        text = self._getObjLabelAndName(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+        speech.speakUtterances(utterances)
+
     def _getObjName(self, obj):
         """Returns the name to speak for an object.
         """
@@ -817,13 +823,6 @@ class WhereAmI:
 
         descendant = self._script.getRealActiveDescendant(obj)
         text = self._script.getDisplayedText(descendant)
-
-        # For Evolution mail header list.
-        if self._getAppName().startswith("evolution") and text == "Status":
-            # Translators: this in reference to an e-mail message status of
-            # having been read or unread.
-            #
-            text = _("Read")
 
         debug.println(self._debugLevel, "cell=<%s>" % text)
 

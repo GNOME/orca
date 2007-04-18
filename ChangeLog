@@ -1,3 +1,24 @@
+2007-04-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          Fixed bug #430278 – The Where_Am_I script does not work in most 
+          applications.
+
+          No longer need to pass a speech context into the whereAmI()
+          routine to get the application name. Application specific
+          code is now in the app specific scripts. Moved the Evolution
+          specific "where am I" code to the Evolution script.
+
+          Fixed bug #427481 – "where am I" does not speak Evolution 
+          Mail...Tasks toggle buttons.
+
+          The problem here was that those objects were toggle buttons and
+          the whereAmI() routine did not have a generic catchall clause
+          at the bottom to handle such objects.
+
 2007-04-17  Willie Walker <william.walker@sun.com>
 
         * src/orca/phonnames.py: add a URL to point to a Wikipedia 

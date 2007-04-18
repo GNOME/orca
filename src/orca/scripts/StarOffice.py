@@ -49,6 +49,7 @@ class WhereAmI(where_am_I.WhereAmI):
         """Create a new WhereAmI that will be used to speak information
         about the current object of interest.
         """
+
         where_am_I.WhereAmI.__init__(self, script)
 
     def _processOrcaKey(self, obj, doubleClick):
@@ -56,12 +57,9 @@ class WhereAmI(where_am_I.WhereAmI):
         """
 
         # Handle the Orca modifier key being pressed.
-        if self._getAppName() == "soffice.bin":
-            top = self._script.getTopLevel(obj)
-            if top and top.name.endswith(" Calc"):
-                self._handleOrcaKey(obj, doubleClick)
-            else:
-                where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
+        top = self._script.getTopLevel(obj)
+        if top and top.name.endswith(" Calc"):
+            self._handleOrcaKey(obj, doubleClick)
         else:
             where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
 

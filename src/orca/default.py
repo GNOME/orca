@@ -1802,8 +1802,7 @@ class Script(script.Script):
             string = atspi.KeystrokeListener.keyEventToString(inputEvent)
             debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
         else:
-            context = self.speechGenerator.getSpeechContext(obj)
-            return self.whereAmI.whereAmI(obj, context, False, False)
+            return self.whereAmI.whereAmI(obj, False, False)
 
         orcaKey = False
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1816,9 +1815,7 @@ class Script(script.Script):
            (self.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
         self.lastWhereAmIEvent = inputEvent
 
-        context = self.speechGenerator.getSpeechContext(obj)
-
-        return self.whereAmI.whereAmI(obj, context, doubleClick, orcaKey)
+        return self.whereAmI.whereAmI(obj, doubleClick, orcaKey)
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.

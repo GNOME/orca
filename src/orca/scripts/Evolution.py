@@ -38,8 +38,51 @@ import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.settings as settings
 import orca.chnames as chnames
+import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
+
+class WhereAmI(where_am_I.WhereAmI):
+
+    def __init__(self, script):
+        """Create a new WhereAmI that will be used to speak information
+        about the current object of interest.
+        """
+
+        where_am_I.WhereAmI.__init__(self, script)
+
+    def _getTableCell(self, obj):
+        """Get the speech utterances for a single table cell.
+        """
+
+        # Don't speak check box cells that area not checked.
+        notChecked = False
+        action = obj.action
+        if action:
+            for i in range(0, action.nActions):
+                if action.getName(i) == "toggle":
+                    obj.role = rolenames.ROLE_CHECK_BOX
+                    if not obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                        notChecked = True
+                    obj.role = rolenames.ROLE_TABLE_CELL
+                    break
+
+        if notChecked:
+            return ""
+
+        descendant = self._script.getRealActiveDescendant(obj)
+        text = self._script.getDisplayedText(descendant)
+
+        # For Evolution mail header list.
+        if text == "Status":
+            # Translators: this in reference to an e-mail message status of
+            # having been read or unread.
+            #
+            text = _("Read")
+
+        debug.println(self._debugLevel, "cell=<%s>" % text)
+
+        return text
 
 ########################################################################
 #                                                                      #
@@ -113,6 +156,12 @@ class Script(default.Script):
             # Translators: spoken words for the rolename of a calendar event.
             #
             _("calendar event"))
+
+    def getWhereAmI(self):
+        """Returns the "where am I" class for this script.
+        """
+
+        return WhereAmI(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
