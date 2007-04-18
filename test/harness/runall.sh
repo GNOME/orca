@@ -171,9 +171,10 @@ do
         cp $newResultsFile $currentdir/$outputdir
 
         # Compare the results file with the golden results file.
-        echo Comparing results for $testFile
-        expectedResultsFile=$resultsDir/$application/$newResultsFile
-        diff -s $expectedResultsFile $newResultsFile
+        # echo Comparing results for $testFile
+        # expectedResultsFile=$resultsDir/$application/$newResultsFile
+        # diff -s $expectedResultsFile $newResultsFile
+
         echo Finished running $testFile.
         if [ "x$stepMode" == "x1" ]
         then

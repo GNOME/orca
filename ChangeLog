@@ -1,3 +1,14 @@
+2007-04-18  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/harness/runall.sh: Commented out the lines that compare 
+	the results file with the golden results file. I believe it 
+	is more useful to do the comparisons after runall.sh has 
+	completed. The runall.sh output just contains information about
+	the test executions, not including the results.
+
+	(Draft) directions for running the Orca regression tests are
+	now in http://live.gnome.org/Orca/RegressionTesting
+
 2007-04-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
