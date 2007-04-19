@@ -674,15 +674,23 @@ class Script(default.Script):
             column = parent.table.getColumnAtIndex(event.source.index)
 
             # This is an indication of whether we should speak all the table
-            # cells (the user has moved focus up or down the list), or just
-            # the current one (focus has moved left or right in the same row).
-            # If we at the start or the end of the message header list and
-            # the row and column haven't changed, then speak all the table
-            # cells.
+            # cells (the user has moved focus up or down the list, or just
+            # deleted a message), or just the current one (focus has moved
+            # left or right in the same row). If we at the start or the end
+            # of the message header list and the row and column haven't 
+            # changed, then speak all the table cells.
+            #
+            justDeleted = False
+            if isinstance(orca_state.lastInputEvent,
+                          input_event.KeyboardEvent):
+                string = orca_state.lastInputEvent.event_string
+                if string == "Delete":
+                    justDeleted = True
 
             speakAll = (self.lastMessageRow != row) or \
                        ((row == 0 or row == parent.table.nRows-1) and \
-                        self.lastMessageColumn == column)
+                        self.lastMessageColumn == column) or \
+                       justDeleted
 
             savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
             savedSpeechVerbosityLevel = settings.speechVerbosityLevel
