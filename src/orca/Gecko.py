@@ -43,6 +43,7 @@ import rolenames
 import settings
 import speech
 import speechgenerator
+import speechserver
 
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
@@ -1114,6 +1115,19 @@ class Script(default.Script):
                 #
                 _("Switches between Gecko native and Orca caret navigation."))
 
+        self.inputEventHandlers["sayAllHandler"] = \
+            input_event.InputEventHandler(
+                Script.sayAll,
+                # Translators: the Orca "SayAll" command allows the
+                # user to press a key and have the entire document in
+                # a window be automatically spoken to the user.  If
+                # the user presses any key during a SayAll operation,
+                # the speech will be interrupted and the cursor will
+                # be positioned at the point where the speech was
+                # interrupted.
+                #
+                _("Speaks entire document."))
+
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
@@ -1570,6 +1584,152 @@ class Script(default.Script):
             else:
                 consumes = handler != None
         return consumes
+
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        Arguments:
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
+        """
+
+        # Determine the correct "say all by" mode to use.
+        #
+        sayAllBySentence = \
+                      (settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE)
+
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.text:
+            # Attempt to locate the start of the current sentence by
+            # searching to the left for a sentence terminator.  If we don't
+            # find one, or if the "say all by" mode is not sentence, we'll
+            # just start the sayAll from at the beginning of this line/object.
+            #
+            [line, startOffset, endOffset] = \
+                obj.text.getTextAtOffset(
+                                 characterOffset,
+                                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            beginAt = 0
+            if line and sayAllBySentence:
+                terminators = ['. ', '? ', '! ']
+                for terminator in terminators:
+                    try:
+                        index = line.rindex(terminator,
+                                            0,
+                                            characterOffset - startOffset)
+                        if index > beginAt:
+                            beginAt = index
+                    except:
+                        pass
+                characterOffset = startOffset + beginAt
+
+        done = False
+        while not done:
+            if sayAllBySentence:
+                contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            else:
+                contents = self.getLineContentsAtOffset(obj, characterOffset)
+            utterances = self.getUtterancesFromContents(contents)
+            clumped = self.clumpUtterances(utterances)
+            for i in range(0, (len(clumped))):
+                [obj, startOffset, endOffset] = \
+                                             contents[min(i, len(contents)-1)]
+                if obj.role == rolenames.ROLE_LABEL and len(obj.relations):
+                    # This label is labelling something and will be spoken
+                    # in conjunction with the object with which it is
+                    # associated.
+                    #
+                    continue
+                [string, voice] = clumped[i]
+                yield [speechserver.SayAllContext(obj, string,
+                                                  startOffset, endOffset),
+                       voice]
+
+            moreLines = False
+            if sayAllBySentence:
+                # getObjectContentsAtOffset() gave us all of the descendants
+                # of the last object.  We need to be sure that we don't "find"
+                # one of those children with findNextObject().
+                #
+                if obj.childCount:
+                    obj = obj.child(obj.childCount - 1)
+                while obj and not moreLines:
+                    obj = self.findNextObject(obj)
+                    if obj:
+                        if obj.role in [rolenames.ROLE_LIST,
+                                        rolenames.ROLE_LIST_ITEM]:
+                            # Adjust the offset so that the item number is
+                            # spoken.
+                            #
+                            offset = -1
+                        else:
+                            offset = 0
+                        [obj, characterOffset] = \
+                                  self.findFirstCaretContext(obj, offset)
+                        moreLines = True
+            else:
+                [nextObj, nextCharOffset] = self.findNextLine(obj, endOffset-1)
+                objExtents = self.getExtents(
+                                  obj, characterOffset, characterOffset + 1)
+                nextObjExtents = self.getExtents(
+                                  nextObj, nextCharOffset, nextCharOffset + 1)
+                if not self.onSameLine(objExtents, nextObjExtents):
+                    [obj, characterOffset] = nextObj, nextCharOffset
+                    moreLines = True
+
+            if not moreLines:
+                done = True
+
+    def __sayAllProgressCallback(self, context, type):
+        if type == speechserver.SayAllContext.PROGRESS:
+            #print "PROGRESS", context.utterance, context.currentOffset
+            #
+            # Attempt to keep the content visible on the screen as
+            # it is being read, but avoid links as grabFocus sometimes
+            # makes them disappear and sayAll to subsequently stop.
+            #
+            if context.currentOffset == 0 and \
+               context.obj.role in [rolenames.ROLE_HEADING,
+                                    rolenames.ROLE_SECTION,
+                                    rolenames.ROLE_PARAGRAPH]:
+                characterCount = context.obj.text.characterCount
+                self.setCaretPosition(context.obj, characterCount-1)
+        elif type == speechserver.SayAllContext.INTERRUPTED:
+            #print "INTERRUPTED", context.utterance, context.currentOffset
+            try:
+                self.setCaretPosition(context.obj, context.currentOffset)
+            except:
+                characterCount = context.obj.text.characterCount
+                self.setCaretPosition(context.obj, characterCount-1)
+            self.updateBraille(context.obj)
+        elif type == speechserver.SayAllContext.COMPLETED:
+            #print "COMPLETED", context.utterance, context.currentOffset
+            orca.setLocusOfFocus(None, context.obj, False)
+            try:
+                self.setCaretPosition(context.obj, context.currentOffset)
+            except:
+                characterCount = context.obj.text.characterCount
+                self.setCaretPosition(context.obj, characterCount-1)
+            self.updateBraille(context.obj)
+
+    def sayAll(self, inputEvent):
+        """Speaks the contents of the document beginning with the present
+        location.  Overridden in this script because the sayAll could have
+        been started on an object without text (such as an image).
+        """
+
+        if not self.inDocumentContent():
+            return default.Script.sayAll(self, inputEvent)
+
+        else:
+            speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                          self.__sayAllProgressCallback)
+
+        return True
 
     def onCaretMoved(self, event):
         """Caret movement in Gecko is somewhat unreliable and
@@ -3630,9 +3790,9 @@ class Script(default.Script):
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
             if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
-                contents.extend(self.getObjectContentsAtOffset(
-                    obj.child(self.getChildIndex(obj, offset)),
-                    0))
+                child = obj.child(self.getChildIndex(obj, offset))
+                if child:
+                    contents.extend(self.getObjectContentsAtOffset(child, 0))
             elif len(contents):
                 [currentObj, startOffset, endOffset] = contents[-1]
                 if obj == currentObj:
@@ -3712,11 +3872,14 @@ class Script(default.Script):
 
         return utterances
 
-    def speakContents(self, contents, speakRole=True):
-        utterances = self.getUtterancesFromContents(contents, speakRole)
+    def clumpUtterances(self, utterances):
+        """Returns a list of utterances clumped together by acss.
 
-        # Now...clump utterances together by acss.
-        #
+        Arguments:
+        -utterances: unclumped utterances
+        -speakRole: if True, speak the roles of objects
+        """
+
         clumped = []
 
         for [string, acss] in utterances:
@@ -3732,10 +3895,17 @@ class Script(default.Script):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
-                speech.speak(_("blank"), clumped[0][1], False)
-        else:
-            for [string, acss] in clumped:
-                speech.speak(string, acss, False)
+                return [[_("blank"), clumped[0][1]]]
+
+        return clumped
+
+    def speakContents(self, contents, speakRole=True):
+        """Speaks each string in contents using the associated voice/acss"""
+
+        utterances = self.getUtterancesFromContents(contents, speakRole)
+        clumped = self.clumpUtterances(utterances)
+        for [string, acss] in clumped:
+            speech.speak(string, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
@@ -3918,12 +4088,18 @@ class Script(default.Script):
         self.updateBraille(obj)
         self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
 
-    def goPreviousLine(self, inputEvent):
-        """Positions the caret offset at the previous line in the
-        document window, attempting to preserve horizontal caret
-        position.
+    def findPreviousLine(self, obj, characterOffset):
+        """Locates the caret offset at the previous line in the document
+        window, attempting to preserve horizontal caret position.
+
+        Arguments:
+        -obj:             the object from which the search should begin
+        -characterOffset: the offset within obj from which the search should
+                          begin
+
+        Returns the [obj, characterOffset] at which to position the caret.
         """
-        [obj, characterOffset] = self.getCaretContext()
+
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
         try:
@@ -3931,7 +4107,7 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        #print "GPL STARTING AT", obj.role, characterOffset
+        #print "FPL STARTING AT", obj.role, characterOffset
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
@@ -3950,7 +4126,7 @@ class Script(default.Script):
                 previousChar = None
                 currentChar = None
 
-            #print "GPL LOOKING AT", obj.role, extents
+            #print "FPL LOOKING AT", obj.role, extents
 
             # Sometimes the reported width and/or height of a character
             # is a large negative number.  When that occurs, we want to
@@ -3987,7 +4163,7 @@ class Script(default.Script):
             [obj, characterOffset] = \
                   self.findPreviousCaretInOrder(obj, characterOffset)
 
-        #print "GPL ENDED UP AT", lastObj.role, lineExtents
+        #print "FPL ENDED UP AT", lastObj.role, lineExtents
 
         contents = self.getLineContentsAtOffset(lastObj,
                                                 lastCharacterOffset)
@@ -4013,20 +4189,20 @@ class Script(default.Script):
                                               lastCharacterOffset,
                                               lastCharacterOffset + 1)
 
-        self.setCaretPosition(lastObj, lastCharacterOffset)
-        self.updateBraille(lastObj)
-        self.speakContents(contents)
+        return [lastObj, lastCharacterOffset]
 
-        # Debug...
-        #
-        #contents = self.getLineContentsAtOffset(lastObj, lastCharacterOffset)
-        #self.dumpContents(inputEvent, contents)
-
-    def goNextLine(self, inputEvent):
-        """Positions the caret offset at the next line in the document
+    def findNextLine(self, obj, characterOffset):
+        """Locates the caret offset at the next line in the document
         window, attempting to preserve horizontal caret position.
+
+        Arguments:
+        -obj:             the object from which the search should begin
+        -characterOffset: the offset within obj from which the search should
+                          begin
+
+        Returns the [obj, characterOffset] at which to position the caret.
         """
-        [obj, characterOffset] = self.getCaretContext()
+
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
         try:
@@ -4034,7 +4210,7 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        #print "GNL STARTING AT", obj.role, characterOffset
+        #print "FNL STARTING AT", obj.role, characterOffset
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
@@ -4053,7 +4229,7 @@ class Script(default.Script):
                 previousChar = None
                 currentChar = None
 
-            #print "GNL LOOKING AT", obj.role, extents
+            #print "FNL LOOKING AT", obj.role, extents
 
             # Sometimes the reported width and/or height of a character
             # is a large negative number.  When that occurs, we want to
@@ -4094,21 +4270,38 @@ class Script(default.Script):
             [obj, characterOffset] = \
                   self.findNextCaretInOrder(obj, characterOffset)
 
-        #print "GNL ENDED UP AT", lastObj.role, lineExtents
-        #print "GNL ENDED UP AT", lastObj
-        #print "                ", lastObj.role, lastCharacterOffset
-        #print "                '%s'" % self.getText(lastObj, 0, -1)
-        #print "                '%s'" % self.getText(lastObj,
-        #                                            lastCharacterOffset,
-        #                                            lastCharacterOffset + 1)
+        return [lastObj, lastCharacterOffset]
 
-        self.setCaretPosition(lastObj, lastCharacterOffset)
-        self.updateBraille(lastObj)
-        self.speakContents(self.getLineContentsAtOffset(lastObj,
-                                                        lastCharacterOffset))
+    def goPreviousLine(self, inputEvent):
+        """Positions the caret offset at the previous line in the document
+        window, attempting to preserve horizontal caret position.
+        """
+        [obj, characterOffset] = self.getCaretContext()
+        [previousObj, previousCharOffset] = \
+                                   self.findPreviousLine(obj, characterOffset)
+        self.setCaretPosition(previousObj, previousCharOffset)
+        self.updateBraille(previousObj)
+        self.speakContents(self.getLineContentsAtOffset(previousObj,
+                                                        previousCharOffset))
         # Debug...
         #
-        #contents = self.getLineContentsAtOffset(lastObj, lastCharacterOffset)
+        #contents = self.getLineContentsAtOffset(previousObj, 
+        #                                        previousCharOffset)
+        #self.dumpContents(inputEvent, contents)
+
+    def goNextLine(self, inputEvent):
+        """Positions the caret offset at the next line in the document
+        window, attempting to preserve horizontal caret position.
+        """
+        [obj, characterOffset] = self.getCaretContext()
+        [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
+        self.setCaretPosition(nextObj, nextCharOffset)
+        self.updateBraille(nextObj)
+        self.speakContents(self.getLineContentsAtOffset(nextObj,
+                                                        nextCharOffset))
+        # Debug...
+        #
+        #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
         #self.dumpContents(inputEvent, contents)
 
     def goPreviousHeading(self, inputEvent):

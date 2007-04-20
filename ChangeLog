@@ -1,3 +1,9 @@
+2007-04-20  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug 426360 - SayAll is broken in
+        Firefox.  It should work much better now.  Plus it now supports
+        both SayAll by sentence and SayAll by line.
+
 2007-04-20  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/keystrokes/swriter/*.keys, test/keystrokes/scalc/*.keys:
