@@ -1,3 +1,8 @@
+2007-04-20  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/keystrokes/swriter/*.keys, test/keystrokes/scalc/*.keys:
+	Added keystrokes to shutdown gracefully, discarding changes.
+
 2007-04-19  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/Evolution.py: More work for the workaround
