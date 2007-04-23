@@ -1,3 +1,117 @@
+2.19.1 - 23-Apr-2007
+
+* Turn on Orca's caret navigation mode by default for Firefox.
+  NOTE TO USERS: you can still toggle between Orca's caret navigation
+  mode and Firefox's (i.e., Gecko) navigation mode by pressing 
+  Insert+F12.
+
+* Much work on bug 400716 and 426360 (Firefox) to provide "say all"
+  support by sentences.
+
+* Fix for bug 430278 to improve the "where am I" functionality.  This
+  also includes bug 427481 to fix the "where am I" feature of the
+  Evolution Mail...Tasks toggle buttons.  This also is related to
+  the fix for bug 423011 to finish the refactor of where_am_I module
+  to have knowledge of the script it is working with.
+
+* Fix for bug 426336 to refactor the find{Next,Previous}Role methods
+  in Gecko.py for Firefox.  In addition, list navigation (L and
+  Shift+L) is now restricted to ordered/unordered lists.  Before, form
+  field lists were included because they, too, have a role of
+  ROLE_LIST.
+
+* Fix for bug 426684 to speak the entry text in Firefox when the caret
+  is at the end of the line.
+
+* Fix for bug 427722 to prevent web page navigation from getting stuck
+  on separators.  
+
+* Work on bug 411261 to prevent Orca from saying just "Link" when
+  arrowing up and down by line in some web content in Firefox.
+
+* Fix for bug 426687 to only speak the entry text when arrowing up and
+  down in a text entry field in Firefox.
+
+* Fix for bug 413990 to provide more smarts in Orca to detect tables
+  that are used for layout only purposes.
+
+* Fix for bug 414926 to present level of headings in Firefox.
+
+* Fix for bug 423198 to prevent Orca from speaking "text" repeatedly
+  when moving around in a text entry area on a web page in Firefox.
+
+* Fix for bug 416971 to speak and braille numbers and bullets of
+  list items.
+
+* Fix for bug 432674 to respect key echo settings and say "star" when
+  speaking characters inserted into password entry fields.
+
+* Fix for bug 398009 to present the tooltip text for an object.
+  NOTE TO USERS: the standard toolkit method for brining up a tooltip
+  is Ctrl+F1 when the object has focus.
+
+* Fix for bug 368626 to prevent gnome-panel from crashing when it
+  pops up a tooltip.
+
+* Fix for bug 423849 to reduce the chattiness of speech context.
+
+* Fix for bug 427880 to restore metacity behavior of presenting the
+  name of the window to get focus when you're doing an Alt+Tab.
+
+* Fix for bug 413109 to add combobox and slider mnemonics to the
+  Orca preferences dialog.
+
+* Fix for bug 425498 to provide option to allow user to quit Orca
+  without needing to go through the "quit" confirmation dialog.
+
+* Fix for bug 413109 to address HIG violations.  Thanks to Calum
+  Benson for his work here.
+
+* Fix bug 423738 to use gconf module methods instead of using exec.
+
+* Work on bug 422487 to move the caret the first line of a message in
+  in Evolution.  There are still issues with HTML messages, which may
+  require changes in Evolution itself.  We're tracking this with the
+  Evolution RFE: http://bugzilla.gnome.org/show_bug.cgi?id=423395.
+
+* Workaround for Evolution bug 347964 to provide better user feedback
+  when deleting messages in Evolution.
+
+* Fix for bug 418147 to make sure we treat characters in strings as
+  characters and not as bytes when spelling an item.
+
+* Fix for bug 430434 to make the key echo settings be enabled by
+  default.
+
+* Fix for bug 430726 to implement GNOME GOAL #4.
+
+* Updated orca man page.
+
+* Updated the user experience specifications.
+
+* NOTE TO TRANSLATORS: finish first major pass on bug 412200 to
+  address I18N/L10N issues.  We are now ready for you to take a
+  look and give us feedback.
+
+* New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    en_GB   English/British      David Lodge
+    es      Spanish              Francisco Javier Dorado Martinez and
+				 Jorge Gonzalez
+    sv      Swedish              Daniel Nylander
+
+2007-04-14  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Updated Arabic Translation by Djihed Afifi.
+
+2007-04-12  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
+	* POTFILES.in: Added missing file.
+  
+==========
+
 2.19.0 - 27-Mar-2007
 
 * Fix for bug 410302 to provide support for the gnome-mud application.
