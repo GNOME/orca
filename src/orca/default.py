@@ -2625,8 +2625,14 @@ class Script(script.Script):
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
-            elif wasCommand or wasAutoComplete or \
-                   (event.source.role == rolenames.ROLE_PASSWORD_TEXT):
+            elif wasCommand or wasAutoComplete:
+                speakThis = True
+            elif (event.source.role == rolenames.ROLE_PASSWORD_TEXT) and \
+                 settings.enableKeyEcho:
+                # Echoing "star" is preferable to echoing the descriptive
+                # name of the bullet that has appeared (e.g. "black circle")
+                #
+                text = "*"
                 speakThis = True
 
         elif isinstance(orca_state.lastInputEvent, \

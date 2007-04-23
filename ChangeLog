@@ -1,5 +1,11 @@
 2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/default.py: Fix for bug 432674 - In password entries, 
+        Orca should respect key echo settings and say "star" for the 
+        inserted characters.
+
+2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/chnames.py: 
           src/orca/punctuation_settings.py:
           Fix for bug 416971 - Orca does not speak or braille numbers/
