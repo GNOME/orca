@@ -2628,7 +2628,7 @@ class Script(script.Script):
             elif wasCommand or wasAutoComplete:
                 speakThis = True
             elif (event.source.role == rolenames.ROLE_PASSWORD_TEXT) and \
-                 settings.enableKeyEcho:
+                 settings.enableKeyEcho and settings.enablePrintableKeys:
                 # Echoing "star" is preferable to echoing the descriptive
                 # name of the bullet that has appeared (e.g. "black circle")
                 #

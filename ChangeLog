@@ -1,3 +1,10 @@
+2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/default.py: More work for bug 432674 - only echo the
+        "stars" in password entries if character echo is enabled AND
+        printable character echo is enabled.  Thanks Hermann for the
+        quick feedback and testing!
+
 2007-04-23  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as v2.19.2pre.
