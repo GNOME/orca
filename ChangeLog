@@ -1,3 +1,15 @@
+2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/chnames.py: 
+          src/orca/punctuation_settings.py:
+          Fix for bug 416971 - Orca does not speak or braille numbers/
+        bullets of list items in Firefox.  This fix should also cause
+        Orca to speak and braille the bullets in OOo Writer documents.
+        A number of other "basic" characters were added that weren't
+        being spoken before.  Also, switched the dictionary keys to
+        unicode which should make it easier for users to add/change their
+        own dictionaries.
+
 2007-04-20  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 426360 - SayAll is broken in
