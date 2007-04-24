@@ -1,7 +1,32 @@
+2007-04-23 Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/tools/play_keystrokes.py: added WAIT keystroke
+	file command to pause for a specified period of time
+	to let Orca speak/braille a long document. This is
+	useful for SayAll testing of long documents.
+	* test/harness/runone.sh: temporary hack to specify
+	the "-norestore" flag when running swriter or scalc.
+	There should be a general way to specify command line
+	arguments when starting a test application
+	* test/text/SayAllText.txt: added text directory for
+	text imput files. SayAllText.txt used to test the SayAll
+	command using gedit.
+	* test/keystrokes/gnome-terminal/swriter-say-all.keys:
+	keystroke file for testing the SayAll command using
+	swriter. Until we have a general way to pass command
+	line arguments to test applications, it's necessary
+	to start the test application from gnome-terminal and
+	enter the application arguments, like the file to
+	open in the application.
+	* test/keystrokes/gedit/say-all.keys, 
+	test/keystrokes/gedit/say-all-cursor-pos.key: keystoke
+	files to test the SayAll command in gedit.
+
+        
 2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/default.py: More work for bug 432674 - only echo the
-        "stars" in password entries if character echo is enabled AND
+	"stars" in password entries if character echo is enabled AND
         printable character echo is enabled.  Thanks Hermann for the
         quick feedback and testing!
 

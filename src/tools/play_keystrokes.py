@@ -63,6 +63,8 @@ def go():
               event_string=(a)
               is_text=True
               time=111223442.987959
+
+    WAIT: wait_time=180
     """
 
     d = orca.atspi.Registry().registry.getDeviceEventController()
@@ -72,7 +74,14 @@ def go():
     
     while True:
         line = raw_input()
-        if line.startswith("KEYEVENT:"):
+        
+        if line.startswith("WAIT:"):
+            # Sleep for the specified wait time. This allows Orca
+            # to speak and braille long documents.
+            wait_time = eval(line[line.index("=") + 1 :])
+            time.sleep(wait_time)
+
+        elif line.startswith("KEYEVENT:"):
             type = eval(line[-1])
             
             line = raw_input()

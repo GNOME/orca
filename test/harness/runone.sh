@@ -38,6 +38,7 @@ sed "s^%debug%^$debugFile.orca^g" $SETTINGS_FILE > user-settings.py
 
 # Run the app (or gnome-terminal if no app was given) and let it settle in.
 #
+ARGS=""
 if [ -n "$3" ]
 then
     APP_NAME=$2
@@ -45,6 +46,16 @@ then
 else
     APP_NAME=gnome-terminal
     coverageMode=$2
+fi
+
+# FIXME(LMS): Temporary hack to tell OpenOffice Writer and Calc
+# to not attempt to recover edited files after a crash. There
+# should be a general way specify command line arguments when
+# starting test applications.
+#
+if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
+then
+    ARGS="-norestore"
 fi
 
 if [ $coverageMode -eq 1 ]
@@ -63,9 +74,9 @@ then
 fi
 
 # Start the test application and let it settle in
-$APP_NAME &
+$APP_NAME $ARGS &
 APP_PID=$!
-echo starting $APP_NAME pid $APP_PID 
+echo starting $APP_NAME $ARGS, pid $APP_PID 
 sleep $WAIT_TIME
 
 # Play the keystrokes.
