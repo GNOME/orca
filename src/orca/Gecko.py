@@ -3285,7 +3285,9 @@ class Script(default.Script):
         isField = containingForm and \
                   obj.role != rolenames.ROLE_LINK and \
                   obj.role != rolenames.ROLE_MENU_ITEM and \
-                  obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)
+                  obj.role != rolenames.ROLE_UNKNOWN and \
+                  obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) and \
+                  obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
 
         return isField
 

@@ -1,5 +1,13 @@
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: More work on bug 423427 – Need to add form 
+        field structural navigation in Firefox.  In the determination of
+        what constitutes a form field we want to navigate to, be sure it 
+        does not have a role of UNKNOWN.  Also be sure it has a state of
+        SENSITIVE. 
+
+2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/Gecko.py: Work on bug 423427 – Need to add form 
         field structural navigation in Firefox.  Now Orca Modifier Key
         + Tab should move you to the next form field and Orca Modifier
