@@ -286,6 +286,49 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         return [regions, regions[focusedRegionIndex]]
 
+    def _getBrailleRegionsForList(self, obj):
+        """Get the braille for a list in a form.  If the list already has
+        focus, then only the selection is displayed.
+
+        Arguments:
+        - obj: the list
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForList(self, obj, already_focused)
+
+        self._debugGenerator("Gecko._getBrailleRegionsForList", obj)
+
+        regions = []
+
+        label = self._script.getDisplayedLabel(obj)
+        if not label:
+            label = obj.name
+
+        focusedRegionIndex = 0
+        if label and len(label):
+            regions.append(braille.Region(label + " "))
+            focusedRegionIndex = 1
+
+        item = None
+        for i in range(0, obj.childCount):
+            if obj.selection.isChildSelected(i):
+                item = obj.child(i)
+                break
+        if not item:
+            item = obj.child(0)
+        regions.append(braille.Region(item.name))
+
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            regions.append(braille.Region(
+                " " + rolenames.getBrailleForRoleName(obj)))
+
+        return [regions, regions[focusedRegionIndex]]
+
     def _getBrailleRegionsForImage(self, obj):
         """Get the braille regions for an image.
 
@@ -308,7 +351,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
         #
-        link = self._script.getContainingLink(obj)
+        link = self._script.getContainingRole(obj, rolenames.ROLE_LINK)
         if len(text) == 0:
             if link:
                 [linkRegions, focusedRegion] = \
@@ -481,9 +524,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not already_focused and label:
             utterances.append(label)
 
-        if not already_focused:
-            utterances.extend(self._getSpeechForObjectRole(obj))
-
         menu = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
@@ -514,7 +554,84 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
         self._debugGenerator("Gecko._getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForMenuItem(self, obj, already_focused):
+        """Get the speech for a menu item.
+
+        Arguments:
+        - obj: the menu item
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        if obj.parent.role != rolenames.ROLE_LIST:
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForMenuItem(self, obj, already_focused)
+
+        # No need to say "menu item" because we already know that.
+        #
+        utterances = self._getSpeechForObjectName(obj)
+
+        self._debugGenerator("Gecko._getSpeechForMenuItem",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForList(self, obj, already_focused):
+        """Get the speech for a list.
+
+        Arguments:
+        - obj: the list
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForList(self, obj, already_focused)
+
+        utterances = []
+
+        label = self._script.getDisplayedLabel(obj)
+        if not label:
+            label = obj.name
+
+        if not already_focused and label:
+            utterances.append(label)
+
+        item = None
+        for i in range(0, obj.childCount):
+            if obj.selection.isChildSelected(i):
+                item = obj.child(i)
+                break
+        if i == obj.childCount - 1:
+            item = obj.child(0)
+        if item:
+            utterances.extend(
+                      self._getSpeechForMenuItem(item, already_focused))
+
+        if not already_focused:
+            if obj.state.count(atspi.Accessibility.STATE_MULTISELECTABLE):
+                # Translators: "multi-select" refers to a web form list
+                # in which more than one item can be selected at a time.
+                #
+                utterances.append(_("multi-select"))
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+        self._debugGenerator("Gecko._getSpeechForList",
                              obj,
                              already_focused,
                              utterances)
@@ -547,7 +664,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # If there's no text for the image, expose the link to
             # the user if the image is in a link.
             #
-            link = self._script.getContainingLink(obj)
+            link = self._script.getContainingRole(obj, rolenames.ROLE_LINK)
             if not len(utterances):
                 if link:
                     utterances.extend(self._getSpeechForLink(link,
@@ -757,6 +874,8 @@ class Script(default.Script):
              Script.goPreviousUnvisitedLink,
              Script.goNextVisitedLink,
              Script.goPreviousVisitedLink,
+             Script.goNextFormField,
+             Script.goPreviousFormField,
              Script.goNextTable,
              Script.goPreviousTable,
              Script.goCellLeft,
@@ -1088,6 +1207,22 @@ class Script(default.Script):
                 # Translators: this is for navigating between links in HTML
                 #
                 _("Goes to next visited link."))
+
+        self.inputEventHandlers["goPreviousFormFieldHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousFormField,
+                # Translators: this is for navigating between form fields in
+                # HTML
+                #
+                _("Goes to previous form field."))
+
+        self.inputEventHandlers["goNextFormFieldHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextFormField,
+                # Translators: this is for navigating between form fields in
+                # HTML
+                #
+                _("Goes to next form field."))
 
         self.inputEventHandlers["goPreviousTableHandler"] = \
             input_event.InputEventHandler(
@@ -1500,6 +1635,27 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextVisitedLinkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Tab",
+                (1 << settings.MODIFIER_ORCA \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_SHIFT),
+                self.inputEventHandlers["goPreviousFormFieldHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Tab",
+                (1 << settings.MODIFIER_ORCA \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goNextFormFieldHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1971,7 +2127,8 @@ class Script(default.Script):
         # the image focus and announce it.
         #
         if event.source.role == rolenames.ROLE_LINK:
-            containingLink = self.getContainingLink(orca_state.locusOfFocus)
+            containingLink = self.getContainingRole(orca_state.locusOfFocus, 
+                                                    rolenames.ROLE_LINK)
             if containingLink == event.source:
                 return
             elif event.source.childCount == 1:
@@ -2315,7 +2472,7 @@ class Script(default.Script):
                 if obj.role == rolenames.ROLE_LINK:
                     link = obj
                 else:
-                    link = self.getContainingLink(obj)
+                    link = self.getContainingRole(obj, rolenames.ROLE_LINK)
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
@@ -2708,14 +2865,22 @@ class Script(default.Script):
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
         elif obj and (obj.role == rolenames.ROLE_MENU_ITEM):
-            # We'll let Firefox handle the navigation of combo boxes.
+            # We'll let Firefox handle the navigation of combo boxes and
+            # lists.
             #
             parent = obj.parent
             if parent:
-                parent = parent.parent
-                if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
+                if parent.role == rolenames.ROLE_LIST or \
+                   (parent.parent and \
+                    parent.parent.role == rolenames.ROLE_COMBO_BOX):
                     weHandleIt = \
                         keyboardEvent.event_string in ["Left", "Right"]
+
+        elif obj and (obj.role == rolenames.ROLE_LIST):
+            # We'll let Firefox handle the navigation of lists in forms.
+            #
+            if obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+                weHandleIt = False
 
         return weHandleIt
 
@@ -2729,6 +2894,14 @@ class Script(default.Script):
         letThemDoItRoles = [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_TEXT,
                             rolenames.ROLE_PASSWORD_TEXT]
+
+        # If the Orca_Modifier key was pressed, we're handling it.
+        #
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            mods = orca_state.lastInputEvent.modifiers
+            isOrcaKey = mods & (1 << settings.MODIFIER_ORCA)
+            if isOrcaKey:
+                return True
 
         obj = orca_state.locusOfFocus
         while obj:
@@ -3082,26 +3255,39 @@ class Script(default.Script):
 
         return basename
 
-    def getContainingLink(self, obj):
-        """Returns the link containing the given object, or None if the
-        given object is not in a link."""
+    def getContainingRole(self, obj, role):
+        """Returns the object of the specified role which contains the
+        given object, or None if the given object is not contained within
+        an object the specified role.
+        """
 
         if not obj:
             return None
 
-        linkObj = None
+        containingObj = None
 
         obj = obj.parent
         while obj and (obj != obj.parent):
-            if obj.role == rolenames.ROLE_LINK:
-                linkObj = obj
+            if obj.role == role:
+                containingObj = obj
                 break
             elif obj.role == rolenames.ROLE_DOCUMENT_FRAME:
                 break
             else:
                 obj = obj.parent
 
-        return linkObj
+        return containingObj
+
+    def isFormField(self, obj):
+        """Returns True if the given object is a field inside of a form."""
+
+        containingForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
+        isField = containingForm and \
+                  obj.role != rolenames.ROLE_LINK and \
+                  obj.role != rolenames.ROLE_MENU_ITEM and \
+                  obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)
+
+        return isField
 
     def isUselessObject(self, obj):
         """Returns true if the given object is an obj that doesn't
@@ -3127,7 +3313,7 @@ class Script(default.Script):
                     useless = True
 
         if useless:
-            link = self.getContainingLink(obj)
+            link = self.getContainingRole(obj, rolenames.ROLE_LINK)
             if link:
                 useless = False
 
@@ -4574,7 +4760,7 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingLink(obj)
+        containingLink = self.getContainingRole(obj, rolenames.ROLE_LINK)
         if containingLink:
             obj = containingLink
 
@@ -4624,7 +4810,7 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingLink(obj)
+        containingLink = self.getContainingRole(obj, rolenames.ROLE_LINK)
         if containingLink:
             obj = containingLink
 
@@ -4666,6 +4852,162 @@ class Script(default.Script):
             # moving from link to link.
             #
             speech.speak(_("No more visited links."))
+
+    def goPreviousFormField(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        found = False
+        while obj and not found:
+            obj = self.findPreviousObject(obj)
+            found = self.isFormField(obj)
+
+        if obj:
+            speakContents = True
+            if obj.role in [rolenames.ROLE_LIST,
+                            rolenames.ROLE_COMBO_BOX]:
+                # We need to do some explicit focus-grabbing so that Firefox
+                # knows exactly where we are.  If we do this, we do not want
+                # to speak the object contents.
+                #
+                focusGrabbed = obj.component.grabFocus()
+                orca.setLocusOfFocus(None, obj, False)
+                speakContents = False
+
+                if obj.role == rolenames.ROLE_COMBO_BOX:
+                    obj = obj.child(0)
+
+                if obj.selection:
+                    for i in range(0, obj.childCount):
+                        if obj.selection.isChildSelected(i):
+                            obj = obj.child(i)
+                            break
+                    if i == obj.childCount - 1:
+                        obj = obj.child(0)
+
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            if obj and obj.role in [rolenames.ROLE_CHECK_BOX,
+                                    rolenames.ROLE_RADIO_BUTTON]:
+                # [[[TODO: HACK - JD.  Explicit focus-grabbing doesn't
+                # work on all objects.  But form fields by their very
+                # nature have text around them.  Therefore, let's try 
+                # quietly updating our caretContext to the text that's
+                # just before the form field we care about before setting
+                # the caret position to that form field.]]]
+                #
+                [prevObject, prevOffset] = \
+                            self.findPreviousCaretInOrder(obj, -1, False)
+                if prevObject:
+                    self.setCaretPosition(prevObject, prevOffset)
+
+            elif obj and obj.role in [rolenames.ROLE_ENTRY,
+                                      rolenames.ROLE_PASSWORD_TEXT]:
+                # [[[TODO: HACK - JD.  If it's an entry, try to activate it
+                # through the AccessibleAction interface.  NOTE: This seems
+                # to work fine for single-line entries and fail for multi-
+                # line ones. ]]]
+                #
+                name = None
+                if obj.action:
+                    for i in range(0, obj.action.nActions):
+                        name = obj.action.getName(i)
+                        if name == "activate":
+                            break
+                    if name:
+                        success = obj.action.doAction(i)
+                        if success:
+                            # Activating this entry will trigger a focus:
+                            # event for us which will cause everything to
+                            # be spoken, updated, etc.
+                            #
+                            return
+
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            if speakContents:
+                self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                             characterOffset))
+        else:
+            # Translators: this is for navigating HTML content by
+            # moving from form field to form field.
+            #
+            speech.speak(_("No more form fields."))
+
+    def goNextFormField(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        found = False
+        while obj and not found:
+            obj = self.findNextObject(obj)
+            found = self.isFormField(obj)
+
+        if obj:
+            speakContents = True
+            if obj.role in [rolenames.ROLE_LIST,
+                            rolenames.ROLE_COMBO_BOX]:
+                # We need to do some explicit focus-grabbing so that Firefox
+                # knows exactly where we are.  If we do this, we do not want
+                # to speak the object contents.
+                #
+                focusGrabbed = obj.component.grabFocus()
+                orca.setLocusOfFocus(None, obj, False)
+                speakContents = False
+
+                if obj.role == rolenames.ROLE_COMBO_BOX:
+                    obj = obj.child(0)
+
+                if obj.selection:
+                    for i in range(0, obj.childCount):
+                        if obj.selection.isChildSelected(i):
+                            obj = obj.child(i)
+                            break
+                    if i == obj.childCount - 1:
+                        obj = obj.child(0)
+
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            if obj and obj.role in [rolenames.ROLE_CHECK_BOX,
+                                    rolenames.ROLE_RADIO_BUTTON]:
+                # [[[TODO: HACK - JD.  Explicit focus-grabbing doesn't
+                # work on all objects.  But form fields by their very
+                # nature have text around them.  Therefore, let's try 
+                # quietly updating our caretContext to the text that's
+                # just after the form field we care about before setting
+                # the caret position to that form field.]]]
+                #
+                [nextObject, nextOffset] = \
+                                     self.findNextCaretInOrder(obj, -1, False)
+                if nextObject:
+                    self.setCaretPosition(nextObject, nextOffset)
+
+            elif obj and obj.role in [rolenames.ROLE_ENTRY,
+                                      rolenames.ROLE_PASSWORD_TEXT]:
+                # [[[TODO: HACK - JD.  If it's an entry, try to activate it
+                # through the AccessibleAction interface.  NOTE: This seems
+                # to work fine for single-line entries and fail for multi-
+                # line ones. ]]]
+                #
+                name = None
+                if obj.action:
+                    for i in range(0, obj.action.nActions):
+                        name = obj.action.getName(i)
+                        if name == "activate":
+                            break
+                    if name:
+                        success = obj.action.doAction(i)
+                        if success:
+                            # Activating this entry will trigger a focus:
+                            # event for us which will cause everything to
+                            # be spoken, updated, etc.
+                            #
+                            return
+
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            if speakContents:
+                self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                             characterOffset))
+        if not found:
+            # Translators: this is for navigating HTML content by
+            # moving from form field to form field.
+            #
+            speech.speak(_("No more form fields."))
 
     def goPreviousTable(self, inputEvent):
         obj = self.findPreviousRole([rolenames.ROLE_TABLE])

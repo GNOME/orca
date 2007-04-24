@@ -1,3 +1,10 @@
+2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Work on bug 423427 – Need to add form 
+        field structural navigation in Firefox.  Now Orca Modifier Key
+        + Tab should move you to the next form field and Orca Modifier
+        Key + Shift Tab should move you to the previous form field.
+
 2007-04-23 Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/tools/play_keystrokes.py: added WAIT keystroke
