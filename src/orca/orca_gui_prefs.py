@@ -309,6 +309,14 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         return voiceACSS
 
+    def writeUserPreferences(self):
+        """Write out the user's generic Orca preferences.
+        """
+
+        if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
+            self._say(_("Accessibility support for GNOME has just been enabled."))
+            self._say(_("You need to log out and log back in for the change to take effect."))
+
     def _getKeyValueForVoiceType(self, voiceType, key, useDefault=True):
         """Look for the value of the given key in the voice dictionary
            for the given voice type.
@@ -2120,9 +2128,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
 
-        if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
-            self._say(_("Accessibility support for GNOME has just been enabled."))
-            self._say(_("You need to log out and log back in for the change to take effect."))
+        self.writeUserPreferences()
 
         orca.loadUserSettings()
 

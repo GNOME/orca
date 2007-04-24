@@ -9,6 +9,7 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
+	app_gui_prefs.py \
 	atspi.py \
 	braille.py \
 	braillegenerator.py \

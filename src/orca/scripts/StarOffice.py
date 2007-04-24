@@ -1411,7 +1411,8 @@ class Script(default.Script):
             # keying off stuff like this, but we're forced to do so in
             # this case.
             #
-            if oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \
+            if oldLocusOfFocus and \
+               oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \
                oldLocusOfFocus.name == _("Text Document") and \
                len(result[0]) == 0:
                 self.whereAmI(None)

@@ -611,12 +611,14 @@ class Script(script.Script):
                 #
                 _("Displays the preferences configuration dialog."))
 
-        self.inputEventHandlers["loadUserSettingsHandler"] = \
+        self.inputEventHandlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                orca.loadUserSettings,
-                # Translators: this is basically a 'warm restart' of Orca.
+                orca._showAppPreferencesGUI,
+                # Translators: the application preferences configuration 
+                # dialog is the dialog that allows users to set their 
+                # preferences for a specific application within Orca.
                 #
-                _("Reloads user settings and reinitializes services as necessary."))
+                _("Displays the application preferences configuration dialog."))
 
         self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
             input_event.InputEventHandler(
@@ -1314,7 +1316,7 @@ class Script(script.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                self.inputEventHandlers["loadUserSettingsHandler"]))
+                self.inputEventHandlers["appPreferencesSettingsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(

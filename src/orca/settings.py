@@ -142,6 +142,7 @@ mainWindowModule = "orca_gui_main"
 #
 guiPreferencesModule    = "orca_gui_prefs"
 consolePreferencesModule= "orca_console_prefs"
+appGuiPreferencesModule = "app_gui_prefs"
 
 # The name of the module that hold the user interface for quitting Orca.
 # This module is expected to have the method, showQuitUI, which will

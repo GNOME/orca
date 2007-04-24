@@ -1,3 +1,35 @@
+2007-04-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/app_gui_prefs.py:   (new)
+          src/orca/default.py:
+          src/orca/Makefile.am:
+          src/orca/orca.py:
+          src/orca/orca_gui_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/settings.py:
+          Fixed bug #372273 – Add ability to configure app-specific
+          settings via GUI.
+
+          Adjusted <ORCA MODIFIER>+Control+Space to now bring up
+          the application specific preferences dialog. The previous
+          usage (reload user settings) is now gone.
+
+          The application specific preferences dialog does not have a
+          general pane and the Speech systems and servers controls on
+          the speech tab are grayed out.
+
+          Application specific settings are written to
+          ~/.orca/app-settings/<APPNAME>.py  Only the differences from
+          the generic Orca user preferences are written out.
+
+          If you want to have application specific customizations that
+          won't get overridden, then these need to be saved in
+          ~/.orca/app-settings/<APPNAME>-customizations.py
+
+        * src/orca/scripts/StarOffice.py:
+          Check for oldLocusOfFocus not being None in locusOfFocusChanged()
+          to reprevent a traceback.
+
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: More work on bug 423427 – Need to add form 

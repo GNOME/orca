@@ -892,6 +892,26 @@ def loadUserSettings(script=None, inputEvent=None):
 
     return True
 
+def _showAppPreferencesGUI(script=None, inputEvent=None):
+    """Displays the user interace to configure the settings for a
+    specific applications within Orca and set up those app-specific 
+    user preferences using a GUI.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.appGuiPreferencesModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showPreferencesUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
+    return True
+
 def _showPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
     user preferences using a GUI.

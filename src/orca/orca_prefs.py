@@ -377,17 +377,8 @@ def readPreferences():
 
     return prefsDict
 
-def writePreferences(prefsDict, treeModel=None):
-    """Creates the directory and files to hold user preferences.  Note
-    that callers of this method may want to consider using an ordered
-    dictionary so that the keys are output in a deterministic order.
-
-    Arguments:
-    - prefsDict: a dictionary where the keys are orca preferences
-    names and the values are the values for the preferences.
-
-    Returns True if accessibility was enabled as a result of this
-    call."""
+def _setupPreferencesDirs():
+    """Creates the directories and standard files to hold user preferences."""
 
     # Set up the user's preferences directory (~/.orca by default).
     #
@@ -410,41 +401,71 @@ def writePreferences(prefsDict, treeModel=None):
     if not os.path.exists(initFile):
         os.close(os.open(initFile, os.O_CREAT, 0700))
 
+def _getValueForKey(prefsDict, key):
+    """Return the value associated with this preferences dictionary key
+
+    Arguments:
+    - prefsDict: a dictionary where the keys are orca preferences
+    names and the values are the values for the preferences.
+    - key: the preferences dictionary key.
+
+    Return the value of the given preferences dictionary key.
+    """
+    if prefsDict.has_key(key):
+        if key == "voices":
+            value = _getVoicesString(prefsDict[key])
+        elif key == "speechServerInfo":
+            value = _getSpeechServerString(prefsDict[key])
+        elif key == "speechServerFactory":
+            value = _getSpeechServerFactoryString(prefsDict[key])
+        elif key.endswith("VerbosityLevel"):
+            value = _getVerbosityString(prefsDict[key])
+        elif key == "brailleRolenameStyle":
+            value = _getBrailleRolenameStyleString(prefsDict[key])
+        elif key == "verbalizePunctuationStyle":
+            value = _getVerbalizePunctuationStyleString(prefsDict[key])
+        elif key == "sayAllStyle":
+            value = _getSayAllStyleString(prefsDict[key])
+        elif key == "magCursorColor":
+            value = _getMagCursorColorString(prefsDict[key])
+        elif key == "magSmoothingMode":
+            value = _getMagSmoothingModeString(prefsDict[key])
+        elif key == "magMouseTrackingMode":
+            value = _getMagMouseTrackingModeString(prefsDict[key])
+        elif key == "magSourceDisplay" or key == "magTargetDisplay":
+            value = _getDisplayString(prefsDict[key])
+        elif key == "keyboardLayout":
+            value = _getKeyboardLayoutString(prefsDict[key])
+        elif key == "orcaModifierKeys":
+            value = _getOrcaModifierKeysString(prefsDict[key])
+        else:
+            value = prefsDict[key]
+
+    return value
+
+def writePreferences(prefsDict, treeModel=None):
+    """Creates the directory and files to hold user preferences.  Note
+    that callers of this method may want to consider using an ordered
+    dictionary so that the keys are output in a deterministic order.
+
+    Arguments:
+    - prefsDict: a dictionary where the keys are orca preferences
+    names and the values are the values for the preferences.
+
+    Returns True if accessibility was enabled as a result of this
+    call."""
+
+    _setupPreferencesDirs()
+
     # Write ~/.orca/user-settings.py
     #
+    orcaDir = settings.userPrefsDir
     prefs = open(os.path.join(orcaDir, "user-settings.py"), "w")
     _writePreferencesPreamble(prefs)
+
     for key in settings.userCustomizableSettings:
-        if prefsDict.has_key(key):
-            if key == "voices":
-                value = _getVoicesString(prefsDict[key])
-            elif key == "speechServerInfo":
-                value = _getSpeechServerString(prefsDict[key])
-            elif key == "speechServerFactory":
-                value = _getSpeechServerFactoryString(prefsDict[key])
-            elif key.endswith("VerbosityLevel"):
-                value = _getVerbosityString(prefsDict[key])
-            elif key == "brailleRolenameStyle":
-                value = _getBrailleRolenameStyleString(prefsDict[key])
-            elif key == "verbalizePunctuationStyle":
-                value = _getVerbalizePunctuationStyleString(prefsDict[key])
-            elif key == "sayAllStyle":
-                value = _getSayAllStyleString(prefsDict[key])
-            elif key == "magCursorColor":
-                value = _getMagCursorColorString(prefsDict[key])
-            elif key == "magSmoothingMode":
-                value = _getMagSmoothingModeString(prefsDict[key])
-            elif key == "magMouseTrackingMode":
-                value = _getMagMouseTrackingModeString(prefsDict[key])
-            elif key == "magSourceDisplay" or key == "magTargetDisplay":
-                value = _getDisplayString(prefsDict[key])
-            elif key == "keyboardLayout":
-                value = _getKeyboardLayoutString(prefsDict[key])
-            elif key == "orcaModifierKeys":
-                value = _getOrcaModifierKeysString(prefsDict[key])
-            else:
-                value = prefsDict[key]
-            prefs.writelines("orca.settings.%s = %s\n" % (key, value))
+        value = _getValueForKey(prefsDict, key)
+        prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
     if treeModel:
         _writeKeyBindingsMap(prefs, treeModel)
@@ -456,3 +477,71 @@ def writePreferences(prefsDict, treeModel=None):
     # as a result of this call.
     #
     return _enableAccessibility()
+
+def _writeAppPreferencesPreamble(prefs, appName):
+    """Writes the preamble to the ~/.orca/app-settings/<APPNAME>.py file.
+
+    Arguments:
+    - prefs: file handle for application preferences.
+    - appName: the application name.
+    """
+
+    prefs.writelines("# %s.py - custom Orca application settings\n" % appName)
+    prefs.writelines("# Generated by orca.  DO NOT EDIT THIS FILE!!!\n")
+    prefs.writelines("# If you want permanent customizations that will not\n")
+    prefs.writelines("# be overwritten, edit %s-customizations.py.\n" % appName)
+    prefs.writelines("#\n")
+    prefs.writelines("import orca.settings\n")
+    prefs.writelines("import orca.acss\n")
+    prefs.writelines("\n")
+
+def _writeAppPreferencesPostamble(prefs, appName):
+    """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py file.
+    
+    Arguments:
+    - prefs: file handle for application preferences.
+    - appName: the application name.
+    """
+    
+    prefs.writelines("\ntry:\n")
+    prefs.writelines("    __import__(\"%s-customizations\")\n" % appName)
+    prefs.writelines("except ImportError:\n")
+    prefs.writelines("    pass\n")
+
+def writeAppPreferences(prefsDict, appName, treeModel=None):
+    """Creates the directory and files to hold application specific
+    user preferences.  Write out any preferences that are different
+    from the generic Orca preferences for this user. Note that callers 
+    of this method may want to consider using an ordered dictionary so 
+    that the keys are output in a deterministic order.
+
+    Arguments:
+    - prefsDict: a dictionary where the keys are orca preferences
+    names and the values are the values for the preferences.
+    - appName: the application these preferences are for.
+    - treeModel: key bindings treemodel.
+    """
+
+    _setupPreferencesDirs()
+
+    oldPrefsDict = readPreferences()
+
+    # Write ~/.orca/app-settings/<APPNAME>.py
+    #
+    orcaDir = settings.userPrefsDir
+    orcaSettingsDir = os.path.join(orcaDir, "app-settings")
+    appFileName = "%s.py" % appName
+    prefs = open(os.path.join(orcaSettingsDir, appFileName), "w")
+    _writeAppPreferencesPreamble(prefs, appName)
+
+    for key in settings.userCustomizableSettings:
+        value = _getValueForKey(prefsDict, key)
+        oldValue = _getValueForKey(oldPrefsDict, key)
+        if oldValue != value:
+            prefs.writelines("orca.settings.%s = %s\n" % (key, value))
+
+    if treeModel:
+        _writeKeyBindingsMap(prefs, treeModel)
+
+    _writeAppPreferencesPostamble(prefs, appName)
+    prefs.close()
