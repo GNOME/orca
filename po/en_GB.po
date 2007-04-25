@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-23 07:12+0100\n"
-"PO-Revision-Date: 2007-04-23 07:15-0000\n"
+"POT-Creation-Date: 2007-04-25 06:50+0100\n"
+"PO-Revision-Date: 2007-04-25 06:52-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -123,230 +123,592 @@ msgstr "Cursor Position"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39
+#: ../src/orca/chnames.py:38
 msgid "space"
 msgstr "space"
 
 #. Translators: this is the spoken word for the newline character
 #.
-#: ../src/orca/chnames.py:43
+#: ../src/orca/chnames.py:42
 msgid "newline"
 msgstr "newline"
 
 #. Translators: this is the spoken word for the tab character
 #.
-#: ../src/orca/chnames.py:47
+#: ../src/orca/chnames.py:46
 msgid "tab"
 msgstr "tab"
 
 #. Translators: this is the spoken word for the exclamation point: !
 #.
-#: ../src/orca/chnames.py:51
+#: ../src/orca/chnames.py:50
 msgid "exclaim"
 msgstr "exclaim"
 
 #. Translators: this is the spoken word for the apostrophe: '
 #.
-#: ../src/orca/chnames.py:55
+#: ../src/orca/chnames.py:54
 msgid "apostrophe"
 msgstr "apostrophe"
 
-#. Translators: this is the spoken word for the comma: ,
+#. Translators: this is the spoken word for the left single quote: â
+#. (U+2018)
 #.
 #: ../src/orca/chnames.py:59
+msgid "left single quote"
+msgstr "left single quote"
+
+#. Translators: this is the spoken word for the right single quote: â
+#. (U+2019)
+#.
+#: ../src/orca/chnames.py:64
+msgid "right single quote"
+msgstr "right single quote"
+
+#. Translators: this is the spoken word for the comma: ,
+#.
+#: ../src/orca/chnames.py:68
 msgid "comma"
 msgstr "comma"
 
 #. Translators: this is the spoken word for the period: .
 #.
-#: ../src/orca/chnames.py:63
+#: ../src/orca/chnames.py:72
 msgid "dot"
-msgstr "dot"
+msgstr "full stop"
 
 #. Translators: this is the spoken word for the question mark: ?
 #.
-#: ../src/orca/chnames.py:67
+#: ../src/orca/chnames.py:76
 msgid "question"
 msgstr "question"
 
 #. Translators: this is the spoken word for the double quote: "
 #.
-#: ../src/orca/chnames.py:71
+#: ../src/orca/chnames.py:80
 msgid "quote"
 msgstr "quote"
 
+#. Translators: this is the spoken word for the left double quote: â
+#. (U+201C)
+#.
+#: ../src/orca/chnames.py:85
+msgid "left double quote"
+msgstr "left double quote"
+
+#. Translators: this is the spoken word for the right double quote: â
+#. (U+201D)
+#.
+#: ../src/orca/chnames.py:90
+msgid "right double quote"
+msgstr "right double quote"
+
 #. Translators: this is the spoken word for the left parentheses: (
 #.
-#: ../src/orca/chnames.py:75
+#: ../src/orca/chnames.py:94
 msgid "left paren"
 msgstr "left bracket"
 
 #. Translators: this is the spoken word for the right parentheses: (
 #.
-#: ../src/orca/chnames.py:79
+#: ../src/orca/chnames.py:98
 msgid "right paren"
 msgstr "right bracket"
 
 #. Translators: this is the spoken word for the hyphen: -
 #.
-#: ../src/orca/chnames.py:83
+#: ../src/orca/chnames.py:102
 msgid "dash"
 msgstr "dash"
 
+#. Translators: this is the spoken word for the en dash: â
+#. (U+2013)
+#.
+#: ../src/orca/chnames.py:107
+msgid "en dash"
+msgstr "en dash"
+
 #. Translators: this is the spoken word for the underscore: _
 #.
-#: ../src/orca/chnames.py:87
+#: ../src/orca/chnames.py:111
 msgid "underscore"
 msgstr "underscore"
 
 #. Translators: this is the spoken word for the colon: :
 #.
-#: ../src/orca/chnames.py:91
+#: ../src/orca/chnames.py:115
 msgid "colon"
 msgstr "colon"
 
 #. Translators: this is the spoken word for the semicolon: ;
 #.
-#: ../src/orca/chnames.py:95
+#: ../src/orca/chnames.py:119
 msgid "semicolon"
 msgstr "semicolon"
 
 #. Translators: this is the spoken word for the less than sign: <
 #.
-#: ../src/orca/chnames.py:99
+#: ../src/orca/chnames.py:123
 msgid "less than"
 msgstr "less than"
 
 #. Translators: this is the spoken word for the greater than sign: >
 #.
-#: ../src/orca/chnames.py:103
+#: ../src/orca/chnames.py:127
 msgid "greater than"
 msgstr "greater than"
 
 #. Translators: this is the spoken word for the left square bracket: [
 #.
-#: ../src/orca/chnames.py:107
+#: ../src/orca/chnames.py:131
 msgid "left bracket"
-msgstr "left bracket"
+msgstr "left square bracket"
 
 #. Translators: this is the spoken word for the right square bracket: ]
 #.
-#: ../src/orca/chnames.py:111
+#: ../src/orca/chnames.py:135
 msgid "right bracket"
-msgstr "right bracket"
+msgstr "right square bracket"
 
 #. Translators: this is the spoken word for the backslash: #.
-#: ../src/orca/chnames.py:115
+#: ../src/orca/chnames.py:139
 msgid "backslash"
 msgstr "backslash"
 
 #. Translators: this is the spoken word for the vertical line: |
 #.
-#: ../src/orca/chnames.py:119
+#: ../src/orca/chnames.py:143
 msgid "vertical line"
 msgstr "vertical line"
 
 #. Translators: this is the spoken word for the accent grave: `
 #.
-#: ../src/orca/chnames.py:123
+#: ../src/orca/chnames.py:147
 msgid "grave accent"
 msgstr "grave accent"
 
 #. Translators: this is the spoken word for the tilde: ~
 #.
-#: ../src/orca/chnames.py:127
+#: ../src/orca/chnames.py:151
 msgid "tilde"
 msgstr "tilde"
 
 #. Translators: this is the spoken word for the left squiggly brace: {
 #.
-#: ../src/orca/chnames.py:131
+#: ../src/orca/chnames.py:155
 msgid "left brace"
 msgstr "left brace"
 
 #. Translators: this is the spoken word for the right squiggly brace: {
 #.
-#: ../src/orca/chnames.py:135
+#: ../src/orca/chnames.py:159
 msgid "right brace"
 msgstr "right brace"
 
 #. Translators: this is the spoken word for the octothorpe: #
 #.
-#: ../src/orca/chnames.py:139
-msgid "pound"
-msgstr "pound"
+#: ../src/orca/chnames.py:163
+msgid "number"
+msgstr "number"
 
 #. Translators: this is the spoken word for the dollar sign: $
 #.
-#: ../src/orca/chnames.py:143
+#: ../src/orca/chnames.py:167
 msgid "dollar"
 msgstr "dollar"
 
+#. Translators: this is the spoken word for the cent sign: Â¢
+#. (U+00A2)
+#.
+#: ../src/orca/chnames.py:172
+msgid "cent"
+msgstr "cent"
+
+#. Translators: this is the spoken word for the pound sign: Â£
+#. (U+00A3)
+#.
+#: ../src/orca/chnames.py:177
+msgid "pound"
+msgstr "pound"
+
+#. Translators: this is the spoken word for the yen sign: Â¥
+#. (U+00A5)
+#.
+#: ../src/orca/chnames.py:182
+msgid "yen"
+msgstr "yen"
+
+#. Translators: this is the spoken word for the euro sign: â¬
+#. (U+20AC)
+#.
+#: ../src/orca/chnames.py:187
+msgid "euro"
+msgstr "euro"
+
 #. Translators: this is the spoken word for the percent sign: %
 #.
-#: ../src/orca/chnames.py:147
+#: ../src/orca/chnames.py:191
 msgid "percent"
 msgstr "percent"
 
 #. Translators: this is the spoken word for the ampersand: &
 #.
-#: ../src/orca/chnames.py:151
+#: ../src/orca/chnames.py:195
 msgid "and"
 msgstr "and"
 
 #. Translators: this is the spoken word for the star: *
 #.
-#: ../src/orca/chnames.py:155
+#: ../src/orca/chnames.py:199
 msgid "star"
 msgstr "star"
 
 #. Translators: this is the spoken word for the plus: +
 #.
-#: ../src/orca/chnames.py:159
+#: ../src/orca/chnames.py:203
 msgid "plus"
 msgstr "plus"
 
 #. Translators: this is the spoken word for the forward slash: /
 #.
-#: ../src/orca/chnames.py:163
+#: ../src/orca/chnames.py:207
 msgid "slash"
 msgstr "slash"
 
 #. Translators: this is the spoken word for the equals sign: =
 #.
-#: ../src/orca/chnames.py:167
+#: ../src/orca/chnames.py:211
 msgid "equals"
 msgstr "equals"
 
 #. Translators: this is the spoken word for the at sign: @
 #.
-#: ../src/orca/chnames.py:171
+#: ../src/orca/chnames.py:215
 msgid "at"
 msgstr "at"
 
 #. Translators: this is the spoken word for the hat sign: ^
 #.
-#: ../src/orca/chnames.py:175
+#: ../src/orca/chnames.py:219
 msgid "caret"
 msgstr "caret"
 
-#. Translators: this is the spoken word for the plus/minus symbol
+#. Translators: this is the spoken word for the not sign: Â¬
+#. (U+00AC)
 #.
-#: ../src/orca/chnames.py:179
+#: ../src/orca/chnames.py:224
+msgid "not"
+msgstr "not"
+
+#. Translators: this is the spoken word for the copyright sign: Â©
+#. (U+00A9)
+#.
+#: ../src/orca/chnames.py:229
+msgid "copyright"
+msgstr "copyright"
+
+#. Translators: this is the spoken word for the registered sign: Â®
+#. (U+00AE)
+#.
+#: ../src/orca/chnames.py:234
+msgid "registered"
+msgstr "registered"
+
+#. Translators: this is the spoken word for the trademark sign: â¢
+#. (U+2122)
+#.
+#: ../src/orca/chnames.py:239
+msgid "trademark"
+msgstr "trademark"
+
+#. Translators: this is the spoken word for the degree symbol: Â°
+#. (U+00B0)
+#.
+#: ../src/orca/chnames.py:244
+msgid "degree"
+msgstr "degree"
+
+#. Translators: this is the spoken word for the plus/minus symbol: Â±
+#. (U+00B1)
+#.
+#: ../src/orca/chnames.py:249
 msgid "plus minus"
 msgstr "plus minus"
 
-#. Translators: this is the spoken word for the division sign
+#. Translators: this is the spoken word for a superscripted 2: Â²
+#. (U+00B2)
 #.
-#: ../src/orca/chnames.py:183
-msgid "divide"
-msgstr "divide"
+#: ../src/orca/chnames.py:254
+msgid "2 superscript"
+msgstr "2 superscript"
 
-#. Translators: this is the spoken word for the multiplication sign
+#. Translators: this is the spoken word for a superscripted 3: Â³
+#. (U+00B3)
 #.
-#: ../src/orca/chnames.py:187
-msgid "multiply"
-msgstr "multiply"
+#: ../src/orca/chnames.py:259
+msgid "3 superscript"
+msgstr "3 superscript"
+
+#. Translators: this is the spoken word for the 1/4 sign: Â¼
+#. (U+00BC)
+#.
+#: ../src/orca/chnames.py:264
+msgid "one quarter"
+msgstr "one quarter"
+
+#. Translators: this is the spoken word for the 1/2 sign: Â½
+#. (U+00BD)
+#.
+#: ../src/orca/chnames.py:269
+msgid "one half"
+msgstr "one half"
+
+#. Translators: this is the spoken word for the 3/4 sign: Â¾
+#. (U+00BE)
+#.
+#: ../src/orca/chnames.py:274
+msgid "three quarters"
+msgstr "three quarters"
+
+#. Translators: this is the spoken word for the multiplication sign: Ã
+#. (U+00D7)
+#.
+#: ../src/orca/chnames.py:279
+msgid "times"
+msgstr "times"
+
+#. Translators: this is the spoken word for the division sign: Ã·
+#. (U+00F7)
+#.
+#: ../src/orca/chnames.py:284
+msgid "divided by"
+msgstr "divided by"
+
+#. Translators: this is the spoken word for the n tilde: Ã±
+#. (U+00F1)
+#.
+#: ../src/orca/chnames.py:289
+msgid "n tilde"
+msgstr "n tilde"
+
+#. Translators: this is the spoken word for the per mille sign: â°
+#. (U+2030)
+#.
+#: ../src/orca/chnames.py:294
+msgid "per mille"
+msgstr "per mille"
+
+#. Translators: this is the spoken word for the prime sign: â²
+#. (U+2032)
+#.
+#: ../src/orca/chnames.py:299
+msgid "prime"
+msgstr "prime"
+
+#. Translators: this is the spoken word for the double prime sign: â³
+#. (U+2033)
+#.
+#: ../src/orca/chnames.py:304
+msgid "double prime"
+msgstr "double prime"
+
+#. Translators: this is the spoken word for the almost-equal-to sign: â
+#. (U+2248)
+#.
+#: ../src/orca/chnames.py:309
+msgid "almost equal to"
+msgstr "almost equal to"
+
+#. Translators: this is the spoken word for the not-equal-to sign: â 
+#. (U+2260)
+#.
+#: ../src/orca/chnames.py:314
+msgid "not equal to"
+msgstr "not equal to"
+
+#. Translators: this is the spoken word for the less-than-or-equal-to sign: â¤
+#. (U+2264)
+#.
+#: ../src/orca/chnames.py:319
+msgid "less than or equal to"
+msgstr "less than or equal to"
+
+#. Translators: this is the spoken word for the greater-than-or-equal-to
+#. sign: â¥ (U+2265)
+#.
+#: ../src/orca/chnames.py:324
+msgid "greater-than or equal to"
+msgstr "greater-than or equal to"
+
+#. Translators: this is the spoken word for the square-root symbol: â
+#. (U+221A)
+#.
+#: ../src/orca/chnames.py:329
+msgid "square root"
+msgstr "square root"
+
+#. Translators: this is the spoken word for the cube-root symbol: â
+#. (U+221B)
+#.
+#: ../src/orca/chnames.py:334
+msgid "cube root"
+msgstr "cube root"
+
+#. Translators: this is the spoken word for the infinity symbol: â
+#. (U+221E)
+#.
+#: ../src/orca/chnames.py:339
+msgid "infinity"
+msgstr "infinity"
+
+#. Translators: this is the spoken word for the section symbol: Â§
+#. (U+00A7)
+#.
+#. Translators: spoken words for the rolename of a section (e.g., in html).
+#.
+#: ../src/orca/chnames.py:344
+#: ../src/orca/rolenames.py:859
+msgid "section"
+msgstr "section"
+
+#. Translators: this is the spoken word for the dagger symbol: â 
+#. (U+2020)
+#.
+#: ../src/orca/chnames.py:349
+msgid "dagger"
+msgstr "dagger"
+
+#. Translators: this is the spoken word for the double-dagger symbol: â¡
+#. (U+2021)
+#.
+#: ../src/orca/chnames.py:354
+msgid "double dagger"
+msgstr "double dagger"
+
+#. Translators: this is the spoken word for the middle dot: Â·
+#. (U+00B7)
+#.
+#: ../src/orca/chnames.py:359
+msgid "middle dot"
+msgstr "middle dot"
+
+#. Translators: this is the spoken word for the bullet: â¢
+#. (U+2022)
+#.
+#: ../src/orca/chnames.py:364
+msgid "bullet"
+msgstr "bullet"
+
+#. Translators: this is the spoken word for the triangular bullet: â£
+#. (U+2023)
+#.
+#: ../src/orca/chnames.py:369
+msgid "triangular bullet"
+msgstr "triangular bullet"
+
+#. Translators: this is the spoken word for the hyphen bullet: â
+#. (U+2043)
+#.
+#: ../src/orca/chnames.py:374
+msgid "hyphen bullet"
+msgstr "hyphen bullet"
+
+#. Translators: this is the spoken word for the black square: â 
+#. (U+25A0).  It can be used as a bullet in a list.
+#.
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
+#. as a bullet which looks like the black square: â  (U+25A0).  Therefore,
+#. please use the same translation for this character.
+#.
+#: ../src/orca/chnames.py:379
+#: ../src/orca/chnames.py:445
+msgid "black square"
+msgstr "black square"
+
+#. Translators: this is the spoken word for the white square: â¡
+#. (U+25A1). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:384
+msgid "white square"
+msgstr "white square"
+
+#. Translators: this is the spoken word for the white bullet: â¦
+#. (U+25E6)
+#.
+#: ../src/orca/chnames.py:389
+msgid "white bullet"
+msgstr "white bullet"
+
+#. Translators: this is the spoken word for the white circle: â
+#. (U+25CB). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:394
+msgid "white circle"
+msgstr "white circle"
+
+#. Translators: this is the spoken word for the black circle: â
+#. (U+25CF). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:399
+msgid "black circle"
+msgstr "black circle"
+
+#. Translators: this is the spoken word for the black diamond: â
+#. (U+25C6). It can be used as a bullet in a list.
+#.
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
+#. as a bullet which looks like the black diamond: â (U+25C6).  Therefore,
+#. please use the same translation for this character.
+#.
+#: ../src/orca/chnames.py:404
+#: ../src/orca/chnames.py:451
+msgid "black diamond"
+msgstr "black diamond"
+
+#. Translators: this is the spoken word for the check mark: â
+#. (U+2713). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:409
+msgid "check mark"
+msgstr "check mark"
+
+#. Translators: this is the spoken word for the heavy check mark: â
+#. (U+2714). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:414
+msgid "heavy check mark"
+msgstr "heavy check mark"
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "ballot x": â (U+2717). This symbol is included here because it
+#. can be used as a bullet in an OOo list.  The goal is to inform the user
+#. of the appearance of the bullet, while making it clear that it is a bullet
+#. and not simply the typed letter 'x'.  "Ballot x" might confuse the user.
+#. Hence the use of "x-shaped bullet".
+#.
+#: ../src/orca/chnames.py:423
+msgid "x-shaped bullet"
+msgstr "x-shaped bullet"
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "heavy wide-headed rightwards arrow": â (U+2794). This symbol
+#. is included here because it can be used as a bullet in an OOo list. The
+#. goal is to inform the user of the appearance of the bullet without too
+#. much verbiage, hence simply "right-pointing arrow".
+#.
+#: ../src/orca/chnames.py:431
+msgid "right-pointing arrow"
+msgstr "right-pointing arrow"
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "three-d top-lighted rightwards arrowhead": â¢ (U+27A2). This symbol
+#. is included here because it can be used as a bullet in an OOo list. The
+#. goal is to inform the user of the appearance of the bullet without too
+#. much verbiage, hence simply "right-pointing arrowhead".
+#.
+#: ../src/orca/chnames.py:439
+msgid "right-pointing arrowhead"
+msgstr "right-pointing arrowhead"
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -817,11 +1179,11 @@ msgstr "Toggles the silencing of speech."
 #.
 #: ../src/orca/default.py:1533
 #: ../src/orca/default.py:1766
-#: ../src/orca/default.py:3431
-#: ../src/orca/default.py:3572
-#: ../src/orca/default.py:3580
-#: ../src/orca/default.py:3679
-#: ../src/orca/default.py:3687
+#: ../src/orca/default.py:3437
+#: ../src/orca/default.py:3578
+#: ../src/orca/default.py:3586
+#: ../src/orca/default.py:3685
+#: ../src/orca/default.py:3693
 #: ../src/orca/Gecko.py:3898
 #: ../src/orca/Gecko.py:4702
 #: ../src/orca/Gecko.py:4741
@@ -873,7 +1235,7 @@ msgstr "entire document selected"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:2945
+#: ../src/orca/default.py:2951
 msgid "Speak row"
 msgstr "Speak row"
 
@@ -881,13 +1243,13 @@ msgstr "Speak row"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:2951
+#: ../src/orca/default.py:2957
 msgid "Speak cell"
 msgstr "Speak cell"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:3001
+#: ../src/orca/default.py:3007
 #: ../src/orca/where_am_I.py:947
 msgid "bold"
 msgstr "bold"
@@ -898,7 +1260,7 @@ msgstr "bold"
 #. given to us in some unknown form by the application,
 #. so we leave things in plural form here.
 #.
-#: ../src/orca/default.py:3009
+#: ../src/orca/default.py:3015
 #, python-format
 msgid "%s %s pixels"
 msgstr "%s %s pixels"
@@ -911,7 +1273,7 @@ msgstr "%s %s pixels"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:3130
+#: ../src/orca/default.py:3136
 msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
 msgstr "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
 
@@ -924,7 +1286,7 @@ msgstr "Entering learn mode.  Press any key to hear its function.  To exit learn
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:3141
+#: ../src/orca/default.py:3147
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
@@ -937,15 +1299,15 @@ msgstr "Learn mode.  Press escape to exit."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/default.py:3162
+#: ../src/orca/default.py:3168
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:3436
-#: ../src/orca/default.py:3585
+#: ../src/orca/default.py:3442
+#: ../src/orca/default.py:3591
 msgid "white space"
 msgstr "white space"
 
@@ -955,7 +1317,7 @@ msgstr "white space"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:3810
+#: ../src/orca/default.py:3816
 msgid "string not found"
 msgstr "string not found"
 
@@ -964,12 +1326,12 @@ msgstr "string not found"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4407
+#: ../src/orca/default.py:4413
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Misspelt word: %s"
 
-#: ../src/orca/default.py:4415
+#: ../src/orca/default.py:4421
 #, python-format
 msgid "Context is %s"
 msgstr "Context is %s"
@@ -979,7 +1341,7 @@ msgstr "Context is %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:4552
+#: ../src/orca/default.py:4558
 #, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
@@ -990,7 +1352,7 @@ msgstr[1] "%d %s characters"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5348
+#: ../src/orca/default.py:5354
 msgid "page selected from cursor position"
 msgstr "page selected from cursor position"
 
@@ -998,7 +1360,7 @@ msgstr "page selected from cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5356
+#: ../src/orca/default.py:5362
 msgid "page selected to cursor position"
 msgstr "page selected to cursor position"
 
@@ -1006,7 +1368,7 @@ msgstr "page selected to cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5364
+#: ../src/orca/default.py:5370
 msgid "line selected down from cursor position"
 msgstr "line selected down from cursor position"
 
@@ -1014,7 +1376,7 @@ msgstr "line selected down from cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5372
+#: ../src/orca/default.py:5378
 msgid "line selected up from cursor position"
 msgstr "line selected up from cursor position"
 
@@ -1022,7 +1384,7 @@ msgstr "line selected up from cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5380
+#: ../src/orca/default.py:5386
 msgid "document selected to cursor position"
 msgstr "document selected to cursor position"
 
@@ -1030,7 +1392,7 @@ msgstr "document selected to cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5388
+#: ../src/orca/default.py:5394
 msgid "document selected from cursor position"
 msgstr "document selected from cursor position"
 
@@ -1040,7 +1402,7 @@ msgstr "document selected from cursor position"
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/default.py:5429
+#: ../src/orca/default.py:5435
 #: ../src/orca/J2SE-access-bridge.py:81
 #: ../src/orca/scripts/StarOffice.py:132
 #: ../src/orca/speechgenerator.py:968
@@ -1052,7 +1414,7 @@ msgstr "selected"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:5441
+#: ../src/orca/default.py:5447
 #: ../src/orca/J2SE-access-bridge.py:85
 msgid "unselected"
 msgstr "unselected"
@@ -3793,12 +4155,6 @@ msgstr "sctn"
 msgid "Section"
 msgstr "Section"
 
-#. Translators: spoken words for the rolename of a section (e.g., in html).
-#.
-#: ../src/orca/rolenames.py:859
-msgid "section"
-msgstr "section"
-
 #. Translators: short braille for the rolename of a separator.
 #.
 #: ../src/orca/rolenames.py:865
@@ -4974,6 +5330,8 @@ msgstr "row %d of %d"
 msgid "item %d of %d"
 msgstr "item %d of %d"
 
+#~ msgid "multiply"
+#~ msgstr "multiply"
 #~ msgid "Paints and prints the visible zones in the active window."
 #~ msgstr "Paints and prints the visible zones in the active window."
 #~ msgid "Reports information on current script."
@@ -5109,8 +5467,6 @@ msgstr "item %d of %d"
 #~ msgstr "hotel"
 #~ msgid "india"
 #~ msgstr "india"
-#~ msgid "juliet"
-#~ msgstr "juliet"
 #~ msgid "kilo"
 #~ msgstr "kilo"
 #~ msgid "lima"
@@ -5125,8 +5481,6 @@ msgstr "item %d of %d"
 #~ msgstr "papa"
 #~ msgid "quebec"
 #~ msgstr "quebec"
-#~ msgid "romeo"
-#~ msgstr "romeo"
 #~ msgid "sierra"
 #~ msgstr "sierra"
 #~ msgid "tango"
@@ -5187,10 +5541,6 @@ msgstr "item %d of %d"
 #, fuzzy
 #~ msgid "Creating __init_.py in .orca script directory."
 #~ msgstr "Creating .orca directory."
-
-#, fuzzy
-#~ msgid "one tab"
-#~ msgstr "one item"
 #~ msgid "Braille support appears to work, use it?  Enter y or n. "
 #~ msgstr "Braille support appears to work, use it?  Enter y or n. "
 #~ msgid "No page to read."
@@ -5545,6 +5895,4 @@ msgstr "item %d of %d"
 #~ msgstr "TRI"
 #~ msgid "TREE ITEM"
 #~ msgstr "TREE ITEM"
-#~ msgid "tree item"
-#~ msgstr "tree item"
 
