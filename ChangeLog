@@ -1,3 +1,37 @@
+2007-04-26  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: More work on bug 422924 - Add more support
+        for accessing HTML tables in Firefox.  We now support non-uniform
+        tables:  When you navigate to a non-uniform table using T or
+        Shift + T, Orca will indicate that this is a non-uniform table.
+        When using structual navigation by cell, if the cell you navigate 
+        to has multiple headers that apply to it such as "week 2" and 
+        "Thursday", we will speak those headers if they are different from
+        the headers from our previous location.  We also announce cell
+        coordinates when navigating using structural navigation among cells.
+        And, finally, we announce cells that span more than one row or
+        column.  Of course, depending on your preferences, that's a lot
+        of verbiage.  :-)  Therefore, these are all customizable settings.
+        In order to configure the different settings for now, use 
+        orca-customizations.py: Here are the *opposites* to the default:
+
+        import orca.Gecko
+        orca.Gecko.speakCellHeaders = False
+        orca.Gecko.speakCellCoordinates = False
+        orca.Gecko.speakCellSpan = False
+
+        In addition, because some "data" tables include layout aspects
+        such as empty cells, you now have the option of skipping these
+        when using structural navigation to move among cells. By default,
+        you'll hear blank.  To skip them set:
+
+        orca.Gecko.skipBlankCells = True
+
+        Note that the reason I'm checking this in now is so Rich can
+        include these new settings in the app-unique settings feature
+        he's implementing.  So if you wait a little while, you will
+        also be able to change these via GUI. :-)
+
 2007-04-24  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/harness/runall.sh

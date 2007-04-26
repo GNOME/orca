@@ -62,6 +62,26 @@ controlCaretNavigation = True
 #
 arrowToLineBeginning = True
 
+# Whether or not to speak the cell's coordinates when navigating
+# from cell to cell in HTML tables.
+#
+speakCellCoordinates = True
+
+# Whether or not to speak the number of cells spanned by a cell
+# that occupies more than one row or column of an HTML table.
+#
+speakCellSpan = True
+
+# Whether or not to announce the header that applies to the current
+# when navigating from cell to cell in HTML tables.
+#
+speakCellHeaders = True
+
+# Whether blank cells should be skipped when navigating in an HTML
+# table using table navigation commands
+#
+skipBlankCells = False
+
 # Roles that imply their text starts on a new line.
 #
 NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
@@ -903,6 +923,14 @@ class Script(default.Script):
         # context for that frame.
         #
         self._documentFrameCaretContext = {}
+
+        # When navigating in a non-uniform table, one can move to a
+        # cell which spans multiple rows and/or columns.  When moving
+        # beyond that cell, into a cell that does NOT span multiple
+        # rows/columns, we want to be sure we land in the right place.
+        # Therefore, we'll store the coordinates from "our perspective."
+        #
+        self.lastTableCell = [-1, -1]
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -3113,34 +3141,72 @@ class Script(default.Script):
         return None
 
     def getCellCoordinates(self, obj):
-        """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0] if this
+        """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0]
         if the coordinates cannot be found.
         """
 
-        # [[[TODO: WDW - we do this here because Gecko's table interface
-        # is broken and does not give us valid answers.  So...we hack
-        # and try to find the coordinates in other ways.  We assume
-        # the cells are laid out in row/column order, thus allowing us
-        # to do some easy math to find the coordinated.]]]
-        #
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+
         parent = obj.parent
         if parent and parent.table:
-            # row = obj.index / parent.table.nColumns
-            # col = obj.index % parent.table.nColumns
-            # return [row, col]
-            #
-            # By the way, here's the proper way to do it, since we
-            # cannot always depend upon the ordering of the children.
-            # Easy if it works...
-            #
-            # NOTE from Joanie:  Seems like the proper way works now.
-            # Leaving the above in for now until we know for certain.
-            #
             row = parent.table.getRowAtIndex(obj.index)
             col = parent.table.getColumnAtIndex(obj.index)
             return [row, col]
 
         return [0, 0]
+
+    def isSameCell(self, obj, coordinates1, coordinates2):
+        """Returns True if coordinates1 and coordinates2 refer to the
+        same cell in the specified table.
+
+        Arguments:
+        - obj: the table in which to compare the coordinates
+        - coordinates1: [row, col]
+        - coordinates2: [row, col]
+        """
+
+        if obj and obj.table:
+            index1 = obj.table.getIndexAt(coordinates1[0], coordinates1[1])
+            index2 = obj.table.getIndexAt(coordinates2[0], coordinates2[1])
+            return (index1 == index2)
+
+        return False
+
+    def isBlankCell(self, obj):
+        """Returns True if the table cell is empty or consists of a single
+        non-breaking space.
+
+        Arguments:
+        - obj: the table cell to examime
+        """
+
+        text = self.getDisplayedText(obj)
+        if text and text != u'\u00A0':
+            return False
+        else:
+            for i in range(0, obj.childCount):
+                if obj.child(i).role == rolenames.ROLE_LINK:
+                     return False
+
+            return True
+
+    def isNonUniformTable(self, obj):
+        """Returns True if the obj is a non-uniform table (i.e. a table
+        where at least one cell spans multiple rows and/or columns).
+
+        Arguments:
+        - obj: the table to examine
+        """
+
+        if obj and obj.table:
+            for i in range(0, obj.childCount):
+                [isCell, row, col, rowExtents, colExtents, isSelected] = \
+                                       obj.table.getRowColumnExtentsAtIndex(i)
+                if (rowExtents > 1) or (colExtents > 1):
+                    return True
+
+        return False
 
     def isHeader(self, obj):
         """Returns True if the table cell is a header"""
@@ -3152,12 +3218,59 @@ class Script(default.Script):
 
         return False
 
-    def getRowHeader(self, obj):
-        """Returns the row header of a ROLE_TABLE_CELL or None if the
-        header cannot be found.
+    def isInHeaderRow(self, obj):
+        """Returns True if all of the cells in the same row as this cell are
+        headers.
+
+        Arguments:
+        - obj: the table cell whose row is to be examined
         """
 
-        rowHeader = None
+        allHeaders = False
+        if obj and obj.role == rolenames.ROLE_TABLE_CELL:
+            row = obj.parent.table.getRowAtIndex(obj.index)
+            nCols = obj.parent.table.nColumns
+            for col in range(0, nCols):
+                accCell = obj.parent.table.getAccessibleAt(row, col)
+                cell = atspi.Accessible.makeAccessible(accCell)
+                if not self.isHeader(cell):
+                    break
+            if col == nCols - 1:
+                allHeaders = True
+
+        return allHeaders
+
+    def isInHeaderColumn(self, obj):
+        """Returns True if all of the cells in the same column as this cell
+        are headers.
+
+        Arguments:
+        - obj: the table cell whose column is to be examined
+        """
+
+        allHeaders = False
+        if obj and obj.role == rolenames.ROLE_TABLE_CELL:
+            col = obj.parent.table.getColumnAtIndex(obj.index)
+            nRows = obj.parent.table.nRows
+            for row in range(0, nRows):
+                accCell = obj.parent.table.getAccessibleAt(row, col)
+                cell = atspi.Accessible.makeAccessible(accCell)
+                if not self.isHeader(cell):
+                    break
+            if row == nRows - 1:
+                allHeaders = True
+
+        return allHeaders
+
+    def getRowHeaders(self, obj):
+        """Returns a list of table cells that serve as a row header for
+        the specified TABLE_CELL.
+        """
+
+        rowHeaders = []
+        if not obj:
+            return rowHeaders
+
         parent = obj.parent
         if parent and parent.table:
             [row, col] = self.getCellCoordinates(obj)
@@ -3166,56 +3279,110 @@ class Script(default.Script):
             # Mozilla doesn't expose the information that way, however.
             # get{Row, Column}Header seems to work sometimes.
             #
-            accRowHeader = parent.table.getRowHeader(row)
-            if accRowHeader:
-                rowHeader = atspi.Accessible.makeAccessible(accRowHeader)
-                rowHeader = rowHeader.text.getText(0, -1)
+            accHeader = parent.table.getRowHeader(row)
+            if accHeader:
+                header = atspi.Accessible.makeAccessible(accHeader)
+                rowHeaders.append(header)
 
             # Headers that are strictly marked up with <th> do not seem
             # to be exposed through get{Row, Column}Header.
             #
             else:
-                for col in range(0, parent.table.nColumns - 1):
-                    accCell = parent.table.getAccessibleAt(row, col)
-                    cell = atspi.Accessible.makeAccessible(accCell)
-                    if self.isHeader(cell) and cell.text:
-                        rowHeader = cell.text.getText(0, -1)
-                        break
+                # If our cell spans multiple rows, we want to get all of
+                # the headers that apply.
+                #
+                rowspan = obj.parent.table.getRowExtentAt(row, col)
+                for r in range(row, row+rowspan):
+                    # We could have multiple headers for a given row, one
+                    # header per column.  Presumably all of the headers are
+                    # prior to our present location.
+                    #
+                    for c in range(0, col):
+                        accCell = parent.table.getAccessibleAt(r, c)
+                        cell = atspi.Accessible.makeAccessible(accCell)
+                        if self.isHeader(cell) and cell.text and \
+                           not cell in rowHeaders:
+                            rowHeaders.append(cell)
 
-        return rowHeader
+        return rowHeaders
 
-    def getColumnHeader(self, obj):
-        """Returns the column header of a ROLE_TABLE_CELL or None if the
-        header cannot be found.
+    def getColumnHeaders(self, obj):
+        """Returns a list of table cells that serve as a column header for
+        the specified TABLE_CELL.
         """
 
-        colHeader = None
+        columnHeaders = []
+        if not obj:
+            return columnHeaders
+
         parent = obj.parent
         if parent and parent.table:
             [row, col] = self.getCellCoordinates(obj)
             # Theoretically, we should be able to quickly get the text
             # of a {row, column}Header via get{Row,Column}Description().
             # Mozilla doesn't expose the information that way, however.
-            # If the column header is in a <thead>, we can get it with
-            # getColumnHeader.
+            # get{Row, Column}Header seems to work sometimes.
             #
-            accColHeader = parent.table.getColumnHeader(col)
-            if accColHeader:
-                colHeader = atspi.Accessible.makeAccessible(accColHeader)
-                colHeader = colHeader.text.getText(0, -1)
+            accHeader = parent.table.getColumnHeader(col)
+            if accHeader:
+                header = atspi.Accessible.makeAccessible(accHeader)
+                columnHeaders.append(header)
 
             # Headers that are strictly marked up with <th> do not seem
             # to be exposed through get{Row, Column}Header.
             #
             else:
-                for row in range(0, parent.table.nRows - 1):
-                    accCell = parent.table.getAccessibleAt(row, col)
-                    cell = atspi.Accessible.makeAccessible(accCell)
-                    if self.isHeader(cell) and cell.text:
-                        colHeader = cell.text.getText(0, -1)
-                        break
+                # If our cell spans multiple columns, we want to get all of
+                # the headers that apply.
+                #
+                colspan = obj.parent.table.getColumnExtentAt(row, col)
+                for c in range(col, col+colspan):
+                    # We could have multiple headers for a given column, one
+                    # header per row.  Presumably all of the headers are
+                    # prior to our present location.
+                    #
+                    for r in range(0, row):
+                        accCell = parent.table.getAccessibleAt(r, c)
+                        cell = atspi.Accessible.makeAccessible(accCell)
+                        if self.isHeader(cell) and cell.text and \
+                           not cell in columnHeaders:
+                            columnHeaders.append(cell)
 
-        return colHeader
+        return columnHeaders
+
+    def getCellSpanInfo(self, obj):
+        """Returns a string reflecting the number of rows and/or columns
+        spanned by a table cell when multiple rows and/or columns are spanned.
+        """
+
+        if not obj or (obj.role != rolenames.ROLE_TABLE_CELL):
+            return
+
+        [row, col] = self.getCellCoordinates(obj)
+        rowspan = obj.parent.table.getRowExtentAt(row, col)
+        colspan = obj.parent.table.getColumnExtentAt(row, col)
+        spanString = None
+        if (colspan > 1) and (rowspan > 1):
+            # Translators: The cell here refers to a cell within an HTML
+            # table.  We need to announce when the cell occupies or "spans"
+            # more than a single row and/or column.
+            #
+            spanString = _("Cell spans %d rows and %d columns") % \
+                          (rowspan, colspan)
+        elif (colspan > 1):
+            # Translators: The cell here refers to a cell within an HTML
+            # table.  We need to announce when the cell occupies or "spans"
+            # more than a single row and/or column.
+            #
+            spanString = _("Cell spans %d columns") % colspan
+        elif (rowspan > 1):
+            # Translators: The cell here refers to a cell within an HTML
+            # table.  We need to announce when the cell occupies or "spans"
+            # more than a single row and/or column.
+            #
+            spanString = _("Cell spans %d rows") % rowspan
+
+        return spanString
 
     def getTableCaption(self, obj):
         """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
@@ -4137,6 +4304,13 @@ class Script(default.Script):
 
         self.caretContext = [obj, characterOffset]
 
+        # If we're not in a table cell, reset self.lastTableCell. 
+        #
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            cell = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+            if not cell:
+                self.lastTableCell = [-1, -1]
+
         # Reset focus if need be.
         #
         if obj != orca_state.locusOfFocus:
@@ -5011,9 +5185,47 @@ class Script(default.Script):
             #
             speech.speak(_("No more form fields."))
 
+    def moveToCell(self, obj):
+        spanString = self.getCellSpanInfo (obj)
+        blank = self.isBlankCell(obj)
+        [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+        self.setCaretPosition(obj, characterOffset)
+        self.updateBraille(obj)
+        if not blank:
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                             characterOffset))
+        else:
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            speech.speak(_("blank"))
+
+        if speakCellCoordinates:
+            [row, col] = self.getCellCoordinates(obj)
+            # Translators: this represents the (row, col) position of
+            # a cell in a table.
+            #
+            speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
+
+        if spanString and speakCellSpan:
+            speech.speak(spanString)
+
     def goPreviousTable(self, inputEvent):
         obj = self.findPreviousRole([rolenames.ROLE_TABLE])
         if obj:
+            caption = self.getTableCaption(obj)
+            if caption and caption.text:
+                text = self.getDisplayedText(caption)
+                speech.speak(text)
+            nonUniformString = ""
+            nonUniform = self.isNonUniformTable(obj)
+            if nonUniform:
+                # Translators: a uniform table is one in which each table
+                # cell occupies one row and one column (i.e. a perfect grid)
+                # In contrast, a non-uniform table is one in which at least
+                # one table cell occupies more than one row and/or column.
+                #
+                nonUniformString = _("Non-uniform")
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns
             # Translators: this represents the number of rows in an HTML table.
@@ -5026,24 +5238,12 @@ class Script(default.Script):
             colString = ngettext("%d column",
                                  "%d columns",
                                   nColumns) % nColumns
-            speech.speak(rowString + " " + colString)
-            caption = self.getTableCaption(obj)
-            if caption and caption.text:
-                speech.speak(caption.text.getText(0, -1))
+            speech.speak(nonUniformString + " " + rowString + " " + colString)
+
             cell = obj.table.getAccessibleAt(0, 0)
             obj = atspi.Accessible.makeAccessible(cell)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            firstCellContents = contents[0][0].text
-            if firstCellContents:
-                self.speakContents(contents)
-            else:
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+            self.moveToCell(obj)
+
         else:
             # Translators: this is for navigating HTML content by
             # moving from table to table.
@@ -5053,6 +5253,19 @@ class Script(default.Script):
     def goNextTable(self, inputEvent):
         obj = self.findNextRole([rolenames.ROLE_TABLE])
         if obj:
+            caption = self.getTableCaption(obj)
+            if caption and caption.text:
+                text = self.getDisplayedText(caption)
+                speech.speak(text)
+            nonUniformString = ""
+            nonUniform = self.isNonUniformTable(obj)
+            if nonUniform:
+                # Translators: a uniform table is one in which each table
+                # cell occupies one row and one column (i.e. a perfect grid)
+                # In contrast, a non-uniform table is one in which at least
+                # one table cell occupies more than one row and/or column.
+                #
+                nonUniformString = _("Non-uniform")
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns
             # Translators: this represents the number of rows in an HTML table.
@@ -5065,24 +5278,11 @@ class Script(default.Script):
             colString = ngettext("%d column",
                                  "%d columns",
                                   nColumns) % nColumns
-            speech.speak(rowString + " " + colString)
-            caption = self.getTableCaption(obj)
-            if caption and caption.text:
-                speech.speak(caption.text.getText(0, -1))
+            speech.speak(nonUniformString + " " + rowString + " " + colString)
             cell = obj.table.getAccessibleAt(0, 0)
             obj = atspi.Accessible.makeAccessible(cell)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            firstCellContents = contents[0][0].text
-            if firstCellContents:
-                self.speakContents(contents)
-            else:
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+            self.moveToCell(obj)
+
         else:
             # Translators: this is for navigating HTML content by
             # moving from table to table.
@@ -5091,22 +5291,41 @@ class Script(default.Script):
 
     def goCellLeft(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE_CELL):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj:
             [row, col] = self.getCellCoordinates(obj)
-            if col > 0:
-                cell = obj.parent.table.getAccessibleAt(row, col - 1)
+            [storedRow, storedCol] = self.lastTableCell
+            oldHeaders = self.getColumnHeaders(obj)
+            table = obj.parent
+            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+                # The stored row helps us maintain the correct position
+                # when traversing cells that span multiple rows.
+                #
+                row = storedRow
+            found = False
+            while not found and col > 0:
+                cell = table.table.getAccessibleAt(row, col - 1)
+                self.lastTableCell = [row, col - 1]
                 obj = atspi.Accessible.makeAccessible(cell)
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-                colHeader = self.getColumnHeader(obj)
-                if colHeader and not self.isHeader(obj):
-                    speech.speak(colHeader)
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
+                if not self.isBlankCell(obj) or \
+                   not skipBlankCells:
+                    found = True
+                else:
+                    col -= 1
+
+            if found:
+                # We only want to speak the header information that has
+                # changed, and we don't want to speak headers if we're in
+                # a header column.
+                #
+                if speakCellHeaders and not self.isInHeaderColumn(obj):
+                    colHeaders = self.getColumnHeaders(obj)
+                    for header in colHeaders:
+                        if not header in oldHeaders:
+                            text = self.getDisplayedText(header)
+                            speech.speak(text)
+                self.moveToCell(obj)
             else:
                 # Translators: this is for navigating HTML content by
                 # moving from table cell to table cell.
@@ -5120,22 +5339,45 @@ class Script(default.Script):
 
     def goCellRight(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE_CELL):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj:
             [row, col] = self.getCellCoordinates(obj)
-            if col < obj.parent.table.nColumns - 1:
-                cell = obj.parent.table.getAccessibleAt(row, col + 1)
+            [storedRow, storedCol] = self.lastTableCell
+            oldHeaders = self.getColumnHeaders(obj)
+            table = obj.parent
+            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+                # The stored row helps us maintain the correct position
+                # when traversing cells that span multiple rows.
+                #
+                row = storedRow
+            colspan = table.table.getColumnExtentAt(row, col)
+            nextCol = col + colspan
+            found = False
+            while not found and (nextCol <= table.table.nColumns - 1):
+                cell = table.table.getAccessibleAt(row, nextCol)
+                self.lastTableCell = [row, nextCol]
                 obj = atspi.Accessible.makeAccessible(cell)
-                colHeader = self.getColumnHeader(obj)
-                if colHeader and not self.isHeader(obj):
-                    speech.speak(colHeader)
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
+                if not self.isBlankCell(obj) or \
+                   not skipBlankCells:
+                    found = True
+                else:
+                    col += 1
+                    colspan = table.table.getColumnExtentAt(row, col)
+                    nextCol = col + colspan
+
+            if found:
+                # We only want to speak the header information that has
+                # changed, and we don't want to speak headers if we're in
+                # a header column.
+                #
+                if speakCellHeaders and not self.isInHeaderColumn(obj):
+                    colHeaders = self.getColumnHeaders(obj)
+                    for header in colHeaders:
+                        if not header in oldHeaders:
+                            text = self.getDisplayedText(header)
+                            speech.speak(text)
+                self.moveToCell(obj)
             else:
                 # Translators: this is for navigating HTML content by
                 # moving from table cell to table cell.
@@ -5149,22 +5391,41 @@ class Script(default.Script):
 
     def goCellUp(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE_CELL):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj:
             [row, col] = self.getCellCoordinates(obj)
-            if row > 0:
-                cell = obj.parent.table.getAccessibleAt(row - 1, col)
+            [storedRow, storedCol] = self.lastTableCell
+            oldHeaders = self.getRowHeaders(obj)
+            table = obj.parent
+            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+                # The stored column helps us maintain the correct position
+                # when traversing cells that span multiple columns.
+                #
+                col = storedCol
+            found = False
+            while not found and row > 0:
+                cell = table.table.getAccessibleAt(row - 1, col)
+                self.lastTableCell = [row - 1, col]
                 obj = atspi.Accessible.makeAccessible(cell)
-                rowHeader = self.getRowHeader(obj)
-                if rowHeader and not self.isHeader(obj):
-                    speech.speak(rowHeader)
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
+                if not self.isBlankCell(obj) or \
+                   not skipBlankCells:
+                    found = True
+                else:
+                    row -= 1
+
+            if found:
+                # We only want to speak the header information that has
+                # changed, and we don't want to speak headers if we're in
+                # a header row.
+                #
+                if speakCellHeaders and not self.isInHeaderRow(obj):
+                    rowHeaders = self.getRowHeaders(obj)
+                    for header in rowHeaders:
+                        if not header in oldHeaders:
+                            text = self.getDisplayedText(header)
+                            speech.speak(text)
+                self.moveToCell(obj)
             else:
                 # Translators: this is for navigating HTML content by
                 # moving from table cell to table cell.
@@ -5178,22 +5439,45 @@ class Script(default.Script):
 
     def goCellDown(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE_CELL):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+        if obj.role != rolenames.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj:
             [row, col] = self.getCellCoordinates(obj)
-            if row < obj.parent.table.nRows - 1:
-                cell = obj.parent.table.getAccessibleAt(row + 1, col)
+            [storedRow, storedCol] = self.lastTableCell
+            oldHeaders = self.getRowHeaders(obj)
+            table = obj.parent
+            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+                # The stored column helps us maintain the correct position
+                # when traversing cells that span multiple columns.
+                #
+                col = storedCol
+            rowspan = table.table.getRowExtentAt(row, col)
+            nextRow = row + rowspan
+            found = False
+            while not found and (nextRow <= table.table.nRows - 1):
+                cell = table.table.getAccessibleAt(nextRow, col)
+                self.lastTableCell = [nextRow, col]
                 obj = atspi.Accessible.makeAccessible(cell)
-                rowHeader = self.getRowHeader(obj)
-                if rowHeader and not self.isHeader(obj):
-                    speech.speak(rowHeader)
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
+                if not self.isBlankCell(obj) or \
+                   not skipBlankCells:
+                    found = True
+                else:
+                    row += 1
+                    rowspan = table.table.getRowExtentAt(row, col)
+                    nextRow = row + rowspan
+
+            if found:
+                # We only want to speak the header information that has
+                # changed, and we don't want to speak headers if we're in
+                # a header row.
+                #
+                if speakCellHeaders and not self.isInHeaderRow(obj):
+                    rowHeaders = self.getRowHeaders(obj)
+                    for header in rowHeaders:
+                        if not header in oldHeaders:
+                            text = self.getDisplayedText(header)
+                            speech.speak(text)
+                self.moveToCell(obj)
             else:
                 # Translators: this is for navigating HTML content by
                 # moving from table cell to table cell.
@@ -5207,24 +5491,13 @@ class Script(default.Script):
 
     def goCellFirst(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE):
+        if obj.role != rolenames.ROLE_TABLE:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE)
+        if obj:
             cell = obj.table.getAccessibleAt(0, 0)
+            self.lastTableCell = [0, 0]
             obj = atspi.Accessible.makeAccessible(cell)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            if obj:
-                [row, col] = self.getCellCoordinates(obj)
-                # Translators: this represents the (row, col) position of
-                # a cell in a table.
-                #
-                speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
-
+            self.moveToCell(obj)
         else:
             # Translators: this is for navigating HTML content by
             # moving from table cell to table cell.
@@ -5233,25 +5506,15 @@ class Script(default.Script):
 
     def goCellLast(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        while obj and (obj != obj.parent) and \
-              (obj.role != rolenames.ROLE_TABLE):
-            obj = obj.parent
-        if obj and (obj.role == rolenames.ROLE_TABLE):
-            cell = obj.table.getAccessibleAt(obj.table.nRows - 1,
-                                             obj.table.nColumns - 1)
+        if obj.role != rolenames.ROLE_TABLE:
+            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE)
+        if obj:
+            lastRow = obj.table.nRows - 1
+            lastCol = obj.table.nColumns - 1
+            cell = obj.table.getAccessibleAt(lastRow, lastCol)
+            self.lastTableCell = [lastRow, lastCol]
             obj = atspi.Accessible.makeAccessible(cell)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            if obj:
-                [row, col] = self.getCellCoordinates(obj)
-                # Translators: this represents the (row, col) position of
-                # a cell in a table.
-                #
-                speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents( \
-                        self.getObjectContentsAtOffset(obj, characterOffset))
-
+            self.moveToCell(obj)
         else:
             # Translators: this is for navigating HTML content by
             # moving from table cell to table cell.
