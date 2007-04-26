@@ -1,0 +1,56 @@
+# DATE=09:13:04 PM 04/04/2007 PDT
+# SYSTEM=Linux xochitl 2.6.20-13-generic #2 SMP Sun Mar 25 00:21:25 UTC 2007 i686 GNU/Linux
+
+KEYEVENT: type=0
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746386.298217
+KEYEVENT: type=1
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746386.431373
+KEYEVENT: type=0
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746387.303602
+KEYEVENT: type=1
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746387.503315
+KEYEVENT: type=0
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746388.559698
+KEYEVENT: type=1
+          hw_code=104
+          modifiers=0
+          event_string=(Down)
+          is_text=True
+          time=1175746388.750512
+
+# DATE=12:46:49 PM 04/25/2007 PDT
+# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
+# KP_Enter press and release
+#
+KEYEVENT: type=0
+          hw_code=108
+          modifiers=0
+          event_string=(KP_Enter)
+          is_text=True
+          time=1177530412.233564
+KEYEVENT: type=1
+          hw_code=108
+          modifiers=0
+          event_string=(KP_Enter)
+          is_text=True
+          time=1177530412.513472

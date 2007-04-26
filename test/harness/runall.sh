@@ -131,11 +131,11 @@ do
       outputdir=$dirprefix/$application
       currentdir=`pwd`
 
-      # We run under /tmp as a means to help provide consistent
+      # We run under ./tmp as a means to help provide consistent
       # output for things that expose directory paths.
       #
-      mkdir -p /tmp/$application
-      cd /tmp/$application
+      mkdir -p ./tmp/$application
+      cd ./tmp/$application
       for testFile in `find $testDir -type f -name "*.keys" | sort`; do
         echo ========================================
         echo Running $testFile
@@ -184,7 +184,7 @@ do
         echo ========================================
       done
       cd $currentdir
-      rm -rf /tmp/$application
+      rm -rf ./tmp/$application
   fi
 done
 echo $dirprefix completed at `date +%Y-%m-%d_%H:%M:%S`

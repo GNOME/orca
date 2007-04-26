@@ -728,7 +728,7 @@ KEYEVENT: type=0
           is_text=True
           time=1177376829.704484
 KEYEVENT: type=1
-          hw_code=102
+         hw_code=102
           modifiers=0
           event_string=(Right)
           is_text=True
@@ -805,3 +805,21 @@ KEYEVENT: type=1
           event_string=(Right)
           is_text=True
           time=1177376832.024013
+
+# DATE=11:34:11 AM 04/24/2007 PDT
+# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
+
+KEYEVENT: type=0
+          hw_code=86
+          modifiers=0
+          event_string=(+)
+          is_text=True
+          time=1177439654.661377
+KEYEVENT: type=1
+          hw_code=86
+          modifiers=0
+          event_string=(+)
+          is_text=True
+          time=1177439654.877221
+
+WAIT: wait_time=180

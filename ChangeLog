@@ -1,3 +1,47 @@
+2007-04-24  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/harness/runall.sh
+	  test/harness/runone.sh
+	  test/keystrokes/gedit/home-end.keys
+          test/keystrokes/gedit/action-key-backspace.keys
+          test/keystrokes/gedit/action-key-delete.keys
+          test/keystrokes/gedit/lock-key-echo.keys
+          test/keystrokes/gedit/function-key-echo.keys
+          test/keystrokes/gedit/alphanum-modifiers.keys
+          test/keystrokes/gedit/spell-mode.keys
+          test/keystrokes/gedit/whereAmI.keys
+          test/keystrokes/gedit/whereAmI-menus.keys
+          test/keystrokes/gedit/whereAmI-text.keys
+          test/keystrokes/gedit/say-all-dialog.keys
+          test/keystrokes/gedit/say-all.keys
+          test/keystrokes/gedit/say-all-cursor-pos.keys
+          test/keystrokes/gedit/text-attributes.keys
+          test/keystrokes/gnome-terminal/whereAmI-checkbox.keys
+          test/keystrokes/gnome-terminal/whereAmI-pushbutton.keys
+          test/keystrokes/gnome-terminal/whereAmI-radiobutton.keys
+          test/keystrokes/gnome-terminal/whereAmI-slider.keys
+          test/keystrokes/gnome-terminal/swriter-say-all.keys
+          test/keystrokes/gtk-demo/whereAmI-checkbox.keys
+          test/keystrokes/gtk-demo/whereAmI-combobox.keys
+          test/keystrokes/gtk-demo/whereAmI-menu.keys
+          test/keystrokes/gtk-demo/whereAmI-radiobutton.keys
+          test/keystrokes/gtk-demo/whereAmI-tabbedpane.keys
+          test/keystrokes/gtk-demo/whereAmI-tablist.keys
+          test/keystrokes/gtk-demo/whereAmI-treetable.keys
+          test/keystrokes/scalc/whereAmI-calc.keys
+          test/keystrokes/general-orca/yelp.keys
+
+	Added keystroke files plus minor changes to the
+	runall.sh and runone.sh scripts. runall.sh changes
+	directory to ./tmp rather than /tmp so keystroke
+	files can find files like docs/doc-set/orca.html
+	to open.
+
+	I still cannot get keypad-plus to invoke say-all 
+	in keystroke files, when Orca is not speaking
+	during the test runs.
+
+
 2007-04-24  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/app_gui_prefs.py:   (new)

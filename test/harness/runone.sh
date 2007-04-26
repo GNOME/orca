@@ -4,6 +4,8 @@
 # don't do it on their own.
 #
 export GTK_MODULES=:gail:atk-bridge:
+export PATH=/usr/lib/openoffice/program:$PATH
+export PS1='$ '
 
 echo runone.sh: $*
 
@@ -94,9 +96,3 @@ fi
 # Terminate the running application
 echo killing app $APP_NAME $APP_PID
 kill -9 $APP_PID > /dev/null 2>&1
-
-
-if [ $coverageMode -eq 0 ] 	 
-then
-    rm user-settings.py*
-fi

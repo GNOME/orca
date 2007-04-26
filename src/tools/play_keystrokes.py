@@ -25,7 +25,7 @@ import signal
 import sys
 import time
 
-import orca.debug
+import orca.debug as debug
 import orca.atspi
 
 # Maximum time, in seconds, to sleep.  This allows us to compress the
