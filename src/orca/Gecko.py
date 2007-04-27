@@ -93,8 +93,7 @@ NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
 #
 OBJECT_ROLES = [rolenames.ROLE_HEADING,
                 rolenames.ROLE_PARAGRAPH,
-                rolenames.ROLE_TABLE_COLUMN_HEADER,
-                rolenames.ROLE_TABLE_ROW_HEADER,
+                rolenames.ROLE_TABLE,
                 rolenames.ROLE_TEXT,
                 rolenames.ROLE_AUTOCOMPLETE]
 
