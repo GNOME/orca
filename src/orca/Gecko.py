@@ -91,13 +91,8 @@ NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
 
 # Roles that represent a logical chunk of information in a document
 #
-OBJECT_ROLES = [rolenames.ROLE_COLUMN_HEADER,
-                rolenames.ROLE_HEADING,
-                rolenames.ROLE_MENU,
-                rolenames.ROLE_PAGE_TAB,
+OBJECT_ROLES = [rolenames.ROLE_HEADING,
                 rolenames.ROLE_PARAGRAPH,
-                rolenames.ROLE_RADIO_MENU,
-                rolenames.ROLE_ROW_HEADER,
                 rolenames.ROLE_TABLE_COLUMN_HEADER,
                 rolenames.ROLE_TABLE_ROW_HEADER,
                 rolenames.ROLE_TEXT,

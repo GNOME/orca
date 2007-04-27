@@ -1,3 +1,8 @@
+2007-04-27  Mike Pedersen <michael.pedersen@sun.com>
+
+        * src/orca/Gecko.py
+          Cleaned up what is considered a large object.
+
 2007-04-26  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: More work on bug 422924 - Add more support
