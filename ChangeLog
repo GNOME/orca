@@ -1,3 +1,8 @@
+2007-04-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_prefs.py:
+          Fixed bug 434394 – orca -t causes traceback.
+
 2007-04-27  Mike Pedersen <michael.pedersen@sun.com>
 
         * src/orca/Gecko.py

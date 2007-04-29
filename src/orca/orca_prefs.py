@@ -411,6 +411,8 @@ def _getValueForKey(prefsDict, key):
 
     Return the value of the given preferences dictionary key.
     """
+
+    value = None
     if prefsDict.has_key(key):
         if key == "voices":
             value = _getVoicesString(prefsDict[key])
@@ -465,7 +467,8 @@ def writePreferences(prefsDict, treeModel=None):
 
     for key in settings.userCustomizableSettings:
         value = _getValueForKey(prefsDict, key)
-        prefs.writelines("orca.settings.%s = %s\n" % (key, value))
+        if value:
+            prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
     if treeModel:
         _writeKeyBindingsMap(prefs, treeModel)
