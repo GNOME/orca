@@ -467,7 +467,7 @@ def writePreferences(prefsDict, treeModel=None):
 
     for key in settings.userCustomizableSettings:
         value = _getValueForKey(prefsDict, key)
-        if value:
+        if value != None:
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
     if treeModel:

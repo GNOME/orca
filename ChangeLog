@@ -1,3 +1,10 @@
+2007-04-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_prefs.py:
+          Re-fixed bug 434394 – orca -t causes traceback.
+          The change to writePreference() in orca_prefs.py should have
+          been checking against None.
+
 2007-04-30  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for one of the requests in Bug 420540 -
