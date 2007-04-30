@@ -313,7 +313,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             bg = braillegenerator.BrailleGenerator
-            return bg._getBrailleRegionsForList(self, obj, already_focused)
+            return bg._getBrailleRegionsForList(self, obj)
 
         self._debugGenerator("Gecko._getBrailleRegionsForList", obj)
 

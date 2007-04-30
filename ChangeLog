@@ -1,3 +1,8 @@
+2007-04-30  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Minor change/snafu correction in 
+        _getBrailleRegionsForList()
+
 2007-04-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
