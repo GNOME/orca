@@ -1,5 +1,11 @@
 2007-04-30  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: Fix for one of the requests in Bug 420540 -
+        Firefox keyboard control wish list.  Orca_Modifier+Z will now
+        toggle the structural navigation keys on/off.
+
+2007-04-30  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/Gecko.py: Minor change/snafu correction in 
         _getBrailleRegionsForList()
 

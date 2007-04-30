@@ -62,6 +62,11 @@ controlCaretNavigation = True
 #
 arrowToLineBeginning = True
 
+# Whether or not to use the structrual navigation commands (e.g. H
+# for heading, T for table, and so on).
+#
+structuralNavigationEnabled = True
+
 # Whether or not to speak the cell's coordinates when navigating
 # from cell to cell in HTML tables.
 #
@@ -1272,6 +1277,18 @@ class Script(default.Script):
                 #
                 _("Switches between Gecko native and Orca caret navigation."))
 
+        self.inputEventHandlers["toggleStructuralNavigationHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleStructuralNavigation,
+                # Translators: the structural navigation keys are designed
+                # to move the caret around the HTML content by object type.
+                # Thus H moves you to the next heading, Shift H to the
+                # previous heading, T to the next table, and so on. Some
+                # users prefer to turn this off to use Firefox's search
+                # when typing feature.
+                #
+                _("Toggles structural navigation keys."))
+
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
@@ -1710,6 +1727,13 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["toggleCaretNavigationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "z",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["toggleStructuralNavigationHandler"]))
 
         if controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
@@ -2917,9 +2941,12 @@ class Script(default.Script):
                             rolenames.ROLE_TEXT,
                             rolenames.ROLE_PASSWORD_TEXT]
 
+        if not structuralNavigationEnabled:
+            return False
+
         # If the Orca_Modifier key was pressed, we're handling it.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+        elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             mods = orca_state.lastInputEvent.modifiers
             isOrcaKey = mods & (1 << settings.MODIFIER_ORCA)
             if isOrcaKey:
@@ -5544,6 +5571,36 @@ class Script(default.Script):
             # Orca mode.
             #
             string = _("Orca is controlling the caret.")
+
+        debug.println(debug.LEVEL_CONFIGURATION, string)
+        speech.speak(string)
+        braille.displayMessage(string)
+
+    def toggleStructuralNavigation(self, inputEvent):
+        """Toggles structural navigation keys."""
+
+        global structuralNavigationEnabled
+
+        structuralNavigationEnabled = not structuralNavigationEnabled
+
+        if structuralNavigationEnabled:
+                # Translators: the structural navigation keys are designed
+                # to move the caret around the HTML content by object type.
+                # Thus H moves you to the next heading, Shift H to the
+                # previous heading, T to the next table, and so on. Some
+                # users prefer to turn this off to use Firefox's search
+                # when typing feature.
+                #
+            string = _("Structural navigation keys on.")
+        else:
+                # Translators: the structural navigation keys are designed
+                # to move the caret around the HTML content by object type.
+                # Thus H moves you to the next heading, Shift H to the
+                # previous heading, T to the next table, and so on. Some
+                # users prefer to turn this off to use Firefox's search
+                # when typing feature.
+                #
+            string = _("Structural navigation keys off.")
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
