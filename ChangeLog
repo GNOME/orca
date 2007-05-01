@@ -6,6 +6,9 @@
           to prevent a traceback if there were no custom key bindings
           found.
 
+          Also needed to check in loadAppSettings if the specified
+          module name has an "overrideAppKeyBindings" attribute.
+
 2007-05-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:

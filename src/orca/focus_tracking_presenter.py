@@ -331,18 +331,15 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                   "...found %s.py" % name)
 
                     # Setup the user's application specific key bindings.
-                    # (if any). Note this method might not have been
-                    # defined, so just catch it and continue.
+                    # (if any).
                     # 
-                    try:
+                    if hasattr(self._knownAppSettings[name], 
+                               "overrideAppKeyBindings"):
                         script.overrideAppKeyBindings = \
                             self._knownAppSettings[name].overrideAppKeyBindings
                         script.keyBindings = \
                          self._knownAppSettings[name].overrideAppKeyBindings( \
                             script, script.keyBindings)
-                    except:
-                        debug.printException(debug.LEVEL_SEVERE)
-                        pass
 
                     break
                 except ImportError:
