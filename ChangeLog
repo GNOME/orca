@@ -1,5 +1,13 @@
 2007-05-01  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/script.py:
+          Slight fixup for bug #433146. Needed to define a "skeleton"
+          def overrideAppKeyBindings(self, script, keyBindings) routine
+          to prevent a traceback if there were no custom key bindings
+          found.
+
+2007-05-01  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/gaim.py:
           src/orca/scripts/StarOffice.py:
           src/orca/Gecko.py:

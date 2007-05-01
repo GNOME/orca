@@ -196,6 +196,16 @@ class Script:
         """
         pass
 
+    def overrideAppKeyBindings(self, script, keyBindings):
+        """Allow for the customization of application specific key bindings.
+
+        Arguments:
+        - script: the application script.
+        - keyBindings: the set of key bindings for this script.
+        """
+
+        return keyBindings
+
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
     # of a __del__ method prevents the garbage collector from
