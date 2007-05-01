@@ -29,6 +29,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gtk
+
 import atspi
 import braille
 import braillegenerator
@@ -1740,6 +1742,162 @@ class Script(default.Script):
                 keyBindings.add(keyBinding)
 
         return keyBindings
+
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        global controlCaretNavigation, arrowToLineBeginning
+        global structuralNavigationEnabled
+        global speakCellCoordinates, speakCellSpan
+        global speakCellHeaders, skipBlankCells
+
+        vbox = gtk.VBox(False, 0)
+        vbox.set_border_width(12)
+        gtk.Widget.show(vbox)
+
+        # General ("Page") Navigation frame.
+        #
+        generalFrame = gtk.Frame()
+        gtk.Widget.show(generalFrame)
+        gtk.Box.pack_start(vbox, generalFrame, False, False, 5)
+
+        generalAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(generalAlignment)
+        gtk.Container.add(generalFrame, generalAlignment)
+        gtk.Alignment.set_padding(generalAlignment, 0, 0, 12, 0)
+
+        generalVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(generalVBox)
+        gtk.Container.add(generalAlignment, generalVBox)
+
+        label = _("Use _Orca Caret Navigation")
+        self.controlCaretNavigationCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.controlCaretNavigationCheckButton)
+        gtk.Box.pack_start(generalVBox, self.controlCaretNavigationCheckButton, 
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.controlCaretNavigationCheckButton,
+                                    controlCaretNavigation)
+
+        label = _("Use Orca _Structural Navigation")
+        self.structuralNavigationCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.structuralNavigationCheckButton)
+        gtk.Box.pack_start(generalVBox, self.structuralNavigationCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
+                                    structuralNavigationEnabled)
+
+        label = _("_Position cursor at start of line when navigating vertically")
+        self.arrowToLineBeginningCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.arrowToLineBeginningCheckButton)
+        gtk.Box.pack_start(generalVBox, self.arrowToLineBeginningCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.arrowToLineBeginningCheckButton,
+                                    arrowToLineBeginning)
+
+        generalLabel = gtk.Label(_("<b>Page Navigation</b>"))
+        gtk.Widget.show(generalLabel)
+        gtk.Frame.set_label_widget(generalFrame, generalLabel)
+        gtk.Label.set_use_markup(generalLabel, True)
+
+        # Table Navigation frame.
+        #
+        tableFrame = gtk.Frame()
+        gtk.Widget.show(tableFrame)
+        gtk.Box.pack_start(vbox, tableFrame, False, False, 5)
+
+        tableAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(tableAlignment)
+        gtk.Container.add(tableFrame, tableAlignment)
+        gtk.Alignment.set_padding(tableAlignment, 0, 0, 12, 0)
+
+        tableVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(tableVBox)
+        gtk.Container.add(tableAlignment, tableVBox)
+
+        label = _("Speak _cell coordinates")
+        self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellCoordinatesCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
+                                    speakCellCoordinates)
+
+        label = _("Speak _multiple cell spans")
+        self.speakCellSpanCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellSpanCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
+                                    speakCellSpan)
+
+        label = _("Announce cell _header")
+        self.speakCellHeadersCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellHeadersCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton, 
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
+                                    speakCellHeaders)
+
+        label = _("Skip _blank cells")
+        self.skipBlankCellsCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.skipBlankCellsCheckButton)
+        gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
+                                    skipBlankCells)
+
+        tableLabel = gtk.Label(_("<b>Table Navigation</b>"))
+        gtk.Widget.show(tableLabel)
+        gtk.Frame.set_label_widget(tableFrame, tableLabel)
+        gtk.Label.set_use_markup(tableLabel, True)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        global controlCaretNavigation, arrowToLineBeginning
+        global structuralNavigationEnabled
+        global speakCellCoordinates, speakCellSpan
+        global speakCellHeaders, skipBlankCells
+
+        prefs.writelines("\n")
+
+        value = self.controlCaretNavigationCheckButton.get_active()
+        prefs.writelines("orca.Gecko.controlCaretNavigation = %s\n" % value)
+        controlCaretNavigation = value
+
+        value = self.structuralNavigationCheckButton.get_active()
+        prefs.writelines("orca.Gecko.structuralNavigationEnabled = %s\n" % \
+                         value)
+        structuralNavigationEnabled = value
+
+        value = self.arrowToLineBeginningCheckButton.get_active()
+        prefs.writelines("orca.Gecko.arrowToLineBeginning = %s\n" % value)
+        arrowToLineBeginning = value
+
+        value = self.speakCellCoordinatesCheckButton.get_active()
+        prefs.writelines("orca.Gecko.speakCellCoordinates = %s\n" % value)
+        speakCellCoordinates = value
+
+        value = self.speakCellSpanCheckButton.get_active()
+        prefs.writelines("orca.Gecko.speakCellSpan = %s\n" % value)
+        speakCellSpan = value
+
+        value = self.speakCellHeadersCheckButton.get_active()
+        prefs.writelines("orca.Gecko.speakCellHeaders = %s\n" % value)
+        speakCellHeaders = value
+
+        value = self.skipBlankCellsCheckButton.get_active()
+        prefs.writelines("orca.Gecko.skipBlankCells = %s\n" % value)
+        skipBlankCells = value
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.

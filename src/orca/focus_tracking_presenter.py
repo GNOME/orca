@@ -301,13 +301,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
     #                                                                      #
     ########################################################################
 
-    def loadAppSettings(self, app):
+    def loadAppSettings(self, script):
         """Load the users application specific settings for an app.
 
         Arguments:
-        - app: the Python app
+        - script: the current active script.
         """
 
+        app = script.app
         settingsPackages = settings.settingsPackages
         moduleName = settings.getScriptModuleName(app)
         module = None
@@ -328,6 +329,21 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                             __import__(name, globals(), locals(), [''])
                     debug.println(debug.LEVEL_FINEST,
                                   "...found %s.py" % name)
+
+                    # Setup the user's application specific key bindings.
+                    # (if any). Note this method might not have been
+                    # defined, so just catch it and continue.
+                    # 
+                    try:
+                        script.overrideAppKeyBindings = \
+                            self._knownAppSettings[name].overrideAppKeyBindings
+                        script.keyBindings = \
+                         self._knownAppSettings[name].overrideAppKeyBindings( \
+                            script, script.keyBindings)
+                    except:
+                        debug.printException(debug.LEVEL_SEVERE)
+                        pass
+
                     break
                 except ImportError:
                     debug.println(debug.LEVEL_FINEST,
@@ -505,7 +521,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # Load in the application specific settings for the
                         # app for this event (if found).
                         #
-                        appSettings = self.loadAppSettings(event.source.app)
+                        appSettings = self.loadAppSettings( \
+                                                      orca_state.activeScript)
 
                         # Tell BrlTTY which commands we care about.
                         #

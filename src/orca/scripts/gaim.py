@@ -33,6 +33,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gtk
+
 import orca.atspi as atspi
 import orca.braille as braille
 import orca.debug as debug
@@ -44,6 +46,10 @@ import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _
+
+# Whether we prefix chat room messages with the name of the chat room.
+#
+prefixChatMessage = False
 
 ########################################################################
 #                                                                      #
@@ -105,10 +111,6 @@ class Script(default.Script):
         # Set the debug level for all the methods in this script.
         #
         self.debugLevel = debug.LEVEL_FINEST
-
-        # Whether we prefix chat room messages with the name of the chat room.
-        #
-        self.prefixChatMessage = False
 
         # Create two cyclic lists; one that will contain the previous
         # chat room messages and the other that will contain the names
@@ -182,6 +184,40 @@ class Script(default.Script):
 
         return keyBindings
 
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        global prefixChatMessage
+
+        vbox = gtk.VBox(False, 0)
+        vbox.set_border_width(12)
+        gtk.Widget.show(vbox)
+        label = _("Speak Chat Room name")
+        self.speakNameCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakNameCheckButton)
+        gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
+        gtk.ToggleButton.set_active(self.speakNameCheckButton, 
+                                    prefixChatMessage)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        global prefixChatMessage
+
+        prefixChatMessage = self.speakNameCheckButton.get_active()
+        prefs.writelines("\n")
+        prefs.writelines("orca.scripts.gaim.prefixChatMessage = %s\n" % \
+                         prefixChatMessage)
+
     def togglePrefix(self, inputEvent):
         """ Toggle whether we prefix chat room messages with the name of
         the chat room.
@@ -190,11 +226,13 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
+        global prefixChatMessage
+
         debug.println(self.debugLevel, "gaim.togglePrefix.")
 
         line = _("speak chat room name.")
-        self.prefixChatMessage = not self.prefixChatMessage
-        if not self.prefixChatMessage:
+        prefixChatMessage = not prefixChatMessage
+        if not prefixChatMessage:
             line = _("Do not speak chat room name.")
 
         speech.speak(line)
@@ -210,8 +248,10 @@ class Script(default.Script):
         - message: the chat room message.
         """
 
+        global prefixChatMessage
+
         text = ""
-        if self.prefixChatMessage:
+        if prefixChatMessage:
             if chatRoomName and chatRoomName != "":
                 text += _("Message from chat room %s") % chatRoomName + " "
         if message and message != "":

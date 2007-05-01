@@ -1243,10 +1243,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-    def _populateKeyBindings(self):
+    def _populateKeyBindings(self, clearModel=True):
         """Fills the TreeView with the list of Orca keybindings
+
+        Arguments:
+        - clearModel: if True, initially clear out the key bindings model.
         """
-        self.keyBindingsModel.clear()
+
+        if clearModel:
+            self.keyBindingsModel.clear()
 
         self.kbindings = keybindings.KeyBindings()
 

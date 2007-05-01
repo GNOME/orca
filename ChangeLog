@@ -1,3 +1,51 @@
+2007-05-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/Gecko.py:
+          src/orca/orca_prefs.py:
+          src/orca/app_gui_prefs.py:
+          src/orca/script.py:
+          Work on bug #433146 – Add ability to configure app-unique
+          settings via GUI.
+
+          Added two new methods to the Script class:
+              def getAppPreferencesGUI(self):
+              Returns a GtkVBox contain the application unique configuration
+              GUI items for the current application.
+
+              def setAppPreferences(self, prefs):
+              Write out the application specific preferences lines and
+              set the new values.
+
+          Any application that has application unique settings need to
+          overridge those methods any implement them.
+
+          If <script>.getAppPreferencesGUI() does return something other
+          than None (the default), then that is assumed to be a Gtk widget
+          that can be given to a new tab in the application configuration
+          dialog.
+
+          Adjusted the gaim script to do exactly that. What this does seem
+          to mean is that those settings values need to be global variables
+          within the application script file rather than script variables
+          (self.<whatever>).
+
+          Similar adjustments for the StarOffice and Gecko scripts.
+
+        * src/orca/app_gui_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          Added in the application specific key bindings to the key bindings
+          list in the application configuration dialog.
+
+          Added in the writing out of the application specific key bindings
+          to the ~/.orca/app-settings/<APPNAME>.py file.
+
+        * src/orca/focus_tracking_presenter.py:
+          Adjusted the loadAppSettings() method to pass in the current 
+          active script, so that the user's application specific key 
+          bindings can be set.
+
 2007-04-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
@@ -102,7 +150,6 @@
 	I still cannot get keypad-plus to invoke say-all 
 	in keystroke files, when Orca is not speaking
 	during the test runs.
-
 
 2007-04-24  Rich Burridge <rich.burridge@sun.com>
 

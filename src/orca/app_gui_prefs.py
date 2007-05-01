@@ -31,6 +31,10 @@ import os
 import sys
 
 import braille
+import debug
+import default
+import input_event
+import keybindings
 import orca_gui_prefs
 import orca_prefs
 import orca_state
@@ -40,21 +44,36 @@ import speech
 
 from orca_i18n import _  # for gettext support
 
+applicationName = None
+appScript = None
 OS = None
 
 class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
-    def _initAppGUIState(self):
+    def _initAppGUIState(self, appScript):
         """Before we show the GUI to the user we want to remove the
         General tab and gray out the Speech systems and servers 
         controls on the speech tab.
+
+        Arguments:
+        - appScript: the application script.
         """
+
+        # Save away the application script so that it can be used later
+        # by writeUserPreferences().
+        #
+        self.appScript = appScript
 
         self.notebook.remove_page(0)
         self.speechSystemsLabel.set_sensitive(False)
         self.speechSystems.set_sensitive(False)
         self.speechServersLabel.set_sensitive(False)
         self.speechServers.set_sensitive(False)
+
+        vbox = appScript.getAppPreferencesGUI()
+        if vbox:
+            label = gtk.Label(orca_state.locusOfFocus.app.name)
+            self.notebook.append_page(vbox, label)
 
     def _showGUI(self):
         """Show the app-specific Orca configuration GUI window. This 
@@ -77,7 +96,77 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
         moduleName = settings.getScriptModuleName(self.app)
         orca_prefs.writeAppPreferences(self.prefsDict, moduleName,
-                                       self.keyBindingsModel)
+                                       self.appScript, self.keyBindingsModel)
+
+    def _markModified(self):
+        """ Mark as modified the user application specific custom key bindings:
+        """
+
+        global appScript
+
+        try:
+            appScript.setupInputEventHandlers()
+            keyBinds = keybindings.KeyBindings()
+            keyBinds = appScript.overrideAppKeyBindings(appScript, keyBinds)
+            keyBind = keybindings.KeyBinding(None, None, None, None)
+            treeModel = self.keyBindingsModel
+
+            myiter = treeModel.get_iter_first()
+            while myiter != None:
+                iterChild = treeModel.iter_children(myiter)
+                while iterChild != None:
+                    descrip = treeModel.get_value(iterChild, 
+                                                  orca_gui_prefs.DESCRIP)
+                    keyBind.handler = input_event.InputEventHandler(None,
+                                                                    descrip)
+                    if keyBinds.hasKeyBinding(keyBind,
+                                              typeOfSearch="description"):
+                        treeModel.set_value(iterChild, 
+                                            orca_gui_prefs.MODIF, True)
+                    iterChild = treeModel.iter_next(iterChild)
+                myiter = treeModel.iter_next(myiter)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+    def _populateKeyBindings(self, clearModel=True):
+        """Fills the TreeView with the list of Orca keybindings. The
+        application specific ones are prepended to the list.
+
+        Arguments:        
+        - clearModel: if True, initially clear out the key bindings model. 
+        """
+
+        global applicationName, appScript
+
+        # Get the key bindings for the application script.
+        #
+        self.appKeyBindings = appScript.getKeyBindings()
+        self.appKeyBindings = appScript.overrideAppKeyBindings(appScript, 
+                                                     self.appKeyBindings)
+
+        # Get the key bindings for the default script.
+        #
+        defScript = default.Script(None)
+        self.defKeyBindings = defScript.getKeyBindings()
+
+        nodeCreated = False
+
+        # Find the key bindings that are in the application script but 
+        # not in the default script.
+        #
+        for kb in self.appKeyBindings.keyBindings:
+            if not self.defKeyBindings.hasKeyBinding(kb, "strict"):
+                if not self._addAlternateKeyBinding(kb):
+                    handl = appScript.getInputEventHandlerKey(kb.handler)
+                    if not nodeCreated:
+                        iterOrca = self._createNode(applicationName)
+                        nodeCreated = True
+                    self._insertRow(handl, kb, iterOrca)
+
+        # Call the parent class to add in the default key bindings.
+        #
+        orca_gui_prefs.orcaSetupGUI._populateKeyBindings(self, False)
+
 
     def okButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the okButton
@@ -110,7 +199,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         OS = None
 
 def showPreferencesUI():
-    global OS
+    global applicationName, appScript, OS
 
     # There must be an application with focus for this to work.
     #
@@ -119,6 +208,8 @@ def showPreferencesUI():
         braille.displayMessage(message)
         speech.speak(message)
         return
+
+    appScript = orca_state.activeScript
 
     # The name of the application that currently has focus.
     #
@@ -145,7 +236,7 @@ def showPreferencesUI():
 
     OS._init()
     if removeGeneralPane:
-        OS._initAppGUIState()
+        OS._initAppGUIState(appScript)
     OS._showGUI()
 
 def main():

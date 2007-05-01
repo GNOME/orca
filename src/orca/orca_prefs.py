@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 import os
 import pprint
+
+import orca_state
 import settings
 
 from orca_i18n import _  # for gettext support
@@ -302,6 +304,17 @@ def _writeKeyBindingsPreamble(prefs):
 
     return
 
+def _writeAppKeyBindingsPreamble(prefs):
+    """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
+    keyBindings section."""
+
+    prefs.writelines("\n")
+    prefs.writelines("# Set up a user key-bindings profile\n")
+    prefs.writelines("#\n")
+    prefs.writelines('def overrideAppKeyBindings(script, keyB):\n')
+
+    return
+
 def _writeKeyBinding(prefs, tupl):
     """Writes a single keyBinding to the user-settings.py keyBindings section.
 
@@ -345,6 +358,20 @@ def _writeKeyBindingsPostamble(prefs):
     prefs.writelines("\n")
     return
 
+def _writeAppKeyBindingsPostamble(prefs, appName, appScript):
+    """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py
+    keyBindings section.
+
+    Arguments:
+    - prefs: file handle for application preferences.
+    - appName: the application these preferences are for.
+    - appScript: the application script.
+    """
+
+    prefs.writelines('   return keyB')
+    prefs.writelines("\n\n")
+    return
+
 def _writeKeyBindingsMap(prefs, treeModel):
     """Write to configuration file 'prefs' the key bindings passed in the
     model treeModel.
@@ -363,6 +390,33 @@ def _writeKeyBindingsMap(prefs, treeModel):
         iter = treeModel.iter_next(iter)
 
     _writeKeyBindingsPostamble(prefs)
+
+    return
+
+def _writeAppKeyBindingsMap(prefs, appName, appScript, treeModel):
+    """Write to an application specific configuration file 'prefs', the 
+    key bindings passed in the model treeModel.
+
+    Arguments:
+    - prefs: file handle for application preferences.
+    - appName: the application these preferences are for.
+    - appScript: the application script.
+    - treeModel: key bindings treemodel.
+    """
+
+    _writeAppKeyBindingsPreamble(prefs)
+
+    iter = treeModel.get_iter_first()
+    while iter != None:
+        iterChild = treeModel.iter_children(iter)
+        while iterChild != None:
+            values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9,10,11)
+            if values[MODIF]:
+                _writeKeyBinding(prefs, values)
+            iterChild = treeModel.iter_next(iterChild)
+        iter = treeModel.iter_next(iter)
+
+    _writeAppKeyBindingsPostamble(prefs, appName, appScript)
 
     return
 
@@ -511,7 +565,7 @@ def _writeAppPreferencesPostamble(prefs, appName):
     prefs.writelines("except ImportError:\n")
     prefs.writelines("    pass\n")
 
-def writeAppPreferences(prefsDict, appName, treeModel=None):
+def writeAppPreferences(prefsDict, appName, appScript, treeModel=None):
     """Creates the directory and files to hold application specific
     user preferences.  Write out any preferences that are different
     from the generic Orca preferences for this user. Note that callers 
@@ -522,6 +576,7 @@ def writeAppPreferences(prefsDict, appName, treeModel=None):
     - prefsDict: a dictionary where the keys are orca preferences
     names and the values are the values for the preferences.
     - appName: the application these preferences are for.
+    - appScript: the application script.
     - treeModel: key bindings treemodel.
     """
 
@@ -544,7 +599,12 @@ def writeAppPreferences(prefsDict, appName, treeModel=None):
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
     if treeModel:
-        _writeKeyBindingsMap(prefs, treeModel)
+        _writeAppKeyBindingsMap(prefs, appName, appScript, treeModel)
+
+    # Write out the application unique preferences (if any) and set the
+    # new values.
+    #
+    appScript.setAppPreferences(prefs)
 
     _writeAppPreferencesPostamble(prefs, appName)
     prefs.close()
