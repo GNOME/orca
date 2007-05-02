@@ -872,7 +872,9 @@
 	    <listitem>
 	      <para>if applicable, the level</para>
 	    </listitem>
+<listitem>
 <para>all other selected rows (regardless of speak cell/row setting) followed by "selected</para>
+</listitem>
 	  </orderedlist>
 
 	  <para>Given the nature of OpenOffice Calc, Orca should
