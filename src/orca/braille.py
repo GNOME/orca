@@ -44,9 +44,12 @@ import atspi
 #
 try:
     import brlapi
+    import gobject
+
     brlAPI = None
     useBrlAPIBindings = True
     brlAPIRunning = False
+    brlAPISourceId = 0
 except:
     import brl
     useBrlAPIBindings = False
@@ -932,9 +935,9 @@ def _processBrailleEvent(command):
 
     return consumed
 
-def _brlAPIKeyReader():
+def _brlAPIKeyReader(source, condition):
         """Method to read a key from the BrlAPI bindings.  This is a
-        gidle handler.
+        gobject IO watch handler.
         """
         key = brlAPI.readKey(False)
         if key:
@@ -1040,10 +1043,11 @@ def init(callback=None, tty=7):
 
     if useBrlAPIBindings:
         try:
-            import gobject
-            gobject.threads_init()
             global brlAPI
             global brlAPIRunning
+            global brlAPISourceId
+
+            gobject.threads_init()
             brlAPI = brlapi.Connection()
 
             try:
@@ -1051,7 +1055,6 @@ def init(callback=None, tty=7):
                 windowPath = os.environ["WINDOWPATH"]
                 brlAPI.enterTtyModeWithPath()
                 brlAPIRunning = True
-                gobject.idle_add(_brlAPIKeyReader)
                 debug.println(\
                     debug.LEVEL_CONFIGURATION,
                     "Braille module has been initialized using WINDOWPATH=" \
@@ -1059,10 +1062,12 @@ def init(callback=None, tty=7):
             except:
                 brlAPI.enterTtyMode(tty)
                 brlAPIRunning = True
-                gobject.idle_add(_brlAPIKeyReader)
                 debug.println(\
                     debug.LEVEL_CONFIGURATION,
                     "Braille module has been initialized using tty=%d" % tty)
+            brlAPISourceId = gobject.io_add_watch(brlAPI.fileDescriptor,
+                                                  gobject.IO_IN,
+                                                  _brlAPIKeyReader)
         except:
             debug.printException(debug.LEVEL_FINEST)
             return False
@@ -1108,9 +1113,13 @@ def shutdown():
         return False
 
     global brlAPIRunning
+    global brlAPISourceId
+
     if useBrlAPIBindings:
         if brlAPIRunning:
             brlAPIRunning = False
+            gobject.source_remove(brlAPISourceId)
+            brlAPISourceId = 0
             brlAPI.leaveTtyMode()
     else:
         brl.shutdown()

@@ -1,6 +1,13 @@
 2007-05-02  Willie Walker <william.walker@sun.com>
 
-        * src/orca/orca.py, src/orca/J2SE-access-bridge.py, 
+        * src/orca/braille.py: fix for bug 432685 to prevent use of
+        BrlTTY 3.8 from consuming large amounts of the available CPU.
+        The fix was to add an IO watch on the BrlAPI file descriptor
+        instead of polling BrlAPI in a gidle handler.
+
+2007-05-02  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py, src/orca/J2SE-access-bridge.py,
         src/orca/keybindings.py: fix for bug 434948 to allow
         Orca modifier key to work on keys that use multiple
         keysyms.
@@ -10,7 +17,7 @@
         * src/orca/app_gui_prefs.py:
           src/orca/orca_prefs.py:
           src/orca/focus_tracking_presenter.py:
-          Hopefully the final fixes for bug #433146 – Add ability to 
+          Hopefully the final fixes for bug #433146 – Add ability to
           configure app-unique settings via GUI.
 
           There were three problems:
@@ -82,8 +89,8 @@
           to the ~/.orca/app-settings/<APPNAME>.py file.
 
         * src/orca/focus_tracking_presenter.py:
-          Adjusted the loadAppSettings() method to pass in the current 
-          active script, so that the user's application specific key 
+          Adjusted the loadAppSettings() method to pass in the current
+          active script, so that the user's application specific key
           bindings can be set.
 
 2007-04-30  Rich Burridge <rich.burridge@sun.com>
@@ -101,7 +108,7 @@
 
 2007-04-30  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Minor change/snafu correction in 
+        * src/orca/Gecko.py: Minor change/snafu correction in
         _getBrailleRegionsForList()
 
 2007-04-29  Rich Burridge <rich.burridge@sun.com>
@@ -120,15 +127,15 @@
         for accessing HTML tables in Firefox.  We now support non-uniform
         tables:  When you navigate to a non-uniform table using T or
         Shift + T, Orca will indicate that this is a non-uniform table.
-        When using structual navigation by cell, if the cell you navigate 
-        to has multiple headers that apply to it such as "week 2" and 
+        When using structual navigation by cell, if the cell you navigate
+        to has multiple headers that apply to it such as "week 2" and
         "Thursday", we will speak those headers if they are different from
         the headers from our previous location.  We also announce cell
         coordinates when navigating using structural navigation among cells.
         And, finally, we announce cells that span more than one row or
         column.  Of course, depending on your preferences, that's a lot
         of verbiage.  :-)  Therefore, these are all customizable settings.
-        In order to configure the different settings for now, use 
+        In order to configure the different settings for now, use
         orca-customizations.py: Here are the *opposites* to the default:
 
         import orca.Gecko
@@ -151,8 +158,8 @@
 2007-04-24  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/harness/runall.sh
-	  test/harness/runone.sh
-	  test/keystrokes/gedit/home-end.keys
+          test/harness/runone.sh
+          test/keystrokes/gedit/home-end.keys
           test/keystrokes/gedit/action-key-backspace.keys
           test/keystrokes/gedit/action-key-delete.keys
           test/keystrokes/gedit/lock-key-echo.keys
@@ -181,15 +188,15 @@
           test/keystrokes/scalc/whereAmI-calc.keys
           test/keystrokes/general-orca/yelp.keys
 
-	Added keystroke files plus minor changes to the
-	runall.sh and runone.sh scripts. runall.sh changes
-	directory to ./tmp rather than /tmp so keystroke
-	files can find files like docs/doc-set/orca.html
-	to open.
+        Added keystroke files plus minor changes to the
+        runall.sh and runone.sh scripts. runall.sh changes
+        directory to ./tmp rather than /tmp so keystroke
+        files can find files like docs/doc-set/orca.html
+        to open.
 
-	I still cannot get keypad-plus to invoke say-all 
-	in keystroke files, when Orca is not speaking
-	during the test runs.
+        I still cannot get keypad-plus to invoke say-all
+        in keystroke files, when Orca is not speaking
+        during the test runs.
 
 2007-04-24  Rich Burridge <rich.burridge@sun.com>
 
@@ -225,15 +232,15 @@
 
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: More work on bug 423427 – Need to add form 
+        * src/orca/Gecko.py: More work on bug 423427 – Need to add form
         field structural navigation in Firefox.  In the determination of
-        what constitutes a form field we want to navigate to, be sure it 
+        what constitutes a form field we want to navigate to, be sure it
         does not have a role of UNKNOWN.  Also be sure it has a state of
-        SENSITIVE. 
+        SENSITIVE.
 
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Work on bug 423427 – Need to add form 
+        * src/orca/Gecko.py: Work on bug 423427 – Need to add form
         field structural navigation in Firefox.  Now Orca Modifier Key
         + Tab should move you to the next form field and Orca Modifier
         Key + Shift Tab should move you to the previous form field.
@@ -241,32 +248,32 @@
 2007-04-23 Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/tools/play_keystrokes.py: added WAIT keystroke
-	file command to pause for a specified period of time
-	to let Orca speak/braille a long document. This is
-	useful for SayAll testing of long documents.
-	* test/harness/runone.sh: temporary hack to specify
-	the "-norestore" flag when running swriter or scalc.
-	There should be a general way to specify command line
-	arguments when starting a test application
-	* test/text/SayAllText.txt: added text directory for
-	text imput files. SayAllText.txt used to test the SayAll
-	command using gedit.
-	* test/keystrokes/gnome-terminal/swriter-say-all.keys:
-	keystroke file for testing the SayAll command using
-	swriter. Until we have a general way to pass command
-	line arguments to test applications, it's necessary
-	to start the test application from gnome-terminal and
-	enter the application arguments, like the file to
-	open in the application.
-	* test/keystrokes/gedit/say-all.keys, 
-	test/keystrokes/gedit/say-all-cursor-pos.key: keystoke
-	files to test the SayAll command in gedit.
+        file command to pause for a specified period of time
+        to let Orca speak/braille a long document. This is
+        useful for SayAll testing of long documents.
+        * test/harness/runone.sh: temporary hack to specify
+        the "-norestore" flag when running swriter or scalc.
+        There should be a general way to specify command line
+        arguments when starting a test application
+        * test/text/SayAllText.txt: added text directory for
+        text imput files. SayAllText.txt used to test the SayAll
+        command using gedit.
+        * test/keystrokes/gnome-terminal/swriter-say-all.keys:
+        keystroke file for testing the SayAll command using
+        swriter. Until we have a general way to pass command
+        line arguments to test applications, it's necessary
+        to start the test application from gnome-terminal and
+        enter the application arguments, like the file to
+        open in the application.
+        * test/keystrokes/gedit/say-all.keys,
+        test/keystrokes/gedit/say-all-cursor-pos.key: keystoke
+        files to test the SayAll command in gedit.
 
-        
+
 2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/default.py: More work for bug 432674 - only echo the
-	"stars" in password entries if character echo is enabled AND
+        "stars" in password entries if character echo is enabled AND
         printable character echo is enabled.  Thanks Hermann for the
         quick feedback and testing!
 
@@ -280,13 +287,13 @@
 
 2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/default.py: Fix for bug 432674 - In password entries, 
-        Orca should respect key echo settings and say "star" for the 
+        * src/orca/default.py: Fix for bug 432674 - In password entries,
+        Orca should respect key echo settings and say "star" for the
         inserted characters.
 
 2007-04-23  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/chnames.py: 
+        * src/orca/chnames.py:
           src/orca/punctuation_settings.py:
           Fix for bug 416971 - Orca does not speak or braille numbers/
         bullets of list items in Firefox.  This fix should also cause
@@ -305,7 +312,7 @@
 2007-04-20  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/keystrokes/swriter/*.keys, test/keystrokes/scalc/*.keys:
-	Added keystrokes to shutdown gracefully, discarding changes.
+        Added keystrokes to shutdown gracefully, discarding changes.
 
 2007-04-19  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -317,22 +324,22 @@
 
         * Makefile.am: fix for bug 430726 to implement GNOME GOAL #4,
         which is to run gtk-update-icon-cache in the uninstall-hook.
-        
+
 2007-04-18  Willie Walker <william.walker@sun.com>
 
         * docs/planning.ods: reconciliation with Bugzilla and include
-	priorities discussed in team meeting.
-        
+        priorities discussed in team meeting.
+
 2007-04-18  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca.py: work on bug 412200 to unmark usage text and
         command line options for translation per gnome-i18n discussion.
-        
+
 2007-04-18  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * test/harness/runall.sh: Commented out the lines that compare 
-        the results file with the golden results file. I believe it 
-        is more useful to do the comparisons after runall.sh has 
+        * test/harness/runall.sh: Commented out the lines that compare
+        the results file with the golden results file. I believe it
+        is more useful to do the comparisons after runall.sh has
         completed. The runall.sh output just contains information about
         the test executions, not including the results.
 
@@ -345,7 +352,7 @@
           src/orca/scripts/StarOffice.py:
           src/orca/default.py:
           src/orca/where_am_I.py:
-          Fixed bug #430278 – The Where_Am_I script does not work in most 
+          Fixed bug #430278 – The Where_Am_I script does not work in most
           applications.
 
           No longer need to pass a speech context into the whereAmI()
@@ -353,7 +360,7 @@
           code is now in the app specific scripts. Moved the Evolution
           specific "where am I" code to the Evolution script.
 
-          Fixed bug #427481 – "where am I" does not speak Evolution 
+          Fixed bug #427481 – "where am I" does not speak Evolution
           Mail...Tasks toggle buttons.
 
           The problem here was that those objects were toggle buttons and
@@ -362,14 +369,14 @@
 
 2007-04-17  Willie Walker <william.walker@sun.com>
 
-        * src/orca/phonnames.py: add a URL to point to a Wikipedia 
+        * src/orca/phonnames.py: add a URL to point to a Wikipedia
         entry on the NATO alphabet.
-        
+
 2007-04-17  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: Add SunF37 as Solaris equivalent for F12.
         Also turn on Orca's caret navigation mode by default.
-        
+
 2007-04-17  Nickolay V. Shmyrev <via william.walker@sun.com>
 
         * src/orca/phonnames.py: work on bug 412200 to provide a
@@ -9997,4 +10004,3 @@
 2004-05-21  Marc Mulcahy  <marc.mulcahy@sun.com>
 
         * Initial cvs import.
-
