@@ -561,7 +561,7 @@ def _writeAppPreferencesPostamble(prefs, appName):
     """
     
     prefs.writelines("\ntry:\n")
-    prefs.writelines("    __import__(\"%s-customizations\")\n" % appName)
+    prefs.writelines("    __import__(\"app-settings.%s-customizations\")\n" % appName)
     prefs.writelines("except ImportError:\n")
     prefs.writelines("    pass\n")
 

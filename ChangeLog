@@ -1,3 +1,25 @@
+2007-05-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/app_gui_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/focus_tracking_presenter.py:
+          Hopefully the final fixes for bug #433146 – Add ability to 
+          configure app-unique settings via GUI.
+
+          There were three problems:
+
+          1/ In loadAppsettings() in focus_tracking_presenter.py, there
+             was a bogus space in a call to self._knownAppSettings.has_key().
+
+          2/ In _writeAppPreferencesPostamble() in orca_prefs.py, the import
+             line that was written out for the <APPNAME>-customizations
+             file needed to have an initial "app-settings.".
+
+          3/ In writeUserPreferences() in app_gui_prefs.py, we needed to
+             call the loadAppsettings() method in FocusTrackingPresenter to
+             get the new key bindings to kick in for the currently running
+             application.
+
 2007-05-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/script.py:

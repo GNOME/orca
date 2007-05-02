@@ -33,6 +33,7 @@ import sys
 import braille
 import debug
 import default
+import focus_tracking_presenter
 import input_event
 import keybindings
 import orca_gui_prefs
@@ -93,10 +94,11 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
     def writeUserPreferences(self):
         """Write out the user's application-specific Orca preferences.
         """
-
         moduleName = settings.getScriptModuleName(self.app)
         orca_prefs.writeAppPreferences(self.prefsDict, moduleName,
                                        self.appScript, self.keyBindingsModel)
+        ftp = focus_tracking_presenter.FocusTrackingPresenter()
+        ftp.loadAppSettings(self.appScript)
 
     def _markModified(self):
         """ Mark as modified the user application specific custom key bindings:
