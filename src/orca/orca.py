@@ -670,7 +670,10 @@ def _processKeyboardEvent(event):
     # See if this is one of our special Orca modifiers (e.g., "Insert")
     #
     orcaModifierKeys = settings.orcaModifierKeys
-    isOrcaModifier = orcaModifierKeys.count(keyboardEvent.event_string) > 0
+    orcaModifierKeycodes = []
+    for keysym in orcaModifierKeys:
+        orcaModifierKeycodes.append(keybindings.getKeycode(keysym))
+    isOrcaModifier = orcaModifierKeycodes.count(keyboardEvent.hw_code) > 0
 
     if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
@@ -894,7 +897,7 @@ def loadUserSettings(script=None, inputEvent=None):
 
 def _showAppPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure the settings for a
-    specific applications within Orca and set up those app-specific 
+    specific applications within Orca and set up those app-specific
     user preferences using a GUI.
 
     Returns True to indicate the input event has been consumed.

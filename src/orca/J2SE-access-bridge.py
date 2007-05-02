@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import atspi
@@ -48,7 +48,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
-        
+
     def _getSpeechForLabel(self, obj, already_focused):
         """Get the speech for a label.
 
@@ -115,7 +115,7 @@ class Script(default.Script):
         Returns True if the event is of interest.
         """
         keysym = keyboardEvent.event_string
-        keyboardEvent.hw_code = keybindings._getKeycode(keysym)
+        keyboardEvent.hw_code = keybindings.getKeycode(keysym)
         return default.Script.consumesKeyboardEvent(self, keyboardEvent)
 
     def onFocus(self, event):
@@ -127,27 +127,27 @@ class Script(default.Script):
 
         role = event.source.role
         if role == rolenames.ROLE_LIST:
-	    selectedItem = None
-	    selection = event.source.selection
-	    if selection and selection.nSelectedChildren > 0:
-        	selectedItem = atspi.Accessible.makeAccessible(
-            				selection.getSelectedChild(0))
-	    elif event.source.childCount > 0:
-		selectedItem = event.source.child(0)
-	    if selectedItem:
-		orca.setLocusOfFocus(event, selectedItem)
-	    else:
-		# if impossible to get selection or list has 0 items, present list
-		orca.setLocusOfFocus(event, event.source)
-	elif role == rolenames.ROLE_LABEL:
-	    # In FileChooserDemo, when enter in a new folder, a focus event for 
-	    # the top combo box selected item (not SHOWING item) is received.
-	    # Should this check be more specific ?
-	    #
-	    if not event.source.state.count (Accessibility.STATE_SHOWING):
-		return
-	elif role == rolenames.ROLE_MENU:
-    	    # A JMenu has always selection.nSelectedChildren > 0
+            selectedItem = None
+            selection = event.source.selection
+            if selection and selection.nSelectedChildren > 0:
+                selectedItem = atspi.Accessible.makeAccessible(
+                                        selection.getSelectedChild(0))
+            elif event.source.childCount > 0:
+                selectedItem = event.source.child(0)
+            if selectedItem:
+                orca.setLocusOfFocus(event, selectedItem)
+            else:
+                # if impossible to get selection or list has 0 items, present list
+                orca.setLocusOfFocus(event, event.source)
+        elif role == rolenames.ROLE_LABEL:
+            # In FileChooserDemo, when enter in a new folder, a focus event for
+            # the top combo box selected item (not SHOWING item) is received.
+            # Should this check be more specific ?
+            #
+            if not event.source.state.count (Accessibility.STATE_SHOWING):
+                return
+        elif role == rolenames.ROLE_MENU:
+            # A JMenu has always selection.nSelectedChildren > 0
             orca.setLocusOfFocus(event, event.source)
         else:
             default.Script.onFocus(self, event)
@@ -183,13 +183,13 @@ class Script(default.Script):
                             if item.state.count(Accessibility.STATE_ARMED):
                                 orca.setLocusOfFocus(event, item)
                                 return
-        
 
-	# In java applications the events are comming in other order:
-	# "focus:" event comes before "state-changed:focused" event
-	#
-	if (event.type == "object:state-changed:focused"):
-	    return
+
+        # In java applications the events are comming in other order:
+        # "focus:" event comes before "state-changed:focused" event
+        #
+        if (event.type == "object:state-changed:focused"):
+            return
 
         # Hand state changes when JTree labels become expanded
         # or collapsed.
@@ -197,18 +197,18 @@ class Script(default.Script):
         if ((event.source.role == rolenames.ROLE_LABEL) and \
             (event.type == "object:state-changed:expanded")):
             orca.visualAppearanceChanged(event, event.source)
-	    return
+            return
 
-	# Present a value change in case of an focused popup menu.
-	# Fix for Swing file chooser.
-	#
-	if event.type == "object:state-changed:visible" and \
-		event.source.role == rolenames.ROLE_POPUP_MENU and \
-		event.source.parent.state.count(Accessibility.STATE_FOCUSED):
-	    orca.setLocusOfFocus(event, event.source.parent)
-	    return
-	
-	default.Script.onStateChanged(self, event)
+        # Present a value change in case of an focused popup menu.
+        # Fix for Swing file chooser.
+        #
+        if event.type == "object:state-changed:visible" and \
+                event.source.role == rolenames.ROLE_POPUP_MENU and \
+                event.source.parent.state.count(Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source.parent)
+            return
+
+        default.Script.onStateChanged(self, event)
 
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
@@ -217,8 +217,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-	if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
-	    return
+        if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
+            return
 
         if event.source.role == rolenames.ROLE_TABLE:
             return
@@ -261,11 +261,11 @@ class Script(default.Script):
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
         value changes for non-focused objects are ignored.
-        
+
         Arguments:
         - event: the Event
         """
-        
+
         # We'll let state-changed:checked event to be used to
         # manage check boxes in java application
         #

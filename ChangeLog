@@ -1,3 +1,10 @@
+2007-05-02  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py, src/orca/J2SE-access-bridge.py, 
+        src/orca/keybindings.py: fix for bug 434948 to allow
+        Orca modifier key to work on keys that use multiple
+        keysyms.
+
 2007-05-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/app_gui_prefs.py:

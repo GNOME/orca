@@ -44,7 +44,7 @@ from orca_i18n import _           # for gettext support
 
 _keycodeCache = {}
 
-def _getKeycode(keysym):
+def getKeycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
     should match the event.hw_code for key events.
 
@@ -182,7 +182,7 @@ class KeyBinding:
         # keybindings in the user's preferences file.
         #
         if not self.keycode:
-            self.keycode = _getKeycode(self.keysymstring)
+            self.keycode = getKeycode(self.keysymstring)
 
         if self.keycode == keycode:
             result = modifiers & self.modifier_mask
