@@ -795,6 +795,18 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForObjectAccelerator(obj))
 
+        # OpenOffice check menu items currently have a role of "menu item"
+        # rather then "check menu item", so we need to test if one of the
+        # states is CHECKED. If it is, then add that in to the list of
+        # speech utterances. Note that we can't tell if this is a "check
+        # menu item" that is currently unchecked and speak that state. 
+        # See Orca bug #433398 for more details.
+        #
+        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this represents the state of a checked menu item.
+            #
+            utterances.append(_("checked"))
+
         self._debugGenerator("_getSpeechForMenuItem",
                              obj,
                              already_focused,

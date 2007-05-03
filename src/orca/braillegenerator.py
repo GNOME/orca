@@ -708,6 +708,16 @@ class BrailleGenerator:
         text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
         text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
+        # OpenOffice check menu items currently have a role of "menu item"
+        # rather then "check menu item", so we need to test if one of the
+        # states is CHECKED. If it is, then add that in to the braille
+        # display output. Note that we can't tell if this is a "check
+        # menu item" that is currently unchecked and braille that state. 
+        # See Orca bug #433398 for more details.
+        #
+        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            text = self._script.appendString(text, "<x>")
+
         if obj == orca_state.locusOfFocus:
             text = self._script.appendString(text, self._getTextForAvailability(obj))
             text = self._script.appendString(text,

@@ -1,6 +1,12 @@
 
 2007-05-03  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/braillegenerator.py:
+          src/orca/speechgenerator.py:
+          Provided an adequate workaround for the problem in bug
+          #433398 – Orca does not provide access to the state of
+          checked menu items in OOo.
+
         * src/orca/scripts/StarOffice.py:
           Fix for bug #435307 – OOo Calc output traceback for 
           UnboundLocalError: local variable 'focusRegion' 
