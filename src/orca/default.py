@@ -614,8 +614,8 @@ class Script(script.Script):
         self.inputEventHandlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 orca._showAppPreferencesGUI,
-                # Translators: the application preferences configuration 
-                # dialog is the dialog that allows users to set their 
+                # Translators: the application preferences configuration
+                # dialog is the dialog that allows users to set their
                 # preferences for a specific application within Orca.
                 #
                 _("Displays the application preferences configuration dialog."))
@@ -4090,13 +4090,36 @@ class Script(script.Script):
         # present this label.
         # This case can be seen in FileChooserDemo application, in Open dialog
         # window, the line with "Look In" label, a combobox and some
-        # presentation buttons.]]]
+        # presentation buttons.
+        #
+        # Finally, we are searching the hierarchy of embedded components for
+        # children that are labels.]]]
         #
         if not label:
-
-            potentialLabel = None
+            potentialLabels = []
             useLabel = False
-            if ((object.role == rolenames.ROLE_FILLER) \
+            if (object.role == rolenames.ROLE_EMBEDDED):
+                candidate = object
+                while candidate.childCount:
+                    candidate = candidate.child(0)
+                # The parent of this object may contain labels
+                # or it may contain filler that contains labels.
+                #
+                candidate = candidate.parent
+                for i in range(0, candidate.childCount):
+                    child = candidate.child(i)
+                    if child.role == rolenames.ROLE_FILLER:
+                       candidate = child
+                       break
+                # If there are labels in this embedded component,
+                # they should be here.
+                #
+                for j in range(0, candidate.childCount):
+                    child = candidate.child(j)
+                    if child.role == rolenames.ROLE_LABEL:
+                        useLabel = True
+                        potentialLabels.append(child)
+            elif ((object.role == rolenames.ROLE_FILLER) \
                     or (object.role == rolenames.ROLE_PANEL)) \
                 and (object.childCount == 2):
                 child0 = object.child(0)
@@ -4106,13 +4129,13 @@ class Script(script.Script):
                     and child1.role in [rolenames.ROLE_FILLER, \
                                         rolenames.ROLE_PANEL]:
                     useLabel = True
-                    potentialLabel = child0
+                    potentialLabels.append(child0)
                 elif child1.role == rolenames.ROLE_LABEL \
                     and not self.__hasLabelForRelation(child1) \
                     and child0.role in [rolenames.ROLE_FILLER, \
                                         rolenames.ROLE_PANEL]:
                     useLabel = True
-                    potentialLabel = child1
+                    potentialLabels.append(child1)
             else:
                 parent = object.parent
                 if parent and \
@@ -4123,12 +4146,15 @@ class Script(script.Script):
                             potentialLabel = parent.child(i)
                             useLabel = self.__isLabeling(potentialLabel, object)
                             if useLabel:
+                                potentialLabels.append(potentialLabel)
                                 break
                         except:
                             pass
 
-            if useLabel and potentialLabel:
-                label = potentialLabel.name
+            if useLabel and len(potentialLabels):
+                label = ""
+                for potentialLabel in potentialLabels:
+                    label += (potentialLabel.name + " ")
 
         return label
 

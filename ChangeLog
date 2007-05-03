@@ -1,3 +1,8 @@
+2007-05-03  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/default.py: Fix for bug 435577 - Orca does not speak
+        labels of embedded components in gnome-panel.
+
 2007-05-02  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
