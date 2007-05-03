@@ -233,6 +233,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
+        focusRegion = None
         regions = []
 
         # Check to see if this spread sheet cell has either a dynamic
