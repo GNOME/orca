@@ -1848,7 +1848,8 @@ class Script(default.Script):
             # See bug #363830 and OOo issue #70872.]]]
             #
             if not self.tickled:
-                self.tickled = self.flatReviewContextClass(self)
+                self.getObjects(self.getFrame(event.source))
+                self.tickled = True
 
         # Announce when the toolbar buttons are toggled if we just toggled
         # them; not if we navigated to some text.
