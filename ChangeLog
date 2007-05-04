@@ -1,3 +1,8 @@
+2007-05-04  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py, src/orca/orca.in, src/orca/keybindings.py:
+        more work on bug 434948 to allow Orca modifier key to work on keys
+        that use multiple keysyms.
 
 2007-05-03  Rich Burridge <rich.burridge@sun.com>
 
@@ -8,11 +13,11 @@
           checked menu items in OOo.
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435307 – OOo Calc output traceback for 
-          UnboundLocalError: local variable 'focusRegion' 
+          Fix for bug #435307 – OOo Calc output traceback for
+          UnboundLocalError: local variable 'focusRegion'
           referenced before assignment. Just needed to initialize
-          focusRegion to None need the beginning of the 
-          _getBrailleRegionsForTableCellRow() method in the 
+          focusRegion to None need the beginning of the
+          _getBrailleRegionsForTableCellRow() method in the
           StarOffice script.
 
 2007-05-03  Joanmarie Diggs <j-diggs@comcast.net>

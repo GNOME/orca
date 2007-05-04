@@ -667,13 +667,39 @@ def _processKeyboardEvent(event):
 
     keyboardEvent = KeyboardEvent(event)
 
-    # See if this is one of our special Orca modifiers (e.g., "Insert")
+    # See if this is one of our special Orca modifier keys.
     #
-    orcaModifierKeys = settings.orcaModifierKeys
-    orcaModifierKeycodes = []
-    for keysym in orcaModifierKeys:
-        orcaModifierKeycodes.append(keybindings.getKeycode(keysym))
-    isOrcaModifier = orcaModifierKeycodes.count(keyboardEvent.hw_code) > 0
+    # [[[TODO: WDW - Note that just looking at the keycode should
+    # suffice, but there is a "feature" in the Java Access Bridge
+    # where it chooses to emit Java platform-independent keycodes
+    # instead of the keycodes for the base platform:
+    #
+    # http://bugzilla.gnome.org/show_bug.cgi?id=106004
+    # http://bugzilla.gnome.org/show_bug.cgi?id=318615
+    #
+    # So...we need to workaround this problem.
+    #
+    # If you make the following expression True we will get a positive
+    # match for all keysyms associated with a given keysym specified
+    # as an Orca modifier key.
+    #
+    # For example, assume the Orca modifier is set to \ for some
+    # reason.  The key that has \ on it produces \ without the Shift
+    # key and | with the Shift key.  If the following expression is
+    # True, both the \ and | will be viewed as the Orca modifier.  If
+    # the following expression is False, only the \ will be viewed as
+    # the Orca modifier (i.e., Shift+\ will still function as the |
+    # character).  In general, I think we want to avoid sucking in all
+    # possible keysyms because it can have unexpected results.]]]
+    #
+    if False:
+        allPossibleKeysyms = []
+        for keysym in settings.orcaModifierKeys:
+            allPossibleKeysyms.extend(keybindings.getAllKeysyms(keysym))
+    else:
+        allPossibleKeysyms = settings.orcaModifierKeys
+
+    isOrcaModifier = allPossibleKeysyms.count(keyboardEvent.event_string) > 0
 
     if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
@@ -882,9 +908,30 @@ def loadUserSettings(script=None, inputEvent=None):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
+    # We don't want the Caps_Lock modifier to act as a locking
+    # modifier if it used as the Orca modifier key.  In addition, if
+    # the KP_Insert key is used as the Orca modifier key, we want to
+    # make sure we clear any other keysyms that might be in use on
+    # that key since we won't be able to detect them as being the Orca
+    # modifier key.  For example, KP_Insert produces "KP_Insert" when
+    # pressed by itself, but Shift+KP_Insert produces "0".
+    #
+    # The original values are saved/reset in the orca shell script.
+    #
+    # [[[TODO: WDW - we probably should just to a 'xmodmap -e "%s = %s"'
+    # for all of the orcaModifierKeys, but saving/restoring the values
+    # becomes a little more difficult.  If we could assume a writeable
+    # filesystem (we cannot), we could do a 'xmodmap -pke > /tmp/foo'
+    # to save the keymap and a 'xmodmap /tmp/foo' to restore it.
+    # For now, we'll just look at the Orca modifier keys we support
+    # (Caps Lock, KP_Insert, and Insert).]]]
+    #
     for keyName in settings.orcaModifierKeys:
         if keyName == "Caps_Lock":
             os.system('xmodmap -e "clear Lock"')
+        if keyName in ["Caps_Lock", "KP_Insert", "Insert"]:
+            command = 'xmodmap -e "keysym %s = %s"' % (keyName, keyName)
+            os.system(command)
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].activate()

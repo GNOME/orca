@@ -42,7 +42,52 @@ import settings
 
 from orca_i18n import _           # for gettext support
 
+_keysymsCache = {}
 _keycodeCache = {}
+
+def getAllKeysyms(keysym):
+    """Given a keysym, find all other keysyms associated with the key
+    that is mapped to the given keysym.  This allows us, for example,
+    to determine that the key bound to KP_Insert is also bound to KP_0."""
+
+    if not _keysymsCache.has_key(keysym):
+        # The keysym itself is always part of the list.
+        #
+        _keysymsCache[keysym] = [keysym]
+
+        # Find the numerical value of the keysym
+        #
+        keyval = gtk.gdk.keyval_from_name(keysym)
+
+        if keyval != 0:
+            # Find the keycodes for the keysym.  Since a keysym
+            # can be associated with more than one key, we'll shoot
+            # for the keysym that's in group 0, regardless of shift
+            # level (each entry is of the form [keycode, group,
+            # level]).
+            #
+            keymap = gtk.gdk.keymap_get_default()
+            entries = keymap.get_entries_for_keyval(keyval)
+            keycode = 0
+            if entries:
+                for entry in entries:
+                    if entry[1] == 0:  # group = 0
+                        keycode = entry[0]
+                        break
+
+            # Find the keysyms bound to the keycode.  These are what
+            # we are looking for.
+            #
+            if keycode != 0:
+                entries = keymap.get_entries_for_keycode(keycode)
+                if entries:
+                    for entry in entries:
+                        keyval = entry[0]
+                        name = gtk.gdk.keyval_name(keyval)
+                        if name and (name != keysym):
+                            _keysymsCache[keysym].append(name)
+
+    return _keysymsCache[keysym]
 
 def getKeycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
