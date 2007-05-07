@@ -322,11 +322,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 try:
                     debug.println(debug.LEVEL_FINEST,
                                   "Looking for settings at %s.py..." % name)
-                    if self._knownAppSettings.has_key(name):
-                        reload(self._knownAppSettings[name])
-                    else:
+                    if not self._knownAppSettings.has_key(name):
                         self._knownAppSettings[name] = \
                             __import__(name, globals(), locals(), [''])
+                    reload(self._knownAppSettings[name])
                     debug.println(debug.LEVEL_FINEST,
                                   "...found %s.py" % name)
 
