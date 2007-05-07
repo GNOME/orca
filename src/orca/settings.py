@@ -385,7 +385,7 @@ speakBlankLines         = True
 # If True, reads all the table cells in the current row rather than just
 # the current one.
 #
-readTableCellRow    = True
+readTableCellRow    = False
 
 # The default set of text attributes to speak to the user. Specific
 # application scripts (or individual users can override these values if

@@ -7,6 +7,17 @@
           been set), without having to Alt-Tab away and back or
           reloading Orca.
 
+        * src/orca/settings.py:
+          Part of the fallout of working on bug #435852 – Orca and 
+          OpenOffice Calc have a memory lovefest. The default setting
+          for "readTableCellRow" is now False rather than True. This
+          improves memory performance in OOo Calc spreadsheets which, 
+          by default, contain 256 cells per row. 
+
+          Note that as we now have application specific settings, it's 
+          possible to set "readTableCellRow" to True for individual
+          applications (such as Evolution), easily overriding the default.
+
 2007-05-07  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
