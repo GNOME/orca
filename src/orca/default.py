@@ -4040,22 +4040,19 @@ class Script(script.Script):
 
         return self._unicodeCurrencySymbols
 
-    def getDisplayedLabel(self, object):
-        """If there is an object labelling the given object, return the
-        text being displayed for the object labelling this object.
-        Otherwise, return None.
+    def findDisplayedLabel(self, object):
+        """Return a list of the objects that are labelling this object.
 
         Argument:
         - object: the object in question
 
-        Returns the string of the object labelling this object, or None
-        if there is nothing of interest here.
+        Returns a list of the objects that are labelling this object.
         """
 
         # For some reason, some objects are labelled by the same thing
         # more than once.  Go figure, but we need to check for this.
         #
-        label = None
+        label = []
         relations = object.relations
         allTargets = []
 
@@ -4075,7 +4072,7 @@ class Script(script.Script):
                                                        relation.getTarget(i))
                     if not target in allTargets:
                         allTargets.append(target)
-                        label = self.appendString(label, self.getDisplayedText(target))
+                        label.append(target)
 
         # [[[TODO: HACK - we've discovered oddness in hierarchies such as
         # the gedit Edit->Preferences dialog.  In this dialog, we have
@@ -4095,7 +4092,7 @@ class Script(script.Script):
         # Finally, we are searching the hierarchy of embedded components for
         # children that are labels.]]]
         #
-        if not label:
+        if not len(label):
             potentialLabels = []
             useLabel = False
             if (object.role == rolenames.ROLE_EMBEDDED):
@@ -4152,11 +4149,28 @@ class Script(script.Script):
                             pass
 
             if useLabel and len(potentialLabels):
-                label = ""
-                for potentialLabel in potentialLabels:
-                    label += (potentialLabel.name + " ")
+                label = potentialLabels
 
         return label
+
+    def getDisplayedLabel(self, object):
+        """If there is an object labelling the given object, return the
+        text being displayed for the object labelling this object.
+        Otherwise, return None.
+
+        Argument:
+        - object: the object in question
+
+        Returns the string of the object labelling this object, or None
+        if there is nothing of interest here.
+        """
+
+        string = None
+        labels = self.findDisplayedLabel(object)
+        for label in labels:
+            string = self.appendString(string, self.getDisplayedText(label))
+
+        return string
 
     def __getDisplayedTextInComboBox(self, combo):
 

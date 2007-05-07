@@ -1,3 +1,21 @@
+2007-05-07  Joanmarie Diggs <j-diggs@comcast.net>
+	
+	* src/orca/Gecko.py: 
+	1. Fix for bug #436718: Navigating in focusable lists in 
+           Firefox's 7-May build hangs Orca. In this afternoon's Firefox,
+           the children of lists in forms stopped being menu items and 
+           started being list items. The goal of this fix is to stop the
+           hanging and re-enable list navigation under these new 
+           conditions. Note that Orca might declare items in form lists 
+           as "greyed."  As soon as I hear back from the Firefox guys as
+           to whether this change was intentional or is a new bug, I'll 
+           adjust accordingly.
+	* src/orca/Gecko.py, src/orca/default.py:
+	2. Fix for bug #428114: Orca should attempt to detect erroneously-
+           marked combo box labels in Firefox.  If a combo box's label
+           consists of the entire contents of the combo box, the label
+           is bogus and should be ignored.  
+
 2007-05-07  Willie Walker <william.walker@sun.com>
 
         * src/orca/keybindings.py: add __str__ function for KeyBindings

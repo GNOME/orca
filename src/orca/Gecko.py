@@ -1,3 +1,4 @@
+
 # Orca
 #
 # Copyright 2005-2007 Sun Microsystems Inc.
@@ -539,7 +540,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # we'll fall back to the accessible name.
         #
         label = self._script.getDisplayedLabel(obj)
-        if not label:
+        if not label and not self._script.inDocumentContent():
             label = obj.name
 
         if not already_focused and label:
@@ -2091,6 +2092,43 @@ class Script(default.Script):
 
         return True
 
+    def getDisplayedLabel(self, obj):
+        """If there is an object labelling the given object, return the
+        text being displayed for the object labelling this object.
+        Otherwise, return None.  Overridden here to handle instances
+        of bogus labels and form fields where a lack of labels necessitates
+        our attempt to guess the text that is functioning as a label.
+
+        Argument:
+        - obj: the object in question
+
+        Returns the string of the object labelling this object, or None
+        if there is nothing of interest here.
+        """
+
+        string = None
+        labels = self.findDisplayedLabel(obj)
+        for label in labels:
+            # Check to see if the official labels are valid.
+            #
+            bogus = False
+            if obj.role == rolenames.ROLE_COMBO_BOX and \
+               self.inDocumentContent():
+                # Bogus case #1:
+                # <label></label> surrounding the entire combo box which
+                # makes the entire combo box's contents serve as the label.
+                # We can identify this case because the child of the label
+                # is the combo box. See bug #428114.
+                #
+                if label.childCount and \
+                   label.child(0).role == rolenames.ROLE_COMBO_BOX:
+                    bogus = True
+
+            if not bogus:
+                string = self.appendString(string, self.getDisplayedText(label))
+
+        return string
+    
     def onCaretMoved(self, event):
         """Caret movement in Gecko is somewhat unreliable and
         unpredictable, but we need to handle it.  When we detect caret
@@ -3080,7 +3118,8 @@ class Script(default.Script):
                     weHandleIt = \
                         keyboardEvent.event_string in ["Left", "Right"]
 
-        elif obj and (obj.role == rolenames.ROLE_LIST):
+        elif obj and obj.role in [rolenames.ROLE_LIST,
+                                  rolenames.ROLE_LIST_ITEM]:
             # We'll let Firefox handle the navigation of lists in forms.
             #
             if obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
@@ -4720,7 +4759,8 @@ class Script(default.Script):
             # Move back to the first character in the list before setting
             # the caret position.
             #
-            if lastObj.role == rolenames.ROLE_LIST_ITEM:
+            if lastObj.role == rolenames.ROLE_LIST_ITEM and not \
+               lastObj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
                 extents = self.getExtents(lastObj,
                                           lastCharacterOffset,
                                           lastCharacterOffset + 1)
