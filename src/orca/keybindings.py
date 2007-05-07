@@ -242,6 +242,16 @@ class KeyBindings:
     def __init__(self):
         self.keyBindings = []
 
+    def __str__(self):
+        result = "[\n"
+        for keyBinding in self.keyBindings:
+            result += "  [%x %x %s %s]\n" % (keyBinding.modifier_mask,
+                                             keyBinding.modifiers,
+                                             keyBinding.keysymstring,
+                                             keyBinding.handler._description)
+        result += "]"
+        return result
+    
     def add(self, keyBinding):
         """Adds the given KeyBinding instance to this set of keybindings.
         """
