@@ -876,6 +876,49 @@
 <para>all other selected rows (regardless of speak cell/row setting) followed by "selected</para>
 </listitem>
 	  </orderedlist>
+	  <para>Tree Tables present the following information (an example
+	  is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
+
+	  <orderedlist numeration="arabic">
+	    <listitem>
+	      <para>label, if any</para>
+	    </listitem>
+	    <listitem>
+	      <para>role</para>
+	    </listitem>
+	    <listitem>
+	      <para>current row (regardless of speak cell/row setting)</para>
+	    </listitem>
+	    <listitem>
+	      <para>relative position</para>
+	    </listitem>
+	    <listitem>
+	      <para>if expandable/collapsible: expanded/collapsed</para>
+	    </listitem>
+	    <listitem>
+	      <para>if applicable, the level</para>
+	    </listitem>
+<listitem>
+<para>all other selected rows (regardless of speak cell/row setting) followed by "selected</para>
+</listitem>
+	  </orderedlist>
+	  <para>Icon Panels present the following information (an example
+	  is "Icon Panel, Mike Pedersen, item 8 of 10, tree level 2"):
+
+	  <orderedlist numeration="arabic">
+	    <listitem>
+	      <para>label, if any</para>
+	    </listitem>
+	    <listitem>
+	      <para>role</para>
+	    </listitem>
+	    <listitem>
+	      <para>relative position</para>
+	    </listitem>
+<listitem>
+<para>all other selected icons followed by "selected</para>
+</listitem>
+	  </orderedlist>
 
 	  <para>Given the nature of OpenOffice Calc, Orca should
 	  override the default KP_Enter behavior when the item with
