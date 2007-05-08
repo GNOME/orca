@@ -104,8 +104,7 @@
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER" or "modifier+enter": performs "Where Am I?"  If this key is
-            pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter or modifier+/ they will hear any relevant status bar information
-            will be spoken.</para>
+            pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter or modifier+/ they will hear any relevant           status bar information.</para>
 	  <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>
 	  <para>&incomplete; [OWNER: WDW] The "where am I" is implemented in V0.2.5. however pressing twice does not yet give statusbar information.</para>

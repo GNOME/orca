@@ -1,3 +1,12 @@
+2007-05-07  Mike Pedersen <michael.pedersen@sun.com>
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/ue_input_style.sgml,
+        * docs/doc-set/orca.pdf
+
+          yet more Updates to the specs
+
 2007-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
