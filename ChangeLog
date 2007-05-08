@@ -1,3 +1,11 @@
+2007-05-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #435201 – Orca is too chatty when navigating by 
+          paragraph in OOo Writer.
+          Ignore "object:text-caret-moved" events when moving my paragraph 
+          in OOo Writer using Control-Up/Down, if event.detail1 is -1.
+
 2007-05-07  Joanmarie Diggs <j-diggs@comcast.net>
 	
 	* src/orca/Gecko.py: 

@@ -2108,6 +2108,12 @@ class Script(default.Script):
                     speech.speak(_("blank"), None, False)
                 return
 
+        # If detail1 from the "object:text-caret-moved" event is -1, 
+        # then just ignore it. See Orca bug #435201 for more details.
+        #
+        if event.detail1 == -1:
+            return
+
         # Speak a newline, if appropriate.
         if self.speakNewLine(event.source):
             speech.speak(chnames.getCharacterName("\n"), None, False)
