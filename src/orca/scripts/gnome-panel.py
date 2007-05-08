@@ -46,7 +46,7 @@ from orca.orca_i18n import _
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for gnome-terminal
+        """Creates a new script for gnome-panel
 
         Arguments:
         - app: the application to create a script for.
@@ -82,10 +82,24 @@ class Script(default.Script):
                event.detail1 == 1:
                 braille.displayMessage(obj.name)
                 speech.speak(obj.name)
-
             # Delete the cached accessible to force the AT-SPI to update
             # the accessible cache. Otherwise, the event references the
             # previous popup object.
+            #
             atspi.Accessible.deleteAccessible(obj._acc)
+
+        # If focus moves to something within a panel and focus was not
+        # already in the containing panel, the panel will issue its
+        # own state-changed:focused event with detail1 == 1 after the
+        # event for the item with focus.  The panel is not focused,
+        # plus the extraneous event results in unnecessary chattiness
+        # and updates the braille display to "panel."
+        #
+        elif obj.role == rolenames.ROLE_PANEL and \
+             event.type == "object:state-changed:focused" and \
+             event.detail1 == 1 and not \
+             event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            return
+
         else:
             default.Script.onStateChanged(self, event)

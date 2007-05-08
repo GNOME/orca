@@ -1,3 +1,8 @@
+2007-05-08  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/scripts/gnome-panel.py: More work on bug 435577 - 
+        Orca does not speak labels of embedded components in gnome-panel.
+
 2007-05-07  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
