@@ -912,11 +912,8 @@
 	    <listitem>
 	      <para>role</para>
 	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
 <listitem>
-<para>all other selected icons followed by "selected</para>
+<para>all selected icons followed by "selected</para>
 </listitem>
 	  </orderedlist>
 
