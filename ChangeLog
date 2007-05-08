@@ -41,6 +41,11 @@
           possible to set "readTableCellRow" to True for individual
           applications (such as Evolution), easily overriding the default.
 
+        * src/orca/settings.py:
+          Boing said Zeppedee! The change setting "readTableCellRow" ito 
+          False has been removed. It's now back to True per comment #34
+          from Mike in bug #435852.
+
 2007-05-07  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
