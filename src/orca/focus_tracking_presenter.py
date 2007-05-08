@@ -654,10 +654,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           ...acquired")
-            if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           calling queue.put...")
-            if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           (full=%s)" % self._eventQueue.full())
             self._eventQueue.put(event)

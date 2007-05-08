@@ -32,7 +32,6 @@ import orca.default as default
 import orca.debug as debug
 import orca.braille as braille
 import orca.speech as speech
-import orca.settings as settings
 import orca.rolenames as rolenames
 
 from orca.orca_i18n import _
@@ -46,7 +45,7 @@ from orca.orca_i18n import _
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for gnome-panel
+        """Creates a new script for gnome-terminal
 
         Arguments:
         - app: the application to create a script for.

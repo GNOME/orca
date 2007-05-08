@@ -1,9 +1,15 @@
+2007-05-08  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/gnome-panel.py, src/orca/rolenames.py,
+        src/orca/focus_tracking_presenter.py: typo fixes from
+        delYsid (Mario Lang).
+
 2007-05-08  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/gnome-panel.py: More work on bug 435577 - 
         Orca does not speak labels of embedded components in gnome-panel.
 
-2007-05-07  Mike Pedersen <michael.pedersen@sun.com>
+2007-05-08  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
         * docs/doc-set/orca.html,
@@ -37,10 +43,10 @@
            marked combo box labels in Firefox.  If a combo box's label
            consists of the entire contents of the combo box, the label
            is bogus and should be ignored.  
-
+ 
 2007-05-07  Willie Walker <william.walker@sun.com>
 
-        * src/orca/keybindings.py: add __str__ function for KeyBindings
+       * src/orca/keybindings.py: add __str__ function for KeyBindings
         class.
 
 2007-05-07  Rich Burridge <rich.burridge@sun.com>

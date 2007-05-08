@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Provides a methods that converts the role name of an Accessible
+"""Provides methods that convert the role name of an Accessible
 object into localized strings for speech and braille."""
 
 __id__        = "$Id$"
