@@ -1,3 +1,11 @@
+2007-05-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #363804 – Add ability to turn off coordinate 
+          announcement when navigating in Calc.
+          Added a new "Speak spread sheet cell coordinates" checkbox to
+          the app-specific GUI settings for StarOffice/OpenOffice.
+
 2007-05-08  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/harness/runall.sh: removed a minor change that was 

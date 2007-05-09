@@ -46,6 +46,10 @@ import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
 
+# Whether we speak spread sheet cell coordinates as the user moves around.
+#
+speakCellCoordinates = True
+
 class WhereAmI(where_am_I.WhereAmI):
 
     def __init__(self, script):
@@ -564,6 +568,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        global speakCellCoordinates
+
         if self._script.isSpreadSheetCell(obj):
             utterances = []
 
@@ -573,10 +579,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             if obj.text:
                 objectText = self._script.getText(obj, 0, -1)
+                if not speakCellCoordinates and len(objectText) == 0:
+                    # Translators: this indicates an empty (blank) spread
+                    # sheet cell.
+                    #
+                    objectText = _("blank")
+
                 utterances.append(objectText)
 
-            nameList = obj.name.split()
-            utterances.append(nameList[1])
+            if speakCellCoordinates:
+                nameList = obj.name.split()
+                utterances.append(nameList[1])
         else:
             # Check to see how many children this table cell has. If it's
             # just one (or none), then pass it on to the superclass to be
@@ -811,10 +824,14 @@ class Script(default.Script):
         GUI items for the current application.
         """
 
+        global speakCellCoordinates
+
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
 
+        # Text entry and label for "Enabled Text Attributes:".
+        #
         hbox = gtk.HBox(False, 0)
         gtk.Widget.show(hbox)
 
@@ -838,6 +855,16 @@ class Script(default.Script):
 
         gtk.Box.pack_start(vbox, hbox, False, False, 0)
 
+        # Checkbox for "Speak spread sheet cell coordinates".
+        #
+        label = _("Speak spread sheet cell coordinates")
+        self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellCoordinatesCheckButton)
+        gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton, 
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
+                                    speakCellCoordinates)
+
         return vbox
 
     def setAppPreferences(self, prefs):
@@ -848,10 +875,18 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
+        global speakCellCoordinates
+
         settings.enabledTextAttributes = self.enabledTextAttributes.get_text()
         prefs.writelines("\n")
         prefs.writelines("orca.settings.enabledTextAttributes = '%s'\n" %  \
                          settings.enabledTextAttributes)
+
+        speakCellCoordinates = \
+                 self.speakCellCoordinatesCheckButton.get_active()
+        prefs.writelines( \
+                 "orca.scripts.StarOffice.speakCellCoordinates = %s\n" % \
+                 speakCellCoordinates)
 
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
