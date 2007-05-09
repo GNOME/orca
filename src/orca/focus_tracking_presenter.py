@@ -418,10 +418,26 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         try:
             if event.source.role == rolenames.ROLE_TOOL_TIP:
-                # Check that it's okay to present tool tips. There
-                # is a bug in GTK versions prior to 2.10.11 that
-                # caused gnome-panel to crash.
-                if not settings.presentToolTips:
+                # Check that it's okay to present tool tips. Always present 
+                # tooltips initiated by the user pressing Control-F1 on the
+                # keyboard.
+                #
+                if isinstance(orca_state.lastInputEvent, \
+                              input_event.KeyboardEvent):
+                    if not orca_state.lastInputEvent.event_string == "F1":
+                        return
+
+                    # Mouse move events don't update orca_state.lastInputEvent
+                    # so it's possible the user accidentally nudged the
+                    # mouse and generated another tooltip event. If the
+                    # current time minus the last keyboard event time is 
+                    # greater than 0.2 seconds, than just ignore this tooltip
+                    # event.
+                    #
+                    currentTime =  time.time()
+                    if (currentTime - orca_state.lastInputEvent.time) > 0.2:
+                        return
+                elif not settings.presentToolTips:
                     return
         except:
             pass

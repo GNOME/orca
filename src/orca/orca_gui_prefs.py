@@ -984,6 +984,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
         self.confirmQuitCheckButton.set_active(prefs["quitOrcaNoConfirmation"])
+        self.presentTooltipsCheckButton.set_active( \
+            prefs["presentToolTips"] and settings.canPresentToolTips)
 
         self.disableKeyGrabPref = settings.isGKSUGrabDisabled()
         self.disableKeyGrabCheckButton.set_active(self.disableKeyGrabPref)
@@ -2054,6 +2056,20 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["quitOrcaNoConfirmation"] = widget.get_active()
+
+    def presentTooltipsChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           presentTooltipsCheckButton GtkCheckButton widget.
+           The user has [un]checked the 'Present Tooltips'
+           checkbox. Set the 'presentToolTips'
+           preference to the new value if the user can present tooltips.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["presentToolTips"] = widget.get_active() and \
+                                            settings.canPresentToolTips
 
     def disableKeyGrabChecked(self, widget):
         """Signal handler for the "toggled" signal for the

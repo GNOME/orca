@@ -36,7 +36,7 @@ tty = 7
 
 # Whether tool tips can be presented.
 #
-presentToolTips = False
+canPresentToolTips = False
 
 try:
     # This can fail due to gtk not being available.  We want to
@@ -67,7 +67,7 @@ try:
     current_gtk_version  = (100000 * gtk.gtk_version[0]) + \
                            (1000 * gtk.gtk_version[1]) + \
                             gtk.gtk_version[2]
-    presentToolTips = (current_gtk_version >= minimum_gtk_version)
+    canPresentToolTips = (current_gtk_version >= minimum_gtk_version)
 except:
     pass
 
@@ -125,6 +125,7 @@ userCustomizableSettings = [
     "verbalizePunctuationStyle",
     "showMainWindow",
     "quitOrcaNoConfirmation",
+    "presentToolTips",
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
@@ -371,6 +372,10 @@ showMainWindow          = True
 # <Orca-modifier>-q.
 #
 quitOrcaNoConfirmation  = False
+
+# Whether the user wants tooltips presented or not.
+#
+presentToolTips = False and canPresentToolTips
 
 # Keyboard layout options (see keyboardLayout).
 #

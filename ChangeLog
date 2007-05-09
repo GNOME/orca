@@ -1,5 +1,21 @@
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py:
+          src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          Fixed bug #368640 – Allow user to optionally ignore or be 
+          notified of tool tips. There is now a "Present Tooltips"
+          checkbox available on the General pane of the Orca Preferences
+          dialog that allows the user to un/set this feature.
+
+          Mouse move events don't update orca_state.lastInputEvent so 
+          it's possible the user accidentally nudged the mouse and 
+          generated another tooltip event. If the current time minus 
+          the last keyboard event time is greater than 0.2 seconds, 
+          than just ignore this tooltip event.
+
+2007-05-09  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/script.py:
           src/orca/focus_tracking_presenter.py:
           Fixed bug #437004 – Add in hooks for allowing 
