@@ -433,3 +433,11 @@ class Script:
         - obj: the Accessible whose visual appearance changed.
         """
         pass
+
+    def activate(self):
+        """Called when this script is activated."""
+        pass
+
+    def deactivate(self):
+        """Called when this script is deactivated."""
+        pass

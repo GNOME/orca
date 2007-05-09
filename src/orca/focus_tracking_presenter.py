@@ -74,7 +74,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._gidleLock      = threading.Lock()
         self.noFocusTimestamp = 0.0
 
-        orca_state.activeScript = None
+        self.setActiveScript(None)
 
         if settings.debugEventQueue:
             self._enqueueEventCount = 0
@@ -264,6 +264,25 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             self._registerEventListeners(script)
 
         return script
+
+    def setActiveScript(self, newScript):
+        """Set the new active script.
+
+        Arguments:
+        - newScript: the new script to be made active.
+        """
+
+        try:
+            orca_state.activeScript.deactivate()
+        except:
+            pass
+
+        orca_state.activeScript = newScript
+
+        try:
+            orca_state.activeScript.activate()
+        except:
+            pass 
 
     def _reclaimScripts(self):
         """Compares the list of known scripts to the list of known apps,
@@ -499,8 +518,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
-                        orca_state.activeScript = \
-                            self._getScript(event.source.app)
+                        self.setActiveScript(self._getScript(event.source.app))
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
 
@@ -871,7 +889,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._oldAppSettings = None
         self._defaultScript  = None
 
-        orca_state.activeScript = self._getScript(None)
+        self.setActiveScript(self._getScript(None))
 
         # Tell BrlTTY which commands we care about.
         #
@@ -906,4 +924,4 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._oldAppSettings = None
         self._defaultScript  = None
 
-        orca_state.activeScript = None
+        self.setActiveScript(None)

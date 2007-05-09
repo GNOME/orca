@@ -1,5 +1,20 @@
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/script.py:
+          src/orca/focus_tracking_presenter.py:
+          Fixed bug #437004 – Add in hooks for allowing 
+          activation/deactivation script methods.
+          Added two new methods to the Script class in script.py:
+
+              def activate(self):
+              def deactivate(self):
+
+          Added a new setActiveScript(self, newScript):
+
+          method in focus_tracking_presenter.py, and replaced all
+          occurances of "orca_state.activeScript = ..." with a call
+          to self.setActiveScript().
+
         * src/orca/where_am_I.py:
           Fixed bug #435223 – Where-am-I doesn't correctly identify 
           multiple selected objects in Nautilus.
