@@ -1,5 +1,11 @@
 2007-05-08  Lynn MonSanto <lynn.monsanto@sun.com>
 
+        * test/harness/runall.sh: removed a minor change that was 
+        accidently putback. A line was commented out that
+        removes the temporary files after a run.
+
+2007-05-08  Lynn MonSanto <lynn.monsanto@sun.com>
+
         * src/orca/J2SE-access-bridge.py, src/orca/rolenames.py,
 	Bug 437049 Orca does not speak Java Control Panel spinbox changes.
 	Added rolenames.ROLE_SPIN_BOX. Also included a potential workaround
