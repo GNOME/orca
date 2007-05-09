@@ -99,7 +99,17 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
+
+        # Set the debug level for all the methods in this script.
+        #
+        self.debugLevel = debug.LEVEL_FINEST
+
         default.Script.__init__(self, app)
+
+    def _debug(self, msg):
+        """ Convenience method for printing debug messages
+        """
+        debug.println(self.debugLevel, "J2SE-access-bridge.py: "+msg)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -124,6 +134,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        self._debug("onFocus: %s '%s'" % \
+                    (event.source.role, event.source.name))
 
         role = event.source.role
         if role == rolenames.ROLE_LIST:
@@ -159,6 +172,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        self._debug("onStateChanged: %s: %s '%s' (%d,%d)" % \
+                    (event.type, event.source.role, event.source.name, event.detail1, event.detail2))
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)
         # where popup menu events are not sent to Orca.
@@ -217,6 +233,9 @@ class Script(default.Script):
         - event: the Event
         """
 
+        self._debug("onSelectionChanged: %s '%s'" % \
+                    (event.source.role, event.source.name))
+
         if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
             return
 
@@ -266,12 +285,18 @@ class Script(default.Script):
         - event: the Event
         """
 
+        self._debug("onValueChanged: %s '%s' value=%d" % \
+                    (event.source.role, event.source.name,
+                     event.source.value.currentValue))
+
         # We'll let state-changed:checked event to be used to
         # manage check boxes in java application
         #
         if event.source.role == rolenames.ROLE_CHECK_BOX and \
                event.type == "object:property-change:accessible-value":
             return
+
+        default.Script.onValueChanged(self, event)
 
 
     def visualAppearanceChanged(self, event, obj):
@@ -287,6 +312,9 @@ class Script(default.Script):
         - obj: the Accessible whose visual appearance changed.
         """
 
+        self._debug("visualAppearanceChanged: %s '%s', locusOfFocus=%s" % \
+                    (obj.role, obj.name, orca_state.locusOfFocus.role))
+
         # Present to Braille and Speech an object that is the same
         # with the last focused object, only if it is a label.
         # This case is for LISTs which contain labels as items
@@ -298,5 +326,47 @@ class Script(default.Script):
                 speech.speakUtterances(self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
                 return
 
+        if obj.role == rolenames.ROLE_SPIN_BOX:
+            # Check for the spinbox text object being null. There appears
+            # to be a bug where the text object for some text fields
+            # is null. 
+            if orca_state.locusOfFocus.role == rolenames.ROLE_TEXT and \
+               orca_state.locusOfFocus.text == None:
+                # Set the locusOfFocus to the spinbox itself.
+                orca.setLocusOfFocus(event, obj)
+
         default.Script.visualAppearanceChanged(self, event, obj)
 
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        self._debug("onCaretMoved: %s '%s'" % \
+                    (event.source.role, event.source.name))
+
+        # Check for bogus events containing null text objects.
+        if event.source.text == None:
+            self._debug("bogus event: text object is null. Discarding event")
+            return;
+
+        default.Script.onCaretMoved(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever the text is inserted.
+
+        Arguments:
+        - event: the Event
+        """
+
+        self._debug("onTextInserted: %s '%s'" % \
+                    (event.source.role, event.source.name))
+
+        # Check for bogus events containing null text objects.
+        if event.source.text == None:
+            self._debug("bogus event: text object is null. Discarding event")
+            return;
+
+        default.Script.onTextInserted(self, event)        

@@ -1,3 +1,11 @@
+2007-05-08  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/J2SE-access-bridge.py, src/orca/rolenames.py,
+	Bug 437049 Orca does not speak Java Control Panel spinbox changes.
+	Added rolenames.ROLE_SPIN_BOX. Also included a potential workaround
+	for bogus text events where the text object is null. The
+	J2SE-access-bridge script discards the events.
+	
 2007-05-08  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/gnome-panel.py, src/orca/rolenames.py,
