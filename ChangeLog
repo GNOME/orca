@@ -1,5 +1,11 @@
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/where_am_I.py:
+          Fixed bug #435223 – Where-am-I doesn't correctly identify 
+          multiple selected objects in Nautilus.
+
+2007-05-09  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py:
           Fix for bug #363804 – Add ability to turn off coordinate 
           announcement when navigating in Calc.

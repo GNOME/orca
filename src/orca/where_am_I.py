@@ -126,6 +126,9 @@ class WhereAmI:
         elif role == rolenames.ROLE_PARAGRAPH:
             self._speakParagraph(obj, doubleClick)
 
+        elif role == rolenames.ROLE_ICON:
+            self._speakIconPanel(obj, doubleClick)
+
         else:
             self._speakGenericObject(obj, doubleClick)
 
@@ -570,6 +573,44 @@ class WhereAmI:
         """
 
         self._speakText(obj, doubleClick)
+
+    def _speakIconPanel(self, obj, doubleClick):
+        """Speak the contents of the pane containing this icon. The
+        number of icons in the pane is spoken. Plus the total number of
+        selected icons. Plus the name of each of the selected icons.
+
+        Arguments:
+        - obj: the icon object that currently has focus.
+        """
+
+        utterances = []
+        panel = obj.parent
+        childCount = panel.childCount
+
+        utterances.append(_("Icon panel"))
+        utterances.append(self._getObjLabelAndName(obj))
+        utterances.append(rolenames.getSpeechForRoleName(obj))
+
+        selectedItems = []
+        totalSelectedItems = 0
+        for i in range(0, childCount):
+            child = panel.child(i)
+            if child.state.count(atspi.Accessibility.STATE_SELECTED):
+                totalSelectedItems += 1
+                selectedItems.append(child)
+
+        # Translators: this is a count of the number of selected icons 
+        # and the count of the total number of icons within an icon panel. 
+        # An example of an icon panel is the Nautilus folder view.
+        #
+        utterances.append(_("%d of %d items selected") % \
+                          (totalSelectedItems, childCount))
+
+        if doubleClick:
+            for i in range(0, len(selectedItems)):
+                utterances.append(self._getObjLabelAndName(selectedItems[i]))
+
+        speech.speakUtterances(utterances)
 
     def _speakGenericObject(self, obj, doubleClick):
         """Speak a generic object; one not specifically handled by
