@@ -1,5 +1,13 @@
 2007-05-10  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py:
+          Implement the suggestion from Will in comment #25 of bug #435852.
+          We now use the extents of the parent table to find a range of 
+          spread sheet cells in the current row, that the current cell is in,
+          when we are speaking/brailling "by row".
+
+2007-05-10  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py:
           Fix for the Evolution sayAll problem reported in comment #48
           of bug #400716.

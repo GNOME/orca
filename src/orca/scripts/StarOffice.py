@@ -310,7 +310,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
                 if speakAll:
                     focusRowRegion = None
-                    for i in range(0, parent.table.nColumns):
+                    [startIndex, endIndex] = \
+                        self._script.getSpreadSheetRowRange(obj)
+                    for i in range(startIndex, endIndex+1):
                         accRow = parent.table.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)
                         showing = cell.state.count( \
@@ -535,7 +537,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                 parent.lastColumn == column)
 
                     if speakAll:
-                        for i in range(0, parent.table.nColumns):
+                        [startIndex, endIndex] = \
+                            self._script.getSpreadSheetRowRange(obj)
+                        for i in range(startIndex, endIndex+1):
                             accRow = parent.table.getAccessibleAt(row, i)
                             cell = atspi.Accessible.makeAccessible(accRow)
                             showing = cell.state.count( \
@@ -995,6 +999,39 @@ class Script(default.Script):
                   "StarOffice: locateInputLine: couldn't find common panel.")
 
         return inputLine
+
+    def getSpreadSheetRowRange(self, obj):
+        """If this is spread sheet cell, return the start and end indices 
+        of the spread sheet cells for the table that obj is in. Otherwise
+        return the complete range (0, parent.table.nColumns).
+
+        Arguments:
+        - obj: a spread sheet table cell.
+
+        Returns the start and end table cell indices.
+        """
+
+        parent = obj.parent
+        startIndex = 0
+        endIndex = parent.table.nColumns
+
+        if self.isSpreadSheetCell(obj):
+            y = parent.extents.y
+            leftX = parent.extents.x + 1
+            cell = parent.component.getAccessibleAtPoint(leftX, y, 0)
+            if cell:
+                leftCell = atspi.Accessible.makeAccessible(cell)
+                table = leftCell.parent.table
+                startIndex = table.getColumnAtIndex(leftCell.index)
+
+            rightX = parent.extents.x + parent.extents.width - 1
+            cell = parent.component.getAccessibleAtPoint(rightX, y, 0)
+            if cell:
+                rightCell = atspi.Accessible.makeAccessible(cell)
+                table = rightCell.parent.table
+                endIndex = table.getColumnAtIndex(rightCell.index)
+
+        return [startIndex, endIndex]
 
     def isSpreadSheetCell(self, obj):
         """Return an indication of whether the given obj is a spread sheet
