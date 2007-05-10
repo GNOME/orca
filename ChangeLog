@@ -1,3 +1,12 @@
+2007-05-09  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: More work on bug #423427 – Need to add
+        form field structural navigation in Firefox.  The a11y guys
+        at Firefox have been hard at work fixing the bugs we needed
+        fixed to have more reliable form field structural navigation.
+        Thanks guys!  We needed to update and adjust Gecko.py to work
+        correctly with their new changes.
+
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
