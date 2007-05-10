@@ -463,6 +463,19 @@ class Script(default.Script):
             if i == total:
                 done = True
 
+        # If there is anything left unspoken, speak it now.
+        # 
+        if len(string) != 0:
+            string = self.adjustForRepeats(string)
+            if string.isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = settings.voices[settings.DEFAULT_VOICE]
+
+            yield [speechserver.SayAllContext(textObjs, string,
+                                              startOffset, endOffset),
+                   voice]
+
     def __sayAllProgressCallback(self, context, type):
         """Provide feedback during the sayAll operation.
         """

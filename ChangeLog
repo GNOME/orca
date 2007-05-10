@@ -1,3 +1,9 @@
+2007-05-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Fix for the Evolution sayAll problem reported in comment #48
+          of bug #400716.
+
 2007-05-09  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: More work on bug #423427 – Need to add
