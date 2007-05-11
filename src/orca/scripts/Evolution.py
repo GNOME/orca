@@ -446,7 +446,8 @@ class Script(default.Script):
 
                         if not textObjs:
                             textObjs.append(textObj)
-                        yield [speechserver.SayAllContext(textObjs, string,
+                        if len(string) != 0:
+                            yield [speechserver.SayAllContext(textObjs, string,
                                                       startOffset, endOffset),
                                voice]
                         textObjs = []
