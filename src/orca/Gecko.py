@@ -1777,7 +1777,8 @@ class Script(default.Script):
         label = _("Use _Orca Caret Navigation")
         self.controlCaretNavigationCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.controlCaretNavigationCheckButton)
-        gtk.Box.pack_start(generalVBox, self.controlCaretNavigationCheckButton, 
+        gtk.Box.pack_start(generalVBox,
+                           self.controlCaretNavigationCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.controlCaretNavigationCheckButton,
                                     controlCaretNavigation)
@@ -1837,7 +1838,7 @@ class Script(default.Script):
         label = _("Announce cell _header")
         self.speakCellHeadersCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellHeadersCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton, 
+        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
                                     speakCellHeaders)
@@ -2129,7 +2130,7 @@ class Script(default.Script):
                 string = self.appendString(string, self.getDisplayedText(label))
 
         return string
-    
+
     def onCaretMoved(self, event):
         """Caret movement in Gecko is somewhat unreliable and
         unpredictable, but we need to handle it.  When we detect caret
@@ -2158,7 +2159,7 @@ class Script(default.Script):
             not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
             return
-        
+
         # Otherwise, we'll just assume that the thing in which the caret
         # moved is the locus of focus.
         #
@@ -2254,34 +2255,27 @@ class Script(default.Script):
 
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
-        self._loadingDocumentContent = True
-        # [[[TODO: WDW - Currently, we handle loading notification by
-        # looking at the state changed events on the document frame
-        # (we care about busy state there) and visibility/value changes
-        # on the progress bar.]]]
+        # We care about the main document and we'll ignore document
+        # events from HTML iframes.
         #
-        self._loadingDocumentContent = True
-        pass
+        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
         """Called when a web page load is completed."""
-        # [[[TODO: WDW - Currently, we handle loading notification by
-        # looking at the state changed events on the document frame
-        # (we care about busy state there) and visibility/value changes
-        # on the progress bar.]]]
+        # We care about the main document and we'll ignore document
+        # events from HTML iframes.
         #
-        self._loadingDocumentContent = False
-        pass
+        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = False
 
     def onDocumentLoadStopped(self, event):
         """Called when a web page load is interrupted."""
-        # [[[TODO: WDW - Currently, we handle loading notification by
-        # looking at the state changed events on the document frame
-        # (we care about busy state there) and visibility/value changes
-        # on the progress bar.]]]
+        # We care about the main document and we'll ignore document
+        # events from HTML iframes.
         #
-        self._loadingDocumentContent = False
-        pass
+        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = False
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -2389,7 +2383,7 @@ class Script(default.Script):
         # the image focus and announce it.
         #
         if event.source.role == rolenames.ROLE_LINK:
-            containingLink = self.getContainingRole(orca_state.locusOfFocus, 
+            containingLink = self.getContainingRole(orca_state.locusOfFocus,
                                                     rolenames.ROLE_LINK)
             if containingLink == event.source:
                 return
@@ -2397,7 +2391,7 @@ class Script(default.Script):
                 child = event.source.child(0)
                 orca.setLocusOfFocus(event, child)
                 return
-            
+
         default.Script.onFocus(self, event)
 
     def onLinkSelected(self, event):
@@ -2451,29 +2445,48 @@ class Script(default.Script):
             if event.source \
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
                 if event.detail1:
+                    # A detail1=1 means the page has started loading.
+                    #
                     self._loadingDocumentContent = True
+
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Loading.  Please wait.")
-                    braille.displayMessage(message)
-                    speech.stop()
-                    speech.speak(message)
+
                 elif event.source.name:
-                    self._loadingDocumentContent = False
+                    # Seems like a document can go between busy and not
+                    # busy while it is loading.  So...we wait for
+                    # document:load-complete and document:load-stopped
+                    # events to tell us when loading is done.  After
+                    # that event, we will get a state-changed:busy event
+                    # with a detail1=0 to let us know things are done.
+                    #
+                    if self._loadingDocumentContent:
+                        return
+
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading %s.") % event.source.name
-                    braille.displayMessage(message)
-                    speech.stop()
-                    speech.speak(message)
+
                 else:
-                    self._loadingDocumentContent = False
+                    # Seems like a document can go between busy and not
+                    # busy while it is loading.  So...we wait for
+                    # document:load-complete and document:load-stopped
+                    # events to tell us when loading is done.  After
+                    # that event, we will get a state-changed:busy event
+                    # with a detail1=0 to let us know things are done.
+                    #
+                    if self._loadingDocumentContent:
+                        return
+
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading.")
-                    braille.displayMessage(message)
-                    speech.stop()
-                    speech.speak(message)
+
+                braille.displayMessage(message)
+                speech.stop()
+                speech.speak(message)
+
             return
 
         default.Script.onStateChanged(self, event)
@@ -2501,6 +2514,12 @@ class Script(default.Script):
             #print "HERE", documentFrame.name
             #print "    ", documentFrame
             #print "    ", documentFrame.parent
+
+            # If the document frame is busy loading, we won't present
+            # anything to prevent Orca from being too chatty.
+            #
+            if self._loadingDocumentContent:
+                return
 
             braille.displayMessage(documentFrame.name)
             speech.stop()
@@ -2596,6 +2615,13 @@ class Script(default.Script):
                 caretOffset = 0
             self.caretContext = self.findFirstCaretContext(newLocusOfFocus,
                                                            caretOffset)
+
+        # We'll ignore focus changes when the document frame is busy.
+        # This will keep Orca from chatting too much while a page is
+        # loading.
+        #
+        if self._loadingDocumentContent:
+            return
 
         # Don't bother speaking all the information about the HTML
         # container - it's duplicated all over the place.  So, we
@@ -4557,7 +4583,7 @@ class Script(default.Script):
 
         self.caretContext = [obj, characterOffset]
 
-        # If we're not in a table cell, reset self.lastTableCell. 
+        # If we're not in a table cell, reset self.lastTableCell.
         #
         if obj.role != rolenames.ROLE_TABLE_CELL:
             cell = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
@@ -4902,7 +4928,7 @@ class Script(default.Script):
                                                         previousCharOffset))
         # Debug...
         #
-        #contents = self.getLineContentsAtOffset(previousObj, 
+        #contents = self.getLineContentsAtOffset(previousObj,
         #                                        previousCharOffset)
         #self.dumpContents(inputEvent, contents)
 
@@ -5733,22 +5759,22 @@ class Script(default.Script):
         structuralNavigationEnabled = not structuralNavigationEnabled
 
         if structuralNavigationEnabled:
-                # Translators: the structural navigation keys are designed
-                # to move the caret around the HTML content by object type.
-                # Thus H moves you to the next heading, Shift H to the
-                # previous heading, T to the next table, and so on. Some
-                # users prefer to turn this off to use Firefox's search
-                # when typing feature.
-                #
+            # Translators: the structural navigation keys are designed
+            # to move the caret around the HTML content by object type.
+            # Thus H moves you to the next heading, Shift H to the
+            # previous heading, T to the next table, and so on. Some
+            # users prefer to turn this off to use Firefox's search
+            # when typing feature.
+            #
             string = _("Structural navigation keys on.")
         else:
-                # Translators: the structural navigation keys are designed
-                # to move the caret around the HTML content by object type.
-                # Thus H moves you to the next heading, Shift H to the
-                # previous heading, T to the next table, and so on. Some
-                # users prefer to turn this off to use Firefox's search
-                # when typing feature.
-                #
+            # Translators: the structural navigation keys are designed
+            # to move the caret around the HTML content by object type.
+            # Thus H moves you to the next heading, Shift H to the
+            # previous heading, T to the next table, and so on. Some
+            # users prefer to turn this off to use Firefox's search
+            # when typing feature.
+            #
             string = _("Structural navigation keys off.")
 
         debug.println(debug.LEVEL_CONFIGURATION, string)

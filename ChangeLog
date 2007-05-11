@@ -1,3 +1,8 @@
+2007-05-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: fix for bug 423435 to reduce the chattiness
+        of Orca when loading a new page in Firefox.
+
 2007-05-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gedit.py:
@@ -11,8 +16,8 @@
           src/orca/focus_tracking_presenter.py:
           src/orca/Gecko.py:
           src/orca/orca_state.py:
-          Hopefully fixed the "no speech" problem related to bug #435201, 
-          because we were getting the key events in a different order. 
+          Hopefully fixed the "no speech" problem related to bug #435201,
+          because we were getting the key events in a different order.
           We now save a handle to the last non-modifier key event in
           orca_state.lastNonModifierKeyEvent, and use that in
           _presentTextAtNewCaretPosition() to check what type of modified
@@ -25,7 +30,7 @@
 
         * src/orca/scripts/StarOffice.py:
           Implement the suggestion from Will in comment #25 of bug #435852.
-          We now use the extents of the parent table to find a range of 
+          We now use the extents of the parent table to find a range of
           spread sheet cells in the current row, that the current cell is in,
           when we are speaking/brailling "by row".
 
@@ -49,22 +54,22 @@
         * src/orca/orca_gui_prefs.py:
           src/orca/settings.py:
           src/orca/orca-setup.glade:
-          Fixed bug #368640 – Allow user to optionally ignore or be 
+          Fixed bug #368640 – Allow user to optionally ignore or be
           notified of tool tips. There is now a "Present Tooltips"
           checkbox available on the General pane of the Orca Preferences
           dialog that allows the user to un/set this feature.
 
-          Mouse move events don't update orca_state.lastInputEvent so 
-          it's possible the user accidentally nudged the mouse and 
-          generated another tooltip event. If the current time minus 
-          the last keyboard event time is greater than 0.2 seconds, 
+          Mouse move events don't update orca_state.lastInputEvent so
+          it's possible the user accidentally nudged the mouse and
+          generated another tooltip event. If the current time minus
+          the last keyboard event time is greater than 0.2 seconds,
           than just ignore this tooltip event.
 
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/script.py:
           src/orca/focus_tracking_presenter.py:
-          Fixed bug #437004 – Add in hooks for allowing 
+          Fixed bug #437004 – Add in hooks for allowing
           activation/deactivation script methods.
           Added two new methods to the Script class in script.py:
 
@@ -78,20 +83,20 @@
           to self.setActiveScript().
 
         * src/orca/where_am_I.py:
-          Fixed bug #435223 – Where-am-I doesn't correctly identify 
+          Fixed bug #435223 – Where-am-I doesn't correctly identify
           multiple selected objects in Nautilus.
 
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #363804 – Add ability to turn off coordinate 
+          Fix for bug #363804 – Add ability to turn off coordinate
           announcement when navigating in Calc.
           Added a new "Speak spread sheet cell coordinates" checkbox to
           the app-specific GUI settings for StarOffice/OpenOffice.
 
 2007-05-08  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * test/harness/runall.sh: removed a minor change that was 
+        * test/harness/runall.sh: removed a minor change that was
         accidently putback. A line was commented out that
         removes the temporary files after a run.
 
@@ -102,7 +107,7 @@
 	Added rolenames.ROLE_SPIN_BOX. Also included a potential workaround
 	for bogus text events where the text object is null. The
 	J2SE-access-bridge script discards the events.
-	
+
 2007-05-08  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/gnome-panel.py, src/orca/rolenames.py,
@@ -111,7 +116,7 @@
 
 2007-05-08  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/scripts/gnome-panel.py: More work on bug 435577 - 
+        * src/orca/scripts/gnome-panel.py: More work on bug 435577 -
         Orca does not speak labels of embedded components in gnome-panel.
 
 2007-05-08  Mike Pedersen <michael.pedersen@sun.com>
@@ -126,29 +131,29 @@
 2007-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435201 – Orca is too chatty when navigating by 
+          Fix for bug #435201 – Orca is too chatty when navigating by
           paragraph in OOo Writer.
-          Ignore "object:text-caret-moved" events when moving my paragraph 
+          Ignore "object:text-caret-moved" events when moving my paragraph
           in OOo Writer using Control-Up/Down, if event.detail1 is -1.
 
 2007-05-07  Joanmarie Diggs <j-diggs@comcast.net>
-	
-	* src/orca/Gecko.py: 
-	1. Fix for bug #436718: Navigating in focusable lists in 
+
+	* src/orca/Gecko.py:
+	1. Fix for bug #436718: Navigating in focusable lists in
            Firefox's 7-May build hangs Orca. In this afternoon's Firefox,
-           the children of lists in forms stopped being menu items and 
+           the children of lists in forms stopped being menu items and
            started being list items. The goal of this fix is to stop the
-           hanging and re-enable list navigation under these new 
-           conditions. Note that Orca might declare items in form lists 
+           hanging and re-enable list navigation under these new
+           conditions. Note that Orca might declare items in form lists
            as "greyed."  As soon as I hear back from the Firefox guys as
-           to whether this change was intentional or is a new bug, I'll 
+           to whether this change was intentional or is a new bug, I'll
            adjust accordingly.
 	* src/orca/Gecko.py, src/orca/default.py:
 	2. Fix for bug #428114: Orca should attempt to detect erroneously-
            marked combo box labels in Firefox.  If a combo box's label
            consists of the entire contents of the combo box, the label
-           is bogus and should be ignored.  
- 
+           is bogus and should be ignored.
+
 2007-05-07  Willie Walker <william.walker@sun.com>
 
        * src/orca/keybindings.py: add __str__ function for KeyBindings
@@ -175,7 +180,7 @@
           applications (such as Evolution), easily overriding the default.
 
         * src/orca/settings.py:
-          Boing said Zeppedee! The change setting "readTableCellRow" ito 
+          Boing said Zeppedee! The change setting "readTableCellRow" ito
           False has been removed. It's now back to True per comment #34
           from Mike in bug #435852.
 
