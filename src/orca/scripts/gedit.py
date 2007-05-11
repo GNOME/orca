@@ -509,7 +509,7 @@ class Script(default.Script):
         #
         if event.source.role == rolenames.ROLE_STATUSBAR \
            and self.isFocusOnFindDialog() \
-           and orca_state.lastInputEvent.event_string == "Return" \
+           and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
            and event.source.name == _("Phrase not found"):
                 debug.println(self.debugLevel,
                               "gedit.onNameChanged - phrase not found.")
@@ -564,7 +564,7 @@ class Script(default.Script):
         # we've just found.
         #
         if self.isFocusOnFindDialog() \
-           and orca_state.lastInputEvent.event_string == "Return":
+           and orca_state.lastNonModifierKeyEvent.event_string == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
 
             allComboBoxes = self.findByRole(orca_state.locusOfFocus.app,

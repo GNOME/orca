@@ -424,7 +424,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 #
                 if isinstance(orca_state.lastInputEvent, \
                               input_event.KeyboardEvent):
-                    if not orca_state.lastInputEvent.event_string == "F1":
+                    if not orca_state.lastNonModifierKeyEvent.event_string == "F1":
                         return
 
                     # Mouse move events don't update orca_state.lastInputEvent

@@ -372,7 +372,7 @@ class Script(default.Script):
             debug.println(self.debugLevel, "acroread: Drawing area bug")
             lastKey = None
             try:
-                lastKey = orca_state.lastInputEvent.event_string
+                lastKey = orca_state.lastNonModifierKeyEvent.event_string
             except:
                 pass
             LOFIndex = orca_state.locusOfFocus.index
@@ -628,7 +628,7 @@ class Script(default.Script):
         else:
             text = obj.text
             offset = text.caretOffset
-            lastKey = orca_state.lastInputEvent.event_string
+            lastKey = orca_state.lastNonModifierKeyEvent.event_string
 
             if lastKey == "Right":
                 penultimateWord = orca_state.lastWord

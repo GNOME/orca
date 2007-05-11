@@ -82,7 +82,7 @@ class Script(default.Script):
         if orca_state.lastInputEvent \
                and isinstance(orca_state.lastInputEvent,
                               input_event.KeyboardEvent):
-            event_string = orca_state.lastInputEvent.event_string
+            event_string = orca_state.lastNonModifierKeyEvent.event_string
         else:
             event_string = None
 
@@ -152,7 +152,7 @@ class Script(default.Script):
         matchFound = False
         speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca_state.lastInputEvent.event_string
+            keyString = orca_state.lastNonModifierKeyEvent.event_string
 
             controlPressed = orca_state.lastInputEvent.modifiers \
                              & (1 << atspi.Accessibility.MODIFIER_CONTROL)

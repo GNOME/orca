@@ -763,6 +763,14 @@ def _processKeyboardEvent(event):
 
     orca_state.lastInputEvent = keyboardEvent
 
+    # If this is a key event for a non-modifier key, save a handle to it.
+    # This is needed to help determine user actions when a multi-key chord 
+    # has been pressed, and we might get the key events in different orders.
+    # See comment #15 of bug #435201 for more details.
+    #
+    if not _isModifierKey(keyboardEvent.event_string):
+        orca_state.lastNonModifierKeyEvent = keyboardEvent
+
     return consumed or isOrcaModifier
 
 ########################################################################

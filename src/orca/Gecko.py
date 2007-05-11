@@ -2209,7 +2209,7 @@ class Script(default.Script):
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
-            string = orca_state.lastInputEvent.event_string
+            string = orca_state.lastNonModifierKeyEvent.event_string
             mods = orca_state.lastInputEvent.modifiers
             if (string == "Left") or (string == "Right"):
                 [obj, characterOffset] = self.caretContext

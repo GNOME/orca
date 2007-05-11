@@ -1545,7 +1545,7 @@ class Script(script.Script):
 
         text = obj.text
         offset = text.caretOffset
-        lastKey = orca_state.lastInputEvent.event_string
+        lastKey = orca_state.lastNonModifierKeyEvent.event_string
         lastWord = orca_state.lastWord
 
         [word, startOffset, endOffset] = \
@@ -1720,7 +1720,7 @@ class Script(script.Script):
         mods = orca_state.lastInputEvent.modifiers
         shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
         if (mods & shiftMask) \
-            and orca_state.lastInputEvent.event_string == "Right":
+            and orca_state.lastNonModifierKeyEvent.event_string == "Right":
             startOffset = offset-1
             endOffset = offset
         else:
@@ -1744,14 +1744,14 @@ class Script(script.Script):
             (prevChar, character, startOffset, offset, endOffset, settings.speakBlankLines))
 
         # Handle speaking newlines when the right-arrow key is pressed.
-        if orca_state.lastInputEvent.event_string == "Right":
+        if orca_state.lastNonModifierKeyEvent.event_string == "Right":
             if prevChar == "\n":
                 # The cursor is at the beginning of a line.
                 # Speak a newline.
                 speech.speak(chnames.getCharacterName("\n"), voice, False)
 
         # Handle speaking newlines when the left-arrow key is pressed.
-        elif orca_state.lastInputEvent.event_string == "Left":
+        elif orca_state.lastNonModifierKeyEvent.event_string == "Left":
             if character == "\n":
                 # The cursor is at the end of a line.
                 # Speak a newline.
@@ -2359,7 +2359,7 @@ class Script(script.Script):
                           input_event.KeyboardEvent):
             return
 
-        string = orca_state.lastInputEvent.event_string
+        string = orca_state.lastNonModifierKeyEvent.event_string
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
@@ -2525,7 +2525,7 @@ class Script(script.Script):
                             input_event.KeyboardEvent)):
             return
 
-        string = orca_state.lastInputEvent.event_string
+        string = orca_state.lastNonModifierKeyEvent.event_string
         text = event.source.text
         if string == "BackSpace":
             # Speak the character that has just been deleted.
@@ -2615,7 +2615,7 @@ class Script(script.Script):
         #
         speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca_state.lastInputEvent.event_string
+            keyString = orca_state.lastNonModifierKeyEvent.event_string
             wasAutoComplete = (event.source.role == rolenames.ROLE_TEXT and \
                                event.source.text.getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
@@ -2752,7 +2752,7 @@ class Script(script.Script):
                 elif orca_state.locusOfFocus \
                     and isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent) \
-                    and (orca_state.lastInputEvent.event_string == "F1"):
+                    and (orca_state.lastNonModifierKeyEvent.event_string == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
                     speech.speakUtterances(self.speechGenerator.getSpeech(
                         orca_state.locusOfFocus,
@@ -5377,7 +5377,7 @@ class Script(script.Script):
         # Control-Shift-End:  speak "document selected from cursor position".
         #
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            eventStr = orca_state.lastInputEvent.event_string
+            eventStr = orca_state.lastNonModifierKeyEvent.event_string
             mods = orca_state.lastInputEvent.modifiers
         else:
             eventStr = None

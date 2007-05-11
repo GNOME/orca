@@ -159,7 +159,7 @@ class Script(default.Script):
                                    input_event.KeyboardEvent)):
                 return
 
-            if (orca_state.lastInputEvent.event_string == "space") \
-                   or (orca_state.lastInputEvent.event_string == "Return") \
-                   or (orca_state.lastInputEvent.event_string == "="):
+            if (orca_state.lastNonModifierKeyEvent.event_string == "space") \
+                   or (orca_state.lastNonModifierKeyEvent.event_string == "Return") \
+                   or (orca_state.lastNonModifierKeyEvent.event_string == "="):
                 speech.speak(contents)

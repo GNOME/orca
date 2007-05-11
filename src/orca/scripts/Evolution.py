@@ -696,7 +696,7 @@ class Script(default.Script):
             justDeleted = False
             if isinstance(orca_state.lastInputEvent,
                           input_event.KeyboardEvent):
-                string = orca_state.lastInputEvent.event_string
+                string = orca_state.lastNonModifierKeyEvent.event_string
                 if string == "Delete":
                     justDeleted = True
 
@@ -1261,7 +1261,7 @@ class Script(default.Script):
                 orca_state.lastInputEvent.__dict__.has_key("event_string")):
             return False
 
-        lastKey = orca_state.lastInputEvent.event_string
+        lastKey = orca_state.lastNonModifierKeyEvent.event_string
         if lastKey != "Left" and lastKey != "Right":
             return False
 
@@ -1395,7 +1395,7 @@ class Script(default.Script):
         # 
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
-            string = orca_state.lastInputEvent.event_string
+            string = orca_state.lastNonModifierKeyEvent.event_string
             if string == "Delete":
                 rolesList = [rolenames.ROLE_TABLE_CELL, \
                              rolenames.ROLE_TREE_TABLE, \

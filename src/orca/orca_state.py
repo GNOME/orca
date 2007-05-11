@@ -52,6 +52,10 @@ clickCount = 0
 capturingKeys   = False
 lastCapturedKey = None
 
+# The last non-modifier key event received.
+#
+lastNonModifierKeyEvent = None
+
 # The InputEvent instance representing the last input event.  This is
 # set each time a mouse, keyboard or braille event is received.
 #

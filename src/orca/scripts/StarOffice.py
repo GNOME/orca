@@ -1937,7 +1937,7 @@ class Script(default.Script):
                 weToggledIt = event.source.component.contains(x, y, 0)
 
             elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                keyString = orca_state.lastInputEvent.event_string
+                keyString = orca_state.lastNonModifierKeyEvent.event_string
                 navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
                              & (1 << atspi.Accessibility.MODIFIER_CONTROL \
@@ -1968,7 +1968,7 @@ class Script(default.Script):
             #
             event_string = None
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                event_string = orca_state.lastInputEvent.event_string
+                event_string = orca_state.lastNonModifierKeyEvent.event_string
             if (event_string == "Up" or event_string == "Down") and \
                event.source.parent == self.lastCell and \
                event.source.parent.childCount > 1:
@@ -2128,7 +2128,7 @@ class Script(default.Script):
         if event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-            event_string = orca_state.lastInputEvent.event_string
+            event_string = orca_state.lastNonModifierKeyEvent.event_string
 
             # If we are moving up and down, and we are speaking-by-cell
             # (as opposed to by-row), then speak the cell name. Otherwise
@@ -2215,7 +2215,7 @@ class Script(default.Script):
                 orca_state.lastInputEvent.__dict__.has_key("event_string")):
             return False
 
-        lastKey = orca_state.lastInputEvent.event_string
+        lastKey = orca_state.lastNonModifierKeyEvent.event_string
         if lastKey != "Left" and lastKey != "Right":
             return False
 
