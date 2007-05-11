@@ -419,44 +419,44 @@ class Script(default.Script):
         while not done:
             accPanel = htmlPanel.accessible.getChildAtIndex(i)
             panel = atspi.Accessible.makeAccessible(accPanel)
-            accTextObj = panel.accessible.getChildAtIndex(0)
-            textObj = atspi.Accessible.makeAccessible(accTextObj)
-            text = textObj.text
-            if not text:
-                return
-            textObjs.append(textObj)
-            length = text.characterCount
+            if panel != None:
+                accTextObj = panel.accessible.getChildAtIndex(0)
+                textObj = atspi.Accessible.makeAccessible(accTextObj)
+                text = textObj.text
+                if not text:
+                    return
+                textObjs.append(textObj)
+                length = text.characterCount
 
-            while offset <= length:
-                [mystr, start, end] = textObj.text.getTextAtOffset(offset,
-                                                                   mode)
+                while offset <= length:
+                    [mystr, start, end] = textObj.text.getTextAtOffset(offset,
+                                                                       mode)
+                    if len(mystr) != 0:
+                        string += " " + mystr
 
-                if len(mystr) != 0:
-                    string += mystr
+                    if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
+                       len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
+                        endOffset = end
 
-                if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
-                   len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
-                    endOffset = end
+                        string = self.adjustForRepeats(string)
+                        if string.isupper():
+                            voice = settings.voices[settings.UPPERCASE_VOICE]
+                        else:
+                            voice = settings.voices[settings.DEFAULT_VOICE]
 
-                    string = self.adjustForRepeats(string)
-                    if string.isupper():
-                        voice = settings.voices[settings.UPPERCASE_VOICE]
-                    else:
-                        voice = settings.voices[settings.DEFAULT_VOICE]
-
-                    if not textObjs:
-                        textObjs.append(textObj)
-                    yield [speechserver.SayAllContext(textObjs, string,
+                        if not textObjs:
+                            textObjs.append(textObj)
+                        yield [speechserver.SayAllContext(textObjs, string,
                                                       startOffset, endOffset),
-                           voice]
-                    textObjs = []
-                    string = ""
-                    startOffset = endOffset
+                               voice]
+                        textObjs = []
+                        string = ""
+                        startOffset = endOffset
 
-                if len(mystr) == 0 or end == length:
-                    break
-                else:
-                    offset = end
+                    if len(mystr) == 0 or end == length:
+                        break
+                    else:
+                        offset = end
 
             offset = 0
             i += 1
