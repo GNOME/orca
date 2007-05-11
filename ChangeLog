@@ -1,3 +1,15 @@
+2007-05-11  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug #407663 – Support the "Find"
+        operation in Firefox better.  There are several new behaviors
+        and features which will be announced on the Orca list soon.
+        If you can't wait, be sure that you have at least the 9th May
+        build of Firefox and give the Find toolbar a try.  Also be
+        sure to check out the additional settings on the Minefield
+        pane of the Firefox app-specific settings dialog.  Hopefully
+        you should be able to customize things to get however much
+        or however little information you want spoken. :-)
+
 2007-05-11  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/flat-review.py: Fix for Bug 436674 flat-review 

@@ -30,6 +30,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import atk
 import gtk
 
 import atspi
@@ -89,6 +90,29 @@ speakCellHeaders = True
 # table using table navigation commands
 #
 skipBlankCells = False
+
+# Whether or not Orca should speak the changing location within the
+# document frame *during* a find (i.e. while focus is still in the
+# Find toolbar).
+#
+speakResultsDuringFind = True
+
+# The minimum number of characters that must be matched during
+# a find before Orca speaks the changed location, assuming that
+# speakResultsDuringFind is True.
+#
+
+# Whether or not to continue speaking the same line if the match
+# has not changed with additional keystrokes.  This setting comes
+# in handy for fast typists who might inadvertantly interrupt the
+# speaking of the line that matches by continuing to type in the
+# Find entry.  This is the equivalent of what we do in autocompletes
+# throughout GNOME.  For power-users of the Find toolbar, however,
+# that may be too verbose so it's configurable.
+#
+onlySpeakChangedLinesDuringFind = False
+
+minimumFindLength = 4
 
 # Roles that imply their text starts on a new line.
 #
@@ -766,6 +790,15 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return utterances
 
         parent = obj.parent
+
+        # If we're in a toolbar, we want to stop before speaking the
+        # application frame.
+        #
+        containingToolbar = \
+               self._script.getContainingRole(obj, rolenames.ROLE_TOOL_BAR)
+        if containingToolbar:
+            stopAncestor = self._script.getFrame(obj)
+
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
@@ -773,6 +806,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # We try to omit layout things right off the bat.
             #
             if self._script.isLayoutOnly(parent):
+                parent = parent.parent
+                continue
+
+            # If the rolename is unknown, skip this item.
+            #
+            if parent.role == rolenames.ROLE_UNKNOWN:
                 parent = parent.parent
                 continue
 
@@ -786,9 +825,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 continue
 
             # Now...autocompletes are wierd.  We'll let the handling of
-            # the entry give us the name.
+            # the entry give us the name -- unless we're in a toolbar.
             #
-            if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+            if parent.role == rolenames.ROLE_AUTOCOMPLETE and \
+               not containingToolbar:
                 parent = parent.parent
                 continue
 
@@ -934,6 +974,17 @@ class Script(default.Script):
         # Therefore, we'll store the coordinates from "our perspective."
         #
         self.lastTableCell = [-1, -1]
+
+        # During a find we get caret-moved events reflecting the changing
+        # screen contents.  The user can opt to have these changes announced.
+        # If the announcement is enabled, it still only will be made if the
+        # selected text is a certain length (user-configurable) and if the
+        # line has changed (so we don't keep repeating the line).  However,
+        # the line has almost certainly changed prior to this length being
+        # reached.  Therefore, we need to make an initial announcement, which
+        # means we need to know if that has already taken place.
+        #
+        self.madeFindAnnouncement = False
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -1754,6 +1805,8 @@ class Script(default.Script):
         global structuralNavigationEnabled
         global speakCellCoordinates, speakCellSpan
         global speakCellHeaders, skipBlankCells
+        global speakResultsDuringFind, minimumFindLength
+        global onlySpeakChangedLinesDuringFind
 
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
@@ -1893,6 +1946,84 @@ class Script(default.Script):
         gtk.Frame.set_label_widget(tableFrame, tableLabel)
         gtk.Label.set_use_markup(tableLabel, True)
 
+        # Find Options frame.
+        #
+        findFrame = gtk.Frame()
+        gtk.Widget.show(findFrame)
+        gtk.Box.pack_start(vbox, findFrame, False, False, 5)
+
+        findAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(findAlignment)
+        gtk.Container.add(findFrame, findAlignment)
+        gtk.Alignment.set_padding(findAlignment, 0, 0, 12, 0)
+
+        findVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(findVBox)
+        gtk.Container.add(findAlignment, findVBox)
+
+        # Translators: this is an option to allow users to have Orca
+        # automatically speak the line that contains the match while
+        # the user is still in Firefox's Find toolbar.
+        #
+        label = _("Speak results during _find")
+        self.speakResultsDuringFindCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakResultsDuringFindCheckButton)
+        gtk.Box.pack_start(findVBox, self.speakResultsDuringFindCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakResultsDuringFindCheckButton,
+                                    speakResultsDuringFind)
+
+        # Translators: this is an option which dictates whether the line
+        # that contains the match from the Find toolbar should always
+        # be spoken, or only spoken if it is a different line than the
+        # line which contained the last match.
+        #
+        label = _("Onl_y speak changed lines during find")
+        self.changedLinesOnlyCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.changedLinesOnlyCheckButton)
+        gtk.Box.pack_start(findVBox, self.changedLinesOnlyCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.changedLinesOnlyCheckButton,
+                                    onlySpeakChangedLinesDuringFind)
+
+        hbox = gtk.HBox(False, 0)
+        gtk.Widget.show(hbox)
+        gtk.Box.pack_start(findVBox, hbox, False, False, 0)
+
+        # Translators: this option allows the user to specify the number
+        # of matched characters that must be present before Orca speaks
+        # the line that contains the results from the Find toolbar.
+        #
+        self.minimumFindLengthLabel = \
+              gtk.Label(_("Minimum length of matched text:"))
+        self.minimumFindLengthLabel.set_alignment(0, 0.5)
+        gtk.Widget.show(self.minimumFindLengthLabel)
+        gtk.Box.pack_start(hbox, self.minimumFindLengthLabel, False, False, 5)
+
+        self.minimumFindLengthAdjustment = \
+                       gtk.Adjustment(minimumFindLength, 0, 20, 1)
+        self.minimumFindLengthSpinButton = \
+                       gtk.SpinButton(self.minimumFindLengthAdjustment, 0.0, 0)
+        gtk.Widget.show(self.minimumFindLengthSpinButton)
+        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton, False, False, 5)
+
+        acc_targets = []
+        acc_src = self.minimumFindLengthLabel.get_accessible()
+        relation_set = acc_src.ref_relation_set()
+        acc_targ = self.minimumFindLengthSpinButton.get_accessible()
+        acc_targets.append(acc_targ)
+        relation = atk.Relation(acc_targets, 1)
+        relation.set_property('relation-type', atk.RELATION_LABEL_FOR)
+        relation_set.add(relation)
+
+        # Translators: this is the title of a panel containing options
+        # for using Firefox's Find toolbar.
+        #
+        findLabel = gtk.Label("<b>%s</b>" % _("Find Options"))
+        gtk.Widget.show(findLabel)
+        gtk.Frame.set_label_widget(findFrame, findLabel)
+        gtk.Label.set_use_markup(findLabel, True)
+
         return vbox
 
     def setAppPreferences(self, prefs):
@@ -1907,6 +2038,8 @@ class Script(default.Script):
         global structuralNavigationEnabled
         global speakCellCoordinates, speakCellSpan
         global speakCellHeaders, skipBlankCells
+        global speakResultsDuringFind, minimumFindLength
+        global onlySpeakChangedLinesDuringFind
 
         prefs.writelines("\n")
 
@@ -1938,6 +2071,20 @@ class Script(default.Script):
         value = self.skipBlankCellsCheckButton.get_active()
         prefs.writelines("orca.Gecko.skipBlankCells = %s\n" % value)
         skipBlankCells = value
+
+        value = self.speakResultsDuringFindCheckButton.get_active()
+        prefs.writelines("orca.Gecko.speakResultsDuringFind = %s\n" % value)
+        speakResultsDuringFind = value
+
+        value = self.changedLinesOnlyCheckButton.get_active()
+        prefs.writelines("orca.Gecko.onlySpeakChangedLinesDuringFind = %s\n"\
+                         % value)
+        onlySpeakChangedLinesDuringFind = value
+
+        value = self.minimumFindLengthSpinButton.get_value()
+        prefs.writelines("orca.Gecko.minimumFindLength = %s\n" % value)
+        minimumFindLength = value
+
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
@@ -2147,6 +2294,7 @@ class Script(default.Script):
 
         string = None
         labels = self.findDisplayedLabel(obj)
+
         for label in labels:
             # Check to see if the official labels are valid.
             #
@@ -2195,6 +2343,51 @@ class Script(default.Script):
            self.isFormField(orca_state.locusOfFocus) and \
             not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
+            return
+        # Possibility #2: We're using the Find toolbar.  In this case
+        # we want to update the caret context.  If the user has opted
+        # to have results spoken during the find (i.e., while still
+        # in the Find toolbar), speak the line containing the caret
+        # based on the user-customizable settings.
+        #
+        if orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY and \
+           orca_state.locusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR \
+           and self.inDocumentContent(event.source):
+            [obj, offset] = self.getCaretContext()
+            self.caretContext = [event.source, event.detail1]
+
+            origExtents = self.getExtents(obj, offset - 1, offset)
+            newExtents = self.getExtents(event.source,
+                                         event.detail1 - 1,
+                                         event.detail1)
+            if speakResultsDuringFind and event.source.text:
+                text = event.source.text
+                nSelections = text.getNSelections()
+                if nSelections:
+                    [start, end] = text.getSelection(0)
+                    enoughSelected = (end - start) >= minimumFindLength
+                    lineChanged = not self.onSameLine(origExtents, newExtents)
+
+                    # If the user starts backspacing over the text in the
+                    # toolbar entry, he/she is indicating they want to perform
+                    # a different search. Because madeFindAnnounement may
+                    # be set to True, we should reset it -- but only if we
+                    # detect the line has also changed.  We're not getting
+                    # events from the Find entry, so we have to compare
+                    # offsets.
+                    #
+                    if (obj == event.source) and (offset > event.detail1) \
+                        and lineChanged:
+                            self.madeFindAnnouncement = False
+
+                    if enoughSelected:
+                        if lineChanged or not self.madeFindAnnouncement or \
+                           not onlySpeakChangedLinesDuringFind:
+                            line = self.getLineContentsAtOffset(event.source,
+                                                                event.detail1)
+                            self.speakContents(line)
+                            self.madeFindAnnouncement = True
+
             return
 
         # Otherwise, we'll just assume that the thing in which the caret
@@ -2648,10 +2841,33 @@ class Script(default.Script):
         if newLocusOfFocus and self.inDocumentContent(newLocusOfFocus):
             if newLocusOfFocus.text:
                 caretOffset = newLocusOfFocus.text.caretOffset
+
+                # If the old locusOfFocus was an entry in a toolbar, there's
+                # a good chance that we just returned from performing a find.
+                #
+                if oldLocusOfFocus.role == rolenames.ROLE_ENTRY and \
+                   oldLocusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR:
+                    # We don't want to speak all of the information
+                    # in the hierarchy; we should just read the line
+                    # with focus.
+                    #
+                    self.setCaretPosition(newLocusOfFocus, caretOffset)
+                    self.updateBraille(newLocusOfFocus)
+                    self.speakContents(self.getLineContentsAtOffset(
+                                                newLocusOfFocus, caretOffset))
+                    return
+
             else:
                 caretOffset = 0
             self.caretContext = self.findFirstCaretContext(newLocusOfFocus,
                                                            caretOffset)
+        # If we've just landed in the Find toolbar, reset
+        # self.madeFindAnnouncement.
+        #
+        if newLocusOfFocus and \
+           newLocusOfFocus.role == rolenames.ROLE_ENTRY and \
+           newLocusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR:
+            self.madeFindAnnouncement = False
 
         # We'll ignore focus changes when the document frame is busy.
         # This will keep Orca from chatting too much while a page is
@@ -2674,6 +2890,7 @@ class Script(default.Script):
             self.updateBraille(newLocusOfFocus)
             speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
             return
+
         # [[[TODO: WDW - I commented this out because we all of a sudden
         # started losing the presentation of links when we tabbed to them
         # sometime around 21-Dec-2006.  It was a hack to begin with, so
@@ -2732,7 +2949,7 @@ class Script(default.Script):
         # on the display.]]]
         #
         lineContentsOffset = focusedCharacterOffset
-        if focusedObj.text:
+        if focusedObj and focusedObj.text:
             char = self.getText(focusedObj,
                                 focusedCharacterOffset,
                                 focusedCharacterOffset + 1)
