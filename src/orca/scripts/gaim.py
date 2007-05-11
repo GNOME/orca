@@ -194,6 +194,9 @@ class Script(default.Script):
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
+        # Translators: If this checkbox is checked, then Orca will speak 
+        # the name of the chat room.
+        #
         label = _("Speak Chat Room name")
         self.speakNameCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakNameCheckButton)

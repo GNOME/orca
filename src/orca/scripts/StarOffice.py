@@ -839,6 +839,13 @@ class Script(default.Script):
         hbox = gtk.HBox(False, 0)
         gtk.Widget.show(hbox)
 
+        # Translators: All text in StarOffice/OpenOffice has a set of
+        # attributes associated with it (such as font type, size, style...)
+        # This label denotes those attributes that you user would like
+        # spoken when you ask to hear the text attributes associated with
+        # the current text (typically when the Insert-f key combination is 
+        # pressed).
+        #
         self.textAttributesLabel = gtk.Label(_("Enabled Text Attributes:"))
         gtk.Widget.show(self.textAttributesLabel)
         gtk.Box.pack_start(hbox, self.textAttributesLabel, False, False, 5)
@@ -860,6 +867,10 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, hbox, False, False, 0)
 
         # Checkbox for "Speak spread sheet cell coordinates".
+        #
+        # Translators: If checked, then Orca will speak the coordinates
+        # of the current spread sheet cell. Coordinates are the row and
+        # column position within the spread sheet (i.e. A1, B1, C2 ...)
         #
         label = _("Speak spread sheet cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
