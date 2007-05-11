@@ -1774,6 +1774,13 @@ class Script(default.Script):
         gtk.Widget.show(generalVBox)
         gtk.Container.add(generalAlignment, generalVBox)
 
+        # Translators: Gecko native caret navigation is where
+        # Firefox itself controls how the arrow keys move the caret
+        # around HTML content.  It's often broken, so Orca needs
+        # to provide its own support.  As such, Orca offers the user
+        # the ability to switch between the Firefox mode and the
+        # Orca mode.
+        #
         label = _("Use _Orca Caret Navigation")
         self.controlCaretNavigationCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.controlCaretNavigationCheckButton)
@@ -1783,6 +1790,10 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.controlCaretNavigationCheckButton,
                                     controlCaretNavigation)
 
+        # Translators: Orca provides keystrokes to navigate HTML content
+        # in a structural manner: go to previous/next header, list item,
+        # table, etc.
+        #
         label = _("Use Orca _Structural Navigation")
         self.structuralNavigationCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.structuralNavigationCheckButton)
@@ -1791,6 +1802,12 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
                                     structuralNavigationEnabled)
 
+        # Translators: when the user arrows up and down in HTML content,
+        # it is some times beneficial to always position the caret at the
+        # beginning of the line rather than guessing the position directly
+        # above the current caret position.  This option allows the user
+        # to decide the behavior they want.
+        #
         label = _("_Position cursor at start of line when navigating vertically")
         self.arrowToLineBeginningCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.arrowToLineBeginningCheckButton)
@@ -1799,7 +1816,11 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.arrowToLineBeginningCheckButton,
                                     arrowToLineBeginning)
 
-        generalLabel = gtk.Label(_("<b>Page Navigation</b>"))
+        # Translators: this is the title of a panel holding options for
+        # how to navigate HTML content (e.g., Orca caret navigation,
+        # positioning of caret, etc.).
+        #
+        generalLabel = gtk.Label("<b>%s</b>" % _("Page Navigation"))
         gtk.Widget.show(generalLabel)
         gtk.Frame.set_label_widget(generalFrame, generalLabel)
         gtk.Label.set_use_markup(generalLabel, True)
@@ -1819,6 +1840,9 @@ class Script(default.Script):
         gtk.Widget.show(tableVBox)
         gtk.Container.add(tableAlignment, tableVBox)
 
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak table cell coordinates in HTML content.
+        #
         label = _("Speak _cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
@@ -1827,6 +1851,10 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
                                     speakCellCoordinates)
 
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak the span size of a table cell (e.g., how many
+        # rows and columns a particular table cell spans in a table).
+        #
         label = _("Speak _multiple cell spans")
         self.speakCellSpanCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellSpanCheckButton)
@@ -1835,6 +1863,9 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
                                     speakCellSpan)
 
+        # Translators: this is an option for whether or not to speak
+        # the header of a table cell in HTML content.
+        #
         label = _("Announce cell _header")
         self.speakCellHeadersCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellHeadersCheckButton)
@@ -1843,6 +1874,9 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
                                     speakCellHeaders)
 
+        # Translators: this is an option to allow users to skip over
+        # empty/blank cells when navigating tables in HTML content.
+        #
         label = _("Skip _blank cells")
         self.skipBlankCellsCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.skipBlankCellsCheckButton)
@@ -1851,7 +1885,10 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
                                     skipBlankCells)
 
-        tableLabel = gtk.Label(_("<b>Table Navigation</b>"))
+        # Translators: this is the title of a panel containing options
+        # for specifying how to navigate tables in HTML content.
+        #
+        tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
         gtk.Widget.show(tableLabel)
         gtk.Frame.set_label_widget(tableFrame, tableLabel)
         gtk.Label.set_use_markup(tableLabel, True)

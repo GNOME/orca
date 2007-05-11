@@ -1,3 +1,10 @@
+2007-05-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: add docs for translators.  Also avoid
+        embedding markup (e.g., <b>...</b>) in strings marked for
+        translation as described in the pitfalls section of:
+        http://developer.gnome.org/doc/tutorials/gnome-i18n/developer.html
+
 2007-05-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
