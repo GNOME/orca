@@ -1,3 +1,8 @@
+2007-05-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/focus_tracking_presenter.py: lower debug level of
+        event queuing and dequeing messages to ALL from FINEST.
+
 2007-05-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:

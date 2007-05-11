@@ -618,16 +618,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         event = None
         if isinstance(e, input_event.KeyboardEvent):
             if e.type == atspi.Accessibility.KEY_PRESSED_EVENT:
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(debug.LEVEL_ALL,
                               "----------> QUEUEING KEYPRESS '%s' (%d)"
                               % (e.event_string, e.hw_code))
             elif e.type == atspi.Accessibility.KEY_RELEASED_EVENT:
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(debug.LEVEL_ALL,
                               "----------> QUEUEING KEYRELEASE '%s' (%d)"
                               % (e.event_string, e.hw_code))
             event = e
         elif isinstance(e, input_event.BrailleEvent):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_ALL,
                           "----------> QUEUEING BRAILLE COMMAND %d" % e.event)
             event = e
         else:
@@ -677,7 +677,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if (not debug.eventDebugFilter) \
                 or (debug.eventDebugFilter \
                     and debug.eventDebugFilter.match(e.type)):
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(debug.LEVEL_ALL,
                               "---------> QUEUEING EVENT %s" % e.type)
 
         if event:
@@ -740,12 +740,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
             if isinstance(event, input_event.KeyboardEvent):
                 if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
-                    debug.println(debug.LEVEL_FINEST,
+                    debug.println(debug.LEVEL_ALL,
                                   "DEQUEUED KEYPRESS '%s' (%d) <----------" \
                                   % (event.event_string, event.hw_code))
                     pressRelease = "PRESS"
                 elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT:
-                    debug.println(debug.LEVEL_FINEST,
+                    debug.println(debug.LEVEL_ALL,
                                   "DEQUEUED KEYRELEASE '%s' (%d) <----------" \
                                   % (event.event_string, event.hw_code))
                     pressRelease = "RELEASE"
@@ -757,7 +757,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               "\n^^^^^ PROCESS KEY %s EVENT %s ^^^^^"\
                               % (pressRelease, event.event_string))
             elif isinstance(event, input_event.BrailleEvent):
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(debug.LEVEL_ALL,
                               "DEQUEUED BRAILLE COMMAND %d <----------" \
                               % event.event)
                 debug.println(debug.eventDebugLevel,
@@ -771,7 +771,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if (not debug.eventDebugFilter) \
                     or (debug.eventDebugFilter \
                         and debug.eventDebugFilter.match(event.type)):
-                    debug.println(debug.LEVEL_FINEST,
+                    debug.println(debug.LEVEL_ALL,
                                   "DEQUEUED EVENT %s <----------" \
                                   % event.type)
                     debug.println(debug.eventDebugLevel,
