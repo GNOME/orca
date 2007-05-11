@@ -1,3 +1,8 @@
+2007-05-11  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/flat-review.py: Fix for Bug 436674 flat-review 
+	only visits right-most tree nodes in SwingSet2 JTree demo
+
 2007-05-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:

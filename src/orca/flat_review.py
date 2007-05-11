@@ -821,6 +821,7 @@ class Context:
         #
         if (accessible.role != rolenames.ROLE_COMBO_BOX) \
             and (accessible.role != rolenames.ROLE_EMBEDDED) \
+            and (accessible.role != rolenames.ROLE_LABEL) \
             and (accessible.role != rolenames.ROLE_MENU) \
             and accessible.childCount > 0:
             pass
@@ -956,11 +957,25 @@ class Context:
 
         if not root:
             return []
+        
+        zones = []
 
         # If we're at a leaf node, then we've got a good one on our hands.
         #
         if root.childCount <= 0:
             return self.getZonesFromAccessible(root, root.extents)
+
+        # Handle non-leaf Java JTree nodes. If the node is collapsed,
+        # treat it as a leaf node. If it's expanded, add it to the
+        # Zones list.
+        #
+        if root.state.count(atspi.Accessibility.STATE_EXPANDABLE):
+            if root.state.count(atspi.Accessibility.STATE_COLLAPSED):
+                return self.getZonesFromAccessible(root, root.extents)
+            elif root.state.count(atspi.Accessibility.STATE_EXPANDED):
+                treenode = self.getZonesFromAccessible(root, root.extents)
+                if treenode:
+                    zones.extend(treenode)
 
         # We'll stop at various objects because, while they do have
         # children, we logically think of them as one region on the
@@ -982,7 +997,6 @@ class Context:
         # parents, especially those that implement accessible text.  Logged
         # as bugzilla bug 319773.]]]
         #
-        zones = []
         if root.role == rolenames.ROLE_PAGE_TAB:
             zones.extend(self.getZonesFromAccessible(root, root.extents))
 
