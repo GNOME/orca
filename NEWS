@@ -1,3 +1,111 @@
+2.19.2 - 13-May-2007
+
+General Orca:
+
+* Typo fixes from Mario Lang (thanks Mario!)
+
+* Updates to the specification
+
+* Additions to the regression tests
+
+* Fix for bug 368640 - Allow user to optionally ignore or be notified
+  of tool tips
+
+* Fix for bug 372273 - Add ability to configure app-specific settings
+  via GUI. NOTE: Adjusted ORCA_MODIFIER+Control+Space to now bring
+  up the application specific preferences dialog. The previous usage
+  (reload user settings) is now gone.
+
+* Fix for bug 400716 - sayAll should be done by sentences
+
+* Fix for bug 432674 -In password entries, Orca should respect key
+  echo settings and say "star" for the inserted characters
+ 
+* Fix for bug 432685 - Using brltty can consume all the CPU
+
+* Fix for bug 433146 - Add ability to configure app-unique settings
+  via GUI
+
+* Fix for bug 434394 - orca -t causes traceback
+
+* Fix for bug 434948 - KP_Insert+Shift cannot be used as modifiers in
+  an entry
+
+* Fix for bug 435223 - Where-am-I doesn't correctly identify multiple
+  selected objects in Nautilus
+ 
+* Fix for bug 435577 - Orca does not speak labels of embedded
+  components in gnome-panel
+
+* Fix for bug 437004 - Add in hooks for allowing
+  activation/deactivation script methods
+
+Firefox:
+
+* Fix for bug 407663 – Support the "Find" operation in Firefox
+  better.  Requires Firefox 3 from at least May 9, 2007.
+
+* Fix for bug 412677 – Navigation to links with { overflow:hidden }
+  stylesheet results in bad behavior
+
+* Partial fix for bug 420540 - Firefox keyboard control wish list.
+  ORCA_MODIFIER+Z will now toggle the structural navigation keys
+  on/off.
+
+* Fix for bug 422924 - Add more support for accessing HTML tables in
+  Firefox.  Orca now supports non-uniform
+  tables: When you navigate to a non-uniform table using T or
+  Shift+T, Orca will indicate that this is a non-uniform table.
+  When using structual navigation by cell, if the cell you navigate
+  to has multiple headers that apply to it such as "week 2" and
+  "Thursday", Orca will speak those headers if they are different from
+  the headers from your previous location.  Orca also announces cell
+  coordinates when navigating using structural navigation among cells.
+  And, finally, Orca announces cells that span more than one row or
+  column.  Of course, depending on your preferences, that's a lot
+  of verbiage.  Therefore, these are all customizable settings.
+
+* Fix for bug 423427 - Need to add form field structural navigation in
+  Firefox.  ORCA_MODIFIER+Tab should move you to the next form field
+  and ORCA_MODIFIER+Shift+Tab should move you to the previous form
+  field.
+
+* Fix for bug 423435 - Orca is too chatty when loading a page in
+  Firefox
+
+* Fix for bug 428114 - Orca should attempt to detect
+  erroneously-marked combo box labels in Firefox
+
+* Fix for bug 436718 - Navigating in focusable lists in FF 7 May build
+  hangs Orca
+
+OpenOffice:
+
+* Fix for bug 363804 - Add ability to turn off coordinate announcement
+  when navigating in Calc
+
+* Fix for bug 433398 - Orca does not provide access to the state of
+  checked menu items in OOo
+
+* Fix for bug 435201 - Orca is too chatty when navigating by
+  paragraph in OOo Writer
+
+* Fix for bug 435307 - OOo Calc output traceback for
+  UnboundLocalError: local variable 'focusRegion' referenced before
+  assignment
+
+* Fix for bug 435852 - Orca and OpenOffice Calc have a memory lovefest
+
+Java platform:
+
+* Pending fix for bug 436674 - flat-review only visits right-most tree
+  nodes in SwingSet2 JTree demo
+
+* Fix for bug 437049 - Orca does not speak Java Control Panel spinbox
+  changes
+
+==========
+
 2.19.1 - 23-Apr-2007
 
 * Turn on Orca's caret navigation mode by default for Firefox.
