@@ -1,3 +1,8 @@
+2007-05-12  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for Bug 412677 – Navigation to links
+        with { overflow:hidden } stylesheet results in bad behavior.
+
 2007-05-11  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug #407663 – Support the "Find"

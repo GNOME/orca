@@ -2390,6 +2390,22 @@ class Script(default.Script):
 
             return
 
+        # If {overflow:hidden} is in the document's style sheet, we seem
+        # to get an additional item in the hierarchy:  An object of role
+        # ROLE_UNKNOWN which is the single child of the document frame and
+        # contains all the items which we'd expect to find in the document
+        # frame.  Under these conditions, we will get a caret-moved event
+        # for the document frame with detail1 == 0 after a focus: event for
+        # the object.  We need to ignore both of these events else we will
+        # jump to the top of the document.
+        #
+        # http://bugzilla.gnome.org/show_bug.cgi?id=412677
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
+        #
+        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME and \
+           event.source.child(0).role == rolenames.ROLE_UNKNOWN:
+            return
+
         # Otherwise, we'll just assume that the thing in which the caret
         # moved is the locus of focus.
         #
@@ -2525,6 +2541,21 @@ class Script(default.Script):
         #
         if (event.source.role == rolenames.ROLE_FRAME) \
            or (not len(event.source.role)):
+            return
+
+        # If {overflow:hidden} is in the document's style sheet, we seem
+        # to get an additional item in the hierarchy:  An object of role
+        # ROLE_UNKNOWN which is the single child of the document frame and
+        # contains all the items which we'd expect to find in the document
+        # frame.  Under these conditions, we will get a caret-moved event
+        # for the document frame with detail1 == 0 after a focus: event for
+        # the object.  We need to ignore both of these events else we will
+        # jump to the top of the document.
+        #
+        # http://bugzilla.gnome.org/show_bug.cgi?id=412677
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
+        #
+        if event.source.role == rolenames.ROLE_UNKNOWN:
             return
 
         # We also ignore focus events on the panel that holds the document
