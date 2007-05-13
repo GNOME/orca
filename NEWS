@@ -13,12 +13,12 @@ General Orca:
 
 * Fix for bug 372273 - Add ability to configure app-specific settings
   via GUI. NOTE: Adjusted ORCA_MODIFIER+Control+Space to now bring
-  up the application specific preferences dialog. The previous usage
+  up the application-specific preferences dialog. The previous usage
   (reload user settings) is now gone.
 
 * Fix for bug 400716 - sayAll should be done by sentences
 
-* Fix for bug 432674 -In password entries, Orca should respect key
+* Fix for bug 432674 - In password entries, Orca should respect key
   echo settings and say "star" for the inserted characters
  
 * Fix for bug 432685 - Using brltty can consume all the CPU
@@ -103,6 +103,10 @@ Java platform:
 
 * Fix for bug 437049 - Orca does not speak Java Control Panel spinbox
   changes
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    en_GB   English/British      David Lodge
 
 ==========
 
@@ -209,15 +213,6 @@ Java platform:
 				 Jorge Gonzalez
     sv      Swedish              Daniel Nylander
 
-2007-04-14  Djihed Afifi <djihed@gmail.com> 
-
-	* ar.po: Updated Arabic Translation by Djihed Afifi.
-
-2007-04-12  Daniel Nylander <po@danielnylander.se>
-
-	* sv.po: Updated Swedish translation.
-	* POTFILES.in: Added missing file.
-  
 ==========
 
 2.19.0 - 27-Mar-2007
