@@ -4,6 +4,7 @@ PYTHONPATH=@pyexecdir@
 DOC_FILES = \
 	orca \
 	orca.acss \
+	orca.app_gui_prefs \
 	orca.atspi \
 	orca.braille \
 	orca.braillegenerator \
@@ -49,7 +50,6 @@ DOC_FILES = \
 	orca.speechdispatcherfactory \
 	orca.speechgenerator \
 	orca.speechserver \
-	orca.util \
 	orca.where_am_I \
 	orca.scripts \
 	orca.scripts.acroread \
@@ -59,14 +59,17 @@ DOC_FILES = \
 	orca.scripts.gdmlogin \
 	orca.scripts.gedit \
 	orca.scripts.gnome_segv2 \
-	orca.scripts.gnome-power-manager \
 	orca.scripts.gnome-keyring-ask \
+	orca.scripts.gnome-mud \
+	orca.scripts.gnome-panel \
+	orca.scripts.gnome-power-manager \
 	orca.scripts.gnome-search-tool \
 	orca.scripts.gnome-terminal \
 	orca.scripts.gnome-window-properties \
 	orca.scripts.liferea \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
+	orca.scripts.nautilus \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \
