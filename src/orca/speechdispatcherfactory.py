@@ -73,7 +73,7 @@ class SpeechServer(speechserver.SpeechServer):
     def getSpeechServer(info=None):
         servers = SpeechServer._getActiveServers()
         if info is not None:
-            return servers.get(info)
+            return servers.get(info[1])
         elif servers:
             return servers.values()[0]
         else:
@@ -102,7 +102,7 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_WARNING,
                        "Speech Dispatcher service failed to connect.")
         else:
-            self.__class__._activeServers[self.getInfo()] = self
+            self.__class__._activeServers[self.getInfo()[1]] = self
 
     def _init(self):
         import speechd
@@ -160,7 +160,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._client.cancel()
 
     def getInfo(self):
-        return ("Speech Dispatcher Server (%s)" % self._id, self._id)
+        return ["Speech Dispatcher Server (%s)" % self._id, self._id]
 
     def getVoiceFamilies(self):
         # Only one voice is currently supported -- the Speech Dispatcher
@@ -222,7 +222,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         self._client.close()
-        del self.__class__._activeServers[self.getInfo()]
+        del self.__class__._activeServers[self.getInfo()[1]]
 
     def reset(self, text=None, acss=None):
         self._cancel()

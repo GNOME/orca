@@ -1,3 +1,9 @@
+2007-05-14  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speechdispatcherfactory.py: fix for bug 349294
+        to make Speech Dispatcher Factory work better with Orca
+        GUI preferences.
+
 2007-05-13  Willie Walker <william.walker@sun.com>
 
         * configure.in, NEWS: prep for v2.19.2
