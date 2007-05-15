@@ -1,8 +1,8 @@
-
-[encoding: UTF-8]
 # List of source files containing translatable strings.
-orca.desktop.in
 # Please keep this file sorted alphabetically.
+[encoding: UTF-8]
+orca.desktop.in
+src/orca/app_gui_prefs.py
 src/orca/braillegenerator.py
 src/orca/braille.py
 src/orca/chnames.py
