@@ -343,7 +343,7 @@ class Text(Region):
     [[[TODO: WDW - need to add in text selection capabilities.  Logged
     as bugzilla bug 319754.]]]"""
 
-    def __init__(self, accessible, label=None):
+    def __init__(self, accessible, label=None, eol=""):
         """Creates a new Text region.
 
         Arguments:
@@ -371,6 +371,10 @@ class Text(Region):
                     atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
         cursorOffset = self.caretOffset - self.lineOffset
+
+        self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
+
+        string = string + eol
 
         self.label = label
         if self.label:
@@ -412,7 +416,7 @@ class Text(Region):
             if offset < 0:
                 return
 
-        newCaretOffset = self.lineOffset + offset
+        newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
         self.accessible.text.setCaretOffset(newCaretOffset)
 
 class ReviewComponent(Component):
@@ -525,7 +529,10 @@ class Line:
             else:
                 pos = len(string.decode("UTF-8"))
 
-        return [region, offset - pos]
+        if offset >= len(string.decode("UTF-8")):
+            return [None, -1]
+        else:
+            return [region, offset - pos]
 
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -534,7 +541,8 @@ class Line:
         been scrolled off the display."""
 
         [region, regionOffset] = self.getRegionAtOffset(offset)
-        region.processCursorKey(regionOffset)
+        if region:
+            region.processCursorKey(regionOffset)
 
 def getRegionAtCell(cell):
     """Given a 1-based cell offset, return the braille region

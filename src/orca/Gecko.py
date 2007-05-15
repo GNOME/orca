@@ -253,9 +253,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             label = parent.name
 
         textRegion = braille.Text(obj, label)
-        regions.append(textRegion)
-        eol = braille.Region(" $l")
-        regions.append(eol)
+        regions.append(textRegion, None, " $l")
         return [regions, textRegion]
 
     def _getBrailleRegionsForComboBox(self, obj):
@@ -3047,9 +3045,7 @@ class Script(default.Script):
                 or ((obj.role == rolenames.ROLE_DOCUMENT_FRAME) \
                     and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
                 label = self.getDisplayedLabel(obj)
-                regions = [braille.Text(obj, label)]
-                eol = braille.Region(" $l")
-                regions.append(eol)
+                regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
                     focusedRegion = regions[0]
             elif obj.text:
