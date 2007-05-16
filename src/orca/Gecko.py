@@ -252,8 +252,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if not label or not len(label):
             label = parent.name
 
-        textRegion = braille.Text(obj, label)
-        regions.append(textRegion, None, " $l")
+        textRegion = braille.Text(obj, label, " $l")
+        regions.append(textRegion)
         return [regions, textRegion]
 
     def _getBrailleRegionsForComboBox(self, obj):
