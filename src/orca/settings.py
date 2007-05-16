@@ -263,6 +263,11 @@ enableBrailleGrouping   = False
 #
 enableBrailleMonitor    = False
 
+# Strings used to indicate checkbox/radio button states in braille:
+#
+brailleCheckBoxIndicators = ["< >", "<x>"]
+brailleRadioButtonIndicators = ["& y", "&=y"]
+
 # If True, enable magnification.
 #
 enableMagnifier                  = False

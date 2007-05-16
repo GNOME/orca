@@ -1,4 +1,3 @@
-
 # Orca
 #
 # Copyright 2005-2007 Sun Microsystems Inc.
@@ -211,10 +210,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = self._script.appendString(text, "<x>")
-        else:
-            text = self._script.appendString(text, "< >")
+        text = self._script.appendString(
+            settings.brailleCheckBoxIndicators[
+                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            text)
 
         text = self._script.appendString(text, self._getTextForRole(obj))
 

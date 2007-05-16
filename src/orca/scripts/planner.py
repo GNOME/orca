@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
@@ -95,10 +95,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             allLabels = self._script.findByRole(filler, rolenames.ROLE_LABEL)
             text += allLabels[0].name
 
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = self._script.appendString(text, "&=y")
-        else:
-            text = self._script.appendString(text, "& y")
+        text = self._script.appendString(
+            settings.brailleRadioButtonIndicators[
+                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            text)
 
         text = self._script.appendString(text, self._getTextForRole(obj))
 

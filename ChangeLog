@@ -1,8 +1,20 @@
+2007-05-16  Mario Lang <mlang@delysid.org>
+
+        * src/orca/settings.py: Configurable checkbox/radio button indicator
+        strings for braille output.
+
+        * src/orca/braillegenerator.py, src/orca/Gecko.py: Use new
+        braille{CheckBox,RadioButton}Indicators from settings.py.
+
+        * src/braillegenerator.py, src/Gecko,py,
+        src/orca/scripts/planner.py: Present checkbox and radio button
+        indicators before label/name in braille.
+
 2007-05-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
           src/orca/focus_tracking_presenter.py:
-          Work on bug #435199 - Orca is bloating the swap partition, so 
+          Work on bug #435199 - Orca is bloating the swap partition, so
           the system is no more usable after a short time.
 
           Adjusted the StarOffice script to use the new activate() and
