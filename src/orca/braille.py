@@ -370,7 +370,7 @@ class Text(Region):
                     0,
                     atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
-        cursorOffset = self.caretOffset - self.lineOffset
+        cursorOffset = min(self.caretOffset - self.lineOffset, len(string))
 
         self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
 
@@ -392,7 +392,7 @@ class Text(Region):
 
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
-        cursorOffset = caretOffset - lineOffset
+        cursorOffset = min(caretOffset - lineOffset, len(string))
         if self.label:
             cursorOffset += len(self.label.decode("UTF-8")) + 1
 
