@@ -1,3 +1,16 @@
+2007-05-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          src/orca/focus_tracking_presenter.py:
+          Work on bug #435199 - Orca is bloating the swap partition, so 
+          the system is no more usable after a short time.
+
+          Adjusted the StarOffice script to use the new activate() and
+          deactivate() script methods to initially set the value of the
+          readTableCellRow setting to False when OOo is running, and
+          restoring it to its previous value when that application is no
+          longer active.
+
 2007-05-16  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: fix typos from 434600.  :-(

@@ -273,6 +273,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         """
 
         try:
+            # If old ("factory") settings don't exist yet, save
+            # a set, else restore the old application settings.
+            #
+            if not self._oldAppSettings:
+                self._oldAppSettings = \
+                    orca_state.activeScript.saveOldAppSettings()
+            else:
+                orca_state.activeScript.restoreOldAppSettings( \
+                    self._oldAppSettings)
+
             orca_state.activeScript.deactivate()
         except:
             pass
@@ -534,19 +544,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
-                        self.setActiveScript(self._getScript(event.source.app))
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
 
-                        # If old ("factory") settings don't exist yet, save
-                        # a set, else restore the old application settings.
-                        #
-                        if not self._oldAppSettings:
-                            self._oldAppSettings = \
-                                  orca_state.activeScript.saveOldAppSettings()
-                        else:
-                            orca_state.activeScript.restoreOldAppSettings( \
-                                                         self._oldAppSettings)
+                        self.setActiveScript(self._getScript(event.source.app))
 
                         # Load in the application specific settings for the
                         # app for this event (if found).

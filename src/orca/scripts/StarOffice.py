@@ -740,6 +740,15 @@ class Script(default.Script):
         #
         self.tickled = None
 
+    def activate(self):
+        """Called when this script is activated."""
+        self.savedreadTableCellRow = settings.readTableCellRow
+        settings.readTableCellRow = False
+
+    def deactivate(self):
+        """Called when this script is deactivated."""
+        settings.readTableCellRow = self.savedreadTableCellRow
+
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
