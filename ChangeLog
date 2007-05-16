@@ -18,6 +18,13 @@
 
 2007-05-16  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/where_am_I.py:
+          src/orca/scripts/Evolution.py:
+          Fixed bug #435226 – Where-am-I doesn't correctly handle multiple 
+          selected paragraphs in OOo Writer and Evolution.
+
+2007-05-16  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py:
           src/orca/focus_tracking_presenter.py:
           Work on bug #435199 - Orca is bloating the swap partition, so

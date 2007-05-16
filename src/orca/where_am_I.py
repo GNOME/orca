@@ -869,6 +869,89 @@ class WhereAmI:
 
         return text
 
+    def _getTextSelection(self, obj):
+        """Get the text selection for the given object.
+
+        Arguments:
+        - obj: the text object to extract the selected text from.
+
+        Returns: the selected text contents plus the start and end 
+        offsets within the text.
+        """
+
+        textContents = ""
+        textObj = obj.text
+        nSelections = textObj.getNSelections()
+        for i in range(0, nSelections):
+            [startOffset, endOffset] = textObj.getSelection(i)
+
+            debug.println(self._debugLevel,
+                "_getTextSelection: selection start=%d, end=%d" % \
+                (startOffset, endOffset))
+
+            selectedText = textObj.getText(startOffset, endOffset)
+            debug.println(self._debugLevel,
+                "_getTextSelection: selected text=<%s>" % selectedText)
+
+            if i > 0:
+                textContents += " "
+            textContents += selectedText
+
+        return [textContents, startOffset, endOffset]
+
+    def _getTextSelections(self, obj, doubleClick):
+        """Get all the text applicable text selections for the given object.
+        If the user doubleclicked, look to see if there are any previous 
+        or next text objects that also have selected text and add in their 
+        text contents.
+
+        Arguments:
+        - obj: the text object to start extracting the selected text from.
+        - doubleClick: True if the user double-clicked the "where am I" key.
+
+        Returns: all the selected text contents plus the start and end
+        offsets within the text for the given object.
+        """
+
+        [textContents, startOffset, endOffset] = self._getTextSelection(obj)
+
+        if doubleClick:
+            current = obj
+            morePossibleSelections = True
+            while morePossibleSelections:
+                morePossibleSelections = False
+                for relation in current.relations:
+                    if relation.getRelationType() == \
+                           atspi.Accessibility.RELATION_FLOWS_FROM:
+                        prevObj = atspi.Accessible.makeAccessible( \
+                                                  relation.getTarget(0))
+                        if prevObj.text.getNSelections() > 0:
+                            [newTextContents, start, end] = \
+                                         self._getTextSelection(prevObj)
+                            textContents = newTextContents + textContents
+                            current = prevObj
+                            morePossibleSelections = True
+                        break
+
+            current = obj
+            morePossibleSelections = True
+            while morePossibleSelections:
+                morePossibleSelections = False
+                for relation in current.relations:
+                    if relation.getRelationType() == \
+                           atspi.Accessibility.RELATION_FLOWS_TO:
+                        nextObj = atspi.Accessible.makeAccessible( \
+                                                  relation.getTarget(0))
+                        if nextObj.text.getNSelections() > 0:
+                            [newTextContents, start, end] = \
+                                         self._getTextSelection(nextObj)
+                            textContents += newTextContents
+                            current = nextObj
+                            morePossibleSelections = True
+                        break
+
+        return [textContents, startOffset, endOffset]
+
     def _getTextContents(self, obj, doubleClick):
         """Returns utterences for text.
 
@@ -892,21 +975,8 @@ class WhereAmI:
 
         if nSelections:
             selected = True
-            for i in range(0, nSelections):
-                [startOffset, endOffset] = textObj.getSelection(i)
-
-                debug.println(self._debugLevel,
-                    "_getTextContents: selection start=%d, end=%d" % \
-                    (startOffset, endOffset))
-
-                selectedText = textObj.getText(startOffset, endOffset)
-                debug.println(self._debugLevel,
-                    "_getTextContents: selected text=<%s>" % selectedText)
-
-                if i > 0:
-                    textContents += " "
-                textContents += selectedText
-
+            [textContents, startOffset, endOffset] = \
+                                  self._getTextSelections(obj, doubleClick)
         else:
             # Get the line containing the caret
             #

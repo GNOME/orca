@@ -84,6 +84,72 @@ class WhereAmI(where_am_I.WhereAmI):
 
         return text
 
+    def _getTextSelections(self, obj, doubleClick):
+        """Get all the text applicable text selections for the given object.
+        If the user doubleclicked, look to see if there are any previous
+        or next text objects that also have selected text and add in their
+        text contents.
+
+        Arguments:
+        - obj: the text object to start extracting the selected text from.
+        - doubleClick: True if the user double-clicked the "where am I" key.
+
+        Returns: all the selected text contents plus the start and end
+        offsets within the text for the given object.
+        """
+
+        [textContents, startOffset, endOffset] = self._getTextSelection(obj)
+
+        if doubleClick:
+            # Unfortunately, Evolution doesn't use the FLOWS_FROM and 
+            # FLOWS_TO relationships to easily allow us to get to previous 
+            # and next text objects. Instead we have to move up the
+            # component hierarchy until we get to the object containing all
+            # the panels (with each line containing a single text item).
+            # We can then check in both directions to see if there is other
+            # contiguous text that is selected. We also have to jump over 
+            # zero length (empty) text lines and continue checking on the 
+            # other side.
+            #
+            container = obj.parent.parent
+            current = obj.parent.index
+            morePossibleSelections = True
+            while morePossibleSelections:
+                morePossibleSelections = False
+                if (current-1) >= 0:
+                    prevPanel = container.child(current-1)
+                    prevObj = prevPanel.child(0)
+                    displayedText = prevObj.text.getText(0, -1)
+                    if len(displayedText) == 0:
+                        current -= 1
+                        morePossibleSelections = True
+                    elif prevObj.text.getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                                     self._getTextSelection(prevObj)
+                        textContents = newTextContents + " " + textContents
+                        current -= 1
+                        morePossibleSelections = True
+
+            current = obj.parent.index
+            morePossibleSelections = True
+            while morePossibleSelections:
+                morePossibleSelections = False
+                if (current+1) < container.childCount:
+                    nextPanel = container.child(current+1)
+                    nextObj = nextPanel.child(0)
+                    displayedText = nextObj.text.getText(0, -1)
+                    if len(displayedText) == 0:
+                        current += 1
+                        morePossibleSelections = True
+                    elif nextObj.text.getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                                     self._getTextSelection(nextObj)
+                        textContents += " " + newTextContents
+                        current += 1
+                        morePossibleSelections = True
+
+        return [textContents, startOffset, endOffset]
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
