@@ -45,7 +45,7 @@ from orca.orca_i18n import _
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for gnome-terminal
+        """Creates a new script for gnome-panel
 
         Arguments:
         - app: the application to create a script for.
