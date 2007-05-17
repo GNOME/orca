@@ -1,3 +1,12 @@
+2007-05-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #435852 – Orca and OpenOffice Calc have a memory 
+          lovefest, found by Will (thanks!). We now override the 
+          _getSpeechForTable() method in the subclassed SpeechGenerator 
+          class in the StarOffice.py script, and just check against 
+          "not obj.childCount"
+
 2007-05-17  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/gcalctool.py: fix for bug 439155 - Flat review

@@ -458,6 +458,33 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+    def _getSpeechForTable(self, obj, already_focused):
+        """Get the speech for a table
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = self._getDefaultSpeech(obj, already_focused)
+
+        self._debugGenerator("_getSpeechForTable",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        # If this is a table with no children, then let the user know.
+        #
+        if not obj.childCount:
+            # Translators: this indicates that there are zero items in 
+            # a layered pane or table.
+            #
+            utterances.append(_("0 items"))
+
+        return utterances
+
     def _getSpeechForTableCellRow(self, obj, already_focused):
         """Get the speech for a table cell row or a single table cell
         if settings.readTableCellRow is False. If this isn't inside a
