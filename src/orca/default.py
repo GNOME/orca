@@ -1863,7 +1863,7 @@ class Script(script.Script):
         maxSearch = min(len(aParents), len(bParents))
         i = 0
         while i < maxSearch:
-            if aParents[i] == bParents[i]:
+            if self.isSameObject(aParents[i], bParents[i]):
                 commonAncestor = aParents[i]
                 i += 1
             else:
@@ -3895,8 +3895,22 @@ class Script(script.Script):
             return False
 
         try:
-            if obj1.name != obj2.name:
+            if (obj1.name != obj2.name) or (obj1.role != obj2.role):
                 return False
+            else:
+                # Gecko sometimes creates multiple accessibles to represent
+                # the same object.  If the two objects have the same name
+                # and the same role, check the extents.  If those also match
+                # then the two objects are for all intents and purposes the
+                # same object.
+                #
+                extents1 = obj1.component.getExtents(0)
+                extents2 = obj2.component.getExtents(0)
+                if (extents1.x == extents2.x) and \
+                   (extents1.y == extents2.y) and \
+                   (extents1.width == extents2.width) and \
+                   (extents1.height == extents2.height):
+                    return True
 
             # When we're looking at children of objects that manage
             # their descendants, we will often get different objects

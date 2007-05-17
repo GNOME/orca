@@ -100,6 +100,7 @@ speakResultsDuringFind = True
 # a find before Orca speaks the changed location, assuming that
 # speakResultsDuringFind is True.
 #
+minimumFindLength = 4
 
 # Whether or not to continue speaking the same line if the match
 # has not changed with additional keystrokes.  This setting comes
@@ -110,8 +111,6 @@ speakResultsDuringFind = True
 # that may be too verbose so it's configurable.
 #
 onlySpeakChangedLinesDuringFind = False
-
-minimumFindLength = 4
 
 # Roles that imply their text starts on a new line.
 #
@@ -787,17 +786,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return utterances
 
         parent = obj.parent
-
-        # If we're in a toolbar, we want to stop before speaking the
-        # application frame.
-        #
-        containingToolbar = \
-               self._script.getContainingRole(obj, rolenames.ROLE_TOOL_BAR)
-        if containingToolbar:
-            stopAncestor = self._script.getFrame(obj)
-
         while parent and (parent.parent != parent):
-            if parent == stopAncestor:
+            if self._script.isSameObject(parent, stopAncestor):
                 break
 
             # We try to omit layout things right off the bat.
@@ -812,6 +802,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
+            # To be consistent with how we provide access to other
+            # applications, don't speak the name of menu bars.
+            #
+            if parent.role == rolenames.ROLE_MENU_BAR:
+                parent = parent.parent
+                continue
+
             # Skip unfocusable menus.  This is for earlier versions
             # of Firefox where menus were nested in kind of an odd
             # dual nested menu hierarchy.
@@ -821,9 +818,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
-            # Now...autocompletes are wierd.  We'll let the handling of
+            # Now...autocompletes are weird.  We'll let the handling of
             # the entry give us the name -- unless we're in a toolbar.
             #
+            containingToolbar = \
+                  self._script.getContainingRole(obj, rolenames.ROLE_TOOL_BAR)
             if parent.role == rolenames.ROLE_AUTOCOMPLETE and \
                not containingToolbar:
                 parent = parent.parent
@@ -2347,7 +2346,8 @@ class Script(default.Script):
         # in the Find toolbar), speak the line containing the caret
         # based on the user-customizable settings.
         #
-        if orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY and \
+        if orca_state.locusOfFocus and \
+           orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY and \
            orca_state.locusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR \
            and self.inDocumentContent(event.source):
             [obj, offset] = self.getCaretContext()
@@ -2870,20 +2870,23 @@ class Script(default.Script):
             if newLocusOfFocus.text:
                 caretOffset = newLocusOfFocus.text.caretOffset
 
-                # If the old locusOfFocus was an entry in a toolbar, there's
-                # a good chance that we just returned from performing a find.
+                # If the old locusOfFocus was not in the document frame, and
+                # if the old locusOfFocus's frame is the same as the frame
+                # containing the new locusOfFocus, we likely just returned
+                # from a toolbar (find, location, menu bar, etc.).  We do
+                # not want to speak the hierarchy between that toolbar and
+                # the document frame.
                 #
-                if oldLocusOfFocus.role == rolenames.ROLE_ENTRY and \
-                   oldLocusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR:
-                    # We don't want to speak all of the information
-                    # in the hierarchy; we should just read the line
-                    # with focus.
-                    #
-                    self.setCaretPosition(newLocusOfFocus, caretOffset)
-                    self.updateBraille(newLocusOfFocus)
-                    self.speakContents(self.getLineContentsAtOffset(
+                if oldLocusOfFocus and \
+                   not self.inDocumentContent(oldLocusOfFocus):
+                    oldFrame = self.getFrame(oldLocusOfFocus)
+                    newFrame = self.getFrame(newLocusOfFocus)
+                    if self.isSameObject(oldFrame, newFrame):
+                        self.setCaretPosition(newLocusOfFocus, caretOffset)
+                        self.updateBraille(newLocusOfFocus)
+                        self.speakContents(self.getLineContentsAtOffset(
                                                 newLocusOfFocus, caretOffset))
-                    return
+                        return
 
             else:
                 caretOffset = 0
