@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.atspi as atspi
@@ -46,7 +46,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
-        
+
     def _getSpeechForObjectName(self, obj):
         """Gives preference to the object name versus what is being
         displayed on the screen.  This helps accomodate the naming
@@ -82,7 +82,7 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
-        self._display = None
+        self._resultsDisplay = None
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -99,7 +99,7 @@ class Script(default.Script):
         # If we haven't found the display, and this is a toplevel window,
         # look for the display in this window
         #
-        if (self._display is None) \
+        if (self._resultsDisplay is None) \
                and (event.source.role == rolenames.ROLE_FRAME):
 
             # The widget hierarchy for gcalctool differs depending upon the
@@ -125,8 +125,8 @@ class Script(default.Script):
                 speech.speak(contents)
                 braille.displayMessage(contents)
             else:
-                self._display = d[0]
-                contents = self.getText(self._display, 0, -1)
+                self._resultsDisplay = d[0]
+                contents = self.getText(self._resultsDisplay, 0, -1)
                 braille.displayMessage(contents)
 
             # Call the default onWindowActivated function
@@ -149,8 +149,8 @@ class Script(default.Script):
         # Always update the Braille display but only speak if the last
         # key pressed was enter or equals
         #
-        if event.source == self._display:
-            contents = self.getText(self._display, 0, -1)
+        if event.source == self._resultsDisplay:
+            contents = self.getText(self._resultsDisplay, 0, -1)
             braille.displayMessage(contents)
 
             if (orca_state.lastInputEvent is None) \
@@ -160,6 +160,7 @@ class Script(default.Script):
                 return
 
             if (orca_state.lastNonModifierKeyEvent.event_string == "space") \
-                   or (orca_state.lastNonModifierKeyEvent.event_string == "Return") \
+                   or (orca_state.lastNonModifierKeyEvent.event_string \
+                       == "Return") \
                    or (orca_state.lastNonModifierKeyEvent.event_string == "="):
                 speech.speak(contents)

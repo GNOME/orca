@@ -1,3 +1,8 @@
+2007-05-17  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/gcalctool.py: fix for bug 439155 - Flat review
+        is broken in gcalctool
+
 2007-05-17  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py, src/orca/default.py: Fix for Bug 437986 –
@@ -9,7 +14,7 @@
         * src/orca/braille.py: additional fix for bug 434600 to handle
 	case where last line of file in gedit is blank.  The cursor
 	was ending up at the wrong spot.
-	
+
 2007-05-16  Mario Lang <mlang@delysid.org>
 
         * src/orca/settings.py: Configurable checkbox/radio button indicator
@@ -26,7 +31,7 @@
 
         * src/orca/where_am_I.py:
           src/orca/scripts/Evolution.py:
-          Fixed bug #435226 – Where-am-I doesn't correctly handle multiple 
+          Fixed bug #435226 – Where-am-I doesn't correctly handle multiple
           selected paragraphs in OOo Writer and Evolution.
 
 2007-05-16  Rich Burridge <rich.burridge@sun.com>
