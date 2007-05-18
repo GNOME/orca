@@ -3062,16 +3062,6 @@ class Script(default.Script):
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
-                elif obj.role == rolenames.ROLE_HEADING:
-                    level = self.getHeadingLevel(obj)
-                    # Translators: the 'h' below represents a heading level
-                    # attribute for content that you might find in something
-                    # such as HTML content (e.g., <h1>). The translated form
-                    # is meant to be a single character followed by a numeric
-                    # heading level, where the single character is to indicate
-                    # 'heading'.
-                    #
-                    regions.append(braille.Region(" " + _("h%d" % level)))
 
                 if isFocusedObj \
                    and (focusedCharacterOffset >= startOffset) \
@@ -3085,6 +3075,30 @@ class Script(default.Script):
                           self.brailleGenerator.getBrailleRegions(obj)
                 if isFocusedObj:
                     focusedRegion = fRegion
+
+            # We only want to display the heading role and level if we
+            # have found the final item in that heading, or if that
+            # heading contains no children.  
+            #
+            containingHeading = \
+                self.getContainingRole(obj, rolenames.ROLE_HEADING)
+            isLastObject = contents.index(content) == (len(contents) - 1)
+            if obj.role == rolenames.ROLE_HEADING:
+                appendRole = isLastObject or not obj.childCount
+            elif containingHeading and isLastObject:
+                obj = containingHeading
+                appendRole = True
+
+            if obj.role == rolenames.ROLE_HEADING and appendRole:
+                level = self.getHeadingLevel(obj)
+                # Translators: the 'h' below represents a heading level
+                # attribute for content that you might find in something
+                # such as HTML content (e.g., <h1>). The translated form
+                # is meant to be a single character followed by a numeric
+                # heading level, where the single character is to indicate
+                # 'heading'.
+                #
+                regions.append(braille.Region(" " + _("h%d" % level)))
 
             if len(line.regions):
                 line.addRegion(braille.Region(" "))
@@ -4762,23 +4776,46 @@ class Script(default.Script):
             if self.isLabellingContents(obj, contents):
                 continue
 
+            # We only want to announce the heading role and level if we
+            # have found the final item in that heading, or if that
+            # heading contains no children.  
+            #
+            containingHeading = \
+                self.getContainingRole(obj, rolenames.ROLE_HEADING)
+            isLastObject = contents.index(content) == (len(contents) - 1)
+            if obj.role == rolenames.ROLE_HEADING:
+                speakThisRole = isLastObject or not obj.childCount
+            else:
+                # We also don't want to speak the role if it's a documement
+                # frame or a table cell.
+                #
+                speakThisRole = \
+                    not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
+                                     rolenames.ROLE_TABLE_CELL]
+
             if obj.text:
                 strings = [self.getText(obj, startOffset, endOffset)]
-                if speakRole and \
-                   not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
-                                    rolenames.ROLE_TABLE_CELL]:
-                    strings.extend(\
-                        self.speechGenerator._getSpeechForObjectRole(obj))
-
             elif self.isLayoutOnly(obj):
                 continue
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 
+            if speakRole and speakThisRole:
+                if obj.text:
+                    strings.extend(\
+                       self.speechGenerator._getSpeechForObjectRole(obj))
+
+                if containingHeading and isLastObject:
+                   obj = containingHeading
+                   strings.extend(\
+                        self.speechGenerator._getSpeechForObjectRole(obj))
+
             for string in strings:
                 utterances.append([string, self.getACSS(obj, string)])
 
-            if obj.role == rolenames.ROLE_HEADING:
+            if speakRole and \
+               speakThisRole and \
+               obj.role == rolenames.ROLE_HEADING:
                 level = self.getHeadingLevel(obj)
                 if level:
                     utterances.append([" ", self.getACSS(obj, " ")])

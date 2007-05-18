@@ -1,3 +1,8 @@
+2007-05-18  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for Bug 414657 – Linked headings should
+        be announced as both heading and link.
+
 2007-05-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
