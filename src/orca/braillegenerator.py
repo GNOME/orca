@@ -478,9 +478,8 @@ class BrailleGenerator:
         if displayedText:
             regions.append(braille.Region(displayedText))
 
-        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            regions.append(braille.Region(
-                " " + rolenames.getBrailleForRoleName(obj)))
+        regions.append(braille.Region(
+            " " + rolenames.getBrailleForRoleName(obj)))
 
         # Things may not have gone as expected above, so we'll do some
         # defensive programming to make sure we don't get an index out
