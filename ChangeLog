@@ -1,3 +1,10 @@
+2007-05-19  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: More work on Bug 420540 – Firefox keyboard 
+        control wish list. Q/Shift+Q can now be used to navigate among
+        blockquotes.  I also added a new method, getLastObject(), which
+        I need for a couple of other RFE's I'm working on.
+
 2007-05-18  Willie Walker <william.walker@sun.com>
 
         * src/orca/braillegenerator.py: fix for bug 439487 - Combobox role

@@ -935,6 +935,8 @@ class Script(default.Script):
              Script.goPreviousVisitedLink,
              Script.goNextFormField,
              Script.goPreviousFormField,
+             Script.goNextBlockquote,
+             Script.goPreviousBlockquote,
              Script.goNextTable,
              Script.goPreviousTable,
              Script.goCellLeft,
@@ -1301,6 +1303,22 @@ class Script(default.Script):
                 # HTML
                 #
                 _("Goes to next form field."))
+
+        self.inputEventHandlers["goPreviousBlockquoteHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousBlockquote,
+                # Translators: this is for navigating among blockquotes in
+                # HTML
+                #
+                _("Goes to previous blockquote."))
+
+        self.inputEventHandlers["goNextBlockquoteHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextBlockquote,
+                # Translators: this is for navigating among blockquotes in
+                # HTML
+                #
+                _("Goes to next blockquote."))
 
         self.inputEventHandlers["goPreviousTableHandler"] = \
             input_event.InputEventHandler(
@@ -1746,6 +1764,24 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["goNextFormFieldHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "q",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousBlockquoteHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "q",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextBlockquoteHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -3078,7 +3114,7 @@ class Script(default.Script):
 
             # We only want to display the heading role and level if we
             # have found the final item in that heading, or if that
-            # heading contains no children.  
+            # heading contains no children.
             #
             containingHeading = \
                 self.getContainingRole(obj, rolenames.ROLE_HEADING)
@@ -4034,6 +4070,16 @@ class Script(default.Script):
 
         return isField
 
+    def isBlockquote(self, obj):
+        """Returns True if the object is a blockquote"""
+
+        if obj and obj.attributes:
+            for attribute in obj.attributes:
+                if attribute == "tag:BLOCKQUOTE":
+                    return True
+
+        return False
+
     def isUselessObject(self, obj):
         """Returns true if the given object is an obj that doesn't
         have any meaning associated with it and it is not inside a
@@ -4112,6 +4158,20 @@ class Script(default.Script):
                     break
 
         return level
+
+    def getLastObject(self):
+        """Returns the last object in the document frame"""
+
+        documentFrame = self.getDocumentFrame()
+        lastChild = documentFrame.child(documentFrame.childCount - 1)
+        while lastChild:
+            lastObj = self.findNextObject(lastChild)
+            if lastObj:
+                lastChild = lastObj
+            else:
+                break
+
+        return lastChild
 
     ####################################################################
     #                                                                  #
@@ -5653,6 +5713,56 @@ class Script(default.Script):
             # moving from link to link.
             #
             speech.speak(_("No more visited links."))
+
+    def goPreviousBlockquote(self, inputEvent):
+        # If the current object has a blockquote in its ancestry, we
+        # need to move out of it else we'll get stuck.
+        #
+        [obj, characterOffset] = self.getCaretContext()
+        candidate = obj
+        while candidate and (candidate != candidate.parent) and \
+              (candidate.role != rolenames.ROLE_DOCUMENT_FRAME):
+            if self.isBlockquote(candidate):
+                obj = candidate
+                break
+            else:
+                candidate = candidate.parent
+
+        found = False
+        while obj and not found:
+            obj = self.findPreviousObject(obj)
+            if obj and self.isBlockquote(obj):
+                found = True
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            # Translators: this is for navigating HTML content by
+            # moving from blockquote to blockquote.
+            #
+            speech.speak(_("No more blockquotes."))
+
+    def goNextBlockquote(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        found = False
+        while obj and not found:
+            obj = self.findNextObject(obj)
+            if obj and self.isBlockquote(obj):
+                found = True
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            # Translators: this is for navigating HTML content by
+            # moving from blockquote to blockquote.
+            #
+            speech.speak(_("No more blockquotes."))
 
     def goPreviousFormField(self, inputEvent):
         # If the current object is a list item in a form field, we
