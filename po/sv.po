@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-21 13:50+0200\n"
-"PO-Revision-Date: 2007-04-21 13:11+0100\n"
+"POT-Creation-Date: 2007-05-15 17:19+0200\n"
+"PO-Revision-Date: 2007-05-15 23:17+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -23,16 +23,32 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca skärmläsare och -förstorare"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
-msgstr ""
-"Visa information på skärmen som uppläsning eller braille, eller förstora "
-"skärmen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Visa information på skärmen som uppläsning eller braille, eller förstora skärmen"
+
+#: ../src/orca/app_gui_prefs.py:89
+#, python-format
+msgid "Orca Preferences for %s"
+msgstr "Orca-inställningar för %s"
+
+#: ../src/orca/app_gui_prefs.py:209
+msgid "No application has focus."
+msgstr "Inget program har fokus."
+
+#. Translators: Orca Preferences in this case, is a configuration GUI
+#. for allowing users to set application specific settings from within
+#. Orca for the application that currently has focus.
+#.
+#: ../src/orca/app_gui_prefs.py:224
+#, python-format
+msgid "Starting Orca Preferences for %s. This may take a while."
+msgstr "Startar Orca-inställningar för %s. Det kan ta en stund."
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:199 ../src/orca/speechgenerator.py:200
+#: ../src/orca/braillegenerator.py:199
+#: ../src/orca/speechgenerator.py:200
 msgid "grayed"
 msgstr "gråad"
 
@@ -40,8 +56,10 @@ msgstr "gråad"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:1073 ../src/orca/J2SE-access-bridge.py:72
-#: ../src/orca/speechgenerator.py:1254 ../src/orca/where_am_I.py:548
+#: ../src/orca/braillegenerator.py:1083
+#: ../src/orca/J2SE-access-bridge.py:72
+#: ../src/orca/speechgenerator.py:1266
+#: ../src/orca/where_am_I.py:551
 msgid "expanded"
 msgstr "utfälld"
 
@@ -49,15 +67,17 @@ msgstr "utfälld"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:1079 ../src/orca/J2SE-access-bridge.py:79
-#: ../src/orca/speechgenerator.py:1260 ../src/orca/where_am_I.py:554
+#: ../src/orca/braillegenerator.py:1089
+#: ../src/orca/J2SE-access-bridge.py:79
+#: ../src/orca/speechgenerator.py:1272
+#: ../src/orca/where_am_I.py:557
 msgid "collapsed"
 msgstr "infälld"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:1086
+#: ../src/orca/braillegenerator.py:1096
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "TRÄDNIVÅ %d"
@@ -66,7 +86,7 @@ msgstr "TRÄDNIVÅ %d"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the left.
 #.
-#: ../src/orca/braille.py:166
+#: ../src/orca/braille.py:169
 msgid "Line Left"
 msgstr "Rad vänster"
 
@@ -74,7 +94,7 @@ msgstr "Rad vänster"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the right.
 #.
-#: ../src/orca/braille.py:172
+#: ../src/orca/braille.py:175
 msgid "Line Right"
 msgstr "Rad höger"
 
@@ -82,7 +102,7 @@ msgstr "Rad höger"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls up.
 #.
-#: ../src/orca/braille.py:178
+#: ../src/orca/braille.py:181
 msgid "Line Up"
 msgstr "Rad uppåt"
 
@@ -90,7 +110,7 @@ msgstr "Rad uppåt"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls down.
 #.
-#: ../src/orca/braille.py:184
+#: ../src/orca/braille.py:187
 msgid "Line Down"
 msgstr "Rad nedåt"
 
@@ -99,7 +119,7 @@ msgstr "Rad nedåt"
 #. When pressing the button, the display scrolls to the top left of the
 #. window.
 #.
-#: ../src/orca/braille.py:191
+#: ../src/orca/braille.py:194
 msgid "Top Left"
 msgstr "Övre vänster"
 
@@ -108,7 +128,7 @@ msgstr "Övre vänster"
 #. When pressing the button, the display scrolls to the bottom right of
 #. the window.
 #.
-#: ../src/orca/braille.py:198
+#: ../src/orca/braille.py:201
 msgid "Bottom Right"
 msgstr "Nedre höger"
 
@@ -117,238 +137,602 @@ msgstr "Nedre höger"
 #. When pressing the button, the display scrolls to position containing
 #. the cursor.
 #.
-#: ../src/orca/braille.py:205
+#: ../src/orca/braille.py:208
 msgid "Cursor Position"
 msgstr "Markörposition"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39
+#: ../src/orca/chnames.py:38
 msgid "space"
 msgstr "blanksteg"
 
 #. Translators: this is the spoken word for the newline character
 #.
-#: ../src/orca/chnames.py:43
+#: ../src/orca/chnames.py:42
 msgid "newline"
 msgstr "ny rad"
 
 # tabulator eller flik?
 #. Translators: this is the spoken word for the tab character
 #.
-#: ../src/orca/chnames.py:47
+#: ../src/orca/chnames.py:46
 msgid "tab"
 msgstr "flik"
 
 #. Translators: this is the spoken word for the exclamation point: !
 #.
-#: ../src/orca/chnames.py:51
+#: ../src/orca/chnames.py:50
 msgid "exclaim"
 msgstr "uttropstecken"
 
 #. Translators: this is the spoken word for the apostrophe: '
 #.
-#: ../src/orca/chnames.py:55
+#: ../src/orca/chnames.py:54
 msgid "apostrophe"
 msgstr "apostrof"
 
-#. Translators: this is the spoken word for the comma: ,
+#. Translators: this is the spoken word for the left single quote: ‘
+#. (U+2018)
 #.
 #: ../src/orca/chnames.py:59
+msgid "left single quote"
+msgstr ""
+
+#. Translators: this is the spoken word for the right single quote: ’
+#. (U+2019)
+#.
+#: ../src/orca/chnames.py:64
+msgid "right single quote"
+msgstr ""
+
+#. Translators: this is the spoken word for the comma: ,
+#.
+#: ../src/orca/chnames.py:68
 msgid "comma"
 msgstr "komma"
 
 #. Translators: this is the spoken word for the period: .
 #.
-#: ../src/orca/chnames.py:63
+#: ../src/orca/chnames.py:72
 msgid "dot"
 msgstr "punkt"
 
 #. Translators: this is the spoken word for the question mark: ?
 #.
-#: ../src/orca/chnames.py:67
+#: ../src/orca/chnames.py:76
 msgid "question"
 msgstr "frågetecken"
 
 #. Translators: this is the spoken word for the double quote: "
 #.
-#: ../src/orca/chnames.py:71
+#: ../src/orca/chnames.py:80
 msgid "quote"
 msgstr "citattecken"
 
+#. Translators: this is the spoken word for the left double quote: “
+#. (U+201C)
+#.
+#: ../src/orca/chnames.py:85
+msgid "left double quote"
+msgstr ""
+
+#. Translators: this is the spoken word for the right double quote: ”
+#. (U+201D)
+#.
+#: ../src/orca/chnames.py:90
+msgid "right double quote"
+msgstr ""
+
 #. Translators: this is the spoken word for the left parentheses: (
 #.
-#: ../src/orca/chnames.py:75
+#: ../src/orca/chnames.py:94
 msgid "left paren"
 msgstr "vänsterparentes"
 
 #. Translators: this is the spoken word for the right parentheses: (
 #.
-#: ../src/orca/chnames.py:79
+#: ../src/orca/chnames.py:98
 msgid "right paren"
 msgstr "högerparentes"
 
 #. Translators: this is the spoken word for the hyphen: -
 #.
-#: ../src/orca/chnames.py:83
+#: ../src/orca/chnames.py:102
 msgid "dash"
 msgstr "streck"
 
+#. Translators: this is the spoken word for the en dash: –
+#. (U+2013)
+#.
+#: ../src/orca/chnames.py:107
+msgid "en dash"
+msgstr ""
+
 #. Translators: this is the spoken word for the underscore: _
 #.
-#: ../src/orca/chnames.py:87
+#: ../src/orca/chnames.py:111
 msgid "underscore"
 msgstr "understreck"
 
 #. Translators: this is the spoken word for the colon: :
 #.
-#: ../src/orca/chnames.py:91
+#: ../src/orca/chnames.py:115
 msgid "colon"
 msgstr "kolon"
 
 #. Translators: this is the spoken word for the semicolon: ;
 #.
-#: ../src/orca/chnames.py:95
+#: ../src/orca/chnames.py:119
 msgid "semicolon"
 msgstr "semikolon"
 
 #. Translators: this is the spoken word for the less than sign: <
 #.
-#: ../src/orca/chnames.py:99
+#: ../src/orca/chnames.py:123
 msgid "less than"
 msgstr "mindre än"
 
 #. Translators: this is the spoken word for the greater than sign: >
 #.
-#: ../src/orca/chnames.py:103
+#: ../src/orca/chnames.py:127
 msgid "greater than"
 msgstr "större än"
 
 #. Translators: this is the spoken word for the left square bracket: [
 #.
-#: ../src/orca/chnames.py:107
+#: ../src/orca/chnames.py:131
 msgid "left bracket"
-msgstr "vänsterhakparentes"
+msgstr "vänster hakparentes"
 
 #. Translators: this is the spoken word for the right square bracket: ]
 #.
-#: ../src/orca/chnames.py:111
+#: ../src/orca/chnames.py:135
 msgid "right bracket"
-msgstr "högerhakparentes"
+msgstr "höger hakparentes"
 
 #. Translators: this is the spoken word for the backslash: #.
-#: ../src/orca/chnames.py:115
+#: ../src/orca/chnames.py:139
 msgid "backslash"
 msgstr "bakstreck"
 
 #. Translators: this is the spoken word for the vertical line: |
 #.
-#: ../src/orca/chnames.py:119
+#: ../src/orca/chnames.py:143
 msgid "vertical line"
 msgstr "vertikal linje"
 
 # Vad är detta?
 #. Translators: this is the spoken word for the accent grave: `
 #.
-#: ../src/orca/chnames.py:123
+#: ../src/orca/chnames.py:147
 msgid "grave accent"
 msgstr "grave accent"
 
 #. Translators: this is the spoken word for the tilde: ~
 #.
-#: ../src/orca/chnames.py:127
+#: ../src/orca/chnames.py:151
 msgid "tilde"
 msgstr "tilde"
 
 #. Translators: this is the spoken word for the left squiggly brace: {
 #.
-#: ../src/orca/chnames.py:131
+#: ../src/orca/chnames.py:155
 msgid "left brace"
-msgstr "vänsterklammerparentes"
+msgstr "vänster klammerparentes"
 
 #. Translators: this is the spoken word for the right squiggly brace: {
 #.
-#: ../src/orca/chnames.py:135
+#: ../src/orca/chnames.py:159
 msgid "right brace"
-msgstr "högerklammerparentes"
+msgstr "höger klammerparentes"
 
 #. Translators: this is the spoken word for the octothorpe: #
 #.
-#: ../src/orca/chnames.py:139
-msgid "pound"
-msgstr "pund"
+#: ../src/orca/chnames.py:163
+msgid "number"
+msgstr "nummer"
 
 #. Translators: this is the spoken word for the dollar sign: $
 #.
-#: ../src/orca/chnames.py:143
+#: ../src/orca/chnames.py:167
 msgid "dollar"
 msgstr "dollartecken"
 
+#. Translators: this is the spoken word for the cent sign: ¢
+#. (U+00A2)
+#.
+#: ../src/orca/chnames.py:172
+msgid "cent"
+msgstr "cent"
+
+#. Translators: this is the spoken word for the pound sign: £
+#. (U+00A3)
+#.
+#: ../src/orca/chnames.py:177
+msgid "pound"
+msgstr "pund"
+
+#. Translators: this is the spoken word for the yen sign: ¥
+#. (U+00A5)
+#.
+#: ../src/orca/chnames.py:182
+msgid "yen"
+msgstr "yen"
+
+#. Translators: this is the spoken word for the euro sign: €
+#. (U+20AC)
+#.
+#: ../src/orca/chnames.py:187
+msgid "euro"
+msgstr "euro"
+
 #. Translators: this is the spoken word for the percent sign: %
 #.
-#: ../src/orca/chnames.py:147
+#: ../src/orca/chnames.py:191
 msgid "percent"
 msgstr "procenttecken"
 
 #. Translators: this is the spoken word for the ampersand: &
 #.
-#: ../src/orca/chnames.py:151
+#: ../src/orca/chnames.py:195
 msgid "and"
 msgstr "ochtecken"
 
 #. Translators: this is the spoken word for the star: *
 #.
-#: ../src/orca/chnames.py:155
+#: ../src/orca/chnames.py:199
 msgid "star"
 msgstr "stjärna"
 
 #. Translators: this is the spoken word for the plus: +
 #.
-#: ../src/orca/chnames.py:159
+#: ../src/orca/chnames.py:203
 msgid "plus"
 msgstr "plustecken"
 
 #. Translators: this is the spoken word for the forward slash: /
 #.
-#: ../src/orca/chnames.py:163
+#: ../src/orca/chnames.py:207
 msgid "slash"
 msgstr "snedstreck"
 
 #. Translators: this is the spoken word for the equals sign: =
 #.
-#: ../src/orca/chnames.py:167
+#: ../src/orca/chnames.py:211
 msgid "equals"
 msgstr "lika med"
 
 #. Translators: this is the spoken word for the at sign: @
 #.
-#: ../src/orca/chnames.py:171
+#: ../src/orca/chnames.py:215
 msgid "at"
 msgstr "snabel a"
 
 #. Translators: this is the spoken word for the hat sign: ^
 #.
-#: ../src/orca/chnames.py:175
+#: ../src/orca/chnames.py:219
 msgid "caret"
 msgstr "utelämningstecken"
 
-#. Translators: this is the spoken word for the plus/minus symbol
+#. Translators: this is the spoken word for the not sign: ¬
+#. (U+00AC)
 #.
-#: ../src/orca/chnames.py:179
+#: ../src/orca/chnames.py:224
+msgid "not"
+msgstr "diskret bindestreck"
+
+#. Translators: this is the spoken word for the copyright sign: ©
+#. (U+00A9)
+#.
+#: ../src/orca/chnames.py:229
+msgid "copyright"
+msgstr "copyright"
+
+#. Translators: this is the spoken word for the registered sign: ®
+#. (U+00AE)
+#.
+#: ../src/orca/chnames.py:234
+msgid "registered"
+msgstr "registrerat varumärke"
+
+#. Translators: this is the spoken word for the trademark sign: ™
+#. (U+2122)
+#.
+#: ../src/orca/chnames.py:239
+msgid "trademark"
+msgstr "varumärke"
+
+#. Translators: this is the spoken word for the degree symbol: °
+#. (U+00B0)
+#.
+#: ../src/orca/chnames.py:244
+msgid "degree"
+msgstr "grad"
+
+#. Translators: this is the spoken word for the plus/minus symbol: ±
+#. (U+00B1)
+#.
+#: ../src/orca/chnames.py:249
 msgid "plus minus"
 msgstr "plus minus"
 
-#. Translators: this is the spoken word for the division sign
+#. Translators: this is the spoken word for a superscripted 2: ²
+#. (U+00B2)
 #.
-#: ../src/orca/chnames.py:183
-msgid "divide"
-msgstr "dividera"
+#: ../src/orca/chnames.py:254
+msgid "2 superscript"
+msgstr "upphöjt till 2"
 
-#. Translators: this is the spoken word for the multiplication sign
+#. Translators: this is the spoken word for a superscripted 3: ³
+#. (U+00B3)
 #.
-#: ../src/orca/chnames.py:187
-msgid "multiply"
-msgstr "multiplicera"
+#: ../src/orca/chnames.py:259
+msgid "3 superscript"
+msgstr "upphöjt till 3"
+
+#. Translators: this is the spoken word for the 1/4 sign: ¼
+#. (U+00BC)
+#.
+#: ../src/orca/chnames.py:264
+msgid "one quarter"
+msgstr "en kvarts"
+
+#. Translators: this is the spoken word for the 1/2 sign: ½
+#. (U+00BD)
+#.
+#: ../src/orca/chnames.py:269
+msgid "one half"
+msgstr "en halv"
+
+#. Translators: this is the spoken word for the 3/4 sign: ¾
+#. (U+00BE)
+#.
+#: ../src/orca/chnames.py:274
+msgid "three quarters"
+msgstr "trekvarts"
+
+#. Translators: this is the spoken word for the multiplication sign: ×
+#. (U+00D7)
+#.
+#: ../src/orca/chnames.py:279
+msgid "times"
+msgstr "gånger"
+
+#. Translators: this is the spoken word for the division sign: ÷
+#. (U+00F7)
+#.
+#: ../src/orca/chnames.py:284
+msgid "divided by"
+msgstr "delat med"
+
+#. Translators: this is the spoken word for the n tilde: ñ
+#. (U+00F1)
+#.
+#: ../src/orca/chnames.py:289
+msgid "n tilde"
+msgstr "n tilde"
+
+#. Translators: this is the spoken word for the per mille sign: ‰
+#. (U+2030)
+#.
+#: ../src/orca/chnames.py:294
+msgid "per mille"
+msgstr "promille"
+
+#. Translators: this is the spoken word for the prime sign: ′
+#. (U+2032)
+#.
+#: ../src/orca/chnames.py:299
+#, fuzzy
+msgid "prime"
+msgstr "Ram"
+
+#. Translators: this is the spoken word for the double prime sign: ″
+#. (U+2033)
+#.
+#: ../src/orca/chnames.py:304
+msgid "double prime"
+msgstr "citationstecken"
+
+#. Translators: this is the spoken word for the almost-equal-to sign: ≈
+#. (U+2248)
+#.
+#: ../src/orca/chnames.py:309
+msgid "almost equal to"
+msgstr "nästan lika med"
+
+#. Translators: this is the spoken word for the not-equal-to sign: ≠
+#. (U+2260)
+#.
+#: ../src/orca/chnames.py:314
+msgid "not equal to"
+msgstr "inte lika med"
+
+#. Translators: this is the spoken word for the less-than-or-equal-to sign: ≤
+#. (U+2264)
+#.
+#: ../src/orca/chnames.py:319
+msgid "less than or equal to"
+msgstr "mindre än eller lika med"
+
+#. Translators: this is the spoken word for the greater-than-or-equal-to
+#. sign: ≥ (U+2265)
+#.
+#: ../src/orca/chnames.py:324
+msgid "greater-than or equal to"
+msgstr "större än eller lika med"
+
+#. Translators: this is the spoken word for the square-root symbol: √
+#. (U+221A)
+#.
+#: ../src/orca/chnames.py:329
+msgid "square root"
+msgstr "kvadratrot"
+
+#. Translators: this is the spoken word for the cube-root symbol: ∛
+#. (U+221B)
+#.
+#: ../src/orca/chnames.py:334
+msgid "cube root"
+msgstr "kubrot"
+
+#. Translators: this is the spoken word for the infinity symbol: ∞
+#. (U+221E)
+#.
+#: ../src/orca/chnames.py:339
+msgid "infinity"
+msgstr "oändligt"
+
+#. Translators: this is the spoken word for the section symbol: §
+#. (U+00A7)
+#.
+#. Translators: spoken words for the rolename of a section (e.g., in html).
+#.
+#: ../src/orca/chnames.py:344
+#: ../src/orca/rolenames.py:860
+msgid "section"
+msgstr "avsnitt"
+
+#. Translators: this is the spoken word for the dagger symbol: †
+#. (U+2020)
+#.
+#: ../src/orca/chnames.py:349
+msgid "dagger"
+msgstr "kors"
+
+#. Translators: this is the spoken word for the double-dagger symbol: ‡
+#. (U+2021)
+#.
+#: ../src/orca/chnames.py:354
+msgid "double dagger"
+msgstr ""
+
+#. Translators: this is the spoken word for the middle dot: ·
+#. (U+00B7)
+#.
+#: ../src/orca/chnames.py:359
+msgid "middle dot"
+msgstr "mittenpunkt"
+
+#. Translators: this is the spoken word for the bullet: •
+#. (U+2022)
+#.
+#: ../src/orca/chnames.py:364
+msgid "bullet"
+msgstr ""
+
+#. Translators: this is the spoken word for the triangular bullet: ‣
+#. (U+2023)
+#.
+#: ../src/orca/chnames.py:369
+msgid "triangular bullet"
+msgstr ""
+
+#. Translators: this is the spoken word for the hyphen bullet: ⁃
+#. (U+2043)
+#.
+#: ../src/orca/chnames.py:374
+msgid "hyphen bullet"
+msgstr ""
+
+#. Translators: this is the spoken word for the black square: ■
+#. (U+25A0).  It can be used as a bullet in a list.
+#.
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
+#. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
+#. please use the same translation for this character.
+#.
+#: ../src/orca/chnames.py:379
+#: ../src/orca/chnames.py:445
+msgid "black square"
+msgstr ""
+
+#. Translators: this is the spoken word for the white square: □
+#. (U+25A1). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:384
+msgid "white square"
+msgstr "vit kvadrat"
+
+#. Translators: this is the spoken word for the white bullet: ◦
+#. (U+25E6)
+#.
+#: ../src/orca/chnames.py:389
+msgid "white bullet"
+msgstr "vit punkt"
+
+#. Translators: this is the spoken word for the white circle: ○
+#. (U+25CB). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:394
+msgid "white circle"
+msgstr "vit cirkel"
+
+#. Translators: this is the spoken word for the black circle: ●
+#. (U+25CF). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:399
+msgid "black circle"
+msgstr ""
+
+#. Translators: this is the spoken word for the black diamond: ◆
+#. (U+25C6). It can be used as a bullet in a list.
+#.
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
+#. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
+#. please use the same translation for this character.
+#.
+#: ../src/orca/chnames.py:404
+#: ../src/orca/chnames.py:451
+msgid "black diamond"
+msgstr ""
+
+#. Translators: this is the spoken word for the check mark: ✓
+#. (U+2713). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:409
+msgid "check mark"
+msgstr "bock"
+
+#. Translators: this is the spoken word for the heavy check mark: ✔
+#. (U+2714). It can be used as a bullet in a list.
+#.
+#: ../src/orca/chnames.py:414
+msgid "heavy check mark"
+msgstr ""
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "ballot x": ✗ (U+2717). This symbol is included here because it
+#. can be used as a bullet in an OOo list.  The goal is to inform the user
+#. of the appearance of the bullet, while making it clear that it is a bullet
+#. and not simply the typed letter 'x'.  "Ballot x" might confuse the user.
+#. Hence the use of "x-shaped bullet".
+#.
+#: ../src/orca/chnames.py:423
+msgid "x-shaped bullet"
+msgstr ""
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "heavy wide-headed rightwards arrow": ➔ (U+2794). This symbol
+#. is included here because it can be used as a bullet in an OOo list. The
+#. goal is to inform the user of the appearance of the bullet without too
+#. much verbiage, hence simply "right-pointing arrow".
+#.
+#: ../src/orca/chnames.py:431
+#, fuzzy
+msgid "right-pointing arrow"
+msgstr "höger control"
+
+#. Translators: this is the spoken word for the character which unicode.org
+#. names "three-d top-lighted rightwards arrowhead": ➢ (U+27A2). This symbol
+#. is included here because it can be used as a bullet in an OOo list. The
+#. goal is to inform the user of the appearance of the bullet without too
+#. much verbiage, hence simply "right-pointing arrowhead".
+#.
+#: ../src/orca/chnames.py:439
+msgid "right-pointing arrowhead"
+msgstr ""
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -386,8 +770,10 @@ msgstr "Genomför högerklick på aktuellt flat granskningspost."
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:153 ../src/orca/Gecko.py:1129
-#: ../src/orca/scripts/acroread.py:113 ../src/orca/scripts/Evolution.py:177
+#: ../src/orca/default.py:153
+#: ../src/orca/Gecko.py:1358
+#: ../src/orca/scripts/acroread.py:113
+#: ../src/orca/scripts/Evolution.py:177
 msgid "Speaks entire document."
 msgstr "Talar hela dokument."
 
@@ -668,9 +1054,7 @@ msgstr "Flyttar flat granskning till nästa tecken."
 #.
 #: ../src/orca/default.py:458
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
-"Växlar huruvida bara den aktuella tabellcellen eller hela raden ska läsas "
-"upp."
+msgstr "Växlar huruvida bara den aktuella tabellcellen eller hela raden ska läsas upp."
 
 #. Translators: the attributes being presented are the
 #. text attributes, such as bold, italic, font name,
@@ -801,38 +1185,53 @@ msgstr "Avslutar Orca"
 msgid "Displays the preferences configuration dialog."
 msgstr "Visar dialogrutan för inställningar."
 
-#. Translators: this is basically a 'warm restart' of Orca.
+#. Translators: the application preferences configuration
+#. dialog is the dialog that allows users to set their
+#. preferences for a specific application within Orca.
 #.
-#: ../src/orca/default.py:619
-msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
-"Läser om användarens inställningar och ominitierar nödvändiga tjänster."
+#: ../src/orca/default.py:621
+#, fuzzy
+msgid "Displays the application preferences configuration dialog."
+msgstr "Visar dialogrutan för inställningar."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
 #.
-#: ../src/orca/default.py:627
+#: ../src/orca/default.py:629
 msgid "Toggles the silencing of speech."
 msgstr "Växlar uppläsningen av eller på."
 
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:1533 ../src/orca/default.py:1766
-#: ../src/orca/default.py:3431 ../src/orca/default.py:3572
-#: ../src/orca/default.py:3580 ../src/orca/default.py:3679
-#: ../src/orca/default.py:3687 ../src/orca/Gecko.py:3898
-#: ../src/orca/Gecko.py:4702 ../src/orca/Gecko.py:4741
-#: ../src/orca/scripts/Evolution.py:577 ../src/orca/scripts/Evolution.py:1099
-#: ../src/orca/scripts/StarOffice.py:2055
-#: ../src/orca/scripts/StarOffice.py:2067 ../src/orca/where_am_I.py:894
+#. Translators: this indicates an empty (blank) spread
+#. sheet cell.
+#.
+#. Translators: "blank" is a short word to mean the
+#. user has navigated to an empty line.
+#.
+#: ../src/orca/default.py:1535
+#: ../src/orca/default.py:1768
+#: ../src/orca/default.py:3439
+#: ../src/orca/default.py:3580
+#: ../src/orca/default.py:3588
+#: ../src/orca/default.py:3687
+#: ../src/orca/default.py:3695
+#: ../src/orca/Gecko.py:4817
+#: ../src/orca/Gecko.py:5682
+#: ../src/orca/scripts/Evolution.py:591
+#: ../src/orca/scripts/Evolution.py:1113
+#: ../src/orca/scripts/StarOffice.py:590
+#: ../src/orca/scripts/StarOffice.py:2191
+#: ../src/orca/scripts/StarOffice.py:2209
+#: ../src/orca/where_am_I.py:935
 msgid "blank"
 msgstr "blank"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1614
+#: ../src/orca/default.py:1616
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -842,7 +1241,7 @@ msgstr[1] "%d blanksteg"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1621
+#: ../src/orca/default.py:1623
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -852,7 +1251,8 @@ msgstr[1] "%d flikar"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2040 ../src/orca/where_am_I.py:562
+#: ../src/orca/default.py:2042
+#: ../src/orca/where_am_I.py:565
 #, python-format
 msgid "tree level %d"
 msgstr "trädnivå %d"
@@ -860,7 +1260,7 @@ msgstr "trädnivå %d"
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:2448
+#: ../src/orca/default.py:2450
 msgid "entire document selected"
 msgstr "hela dokumentet valt"
 
@@ -868,7 +1268,7 @@ msgstr "hela dokumentet valt"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:2945
+#: ../src/orca/default.py:2953
 msgid "Speak row"
 msgstr "Läs upp rad"
 
@@ -876,13 +1276,14 @@ msgstr "Läs upp rad"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:2951
+#: ../src/orca/default.py:2959
 msgid "Speak cell"
 msgstr "Läs upp cell"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:3001 ../src/orca/where_am_I.py:947
+#: ../src/orca/default.py:3009
+#: ../src/orca/where_am_I.py:988
 msgid "bold"
 msgstr "fet"
 
@@ -892,7 +1293,7 @@ msgstr "fet"
 #. given to us in some unknown form by the application,
 #. so we leave things in plural form here.
 #.
-#: ../src/orca/default.py:3009
+#: ../src/orca/default.py:3017
 #, python-format
 msgid "%s %s pixels"
 msgstr "%s %s bildpunkter"
@@ -905,13 +1306,9 @@ msgstr "%s %s bildpunkter"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:3130
-msgid ""
-"Entering learn mode.  Press any key to hear its function.  To exit learn "
-"mode, press the escape key."
-msgstr ""
-"Går in i inlärningsläge. Tryck på en tangent för att höra dess funktion.  "
-"Tryck Escape-knappen för att avsluta inlärningsläget."
+#: ../src/orca/default.py:3138
+msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
+msgstr "Går in i inlärningsläge. Tryck på en tangent för att höra dess funktion.  Tryck Escape-knappen för att avsluta inlärningsläget."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -922,7 +1319,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:3141
+#: ../src/orca/default.py:3149
 msgid "Learn mode.  Press escape to exit."
 msgstr "Inlärningsläge. Tryck Escape för att lämna."
 
@@ -935,14 +1332,15 @@ msgstr "Inlärningsläge. Tryck Escape för att lämna."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/default.py:3162
+#: ../src/orca/default.py:3170
 msgid "Exiting learn mode."
 msgstr "Lämnar inlärningsläget."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:3436 ../src/orca/default.py:3585
+#: ../src/orca/default.py:3444
+#: ../src/orca/default.py:3593
 msgid "white space"
 msgstr "vitsteg"
 
@@ -952,7 +1350,7 @@ msgstr "vitsteg"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:3810
+#: ../src/orca/default.py:3818
 msgid "string not found"
 msgstr "strängen hittades inte"
 
@@ -961,12 +1359,12 @@ msgstr "strängen hittades inte"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4407
+#: ../src/orca/default.py:4455
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Felstavat ord: %s"
 
-#: ../src/orca/default.py:4415
+#: ../src/orca/default.py:4463
 #, python-format
 msgid "Context is %s"
 msgstr "Sammanhanget är %s"
@@ -976,7 +1374,7 @@ msgstr "Sammanhanget är %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:4552
+#: ../src/orca/default.py:4600
 #, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
@@ -987,7 +1385,7 @@ msgstr[1] " %d %s tecken"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5348
+#: ../src/orca/default.py:5396
 msgid "page selected from cursor position"
 msgstr "sida vald från markörposition"
 
@@ -995,7 +1393,7 @@ msgstr "sida vald från markörposition"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5356
+#: ../src/orca/default.py:5404
 msgid "page selected to cursor position"
 msgstr "sida vald till markörposition"
 
@@ -1003,7 +1401,7 @@ msgstr "sida vald till markörposition"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5364
+#: ../src/orca/default.py:5412
 msgid "line selected down from cursor position"
 msgstr "rad vald ner från markörposition"
 
@@ -1011,7 +1409,7 @@ msgstr "rad vald ner från markörposition"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5372
+#: ../src/orca/default.py:5420
 msgid "line selected up from cursor position"
 msgstr "rad vald upp från markörposition"
 
@@ -1019,7 +1417,7 @@ msgstr "rad vald upp från markörposition"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5380
+#: ../src/orca/default.py:5428
 msgid "document selected to cursor position"
 msgstr "dokument valt till markörposition"
 
@@ -1027,7 +1425,7 @@ msgstr "dokument valt till markörposition"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5388
+#: ../src/orca/default.py:5436
 msgid "document selected from cursor position"
 msgstr "dokument valt från markörposition"
 
@@ -1037,9 +1435,11 @@ msgstr "dokument valt från markörposition"
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/default.py:5429 ../src/orca/J2SE-access-bridge.py:81
-#: ../src/orca/scripts/StarOffice.py:132 ../src/orca/speechgenerator.py:968
-#: ../src/orca/where_am_I.py:472
+#: ../src/orca/default.py:5477
+#: ../src/orca/J2SE-access-bridge.py:81
+#: ../src/orca/scripts/StarOffice.py:139
+#: ../src/orca/speechgenerator.py:980
+#: ../src/orca/where_am_I.py:475
 msgid "selected"
 msgstr "vald"
 
@@ -1047,7 +1447,8 @@ msgstr "vald"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:5441 ../src/orca/J2SE-access-bridge.py:85
+#: ../src/orca/default.py:5489
+#: ../src/orca/J2SE-access-bridge.py:85
 msgid "unselected"
 msgstr "avmarkerad"
 
@@ -1089,183 +1490,191 @@ msgstr "Börjar om från toppen"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/focus_tracking_presenter.py:762
+#: ../src/orca/focus_tracking_presenter.py:807
 msgid "No focus"
 msgstr "Ingen fokus"
+
+#. Translators: "multi-select" refers to a web form list
+#. in which more than one item can be selected at a time.
+#.
+#: ../src/orca/Gecko.py:678
+#, fuzzy
+msgid "multi-select"
+msgstr "avmarkerad"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:818
+#: ../src/orca/Gecko.py:1019
 msgid "Goes to next character."
 msgstr "Går till nästa tecken."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:826
+#: ../src/orca/Gecko.py:1027
 msgid "Goes to previous character."
 msgstr "Går till föregående tecken."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:834
+#: ../src/orca/Gecko.py:1035
 msgid "Goes to next word."
 msgstr "Går till nästa ord."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:842
+#: ../src/orca/Gecko.py:1043
 msgid "Goes to previous word."
 msgstr "Går till föregående ord."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:850
+#: ../src/orca/Gecko.py:1051
 msgid "Goes to next line."
 msgstr "Går till nästa rad."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:858
+#: ../src/orca/Gecko.py:1059
 msgid "Goes to previous line."
 msgstr "Går till föregående rad."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:865
+#: ../src/orca/Gecko.py:1066
 msgid "Goes left one cell."
 msgstr "Går en cell åt vänster."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:872
+#: ../src/orca/Gecko.py:1073
 msgid "Goes right one cell."
 msgstr "Går en cell åt höger."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:879
+#: ../src/orca/Gecko.py:1080
 msgid "Goes down one cell."
 msgstr "Går en cell nedåt."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:886
+#: ../src/orca/Gecko.py:1087
 msgid "Goes up one cell."
 msgstr "Går en cell uppåt."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:893
+#: ../src/orca/Gecko.py:1094
 msgid "Goes to the first cell in a table."
 msgstr "Går till första cellen i en tabell."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:900
+#: ../src/orca/Gecko.py:1101
 msgid "Goes to the last cell in a table."
 msgstr "Går till sista cellen i en tabell."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:908
+#: ../src/orca/Gecko.py:1109
 msgid "Goes to previous heading."
 msgstr "Går till föregående rubrik."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:916
+#: ../src/orca/Gecko.py:1117
 msgid "Goes to next heading."
 msgstr "Går till nästa rubrik."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:924
+#: ../src/orca/Gecko.py:1125
 msgid "Goes to previous heading at level 1."
 msgstr "Går till föregående rubrik i nivå 1."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:932
+#: ../src/orca/Gecko.py:1133
 msgid "Goes to next heading at level 1."
 msgstr "Går till nästa rubrik i nivå 1."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:940
+#: ../src/orca/Gecko.py:1141
 msgid "Goes to previous heading at level 2."
 msgstr "Går till föregående rubrik i nivå 2."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:948
+#: ../src/orca/Gecko.py:1149
 msgid "Goes to next heading at level 2."
 msgstr "Går till nästa rubrik i nivå 2."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:956
+#: ../src/orca/Gecko.py:1157
 msgid "Goes to previous heading at level 3."
 msgstr "Går till föregående rubrik i nivå 3."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:964
+#: ../src/orca/Gecko.py:1165
 msgid "Goes to next heading at level 3."
 msgstr "Går till nästa rubrik i nivå 3."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:972
+#: ../src/orca/Gecko.py:1173
 msgid "Goes to previous heading at level 4."
 msgstr "Går till föregående rubrik i nivå 4."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:980
+#: ../src/orca/Gecko.py:1181
 msgid "Goes to next heading at level 4."
 msgstr "Går till nästa rubrik i nivå 4."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:988
+#: ../src/orca/Gecko.py:1189
 msgid "Goes to previous heading at level 5."
 msgstr "Går till föregående rubrik i nivå 5."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:996
+#: ../src/orca/Gecko.py:1197
 msgid "Goes to next heading at level 5."
 msgstr "Går till nästa rubrik i nivå 5."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1004
+#: ../src/orca/Gecko.py:1205
 msgid "Goes to previous heading at level 6."
 msgstr "Går till föregående rubrik i nivå 6."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1012
+#: ../src/orca/Gecko.py:1213
 msgid "Goes to next heading at level 6."
 msgstr "Går till nästa rubrik i nivå 6."
 
@@ -1273,7 +1682,7 @@ msgstr "Går till nästa rubrik i nivå 6."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1021
+#: ../src/orca/Gecko.py:1222
 msgid "Goes to previous large object."
 msgstr "Går till föregående stora objekt."
 
@@ -1281,71 +1690,85 @@ msgstr "Går till föregående stora objekt."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1030
+#: ../src/orca/Gecko.py:1231
 msgid "Goes to next large object."
 msgstr "Går till nästa stora objekt."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1038
+#: ../src/orca/Gecko.py:1239
 msgid "Goes to previous list."
 msgstr "Går till föregående lista."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1046
+#: ../src/orca/Gecko.py:1247
 msgid "Goes to next list."
 msgstr "Går till nästa lista."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1054
+#: ../src/orca/Gecko.py:1255
 msgid "Goes to previous list item."
 msgstr "Går till föregående listobjekt."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1062
+#: ../src/orca/Gecko.py:1263
 msgid "Goes to next list item."
 msgstr "Går till nästa listobjekt."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1069
+#: ../src/orca/Gecko.py:1270
 msgid "Goes to previous unvisited link."
 msgstr "Går till föregående obesökta länk."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1076
+#: ../src/orca/Gecko.py:1277
 msgid "Goes to next unvisited link."
 msgstr "Går till nästa obesökta länk."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1083
+#: ../src/orca/Gecko.py:1284
 msgid "Goes to previous visited link."
 msgstr "Går till föregående besökta länk."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1090
+#: ../src/orca/Gecko.py:1291
 msgid "Goes to next visited link."
 msgstr "Går till nästa besökta länk."
 
+#. Translators: this is for navigating between form fields in
+#. HTML
+#.
+#: ../src/orca/Gecko.py:1299
+msgid "Goes to previous form field."
+msgstr "Går till föregående formulärfält."
+
+#. Translators: this is for navigating between form fields in
+#. HTML
+#.
+#: ../src/orca/Gecko.py:1307
+msgid "Goes to next form field."
+msgstr "Går till nästa formulärfält."
+
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:1097
+#: ../src/orca/Gecko.py:1314
 msgid "Goes to previous table."
 msgstr "Går till föregående tabell."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:1104
+#: ../src/orca/Gecko.py:1321
 msgid "Goes to next table."
 msgstr "Går till nästa tabell."
 
@@ -1356,26 +1779,143 @@ msgstr "Går till nästa tabell."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:1116
+#: ../src/orca/Gecko.py:1333
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Växlar mellan Geckos egna och Orcas markörnavigering."
 
+#. Translators: the structural navigation keys are designed
+#. to move the caret around the HTML content by object type.
+#. Thus H moves you to the next heading, Shift H to the
+#. previous heading, T to the next table, and so on. Some
+#. users prefer to turn this off to use Firefox's search
+#. when typing feature.
+#.
+#: ../src/orca/Gecko.py:1345
+msgid "Toggles structural navigation keys."
+msgstr ""
+
+#. Translators: Gecko native caret navigation is where
+#. Firefox itself controls how the arrow keys move the caret
+#. around HTML content.  It's often broken, so Orca needs
+#. to provide its own support.  As such, Orca offers the user
+#. the ability to switch between the Firefox mode and the
+#. Orca mode.
+#.
+#: ../src/orca/Gecko.py:1837
+msgid "Use _Orca Caret Navigation"
+msgstr "Använd _Orcas markörnavigering"
+
+#. Translators: Orca provides keystrokes to navigate HTML content
+#. in a structural manner: go to previous/next header, list item,
+#. table, etc.
+#.
+#: ../src/orca/Gecko.py:1850
+msgid "Use Orca _Structural Navigation"
+msgstr ""
+
+#. Translators: when the user arrows up and down in HTML content,
+#. it is some times beneficial to always position the caret at the
+#. beginning of the line rather than guessing the position directly
+#. above the current caret position.  This option allows the user
+#. to decide the behavior they want.
+#.
+#: ../src/orca/Gecko.py:1864
+msgid "_Position cursor at start of line when navigating vertically"
+msgstr ""
+
+#. Translators: this is the title of a panel holding options for
+#. how to navigate HTML content (e.g., Orca caret navigation,
+#. positioning of caret, etc.).
+#.
+#: ../src/orca/Gecko.py:1876
+msgid "Page Navigation"
+msgstr "Sidnavigering"
+
+#. Translators: this is an option to tell Orca whether or not it
+#. should speak table cell coordinates in HTML content.
+#.
+#: ../src/orca/Gecko.py:1899
+#, fuzzy
+msgid "Speak _cell coordinates"
+msgstr "Läs upp cell"
+
+#. Translators: this is an option to tell Orca whether or not it
+#. should speak the span size of a table cell (e.g., how many
+#. rows and columns a particular table cell spans in a table).
+#.
+#: ../src/orca/Gecko.py:1911
+msgid "Speak _multiple cell spans"
+msgstr ""
+
+#. Translators: this is an option for whether or not to speak
+#. the header of a table cell in HTML content.
+#.
+#: ../src/orca/Gecko.py:1922
+msgid "Announce cell _header"
+msgstr "Meddela cell_huvud"
+
+#. Translators: this is an option to allow users to skip over
+#. empty/blank cells when navigating tables in HTML content.
+#.
+#: ../src/orca/Gecko.py:1933
+msgid "Skip _blank cells"
+msgstr "Hoppa över _tomma celler"
+
+#. Translators: this is the title of a panel containing options
+#. for specifying how to navigate tables in HTML content.
+#.
+#: ../src/orca/Gecko.py:1944
+msgid "Table Navigation"
+msgstr "Tabellnavigering"
+
+#. Translators: this is an option to allow users to have Orca
+#. automatically speak the line that contains the match while
+#. the user is still in Firefox's Find toolbar.
+#.
+#: ../src/orca/Gecko.py:1968
+msgid "Speak results during _find"
+msgstr ""
+
+#. Translators: this is an option which dictates whether the line
+#. that contains the match from the Find toolbar should always
+#. be spoken, or only spoken if it is a different line than the
+#. line which contained the last match.
+#.
+#: ../src/orca/Gecko.py:1981
+msgid "Onl_y speak changed lines during find"
+msgstr ""
+
+#. Translators: this option allows the user to specify the number
+#. of matched characters that must be present before Orca speaks
+#. the line that contains the results from the Find toolbar.
+#.
+#: ../src/orca/Gecko.py:1998
+msgid "Minimum length of matched text:"
+msgstr ""
+
+#. Translators: this is the title of a panel containing options
+#. for using Firefox's Find toolbar.
+#.
+#: ../src/orca/Gecko.py:2022
+msgid "Find Options"
+msgstr "Sökalternativ"
+
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:2038
+#: ../src/orca/Gecko.py:2715
 msgid "Loading.  Please wait."
 msgstr "Läser in. Var god vänta."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:2046
+#: ../src/orca/Gecko.py:2730
 #, python-format
 msgid "Finished loading %s."
 msgstr "Inläsning av %s färdig."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:2054
+#: ../src/orca/Gecko.py:2745
 msgid "Finished loading."
 msgstr "Inläsning färdig."
 
@@ -1386,15 +1926,42 @@ msgstr "Inläsning färdig."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/Gecko.py:2331
+#: ../src/orca/Gecko.py:3076
 #, python-format
 msgid "h%d"
 msgstr "h%d"
 
+#. Translators: The cell here refers to a cell within an HTML
+#. table.  We need to announce when the cell occupies or "spans"
+#. more than a single row and/or column.
+#.
+#: ../src/orca/Gecko.py:3934
+#, python-format
+msgid "Cell spans %d rows and %d columns"
+msgstr "Cellen spänner över %d rader och %d kolumner"
+
+#. Translators: The cell here refers to a cell within an HTML
+#. table.  We need to announce when the cell occupies or "spans"
+#. more than a single row and/or column.
+#.
+#: ../src/orca/Gecko.py:3941
+#, python-format
+msgid "Cell spans %d columns"
+msgstr "Cellen spänner över %d kolumner"
+
+#. Translators: The cell here refers to a cell within an HTML
+#. table.  We need to announce when the cell occupies or "spans"
+#. more than a single row and/or column.
+#.
+#: ../src/orca/Gecko.py:3947
+#, python-format
+msgid "Cell spans %d rows"
+msgstr "Cellen spänner över %d rader"
+
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
-#: ../src/orca/Gecko.py:3871
+#: ../src/orca/Gecko.py:4790
 #, python-format
 msgid "level %d"
 msgstr "nivå %d"
@@ -1402,14 +1969,16 @@ msgstr "nivå %d"
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:4319 ../src/orca/Gecko.py:4333
+#: ../src/orca/Gecko.py:5247
+#: ../src/orca/Gecko.py:5261
 msgid "No more headings."
 msgstr "Inga fler rubriker."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:4357 ../src/orca/Gecko.py:4379
+#: ../src/orca/Gecko.py:5285
+#: ../src/orca/Gecko.py:5307
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Inga fler rubriker i nivå %d."
@@ -1418,13 +1987,15 @@ msgstr "Inga fler rubriker i nivå %d."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:4430 ../src/orca/Gecko.py:4445
+#: ../src/orca/Gecko.py:5358
+#: ../src/orca/Gecko.py:5373
 msgid "No more large objects."
 msgstr "Inga fler stora objekt."
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/Gecko.py:4467 ../src/orca/Gecko.py:4514
+#: ../src/orca/Gecko.py:5395
+#: ../src/orca/Gecko.py:5442
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -1436,7 +2007,8 @@ msgstr[1] "Lista med %d objekt"
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/Gecko.py:4482 ../src/orca/Gecko.py:4529
+#: ../src/orca/Gecko.py:5410
+#: ../src/orca/Gecko.py:5457
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nästlad nivå %d"
@@ -1444,7 +2016,8 @@ msgstr "Nästlad nivå %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/Gecko.py:4492 ../src/orca/Gecko.py:4539
+#: ../src/orca/Gecko.py:5420
+#: ../src/orca/Gecko.py:5467
 msgid "No more lists."
 msgstr "Inga fler listor."
 
@@ -1452,27 +2025,58 @@ msgstr "Inga fler listor."
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/Gecko.py:4554 ../src/orca/Gecko.py:4569
+#: ../src/orca/Gecko.py:5494
+#: ../src/orca/Gecko.py:5521
 msgid "No more list items."
 msgstr "Inga fler listobjekt."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:4598 ../src/orca/Gecko.py:4619
+#: ../src/orca/Gecko.py:5550
+#: ../src/orca/Gecko.py:5571
 msgid "No more unvisited links."
 msgstr "Inga fler obesökta länkar."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:4648 ../src/orca/Gecko.py:4668
+#: ../src/orca/Gecko.py:5600
+#: ../src/orca/Gecko.py:5620
 msgid "No more visited links."
 msgstr "Inga fler besökta länkar."
 
+#. Translators: this is for navigating HTML content by
+#. moving from form field to form field.
+#.
+#: ../src/orca/Gecko.py:5648
+#: ../src/orca/Gecko.py:5667
+msgid "No more form fields."
+msgstr "Inga fler formulärfält."
+
+#. Translators: this represents the (row, col) position of
+#. a cell in a table.
+#.
+#: ../src/orca/Gecko.py:5689
+#, python-format
+msgid "Row %d, column %d."
+msgstr "Rad %d, kolumn %d."
+
+#. Translators: a uniform table is one in which each table
+#. cell occupies one row and one column (i.e. a perfect grid)
+#. In contrast, a non-uniform table is one in which at least
+#. one table cell occupies more than one row and/or column.
+#.
+#: ../src/orca/Gecko.py:5709
+#: ../src/orca/Gecko.py:5749
+#, fuzzy
+msgid "Non-uniform"
+msgstr "urban"
+
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/Gecko.py:4677 ../src/orca/Gecko.py:4716
+#: ../src/orca/Gecko.py:5714
+#: ../src/orca/Gecko.py:5754
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -1481,7 +2085,8 @@ msgstr[1] "Tabell med %d rader"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/Gecko.py:4682 ../src/orca/Gecko.py:4721
+#: ../src/orca/Gecko.py:5719
+#: ../src/orca/Gecko.py:5759
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -1491,54 +2096,50 @@ msgstr[1] "%d kolumner"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/Gecko.py:4707 ../src/orca/Gecko.py:4746
+#: ../src/orca/Gecko.py:5732
+#: ../src/orca/Gecko.py:5771
 msgid "No more tables."
 msgstr "Inga fler tabeller."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:4770
+#: ../src/orca/Gecko.py:5814
 msgid "Beginning of row."
 msgstr "Början av raden."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:4775 ../src/orca/Gecko.py:4804
-#: ../src/orca/Gecko.py:4833 ../src/orca/Gecko.py:4862
-#: ../src/orca/Gecko.py:4888 ../src/orca/Gecko.py:4915
+#: ../src/orca/Gecko.py:5819
+#: ../src/orca/Gecko.py:5871
+#: ../src/orca/Gecko.py:5919
+#: ../src/orca/Gecko.py:5971
+#: ../src/orca/Gecko.py:5986
+#: ../src/orca/Gecko.py:6003
 msgid "Not in a table."
 msgstr "Inte i en tabell."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:4799
+#: ../src/orca/Gecko.py:5866
 msgid "End of row."
 msgstr "Slutet på raden."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:4828
+#: ../src/orca/Gecko.py:5914
 msgid "Top of column."
 msgstr "Överst i kolumnen."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:4857
+#: ../src/orca/Gecko.py:5966
 msgid "Bottom of column."
 msgstr "Nederst i kolumnen."
-
-#. Translators: this represents the (row, col) position of
-#. a cell in a table.
-#.
-#: ../src/orca/Gecko.py:4878 ../src/orca/Gecko.py:4905
-#, python-format
-msgid "Row %d, column %d."
-msgstr "Rad %d, kolumn %d."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -1547,7 +2148,7 @@ msgstr "Rad %d, kolumn %d."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:4933
+#: ../src/orca/Gecko.py:6021
 msgid "Gecko is controlling the caret."
 msgstr "Gecko kontrollerar markören."
 
@@ -1558,9 +2159,31 @@ msgstr "Gecko kontrollerar markören."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:4945
+#: ../src/orca/Gecko.py:6033
 msgid "Orca is controlling the caret."
 msgstr "Orca kontrollerar markören."
+
+#. Translators: the structural navigation keys are designed
+#. to move the caret around the HTML content by object type.
+#. Thus H moves you to the next heading, Shift H to the
+#. previous heading, T to the next table, and so on. Some
+#. users prefer to turn this off to use Firefox's search
+#. when typing feature.
+#.
+#: ../src/orca/Gecko.py:6054
+msgid "Structural navigation keys on."
+msgstr ""
+
+#. Translators: the structural navigation keys are designed
+#. to move the caret around the HTML content by object type.
+#. Thus H moves you to the next heading, Shift H to the
+#. previous heading, T to the next table, and so on. Some
+#. users prefer to turn this off to use Firefox's search
+#. when typing feature.
+#.
+#: ../src/orca/Gecko.py:6063
+msgid "Structural navigation keys off."
+msgstr ""
 
 #: ../src/orca/gnomespeechfactory.py:163
 msgid "GNOME Speech Services"
@@ -1572,7 +2195,8 @@ msgstr "GNOME-uppläsningstjänster"
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/gnomespeechfactory.py:665 ../src/orca/gnomespeechfactory.py:666
+#: ../src/orca/gnomespeechfactory.py:665
+#: ../src/orca/gnomespeechfactory.py:666
 msgid " dot dot dot"
 msgstr " punkt punkt punkt"
 
@@ -1617,57 +2241,58 @@ msgstr "snabbare."
 msgid "slower."
 msgstr "långsammare."
 
-#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1158
-#: ../src/orca/orca_gui_prefs.py:1245
+#: ../src/orca/keybindings.py:152
+#: ../src/orca/orca_gui_prefs.py:1168
+#: ../src/orca/orca_gui_prefs.py:1260
 msgid "Orca"
 msgstr "Orca"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: ../src/orca/keybindings.py:114
+#: ../src/orca/keybindings.py:159
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: ../src/orca/keybindings.py:119
+#: ../src/orca/keybindings.py:164
 msgid "Super"
 msgstr "Super"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: ../src/orca/keybindings.py:124
+#: ../src/orca/keybindings.py:169
 msgid "Meta2"
 msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: ../src/orca/keybindings.py:131
+#: ../src/orca/keybindings.py:176
 msgid "Alt_L"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: ../src/orca/keybindings.py:136
+#: ../src/orca/keybindings.py:181
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: ../src/orca/keybindings.py:141
+#: ../src/orca/keybindings.py:186
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: ../src/orca/keybindings.py:146
+#: ../src/orca/keybindings.py:191
 msgid "Shift"
 msgstr "Skift"
 
@@ -1790,7 +2415,8 @@ msgstr "^[JjYy1]"
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
 #.
-#: ../src/orca/orca_console_prefs.py:136 ../src/orca/orca_console_prefs.py:155
+#: ../src/orca/orca_console_prefs.py:136
+#: ../src/orca/orca_console_prefs.py:155
 msgid "Speech is unavailable."
 msgstr "Uppläsning är inte tillgängligt."
 
@@ -1810,15 +2436,19 @@ msgstr "Välj önskat uppläsningssystem:"
 
 #. Translators: this is prompting for a numerical choice.
 #.
-#: ../src/orca/orca_console_prefs.py:175 ../src/orca/orca_console_prefs.py:207
-#: ../src/orca/orca_console_prefs.py:254 ../src/orca/orca_console_prefs.py:400
+#: ../src/orca/orca_console_prefs.py:175
+#: ../src/orca/orca_console_prefs.py:207
+#: ../src/orca/orca_console_prefs.py:254
+#: ../src/orca/orca_console_prefs.py:400
 msgid "Enter choice: "
 msgstr "Ange val: "
 
 #. Translators: this means speech synthesis will not be used.
 #.
-#: ../src/orca/orca_console_prefs.py:179 ../src/orca/orca_console_prefs.py:190
-#: ../src/orca/orca_console_prefs.py:211 ../src/orca/orca_console_prefs.py:227
+#: ../src/orca/orca_console_prefs.py:179
+#: ../src/orca/orca_console_prefs.py:190
+#: ../src/orca/orca_console_prefs.py:211
+#: ../src/orca/orca_console_prefs.py:227
 #: ../src/orca/orca_console_prefs.py:261
 msgid "Speech will not be used.\n"
 msgstr "Uppläsning kommer inte att användas.\n"
@@ -1918,7 +2548,7 @@ msgstr "Välj önskad tangentbordslayout:"
 #.
 #: ../src/orca/orca_console_prefs.py:389
 msgid "1. Desktop"
-msgstr "1. Skrivbord"
+msgstr "1. Stationär dator"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -1930,7 +2560,7 @@ msgstr "2. Bärbar dator"
 
 #: ../src/orca/orca_console_prefs.py:410
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr "Ogiltigt val. Väljer skrivbordets tangentbordslayout.\n"
+msgstr "Ogiltigt val. Väljer tangentbordslayout för stationär dator.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
@@ -1954,8 +2584,7 @@ msgstr "Tillgänglighetsstöd för GNOME har precis blivit aktiverat."
 
 #: ../src/orca/orca_console_prefs.py:468
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
-"Du behöver logga ut och logga in igen för att ändringarna ska bli aktiva."
+msgstr "Du behöver logga ut och logga in igen för att ändringarna ska bli aktiva."
 
 #: ../src/orca/orca_console_prefs.py:475
 msgid "Do you want to logout now?  Enter y or n: "
@@ -1973,7 +2602,8 @@ msgstr "Konfiguration färdig. Tryck Return för att fortsätta."
 msgid "<b>Start from:</b>"
 msgstr "<b>Börja från:</b>"
 
-#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:127
+#: ../src/orca/orca-find.glade.h:2
+#: ../src/orca/orca_gui_find.py:127
 msgid "C_urrent location"
 msgstr "A_ktuell position"
 
@@ -1996,7 +2626,8 @@ msgstr "Stäng"
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.glade.h:4 ../src/orca/scripts/gedit.py:351
+#: ../src/orca/orca-find.glade.h:4
+#: ../src/orca/scripts/gedit.py:351
 #: ../src/orca/scripts/gedit.py:353
 #: ../src/orca/scripts/gnome-search-tool.py:160
 msgid "Find"
@@ -2081,29 +2712,41 @@ msgstr "Ändrad"
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:292 ../src/orca/orca_gui_prefs.py:329
+#: ../src/orca/orca_gui_prefs.py:292
+#: ../src/orca/orca_gui_prefs.py:337
 msgid "Default"
 msgstr "Standard"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:298 ../src/orca/orca_gui_prefs.py:335
+#: ../src/orca/orca_gui_prefs.py:298
+#: ../src/orca/orca_gui_prefs.py:343
 msgid "Uppercase"
 msgstr "Versaler"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:304 ../src/orca/orca_gui_prefs.py:345
+#: ../src/orca/orca_gui_prefs.py:304
+#: ../src/orca/orca_gui_prefs.py:353
 msgid "Hyperlink"
 msgstr "Hyperlänk"
+
+#: ../src/orca/orca_gui_prefs.py:317
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr "Tillgänglighetsstöd för GNOME har precis blivit aktiverat."
+
+#: ../src/orca/orca_gui_prefs.py:318
+msgid "You need to log out and log back in for the change to take effect."
+msgstr "Du behöver logga ut och logga in igen för att ändringen ska bli aktiv."
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:914 ../src/orca/orca_gui_prefs.py:925
-#: ../src/orca/orca_gui_prefs.py:1873
+#: ../src/orca/orca_gui_prefs.py:922
+#: ../src/orca/orca_gui_prefs.py:933
+#: ../src/orca/orca_gui_prefs.py:1888
 msgid "Bilinear"
 msgstr "Bilinjär"
 
@@ -2111,8 +2754,10 @@ msgstr "Bilinjär"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:920 ../src/orca/orca_gui_prefs.py:940
-#: ../src/orca/orca_gui_prefs.py:1875 ../src/orca/orca_gui_prefs.py:1918
+#: ../src/orca/orca_gui_prefs.py:928
+#: ../src/orca/orca_gui_prefs.py:948
+#: ../src/orca/orca_gui_prefs.py:1890
+#: ../src/orca/orca_gui_prefs.py:1933
 msgid "None"
 msgstr "Ingen"
 
@@ -2120,8 +2765,9 @@ msgstr "Ingen"
 #. with the magnifier.  Centered means that Orca attempts to
 #. keep the mouse in the center of the magnified window.
 #.
-#: ../src/orca/orca_gui_prefs.py:938 ../src/orca/orca_gui_prefs.py:963
-#: ../src/orca/orca_gui_prefs.py:1896
+#: ../src/orca/orca_gui_prefs.py:946
+#: ../src/orca/orca_gui_prefs.py:971
+#: ../src/orca/orca_gui_prefs.py:1911
 msgid "Centered"
 msgstr "Centrerad"
 
@@ -2133,7 +2779,8 @@ msgstr "Centrerad"
 #. the desktop, Orca positions the mouse 25% from the left edge
 #. of the magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:950 ../src/orca/orca_gui_prefs.py:1915
+#: ../src/orca/orca_gui_prefs.py:958
+#: ../src/orca/orca_gui_prefs.py:1930
 msgid "Proportional"
 msgstr "Proportionell"
 
@@ -2142,7 +2789,8 @@ msgstr "Proportionell"
 #. the magnified region until the mouse hits an edge of the
 #. magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:957 ../src/orca/orca_gui_prefs.py:1904
+#: ../src/orca/orca_gui_prefs.py:965
+#: ../src/orca/orca_gui_prefs.py:1919
 msgid "Push"
 msgstr "Tryck"
 
@@ -2151,31 +2799,36 @@ msgstr "Tryck"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:1197 ../src/orca/orca_gui_prefs.py:1269
+#: ../src/orca/orca_gui_prefs.py:1207
+#: ../src/orca/orca_gui_prefs.py:1284
 msgid "Braille Bindings"
 msgstr "Braille-bindningar"
 
-#: ../src/orca/orca_gui_prefs.py:1573 ../src/orca/orca-setup.glade.h:74
+#: ../src/orca/orca_gui_prefs.py:1588
+#: ../src/orca/orca-setup.glade.h:74
 msgid "_None"
 msgstr "_Ingen"
 
-#: ../src/orca/orca_gui_prefs.py:1576 ../src/orca/orca-setup.glade.h:56
+#: ../src/orca/orca_gui_prefs.py:1591
+#: ../src/orca/orca-setup.glade.h:56
 msgid "So_me"
 msgstr "Vi_ssa"
 
-#: ../src/orca/orca_gui_prefs.py:1579 ../src/orca/orca-setup.glade.h:41
+#: ../src/orca/orca_gui_prefs.py:1594
+#: ../src/orca/orca-setup.glade.h:41
 msgid "M_ost"
-msgstr "M_est"
+msgstr "Fl_esta"
 
-#: ../src/orca/orca_gui_prefs.py:1596
+#: ../src/orca/orca_gui_prefs.py:1611
 msgid "Line"
 msgstr "Rad"
 
-#: ../src/orca/orca_gui_prefs.py:1598
+#: ../src/orca/orca_gui_prefs.py:1613
 msgid "Sentence"
 msgstr "Mening"
 
-#: ../src/orca/orca_gui_prefs.py:1614 ../src/orca/orca_gui_prefs.py:1673
+#: ../src/orca/orca_gui_prefs.py:1629
+#: ../src/orca/orca_gui_prefs.py:1688
 #: ../src/orca/orca-setup.glade.h:10
 msgid "Brie_f"
 msgstr "Kor_t"
@@ -2184,7 +2837,8 @@ msgstr "Kor_t"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:1638 ../src/orca/orca-setup.glade.h:59
+#: ../src/orca/orca_gui_prefs.py:1653
+#: ../src/orca/orca-setup.glade.h:59
 msgid "Speak current _cell"
 msgstr "Säg aktuell _cell"
 
@@ -2192,7 +2846,7 @@ msgstr "Säg aktuell _cell"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:1952
+#: ../src/orca/orca_gui_prefs.py:1967
 msgid "enter new key"
 msgstr "ange ny tangent"
 
@@ -2200,7 +2854,7 @@ msgstr "ange ny tangent"
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:1981
+#: ../src/orca/orca_gui_prefs.py:1996
 #, python-format
 msgid "The new key is: %s"
 msgstr "Den nya tangenten är: %s"
@@ -2210,28 +2864,21 @@ msgstr "Den nya tangenten är: %s"
 #. just entered for defining a new key binding was already
 #. defined.
 #.
-#: ../src/orca/orca_gui_prefs.py:1989
+#: ../src/orca/orca_gui_prefs.py:2004
 msgid "The key entered is the same. Nothing changed."
 msgstr "Angiven tangent är den samma. Ingenting har ändrats."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:2075 ../src/orca/orca-setup.glade.h:70
+#: ../src/orca/orca_gui_prefs.py:2104
+#: ../src/orca/orca-setup.glade.h:70
 msgid "_Desktop"
-msgstr "_Skrivbord"
-
-#: ../src/orca/orca_gui_prefs.py:2124
-msgid "Accessibility support for GNOME has just been enabled."
-msgstr "Tillgänglighetsstöd för GNOME har precis blivit aktiverat."
-
-#: ../src/orca/orca_gui_prefs.py:2125
-msgid "You need to log out and log back in for the change to take effect."
-msgstr "Du behöver logga ut och logga in igen för att ändringen ska bli aktiv."
+msgstr "_Stationär dator"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:2179
+#: ../src/orca/orca_gui_prefs.py:2206
 msgid "Starting Orca Preferences. This may take a while."
 msgstr "Startar Inställningar för Orca. Det kan ta en stund."
 
@@ -2249,17 +2896,21 @@ msgstr "Avsluta"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:228 ../src/orca/orca.py:1100 ../src/orca/orca.py:1101
+#: ../src/orca/orca.py:228
+#: ../src/orca/orca.py:1178
+#: ../src/orca/orca.py:1179
 msgid "Goodbye."
 msgstr "Hej då."
 
-#: ../src/orca/orca.py:568 ../src/orca/scripts/StarOffice.py:613
-#: ../src/orca/scripts/StarOffice.py:640
+#: ../src/orca/orca.py:568
+#: ../src/orca/scripts/StarOffice.py:634
+#: ../src/orca/scripts/StarOffice.py:661
 msgid "off"
 msgstr "av"
 
-#: ../src/orca/orca.py:570 ../src/orca/scripts/StarOffice.py:611
-#: ../src/orca/scripts/StarOffice.py:638
+#: ../src/orca/orca.py:570
+#: ../src/orca/scripts/StarOffice.py:632
+#: ../src/orca/scripts/StarOffice.py:659
 msgid "on"
 msgstr "på"
 
@@ -2275,14 +2926,14 @@ msgstr "Tangent fångad: %s. Tryck Enter för att bekräfta."
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:793
+#: ../src/orca/orca.py:830
 msgid "Speech enabled."
 msgstr "Uppläsning aktiverat."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:798
+#: ../src/orca/orca.py:835
 msgid "Speech disabled."
 msgstr "Uppläsning inte aktiverat."
 
@@ -2290,11 +2941,11 @@ msgstr "Uppläsning inte aktiverat."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:850
+#: ../src/orca/orca.py:887
 msgid "Orca user settings reloaded."
 msgstr "Användarinställningar omlästa."
 
-#: ../src/orca/orca.py:1363
+#: ../src/orca/orca.py:1441
 msgid "Welcome to Orca."
 msgstr "Välkommen till Orca."
 
@@ -2581,30 +3232,34 @@ msgid "_Person:"
 msgstr "_Person:"
 
 #: ../src/orca/orca-setup.glade.h:76
+msgid "_Present tooltips"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:77
 msgid "_Rate:"
 msgstr "_Hastighet:"
 
-#: ../src/orca/orca-setup.glade.h:77
+#: ../src/orca/orca-setup.glade.h:78
 msgid "_Right:"
 msgstr "_Höger:"
 
-#: ../src/orca/orca-setup.glade.h:78
+#: ../src/orca/orca-setup.glade.h:79
 msgid "_Smoothing:"
 msgstr "_Utjämning:"
 
-#: ../src/orca/orca-setup.glade.h:79
+#: ../src/orca/orca-setup.glade.h:80
 msgid "_Top:"
 msgstr "_Övre:"
 
-#: ../src/orca/orca-setup.glade.h:80
+#: ../src/orca/orca-setup.glade.h:81
 msgid "_Voice settings:"
 msgstr "_Röstinställningar:"
 
-#: ../src/orca/orca-setup.glade.h:81
+#: ../src/orca/orca-setup.glade.h:82
 msgid "_Width:"
 msgstr "_Bredd:"
 
-#: ../src/orca/orca-setup.glade.h:82
+#: ../src/orca/orca-setup.glade.h:83
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -2632,17 +3287,8 @@ msgstr "bildpunkter"
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
 #: ../src/orca/phonnames.py:53
-msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr ""
-"a : adam, b : bertil, c : cesar, d : david, e : erik, f : filip, g : gustav, "
-"h : helge, i : ivar, j : johan, k : kalle, l : ludvig, m : martin, n : "
-"niklas, o : olof, p : petter, q : quintus, r : rudolf, s : sigurd, t : tore, "
-"u : urban, v : viktor, w : wilhelm, x : xerxes, y : yngve, z : zäta, å : "
-"åke, ä : ärlig, ö : östen"
+msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgstr "a : adam, b : bertil, c : cesar, d : david, e : erik, f : filip, g : gustav, h : helge, i : ivar, j : johan, k : kalle, l : ludvig, m : martin, n : niklas, o : olof, p : petter, q : quintus, r : rudolf, s : sigurd, t : tore, u : urban, v : viktor, w : wilhelm, x : xerxes, y : yngve, z : zäta, å : åke, ä : ärlig, ö : östen"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "ASAP"
@@ -2711,40 +3357,40 @@ msgstr "ess ee linux"
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
 #.
-#: ../src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:160
 msgid "???"
 msgstr "???"
 
 #. Translators: long braille for the rolename of an invalid object.
 #. We typically make these 'camel' case.
 #.
-#: ../src/orca/rolenames.py:163
+#: ../src/orca/rolenames.py:164
 msgid "Invalid"
 msgstr "Ogiltig"
 
 #. Translators: spoken words for the rolename of an invalid object.
 #.
-#: ../src/orca/rolenames.py:166
+#: ../src/orca/rolenames.py:167
 msgid "invalid"
 msgstr "ogiltig"
 
 #. Translators: short braille for an accelerator (what you see in a menu).
 #. We strive to keep it under three characters to preserve real estate.
 #.
-#: ../src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:174
 msgid "acc"
 msgstr "snab"
 
 #. Translators: long braille for an accelerator (what you see in a menu).
 #. We typically make these 'camel' case.
 #.
-#: ../src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:178
 msgid "Accelerator"
 msgstr "Snabbtangent"
 
 #. Translators: spoken words for an accelerator (what you see in a menu).
 #.
-#: ../src/orca/rolenames.py:180
+#: ../src/orca/rolenames.py:181
 msgid "accelerator"
 msgstr "snabbtangent"
 
@@ -2754,7 +3400,7 @@ msgstr "snabbtangent"
 #. display.  The letters are chosen to make them unique across all
 #. other rolenames, and they typically act like an abbreviation.
 #.
-#: ../src/orca/rolenames.py:190
+#: ../src/orca/rolenames.py:191
 msgid "alrt"
 msgstr "alrm"
 
@@ -2764,7 +3410,7 @@ msgstr "alrm"
 #. spaces between them and the first letter of each word is
 #. capitalized.
 #.
-#: ../src/orca/rolenames.py:197
+#: ../src/orca/rolenames.py:198
 msgid "Alert"
 msgstr "Alarm"
 
@@ -2772,100 +3418,100 @@ msgstr "Alarm"
 #. NOTE for all the spoken words: these are the words one would use
 #. when speaking.
 #.
-#: ../src/orca/rolenames.py:202
+#: ../src/orca/rolenames.py:203
 msgid "alert"
 msgstr "alarm"
 
 #. Translators: short braille for the rolename of an animation widget.
 #.
-#: ../src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:209
 msgid "anim"
 msgstr "anim"
 
 #. Translators: long braille for the rolename of an animation widget.
 #.
-#: ../src/orca/rolenames.py:211
+#: ../src/orca/rolenames.py:212
 msgid "Animation"
 msgstr "Animering"
 
 #. Translators: spoken words for the rolename of an animation widget.
 #.
-#: ../src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:215
 msgid "animation"
 msgstr "animering"
 
 #. Translators: short braille for the rolename of an arrow widget.
 #.
-#: ../src/orca/rolenames.py:220
+#: ../src/orca/rolenames.py:221
 msgid "arw"
 msgstr "pil"
 
 #. Translators: long braille for the rolename of an animation widget.
 #.
-#: ../src/orca/rolenames.py:223
+#: ../src/orca/rolenames.py:224
 msgid "Arrow"
 msgstr "Pil"
 
 #. Translators: spoken words for the rolename of an animation widget.
 #.
-#: ../src/orca/rolenames.py:226
+#: ../src/orca/rolenames.py:227
 msgid "arrow"
 msgstr "pil"
 
 #. Translators: short braille for the rolename of a calendar widget.
 #.
-#: ../src/orca/rolenames.py:232
+#: ../src/orca/rolenames.py:233
 msgid "cal"
 msgstr "kal"
 
 #. Translators: long braille for the rolename of a calendar widget.
 #.
-#: ../src/orca/rolenames.py:235
+#: ../src/orca/rolenames.py:236
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: spoken words for the rolename of a calendar widget.
 #.
-#: ../src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:239
 msgid "calendar"
 msgstr "kalender"
 
 #. Translators: short braille for the rolename of a canvas widget.
 #.
-#: ../src/orca/rolenames.py:244
+#: ../src/orca/rolenames.py:245
 msgid "cnv"
 msgstr "ryta"
 
 #. Translators: long braille for the rolename of a canvas widget.
 #.
-#: ../src/orca/rolenames.py:247
+#: ../src/orca/rolenames.py:248
 msgid "Canvas"
 msgstr "Rityta"
 
 #. Translators: spoken words for the rolename of a canvas widget.
 #.
-#: ../src/orca/rolenames.py:250
+#: ../src/orca/rolenames.py:251
 msgid "canvas"
 msgstr "rityta"
 
 #. Translators: short braille for the rolename of a caption (e.g.,
 #. table caption).
 #.
-#: ../src/orca/rolenames.py:257
+#: ../src/orca/rolenames.py:258
 msgid "cptn"
 msgstr "rubk"
 
 #. Translators: long braille for the rolename of a caption (e.g.,
 #. table caption).
 #.
-#: ../src/orca/rolenames.py:261
+#: ../src/orca/rolenames.py:262
 msgid "Caption"
 msgstr "Rubrik"
 
 #. Translators: spoken words for the rolename of a caption (e.g.,
 #. table caption).
 #.
-#: ../src/orca/rolenames.py:265
+#: ../src/orca/rolenames.py:266
 msgid "caption"
 msgstr "rubrik"
 
@@ -2873,70 +3519,71 @@ msgstr "rubrik"
 #.
 #. Translators: short braille for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:271 ../src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:272
+#: ../src/orca/rolenames.py:284
 msgid "chk"
 msgstr "kry"
 
 #. Translators: long braille for the rolename of a checkbox.
 #.
-#: ../src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:275
 msgid "CheckBox"
 msgstr "Kryssruta"
 
 #. Translators: spoken words for the rolename of a checkbox.
 #.
-#: ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:278
 msgid "check box"
 msgstr "kryssruta"
 
 #. Translators: long braille for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:286
+#: ../src/orca/rolenames.py:287
 msgid "CheckItem"
 msgstr "Krysspost"
 
 #. Translators: spoken words for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:290
 msgid "check item"
 msgstr "krysspost"
 
 #. Translators: short braille for the rolename of a check menu (i.e.,
 #. a bizarre construct where the menu item is also a menu).
 #.
-#: ../src/orca/rolenames.py:296
+#: ../src/orca/rolenames.py:297
 msgid "ckm"
 msgstr "krm"
 
 #. Translators: long braille for the rolename of a check menu (i.e.,
 #. a bizarre construct where the menu item is also a menu).
 #.
-#: ../src/orca/rolenames.py:300
+#: ../src/orca/rolenames.py:301
 msgid "CheckMenu"
 msgstr "Kryssmeny"
 
 #. Translators: spoken words for the rolename of a check menu (i.e.,
 #. a bizarre construct where the menu item is also a menu).
 #.
-#: ../src/orca/rolenames.py:304
+#: ../src/orca/rolenames.py:305
 msgid "check menu"
 msgstr "kryssmeny"
 
 #. Translators: short braille for the rolename of a color chooser.
 #.
-#: ../src/orca/rolenames.py:310
+#: ../src/orca/rolenames.py:311
 msgid "clrchsr"
 msgstr "färgvä"
 
 #. Translators: long braille for the rolename of a color chooser.
 #.
-#: ../src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:314
 msgid "ColorChooser"
 msgstr "Färgväljare"
 
 #. Translators: spoken words for the rolename of a color chooser.
 #.
-#: ../src/orca/rolenames.py:316
+#: ../src/orca/rolenames.py:317
 msgid "color chooser"
 msgstr "färgväljare"
 
@@ -2944,7 +3591,8 @@ msgstr "färgväljare"
 #.
 #. Translators: short braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:322 ../src/orca/rolenames.py:949
+#: ../src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:950
 msgid "colhdr"
 msgstr "kolhuv"
 
@@ -2952,7 +3600,8 @@ msgstr "kolhuv"
 #.
 #. Translators: long braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:325 ../src/orca/rolenames.py:952
+#: ../src/orca/rolenames.py:326
+#: ../src/orca/rolenames.py:953
 msgid "ColumnHeader"
 msgstr "Kolumnhuvud"
 
@@ -2960,43 +3609,44 @@ msgstr "Kolumnhuvud"
 #.
 #. Translators: spoken words for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:328 ../src/orca/rolenames.py:955
+#: ../src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:956
 msgid "column header"
 msgstr "kolumnhuvud"
 
 #. Translators: short braille for the rolename of a combo box.
 #.
-#: ../src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:335
 msgid "cbo"
 msgstr "kbr"
 
 #. Translators: long braille for the rolename of a combo box.
 #.
-#: ../src/orca/rolenames.py:337
+#: ../src/orca/rolenames.py:338
 msgid "Combo"
 msgstr "Kombinationsruta"
 
 #. Translators: spoken words for the rolename of a combo box.
 #.
-#: ../src/orca/rolenames.py:340
+#: ../src/orca/rolenames.py:341
 msgid "combo box"
 msgstr "kombinationsruta"
 
 #. Translators: short braille for the rolename of a date editor.
 #.
-#: ../src/orca/rolenames.py:346
+#: ../src/orca/rolenames.py:347
 msgid "dat"
 msgstr "dat"
 
 #. Translators: long braille for the rolename of a date editor.
 #.
-#: ../src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:350
 msgid "DateEditor"
 msgstr "Datumredigerare"
 
 #. Translators: spoken words for the rolename of a date editor.
 #.
-#: ../src/orca/rolenames.py:352
+#: ../src/orca/rolenames.py:353
 msgid "date editor"
 msgstr "datumredigerare"
 
@@ -3004,19 +3654,20 @@ msgstr "datumredigerare"
 #.
 #. Translators: short braille for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:358 ../src/orca/rolenames.py:538
+#: ../src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:539
 msgid "icn"
 msgstr "ikn"
 
 #. Translators: long braille for the rolename of a desktop icon.
 #.
-#: ../src/orca/rolenames.py:361
+#: ../src/orca/rolenames.py:362
 msgid "DesktopIcon"
 msgstr "Skrivbordsikon"
 
 #. Translators: spoken words for the rolename of a desktop icon.
 #.
-#: ../src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:365
 msgid "desktop icon"
 msgstr "skrivbordsikon"
 
@@ -3024,19 +3675,20 @@ msgstr "skrivbordsikon"
 #.
 #. Translators: short braille for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:370 ../src/orca/rolenames.py:490
+#: ../src/orca/rolenames.py:371
+#: ../src/orca/rolenames.py:491
 msgid "frm"
 msgstr "ram"
 
 #. Translators: long braille for the rolename of a desktop frame.
 #.
-#: ../src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:374
 msgid "DesktopFrame"
 msgstr "Skrivbordsram"
 
 #. Translators: spoken words for the rolename of a desktop frame.
 #.
-#: ../src/orca/rolenames.py:376
+#: ../src/orca/rolenames.py:377
 msgid "desktop frame"
 msgstr "skrivbordsram"
 
@@ -3044,49 +3696,50 @@ msgstr "skrivbordsram"
 #.
 #. Translators: spoken words for the rolename of a dial.
 #.
-#: ../src/orca/rolenames.py:382 ../src/orca/rolenames.py:388
+#: ../src/orca/rolenames.py:383
+#: ../src/orca/rolenames.py:389
 msgid "dial"
 msgstr "ring"
 
 #. Translators: long braille for the rolename of a dial.
 #.
-#: ../src/orca/rolenames.py:385
+#: ../src/orca/rolenames.py:386
 msgid "Dial"
 msgstr "Ring"
 
 #. Translators: short braille for the rolename of a dialog.
 #.
-#: ../src/orca/rolenames.py:394
+#: ../src/orca/rolenames.py:395
 msgid "dlg"
 msgstr "dlg"
 
 #. Translators: long braille for the rolename of a dialog.
 #.
-#: ../src/orca/rolenames.py:397
+#: ../src/orca/rolenames.py:398
 msgid "Dialog"
 msgstr "Dialog"
 
 #. Translators: spoken words for the rolename of a dialog.
 #.
-#: ../src/orca/rolenames.py:400
+#: ../src/orca/rolenames.py:401
 msgid "dialog"
 msgstr "dialog"
 
 #. Translators: short braille for the rolename of a directory pane.
 #.
-#: ../src/orca/rolenames.py:406
+#: ../src/orca/rolenames.py:407
 msgid "dip"
 msgstr "kpa"
 
 #. Translators: long braille for the rolename of a directory pane.
 #.
-#: ../src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:410
 msgid "DirectoryPane"
 msgstr "Katalogpanel"
 
 #. Translators: spoken words for the rolename of a directory pane.
 #.
-#: ../src/orca/rolenames.py:412
+#: ../src/orca/rolenames.py:413
 msgid "directory pane"
 msgstr "katalogpanel"
 
@@ -3094,91 +3747,92 @@ msgstr "katalogpanel"
 #.
 #. Translators: short braille for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:418 ../src/orca/rolenames.py:526
+#: ../src/orca/rolenames.py:419
+#: ../src/orca/rolenames.py:527
 msgid "html"
 msgstr "html"
 
 #. Translators: long braille for the rolename of an HTML document frame.
 #.
-#: ../src/orca/rolenames.py:421
+#: ../src/orca/rolenames.py:422
 msgid "HtmlPane"
 msgstr "HtmlPane"
 
 #. Translators: spoken words for the rolename of an HTML document frame.
 #.
-#: ../src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:425
 msgid "html content"
 msgstr "html-innehåll"
 
 #. Translators: short braille for the rolename of a drawing area.
 #.
-#: ../src/orca/rolenames.py:430
+#: ../src/orca/rolenames.py:431
 msgid "draw"
 msgstr "rita"
 
 #. Translators: long braille for the rolename of a drawing area.
 #.
-#: ../src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:434
 msgid "DrawingArea"
 msgstr "Ritområde"
 
 #. Translators: spoken words for the rolename of a drawing area.
 #.
-#: ../src/orca/rolenames.py:436
+#: ../src/orca/rolenames.py:437
 msgid "drawing area"
 msgstr "ritområde"
 
 #. Translators: short braille for the rolename of a file chooser.
 #.
-#: ../src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:443
 msgid "fchsr"
 msgstr "filväl"
 
 #. Translators: long braille for the rolename of a file chooser.
 #.
-#: ../src/orca/rolenames.py:445
+#: ../src/orca/rolenames.py:446
 msgid "FileChooser"
 msgstr "Filväljare"
 
 #. Translators: spoken words for the rolename of a file chooser.
 #.
-#: ../src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:449
 msgid "file chooser"
 msgstr "filväljare"
 
 #. Translators: short braille for the rolename of a filler.
 #.
-#: ../src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:455
 msgid "flr"
 msgstr "utf"
 
 #. Translators: long braille for the rolename of a filler.
 #.
-#: ../src/orca/rolenames.py:457
+#: ../src/orca/rolenames.py:458
 msgid "Filler"
 msgstr "Utfyllare"
 
 #. Translators: spoken words for the rolename of a filler.
 #.
-#: ../src/orca/rolenames.py:460
+#: ../src/orca/rolenames.py:461
 msgid "filler"
 msgstr "utfyllare"
 
 #. Translators: short braille for the rolename of a font chooser.
 #.
-#: ../src/orca/rolenames.py:466
+#: ../src/orca/rolenames.py:467
 msgid "fnt"
 msgstr "typsn"
 
 #. Translators: long braille for the rolename of a font chooser.
 #.
-#: ../src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:470
 msgid "FontChooser"
 msgstr "Typsnittsväljare"
 
 #. Translators: spoken words for the rolename of a font chooser.
 #.
-#: ../src/orca/rolenames.py:472
+#: ../src/orca/rolenames.py:473
 msgid "font chooser"
 msgstr "typsnittsväljare"
 
@@ -3186,485 +3840,487 @@ msgstr "typsnittsväljare"
 #.
 #. Translators: spoken words for the rolename of a form.
 #.
-#: ../src/orca/rolenames.py:478 ../src/orca/rolenames.py:484
+#: ../src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:485
 msgid "form"
 msgstr "formulär"
 
 #. Translators: long braille for the rolename of a form.
 #.
-#: ../src/orca/rolenames.py:481
+#: ../src/orca/rolenames.py:482
 msgid "Form"
 msgstr "Formulär"
 
 #. Translators: long braille for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:494
 msgid "Frame"
 msgstr "Ram"
 
 #. Translators: spoken words for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:496
+#: ../src/orca/rolenames.py:497
 msgid "frame"
 msgstr "ram"
 
 #. Translators: short braille for the rolename of a glass pane.
 #.
-#: ../src/orca/rolenames.py:502
+#: ../src/orca/rolenames.py:503
 msgid "gpn"
 msgstr "gpn"
 
 #. Translators: long braille for the rolename of a glass pane.
 #.
-#: ../src/orca/rolenames.py:505
+#: ../src/orca/rolenames.py:506
 msgid "GlassPane"
 msgstr "Glaspanel"
 
 #. Translators: spoken words for the rolename of a glass pane.
 #.
-#: ../src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:509
 msgid "glass pane"
 msgstr "glaspanel"
 
 #. Translators: short braille for the rolename of a heading.
 #.
-#: ../src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:515
 msgid "hdng"
 msgstr "rubr"
 
 #. Translators: long braille for the rolename of a heading.
 #.
-#: ../src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:518
 msgid "Heading"
 msgstr "Rubrik"
 
 #. Translators: spoken words for the rolename of a heading.
 #.
-#: ../src/orca/rolenames.py:520
+#: ../src/orca/rolenames.py:521
 msgid "heading"
 msgstr "rubrik"
 
 #. Translators: long braille for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:530
 msgid "HtmlContainer"
 msgstr "Html-behållare"
 
 #. Translators: spoken words for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:532
+#: ../src/orca/rolenames.py:533
 msgid "h t m l container"
 msgstr "h t m l-behållare"
 
 #. Translators: long braille for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:541
+#: ../src/orca/rolenames.py:542
 msgid "Icon"
 msgstr "Ikon"
 
 #. Translators: spoken words for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:544
+#: ../src/orca/rolenames.py:545
 msgid "icon"
 msgstr "ikon"
 
 #. Translators: short braille for the rolename of a image.
 #.
-#: ../src/orca/rolenames.py:550
+#: ../src/orca/rolenames.py:551
 msgid "img"
 msgstr "bld"
 
 #. Translators: long braille for the rolename of a image.
 #.
-#: ../src/orca/rolenames.py:553
+#: ../src/orca/rolenames.py:554
 msgid "Image"
 msgstr "Bild"
 
 #. Translators: spoken words for the rolename of a image.
 #.
-#: ../src/orca/rolenames.py:556
+#: ../src/orca/rolenames.py:557
 msgid "image"
 msgstr "bild"
 
 #. Translators: short braille for the rolename of an internal frame.
 #.
-#: ../src/orca/rolenames.py:562
+#: ../src/orca/rolenames.py:563
 msgid "ifrm"
 msgstr "irm"
 
 #. Translators: long braille for the rolename of an internal frame.
 #.
-#: ../src/orca/rolenames.py:565
+#: ../src/orca/rolenames.py:566
 msgid "InternalFrame"
 msgstr "Intern ram"
 
 #. Translators: spoken words for the rolename of an internal frame.
 #.
-#: ../src/orca/rolenames.py:568
+#: ../src/orca/rolenames.py:569
 msgid "internal frame"
 msgstr "intern ram"
 
 #. Translators: short braille for the rolename of a label.
 #.
-#: ../src/orca/rolenames.py:574
+#: ../src/orca/rolenames.py:575
 msgid "lbl"
 msgstr "etik"
 
 #. Translators: long braille for the rolename of a label.
 #.
-#: ../src/orca/rolenames.py:577
+#: ../src/orca/rolenames.py:578
 msgid "Label"
 msgstr "Etikett"
 
 #. Translators: spoken words for the rolename of a label.
 #.
-#: ../src/orca/rolenames.py:580
+#: ../src/orca/rolenames.py:581
 msgid "label"
 msgstr "etikett"
 
 #. Translators: short braille for the rolename of a layered pane.
 #.
-#: ../src/orca/rolenames.py:586
+#: ../src/orca/rolenames.py:587
 msgid "lyrdpn"
 msgstr "lagpan"
 
 #. Translators: long braille for the rolename of a layered pane.
 #.
-#: ../src/orca/rolenames.py:589
+#: ../src/orca/rolenames.py:590
 msgid "LayeredPane"
 msgstr "Lagerpanel"
 
 #. Translators: spoken words for the rolename of a layered pane.
 #.
-#: ../src/orca/rolenames.py:592
+#: ../src/orca/rolenames.py:593
 msgid "layered pane"
 msgstr "lagerpanel"
 
 #. Translators: short braille for the rolename of a link.
 #.
-#: ../src/orca/rolenames.py:598
+#: ../src/orca/rolenames.py:599
 msgid "lnk"
 msgstr "lnk"
 
 #. Translators: long braille for the rolename of a link.
 #.
-#: ../src/orca/rolenames.py:601
+#: ../src/orca/rolenames.py:602
 msgid "Link"
 msgstr "Länk"
 
 #. Translators: spoken words for the rolename of a link.
 #.
-#: ../src/orca/rolenames.py:604 ../src/orca/scripts/StarOffice.py:1289
+#: ../src/orca/rolenames.py:605
+#: ../src/orca/scripts/StarOffice.py:1423
 msgid "link"
 msgstr "länk"
 
 #. Translators: short braille for the rolename of a list.
 #.
-#: ../src/orca/rolenames.py:610
+#: ../src/orca/rolenames.py:611
 msgid "lst"
 msgstr "lst"
 
 #. Translators: long braille for the rolename of a list.
 #.
-#: ../src/orca/rolenames.py:613
+#: ../src/orca/rolenames.py:614
 msgid "List"
 msgstr "Lista"
 
 #. Translators: spoken words for the rolename of a list.
 #.
-#: ../src/orca/rolenames.py:616
+#: ../src/orca/rolenames.py:617
 msgid "list"
 msgstr "lista"
 
 #. Translators: short braille for the rolename of a list item.
 #.
-#: ../src/orca/rolenames.py:622
+#: ../src/orca/rolenames.py:623
 msgid "lstitm"
 msgstr "lispos"
 
 #. Translators: long braille for the rolename of a list item.
 #.
-#: ../src/orca/rolenames.py:625
+#: ../src/orca/rolenames.py:626
 msgid "ListItem"
 msgstr "Listpost"
 
 #. Translators: spoken words for the rolename of a list item.
 #.
-#: ../src/orca/rolenames.py:628
+#: ../src/orca/rolenames.py:629
 msgid "list item"
 msgstr "listpost"
 
 #. Translators: short braille for the rolename of a menu.
 #.
-#: ../src/orca/rolenames.py:634
+#: ../src/orca/rolenames.py:635
 msgid "mnu"
 msgstr "mny"
 
 #. Translators: long braille for the rolename of a menu.
 #.
-#: ../src/orca/rolenames.py:637
+#: ../src/orca/rolenames.py:638
 msgid "Menu"
 msgstr "Meny"
 
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/rolenames.py:640
+#: ../src/orca/rolenames.py:641
 msgid "menu"
 msgstr "meny"
 
 #. Translators: short braille for the rolename of a menu bar.
 #.
-#: ../src/orca/rolenames.py:646
+#: ../src/orca/rolenames.py:647
 msgid "mnubr"
 msgstr "menrad"
 
 #. Translators: long braille for the rolename of a menu bar.
 #.
-#: ../src/orca/rolenames.py:649
+#: ../src/orca/rolenames.py:650
 msgid "MenuBar"
 msgstr "Menyrad"
 
 #. Translators: spoken words for the rolename of a menu bar.
 #.
-#: ../src/orca/rolenames.py:652
+#: ../src/orca/rolenames.py:653
 msgid "menu bar"
 msgstr "menyrad"
 
 #. Translators: short braille for the rolename of a menu item.
 #.
-#: ../src/orca/rolenames.py:658
+#: ../src/orca/rolenames.py:659
 msgid "mnuitm"
 msgstr "menpos"
 
 #. Translators: long braille for the rolename of a menu item.
 #.
-#: ../src/orca/rolenames.py:661
+#: ../src/orca/rolenames.py:662
 msgid "MenuItem"
 msgstr "Menypost"
 
 #. Translators: spoken words for the rolename of a menu item.
 #.
-#: ../src/orca/rolenames.py:664
+#: ../src/orca/rolenames.py:665
 msgid "menu item"
 msgstr "menypost"
 
 #. Translators: short braille for the rolename of an option pane.
 #.
-#: ../src/orca/rolenames.py:670
+#: ../src/orca/rolenames.py:671
 msgid "optnpn"
 msgstr "altpan"
 
 #. Translators: long braille for the rolename of an option pane.
 #.
-#: ../src/orca/rolenames.py:673
+#: ../src/orca/rolenames.py:674
 msgid "OptionPane"
 msgstr "Alternativpanel"
 
 #. Translators: spoken words for the rolename of an option pane.
 #.
-#: ../src/orca/rolenames.py:676
+#: ../src/orca/rolenames.py:677
 msgid "option pane"
 msgstr "alternativpanel"
 
 #. Translators: short braille for the rolename of a page tab.
 #.
-#: ../src/orca/rolenames.py:682
+#: ../src/orca/rolenames.py:683
 msgid "pgt"
 msgstr "sdf"
 
 #. Translators: long braille for the rolename of a page tab.
 #.
-#: ../src/orca/rolenames.py:685
+#: ../src/orca/rolenames.py:686
 msgid "Page"
 msgstr "Sida"
 
 #. Translators: spoken words for the rolename of a page tab.
 #.
-#: ../src/orca/rolenames.py:688
+#: ../src/orca/rolenames.py:689
 msgid "page"
 msgstr "sida"
 
 #. Translators: short braille for the rolename of a page tab list.
 #.
-#: ../src/orca/rolenames.py:694
+#: ../src/orca/rolenames.py:695
 msgid "tblst"
 msgstr "tblst"
 
 # tabulator eller flik?
 #. Translators: long braille for the rolename of a page tab list.
 #.
-#: ../src/orca/rolenames.py:697
+#: ../src/orca/rolenames.py:698
 msgid "TabList"
 msgstr "Fliklista"
 
 #. Translators: spoken words for the rolename of a page tab list.
 #.
-#: ../src/orca/rolenames.py:700
+#: ../src/orca/rolenames.py:701
 msgid "tab list"
 msgstr "fliklista"
 
 #. Translators: short braille for the rolename of a panel.
 #.
-#: ../src/orca/rolenames.py:706
+#: ../src/orca/rolenames.py:707
 msgid "pnl"
 msgstr "pnl"
 
 #. Translators: long braille for the rolename of a panel.
 #.
-#: ../src/orca/rolenames.py:709
+#: ../src/orca/rolenames.py:710
 msgid "Panel"
 msgstr "Panel"
 
 #. Translators: spoken words for the rolename of a panel.
 #.
-#: ../src/orca/rolenames.py:712
+#: ../src/orca/rolenames.py:713
 msgid "panel"
 msgstr "panel"
 
 #. Translators: short braille for the rolename of a password field.
 #.
-#: ../src/orca/rolenames.py:718
+#: ../src/orca/rolenames.py:719
 msgid "pwd"
 msgstr "lös"
 
 #. Translators: long braille for the rolename of a password field.
 #.
-#: ../src/orca/rolenames.py:721
+#: ../src/orca/rolenames.py:722
 msgid "Password"
 msgstr "Lösenord"
 
 #. Translators: spoken words for the rolename of a password field.
 #.
-#: ../src/orca/rolenames.py:724
+#: ../src/orca/rolenames.py:725
 msgid "password"
 msgstr "lösenord"
 
 #. Translators: short braille for the rolename of a popup menu.
 #.
-#: ../src/orca/rolenames.py:730
+#: ../src/orca/rolenames.py:731
 msgid "popmnu"
 msgstr "popmny"
 
 #. Translators: long braille for the rolename of a popup menu.
 #.
-#: ../src/orca/rolenames.py:733
+#: ../src/orca/rolenames.py:734
 msgid "PopupMenu"
 msgstr "Popupmeny"
 
 #. Translators: spoken words for the rolename of a popup menu.
 #.
-#: ../src/orca/rolenames.py:736
+#: ../src/orca/rolenames.py:737
 msgid "popup menu"
 msgstr "popupmeny"
 
 #. Translators: short braille for the rolename of a progress bar.
 #.
-#: ../src/orca/rolenames.py:742
+#: ../src/orca/rolenames.py:743
 msgid "pgbar"
 msgstr "förlmä"
 
 #. Translators: long braille for the rolename of a progress bar.
 #.
-#: ../src/orca/rolenames.py:745
+#: ../src/orca/rolenames.py:746
 msgid "Progress"
 msgstr "Förlopp"
 
 #. Translators: spoken words for the rolename of a progress bar.
 #.
-#: ../src/orca/rolenames.py:748
+#: ../src/orca/rolenames.py:749
 msgid "progress bar"
 msgstr "förloppsmätare"
 
 #. Translators: short braille for the rolename of a push button.
 #.
-#: ../src/orca/rolenames.py:754
+#: ../src/orca/rolenames.py:755
 msgid "btn"
 msgstr "kna"
 
 #. Translators: long braille for the rolename of a push button.
 #.
-#: ../src/orca/rolenames.py:757
+#: ../src/orca/rolenames.py:758
 msgid "Button"
 msgstr "Knapp"
 
 #. Translators: spoken words for the rolename of a push button.
 #.
-#: ../src/orca/rolenames.py:760
+#: ../src/orca/rolenames.py:761
 msgid "button"
 msgstr "knapp"
 
 #. Translators: short braille for the rolename of a radio button.
 #.
-#: ../src/orca/rolenames.py:766
+#: ../src/orca/rolenames.py:767
 msgid "radio"
 msgstr "radio"
 
 #. Translators: long braille for the rolename of a radio button.
 #.
-#: ../src/orca/rolenames.py:769
+#: ../src/orca/rolenames.py:770
 msgid "RadioButton"
 msgstr "Radioknapp"
 
 #. Translators: spoken words for the rolename of a radio button.
 #.
-#: ../src/orca/rolenames.py:772
+#: ../src/orca/rolenames.py:773
 msgid "radio button"
 msgstr "radioknapp"
 
 #. Translators: short braille for the rolename of a radio menu item.
 #.
-#: ../src/orca/rolenames.py:778
+#: ../src/orca/rolenames.py:779
 msgid "rdmnuitm"
 msgstr "radmenpos"
 
 #. Translators: long braille for the rolename of a radio menu item.
 #.
-#: ../src/orca/rolenames.py:781
+#: ../src/orca/rolenames.py:782
 msgid "RadioItem"
 msgstr "Radiomenypost"
 
 #. Translators: spoken words for the rolename of a radio menu item.
 #.
-#: ../src/orca/rolenames.py:784
+#: ../src/orca/rolenames.py:785
 msgid "radio menu item"
 msgstr "radiomenypost"
 
 #. Translators: short braille for the rolename of a radio menu, which
 #. is a bizarre construct where the menu item is also a menu.
 #.
-#: ../src/orca/rolenames.py:791
+#: ../src/orca/rolenames.py:792
 msgid "rdmnu"
 msgstr "rdmny"
 
 #. Translators: long braille for the rolename of a radio_menu, which
 #. is a bizarre construct where the menu item is also a menu.
 #.
-#: ../src/orca/rolenames.py:795
+#: ../src/orca/rolenames.py:796
 msgid "RadioMenu"
 msgstr "RadioMeny"
 
 #. Translators: spoken words for the rolename of a radio_menu, which
 #. is a bizarre construct where the menu item is also a menu.
 #.
-#: ../src/orca/rolenames.py:799
+#: ../src/orca/rolenames.py:800
 msgid "radio menu"
 msgstr "radiomeny"
 
 #. Translators: short braille for the rolename of a root pane.
 #.
-#: ../src/orca/rolenames.py:805
+#: ../src/orca/rolenames.py:806
 msgid "rtpn"
 msgstr "rtpan"
 
 #. Translators: long braille for the rolename of a root pane.
 #.
-#: ../src/orca/rolenames.py:808
+#: ../src/orca/rolenames.py:809
 msgid "RootPane"
 msgstr "Rotpanel"
 
 #. Translators: spoken words for the rolename of a root pane.
 #.
-#: ../src/orca/rolenames.py:811
+#: ../src/orca/rolenames.py:812
 msgid "root pane"
 msgstr "rotpanel"
 
@@ -3672,7 +4328,8 @@ msgstr "rotpanel"
 #.
 #. Translators: short braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:817 ../src/orca/rolenames.py:961
+#: ../src/orca/rolenames.py:818
+#: ../src/orca/rolenames.py:962
 msgid "rwhdr"
 msgstr "rahuv"
 
@@ -3680,7 +4337,8 @@ msgstr "rahuv"
 #.
 #. Translators: long braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:820 ../src/orca/rolenames.py:964
+#: ../src/orca/rolenames.py:821
+#: ../src/orca/rolenames.py:965
 msgid "RowHeader"
 msgstr "Radhuvud"
 
@@ -3688,512 +4346,508 @@ msgstr "Radhuvud"
 #.
 #. Translators: spoken words for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:823 ../src/orca/rolenames.py:967
+#: ../src/orca/rolenames.py:824
+#: ../src/orca/rolenames.py:968
 msgid "row header"
 msgstr "radhuvud"
 
 #. Translators: short braille for the rolename of a scroll bar.
 #.
-#: ../src/orca/rolenames.py:829
+#: ../src/orca/rolenames.py:830
 msgid "scbr"
 msgstr "rulra"
 
 #. Translators: long braille for the rolename of a scroll bar.
 #.
-#: ../src/orca/rolenames.py:832
+#: ../src/orca/rolenames.py:833
 msgid "ScrollBar"
 msgstr "Rullrad"
 
 #. Translators: spoken words for the rolename of a scroll bar.
 #.
-#: ../src/orca/rolenames.py:835
+#: ../src/orca/rolenames.py:836
 msgid "scroll bar"
 msgstr "rullrad"
 
 #. Translators: short braille for the rolename of a scroll pane.
 #.
-#: ../src/orca/rolenames.py:841
+#: ../src/orca/rolenames.py:842
 msgid "scpn"
 msgstr "rulpan"
 
 #. Translators: long braille for the rolename of a scroll pane.
 #.
-#: ../src/orca/rolenames.py:844
+#: ../src/orca/rolenames.py:845
 msgid "ScrollPane"
 msgstr "Rulla panel"
 
 #. Translators: spoken words for the rolename of a scroll pane.
 #.
-#: ../src/orca/rolenames.py:847
+#: ../src/orca/rolenames.py:848
 msgid "scroll pane"
 msgstr "rulla panel"
 
 #. Translators: short braille for the rolename of a section (e.g., in html).
 #.
-#: ../src/orca/rolenames.py:853
+#: ../src/orca/rolenames.py:854
 msgid "sctn"
 msgstr "avsn"
 
 #. Translators: long braille for the rolename of a section (e.g., in html).
 #.
-#: ../src/orca/rolenames.py:856
+#: ../src/orca/rolenames.py:857
 msgid "Section"
 msgstr "Avsnitt"
 
-#. Translators: spoken words for the rolename of a section (e.g., in html).
-#.
-#: ../src/orca/rolenames.py:859
-msgid "section"
-msgstr "avsnitt"
-
 #. Translators: short braille for the rolename of a separator.
 #.
-#: ../src/orca/rolenames.py:865
+#: ../src/orca/rolenames.py:866
 msgid "seprtr"
 msgstr "avskilj"
 
 #. Translators: long braille for the rolename of a separator.
 #.
-#: ../src/orca/rolenames.py:868
+#: ../src/orca/rolenames.py:869
 msgid "Separator"
 msgstr "Avskiljare"
 
 #. Translators: spoken words for the rolename of a separator.
 #.
-#: ../src/orca/rolenames.py:871
+#: ../src/orca/rolenames.py:872
 msgid "separator"
 msgstr "avskiljare"
 
 #. Translators: short braille for the rolename of a slider.
 #.
-#: ../src/orca/rolenames.py:877
+#: ../src/orca/rolenames.py:878
 msgid "sldr"
 msgstr "glid"
 
 #. Translators: long braille for the rolename of a slider.
 #.
-#: ../src/orca/rolenames.py:880
+#: ../src/orca/rolenames.py:881
 msgid "Slider"
 msgstr "Glidare"
 
 #. Translators: spoken words for the rolename of a slider.
 #.
-#: ../src/orca/rolenames.py:883
+#: ../src/orca/rolenames.py:884
 msgid "slider"
 msgstr "glidare"
 
 #. Translators: short braille for the rolename of a split pane.
 #.
-#: ../src/orca/rolenames.py:889
+#: ../src/orca/rolenames.py:890
 msgid "spltpn"
 msgstr "delapan"
 
 #. Translators: long braille for the rolename of a split pane.
 #.
-#: ../src/orca/rolenames.py:892
+#: ../src/orca/rolenames.py:893
 msgid "SplitPane"
 msgstr "Dela panel"
 
 #. Translators: spoken words for the rolename of a split pane.
 #.
-#: ../src/orca/rolenames.py:895
+#: ../src/orca/rolenames.py:896
 msgid "split pane"
 msgstr "dela panel"
 
 #. Translators: short braille for the rolename of a spin button.
 #.
-#: ../src/orca/rolenames.py:901
+#: ../src/orca/rolenames.py:902
 msgid "spin"
 msgstr "snur"
 
 #. Translators: long braille for the rolename of a spin button.
 #.
-#: ../src/orca/rolenames.py:904
+#: ../src/orca/rolenames.py:905
 msgid "SpinButton"
 msgstr "Snurrknapp"
 
 #. Translators: spoken words for the rolename of a spin button.
 #.
-#: ../src/orca/rolenames.py:907
+#: ../src/orca/rolenames.py:908
 msgid "spin button"
 msgstr "snurrknapp"
 
 #. Translators: short braille for the rolename of a statusbar.
 #.
-#: ../src/orca/rolenames.py:913
+#: ../src/orca/rolenames.py:914
 msgid "statbr"
 msgstr "statra"
 
 #. Translators: long braille for the rolename of a statusbar.
 #.
-#: ../src/orca/rolenames.py:916
+#: ../src/orca/rolenames.py:917
 msgid "StatusBar"
 msgstr "Statusrad"
 
 #. Translators: spoken words for the rolename of a statusbar.
 #.
-#: ../src/orca/rolenames.py:919
+#: ../src/orca/rolenames.py:920
 msgid "status bar"
 msgstr "statusrad"
 
 #. Translators: short braille for the rolename of a table.
 #.
-#: ../src/orca/rolenames.py:925
+#: ../src/orca/rolenames.py:926
 msgid "tbl"
 msgstr "tbl"
 
 #. Translators: long braille for the rolename of a table.
 #.
-#: ../src/orca/rolenames.py:928
+#: ../src/orca/rolenames.py:929
 msgid "Table"
 msgstr "Tabell"
 
 #. Translators: spoken words for the rolename of a table.
 #.
-#: ../src/orca/rolenames.py:931
+#: ../src/orca/rolenames.py:932
 msgid "table"
 msgstr "tabell"
 
 #. Translators: short braille for the rolename of a table cell.
 #.
-#: ../src/orca/rolenames.py:937
+#: ../src/orca/rolenames.py:938
 msgid "cll"
 msgstr "cell"
 
 #. Translators: long braille for the rolename of a table cell.
 #.
-#: ../src/orca/rolenames.py:940
+#: ../src/orca/rolenames.py:941
 msgid "Cell"
 msgstr "Cell"
 
 #. Translators: spoken words for the rolename of a table cell.
 #.
-#: ../src/orca/rolenames.py:943 ../src/orca/scripts/StarOffice.py:82
-#: ../src/orca/scripts/StarOffice.py:120
+#: ../src/orca/rolenames.py:944
+#: ../src/orca/scripts/StarOffice.py:89
+#: ../src/orca/scripts/StarOffice.py:127
 msgid "cell"
 msgstr "cell"
 
 #. Translators: short braille for the rolename of a tear off menu item.
 #.
-#: ../src/orca/rolenames.py:973
+#: ../src/orca/rolenames.py:974
 msgid "tomnuitm"
 msgstr "mpatb"
 
 #. Translators: long braille for the rolename of a tear off menu item.
 #.
-#: ../src/orca/rolenames.py:976
+#: ../src/orca/rolenames.py:977
 msgid "TearOffMenuItem"
 msgstr "Menypost att ta bort"
 
 #. Translators: spoken words for the rolename of a tear off menu item.
 #.
-#: ../src/orca/rolenames.py:979
+#: ../src/orca/rolenames.py:980
 msgid "tear off menu item"
 msgstr "menypost att ta bort"
 
 #. Translators: short braille for the rolename of a terminal.
 #.
-#: ../src/orca/rolenames.py:985
+#: ../src/orca/rolenames.py:986
 msgid "term"
 msgstr "term"
 
 #. Translators: long braille for the rolename of a terminal.
 #.
-#: ../src/orca/rolenames.py:988
+#: ../src/orca/rolenames.py:989
 msgid "Terminal"
 msgstr "Terminal"
 
 #. Translators: spoken words for the rolename of a terminal.
 #.
-#: ../src/orca/rolenames.py:991
+#: ../src/orca/rolenames.py:992
 msgid "terminal"
 msgstr "terminal"
 
 #. Translators: short braille for the rolename of a text entry field.
 #.
-#: ../src/orca/rolenames.py:997
+#: ../src/orca/rolenames.py:998
 msgid "txt"
 msgstr "txt"
 
 #. Translators: long braille for the rolename of a text entry field.
 #.
-#: ../src/orca/rolenames.py:1000
+#: ../src/orca/rolenames.py:1001
 msgid "Text"
 msgstr "Text"
 
 #. Translators: spoken words for the rolename of a text entry field.
 #.
-#: ../src/orca/rolenames.py:1003
+#: ../src/orca/rolenames.py:1004
 msgid "text"
 msgstr "text"
 
 #. Translators: short braille for the rolename of a toggle button.
 #.
-#: ../src/orca/rolenames.py:1011
+#: ../src/orca/rolenames.py:1012
 msgid "tglbtn"
 msgstr "växkn"
 
 #. Translators: long braille for the rolename of a toggle button.
 #.
-#: ../src/orca/rolenames.py:1014
+#: ../src/orca/rolenames.py:1015
 msgid "ToggleButton"
 msgstr "Växlingsknapp"
 
 #. Translators: spoken words for the rolename of a toggle button.
 #.
-#: ../src/orca/rolenames.py:1017
+#: ../src/orca/rolenames.py:1018
 msgid "toggle button"
 msgstr "växlingsknapp"
 
 #. Translators: short braille for the rolename of a toolbar.
 #.
-#: ../src/orca/rolenames.py:1023
+#: ../src/orca/rolenames.py:1024
 msgid "tbar"
 msgstr "verra"
 
 #. Translators: long braille for the rolename of a toolbar.
 #.
-#: ../src/orca/rolenames.py:1026
+#: ../src/orca/rolenames.py:1027
 msgid "ToolBar"
 msgstr "Verktygsrad"
 
 #. Translators: spoken words for the rolename of a toolbar.
 #.
-#: ../src/orca/rolenames.py:1029
+#: ../src/orca/rolenames.py:1030
 msgid "tool bar"
 msgstr "verktygsrad"
 
 #. Translators: short braille for the rolename of a tooltip.
 #.
-#: ../src/orca/rolenames.py:1035
+#: ../src/orca/rolenames.py:1036
 msgid "tip"
 msgstr "tips"
 
 #. Translators: long braille for the rolename of a tooltip.
 #.
-#: ../src/orca/rolenames.py:1038
+#: ../src/orca/rolenames.py:1039
 msgid "ToolTip"
 msgstr "Verktygstips"
 
 #. Translators: spoken words for the rolename of a tooltip.
 #.
-#: ../src/orca/rolenames.py:1041
+#: ../src/orca/rolenames.py:1042
 msgid "tool tip"
 msgstr "verktygstips"
 
 #. Translators: short braille for the rolename of a tree.
 #.
-#: ../src/orca/rolenames.py:1047
+#: ../src/orca/rolenames.py:1048
 msgid "tre"
 msgstr "trä"
 
 #. Translators: long braille for the rolename of a tree.
 #.
-#: ../src/orca/rolenames.py:1050
+#: ../src/orca/rolenames.py:1051
 msgid "Tree"
 msgstr "Träd"
 
 #. Translators: spoken words for the rolename of a tree.
 #.
-#: ../src/orca/rolenames.py:1053
+#: ../src/orca/rolenames.py:1054
 msgid "tree"
 msgstr "träd"
 
 #. Translators: short braille for the rolename of a tree table.
 #.
-#: ../src/orca/rolenames.py:1059
+#: ../src/orca/rolenames.py:1060
 msgid "trtbl"
 msgstr "tret"
 
 #. Translators: long braille for the rolename of a tree table.
 #.
-#: ../src/orca/rolenames.py:1062
+#: ../src/orca/rolenames.py:1063
 msgid "TreeTable"
 msgstr "Trädtabell"
 
 #. Translators: spoken words for the rolename of a tree table.
 #.
-#: ../src/orca/rolenames.py:1065
+#: ../src/orca/rolenames.py:1066
 msgid "tree table"
 msgstr "trädtabell"
 
 #. Translators: short braille for when the rolename of an object is unknown.
 #.
-#: ../src/orca/rolenames.py:1071
+#: ../src/orca/rolenames.py:1072
 msgid "unk"
 msgstr "okä"
 
 #. Translators: long braille for when the rolename of an object is unknown.
 #.
-#: ../src/orca/rolenames.py:1074
+#: ../src/orca/rolenames.py:1075
 msgid "Unknown"
 msgstr "Okänd"
 
 #. Translators: spoken words for when the rolename of an object is unknown.
 #.
-#: ../src/orca/rolenames.py:1077
+#: ../src/orca/rolenames.py:1078
 msgid "unknown"
 msgstr "okänd"
 
 #. Translators: short braille for the rolename of a viewport.
 #.
-#: ../src/orca/rolenames.py:1083
+#: ../src/orca/rolenames.py:1084
 msgid "vwprt"
 msgstr "visom"
 
 #. Translators: long braille for the rolename of a viewport.
 #.
-#: ../src/orca/rolenames.py:1086
+#: ../src/orca/rolenames.py:1087
 msgid "Viewport"
 msgstr "Visningsområde"
 
 #. Translators: spoken words for the rolename of a viewport.
 #.
-#: ../src/orca/rolenames.py:1089
+#: ../src/orca/rolenames.py:1090
 msgid "viewport"
 msgstr "visningsområde"
 
 #. Translators: short braille for the rolename of a window.
 #.
-#: ../src/orca/rolenames.py:1095
+#: ../src/orca/rolenames.py:1096
 msgid "wnd"
 msgstr "fön"
 
 #. Translators: long braille for the rolename of a window.
 #.
-#: ../src/orca/rolenames.py:1098
+#: ../src/orca/rolenames.py:1099
 msgid "Window"
 msgstr "Fönster"
 
 #. Translators: spoken words for the rolename of a window.
 #.
-#: ../src/orca/rolenames.py:1101
+#: ../src/orca/rolenames.py:1102
 msgid "window"
 msgstr "fönster"
 
 #. Translators: short braille for the rolename of a header.
 #.
-#: ../src/orca/rolenames.py:1107
+#: ../src/orca/rolenames.py:1108
 msgid "hdr"
 msgstr "huv"
 
 #. Translators: long braille for the rolename of a header.
 #.
-#: ../src/orca/rolenames.py:1110
+#: ../src/orca/rolenames.py:1111
 msgid "Header"
 msgstr "Huvud"
 
 #. Translators: spoken words for the rolename of a header.
 #.
-#: ../src/orca/rolenames.py:1113
+#: ../src/orca/rolenames.py:1114
 msgid "header"
 msgstr "huvud"
 
 #. Translators: short braille for the rolename of a footer.
 #.
-#: ../src/orca/rolenames.py:1119
+#: ../src/orca/rolenames.py:1120
 msgid "ftr"
 msgstr "sidf"
 
 #. Translators: long braille for the rolename of a footer.
 #.
-#: ../src/orca/rolenames.py:1122
+#: ../src/orca/rolenames.py:1123
 msgid "Footer"
 msgstr "Sidfot"
 
 #. Translators: spoken words for the rolename of a footer.
 #.
-#: ../src/orca/rolenames.py:1125
+#: ../src/orca/rolenames.py:1126
 msgid "footer"
 msgstr "sidfot"
 
 #. Translators: short braille for the rolename of a paragraph.
 #.
-#: ../src/orca/rolenames.py:1131
+#: ../src/orca/rolenames.py:1132
 msgid "para"
 msgstr "styck"
 
 #. Translators: long braille for the rolename of a paragraph.
 #.
-#: ../src/orca/rolenames.py:1134
+#: ../src/orca/rolenames.py:1135
 msgid "Paragraph"
 msgstr "Stycke"
 
 #. Translators: spoken words for the rolename of a paragraph.
 #.
-#: ../src/orca/rolenames.py:1137
+#: ../src/orca/rolenames.py:1138
 msgid "paragraph"
 msgstr "stycke"
 
 #. Translators: short braille for the rolename of a application.
 #.
-#: ../src/orca/rolenames.py:1143
+#: ../src/orca/rolenames.py:1144
 msgid "app"
 msgstr "prg"
 
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/rolenames.py:1146
+#: ../src/orca/rolenames.py:1147
 msgid "Application"
 msgstr "Program"
 
 #. Translators: spoken words for the rolename of a application.
 #.
-#: ../src/orca/rolenames.py:1149
+#: ../src/orca/rolenames.py:1150
 msgid "application"
 msgstr "program"
 
 #. Translators: short braille for the rolename of a autocomplete.
 #.
-#: ../src/orca/rolenames.py:1155
+#: ../src/orca/rolenames.py:1156
 msgid "auto"
 msgstr "auto"
 
 #. Translators: long braille for the rolename of a autocomplete.
 #.
-#: ../src/orca/rolenames.py:1158
+#: ../src/orca/rolenames.py:1159
 msgid "AutoComplete"
 msgstr "Automatisk komplettering"
 
 #. Translators: spoken words for the rolename of a autocomplete.
 #.
-#: ../src/orca/rolenames.py:1161
+#: ../src/orca/rolenames.py:1162
 msgid "autocomplete"
 msgstr "automatisk komplettering"
 
 #. Translators: short braille for the rolename of an editbar.
 #.
-#: ../src/orca/rolenames.py:1167
+#: ../src/orca/rolenames.py:1168
 msgid "edtbr"
 msgstr "redra"
 
 #. Translators: long braille for the rolename of an editbar.
 #.
-#: ../src/orca/rolenames.py:1170
+#: ../src/orca/rolenames.py:1171
 msgid "EditBar"
 msgstr "Redigeringsrad"
 
 #. Translators: spoken words for the rolename of an editbar.
 #.
-#: ../src/orca/rolenames.py:1173
+#: ../src/orca/rolenames.py:1174
 msgid "edit bar"
 msgstr "redigeringsrad"
 
 #. Translators: short braille for the rolename of an embedded component.
 #.
-#: ../src/orca/rolenames.py:1179
+#: ../src/orca/rolenames.py:1180
 msgid "emb"
 msgstr "inbä"
 
 #. Translators: long braille for the rolename of an embedded component.
 #.
-#: ../src/orca/rolenames.py:1182
+#: ../src/orca/rolenames.py:1183
 msgid "EmbeddedComponent"
 msgstr "Inbäddad komponent"
 
 #. Translators: spoken words for the rolename of an embedded component.
 #.
-#: ../src/orca/rolenames.py:1185
+#: ../src/orca/rolenames.py:1186
 msgid "embedded component"
 msgstr "inbäddad komponent"
 
@@ -4220,14 +4874,16 @@ msgstr "dokument"
 
 #. We've entered a table.  Announce the dimensions.
 #.
-#: ../src/orca/scripts/acroread.py:263 ../src/orca/scripts/StarOffice.py:984
+#: ../src/orca/scripts/acroread.py:263
+#: ../src/orca/scripts/StarOffice.py:1118
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tabell med %d rader och %d kolumner."
 
 #. We've left a table.  Announce this fact.
 #.
-#: ../src/orca/scripts/acroread.py:270 ../src/orca/scripts/StarOffice.py:989
+#: ../src/orca/scripts/acroread.py:270
+#: ../src/orca/scripts/StarOffice.py:1123
 msgid "leaving table."
 msgstr "lämnar tabell."
 
@@ -4242,7 +4898,8 @@ msgstr "rad %d, kolumn %d"
 #. Translators: this represents the column we're
 #. on in a table.
 #.
-#: ../src/orca/scripts/acroread.py:294 ../src/orca/scripts/StarOffice.py:89
+#: ../src/orca/scripts/acroread.py:294
+#: ../src/orca/scripts/StarOffice.py:96
 #, python-format
 msgid "column %d"
 msgstr "kolumn %d"
@@ -4349,7 +5006,8 @@ msgstr "Gratulerar"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/Evolution.py:754 ../src/orca/scripts/Evolution.py:806
+#: ../src/orca/scripts/Evolution.py:768
+#: ../src/orca/scripts/Evolution.py:820
 msgid "Status"
 msgstr "Status"
 
@@ -4357,7 +5015,7 @@ msgstr "Status"
 #. indicate that an email message has not been
 #. marked as having been read.
 #.
-#: ../src/orca/scripts/Evolution.py:811
+#: ../src/orca/scripts/Evolution.py:825
 msgid "unread"
 msgstr "oläst"
 
@@ -4366,14 +5024,14 @@ msgstr "oläst"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/Evolution.py:820
+#: ../src/orca/scripts/Evolution.py:834
 msgid "Attachment"
 msgstr "Bilaga"
 
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
-#: ../src/orca/scripts/Evolution.py:984
+#: ../src/orca/scripts/Evolution.py:998
 msgid "No appointments"
 msgstr "Inga möten"
 
@@ -4381,7 +5039,7 @@ msgstr "Inga möten"
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
 #.
-#: ../src/orca/scripts/Evolution.py:1062
+#: ../src/orca/scripts/Evolution.py:1076
 msgid "Directories button"
 msgstr "Katalogerknapp"
 
@@ -4391,29 +5049,35 @@ msgstr "Katalogerknapp"
 #. keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/Evolution.py:1218 ../src/orca/scripts/Evolution.py:1342
+#: ../src/orca/scripts/Evolution.py:1232
+#: ../src/orca/scripts/Evolution.py:1356
 msgid "Assistant"
 msgstr "Assistent"
 
-#: ../src/orca/scripts/gaim.py:149
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"Växla huruvida vi inleder chattrumsmeddelanden med namnet på chattrummet."
+#: ../src/orca/scripts/gaim.py:151
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "Växla huruvida vi inleder chattrumsmeddelanden med namnet på chattrummet."
 
-#: ../src/orca/scripts/gaim.py:154
+#: ../src/orca/scripts/gaim.py:156
 msgid "Speak and braille a previous chat room message."
-msgstr "Säg och Braille ett tidigare chattrumsmeddelande."
+msgstr "Säg och braille ett föregående chattrumsmeddelande."
 
-#: ../src/orca/scripts/gaim.py:195
+#. Translators: If this checkbox is checked, then Orca will speak
+#. the name of the chat room.
+#.
+#: ../src/orca/scripts/gaim.py:200
+msgid "Speak Chat Room name"
+msgstr "Säg namnet på chattrummet."
+
+#: ../src/orca/scripts/gaim.py:236
 msgid "speak chat room name."
 msgstr "säg chattrummets namn."
 
-#: ../src/orca/scripts/gaim.py:198
+#: ../src/orca/scripts/gaim.py:239
 msgid "Do not speak chat room name."
 msgstr "Säg inte chattrummets namn."
 
-#: ../src/orca/scripts/gaim.py:216
+#: ../src/orca/scripts/gaim.py:259
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Meddelande från chattrummet %s"
@@ -4456,7 +5120,8 @@ msgstr "Tryck Tab och Return för att avsluta."
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/gedit.py:427 ../src/orca/scripts/gedit.py:486
+#: ../src/orca/scripts/gedit.py:427
+#: ../src/orca/scripts/gedit.py:486
 msgid "Check Spelling"
 msgstr "Kontrollera stavning"
 
@@ -4554,29 +5219,34 @@ msgid_plural "%d items"
 msgstr[0] " %d objekt"
 msgstr[1] " %d objekt"
 
-#: ../src/orca/scripts/planner.py:76 ../src/orca/scripts/planner.py:137
+#: ../src/orca/scripts/planner.py:76
+#: ../src/orca/scripts/planner.py:137
 msgid "Display more options"
 msgstr "Visa fler alternativ"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
-#: ../src/orca/scripts/planner.py:175 ../src/orca/scripts/planner.py:183
-#: ../src/orca/speechgenerator.py:1438
+#: ../src/orca/scripts/planner.py:141
+#: ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:175
+#: ../src/orca/scripts/planner.py:183
+#: ../src/orca/speechgenerator.py:1450
 msgid "pressed"
 msgstr "nedtryckt"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/scripts/planner.py:143 ../src/orca/scripts/planner.py:151
-#: ../src/orca/scripts/planner.py:177 ../src/orca/scripts/planner.py:185
-#: ../src/orca/speechgenerator.py:1442
+#: ../src/orca/scripts/planner.py:143
+#: ../src/orca/scripts/planner.py:151
+#: ../src/orca/scripts/planner.py:177
+#: ../src/orca/scripts/planner.py:185
+#: ../src/orca/speechgenerator.py:1454
 msgid "not pressed"
 msgstr "inte nedtryckt"
 
 #. Translators: this represents the row number of a table.
 #.
-#: ../src/orca/scripts/StarOffice.py:94
+#: ../src/orca/scripts/StarOffice.py:101
 #, python-format
 msgid "row %d"
 msgstr "rad %d"
@@ -4584,28 +5254,44 @@ msgstr "rad %d"
 #. Translators: this is the input line of a spreadsheet
 #. (i.e., the place where enter formulas)
 #.
-#: ../src/orca/scripts/StarOffice.py:755
+#: ../src/orca/scripts/StarOffice.py:776
 msgid "Speaks the contents of the input line."
 msgstr "Talar innehållet på inmatningsraden."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:763
+#: ../src/orca/scripts/StarOffice.py:784
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr ""
-"Ställ in raden att använda som dynamiska kolumnhuvud när beräkningsceller "
-"talas."
+msgstr "Ställ in raden att använda som dynamiska kolumnhuvud när beräkningsceller talas."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:771
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+#: ../src/orca/scripts/StarOffice.py:792
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr "Ställ in kolumnen att använda som dynamiska radhuvud när beräkningsceller talas."
+
+#. Translators: All text in StarOffice/OpenOffice has a set of
+#. attributes associated with it (such as font type, size, style...)
+#. This label denotes those attributes that you user would like
+#. spoken when you ask to hear the text attributes associated with
+#. the current text (typically when the Insert-f key combination is
+#. pressed).
+#.
+#: ../src/orca/scripts/StarOffice.py:849
+msgid "Enabled Text Attributes:"
 msgstr ""
-"Ställ in kolumnen att använda som dynamiska radhuvud när beräkningsceller "
-"talas."
+
+#. Checkbox for "Speak spread sheet cell coordinates".
+#.
+#. Translators: If checked, then Orca will speak the coordinates
+#. of the current spread sheet cell. Coordinates are the row and
+#. column position within the spread sheet (i.e. A1, B1, C2 ...)
+#.
+#: ../src/orca/scripts/StarOffice.py:875
+msgid "Speak spread sheet cell coordinates"
+msgstr "Säg koordinater för kalkylarkscell"
 
 #. Translators: this represents a match on a window title.
 #. We're looking for frame that ends in "Calc", representing
@@ -4613,42 +5299,42 @@ msgstr ""
 #. really try to avoid doing this kind of thing, but sometimes
 #. it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/StarOffice.py:946
+#: ../src/orca/scripts/StarOffice.py:1080
 msgid "Calc"
 msgstr "Kalkylark"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/StarOffice.py:1014
+#: ../src/orca/scripts/StarOffice.py:1148
 msgid "empty"
 msgstr "tom"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1084
+#: ../src/orca/scripts/StarOffice.py:1218
 msgid "Dynamic column header cleared."
 msgstr "Dynamiskt kolumnhuvud tömdes."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1094
+#: ../src/orca/scripts/StarOffice.py:1228
 msgid "Dynamic column header set for row "
 msgstr "Dynamtiskt kolumnhuvud inställt för raden "
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1151
+#: ../src/orca/scripts/StarOffice.py:1285
 msgid "Dynamic row header cleared."
 msgstr "Dynamiskt radhuvud tömdes."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1161
+#: ../src/orca/scripts/StarOffice.py:1295
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dynamtisk radhuvud inställt för kolumnen %s"
@@ -4659,7 +5345,7 @@ msgstr "Dynamtisk radhuvud inställt för kolumnen %s"
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1313
+#: ../src/orca/scripts/StarOffice.py:1447
 msgid "Welcome to StarOffice"
 msgstr "Välkommen till StarOffice"
 
@@ -4670,7 +5356,7 @@ msgstr "Välkommen till StarOffice"
 #. keying off stuff like this, but we're forced to do so in
 #. this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1415
+#: ../src/orca/scripts/StarOffice.py:1550
 msgid "Text Document"
 msgstr "Textdokument"
 
@@ -4680,16 +5366,16 @@ msgstr "Textdokument"
 #. hate keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1481
-#: ../src/orca/scripts/StarOffice.py:1717
+#: ../src/orca/scripts/StarOffice.py:1616
+#: ../src/orca/scripts/StarOffice.py:1852
 msgid "Spellcheck:"
 msgstr "Stavningskontroll:"
 
-#: ../src/orca/scripts/StarOffice.py:1509
+#: ../src/orca/scripts/StarOffice.py:1644
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Notera att Rulla ner-knappen måste tryckas ner flera gånger."
 
-#: ../src/orca/scripts/StarOffice.py:1523
+#: ../src/orca/scripts/StarOffice.py:1658
 msgid "License Agreement Accept button now has focus."
 msgstr "Licensavtalets knapp för att acceptera har nu fokus."
 
@@ -4699,7 +5385,7 @@ msgstr "Licensavtalets knapp för att acceptera har nu fokus."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1552
+#: ../src/orca/scripts/StarOffice.py:1687
 msgid "First name"
 msgstr "Förnamn"
 
@@ -4707,7 +5393,7 @@ msgstr "Förnamn"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/StarOffice.py:1626
+#: ../src/orca/scripts/StarOffice.py:1761
 msgid "Move to cell"
 msgstr "Flytta till cell"
 
@@ -4718,7 +5404,7 @@ msgstr "Flytta till cell"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1780
+#: ../src/orca/scripts/StarOffice.py:1915
 msgid "Writer"
 msgstr "Ordbehandlare"
 
@@ -4726,13 +5412,13 @@ msgstr "Ordbehandlare"
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:1940
+#: ../src/orca/scripts/StarOffice.py:2076
 msgid "has formula"
 msgstr "har formeln"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:1988
+#: ../src/orca/scripts/StarOffice.py:2124
 #, python-format
 msgid "Cell %s"
 msgstr "Cell %s"
@@ -4754,28 +5440,28 @@ msgstr "%s panel"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:596
+#: ../src/orca/settings.py:602
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:601
+#: ../src/orca/settings.py:607
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:606
+#: ../src/orca/settings.py:612
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
-#: ../src/orca/settings.py:611
+#: ../src/orca/settings.py:617
 msgid "yelp"
 msgstr "yelp"
 
@@ -4783,7 +5469,7 @@ msgstr "yelp"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:617
+#: ../src/orca/settings.py:623
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -4791,7 +5477,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:623
+#: ../src/orca/settings.py:629
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -4799,35 +5485,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:629
+#: ../src/orca/settings.py:635
 msgid "Minefield"
 msgstr "Minröj"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:634
+#: ../src/orca/settings.py:640
 msgid "Mail/News"
 msgstr "E-post/Diskussionsgrupper"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:639
+#: ../src/orca/settings.py:645
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:644
+#: ../src/orca/settings.py:650
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. the time-admin application.
 #.
-#: ../src/orca/settings.py:649
+#: ../src/orca/settings.py:655
 msgid "time-admin"
 msgstr "time-admin"
 
@@ -4841,29 +5527,37 @@ msgstr "Konfigurerad standardröst för Uppläsningsassistenten"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/speechgenerator.py:379 ../src/orca/where_am_I.py:159
-#: ../src/orca/where_am_I.py:202
+#. Translators: this represents the state of a checked menu item.
+#.
+#. Translators: this represents the state of a checkbox.
+#.
+#: ../src/orca/speechgenerator.py:379
+#: ../src/orca/speechgenerator.py:808
+#: ../src/orca/where_am_I.py:162
+#: ../src/orca/where_am_I.py:205
 msgid "checked"
 msgstr "kryssad"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/speechgenerator.py:383 ../src/orca/where_am_I.py:163
-#: ../src/orca/where_am_I.py:206
+#: ../src/orca/speechgenerator.py:383
+#: ../src/orca/where_am_I.py:166
+#: ../src/orca/where_am_I.py:209
 msgid "not checked"
 msgstr "inte kryssad"
 
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speechgenerator.py:712 ../src/orca/speechgenerator.py:1208
-#: ../src/orca/speechgenerator.py:1269
+#: ../src/orca/speechgenerator.py:712
+#: ../src/orca/speechgenerator.py:1220
+#: ../src/orca/speechgenerator.py:1281
 msgid "0 items"
 msgstr "0 objekt"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speechgenerator.py:912
+#: ../src/orca/speechgenerator.py:924
 #, python-format
 msgid "%d percent."
 msgstr "%d procent."
@@ -4871,93 +5565,103 @@ msgstr "%d procent."
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/speechgenerator.py:973
+#: ../src/orca/speechgenerator.py:985
 msgid "not selected"
 msgstr "inte vald"
 
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
 #.
-#: ../src/orca/speechgenerator.py:1388
+#: ../src/orca/speechgenerator.py:1400
 msgid "tear off"
 msgstr "ta bort"
 
 #. Translators: this is the percentage value of a slider.
 #.
-#: ../src/orca/where_am_I.py:334
+#: ../src/orca/where_am_I.py:337
 #, python-format
 msgid "%s percent"
 msgstr "%s procent"
 
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
-#: ../src/orca/where_am_I.py:404 ../src/orca/where_am_I.py:417
+#: ../src/orca/where_am_I.py:407
+#: ../src/orca/where_am_I.py:420
 #, python-format
 msgid "%s page"
 msgstr "%s sida"
 
 #. Translators: this in reference to a row in a table.
 #.
-#: ../src/orca/where_am_I.py:517 ../src/orca/where_am_I.py:539
+#: ../src/orca/where_am_I.py:520
+#: ../src/orca/where_am_I.py:542
 #, python-format
 msgid "row %d of %d"
 msgstr "rad %d av %d"
 
+#: ../src/orca/where_am_I.py:590
+msgid "Icon panel"
+msgstr "Ikonpanel"
+
+#. Translators: this is a count of the number of selected icons
+#. and the count of the total number of icons within an icon panel.
+#. An example of an icon panel is the Nautilus folder view.
+#.
+#: ../src/orca/where_am_I.py:606
+#, python-format
+msgid "%d of %d items selected"
+msgstr "%d av %d objekt markerade"
+
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:685 ../src/orca/where_am_I.py:715
+#: ../src/orca/where_am_I.py:726
+#: ../src/orca/where_am_I.py:756
 #, python-format
 msgid "item %d of %d"
 msgstr "objekt %d av %d"
 
+#~ msgid "multiply"
+#~ msgstr "multiplicera"
+#~ msgid "Reloads user settings and reinitializes services as necessary."
+#~ msgstr ""
+#~ "Läser om användarens inställningar och ominitierar nödvändiga tjänster."
 #~ msgid "User logged out - shutting down."
 #~ msgstr "Användaren loggade ut - stänger ned."
-
 #~ msgid "Usage: orca [OPTION...]"
 #~ msgstr "Användning: orca [FLAGGA...]"
-
 #~ msgid "-?, --help                   Show this help message"
 #~ msgstr "-?, --help                   Visa detta hjälpmeddelande"
-
 #~ msgid "-v, --version                %s"
 #~ msgstr "-v, --version                %s"
-
 #~ msgid "-s, --setup, --gui-setup     Set up user preferences"
 #~ msgstr "-s, --setup, --gui-setup     Ställ in användarinställningar"
-
 #~ msgid "-t, --text-setup             Set up user preferences (text version)"
 #~ msgstr ""
 #~ "-t, --text-setup             Ställ in användarens inställningar "
 #~ "(textversion)"
-
 #~ msgid "-n, --no-setup               Skip set up of user preferences"
 #~ msgstr ""
 #~ "-n, --no-setup               Hoppa över konfiguration av användarens "
 #~ "inställningar"
-
 #~ msgid ""
 #~ "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 #~ msgstr ""
 #~ "-u, --user-prefs-dir=dirname Använd alternativ katalog för "
 #~ "användarinställningar"
-
 #~ msgid ""
 #~ "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
 #~ "use of option"
 #~ msgstr ""
 #~ "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] "
 #~ "Tvinga användning av alternativ"
-
 #~ msgid ""
 #~ "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] "
 #~ "Prevent use of option"
 #~ msgstr ""
 #~ "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] "
 #~ "Förhindra användning av alternativ"
-
 #~ msgid "-q, --quit                   Quits Orca (if shell script used)"
 #~ msgstr "-q, --quit                   Avslutar Orca (om skalskript används)"
-
 #~ msgid ""
 #~ "If Orca has not been previously set up by the user, Orca\n"
 #~ "will automatically launch the preferences set up unless\n"
@@ -4966,294 +5670,201 @@ msgstr "objekt %d av %d"
 #~ "Om Orca inte tidigare har konfigurerats av användaren,\n"
 #~ "kommer Orca automatiskt att starta konfigurationen\n"
 #~ "såvida inte flaggorna -n eller --no-setup används."
-
 #~ msgid "Report bugs to orca-list@gnome.org."
 #~ msgstr ""
 #~ "Rapportera fel till orca-list@gnome.org\n"
 #~ "Skicka synpunkter på översättningen till tp-sv@listor.tp-sv.se"
-
 #~ msgid "alpha"
 #~ msgstr "adam"
-
 #~ msgid "bravo"
 #~ msgstr "bertil"
-
 #~ msgid "charlie"
 #~ msgstr "ceasar"
-
 #~ msgid "delta"
 #~ msgstr "david"
-
 #~ msgid "echo"
 #~ msgstr "erik"
-
 #~ msgid "foxtrot"
 #~ msgstr "filip"
-
 #~ msgid "golf"
 #~ msgstr "gustav"
-
 #~ msgid "hotel"
 #~ msgstr "helge"
-
 #~ msgid "india"
 #~ msgstr "ivar"
-
-#~ msgid "juliet"
-#~ msgstr "johan"
-
 #~ msgid "kilo"
 #~ msgstr "kalle"
-
 #~ msgid "lima"
 #~ msgstr "ludvig"
-
 #~ msgid "mike"
 #~ msgstr "martin"
-
 #~ msgid "november"
 #~ msgstr "niklas"
-
 #~ msgid "oscar"
 #~ msgstr "olof"
-
 #~ msgid "papa"
 #~ msgstr "petter"
-
 #~ msgid "quebec"
 #~ msgstr "quintus"
-
 #~ msgid "romeo"
 #~ msgstr "rudolf"
-
 #~ msgid "sierra"
 #~ msgstr "sigurd"
-
 #~ msgid "tango"
 #~ msgstr "tore"
-
-#~ msgid "uniform"
-#~ msgstr "urban"
-
 #~ msgid "victor"
 #~ msgstr "viktor"
-
 #~ msgid "whiskey"
 #~ msgstr "wilhelm"
-
 #~ msgid "xray"
 #~ msgstr "xerxes"
-
 #~ msgid "yankee"
 #~ msgstr "yngve"
-
 #~ msgid "zulu"
 #~ msgstr "zäta"
-
 #~ msgid "%s"
 #~ msgstr "%s"
-
 #~ msgid "chrome://"
 #~ msgstr "chrome://"
-
 #~ msgid "Paints and prints the visible zones in the active window."
 #~ msgstr "Ritar och skriver ut de synliga zonerna i det aktiva fönstret."
-
 #~ msgid "Reports information on current script."
 #~ msgstr "Rapporterar information om aktuellt skript."
-
 #~ msgid "Toggles keystroke recording on and off."
 #~ msgstr "Växlar tangenttryckningsinspelning på eller av."
-
 #~ msgid ""
 #~ "Prints a debug listing of all known applications to the console where "
 #~ "Orca is running."
 #~ msgstr ""
 #~ "Skriver ut en felsökningslista på alla kända program till konsollen där "
 #~ "Orca kör."
-
 #~ msgid "Cycles the debug level at run time."
 #~ msgstr "Växlar felsökningsnivån vid körtid."
-
 #~ msgid ""
 #~ "Prints debug information about the currently active application to the "
 #~ "console where Orca is running."
 #~ msgstr ""
 #~ "Skriver ut felsökningsinformation om det för närvarande aktia programmet "
 #~ "till konsollen där Orca kör."
-
 #~ msgid "Prints debug information about the ancestry of the object with focus"
 #~ msgstr "Skriver ut felsökningsinformation om det fokuserade objektets anor"
-
 #~ msgid "Prints debug information about the application with focus"
 #~ msgstr "Skriver ut felsökningsinformation om det fokuserade programmet"
-
 #~ msgid "Switches to the next presentation manager."
 #~ msgstr "Växlar till nästa presentationshanterare."
-
 #~ msgid "1 space "
 #~ msgstr "1 blanksteg "
 
 # tabulator eller flik?
 #~ msgid "1 tab "
 #~ msgstr "1 flik "
-
 #~ msgid "row"
 #~ msgstr "rad"
-
 #~ msgid "To exit learn mode, press the escape key."
 #~ msgstr "För att lämna inlärningsläget, tryck Escape."
-
 #~ msgid "Switching to focus tracking mode."
 #~ msgstr "Växlar till fokusspårningsläget."
-
 #~ msgid "No more chunks."
 #~ msgstr "Inga fler delar."
-
 #~ msgid "Switching to hierarchical navigation mode."
 #~ msgstr "Växlar till hierarkiskt navigeringsläge."
-
 #~ msgid "%d. %s"
 #~ msgstr "%d. %s"
-
 #~ msgid "Orca Find"
 #~ msgstr "Orca-sökning"
-
 #~ msgid "Handler"
 #~ msgstr "Hanterare"
-
 #~ msgid "Mod.Mask 1"
 #~ msgstr "Mod.Mask 1"
-
 #~ msgid "Use Mod.1"
 #~ msgstr "Använd mod.1"
-
 #~ msgid "Key1"
 #~ msgstr "Tangent1"
-
 #~ msgid "Mod.Mask 2"
 #~ msgstr "Mod.Mask 2"
-
 #~ msgid "Use Mod.2"
 #~ msgstr "Använd mod.2"
-
 #~ msgid "Key2"
 #~ msgstr "Tangent2"
-
 #~ msgid "Speech not available."
 #~ msgstr "Uppläsning är inte tillgängligt."
-
 #~ msgid "Debug level all."
 #~ msgstr "Felsökningsnivå allt."
-
 #~ msgid "Debug level finest."
 #~ msgstr "Felsökningsnivå finast."
-
 #~ msgid "Debug level finer."
 #~ msgstr "Felsökningsnivå finare."
-
 #~ msgid " off"
 #~ msgstr " av"
-
 #~ msgid " on"
 #~ msgstr " på"
-
 #~ msgid "Num_Lock"
 #~ msgstr "Num_Lock"
-
 #~ msgid "goodbye."
 #~ msgstr "hejdå."
-
 #~ msgid "Do you really want to quit Orca?"
 #~ msgstr "Vill du verkligen avsluta Orca?"
-
 #~ msgid "Question"
 #~ msgstr "Fråga"
-
 #~ msgid "%s %s"
 #~ msgstr "%s %s"
-
 #~ msgid "%s text %s %s"
 #~ msgstr "%s text %s %s"
-
 #~ msgid "%s text %s"
 #~ msgstr "%s text %s"
-
 #~ msgid "text %s %s"
 #~ msgstr "text %s %s"
-
 #~ msgid ":"
 #~ msgstr ":"
-
 #~ msgid "Account Settings"
 #~ msgstr "Kontoinställningar"
-
 #~ msgid "Thunderbird Preferences"
 #~ msgstr "Inställningar för Thunderbird"
-
 #~ msgid "shortcut"
 #~ msgstr "genväg"
-
 #~ msgid "Default Key"
 #~ msgstr "Standardtangent"
-
 #~ msgid "Item "
 #~ msgstr "Post "
-
 #~ msgid " of "
 #~ msgstr " av "
-
 #~ msgid ""
 #~ "You will have to log out for the change to take effect.\n"
 #~ "Do you want to log out now? "
 #~ msgstr ""
 #~ "Du behöver logga ut för att ändringen ska bli aktiv.\n"
 #~ "Vill du logga ut nu?"
-
 #, fuzzy
 #~ msgid "tick"
 #~ msgstr "_Fast"
-
 #~ msgid "semi"
 #~ msgstr "semikolon"
-
 #~ msgid "back"
 #~ msgstr "tillbaka"
-
 #~ msgid "bar"
 #~ msgstr "lodstreck"
-
 #~ msgid "version"
 #~ msgstr "version"
-
 #~ msgid "Creating .orca directory."
 #~ msgstr "Skapar .orca-katalog."
-
 #~ msgid "Creating .orca script directory."
 #~ msgstr "Skapar .orca-skriptkatalog."
-
 #~ msgid "Creating __init_.py in .orca script directory."
 #~ msgstr "Skapar __init_.py i .orca-skriptkatalogen."
-
 #~ msgid "Braille support appears to work, use it?  Enter y or n. "
 #~ msgstr ""
 #~ "Stödet för Braille verkar fungera, använda det? Ange y (ja) eller n "
 #~ "(nej). "
-
 #~ msgid "No page to read."
 #~ msgstr "Ingen sida att läsa."
-
 #~ msgid "Reading web page failed."
 #~ msgstr "Läsning av webbsida misslyckades."
-
 #~ msgid "Input"
 #~ msgstr "Indata"
-
 #~ msgid "Message Log"
 #~ msgstr "Meddelandelogg"
-
 #~ msgid "Enter choice."
 #~ msgstr "Ange val."
-
 #~ msgid "Enter voice name: "
 #~ msgstr "Ange röstnamn: "
+
