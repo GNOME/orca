@@ -1,12 +1,17 @@
+2007-05-21  Mario Lang <mlang@delysid.org>
+
+        * src/orca/braillegenerator.py: fix for bug 439509 - Run
+        Application Dialog prints entered text twice in braille.
+
 2007-05-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
-          Potential fix for bug #345399 – Key echo missing alpha numeric 
+          Potential fix for bug #345399 – Key echo missing alpha numeric
           and punctuation keys.
 
 2007-05-19  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: More work on Bug 420540 – Firefox keyboard 
+        * src/orca/Gecko.py: More work on Bug 420540 – Firefox keyboard
         control wish list. Q/Shift+Q can now be used to navigate among
         blockquotes.  I also added a new method, getLastObject(), which
         I need for a couple of other RFE's I'm working on.
@@ -24,10 +29,10 @@
 2007-05-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435852 – Orca and OpenOffice Calc have a memory 
-          lovefest, found by Will (thanks!). We now override the 
-          _getSpeechForTable() method in the subclassed SpeechGenerator 
-          class in the StarOffice.py script, and just check against 
+          Fix for bug #435852 – Orca and OpenOffice Calc have a memory
+          lovefest, found by Will (thanks!). We now override the
+          _getSpeechForTable() method in the subclassed SpeechGenerator
+          class in the StarOffice.py script, and just check against
           "not obj.childCount"
 
 2007-05-17  Willie Walker <william.walker@sun.com>

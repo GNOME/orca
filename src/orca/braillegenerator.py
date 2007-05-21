@@ -26,7 +26,7 @@ generators as they see fit."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import math
@@ -45,6 +45,11 @@ class BrailleGenerator:
     for those objects.  See the getBrailleRegions method, which is the
     primary entry point.  Subclasses can feel free to override/extend
     the brailleGenerators instance field as they see fit."""
+
+    SKIP_CONTEXT_ROLES = (rolenames.ROLE_MENU,
+                          rolenames.ROLE_MENU_BAR,
+                          rolenames.ROLE_PAGE_TAB_LIST,
+                          rolenames.ROLE_COMBO_BOX)
 
     def __init__(self, script):
 
@@ -1449,10 +1454,7 @@ class BrailleGenerator:
 
         regions = []
         parent = obj.parent
-        if parent \
-           and ((parent.role == rolenames.ROLE_MENU) \
-                or (parent.role == rolenames.ROLE_MENU_BAR) \
-                or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
+        if parent and (parent.role in self.SKIP_CONTEXT_ROLES):
             parent = parent.parent
         while parent and (parent.parent != parent):
             # [[[TODO: WDW - we might want to include more things here
