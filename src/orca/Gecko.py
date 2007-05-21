@@ -4505,13 +4505,18 @@ class Script(default.Script):
 
         return nextObj
 
-    def findPreviousRole(self, roles, currentObj=None):
+    def findPreviousRole(self, roles, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match.
 
         Arguments:
         -roles: a list of roles from rolenames.py
+        -wrap: if True and the top of the document is reached, move
+               to the bottom and keep looking.
         -currentObj: the object from which the search should begin
+
+        Returns: [obj, wrapped] where wrapped is a boolean reflecting
+        whether wrapping took place.
         """
 
         if not currentObj:
@@ -4524,6 +4529,7 @@ class Script(default.Script):
             ancestors.append(obj)
             obj = obj.parent
 
+        wrapped = False
         obj = self.findPreviousObject(currentObj)
         while obj:
             isNestedItem = ((obj != currentObj.parent) \
@@ -4532,19 +4538,29 @@ class Script(default.Script):
             if ((not obj in ancestors) or isNestedItem) \
                and (obj.role in roles) \
                and (not self.isLayoutOnly(obj)):
-                return obj
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+                return [obj, wrapped]
             else:
                 obj = self.findPreviousObject(obj)
+                if not obj and wrap and not wrapped:
+                    obj = self.getLastObject()
+                    wrapped = True
 
-        return None
+        return [None, wrapped]
 
-    def findNextRole(self, roles, currentObj=None):
+    def findNextRole(self, roles, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
         Arguments:
         -roles: a list of roles from rolenames.py
+        -wrap: if True and the bottom of the document is reached, move
+               to the top and keep looking.
         -currentObj: the object from which the search should begin
+
+        Returns: [obj, wrapped] where wrapped is a boolean reflecting
+        whether wrapping took place.
         """
 
         if not currentObj:
@@ -4556,15 +4572,27 @@ class Script(default.Script):
             ancestors.append(obj)
             obj = obj.parent
 
+        wrapped = False
         obj = self.findNextObject(currentObj)
+        if not obj and wrap:
+            documentFrame = self.getDocumentFrame()
+            obj = documentFrame.child(0)
+            wrapped = True
+
         while obj:
             if (not obj in ancestors) and (obj.role in roles) \
                 and (not self.isLayoutOnly(obj)):
-                return obj
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+                return [obj, wrapped]
             else:
                 obj = self.findNextObject(obj)
+                if not obj and wrap and not wrapped:
+                    documentFrame = self.getDocumentFrame()
+                    obj = documentFrame.child(0)
+                    wrapped = True
 
-        return None
+        return [None, wrapped]
 
     ####################################################################
     #                                                                  #
@@ -5328,7 +5356,16 @@ class Script(default.Script):
         #self.dumpContents(inputEvent, contents)
 
     def goPreviousHeading(self, inputEvent):
-        obj = self.findPreviousRole([rolenames.ROLE_HEADING])
+        wrap = True
+        [obj, wrapped] = self.findPreviousRole([rolenames.ROLE_HEADING], wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5342,7 +5379,16 @@ class Script(default.Script):
             speech.speak(_("No more headings."))
 
     def goNextHeading(self, inputEvent):
-        obj = self.findNextRole([rolenames.ROLE_HEADING])
+        wrap = True
+        [obj, wrapped] = self.findNextRole([rolenames.ROLE_HEADING], wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5361,13 +5407,27 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         if obj.parent.role == rolenames.ROLE_HEADING:
             obj = obj.parent
+        wrap = True
         while obj and not found:
-            obj = self.findPreviousRole([rolenames.ROLE_HEADING], obj)
+            [obj, wrapped] = \
+                  self.findPreviousRole([rolenames.ROLE_HEADING], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
             if obj:
                 level = self.getHeadingLevel(obj)
                 if level == desiredLevel:
                     found = True
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5383,13 +5443,27 @@ class Script(default.Script):
         found = False
         level = 0
         [obj, characterOffset] = self.getCaretContext()
+        wrap = True
         while obj and not found:
-            obj = self.findNextRole([rolenames.ROLE_HEADING], obj)
+            [obj, wrapped] = \
+                  self.findNextRole([rolenames.ROLE_HEADING], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
             if obj:
                 level = self.getHeadingLevel(obj)
                 if level == desiredLevel:
                     found = True
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5438,7 +5512,16 @@ class Script(default.Script):
         self.goPreviousHeadingAtLevel(inputEvent, 6)
 
     def goPreviousChunk(self, inputEvent):
-        obj = self.findPreviousRole(OBJECT_ROLES)
+        wrap = True
+        [obj, wrapped] = self.findPreviousRole(OBJECT_ROLES, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5453,7 +5536,16 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
-        obj = self.findNextRole(OBJECT_ROLES)
+        wrap = True
+        [obj, wrapped] = self.findNextRole(OBJECT_ROLES, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5470,8 +5562,15 @@ class Script(default.Script):
     def goPreviousList(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findPreviousRole([rolenames.ROLE_LIST], obj)
+            [obj, wrapped] = \
+                  self.findPreviousRole([rolenames.ROLE_LIST], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
+
             # We need to be sure that the list in question is an (un)ordered
             # list rather than a list in a form field. Form field lists are
             # focusable; (un)ordered lists are not.
@@ -5480,7 +5579,15 @@ class Script(default.Script):
                not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 found = True
 
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
                 if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
@@ -5517,8 +5624,15 @@ class Script(default.Script):
     def goNextList(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findNextRole([rolenames.ROLE_LIST], obj)
+            [obj, wrapped] = \
+                  self.findNextRole([rolenames.ROLE_LIST], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
+
             # We need to be sure that the list in question is an (un)ordered
             # list rather than a list in a form field. Form field lists are
             # focusable; (un)ordered lists are not.
@@ -5526,8 +5640,15 @@ class Script(default.Script):
             if obj and \
                not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
                 if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
@@ -5564,8 +5685,15 @@ class Script(default.Script):
     def goPreviousListItem(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findPreviousRole([rolenames.ROLE_LIST_ITEM], obj)
+            [obj, wrapped] = \
+                  self.findPreviousRole([rolenames.ROLE_LIST_ITEM], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
+
             # We need to be sure that the list item in question is the child
             # of an (un)ordered list rather than a list in a form field.
             # Form field list items are focusable; (un)ordered list items are
@@ -5574,8 +5702,15 @@ class Script(default.Script):
             if obj and \
                not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5591,8 +5726,15 @@ class Script(default.Script):
     def goNextListItem(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findNextRole([rolenames.ROLE_LIST_ITEM], obj)
+            [obj, wrapped] = \
+                  self.findNextRole([rolenames.ROLE_LIST_ITEM], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
+
             # We need to be sure that the list item in question is the child
             # of an (un)ordered list rather than a list in a form field.
             # Form field list items are focusable; (un)ordered list items are
@@ -5601,8 +5743,15 @@ class Script(default.Script):
             if obj and \
                not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5626,13 +5775,26 @@ class Script(default.Script):
             obj = containingLink
 
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findPreviousRole([rolenames.ROLE_LINK], obj)
+            [obj, wrapped] = \
+                  self.findPreviousRole([rolenames.ROLE_LINK], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
             if obj and \
                not obj.state.count(atspi.Accessibility.STATE_VISITED):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5647,13 +5809,26 @@ class Script(default.Script):
     def goNextUnvisitedLink(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findNextRole([rolenames.ROLE_LINK], obj)
+            [obj, wrapped] = \
+                  self.findNextRole([rolenames.ROLE_LINK], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
             if obj and \
                not obj.state.count(atspi.Accessibility.STATE_VISITED):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5676,13 +5851,26 @@ class Script(default.Script):
             obj = containingLink
 
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findPreviousRole([rolenames.ROLE_LINK], obj)
+            [obj, wrapped] = \
+                  self.findPreviousRole([rolenames.ROLE_LINK], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
             if obj and \
                obj.state.count(atspi.Accessibility.STATE_VISITED):
                 found = True
-
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5697,12 +5885,27 @@ class Script(default.Script):
     def goNextVisitedLink(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
         found = False
+        wrap = True
         while obj and not found:
-            obj = self.findNextRole([rolenames.ROLE_LINK], obj)
+            [obj, wrapped] = \
+                  self.findNextRole([rolenames.ROLE_LINK], wrap, obj)
+            # We should only wrap if we haven't already done so.
+            #
+            if wrapped:
+                wrap = False
+
             if obj and \
                obj.state.count(atspi.Accessibility.STATE_VISITED):
                 found = True
-        if obj:
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -5727,12 +5930,26 @@ class Script(default.Script):
                 break
             else:
                 candidate = candidate.parent
-
+        currentObj = obj
         found = False
+        wrapped = False
+        wrap = True
         while obj and not found:
             obj = self.findPreviousObject(obj)
-            if obj and self.isBlockquote(obj):
+            if not obj and wrap and not wrapped:
+                obj = self.getLastObject()
+                wrapped = True
+            if obj and self.isBlockquote(obj) and \
+               not self.isSameObject(currentObj, obj):
                 found = True
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5747,11 +5964,27 @@ class Script(default.Script):
 
     def goNextBlockquote(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
+        currentObj = obj
         found = False
+        wrapped = False
+        wrap = True
         while obj and not found:
             obj = self.findNextObject(obj)
-            if obj and self.isBlockquote(obj):
+            if not obj and wrap and not wrapped:
+                documentFrame = self.getDocumentFrame()
+                obj = documentFrame.child(0)
+                wrapped = True
+            if obj and self.isBlockquote(obj) and \
+               not self.isSameObject(currentObj, obj):
                 found = True
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5771,15 +6004,31 @@ class Script(default.Script):
         # list first.
         #
         [obj, characterOffset] = self.getCaretContext()
+        currentObj = obj
         if obj.role == rolenames.ROLE_LIST_ITEM and \
            obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.parent
 
         found = False
+        wrapped = False
+        wrap = True
         while obj and not found:
             obj = self.findPreviousObject(obj)
-            found = self.isFormField(obj)
-
+            if not obj and wrap and not wrapped:
+                obj = self.getLastObject()
+                wrapped = True
+            if obj:
+                found = self.isFormField(obj)
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
@@ -5794,18 +6043,35 @@ class Script(default.Script):
 
     def goNextFormField(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
+        currentObj = obj
         found = False
+        wrapped = False
+        wrap = True
         while obj and not found:
             obj = self.findNextObject(obj)
-            found = self.isFormField(obj)
-
+            if not obj and wrap and not wrapped:
+                documentFrame = self.getDocumentFrame()
+                obj = documentFrame.child(0)
+                wrapped = True
+            if obj:
+                found = self.isFormField(obj)
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                              characterOffset))
-        if not found:
+        else:
             # Translators: this is for navigating HTML content by
             # moving from form field to form field.
             #
@@ -5837,7 +6103,16 @@ class Script(default.Script):
             speech.speak(spanString)
 
     def goPreviousTable(self, inputEvent):
-        obj = self.findPreviousRole([rolenames.ROLE_TABLE])
+        wrap = True
+        [obj, wrapped] = self.findPreviousRole([rolenames.ROLE_TABLE], wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
         if obj:
             caption = self.getTableCaption(obj)
             if caption and caption.text:
@@ -5877,7 +6152,16 @@ class Script(default.Script):
             speech.speak(_("No more tables."))
 
     def goNextTable(self, inputEvent):
-        obj = self.findNextRole([rolenames.ROLE_TABLE])
+        wrap = True
+        [obj, wrapped] = self.findNextRole([rolenames.ROLE_TABLE], wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
         if obj:
             caption = self.getTableCaption(obj)
             if caption and caption.text:

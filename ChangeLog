@@ -1,3 +1,8 @@
+2007-05-21  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for Bug 433655 – Orca's structural
+        navigation should wrap at the end of a page.
+
 2007-05-21  Mario Lang <mlang@delysid.org>
 
         * src/orca/braillegenerator.py: fix for bug 439509 - Run
