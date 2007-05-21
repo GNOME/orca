@@ -432,7 +432,9 @@ def _isPrintableKey(event_string):
     if event_string == "space":
         reply = True
     else:
-        reply = event_string in string.printable
+        unicodeString = event_string.decode("UTF-8")
+        reply = (len(unicodeString) == 1) \
+                and (unicodeString.isalnum() or unicodeString.isspace())
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoPrintableKey: returning: %s" % reply)
     return reply

@@ -1,3 +1,9 @@
+2007-05-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Potential fix for bug #345399 – Key echo missing alpha numeric 
+          and punctuation keys.
+
 2007-05-19  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: More work on Bug 420540 – Firefox keyboard 
