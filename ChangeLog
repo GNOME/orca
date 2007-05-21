@@ -1,3 +1,11 @@
+2007-05-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          The patch from Comment 13 of bug #435201
+          http://bugzilla.gnome.org/show_bug.cgi?id=435201#c13
+          was causing selected lines not to be spoken properly in OOo Writer.
+          It's not been removed. Fix found by Joanie (thanks!)
+
 2007-05-21  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for Bug 433655 – Orca's structural
