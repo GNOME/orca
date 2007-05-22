@@ -1,3 +1,8 @@
+2007-05-22  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for Bug 439286 – Gecko.py's 
+        find{Next,Previous}Object fails when object is document_frame.
+
 2007-05-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

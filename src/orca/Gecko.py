@@ -4385,10 +4385,22 @@ class Script(default.Script):
         """
 
         previousObj = None
+        characterOffset = 0
+
+        # If the object is the document frame, the previous object is
+        # the one that follows us relative to our offset.
+        #
+        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            [obj, characterOffset] = self.getCaretContext()
 
         index = obj.index - 1
-        if (index < 0) and (obj.role != rolenames.ROLE_DOCUMENT_FRAME):
-            previousObj = obj.parent
+        if (index < 0):
+            if (obj.role != rolenames.ROLE_DOCUMENT_FRAME):
+                previousObj = obj.parent
+            else:
+                # We're likely at the very end of the document
+                # frame.
+                previousObj = self.getLastObject()
         else:
             # [[[TODO: HACK - WDW defensive programming because Gecko
             # ally hierarchies are not always working.  Objects say
@@ -4414,19 +4426,27 @@ class Script(default.Script):
             if not previousObj:
                 if obj.role != rolenames.ROLE_DOCUMENT_FRAME:
                     previousObj = obj.parent
-            else:
-                while previousObj.childCount:
-                    index = previousObj.childCount - 1
-                    while index >= 0:
-                        child = previousObj.child(index)
-                        if isinstance(child, atspi.Accessible):
-                            previousObj = child
-                            break
-                        else:
-                            index -= 1
-                    if index < 0:
-                        break
+                else:
+                    previousObj = obj
 
+            while previousObj.childCount:
+                index = previousObj.childCount - 1
+                while index >= 0:
+                    child = previousObj.child(index)
+                    childOffset = self.getCharacterOffsetInParent(child)
+                    if isinstance(child, atspi.Accessible) and not \
+                       (previousObj.role == rolenames.ROLE_DOCUMENT_FRAME \
+                        and childOffset > characterOffset):
+                        previousObj = child
+                        break
+                    else:
+                        index -= 1
+                if index < 0:
+                    break
+
+        if previousObj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            previousObj = None
+    
         return previousObj
 
     def findNextObject(self, obj):
@@ -4439,6 +4459,13 @@ class Script(default.Script):
         """
 
         nextObj = None
+        characterOffset = 0
+
+        # If the object is the document frame, the next object is
+        # the one that follows us relative to our offset.
+        #
+        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            [obj, characterOffset] = self.getCaretContext()
 
         # If the object has children, we'll choose the first one.
         #
@@ -4448,7 +4475,10 @@ class Script(default.Script):
         index = 0
         while index < obj.childCount:
             child = obj.child(index)
-            if isinstance(child, atspi.Accessible):
+            childOffset = self.getCharacterOffsetInParent(child)
+            if isinstance(child, atspi.Accessible) and \
+               not (obj.role == rolenames.ROLE_DOCUMENT_FRAME and \
+                    childOffset < characterOffset):
                 nextObj = child
                 break
             else:
