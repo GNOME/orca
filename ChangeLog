@@ -1,3 +1,9 @@
+2007-05-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gcalctool.py:
+          Fixed bug #440592 – Orca doesn't speak gcalctool's status bar 
+          correctly.
+
 2007-05-22  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for Bug 439286 – Gecko.py's 

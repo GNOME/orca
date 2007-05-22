@@ -33,12 +33,27 @@ import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
+import orca.where_am_I as where_am_I
 
-########################################################################
-#                                                                      #
-# The GCalcTool script class.                                          #
-#                                                                      #
-########################################################################
+class WhereAmI(where_am_I.WhereAmI):
+
+    def __init__(self, script):
+        """Create a new WhereAmI that will be used to speak information
+        about the current object of interest.
+        """
+
+        where_am_I.WhereAmI.__init__(self, script)
+
+    def _speakStatusBar(self):
+        """Speaks the status bar."""
+
+        if not self._statusBar:
+            return
+
+        utterances = []
+        text = self._getObjLabelAndName(self._statusBar)
+        utterances.append(text)
+        speech.speakUtterances(utterances)
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForPushButton to handle 'unspeakable'
@@ -69,6 +84,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         else:
             return []
 
+########################################################################
+#                                                                      #
+# The GCalcTool script class.                                          #
+#                                                                      #
+########################################################################
+
 class Script(default.Script):
 
     def __init__(self, app):
@@ -83,6 +104,12 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
         self._resultsDisplay = None
+
+    def getWhereAmI(self):
+        """Returns the "where am I" class for this script.
+        """
+
+        return WhereAmI(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
