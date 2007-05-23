@@ -33,6 +33,7 @@ import settings
 import speech
 
 from orca_i18n import _ # for gettext support
+from orca_i18n import ngettext  # for ngettext support
 
 class WhereAmI:
 
@@ -603,8 +604,11 @@ class WhereAmI:
         # and the count of the total number of icons within an icon panel. 
         # An example of an icon panel is the Nautilus folder view.
         #
-        utterances.append(_("%d of %d items selected") % \
-                          (totalSelectedItems, childCount))
+        itemString = ngettext("%d of %d item selected",
+                              "%d of %d items selected",
+                              childCount) % \
+                              (totalSelectedItems, childCount)
+        utterances.append(itemString)
 
         if doubleClick:
             for i in range(0, len(selectedItems)):

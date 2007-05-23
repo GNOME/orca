@@ -1,3 +1,9 @@
+2007-05-23  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/where_am_I.py:
+          Fix the translation problem mentioned in comment #51 of 
+          bug #412200.
+
 2007-05-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gcalctool.py:
