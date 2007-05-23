@@ -2376,7 +2376,20 @@ class Script(default.Script):
             not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
             return
-        # Possibility #2: We're using the Find toolbar.  In this case
+
+        # Possibility #2: We're looking at the Help contents.  As
+        # the selected item changes in the list on the left, we're
+        # getting caret-moved events for the changing content on
+        # the right.  We want to update the caret context but not
+        # the locus of focus.
+        #
+        if orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM and \
+           not self.inDocumentContent(orca_state.locusOfFocus) and \
+           self.inDocumentContent(event.source):
+            self.caretContext = [event.source, event.detail1]
+            return
+        
+        # Possibility #3: We're using the Find toolbar.  In this case
         # we want to update the caret context.  If the user has opted
         # to have results spoken during the find (i.e., while still
         # in the Find toolbar), speak the line containing the caret
@@ -2738,7 +2751,15 @@ class Script(default.Script):
         if event.type == "object:state-changed:busy":
             if event.source \
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
-                if event.detail1:
+                if orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM \
+                   and not self.inDocumentContent(orca_state.locusOfFocus):
+                    # The event is for the changing contents of the help
+                    # frame as the user navigates from topic to topic in
+                    # the list on the left.  Ignore this.
+                    #
+                    return
+                
+                elif event.detail1:
                     # A detail1=1 means the page has started loading.
                     #
                     self._loadingDocumentContent = True

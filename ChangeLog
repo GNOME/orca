@@ -1,3 +1,8 @@
+2007-05-23  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for Bug 440529 – Orca bounces out of
+        Firefox Help Contents tree and into the document frame.
+
 2007-05-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:
