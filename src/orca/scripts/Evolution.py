@@ -84,6 +84,62 @@ class WhereAmI(where_am_I.WhereAmI):
 
         return text
 
+    def _hasTextSelections(self, obj):
+        """Return an indication of whether this object has selected text.
+        Note that it's possible that this object has no text, but is part
+        of a selected text area. Because of this, we need to check the
+        objects on either side to see if they are none zero length and 
+        have text selections.
+
+        Arguments:
+        - obj: the text object to start checking for selected text.
+
+        Returns: an indication of whether this object has selected text,
+        or adjacent text objects have selected text.
+        """
+
+        currentSelected = False
+        otherSelected = False
+        nSelections = obj.text.getNSelections()
+        if nSelections:
+            currentSelected = True
+        else:
+            otherSelected = False
+            displayedText = obj.text.getText(0, -1)
+            if len(displayedText) == 0:
+                container = obj.parent.parent
+                current = obj.parent.index
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    if (current-1) >= 0:
+                        prevPanel = container.child(current-1)
+                        prevObj = prevPanel.child(0)
+                        if prevObj.text.getNSelections() > 0:
+                            otherSelected = True
+                        else:
+                            displayedText = prevObj.text.getText(0, -1)
+                            if len(displayedText) == 0:
+                                current -= 1
+                                morePossibleSelections = True
+
+                current = obj.parent.index
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    if (current+1) < container.childCount:
+                        nextPanel = container.child(current+1)
+                        nextObj = nextPanel.child(0)
+                        if nextObj.text.getNSelections() > 0:
+                            otherSelected = True
+                        else:
+                            displayedText = nextObj.text.getText(0, -1)
+                            if len(displayedText) == 0:
+                                current += 1
+                                morePossibleSelections = True
+
+        return [currentSelected, otherSelected]
+
     def _getTextSelections(self, obj, doubleClick):
         """Get all the text applicable text selections for the given object.
         If the user doubleclicked, look to see if there are any previous
@@ -98,7 +154,12 @@ class WhereAmI(where_am_I.WhereAmI):
         offsets within the text for the given object.
         """
 
-        [textContents, startOffset, endOffset] = self._getTextSelection(obj)
+        textContents = ""
+        startOffset = 0
+        endOffset = 0
+        if obj.text.getNSelections() > 0:
+            [textContents, startOffset, endOffset] = \
+                                            self._getTextSelection(obj)
 
         if doubleClick:
             # Unfortunately, Evolution doesn't use the FLOWS_FROM and 

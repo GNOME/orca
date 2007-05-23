@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import atspi
@@ -917,7 +917,12 @@ class WhereAmI:
         offsets within the text for the given object.
         """
 
-        [textContents, startOffset, endOffset] = self._getTextSelection(obj)
+        textContents = ""
+        startOffset = 0
+        endOffset = 0
+        if obj.text.getNSelections() > 0:
+            [textContents, startOffset, endOffset] = \
+                                            self._getTextSelection(obj)
 
         if doubleClick:
             current = obj
@@ -935,6 +940,11 @@ class WhereAmI:
                             textContents = newTextContents + textContents
                             current = prevObj
                             morePossibleSelections = True
+                        else:
+                            displayedText = prevObj.text.getText(0, -1)
+                            if len(displayedText) == 0:
+                                current = prevObj
+                                morePossibleSelections = True
                         break
 
             current = obj
@@ -952,9 +962,75 @@ class WhereAmI:
                             textContents += newTextContents
                             current = nextObj
                             morePossibleSelections = True
+                        else:
+                            displayedText = nextObj.text.getText(0, -1)
+                            if len(displayedText) == 0:
+                                current = nextObj
+                                morePossibleSelections = True
                         break
 
         return [textContents, startOffset, endOffset]
+
+    def _hasTextSelections(self, obj):
+        """Return an indication of whether this object has selected text.
+        Note that it's possible that this object has no text, but is part
+        of a selected text area. Because of this, we need to check the
+        objects on either side to see if they are none zero length and
+        have text selections.
+
+        Arguments:
+        - obj: the text object to start checking for selected text.
+
+        Returns: an indication of whether this object has selected text,
+        or adjacent text objects have selected text.
+        """
+
+        currentSelected = False
+        otherSelected = False
+        nSelections = obj.text.getNSelections()
+        if nSelections:
+            currentSelected = True
+        else:
+            otherSelected = False
+            displayedText = obj.text.getText(0, -1)
+            if len(displayedText) == 0:
+                current = obj
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    for relation in current.relations:
+                        if relation.getRelationType() == \
+                               atspi.Accessibility.RELATION_FLOWS_FROM:
+                            prevObj = atspi.Accessible.makeAccessible( \
+                                                      relation.getTarget(0))
+                            if prevObj.text.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = prevObj.text.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current = prevObj
+                                    morePossibleSelections = True
+                            break
+
+                current = obj
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    for relation in current.relations:
+                        if relation.getRelationType() == \
+                               atspi.Accessibility.RELATION_FLOWS_TO:
+                            nextObj = atspi.Accessible.makeAccessible( \
+                                                      relation.getTarget(0))
+                            if nextObj.text.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = nextObj.text.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current = nextObj
+                                    morePossibleSelections = True
+                            break
+
+        return [currentSelected, otherSelected]
 
     def _getTextContents(self, obj, doubleClick):
         """Returns utterences for text.
@@ -977,7 +1053,9 @@ class WhereAmI:
             "_getTextContents: caretOffset=%d, nSelections=%d" % \
             (caretOffset, nSelections))
 
-        if nSelections:
+        [current, other] = self._hasTextSelections(obj)
+        if (doubleClick and (current or other)) or \
+           (not doubleClick and current):
             selected = True
             [textContents, startOffset, endOffset] = \
                                   self._getTextSelections(obj, doubleClick)
