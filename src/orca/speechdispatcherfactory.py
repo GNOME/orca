@@ -90,6 +90,11 @@ class SpeechServer(speechserver.SpeechServer):
     def __init__(self, id, language=None):
         self._id = id
         self._default_language = language
+        self._acss_manipulators = (
+            (ACSS.RATE, self._set_rate),
+            (ACSS.AVERAGE_PITCH, self._set_pitch),
+            (ACSS.GAIN, self._set_volume),
+            )
         try:
             self._init()
         except ImportError:
@@ -110,12 +115,18 @@ class SpeechServer(speechserver.SpeechServer):
             from speechd import CallbackType
         except ImportError:
             raise SpeechDispatcherVersionError()
-        self._rate = 60
-        self._pitch = 0
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
         if self._default_language is not None:
             client.set_language(self._default_language)
-        client.set_rate(self._rate)
+        self._current_voice_properties = {}
+        self._apply_acss(settings.voices[settings.DEFAULT_VOICE])
+        punctuation_mode = {
+            settings.PUNCTUATION_STYLE_ALL:  speechd.PunctuationMode.ALL,
+            settings.PUNCTUATION_STYLE_MOST: speechd.PunctuationMode.SOME,
+            settings.PUNCTUATION_STYLE_SOME: speechd.PunctuationMode.SOME,
+            settings.PUNCTUATION_STYLE_NONE: speechd.PunctuationMode.NONE,
+            }[settings.verbalizePunctuationStyle]
+        client.set_punctuation(punctuation_mode)
         self._callback_type_map = {
             CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
             CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
@@ -123,7 +134,28 @@ class SpeechServer(speechserver.SpeechServer):
             #CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
 
+    def _set_rate(self, acss_rate):
+        rate = int(2 * max(0, min(99, acss_rate)) - 98)
+        self._client.set_rate(rate)
+
+    def _set_pitch(self, acss_pitch):
+        pitch = int(20 * max(0, min(9, acss_pitch)) - 90)
+        self._client.set_pitch(pitch)
+
+    def _set_volume(self, acss_volume):
+        volume = int(15 * max(0, min(9, acss_volume)) - 35)
+        self._client.set_volume(volume)
+
+    def _apply_acss(self, acss):
+        current = self._current_voice_properties
+        for property, method in self._acss_manipulators:
+            value = acss.get(property)
+            if value is not None and current.get(property) != value:
+                method(value)
+                current[property] = value
+        
     def _speak(self, text, acss, **kwargs):
+        self._apply_acss(acss)
         self._client.speak(text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
@@ -158,6 +190,26 @@ class SpeechServer(speechserver.SpeechServer):
 
     def _cancel(self):
         self._client.cancel()
+
+    def _change_default_speech_rate(self, decrease=False):
+        acss = settings.voices[settings.DEFAULT_VOICE]
+        delta = settings.speechRateDelta * (decrease and -1 or +1)
+        rate = acss[ACSS.RATE]
+        acss[ACSS.RATE] = max(0, min(99, rate + delta))
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Speech rate is now %d" % rate)
+        # Translators: This string announces speech rate change.
+        self.speak(decrease and _("slower.") or _("faster."), acss=acss)
+            
+    def _change_default_speech_pitch(self, decrease=False):
+        acss = settings.voices[settings.DEFAULT_VOICE]
+        delta = settings.speechPitchDelta * (decrease and -1 or +1)
+        pitch = acss[ACSS.AVERAGE_PITCH]
+        acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Speech pitch is now %d" % pitch)
+        # Translators: This string announces speech pitch change.
+        self.speak(decrease and _("lower.") or _("higher."), acss=acss)
 
     def getInfo(self):
         return ["Speech Dispatcher Server (%s)" % self._id, self._id]
@@ -194,28 +246,16 @@ class SpeechServer(speechserver.SpeechServer):
         self._client.char(character)
 
     def increaseSpeechRate(self, step=5):
-        newvalue = self._rate + step*2
-        if newvalue <= 100:
-            self._rate = newvalue
-            self._client.set_rate(newvalue)
+        self._change_default_speech_rate()
 
     def decreaseSpeechRate(self, step=5):
-        newvalue = self._rate - step*2
-        if newvalue >= -100:
-            self._rate = newvalue
-            self._client.set_rate(newvalue)
+        self._change_default_speech_rate(decrease=True)
 
     def increaseSpeechPitch(self, step=0.5):
-        newvalue = int(self._pitch + step*20)
-        if newvalue <= 100:
-            self._pitch = newvalue
-            self._client.set_pitch(newvalue)
-
+        self._change_default_speech_pitch()
+        
     def decreaseSpeechPitch(self, step=0.5):
-        newvalue = int(self._pitch - step*20)
-        if newvalue >= -100:
-            self._pitch = newvalue
-            self._client.set_pitch(newvalue)
+        self._change_default_speech_pitch(decrease=True)
 
     def stop(self):
         self._cancel()

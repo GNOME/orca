@@ -1,3 +1,8 @@
+2007-05-24  Tomas Cerha <via william.walker@sun.com>
+
+        * src/orca/speechdispatcherfactory.py: fix for bug 440294 - Voice
+        Properties in Speech Dispatcher backend.
+
 2007-05-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:
@@ -15,18 +20,18 @@
 2007-05-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:
-          Fix the translation problem mentioned in comment #51 of 
+          Fix the translation problem mentioned in comment #51 of
           bug #412200.
 
 2007-05-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gcalctool.py:
-          Fixed bug #440592 – Orca doesn't speak gcalctool's status bar 
+          Fixed bug #440592 – Orca doesn't speak gcalctool's status bar
           correctly.
 
 2007-05-22  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 439286 – Gecko.py's 
+        * src/orca/Gecko.py: Fix for Bug 439286 – Gecko.py's
         find{Next,Previous}Object fails when object is document_frame.
 
 2007-05-21  Rich Burridge <rich.burridge@sun.com>
