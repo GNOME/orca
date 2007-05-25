@@ -1732,7 +1732,7 @@ class Script(script.Script):
             character = self.getText(obj, startOffset, endOffset)
         if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.isupper():
+        elif character.decode("UTF-8").isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -1767,7 +1767,7 @@ class Script(script.Script):
                     #
                     speech.speak(_("blank"), voice, False)
         else:
-            speech.speak(character, voice, False)
+            speech.speak(chnames.getCharacterName(character), voice, False)
 
         self.speakTextSelectionState(obj, startOffset, endOffset)
 

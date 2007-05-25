@@ -1,3 +1,18 @@
+2007-05-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/chnames.py:
+          More work on bug #345399 – Key echo missing alpha numeric and 
+          punctuation keys. Included extended chnames dictionary entries
+          (thanks Joanie).
+
+          Testing for uppercase in sayCharacter() in default.py
+          now does "character.decode("UTF-8").isupper()" (thanks Will).
+
+          The sayCharacter() method now also calls
+          chnames.getCharacterName(character) rather than
+          just passing "character" to speech.speak() (thanks Will).
+
 2007-05-24  Tomas Cerha <via william.walker@sun.com>
 
         * src/orca/speechdispatcherfactory.py: fix for bug 440294 - Voice
