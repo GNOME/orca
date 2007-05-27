@@ -1,3 +1,11 @@
+2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: 
+        1. Fix for Bug 441476 Orca should attempt to detect erroneously-
+           marked list labels in Firefox.
+        2. Fix for Bug 441484 – Need to adjust FF form field navigation 
+           to accommodate FF changes.
+
 2007-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

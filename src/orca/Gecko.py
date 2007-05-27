@@ -648,7 +648,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
 
         label = self._script.getDisplayedLabel(obj)
-        if not label:
+        if not label and not self._script.inDocumentContent():
             label = obj.name
 
         if not already_focused and label:
@@ -2331,16 +2331,18 @@ class Script(default.Script):
             # Check to see if the official labels are valid.
             #
             bogus = False
-            if obj.role == rolenames.ROLE_COMBO_BOX and \
-               self.inDocumentContent():
+            if self.inDocumentContent and \
+               obj.role in [rolenames.ROLE_COMBO_BOX,
+                            rolenames.ROLE_LIST]:
                 # Bogus case #1:
-                # <label></label> surrounding the entire combo box which
-                # makes the entire combo box's contents serve as the label.
-                # We can identify this case because the child of the label
-                # is the combo box. See bug #428114.
+                # <label></label> surrounding the entire combo box/list which
+                # makes the entire combo box's/list's contents serve as the
+                # label. We can identify this case because the child of the
+                # label is the combo box/list. See bug #428114, #441476.
                 #
                 if label.childCount and \
-                   label.child(0).role == rolenames.ROLE_COMBO_BOX:
+                   label.child(0).role in [rolenames.ROLE_COMBO_BOX,
+                                           rolenames.ROLE_LIST]:
                     bogus = True
 
             if not bogus:
@@ -6081,6 +6083,11 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to bottom."))
         if obj:
+            # If the object is a list item, we need to give focus to
+            # the parent list.
+            #
+            if obj.role == rolenames.ROLE_LIST_ITEM:
+                obj = obj.parent
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -6093,8 +6100,16 @@ class Script(default.Script):
             speech.speak(_("No more form fields."))
 
     def goNextFormField(self, inputEvent):
+        # If the current object is a list item in a form field, we
+        # need to move to the end of this list before we search for
+        # the next list; otherwise we'll find the current list again.
+        #
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
+        if obj.role == rolenames.ROLE_LIST_ITEM and \
+           obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            obj = obj.parent.child(obj.parent.childCount - 1)
+
         found = False
         wrapped = False
         wrap = True
