@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-20 13:57+0200\n"
+"POT-Creation-Date: 2007-05-27 16:08+0200\n"
 "PO-Revision-Date: 2007-05-20 14:15+0200\n"
 "Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -47,7 +47,8 @@ msgstr "Keine Anwendung besitzt den Fokus."
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
 msgstr ""
-"Orca-Einstellungen für %s werden gestartet. Dies kann etwas Zeit in Anspruch nehmen."
+"Orca-Einstellungen für %s werden gestartet. Dies kann etwas Zeit in Anspruch "
+"nehmen."
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
@@ -246,7 +247,7 @@ msgstr "Bindestrich"
 #.
 #: ../src/orca/chnames.py:107
 msgid "en dash"
-msgstr "langezogener Bindestrich"
+msgstr "langgezogener Bindestrich"
 
 #. Translators: this is the spoken word for the underscore: _
 #.
@@ -349,7 +350,7 @@ msgstr "Cent"
 #.
 #: ../src/orca/chnames.py:177
 msgid "pound"
-msgstr "Gatter"
+msgstr "Pfund"
 
 #. Translators: this is the spoken word for the yen sign: ¥
 #. (U+00A5)
@@ -502,7 +503,7 @@ msgstr "multipliziert"
 #.
 #: ../src/orca/chnames.py:284
 msgid "divided by"
-msgstr "dividiert"
+msgstr "durch"
 
 #. Translators: this is the spoken word for the n tilde: ñ
 #. (U+00F1)
@@ -1232,7 +1233,7 @@ msgstr[1] "%d Leerzeichen"
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] "%d Tabulatoren"
+msgstr[0] "%d Tabulator"
 msgstr[1] "%d Tabulatoren"
 
 #. Translators: this represents the depth of a node in a tree
@@ -2055,7 +2056,7 @@ msgstr "Keine weiteren Formularfelder."
 #: ../src/orca/Gecko.py:5834
 #, python-format
 msgid "Row %d, column %d."
-msgstr "Zeile %d, Spalte %d"
+msgstr "Zeile %d, Spalte %d."
 
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
@@ -2923,7 +2924,7 @@ msgid ""
 "This will stop all speech output and screen magnification.\n"
 "\n"
 msgstr ""
-"<b><big>Quit Orca?</big></b>\n"
+"<b><big>Orca beenden?</big></b>\n"
 "\n"
 "Hierdurch wird jede Sprachausgabe und die Bildschirmlupe gestoppt.\n"
 "\n"
@@ -3120,7 +3121,7 @@ msgstr "_Quellanzeige:"
 
 #: ../src/orca/orca-setup.glade.h:52
 msgid "Say All B_y:"
-msgstr "Alles _druch sprechen:"
+msgstr "Alles _durch sprechen:"
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid "Scale _factor:"
@@ -3264,7 +3265,7 @@ msgstr ""
 "Gustav, h : Heinrich, i : Ida, j : Julius, k : Kaufmann, l : Ludwig, m : "
 "Martha, n : Nordpol, o : Otto, p : Paula, q : Quelle, r : Richard, s : "
 "Siegfried, t : Theodor, u : Ulrich, v : Viktor, w : Wilhelm, x : Xantippe, "
-"y : Ypsilon, z : Zeppelin"
+"y : Ypsilon, z : Zeppelin, ä : Ärger, ö : Ökonom, ü : Übermut, ß : Eszett"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "ASAP"
@@ -4867,7 +4868,7 @@ msgstr "Spalte %d"
 #.
 #: ../src/orca/scripts/Evolution.py:81
 msgid "Read"
-msgstr "Lesen"
+msgstr "gelesen"
 
 #. Translators: short braille for the rolename of a calendar view.
 #.
@@ -5270,7 +5271,7 @@ msgstr "Zellenkoordinaten in Tabellenkalkulation vorlesen"
 #.
 #: ../src/orca/scripts/StarOffice.py:1116
 msgid "Calc"
-msgstr "Berechnen"
+msgstr "Tabellenkalkulation"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
@@ -5460,7 +5461,7 @@ msgstr "Bon Echo"
 #.
 #: ../src/orca/settings.py:640
 msgid "Minefield"
-msgstr "Minen"
+msgstr "Minefield"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
@@ -5569,7 +5570,7 @@ msgstr "Symbolleiste"
 #: ../src/orca/where_am_I.py:606
 #, python-format
 msgid "%d of %d items selected"
-msgstr "%d von %d Objekte ausgewählt"
+msgstr "%d von %d Objekten ausgewählt"
 
 #. Translators: this is an item in a list.
 #.
