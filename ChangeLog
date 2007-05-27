@@ -1,3 +1,8 @@
+2007-05-27  Mario Lang <via william.walker@sun.com	>
+
+        * src/orca/braille.py: fix for bug 441640 - Rename
+	processCursorKey to processRoutingKey (Thanks Mario!).
+
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: 

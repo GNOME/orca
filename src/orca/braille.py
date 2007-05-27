@@ -35,7 +35,6 @@ import logging
 log = logging.getLogger("braille")
 
 import signal
-import threading
 
 import atspi
 
@@ -286,9 +285,9 @@ class Region:
 
         self.cursorOffset = cursorOffset
 
-    def processCursorKey(self, offset):
-        """Processes a cursor key press on this Component.  The offset is
-        0-based, where 0 represents the leftmost character of string
+    def processRoutingKey(self, offset):
+        """Processes a cursor routing key press on this Component.  The offset
+        is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
         pass
@@ -312,9 +311,9 @@ class Component(Region):
         Region.__init__(self, string, cursorOffset)
         self.accessible = accessible
 
-    def processCursorKey(self, offset):
-        """Processes a cursor key press on this Component.  The offset is
-        0-based, where 0 represents the leftmost character of string
+    def processRoutingKey(self, offset):
+        """Processes a cursor routing key press on this Component.  The offset
+        is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
@@ -329,7 +328,7 @@ class Component(Region):
             # routing key.]]]
             #
             debug.println(debug.LEVEL_FINEST,
-                          "braille.Component.processCursorKey: no action")
+                          "braille.Component.processRoutingKey: no action")
             try:
                 eventsynthesizer.clickObject(self.accessible, 1)
             except:
@@ -405,11 +404,11 @@ class Text(Region):
 
         return True
 
-    def processCursorKey(self, offset):
-        """Processes a cursor key press on this Component.  The offset is
-        0-based, where 0 represents the leftmost character of text associated
-        with this region.  Note that the zeroeth character may have been
-        scrolled off the display."""
+    def processRoutingKey(self, offset):
+        """Processes a cursor routing key press on this Component.  The offset
+        is 0-based, where 0 represents the leftmost character of text
+        associated with this region.  Note that the zeroeth character may have
+        been scrolled off the display."""
 
         if self.label:
             offset = offset - len(self.label.decode("UTF-8")) - 1
@@ -458,11 +457,11 @@ class ReviewText(Region):
         self.lineOffset = lineOffset
         self.zone = zone
 
-    def processCursorKey(self, offset):
-        """Processes a cursor key press on this Component.  The offset is
-        0-based, where 0 represents the leftmost character of text associated
-        with this region.  Note that the zeroeth character may have been
-        scrolled off the display."""
+    def processRoutingKey(self, offset):
+        """Processes a cursor routing key press on this Component.  The offset
+        is 0-based, where 0 represents the leftmost character of text
+        associated with this region.  Note that the zeroeth character may have
+        been scrolled off the display."""
 
         newCaretOffset = self.lineOffset + offset
         self.accessible.text.setCaretOffset(newCaretOffset)
@@ -534,15 +533,15 @@ class Line:
         else:
             return [region, offset - pos]
 
-    def processCursorKey(self, offset):
-        """Processes a cursor key press on this Component.  The offset is
-        0-based, where 0 represents the leftmost character of string
+    def processRoutingKey(self, offset):
+        """Processes a cursor routing key press on this Component.  The offset
+        is 0-based, where 0 represents the leftmost character of string
         associated with this line.  Note that the zeroeth character may have
         been scrolled off the display."""
 
         [region, regionOffset] = self.getRegionAtOffset(offset)
         if region:
-            region.processCursorKey(regionOffset)
+            region.processRoutingKey(regionOffset)
 
 def getRegionAtCell(cell):
     """Given a 1-based cell offset, return the braille region
@@ -935,7 +934,7 @@ def _processBrailleEvent(command):
         if len(_lines) > 0:
             cursor = (command - 0x100) + _viewport[0]
             lineNum = _viewport[1]
-            _lines[lineNum].processCursorKey(cursor)
+            _lines[lineNum].processRoutingKey(cursor)
             consumed = True
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
