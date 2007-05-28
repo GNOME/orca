@@ -593,7 +593,7 @@ chnames[u'\u2021'] = _("double dagger")
 
 # Translators: this is the spoken word for the character '•' (U+2022)
 #
-chnames[u'\u0022'] = _("bullet")
+chnames[u'\u2022'] = _("bullet")
 
 # Translators: this is the spoken word for the character '‣' (U+2023)
 #
