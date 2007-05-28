@@ -609,7 +609,7 @@ chnames[u'\u2032'] = _("prime")
 
 # Translators: this is the spoken word for the character '″' (U+2033)
 #
-chnames[u'\u0033'] = _("double prime")
+chnames[u'\u2033'] = _("double prime")
 
 # Translators: this is the spoken word for the character '⁃' (U+2043)
 #
