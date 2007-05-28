@@ -4097,6 +4097,7 @@ class Script(default.Script):
         isField = containingForm and \
                   obj.role != rolenames.ROLE_LINK and \
                   obj.role != rolenames.ROLE_MENU_ITEM and \
+                  obj.role != rolenames.ROLE_LIST_ITEM and \
                   obj.role != rolenames.ROLE_UNKNOWN and \
                   obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) and \
                   obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
@@ -6093,11 +6094,6 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to bottom."))
         if obj:
-            # If the object is a list item, we need to give focus to
-            # the parent list.
-            #
-            if obj.role == rolenames.ROLE_LIST_ITEM:
-                obj = obj.parent
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
@@ -6110,20 +6106,8 @@ class Script(default.Script):
             speech.speak(_("No more form fields."))
 
     def goNextFormField(self, inputEvent):
-        # If the current object is a list item in a form field, or
-        # is a list itself, we need to move to the end of this list
-        # before we search for the next list; otherwise we'll find
-        # the current list again.
-        #
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
-        if obj.role == rolenames.ROLE_LIST_ITEM and \
-           obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
-            obj = obj.parent.child(obj.parent.childCount - 1)
-        elif obj.role == rolenames.ROLE_LIST and \
-             obj.state.count(atspi.Accessibility.STATE_FOCUSED):
-            obj = obj.child(obj.childCount - 1)
-
         found = False
         wrapped = False
         wrap = True

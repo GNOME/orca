@@ -1,3 +1,8 @@
+2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Better solution for Bug 441484 – Need to
+        adjust FF form field navigation to accommodate FF changes.
+
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: 
