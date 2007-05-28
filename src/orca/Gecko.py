@@ -2340,13 +2340,23 @@ class Script(default.Script):
                 # label. We can identify this case because the child of the
                 # label is the combo box/list. See bug #428114, #441476.
                 #
-                if label.childCount and \
-                   label.child(0).role in [rolenames.ROLE_COMBO_BOX,
-                                           rolenames.ROLE_LIST]:
-                    bogus = True
+                if label.childCount:
+                    bogus = (label.child(0).role == obj.role)
 
             if not bogus:
-                string = self.appendString(string, self.getDisplayedText(label))
+                # Bogus case #2:
+                # <label></label> surrounds not just the text serving as the
+                # label, but whitespace characters as well (e.g. the text
+                # serving as the label is on its own line within the HTML).
+                # Because of the Mozilla whitespace bug, these characters
+                # will become part of the label which will cause the label
+                # and name to no longer match and Orca to seemingly repeat
+                # the label.  Therefore, strip out surrounding whitespace.
+                # See bug #441610 and
+                # https://bugzilla.mozilla.org/show_bug.cgi?id=348901
+                #
+                displayedText = self.getDisplayedText(label)
+                string = self.appendString(string, displayedText.strip())
 
         return string
 
@@ -2390,7 +2400,7 @@ class Script(default.Script):
            self.inDocumentContent(event.source):
             self.caretContext = [event.source, event.detail1]
             return
-        
+
         # Possibility #3: We're using the Find toolbar.  In this case
         # we want to update the caret context.  If the user has opted
         # to have results spoken during the find (i.e., while still
@@ -2760,7 +2770,7 @@ class Script(default.Script):
                     # the list on the left.  Ignore this.
                     #
                     return
-                
+
                 elif event.detail1:
                     # A detail1=1 means the page has started loading.
                     #
@@ -4469,7 +4479,7 @@ class Script(default.Script):
 
         if previousObj.role == rolenames.ROLE_DOCUMENT_FRAME:
             previousObj = None
-    
+
         return previousObj
 
     def findNextObject(self, obj):
@@ -4919,7 +4929,7 @@ class Script(default.Script):
 
             # We only want to announce the heading role and level if we
             # have found the final item in that heading, or if that
-            # heading contains no children.  
+            # heading contains no children.
             #
             containingHeading = \
                 self.getContainingRole(obj, rolenames.ROLE_HEADING)
@@ -6100,15 +6110,19 @@ class Script(default.Script):
             speech.speak(_("No more form fields."))
 
     def goNextFormField(self, inputEvent):
-        # If the current object is a list item in a form field, we
-        # need to move to the end of this list before we search for
-        # the next list; otherwise we'll find the current list again.
+        # If the current object is a list item in a form field, or
+        # is a list itself, we need to move to the end of this list
+        # before we search for the next list; otherwise we'll find
+        # the current list again.
         #
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
         if obj.role == rolenames.ROLE_LIST_ITEM and \
            obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.parent.child(obj.parent.childCount - 1)
+        elif obj.role == rolenames.ROLE_LIST and \
+             obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            obj = obj.child(obj.childCount - 1)
 
         found = False
         wrapped = False
