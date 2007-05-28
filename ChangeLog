@@ -1,5 +1,10 @@
 2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: Fix for Bug 440079 – Orca cannot arrow past
+        certain combo boxes in Firefox
+
+2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/Gecko.py: Better solution for Bug 441484 – Need to
         adjust FF form field navigation to accommodate FF changes.
 

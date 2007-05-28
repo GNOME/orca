@@ -2448,6 +2448,19 @@ class Script(default.Script):
 
             return
 
+        # If Orca is controlling the caret, it is possible to arrow into
+        # a menu item inside of a combo box.  This is something that is
+        # not possible in Firefox caret browsing mode and seems to confuse
+        # Firefox sufficiently that it wants to generate a caret-moved
+        # event for *something*:  might be the menu item, might be a nearby
+        # link, might be something else.  If it's the menu item, we double
+        # speak it.  If it's something else, we don't want the locusOfFocus
+        # to be set there.  So for now, let's just ignore these.
+        #
+        if orca_state.locusOfFocus.role == rolenames.ROLE_MENU_ITEM \
+           and self.inDocumentContent(event.source):
+            return
+
         # If {overflow:hidden} is in the document's style sheet, we seem
         # to get an additional item in the hierarchy:  An object of role
         # ROLE_UNKNOWN which is the single child of the document frame and
@@ -3533,18 +3546,6 @@ class Script(default.Script):
             #
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
-        elif obj and (obj.role == rolenames.ROLE_MENU_ITEM):
-            # We'll let Firefox handle the navigation of combo boxes and
-            # lists.
-            #
-            parent = obj.parent
-            if parent:
-                if parent.role == rolenames.ROLE_LIST or \
-                   (parent.parent and \
-                    parent.parent.role == rolenames.ROLE_COMBO_BOX):
-                    weHandleIt = \
-                        keyboardEvent.event_string in ["Left", "Right"]
-
         elif obj and obj.role in [rolenames.ROLE_LIST,
                                   rolenames.ROLE_LIST_ITEM]:
             # We'll let Firefox handle the navigation of lists in forms.
@@ -3676,7 +3677,14 @@ class Script(default.Script):
         """
         if not obj:
             return [0, 0, 0, 0]
-        if obj.text:
+
+        # The menu items that are children of combo boxes have unique
+        # extents based on their physical position, even though they are
+        # not showing.  Therefore, if the object in question is a menu
+        # item, get the object extents rather than the range extents for
+        # the text.
+        #
+        if obj.text and obj.role != rolenames.ROLE_MENU_ITEM:
             extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
         else:
             ext = obj.extents
@@ -4827,7 +4835,16 @@ class Script(default.Script):
             # fixed at some point, but we just ignore it for now.
             #
             if extents != (0, 0, 0, 0):
-                if not self.onSameLine(extents, lineExtents):
+                if obj.role == rolenames.ROLE_MENU_ITEM \
+                   and not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+                    # [[[TODO: JD - HACK. Items within combo boxes lack
+                    # a STATE_SHOWING whether they are showing or not.
+                    # If the menu item within the combo box is not focused
+                    # it is not showing. And if it's not showing, we don't
+                    # want to append it to contents.]]]
+                    #
+                    pass
+                elif not self.onSameLine(extents, lineExtents):
                     break
                 elif (lastObj == obj) and len(contents):
                     contents[-1][2] = characterOffset + 1
