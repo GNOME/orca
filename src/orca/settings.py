@@ -653,8 +653,3 @@ setScriptMapping(re.compile(_('bug-buddy')), "gnome_segv2")
 # the underlying terminal support in gnome-terminal.
 #
 setScriptMapping(re.compile(_('vte')), "gnome-terminal")
-
-# Translators: see the regular expression note above.  This is for
-# the time-admin application.
-#
-setScriptMapping(re.compile(_('time-admin')), "users-admin")

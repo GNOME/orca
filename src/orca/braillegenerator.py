@@ -1086,6 +1086,40 @@ class BrailleGenerator:
 
         regions = []
 
+        # If this table cell has 2 children and one of them has a
+        # 'toggle' action and the other does not, then present this
+        # as a checkbox where:
+        # 1) we get the checked state from the cell with the 'toggle' action
+        # 2) we get the label from the other cell.
+        # See Orca bug #376015 for more details.
+        #
+        if obj.childCount == 2:
+            cellOrder = []
+            hasToggle = [ False, False ]
+            for i in range(0, obj.childCount):
+                action = obj.child(i).action
+                if action:
+                    for j in range(0, action.nActions):
+                        if action.getName(j) == "toggle":
+                            hasToggle[i] = True
+                            break
+
+            if hasToggle[0] and not hasToggle[1]:
+                cellOrder = [ 0, 1 ]
+            elif not hasToggle[0] and hasToggle[1]:
+                cellOrder = [ 1, 0 ]
+            if cellOrder:
+                for i in cellOrder:
+                    [cellRegions, focusRegion] = \
+                            self._getBrailleRegionsForTableCell(obj.child(i))
+                    if len(regions):
+                        regions.append(braille.Region(" "))
+                    else:
+                        cellFocusedRegion = focusRegion
+                    regions.append(cellRegions[0])
+                regions = [regions, cellFocusedRegion]
+                return regions
+
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
         # bunch of stuff we can do here, such as check the EXPANDABLE
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
@@ -1192,7 +1226,7 @@ class BrailleGenerator:
                             self._getBrailleRegionsForTableCell(cell)
                         if len(rowRegions):
                             rowRegions.append(braille.Region(" "))
-                        rowRegions.append(cellRegions[0])
+                        rowRegions.extend(cellRegions)
                         if i == column:
                             focusRowRegion = cellRegions[0]
                 regions = [rowRegions, focusRowRegion]

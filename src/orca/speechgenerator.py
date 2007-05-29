@@ -1233,6 +1233,41 @@ class SpeechGenerator:
 
         utterances = []
 
+        # If this table cell has 2 children and one of them has a 
+        # 'toggle' action and the other does not, then present this 
+        # as a checkbox where:
+        # 1) we get the checked state from the cell with the 'toggle' action
+        # 2) we get the label from the other cell.
+        # See Orca bug #376015 for more details.
+        #
+        if obj.childCount == 2:
+            cellOrder = []
+            hasToggle = [ False, False ]
+            for i in range(0, obj.childCount):
+                action = obj.child(i).action
+                if action:
+                    for j in range(0, action.nActions):
+                        if action.getName(j) == "toggle":
+                            hasToggle[i] = True
+                            break
+
+            if hasToggle[0] and not hasToggle[1]:
+                cellOrder = [ 1, 0 ] 
+            elif not hasToggle[0] and hasToggle[1]:
+                cellOrder = [ 0, 1 ]
+            if cellOrder:
+                for i in cellOrder:
+                    # Don't speak the label if just the checkbox state has
+                    # changed.
+                    #
+                    if already_focused and not hasToggle[i]:
+                        pass
+                    else:
+                        utterances.extend( \
+                            self._getSpeechForTableCell(obj.child(i),
+                                                              already_focused))
+                return utterances
+
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
         # bunch of stuff we can do here, such as check the EXPANDABLE
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
