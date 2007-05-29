@@ -99,7 +99,7 @@ chnames["-"] = _("dash")
 
 # Translators: this is the spoken word for the character '.' (U+002e)
 #
-chnames["."] = _("period")
+chnames["."] = _("dot")
 
 # Translators: this is the spoken word for the character '/' (U+002f)
 #

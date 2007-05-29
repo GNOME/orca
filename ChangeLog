@@ -1,3 +1,9 @@
+2007-05-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/chnames.py:
+          More work on bug #345399 (comment #22). chnames entry for "."
+          changed from "period" back to "dot".
+
 2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for Bug 440079 – Orca cannot arrow past
