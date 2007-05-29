@@ -1,3 +1,9 @@
+2007-05-29  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: fix for bug 423435 - Orca is too chatty when
+        loading a page in Firefox.  The Gecko developers changed the
+        behavior on us and we needed to adapt.
+
 2007-05-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py:
@@ -32,15 +38,15 @@
 
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: 
-        1. More work on Bug 441484 – Need to adjust FF form field 
+        * src/orca/Gecko.py:
+        1. More work on Bug 441484 – Need to adjust FF form field
            navigation to accommodate FF changes.
-        2. Fix for Bug 441610 – Orca should identify bogus/redundant 
+        2. Fix for Bug 441610 – Orca should identify bogus/redundant
            checkbox labels in Firefox.
 
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
-        *  src/orca/chnames.py: Bug 441723 – Orca should not speak 
+        *  src/orca/chnames.py: Bug 441723 – Orca should not speak
         "double prime" for the number 3
 
 2007-05-27  Mario Lang <via william.walker@sun.com	>
@@ -50,17 +56,17 @@
 
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: 
+        * src/orca/Gecko.py:
         1. Fix for Bug 441476 Orca should attempt to detect erroneously-
            marked list labels in Firefox.
-        2. Fix for Bug 441484 – Need to adjust FF form field navigation 
+        2. Fix for Bug 441484 – Need to adjust FF form field navigation
            to accommodate FF changes.
 
 2007-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
           src/orca/chnames.py:
-          More work on bug #345399 – Key echo missing alpha numeric and 
+          More work on bug #345399 – Key echo missing alpha numeric and
           punctuation keys. Included extended chnames dictionary entries
           (thanks Joanie).
 

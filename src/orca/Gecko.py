@@ -2776,7 +2776,9 @@ class Script(default.Script):
         if event.type == "object:state-changed:busy":
             if event.source \
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
-                if orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM \
+                if orca_state.locusOfFocus \
+                    and (orca_state.locusOfFocus.role \
+                         == rolenames.ROLE_LIST_ITEM) \
                    and not self.inDocumentContent(orca_state.locusOfFocus):
                     # The event is for the changing contents of the help
                     # frame as the user navigates from topic to topic in
@@ -2794,31 +2796,11 @@ class Script(default.Script):
                     message = _("Loading.  Please wait.")
 
                 elif event.source.name:
-                    # Seems like a document can go between busy and not
-                    # busy while it is loading.  So...we wait for
-                    # document:load-complete and document:load-stopped
-                    # events to tell us when loading is done.  After
-                    # that event, we will get a state-changed:busy event
-                    # with a detail1=0 to let us know things are done.
-                    #
-                    if self._loadingDocumentContent:
-                        return
-
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading %s.") % event.source.name
 
                 else:
-                    # Seems like a document can go between busy and not
-                    # busy while it is loading.  So...we wait for
-                    # document:load-complete and document:load-stopped
-                    # events to tell us when loading is done.  After
-                    # that event, we will get a state-changed:busy event
-                    # with a detail1=0 to let us know things are done.
-                    #
-                    if self._loadingDocumentContent:
-                        return
-
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading.")
