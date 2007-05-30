@@ -49,12 +49,6 @@ KEYEVENT: type=1
           event_string=(Down)
           is_text=True
           time=1175705776.283731
-KEYEVENT: type=0
-          hw_code=9
-          modifiers=0
-          event_string=(Escape)
-          is_text=True
-          time=1175705804.364485
 
 # DATE=12:46:49 PM 04/25/2007 PDT
 # SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
@@ -72,3 +66,6 @@ KEYEVENT: type=1
           event_string=(KP_Enter)
           is_text=True
           time=1177530412.513472
+
+WAIT: wait_time=10
+

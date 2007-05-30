@@ -234,3 +234,5 @@ KEYEVENT: type=1
           event_string=(KP_Enter)
           is_text=True
           time=1177530412.513472
+
+WAIT wait_time=10

@@ -1,3 +1,38 @@
+2007-05-29  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * Fix for bug 412837 - Need a single number to summarize 
+	test code coverage: 
+	test/harness/trace2html-coverage-patch.txt 
+	test/keystrokes/general-orca/yelp.keys,
+	test/keystrokes/swriter/text-attributes.keys,
+	test/keystrokes/scalc/F6-navigation.keys,
+	test/keystrokes/scalc/whereAmI-calc.keys,
+	test/keystrokes/gtk-demo/whereAmI-checkbox.keys,
+	test/keystrokes/gtk-demo/whereAmI-treetable.keys,
+	test/keystrokes/gtk-demo/whereAmI-combobox.keys,
+	test/keystrokes/gtk-demo/whereAmI-radiobuttons.keys,
+	test/keystrokes/gtk-demo/whereAmI-tablist.keys,
+	test/keystrokes/gtk-demo/whereAmI-menu.keys,
+	test/keystrokes/gtk-demo/whereAmI-tabbedpane.keys,
+	test/keystrokes/gedit/whereAmI-text.keys,
+	test/keystrokes/gedit/alphanum-modifiers.keys,
+	test/keystrokes/gedit/whereAmI-menus.keys,
+	test/keystrokes/gedit/lock-key-echo.keys,
+	test/keystrokes/gedit/say-all-dialog.keys,
+	test/keystrokes/gedit/action-key-delete.keys,
+	test/keystrokes/gnome-terminal/whereAmI-checkbox.keys,
+	test/keystrokes/gnome-terminal/whereAmI-combobox.keys,
+	test/keystrokes/gnome-terminal/whereAmI-radiobutton.keys,
+	test/keystrokes/gnome-terminal/whereAmI-pushbutton.keys,
+	test/keystrokes/gnome-terminal/swriter-say-all.keys,
+	test/keystrokes/gnome-terminal/whereAmI-slider.keys,
+	test/keystrokes/gnome-terminal/whereAmI.keys
+
+	Added Will's patch for trace2html which generates a single
+	number to summarize test code coverage.
+
+	Fixed miscilaneous keystroke file problems.
+	
 2007-05-29  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: fix for bug 423435 - Orca is too chatty when
