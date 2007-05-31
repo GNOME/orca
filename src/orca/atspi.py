@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import signal
@@ -595,6 +595,12 @@ class Accessible:
         Arguments:
         - acc: the AT-SPI Accessibility_Accessible
         """
+
+        # Just a little sanity check in case someone sent us a
+        # Python Accessible instance instead of a CORBA object.
+        #
+        if isinstance(acc, Accessible):
+            acc = acc._acc
 
         if acc and Accessible._cache.has_key(acc):
             try:

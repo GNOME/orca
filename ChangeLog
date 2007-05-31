@@ -1,5 +1,11 @@
 2007-05-31  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: in deleteAccessible, convert object to
+	the CORBA object if someone accidentally passed in one of
+	our atspi.py:Accessible objects.
+
+2007-05-31  Willie Walker <william.walker@sun.com>
+
         * src/orca/Gecko.py: fix for bug 437753 - Orca should speak and
         braille the current locus of focus after a page is loaded in
         firefox and then start reading the page.
