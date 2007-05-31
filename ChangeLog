@@ -1,3 +1,9 @@
+2007-05-31  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: fix for bug 437753 - Orca should speak and
+        braille the current locus of focus after a page is loaded in
+        firefox and then start reading the page.
+
 2007-05-31  Mario Lang <via william.walker@sun.com>
 
         * src/orca/input_event.py, src/orca/script.py,

@@ -2117,7 +2117,6 @@ class Script(default.Script):
         prefs.writelines("orca.Gecko.minimumFindLength = %s\n" % value)
         minimumFindLength = value
 
-
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
 
@@ -2398,7 +2397,7 @@ class Script(default.Script):
         if orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM and \
            not self.inDocumentContent(orca_state.locusOfFocus) and \
            self.inDocumentContent(event.source):
-            self.caretContext = [event.source, event.detail1]
+            self.setCaretContext(event.source, event.detail1)
             return
 
         # Possibility #3: We're using the Find toolbar.  In this case
@@ -2412,7 +2411,7 @@ class Script(default.Script):
            orca_state.locusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR \
            and self.inDocumentContent(event.source):
             [obj, offset] = self.getCaretContext()
-            self.caretContext = [event.source, event.detail1]
+            self.setCaretContext(event.source, event.detail1)
 
             origExtents = self.getExtents(obj, offset - 1, offset)
             newExtents = self.getExtents(event.source,
@@ -2478,9 +2477,16 @@ class Script(default.Script):
             return
 
         # Otherwise, we'll just assume that the thing in which the caret
-        # moved is the locus of focus.
+        # moved is the locus of focus.  We'll only do this if the current
+        # object that's the locus of focus no longer has focus, though.
+        # The reason for this is that we can indeed get caret-moved events
+        # from things that really have nothing to do with the locus of
+        # focus.
         #
-        orca.setLocusOfFocus(event, event.source, False)
+        if orca_state.locusOfFocus \
+            and not orca_state.locusOfFocus.state.count(
+                        atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
 
         # We need to handle HTML content differently because we do our
         # own navigation and we also handle the
@@ -2495,27 +2501,17 @@ class Script(default.Script):
             default.Script.onCaretMoved(self, event)
             return
 
-        #print "HERE: caretContext=", self.caretContext
+        #print "HERE: caretContext=", self.getCaretContext()
         #print "            source=", event.source
         #print "       caretOffset=", event.source.text.caretOffset
         #print "    characterCount=", event.source.text.characterCount
 
+        [obj, characterOffset] = \
+            self.findFirstCaretContext(event.source,
+                                       event.source.text.caretOffset)
+        self.setCaretContext(obj, characterOffset)
 
-        self.caretContext = self.findFirstCaretContext(\
-            event.source,
-            event.source.text.caretOffset)
-        [obj, characterOffset] = self.caretContext
-
-        # Save where we are in this particular document frame.
-        # We do this because the user might have several URLs
-        # open in several different tabs, and we keep track of
-        # where the caret is for each documentFrame.
-        #
-        documentFrame = self.getDocumentFrame()
-        if documentFrame:
-            self._documentFrameCaretContext[documentFrame] = self.caretContext
-
-        #print "       ended up at=", self.caretContext
+        #print "       ended up at=", self.getCaretContext()
 
         # If the user presses left or right, we'll set the target
         # column for up/down navigation by line.  The goal here is
@@ -2530,7 +2526,7 @@ class Script(default.Script):
             string = orca_state.lastNonModifierKeyEvent.event_string
             mods = orca_state.lastInputEvent.modifiers
             if (string == "Left") or (string == "Right"):
-                [obj, characterOffset] = self.caretContext
+                [obj, characterOffset] = self.getCaretContext()
                 self.targetCharacterExtents = \
                     self.getExtents(obj,
                                     characterOffset,
@@ -2649,7 +2645,7 @@ class Script(default.Script):
         if event.source \
             and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
             try:
-                [obj, characterOffset] = self.caretContext
+                [obj, characterOffset] = self.getCaretContext()
                 orca.setLocusOfFocus(event, obj)
                 return
             except:
@@ -2776,6 +2772,7 @@ class Script(default.Script):
         if event.type == "object:state-changed:busy":
             if event.source \
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
+                finishedLoading = False
                 if orca_state.locusOfFocus \
                     and (orca_state.locusOfFocus.role \
                          == rolenames.ROLE_LIST_ITEM) \
@@ -2799,15 +2796,54 @@ class Script(default.Script):
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading %s.") % event.source.name
+                    finishedLoading = True
 
                 else:
                     # Translators: this is in reference to loading a web page.
                     #
                     message = _("Finished loading.")
+                    finishedLoading = True
 
                 braille.displayMessage(message)
                 speech.stop()
                 speech.speak(message)
+
+                if finishedLoading:
+                    # We want to present something regarding where the
+                    # caret is in the newly loaded page.  If the caret
+                    # isn't anywhere, we will set it to the top of the
+                    # page.
+                    #
+                    [obj, characterOffset] = self.getCaretContext()
+                    if not obj:
+                        [obj, characterOffset] = self.findNextCaretInOrder()
+                        self.setCaretContext(obj, characterOffset)
+                    if not obj:
+                        return
+
+                    # When a document is loaded, we are going to
+                    # assume that the newly loaded document frame has
+                    # focus.  Gecko doesn't seem to give us a focus
+                    # event for this, though, so we will force the
+                    # locus of focus here.
+                    #
+                    orca.setLocusOfFocus(event, obj, False)
+
+                    # For braille, we just show the current line
+                    # containing the caret.  For speech, however, we
+                    # will start a Say All operation if the caret is
+                    # in an uneditable area (e.g., it's not in a text
+                    # entry area such as Google's search text entry).
+                    # Otherwise, we'll just speak the line that the
+                    # caret is on.
+                    #
+                    self.updateBraille(obj)
+                    if obj.state.count(atspi.Accessibility.STATE_EDITABLE):
+                        self.speakContents(
+                            self.getObjectContentsAtOffset(obj,
+                                                           characterOffset))
+                    elif settings.enableSpeech:
+                        self.sayAll(None)
 
             return
 
@@ -2824,18 +2860,8 @@ class Script(default.Script):
         documentFrame = None
         if (event.source.role == rolenames.ROLE_FRAME) \
             and event.source.state.count(atspi.Accessibility.STATE_ACTIVE):
-            documentFrame = self.getDocumentFrame()
-            try:
-                self.caretContext = self._documentFrameCaretContext[\
-                    documentFrame]
-            except:
-                self.caretContext = self.findNextCaretInOrder(documentFrame)
-                self._documentFrameCaretContext[documentFrame] = \
-                    self.caretContext
 
-            #print "HERE", documentFrame.name
-            #print "    ", documentFrame
-            #print "    ", documentFrame.parent
+            documentFrame = self.getDocumentFrame()
 
             # If the document frame is busy loading, we won't present
             # anything to prevent Orca from being too chatty.
@@ -2850,16 +2876,22 @@ class Script(default.Script):
                 % (documentFrame.name,
                    rolenames.rolenames[rolenames.ROLE_PAGE_TAB].speech))
 
-            # [[[TODO: WDW - commented this out.  It is an attempt to
-            # read the line at the current character offset for the
-            # window, but it doesn't seem to be reliable.]]]
+            if not self.inDocumentContent():
+                return
+
+            [obj, characterOffset] = self.getCaretContext()
+            if not obj:
+                [obj, characterOffset] = self.findNextCaretInOrder()
+                self.setCaretContext(obj, characterOffset)
+            if not obj:
+                return
+
+            # When a document tab is tabbed to, we will just present the
+            # line where the caret currently is.
             #
-            #if self.caretContext:
-            #    [obj, characterOffset] = self.caretContext
-            #    self.updateBraille(obj)
-            #    self.speakContents(
-            #        self.getLineContentsAtOffset(obj,
-            #                                     characterOffset))
+            self.updateBraille(obj)
+            self.speakContents(
+                self.getLineContentsAtOffset(obj, characterOffset))
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
@@ -2917,8 +2949,9 @@ class Script(default.Script):
         # they're the same, then the oldLocusOfFocus and the newLocusOfFocus
         # are the same object.
         #
-        if self.isFormField(newLocusOfFocus) and \
-           oldLocusOfFocus.role == newLocusOfFocus.role:
+        if oldLocusOfFocus and newLocusOfFocus \
+           and (oldLocusOfFocus.role == newLocusOfFocus.role) \
+           and self.isFormField(newLocusOfFocus):
             oldExtents = oldLocusOfFocus.component.getExtents(0)
             newExtents = newLocusOfFocus.component.getExtents(0)
             if oldExtents.x == newExtents.x and \
@@ -2954,8 +2987,10 @@ class Script(default.Script):
 
             else:
                 caretOffset = 0
-            self.caretContext = self.findFirstCaretContext(newLocusOfFocus,
-                                                           caretOffset)
+            [obj, characterOffset] = \
+                  self.findFirstCaretContext(newLocusOfFocus, caretOffset)
+            self.setCaretContext(obj, characterOffset)
+
         # If we've just landed in the Find toolbar, reset
         # self.madeFindAnnouncement.
         #
@@ -3000,7 +3035,7 @@ class Script(default.Script):
         #    # event or some other event.  So...we don't anything.
         #    #
         #    try:
-        #        [obj, characterOffset] = self.caretContext
+        #        [obj, characterOffset] = self.getCaretContext()
         #        if newLocusOfFocus == obj:
         #            return
         #    except:
@@ -3012,7 +3047,7 @@ class Script(default.Script):
                                            newLocusOfFocus)
 
     def updateBraille(self, obj, extraRegion=None):
-        """Updates the braille display to show the give object.
+        """Updates the braille display to show the given object.
 
         Arguments:
         - obj: the Accessible
@@ -3309,7 +3344,7 @@ class Script(default.Script):
         contents = []
         lastObj = None
         lastExtents = None
-        del self.caretContext
+        self.clearCaretContext()
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             if True or obj.state.count(atspi.Accessibility.STATE_SHOWING):
@@ -4654,18 +4689,67 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
+    def clearCaretContext(self):
+        """Deletes all knowledge of a character context for the current
+        document frame."""
+
+        # [[[TODO: WDW - for some very odd reason, we end up with
+        # different Python Accessible objects for the same CORBA
+        # object.  atspi.py:makeAccessible attempts to prevent
+        # this from happening, so something strange is happening.
+        # For now, we'll look at the CORBA object, which is the
+        # _acc field of a Python accessible.]]]
+        #
+        documentFrame = self.getDocumentFrame()
+        try:
+            del self._documentFrameCaretContext[documentFrame._acc]
+        except:
+            pass
+
+    def setCaretContext(self, obj=None, characterOffset=-1):
+        """Sets the caret context for the current document frame."""
+
+        # We keep a context for each page tab shown.
+        # [[[TODO: WDW - probably should figure out how to destroy
+        # these contexts when a tab is killed.]]]
+        #
+        # [[[TODO: WDW - for some very odd reason, we end up with
+        # different Python Accessible objects for the same CORBA
+        # object.  atspi.py:makeAccessible attempts to prevent
+        # this from happening, so something strange is happening.
+        # For now, we'll look at the CORBA object, which is the
+        # _acc field of a Python accessible.]]]
+        #
+        documentFrame = self.getDocumentFrame()
+        self._documentFrameCaretContext[documentFrame._acc] = \
+            [obj, characterOffset]
+
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
         it returns the first [obj, caretOffset] found by an in order
         traversal from the beginning of the document."""
 
+        # We keep a context for each page tab shown.
+        # [[[TODO: WDW - probably should figure out how to destroy
+        # these contexts when a tab is killed.]]]
+        #
+        # [[[TODO: WDW - for some very odd reason, we end up with
+        # different Python Accessible objects for the same CORBA
+        # object.  atspi.py:makeAccessible attempts to prevent
+        # this from happening, so something strange is happening.
+        # For now, we'll look at the CORBA object, which is the
+        # _acc field of a Python accessible.]]]
+        #
+        documentFrame = self.getDocumentFrame()
         try:
-            return self.caretContext
+            return self._documentFrameCaretContext[documentFrame._acc]
         except:
-            self.caretContext = self.findNextCaretInOrder(None,
-                                                          -1,
-                                                          includeNonText)
-        return self.caretContext
+            self._documentFrameCaretContext[documentFrame._acc] = \
+                self.findNextCaretInOrder(None,
+                                          -1,
+                                          includeNonText)
+
+        return self._documentFrameCaretContext[documentFrame._acc]
 
     def getCharacterAtOffset(self, obj, characterOffset):
         """Returns the character at the given characterOffset in the
@@ -5052,7 +5136,7 @@ class Script(default.Script):
         if caretContext == [obj, characterOffset]:
             return
 
-        self.caretContext = [obj, characterOffset]
+        self.setCaretContext(obj, characterOffset)
 
         # If we're not in a table cell, reset self.lastTableCell.
         #
@@ -5123,7 +5207,7 @@ class Script(default.Script):
         if obj:
             self.setCaretPosition(obj, characterOffset)
         else:
-            del self.caretContext
+            self.clearCaretContext()
 
         self.updateBraille(obj)
         self.speakCharacterAtOffset(obj, characterOffset)
@@ -5142,7 +5226,7 @@ class Script(default.Script):
         if obj:
             self.setCaretPosition(obj, characterOffset)
         else:
-            del self.caretContext
+            self.clearCaretContext()
 
         self.updateBraille(obj)
         self.speakCharacterAtOffset(obj, characterOffset)
