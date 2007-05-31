@@ -6165,6 +6165,12 @@ class Script(default.Script):
                 obj = self.getLastObject()
                 wrapped = True
             if obj:
+                # For performance purposes, we do not want to work
+                # our way up through list items in search of the
+                # parent list.
+                #
+                if obj.role == rolenames.ROLE_LIST_ITEM:
+                    obj = obj.parent
                 found = self.isFormField(obj)
                 if wrapped and self.isSameObject(currentObj, obj):
                     obj = None
@@ -6194,6 +6200,16 @@ class Script(default.Script):
         found = False
         wrapped = False
         wrap = True
+        # For performance purposes, we do not want to examine each item
+        # in the current combo box or list via findNextObject.
+        #
+        if obj.role == rolenames.ROLE_LIST \
+           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            obj = obj.child(obj.childCount - 1)
+        elif obj.role == rolenames.ROLE_COMBO_BOX:
+            menu = obj.child(0)
+            obj = menu.child(menu.childCount - 1)
+
         while obj and not found:
             obj = self.findNextObject(obj)
             if not obj and wrap and not wrapped:
