@@ -1,8 +1,14 @@
+2007-05-31  Mario Lang <via william.walker@sun.com>
+
+        * src/orca/input_event.py, src/orca/script.py,
+        src/orca/default.py: fix for bug 441673 - Define
+        InputEventHandler.__eq__ (Thanks Mario!)
+
 2007-05-29  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * Fix for bug 412837 - Need a single number to summarize 
-	test code coverage: 
-	test/harness/trace2html-coverage-patch.txt 
+        * Fix for bug 412837 - Need a single number to summarize
+	test code coverage:
+	test/harness/trace2html-coverage-patch.txt
 	test/keystrokes/general-orca/yelp.keys,
 	test/keystrokes/swriter/text-attributes.keys,
 	test/keystrokes/scalc/F6-navigation.keys,
@@ -32,7 +38,7 @@
 	number to summarize test code coverage.
 
 	Fixed miscilaneous keystroke file problems.
-	
+
 2007-05-29  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: fix for bug 423435 - Orca is too chatty when
@@ -84,7 +90,7 @@
         *  src/orca/chnames.py: Bug 441723 – Orca should not speak
         "double prime" for the number 3
 
-2007-05-27  Mario Lang <via william.walker@sun.com	>
+2007-05-27  Mario Lang <via william.walker@sun.com>
 
         * src/orca/braille.py: fix for bug 441640 - Rename
 	processCursorKey to processRoutingKey (Thanks Mario!).

@@ -146,6 +146,10 @@ class InputEventHandler:
         self._description = description
         self._learnModeEnabled = learnModeEnabled
 
+    def __eq__(self, other):
+        """Compares one input handler to another."""
+        return (self._function == other._function)
+
     def processInputEvent(self, script, inputEvent):
         """Processes an input event.  If settings.learnModeEnabled is True,
         this will merely report the description of the input event to braille

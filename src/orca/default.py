@@ -658,13 +658,11 @@ class Script(script.Script):
         passed as argument
         """
 
-        key = None
-
         for keyName,handler in self.inputEventHandlers.iteritems():
-            if handler._function == inputEventHandler._function:
-                key = keyName
+            if handler == inputEventHandler:
+                return keyName
 
-        return key
+        return None
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.

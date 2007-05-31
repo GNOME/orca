@@ -135,7 +135,7 @@ class Script:
         matches = keybindings.KeyBindings()
 
         for binding in self.keyBindings.keyBindings:
-            if inputEventHandler._function == binding.handler._function:
+            if inputEventHandler == binding.handler:
                 matches.add(binding)
 
         return matches
@@ -158,13 +158,9 @@ class Script:
         Returns a list (possibly empty) of BrlTTY commands (they're in
         braille.py) that match the given inputEventHandler passed.
         """
-        matches = []
-
-        for command,handler in self.brailleBindings.iteritems():
-            if inputEventHandler._function == handler._function:
-                matches.append(command)
-
-        return matches
+        return [command
+                for command, handler in self.brailleBindings.iteritems()
+                if inputEventHandler == handler]
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
