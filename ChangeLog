@@ -1,6 +1,11 @@
+2007-06-01  Willie Walker <william.walker@sun.com>
+
+        * src/orca/atspi.py: fix for bug 443012 -
+        atspi.py:_onParentChanged upsets atspi.py:_cache in a bad way
+
 2007-05-31  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: fix for bug 442691 - Form field structural 
+        * src/orca/Gecko.py: fix for bug 442691 - Form field structural
         navigation is slow to and in large lists.
 
 2007-05-31  Willie Walker <william.walker@sun.com>

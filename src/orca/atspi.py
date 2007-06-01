@@ -489,13 +489,16 @@ class Accessible:
         - e: AT-SPI event from the AT-SPI registry
         """
 
-        # [[[TODO: WDW - I put this in here for now.  The idea is that
-        # we will probably get parent changed events for objects that
-        # are or will soon be defunct, so let's just forget about the
-        # object rather than try to keep the cache in sync.]]]
+        # When the parent of an object changes, just forget about the
+        # parent -- we'll lazily ask for it the next time someone is
+        # really interested.
         #
-        if Accessible._cache.has_key(e.source):
-            Accessible.deleteAccessible(e.source)
+        try:
+            obj = Accessible._cache[e.source]
+            del obj.__dict__["parent"]
+        except:
+            pass
+
         return
 
     _onParentChanged = staticmethod(_onParentChanged)
