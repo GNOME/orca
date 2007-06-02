@@ -1,8 +1,13 @@
+2007-06-02  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: more work on 437753 to implement the new
+        proposal for speaking/brailling when a page is loaded.
+
 2007-06-02  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: 
+        * src/orca/Gecko.py:
         1. Fix for Bug 407941 - Infer labels for objects in HTML content
-        2. Fix for Bug 443067 - sayAll by sentence skips content that is 
+        2. Fix for Bug 443067 - sayAll by sentence skips content that is
            in HTML tables in Firefox
 
 2007-06-01  Willie Walker <william.walker@sun.com>

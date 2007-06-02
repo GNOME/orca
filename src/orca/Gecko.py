@@ -2944,17 +2944,31 @@ class Script(default.Script):
                 speech.speak(message)
 
                 if finishedLoading:
-                    # We want to present something regarding where the
-                    # caret is in the newly loaded page.  If the caret
-                    # isn't anywhere, we will set it to the top of the
-                    # page.
+                    # We first try to figure out where the caret is on
+                    # the newly loaded page.  If it is on an editable
+                    # object (e.g., a text entry), then we present just
+                    # that object.  Otherwise, we force the caret to the
+                    # top of the page and start a SayAll from that position.
                     #
                     [obj, characterOffset] = self.getCaretContext()
+                    atTop = False
                     if not obj:
-                        [obj, characterOffset] = self.findNextCaretInOrder()
-                        self.setCaretContext(obj, characterOffset)
+                        self.clearCaretContext()
+                        [obj, characterOffset] = self.getCaretContext()
+                        atTop = True
+
+                    # If we found nothing, then don't do anything.  Otherwise
+                    # determine if we should do a SayAll or not.
+                    #
                     if not obj:
                         return
+                    elif not atTop \
+                        and not obj.state.count(\
+                            atspi.Accessibility.STATE_EDITABLE):
+                        self.clearCaretContext()
+                        [obj, characterOffset] = self.getCaretContext()
+                        if not obj:
+                            return
 
                     # When a document is loaded, we are going to
                     # assume that the newly loaded document frame has
@@ -2963,6 +2977,7 @@ class Script(default.Script):
                     # locus of focus here.
                     #
                     orca.setLocusOfFocus(event, obj, False)
+                    self.setCaretPosition(obj, characterOffset)
 
                     # For braille, we just show the current line
                     # containing the caret.  For speech, however, we
@@ -2973,10 +2988,10 @@ class Script(default.Script):
                     # caret is on.
                     #
                     self.updateBraille(obj)
+
                     if obj.state.count(atspi.Accessibility.STATE_EDITABLE):
-                        self.speakContents(
-                            self.getObjectContentsAtOffset(obj,
-                                                           characterOffset))
+                        speech.speakUtterances(\
+                            self.speechGenerator.getSpeech(obj, True))
                     elif settings.enableSpeech:
                         self.sayAll(None)
 
