@@ -1,3 +1,10 @@
+2007-06-02  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: 
+        1. Fix for Bug 407941 - Infer labels for objects in HTML content
+        2. Fix for Bug 443067 - sayAll by sentence skips content that is 
+           in HTML tables in Firefox
+
 2007-06-01  Willie Walker <william.walker@sun.com>
 
         * src/orca/atspi.py: fix for bug 443012 -

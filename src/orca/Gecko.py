@@ -514,21 +514,32 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        utterances = []
         parent = obj.parent
-        if parent.role != rolenames.ROLE_AUTOCOMPLETE:
+        if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+            # This is the main difference between this class and the default
+            # class - we'll give this thing a name here, and we'll make it
+            # be the name of the autocomplete.
+            #
+            label = self._script.getDisplayedLabel(parent)
+            if not label or not len(label):
+                label = parent.name
+            utterances.append(label)
+        elif obj.role in [rolenames.ROLE_ENTRY,
+                          rolenames.ROLE_PASSWORD_TEXT] \
+            and self._script.inDocumentContent():
+            # This is a form field in web content.  If we don't get a label,
+            # we'll try to guess what text on the page is functioning as
+            # the label.
+            #
+            label = self._script.getDisplayedLabel(obj)
+            if not label or not len(label):
+                label = self._script.guessTheLabel(obj)
+            if label:
+                utterances.append(label)
+        else:
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
-
-        utterances = []
-
-        # This is the main difference between this class and the default
-        # class - we'll give this thing a name here, and we'll make it
-        # be the name of the autocomplete.
-        #
-        label = self._script.getDisplayedLabel(parent)
-        if not label or not len(label):
-            label = parent.name
-        utterances.append(label)
 
         utterances.extend(self._getSpeechForObjectRole(obj))
 
@@ -562,8 +573,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # we'll fall back to the accessible name.
         #
         label = self._script.getDisplayedLabel(obj)
-        if not label and not self._script.inDocumentContent():
-            label = obj.name
+        if not label:
+            if not self._script.inDocumentContent():
+                label = obj.name
+            else:
+                label = self._script.guessTheLabel(obj)
 
         if not already_focused and label:
             utterances.append(label)
@@ -648,8 +662,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
 
         label = self._script.getDisplayedLabel(obj)
-        if not label and not self._script.inDocumentContent():
-            label = obj.name
+        if not label:
+            if not self._script.inDocumentContent():
+                label = obj.name
+            else:
+                label = self._script.guessTheLabel(obj)
 
         if not already_focused and label:
             utterances.append(label)
@@ -764,6 +781,126 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+    def _getSpeechForTable(self, obj, already_focused):
+        """Get the speech for a table
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        # [[[TODO: JD - We should decide if we want to provide
+        # information about the table dimensions, whether or not
+        # this is a layout table versus a data table, etc.  For now,
+        # however, if it's in HTML content let's ignore it so that
+        # SayAll by sentence works. :-) ]]]
+        #
+        utterances = []
+
+        if not self._script.inDocumentContent():
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForTable(self, obj, already_focused)
+
+        return utterances
+
+    def _getSpeechForRadioButton(self, obj, already_focused):
+        """Get the speech for a radio button.  If the button already had
+        focus, then only the state is spoken.
+
+        Arguments:
+        - obj: the radio button
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        if not self._script.inDocumentContent():
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForRadioButton(self, obj, already_focused)
+
+        utterances = []
+        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this is in reference to a radio button being
+            # selected or not.
+            #
+            selectionState = _("selected")
+        else:
+            # Translators: this is in reference to a radio button being
+            # selected or not.
+            #
+            selectionState = _("not selected")
+
+        if not already_focused:
+            # The label is handled as a context in default.py -- assuming we
+            # don't have to guess it.  If  we need to guess it, we need to
+            # add it to utterances.
+            #
+            label = self._script.getDisplayedLabel(obj)
+            if not label:
+                label = self._script.guessTheLabel(obj)
+                if label:
+                    utterances.append(label)
+
+            utterances.append(selectionState)
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+        else:
+            utterances.append(selectionState)
+
+        self._debugGenerator("Gecko._getSpeechForRadioButton",
+                             obj,
+                             already_focused,
+                             utterances)
+        return utterances
+
+    def _getSpeechForCheckBox(self, obj, already_focused):
+        """Get the speech for a check box.  If the check box already had
+        focus, then only the state is spoken.
+
+        Arguments:
+        - obj: the check box
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        if not self._script.inDocumentContent():
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForCheckBox(self, obj, already_focused)
+
+        utterances = []
+        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            # Translators: this represents the state of a checkbox.
+            #
+            checkedState = _("checked")
+        else:
+            # Translators: this represents the state of a checkbox.
+            #
+            checkedState = _("not checked")
+
+        # If it's not already focused, say its label.
+        #
+        if not already_focused:
+            label = self._script.getDisplayedLabel(obj)
+            if not label:
+                label = self._script.guessTheLabel(obj)
+            if label:
+                utterances.append(label)
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.append(checkedState)
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+        else:
+            utterances.append(checkedState)
+
+        self._debugGenerator("Gecko._getSpeechForCheckBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
     def getSpeechContext(self, obj, stopAncestor=None):
         """Get the speech that describes the names and role of
         the container hierarchy of the object, stopping at and
@@ -778,9 +915,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """
 
         utterances = []
-
-        if not obj:
-            return utterances
 
         if obj is stopAncestor:
             return utterances
@@ -2230,10 +2364,11 @@ class Script(default.Script):
             moreLines = False
             if sayAllBySentence:
                 # getObjectContentsAtOffset() gave us all of the descendants
-                # of the last object.  We need to be sure that we don't "find"
-                # one of those children with findNextObject().
+                # of the last object, as long as the last object was not a
+                # table.  We need to be sure that we don't "find" one of those
+                # children with findNextObject().
                 #
-                if obj.childCount:
+                if obj.childCount and obj.role != rolenames.ROLE_TABLE:
                     obj = obj.child(obj.childCount - 1)
                 while obj and not moreLines:
                     obj = self.findNextObject(obj)
@@ -2325,14 +2460,13 @@ class Script(default.Script):
 
         string = None
         labels = self.findDisplayedLabel(obj)
-
         for label in labels:
             # Check to see if the official labels are valid.
             #
             bogus = False
-            if self.inDocumentContent and \
-               obj.role in [rolenames.ROLE_COMBO_BOX,
-                            rolenames.ROLE_LIST]:
+            if self.inDocumentContent() \
+               and obj.role in [rolenames.ROLE_COMBO_BOX,
+                                rolenames.ROLE_LIST]:
                 # Bogus case #1:
                 # <label></label> surrounding the entire combo box/list which
                 # makes the entire combo box's/list's contents serve as the
@@ -2354,8 +2488,7 @@ class Script(default.Script):
                 # See bug #441610 and
                 # https://bugzilla.mozilla.org/show_bug.cgi?id=348901
                 #
-                displayedText = self.getDisplayedText(label)
-                string = self.appendString(string, displayedText.strip())
+                string = self.appendString(string, label.name)
 
         return string
 
@@ -2394,9 +2527,10 @@ class Script(default.Script):
         # the right.  We want to update the caret context but not
         # the locus of focus.
         #
-        if orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM and \
-           not self.inDocumentContent(orca_state.locusOfFocus) and \
-           self.inDocumentContent(event.source):
+        if orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM \
+           and not self.inDocumentContent(orca_state.locusOfFocus) \
+           and self.inDocumentContent(event.source):
             self.setCaretContext(event.source, event.detail1)
             return
 
@@ -2406,9 +2540,10 @@ class Script(default.Script):
         # in the Find toolbar), speak the line containing the caret
         # based on the user-customizable settings.
         #
-        if orca_state.locusOfFocus and \
-           orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY and \
-           orca_state.locusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR \
+        if orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY \
+           and orca_state.locusOfFocus.parent.role == \
+                                            rolenames.ROLE_TOOL_BAR \
            and self.inDocumentContent(event.source):
             [obj, offset] = self.getCaretContext()
             self.setCaretContext(event.source, event.detail1)
@@ -2944,21 +3079,10 @@ class Script(default.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        # Sometimes Gecko gives us a *different* obj for the *same* form
-        # control.  Compare extents of the old and new loci of focus. If
-        # they're the same, then the oldLocusOfFocus and the newLocusOfFocus
-        # are the same object.
+        # Sometimes we get different accessibles for the same object.
         #
-        if oldLocusOfFocus and newLocusOfFocus \
-           and (oldLocusOfFocus.role == newLocusOfFocus.role) \
-           and self.isFormField(newLocusOfFocus):
-            oldExtents = oldLocusOfFocus.component.getExtents(0)
-            newExtents = newLocusOfFocus.component.getExtents(0)
-            if oldExtents.x == newExtents.x and \
-               oldExtents.y == newExtents.y and \
-               oldExtents.width == newExtents.width and \
-               oldExtents.height == newExtents.height:
-                return
+        if self.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+            return
 
         # Try to handle the case where a spurious focus event was tossed
         # at us.
@@ -3040,7 +3164,6 @@ class Script(default.Script):
         #            return
         #    except:
         #        pass
-
         default.Script.locusOfFocusChanged(self,
                                            event,
                                            oldLocusOfFocus,
@@ -3262,11 +3385,18 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
 
-        # We don't want to speak the role if we're in an entry.
+        # Ideally in an entry we would just let default.sayWord() handle
+        # things.  That fails to work when navigating backwords by word.
+        # Because getUtterancesFromContents() now uses the speechgenerator
+        # with entries, we need to handle word navigation in entries here.
         #
-        speakRole = (obj.role != rolenames.ROLE_ENTRY)
-        self.speakContents(self.getWordContentsAtOffset(obj, characterOffset),
-                           speakRole)
+        wordContents = self.getWordContentsAtOffset(obj, characterOffset)
+        if obj.role != rolenames.ROLE_ENTRY:
+            self.speakContents(wordContents)
+        else:
+            [textObj, startOffset, endOffset] = wordContents[0]
+            word = textObj.text.getText(startOffset, endOffset)
+            speech.speakUtterances([word], self.getACSS(textObj, word))
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -4232,6 +4362,558 @@ class Script(default.Script):
 
         return lastChild
 
+    def getNextCellInfo(self, cell, direction):
+        """Given a cell from which to start and a direction in which to
+        search locates the next cell and returns it, along with its
+        text, extents (as a tuple), and whether or not the cell contents
+        consist of a form field.
+
+        Arguments
+        - cell: the table cell from which to start
+        - direction: a string which can be one of four options: 'left',
+                     'right', 'up', 'down'
+
+        Returns [nextCell, text, extents, isField]
+        """
+
+        newCell = None
+        text = None
+        extents = ()
+        isField = False
+        if not cell or cell.role != rolenames.ROLE_TABLE_CELL:
+            return [newCell, text, extents, isField]
+
+        [row, col] = self.getCellCoordinates(cell)
+        rowspan = cell.parent.table.getRowExtentAt(row, col)
+        colspan = cell.parent.table.getColumnExtentAt(row, col)
+        nRows = cell.parent.table.nRows
+        nCols = cell.parent.table.nColumns
+        nextCell = None
+        if direction == "left" and col > 0:
+            nextCell = (row, col - 1)
+        elif direction == "right" and (col + colspan <= nCols - 1):
+            nextCell = (row, col + colspan)
+        elif direction == "up" and row > 0:
+            nextCell = (row - 1, col)
+        elif direction == "down" and (row + rowspan <= nRows - 1):
+            nextCell = (row + rowspan, col)
+        if nextCell:
+            accCell = cell.parent.table.getAccessibleAt(nextCell[0],
+                                                        nextCell[1])
+            newCell = atspi.Accessible.makeAccessible(accCell)
+            if newCell:
+                [obj, offset] = self.findFirstCaretContext(newCell, 0)
+                extents = self.getExtents(newCell, 0, 1)
+                isField = self.isFormField(obj)
+                if newCell.text and not self.isBlankCell(newCell):
+                    text = self.getDisplayedText(newCell)
+
+        return [newCell, text, extents, isField]
+
+    def expandEOCs(self, obj, startOffset=0, endOffset= -1):
+        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
+        with their text.
+
+        Arguments
+        - obj: the object whose text should be expanded
+        - startOffset: the offset of the first character to be included
+        - endOffset: the offset of the last character to be included
+
+        Returns the fully expanded text for the object.
+        """
+
+        if not obj:
+            return None
+
+        text = None
+        if obj.text:
+            text = obj.text.getText(startOffset, endOffset)
+            unicodeText = text.decode("UTF-8")
+            if unicodeText \
+                and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
+                toBuild = list(unicodeText)
+                count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
+                for i in range(0, count):
+                    index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                    child = obj.child(i)
+                    childText = self.expandEOCs(child)
+                    if not childText:
+                        childText = ""
+                    toBuild[index] = childText.decode("UTF-8")
+                text = "".join(toBuild)
+
+        return text
+
+    def guessLabelFromLine(self, obj):
+        """Attempts to guess what the label of an unlabeled form control
+        might be by looking at surrounding contents from the same line.
+
+        Arguments
+        - obj: the form field about which to take a guess
+
+        Returns the text which we think might be the label or None if we
+        give up.
+        """
+
+        # Based on Tom Brunet's comments on how Home Page Reader
+        # approached the task of guessing labels.  Please see:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
+        #
+        #  1. Text/img that precedes control in same item.
+        #  2. Text/img that follows control in same item (nothing between
+        #     end of text and item)
+        #
+        # Reverse this order for radio buttons and check boxes
+        #
+        guess = None
+        extents = obj.component.getExtents(0)
+        objExtents = [extents.x, extents.y, extents.width, extents.height]
+        lineContents = self.getLineContentsAtOffset(obj, 0)
+
+        # Let's figure out where we are with respect to the other objects
+        # on this line.
+        #
+        ourIndex = -1
+        objectsOnLine = []
+        for content in lineContents:
+            objectsOnLine.append(content[0])
+            extents = content[0].component.getExtents(0)
+            contentExtents = \
+                     [extents.x, extents.y, extents.width, extents.height]
+            if objExtents == contentExtents:
+                ourIndex = lineContents.index(content)
+
+        # Now that we know where we are, let's see who are neighbors are
+        # and where they are.
+        #
+        onLeft = None
+        onRight = None
+        if ourIndex > 0:
+            onLeft = objectsOnLine[ourIndex - 1]
+            extents = content[0].component.getExtents(0)
+            onLeftExtents = \
+                     [extents.x, extents.y, extents.width, extents.height]
+        if 0 <= ourIndex < len(objectsOnLine) - 1:
+            onRight = objectsOnLine[ourIndex + 1]
+            extents = content[0].component.getExtents(0)
+            onRightExtents = \
+                     [extents.x, extents.y, extents.width, extents.height]
+
+        # Normally we prefer what's on the left given a choice.  Reasons
+        # to prefer what's on the right include looking at a radio button
+        # or a checkbox. [[[TODO - JD: Language direction should also be
+        # taken into account.]]]
+        #
+        preferRight = obj.role in [rolenames.ROLE_CHECK_BOX,
+                                   rolenames.ROLE_RADIO_BUTTON]
+
+        # [[[TODO: JD: Nearby text that's not actually in the form may need
+        # to be ignored.  Let's try that for now and adjust based on feedback
+        # and testing.]]]
+        #
+        leftIsInForm = self.getContainingRole(onLeft, rolenames.ROLE_FORM)
+        rightIsInForm = self.getContainingRole(onRight, rolenames.ROLE_FORM)
+
+        # [[[TODO: Grayed out buttons don't pass the isFormField() test
+        # because they are neither focusable nor showing -- and thus
+        # something we don't want to navigate to via structural navigation.
+        # We may need to rethink our definition of isFormField().  In the
+        # meantime, let's not used grayed out buttons as labels. As an
+        # example, see the Search entry on live.gnome.org.]]]
+        #
+        if onLeft:
+            leftIsFormField = self.isFormField(onLeft) \
+                              or onLeft.role == rolenames.ROLE_PUSH_BUTTON
+        if onRight:
+            rightIsFormField = self.isFormField(onRight) \
+                               or onRight.role == rolenames.ROLE_PUSH_BUTTON
+
+        if onLeft and leftIsInForm and not leftIsFormField:
+            # We want to get the text on the left including embedded objects
+            # that are NOT form fields. If we find a form field on the left,
+            # that will be the starting point of the text we want.
+            #
+            startOffset = 0
+            endOffset = -1
+            if self.isSameObject(obj.parent,onLeft):
+                endOffset = self.getCharacterOffsetInParent(obj)
+                if obj.index > 0:
+                    prevSibling = onLeft.child(obj.index - 1)
+                    if self.isFormField(prevSibling):
+                        startOffset = \
+                                  self.getCharacterOffsetInParent(prevSibling)
+
+            guess = self.expandEOCs(onLeft, startOffset, endOffset)
+            if not guess and onLeft.role == rolenames.ROLE_IMAGE:
+                guess = onLeft.name
+
+        if (preferRight or not guess) \
+           and onRight and rightIsInForm and not rightIsFormField:
+            # The object's horizontal position plus its width tells us
+            # where the text on the right can begin.  For now, define
+            # "immediately after" as  within 50 pixels.
+            #
+            canStartAt = objExtents[0] + objExtents[2]
+            if (onRightExtents[0] - canStartAt) <= 50:
+                # We want to get the text on the right including embedded
+                # objects that are NOT form fields.  If we find a form field
+                # on the right, that will be the ending point of the text we
+                # want.  However, if we have a form field on the right and
+                # do not have a reason to prefer the text on the right, our
+                # label may be on the line above.  As an example, see the
+                # bugzilla Advanced search... Bug Changes section.
+                #
+                startOffset = 0
+                endOffset = -1
+                if self.isSameObject(obj.parent, onRight):
+                    startOffset = self.getCharacterOffsetInParent(obj)
+                    if obj.index < onRight.childCount - 1:
+                        nextSibling = onRight.child(obj.index + 1)
+                        if self.isFormField(nextSibling):
+                            endOffset = \
+                                  self.getCharacterOffsetInParent(nextSibling)
+                            if not preferRight:
+                                return None
+
+                guess = self.expandEOCs(onRight, startOffset, endOffset)
+                if not guess and onRight.role == rolenames.ROLE_IMAGE:
+                    guess = onRight.name
+
+        return guess
+
+    def guessLabelFromOtherLines(self, obj):
+        """Attempts to guess what the label of an unlabeled form control
+        might be by looking at nearby contents from neighboring lines.
+
+        Arguments
+        - obj: the form field about which to take a guess
+
+        Returns the text which we think might be the label or None if we
+        give up.
+        """
+
+        # Based on Tom Brunet's comments on how Home Page Reader
+        # approached the task of guessing labels.  Please see:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
+        #
+        guess = None
+        extents = obj.component.getExtents(0)
+        objExtents = \
+               [extents.x, extents.y, extents.width, extents.height]
+
+        [prevObj, prevOffset] = self.findPreviousLine(obj, 0)
+        prevLineContents = self.getLineContentsAtOffset(prevObj,
+                                                        prevOffset)
+
+        # The labels for combo boxes won't be found below the combo box
+        # because expanding the combo box will cover up the label. Labels
+        # for lists probably won't be below the list either.
+        #
+        if not obj.role in [rolenames.ROLE_COMBO_BOX,
+                            rolenames.ROLE_MENU,
+                            rolenames.ROLE_MENU_ITEM,
+                            rolenames.ROLE_LIST,
+                            rolenames.ROLE_LIST_ITEM]:
+            [nextObj, nextOffset] = self.findNextLine(obj, 0)
+            nextLineContents = self.getLineContentsAtOffset(nextObj,
+                                                            nextOffset)
+        else:
+            [nextObj, nextOffset] = [None, 0]
+            nextLineContents = []
+
+        above = None
+        for content in prevLineContents:
+            extents = content[0].component.getExtents(0)
+            aboveExtents = \
+                 [extents.x, extents.y, extents.width, extents.height]
+
+            # [[[TODO: Grayed out buttons don't pass the isFormField()
+            # test because they are neither focusable nor showing -- and
+            # thus something we don't want to navigate to via structural
+            # navigation. We may need to rethink our definition of
+            # isFormField().  In the meantime, let's not used grayed out
+            # buttons as labels. As an example, see the Search entry on
+            # live.gnome.org. We want to ignore menu items as well.]]]
+            #
+            aboveIsFormField = self.isFormField(content[0]) \
+                            or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
+                                                   rolenames.ROLE_MENU_ITEM]
+
+            # [[[TODO - JD: Nearby text that's not actually in the form
+            # may need to be ignored.  Let's do so unless it's directly
+            # above the form field or the text above is contained in the
+            # form's parent and adjust based on feedback, testing.]]]
+            #
+            theForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
+            aboveForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
+            aboveIsInForm = self.isSameObject(theForm, aboveForm)
+            formIsInAbove = self.isSameObject(theForm.parent, content[0])
+
+            # If the horizontal starting point of the object is the
+            # same as the horizontal starting point of the text
+            # above it, the text above it is probably serving as the
+            # label. We'll allow for a 2 pixel difference.  If that
+            # fails, and the text above starts within 50 pixels to
+            # the left and ends somewhere above or beyond the current
+            # form field, we'll give it the benefit of the doubt.
+            # For an example of the latter case, see Bugzilla's Advanced
+            # search page, Bug Changes section.
+            #
+            if (objExtents != aboveExtents) and not aboveIsFormField:
+                guessThis = (0 <= abs(objExtents[0] - aboveExtents[0]) <= 2)
+                if not guessThis:
+                    objEnd = objExtents[0] + objExtents[2]
+                    aboveEnd = aboveExtents[0] + aboveExtents[2]
+                    guessThis = (0 <= objExtents[0] - aboveExtents[0] <= 50) \
+                                 and (aboveEnd > objEnd) \
+                                 and (aboveIsInForm or formIsInAbove)
+
+                if guessThis:
+                    above = content[0]
+                    guessAbove = self.expandEOCs(content[0],
+                                                 content[1],
+                                                 content[2])
+                    break
+
+        below = None
+        for content in nextLineContents:
+            extents = content[0].component.getExtents(0)
+            belowExtents = \
+                 [extents.x, extents.y, extents.width, extents.height]
+            # [[[TODO: Grayed out buttons don't pass the isFormField()
+            # test because they are neither focusable nor showing -- and
+            # thus something we don't want to navigate to via structural
+            # navigation. We may need to rethink our definition of
+            # isFormField().  In the meantime, let's not used grayed out
+            # buttons as labels. As an example, see the Search entry on
+            # live.gnome.org. We want to ignore menu items as well.]]]
+            #
+            belowIsFormField = self.isFormField(content[0]) \
+                            or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
+                                                   rolenames.ROLE_MENU_ITEM]
+
+            # [[[TODO - JD: Nearby text that's not actually in the form
+            # may need to be ignored.  Let's try that for now and adjust
+            # based on feedback and testing.]]]
+            #
+            belowIsInForm = self.getContainingRole(content[0],
+                                                   rolenames.ROLE_FORM)
+
+            # If the horizontal starting point of the object is the
+            # same as the horizontal starting point of the text
+            # below it, the text below it is probably serving as the
+            # label. We'll allow for a 2 pixel difference.
+            #
+            if objExtents != belowExtents \
+               and not belowIsFormField \
+               and belowIsInForm \
+               and 0 <= abs(objExtents[0] - belowExtents[0]) <= 2:
+                below = content[0]
+                guessBelow = self.expandEOCs(content[0],
+                                             content[1],
+                                             content[2])
+                break
+
+        if above:
+            if not below:
+                guess = guessAbove
+            else:
+                # We'll guess the nearest text.
+                #
+                bottomOfAbove = aboveExtents[1] + aboveExtents[3]
+                topOfBelow = belowExtents[1]
+                bottomOfObj = objExtents[1] + objExtents[3]
+                topOfObject = objExtents[1]
+                aboveProximity = topOfObject - bottomOfAbove
+                belowProximity = topOfBelow - bottomOfObj
+                if aboveProximity <=  belowProximity \
+                   or belowProximity < 0:
+                    guess = guessAbove
+                else:
+                    guess = guessBelow
+        elif below:
+            guess = guessBelow
+
+        return guess
+
+    def guessLabelFromTable(self, obj):
+        """Attempts to guess what the label of an unlabeled form control
+        might be by looking at surrounding table cells.
+
+        Arguments
+        - obj: the form field about which to take a guess
+
+        Returns the text which we think might be the label or None if we
+        give up.
+        """
+
+        # Based on Tom Brunet's comments on how Home Page Reader
+        # approached the task of guessing labels.  Please see:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
+        #
+        # "3. Text/img that precedes control in previous item/cell
+        #     not another control in that item)..."
+        #
+        #  4. Text/img in cell above without other controls in this
+        #     cell above."
+        #
+        # If that fails, we might as well look to the cell below. If the
+        # text is immediately below the entry and nothing else looks like
+        # a label, that text might be it. Given both text above and below
+        # the control, the most likely label is probably the text that is
+        # vertically nearest it. This theory will, of course, require
+        # testing "in the wild."
+        #
+        guess = None
+        extents = obj.component.getExtents(0)
+        objExtents = [extents.x, extents.y, extents.width, extents.height]
+        containingCell = \
+                       self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+
+        # If we're not in a table cell, pursuing this further is silly. If
+        # we're in a table cell but are not the sole occupant of that cell,
+        # we're likely in a more complex layout table than this approach
+        # can handle.
+        #
+        if not containingCell \
+           or (containingCell.childCount > 1):
+            return guess
+        else:
+            containingParagraph = \
+                         self.getContainingRole(obj, rolenames.ROLE_PARAGRAPH)
+            if containingParagraph:
+                return guess
+
+        [cellLeft, leftText, leftExtents, leftIsField] = \
+                   self.getNextCellInfo(containingCell, "left")
+        [cellRight, rightText, rightExtents, rightIsField] = \
+                   self.getNextCellInfo(containingCell, "right")
+        [cellAbove, aboveText, aboveExtents, aboveIsField] = \
+                   self.getNextCellInfo(containingCell, "up")
+        [cellBelow, belowText, belowExtents, belowIsField] = \
+                   self.getNextCellInfo(containingCell, "down")
+
+        if rightText:
+            # The object's horizontal position plus its width tells us
+            # where the text on the right can begin. For now, define
+            # "immediately after" as  within 50 pixels.
+            #
+            canStartAt = objExtents[0] + objExtents[2]
+            rightCloseEnough = rightExtents[0] - canStartAt <= 50
+
+        if leftText and not leftIsField:
+            guess = leftText
+        elif rightText and rightCloseEnough and not rightIsField:
+            guess = rightText
+        elif aboveText and not aboveIsField:
+            if not belowText or belowIsField:
+                guess = aboveText
+            else:
+                # We'll guess the nearest text.
+                #
+                bottomOfAbove = aboveExtents[1] + aboveExtents[3]
+                topOfBelow = belowExtents[1]
+                bottomOfObj = objExtents[1] + objExtents[3]
+                topOfObject = objExtents[1]
+                aboveProximity = topOfObject - bottomOfAbove
+                belowProximity = topOfBelow - bottomOfObj
+                if aboveProximity <=  belowProximity:
+                    guess = aboveText
+                else:
+                    guess = belowText
+        elif belowText and not belowIsField:
+            guess = belowText
+        elif aboveIsField:
+            # Given the lack of potential labels and the fact that
+            # there's a form field immediately above us, there's
+            # a reasonable chance that we're in a series of form
+            # fields arranged grid-style.  It's even more likely
+            # if the form fields above us are all of the same type
+            # and size (say, within 1 pixel).
+            #
+            grid = False
+            done = False
+            nextCell = containingCell
+            while not done:
+                [nextCell, text, extents, isField] = \
+                        self.getNextCellInfo(nextCell, "up")
+                dWidth = abs(objExtents[2] - extents[2])
+                dHeight = abs(objExtents[3] - extents[3])
+                if dWidth > 1 or dHeight > 1:
+                    done = True
+                if not isField:
+                    [row, col]=  self.getCellCoordinates(nextCell)
+                    if row == 0:
+                        grid = True
+                        done = True
+
+            if grid:
+                cell = nextCell.parent.table.getAccessibleAt(0, col)
+                topCol = atspi.Accessible.makeAccessible(cell)
+                [objTop, offset] = self.findFirstCaretContext(topCol, 0)
+                if topCol.text and not self.isFormField(topCol):
+                    guess = self.expandEOCs(topCol)
+
+        return guess
+
+    def guessTheLabel(self, obj):
+        """Attempts to guess what the label of an unlabeled form control
+        might be.
+
+        Arguments
+        - obj: the form field about which to take a guess
+
+        Returns the text which we think might be the label or None if we
+        give up.
+        """
+
+        # The initial stab at this is based on Tom Brunet's comments
+        # on how Home Page Reader approached this task.  His comments
+        # can be found at the RFE for Mozilla to do this work for us:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
+        # N.B. If you see a comment in quotes, it's taken directly from
+        # Tom.
+        #
+        guess = None
+
+        # If we're not in the document frame, we don't want to be guessing.
+        # We also don't want to be guessing if the item doesn't have focus.
+        #
+        if not self.inDocumentContent() \
+           or not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            return guess
+
+        # Because the guesswork is based upon spatial relations, if we're
+        # in a list, look from the perspective of the first list item rather
+        # than from the list as a whole.
+        #
+        if obj.role == rolenames.ROLE_LIST:
+            obj = obj.child(0)
+
+        guess = self.guessLabelFromLine(obj)
+        # print "guess from line: ", guess
+        if not guess:
+            # Maybe it's in a table cell.
+            #
+            guess = self.guessLabelFromTable(obj)
+            # print "guess from table: ", guess
+        if not guess:
+            # Maybe the text is above or below us, but not in a table
+            # cell.
+            #
+            guess = self.guessLabelFromOtherLines(obj)
+            #print "guess form other lines: ", guess
+        if not guess:
+            # We've pretty much run out of options.  From Tom's overview
+            # of the approach for all controls:
+            # "... 4. title attribute."
+            # The title attribute seems to be exposed as the name.
+            #
+            guess = obj.name
+            #print "Guessing the name: ", guess
+
+        return guess.strip()
+
     ####################################################################
     #                                                                  #
     # Methods to find previous and next objects.                       #
@@ -5011,6 +5693,17 @@ class Script(default.Script):
             if self.isLabellingContents(obj, contents):
                 continue
 
+            # The radio button's label gets added to the context in
+            # default.locusOfFocusChanged() and not through the speech
+            # generator -- unless we wind up having to guess the label.
+            # Therefore, if we have a valid label for a radio button,
+            # we need to add it here.
+            #
+            if obj.role == rolenames.ROLE_RADIO_BUTTON:
+                label = self.getDisplayedLabel(obj)
+                if label:
+                    utterances.append([label, self.getACSS(obj, label)])
+
             # We only want to announce the heading role and level if we
             # have found the final item in that heading, or if that
             # heading contains no children.
@@ -5022,13 +5715,21 @@ class Script(default.Script):
                 speakThisRole = isLastObject or not obj.childCount
             else:
                 # We also don't want to speak the role if it's a documement
-                # frame or a table cell.
+                # frame or a table cell.  In addition, if the object is an
+                # entry or password_text, _getSpeechForText() will add the
+                # role after the label and before any text that is present
+                # in that field.  We don't want to repeat the role.
                 #
                 speakThisRole = \
                     not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
-                                     rolenames.ROLE_TABLE_CELL]
+                                     rolenames.ROLE_TABLE_CELL,
+                                     rolenames.ROLE_ENTRY,
+                                     rolenames.ROLE_PASSWORD_TEXT]
 
-            if obj.text:
+            if obj.text \
+               and not obj.role in [rolenames.ROLE_ENTRY,
+                                    rolenames.ROLE_PASSWORD_TEXT,
+                                    rolenames.ROLE_RADIO_BUTTON]:
                 strings = [self.getText(obj, startOffset, endOffset)]
             elif self.isLayoutOnly(obj):
                 continue
