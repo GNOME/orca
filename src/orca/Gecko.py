@@ -2792,6 +2792,19 @@ class Script(default.Script):
             documentFrame = self.getDocumentFrame()
             if documentFrame and (documentFrame.parent == event.source):
                 return
+            else:
+                # Web pages can contain their own panels.  If the locus
+                # of focus is within that panel, we probably moved off
+                # of a focusable item (like a link within the panel)
+                # to something non-focusable (like text within the panel).
+                # If we don't ignore this event, we'll loop to the top
+                # of the panel.
+                #
+                containingPanel = \
+                            self.getContainingRole(orca_state.locusOfFocus,
+                                                   rolenames.ROLE_PANEL)
+                if self.isSameObject(containingPanel, event.source):
+                    return
 
         # When we get a focus event on the document frame, it's usually
         # because we did a grabFocus on its parent in setCaretPosition.

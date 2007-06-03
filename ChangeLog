@@ -1,3 +1,8 @@
+2007-06-03  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: fix for bug 443650 - Orca "loops" on 
+        certain pages in Firefox
+
 2007-06-03  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: more work on bug 437753 to make the
