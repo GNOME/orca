@@ -65,6 +65,11 @@ controlCaretNavigation = True
 #
 arrowToLineBeginning = True
 
+# If True, it tells Orca to automatically perform a SayAll operation
+# when a page is first loaded.
+#
+sayAllOnLoad = True
+
 # Whether or not to use the structrual navigation commands (e.g. H
 # for heading, T for table, and so on).
 #
@@ -1967,7 +1972,7 @@ class Script(default.Script):
         GUI items for the current application.
         """
 
-        global controlCaretNavigation, arrowToLineBeginning
+        global controlCaretNavigation, arrowToLineBeginning, sayAllOnLoad
         global structuralNavigationEnabled
         global speakCellCoordinates, speakCellSpan
         global speakCellHeaders, skipBlankCells
@@ -2034,6 +2039,18 @@ class Script(default.Script):
                            False, False, 0)
         gtk.ToggleButton.set_active(self.arrowToLineBeginningCheckButton,
                                     arrowToLineBeginning)
+
+        # Translators: when the user loads a new page in Firefox, they
+        # can optionally tell Orca to automatically start reading a
+        # page from beginning to end.
+        #
+        label = _("Automatically start speaking a page when it is first _loaded")
+        self.sayAllOnLoadCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.sayAllOnLoadCheckButton)
+        gtk.Box.pack_start(generalVBox, self.sayAllOnLoadCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
+                                    sayAllOnLoad)
 
         # Translators: this is the title of a panel holding options for
         # how to navigate HTML content (e.g., Orca caret navigation,
@@ -2200,7 +2217,7 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global controlCaretNavigation, arrowToLineBeginning
+        global controlCaretNavigation, arrowToLineBeginning, sayAllOnLoad
         global structuralNavigationEnabled
         global speakCellCoordinates, speakCellSpan
         global speakCellHeaders, skipBlankCells
@@ -2221,6 +2238,10 @@ class Script(default.Script):
         value = self.arrowToLineBeginningCheckButton.get_active()
         prefs.writelines("orca.Gecko.arrowToLineBeginning = %s\n" % value)
         arrowToLineBeginning = value
+
+        value = self.sayAllOnLoadCheckButton.get_active()
+        prefs.writelines("orca.Gecko.sayAllOnLoad = %s\n" % value)
+        sayAllOnLoad = value
 
         value = self.speakCellCoordinatesCheckButton.get_active()
         prefs.writelines("orca.Gecko.speakCellCoordinates = %s\n" % value)
@@ -2591,8 +2612,9 @@ class Script(default.Script):
         # speak it.  If it's something else, we don't want the locusOfFocus
         # to be set there.  So for now, let's just ignore these.
         #
-        if orca_state.locusOfFocus.role == rolenames.ROLE_MENU_ITEM \
-           and self.inDocumentContent(event.source):
+        if orca_state.locusOfFocus \
+            and orca_state.locusOfFocus.role == rolenames.ROLE_MENU_ITEM \
+            and self.inDocumentContent(event.source):
             return
 
         # If {overflow:hidden} is in the document's style sheet, we seem
@@ -2992,6 +3014,10 @@ class Script(default.Script):
                     if obj.state.count(atspi.Accessibility.STATE_EDITABLE):
                         speech.speakUtterances(\
                             self.speechGenerator.getSpeech(obj, True))
+                    elif not sayAllOnLoad:
+                        self.speakContents(\
+                            self.getLineContentsAtOffset(obj,
+                                                         characterOffset))
                     elif settings.enableSpeech:
                         self.sayAll(None)
 

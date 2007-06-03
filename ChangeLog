@@ -1,7 +1,14 @@
+2007-06-03  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py: more work on bug 437753 to make the
+        "Automatic SayAll on document load" an optional feature.  Added
+        the option under the "Page Navigation" panel of the Minefield
+        preferences tab of the Orca preferences GUI.
+
 2007-06-02  Willie Walker <william.walker@sun.com>
 
-        * src/orca/Gecko.py: more work on 437753 to implement the new
-        proposal for speaking/brailling when a page is loaded.
+        * src/orca/Gecko.py: more work on bug 437753 to implement the new
+	proposal for speaking/brailling when a page is loaded.
 
 2007-06-02  Joanmarie Diggs <j-diggs@comcast.net>
 
