@@ -1,3 +1,141 @@
+2.19.3 - 04-Jun-2007
+
+General Orca:
+
+* Make checkbox and radio button indicator strings customizable
+  (thanks Mario Lang!)
+
+* Present checkbox and radio button indicators before label/name in
+  braille (thanks Mario Lang!)
+
+* Fix for bug 345399 – Key echo missing alpha numeric and punctuation
+  keys
+
+* Fix for bug 349394 to make Speech Dispatcher Factory work better
+  with Orca GUI preferences (thanks Tomas Cerha!)
+
+* Fix for bug 376015 – [a11y] time-admin time servers table is not
+  accessible
+
+* Fix for bug 412837 - Need a single number to summarize test code
+  coverage
+
+* Fix for bug 434600 - cursor routing keys cannot be used to position
+  caret at end of line 
+
+* Fix for bug 435226 – Where-am-I doesn't correctly handle multiple
+  selected paragraphs in OOo Writer and Evolution
+
+* Fix for bug 439155 - Flat review is broken in gcalctool
+
+* Fix for bug 439487 - Combobox role not shown in braille in 'brief'
+  verbosity mode
+
+* Fix for bug 439509 - Run Application Dialog prints entered text
+  twice in braille (thanks Mario Lang!)
+
+* Fix for bug 440592 – Orca doesn't speak gcalctool's status bar
+  correctly
+
+* Fix for bug 440294 - Voice Properties in Speech Dispatcher backend
+  (thanks Tomas Cerha!)
+
+* Fix for bug 441640 - Rename processCursorKey to processRoutingKey 
+  (thanks Mario Lang!)
+
+* Fix for bug 441673 - Define InputEventHandler.__eq__ 
+  (thanks Mario Lang!)
+
+* Fix for bug 441723 – Orca should not speak "double prime" for the
+  number 3
+
+* Fix for bug 443012 - atspi.py:_onParentChanged upsets
+  atspi.py:_cache in a bad way 
+
+Firefox:
+
+* Fix for bug 407941 - Infer labels for objects in HTML content
+
+* Fix for bug 414657 – Linked headings should be announced as both
+  heading and link
+
+* Fix for bug 420540 – Firefox keyboard control wish list. Q/Shift+Q
+  can now be used to navigate among blockquotes.
+
+* Fix for bug 423435 - Orca is too chatty when loading a page in
+  Firefox
+
+* Fix for Bug 433655 – Orca's structural navigation should wrap at the
+  end of a page
+
+* Fix for bug 437753 - Orca should speak and braille the current locus
+  of focus after a page is loaded in Firefox and then start reading
+  the page
+
+* Fix for bug 437986 – Orca should not first speak page and frame
+  title when opening a menu in firefox
+
+* Fix for bug 439286 – Gecko.py's find{Next,Previous}Object fails when
+  object is document_frame.
+
+* Fix for bug 440079 – Orca cannot arrow past certain combo boxes in
+  Firefox
+
+* Fix for bug 440529 – Orca bounces out of Firefox Help Contents tree
+  and into the document frame
+
+* Fix for bug 441476 Orca should attempt to detect erroneously-marked
+  list labels in Firefox
+
+* Fix for bug 441484 – Need to adjust Firefox form field navigation to
+  accommodate Firefox changes.
+
+* Fix for bug 441610 – Orca should identify bogus/redundant checkbox
+  labels in Firefox.
+
+* Fix for bug 442691 - Form field structural navigation is slow to and
+  in large lists
+
+* Fix for bug 443067 - sayAll by sentence skips content that is
+  in HTML tables in Firefox
+
+* Fix for bug 443650 - Orca "loops" on certain pages in Firefox
+
+OpenOffice:
+
+* Work on bug 435199 - Orca is bloating the swap partition, so
+  the system is no more usable after a short time (improvements
+  made to OpenOffice script)
+
+* Additional fix for bug 435201 - Orca is too chatty when navigating
+  by paragraph in OOo Writer
+
+* Fix for bug 435226 – Where-am-I doesn't correctly handle multiple
+  selected paragraphs in OOo Writer and Evolution
+
+* Fix for bug 435852 – Orca and OpenOffice Calc have a memory lovefest
+
+Java platform:
+
+* Fix for bug 435825 - Non-ORBit object typecodes ignored when
+  instantiating stubs.  NOTE: this was a pyorbit fix from Peter Parente
+  that had a major impact on a number of bugs we were running into with
+  the Java platform.  Thanks so much, Peter Parente!
+
+* Fix for bug 436674 - flat-review only visits right-most tree nodes
+  in SwingSet2 JTree demo
+
+* Fix for bug 437049 - Orca does not speak Java Control Panel spinbox
+  changes
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de      German               Jochen Skulj
+    sv      Swedish              Daniel Nylander
+    en_GB   English/British      David Lodge
+
+==========
+
 2.19.2 - 13-May-2007
 
 General Orca:
