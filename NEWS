@@ -93,11 +93,17 @@ Firefox:
 * Fix for bug 441610 – Orca should identify bogus/redundant checkbox
   labels in Firefox.
 
+* Fix for bug 442083 - Orca skips over empty entries with Up/Down
+  Arrow in Firefox
+
 * Fix for bug 442691 - Form field structural navigation is slow to and
   in large lists
 
 * Fix for bug 443067 - sayAll by sentence skips content that is
   in HTML tables in Firefox
+
+* Fix for bug 443337 - Orca should not use the alt text if it is empty
+  to infer a link name
 
 * Fix for bug 443650 - Orca "loops" on certain pages in Firefox
 

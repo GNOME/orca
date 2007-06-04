@@ -12,7 +12,7 @@ PREPARE SOURCES FOR THE RELEASE:
 
 Modify these lines in ./configure.in:
 
-  ORCA_MAJOR_VERSION=2
+  ORCA_MAJOR_VERSION=3
   ORCA_MINOR_VERSION=19
   ORCA_MICRO_VERSION=0
 
@@ -29,13 +29,30 @@ BUILD THE RELEASE:
 
 ./autogen.sh && make && make install &&  make distcheck
 
+For sanity, you can run pychecker -- we still have a lot of work to do
+to eliminate the lint-ish warnings, but pychecker can help flag some
+bad problems we might not have caught during testing:
+
+pychecker -T -# 1000 /usr/lib/python2.4/site-packages/orca/*.py
+
+You should also make the pydoc:
+
+cd docs/pydoc
+<edit end of Makefile to uncomment the all: target>
+make
+<copy resulting *.html to 
+ ~/gnome-head/gnomeweb-wml/www.gnome.org/projects/orca/pydoc/
+ and check these in.  Also update the associated index.html
+ files and such to have latest version and such.  Should also
+ do the same thing on http://live.gnome.org/Orca/>
+
 
 TEST THE CANDIDATE:
 ------------------
 
 cd /tmp
-gunzip -c orca-2.19.0.tar.gz | tar xvf -
-cd orca-2.19.0
+gunzip -c orca-2.19.3.tar.gz | tar xvf -
+cd orca-2.19.3
 ./configure --prefix=/usr
 make
 sudo make install
@@ -48,26 +65,15 @@ TAG THE RELEASE:
 While in the trunk directory:
 
 svn commit
-svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_0
+svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_3
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-2.19.0.tar.gz wwalker@master.gnome.org:
+scp orca-2.19.3.tar.gz wwalker@master.gnome.org:
 ssh master.gnome.org
-install-module orca-2.19.0.tar.gz
-
-You should also:
-
-cd docs/pydoc
-<edit end of Makefile to uncomment the all: target>
-make
-<copy resulting *.html to 
- ~/gnome-head/gnomeweb-wml/www.gnome.org/projects/orca/pydoc/
- and check these in.  Also update the associated index.html
- files and such to have latest version and such.  Should also
- do the same thing on http://live.gnome.org/Orca/>
+install-module orca-2.19.3.tar.gz
 
 
 IDENTIFY TRUNK AS "PRE":
