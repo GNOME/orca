@@ -370,3 +370,38 @@ class Script(default.Script):
             return;
 
         default.Script.onTextInserted(self, event)        
+
+    def getDisplayedLabel(self, object):
+        """If there is an object labelling the given object, return the
+        text being displayed for the object labelling this object.
+        Otherwise, return None.
+
+        Argument:
+        - object: the object in question
+
+        Returns the string of the object labelling this object, or None
+        if there is nothing of interest here.
+        """
+        label = default.Script.getDisplayedLabel(self, object)
+        if not label and \
+           (object.role == rolenames.ROLE_TEXT or \
+            object.role == rolenames.ROLE_COMBO_BOX):
+            # This is a workaround for a common Java accessibility
+            # bug where a label next to a component is used to
+            # label the component. This relation is only obvious to
+            # a sighted person. The LABEL_FOR property is used to
+            # indicate the label refers to the component next to it.
+            # The workaround is to assume the label refers to the
+            # component if the label is the previous component and
+            # ends with a colon. We only do this for text and combo
+            # boxes since they are the most common Java component with
+            # this bug.
+            if object.index > 0:
+                prevSibling = object.parent.child(object.index-1)
+                if prevSibling and prevSibling.name and \
+                   prevSibling.role == rolenames.ROLE_LABEL:
+                    labelFor = prevSibling.name.rstrip(" ")
+                    if (labelFor.endswith(":")):
+                        return labelFor.rstrip(":")
+
+        return label
