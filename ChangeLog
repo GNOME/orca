@@ -1,5 +1,10 @@
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: Fix for bug 444148 - Orca doesn't speak form 
+        fields at landsend.com 
+
+2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/Gecko.py: check for obj before checking obj.text.
         This is in response to one of the stack traces Rich saw in
         comment #9 of bug 435199.

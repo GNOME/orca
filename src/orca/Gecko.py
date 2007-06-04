@@ -4706,7 +4706,8 @@ class Script(default.Script):
             theForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
             aboveForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
             aboveIsInForm = self.isSameObject(theForm, aboveForm)
-            formIsInAbove = self.isSameObject(theForm.parent, content[0])
+            formIsInAbove = theForm \
+                            and self.isSameObject(theForm.parent, content[0])
 
             # If the horizontal starting point of the object is the
             # same as the horizontal starting point of the text
