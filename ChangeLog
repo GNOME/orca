@@ -1,7 +1,17 @@
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
+        * src/orca/flat-review.py - fix for Bug 436658 - flat-review 
+	speaks "filler" for SwingSet2 demo/source tabs
+	
+2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
+
         * src/orca/J2SE-access-bridge.py - fix for Bug 437226 - Orca 
 	should handle Java labels and text where LABEL_FOR is not set
+	
+2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/flat_review.py: fix for Bug 436658 - flat-review 
+	speaks "filler" for SwingSet2 demo/source tabs
 	
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 

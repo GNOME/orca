@@ -831,6 +831,7 @@ class Context:
             and (accessible.role != rolenames.ROLE_EMBEDDED) \
             and (accessible.role != rolenames.ROLE_LABEL) \
             and (accessible.role != rolenames.ROLE_MENU) \
+            and (accessible.role != rolenames.ROLE_PAGE_TAB) \
             and accessible.childCount > 0:
             pass
         elif len(zones) == 0:
