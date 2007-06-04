@@ -1,5 +1,9 @@
 2007-06-04  Willie Walker <william.walker@sun.com>
 
+        * README, configure.in: mark as 2.19.4pre
+
+2007-06-04  Willie Walker <william.walker@sun.com>
+
         * NEWS, README, RELEASE_HOWTO, configure.in: final prep for
         v2.19.3
 
