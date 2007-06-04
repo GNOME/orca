@@ -767,9 +767,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             # Handle empty alt tags.
             #
-            lengthOfName = len(name[0].strip())
-            if (lengthOfName > 0) and (name != label):
-                utterances.extend(name)
+            if name:
+                lengthOfName = len(name[0].strip())
+                if (lengthOfName > 0) and (name != label):
+                    utterances.extend(name)
 
             # If there's no text for the link, expose part of the
             # URI to the user.
