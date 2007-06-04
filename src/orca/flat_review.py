@@ -783,10 +783,18 @@ class Context:
         # We really want the accessible text information.  But, if we have
         # an image, and it has a description, we can fall back on it.
         #
-        if (len(zones) == 0) \
-               and accessible.image \
-               and accessible.image.imageDescription \
-               and len(accessible.image.imageDescription):
+        if (len(zones) == 0) and accessible.image:
+            # Check for accessible.name, if it exists and has len > 0, use it
+            # Otherwise, do the same for accessible.description
+            # Otherwise, do the same for accessible.image.description
+            imageName = ""
+            if accessible.name and len(accessible.name):
+                imageName = accessible.name
+            elif accessible.description and len(accessible.description):
+                imageName = accessible.description
+            elif accessible.image.imageDescription and \
+                     len(accessible.image.imageDescription):
+                imageName = accessible.image.imageDescription
 
             [x, y] = accessible.image.getImagePosition(0)
             [width, height] = accessible.image.getImageSize()
@@ -802,7 +810,7 @@ class Context:
 
                 if (clipping[2] != 0) or (clipping[3] != 0):
                     zones.append(Zone(accessible,
-                                      accessible.image.imageDescription,
+                                      imageName,
                                       clipping[0],
                                       clipping[1],
                                       clipping[2],
