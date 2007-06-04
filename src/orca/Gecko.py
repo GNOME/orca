@@ -764,7 +764,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             label = self._getSpeechForObjectLabel(obj)
             utterances.extend(label)
             name = self._getSpeechForObjectName(obj)
-            if name != label:
+
+            # Handle empty alt tags.
+            #
+            lengthOfName = len(name[0].strip())
+            if (lengthOfName > 0) and (name != label):
                 utterances.extend(name)
 
             # If there's no text for the link, expose part of the
@@ -6097,11 +6101,14 @@ class Script(default.Script):
             if validExtents and extents != (0, 0, 0, 0):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
-                        lineExtents = extents
                         if currentChar != "\n" and extents[1] >= 0:
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
+                        elif obj.role == rolenames.ROLE_ENTRY:
+                            crossedLineBoundary = True
+                        if crossedLineBoundary:
+                            lineExtents = extents
                     else:
                         break
                 elif crossedLineBoundary \
@@ -6201,15 +6208,18 @@ class Script(default.Script):
             if validExtents and extents != (0, 0, 0, 0):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
-                        lineExtents = extents
                         if currentChar != "\n" and extents[1] >= 0:
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
-                        if crossedLineBoundary and arrowToLineBeginning:
-                            [lastObj, lastCharacterOffset] = \
-                                [obj, characterOffset]
-                            break
+                        elif obj.role == rolenames.ROLE_ENTRY:
+                            crossedLineBoundary = True
+                        if crossedLineBoundary:
+                            lineExtents = extents
+                            if arrowToLineBeginning:
+                                [lastObj, lastCharacterOffset] = \
+                                    [obj, characterOffset]
+                                break
                     else:
                         break
                 elif crossedLineBoundary \

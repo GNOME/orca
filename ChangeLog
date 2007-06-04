@@ -1,3 +1,11 @@
+2007-06-03  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py:
+        1. Fix for Bug 442083 - Orca skips over empty entries with Up/Down
+           Arrow in Firefox
+        2. Fix for Bug 443337 - Orca should not use the alt text if it is
+           empty to infer a link name
+
 2007-06-03  Willie Walker <william.walker@sun.com>
 
         * NEWS: initial prep for v2.19.3
