@@ -2341,7 +2341,7 @@ class Script(default.Script):
                       (settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE)
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj.text:
+        if obj and obj.text:
             # Attempt to locate the start of the current sentence by
             # searching to the left for a sentence terminator.  If we don't
             # find one, or if the "say all by" mode is not sentence, we'll
@@ -3404,7 +3404,7 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj.text:
+        if obj and obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous character.  But...maybe we want to
@@ -3431,7 +3431,7 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj.text:
+        if obj and obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous word.  But...maybe we want to
@@ -3470,7 +3470,7 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj.text:
+        if obj and obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the current line.  But...maybe we want to
@@ -4995,7 +4995,7 @@ class Script(default.Script):
         Returns [obj, characterOffset] that points to real content.
         """
 
-        if obj.text:
+        if obj and obj.text:
             unicodeText = self.getUnicodeText(obj)
             if characterOffset >= len(unicodeText):
                 return [obj, -1]
@@ -5049,7 +5049,7 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if obj.text:
+        if obj and obj.text:
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
@@ -5121,7 +5121,7 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if obj.text:
+        if obj and obj.text:
             unicodeText = self.getUnicodeText(obj)
             if startOffset == -1:
                 startOffset = len(unicodeText)
