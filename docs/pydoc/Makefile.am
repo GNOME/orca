@@ -73,8 +73,7 @@ DOC_FILES = \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \
-	orca.scripts.Thunderbird \
-	orca.scripts.users-admin
+	orca.scripts.Thunderbird
 
 if ENABLE_PYDOC
 all:

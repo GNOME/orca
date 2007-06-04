@@ -1,3 +1,9 @@
+2007-06-04  Willie Walker <william.walker@sun.com>
+
+	* po/POTFILES.in, docs/pydoc/Makefile.am: remove reference to
+	users-admin.py, which was removed as part of work on bug
+        376015 – [a11y] time-admin time servers table is not accessible
+	
 2007-06-03  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py:
