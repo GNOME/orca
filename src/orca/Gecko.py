@@ -5461,6 +5461,10 @@ class Script(default.Script):
         # _acc field of a Python accessible.]]]
         #
         documentFrame = self.getDocumentFrame()
+
+        if not documentFrame:
+            return
+
         self._documentFrameCaretContext[documentFrame._acc] = \
             [obj, characterOffset]
 
@@ -5481,6 +5485,10 @@ class Script(default.Script):
         # _acc field of a Python accessible.]]]
         #
         documentFrame = self.getDocumentFrame()
+
+        if not documentFrame:
+            return [None, -1]
+
         try:
             return self._documentFrameCaretContext[documentFrame._acc]
         except:
