@@ -1,3 +1,12 @@
+2007-06-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/focus_tracking_presenter.py:
+          Work on bug #435199 - Orca is bloating the swap partition, so 
+          the system is no more usable after a short time. Added in a
+          _cleanupCache() routine that gets called in _processObjectEvent() 
+          if we've just received a "object:children-changed:remove" event 
+          for the desktop.
+
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 444148 - Orca doesn't speak form 

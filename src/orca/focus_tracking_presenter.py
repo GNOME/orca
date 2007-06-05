@@ -294,6 +294,23 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         except:
             pass 
 
+    def _cleanupCache(self):
+        """Looks for defunct accessible objects in the cache and removes them.
+        """
+
+        objectsRemoved = 0
+        for obj in atspi.Accessible._cache.values():
+            try:
+                if obj.state.count(atspi.Accessibility.STATE_DEFUNCT):
+                    atspi.Accessible.deleteAccessible(obj)
+                    objectsRemoved += 1
+            except CORBA.COMM_FAILURE:
+                atspi.Accessible.deleteAccessible(obj)
+                objectsRemoved += 1
+
+        debug.println(debug.LEVEL_FINEST,
+                      "_cleanupCache: %d objects removed." % objectsRemoved)
+
     def _reclaimScripts(self):
         """Compares the list of known scripts to the list of known apps,
         deleting any scripts as necessary.
@@ -461,6 +478,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if event.source == atspi.Accessible.makeAccessible(
                                    self.registry.desktop):
                 self._reclaimScripts()
+                self._cleanupCache()
                 #import gc
                 #gc.collect()
                 #print "In process, garbage:", gc.garbage
