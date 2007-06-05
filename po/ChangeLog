@@ -1,4 +1,8 @@
-2007-05-27 Jochen Skulj <jochen@jochenskulj.de>
+2007-06-05  Jakub Friedl <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2007-05-27  Jochen Skulj  <jochen@jochenskulj.de>
 
 	* de.po: Fixed bug #440530
 
@@ -6,7 +10,7 @@
 
 	* sv.po: Updated Swedish translation.
 
-2007-05-20 Jochen Skulj <jochen@jochenskulj.de>
+2007-05-20  Jochen Skulj  <jochen@jochenskulj.de>
 
 	* de.po: Updated German translation
 
