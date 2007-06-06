@@ -1,3 +1,9 @@
+2007-06-06  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: check for obj before checking children.
+        This is in response to one of the stack traces Rich saw in
+        comment #16 of bug 435199.
+
 2007-06-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/script.py, src/orca/focus_tracking_presenter.py,

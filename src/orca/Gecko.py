@@ -5073,7 +5073,10 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if obj and obj.text:
+        if not obj:
+            return [None, -1]
+
+        if obj.text:
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
@@ -5145,7 +5148,10 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if obj and obj.text:
+        if not obj:
+            return [None, -1]
+
+        if obj.text:
             unicodeText = self.getUnicodeText(obj)
             if startOffset == -1:
                 startOffset = len(unicodeText)
