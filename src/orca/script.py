@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -36,7 +36,7 @@ instance of the Script subclass.  See default.py for an example."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import braillegenerator
@@ -202,6 +202,20 @@ class Script:
 
         return keyBindings
 
+    def getAppState(self):
+        """Returns an object that can be passed to setAppState.  This
+        object will be used by setAppState to restore any state
+        information that was being maintained by the script."""
+        return None
+
+    def setAppState(self, appState):
+        """Sets the application state using the given appState object.
+
+        Arguments:
+        - appState: an object obtained from getAppState
+        """
+        return
+        
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
     # of a __del__ method prevents the garbage collector from

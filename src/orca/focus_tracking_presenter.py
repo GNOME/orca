@@ -292,7 +292,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         try:
             orca_state.activeScript.activate()
         except:
-            pass 
+            pass
 
     def _cleanupCache(self):
         """Looks for defunct accessible objects in the cache and removes them.
@@ -377,8 +377,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
                     # Setup the user's application specific key bindings.
                     # (if any).
-                    # 
-                    if hasattr(self._knownAppSettings[name], 
+                    #
+                    if hasattr(self._knownAppSettings[name],
                                "overrideAppKeyBindings"):
                         script.overrideAppKeyBindings = \
                             self._knownAppSettings[name].overrideAppKeyBindings
@@ -445,7 +445,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         try:
             if event.source.role == rolenames.ROLE_TOOL_TIP:
-                # Check that it's okay to present tool tips. Always present 
+                # Check that it's okay to present tool tips. Always present
                 # tooltips initiated by the user pressing Control-F1 on the
                 # keyboard.
                 #
@@ -457,7 +457,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # Mouse move events don't update orca_state.lastInputEvent
                     # so it's possible the user accidentally nudged the
                     # mouse and generated another tooltip event. If the
-                    # current time minus the last keyboard event time is 
+                    # current time minus the last keyboard event time is
                     # greater than 0.2 seconds, than just ignore this tooltip
                     # event.
                     #
@@ -915,6 +915,23 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         if orca_state.activeScript:
             orca_state.activeScript.visualAppearanceChanged(event, obj)
 
+    def _saveAppStates(self):
+        """Saves script and application state information."""
+        self._appStateInfo = []
+        for script in self._knownScripts.values():
+            self._appStateInfo.append([script.app, script.getAppState()])
+
+    def _restoreAppStates(self):
+        """Restores script and application state information."""
+        try:
+            for [app, appState] in self._appStateInfo:
+                script = self._getScript(app)
+                script.setAppState(appState)
+        except:
+            pass
+
+        self._appStateInfo = None
+
     def activate(self):
         """Called when this presentation manager is activated."""
 
@@ -924,6 +941,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._oldAppSettings = None
         self._defaultScript  = None
 
+        self._restoreAppStates()
+        
         self.setActiveScript(self._getScript(None))
 
         # Tell BrlTTY which commands we care about.
@@ -950,6 +969,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
 
+        self._saveAppStates()
+        
         for eventType in self._listenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueueEvent,
                                                   eventType)

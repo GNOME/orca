@@ -478,7 +478,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # If this is a table with no children, then let the user know.
         #
         if not obj.childCount:
-            # Translators: this indicates that there are zero items in 
+            # Translators: this indicates that there are zero items in
             # a layered pane or table.
             #
             utterances.append(_("0 items"))
@@ -879,7 +879,7 @@ class Script(default.Script):
         # attributes associated with it (such as font type, size, style...)
         # This label denotes those attributes that you user would like
         # spoken when you ask to hear the text attributes associated with
-        # the current text (typically when the Insert-f key combination is 
+        # the current text (typically when the Insert-f key combination is
         # pressed).
         #
         self.textAttributesLabel = gtk.Label(_("Enabled Text Attributes:"))
@@ -911,7 +911,7 @@ class Script(default.Script):
         label = _("Speak spread sheet cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
-        gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton, 
+        gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
                                     speakCellCoordinates)
@@ -938,6 +938,29 @@ class Script(default.Script):
         prefs.writelines( \
                  "orca.scripts.StarOffice.speakCellCoordinates = %s\n" % \
                  speakCellCoordinates)
+
+    def getAppState(self):
+        """Returns an object that can be passed to setAppState.  This
+        object will be use by setAppState to restore any state information
+        that was being maintained by the script."""
+        return [default.Script.getAppState(self),
+                self.dynamicColumnHeaders,
+                self.dynamicRowHeaders]
+
+    def setAppState(self, appState):
+        """Sets the application state using the given appState object.
+
+        Arguments:
+        - appState: an object obtained from getAppState
+        """
+        try:
+            [defaultAppState,
+             self.dynamicColumnHeaders,
+             self.dynamicRowHeaders] = appState
+            default.Script.setAppState(self, defaultAppState)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            pass
 
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
@@ -1048,7 +1071,7 @@ class Script(default.Script):
         return inputLine
 
     def getSpreadSheetRowRange(self, obj):
-        """If this is spread sheet cell, return the start and end indices 
+        """If this is spread sheet cell, return the start and end indices
         of the spread sheet cells for the table that obj is in. Otherwise
         return the complete range (0, parent.table.nColumns).
 

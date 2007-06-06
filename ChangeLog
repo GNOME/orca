@@ -1,3 +1,11 @@
+2007-06-06  Willie Walker <william.walker@sun.com>
+
+        * src/orca/script.py, src/orca/focus_tracking_presenter.py,
+        src/orca/Gecko.py, src/orca/scripts/gaim.py,
+        src/orca/scripts/StarOffice.py: fix for bug 433951 - making
+        changes in the Orca Preferences dialog causes loss of script
+        state.
+
 2007-06-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-system-monitor.py: (new)
@@ -8,16 +16,16 @@
 2007-06-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/focus_tracking_presenter.py:
-          Work on bug #435199 - Orca is bloating the swap partition, so 
+          Work on bug #435199 - Orca is bloating the swap partition, so
           the system is no more usable after a short time. Added in a
-          _cleanupCache() routine that gets called in _processObjectEvent() 
-          if we've just received a "object:children-changed:remove" event 
+          _cleanupCache() routine that gets called in _processObjectEvent()
+          if we've just received a "object:children-changed:remove" event
           for the desktop.
 
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug 444148 - Orca doesn't speak form 
-        fields at landsend.com 
+        * src/orca/Gecko.py: Fix for bug 444148 - Orca doesn't speak form
+        fields at landsend.com
 
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -27,7 +35,7 @@
 
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Adjustment to the fix for Bug 443337 - Orca 
+        * src/orca/Gecko.py: Adjustment to the fix for Bug 443337 - Orca
         should not use the alt text if it is empty to infer a link name.
 
 2007-06-04  Willie Walker <william.walker@sun.com>

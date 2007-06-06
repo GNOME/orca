@@ -2277,6 +2277,29 @@ class Script(default.Script):
         prefs.writelines("orca.Gecko.minimumFindLength = %s\n" % value)
         minimumFindLength = value
 
+    def getAppState(self):
+        """Returns an object that can be passed to setAppState.  This
+        object will be use by setAppState to restore any state information
+        that was being maintained by the script."""
+        return [default.Script.getAppState(self),
+                self._documentFrameCaretContext,
+                self.lastTableCell]
+
+    def setAppState(self, appState):
+        """Sets the application state using the given appState object.
+
+        Arguments:
+        - appState: an object obtained from getAppState
+        """
+        try:
+            [defaultAppState,
+             self._documentFrameCaretContext,
+             self.lastTableCell] = appState
+            default.Script.setAppState(self, defaultAppState)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            pass
+
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
 

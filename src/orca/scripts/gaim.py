@@ -194,14 +194,14 @@ class Script(default.Script):
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
-        # Translators: If this checkbox is checked, then Orca will speak 
+        # Translators: If this checkbox is checked, then Orca will speak
         # the name of the chat room.
         #
         label = _("Speak Chat Room name")
         self.speakNameCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakNameCheckButton)
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
-        gtk.ToggleButton.set_active(self.speakNameCheckButton, 
+        gtk.ToggleButton.set_active(self.speakNameCheckButton,
                                     prefixChatMessage)
 
         return vbox
@@ -220,6 +220,31 @@ class Script(default.Script):
         prefs.writelines("\n")
         prefs.writelines("orca.scripts.gaim.prefixChatMessage = %s\n" % \
                          prefixChatMessage)
+
+    def getAppState(self):
+        """Returns an object that can be passed to setAppState.  This
+        object will be use by setAppState to restore any state information
+        that was being maintained by the script."""
+        return [default.Script.getAppState(self),
+                self.previousMessages,
+                self.previousChatRoomNames,
+                self.chatAreas]
+
+    def setAppState(self, appState):
+        """Sets the application state using the given appState object.
+
+        Arguments:
+        - appState: an object obtained from getAppState
+        """
+        try:
+            [defaultAppState,
+             self.previousMessages,
+             self.previousChatRoomNames,
+             self.chatAreas] = appState
+            default.Script.setAppState(self, defaultAppState)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            pass
 
     def togglePrefix(self, inputEvent):
         """ Toggle whether we prefix chat room messages with the name of
