@@ -1,3 +1,10 @@
+2007-06-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gnome-system-monitor.py: (new)
+          src/orca/scripts/Makefile.am:
+          Fixed bug #433818 – Messages on system tab of gnome-system-monitor
+          are not reported by Orca.
+
 2007-06-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/focus_tracking_presenter.py:

@@ -14,6 +14,7 @@ orca_python_PYTHON = \
 	gnome-panel.py \
 	gnome-power-manager.py \
 	gnome-search-tool.py \
+	gnome-system-monitor.py \
 	gnome-terminal.py \
 	gnome-window-properties.py \
 	liferea.py \
