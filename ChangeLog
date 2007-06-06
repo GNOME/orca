@@ -1,3 +1,8 @@
+2007-06-06  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/flat-review.py: fix for Bug 435553 - KeyError: 
+	'startOffset' during Java Control Panel flat-review
+
 2007-06-06  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: check for obj before checking children.

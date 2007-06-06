@@ -318,9 +318,12 @@ class Line:
             self.brailleRegions = []
             brailleOffset = 0
             for zone in self.zones:
-                if (zone.accessible.role == rolenames.ROLE_TEXT) \
-                   or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
-                   or (zone.accessible.role == rolenames.ROLE_TERMINAL):
+                # The 'isinstance(zone, TextZone)' test is a sanity check
+                # to handle problems with Java text. See Bug 435553.
+                if isinstance(zone, TextZone) and \
+                   ((zone.accessible.role == rolenames.ROLE_TEXT) \
+                    or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
+                    or (zone.accessible.role == rolenames.ROLE_TERMINAL)):
                     region = braille.ReviewText(zone.accessible,
                                                 zone.string,
                                                 zone.startOffset,
