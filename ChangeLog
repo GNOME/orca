@@ -1,10 +1,10 @@
 2007-06-11  Willie Walker <william.walker@sun.com>
 
-        * src/orca/settings.py, src/orca/orca.py, src/orca/default.py:
-        add settings.debugMemoryUsage property and keystrokes for
-        debugging memory usage if settings.debugMemoryUsage is True.
-        Orca+Ctrl+F8 prints out a brief message to the console whereas
-        Orca+Shift+Ctrl+F8 prints out detailed information.
+        * src/orca/settings.py, src/orca/orca.py, src/orca/default.py: As
+	part of bug 435199, add settings.debugMemoryUsage property and
+	keystrokes for debugging memory usage if settings.debugMemoryUsage
+	is True.  Orca+Ctrl+F8 prints out a brief message to the console
+	whereas Orca+Shift+Ctrl+F8 prints out detailed information.
 
 2007-06-06  Lynn MonSanto <lynn.monsanto@sun.com>
 
