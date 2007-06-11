@@ -1,7 +1,15 @@
+2007-06-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/settings.py, src/orca/orca.py, src/orca/default.py:
+        add settings.debugMemoryUsage property and keystrokes for
+        debugging memory usage if settings.debugMemoryUsage is True.
+        Orca+Ctrl+F8 prints out a brief message to the console whereas
+        Orca+Shift+Ctrl+F8 prints out detailed information.
+
 2007-06-06  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/flat-review.py: fix for Bug 435553 - KeyError: 
-	'startOffset' during Java Control Panel flat-review
+        * src/orca/flat-review.py: fix for Bug 435553 - KeyError:
+        'startOffset' during Java Control Panel flat-review
 
 2007-06-06  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -58,22 +66,22 @@
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/flat-review.py - fix for Bug 436658 - flat-review
-	speaks "filler" for SwingSet2 demo/source tabs
+        speaks "filler" for SwingSet2 demo/source tabs
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/J2SE-access-bridge.py - fix for Bug 437226 - Orca
-	should handle Java labels and text where LABEL_FOR is not set
+        should handle Java labels and text where LABEL_FOR is not set
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/flat_review.py: fix for Bug 436658 - flat-review
-	speaks "filler" for SwingSet2 demo/source tabs
+        speaks "filler" for SwingSet2 demo/source tabs
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/flat_review.py: fix for Bug 436661 - flat-review
-	speaks SwingSet2 toolbar image paths instead of item names
+        speaks SwingSet2 toolbar image paths instead of item names
 
 2007-06-04  Willie Walker <william.walker@sun.com>
 

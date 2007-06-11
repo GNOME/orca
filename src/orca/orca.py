@@ -70,6 +70,13 @@ from input_event import InputEventHandler
 
 from orca_i18n import _           # for gettext support
 
+if settings.debugMemoryUsage:
+    import gc
+    gc.set_debug(gc.DEBUG_UNCOLLECTABLE \
+                 | gc.DEBUG_INSTANCES \
+                 | gc.DEBUG_OBJECTS \
+                 | gc.DEBUG_SAVEALL)
+
 # The user-settings module (see loadUserSettings).
 #
 _userSettings = None
@@ -766,7 +773,7 @@ def _processKeyboardEvent(event):
     orca_state.lastInputEvent = keyboardEvent
 
     # If this is a key event for a non-modifier key, save a handle to it.
-    # This is needed to help determine user actions when a multi-key chord 
+    # This is needed to help determine user actions when a multi-key chord
     # has been pressed, and we might get the key events in different orders.
     # See comment #15 of bug #435201 for more details.
     #

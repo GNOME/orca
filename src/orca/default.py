@@ -653,6 +653,11 @@ class Script(script.Script):
                 Script.printHierarchyHandler,
                 "Prints debug information about the application with focus.")
 
+        self.inputEventHandlers["printMemoryUsageHandler"] = \
+            input_event.InputEventHandler(
+                Script.printMemoryUsageHandler,
+                "Prints memory usage information.")
+
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
         passed as argument
@@ -1072,25 +1077,25 @@ class Script(script.Script):
                 "bracketright",
                 (1 << settings.MODIFIER_ORCA
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["findPreviousHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
@@ -1103,86 +1108,86 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "j",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "j",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "k",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "k",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "m",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "m",
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
@@ -1312,8 +1317,8 @@ class Script(script.Script):
                 "space",
                 (1 << settings.MODIFIER_ORCA
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["appPreferencesSettingsHandler"]))
 
         keyBindings.add(
@@ -1348,17 +1353,28 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "F7",
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["printAncestryHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F8",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["printHierarchyHandler"]))
+
+        if settings.debugMemoryUsage:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    "F8",
+                    (1 << settings.MODIFIER_ORCA
+                     | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                    (1 << settings.MODIFIER_ORCA
+                     | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                    self.inputEventHandlers["printMemoryUsageHandler"]))
 
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
@@ -3860,22 +3876,138 @@ class Script(script.Script):
 #                                                                      #
 ########################################################################
 
-    def printAppsHandler(self, script=None, inputEvent=None):
+    def _detectCycle(self, obj, visitedObjs, indent=""):
+        import gc
+        print indent, `obj`
+        visitedObjs.append[obj]
+        for referent in gc.get_referents(obj):
+            try:
+                if visitedObjs[referent]:
+                    print indent, "CYCLE!!!!", `referent`
+            except:
+                pass
+            self._detectCycle(referent, visitedObjs, indent + "+")
+        del visitedObjs[obj]
+
+    def printMemoryUsageHandler(self, inputEvent):
+        """Prints memory usage information."""
+
+        import sys
+        import inspect
+        import gc
+        gc.collect()
+
+        if inputEvent \
+            and isinstance(inputEvent, input_event.KeyboardEvent) \
+            and (inputEvent.modifiers \
+                 & (1 << atspi.Accessibility.MODIFIER_SHIFT)):
+            detailed = True
+        else:
+            detailed = False
+
+        focusTracker = \
+            orca._PRESENTATION_MANAGERS[orca._currentPresentationManager]
+
+        try:
+            print "NUM SCRIPTS=%d" % len(focusTracker._knownScripts)
+        except:
+            pass
+
+        try:
+            print "NUM ACCESSIBLES=%d" % len(atspi.Accessible._cache)
+        except:
+            pass
+
+        oo = gc.get_objects()
+        print "NUM OBJECTS=%d" % len(oo)
+
+        if detailed:
+            exclude = [
+                "function",
+                "type",
+                "list",
+                "dict",
+                "tuple",
+                "wrapper_descriptor",
+                "module",
+                "method_descriptor",
+                "member_descriptor",
+                "instancemethod",
+                "builtin_function_or_method",
+                "frame",
+                "classmethod",
+                "classmethod_descriptor",
+                "_Environ",
+                "MemoryError",
+                "_Printer",
+                "_Helper",
+                "getset_descriptor",
+                "weakref",
+                "property",
+                "cell",
+                "staticmethod",
+                "EventListener",
+                "KeystrokeListener",
+                "KeyBinding",
+                "InputEventHandler",
+                "Rolename"
+                ]
+
+            for o in oo:
+                if getattr(o, "__class__", None):
+                    name = o.__class__.__name__
+                    if name not in exclude:
+                        try:
+                            filename = inspect.getabsfile(o.__class__)
+                            filename.index("orca")
+                            print "Object :", name, `o`
+                        except:
+                            pass
+
+            try:
+                del o
+                del name
+                del filename
+                del exclude
+            except:
+                pass
+
+        del oo
+
+        gc.collect()
+        print "LEN GARBAGE=%d" % len(gc.garbage)
+
+        if detailed:
+            for obj in gc.garbage:
+                try:
+                    if isinstance(obj, atspi.Accessible):
+                        print " GARBAGE ACCESSIBLE", obj, sys.getrefcount(obj)
+                        #print "  REFERRERS:"
+                        #for referer in gc.get_referrers(obj):
+                        #    print "   ", referer
+                    elif isinstance(obj, script.Script):
+                        print " GARBAGE SCRIPT", obj, obj.name, \
+                              sys.getrefcount(obj)
+                        self._detectCycle(obj, {}, "+")
+                except:
+                    debug.printException(debug.LEVEL_OFF)
+
+    def printAppsHandler(self, inputEvent=None):
         """Prints a list of all applications to stdout."""
         self.printApps()
         return True
 
-    def printActiveAppHandler(self, script=None, inputEvent=None):
+    def printActiveAppHandler(self, inputEvent=None):
         """Prints the currently active application."""
         self.printActiveApp()
         return True
 
-    def printAncestryHandler(self, script=None, inputEvent=None):
+    def printAncestryHandler(self, inputEvent=None):
         """Prints the ancestry for the current locusOfFocus"""
         self.printAncestry(orca_state.locusOfFocus)
         return True
 
-    def printHierarchyHandler(self, script=None, inputEvent=None):
+    def printHierarchyHandler(self, inputEvent=None):
         """Prints the application for the current locusOfFocus"""
         if orca_state.locusOfFocus:
             self.printHierarchy(orca_state.locusOfFocus.app,
