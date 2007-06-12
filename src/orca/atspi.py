@@ -823,12 +823,15 @@ class Accessible:
                 self.accessible.unref()
             except:
                 pass
+
             try:
                 Accessible.deleteAccessible(self._acc)
-                self.accessible = None
-                self._acc = None
             except:
                 pass
+
+            self.accessible = None
+            self._acc = None
+            self.app = None
 
     def __get_name(self):
         """Returns the object's accessible name as a string.

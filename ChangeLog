@@ -1,10 +1,20 @@
 2007-06-11  Willie Walker <william.walker@sun.com>
 
+        * src/orca/atspi.py, src/orca/orca.py,
+        src/orca/focus_tracking_presenter.py, src/orca/default.py: more
+        work on bug 435199 to try to detect object reference cycles and
+        what is causing things to not be collected by the garbage
+        collector.  No brilliant insight yet.  Not even insight that
+        could illuminate the home of a plague carrying flea.  :-(
+        Things do not seem horribly bad, though.
+
+2007-06-11  Willie Walker <william.walker@sun.com>
+
         * src/orca/settings.py, src/orca/orca.py, src/orca/default.py: As
-	part of bug 435199, add settings.debugMemoryUsage property and
-	keystrokes for debugging memory usage if settings.debugMemoryUsage
-	is True.  Orca+Ctrl+F8 prints out a brief message to the console
-	whereas Orca+Shift+Ctrl+F8 prints out detailed information.
+        part of bug 435199, add settings.debugMemoryUsage property and
+        keystrokes for debugging memory usage if settings.debugMemoryUsage
+        is True.  Orca+Ctrl+F8 prints out a brief message to the console
+        whereas Orca+Shift+Ctrl+F8 prints out detailed information.
 
 2007-06-06  Lynn MonSanto <lynn.monsanto@sun.com>
 

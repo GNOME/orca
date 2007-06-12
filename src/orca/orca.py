@@ -72,9 +72,10 @@ from orca_i18n import _           # for gettext support
 
 if settings.debugMemoryUsage:
     import gc
-    gc.set_debug(gc.DEBUG_UNCOLLECTABLE \
-                 | gc.DEBUG_INSTANCES \
-                 | gc.DEBUG_OBJECTS \
+    gc.set_debug(gc.DEBUG_UNCOLLECTABLE
+                 | gc.DEBUG_COLLECTABLE
+                 | gc.DEBUG_INSTANCES
+                 | gc.DEBUG_OBJECTS
                  | gc.DEBUG_SAVEALL)
 
 # The user-settings module (see loadUserSettings).

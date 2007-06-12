@@ -304,12 +304,28 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if obj.state.count(atspi.Accessibility.STATE_DEFUNCT):
                     atspi.Accessible.deleteAccessible(obj)
                     objectsRemoved += 1
+                else:
+                    # Try to force a COMM_FAILURE
+                    #
+                    obj.toString()
             except CORBA.COMM_FAILURE:
                 atspi.Accessible.deleteAccessible(obj)
                 objectsRemoved += 1
 
         debug.println(debug.LEVEL_FINEST,
                       "_cleanupCache: %d objects removed." % objectsRemoved)
+
+    def _cleanupGarbage(self):
+        """Cleans up garbage on the heap."""
+        import gc
+        gc.collect()
+        for obj in gc.garbage:
+            try:
+                if isinstance(obj, atspi.Accessible):
+                    gc.garbage.remove(obj)
+                    obj.__del__()
+            except:
+                pass
 
     def _reclaimScripts(self):
         """Compares the list of known scripts to the list of known apps,
@@ -327,16 +343,20 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             apps = []
             desktop = self.registry.desktop
             for i in range(0, desktop.childCount):
-                acc = desktop.getChildAtIndex(i)
-                app = atspi.Accessible.makeAccessible(acc)
-                if app:
-                    apps.insert(0, app)
+                try:
+                    acc = desktop.getChildAtIndex(i)
+                    app = atspi.Accessible.makeAccessible(acc)
+                    if app:
+                        apps.insert(0, app)
+                except:
+                    pass
 
             for app in self._knownScripts.keys():
                 if apps.count(app) == 0:
                     script = self._knownScripts[app]
                     self._deregisterEventListeners(script)
                     del self._knownScripts[app]
+                    del app
                     del script
         except:
             debug.printException(debug.LEVEL_FINEST)
@@ -479,11 +499,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                    self.registry.desktop):
                 self._reclaimScripts()
                 self._cleanupCache()
-                #import gc
-                #gc.collect()
-                #print "In process, garbage:", gc.garbage
-                #for obj in gc.garbage:
-                #    print "   referrers:", obj, gc.get_referrers(obj)
+                if settings.debugMemoryUsage:
+                    self._cleanupGarbage()
             return
 
         try:
@@ -942,7 +959,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._defaultScript  = None
 
         self._restoreAppStates()
-        
+
         self.setActiveScript(self._getScript(None))
 
         # Tell BrlTTY which commands we care about.
@@ -970,7 +987,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         """Called when this presentation manager is deactivated."""
 
         self._saveAppStates()
-        
+
         for eventType in self._listenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueueEvent,
                                                   eventType)

@@ -3876,24 +3876,78 @@ class Script(script.Script):
 #                                                                      #
 ########################################################################
 
+    def _isInterestingObj(self, obj):
+        import inspect
+
+        interesting = False
+
+        if getattr(obj, "__class__", None):
+            name = obj.__class__.__name__
+            if name not in ["function",
+                            "type",
+                            "list",
+                            "dict",
+                            "tuple",
+                            "wrapper_descriptor",
+                            "module",
+                            "method_descriptor",
+                            "member_descriptor",
+                            "instancemethod",
+                            "builtin_function_or_method",
+                            "frame",
+                            "classmethod",
+                            "classmethod_descriptor",
+                            "_Environ",
+                            "MemoryError",
+                            "_Printer",
+                            "_Helper",
+                            "getset_descriptor",
+                            "weakref",
+                            "property",
+                            "cell",
+                            "staticmethod",
+                            "EventListener",
+                            "KeystrokeListener",
+                            "KeyBinding",
+                            "InputEventHandler",
+                            "Rolename"]:
+                try:
+                    filename = inspect.getabsfile(obj.__class__)
+                    if filename.index("orca"):
+                        interesting = True
+                except:
+                    pass
+
+        return interesting
+
     def _detectCycle(self, obj, visitedObjs, indent=""):
+        """Attempts to discover a cycle in object references."""
+
+        # [[[TODO: WDW - not sure this really works.]]]
+
         import gc
-        print indent, `obj`
-        visitedObjs.append[obj]
+        visitedObjs.append(obj)
         for referent in gc.get_referents(obj):
             try:
-                if visitedObjs[referent]:
-                    print indent, "CYCLE!!!!", `referent`
+                if visitedObjs.index(referent):
+                    if self._isInterestingObj(referent):
+                        print indent, "CYCLE!!!!", `referent`
+                    break
             except:
                 pass
-            self._detectCycle(referent, visitedObjs, indent + "+")
-        del visitedObjs[obj]
+            self._detectCycle(referent, visitedObjs, " " + indent)
+        visitedObjs.remove(obj)
+
+    def _printObjInfo(self, indent, obj):
+        """Prints information about an object, if we care about it."""
+        import inspect
+        if self._isInterestingObj(obj):
+            print indent, obj.__class__.__name__, `obj`
 
     def printMemoryUsageHandler(self, inputEvent):
         """Prints memory usage information."""
 
         import sys
-        import inspect
         import gc
         gc.collect()
 
@@ -3910,69 +3964,49 @@ class Script(script.Script):
 
         try:
             print "NUM SCRIPTS=%d" % len(focusTracker._knownScripts)
+            for script in focusTracker._knownScripts:
+                try:
+                    self._printObjInfo(" script(%s):" % script.name, script)
+                except:
+                    pass
         except:
             pass
 
         try:
+            focusTracker._cleanupCache()
             print "NUM ACCESSIBLES=%d" % len(atspi.Accessible._cache)
+            if detailed:
+                for obj in atspi.Accessible._cache.values():
+                    try:
+                        if not (obj in self._oldAccessibleCache):
+                            self._printObjInfo(" NEW %s:" % obj.toString(),
+                                               obj)
+                        else:
+                            self._printObjInfo(" %s:" % obj.toString(),
+                                               obj)
+                    except:
+                        try:
+                            self._printObjInfo(" %s:" % obj.toString(),
+                                               obj)
+                        except:
+                            debug.printException(debug.LEVEL_OFF)
         except:
             pass
 
-        oo = gc.get_objects()
-        print "NUM OBJECTS=%d" % len(oo)
-
         if detailed:
-            exclude = [
-                "function",
-                "type",
-                "list",
-                "dict",
-                "tuple",
-                "wrapper_descriptor",
-                "module",
-                "method_descriptor",
-                "member_descriptor",
-                "instancemethod",
-                "builtin_function_or_method",
-                "frame",
-                "classmethod",
-                "classmethod_descriptor",
-                "_Environ",
-                "MemoryError",
-                "_Printer",
-                "_Helper",
-                "getset_descriptor",
-                "weakref",
-                "property",
-                "cell",
-                "staticmethod",
-                "EventListener",
-                "KeystrokeListener",
-                "KeyBinding",
-                "InputEventHandler",
-                "Rolename"
-                ]
+            self._oldAccessibleCache = []
+            self._oldAccessibleCache.extend(atspi.Accessible._cache.values())
 
-            for o in oo:
-                if getattr(o, "__class__", None):
-                    name = o.__class__.__name__
-                    if name not in exclude:
-                        try:
-                            filename = inspect.getabsfile(o.__class__)
-                            filename.index("orca")
-                            print "Object :", name, `o`
-                        except:
-                            pass
-
+        objects = gc.get_objects()
+        print "NUM OBJECTS=%d" % len(objects)
+        if detailed:
+            for obj in objects:
+                self._printObjInfo(" ", obj)
             try:
-                del o
-                del name
-                del filename
-                del exclude
+                del obj
             except:
                 pass
-
-        del oo
+        del objects
 
         gc.collect()
         print "LEN GARBAGE=%d" % len(gc.garbage)
@@ -3982,13 +4016,16 @@ class Script(script.Script):
                 try:
                     if isinstance(obj, atspi.Accessible):
                         print " GARBAGE ACCESSIBLE", obj, sys.getrefcount(obj)
-                        #print "  REFERRERS:"
-                        #for referer in gc.get_referrers(obj):
-                        #    print "   ", referer
+                        try:
+                            print "  name:", obj.name
+                            print "  role:", obj.role
+                        except:
+                            pass
+                        #self._detectCycle(obj, [], "   referent:")
                     elif isinstance(obj, script.Script):
-                        print " GARBAGE SCRIPT", obj, obj.name, \
-                              sys.getrefcount(obj)
-                        self._detectCycle(obj, {}, "+")
+                        print " GARBAGE SCRIPT", obj, sys.getrefcount(obj)
+                        print "  name:", obj.name
+                        #self._detectCycle(obj, [], "   referent:")
                 except:
                     debug.printException(debug.LEVEL_OFF)
 
