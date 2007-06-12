@@ -204,6 +204,13 @@ def _getOrcaModifierKeysString(orcaModifierKeys):
     else:
         return "orca.settings.LAPTOP_MODIFIER_KEYS"
 
+def _getTextAttributesString(enabledTextAttributes):
+    """ Returns a string that represents the enabled text attributes 
+    passed in.
+    """
+
+    return "\"" + enabledTextAttributes + "\""
+
 def _getVerbosityString(verbosityLevel):
     """Returns a string that represents the verbosity level passed in."""
     if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
@@ -494,6 +501,8 @@ def _getValueForKey(prefsDict, key):
             value = _getKeyboardLayoutString(prefsDict[key])
         elif key == "orcaModifierKeys":
             value = _getOrcaModifierKeysString(prefsDict[key])
+        elif key == "enabledTextAttributes":
+            value = _getTextAttributesString(prefsDict[key])
         else:
             value = prefsDict[key]
 

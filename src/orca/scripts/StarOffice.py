@@ -870,38 +870,6 @@ class Script(default.Script):
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
 
-        # Text entry and label for "Enabled Text Attributes:".
-        #
-        hbox = gtk.HBox(False, 0)
-        gtk.Widget.show(hbox)
-
-        # Translators: All text in StarOffice/OpenOffice has a set of
-        # attributes associated with it (such as font type, size, style...)
-        # This label denotes those attributes that you user would like
-        # spoken when you ask to hear the text attributes associated with
-        # the current text (typically when the Insert-f key combination is
-        # pressed).
-        #
-        self.textAttributesLabel = gtk.Label(_("Enabled Text Attributes:"))
-        gtk.Widget.show(self.textAttributesLabel)
-        gtk.Box.pack_start(hbox, self.textAttributesLabel, False, False, 5)
-
-        self.enabledTextAttributes = gtk.Entry()
-        gtk.Widget.show(self.enabledTextAttributes)
-        self.enabledTextAttributes.set_text(orca.settings.enabledTextAttributes)
-        gtk.Box.pack_end(hbox, self.enabledTextAttributes, True, True, 5)
-
-        acc_targets = []
-        acc_src = self.textAttributesLabel.get_accessible()
-        relation_set = acc_src.ref_relation_set()
-        acc_targ = self.enabledTextAttributes.get_accessible()
-        acc_targets.append(acc_targ)
-        relation = atk.Relation(acc_targets, 1)
-        relation.set_property('relation-type', atk.RELATION_LABEL_FOR)
-        relation_set.add(relation)
-
-        gtk.Box.pack_start(vbox, hbox, False, False, 0)
-
         # Checkbox for "Speak spread sheet cell coordinates".
         #
         # Translators: If checked, then Orca will speak the coordinates
@@ -928,11 +896,7 @@ class Script(default.Script):
 
         global speakCellCoordinates
 
-        settings.enabledTextAttributes = self.enabledTextAttributes.get_text()
         prefs.writelines("\n")
-        prefs.writelines("orca.settings.enabledTextAttributes = '%s'\n" %  \
-                         settings.enabledTextAttributes)
-
         speakCellCoordinates = \
                  self.speakCellCoordinatesCheckButton.get_active()
         prefs.writelines( \

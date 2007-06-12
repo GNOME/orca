@@ -1,3 +1,17 @@
+2007-06-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #376515 – Add GUI support for the new customizable 
+          text-attribute feature. There is a new "Text Attributes" pane
+          in the Orca preferences dialog for this. It can also be set on
+          an individual app-specific basis.
+
+          (Thanks to Joanie for her extensive help with this new feature).
+
 2007-06-11  Willie Walker <william.walker@sun.com>
 
         * src/orca/atspi.py, src/orca/orca.py,

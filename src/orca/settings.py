@@ -129,6 +129,7 @@ userCustomizableSettings = [
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
+    "enabledTextAttributes",
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -396,6 +397,10 @@ speakBlankLines         = True
 # the current one.
 #
 readTableCellRow    = True
+
+# The complete list of possible text attributes.
+#
+allTextAttributes = "bg-color:; bg-full-height:; bg-stipple:; direction:; editable:; family-name:; fg-color:; fg-stipple:; font-effect:none; indent:0; invisible:; justification:left; language:; left-margin:; line-height:100%; paragraph-style:Default; pixels-above-lines:; pixels-below-lines:; pixels-inside-wrap:; right-margin:; rise:; scale:; size:; stretch:; strikethrough:false; style:normal; text-decoration:none; text-rotation:0; text-shadow:none; underline:none; variant:; vertical-align:baseline; weight:400; wrap-mode:; writing-mode:lr-tb;"
 
 # The default set of text attributes to speak to the user. Specific
 # application scripts (or individual users can override these values if

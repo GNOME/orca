@@ -60,6 +60,7 @@ OS = None
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
+(IS_SPOKEN, NAME, VALUE) = range(3)
 
 class orcaSetupGUI(orca_glade.GladeWrapper):
 
@@ -744,6 +745,174 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self._setupSpeechSystems(factories)
         self.initializingSpeech = False
 
+    def _setTextAttributes(self, view, setAttributes, state, moveToTop=False):
+        """Given a set of text attributes, update the model used by the
+        text attribute tree view.
+
+        Arguments:
+        - view: the text attribute tree view.
+        - setAttributes: the list of attributes to update.
+        - state: the state (True or False) that they all should be set to.
+        - moveToTop: if True, move these attributes to the top of the list.
+        """
+
+        model = view.get_model()
+        view.set_model(None)
+
+        [attrList, attrDict] = \
+            orca_state.activeScript.textAttrsToDictionary(setAttributes)
+        [allAttrList, allAttrDict] = \
+            orca_state.activeScript.textAttrsToDictionary( \
+                                        settings.allTextAttributes)
+
+        for i in range(0, len(attrList)):
+            for path in range(0, len(allAttrList)):
+                if attrList[i] == model[path][NAME]:
+                    iter = model.get_iter(path)
+                    model.set(iter, IS_SPOKEN, state,
+                                    NAME, attrList[i],
+                                    VALUE, attrDict[attrList[i]])
+                    if moveToTop:
+                        iter = model.get_iter(path)
+                        otherIter = model.get_iter(i)
+                        model.move_before(iter, otherIter)
+                    break
+
+        view.set_model(model)
+
+    def _updateTextDictEntry(self):
+        """The user has updated the text attribute list in some way. Update
+        the "enabledTextAttributes" preference string to reflect the current
+        state of the text attribute list.
+        """
+
+        model = self.getTextAttributesView.get_model()
+        attrStr = ""
+        noRows = model.iter_n_children(None)
+        for path in range(0, noRows):
+            if model[path][IS_SPOKEN]:
+                attrStr += model[path][NAME] + ":" + model[path][VALUE] + "; "
+
+        self.prefsDict["enabledTextAttributes"] = attrStr
+
+    def textAttributeToggled(self, cell, path, model):
+        """The user has toggled the state of one of the text attribute
+        checkboxes. Update our model to reflect this, then update the
+        "enabledTextAttributes" preference string.
+
+        Arguments:
+        - cell: the cell that changed.
+        - path: the path of that cell.
+        - model: the model that the cell is part of.
+        """
+
+        iter = model.get_iter(path)
+        model.set(iter, IS_SPOKEN, not model[path][IS_SPOKEN])
+        self._updateTextDictEntry()
+
+    def textAttrValueEdited(self, cell, path, new_text, model):
+        """The user has edited the value of one of the text attributes.
+        Update our model to reflect this, then update the 
+        "enabledTextAttributes" preference string.
+
+        Arguments:
+        - cell: the cell that changed.
+        - path: the path of that cell. 
+        - new_text: the new text attribute value string.
+        - model: the model that the cell is part of.
+        """
+
+        iter = model.get_iter(path)
+        model.set(iter, VALUE, new_text)
+        self._updateTextDictEntry()
+
+    def textAttrCursorChanged(self, widget):
+        """Set the search column in the text attribute tree view
+        depending upon which column the user currently has the cursor in.
+        """
+
+        [path, focusColumn] = self.getTextAttributesView.get_cursor()
+        if focusColumn:
+            noColumns = len(self.getTextAttributesView.get_columns())
+            for i in range(0, noColumns):
+                col = self.getTextAttributesView.get_column(i)
+                if focusColumn == col:
+                    self.getTextAttributesView.set_search_column(i+1)
+                    break
+
+    def _createTextAttributesTreeView(self):
+        """Create the text attributes tree view. The view is the
+        textAttributesTreeView GtkTreeView widget. The view will consist
+        of a list containing three columns:
+          IS_SPOKEN - a checkbox whose state indicates whether this text
+                      attribute will be spoken or not.
+          NAME      - the text attribute name.
+          VALUE     - if set, (and this attributes is enabled for speaking),
+                      then this attribute will be spoken unless it equals 
+                      this value.
+        """
+
+        self.getTextAttributesView = \
+                       self.widgets.get_widget("textAttributesTreeView")
+        model = gtk.ListStore(gobject.TYPE_BOOLEAN,
+                              gobject.TYPE_STRING,
+                              gobject.TYPE_STRING)
+
+        # Initially setup the list store model based on the values of all 
+        # the known text attributes.
+        #
+        [allAttrList, allAttrDict] = \
+            orca_state.activeScript.textAttrsToDictionary( \
+                                        settings.allTextAttributes)
+        for i in range(0, len(allAttrList)):
+            iter = model.append()
+            model.set(iter, IS_SPOKEN, False,
+                            NAME, allAttrList[i],
+                            VALUE, allAttrDict[allAttrList[i]])
+
+        self.getTextAttributesView.set_model(model)
+
+        # Attribute Name column (IS_SPOKEN and NAME).
+        #
+        column = gtk.TreeViewColumn(_("Attribute Name"))
+        column.set_min_width(250)
+        column.set_resizable(True)
+        renderer = gtk.CellRendererToggle()
+        column.pack_start(renderer, False)
+        column.set_attributes(renderer, active=IS_SPOKEN)
+        renderer.connect("toggled",
+                         self.textAttributeToggled,
+                         model)
+
+        renderer = gtk.CellRendererText()
+        column.pack_end(renderer, True)
+        column.set_attributes(renderer, text=NAME)
+
+        self.getTextAttributesView.insert_column(column, 0)
+        column.clicked()
+
+        # Attribute Value column (VALUE)
+        #
+        column = gtk.TreeViewColumn(_("Speak Unless"))
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        column.pack_end(renderer, True)
+        column.set_attributes(renderer, text=VALUE)
+        renderer.connect("edited", self.textAttrValueEdited, model)
+
+        self.getTextAttributesView.insert_column(column, 1)
+
+        # Check all the enabled (spoken) text attributes.
+        #
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.enabledTextAttributes, True, True)
+
+        # Connect a handler for when the user changes columns within the
+        # view, so that we can adjust the search column for item lookups.
+        #
+        self.getTextAttributesView.connect("cursor_changed",
+                                           self.textAttrCursorChanged)
+
     def _initGUIState(self):
         """Adjust the settings of the various components on the
         configuration GUI depending upon the users preferences.
@@ -980,6 +1149,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         targetDisplay = prefs["magTargetDisplay"]
         self.magTargetDisplayEntry.set_text(targetDisplay)
 
+        # Text attributes pane.
+        #
+        self._createTextAttributesTreeView()
+
         # General pane.
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
@@ -1042,6 +1215,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     orca_state.lastInputEventTimestamp)
             except AttributeError:
                 debug.printException(debug.LEVEL_FINEST)
+
+        # We always want to re-order the text attributes page so that enabled
+        # items are consistently at the top.
+        #
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.enabledTextAttributes, True, True)
 
         self.orcaSetupWindow.show()
 
@@ -1600,7 +1779,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
     def sayAllStyleChanged(self, widget):
         """Signal handler for the "changed" signal for the sayAllStyle
-           GtkComboBox widget. Set the 'sayAllStyle' preference to the 
+           GtkComboBox widget. Set the 'sayAllStyle' preference to the
            new value.
 
         Arguments:
@@ -2111,6 +2290,128 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
                 self.prefsDict["orcaModifierKeys"] = \
                     settings.LAPTOP_MODIFIER_KEYS
+
+    def textSelectAllButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the 
+        textSelectAllButton GtkButton widget. The user has clicked 
+        the Speak all button.  Check all the text attributes and 
+        then update the "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """ 
+
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, True)
+        self._updateTextDictEntry()
+        
+    def textUnselectAllButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the 
+        textUnselectAllButton GtkButton widget. The user has clicked 
+        the Speak none button. Uncheck all the text attributes and 
+        then update the "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal. 
+        """
+
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, False)
+        self._updateTextDictEntry()
+        
+    def textResetButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the 
+        textResetButton GtkButton widget. The user has clicked
+        the Reset button. Reset all the text attributes to their 
+        initial state and then update the "enabledTextAttributes" 
+        preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, False)
+        self._setTextAttributes(self.getTextAttributesView,
+                                settings.enabledTextAttributes, True)
+        self._updateTextDictEntry()
+        
+    def textMoveToTopButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        textMoveToTopButton GtkButton widget. The user has clicked
+        the Move to top button. Move the selected rows in the text 
+        attribute view to the very top of the list and then update 
+        the "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        textSelection = self.getTextAttributesView.get_selection()
+        [model, paths] = textSelection.get_selected_rows()
+        for path in paths:
+            iter = model.get_iter(path)
+            model.move_after(iter, None)
+        self._updateTextDictEntry()
+
+    def textMoveUpOneButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        textMoveUpOneButton GtkButton widget. The user has clicked
+        the Move up one button. Move the selected rows in the text
+        attribute view up one row in the list and then update the 
+        "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        textSelection = self.getTextAttributesView.get_selection()
+        [model, paths] = textSelection.get_selected_rows()
+        for path in paths:
+            iter = model.get_iter(path)
+            if path[0]:
+                otherIter = model.iter_nth_child(None, path[0]-1)
+                model.swap(iter, otherIter)
+        self._updateTextDictEntry()
+
+    def textMoveDownOneButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        textMoveDownOneButton GtkButton widget. The user has clicked
+        the Move down one button. Move the selected rows in the text
+        attribute view down one row in the list and then update the
+        "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        textSelection = self.getTextAttributesView.get_selection()
+        [model, paths] = textSelection.get_selected_rows()
+        noRows = model.iter_n_children(None)
+        for path in paths:
+            iter = model.get_iter(path)
+            if path[0] < noRows-1:
+                otherIter = model.iter_next(iter)
+                model.swap(iter, otherIter)
+        self._updateTextDictEntry()
+
+    def textMoveToBottomButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        textMoveToBottomButton GtkButton widget. The user has clicked
+        the Move to bottom button. Move the selected rows in the text
+        attribute view to the bottom of the list and then update the
+        "enabledTextAttributes" preference string.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        textSelection = self.getTextAttributesView.get_selection()
+        [model, paths] = textSelection.get_selected_rows()
+        for path in paths:
+            iter = model.get_iter(path)
+            model.move_before(iter, None)
+        self._updateTextDictEntry()
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton
