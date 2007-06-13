@@ -355,7 +355,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if apps.count(app) == 0:
                     script = self._knownScripts[app]
                     self._deregisterEventListeners(script)
+
+                    # Provide a bunch of hints to the garbage collector
+                    # that we just don't care about this stuff any longer.
+                    # Note the "app.app = None" - that helps remove a
+                    # cycle of the application referring to itself.
+                    #
                     del self._knownScripts[app]
+                    app.app = None
                     del app
                     del script
         except:

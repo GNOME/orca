@@ -1,10 +1,16 @@
+2007-06-13  Willie Walker <william.walker@sun.com>
+
+        * src/orca/focus_tracking_presenter.py: fix for bug 435199
+        to break self-reference cycle of Accessible instances that
+        are applications.
+
 2007-06-13 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/atspi.py
 	  src/orca/default.py
           src/orca/Gecko.py
           src/orca/where_am_I.py
-          Fixed bug #445578, Link preview information would be desirable 
+          Fixed bug #445578, Link preview information would be desirable
           for Firefox
 
 2007-06-12  Rich Burridge <rich.burridge@sun.com>
@@ -14,7 +20,7 @@
           src/orca/orca-setup.glade:
           src/orca/orca_prefs.py:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #376515 – Add GUI support for the new customizable 
+          Fixed bug #376515 – Add GUI support for the new customizable
           text-attribute feature. There is a new "Text Attributes" pane
           in the Orca preferences dialog for this. It can also be set on
           an individual app-specific basis.
