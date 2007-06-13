@@ -823,12 +823,12 @@ class Accessible:
                 self.accessible.unref()
             except:
                 pass
-
+            
             try:
                 Accessible.deleteAccessible(self._acc)
             except:
                 pass
-
+            
             self.accessible = None
             self._acc = None
             self.app = None
@@ -1230,6 +1230,25 @@ class Accessible:
             self.selection = selection
 
         return selection
+        
+    def __get_document(self):
+        """Returns an object that implements the Accessibility_Document
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Document interface.
+        """
+        document = self.accessible.queryInterface(\
+            "IDL:Accessibility/Document:1.0")
+
+        if document:
+            try:
+                document = document._narrow(Accessibility.Document)
+            except:
+                document = None
+
+        if document and settings.cacheValues:
+            self.document = document
+
+        return document
 
     def __get_table(self):
         """Returns an object that implements the Accessibility_Table
@@ -1255,7 +1274,6 @@ class Accessible:
         interface for this object, or None if this object doesn't implement
         the Accessibility_Text interface.
         """
-
         text = self.accessible.queryInterface("IDL:Accessibility/Text:1.0")
 
         if text:
@@ -1354,6 +1372,8 @@ class Accessible:
             return self.__get_value()
         elif attr == "attributes":
             return self.__get_attributes()
+        elif attr == "document":
+            return self.__get_document()
         elif attr.startswith('__') and attr.endswith('__'):
             raise AttributeError, attr
         else:

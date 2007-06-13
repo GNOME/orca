@@ -31,6 +31,7 @@ import orca_state
 import rolenames
 import settings
 import speech
+import urlparse, urllib2
 
 from orca_i18n import _ # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -129,6 +130,9 @@ class WhereAmI:
 
         elif role == rolenames.ROLE_ICON:
             self._speakIconPanel(obj, doubleClick)
+            
+        elif role == rolenames.ROLE_LINK:
+            self._speakLink(obj, doubleClick)
 
         else:
             self._speakGenericObject(obj, doubleClick)
@@ -615,6 +619,110 @@ class WhereAmI:
                 utterances.append(self._getObjLabelAndName(selectedItems[i]))
 
         speech.speakUtterances(utterances)
+        
+    def _speakLink(self, obj, doubleClick):
+        """Speaks information about a link including protocol, domain 
+        comparisons and size of file if possible
+        
+        Arguments:
+        - obj: the icon object that currently has focus.
+        - doubleClick: was it a doubleclick event?
+        """
+        
+        # get the URI for the link of interest and parse it.
+        # parsed URI is returned as a tuple containing six components: 
+        # scheme://netloc/path;parameters?query#fragment.
+        link_uri = self._script.getURI(obj)
+        if link_uri:
+            link_uri_info = urlparse.urlparse(link_uri)
+        else:
+            # something is wrong, just return
+            return
+      
+        # Try to get the URI of the active document and parse it
+        doc_uri = self.__getDocumentFrameURI(obj)
+        if doc_uri:
+            doc_uri_info = urlparse.urlparse(doc_uri)
+        else:
+            doc_uri_info = None
+              
+        # initialize our three outputs.  Output may change below for some 
+        # protocols.
+        linkoutput = '%s link' %link_uri_info[0]
+        domainoutput = ''
+        sizeoutput = ''
+      
+        # get size and other protocol specific information
+        if link_uri_info[0] == 'ftp' or \
+           link_uri_info[0] == 'ftps' or \
+           link_uri_info[0] == 'file':
+            # change link output message to include filename
+            filename = link_uri_info[2].split('/')
+            linkoutput = '%s link to %s' %(link_uri_info[0], filename[-1])
+            sizestr = self.__extractSize(link_uri)
+            sizeoutput = self.__formatSizeOutput(sizestr)
+   
+        # determine location differences if doc uri info is available
+        if doc_uri_info:
+            if link_uri_info[1] == doc_uri_info[1]:
+                if link_uri_info[2] == doc_uri_info[2]:
+                    domainoutput = 'same page'
+                else:
+                    domainoutput = 'same site'
+            else:
+                # check for different machine name on same site
+                linkdomain = link_uri_info[1].split('.')
+                docdomain = doc_uri_info[1].split('.')
+                if len(linkdomain) > 1 and docdomain > 1  \
+                    and linkdomain[-1] == docdomain[-1]  \
+                    and linkdomain[-2] == docdomain[-2]:
+                    domainoutput = 'same site' 
+                else:
+                    domainoutput = 'different site'
+
+        speech.speakUtterances([linkoutput, domainoutput, sizeoutput])
+      
+    def __extractSize(self, uri):
+        '''
+        Get the http header for a given uri and try to extract the size (Content-length).
+        '''
+        try:
+            x=urllib2.urlopen(uri)
+            try:
+                return x.info()['Content-length']
+            except KeyError:
+                return None
+        except (ValueError, urllib2.URLError, OSError):
+            return None
+  
+    def __formatSizeOutput(self, sizestr):
+        '''
+        Format the size output announcement.  Changes wording based on size.
+        '''
+        # sanity check
+        if sizestr is None or sizestr == '':
+            return ''
+        size = int(sizestr)
+        if size < 10000:
+            return '%s bytes' %sizestr
+        elif size < 1000000:
+            return '%.2f kilobytes' %(float(size) * .001)
+        elif size >= 1000000:
+            return '%.2f megabytes' %(float(size) * .000001) 
+        
+    def __getDocumentFrameURI(self, obj):
+        '''
+        Returns the URI of the document frame that is active
+        '''
+        try:
+            documentFrame = self._script.getDocumentFrame()
+        except AttributeError:
+            return None
+        attrs = documentFrame.document.getAttributes()
+        for attr in attrs:
+            if attr.startswith('DocURL'):
+                return attr[7:]
+        return None
 
     def _speakGenericObject(self, obj, doubleClick):
         """Speak a generic object; one not specifically handled by

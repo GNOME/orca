@@ -1,3 +1,12 @@
+2007-06-13 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/atspi.py
+	  src/orca/default.py
+          src/orca/Gecko.py
+          src/orca/where_am_I.py
+          Fixed bug #445578, Link preview information would be desirable 
+          for Firefox
+
 2007-06-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

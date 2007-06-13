@@ -3714,6 +3714,19 @@ class Script(default.Script):
                             documentFrame = None
 
         return documentFrame
+                        
+    def getURI(self, obj):
+        """Return the URI for a given link object.
+
+        Arguments:
+        - obj: the Accessible object.
+        """
+        # Getting a link's URI requires a little workaround due to  
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=379747.  You should be
+        # able to use getURI() directly on the link but instead must use
+        # ihypertext.getLink(0) on parent then use getURI on returned ihyperlink.
+        ihyperlink = obj.parent.hypertext.getLink(0)
+        return ihyperlink.getURI(0)
 
     def getUnicodeText(self, obj):
         """Returns the unicode text for an object or None if the object

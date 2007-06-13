@@ -5677,6 +5677,20 @@ class Script(script.Script):
         obj.lastSelections = []
         for i in range(0, obj.text.getNSelections()):
             obj.lastSelections.append(obj.text.getSelection(i))
+                        
+    def getURI(self, obj):
+        """Return the URI for a given link object.
+
+        Arguments:
+        - obj: the Accessible object.
+        """
+        return obj.ihyperlink.getURI(0)
+    
+    def getDocumentFrame(self):
+        """Dummy method used as a reminder to refactor whereamI for links,
+        possibly subclassing whereamI for the Gecko script.
+        """
+        return None
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list
