@@ -648,6 +648,8 @@ class WhereAmI:
               
         # initialize our three outputs.  Output may change below for some 
         # protocols.
+        # Translators: this is the protocol of a link eg. http, mailto.
+        #
         linkoutput = _('%s link') %link_uri_info[0]
         domainoutput = ''
         sizeoutput = ''
@@ -660,12 +662,17 @@ class WhereAmI:
             filename = link_uri_info[2].split('/')
             linkoutput = _('%s link to %s') %(link_uri_info[0], filename[-1])
             sizestr = self.__extractSize(link_uri)
+            # Translators: this is the size of a target file pointed to by a 
+            # link.
+            #
             sizeoutput = _('%s') %self.__formatSizeOutput(sizestr)
    
         # determine location differences if doc uri info is available
         if doc_uri_info:
             if link_uri_info[1] == doc_uri_info[1]:
                 if link_uri_info[2] == doc_uri_info[2]:
+                    # Translators: this is the domain relationship of a given
+                    # link to the current page.  eg. same page, same site.
                     domainoutput = _('same page')
                 else:
                     domainoutput = _('same site')
