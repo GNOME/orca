@@ -648,7 +648,7 @@ class WhereAmI:
               
         # initialize our three outputs.  Output may change below for some 
         # protocols.
-        linkoutput = '%s link' %link_uri_info[0]
+        linkoutput = _('%s link') %link_uri_info[0]
         domainoutput = ''
         sizeoutput = ''
       
@@ -658,17 +658,17 @@ class WhereAmI:
            link_uri_info[0] == 'file':
             # change link output message to include filename
             filename = link_uri_info[2].split('/')
-            linkoutput = '%s link to %s' %(link_uri_info[0], filename[-1])
+            linkoutput = _('%s link to %s') %(link_uri_info[0], filename[-1])
             sizestr = self.__extractSize(link_uri)
-            sizeoutput = self.__formatSizeOutput(sizestr)
+            sizeoutput = _('%s') %self.__formatSizeOutput(sizestr)
    
         # determine location differences if doc uri info is available
         if doc_uri_info:
             if link_uri_info[1] == doc_uri_info[1]:
                 if link_uri_info[2] == doc_uri_info[2]:
-                    domainoutput = 'same page'
+                    domainoutput = _('same page')
                 else:
-                    domainoutput = 'same site'
+                    domainoutput = _('same site')
             else:
                 # check for different machine name on same site
                 linkdomain = link_uri_info[1].split('.')
@@ -676,9 +676,9 @@ class WhereAmI:
                 if len(linkdomain) > 1 and docdomain > 1  \
                     and linkdomain[-1] == docdomain[-1]  \
                     and linkdomain[-2] == docdomain[-2]:
-                    domainoutput = 'same site' 
+                    domainoutput = _('same site') 
                 else:
-                    domainoutput = 'different site'
+                    domainoutput = _('different site')
 
         speech.speakUtterances([linkoutput, domainoutput, sizeoutput])
       

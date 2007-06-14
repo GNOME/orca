@@ -1,3 +1,8 @@
+2007-06-14 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/where_am_I.py
+          Fixed bug #445578, i18n support for link preview 
+
 2007-06-13  Willie Walker <william.walker@sun.com>
 
         * src/orca/focus_tracking_presenter.py: fix for bug 435199
