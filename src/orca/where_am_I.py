@@ -662,10 +662,7 @@ class WhereAmI:
             filename = link_uri_info[2].split('/')
             linkoutput = _('%s link to %s') %(link_uri_info[0], filename[-1])
             sizestr = self.__extractSize(link_uri)
-            # Translators: this is the size of a target file pointed to by a 
-            # link.
-            #
-            sizeoutput = _('%s') %self.__formatSizeOutput(sizestr)
+            sizeoutput = self.__formatSizeOutput(sizestr)
    
         # determine location differences if doc uri info is available
         if doc_uri_info:
@@ -711,11 +708,17 @@ class WhereAmI:
             return ''
         size = int(sizestr)
         if size < 10000:
-            return '%s bytes' %sizestr
+            # Translators: This is the size of a file in bytes
+            #
+            return ngettext('%d byte', '%d bytes', size) % size
         elif size < 1000000:
-            return '%.2f kilobytes' %(float(size) * .001)
+            # Translators: This is the size of a file in kilobytes
+            #
+            return _('%.2f kilobytes') % (float(size) * .001)
         elif size >= 1000000:
-            return '%.2f megabytes' %(float(size) * .000001) 
+            # Translators: This is the size of a file in megabytes
+            #
+            return _('%.2f megabytes') % (float(size) * .000001) 
         
     def __getDocumentFrameURI(self, obj):
         '''
