@@ -274,14 +274,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         regions = []
 
-        # With Gecko, a combo box has a menu as a child.  We will use
-        # the menu's selection as the text being displayed by the
-        # combo box.  In addition, if the LABELLED_BY property is
-        # set, we will use it as the label of the combo box.  Otherwise,
-        # we'll fall back to the accessible name.
-        #
         label = self._script.getDisplayedLabel(obj)
-        if not label:
+        if not label and not self._script.inDocumentContent():
             label = obj.name
 
         focusedRegionIndex = 0
@@ -289,33 +283,21 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
+        # With Gecko, a combo box has a menu as a child.  The text being
+        # displayed for the combo box can be obtained via the selected
+        # menu item.
+        #
         menu = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
             if child.role == rolenames.ROLE_MENU:
                 menu = child
                 break
-
-        # If the menu is not popped up, then it has no selection and
-        # its name is the item that the combo box is showing.  NOTE:
-        # This seems to have changed.  See Mozilla bug #363955 and
-        # comments below.
-        #
         if menu:
-            selection = menu.selection
-            if selection:
-                # The menu might have a selection, but when we go to get
-                # the selected item, we get None. In those cases, we'll
-                # revert to the name of the menu because that tends to be
-                # what text is being presented by the combobox in these cases.
-                #
-                try:
-                    item = selection.getSelectedChild(0)
-                    regions.append(braille.Region(item.name))
-                except:
-                    regions.append(braille.Region(menu.name))
-            elif menu.name:
-                regions.append(braille.Region(menu.name))
+            for i in range(0, menu.childCount):
+                child = menu.child(i)
+                if child.state.count(atspi.Accessibility.STATE_SELECTED):
+                    regions.append(braille.Region(child.name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -331,6 +313,47 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #
+        return [regions, regions[focusedRegionIndex]]
+
+    def _getBrailleRegionsForMenuItem(self, obj):
+        """Get the braille for a menu item.
+
+        Arguments:
+        - obj: the menu item
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        if not self._script.inDocumentContent():
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForMenuItem(self, obj)
+
+        self._debugGenerator("Gecko._getBrailleRegionsForMenuItem", obj)
+
+        regions = []
+
+        # Displaying "menu item" for a combo box can confuse users. Therefore,
+        # display the combo box role instead.  Also, only do it if the menu
+        # item is not focused (if the menu item is focused, it means we're
+        # navigating in the combo box).
+        #
+        label = self._script.getDisplayedLabel(obj)
+        focusedRegionIndex = 0
+        if label and len(label):
+            regions.append(braille.Region(label + " "))
+            focusedRegionIndex = 1
+        regions.append(braille.Region(obj.name))
+
+        comboBox = \
+                 self._script.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+        if comboBox \
+           and not obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+           and (settings.brailleVerbosityLevel == \
+                settings.VERBOSITY_LEVEL_VERBOSE):
+            regions.append(braille.Region(
+                " " + rolenames.getBrailleForRoleName(comboBox)))
+
         return [regions, regions[focusedRegionIndex]]
 
     def _getBrailleRegionsForList(self, obj):
@@ -480,6 +503,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         rolenames.ROLE_SECTION,
                         rolenames.ROLE_LABEL,
                         rolenames.ROLE_LIST_ITEM,
+                        rolenames.ROLE_MENU_ITEM,
                         rolenames.ROLE_UNKNOWN]:
             return []
         else:
@@ -571,12 +595,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
 
-        # With Gecko, a combo box has a menu as a child.  We will use
-        # the menu's selection as the text being displayed by the
-        # combo box.  In addition, if the LABELLED_BY property is
-        # set, we will use it as the label of the combo box.  Otherwise,
-        # we'll fall back to the accessible name.
-        #
         label = self._script.getDisplayedLabel(obj)
         if not label:
             if not self._script.inDocumentContent():
@@ -587,33 +605,21 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not already_focused and label:
             utterances.append(label)
 
+        # With Gecko, a combo box has a menu as a child.  The text being
+        # displayed for the combo box can be obtained via the selected
+        # menu item.
+        #
         menu = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
             if child.role == rolenames.ROLE_MENU:
                 menu = child
                 break
-
-        # If the menu is not popped up, then it has no selection and
-        # its name is the item that the combo box is showing.  NOTE:
-        # This seems to have changed.  See Mozilla bug #363955 and
-        # comments below.
-        #
         if menu:
-            selection = menu.selection
-            if selection:
-                # The menu might have a selection, but when we go to get
-                # the selected item, we get None. In those cases, we'll
-                # revert to the name of the menu because that tends to be
-                # what text is being presented by the combobox in these cases.
-                #
-                try:
-                    item = selection.getSelectedChild(0)
-                    utterances.append(item.name)
-                except:
-                    utterances.append(menu.name)
-            elif menu.name:
-                utterances.append(menu.name)
+            for i in range(0, menu.childCount):
+                child = menu.child(i)
+                if child.state.count(atspi.Accessibility.STATE_SELECTED):
+                    utterances.append(child.name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -621,6 +627,40 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.extend(self._getSpeechForObjectRole(obj))
 
         self._debugGenerator("Gecko._getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForMenuItem(self, obj, already_focused):
+        """Get the speech for a menu item.
+
+        Arguments:
+        - obj: the menu item
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        if not self._script.inDocumentContent():
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForMenuItem(self, obj, already_focused)
+
+        utterances = self._getSpeechForObjectName(obj)
+
+        # Saying "menu item" for a combo box can confuse users. Therefore,
+        # speak the combo box role instead.  Also, only do it if the menu
+        # item is not focused (if the menu item is focused, it means we're
+        # navigating in the combo box)
+        #
+        if not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            comboBox = \
+                 self._script.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+            if comboBox:
+                utterances.extend(self._getSpeechForObjectRole(comboBox))
+
+        self._debugGenerator("Gecko._getSpeechForMenuItem",
                              obj,
                              already_focused,
                              utterances)
@@ -1046,7 +1086,8 @@ class Script(default.Script):
              Script.goNextWord,
              Script.goPreviousWord,
              Script.goNextLine,
-             Script.goPreviousLine]
+             Script.goPreviousLine,
+             Script.expandComboBox]
 
         # _structuralNavigationFunctions are functions that represent
         # more complex navigation functions (e.g., moving by heading,
@@ -1199,6 +1240,14 @@ class Script(default.Script):
                 # line at a time.
                 #
                 _("Goes to previous line."))
+
+        self.inputEventHandlers["expandComboBoxHandler"] = \
+            input_event.InputEventHandler(
+                Script.expandComboBox,
+                # Translators: this is for causing a collapsed combo box
+                # which was reached by Orca's caret navigation to be expanded.
+                #
+                _("Causes the current combo box to be expanded."))
 
         self.inputEventHandlers["goCellLeftHandler"] = \
             input_event.InputEventHandler(
@@ -1598,6 +1647,15 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Down",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                1 << atspi.Accessibility.MODIFIER_ALT,
+                self.inputEventHandlers["expandComboBoxHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2864,26 +2922,6 @@ class Script(default.Script):
         #   and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
         #    return
 
-        # Gecko's combo boxes are a bit of a struggle to work with.
-        # First of all, the combo box is a container for a menu.
-        # When you arrow up and down in them, the menu item gets
-        # focus and then we see name changed events for the menu
-        # to represent the name of the menu item that was just
-        # selected.  It's all wonderfully convoluted.
-        #
-        if (event.source.role == rolenames.ROLE_MENU_ITEM):
-            parent = event.source.parent
-            if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
-                orca.setLocusOfFocus(event, parent)
-                orca.visualAppearanceChanged(event, parent)
-                return
-            elif parent and (parent.role == rolenames.ROLE_MENU):
-                parent = parent.parent
-                if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
-                    orca.setLocusOfFocus(event, parent, False)
-                    orca.visualAppearanceChanged(event, parent)
-                    return
-
         # Autocomplete widgets are a complex beast as well.  When they
         # get focus, their child (which is an entry) really has focus.
         # Their child also issues a focus: event, so we just ignore
@@ -3313,38 +3351,17 @@ class Script(default.Script):
             #if self.isLabellingContents(obj, contents):
             #    continue
 
-            # [[[TODO: WDW - Something odd is going on with text
-            # entries and checkboxes and other things: we are ending
-            # up with different accessibles for the same object.  I'm
-            # not sure if this is a Firefox bug or an Orca bug, but
-            # it's wreaking havoc on us.  This is a hack to try to
-            # get around that.]]]
+            # Treat the focused combo box and its selected menu item
+            # as the same object for the purposes of displaying the
+            # item in braille.
             #
-            isFocusedObj = \
-                (obj == focusedObj) \
-                or ((obj.role == focusedObj.role) \
-                    and (obj.name == focusedObj.name) \
-                    and (obj.parent == focusedObj.parent)) \
-                or obj.state.count(atspi.Accessibility.STATE_FOCUSED)
-
-            # [[[TODO: WDW - one more stab before we say it is the focused
-            # object.  If the text attributes are different, we definitely
-            # know they are not the same.]]]
-            #
-            if isFocusedObj:
-                if obj.text:
-                    if not focusedObj.text:
-                        isFocusedObj = False
-                    else:
-                        string1 = self.getText(obj,
-                                               startOffset,
-                                               endOffset)
-                        string2 = self.getText(focusedObj,
-                                               startOffset,
-                                               endOffset)
-                        isFocusedObj = string1 == string2
-                else:
-                    isFocusedObj = not focusedObj.text
+            if focusedObj.role == rolenames.ROLE_COMBO_BOX \
+               and obj.role == rolenames.ROLE_MENU_ITEM:
+                comboBox = self.getContainingRole(obj,
+                                                  rolenames.ROLE_COMBO_BOX)
+                isFocusedObj = self.isSameObject(comboBox, focusedObj)
+            else:
+                isFocusedObj = self.isSameObject(obj, focusedObj)
 
             if obj.role in [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_PASSWORD_TEXT] \
@@ -3354,7 +3371,7 @@ class Script(default.Script):
                 regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
                     focusedRegion = regions[0]
-            elif obj.text:
+            elif obj.text and (obj.role != rolenames.ROLE_MENU_ITEM):
                 string = self.getText(obj, startOffset, endOffset)
                 regions = [braille.Region(
                     string,
@@ -3408,6 +3425,13 @@ class Script(default.Script):
                 line.addRegion(braille.Region(" "))
 
             line.addRegions(regions)
+
+            # If we're inside of a combo box, we only want to display
+            # the selected menu item.
+            #
+            if obj.role == rolenames.ROLE_MENU_ITEM \
+               and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+                break
 
         if extraRegion:
             line.addRegion(extraRegion)
@@ -3777,23 +3801,37 @@ class Script(default.Script):
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
 
         elif keyboardEvent.modifiers & (1 << atspi.Accessibility.MODIFIER_ALT):
-            # We won't handle keyboard events with Alt in them since
-            # they are for things like going back in history and
-            # opening and closing combo boxes.
+            # Alt+Down Arrow is the Firefox command to expand/collapse the
+            # *currently focused* combo box.  When Orca is controlling the
+            # caret, it is possible to navigate into a combo box *without
+            # giving focus to that combo box*.  Under these circumstances,
+            # the menu item has focus.  Because the user knows that he/she
+            # is on a combo box, he/she expects to be able to use Alt+Down
+            # Arrow to expand the combo box.  Therefore, if a menu item has
+            # focus and Alt+Down Arrow is pressed, we will handle it by
+            # giving the combo box focus and expanding it as the user
+            # expects.
             #
-            weHandleIt = False
+            weHandleIt = (keyboardEvent.event_string == "Down") \
+                         and obj.role == rolenames.ROLE_MENU_ITEM
 
         elif obj and (obj.role == rolenames.ROLE_COMBO_BOX):
             # We'll let Firefox handle the navigation of combo boxes.
             #
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
+        elif obj and (obj.role == rolenames.ROLE_MENU_ITEM):
+            # We'll let Firefox handle the navigation of combo boxes.
+            #
+            weHandleIt = \
+                       not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
+
         elif obj and obj.role in [rolenames.ROLE_LIST,
                                   rolenames.ROLE_LIST_ITEM]:
             # We'll let Firefox handle the navigation of lists in forms.
             #
-            if obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
-                weHandleIt = False
+            weHandleIt = \
+                       not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)
 
         return weHandleIt
 
@@ -3804,9 +3842,12 @@ class Script(default.Script):
         navigation stuff to work.]]]
         """
 
-        letThemDoItRoles = [rolenames.ROLE_ENTRY,
-                            rolenames.ROLE_TEXT,
-                            rolenames.ROLE_PASSWORD_TEXT]
+        letThemDoItEditableRoles = [rolenames.ROLE_ENTRY,
+                                    rolenames.ROLE_TEXT,
+                                    rolenames.ROLE_PASSWORD_TEXT]
+        letThemDoItSelectionRoles = [rolenames.ROLE_LIST,
+                                     rolenames.ROLE_LIST_ITEM,
+                                     rolenames.ROLE_MENU_ITEM]
 
         if not structuralNavigationEnabled:
             return False
@@ -3825,8 +3866,12 @@ class Script(default.Script):
                 # Don't use the structural navivation model if the
                 # user is editing the document.
                 return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
-            elif obj.role in letThemDoItRoles:
+            elif obj.role in letThemDoItEditableRoles:
                 return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
+            elif obj.role in letThemDoItSelectionRoles:
+                return not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
+            elif obj.role == rolenames.ROLE_COMBO_BOX:
+                return False
             else:
                 obj = obj.parent
 
@@ -5694,12 +5739,9 @@ class Script(default.Script):
             #
             if extents != (0, 0, 0, 0):
                 if obj.role == rolenames.ROLE_MENU_ITEM \
-                   and not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
-                    # [[[TODO: JD - HACK. Items within combo boxes lack
-                    # a STATE_SHOWING whether they are showing or not.
-                    # If the menu item within the combo box is not focused
-                    # it is not showing. And if it's not showing, we don't
-                    # want to append it to contents.]]]
+                   and not obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                    # If a combo box is on the current line, only append the
+                    # menu item which is showing.
                     #
                     pass
                 elif not self.onSameLine(extents, lineExtents):
@@ -5839,7 +5881,8 @@ class Script(default.Script):
             if obj.text \
                and not obj.role in [rolenames.ROLE_ENTRY,
                                     rolenames.ROLE_PASSWORD_TEXT,
-                                    rolenames.ROLE_RADIO_BUTTON]:
+                                    rolenames.ROLE_RADIO_BUTTON,
+                                    rolenames.ROLE_MENU_ITEM]:
                 strings = [self.getText(obj, startOffset, endOffset)]
             elif self.isLayoutOnly(obj):
                 continue
@@ -6318,6 +6361,26 @@ class Script(default.Script):
         #
         #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
         #self.dumpContents(inputEvent, contents)
+
+    def expandComboBox(self, inputEvent):
+        """If focus is on a menu item, but the containing combo box does not
+        have focus, give the combo box focus and expand it.  Note that this
+        is necessary because with Orca controlling the caret it is possible
+        to arrow to a menu item within the combo box without actually giving
+        the containing combo box focus.
+        """
+
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.role == rolenames.ROLE_MENU_ITEM:
+            comboBox = self.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+            if comboBox and comboBox.action:
+                orca.setLocusOfFocus(None, comboBox)
+                focusGrabbed = comboBox.component.grabFocus()
+                for i in range(0, comboBox.action.nActions):
+                    name = comboBox.action.getName(i)
+                    if name == "open":
+                        success = comboBox.action.doAction(i)
+                        break
 
     def goPreviousHeading(self, inputEvent):
         wrap = True

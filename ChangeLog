@@ -1,3 +1,8 @@
+2007-06-17  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug 442709 - Need to do "combo 
+        box cleanup"/refactor for Firefox.
+
 2007-06-15 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/where_am_I.py
