@@ -1,3 +1,63 @@
+2.19.4 - 17-Jun-2007
+
+General:
+
+* Fix for bug 376515 - Add GUI support for the new customizable
+  text-attribute feature. There is a new "Text Attributes" pane in
+  the Orca preferences dialog for this. It can also be set on an
+  individual app-specific basis.
+
+* Fix for bug 433818 – Messages on system tab of gnome-system-monitor
+  are not reported by Orca.
+
+* Fix for bug 433951 - making changes in the Orca Preferences dialog
+  causes loss of script state.
+
+* Fixes for bug 435199 - Orca is bloating the swap partition, so the
+  system is no more usable after a short time.  We did a lot of
+  analysis of Orca's memory usage and patched the leaks we were able
+  to detect.  There is still a leak in the AT-SPI infrastructure; it
+  is being worked on by the AT-SPI maintainers and is tracked via bug
+  446277.
+
+Firefox:
+
+* Fix for bug 442709 - Need to do "combo box cleanup"/refactor for
+  Firefox.
+
+* Fix for bug 443337 - Orca should not use the alt text if it is empty
+  to infer a link name.
+
+* Fix for bug 444148 - Orca doesn't speak form fields at landsend.com
+
+* Fix for bug 445578 - Link preview information would be desirable for
+  Firefox.  This is obtained when performing a "Where Am I" operation
+  (KP_Enter for desktop bindings, ORCA_MODIFIER+Return for laptop
+  bindings).  Many thanks to new community member Scott Haeger for
+  this functionality!
+
+Java platform:
+
+* Fix for bug 435553 - KeyError: 'startOffset' during Java Control
+  Panel flat-review.
+
+* Fix for bug 436658 - flat-review speaks "filler" for SwingSet2
+  demo/source tabs.
+
+* Fix for bug 436661 - flat-review speaks SwingSet2 toolbar image
+  paths instead of item names.
+
+* Fix for bug 437226 - Orca should handle Java labels and text where
+  LABEL_FOR is not set.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    dz      Dzongkha             Pema Geyleg
+    es      Spanish              Francisco Javier Dorado Martinez and
+				 Jorge Gonzalez
+
+==========
+
 2.19.3 - 04-Jun-2007
 
 General Orca:

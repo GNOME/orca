@@ -1,17 +1,24 @@
+2007-06-17  Willie Walker <william.walker@sun.com>
+
+        * NEWS, README, RELEASE_HOWTO, configure.in: prep for v2.19.4
+
+        * docs/pydoc/Makefile.am, src/orca/Makefile.am: sort and make
+        sure files are listed in both places.
+
 2007-06-17  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug 442709 - Need to do "combo 
+        * src/orca/Gecko.py: Fix for bug 442709 - Need to do "combo
         box cleanup"/refactor for Firefox.
 
 2007-06-15 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/where_am_I.py
-        Fixed bug #445578, more link preview i18n/translator fixes 
+        Fixed bug #445578, more link preview i18n/translator fixes
 
 2007-06-14 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/where_am_I.py
-          Fixed bug #445578, i18n support for link preview 
+          Fixed bug #445578, i18n support for link preview
 
 2007-06-13  Willie Walker <william.walker@sun.com>
 
@@ -22,7 +29,7 @@
 2007-06-13 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/atspi.py
-	  src/orca/default.py
+          src/orca/default.py
           src/orca/Gecko.py
           src/orca/where_am_I.py
           Fixed bug #445578, Link preview information would be desirable

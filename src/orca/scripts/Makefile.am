@@ -9,8 +9,8 @@ orca_python_PYTHON = \
 	gdmlogin.py \
 	gedit.py \
 	gnome_segv2.py \
-	gnome-mud.py \
 	gnome-keyring-ask.py \
+	gnome-mud.py \
 	gnome-panel.py \
 	gnome-power-manager.py \
 	gnome-search-tool.py \

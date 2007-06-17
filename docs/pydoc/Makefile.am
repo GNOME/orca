@@ -64,6 +64,7 @@ DOC_FILES = \
 	orca.scripts.gnome-panel \
 	orca.scripts.gnome-power-manager \
 	orca.scripts.gnome-search-tool \
+	orca.scripts.gnome-system-monitor \
 	orca.scripts.gnome-terminal \
 	orca.scripts.gnome-window-properties \
 	orca.scripts.liferea \
