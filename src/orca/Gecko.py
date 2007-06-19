@@ -47,6 +47,7 @@ import settings
 import speech
 import speechgenerator
 import speechserver
+import where_am_I
 
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
@@ -1054,6 +1055,82 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances.reverse()
 
         return utterances
+            
+            
+########################################################################
+#                                                                      #
+# Custom WhereAmI                                                      #
+#                                                                      #
+########################################################################            
+class GeckoWhereAmI(where_am_I.WhereAmI):
+    def __init__(self, script):
+        """Gecko specific WhereAmI that will be used to speak information
+        about the current object of interest and will provide additional Gecko
+        specific information.
+        """
+        where_am_I.WhereAmI.__init__(self, script)
+        self._script = script
+        
+    def whereAmI(self, obj, doubleClick, orcaKey):
+        """Calls the base class method for single clicks and Gecko specific
+        information presentation methods for double clicks
+        """
+        if not doubleClick:
+            where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, orcaKey)
+        else:
+            self.readPageSummary(obj)
+            
+    def readPageSummary(self, obj):
+        """Reads the quantity of headings, forms, tables, visited and unvisited links, 
+        plus the locale.
+        """
+        headings = 0 
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        nodetotal = 0
+        obj_index = None
+        currentobj = obj
+        
+        # start at the first object after document frame
+        obj = self._script.getDocumentFrame().child(0)
+        while obj:
+            nodetotal += 1
+            if obj == currentobj:
+                obj_index = nodetotal
+            role = obj.role
+            if role == rolenames.ROLE_HEADING:
+                headings += 1
+            elif role == rolenames.ROLE_FORM:
+                forms += 1
+            elif role == rolenames.ROLE_TABLE and not self._script.isLayoutOnly(obj):
+                tables += 1
+            elif role == rolenames.ROLE_LINK:
+                if obj.state.count(atspi.Accessibility.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+                    
+            obj = self._script.findNextObject(obj)
+            
+        utterances = []
+        utterances.append(ngettext \
+                 ('%d heading', '%d headings', headings) %headings)
+        utterances.append(ngettext \
+                 ('%d form', '%d forms', forms) %forms)
+        utterances.append(ngettext \
+                 ('%d table', '%d tables', tables) %tables)
+        utterances.append(ngettext \
+                 ('%d visited link', '%d visited links', vlinks) %vlinks)
+        utterances.append(ngettext \
+                 ('%d unvisited link', '%d unvisited links', uvlinks) %uvlinks)
+        if obj_index:
+            utterances.append(_('%d percent of document read') \
+                                     %int(obj_index*100/nodetotal))
+            
+        speech.speakUtterances(utterances)    
+     
 
 ########################################################################
 #                                                                      #
@@ -1168,6 +1245,11 @@ class Script(default.Script):
         # means we need to know if that has already taken place.
         #
         self.madeFindAnnouncement = False
+        
+    def getWhereAmI(self):
+        """Returns the "where am I" class for this script.
+        """
+        return GeckoWhereAmI(self)
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -5363,6 +5445,10 @@ class Script(default.Script):
         index = 0
         while index < obj.childCount:
             child = obj.child(index)
+            # bandaid for Gecko broken hierarchy
+            if child is None:
+                index += 1
+                continue
             childOffset = self.getCharacterOffsetInParent(child)
             if isinstance(child, atspi.Accessible) and \
                not (obj.role == rolenames.ROLE_DOCUMENT_FRAME and \

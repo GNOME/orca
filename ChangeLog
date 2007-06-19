@@ -1,3 +1,7 @@
+2007-06-19 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary
+
 2007-06-18  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as v2.19.5pre.
