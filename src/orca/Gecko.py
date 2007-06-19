@@ -5361,16 +5361,17 @@ class Script(default.Script):
 
         previousObj = None
         characterOffset = 0
+        documentFrame = self.getDocumentFrame()
 
         # If the object is the document frame, the previous object is
         # the one that follows us relative to our offset.
         #
-        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
 
         index = obj.index - 1
         if (index < 0):
-            if (obj.role != rolenames.ROLE_DOCUMENT_FRAME):
+            if not self.isSameObject(obj, documentFrame):
                 previousObj = obj.parent
             else:
                 # We're likely at the very end of the document
@@ -5399,7 +5400,7 @@ class Script(default.Script):
             # more complex than it really has to be.]]]
             #
             if not previousObj:
-                if obj.role != rolenames.ROLE_DOCUMENT_FRAME:
+                if not self.isSameObject(obj, documentFrame):
                     previousObj = obj.parent
                 else:
                     previousObj = obj
@@ -5409,8 +5410,8 @@ class Script(default.Script):
                 while index >= 0:
                     child = previousObj.child(index)
                     childOffset = self.getCharacterOffsetInParent(child)
-                    if isinstance(child, atspi.Accessible) and not \
-                       (previousObj.role == rolenames.ROLE_DOCUMENT_FRAME \
+                    if isinstance(child, atspi.Accessible) \
+                       and not (self.isSameObject(previousObj, documentFrame) \
                         and childOffset > characterOffset):
                         previousObj = child
                         break
@@ -5419,7 +5420,7 @@ class Script(default.Script):
                 if index < 0:
                     break
 
-        if previousObj.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if self.isSameObject(previousObj, documentFrame):
             previousObj = None
 
         return previousObj
@@ -5435,11 +5436,12 @@ class Script(default.Script):
 
         nextObj = None
         characterOffset = 0
+        documentFrame = self.getDocumentFrame()
 
         # If the object is the document frame, the next object is
         # the one that follows us relative to our offset.
         #
-        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
 
         # If the object has children, we'll choose the first one.
@@ -5455,9 +5457,9 @@ class Script(default.Script):
                 index += 1
                 continue
             childOffset = self.getCharacterOffsetInParent(child)
-            if isinstance(child, atspi.Accessible) and \
-               not (obj.role == rolenames.ROLE_DOCUMENT_FRAME and \
-                    childOffset < characterOffset):
+            if isinstance(child, atspi.Accessible) \
+               and not (self.isSameObject(obj, documentFrame) \
+                        and childOffset < characterOffset):
                 nextObj = child
                 break
             else:
@@ -5486,7 +5488,7 @@ class Script(default.Script):
             # the right for us.
             #
             while (candidate.index >= (candidate.parent.childCount - 1)) \
-                and (candidate.role != rolenames.ROLE_DOCUMENT_FRAME):
+                and not self.isSameObject(candidate, documentFrame):
                 candidate = candidate.parent
 
             # Now...let's get the sibling.
@@ -5494,7 +5496,7 @@ class Script(default.Script):
             # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
             # a bit of a challenge.]]]
             #
-            if candidate.role != rolenames.ROLE_DOCUMENT_FRAME:
+            if not self.isSameObject(candidate, documentFrame):
                 index = candidate.index + 1
                 while index < candidate.parent.childCount:
                     child = candidate.parent.child(index)
@@ -5587,7 +5589,6 @@ class Script(default.Script):
             documentFrame = self.getDocumentFrame()
             obj = documentFrame.child(0)
             wrapped = True
-
         while obj:
             if (not obj in ancestors) and (obj.role in roles) \
                 and (not self.isLayoutOnly(obj)):

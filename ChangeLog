@@ -1,3 +1,8 @@
+2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug 449171 - Orca gets stuck in 
+        endless loops on woot.com
+
 2007-06-19 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary
