@@ -1115,15 +1115,20 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             obj = self._script.findNextObject(obj)
             
         utterances = []
-        utterances.append(ngettext \
+        if headings:
+            utterances.append(ngettext \
                  ('%d heading', '%d headings', headings) %headings)
-        utterances.append(ngettext \
+        if forms:
+            utterances.append(ngettext \
                  ('%d form', '%d forms', forms) %forms)
-        utterances.append(ngettext \
+        if tables:
+            utterances.append(ngettext \
                  ('%d table', '%d tables', tables) %tables)
-        utterances.append(ngettext \
+        if vlinks:
+            utterances.append(ngettext \
                  ('%d visited link', '%d visited links', vlinks) %vlinks)
-        utterances.append(ngettext \
+        if uvlinks:
+            utterances.append(ngettext \
                  ('%d unvisited link', '%d unvisited links', uvlinks) %uvlinks)
         if obj_index:
             utterances.append(_('%d percent of document read') \

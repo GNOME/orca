@@ -2,6 +2,9 @@
 
         * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary
 
+        * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary,
+        make announcements only when items > 0 
+
 2007-06-18  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as v2.19.5pre.
