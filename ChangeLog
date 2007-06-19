@@ -1,5 +1,10 @@
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
 
+        * src/orca/Gecko.py: Additional fix for bug 449171 - Orca gets
+        stuck in endless loops on woot.com
+
+2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
+
         * src/orca/Gecko.py: Fix for bug 449171 - Orca gets stuck in 
         endless loops on woot.com
 

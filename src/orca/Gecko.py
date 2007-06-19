@@ -5249,7 +5249,8 @@ class Script(default.Script):
         # If we're here, we need to start looking up the tree,
         # going no higher than the document frame, of course.
         #
-        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+        documentFrame = self.getDocumentFrame()
+        if self.isSameObject(obj, documentFrame):
             return [None, -1]
 
         while obj.parent and obj != obj.parent:
@@ -5327,7 +5328,8 @@ class Script(default.Script):
         # If we're here, we need to start looking up the tree,
         # going no higher than the document frame, of course.
         #
-        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+        documentFrame = self.getDocumentFrame()
+        if self.isSameObject(obj, documentFrame):
             return [None, -1]
 
         while obj.parent and obj != obj.parent:
