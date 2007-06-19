@@ -130,6 +130,8 @@ userCustomizableSettings = [
     "keyboardLayout",
     "speakBlankLines",
     "enabledTextAttributes",
+    "enableProgressBarUpdates",
+    "progressBarUpdateInterval"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -397,6 +399,15 @@ speakBlankLines         = True
 # the current one.
 #
 readTableCellRow    = True
+
+# If True, enable speaking of progress bar updates.
+#
+enableProgressBarUpdates = False
+
+# The interval (in seconds) between speaking progress bar updates. A value
+# of zero means that progress bar updates should not be spoken at all.
+#
+progressBarUpdateInterval = 10
 
 # The complete list of possible text attributes.
 #

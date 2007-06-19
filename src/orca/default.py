@@ -105,6 +105,12 @@ class Script(script.Script):
         self._display = None
         self._visibleRectangle = None
 
+        # Used by the visualAppearanceChanged routine for updating whether
+        # progress bars are spoken.
+        #
+        self.lastProgressBarTime = {}
+        self.lastProgressBarValue = {}
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -1888,6 +1894,79 @@ class Script(script.Script):
 
         return commonAncestor
 
+    def handleProgressBarUpdate(self, event, obj):
+        """Determine whether this progress bar event should be spoken or not.
+        It should be spoken if:
+        1/ settings.enableProgressBarUpdates is True.
+        2/ The application with the progress bar has focus.
+        3/ The time of this event exceeds the
+           settings.progressBarUpdateInterval value.  This value
+           indicates the time (in seconds) between potential spoken
+           progress bar updates.
+        4/ The new value of the progress bar (converted to an integer),
+           is different from the last one or equals 100 (i.e complete).
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj:  the Accessible progress bar object.
+        """
+
+        if settings.enableProgressBarUpdates:
+            if orca_state.locusOfFocus and \
+               orca_state.locusOfFocus.app == obj.app:
+                currentTime = time.time()
+
+                # If this progress bar is not already known, create initial
+                # values for it.
+                #
+                if not self.lastProgressBarTime.has_key(obj):
+                    self.lastProgressBarTime[obj] = 0.0
+                if not self.lastProgressBarValue.has_key(obj):
+                    self.lastProgressBarValue[obj] = None
+
+                lastProgressBarTime = self.lastProgressBarTime[obj]
+                lastProgressBarValue = self.lastProgressBarValue[obj]
+
+                if (currentTime - lastProgressBarTime) > \
+                           settings.progressBarUpdateInterval:
+                    value = obj.value
+                    currentValue = int(value.currentValue)
+                    percentValue = int((value.currentValue / \
+                        (value.maximumValue - value.minimumValue)) * 100.0)
+                    if lastProgressBarValue != currentValue \
+                       or percentValue == 100:
+                        utterances = []
+
+                        # There may be cases when more than one progress 
+                        # bar is updating at the same time in a window.
+                        # If this is the case, then speak the index of this
+                        # progress bar in the dictionary of known progress 
+                        # bars, as well as the value.
+                        #
+                        if len(self.lastProgressBarTime) > 1:
+                            index = 0
+                            for key in self.lastProgressBarTime.keys():
+                                if key == obj:
+                                    # Translators: this is an index value
+                                    # so that we can tell which progress bar
+                                    # we are referring to.
+                                    #
+                                    label = _("Progress bar %d.") % (index + 1)
+                                    utterances.append(label)
+                                else:
+                                    index += 1
+
+                        # Translators: this is the percentage value of a 
+                        # progress bar.
+                        #
+                        percentage = _("%d percent.") % percentValue + " "
+
+                        utterances.append(percentage)
+                        speech.speakUtterances(utterances)
+
+                        self.lastProgressBarTime[obj] = currentTime
+                        self.lastProgressBarValue[obj] = currentValue
+
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -2098,6 +2177,11 @@ class Script(script.Script):
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
+
+        # Check if this event is for a progress bar.
+        #
+        if obj.role == rolenames.ROLE_PROGRESS_BAR:
+            self.handleProgressBarUpdate(event, obj)
 
         # We care if panels are suddenly showing.  The reason for this
         # is that some applications, such as Evolution, will bring up

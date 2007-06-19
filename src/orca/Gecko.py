@@ -3235,6 +3235,24 @@ class Script(default.Script):
             self.speakContents(
                 self.getLineContentsAtOffset(obj, characterOffset))
 
+    def handleProgressBarUpdate(self, event, obj):
+        """Determine whether this progress bar event should be spoken or not.
+        For Firefox, we don't want to speak the small "page load" progress
+        bar. All other Firefox progress bars get passed onto the parent 
+        class for handling.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj:  the Accessible progress bar object.
+        """
+
+        rolesList = [rolenames.ROLE_PROGRESS_BAR, \
+                     rolenames.ROLE_STATUSBAR, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if not self.isDesiredFocusedItem(event.source, rolesList):
+            default.Script.handleProgressBarUpdate(self, event, obj)
+
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
         method should not be called for objects whose visual appearance

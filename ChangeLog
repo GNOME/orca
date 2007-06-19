@@ -1,3 +1,38 @@
+2007-06-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/speechgenerator.py:
+          src/orca/Gecko.py:
+          src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Work on bug #438333 – Need to present progress bar activity.
+          Implementation of speech support for progress bars as outlined
+          by Mike in comment #6, plus the following changes (per email
+          from Will):
+
+          - Adjust the GUI for this particular feature to have a checkbox
+            and a separate label/spin button. ie.:
+
+            [ ] Speak Progress Bar Updates       Update Interval:  ( 10 )
+
+            where the label/spin button pair would be inactivate/grayed if
+            the checkbox wasn't checked, and the interval spin button went
+            from 1 upwards in intervals of 1 with a default value of 10.
+
+          - When progress bar is at 100%, we should present it, regardless
+            of the interval.
+
+          - There may be cases when more than one progress bar is updating
+            at the same time in a window. If this is the case, then speak
+            the index of this progress bar in the dictionary of known
+            progress bars, as well as the value.
+
+          Note that the progress bar currentValue isn't always a value in
+          the range 0-100. You need to look at the minimumValue and the
+          maximumValue to determine the range. Also fixed
+          speechgenerator._getSpeechForProgressBar to reflect this.
+
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Additional fix for bug 449171 - Orca gets

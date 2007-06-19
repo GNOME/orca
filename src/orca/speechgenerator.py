@@ -919,9 +919,12 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
+        percentValue = (obj.value.currentValue / \
+            (obj.value.maximumValue - obj.value.minimumValue)) * 100.0
+
         # Translators: this is the percentage value of a progress bar.
         #
-        percentage = _("%d percent.") % obj.value.currentValue + " "
+        percentage = _("%d percent.") % percentValue + " "
 
         utterances = []
 

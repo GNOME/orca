@@ -956,6 +956,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.sayAllStyle.set_active(prefs["sayAllStyle"])
 
+        # Set the sensitivity of the "Update Interval" items, depending
+        # upon whether the "Speak progress bar updates" checkbox is checked.
+        #
+        enable = prefs["enableProgressBarUpdates"]
+        self.speechProgressBarCheckbutton.set_active(enable)
+        self.speakUpdateIntervalHBox.set_sensitive(enable)
+
+        interval = prefs["progressBarUpdateInterval"]
+        self.speakProgressBarSpinButton.set_value(interval)
+
         # Braille pane.
         #
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
@@ -1833,6 +1843,35 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                 self.prefsDict["readTableCellRow"] = False
             else:
                 self.prefsDict["readTableCellRow"] = True
+
+    def speechProgressBarChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speechProgressBarCheckbutton GtkCheckButton widget.
+           The user has [un]checked the "Speak progress bar updates" checkbox.
+           Set the 'enableProgressBarUpdates' preference to the new value.
+           Set the rest of the 'update interval' hbox items [in]sensensitive
+           depending upon whether this checkbox is checked.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["enableProgressBarUpdates"] = enable
+        self.speakUpdateIntervalHBox.set_sensitive(enable)
+
+    def speakProgressBarValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           speakProgressBarSpinButton GtkSpinButton widget.
+           The user has changed the value of the "speak progress bar
+           updates" spin button. Set the 'progressBarUpdateInterval'
+           preference to the new integer value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["progressBarUpdateInterval"] = widget.get_value_as_int()
 
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames
