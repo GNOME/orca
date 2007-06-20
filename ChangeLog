@@ -1,3 +1,8 @@
+2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug 409728 - Orca repeats mouse-
+        selected text numerous times in Gecko. (Thanks Rich!)
+
 2007-06-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

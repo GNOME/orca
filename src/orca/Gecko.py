@@ -2862,6 +2862,14 @@ class Script(default.Script):
                                     characterOffset,
                                     characterOffset + 1)
 
+        # If the last event was a mouse event, then just return. This
+        # prevents the multiple utterances of text selected via the mouse
+        # (see bug #409728).
+        #
+        if isinstance(orca_state.lastInputEvent,
+                      input_event.MouseButtonEvent):
+            return                
+
         default.Script.onCaretMoved(self, event)
 
     def onTextDeleted(self, event):
