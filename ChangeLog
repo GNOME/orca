@@ -1,3 +1,8 @@
+2007-06-21 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py Fixed bug #449232, Firefox move to next 
+        large object tweak
+
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 409728 - Orca repeats mouse-

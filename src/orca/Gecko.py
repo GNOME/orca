@@ -118,6 +118,10 @@ minimumFindLength = 4
 #
 onlySpeakChangedLinesDuringFind = False
 
+# The minimum number of characters of text that an accessible object must 
+# contain to be considered a match in go to next/prev large object
+largeObjectTextLength = 75
+
 # Roles that imply their text starts on a new line.
 #
 NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
@@ -130,7 +134,10 @@ NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
 OBJECT_ROLES = [rolenames.ROLE_HEADING,
                 rolenames.ROLE_PARAGRAPH,
                 rolenames.ROLE_TABLE,
+                rolenames.ROLE_TABLE_CELL,
                 rolenames.ROLE_TEXT,
+                rolenames.ROLE_SECTION,
+                rolenames.ROLE_DOCUMENT_FRAME,
                 rolenames.ROLE_AUTOCOMPLETE]
 
 ########################################################################
@@ -5631,6 +5638,93 @@ class Script(default.Script):
                     wrapped = True
 
         return [None, wrapped]
+                
+    def findPrevByPredicate(self, pred, wrap, currentObj=None):
+        """Finds the caret offset at the beginning of the previous object
+        using the given predicate as a pattern to match.
+
+        Arguments:
+        -pred: a python callable that takes an accessible argument and
+               returns true/false based on some match criteria
+        -wrap: if True and the top of the document is reached, move
+               to the bottom and keep looking.
+        -currentObj: the object from which the search should begin
+
+        Returns: [obj, wrapped] where wrapped is a boolean reflecting
+        whether wrapping took place.
+        """
+
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
+
+        ancestors = []
+        nestableRoles = [rolenames.ROLE_LIST, rolenames.ROLE_TABLE]
+        obj = currentObj.parent
+        while obj:
+            ancestors.append(obj)
+            obj = obj.parent
+
+        wrapped = False
+        obj = self.findPreviousObject(currentObj)
+        while obj:
+            isNestedItem = ((obj != currentObj.parent) \
+                            and (currentObj.parent.role == obj.role) \
+                            and (obj.role in nestableRoles))
+            if ((not obj in ancestors) or isNestedItem) and pred(obj):
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+                return [obj, wrapped]
+            else:
+                obj = self.findPreviousObject(obj)
+                if not obj and wrap and not wrapped:
+                    obj = self.getLastObject()
+                    wrapped = True
+
+        return [None, wrapped]
+                
+    def findNextByPredicate(self, pred, wrap, currentObj=None):
+        """Finds the caret offset at the beginning of the next object
+        using the given predicate as a pattern to match or not match.
+
+        Arguments:
+        -pred: a python callable that takes an accessible argument and
+               returns true/false based on some match criteria
+        -wrap: if True and the bottom of the document is reached, move
+               to the top and keep looking.
+        -currentObj: the object from which the search should begin
+
+        Returns: [obj, wrapped] where wrapped is a boolean reflecting
+        whether wrapping took place.
+        """
+
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
+        ancestors = []
+        obj = currentObj.parent
+        while obj:
+            ancestors.append(obj)
+            obj = obj.parent
+
+        wrapped = False
+        obj = self.findNextObject(currentObj)
+        if not obj and wrap:
+            documentFrame = self.getDocumentFrame()
+            obj = documentFrame.child(0)
+            wrapped = True
+
+        while obj:
+            if (not obj in ancestors) and pred(obj):
+                if wrapped and self.isSameObject(currentObj, obj):
+                    obj = None
+                return [obj, wrapped]
+            else:
+                obj = self.findNextObject(obj)
+                if not obj and wrap and not wrapped:
+                    documentFrame = self.getDocumentFrame()
+                    obj = documentFrame.child(0)
+                    wrapped = True
+
+        return [None, wrapped]
 
     ####################################################################
     #                                                                  #
@@ -6660,7 +6754,7 @@ class Script(default.Script):
 
     def goPreviousChunk(self, inputEvent):
         wrap = True
-        [obj, wrapped] = self.findPreviousRole(OBJECT_ROLES, wrap)
+        [obj, wrapped] = self.findPrevByPredicate(self.__matchChunk, wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -6683,8 +6777,9 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
+        print inputEvent.event_string
         wrap = True
-        [obj, wrapped] = self.findNextRole(OBJECT_ROLES, wrap)
+        [obj, wrapped] = self.findNextByPredicate(self.__matchChunk, wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -7657,3 +7752,19 @@ class Script(default.Script):
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
         braille.displayMessage(string)
+        
+    ####################################################################
+    #                                                                  #
+    # Match Predicates                                                 #
+    #                                                                  #
+    ####################################################################
+    def __matchChunk(self, obj):
+        if obj.role in OBJECT_ROLES:
+            text = obj.text
+            if text and text.characterCount > largeObjectTextLength:
+                return True
+            else:
+                return False
+        else:
+            return False
+        
