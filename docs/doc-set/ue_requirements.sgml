@@ -314,7 +314,7 @@
 	      </row>
 	      <row>
 	        <entry>Web Browsing</entry>
-		<entry>Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
+		<entry>	        	        Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
 
 		<entry>&incomplete; [OWNER: LMS] Firefox 2.0 is
 		  probably as good as it is going to get. Working with
@@ -1094,16 +1094,34 @@
 
     <section id="urbookmark"><title>Bookmarked Objects</title>
       <para>Orca will allow users to define a gesture (keyboard or
-	braille) that will tell Orca to enter review mode and make a
+	braille) that will tell Orca to enter flat review mode and make a
 	particular object the object of interest.  From this point,
 	the user can use a &wkc; to go back to the object with focus,
 	give the bookmarked object focus if possible, or perform the
-	equivalent of a mouse click on the bookmarked object.</para>
+	equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.</para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the bookmarked object.</para>
       <para>&note; if the specified bookmarked object is not in the
-        window with focus, it is not a requirement to jump to the
+        window with focus, with the exception of web pages it is not a requirement to jump to the
         bookmarked object.</para>
+        <para> When in firefox the user should be able to define bookmarks for each individual page.  It is understood that if the page is dynamic the feature might not always work.</para>
+        <para> If possible, many users have expressed a desire to be able to save the bookmarks that they generate.</para>
+        <para> The following keystrokes should be used to perform the functions related to this feature.</para>
+
+	  <para>Alt-orca-1 through 9
+    Add a bookmark in this numbered slot. Press again to confirm an overwrite of an existing bookmark. </para>
+ 
+	  <para>orca-1 through 9
+    Move the pointer to the bookmark in this numbered slot. </para>
+ 
+	  <para>Alt-Shift-1 through 9
+    Report "Where am I" information for this bookmark relative to the root. </para>
+ 
+	  <para>Alt-orca-Shift-2 through 9
+    Report "Where am I" information for this bookmark relative to the current pointer location.</para> 
+ 
+	  <para>"b" and "shift+b" Move between the given bookmarks for the given application or page. </para>         
+	  <para> "Alt+orca+b" should be used to save the defined bookmarks for the current application or page.</para>
 
       <section><title>Functional Description and Status</title>
 
