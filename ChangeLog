@@ -1,3 +1,20 @@
+2007-06-21  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/keystrokes/swriter/text-attributes.keys,
+        test/keystrokes/gedit/say-all.keys,
+        test/keystrokes/gedit/say-all-cursor-pos.keys,
+        test/keystrokes/gnome-terminal/gnome-terminal.keys,
+        test/keystrokes/gnome-terminal/swriter-say-all.keys
+
+        Fixed minor keystroke file problems.
+
+        src/tools/play_keystrokes.py,
+        src/tools/sanity_check.py
+
+        Modified play_keystrokes,py to sleep for fixed times after keystrokes
+        Modified sanity_check.py to test for a previous key not being
+        released before the current key is released.
+
 2007-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

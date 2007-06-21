@@ -19,6 +19,15 @@
 
 """Performs a sanity check on a keystroke file."""
 
+# Keystroke modifier keys.
+#
+# ToDo (LMS) make sure the list is complete. Meta keys are defined
+# in the AT-SPI, but I don't know what they map to, except for Esc.
+#
+modifierKeys = [ "(Control_L)", "(Shift_L)", "(Alt_L)", \
+                 "(Control_R)", "(Shift_R)", "(Alt_R)",
+                 "(KP_Insert)"]
+
 def main():
     """Expects to find lines of the following form on stdin:
 
@@ -31,7 +40,8 @@ def main():
     """
 
     keycodePresses = {}
-
+    keyPressCount = 0
+    
     lineCount = 0
     errorCount = 0
     try:
@@ -73,6 +83,22 @@ def main():
                           + "code=%d string=%s at line=%d" \
                           % (hw_code, event_string, lineCount)
                     errorCount += 1
+
+                # Verify all key presses, except for modifier keys,
+                # have been released.
+                if modifierKeys.count(event_string) == 0:
+                    if type == 0: # key press
+                        keyPressCount = keyPressCount + 1
+                    else:
+                        keyPressCount = keyPressCount - 1
+                        
+                if type == 1 and keyPressCount != 0:
+                    # There is still a key pressed.
+                    print "ERROR: key still pressed when current key is released: " \
+                          + "code=%d key still pressed=%s at line=%d" \
+                          % (hw_code, event_string, lineCount)
+                    errorCount += 1
+
                 lineCount += 5
     except EOFError:
         pass

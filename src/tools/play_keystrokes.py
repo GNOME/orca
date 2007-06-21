@@ -28,14 +28,13 @@ import time
 import orca.debug as debug
 import orca.atspi
 
-# Maximum time, in seconds, to sleep.  This allows us to compress the
-# playback some for users who took their sweet time entering key strokes.
+# Time to sleep after a key is pressed
 #
-MAX_SLEEP = 5.0
+KEY_PRESS_SLEEP_TIME = 0.2
 
-# Minimum time to sleep between navigation key presses.
+# Time to sleep after a key is released
 #
-MIN_SLEEP = 3.0
+KEY_RELEASE_SLEEP_TIME = 3.0
 
 # Keystroke modifier keys.
 #
@@ -44,12 +43,6 @@ MIN_SLEEP = 3.0
 #
 modifierKeys = [ "(Control_L)", "(Shift_L)", "(Alt_L)", \
                  "(Control_R)", "(Shift_R)", "(Alt_R)" ]
-
-# Factor to speed up the playback.  This will compress time by the
-# given amount.  For example, 2.0 will play the events back twice
-# as fast.
-#
-SPEED_UP  = 1.0
 
 def exit(signum, frame):
     sys.exit()
@@ -69,8 +62,8 @@ def go():
 
     d = orca.atspi.Registry().registry.getDeviceEventController()
 
-    lastTime = None
     keyPressCount = 0
+    sleepTime = 0
     
     while True:
         line = raw_input()
@@ -78,8 +71,8 @@ def go():
         if line.startswith("WAIT:"):
             # Sleep for the specified wait time. This allows Orca
             # to speak and braille long documents.
-            wait_time = eval(line[line.index("=") + 1 :])
-            time.sleep(wait_time)
+            waitTime = eval(line[line.index("=") + 1 :])
+            time.sleep(waitTime)
 
         elif line.startswith("KEYEVENT:"):
             type = eval(line[-1])
@@ -99,25 +92,23 @@ def go():
                     keyPressCount = keyPressCount - 1
 
             line = raw_input() # is_text
-            
-            line = raw_input()
-            event_time = eval(line[line.index("=") + 1 :])
-                
-            if not lastTime:
-                lastTime = event_time
+            line = raw_input() # time
 
-            delta = min(MAX_SLEEP, (event_time - lastTime) / SPEED_UP)
-
-            if type == 0 and keyPressCount == 1:
-                # Make sure there is sufficient delay between key presses,
-                # but avoid pausing when a key is pressed.
-                delta = max(MIN_SLEEP, delta)
-
-            if delta > 0:
-                time.sleep(delta)
-            lastTime = event_time
-
+            # Play the keystroke.
             d.generateKeyboardEvent(hw_code, "", type)
+
+            # Sleep after the keystroke.
+            if type == 0: # key press
+                sleepTime = KEY_PRESS_SLEEP_TIME
+            else: # key release
+                if keyPressCount == 0:
+                    sleepTime = KEY_RELEASE_SLEEP_TIME
+                else: 
+                    # A non-modifier key is still pressed, so don't sleep
+                    # so long that auto-repeat occurs.
+                    sleepTime = KEY_PRESS_SLEEP_TIME
+                    
+            time.sleep(sleepTime)
 
 def main():
     signal.signal(signal.SIGINT, exit)
