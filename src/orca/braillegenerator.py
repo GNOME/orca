@@ -1537,7 +1537,10 @@ class BrailleGenerator:
         parent = obj.parent
         if parent and parent.table:
             row = parent.table.getRowAtIndex(obj.index)
-            desc = parent.table.getRowDescription(row)
+            if row >= 0:
+                desc = parent.table.getRowDescription(row)
+            else:
+                desc = None
             if desc and len(desc):
                 if settings.brailleRolenameStyle \
                        == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -1553,7 +1556,10 @@ class BrailleGenerator:
                 regions.append(braille.Region(text))
 
             col = parent.table.getColumnAtIndex(obj.index)
-            desc = parent.table.getColumnDescription(col)
+            if col >= 0:
+                desc = parent.table.getColumnDescription(col)
+            else:
+                desc = None
             if desc and len(desc):
                 if settings.brailleVerbosityLevel \
                        == settings.VERBOSITY_LEVEL_VERBOSE:

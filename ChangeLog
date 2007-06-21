@@ -1,3 +1,10 @@
+2007-06-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #446881 – Orca braillegenerator code assumes that 
+          what's in a table is a table cell. Don't try to get row
+          description if we are passed a row number < 0.
+
 2007-05-08  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
