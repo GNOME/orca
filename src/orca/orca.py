@@ -49,6 +49,7 @@ import os
 import signal
 import string
 import time
+import unicodedata
 
 import atspi
 import braille
@@ -442,7 +443,8 @@ def _isPrintableKey(event_string):
     else:
         unicodeString = event_string.decode("UTF-8")
         reply = (len(unicodeString) == 1) \
-                and (unicodeString.isalnum() or unicodeString.isspace())
+                and (unicodeString.isalnum() or unicodeString.isspace()
+                or unicodedata.category(unicodeString)[0] in ('P', 'S'))
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoPrintableKey: returning: %s" % reply)
     return reply

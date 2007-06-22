@@ -1,3 +1,9 @@
+2007-06-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          From Tomas Cerha (thanks!)
+          Fixed bug #449978 – Punctuation keys not echoed.
+
 2007-06-21  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/keystrokes/swriter/text-attributes.keys,
