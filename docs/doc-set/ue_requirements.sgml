@@ -1098,7 +1098,7 @@
 	particular object the object of interest.  From this point,
 	the user can use a &wkc; to go back to the object with focus,
 	give the bookmarked object focus if possible, or perform the
-	equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.</para>
+	equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.  If possible it would be really nice to play the system beep if the bookmark can't be found.</para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the bookmarked object.</para>
       <para>&note; if the specified bookmarked object is not in the
@@ -1109,7 +1109,7 @@
         <para> The following keystrokes should be used to perform the functions related to this feature.</para>
 
 	  <para>Alt-orca-1 through 9
-    Add a bookmark in this numbered slot. Press again to confirm an overwrite of an existing bookmark. </para>
+    Add a bookmark in this numbered slot. If a bookmark already exists at this register it will be replaced with the new one. </para>
  
 	  <para>orca-1 through 9
     Move the pointer to the bookmark in this numbered slot. </para>

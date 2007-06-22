@@ -1,3 +1,11 @@
+2007-06-22  Mike Pedersen <michael.pedersen@sun.com>
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+           Update to the bookmarked object specs 
+
 2007-06-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
@@ -28,7 +36,7 @@
           what's in a table is a table cell. Don't try to get row
           description if we are passed a row number < 0.
 
-2007-05-08  Mike Pedersen <michael.pedersen@sun.com>
+2007-06-21  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
         * docs/doc-set/orca.html,
