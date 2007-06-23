@@ -107,11 +107,6 @@ class Script(Gecko.Script):
 
         self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))
 
-        # Let onTextInsertion handle autocompletion.
-        #
-        if parent and parent.role == rolenames.ROLE_AUTOCOMPLETE:
-            return
-
         # Don't speak chrome URLs.
         #
         if obj.name.startswith("chrome://"):
@@ -180,6 +175,19 @@ class Script(Gecko.Script):
             speech.speakUtterances(utterances)
         else:
             Gecko.Script.onTextInserted(self, event)
+
+    def onVisibleDataChanged(self, event):
+        """Called when the visible data of an object changes."""
+
+        # [[[TODO: JD - In Gecko.py, we need onVisibleDataChanged() to
+        # to detect when the user switches between the tabs holding
+        # different URLs in Firefox.  Thunderbird issues very similar-
+        # looking events as the user types a subject in the message
+        # composition window. For now, rather than trying to distinguish
+        # them  in Gecko.py, we'll simply prevent Gecko.py from seeing when
+        # Thunderbird issues such an event.]]]
+        #
+        return
 
     def _speakEnclosingPanel(self, obj):
         """Speak the enclosing panel for the object, if it is

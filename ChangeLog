@@ -1,3 +1,8 @@
+2007-06-23  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/scripts/Thunderbird.py: Fix for bug 449152 - 
+        Cannot create a new message in thunderbird while using Orca
+
 2007-06-22  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
