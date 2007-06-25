@@ -1,9 +1,18 @@
 2007-06-25  Willie Walker <william.walker@sun.com>
 
-	* src/orca/flat-review.py, src/orca/default.py: 
-	Fix for bug 436888 - Include widget status information in speech
-	and braille for flat review.
-	
+        * src/orca/atspi.py: Fix for bug 450037 Password field for gdm
+        speaks characters you type instead of "star star star star".
+        The problem was that we were not listening for
+        object:property-change:accessible-role events to handle the
+        case where gdm changes the role of the text entry area from
+        "text" (for username) to "password text" (for password).
+
+2007-06-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/flat-review.py, src/orca/default.py:
+        Fix for bug 436888 - Include widget status information in speech
+        and braille for flat review.
+
 2007-06-25  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py, src/orca/default.py: Fix for bug 448096 -
@@ -11,7 +20,7 @@
 
 2007-06-23  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/scripts/Thunderbird.py: Fix for bug 449152 - 
+        * src/orca/scripts/Thunderbird.py: Fix for bug 449152 -
         Cannot create a new message in thunderbird while using Orca
 
 2007-06-22  Mike Pedersen <michael.pedersen@sun.com>
@@ -20,7 +29,7 @@
         * docs/doc-set/orca.html,
         * docs/doc-set/orca.pdf
 
-           Update to the bookmarked object specs 
+           Update to the bookmarked object specs
 
 2007-06-22  Rich Burridge <rich.burridge@sun.com>
 
@@ -48,7 +57,7 @@
 2007-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
-          Fixed bug #446881 – Orca braillegenerator code assumes that 
+          Fixed bug #446881 – Orca braillegenerator code assumes that
           what's in a table is a table cell. Don't try to get row
           description if we are passed a row number < 0.
 
@@ -63,7 +72,7 @@
 
 2007-06-21 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py Fixed bug #449232, Firefox move to next 
+        * src/orca/Gecko.py Fixed bug #449232, Firefox move to next
         large object tweak
 
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
@@ -113,7 +122,7 @@
 
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug 449171 - Orca gets stuck in 
+        * src/orca/Gecko.py: Fix for bug 449171 - Orca gets stuck in
         endless loops on woot.com
 
 2007-06-19 Scott Haeger <scott@bashautomation.com>
@@ -121,7 +130,7 @@
         * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary
 
         * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary,
-        make announcements only when items > 0 
+        make announcements only when items > 0
 
 2007-06-18  Willie Walker <william.walker@sun.com>
 

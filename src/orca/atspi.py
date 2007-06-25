@@ -405,6 +405,9 @@ class Accessible:
         - registry: an instance of Registry
         """
         registry.registerEventListener(
+            Accessible._onRoleChanged,
+            "object:property-change:accessible-role")
+        registry.registerEventListener(
             Accessible._onNameChanged,
             "object:property-change:accessible-name")
         registry.registerEventListener(
@@ -430,6 +433,9 @@ class Accessible:
         - registry: an instance of Registry
         """
         registry.deregisterEventListener(
+            Accessible._onRoleChanged,
+            "object:property-change:accessible-role")
+        registry.deregisterEventListener(
             Accessible._onNameChanged,
             "object:property-change:accessible-name")
         registry.deregisterEventListener(
@@ -446,6 +452,21 @@ class Accessible:
             "object:children-changed:")
 
     shutdown = staticmethod(shutdown)
+
+    def _onRoleChanged(e):
+        """Core module event listener called when an object's role
+        changes.  Updates the cache accordingly.
+
+        Arguments:
+        - e: AT-SPI event from the AT-SPI registry
+        """
+
+        if Accessible._cache.has_key(e.source):
+            obj = Accessible._cache[e.source]
+            if obj.__dict__.has_key("role"):
+                del obj.__dict__["role"]
+
+    _onRoleChanged = staticmethod(_onRoleChanged)
 
     def _onNameChanged(e):
         """Core module event listener called when an object's name
@@ -823,12 +844,12 @@ class Accessible:
                 self.accessible.unref()
             except:
                 pass
-            
+
             try:
                 Accessible.deleteAccessible(self._acc)
             except:
                 pass
-            
+
             self.accessible = None
             self._acc = None
             self.app = None
@@ -1230,7 +1251,7 @@ class Accessible:
             self.selection = selection
 
         return selection
-        
+
     def __get_document(self):
         """Returns an object that implements the Accessibility_Document
         interface for this object, or None if this object doesn't implement
