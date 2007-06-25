@@ -3221,9 +3221,10 @@ class Script(default.Script):
             documentFrame = self.getDocumentFrame()
 
             # If the document frame is busy loading, we won't present
-            # anything to prevent Orca from being too chatty.
+            # anything to prevent Orca from being too chatty.  We also
+            # don't want to present anything if we're not in the document.
             #
-            if self._loadingDocumentContent:
+            if self._loadingDocumentContent or not self.inDocumentContent():
                 return
 
             braille.displayMessage(documentFrame.name)
@@ -3232,9 +3233,6 @@ class Script(default.Script):
                 "%s %s" \
                 % (documentFrame.name,
                    rolenames.rolenames[rolenames.ROLE_PAGE_TAB].speech))
-
-            if not self.inDocumentContent():
-                return
 
             [obj, characterOffset] = self.getCaretContext()
             if not obj:
@@ -3280,29 +3278,6 @@ class Script(default.Script):
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
-
-        # We'll try to give some presentation of progress level for
-        # loading the document content if we can.  [[[TODO: HACK - WDW
-        # I've been filling the talkback buffers with Firefox crashes
-        # all day today.  Looks like Gecko wants to crash when you
-        # probe things about progress bars.  Maybe it's a passive
-        # aggressive way of saying "HEY! QUIT CHECKING MY STATUS!
-        # I'LL TELL YOU WHEN I'M DONE!!!".  So...we won't offer
-        # this feature right now.]]]
-        #
-        if False and obj.role == rolenames.ROLE_PROGRESS_BAR:
-            if self._loadingDocumentContent:
-                [regions, focusedRegion] = \
-                    self.brailleGenerator.getBrailleRegions(event.source)
-                braille.clear()
-                line = braille.Line()
-                braille.addLine(line)
-                braille.setFocus(focusedRegion)
-                braille.refresh(True)
-                if not speech.isSpeaking():
-                    speech.speakUtterances(\
-                        self.speechGenerator.getSpeech(event.source, True))
-                return
 
         if (obj.role == rolenames.ROLE_CHECK_BOX) \
             and obj.state.count(atspi.Accessibility.STATE_FOCUSED):

@@ -1926,15 +1926,15 @@ class Script(script.Script):
 
                 lastProgressBarTime = self.lastProgressBarTime[obj]
                 lastProgressBarValue = self.lastProgressBarValue[obj]
+                value = obj.value
+                currentValue = int(value.currentValue)
+                percentValue = int((value.currentValue / \
+                    (value.maximumValue - value.minimumValue)) * 100.0)
 
                 if (currentTime - lastProgressBarTime) > \
-                           settings.progressBarUpdateInterval:
-                    value = obj.value
-                    currentValue = int(value.currentValue)
-                    percentValue = int((value.currentValue / \
-                        (value.maximumValue - value.minimumValue)) * 100.0)
-                    if lastProgressBarValue != currentValue \
-                       or percentValue == 100:
+                       settings.progressBarUpdateInterval \
+                   or percentValue == 100:
+                    if lastProgressBarValue != percentValue:
                         utterances = []
 
                         # There may be cases when more than one progress 
@@ -1965,7 +1965,7 @@ class Script(script.Script):
                         speech.speakUtterances(utterances)
 
                         self.lastProgressBarTime[obj] = currentTime
-                        self.lastProgressBarValue[obj] = currentValue
+                        self.lastProgressBarValue[obj] = percentValue
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.

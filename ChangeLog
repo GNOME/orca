@@ -1,3 +1,8 @@
+2007-06-25  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py, src/orca/default.py: Fix for bug 448096 -
+        Orca does not provide access to progress bars for FF3 downloads
+
 2007-06-23  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/Thunderbird.py: Fix for bug 449152 - 
