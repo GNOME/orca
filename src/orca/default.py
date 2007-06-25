@@ -1937,10 +1937,10 @@ class Script(script.Script):
                     if lastProgressBarValue != percentValue:
                         utterances = []
 
-                        # There may be cases when more than one progress 
+                        # There may be cases when more than one progress
                         # bar is updating at the same time in a window.
                         # If this is the case, then speak the index of this
-                        # progress bar in the dictionary of known progress 
+                        # progress bar in the dictionary of known progress
                         # bars, as well as the value.
                         #
                         if len(self.lastProgressBarTime) > 1:
@@ -1956,7 +1956,7 @@ class Script(script.Script):
                                 else:
                                     index += 1
 
-                        # Translators: this is the percentage value of a 
+                        # Translators: this is the percentage value of a
                         # progress bar.
                         #
                         percentage = _("%d percent.") % percentValue + " "
@@ -2182,6 +2182,13 @@ class Script(script.Script):
         #
         if obj.role == rolenames.ROLE_PROGRESS_BAR:
             self.handleProgressBarUpdate(event, obj)
+
+        if self.flatReviewContext:
+            if self.isSameObject(
+                obj,
+                self.flatReviewContext.getCurrentAccessible()):
+                self.updateBrailleReview()
+            return
 
         # We care if panels are suddenly showing.  The reason for this
         # is that some applications, such as Evolution, will bring up
@@ -5761,7 +5768,7 @@ class Script(script.Script):
         obj.lastSelections = []
         for i in range(0, obj.text.getNSelections()):
             obj.lastSelections.append(obj.text.getSelection(i))
-                        
+
     def getURI(self, obj):
         """Return the URI for a given link object.
 
@@ -5769,7 +5776,7 @@ class Script(script.Script):
         - obj: the Accessible object.
         """
         return obj.ihyperlink.getURI(0)
-    
+
     def getDocumentFrame(self):
         """Dummy method used as a reminder to refactor whereamI for links,
         possibly subclassing whereamI for the Gecko script.

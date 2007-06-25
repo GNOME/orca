@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import re
@@ -34,6 +34,9 @@ import debug
 import eventsynthesizer
 import orca_state
 import rolenames
+import settings
+
+from orca_i18n import _         # for gettext support
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -271,6 +274,116 @@ class TextZone(Zone):
         else:
             return self.__dict__[attr]
 
+class StateZone(Zone):
+    """Represents a Zone for an accessible that shows a state using
+    a graphical indicator, such as a checkbox or radio button."""
+
+    def __init__(self,
+                 accessible,
+                 x, y,
+                 width, height):
+        Zone.__init__(self, accessible, "", x, y, width, height)
+
+        # Force the use of __getattr__ so we get the actual state
+        # of the accessible each time we look at the 'string' field.
+        #
+        del self.string
+
+    def __getattr__(self, attr):
+        if attr in ["string", "length", "brailleString"]:
+            stateCount = \
+                self.accessible.state.count(atspi.Accessibility.STATE_CHECKED)
+
+            if self.accessible.role in [rolenames.ROLE_CHECK_BOX,
+                                        rolenames.ROLE_CHECK_MENU_ITEM,
+                                        rolenames.ROLE_CHECK_MENU,
+                                        rolenames.ROLE_TABLE_CELL]:
+                if stateCount:
+                    # Translators: this represents the state of a checkbox.
+                    #
+                    speechState = _("checked")
+                else:
+                    # Translators: this represents the state of a checkbox.
+                    #
+                    speechState = _("not checked")
+                brailleState = \
+                    settings.brailleCheckBoxIndicators[stateCount]
+            elif self.accessible.role == rolenames.ROLE_TOGGLE_BUTTON:
+                if stateCount:
+                    # Translators: the state of a toggle button.
+                    #
+                    speechState = _("pressed")
+                else:
+                    # Translators: the state of a toggle button.
+                    #
+                    speechState = _("not pressed")
+                brailleState = \
+                    settings.brailleRadioButtonIndicators[stateCount]
+            else:
+                if stateCount:
+                    # Translators: this is in reference to a radio button being
+                    # selected or not.
+                    #
+                    speechState = _("selected")
+                else:
+                    # Translators: this is in reference to a radio button being
+                    # selected or not.
+                    #
+                    speechState = _("not selected")
+                brailleState = \
+                    settings.brailleRadioButtonIndicators[stateCount]
+
+            if attr == "string":
+                return speechState
+            elif attr == "length":
+                return len(speechState)
+            elif attr == "brailleString":
+                return brailleState
+        else:
+            return Zone.__getattr__(self, attr)
+
+class ValueZone(Zone):
+    """Represents a Zone for an accessible that shows a value using
+    a graphical indicator, such as a progress bar or slider."""
+
+    def __init__(self,
+                 accessible,
+                 x, y,
+                 width, height):
+        Zone.__init__(self, accessible, "", x, y, width, height)
+
+        # Force the use of __getattr__ so we get the actual state
+        # of the accessible each time we look at the 'string' field.
+        #
+        del self.string
+
+    def __getattr__(self, attr):
+        if attr in ["string", "length", "brailleString"]:
+            value = self.accessible.value
+            currentValue = int(value.currentValue)
+            percentValue = int((value.currentValue
+                                / (value.maximumValue
+                                   - value.minimumValue))
+                               * 100.0)
+
+            # Translators: this is the percentage value of a
+            # progress bar.
+            #
+            speechValue = (rolenames.getSpeechForRoleName(self.accessible) \
+                           + " " + _("%d percent.") % percentValue)
+            brailleValue = "%s %d%%" \
+                           % (rolenames.getBrailleForRoleName(self.accessible),
+                              percentValue)
+
+            if attr == "string":
+                return speechValue
+            elif attr == "length":
+                return len(speechValue)
+            elif attr == "brailleString":
+                return brailleValue
+        else:
+            return Zone.__getattr__(self, attr)
+
 class Line:
     """A Line is a single line across a window and is composed of Zones."""
 
@@ -283,38 +396,57 @@ class Line:
         - index: the index of this Line in the window
         - zones: the Zones that make up this line
         """
-
         self.index = index
         self.zones = zones
-
-        bounds = None
-        self.string = ""
-        for zone in self.zones:
-            if not bounds:
-                bounds = [zone.x, zone.y,
-                          zone.x + zone.width, zone.y + zone.height]
-            else:
-                bounds[0] = min(bounds[0], zone.x)
-                bounds[1] = min(bounds[1], zone.y)
-                bounds[2] = max(bounds[2], zone.x + zone.width)
-                bounds[3] = max(bounds[3], zone.y + zone.height)
-            if len(zone.string):
-                if len(self.string):
-                    self.string += " "
-                self.string += zone.string
-
-        if not bounds:
-            bounds = [-1, -1, -1, -1]
-
-        self.x = bounds[0]
-        self.y = bounds[1]
-        self.width = bounds[2] - bounds[0]
-        self.height = bounds[3] - bounds[1]
-
         self.brailleRegions = None
 
+    def __getattr__(self, attr):
+        # We dynamically create the string each time to handle
+        # StateZone and ValueZone zones.
+        #
+        if attr in ["string", "length", "x", "y", "width", "height"]:
+            bounds = None
+            string = ""
+            for zone in self.zones:
+                if not bounds:
+                    bounds = [zone.x, zone.y,
+                              zone.x + zone.width, zone.y + zone.height]
+                else:
+                    bounds[0] = min(bounds[0], zone.x)
+                    bounds[1] = min(bounds[1], zone.y)
+                    bounds[2] = max(bounds[2], zone.x + zone.width)
+                    bounds[3] = max(bounds[3], zone.y + zone.height)
+                if len(zone.string):
+                    if len(string):
+                        string += " "
+                    string += zone.string
+
+            if not bounds:
+                bounds = [-1, -1, -1, -1]
+
+            if attr == "string":
+                return string
+            elif attr == "length":
+                return len(string)
+            elif attr == "x":
+                return bounds[0]
+            elif attr == "y":
+                return bounds[1]
+            elif attr == "width":
+                return bounds[2] - bounds[0]
+            elif attr == "height":
+                return bounds[3] - bounds[1]
+        elif attr.startswith('__') and attr.endswith('__'):
+            raise AttributeError, attr
+        else:
+            return self.__dict__[attr]
+
     def getBrailleRegions(self):
-        if not self.brailleRegions:
+        # [[[WDW - We'll always compute the braille regions.  This
+        # allows us to handle StateZone and ValueZone zones whose
+        # states might be changing on us.]]]
+        #
+        if True or not self.brailleRegions:
             self.brailleRegions = []
             brailleOffset = 0
             for zone in self.zones:
@@ -329,8 +461,12 @@ class Line:
                                                 zone.startOffset,
                                                 zone)
                 else:
+                    try:
+                        brailleString = zone.brailleString
+                    except:
+                        brailleString = zone.string
                     region = braille.ReviewComponent(zone.accessible,
-                                                     zone.string,
+                                                     brailleString,
                                                      0, # cursor offset
                                                      zone)
                 if len(self.brailleRegions):
@@ -747,6 +883,77 @@ class Context:
 
         return zones
 
+    def _insertStateZone(self, zones, accessible):
+        """If the accessible presents non-textual state, such as a
+        checkbox or radio button, insert a StateZone representing
+        that state."""
+
+        zone = None
+        stateOnLeft = True
+
+        if accessible.role in [rolenames.ROLE_CHECK_BOX,
+                               rolenames.ROLE_CHECK_MENU_ITEM,
+                               rolenames.ROLE_CHECK_MENU,
+                               rolenames.ROLE_RADIO_BUTTON,
+                               rolenames.ROLE_RADIO_MENU_ITEM,
+                               rolenames.ROLE_RADIO_MENU]:
+
+            # Attempt to infer if the indicator is to the left or
+            # right of the text.
+            #
+            extents = accessible.component.getExtents(0)
+            stateX = extents.x
+            stateY = extents.y
+            stateWidth = 1
+            stateHeight = extents.height
+
+            if accessible.text:
+                [x, y, width, height] = \
+                    accessible.text.getRangeExtents( \
+                        0, accessible.text.characterCount, 0)
+                textToLeftEdge = x - extents.x
+                textToRightEdge = (extents.x + extents.width) - (x + width)
+                stateOnLeft = textToLeftEdge > 20
+                if stateOnLeft:
+                    stateWidth = textToLeftEdge
+                else:
+                    stateX = x + width
+                    stateWidth = textToRightEdge
+
+            zone = StateZone(accessible,
+                             stateX, stateY, stateWidth, stateHeight)
+
+        elif accessible.role ==  rolenames.ROLE_TOGGLE_BUTTON:
+            # [[[TODO: WDW - This is a major hack.  We make up an
+            # indicator for a toggle button to let the user know
+            # whether a toggle button is pressed or not.]]]
+            #
+            extents = accessible.component.getExtents(0)
+            zone = StateZone(accessible,
+                             extents.x, extents.y, 1, extents.height)
+
+        elif accessible.role == rolenames.ROLE_TABLE_CELL \
+            and accessible.action:
+            # Handle table cells that act like check boxes.
+            #
+            action = accessible.action
+            hasToggle = False
+            for i in range(0, action.nActions):
+                if action.getName(i) == "toggle":
+                    hasToggle = True
+                    break
+            if hasToggle:
+                savedRole = accessible.role
+                accessible.role = rolenames.ROLE_CHECK_BOX
+                self._insertStateZone(zones, accessible)
+                accessible.role = savedRole
+
+        if zone:
+            if stateOnLeft:
+                zones.insert(0, zone)
+            else:
+                zones.append(zone)
+
     def getZonesFromAccessible(self, accessible, cliprect):
         """Returns a list of Zones for the given accessible.
 
@@ -830,6 +1037,11 @@ class Context:
         # use the component extents and the name or description of the
         # accessible.
         #
+        clipping = self.clip(extents.x, extents.y,
+                             extents.width, extents.height,
+                             cliprect.x, cliprect.y,
+                             cliprect.width, cliprect.height)
+
         if (accessible.role != rolenames.ROLE_COMBO_BOX) \
             and (accessible.role != rolenames.ROLE_EMBEDDED) \
             and (accessible.role != rolenames.ROLE_LABEL) \
@@ -837,11 +1049,16 @@ class Context:
             and (accessible.role != rolenames.ROLE_PAGE_TAB) \
             and accessible.childCount > 0:
             pass
+        elif (len(zones) == 0) \
+             and accessible.role in [rolenames.ROLE_SCROLL_BAR,
+                                     rolenames.ROLE_SLIDER,
+                                     rolenames.ROLE_PROGRESS_BAR]:
+            zones.append(ValueZone(accessible,
+                                   clipping[0],
+                                   clipping[1],
+                                   clipping[2],
+                                   clipping[3]))
         elif len(zones) == 0:
-            clipping = self.clip(extents.x, extents.y,
-                                 extents.width, extents.height,
-                                 cliprect.x, cliprect.y,
-                                 cliprect.width, cliprect.height)
             if accessible.name and len(accessible.name):
                 string = accessible.name
             elif accessible.description and len(accessible.description):
@@ -849,19 +1066,9 @@ class Context:
             else:
                 string = ""
 
-            if string == "":
-                # [[[TODO: WDW - ooohhhh....this is going to be a headache.
-                # We want to synthesize a string for objects that are there,
-                # but have no text.  For example, scroll bars.  The rub is
-                # that we will sometimes want to do different strings for
-                # speech and braille (e.g., checkbox cells in tables - the
-                # speech will say "checkbox checked" and the braille will
-                # display "checkbox <x>".  Yikes.  That may be a challenge.
-                # So...for now we punt on table cells.  Logged as bugzilla
-                # bug 319772.]]]
-                #
-                if accessible.role != rolenames.ROLE_TABLE_CELL:
-                    string = accessible.role
+            if (string == "") \
+                and (accessible.role != rolenames.ROLE_TABLE_CELL):
+                string = accessible.role
 
             if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
                 zones.append(Zone(accessible,
@@ -870,6 +1077,8 @@ class Context:
                                   clipping[1],
                                   clipping[2],
                                   clipping[3]))
+
+        self._insertStateZone(zones, accessible)
 
         return zones
 
@@ -894,13 +1103,15 @@ class Context:
 
         parentExtents = parent.component.getExtents(0)
 
-        # [[[TODO: WDW - HACK related to GAIL bug where table column headers
-        # seem to be ignored: http://bugzilla.gnome.org/show_bug.cgi?id=325809.
-        # The problem is that this causes getAccessibleAtPoint to return the
-        # cell effectively below the real cell at a given point, making a mess
-        # of everything.  So...we just manually add in showing headers for now.
-        # The remainder of the logic below accidentally accounts for this offset,
-        # yet it should also work when bug 325809 is fixed.]]]
+        # [[[TODO: WDW - HACK related to GAIL bug where table column
+        # headers seem to be ignored:
+        # http://bugzilla.gnome.org/show_bug.cgi?id=325809.  The
+        # problem is that this causes getAccessibleAtPoint to return
+        # the cell effectively below the real cell at a given point,
+        # making a mess of everything.  So...we just manually add in
+        # showing headers for now.  The remainder of the logic below
+        # accidentally accounts for this offset, yet it should also
+        # work when bug 325809 is fixed.]]]
         #
         table = parent.table
         if table:
@@ -969,7 +1180,7 @@ class Context:
 
         if not root:
             return []
-        
+
         zones = []
 
         # If we're at a leaf node, then we've got a good one on our hands.
@@ -1460,8 +1671,9 @@ class Context:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             if omitWhitespace \
                and moved \
-               and ((len(zone.words) == 0) \
-                    or zone.words[self.wordIndex].string.isspace()):
+               and ((len(zone.string) == 0) \
+                    or (len(zone.words) \
+                        and zone.words[self.wordIndex].string.isspace())):
 
                 # If we're on whitespace in the same zone, then let's
                 # try to move on.  If not, we've definitely moved
@@ -1583,8 +1795,9 @@ class Context:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             if omitWhitespace \
                and moved \
-               and ((len(zone.words) == 0) \
-                    or zone.words[self.wordIndex].string.isspace()):
+               and ((len(zone.string) == 0) \
+                    or (len(zone.words) \
+                        and zone.words[self.wordIndex].string.isspace())):
 
                 # If we're on whitespace in the same zone, then let's
                 # try to move on.  If not, we've definitely moved
