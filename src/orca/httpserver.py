@@ -90,10 +90,32 @@ class _HTTPRequestThread(threading.Thread):
     """Runs a _HTTPRequestHandler in a separate thread."""
 
     def run(self):
-        httpd = BaseHTTPServer.HTTPServer(('',
-                                           settings.httpServerPort),
-                                          _HTTPRequestHandler)
-        httpd.serve_forever()
+        """Try to start an HTTP server on settings.httpServerPort.
+        If this fails, retry settings.maxHttpServerRetries times,
+        each time incrementing the server port number by 1. If we
+        are still unable to start a server, just fail gracefully.
+        """
+
+        portNo = settings.httpServerPort
+        connected = False
+        while not connected and \
+            (portNo < settings.httpServerPort + settings.maxHttpServerRetries):
+            try:
+                httpd = BaseHTTPServer.HTTPServer(('', portNo),
+                                                  _HTTPRequestHandler)
+                connected = True
+            except:
+                if portNo == settings.httpServerPort:
+                    debug.printException(debug.LEVEL_WARNING)
+                debug.println(debug.LEVEL_WARNING,
+                    "httpserver._HTTPRequestThread unable to start server on port %d" % portNo)
+                portNo += 1
+
+        if not connected:
+            debug.println(debug.LEVEL_WARNING,
+                    "httpserver._HTTPRequestThread server startup failed.")
+        else:
+            httpd.serve_forever()
 
 def init():
     """Creates an HTTP server that listens for speak commands from a
@@ -108,7 +130,7 @@ def init():
             _httpRequestThread.setDaemon(True)
             _httpRequestThread.start()
         except:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_WARNING)
 
 def shutdown():
     """Stops the HTTP server.  [[[WDW - not implemented yet.]]]"""

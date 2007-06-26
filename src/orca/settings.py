@@ -222,6 +222,11 @@ speechPitchDelta        = 0.5
 #
 httpServerPort          = 20433
 
+# The number of attempts to retry setting up an HTTP server
+# connection (each time incrementing the port number by 1).
+#
+maxHttpServerRetries   = 20
+
 # If True, enable speech.
 #
 enableSpeech            = True

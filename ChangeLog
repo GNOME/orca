@@ -9,6 +9,14 @@
           Fixed bug #450210 – StarOffice.py needs null-check for 
           self.getFrame(event.source)
 
+        * src/orca/settings.py:
+          src/orca/httpserver.py:
+          Work on bug #395146 – Crash at start. Try to start an HTTP 
+          server on settings.httpServerPort. If this fails, retry 
+          settings.maxHttpServerRetries times, each time incrementing 
+          the server port number by 1. If we are still unable to start 
+          a server, just fail gracefully.
+
 2007-06-25  Willie Walker <william.walker@sun.com>
 
         * src/orca/atspi.py: Fix for bug 450037 Password field for gdm
