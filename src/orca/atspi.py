@@ -687,8 +687,8 @@ class Accessible:
             try:
                 self.accessible = acc._narrow(Accessibility.Accessible)
             except:
-                debug.printException(debug.LEVEL_SEVERE)
-                debug.println(debug.LEVEL_SEVERE,
+                debug.printException(debug.LEVEL_WARNING)
+                debug.println(debug.LEVEL_WARNING,
                               "atspi.py:Accessible.__init__" \
                               + " NOT GIVEN AN ACCESSIBLE!")
                 self.accessible = None

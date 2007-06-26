@@ -1,3 +1,8 @@
+2007-06-26  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/atspi.py: fix for bug #450213 - should 
+	acc._narrow(Accessibility.Accessible) be a SEVERE error?
+	
 2007-06-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
