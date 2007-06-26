@@ -1,3 +1,13 @@
+2007-06-26  Eitan Isaacson <eitan@ascender.com>
+
+	* src/orca/default.py: Removed "object:bounds-changed" listener.
+	* src/orca/scripts/Makefile.am: Removed gnome-power-manager.py,
+	added notification-daemon.py.
+	* src/orca/scripts/gnome-power-manager.py: Removed in favor of
+	more generic notification daemon script.
+	* src/orca/scripts/notification-daemon.py: Automatic presentation 
+	of libnotify notifications, bug #354479.
+
 2007-06-26  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * src/orca/atspi.py: fix for bug #450213 - should 

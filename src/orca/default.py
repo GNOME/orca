@@ -699,8 +699,6 @@ class Script(script.Script):
             self.noOp
         listeners["object:link-selected"]                   = \
             self.onLinkSelected
-        listeners["object:bounds-changed"]                  = \
-            self.noOp
         listeners["object:state-changed:"]                  = \
             self.onStateChanged
         listeners["object:selection-changed"]               = \

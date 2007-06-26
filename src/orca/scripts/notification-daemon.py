@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-""" Custom script for Gnome Power Manager.
+""" Custom script for The notification daemon.
 """
 
 __id__        = ""
@@ -31,69 +31,38 @@ import orca.default as default
 import orca.debug as debug
 import orca.settings as settings
 import orca.speech as speech
+import orca.rolenames as rolenames
 
 from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #
-# The gnome-power-manager script class.                                #
+# The notification-daemon script class.                                #
 #                                                                      #
 ########################################################################
 
 class Script(default.Script):
-
-    def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        # Set the debug level for all the methods in this script.
-        #
-        self.debugLevel = debug.LEVEL_FINEST
-        self._lastInfo = ""
-
-        # The power manager does not send events indication
-        # that the accessible description has changed.
-        # Disabling the caching of accessible descriptions, 
-        # forces the power manager to return a new description 
-        # with the latest power management information.
-        settings.cacheDescriptions = False
-
-        default.Script.__init__(self, app)
-        
-
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
         listeners = default.Script.getListeners(self)
 
-        listeners["object:bounds-changed"] = \
-            self.onBoundsChanged
+        listeners["window:create"] = \
+            self.onWindowCreate
 
         return listeners
 
-
-    def _debug(self, msg):
-        """ Convenience method for printing debug messages
-        """
-        debug.println(self.debugLevel, "gnome-power-manager.py: "+msg)
-
-
-    def onBoundsChanged(self, event):
-        """ Called whenever an object's bounds change. This happens
-        when the Gnome Power Manager balloon is displayed on the
-        desktop.
+    def onWindowCreate(self, event):
+        """Called whenever a window is created in the notification-daemon
+        application.
 
         Arguments:
-        - event: the Event
+        - event: the Event.
         """
-        info = event.source.description
-        self._debug("onBoundsChanged: '%s'" % info)
-
-        if info != self._lastInfo:
-            self._lastInfo = info
-            if len(info) > 0:
-                speech.speak(info, None, True)
+        a = self.findByRole(event.source, rolenames.ROLE_LABEL)
+        texts = [self.getDisplayedText(acc) for acc in a]
+        # Translators: This denotes a notification to the user of some sort.
+        #
+        text = _('Notification %s') % ' '.join(texts)
+        speech.speak(text, None, True)
 

@@ -12,7 +12,6 @@ orca_python_PYTHON = \
 	gnome-keyring-ask.py \
 	gnome-mud.py \
 	gnome-panel.py \
-	gnome-power-manager.py \
 	gnome-search-tool.py \
 	gnome-system-monitor.py \
 	gnome-terminal.py \
@@ -21,6 +20,7 @@ orca_python_PYTHON = \
 	metacity.py \
 	Mozilla.py \
 	nautilus.py \
+	notification-daemon.py \
 	planner.py \
 	self_voicing.py \
 	StarOffice.py \
