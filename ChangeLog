@@ -1,3 +1,9 @@
+2007-06-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #450210 – StarOffice.py needs null-check for 
+          self.getFrame(event.source)
+
 2007-06-25  Willie Walker <william.walker@sun.com>
 
         * src/orca/atspi.py: Fix for bug 450037 Password field for gdm
