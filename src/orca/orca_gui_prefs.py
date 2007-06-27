@@ -1480,6 +1480,20 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.keyBindView.expand_all()
         self.keyBindingsModel.set_sort_column_id(TEXT1, gtk.SORT_ASCENDING)
 
+    def _cleanupSpeechServers(self):
+        """Remove unwanted factories and gnome-speech drivers for the current
+        active factory, when the user dismisses the Orca Preferences dialog.
+        """
+
+        for workingFactory in self.workingFactories:
+            if not (workingFactory == self.speechSystemsChoice):
+                workingFactory.SpeechServer.shutdownActiveServers()
+            else:
+                servers = workingFactory.SpeechServer.getSpeechServers()
+                for server in servers:
+                    if not (server == self.speechServersChoice):
+                        server.shutdown()
+
     def speechSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            speechSupportCheckbutton GtkCheckButton widget. The user has
@@ -2506,6 +2520,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
+        self._cleanupSpeechServers()
         self.orcaSetupWindow.destroy()
 
     def okButtonClicked(self, widget):
@@ -2522,6 +2537,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.applyButtonClicked(widget)
+        self._cleanupSpeechServers()
         self.orcaSetupWindow.hide()
 
     def windowDestroyed(self, widget):
