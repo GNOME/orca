@@ -1,3 +1,9 @@
+2007-06-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/settings.py: fix for bug 451531 - Orca failed to report
+	the conversation message of pidgin.  This was solved by simply
+	mapping the gaim script to pidgin.
+	
 2007-06-26  Eitan Isaacson <eitan@ascender.com>
 
 	* src/orca/default.py: Removed "object:bounds-changed" listener.
