@@ -1,36 +1,41 @@
 2007-06-27  Willie Walker <william.walker@sun.com>
 
-	* src/orca/settings.py: fix for bug 451531 - Orca failed to report
-	the conversation message of pidgin.  This was solved by simply
-	mapping the gaim script to pidgin.
-	
+        * src/orca/mag.py: fix for bug 375396 - Orca failed to exit after
+        stopping the full screen mag.
+
+2007-06-27  Willie Walker <william.walker@sun.com>
+
+        * src/orca/settings.py: fix for bug 451531 - Orca failed to report
+        the conversation message of pidgin.  This was solved by simply
+        mapping the gaim script to pidgin.
+
 2007-06-26  Eitan Isaacson <eitan@ascender.com>
 
-	* src/orca/default.py: Removed "object:bounds-changed" listener.
-	* src/orca/scripts/Makefile.am: Removed gnome-power-manager.py,
-	added notification-daemon.py.
-	* src/orca/scripts/gnome-power-manager.py: Removed in favor of
-	more generic notification daemon script.
-	* src/orca/scripts/notification-daemon.py: Automatic presentation 
-	of libnotify notifications, bug #354479.
+        * src/orca/default.py: Removed "object:bounds-changed" listener.
+        * src/orca/scripts/Makefile.am: Removed gnome-power-manager.py,
+        added notification-daemon.py.
+        * src/orca/scripts/gnome-power-manager.py: Removed in favor of
+        more generic notification daemon script.
+        * src/orca/scripts/notification-daemon.py: Automatic presentation
+        of libnotify notifications, bug #354479.
 
 2007-06-26  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/atspi.py: fix for bug #450213 - should 
-	acc._narrow(Accessibility.Accessible) be a SEVERE error?
-	
+        * src/orca/atspi.py: fix for bug #450213 - should
+        acc._narrow(Accessibility.Accessible) be a SEVERE error?
+
 2007-06-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #450210 – StarOffice.py needs null-check for 
+          Fixed bug #450210 – StarOffice.py needs null-check for
           self.getFrame(event.source)
 
         * src/orca/settings.py:
           src/orca/httpserver.py:
-          Work on bug #395146 – Crash at start. Try to start an HTTP 
-          server on settings.httpServerPort. If this fails, retry 
-          settings.maxHttpServerRetries times, each time incrementing 
-          the server port number by 1. If we are still unable to start 
+          Work on bug #395146 – Crash at start. Try to start an HTTP
+          server on settings.httpServerPort. If this fails, retry
+          settings.maxHttpServerRetries times, each time incrementing
+          the server port number by 1. If we are still unable to start
           a server, just fail gracefully.
 
 2007-06-25  Willie Walker <william.walker@sun.com>

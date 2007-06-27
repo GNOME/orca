@@ -582,8 +582,16 @@ def shutdown():
 
     atspi.Registry().deregisterEventListener(__onMouseEvent,"mouse:abs")
 
-    _magnifier.clearAllZoomRegions()
-    _magnifier.dispose()
+    # Someone might have killed the magnifier on us.  They shouldn't
+    # have done so, but we need to be able to recover if they did.
+    # See http://bugzilla.gnome.org/show_bug.cgi?id=375396.
+    #
+    try:
+        _magnifier.clearAllZoomRegions()
+        _magnifier.dispose()
+    except:
+        debug.printException(debug.LEVEL_WARNING)
+
     _magnifier = None
 
     _initialized = False
