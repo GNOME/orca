@@ -6752,7 +6752,6 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
-        print inputEvent.event_string
         wrap = True
         [obj, wrapped] = self.findNextByPredicate(self.__matchChunk, wrap)
         if wrapped:
@@ -7736,7 +7735,8 @@ class Script(default.Script):
     def __matchChunk(self, obj):
         if obj.role in OBJECT_ROLES:
             text = obj.text
-            if text and text.characterCount > largeObjectTextLength:
+            if text and text.characterCount > largeObjectTextLength and \
+                    not self.isUselessObject(obj):
                 return True
             else:
                 return False

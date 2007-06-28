@@ -1,3 +1,8 @@
+2007-06-28 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py Fixed bug #449232, Firefox move to next
+        large object additional tweak
+
 2007-06-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
