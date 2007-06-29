@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-20 03:23+0100\n"
-"PO-Revision-Date: 2007-06-27 22:19+0930\n"
+"POT-Creation-Date: 2007-06-29 03:26+0100\n"
+"PO-Revision-Date: 2007-06-29 14:59+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1190,7 +1190,7 @@ msgid "Performs right click on current flat review item."
 msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 
 #: ../src/orca/default.py:159
-#: ../src/orca/Gecko.py:1652
+#: ../src/orca/Gecko.py:1659
 #: ../src/orca/scripts/acroread.py:113
 #: ../src/orca/scripts/Evolution.py:304
 #. Translators: the Orca "SayAll" command allows the
@@ -1627,20 +1627,20 @@ msgstr "Hiển thị hộp thoại cấu hình tùy thích của ứng dụng."
 msgid "Toggles the silencing of speech."
 msgstr "Bật/tắt câm giọng nói."
 
-#: ../src/orca/default.py:1555
-#: ../src/orca/default.py:1788
-#: ../src/orca/default.py:3537
-#: ../src/orca/default.py:3678
-#: ../src/orca/default.py:3686
-#: ../src/orca/default.py:3785
-#: ../src/orca/default.py:3793
-#: ../src/orca/Gecko.py:6061
-#: ../src/orca/Gecko.py:7256
+#: ../src/orca/default.py:1553
+#: ../src/orca/default.py:1786
+#: ../src/orca/default.py:3542
+#: ../src/orca/default.py:3683
+#: ../src/orca/default.py:3691
+#: ../src/orca/default.py:3790
+#: ../src/orca/default.py:3798
+#: ../src/orca/Gecko.py:6130
+#: ../src/orca/Gecko.py:7325
 #: ../src/orca/scripts/Evolution.py:718
 #: ../src/orca/scripts/Evolution.py:1240
 #: ../src/orca/scripts/StarOffice.py:617
-#: ../src/orca/scripts/StarOffice.py:2214
-#: ../src/orca/scripts/StarOffice.py:2226
+#: ../src/orca/scripts/StarOffice.py:2216
+#: ../src/orca/scripts/StarOffice.py:2228
 #: ../src/orca/where_am_I.py:1205
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
@@ -1654,7 +1654,7 @@ msgstr "Bật/tắt câm giọng nói."
 msgid "blank"
 msgstr "trắng"
 
-#: ../src/orca/default.py:1636
+#: ../src/orca/default.py:1634
 #, python-format
 #. Translators: this is the number of space characters on a line
 #. of text.
@@ -1663,7 +1663,7 @@ msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d dấu cách"
 
-#: ../src/orca/default.py:1643
+#: ../src/orca/default.py:1641
 #, python-format
 #. Translators: this is the number of tab characters on a line
 #. of text.
@@ -1672,7 +1672,7 @@ msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d tab "
 
-#: ../src/orca/default.py:1954
+#: ../src/orca/default.py:1952
 #, python-format
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -1681,7 +1681,7 @@ msgstr[0] "%d tab "
 msgid "Progress bar %d."
 msgstr "Thanh tiến hành %d."
 
-#: ../src/orca/default.py:1962
+#: ../src/orca/default.py:1960
 #: ../src/orca/speechgenerator.py:927
 #, python-format
 #. Translators: this is the percentage value of a
@@ -1692,7 +1692,7 @@ msgstr "Thanh tiến hành %d."
 msgid "%d percent."
 msgstr "%d phần trăm."
 
-#: ../src/orca/default.py:2135
+#: ../src/orca/default.py:2133
 #: ../src/orca/where_am_I.py:570
 #, python-format
 #. Translators: this represents the depth of a node in a tree
@@ -1701,14 +1701,14 @@ msgstr "%d phần trăm."
 msgid "tree level %d"
 msgstr "cấp cây %d"
 
-#: ../src/orca/default.py:2548
+#: ../src/orca/default.py:2553
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
 msgid "entire document selected"
 msgstr "toàn bộ tài liệu đã chọn"
 
-#: ../src/orca/default.py:3051
+#: ../src/orca/default.py:3056
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -1716,7 +1716,7 @@ msgstr "toàn bộ tài liệu đã chọn"
 msgid "Speak row"
 msgstr "Nói hàng"
 
-#: ../src/orca/default.py:3057
+#: ../src/orca/default.py:3062
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -1724,14 +1724,14 @@ msgstr "Nói hàng"
 msgid "Speak cell"
 msgstr "Nói ô"
 
-#: ../src/orca/default.py:3107
+#: ../src/orca/default.py:3112
 #: ../src/orca/where_am_I.py:1258
 #. Translators: bold as in the font sense.
 #.
 msgid "bold"
 msgstr "đậm"
 
-#: ../src/orca/default.py:3115
+#: ../src/orca/default.py:3120
 #, python-format
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
@@ -1742,7 +1742,7 @@ msgstr "đậm"
 msgid "%s %s pixels"
 msgstr "%s %s điểm ảnh"
 
-#: ../src/orca/default.py:3236
+#: ../src/orca/default.py:3241
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1753,9 +1753,10 @@ msgstr "%s %s điểm ảnh"
 #.
 msgid "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
-msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó. Để thoát khỏi chế độ học biết này, bấm phím thoát (Esc)."
+msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó. "
+"Để thoát khỏi chế độ học biết này, bấm phím thoát (Esc)."
 
-#: ../src/orca/default.py:3247
+#: ../src/orca/default.py:3252
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1768,7 +1769,7 @@ msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào đ
 msgid "Learn mode.  Press escape to exit."
 msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
 
-#: ../src/orca/default.py:3268
+#: ../src/orca/default.py:3273
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1781,15 +1782,15 @@ msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
 msgid "Exiting learn mode."
 msgstr "Đang thoát khỏi chế độ học biết."
 
-#: ../src/orca/default.py:3542
-#: ../src/orca/default.py:3691
+#: ../src/orca/default.py:3547
+#: ../src/orca/default.py:3696
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
 msgid "white space"
 msgstr "khoảng trắng"
 
-#: ../src/orca/default.py:3916
+#: ../src/orca/default.py:3921
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
 #. that text.  For example, they may want to find the
@@ -1799,7 +1800,7 @@ msgstr "khoảng trắng"
 msgid "string not found"
 msgstr "không tìm thấy"
 
-#: ../src/orca/default.py:4720
+#: ../src/orca/default.py:4725
 #, python-format
 #. Translators: Orca will provide more compelling output of
 #. the spell checking dialog in some applications.  The first
@@ -1809,12 +1810,12 @@ msgstr "không tìm thấy"
 msgid "Misspelled word: %s"
 msgstr "Từ sai chính tả : %s"
 
-#: ../src/orca/default.py:4728
+#: ../src/orca/default.py:4733
 #, python-format
 msgid "Context is %s"
 msgstr "Ngữ cảnh là %s"
 
-#: ../src/orca/default.py:4865
+#: ../src/orca/default.py:4870
 #, python-format
 #. Translators: Orca will tell you how many characters
 #. are repeated on a line of text.  For example: "22
@@ -1825,7 +1826,7 @@ msgid "%d %s character"
 msgid_plural "%d %s characters"
 msgstr[0] "%d %s ký tự"
 
-#: ../src/orca/default.py:5661
+#: ../src/orca/default.py:5666
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1833,7 +1834,7 @@ msgstr[0] "%d %s ký tự"
 msgid "page selected from cursor position"
 msgstr "trang được chọn từ vị trí con trỏ"
 
-#: ../src/orca/default.py:5669
+#: ../src/orca/default.py:5674
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1841,7 +1842,7 @@ msgstr "trang được chọn từ vị trí con trỏ"
 msgid "page selected to cursor position"
 msgstr "trang được chọn đến vị trí con trỏ"
 
-#: ../src/orca/default.py:5677
+#: ../src/orca/default.py:5682
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1849,7 +1850,7 @@ msgstr "trang được chọn đến vị trí con trỏ"
 msgid "line selected down from cursor position"
 msgstr "dòng được chọn bên dưới vị trí con trỏ"
 
-#: ../src/orca/default.py:5685
+#: ../src/orca/default.py:5690
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1857,7 +1858,7 @@ msgstr "dòng được chọn bên dưới vị trí con trỏ"
 msgid "line selected up from cursor position"
 msgstr "dòng được chọn bên trên vị trí con trỏ"
 
-#: ../src/orca/default.py:5693
+#: ../src/orca/default.py:5698
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1865,7 +1866,7 @@ msgstr "dòng được chọn bên trên vị trí con trỏ"
 msgid "document selected to cursor position"
 msgstr "tài liệu được chọn đến vị trí con trỏ"
 
-#: ../src/orca/default.py:5701
+#: ../src/orca/default.py:5706
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1873,8 +1874,8 @@ msgstr "tài liệu được chọn đến vị trí con trỏ"
 msgid "document selected from cursor position"
 msgstr "tài liệu được chọn từ vị trí con trỏ"
 
-#: ../src/orca/default.py:5742
-#: ../src/orca/Gecko.py:879
+#: ../src/orca/default.py:5747
+#: ../src/orca/Gecko.py:886
 #: ../src/orca/J2SE-access-bridge.py:81
 #: ../src/orca/scripts/StarOffice.py:139
 #: ../src/orca/speechgenerator.py:983
@@ -1894,7 +1895,7 @@ msgstr "tài liệu được chọn từ vị trí con trỏ"
 msgid "selected"
 msgstr "đã chọn"
 
-#: ../src/orca/default.py:5754
+#: ../src/orca/default.py:5759
 #: ../src/orca/J2SE-access-bridge.py:85
 #. Translators: when the user unselects
 #. (unhighlights) text in a document, Orca lets
@@ -1945,14 +1946,14 @@ msgstr "Cuộn đến đỉnh"
 msgid "No focus"
 msgstr "Không có tiêu điểm"
 
-#: ../src/orca/Gecko.py:737
+#: ../src/orca/Gecko.py:744
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
 msgid "multi-select"
 msgstr "đa chọn"
 
-#: ../src/orca/Gecko.py:884
+#: ../src/orca/Gecko.py:891
 #: ../src/orca/speechgenerator.py:988
 #. Translators: this is in reference to a radio button being
 #. selected or not.
@@ -1960,7 +1961,7 @@ msgstr "đa chọn"
 msgid "not selected"
 msgstr "chưa chọn"
 
-#: ../src/orca/Gecko.py:928
+#: ../src/orca/Gecko.py:935
 #: ../src/orca/speechgenerator.py:379
 #: ../src/orca/speechgenerator.py:808
 #: ../src/orca/where_am_I.py:167
@@ -1974,7 +1975,7 @@ msgstr "chưa chọn"
 msgid "checked"
 msgstr "đã kiểm tra"
 
-#: ../src/orca/Gecko.py:932
+#: ../src/orca/Gecko.py:939
 #: ../src/orca/speechgenerator.py:383
 #: ../src/orca/where_am_I.py:171
 #: ../src/orca/where_am_I.py:214
@@ -1983,225 +1984,225 @@ msgstr "đã kiểm tra"
 msgid "not checked"
 msgstr "chưa kiểm tra"
 
-#: ../src/orca/Gecko.py:1120
+#: ../src/orca/Gecko.py:1127
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d phần đầu"
 
-#: ../src/orca/Gecko.py:1123
+#: ../src/orca/Gecko.py:1130
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d mẫu"
 
-#: ../src/orca/Gecko.py:1126
+#: ../src/orca/Gecko.py:1133
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "%d bảng"
 
-#: ../src/orca/Gecko.py:1129
+#: ../src/orca/Gecko.py:1136
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
 msgstr[0] "%d liên kết đã thăm"
 
-#: ../src/orca/Gecko.py:1132
+#: ../src/orca/Gecko.py:1139
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
 msgstr[0] "%d liên kết chưa thăm"
 
-#: ../src/orca/Gecko.py:1134
+#: ../src/orca/Gecko.py:1141
 #, python-format
 msgid "%d percent of document read"
 msgstr "%d phần trăm tài liệu đã đọc"
 
-#: ../src/orca/Gecko.py:1289
+#: ../src/orca/Gecko.py:1296
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
 msgid "Goes to next character."
 msgstr "Tới ký tự kế tiếp."
 
-#: ../src/orca/Gecko.py:1297
+#: ../src/orca/Gecko.py:1304
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
 msgid "Goes to previous character."
 msgstr "Về ký tự trước đó."
 
-#: ../src/orca/Gecko.py:1305
+#: ../src/orca/Gecko.py:1312
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
 msgid "Goes to next word."
 msgstr "Tới từ kế tiếp."
 
-#: ../src/orca/Gecko.py:1313
+#: ../src/orca/Gecko.py:1320
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
 msgid "Goes to previous word."
 msgstr "Về từ trước đó."
 
-#: ../src/orca/Gecko.py:1321
+#: ../src/orca/Gecko.py:1328
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
 msgid "Goes to next line."
 msgstr "Tới dòng kế tiếp."
 
-#: ../src/orca/Gecko.py:1329
+#: ../src/orca/Gecko.py:1336
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
 msgid "Goes to previous line."
 msgstr "Về dòng trước đó."
 
-#: ../src/orca/Gecko.py:1337
+#: ../src/orca/Gecko.py:1344
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
 msgid "Causes the current combo box to be expanded."
 msgstr "Gây ra hộp tổ hợp được bung ra."
 
-#: ../src/orca/Gecko.py:1344
+#: ../src/orca/Gecko.py:1351
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes left one cell."
 msgstr "Chuyển bên trái theo một ô"
 
-#: ../src/orca/Gecko.py:1351
+#: ../src/orca/Gecko.py:1358
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes right one cell."
 msgstr "Chuyển bên phải theo một ô"
 
-#: ../src/orca/Gecko.py:1358
+#: ../src/orca/Gecko.py:1365
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes down one cell."
 msgstr "Chuyển bên dưới theo một ô"
 
-#: ../src/orca/Gecko.py:1365
+#: ../src/orca/Gecko.py:1372
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes up one cell."
 msgstr "Chuyển bên trên theo một ô"
 
-#: ../src/orca/Gecko.py:1372
+#: ../src/orca/Gecko.py:1379
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes to the first cell in a table."
 msgstr "Tới ô đầu của bảng."
 
-#: ../src/orca/Gecko.py:1379
+#: ../src/orca/Gecko.py:1386
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes to the last cell in a table."
 msgstr "Tới ô cuối của bảng."
 
-#: ../src/orca/Gecko.py:1387
+#: ../src/orca/Gecko.py:1394
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to previous heading."
 msgstr "Về tiêu đề trước đó."
 
-#: ../src/orca/Gecko.py:1395
+#: ../src/orca/Gecko.py:1402
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to next heading."
 msgstr "Tới tiêu đề kế tiếp."
 
-#: ../src/orca/Gecko.py:1403
+#: ../src/orca/Gecko.py:1410
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to previous heading at level 1."
 msgstr "Về tiêu đề trước ở cấp 1."
 
-#: ../src/orca/Gecko.py:1411
+#: ../src/orca/Gecko.py:1418
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to next heading at level 1."
 msgstr "Tới tiêu đề kế ở cấp 1."
 
-#: ../src/orca/Gecko.py:1419
+#: ../src/orca/Gecko.py:1426
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
 msgid "Goes to previous heading at level 2."
 msgstr "Về tiêu đề trước ở cấp 2."
 
-#: ../src/orca/Gecko.py:1427
+#: ../src/orca/Gecko.py:1434
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
 msgid "Goes to next heading at level 2."
 msgstr "Tới tiêu đề kế ở cấp 2."
 
-#: ../src/orca/Gecko.py:1435
+#: ../src/orca/Gecko.py:1442
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
 msgid "Goes to previous heading at level 3."
 msgstr "Về tiêu đề trước ở cấp 3."
 
-#: ../src/orca/Gecko.py:1443
+#: ../src/orca/Gecko.py:1450
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
 msgid "Goes to next heading at level 3."
 msgstr "Tới tiêu đề kế ở cấp 3."
 
-#: ../src/orca/Gecko.py:1451
+#: ../src/orca/Gecko.py:1458
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
 msgid "Goes to previous heading at level 4."
 msgstr "Về tiêu đề trước ở cấp 4."
 
-#: ../src/orca/Gecko.py:1459
+#: ../src/orca/Gecko.py:1466
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
 msgid "Goes to next heading at level 4."
 msgstr "Tới tiêu đề kế ở cấp 4."
 
-#: ../src/orca/Gecko.py:1467
+#: ../src/orca/Gecko.py:1474
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
 msgid "Goes to previous heading at level 5."
 msgstr "Về tiêu đề trước ở cấp 5."
 
-#: ../src/orca/Gecko.py:1475
+#: ../src/orca/Gecko.py:1482
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
 msgid "Goes to next heading at level 5."
 msgstr "Tới tiêu đề kế ở cấp 5."
 
-#: ../src/orca/Gecko.py:1483
+#: ../src/orca/Gecko.py:1490
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
 msgid "Goes to previous heading at level 6."
 msgstr "Về tiêu đề trước ở cấp 6."
 
-#: ../src/orca/Gecko.py:1491
+#: ../src/orca/Gecko.py:1498
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
 msgid "Goes to next heading at level 6."
 msgstr "Tới tiêu đề kế ở cấp 6."
 
-#: ../src/orca/Gecko.py:1500
+#: ../src/orca/Gecko.py:1507
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2209,7 +2210,7 @@ msgstr "Tới tiêu đề kế ở cấp 6."
 msgid "Goes to previous large object."
 msgstr "Về đối tượng lớn trước."
 
-#: ../src/orca/Gecko.py:1509
+#: ../src/orca/Gecko.py:1516
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2217,99 +2218,99 @@ msgstr "Về đối tượng lớn trước."
 msgid "Goes to next large object."
 msgstr "Tới đối tượng lớn kế tiếp."
 
-#: ../src/orca/Gecko.py:1517
+#: ../src/orca/Gecko.py:1524
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
 msgid "Goes to previous list."
 msgstr "Về danh sách trước."
 
-#: ../src/orca/Gecko.py:1525
+#: ../src/orca/Gecko.py:1532
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
 msgid "Goes to next list."
 msgstr "Tới danh sách kế tiếp."
 
-#: ../src/orca/Gecko.py:1533
+#: ../src/orca/Gecko.py:1540
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
 msgid "Goes to previous list item."
 msgstr "Về mục danh sách trước."
 
-#: ../src/orca/Gecko.py:1541
+#: ../src/orca/Gecko.py:1548
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
 msgid "Goes to next list item."
 msgstr "Tới mục danh sách kế tiếp."
 
-#: ../src/orca/Gecko.py:1548
+#: ../src/orca/Gecko.py:1555
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to previous unvisited link."
 msgstr "Về liên kết chưa thăm trước."
 
-#: ../src/orca/Gecko.py:1555
+#: ../src/orca/Gecko.py:1562
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to next unvisited link."
 msgstr "Tới liên kết chưa thăm kế tiếp."
 
-#: ../src/orca/Gecko.py:1562
+#: ../src/orca/Gecko.py:1569
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to previous visited link."
 msgstr "Về liên kết đã thăm trước."
 
-#: ../src/orca/Gecko.py:1569
+#: ../src/orca/Gecko.py:1576
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to next visited link."
 msgstr "Tới liên kết đã tham kế tiếp."
 
-#: ../src/orca/Gecko.py:1577
+#: ../src/orca/Gecko.py:1584
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 msgid "Goes to previous form field."
 msgstr "Về trường mẫu trước."
 
-#: ../src/orca/Gecko.py:1585
+#: ../src/orca/Gecko.py:1592
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 msgid "Goes to next form field."
 msgstr "Tới trường mẫu kế tiếp."
 
-#: ../src/orca/Gecko.py:1593
+#: ../src/orca/Gecko.py:1600
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 msgid "Goes to previous blockquote."
 msgstr "Về khối trích dẫn trước."
 
-#: ../src/orca/Gecko.py:1601
+#: ../src/orca/Gecko.py:1608
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 msgid "Goes to next blockquote."
 msgstr "Tới khối trích dẫn kế tiếp."
 
-#: ../src/orca/Gecko.py:1608
+#: ../src/orca/Gecko.py:1615
 #. Translators: this is for navigating between tables in HTML
 #.
 msgid "Goes to previous table."
 msgstr "Về bảng trước."
 
-#: ../src/orca/Gecko.py:1615
+#: ../src/orca/Gecko.py:1622
 #. Translators: this is for navigating between tables in HTML
 #.
 msgid "Goes to next table."
 msgstr "Tới bảng kế tiếp."
 
-#: ../src/orca/Gecko.py:1627
+#: ../src/orca/Gecko.py:1634
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2320,7 +2321,7 @@ msgstr "Tới bảng kế tiếp."
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Chuyển đổi giữa cách duyệt qua sở hữu của Gecko và kiểu dấu mũ của Oca."
 
-#: ../src/orca/Gecko.py:1639
+#: ../src/orca/Gecko.py:1646
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
@@ -2331,7 +2332,7 @@ msgstr "Chuyển đổi giữa cách duyệt qua sở hữu của Gecko và ki�
 msgid "Toggles structural navigation keys."
 msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 
-#: ../src/orca/Gecko.py:2158
+#: ../src/orca/Gecko.py:2165
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2342,7 +2343,7 @@ msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 msgid "Use _Orca Caret Navigation"
 msgstr "Dùng khả năng duyệt qua dấu mũ _Orca"
 
-#: ../src/orca/Gecko.py:2171
+#: ../src/orca/Gecko.py:2178
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
@@ -2350,7 +2351,7 @@ msgstr "Dùng khả năng duyệt qua dấu mũ _Orca"
 msgid "Use Orca _Structural Navigation"
 msgstr "Dùng khả năng duyệt qua cấu trúc O_rca"
 
-#: ../src/orca/Gecko.py:2185
+#: ../src/orca/Gecko.py:2192
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the caret at the
 #. beginning of the line rather than guessing the position directly
@@ -2360,7 +2361,7 @@ msgstr "Dùng khả năng duyệt qua cấu trúc O_rca"
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "Để con chạy ở đầu dòng khi duyệt qua theo chiều dọc"
 
-#: ../src/orca/Gecko.py:2197
+#: ../src/orca/Gecko.py:2204
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
@@ -2368,7 +2369,7 @@ msgstr "Để con chạy ở đầu dòng khi duyệt qua theo chiều dọc"
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Tự động _bắt đầu nói một trang mới nạp"
 
-#: ../src/orca/Gecko.py:2209
+#: ../src/orca/Gecko.py:2216
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
@@ -2376,14 +2377,14 @@ msgstr "Tự động _bắt đầu nói một trang mới nạp"
 msgid "Page Navigation"
 msgstr "Duyệt qua Trang"
 
-#: ../src/orca/Gecko.py:2232
+#: ../src/orca/Gecko.py:2239
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
 msgid "Speak _cell coordinates"
 msgstr "Nói t_oạ độ ô"
 
-#: ../src/orca/Gecko.py:2244
+#: ../src/orca/Gecko.py:2251
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
@@ -2391,28 +2392,28 @@ msgstr "Nói t_oạ độ ô"
 msgid "Speak _multiple cell spans"
 msgstr "Nói ô th_eo nhiều hàng"
 
-#: ../src/orca/Gecko.py:2255
+#: ../src/orca/Gecko.py:2262
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
 msgid "Announce cell _header"
 msgstr "T_hông báo phần đầu ô"
 
-#: ../src/orca/Gecko.py:2266
+#: ../src/orca/Gecko.py:2273
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
 msgid "Skip _blank cells"
 msgstr "Bỏ qua ô _rỗng"
 
-#: ../src/orca/Gecko.py:2277
+#: ../src/orca/Gecko.py:2284
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
 msgid "Table Navigation"
 msgstr "Duyệt qua Bảng"
 
-#: ../src/orca/Gecko.py:2301
+#: ../src/orca/Gecko.py:2308
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
@@ -2420,7 +2421,7 @@ msgstr "Duyệt qua Bảng"
 msgid "Speak results during _find"
 msgstr "Nói _kết quả trong khi tìm"
 
-#: ../src/orca/Gecko.py:2314
+#: ../src/orca/Gecko.py:2321
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
 #. be spoken, or only spoken if it is a different line than the
@@ -2429,7 +2430,7 @@ msgstr "Nói _kết quả trong khi tìm"
 msgid "Onl_y speak changed lines during find"
 msgstr "Chỉ nói dòng nào tha_y đổi trong khi tìm"
 
-#: ../src/orca/Gecko.py:2331
+#: ../src/orca/Gecko.py:2338
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
@@ -2437,33 +2438,33 @@ msgstr "Chỉ nói dòng nào tha_y đổi trong khi tìm"
 msgid "Minimum length of matched text:"
 msgstr "Độ dài văn bản khớp tối thiểu :"
 
-#: ../src/orca/Gecko.py:2355
+#: ../src/orca/Gecko.py:2362
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
 msgid "Find Options"
 msgstr "Tùy chọn tìm"
 
-#: ../src/orca/Gecko.py:3124
+#: ../src/orca/Gecko.py:3131
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Loading.  Please wait."
 msgstr "Đang nạp. Vui lòng chờ."
 
-#: ../src/orca/Gecko.py:3129
+#: ../src/orca/Gecko.py:3136
 #, python-format
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Finished loading %s."
 msgstr "Hoàn tất nạp %s."
 
-#: ../src/orca/Gecko.py:3135
+#: ../src/orca/Gecko.py:3142
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Finished loading."
 msgstr "Hoàn tất nạp."
 
-#: ../src/orca/Gecko.py:3535
+#: ../src/orca/Gecko.py:3517
 #, python-format
 #. Translators: the 'h' below represents a heading level
 #. attribute for content that you might find in something
@@ -2475,7 +2476,7 @@ msgstr "Hoàn tất nạp."
 msgid "h%d"
 msgstr "h%d"
 
-#: ../src/orca/Gecko.py:4423
+#: ../src/orca/Gecko.py:4405
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2484,7 +2485,7 @@ msgstr "h%d"
 msgid "Cell spans %d rows and %d columns"
 msgstr "Ô theo %d hàng và %d cột"
 
-#: ../src/orca/Gecko.py:4430
+#: ../src/orca/Gecko.py:4412
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2493,7 +2494,7 @@ msgstr "Ô theo %d hàng và %d cột"
 msgid "Cell spans %d columns"
 msgstr "Ô theo %d cột"
 
-#: ../src/orca/Gecko.py:4436
+#: ../src/orca/Gecko.py:4418
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2502,7 +2503,7 @@ msgstr "Ô theo %d cột"
 msgid "Cell spans %d rows"
 msgstr "Ô theo %d hàng"
 
-#: ../src/orca/Gecko.py:6034
+#: ../src/orca/Gecko.py:6103
 #, python-format
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
@@ -2510,16 +2511,16 @@ msgstr "Ô theo %d hàng"
 msgid "level %d"
 msgstr "cấp %d"
 
-#: ../src/orca/Gecko.py:6515
-#: ../src/orca/Gecko.py:6576
-#: ../src/orca/Gecko.py:6671
-#: ../src/orca/Gecko.py:6736
-#: ../src/orca/Gecko.py:6859
-#: ../src/orca/Gecko.py:6943
-#: ../src/orca/Gecko.py:7019
-#: ../src/orca/Gecko.py:7099
-#: ../src/orca/Gecko.py:7184
-#: ../src/orca/Gecko.py:7278
+#: ../src/orca/Gecko.py:6584
+#: ../src/orca/Gecko.py:6645
+#: ../src/orca/Gecko.py:6740
+#: ../src/orca/Gecko.py:6805
+#: ../src/orca/Gecko.py:6928
+#: ../src/orca/Gecko.py:7012
+#: ../src/orca/Gecko.py:7088
+#: ../src/orca/Gecko.py:7168
+#: ../src/orca/Gecko.py:7253
+#: ../src/orca/Gecko.py:7347
 #. Translators: when the user is attempting to locate a
 #. particular object and the top of the web page has been
 #. reached without that object being found, we "wrap" to
@@ -2529,24 +2530,24 @@ msgstr "cấp %d"
 msgid "Wrapping to bottom."
 msgstr "Cuộn đến đáy."
 
-#: ../src/orca/Gecko.py:6526
-#: ../src/orca/Gecko.py:6549
+#: ../src/orca/Gecko.py:6595
+#: ../src/orca/Gecko.py:6618
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
 msgid "No more headings."
 msgstr "Không còn đầu đề nào nữa."
 
-#: ../src/orca/Gecko.py:6538
-#: ../src/orca/Gecko.py:6612
-#: ../src/orca/Gecko.py:6695
-#: ../src/orca/Gecko.py:6797
-#: ../src/orca/Gecko.py:6900
-#: ../src/orca/Gecko.py:6977
-#: ../src/orca/Gecko.py:7054
-#: ../src/orca/Gecko.py:7134
-#: ../src/orca/Gecko.py:7230
-#: ../src/orca/Gecko.py:7327
+#: ../src/orca/Gecko.py:6607
+#: ../src/orca/Gecko.py:6681
+#: ../src/orca/Gecko.py:6764
+#: ../src/orca/Gecko.py:6866
+#: ../src/orca/Gecko.py:6969
+#: ../src/orca/Gecko.py:7046
+#: ../src/orca/Gecko.py:7123
+#: ../src/orca/Gecko.py:7203
+#: ../src/orca/Gecko.py:7299
+#: ../src/orca/Gecko.py:7396
 #. Translators: when the user is attempting to locate a
 #. particular object and the bottom of the web page has been
 #. reached without that object being found, we "wrap" to the
@@ -2556,8 +2557,8 @@ msgstr "Không còn đầu đề nào nữa."
 msgid "Wrapping to top."
 msgstr "Cuộn đến đỉnh."
 
-#: ../src/orca/Gecko.py:6587
-#: ../src/orca/Gecko.py:6623
+#: ../src/orca/Gecko.py:6656
+#: ../src/orca/Gecko.py:6692
 #, python-format
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -2565,8 +2566,8 @@ msgstr "Cuộn đến đỉnh."
 msgid "No more headings at level %d."
 msgstr "Không còn phần đầu nào nữa ở cấp %d."
 
-#: ../src/orca/Gecko.py:6683
-#: ../src/orca/Gecko.py:6707
+#: ../src/orca/Gecko.py:6752
+#: ../src/orca/Gecko.py:6776
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2574,8 +2575,8 @@ msgstr "Không còn phần đầu nào nữa ở cấp %d."
 msgid "No more large objects."
 msgstr "Không còn đối tượng lớn nào nữa."
 
-#: ../src/orca/Gecko.py:6744
-#: ../src/orca/Gecko.py:6805
+#: ../src/orca/Gecko.py:6813
+#: ../src/orca/Gecko.py:6874
 #, python-format
 #. Translators: this represents a list in HTML.
 #.
@@ -2583,8 +2584,8 @@ msgid "List with %d item"
 msgid_plural "List with %d items"
 msgstr[0] "Danh sách có %d mục"
 
-#: ../src/orca/Gecko.py:6759
-#: ../src/orca/Gecko.py:6820
+#: ../src/orca/Gecko.py:6828
+#: ../src/orca/Gecko.py:6889
 #, python-format
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
@@ -2594,16 +2595,16 @@ msgstr[0] "Danh sách có %d mục"
 msgid "Nesting level %d"
 msgstr "Cấp lồng nhau %d"
 
-#: ../src/orca/Gecko.py:6769
-#: ../src/orca/Gecko.py:6830
+#: ../src/orca/Gecko.py:6838
+#: ../src/orca/Gecko.py:6899
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
 msgid "No more lists."
 msgstr "Không còn danh sách nào nữa."
 
-#: ../src/orca/Gecko.py:6871
-#: ../src/orca/Gecko.py:6912
+#: ../src/orca/Gecko.py:6940
+#: ../src/orca/Gecko.py:6981
 #. Translators: this is for navigating HTML content by
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
@@ -2611,39 +2612,39 @@ msgstr "Không còn danh sách nào nữa."
 msgid "No more list items."
 msgstr "Không còn mục danh sách nào nữa."
 
-#: ../src/orca/Gecko.py:6954
-#: ../src/orca/Gecko.py:6988
+#: ../src/orca/Gecko.py:7023
+#: ../src/orca/Gecko.py:7057
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 msgid "No more unvisited links."
 msgstr "Không còn liên kết chưa thăm nào nữa."
 
-#: ../src/orca/Gecko.py:7030
-#: ../src/orca/Gecko.py:7065
+#: ../src/orca/Gecko.py:7099
+#: ../src/orca/Gecko.py:7134
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 msgid "No more visited links."
 msgstr "Không còn liên kết đã thăm nào nữa."
 
-#: ../src/orca/Gecko.py:7110
-#: ../src/orca/Gecko.py:7145
+#: ../src/orca/Gecko.py:7179
+#: ../src/orca/Gecko.py:7214
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
 msgid "No more blockquotes."
 msgstr "Không còn khối trích dẫn nào nữa."
 
-#: ../src/orca/Gecko.py:7195
-#: ../src/orca/Gecko.py:7241
+#: ../src/orca/Gecko.py:7264
+#: ../src/orca/Gecko.py:7310
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
 msgid "No more form fields."
 msgstr "Không còn trường mẫu nào nữa."
 
-#: ../src/orca/Gecko.py:7263
+#: ../src/orca/Gecko.py:7332
 #, python-format
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
@@ -2651,8 +2652,8 @@ msgstr "Không còn trường mẫu nào nữa."
 msgid "Row %d, column %d."
 msgstr "Hàng %d, cột %d."
 
-#: ../src/orca/Gecko.py:7292
-#: ../src/orca/Gecko.py:7341
+#: ../src/orca/Gecko.py:7361
+#: ../src/orca/Gecko.py:7410
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
 #. In contrast, a non-uniform table is one in which at least
@@ -2661,8 +2662,8 @@ msgstr "Hàng %d, cột %d."
 msgid "Non-uniform"
 msgstr "Không đều"
 
-#: ../src/orca/Gecko.py:7297
-#: ../src/orca/Gecko.py:7346
+#: ../src/orca/Gecko.py:7366
+#: ../src/orca/Gecko.py:7415
 #, python-format
 #. Translators: this represents the number of rows in an HTML table.
 #.
@@ -2670,8 +2671,8 @@ msgid "Table with %d row"
 msgid_plural "Table with %d rows"
 msgstr[0] "Bảng %d hàng"
 
-#: ../src/orca/Gecko.py:7302
-#: ../src/orca/Gecko.py:7351
+#: ../src/orca/Gecko.py:7371
+#: ../src/orca/Gecko.py:7420
 #, python-format
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -2679,55 +2680,55 @@ msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d cột"
 
-#: ../src/orca/Gecko.py:7315
-#: ../src/orca/Gecko.py:7363
+#: ../src/orca/Gecko.py:7384
+#: ../src/orca/Gecko.py:7432
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
 msgid "No more tables."
 msgstr "Không còn bảng nào nữa."
 
-#: ../src/orca/Gecko.py:7406
+#: ../src/orca/Gecko.py:7475
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Beginning of row."
 msgstr "Đầu hàng."
 
-#: ../src/orca/Gecko.py:7411
-#: ../src/orca/Gecko.py:7463
-#: ../src/orca/Gecko.py:7511
-#: ../src/orca/Gecko.py:7563
-#: ../src/orca/Gecko.py:7578
-#: ../src/orca/Gecko.py:7595
+#: ../src/orca/Gecko.py:7480
+#: ../src/orca/Gecko.py:7532
+#: ../src/orca/Gecko.py:7580
+#: ../src/orca/Gecko.py:7632
+#: ../src/orca/Gecko.py:7647
+#: ../src/orca/Gecko.py:7664
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Not in a table."
 msgstr "Không phải trong bảng."
 
-#: ../src/orca/Gecko.py:7458
+#: ../src/orca/Gecko.py:7527
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "End of row."
 msgstr "Cuối hàng."
 
-#: ../src/orca/Gecko.py:7506
+#: ../src/orca/Gecko.py:7575
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Top of column."
 msgstr "Đầu cột."
 
-#: ../src/orca/Gecko.py:7558
+#: ../src/orca/Gecko.py:7627
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Bottom of column."
 msgstr "Cuối cột."
 
-#: ../src/orca/Gecko.py:7613
+#: ../src/orca/Gecko.py:7682
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2738,7 +2739,7 @@ msgstr "Cuối cột."
 msgid "Gecko is controlling the caret."
 msgstr "Gecko đang điều khiển dấu mũ."
 
-#: ../src/orca/Gecko.py:7625
+#: ../src/orca/Gecko.py:7694
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2749,7 +2750,7 @@ msgstr "Gecko đang điều khiển dấu mũ."
 msgid "Orca is controlling the caret."
 msgstr "Orca đang điều khiển dấu mũ."
 
-#: ../src/orca/Gecko.py:7646
+#: ../src/orca/Gecko.py:7715
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
@@ -2760,7 +2761,7 @@ msgstr "Orca đang điều khiển dấu mũ."
 msgid "Structural navigation keys on."
 msgstr "Các phím duyệt qua kiểu cấu trúc đã bật."
 
-#: ../src/orca/Gecko.py:7655
+#: ../src/orca/Gecko.py:7724
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
@@ -3347,7 +3348,7 @@ msgstr "Nói trừ khi"
 
 #: ../src/orca/orca_gui_prefs.py:1101
 #: ../src/orca/orca_gui_prefs.py:1112
-#: ../src/orca/orca_gui_prefs.py:2106
+#: ../src/orca/orca_gui_prefs.py:2120
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
@@ -3356,8 +3357,8 @@ msgstr "Tuyến kép"
 
 #: ../src/orca/orca_gui_prefs.py:1107
 #: ../src/orca/orca_gui_prefs.py:1127
-#: ../src/orca/orca_gui_prefs.py:2108
-#: ../src/orca/orca_gui_prefs.py:2151
+#: ../src/orca/orca_gui_prefs.py:2122
+#: ../src/orca/orca_gui_prefs.py:2165
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
@@ -3367,7 +3368,7 @@ msgstr "Không có"
 
 #: ../src/orca/orca_gui_prefs.py:1125
 #: ../src/orca/orca_gui_prefs.py:1150
-#: ../src/orca/orca_gui_prefs.py:2129
+#: ../src/orca/orca_gui_prefs.py:2143
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Centered means that Orca attempts to
 #. keep the mouse in the center of the magnified window.
@@ -3376,7 +3377,7 @@ msgid "Centered"
 msgstr "Giữa lại"
 
 #: ../src/orca/orca_gui_prefs.py:1137
-#: ../src/orca/orca_gui_prefs.py:2148
+#: ../src/orca/orca_gui_prefs.py:2162
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Proportional means that Orca attempts
 #. to position the mouse in the magnifier window in a way
@@ -3389,7 +3390,7 @@ msgid "Proportional"
 msgstr "Co giãn"
 
 #: ../src/orca/orca_gui_prefs.py:1144
-#: ../src/orca/orca_gui_prefs.py:2137
+#: ../src/orca/orca_gui_prefs.py:2151
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Push means that Orca will not move
 #. the magnified region until the mouse hits an edge of the
@@ -3408,36 +3409,36 @@ msgstr "Đẩy"
 msgid "Braille Bindings"
 msgstr "Liên kết Braille"
 
-#: ../src/orca/orca_gui_prefs.py:1777
+#: ../src/orca/orca_gui_prefs.py:1791
 #: ../src/orca/orca-setup.glade.h:85
 msgid "_None"
 msgstr "Khô_ng có"
 
-#: ../src/orca/orca_gui_prefs.py:1780
+#: ../src/orca/orca_gui_prefs.py:1794
 #: ../src/orca/orca-setup.glade.h:63
 msgid "So_me"
 msgstr "Một _số"
 
-#: ../src/orca/orca_gui_prefs.py:1783
+#: ../src/orca/orca_gui_prefs.py:1797
 #: ../src/orca/orca-setup.glade.h:44
 msgid "M_ost"
 msgstr "Phần _lớn"
 
-#: ../src/orca/orca_gui_prefs.py:1800
+#: ../src/orca/orca_gui_prefs.py:1814
 msgid "Line"
 msgstr "Dòng"
 
-#: ../src/orca/orca_gui_prefs.py:1802
+#: ../src/orca/orca_gui_prefs.py:1816
 msgid "Sentence"
 msgstr "Câu"
 
-#: ../src/orca/orca_gui_prefs.py:1818
-#: ../src/orca/orca_gui_prefs.py:1906
+#: ../src/orca/orca_gui_prefs.py:1832
+#: ../src/orca/orca_gui_prefs.py:1920
 #: ../src/orca/orca-setup.glade.h:13
 msgid "Brie_f"
 msgstr "_Ngắn"
 
-#: ../src/orca/orca_gui_prefs.py:1842
+#: ../src/orca/orca_gui_prefs.py:1856
 #: ../src/orca/orca-setup.glade.h:67
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -3446,7 +3447,7 @@ msgstr "_Ngắn"
 msgid "Speak current _cell"
 msgstr "Nói ô hiện _có"
 
-#: ../src/orca/orca_gui_prefs.py:2185
+#: ../src/orca/orca_gui_prefs.py:2199
 #. Translators: this is a spoken prompt asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
@@ -3454,7 +3455,7 @@ msgstr "Nói ô hiện _có"
 msgid "enter new key"
 msgstr "nhập phím mới"
 
-#: ../src/orca/orca_gui_prefs.py:2214
+#: ../src/orca/orca_gui_prefs.py:2228
 #, python-format
 #. Translators: this is a spoken prompt confirming the key
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
@@ -3463,7 +3464,7 @@ msgstr "nhập phím mới"
 msgid "The new key is: %s"
 msgstr "Phím mới là: %s"
 
-#: ../src/orca/orca_gui_prefs.py:2222
+#: ../src/orca/orca_gui_prefs.py:2236
 #. Translators: this is a spoken prompt letting the user
 #. know that the key combination (e.g., Ctrl+Alt+f) they
 #. just entered for defining a new key binding was already
@@ -3472,7 +3473,7 @@ msgstr "Phím mới là: %s"
 msgid "The key entered is the same. Nothing changed."
 msgstr "Phím được nhập như nhau. Không có gì thay đổi."
 
-#: ../src/orca/orca_gui_prefs.py:2322
+#: ../src/orca/orca_gui_prefs.py:2336
 #: ../src/orca/orca-setup.glade.h:81
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
@@ -3480,7 +3481,7 @@ msgstr "Phím được nhập như nhau. Không có gì thay đổi."
 msgid "_Desktop"
 msgstr "_Máy để bàn"
 
-#: ../src/orca/orca_gui_prefs.py:2546
+#: ../src/orca/orca_gui_prefs.py:2562
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
 msgid "Starting Orca Preferences. This may take a while."
@@ -3498,27 +3499,27 @@ msgstr "Tùy thích"
 msgid "Quit"
 msgstr "Thoát"
 
-#: ../src/orca/orca.py:236
-#: ../src/orca/orca.py:1188
-#: ../src/orca/orca.py:1189
+#: ../src/orca/orca.py:237
+#: ../src/orca/orca.py:1190
+#: ../src/orca/orca.py:1191
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
 msgid "Goodbye."
 msgstr "Tạm biệt nhé."
 
-#: ../src/orca/orca.py:578
+#: ../src/orca/orca.py:580
 #: ../src/orca/scripts/StarOffice.py:661
 #: ../src/orca/scripts/StarOffice.py:688
 msgid "off"
 msgstr "tắt"
 
-#: ../src/orca/orca.py:580
+#: ../src/orca/orca.py:582
 #: ../src/orca/scripts/StarOffice.py:659
 #: ../src/orca/scripts/StarOffice.py:686
 msgid "on"
 msgstr "bật"
 
-#: ../src/orca/orca.py:641
+#: ../src/orca/orca.py:643
 #, python-format
 #. Translators: this is a spoken prompt letting the user know
 #. Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -3527,21 +3528,21 @@ msgstr "bật"
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Đã bắt phím: %s. Nhấn enter để xác nhận."
 
-#: ../src/orca/orca.py:840
+#: ../src/orca/orca.py:842
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
 msgid "Speech enabled."
 msgstr "Tiếng nói đã bật."
 
-#: ../src/orca/orca.py:845
+#: ../src/orca/orca.py:847
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
 msgid "Speech disabled."
 msgstr "Tiếng nói bị tắt."
 
-#: ../src/orca/orca.py:897
+#: ../src/orca/orca.py:899
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
@@ -3549,7 +3550,7 @@ msgstr "Tiếng nói bị tắt."
 msgid "Orca user settings reloaded."
 msgstr "Thiết lập người dùng Orca đã được tải lại."
 
-#: ../src/orca/orca.py:1451
+#: ../src/orca/orca.py:1453
 msgid "Welcome to Orca."
 msgstr "Chúc mừng bạn dùng Orca."
 
@@ -6069,7 +6070,7 @@ msgstr "Chuyển sang ô"
 msgid "Writer"
 msgstr "Writer"
 
-#: ../src/orca/scripts/StarOffice.py:2099
+#: ../src/orca/scripts/StarOffice.py:2101
 #. Translators: this means a particular
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -6077,22 +6078,22 @@ msgstr "Writer"
 msgid "has formula"
 msgstr "có công thức"
 
-#: ../src/orca/scripts/StarOffice.py:2147
+#: ../src/orca/scripts/StarOffice.py:2149
 #, python-format
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
 msgid "Cell %s"
 msgstr "Ô %s"
 
-#: ../src/orca/scripts/Thunderbird.py:207
-#: ../src/orca/scripts/Thunderbird.py:224
+#: ../src/orca/scripts/Thunderbird.py:215
+#: ../src/orca/scripts/Thunderbird.py:232
 #, python-format
 #. Translators: this is the name of a panel in Thunderbird.
 #.
 msgid "%s panel"
 msgstr "bảng điều khiển %s"
 
-#: ../src/orca/settings.py:629
+#: ../src/orca/settings.py:634
 #. Translators: the regular expression here represents a string to
 #. match in the localized application name as seen by at-poke.  For
 #. most cases, the application name is the name of the binary used to
@@ -6105,28 +6106,28 @@ msgstr "bảng điều khiển %s"
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:634
+#: ../src/orca/settings.py:639
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:639
+#: ../src/orca/settings.py:644
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:644
+#: ../src/orca/settings.py:649
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
 msgid "yelp"
 msgstr "yelp"
 
-#: ../src/orca/settings.py:650
+#: ../src/orca/settings.py:655
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6134,7 +6135,7 @@ msgstr "yelp"
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:656
+#: ../src/orca/settings.py:661
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6142,7 +6143,7 @@ msgstr "Deer Park"
 msgid "Bon Echo"
 msgstr "Phản hồi Bon"
 
-#: ../src/orca/settings.py:662
+#: ../src/orca/settings.py:667
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6150,26 +6151,33 @@ msgstr "Phản hồi Bon"
 msgid "Minefield"
 msgstr "Minefield"
 
-#: ../src/orca/settings.py:667
+#: ../src/orca/settings.py:672
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
 msgid "Mail/News"
 msgstr "Thư/Tin tức"
 
-#: ../src/orca/settings.py:672
+#: ../src/orca/settings.py:677
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:677
+#: ../src/orca/settings.py:682
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
 msgid "vte"
 msgstr "vte"
+
+#: ../src/orca/settings.py:687
+#. Translators: see the regular expression note above.  This is for
+#. supporting pidgin, which is the new name for gaim.
+#.
+msgid "pidgin"
+msgstr "pidgin"
 
 #: ../src/orca/speechdispatcherfactory.py:54
 msgid "Speech Dispatcher"
