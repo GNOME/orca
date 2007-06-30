@@ -758,12 +758,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         model = view.get_model()
         view.set_model(None)
+        defScript = default.Script(None)
 
         [attrList, attrDict] = \
-            orca_state.activeScript.textAttrsToDictionary(setAttributes)
+           defScript.textAttrsToDictionary(setAttributes)
         [allAttrList, allAttrDict] = \
-            orca_state.activeScript.textAttrsToDictionary( \
-                                        settings.allTextAttributes)
+           defScript.textAttrsToDictionary(settings.allTextAttributes)
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
@@ -861,9 +861,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # Initially setup the list store model based on the values of all 
         # the known text attributes.
         #
+        defScript = default.Script(None)
         [allAttrList, allAttrDict] = \
-            orca_state.activeScript.textAttrsToDictionary( \
-                                        settings.allTextAttributes)
+                defScript.textAttrsToDictionary(settings.allTextAttributes)
         for i in range(0, len(allAttrList)):
             iter = model.append()
             model.set(iter, IS_SPOKEN, False,

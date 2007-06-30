@@ -1,3 +1,10 @@
+2007-06-30  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/orca_gui_prefs.py: Tweak for the fix for Bug #376515 
+        - Add GUI support for the new customizable text-attribute feature.
+        Use default.Script rather than orca_state.activeScript to avoid
+        errors when ~/.orca is not present.
+
 2007-06-28 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py Fixed bug #449232, Firefox move to next
