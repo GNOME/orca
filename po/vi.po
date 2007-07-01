@@ -7,7 +7,7 @@ msgid ""
 msgstr "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-29 03:26+0100\n"
-"PO-Revision-Date: 2007-06-29 14:59+0930\n"
+"PO-Revision-Date: 2007-07-01 10:56-0400\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,7 @@ msgstr "Bộ Đọc và Phóng To Màn Hình Orca"
 #: ../orca.desktop.in.h:2
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Đưa ra tông tin trên màn hình như là tiếng nói hay chữ Bray, hoặc phóng to "
-"màn hình"
+msgstr "Đưa ra thông tin trên màn hình như là tiếng nói hay chữ nổi, hoặc phóng to màn hình"
 
 #: ../src/orca/app_gui_prefs.py:89
 #, python-format
@@ -355,7 +354,7 @@ msgstr "dấu ngã"
 #. Translators: this is the spoken word for the character 'Â¡' (U+00a1)
 #.
 msgid "inverted exclamation point"
-msgstr "dấu chấm than đảo"
+msgstr "dấu chấm than ngược"
 
 #: ../src/orca/chnames.py:182
 #. Translators: this is the spoken word for the character 'Â¢' (U+00a2)
@@ -424,7 +423,7 @@ msgstr "dấu ngoặc nhọn đôi trái"
 #. Translators: this is the spoken word for the character 'Â¬' (U+00ac)
 #.
 msgid "logical not"
-msgstr "không phải hợp lý"
+msgstr "phủ định"
 
 #: ../src/orca/chnames.py:226
 #. Translators: this is the spoken word for the character 'Â­' (U+00ad)
@@ -1502,7 +1501,7 @@ msgstr "Đọc các thuộc tính liên quan đến ký tự chữ hiện có."
 #. this line.
 #.
 msgid "Pans the braille display to the left."
-msgstr "Kéo ngang vùng hiển thị Bray qua trái."
+msgstr "Kéo ngang vùng hiển thị nổi qua trái."
 
 #: ../src/orca/default.py:507
 #. Translators: a refreshable braille display is an
@@ -1515,7 +1514,7 @@ msgstr "Kéo ngang vùng hiển thị Bray qua trái."
 #. this line.
 #.
 msgid "Pans the braille display to the right."
-msgstr "Kéo ngang vùng hiển thị Bray qua phải."
+msgstr "Kéo ngang vùng hiển thị nổi qua phải."
 
 #: ../src/orca/default.py:523
 #. Translators: the 'flat review' feature of Orca
@@ -1557,7 +1556,7 @@ msgstr "Trở về đối tượng có tiêu điểm bàn phím."
 #. echo the name of the key if Orca doesn't have a handler.
 #.
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Vào chế độ học biết. Hãy bấm phím Escape để thoát khỏi chế độ học biết."
+msgstr "Vào chế độ học. Hãy bấm phím Escape để thoát khỏi chế độ học."
 
 #: ../src/orca/default.py:565
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -1568,7 +1567,7 @@ msgstr "Vào chế độ học biết. Hãy bấm phím Escape để thoát kh�
 #. echo the name of the key if Orca doesn't have a handler.
 #.
 msgid "Exits learn mode."
-msgstr "Thoát khỏi chế độ học biết."
+msgstr "Thoát khỏi chế độ học."
 
 #: ../src/orca/default.py:573
 #. Translators: the speech rate is how fast the speech
@@ -1753,8 +1752,8 @@ msgstr "%s %s điểm ảnh"
 #.
 msgid "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
-msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó. "
-"Để thoát khỏi chế độ học biết này, bấm phím thoát (Esc)."
+msgstr "Đang vào chế độ học. Hãy bấm bất cứ phím nào để nghe chức năng của nó. "
+"Để thoát khỏi chế độ học này, bấm phím thoát (Esc)."
 
 #: ../src/orca/default.py:3252
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -1767,7 +1766,7 @@ msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào đ
 #. display.
 #.
 msgid "Learn mode.  Press escape to exit."
-msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
+msgstr "Chế độ học. Hãy bấm phim Escape để thoát."
 
 #: ../src/orca/default.py:3273
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -1780,7 +1779,7 @@ msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
 #. mode.
 #.
 msgid "Exiting learn mode."
-msgstr "Đang thoát khỏi chế độ học biết."
+msgstr "Đang thoát khỏi chế độ học."
 
 #: ../src/orca/default.py:3547
 #: ../src/orca/default.py:3696
@@ -3160,7 +3159,7 @@ msgstr "Lựa chọn không hợp lệ. Hãy chọn lại bố trí bàn phím.\
 #. refreshable braille display (an external hardware device) or not.
 #.
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Bật chữ Bray không? Nhập y (có) hay n (không): "
+msgstr "Bật chữ nổi không? Nhập y (có) hay n (không): "
 
 #: ../src/orca/orca_console_prefs.py:454
 #. Translators: the braille monitor is a graphical display on the screen
@@ -3169,7 +3168,7 @@ msgstr "Bật chữ Bray không? Nhập y (có) hay n (không): "
 #. display.
 #.
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Bật bộ trình bày chữ Bray không? Nhập y (có) hay n (không): "
+msgstr "Bật bộ trình bày chữ nổi không? Nhập y (có) hay n (không): "
 
 #: ../src/orca/orca_console_prefs.py:463
 msgid "Accessibility support for GNOME has just been enabled. "
@@ -3610,7 +3609,7 @@ msgstr "<b>Thiết lập bộ thu phóng</b>"
 
 #: ../src/orca/orca-setup.glade.h:12
 msgid "Braille"
-msgstr "Chữ Bray"
+msgstr "Chữ nổi"
 
 #: ../src/orca/orca-setup.glade.h:14
 msgid ""
@@ -3646,11 +3645,11 @@ msgstr "Tắt bắt phím _gksu"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Enable Braille _monitor"
-msgstr "Dùng bộ trình bày chữ _Bray"
+msgstr "Dùng bộ trình bày chữ _nổi"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable Braille _support"
-msgstr "Bật khả năng _hỗ trợ chữ Bray"
+msgstr "Bật khả năng _hỗ trợ chữ nổi"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Enable _alphanumeric and punctuation keys"
@@ -5722,7 +5721,7 @@ msgstr "Bật/tắt thêm tên của phòng trò chuyện trước tin nhắn tr
 
 #: ../src/orca/scripts/gaim.py:156
 msgid "Speak and braille a previous chat room message."
-msgstr "Nói và hiển thị bằng chữ Bray một tin nhắn phòng trò chuyện trước."
+msgstr "Nói và hiển thị bằng chữ nổi một tin nhắn phòng trò chuyện trước."
 
 #: ../src/orca/scripts/gaim.py:200
 #. Translators: If this checkbox is checked, then Orca will speak
@@ -6342,7 +6341,7 @@ msgstr "mục %d trên %d"
 #~ msgstr "hàng"
 
 #~ msgid "To exit learn mode, press the escape key."
-#~ msgstr "Để thoát khởi chế độ học biết, hãy bấm phím Escape."
+#~ msgstr "Để thoát khởi chế độ học, hãy bấm phím Escape."
 
 #~ msgid "Switching to focus tracking mode."
 #~ msgstr "Đang chuyển đổi sang chế độ theo dõi tiêu điểm."
