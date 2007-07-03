@@ -2816,6 +2816,7 @@ class Script(default.Script):
                     #
                     continue
                 [string, voice] = clumped[i]
+                string = self.adjustForRepeats(string)
                 yield [speechserver.SayAllContext(obj, string,
                                                   startOffset, endOffset),
                        voice]
@@ -6408,6 +6409,7 @@ class Script(default.Script):
         utterances = self.getUtterancesFromContents(contents, speakRole)
         clumped = self.clumpUtterances(utterances)
         for [string, acss] in clumped:
+            string = self.adjustForRepeats(string)
             speech.speak(string, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):

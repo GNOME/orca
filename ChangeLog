@@ -1,3 +1,8 @@
+2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug 453229 - Orca should honor the
+        repeated character count setting in Firefox.  Thanks much Rich!!
+
 2007-07-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:
