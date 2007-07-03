@@ -33,6 +33,13 @@
         * src/orca/script.py
         * src/orca/where_am_I.py 
         - Fixed bug #354468 – Bookmarked Objects
+        - Additional #354468 – Bookmarked Objects fix involving removal of 
+        whereamI relative to current key bindings and trimming down number 
+        of bookmarks to 6
+
+        Documentation updates for whereamI and bookmarks.
+        * docs/doc-set/ue_requirements.sgml
+        * docs/doc-set/ue_input_style.sgml
 
 2007-06-30  Joanmarie Diggs <j-diggs@comcast.net>
 

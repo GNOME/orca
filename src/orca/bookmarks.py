@@ -74,17 +74,6 @@ class Bookmarks:
                           context.getCurrentAccessible(), False))
         speech.speakUtterances(utterances)
         
-    def bookmarkRootWhereAmI(self, inputEvent):
-        try:
-            context = self._bookmarkToContext(self._bookmarks[inputEvent.hw_code])
-        except KeyError:
-            self._script.systemBeep()
-            return 
-        
-        obj = context.getCurrentAccessible()
-        speech.speakUtterances( \
-                         self._script.speechGenerator.getSpeechContext(obj))
-        
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 
         current pointer location."""

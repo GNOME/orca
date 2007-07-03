@@ -266,6 +266,29 @@
           <para>modifier+SPACE: brings up configuration GUI</para>
 	  <para>&complete; V0.2.5.</para>
         </listitem>
+        <listitem>
+            <para>Alt+modifier+[1-6]: add a bookmark and bind it to that number key.</para>
+            <para>&complete; V2.19.5.</para>
+        </listitem>
+        <listitem>
+            <para>modifier+[1-6]: Go to bookmark bound to this number key.</para>
+            <para>&complete; V2.19.5.</para>
+        </listitem>
+        <listitem>
+            <para>Alt+shift+[1-6]: Bookmark whereamI information relative to current 
+                position.</para>
+            <para>&complete; V2.19.5.</para>
+        </listitem>
+        <listitem>
+            <para>b; shift+b]: Move between the given bookmarks for the given application 
+                or page. </para>
+            <para>&complete; V2.19.5.</para>
+        </listitem>
+        <listitem>
+            <para>Alt+modifier+b: Save bookmarks</para>
+            <para>&complete; V2.19.5.</para>
+        </listitem>
+        
       </itemizedlist>
 
     </section>

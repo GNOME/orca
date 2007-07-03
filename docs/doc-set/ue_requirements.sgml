@@ -405,8 +405,9 @@
 
 	<para>The letters "o" and "Shift+o" will be used to move
 	between large objects.  Large objects can be things such as:
-	headings, paragraphs, and tables.  For this feature, links and
-	form controls will not be considered large objects.</para>
+	headings, paragraphs, and tables containing text of a certain
+        length.  For this feature, links and form controls will not be 
+        considered large objects.</para>
       </section>
 
       <section><title>Verbalized Links spec</title>
@@ -624,6 +625,14 @@
       <section><title>Functional Description and Status</title>
         <para>&whereamitestlink;</para>
 
+        <para>&incomplete; V2.19.5. Gecko script provides advanced where am I 
+        information for links in the form of link previews.  These include 
+        protocol, target file name, relative location and possibly file 
+        size information.  Double-clicking the "Where am I" key in Firefox  
+        provides a page summary, which includes the total number of headings, 
+        forms, tables, visited links, and unvisited links in the document. 
+        </para>
+    
         <para>&incomplete; V2.17.3. Orca provides top down "Where am I"
         functionality when the user presses the KP_Enter key.  Orca
         should also present bottom-up "Where am I" when double
@@ -912,6 +921,16 @@
 	    <listitem>
 	      <para>role</para>
 	    </listitem>
+            <para>Icon Panels present the following information (an example
+	  is "Icon Panel, Mike Pedersen, item 8 of 10, "):
+
+	  <orderedlist numeration="arabic">
+	    <listitem>
+	      <para>label, if any</para>
+	    </listitem>
+	    <listitem>
+	      <para>role</para>
+	    </listitem>
 <listitem>
 <para>all selected icons followed by "selected</para>
 </listitem>
@@ -1108,22 +1127,22 @@
         <para> If possible, many users have expressed a desire to be able to save the bookmarks that they generate.</para>
         <para> The following keystrokes should be used to perform the functions related to this feature.</para>
 
-	  <para>Alt-orca-1 through 9
+	  <para>Alt-orca-1 through 6
     Add a bookmark in this numbered slot. If a bookmark already exists at this register it will be replaced with the new one. </para>
  
-	  <para>orca-1 through 9
+	  <para>orca-1 through 6
     Move the pointer to the bookmark in this numbered slot. </para>
  
-	  <para>Alt-Shift-1 through 9
-    Report "Where am I" information for this bookmark relative to the root. </para>
- 
-	  <para>Alt-orca-Shift-1 through 9
+	  <para>Alt-Shift-1 through 6
     Report "Where am I" information for this bookmark relative to the current pointer location.</para> 
  
 	  <para>"b" and "shift+b" Move between the given bookmarks for the given application or page. </para>         
 	  <para> "Alt+orca+b" should be used to save the defined bookmarks for the current application or page.</para>
 
       <section><title>Functional Description and Status</title>
+          
+          <para>&incomplete; V2.19.5.  Functionality was implemented for all features 
+          shown above.  Magnification was not considered for the initial version.</para>
 
         <para>&incomplete; &shoulddeliver; V1.1.</para>
 

@@ -673,15 +673,6 @@ class Script(script.Script):
                 #
                 _("Bookmark where am I with respect to current position."))    
                 
-        self.inputEventHandlers["bookmarkRootWhereAmI"] = \
-            input_event.InputEventHandler(
-                Script.bookmarkRootWhereAmI,
-                # Translators: this command announces information regarding
-                # the relationship of the given bookmark to the root 
-                # accessible
-                #
-                _("Bookmark where am I with respect to root."))
-                
         self.inputEventHandlers["goToBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToBookmark,
@@ -1473,20 +1464,8 @@ class Script(script.Script):
                 (1 << settings.MODIFIER_ORCA),
                 self.inputEventHandlers["goToNextBookmark"]))    
                 
-        # key bindings for '1' through '9' for relevant commands            
-        for key in xrange(1,10):  
-            # key binding for WhereAmI information with respect to current acc 
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    str(key),
-                    (1 << settings.MODIFIER_ORCA \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT \
-                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                    (1 << settings.MODIFIER_ORCA \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT \
-                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                    self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
-            
+        # key bindings for '1' through '6' for relevant commands            
+        for key in xrange(1,7):  
             # 'Add bookmark' key bindings
             keyBindings.add(
                 keybindings.KeyBinding(
@@ -1517,7 +1496,7 @@ class Script(script.Script):
                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
                     (1 << atspi.Accessibility.MODIFIER_SHIFT \
                     | 1 << atspi.Accessibility.MODIFIER_ALT),
-                    self.inputEventHandlers["bookmarkRootWhereAmI"]))
+                    self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
                     
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
@@ -4109,12 +4088,6 @@ class Script(script.Script):
         Bookmark.addBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.addBookmark(inputEvent)
-        
-    def bookmarkRootWhereAmI(self, inputEvent):
-        """ Report "Where am I" information for this bookmark relative to the 
-        root.  Delegates to Bookmark.bookmarkRootWhereAmI""" 
-        bookmarks = self.getBookmarks()
-        bookmarks.bookmarkRootWhereAmI(inputEvent)
     
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 

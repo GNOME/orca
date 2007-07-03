@@ -1196,18 +1196,6 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             self._currentbookmarkindex[index[1]] = index[0]
         else:
             self._script.systemBeep()
-                                                            
-    def bookmarkRootWhereAmI(self, inputEvent):
-        """ Report "Where am I" information for this bookmark relative to the 
-        root. """
-        index = (inputEvent.hw_code, self._getURIKey())
-        try:
-            path, characterOffset = self._bookmarks[index]
-            obj = self._pathToObj(path)
-            speech.speakUtterances( \
-                         self._script.speechGenerator.getSpeechContext(obj))
-        except KeyError:
-            self._script.systemBeep()
         
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 
