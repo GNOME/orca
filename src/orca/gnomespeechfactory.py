@@ -479,6 +479,8 @@ class SpeechServer(speechserver.SpeechServer):
         #
         (id, type, offset) = self.__eventQueue.get()
 
+        offset = self.__adjustTextCharIndex(offset)
+
         if self.__sayAll:
             if self.__sayAll.idForCurrentContext == id:
                 context = self.__sayAll.currentContext
@@ -639,6 +641,22 @@ class SpeechServer(speechserver.SpeechServer):
                 self.speak(text, acss, interrupt and (i == 0))
             i += 1
 
+    def __adjustTextCharIndex(self, offset):
+        """Get the original character index into the text string (before
+        the string was adjusted for verbalized punctuation.
+
+        Arguments:
+        - offset: character offset into text string
+
+        Returns the equivalent character index into the original text string.
+        """
+
+        for i in range(0, len(self.textCharIndices)):
+            if self.textCharIndices[i] >= offset:
+                break
+
+        return i
+
     def __addVerbalizedPunctuation(self, oldText):
         """Depending upon the users verbalized punctuation setting,
         adjust punctuation symbols in the given text to their pronounced
@@ -679,6 +697,11 @@ class SpeechServer(speechserver.SpeechServer):
         if removeNewLines:
             oldText = oldText.replace("\n", "", 1)
 
+        # Used to keep a list of character offsets into the new text string,
+        # once it has been converted to use verbalized punctuation, one for 
+        # each character in the original string.
+        #
+        self.textCharIndices = []
         style = settings.verbalizePunctuationStyle
         newText = ''
         for i in range(0, len(oldText)):
@@ -716,6 +739,7 @@ class SpeechServer(speechserver.SpeechServer):
                     nextCharMatches = (oldText[i + 1] in string.digits or \
                                        oldText[i + 1] in currencySymbols)
 
+                self.textCharIndices.append(len(newText))
                 if oldText[i] == "-" and \
                    style != settings.PUNCTUATION_STYLE_NONE and \
                    prevCharMatches and nextCharMatches:
@@ -741,6 +765,7 @@ class SpeechServer(speechserver.SpeechServer):
                 else:
                     newText += oldText[i].encode("UTF-8")
             except:
+                self.textCharIndices.append(len(newText))
                 if (len(oldText) == 1):
                     newText += chnames.getCharacterName(oldText[i])
                 else:
