@@ -432,6 +432,7 @@ KEYEVENT: type=1
           event_string=(Control_L)
           is_text=True
           time=1176937675.307653
+WAIT: wait_time=5
 KEYEVENT: type=0
           hw_code=102
           modifiers=0

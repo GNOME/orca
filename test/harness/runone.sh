@@ -46,7 +46,7 @@ then
     APP_NAME=$2
     coverageMode=$3
 else
-    APP_NAME=gnome-terminal
+   APP_NAME=gnome-terminal
     coverageMode=$2
 fi
 
@@ -75,11 +75,19 @@ then
     sleep $WAIT_TIME
 fi
 
-# Start the test application and let it settle in
+# Start the test application and let it settle in. Two processes
+# are started for OpenOffice.
+#
 $APP_NAME $ARGS &
-APP_PID=$!
-echo starting $APP_NAME $ARGS, pid $APP_PID 
+echo starting test application $APP_NAME $ARGS ...
 sleep $WAIT_TIME
+if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
+then
+    APP_PID=$(ps -A | grep soffice | cut -d' ' -f1)
+else
+    APP_PID=$!
+fi
+echo $APP_NAME pid $APP_PID 
 
 # Play the keystrokes.
 #
@@ -96,3 +104,7 @@ fi
 # Terminate the running application
 echo killing app $APP_NAME $APP_PID
 kill -9 $APP_PID > /dev/null 2>&1
+
+# Temporary hack to kill gnome-terminal help is it's running.
+HELP_PID=$(ps -A | grep gnome-help | cut -d' ' -f1)
+kill -9 $HELP_PID > /dev/null 2>&1

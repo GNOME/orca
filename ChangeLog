@@ -1,3 +1,24 @@
+2007-07-03  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/harness/runone.sh 
+
+	Kills both soffice processes.
+	
+	* test/keystrokes/general-orca/yelp.keys,
+	test/keystrokes/yelp/yelp.keys
+
+	Moved yelp.keys to test/keystrokes/yelp so the yelp
+	application is started first instead of being started
+	from gnome-terminal
+	
+	* test/keystrokes/swriter/menus.keys,
+	test/keystrokes/scalc/whereAmI-calc.keys,
+	test/keystrokes/scalc/menu-items.keys,
+	test/keystrokes/gtk-demo/trees.keys,
+	test/keystrokes/gedit/lock-key-echo.keys,
+
+	Minor keystroke file improvements.
+
 2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/gaim.py: Adjustment to the gaim/pidgin script
