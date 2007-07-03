@@ -1,3 +1,9 @@
+2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/scripts/gaim.py: Adjustment to the gaim/pidgin script
+        so that the chat history commands work with the new bookmarked
+        objects feature.
+
 2007-07-03 Scott Haeger <scott@bashautomation.com>
         * src/orca/Gecko.py
         * src/orca/default.py

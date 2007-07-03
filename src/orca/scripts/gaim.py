@@ -150,7 +150,10 @@ class Script(default.Script):
                 Script.togglePrefix,
                 _("Toggle whether we prefix chat room messages with the name of the chat room."))
 
-        self.inputEventHandlers["readPreviousMessageHandler"] = \
+        # In gaim/pidgin, we are overriding the default script's bookmark
+        # feature and keybindings to provide chat room message history.
+        #
+        self.inputEventHandlers["goToBookmark"] = \
             input_event.InputEventHandler(
                 Script.readPreviousMessage,
                 _("Speak and braille a previous chat room message."))
@@ -173,6 +176,9 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["togglePrefixHandler"]))
 
+        # In gaim/pidgin, we are overriding the default script's bookmark
+        # feature and keybindings to provide chat room message history.
+        #
         messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
         for messageKey in messageKeys:
             keyBindings.add(
@@ -180,7 +186,7 @@ class Script(default.Script):
                     messageKey,
                     1 << settings.MODIFIER_ORCA,
                     1 << settings.MODIFIER_ORCA,
-                    self.inputEventHandlers["readPreviousMessageHandler"]))
+                    self.inputEventHandlers["goToBookmark"]))
 
         return keyBindings
 
