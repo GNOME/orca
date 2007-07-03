@@ -47,6 +47,7 @@ import orca_state
 import settings
 import speechgenerator
 import where_am_I
+import bookmarks
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -60,7 +61,6 @@ class Script:
         Arguments:
         - app: the Python Accessible application to create a script for
         """
-
         self.app = app
 
         if app:
@@ -69,7 +69,7 @@ class Script:
             self.name = "default"
 
         self.name += " (module=" + self.__module__ + ")"
-
+        
         self.listeners = self.getListeners()
 
         # By default, handle events for non-active applications.
@@ -84,6 +84,7 @@ class Script:
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.whereAmI = self.getWhereAmI()
+        self.bookmarks = self.getBookmarks()
         self.voices = settings.voices
 
         self.flatReviewContextClass = flat_review.Context
@@ -176,6 +177,15 @@ class Script:
         """Returns the "where am I" class for this script.
         """
         return where_am_I.WhereAmI(self)
+    
+    def getBookmarks(self):
+        """Returns the "bookmarks" class for this script.
+        """
+        try:
+            return self.bookmarks 
+        except AttributeError:
+            self.bookmarks = bookmarks.Bookmarks(self)
+            return self.bookmarks
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration

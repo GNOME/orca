@@ -640,7 +640,7 @@ class WhereAmI:
             return
       
         # Try to get the URI of the active document and parse it
-        doc_uri = self.__getDocumentFrameURI(obj)
+        doc_uri = self._script.getDocumentFrameURI()
         if doc_uri:
             doc_uri_info = urlparse.urlparse(doc_uri)
         else:
@@ -719,20 +719,6 @@ class WhereAmI:
             # Translators: This is the size of a file in megabytes
             #
             return _('%.2f megabytes') % (float(size) * .000001) 
-        
-    def __getDocumentFrameURI(self, obj):
-        '''
-        Returns the URI of the document frame that is active
-        '''
-        try:
-            documentFrame = self._script.getDocumentFrame()
-        except AttributeError:
-            return None
-        attrs = documentFrame.document.getAttributes()
-        for attr in attrs:
-            if attr.startswith('DocURL'):
-                return attr[7:]
-        return None
 
     def _speakGenericObject(self, obj, doubleClick):
         """Speak a generic object; one not specifically handled by

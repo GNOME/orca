@@ -1,3 +1,12 @@
+2007-07-03 Scott Haeger <scott@bashautomation.com>
+        * src/orca/Gecko.py
+        * src/orca/default.py
+        * src/orca/bookmarks.py
+        * src/orca/Makefile.am 
+        * src/orca/script.py
+        * src/orca/where_am_I.py 
+        - Fixed bug #354468 – Bookmarked Objects
+
 2007-06-30  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/orca_gui_prefs.py: Tweak for the fix for Bug #376515 

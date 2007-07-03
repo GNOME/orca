@@ -62,6 +62,7 @@ import speech
 import speechserver
 import string
 import where_am_I
+import bookmarks
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -83,7 +84,6 @@ class Script(script.Script):
         Arguments:
         - app: the application to create a script for.
         """
-
         script.Script.__init__(self, app)
 
         self.flatReviewContext  = None
@@ -663,6 +663,64 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.printMemoryUsageHandler,
                 "Prints memory usage information.")
+                        
+        self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
+            input_event.InputEventHandler(
+                Script.bookmarkCurrentWhereAmI,
+                # Translators: this command announces information regarding
+                # the relationship of the given bookmark to the current 
+                # position
+                #
+                _("Bookmark where am I with respect to current position."))    
+                
+        self.inputEventHandlers["bookmarkRootWhereAmI"] = \
+            input_event.InputEventHandler(
+                Script.bookmarkRootWhereAmI,
+                # Translators: this command announces information regarding
+                # the relationship of the given bookmark to the root 
+                # accessible
+                #
+                _("Bookmark where am I with respect to root."))
+                
+        self.inputEventHandlers["goToBookmark"] = \
+            input_event.InputEventHandler(
+                Script.goToBookmark,
+                # Translators: this command moves the current position to the
+                # location stored at the bookmark.
+                #
+                _("Go to bookmark."))
+                
+        self.inputEventHandlers["addBookmark"] = \
+            input_event.InputEventHandler(
+                Script.addBookmark,
+                # Translators: this event handler binds an in-page accessible 
+                # object location to the given input key command.
+                #
+                _("Add bookmark."))
+                
+        self.inputEventHandlers["saveBookmarks"] = \
+            input_event.InputEventHandler(
+                Script.saveBookmarks,
+                # Translators: this event handler saves all bookmarks for the 
+                # current application to disk.
+                #
+                _("Save bookmarks."))
+                
+        self.inputEventHandlers["goToNextBookmark"] = \
+            input_event.InputEventHandler(
+                Script.goToNextBookmark,
+                # Translators: this event handler cycles through the registered
+                # bookmarks and takes the user to the next bookmark location.
+                #
+                _("Go to next bookmark location."))
+                
+        self.inputEventHandlers["goToPrevBookmark"] = \
+            input_event.InputEventHandler(
+                Script.goToPrevBookmark,
+                # Translators: this event handler cycles through the registered
+                # bookmarks and takes the user to the previous bookmark location.
+                #
+                _("Go to previous bookmark location."))
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -1379,7 +1437,88 @@ class Script(script.Script):
                     (1 << settings.MODIFIER_ORCA
                      | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                     self.inputEventHandlers["printMemoryUsageHandler"]))
-
+                    
+        #####################################################################
+        #                                                                   #
+        #  Bookmark key bindings                                            #
+        #                                                                   #
+        #####################################################################   
+        # key binding to save bookmark information to disk 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "b",
+                (1 << settings.MODIFIER_ORCA
+                        | 1 << atspi.Accessibility.MODIFIER_ALT
+                        | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                (1 << settings.MODIFIER_ORCA
+                        | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["saveBookmarks"])) 
+        # key binding to move to the previous bookmark         
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "b",
+                (1 << settings.MODIFIER_ORCA
+                     | 1 << atspi.Accessibility.MODIFIER_ALT
+                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                (1 << settings.MODIFIER_ORCA
+                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                self.inputEventHandlers["goToPrevBookmark"])) 
+        # key binding to move to the next bookmark             
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "b",
+                (1 << settings.MODIFIER_ORCA
+                     | 1 << atspi.Accessibility.MODIFIER_ALT
+                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                (1 << settings.MODIFIER_ORCA),
+                self.inputEventHandlers["goToNextBookmark"]))    
+                
+        # key bindings for '1' through '9' for relevant commands            
+        for key in xrange(1,10):  
+            # key binding for WhereAmI information with respect to current acc 
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    str(key),
+                    (1 << settings.MODIFIER_ORCA \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT \
+                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                    (1 << settings.MODIFIER_ORCA \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT \
+                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                    self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
+            
+            # 'Add bookmark' key bindings
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    str(key),
+                    (1 << settings.MODIFIER_ORCA \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT \
+                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                    (1 << settings.MODIFIER_ORCA
+                        | 1 << atspi.Accessibility.MODIFIER_ALT),
+                    self.inputEventHandlers["addBookmark"]))
+                    
+            # 'Go to bookmark' key bindings
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    str(key),
+                    (1 << settings.MODIFIER_ORCA \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT \
+                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                    1 << settings.MODIFIER_ORCA,
+                    self.inputEventHandlers["goToBookmark"]))
+                    
+            # key binding for WhereAmI information with respect to root acc      
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    str(key),
+                    (1 << settings.MODIFIER_ORCA \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT \
+                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                    (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                    | 1 << atspi.Accessibility.MODIFIER_ALT),
+                    self.inputEventHandlers["bookmarkRootWhereAmI"]))
+                    
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
         return keyBindings
@@ -3947,7 +4086,7 @@ class Script(script.Script):
         """Searches backwards for the next instance of the string
         searched for via the Orca Find dialog.  Other than direction
         and the starting point, the search options initially specified
-        (case sensitivity, window wrap, and full/partial match) are
+        (case sensitivity, window wrap, and full/or partial match) are
         preserved.
         """
 
@@ -3958,7 +4097,52 @@ class Script(script.Script):
             self.find(lastQuery)
         else:
             orca._showFindGUI()
-
+            
+    def goToBookmark(self, inputEvent): 
+        """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to 
+        Bookmark.goToBookmark """
+        bookmarks = self.getBookmarks()
+        bookmarks.goToBookmark(inputEvent)
+    
+    def addBookmark(self, inputEvent): 
+        """ Add an in-page accessible object bookmark for this key. Delegates to 
+        Bookmark.addBookmark """
+        bookmarks = self.getBookmarks()
+        bookmarks.addBookmark(inputEvent)
+        
+    def bookmarkRootWhereAmI(self, inputEvent):
+        """ Report "Where am I" information for this bookmark relative to the 
+        root.  Delegates to Bookmark.bookmarkRootWhereAmI""" 
+        bookmarks = self.getBookmarks()
+        bookmarks.bookmarkRootWhereAmI(inputEvent)
+    
+    def bookmarkCurrentWhereAmI(self, inputEvent):
+        """ Report "Where am I" information for this bookmark relative to the 
+        current pointer location.  Delegates to 
+        Bookmark.bookmarkCurrentWhereAmI""" 
+        bookmarks = self.getBookmarks()
+        bookmarks.bookmarkCurrentWhereAmI(inputEvent)
+    
+    def saveBookmarks(self, inputEvent): 
+        """ Save the bookmarks for this script. Delegates to 
+        Bookmark.saveBookmarks """
+        bookmarks = self.getBookmarks()
+        bookmarks.saveBookmarks(inputEvent)
+    
+    def goToNextBookmark(self, inputEvent): 
+        """ Go to the next bookmark location.  If no bookmark has yet to be
+        selected, the first bookmark will be used.  Delegates to 
+        Bookmark.goToNextBookmark """
+        bookmarks = self.getBookmarks()
+        bookmarks.goToNextBookmark(inputEvent)
+    
+    def goToPrevBookmark(self, inputEvent):
+        """ Go to the previous bookmark location.  If no bookmark has yet to 
+        be selected, the first bookmark will be used.  Delegates to 
+        Bookmark.goToPrevBookmark """ 
+        bookmarks = self.getBookmarks()
+        bookmarks.goToPrevBookmark(inputEvent)
+           
 ########################################################################
 #                                                                      #
 # DEBUG support.                                                       #
@@ -5780,6 +5964,13 @@ class Script(script.Script):
         possibly subclassing whereamI for the Gecko script.
         """
         return None
+    
+    def systemBeep(self):
+        """Rings the system bell.  This is really a hack.  Ideally, we want
+        a method that will present an earcon (any sound designated representing
+        an error, event etc)
+        """
+        print "\a"
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list
