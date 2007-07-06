@@ -262,7 +262,7 @@ HYPERLINK_VOICE         = "hyperlink"
 
 voices = {
     DEFAULT_VOICE   : ACSS({}),
-    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
+    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 5.6}),
     HYPERLINK_VOICE : ACSS({})
 }
 

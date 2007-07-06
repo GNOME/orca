@@ -1,3 +1,8 @@
+2007-07-06  Mike Pedersen <michael.pedersen@sun.com>
+
+        * src/orca/settings.py 
+          Adjusted the uppercase pitch setting so that it is still noticable but not quite so high.
+
 2007-07-06  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/brlmon.py,
