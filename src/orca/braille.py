@@ -292,6 +292,16 @@ class Region:
         been scrolled off the display."""
         pass
 
+    def getAttributeMask(self):
+        """Creates a string which can be used as the attrOr field of brltty's
+        write structure for the purpose of indicating text attributes and
+        selection."""
+
+        # Create an empty mask.
+        #
+        mask = ['\x00'] * len(self.string)
+        return "".join(mask)
+
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
     to any cursor routing key events and perform the default action on the
@@ -373,7 +383,8 @@ class Text(Region):
 
         self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
 
-        string = string + eol
+        self.eol = eol
+        string = string + self.eol
 
         self.label = label
         if self.label:
@@ -417,6 +428,104 @@ class Text(Region):
 
         newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
         self.accessible.text.setCaretOffset(newCaretOffset)
+
+    def getAttributeMask(self):
+        """Creates a string which can be used as the attrOr field of brltty's
+        write structure for the purpose of indicating text attributes and
+        selection."""
+
+        text = self.accessible.text
+
+        # Start with an empty mask.
+        #
+        stringLength = len(self.string) - len(self.eol)
+        attrMask = ['\x00']*stringLength
+
+        attrIndicator = settings.textAttributesBrailleIndicator
+        selIndicator = settings.brailleSelectorIndicator
+        indicateAttr = (attrIndicator != settings.TEXT_ATTR_BRAILLE_NONE)
+        indicateSel = (selIndicator != settings.BRAILLE_SEL_NONE)
+
+        if indicateAttr:
+            # Identify what attributes the user cares about.  Also get the
+            # default attributes for the text object because those attributes
+            # may not be included as attributes for the character.
+            #
+            script = orca_state.activeScript
+            enabledAttributes = settings.enabledBrailledTextAttributes
+            [userAttrList, userAttrDict] = \
+                script.textAttrsToDictionary(enabledAttributes)
+            defaultAttributes = text.getDefaultAttributes()
+            [defaultAttrList, defaultAttrDict] = \
+                script.textAttrsToDictionary(defaultAttributes)
+
+            # [[[TODO - HACK - JD: The end offset returned by SO/OOo is the
+            # offset of the first character that doesn't have the attribute
+            # in question; all other apps return the offset of the last
+            # character that has that attribute]]]
+            #
+            adjustment = 0
+            if orca_state.locusOfFocus.app.name == "soffice.bin":
+                adjustment += 1
+
+            i = self.lineOffset
+            endOffset = self.lineOffset + stringLength
+            while i < endOffset - 1:
+                for attribute in userAttrList:
+                    defaultValue = None
+                    if attribute in defaultAttrList:
+                        defaultValue = defaultAttrDict[attribute]
+                    [value, start, end, defined] = \
+                            text.getAttributeValue(i, attribute)
+
+                    notOfInterest = userAttrDict[attribute]
+                    if defined:
+                        weCare = (value != notOfInterest)
+                    elif defaultValue and len(notOfInterest):
+                        weCare = (defaultValue != notOfInterest)
+                    else:
+                        weCare = False
+
+                    if weCare and start >= 0:
+                        maskStart = start - self.lineOffset
+                        maskEnd = end - self.lineOffset - adjustment
+                        maskLength = maskEnd - maskStart
+                        attrMask[maskStart:maskEnd] = \
+                                                  [attrIndicator] * maskLength
+                if (end <= i):
+                    break
+
+                i = end
+
+        if indicateSel:
+            nSelections = text.getNSelections()
+            if nSelections:
+                for i in range(0, nSelections):
+                    [start, end] = text.getSelection(i)
+                    maskStart = max(self.lineOffset, start) - self.lineOffset
+                    maskEnd = end - self.lineOffset
+                    # Combine the selection indicator with the attribute
+                    # indicator.
+                    #
+                    for j in range(maskStart, maskEnd):
+                        if attrMask[j] != '\x00' \
+                           and attrMask[j] != selIndicator:
+                            attrMask[j] = '\xc0'
+                        else:
+                            attrMask[j] = selIndicator
+
+        mask = "".join(attrMask)
+
+        # Add empty mask characters for the EOL character as well as for
+        # any label that might be present.
+        #
+        for i in range (0, len(self.eol)):
+            mask += '\x00'
+        if self.label:
+            for i in range (0, len(self.label) + 1):
+                mask = '\x00' + mask
+
+        return mask
 
 class ReviewComponent(Component):
     """A subclass of Component that is to be used for flat review mode."""
@@ -489,11 +598,12 @@ class Line:
         If the region with focus is not on this line, then the index
         will be -1.
 
-        Returns [string, offsetIndex]
+        Returns [string, offsetIndex, attributeMask]
         """
 
         string = ""
         focusOffset = -1
+        attributeMask = ""
         for region in self.regions:
             if region == _regionWithFocus:
                 focusOffset = len(string.decode("UTF-8"))
@@ -503,8 +613,10 @@ class Line:
                 # BrlTTY.]]]
                 #
                 string += region.string.replace("\342\200\246", "...")
+            mask = region.getAttributeMask()
+            attributeMask += mask
 
-        return [string, focusOffset]
+        return [string, focusOffset, attributeMask]
 
     def getRegionAtOffset(self, offset):
         """Finds the Region at the given 0-based offset in this line.
@@ -631,7 +743,7 @@ def setFocus(region, panToFocus=True):
             lineNum += 1
 
     line = _lines[_viewport[1]]
-    [string, offset] = line.getLineInfo()
+    [string, offset, attributeMask] = line.getLineInfo()
 
     # If the cursor is too far right, we scroll the viewport
     # so the cursor will be on the last cell of the display.
@@ -686,7 +798,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     # actually is in the string.
     #
     line = _lines[_viewport[1]]
-    [string, focusOffset] = line.getLineInfo()
+    [string, focusOffset, attributeMask] = line.getLineInfo()
     cursorOffset = -1
     if focusOffset >= 0:
         cursorOffset = focusOffset + _regionWithFocus.cursorOffset
@@ -742,6 +854,8 @@ def refresh(panToCursor=True, targetCursorCell=0):
             writeStruct.regionSize = len(substring.decode("UTF-8"))
             while writeStruct.regionSize < _displaySize[0]:
                 substring += " "
+                if attributeMask:
+                    attributeMask += '\x00'
                 writeStruct.regionSize += 1
             writeStruct.text = substring
             writeStruct.cursor = cursorCell
@@ -762,6 +876,9 @@ def refresh(panToCursor=True, targetCursorCell=0):
             #    myUnderline += '\xc0'
             #writeStruct.attrOr = myUnderline
 
+            if attributeMask:
+                writeStruct.attrOr = attributeMask[startPos:endPos]
+
             brlAPI.write(writeStruct)
     else:
         brl.writeText(cursorCell, substring)
@@ -770,7 +887,11 @@ def refresh(panToCursor=True, targetCursorCell=0):
         if not monitor:
             monitor = brlmon.BrlMon(_displaySize[0])
             monitor.show_all()
-        monitor.writeText(cursorCell, substring)
+        if attributeMask:
+            subMask = attributeMask[startPos:endPos]
+        else:
+            subMask = None
+        monitor.writeText(cursorCell, substring, subMask)
     elif monitor:
         monitor.destroy()
 
@@ -854,7 +975,7 @@ def panRight(panAmount=0):
     if len(_lines) > 0:
         lineNum = _viewport[1]
         newX = _viewport[0] + panAmount
-        [string, focusOffset] = _lines[lineNum].getLineInfo()
+        [string, focusOffset, attributeMask] = _lines[lineNum].getLineInfo()
         if newX < len(string.decode("UTF-8")):
             _viewport[0] = newX
 

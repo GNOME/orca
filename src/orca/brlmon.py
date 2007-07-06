@@ -28,6 +28,30 @@ __license__   = "LGPL"
 
 import gtk
 
+# Attribute/Selection mask strings:
+#
+DOT_7 =   '\x40' # 01000000
+DOT_8 =   '\x80' # 10000000
+DOTS_78 = '\xc0' # 11000000
+    
+# Markup strings:
+#
+NORMAL = " size='xx-large'"
+
+CURSOR_CELL_EMPTY =   " background='black'" \
+                    + " weight='ultrabold'" \
+                    + " style='italic'"
+
+CURSOR_CELL =   " background='white'" \
+              + " weight='ultrabold'" \
+              + " style='italic'" \
+
+ATTRIBUTE_7 = " underline='low'"
+
+ATTRIBUTE_8 = " underline='error'"
+
+ATTRIBUTE_78 = " underline='double'"
+
 class BrlMon(gtk.Window):
 
     """Displays a GUI braille monitor that mirrors what is being
@@ -101,7 +125,7 @@ class BrlMon(gtk.Window):
 
         self.move(x, 0)
 
-    def writeText(self, cursorCell, string):
+    def writeText(self, cursorCell, string, mask=None):
         """Display the given text and highlight the given
         cursor cell.  A cursorCell of 0 means no cell has
         the cursor.
@@ -129,32 +153,28 @@ class BrlMon(gtk.Window):
             else:
                 char = string[i]
 
+            markup = NORMAL
             if i == (cursorCell - 1):
                 if string[i] == " ":
-                    self.cellLabels[i].set_markup(
-                        "<span"\
-                        + " background='black'" \
-                        + " weight='ultrabold'" \
-                        + " style='italic'"\
-                        + " size='xx-large'"\
-                        + ">%s</span>" \
-                        % char)
+                    markup += CURSOR_CELL_EMPTY
                 else:
-                    self.cellLabels[i].set_markup(
-                        "<span"\
-                        + " background='white'" \
-                        + " weight='ultrabold'" \
-                        + " style='italic'"\
-                        + " size='xx-large'"\
-                        + ">%s</span>" \
-                        % char)
+                    markup += CURSOR_CELL
                 self.cellFrames[i].set_shadow_type(
                     gtk.SHADOW_IN)
             else:
-                self.cellLabels[i].set_markup(
-                    "<span size='xx-large'>%s</span>" % char)
                 self.cellFrames[i].set_shadow_type(
                     gtk.SHADOW_OUT)
+
+            if mask:
+                if (mask[i] == DOTS_78):
+                    markup += ATTRIBUTE_78
+                elif (mask[i] == DOT_7):
+                    markup += ATTRIBUTE_7
+                elif (mask[i] == DOT_8):
+                    markup += ATTRIBUTE_8
+
+            self.cellLabels[i].set_markup(
+                "<span" + markup + ">%s</span>" % char)
 
         # Pad the rest
         #

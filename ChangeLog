@@ -1,3 +1,18 @@
+2007-07-06  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/brlmon.py,
+          src/orca/braille.py,
+          src/orca/default.py,
+          src/orca/settings.py,
+          src/orca/orca_prefs.py,
+          src/orca/orca_gui_prefs.py,
+          src/orca/orca-setup.glade,
+          src/orca/scripts/Evolution.py:
+        Fix for bugs 382601 - Orca should indicate selected text on the
+        braille display and 400720 - Support accurate presentation of 
+        text attributes on the braille display.  Much thanks to Rich for
+        all of his help implementing these new features!
+
 2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 453229 - Orca should honor the

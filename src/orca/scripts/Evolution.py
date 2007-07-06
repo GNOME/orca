@@ -703,7 +703,7 @@ class Script(default.Script):
 
             [string, caretOffset, startOffset] = \
                 self.getTextLineAtCaret(event.source)
-            braille.displayMessage(string)
+            self.updateBraille(newLocusOfFocus)
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, string)
             line = self.adjustForRepeats(string)

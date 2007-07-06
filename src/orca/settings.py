@@ -103,6 +103,7 @@ userCustomizableSettings = [
     "enableBrailleGrouping",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
+    "brailleSelectorIndicator",
     "enableBrailleMonitor",
     "enableMagnifier",
     "enableMagCursor",
@@ -129,7 +130,9 @@ userCustomizableSettings = [
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
-    "enabledTextAttributes",
+    "enabledSpokenTextAttributes",
+    "enabledBrailledTextAttributes",
+    "textAttributesBrailleIndicator",
     "enableProgressBarUpdates",
     "progressBarUpdateInterval"
 ]
@@ -190,6 +193,16 @@ brailleVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
 BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
+
+# Braille Selection Indicator (see brailleSelectorIndicator).
+# The values represent the character to be used in the attrOr
+# field of brlAPI's writeStruct.
+#
+BRAILLE_SEL_NONE = '\x00' # 00000000
+BRAILLE_SEL_7    = '\x40' # 01000000
+BRAILLE_SEL_8    = '\x80' # 10000000
+BRAILLE_SEL_BOTH = '\xc0' # 11000000
+brailleSelectorIndicator = BRAILLE_SEL_BOTH
 
 # Speech punctuation levels (see verbalizePunctuationStyle).
 #
@@ -426,7 +439,27 @@ allTextAttributes = "bg-color:; bg-full-height:; bg-stipple:; direction:; editab
 # it won't be spoken. If no value part is given, then that attribute will
 # always be spoken.
 
-enabledTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+enabledSpokenTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+
+# The default set of text attributes to be brailled for the user. Specific
+# application scripts (or individual users can override these values if
+# so desired. Each of these text attributes is of the form <key>:<value>;
+# The <value> part will be the "default" value for that attribute. In
+# other words, if the attribute for a given piece of text has that value,
+# it won't be spoken. If no value part is given, then that attribute will
+# always be brailled.
+
+enabledBrailledTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+
+# Text Attributes Braille Indicator (see textAttributesBrailleIndicator).
+# The values represent the character to be used in the attrOr
+# field of brlAPI's writeStruct.
+#
+TEXT_ATTR_BRAILLE_NONE = '\x00' # 00000000
+TEXT_ATTR_BRAILLE_7    = '\x40' # 01000000
+TEXT_ATTR_BRAILLE_8    = '\x80' # 10000000
+TEXT_ATTR_BRAILLE_BOTH = '\xc0' # 11000000
+textAttributesBrailleIndicator = TEXT_ATTR_BRAILLE_NONE
 
 # The limit to enable a repeat character count to be spoken.
 # If set to 0, then there will be no repeat character count.

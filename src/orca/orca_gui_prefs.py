@@ -60,7 +60,7 @@ OS = None
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
-(IS_SPOKEN, NAME, VALUE) = range(3)
+(NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
 
 class orcaSetupGUI(orca_glade.GladeWrapper):
 
@@ -745,13 +745,14 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self._setupSpeechSystems(factories)
         self.initializingSpeech = False
 
-    def _setTextAttributes(self, view, setAttributes, state, moveToTop=False):
-        """Given a set of text attributes, update the model used by the
+    def _setSpokenTextAttributes(self, view, setAttributes,
+                                 state, moveToTop=False):
+        """Given a set of spoken text attributes, update the model used by the
         text attribute tree view.
 
         Arguments:
         - view: the text attribute tree view.
-        - setAttributes: the list of attributes to update.
+        - setAttributes: the list of spoken text attributes to update.
         - state: the state (True or False) that they all should be set to.
         - moveToTop: if True, move these attributes to the top of the list.
         """
@@ -769,8 +770,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             for path in range(0, len(allAttrList)):
                 if attrList[i] == model[path][NAME]:
                     iter = model.get_iter(path)
-                    model.set(iter, IS_SPOKEN, state,
-                                    NAME, attrList[i],
+                    model.set(iter, NAME, attrList[i],
+                                    IS_SPOKEN, state,
                                     VALUE, attrDict[attrList[i]])
                     if moveToTop:
                         iter = model.get_iter(path)
@@ -780,25 +781,60 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         view.set_model(model)
 
+    def _setBrailledTextAttributes(self, view, setAttributes, state):
+        """Given a set of brailled text attributes, update the model used
+        by the text attribute tree view.
+
+        Arguments:
+        - view: the text attribute tree view.
+        - setAttributes: the list of brailled text attributes to update.
+        - state: the state (True or False) that they all should be set to.
+        """
+
+        model = view.get_model()
+        view.set_model(None)
+
+        defScript = default.Script(None)
+        [attrList, attrDict] = \
+            defScript.textAttrsToDictionary(setAttributes)
+        [allAttrList, allAttrDict] = \
+            defScript.textAttrsToDictionary(settings.allTextAttributes)
+
+        for i in range(0, len(attrList)):
+            for path in range(0, len(allAttrList)):
+                if attrList[i] == model[path][NAME]:
+                    iter = model.get_iter(path)
+                    model.set(iter, IS_BRAILLED, state)
+                    break
+
+        view.set_model(model)
+
     def _updateTextDictEntry(self):
         """The user has updated the text attribute list in some way. Update
-        the "enabledTextAttributes" preference string to reflect the current
-        state of the text attribute list.
+        the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings to reflect the current state of the corresponding
+        text attribute lists.
         """
 
         model = self.getTextAttributesView.get_model()
-        attrStr = ""
+        spokenAttrStr = ""
+        brailledAttrStr = ""
         noRows = model.iter_n_children(None)
         for path in range(0, noRows):
             if model[path][IS_SPOKEN]:
-                attrStr += model[path][NAME] + ":" + model[path][VALUE] + "; "
+                spokenAttrStr += model[path][NAME] + ":" + \
+                                 model[path][VALUE] + "; "
+            if model[path][IS_BRAILLED]:
+                brailledAttrStr += model[path][NAME] + ":" + \
+                                   model[path][VALUE] + "; "
 
-        self.prefsDict["enabledTextAttributes"] = attrStr
+        self.prefsDict["enabledSpokenTextAttributes"] = spokenAttrStr
+        self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
 
-    def textAttributeToggled(self, cell, path, model):
+    def textAttributeSpokenToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
-        checkboxes. Update our model to reflect this, then update the
-        "enabledTextAttributes" preference string.
+        checkboxes to be spoken. Update our model to reflect this, then
+        update the "enabledSpokenTextAttributes" preference string.
 
         Arguments:
         - cell: the cell that changed.
@@ -810,14 +846,30 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         model.set(iter, IS_SPOKEN, not model[path][IS_SPOKEN])
         self._updateTextDictEntry()
 
-    def textAttrValueEdited(self, cell, path, new_text, model):
-        """The user has edited the value of one of the text attributes.
-        Update our model to reflect this, then update the 
-        "enabledTextAttributes" preference string.
+    def textAttributeBrailledToggled(self, cell, path, model):
+        """The user has toggled the state of one of the text attribute
+        checkboxes to be brailled. Update our model to reflect this,
+        then update the "enabledBrailledTextAttributes" preference string.
 
         Arguments:
         - cell: the cell that changed.
-        - path: the path of that cell. 
+        - path: the path of that cell.
+        - model: the model that the cell is part of.
+        """
+
+        iter = model.get_iter(path)
+        model.set(iter, IS_BRAILLED, not model[path][IS_BRAILLED])
+        self._updateTextDictEntry()
+
+    def textAttrValueEdited(self, cell, path, new_text, model):
+        """The user has edited the value of one of the text attributes.
+        Update our model to reflect this, then update the
+        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings.
+
+        Arguments:
+        - cell: the cell that changed.
+        - path: the path of that cell.
         - new_text: the new text attribute value string.
         - model: the model that the cell is part of.
         """
@@ -848,17 +900,18 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                       attribute will be spoken or not.
           NAME      - the text attribute name.
           VALUE     - if set, (and this attributes is enabled for speaking),
-                      then this attribute will be spoken unless it equals 
+                      then this attribute will be spoken unless it equals
                       this value.
         """
 
         self.getTextAttributesView = \
                        self.widgets.get_widget("textAttributesTreeView")
-        model = gtk.ListStore(gobject.TYPE_BOOLEAN,
-                              gobject.TYPE_STRING,
+        model = gtk.ListStore(gobject.TYPE_STRING,
+                              gobject.TYPE_BOOLEAN,
+                              gobject.TYPE_BOOLEAN,
                               gobject.TYPE_STRING)
 
-        # Initially setup the list store model based on the values of all 
+        # Initially setup the list store model based on the values of all
         # the known text attributes.
         #
         defScript = default.Script(None)
@@ -866,46 +919,75 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                 defScript.textAttrsToDictionary(settings.allTextAttributes)
         for i in range(0, len(allAttrList)):
             iter = model.append()
-            model.set(iter, IS_SPOKEN, False,
-                            NAME, allAttrList[i],
+            model.set(iter, NAME, allAttrList[i],
+                            IS_SPOKEN, False,
+                            IS_BRAILLED, False,
                             VALUE, allAttrDict[allAttrList[i]])
 
         self.getTextAttributesView.set_model(model)
 
-        # Attribute Name column (IS_SPOKEN and NAME).
+        # Attribute Name column (NAME).
         #
         column = gtk.TreeViewColumn(_("Attribute Name"))
         column.set_min_width(250)
         column.set_resizable(True)
+        renderer = gtk.CellRendererText()
+        column.pack_end(renderer, True)
+        column.set_attributes(renderer, text=NAME)
+        self.getTextAttributesView.insert_column(column, 0)
+
+        # Attribute Speak column (IS_SPOKEN).
+        #
+        column = gtk.TreeViewColumn(_("Speak"))
+        renderer = gtk.CellRendererText()
+        renderer.set_property("text", (_("speak")))
+        renderer.set_property("visible", False)
+        column.pack_end(renderer, True)
         renderer = gtk.CellRendererToggle()
         column.pack_start(renderer, False)
         column.set_attributes(renderer, active=IS_SPOKEN)
         renderer.connect("toggled",
-                         self.textAttributeToggled,
+                         self.textAttributeSpokenToggled,
                          model)
+        self.getTextAttributesView.insert_column(column, 1)
+        column.clicked()
 
+        # Attribute Mark in Braille column (IS_BRAILLED).
+        #
+        column = gtk.TreeViewColumn(_("Mark in braille"))
         renderer = gtk.CellRendererText()
+        renderer.set_property("text", (_("Mark in braille")))
+        renderer.set_property("visible", False)
         column.pack_end(renderer, True)
-        column.set_attributes(renderer, text=NAME)
-
-        self.getTextAttributesView.insert_column(column, 0)
+        renderer = gtk.CellRendererToggle()
+        column.pack_start(renderer, False)
+        column.set_attributes(renderer, active=IS_BRAILLED)
+        renderer.connect("toggled",
+                         self.textAttributeBrailledToggled,
+                         model)
+        self.getTextAttributesView.insert_column(column, 2)
         column.clicked()
 
         # Attribute Value column (VALUE)
         #
-        column = gtk.TreeViewColumn(_("Speak Unless"))
+        column = gtk.TreeViewColumn(_("Present Unless"))
         renderer = gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True)
         column.set_attributes(renderer, text=VALUE)
         renderer.connect("edited", self.textAttrValueEdited, model)
 
-        self.getTextAttributesView.insert_column(column, 1)
+        self.getTextAttributesView.insert_column(column, 4)
 
         # Check all the enabled (spoken) text attributes.
         #
-        self._setTextAttributes(self.getTextAttributesView,
-                                settings.enabledTextAttributes, True, True)
+        self._setSpokenTextAttributes(self.getTextAttributesView,
+                            settings.enabledSpokenTextAttributes, True, True)
+
+        # Check all the enabled (brailled) text attributes.
+        #
+        self._setBrailledTextAttributes(self.getTextAttributesView,
+                                settings.enabledBrailledTextAttributes, True)
 
         # Connect a handler for when the user changes columns within the
         # view, so that we can adjust the search column for item lookups.
@@ -977,6 +1059,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             self.brailleBriefButton.set_active(True)
         else:
             self.brailleVerboseButton.set_active(True)
+
+        selectionIndicator = prefs["brailleSelectorIndicator"]
+        if selectionIndicator == settings.BRAILLE_SEL_7:
+            self.brailleSelection7Button.set_active(True)
+        elif selectionIndicator == settings.BRAILLE_SEL_8:
+            self.brailleSelection8Button.set_active(True)
+        elif selectionIndicator == settings.BRAILLE_SEL_BOTH:
+            self.brailleSelectionBothButton.set_active(True)
+        else:
+            self.brailleSelectionNoneButton.set_active(True)
 
         # Key Echo pane.
         #
@@ -1163,6 +1255,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         self._createTextAttributesTreeView()
 
+        brailleIndicator = prefs["textAttributesBrailleIndicator"]
+        if brailleIndicator == settings.TEXT_ATTR_BRAILLE_7:
+            self.textBraille7Button.set_active(True)
+        elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_8:
+            self.textBraille8Button.set_active(True)
+        elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_BOTH:
+            self.textBrailleBothButton.set_active(True)
+        else:
+            self.textBrailleNoneButton.set_active(True)
+
         # General pane.
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
@@ -1229,8 +1331,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # We always want to re-order the text attributes page so that enabled
         # items are consistently at the top.
         #
-        self._setTextAttributes(self.getTextAttributesView,
-                                settings.enabledTextAttributes, True, True)
+        self._setSpokenTextAttributes(self.getTextAttributesView,
+                            settings.enabledSpokenTextAttributes, True, True)
 
         self.orcaSetupWindow.show()
 
@@ -1774,6 +1876,61 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["enableEchoByWord"] = widget.get_active()
+
+    def brailleSelectionChanged(self, widget):
+        """Signal handler for the "toggled" signal for the
+           brailleSelectionNoneButton, brailleSelection7Button,
+           brailleSelection8Button or brailleSelectionBothButton
+           GtkRadioButton widgets. The user has toggled the braille
+           selection indicator value. If this signal was generated
+           as the result of a radio button getting selected (as
+           opposed to a radio button losing the selection), set the
+           'brailleSelectorIndicator' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            if widget.get_label() == _("Dot _7"):
+                self.prefsDict["brailleSelectorIndicator"] = \
+                    settings.BRAILLE_SEL_7
+            elif widget.get_label() == _("Dot _8"):
+                self.prefsDict["brailleSelectorIndicator"] = \
+                    settings.BRAILLE_SEL_8
+            elif widget.get_label() == _("Dots 7 an_d 8"):
+                self.prefsDict["brailleSelectorIndicator"] = \
+                    settings.BRAILLE_SEL_BOTH
+            else:
+                self.prefsDict["brailleSelectorIndicator"] = \
+                    settings.BRAILLE_SEL_NONE
+
+    def brailleIndicatorChanged(self, widget):
+        """Signal handler for the "toggled" signal for the
+           textBrailleNoneButton, textBraille7Button, textBraille8Button
+           or textBrailleBothButton GtkRadioButton widgets. The user has
+           toggled the text attributes braille indicator value. If this signal
+           was generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
+           'textAttributesBrailleIndicator' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            if widget.get_label() == _("Dot _7"):
+                self.prefsDict["textAttributesBrailleIndicator"] = \
+                    settings.TEXT_ATTR_BRAILLE_7
+            elif widget.get_label() == _("Dot _8"):
+                self.prefsDict["textAttributesBrailleIndicator"] = \
+                    settings.TEXT_ATTR_BRAILLE_8
+            elif widget.get_label() == _("Dots 7 an_d 8"):
+                self.prefsDict["textAttributesBrailleIndicator"] = \
+                    settings.TEXT_ATTR_BRAILLE_BOTH
+            else:
+                self.prefsDict["textAttributesBrailleIndicator"] = \
+                    settings.TEXT_ATTR_BRAILLE_NONE
 
     def punctuationLevelChanged(self, widget):
         """Signal handler for the "toggled" signal for the noneButton,
@@ -2345,56 +2502,65 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     settings.LAPTOP_MODIFIER_KEYS
 
     def textSelectAllButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the 
-        textSelectAllButton GtkButton widget. The user has clicked 
-        the Speak all button.  Check all the text attributes and 
-        then update the "enabledTextAttributes" preference string.
+        """Signal handler for the "clicked" signal for the
+        textSelectAllButton GtkButton widget. The user has clicked
+        the Speak all button.  Check all the text attributes and
+        then update the "enabledSpokenTextAttributes" and
+        "enabledBrailledTextAttributes" preference strings.
 
         Arguments:
         - widget: the component that generated the signal.
-        """ 
+        """
 
-        self._setTextAttributes(self.getTextAttributesView,
+        self._setSpokenTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, True)
+        self._setBrailledTextAttributes(self.getTextAttributesView,
                                 settings.allTextAttributes, True)
         self._updateTextDictEntry()
-        
+
     def textUnselectAllButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the 
-        textUnselectAllButton GtkButton widget. The user has clicked 
-        the Speak none button. Uncheck all the text attributes and 
-        then update the "enabledTextAttributes" preference string.
-
-        Arguments:
-        - widget: the component that generated the signal. 
-        """
-
-        self._setTextAttributes(self.getTextAttributesView,
-                                settings.allTextAttributes, False)
-        self._updateTextDictEntry()
-        
-    def textResetButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the 
-        textResetButton GtkButton widget. The user has clicked
-        the Reset button. Reset all the text attributes to their 
-        initial state and then update the "enabledTextAttributes" 
-        preference string.
+        """Signal handler for the "clicked" signal for the
+        textUnselectAllButton GtkButton widget. The user has clicked
+        the Speak none button. Uncheck all the text attributes and
+        then update the "enabledSpokenTextAttributes" and
+        "enabledBrailledTextAttributes" preference strings.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self._setTextAttributes(self.getTextAttributesView,
+        self._setSpokenTextAttributes(self.getTextAttributesView,
                                 settings.allTextAttributes, False)
-        self._setTextAttributes(self.getTextAttributesView,
-                                settings.enabledTextAttributes, True)
+        self._setBrailledTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, False)
         self._updateTextDictEntry()
-        
+
+    def textResetButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        textResetButton GtkButton widget. The user has clicked
+        the Reset button. Reset all the text attributes to their
+        initial state and then update the "enabledSpokenTextAttributes"
+        and "enabledBrailledTextAttributes" preference strings.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self._setSpokenTextAttributes(self.getTextAttributesView,
+                                settings.allTextAttributes, False)
+        self._setSpokenTextAttributes(self.getTextAttributesView,
+                                settings.enabledSpokenTextAttributes, True)
+        self._setBrailledTextAttributes(self.getTextAttributesView,
+                                settings.enabledBrailledTextAttributes, True)
+        self._updateTextDictEntry()
+
     def textMoveToTopButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
         textMoveToTopButton GtkButton widget. The user has clicked
-        the Move to top button. Move the selected rows in the text 
-        attribute view to the very top of the list and then update 
-        the "enabledTextAttributes" preference string.
+        the Move to top button. Move the selected rows in the text
+        attribute view to the very top of the list and then update
+        the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -2411,8 +2577,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """Signal handler for the "clicked" signal for the
         textMoveUpOneButton GtkButton widget. The user has clicked
         the Move up one button. Move the selected rows in the text
-        attribute view up one row in the list and then update the 
-        "enabledTextAttributes" preference string.
+        attribute view up one row in the list and then update the
+        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -2432,7 +2599,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         textMoveDownOneButton GtkButton widget. The user has clicked
         the Move down one button. Move the selected rows in the text
         attribute view down one row in the list and then update the
-        "enabledTextAttributes" preference string.
+        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -2453,7 +2621,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         textMoveToBottomButton GtkButton widget. The user has clicked
         the Move to bottom button. Move the selected rows in the text
         attribute view to the bottom of the list and then update the
-        "enabledTextAttributes" preference string.
+        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
+        preference strings.
 
         Arguments:
         - widget: the component that generated the signal.

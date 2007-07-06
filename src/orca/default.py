@@ -3283,7 +3283,7 @@ class Script(script.Script):
             # Get a dictionary of text attributes that the user cares about.
             #
             [userAttrList, userAttrDict] = \
-                self.textAttrsToDictionary(settings.enabledTextAttributes)
+                self.textAttrsToDictionary(settings.enabledSpokenTextAttributes)
 
             # Create a dictionary of just the items we are interested in.
             # Always include size and family-name. For the others, if the

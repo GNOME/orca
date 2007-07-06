@@ -204,12 +204,49 @@ def _getOrcaModifierKeysString(orcaModifierKeys):
     else:
         return "orca.settings.LAPTOP_MODIFIER_KEYS"
 
-def _getTextAttributesString(enabledTextAttributes):
-    """ Returns a string that represents the enabled text attributes 
+def _getSpokenTextAttributesString(enabledSpokenTextAttributes):
+    """ Returns a string that represents the enabled spoken text attributes 
     passed in.
     """
 
-    return "\"" + enabledTextAttributes + "\""
+    return "\"" + enabledSpokenTextAttributes + "\""
+
+def _getBrailledTextAttributesString(enabledBrailledTextAttributes):
+    """ Returns a string that represents the enabled brailled text attributes
+    passed in.
+    """
+
+    return "\"" + enabledBrailledTextAttributes + "\""
+
+def _getTextAttributesBrailleIndicatorString(brailleIndicator):
+    """Returns a string that represents the text attribute braille indicator
+    value passed in."""
+
+    if brailleIndicator == settings.TEXT_ATTR_BRAILLE_NONE:
+        return "orca.settings.TEXT_ATTR_BRAILLE_NONE"
+    elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_7:
+        return "orca.settings.TEXT_ATTR_BRAILLE_7"
+    elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_8:
+        return "orca.settings.TEXT_ATTR_BRAILLE_8"
+    elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_BOTH:
+        return "orca.settings.TEXT_ATTR_BRAILLE_BOTH"
+    else:
+        return "orca.settings.TEXT_ATTR_BRAILLE_NONE"
+
+def _getBrailleSelectionIndicatorString(selectionIndicator):
+    """Returns a string that represents the braille selection indicator
+    value passed in."""
+
+    if selectionIndicator == settings.BRAILLE_SEL_NONE:
+        return "orca.settings.BRAILLE_SEL_NONE"
+    elif selectionIndicator == settings.BRAILLE_SEL_7:
+        return "orca.settings.BRAILLE_SEL_7"
+    elif selectionIndicator == settings.BRAILLE_SEL_8:
+        return "orca.settings.BRAILLE_SEL_8"
+    elif selectionIndicator == settings.BRAILLE_SEL_BOTH:
+        return "orca.settings.BRAILLE_SEL_BOTH"
+    else:
+        return "orca.settings.BRAILLE_SEL_NONE"
 
 def _getVerbosityString(verbosityLevel):
     """Returns a string that represents the verbosity level passed in."""
@@ -485,6 +522,8 @@ def _getValueForKey(prefsDict, key):
             value = _getVerbosityString(prefsDict[key])
         elif key == "brailleRolenameStyle":
             value = _getBrailleRolenameStyleString(prefsDict[key])
+        elif key == "brailleSelectorIndicator":
+            value = _getBrailleSelectionIndicatorString(prefsDict[key])
         elif key == "verbalizePunctuationStyle":
             value = _getVerbalizePunctuationStyleString(prefsDict[key])
         elif key == "sayAllStyle":
@@ -501,8 +540,12 @@ def _getValueForKey(prefsDict, key):
             value = _getKeyboardLayoutString(prefsDict[key])
         elif key == "orcaModifierKeys":
             value = _getOrcaModifierKeysString(prefsDict[key])
-        elif key == "enabledTextAttributes":
-            value = _getTextAttributesString(prefsDict[key])
+        elif key == "enabledSpokenTextAttributes":
+            value = _getSpokenTextAttributesString(prefsDict[key])
+        elif key == "enabledBrailledTextAttributes":
+            value = _getBrailledTextAttributesString(prefsDict[key])
+        elif key == "textAttributesBrailleIndicator":
+            value = _getTextAttributesBrailleIndicatorString(prefsDict[key])
         else:
             value = prefsDict[key]
 
