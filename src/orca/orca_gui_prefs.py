@@ -928,6 +928,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # Attribute Name column (NAME).
         #
+        # Translators: Attribute here refers to text attributes such
+        # as bold, underline, family-name, etc.
+        #
         column = gtk.TreeViewColumn(_("Attribute Name"))
         column.set_min_width(250)
         column.set_resizable(True)
@@ -938,9 +941,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # Attribute Speak column (IS_SPOKEN).
         #
-        column = gtk.TreeViewColumn(_("Speak"))
+        # Translators: the "Speak" column consists of a single checkbox
+        # for each text attribute.  If the checkbox is checked, Orca
+        # will speak that attribute, if it is present, when the user
+        # presses Orca_Modifier+F.
+        #
+        speakAttrColumnLabel = _("Speak")
+        column = gtk.TreeViewColumn(speakAttrColumnLabel)
         renderer = gtk.CellRendererText()
-        renderer.set_property("text", (_("speak")))
+        renderer.set_property("text", speakAttrColumnLabel)
         renderer.set_property("visible", False)
         column.pack_end(renderer, True)
         renderer = gtk.CellRendererToggle()
@@ -954,9 +963,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # Attribute Mark in Braille column (IS_BRAILLED).
         #
-        column = gtk.TreeViewColumn(_("Mark in braille"))
+        # Translators: The "Mark in braille" column consists of a single
+        # checkbox for each text attribute.  If the checkbox is checked,
+        # Orca will "underline" that attribute, if it is present, on
+        # the refreshable braille display.
+        #
+        markAttrColumnLabel = _("Mark in braille")
+        column = gtk.TreeViewColumn(markAttrColumnLabel)
         renderer = gtk.CellRendererText()
-        renderer.set_property("text", (_("Mark in braille")))
+        renderer.set_property("text", markAttrColumnLabel)
         renderer.set_property("visible", False)
         column.pack_end(renderer, True)
         renderer = gtk.CellRendererToggle()
@@ -969,6 +984,14 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         column.clicked()
 
         # Attribute Value column (VALUE)
+        #
+        # Translators: The "Present Unless" column consists of an
+        # editable text field in which the user can specify the
+        # "default" (or not of interest) value for that attribute,
+        # such as "None" in the case of underline. Orca will only
+        # speak the attribute and/or mark it in braille if the
+        # appropriate checkboxes have been checked AND the attribute
+        # value is not the default.
         #
         column = gtk.TreeViewColumn(_("Present Unless"))
         renderer = gtk.CellRendererText()
@@ -1868,7 +1891,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
     def echoByWordChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            echoByWordCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Echo by Word" checkbox. Set the
+           [un]checked the 'Enable Echo by Word' checkbox. Set the
            'enableEchoByWord' preference to the new value.
 
         Arguments:
@@ -1892,12 +1915,25 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: A single braille cell on a refreshable
+            # braille display consists of 8 dots.  If the user
+            # chooses this setting, the dot in the bottom left
+            # corner will be used to 'underline' text of interest.
+            #
             if widget.get_label() == _("Dot _7"):
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_7
+            # Translators: If the user chooses this setting, the
+            # dot in the bottom right corner of the braille cell
+            # will be used to 'underline' text of interest.
+            #
             elif widget.get_label() == _("Dot _8"):
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_8
+            # Translators: If the user chooses this setting, the
+            # two dots at the bottom of the braille cell will be
+            # used to 'underline' text of interest.
+            #
             elif widget.get_label() == _("Dots 7 an_d 8"):
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_BOTH
@@ -1919,12 +1955,25 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: A single braille cell on a refreshable
+            # braille display consists of 8 dots.  If the user
+            # chooses this setting, the dot in the bottom left
+            # corner will be used to 'underline' text of interest.
+            #
             if widget.get_label() == _("Dot _7"):
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_7
+            # Translators: If the user chooses this setting, the
+            # dot in the bottom right corner of the braille cell
+            # will be used to 'underline' text of interest.
+            #
             elif widget.get_label() == _("Dot _8"):
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_8
+            # Translators: If the user chooses this setting, the
+            # two dots at the bottom of the braille cell will be
+            # used to 'underline' text of interest.
+            #
             elif widget.get_label() == _("Dots 7 an_d 8"):
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_BOTH
@@ -1945,12 +1994,24 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: If this setting is chosen, no punctuation
+            # symbols will be spoken as a user reads a document.
+            #
             if widget.get_label() == _("_None"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_NONE
+            # Translators: If this setting is chosen, common punctuation
+            # symbols (like comma, period, question mark) will not be
+            # spoken as a user reads a document, but less common symbols
+            # (such as #, @, $) will.
+            #
             elif widget.get_label() == _("So_me"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_SOME
+            # Translators: If this setting is chosen, the majority of
+            # punctuation symbols will be spoken as a user reads a
+            # document.
+            #
             elif widget.get_label() == _("M_ost"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_MOST
@@ -1968,8 +2029,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         sayAllStyle = widget.get_active_text()
+        # Translators: If this setting is chosen and the user is reading
+        # over an entire document, Orca will pause at the end of each
+        # line.
+        #
         if sayAllStyle == _("Line"):
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_LINE
+        # Translators: If this setting is chosen and the user is reading
+        # over an entire document, Orca will pause at the end of each
+        # sentence.
+        #
         elif sayAllStyle == _("Sentence"):
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE
 
@@ -1986,6 +2055,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if widget.get_active():
+            # Translators: This refers to the amount of information
+            # Orca provides about a particular object that receives
+            # focus.
+            #
             if widget.get_label() == _("Brie_f"):
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF

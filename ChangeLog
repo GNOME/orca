@@ -1,3 +1,9 @@
+2007-07-08  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/orca_gui_prefs.py: Added translation docs to dialog
+        for the new text selection and attribute indication features
+        (bugs 382601 and 400720).
+
 2007-07-03 Scott Haeger <scott@bashautomation.com>
         * src/orca/Gecko.py
         Added translation docs to read page summary code, bug #447191.
