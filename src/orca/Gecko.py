@@ -1126,21 +1126,41 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             
         utterances = []
         if headings:
+            # Translators: Announces the number of headings in the
+            # web page that is currently being displayed.
+            #
             utterances.append(ngettext \
                  ('%d heading', '%d headings', headings) %headings)
         if forms:
+            # Translators: Announces the number of forms in the
+            # web page that is currently being displayed.
+            #
             utterances.append(ngettext \
                  ('%d form', '%d forms', forms) %forms)
         if tables:
+            # Translators: Announces the number of non-layout tables in the
+            # web page that is currently being displayed.
+            #
             utterances.append(ngettext \
                  ('%d table', '%d tables', tables) %tables)
         if vlinks:
+            # Translators: Announces the number of visited links in the
+            # web page that is currently being displayed.
+            #
             utterances.append(ngettext \
                  ('%d visited link', '%d visited links', vlinks) %vlinks)
         if uvlinks:
+            # Translators: Announces the number of unvisited links in the
+            # web page that is currently being displayed.
+            #
             utterances.append(ngettext \
                  ('%d unvisited link', '%d unvisited links', uvlinks) %uvlinks)
         if obj_index:
+            # Translators: Announces the percentage of the document that has
+            # been read.  This is calculated by knowing the index of the 
+            # current position divided by the total number of objects on the 
+            # page.
+            #
             utterances.append(_('%d percent of document read') \
                                      %int(obj_index*100/nodetotal))
             

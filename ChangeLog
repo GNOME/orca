@@ -1,3 +1,7 @@
+2007-07-03 Scott Haeger <scott@bashautomation.com>
+        * src/orca/Gecko.py
+        Added translation docs to read page summary code, bug #447191.
+
 2007-07-06  Mike Pedersen <michael.pedersen@sun.com>
 
         * src/orca/settings.py 
