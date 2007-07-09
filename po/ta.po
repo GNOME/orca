@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-20 07:24+0200\n"
-"PO-Revision-Date: 2007-07-09 17:08+0530\n"
+"PO-Revision-Date: 2007-07-09 17:17+0530\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -514,7 +514,7 @@ msgstr "Orca விருப்பங்கள்"
 
 #: ../src/orca/orca-setup.glade.h:38
 msgid "Pi_tch:"
-msgstr ""
+msgstr "தொனி (_t):"
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Question"
@@ -762,7 +762,7 @@ msgstr "Usage: orca [OPTION...]"
 
 #: ../src/orca/orca.py:1238
 msgid "-?, --help                   Show this help message"
-msgstr "-?, --help                   இந்த உதவி செய்தியை காட்டு"
+msgstr "-?, --help                   இந்த உதவி செய்தியை காட்டவும்"
 
 #: ../src/orca/orca.py:1239
 #, python-format
