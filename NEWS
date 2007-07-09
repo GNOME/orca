@@ -1,3 +1,93 @@
+2.19.5 - 09-Jul-2007
+
+General:
+
+* More work on the regression testing framework and tests
+
+* Adjusted the uppercase pitch setting so that it is still noticable
+  but not quite so high
+
+* Fix for bug 354468 - support bookmarked objects
+
+* Fix for bug 354479 - Automatic presentation of "balloon" type
+  messages
+
+* Fix for bug 375396 - Orca failed to exit after stopping the full
+  screen mag.
+
+* Tweak for the fix for bug 376515 - Add GUI support for the new
+  customizable text-attribute feature: avoid errors when ~/.orca is
+  not present
+
+* Fix for bug 382601 and bug 400720 - Orca should indicate selected
+  text on the braille display and support accurate presentation of
+  text attributes on the braille display
+
+* Work on bug 395146 – Crash at start. Try to start an HTTP server on
+  settings.httpServerPort. If this fails, retry
+  settings.maxHttpServerRetries times, each time incrementing the
+  server port number by 1. If we are still unable to start a server,
+  just fail gracefully.
+
+* Fix for bug 436888 - Include widget status information in speech and
+  braille for flat review
+
+* Fix for bug 438333 – Need to present progress bar activity
+
+* Fix for bug 439191 – sayAll by sentence can position the text cursor
+  in the wrong place when interrupted
+
+* Fix for bug 442069 – Unneeded gnome-speech drivers not stopped when
+  GUI setup window is dismissed
+
+* Fix for bug 446881 – Orca braillegenerator code assumes that what's
+  in a table is a table cell
+
+* Fix for bug 449978 – Punctuation keys not echoed (thanks Tomas Cerha!)
+
+* Fix for bug 450037 - Password field for gdm speaks characters you
+  type instead of "star star star star"
+
+* Fix for bug 450213 - should acc._narrow(Accessibility.Accessible) be
+  a SEVERE error?
+
+* Fix for bug 451531 - Orca failed to report the conversation message
+  of pidgin.  This was solved by simply mapping the gaim script to pidgin
+
+Firefox:
+
+* Fix for bug 409728 - Orca repeats mouse-selected text numerous times
+  in Gecko
+
+* Fix for bug 447191 – Firefox read page summary
+
+* Fix for bug 448096 - Orca does not provide access to progress bars
+  for FF3 downloads
+
+* Fix for bug 449171 - Orca gets stuck in endless loops on woot.com
+
+* Fix for bug 449232 - Firefox move to next large object additional
+  tweak
+
+* Fix for bug 453229 - Orca should honor the repeated character count
+  setting in Firefox
+
+Thunderbird:
+
+* Fix for bug 449152 - Cannot create a new message in thunderbird
+  while using Orca
+
+OpenOffice:
+
+* Fix for bug 450210 – StarOffice.py needs null-check for
+  self.getFrame(event.source)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    vi      Vietnamese           Clytie Siddall and Nguyễn Thái Ngọc Duy
+
+==========
+
 2.19.4 - 17-Jun-2007
 
 General:
@@ -54,7 +144,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     dz      Dzongkha             Pema Geyleg
     es      Spanish              Francisco Javier Dorado Martinez and
-				 Jorge Gonzalez
+                                 Jorge Gonzalez
 
 ==========
 
@@ -81,7 +171,7 @@ General Orca:
   coverage
 
 * Fix for bug 434600 - cursor routing keys cannot be used to position
-  caret at end of line 
+  caret at end of line
 
 * Fix for bug 435226 – Where-am-I doesn't correctly handle multiple
   selected paragraphs in OOo Writer and Evolution
@@ -100,17 +190,17 @@ General Orca:
 * Fix for bug 440294 - Voice Properties in Speech Dispatcher backend
   (thanks Tomas Cerha!)
 
-* Fix for bug 441640 - Rename processCursorKey to processRoutingKey 
+* Fix for bug 441640 - Rename processCursorKey to processRoutingKey
   (thanks Mario Lang!)
 
-* Fix for bug 441673 - Define InputEventHandler.__eq__ 
+* Fix for bug 441673 - Define InputEventHandler.__eq__
   (thanks Mario Lang!)
 
 * Fix for bug 441723 – Orca should not speak "double prime" for the
   number 3
 
 * Fix for bug 443012 - atspi.py:_onParentChanged upsets
-  atspi.py:_cache in a bad way 
+  atspi.py:_cache in a bad way
 
 Firefox:
 
@@ -224,7 +314,7 @@ General Orca:
 
 * Fix for bug 432674 - In password entries, Orca should respect key
   echo settings and say "star" for the inserted characters
- 
+
 * Fix for bug 432685 - Using brltty can consume all the CPU
 
 * Fix for bug 433146 - Add ability to configure app-unique settings
@@ -237,7 +327,7 @@ General Orca:
 
 * Fix for bug 435223 - Where-am-I doesn't correctly identify multiple
   selected objects in Nautilus
- 
+
 * Fix for bug 435577 - Orca does not speak labels of embedded
   components in gnome-panel
 
@@ -318,7 +408,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 * Turn on Orca's caret navigation mode by default for Firefox.
   NOTE TO USERS: you can still toggle between Orca's caret navigation
-  mode and Firefox's (i.e., Gecko) navigation mode by pressing 
+  mode and Firefox's (i.e., Gecko) navigation mode by pressing
   Insert+F12.
 
 * Much work on bug 400716 and 426360 (Firefox) to provide "say all"
@@ -340,7 +430,7 @@ New and updated translations (THANKS EVERYONE!!!):
   is at the end of the line.
 
 * Fix for bug 427722 to prevent web page navigation from getting stuck
-  on separators.  
+  on separators.
 
 * Work on bug 411261 to prevent Orca from saying just "Link" when
   arrowing up and down by line in some web content in Firefox.
@@ -414,7 +504,7 @@ New and updated translations (THANKS EVERYONE!!!):
     ar      Arabic               Djihed Afifi
     en_GB   English/British      David Lodge
     es      Spanish              Francisco Javier Dorado Martinez and
-				 Jorge Gonzalez
+                                 Jorge Gonzalez
     sv      Swedish              Daniel Nylander
 
 ==========
@@ -441,19 +531,19 @@ New and updated translations (THANKS EVERYONE!!!):
   This also takes care of a side effect of the refactoring work done
   in bug 395548.
 
-* Work on bug 423011 to refactor the where_am_I module to know about 
+* Work on bug 423011 to refactor the where_am_I module to know about
   the script that is using it.
 
 * Fix for bug 319778 to remove hierarchical_presenter (we'll rely on
   an external utility, such as Accerciser, to provide this functionality).
-	
+
 * Fix for bug 420173 to prevent the Escape key from becoming bound
   when exiting learn mode.
 
-* Fix for bug 423009 to prevent Orca from speaking the role name 
+* Fix for bug 423009 to prevent Orca from speaking the role name
   "list item" on web pages.
 
-* Fix for bug 418430 to handle empty sections in Firefox.  
+* Fix for bug 418430 to handle empty sections in Firefox.
 
 * Fix for bug 423214 to use 1 through 6 and Shift+1 through Shift+6 to
   navigate among headings by level.
@@ -482,13 +572,13 @@ New and updated translations (THANKS EVERYONE!!!):
 * Fix for bug 416857 to reposition caret better in HTML content after
   leaving and returning to the content (e.g., opening a separate
   dialog and then closing it).
-	
+
 * Fix for bug 423531 so O and Shift O do not stop on images and now
   say "large objects" instead of "chunks".
 
 * Fix problem with SayAll where the speech engine might not give us a
   callback if we pass it nothing or text that is just whitespace.
-	
+
 * Fix for bug 416964 to account for "no break space" character in word
   delimiters.
 
@@ -523,7 +613,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 2.18.0 - 12-Mar-2007
 
-* See http://live.gnome.org/TwoPointSeventeen/ReleaseNotes/Orca for a 
+* See http://live.gnome.org/TwoPointSeventeen/ReleaseNotes/Orca for a
   summary of what's changed since Orca v1.0.0.  The remainder of these
   NEWS entries cover what's changed since Orca v2.17.92.
 
@@ -568,13 +658,13 @@ New and updated translations (THANKS EVERYONE!!!):
     mk      Macedonian           Jovan Naumovski
     pt      Portuguese           Duarte Loreto
     pt_BR   Brazilian Portuguese Raphael Higino, Og Maciel, Jonh Wendell and
-				 Fábio Nogueira
+                                 Fábio Nogueira
     ru      Russian              Nickolay V. Shmyrev
     sv      Swedish              Daniel Nylander
     uk      Ukrainian            Maxim Dziumanenko
     zh_HK   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
     zh_TW   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
- 
+
 ==========
 
 2.17.92 - 26-Feb-2007
@@ -589,9 +679,9 @@ New and updated translations (THANKS EVERYONE!!!):
   the Python process when it gets a TERM signal.  The motivation for
   this is to better support the code coverage analysis work that is
   being done by Lynn Monsanto.
-	
-* Work on bug 354479 to announce what we can about changes to the 
-  battery status.  There are currently issues with the AT-SPI 
+
+* Work on bug 354479 to announce what we can about changes to the
+  battery status.  There are currently issues with the AT-SPI
   support from the Galago support used by gnome-panel that prevent
   us from doing a more effect job here.
 
@@ -601,10 +691,10 @@ New and updated translations (THANKS EVERYONE!!!):
 * Fix for bug 409708 to remove unnecessary code from Thunderbird
   script now that a few Thunderbird bugs have been fixed.
 
-* Fix for bug 405541 to better handle Thunderbird message summary 
+* Fix for bug 405541 to better handle Thunderbird message summary
   list in braille.
 
-* Fix for but 408174 to make laptop keybindings work better 
+* Fix for but 408174 to make laptop keybindings work better
   (Thanks to community member Juan Ramon Jimenez for this fix!!!).
 
 * Fixed for bug 405624 so Orca wille report a label even if it was

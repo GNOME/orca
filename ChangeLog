@@ -1,3 +1,7 @@
+2007-07-08  Willie Walker <william.walker@sun.com>
+
+        * NEWS, README, configure.in: initial prep for v2.19.5
+
 2007-07-08  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/orca_gui_prefs.py: Added translation docs to dialog
@@ -5,28 +9,25 @@
         (bugs 382601 and 400720).
 
 2007-07-03 Scott Haeger <scott@bashautomation.com>
-        * src/orca/Gecko.py
-        Added translation docs to read page summary code, bug #447191.
+
+        * src/orca/Gecko.py: Added translation docs to read page summary
+        code, bug #447191.
 
 2007-07-06  Mike Pedersen <michael.pedersen@sun.com>
 
-        * src/orca/settings.py 
-          Adjusted the uppercase pitch setting so that it is still noticable but not quite so high.
+        * src/orca/settings.py: Adjusted the uppercase pitch setting so
+        that it is still noticable but not quite so high.
 
 2007-07-06  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/brlmon.py,
-          src/orca/braille.py,
-          src/orca/default.py,
-          src/orca/settings.py,
-          src/orca/orca_prefs.py,
-          src/orca/orca_gui_prefs.py,
-          src/orca/orca-setup.glade,
-          src/orca/scripts/Evolution.py:
-        Fix for bugs 382601 - Orca should indicate selected text on the
-        braille display and 400720 - Support accurate presentation of 
-        text attributes on the braille display.  Much thanks to Rich for
-        all of his help implementing these new features!
+        * src/orca/brlmon.py, src/orca/braille.py, src/orca/default.py,
+        src/orca/settings.py, src/orca/orca_prefs.py,
+        src/orca/orca_gui_prefs.py, src/orca/orca-setup.glade,
+        src/orca/scripts/Evolution.py: Fix for bugs 382601 - Orca should
+        indicate selected text on the braille display and 400720 - Support
+        accurate presentation of text attributes on the braille display.
+        Much thanks to Rich for all of his help implementing these new
+        features!
 
 2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -35,30 +36,25 @@
 
 2007-07-03  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/gnomespeechfactory.py:
-          Fixed bug #439191 – sayAll by sentence can position the text
-          cursor in the wrong place when interrupted.
+        * src/orca/gnomespeechfactory.py: Fixed bug #439191 – sayAll by
+        sentence can position the text cursor in the wrong place when
+        interrupted.
 
 2007-07-03  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * test/harness/runone.sh 
+        * test/harness/runone.sh: Kills both soffice processes.
 
-	Kills both soffice processes.
-	
-	* test/keystrokes/general-orca/yelp.keys,
-	test/keystrokes/yelp/yelp.keys
+        * test/keystrokes/general-orca/yelp.keys,
+        test/keystrokes/yelp/yelp.keys: Moved yelp.keys to
+        test/keystrokes/yelp so the yelp application is started first
+        instead of being started from gnome-terminal
 
-	Moved yelp.keys to test/keystrokes/yelp so the yelp
-	application is started first instead of being started
-	from gnome-terminal
-	
-	* test/keystrokes/swriter/menus.keys,
-	test/keystrokes/scalc/whereAmI-calc.keys,
-	test/keystrokes/scalc/menu-items.keys,
-	test/keystrokes/gtk-demo/trees.keys,
-	test/keystrokes/gedit/lock-key-echo.keys,
-
-	Minor keystroke file improvements.
+        * test/keystrokes/swriter/menus.keys,
+        test/keystrokes/scalc/whereAmI-calc.keys,
+        test/keystrokes/scalc/menu-items.keys,
+        test/keystrokes/gtk-demo/trees.keys,
+        test/keystrokes/gedit/lock-key-echo.keys: Minor keystroke file
+        improvements.
 
 2007-07-03  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -67,24 +63,20 @@
         objects feature.
 
 2007-07-03 Scott Haeger <scott@bashautomation.com>
-        * src/orca/Gecko.py
-        * src/orca/default.py
-        * src/orca/bookmarks.py
-        * src/orca/Makefile.am 
-        * src/orca/script.py
-        * src/orca/where_am_I.py 
-        - Fixed bug #354468 – Bookmarked Objects
-        - Additional #354468 – Bookmarked Objects fix involving removal of 
-        whereamI relative to current key bindings and trimming down number 
-        of bookmarks to 6
 
-        Documentation updates for whereamI and bookmarks.
-        * docs/doc-set/ue_requirements.sgml
-        * docs/doc-set/ue_input_style.sgml
+        * src/orca/Gecko.py, src/orca/default.py, src/orca/bookmarks.py,
+        src/orca/Makefile.am, src/orca/script.py, src/orca/where_am_I.py:
+        Fixed bug #354468 – Bookmarked Objects.  - Also included removal
+        of whereamI relative to current key bindings and trimming down
+        number of bookmarks to 6
+
+        * docs/doc-set/ue_requirements.sgml,
+        docs/doc-set/ue_input_style.sgml: Documentation updates for
+        whereamI and bookmarks.
 
 2007-06-30  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/orca_gui_prefs.py: Tweak for the fix for Bug #376515 
+        * src/orca/orca_gui_prefs.py: Tweak for the fix for Bug #376515
         - Add GUI support for the new customizable text-attribute feature.
         Use default.Script rather than orca_state.activeScript to avoid
         errors when ~/.orca is not present.
@@ -96,9 +88,9 @@
 
 2007-06-27  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/orca_gui_prefs.py:
-          Fixed bug #442069 – Unneeded gnome-speech drivers not stopped 
-          when GUI setup window is dismissed.
+        * src/orca/orca_gui_prefs.py: Fixed bug #442069 – Unneeded
+        gnome-speech drivers not stopped when GUI setup window is
+        dismissed.
 
 2007-06-27  Willie Walker <william.walker@sun.com>
 
@@ -128,17 +120,15 @@
 
 2007-06-25  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/scripts/StarOffice.py:
-          Fixed bug #450210 – StarOffice.py needs null-check for
-          self.getFrame(event.source)
+        * src/orca/scripts/StarOffice.py: Fixed bug #450210 –
+        StarOffice.py needs null-check for self.getFrame(event.source)
 
-        * src/orca/settings.py:
-          src/orca/httpserver.py:
-          Work on bug #395146 – Crash at start. Try to start an HTTP
-          server on settings.httpServerPort. If this fails, retry
-          settings.maxHttpServerRetries times, each time incrementing
-          the server port number by 1. If we are still unable to start
-          a server, just fail gracefully.
+        * src/orca/settings.py: src/orca/httpserver.py: Work on bug
+        #395146 – Crash at start. Try to start an HTTP server on
+        settings.httpServerPort. If this fails, retry
+        settings.maxHttpServerRetries times, each time incrementing the
+        server port number by 1. If we are still unable to start a server,
+        just fail gracefully.
 
 2007-06-25  Willie Walker <william.walker@sun.com>
 
@@ -167,17 +157,13 @@
 
 2007-06-22  Mike Pedersen <michael.pedersen@sun.com>
 
-        * docs/doc-set/ue_requirements.sgml,
-        * docs/doc-set/orca.html,
-        * docs/doc-set/orca.pdf
-
-           Update to the bookmarked object specs
+        * docs/doc-set/ue_requirements.sgml, * docs/doc-set/orca.html, *
+        docs/doc-set/orca.pdf: Update to the bookmarked object specs
 
 2007-06-22  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/orca.py:
-          From Tomas Cerha (thanks!)
-          Fixed bug #449978 – Punctuation keys not echoed.
+        * src/orca/orca.py: Fixed bug #449978 – Punctuation keys not
+          echoed (thanks Tomas Cerha!)
 
 2007-06-21  Lynn MonSanto <lynn.monsanto@sun.com>
 
@@ -185,36 +171,29 @@
         test/keystrokes/gedit/say-all.keys,
         test/keystrokes/gedit/say-all-cursor-pos.keys,
         test/keystrokes/gnome-terminal/gnome-terminal.keys,
-        test/keystrokes/gnome-terminal/swriter-say-all.keys
+        test/keystrokes/gnome-terminal/swriter-say-all.keys: Fixed minor
+        keystroke file problems.
 
-        Fixed minor keystroke file problems.
-
-        src/tools/play_keystrokes.py,
-        src/tools/sanity_check.py
-
-        Modified play_keystrokes,py to sleep for fixed times after keystrokes
+        * src/tools/play_keystrokes.py, src/tools/sanity_check.py: Modified
+        play_keystrokes,py to sleep for fixed times after keystrokes
         Modified sanity_check.py to test for a previous key not being
         released before the current key is released.
 
 2007-06-21  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/default.py:
-          Fixed bug #446881 – Orca braillegenerator code assumes that
-          what's in a table is a table cell. Don't try to get row
-          description if we are passed a row number < 0.
+        * src/orca/default.py: Fixed bug #446881 – Orca braillegenerator
+        code assumes that what's in a table is a table cell. Don't try to
+        get row description if we are passed a row number < 0.
 
 2007-06-21  Mike Pedersen <michael.pedersen@sun.com>
 
-        * docs/doc-set/ue_requirements.sgml,
-        * docs/doc-set/orca.html,
-        * docs/doc-set/README,
-        * docs/doc-set/orca.pdf
-
-           Update to the bookmarked object specs as well as README doc for generating docs
+        * docs/doc-set/ue_requirements.sgml, docs/doc-set/orca.html,
+        docs/doc-set/README, docs/doc-set/orca.pdf: Update to the
+        bookmarked object specs as well as README doc for generating docs
 
 2007-06-21 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py Fixed bug #449232, Firefox move to next
+        * src/orca/Gecko.py: Fixed bug #449232 - Firefox move to next
         large object tweak
 
 2007-06-19  Joanmarie Diggs <j-diggs@comcast.net>
@@ -224,16 +203,12 @@
 
 2007-06-19  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/default.py:
-          src/orca/speechgenerator.py:
-          src/orca/Gecko.py:
-          src/orca/settings.py:
-          src/orca/orca-setup.glade:
-          src/orca/orca_gui_prefs.py:
-          Work on bug #438333 – Need to present progress bar activity.
-          Implementation of speech support for progress bars as outlined
-          by Mike in comment #6, plus the following changes (per email
-          from Will):
+        * src/orca/default.py, src/orca/speechgenerator.py,
+        src/orca/Gecko.py, src/orca/settings.py,
+        src/orca/orca-setup.glade, src/orca/orca_gui_prefs.py: Work on bug
+        #438333 – Need to present progress bar activity.  Implementation
+        of speech support for progress bars as outlined by Mike in comment
+        #6, plus the following changes (per email from Will):
 
           - Adjust the GUI for this particular feature to have a checkbox
             and a separate label/spin button. ie.:
@@ -292,13 +267,13 @@
 
 2007-06-15 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/where_am_I.py
-        Fixed bug #445578, more link preview i18n/translator fixes
+        * src/orca/where_am_I.py: Fixed bug #445578, more link preview
+        i18n/translator fixes
 
 2007-06-14 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/where_am_I.py
-          Fixed bug #445578, i18n support for link preview
+        * src/orca/where_am_I.py: Fixed bug #445578, i18n support for link
+          preview
 
 2007-06-13  Willie Walker <william.walker@sun.com>
 
@@ -308,24 +283,18 @@
 
 2007-06-13 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/atspi.py
-          src/orca/default.py
-          src/orca/Gecko.py
-          src/orca/where_am_I.py
-          Fixed bug #445578, Link preview information would be desirable
-          for Firefox
+        * src/orca/atspi.py, src/orca/default.py, src/orca/Gecko.py,
+        src/orca/where_am_I.py: Fixed bug #445578, Link preview
+        information would be desirable for Firefox
 
 2007-06-12  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/scripts/StarOffice.py:
-          src/orca/settings.py:
-          src/orca/orca-setup.glade:
-          src/orca/orca_prefs.py:
-          src/orca/orca_gui_prefs.py:
-          Fixed bug #376515 – Add GUI support for the new customizable
-          text-attribute feature. There is a new "Text Attributes" pane
-          in the Orca preferences dialog for this. It can also be set on
-          an individual app-specific basis.
+        * src/orca/scripts/StarOffice.py, src/orca/settings.py,
+          src/orca/orca-setup.glade, src/orca/orca_prefs.py,
+          src/orca/orca_gui_prefs.py: Fixed bug #376515 – Add GUI support
+          for the new customizable text-attribute feature. There is a new
+          "Text Attributes" pane in the Orca preferences dialog for
+          this. It can also be set on an individual app-specific basis.
 
           (Thanks to Joanie for her extensive help with this new feature).
 
@@ -368,19 +337,17 @@
 
 2007-06-06  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/scripts/gnome-system-monitor.py: (new)
-          src/orca/scripts/Makefile.am:
-          Fixed bug #433818 – Messages on system tab of gnome-system-monitor
-          are not reported by Orca.
+        * src/orca/scripts/gnome-system-monitor.py (new),
+          src/orca/scripts/Makefile.am: Fixed bug #433818 – Messages on
+          system tab of gnome-system-monitor are not reported by Orca.
 
 2007-06-05  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/focus_tracking_presenter.py:
-          Work on bug #435199 - Orca is bloating the swap partition, so
-          the system is no more usable after a short time. Added in a
-          _cleanupCache() routine that gets called in _processObjectEvent()
-          if we've just received a "object:children-changed:remove" event
-          for the desktop.
+        * src/orca/focus_tracking_presenter.py: Work on bug #435199 - Orca
+          is bloating the swap partition, so the system is no more usable
+          after a short time. Added in a _cleanupCache() routine that gets
+          called in _processObjectEvent() if we've just received a
+          "object:children-changed:remove" event for the desktop.
 
 2007-06-04  Joanmarie Diggs <j-diggs@comcast.net>
 
@@ -406,23 +373,23 @@
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/flat-review.py - fix for Bug 436658 - flat-review
-        speaks "filler" for SwingSet2 demo/source tabs
+        * src/orca/flat-review.py: fix for Bug 436658 - flat-review speaks
+        "filler" for SwingSet2 demo/source tabs
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/J2SE-access-bridge.py - fix for Bug 437226 - Orca
-        should handle Java labels and text where LABEL_FOR is not set
+        * src/orca/J2SE-access-bridge.py: fix for Bug 437226 - Orca should
+        handle Java labels and text where LABEL_FOR is not set
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/flat_review.py: fix for Bug 436658 - flat-review
-        speaks "filler" for SwingSet2 demo/source tabs
+        * src/orca/flat_review.py: fix for Bug 436658 - flat-review speaks
+        "filler" for SwingSet2 demo/source tabs
 
 2007-06-04  Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/flat_review.py: fix for Bug 436661 - flat-review
-        speaks SwingSet2 toolbar image paths instead of item names
+        * src/orca/flat_review.py: fix for Bug 436661 - flat-review speaks
+        SwingSet2 toolbar image paths instead of item names
 
 2007-06-04  Willie Walker <william.walker@sun.com>
 
@@ -436,8 +403,8 @@
 2007-06-04  Willie Walker <william.walker@sun.com>
 
         * po/POTFILES.in, docs/pydoc/Makefile.am: remove reference to
-        users-admin.py, which was removed as part of work on bug
-        376015 – [a11y] time-admin time servers table is not accessible
+        users-admin.py, which was removed as part of work on bug 376015 –
+        [a11y] time-admin time servers table is not accessible
 
 2007-06-03  Joanmarie Diggs <j-diggs@comcast.net>
 
