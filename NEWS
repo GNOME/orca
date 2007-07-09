@@ -43,6 +43,9 @@ General:
 * Fix for bug 446881 – Orca braillegenerator code assumes that what's
   in a table is a table cell
 
+* Fix for bug 449964 - Pass the key event information to the speech
+  system to allow more advanced key echo handling (thanks Tomas Cerha!)
+
 * Fix for bug 449978 – Punctuation keys not echoed (thanks Tomas Cerha!)
 
 * Fix for bug 450037 - Password field for gdm speaks characters you
@@ -84,6 +87,9 @@ OpenOffice:
 
 New and updated translations (THANKS EVERYONE!!!):
 
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    ta      Tamil                I. Felix
     vi      Vietnamese           Clytie Siddall and Nguyễn Thái Ngọc Duy
 
 ==========
