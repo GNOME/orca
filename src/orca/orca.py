@@ -47,7 +47,6 @@ except:
 import getopt
 import os
 import signal
-import string
 import time
 import unicodedata
 

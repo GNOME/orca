@@ -10,6 +10,7 @@ DOC_FILES = \
 	orca.braillegenerator \
 	orca.brl \
 	orca.brlmon \
+        orca.bookmarks \
 	orca.chnames \
 	orca.debug \
 	orca.dectalk \
@@ -62,7 +63,6 @@ DOC_FILES = \
 	orca.scripts.gnome-keyring-ask \
 	orca.scripts.gnome-mud \
 	orca.scripts.gnome-panel \
-	orca.scripts.gnome-power-manager \
 	orca.scripts.gnome-search-tool \
 	orca.scripts.gnome-system-monitor \
 	orca.scripts.gnome-terminal \
@@ -71,6 +71,7 @@ DOC_FILES = \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
 	orca.scripts.nautilus \
+	orca.notification-daemon.py \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \

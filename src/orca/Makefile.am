@@ -11,6 +11,7 @@ orca_python_PYTHON = \
 	acss.py \
 	app_gui_prefs.py \
 	atspi.py \
+        bookmarks.py \
 	braille.py \
 	braillegenerator.py \
 	brlmon.py \
@@ -54,8 +55,7 @@ orca_python_PYTHON = \
 	speechdispatcherfactory.py \
 	speechgenerator.py \
 	speechserver.py \
-	where_am_I.py \
-        bookmarks.py
+	where_am_I.py
 
 orca_pythondir=$(pyexecdir)/orca
 
