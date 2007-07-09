@@ -1,3 +1,14 @@
+2007-07-09  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * test/keystrokes/gedit/say-all-cursor-pos.settings,
+	test/keystrokes/gedit/say-all-dialog.setting,
+	test/keystrokes/gedit/say-all.settings,
+	test/keystrokes/gnome-terminal/swriter-say-all.settings
+
+	New settings files for SayAll tests. These settings files
+	have the line 'orca.settings.speechServerFactory = None' 
+	commented out.
+
 2007-07-09  Willie Walker <william.walker@sun.com>
 
         * NEWS: final prep for v2.19.5
