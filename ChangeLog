@@ -1,3 +1,9 @@
+2007-07-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/gnomespeechfactory.py: 
+        Correct fix for bug #439191 – sayAll by sentence can position the 
+        text cursor in the wrong place when interrupted.
+
 2007-07-09  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/keystrokes/gedit/say-all-cursor-pos.settings,

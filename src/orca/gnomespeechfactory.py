@@ -705,6 +705,7 @@ class SpeechServer(speechserver.SpeechServer):
         style = settings.verbalizePunctuationStyle
         newText = ''
         for i in range(0, len(oldText)):
+            self.textCharIndices.append(len(newText))
             try:
                 level, action = \
                     punctuation_settings.getPunctuationInfo(oldText[i])
@@ -739,7 +740,6 @@ class SpeechServer(speechserver.SpeechServer):
                     nextCharMatches = (oldText[i + 1] in string.digits or \
                                        oldText[i + 1] in currencySymbols)
 
-                self.textCharIndices.append(len(newText))
                 if oldText[i] == "-" and \
                    style != settings.PUNCTUATION_STYLE_NONE and \
                    prevCharMatches and nextCharMatches:
@@ -765,7 +765,6 @@ class SpeechServer(speechserver.SpeechServer):
                 else:
                     newText += oldText[i].encode("UTF-8")
             except:
-                self.textCharIndices.append(len(newText))
                 if (len(oldText) == 1):
                     newText += chnames.getCharacterName(oldText[i])
                 else:
