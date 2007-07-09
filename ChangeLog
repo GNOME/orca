@@ -1,3 +1,22 @@
+2007-07-09  Tomas Cerha  <cerha@brailcom.org>
+
+	Fix for bug 449964 - Pass the key event information to the speech
+	system to allow more advanced key echo handling
+	
+        * src/orca/orca.py (KeyEventType): New class.
+        (_keyEcho): Speak using `speech.speakKeyEvent()' instead of
+        `speech.speak()' to allow the speech server accessing the original
+        key event information (before key name verbalization).
+
+        * src/orca/speech.py (speakKeyEvent): New function.
+
+        * src/orca/speechserver.py (SpeechServer): Derive from `object'.
+        (SpeechServer.speakKeyEvent): Implement a generic key echo
+        handling using the `speak' command.
+
+        * src/orca/speechdispatcherfactory.py: Added support for key echo
+        using Speech Dispatcher's KEY command.
+
 2007-07-08  Willie Walker <william.walker@sun.com>
 
         * NEWS, README, configure.in: initial prep for v2.19.5

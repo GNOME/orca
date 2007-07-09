@@ -37,6 +37,7 @@ import re
 import debug
 import speechserver
 import settings
+import orca
 from acss import ACSS
 from orca_i18n import _
 from speechserver import VoiceFamily
@@ -44,11 +45,16 @@ from speechserver import VoiceFamily
 class SpeechDispatcherVersionError(Exception):
     """Incompatible version of the Speech Dispatcher Python Interface."""
 
-
 class SpeechServer(speechserver.SpeechServer):
     # See the parent class for documentation.
 
     _activeServers = {}
+
+    KEY_NAMES = {
+        '_':     'underscore',
+        'space': 'space',
+        '"':     'double-quote',
+        }
 
     def getFactoryName():
         return _("Speech Dispatcher")
@@ -153,7 +159,7 @@ class SpeechServer(speechserver.SpeechServer):
             if value is not None and current.get(property) != value:
                 method(value)
                 current[property] = value
-        
+
     def _speak(self, text, acss, **kwargs):
         self._apply_acss(acss)
         self._client.speak(text, **kwargs)
@@ -200,7 +206,7 @@ class SpeechServer(speechserver.SpeechServer):
                       "Speech rate is now %d" % rate)
         # Translators: This string announces speech rate change.
         self.speak(decrease and _("slower.") or _("faster."), acss=acss)
-            
+
     def _change_default_speech_pitch(self, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
         delta = settings.speechPitchDelta * (decrease and -1 or +1)
@@ -245,6 +251,20 @@ class SpeechServer(speechserver.SpeechServer):
     def speakCharacter(self, character, acss=None):
         self._client.char(character)
 
+    def speakKeyEvent(self, event_string, type):
+        if type == orca.KeyEventType.PRINTABLE:
+            # We currently only handle printable characters by Speech
+            # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
+            # etc. we prefer Orca's verbalization.
+            if event_string.decode("UTF-8").isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = settings.voices[settings.DEFAULT_VOICE]
+            self._apply_acss(voice)
+            self._client.key(self.KEY_NAMES.get(event_string, event_string))
+        else:
+            return super(SpeechServer, self).speakKeyEvent(event_string, type)
+
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate()
 
@@ -253,7 +273,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def increaseSpeechPitch(self, step=0.5):
         self._change_default_speech_pitch()
-        
+
     def decreaseSpeechPitch(self, step=0.5):
         self._change_default_speech_pitch(decrease=True)
 

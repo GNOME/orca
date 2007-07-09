@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -27,13 +27,18 @@ attributes to create aural style sheets."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
+import keynames
+import settings
+import orca
 log = logging.getLogger("speech")
 
 import debug
+
+from orca_i18n import _           # for gettext support
 
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
@@ -84,7 +89,8 @@ class SayAllContext:
         self.currentOffset = startOffset
         self.endOffset     = endOffset
 
-class SpeechServer:
+
+class SpeechServer(object):
 
     """Provides speech server abstraction."""
 
@@ -173,6 +179,36 @@ class SpeechServer:
         """
         pass
 
+    def speakKeyEvent(self, event_string, type):
+        """Speaks a key event immediately.
+
+        Arguments:
+        - event_string: string representing the key event as defined by
+                        input_event.KeyboardEvent.
+        - type:         key event type as one of orca.KeyEventType constants.
+
+        """
+        if type == orca.KeyEventType.PRINTABLE and \
+               event_string.decode("UTF-8").isupper():
+            voice = settings.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = settings.voices[settings.DEFAULT_VOICE]
+
+        # Check to see if there are localized words to be spoken for
+        # this key event.
+        #
+        event_string = keynames.getKeyName(event_string)
+
+        if type == orca.KeyEventType.LOCKING_LOCKED:
+            event_string += " " + _("on")
+        elif type == orca.KeyEventType.LOCKING_UNLOCKED:
+            event_string += " " + _("off")
+
+        debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + event_string +"'")
+        log.info("'%s'" % event_string)
+
+        self.speak(event_string, acss=voice)
+
     def speakUtterances(self, list, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
 
@@ -204,8 +240,8 @@ class SpeechServer:
         pass
 
     def isSpeaking(self):
-	""""Returns True if the system is currently speaking."""
-	return False
+        """"Returns True if the system is currently speaking."""
+        return False
 
     def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking

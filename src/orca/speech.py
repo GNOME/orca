@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@ as its speech server, or it can feel free to create one of its own."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
@@ -152,6 +152,21 @@ def speak(text, acss=None, interrupt=True):
 
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
+
+def speakKeyEvent(event_string, type):
+    """Speaks a key event immediately.
+
+    Arguments:
+    - event_string: string representing the key event as defined by
+                    input_event.KeyboardEvent.
+    - type:         key event type as one of orca.KeyEventType constants.
+
+    """
+    if settings.silenceSpeech:
+        return
+
+    if _speechserver:
+        _speechserver.speakKeyEvent(event_string, type)
 
 def isSpeaking():
     """"Returns True if the system is currently speaking."""

@@ -525,6 +525,30 @@ def _isActionKey(event_string):
                   "orca._echoActionKey: returning: %s" % reply)
     return reply
 
+class KeyEventType:
+    """Definition of available key event types."""
+
+    """An alphanumeric or punctuation key event."""
+    PRINTABLE = 'PRINTABLE'
+
+    """A modifier key event."""
+    MODIFIER = 'MODIFIER'
+
+    """A locking key event."""
+    LOCKING = 'LOCKING'
+
+    """A locking key lock event."""
+    LOCKING_LOCKED = 'LOCKING_LOCKED'
+
+    """A locking key unlock event."""
+    LOCKING_UNLOCKED = 'LOCKING_UNLOCKED'
+
+    """A function key event."""
+    FUNCTION = 'FUNCTION'
+
+    """An action key event."""
+    ACTION = 'ACTION'
+
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
     event it is and echo it via speech, if the user wants that type of
@@ -548,11 +572,6 @@ def _keyEcho(event):
     debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: string to echo: %s" % event_string)
 
-    voices = settings.voices
-    voice = voices[settings.DEFAULT_VOICE]
-
-    lockState = None
-
     # If key echo is enabled, then check to see what type of key event
     # it is and echo it via speech, if the user wants that type of key
     # echoed.
@@ -562,24 +581,25 @@ def _keyEcho(event):
         if _isPrintableKey(event_string):
             if not settings.enablePrintableKeys:
                 return
-
-            if event_string.isupper():
-                voice = voices[settings.UPPERCASE_VOICE]
+            type = KeyEventType.PRINTABLE
 
         elif _isModifierKey(event_string):
             if not settings.enableModifierKeys:
                 return
+            type = KeyEventType.MODIFIER
 
         elif _isLockingKey(event_string):
             if not settings.enableLockingKeys:
                 return
+            type = KeyEventType.LOCKING
 
             modifiers = event.modifiers
+
             if event_string == "Caps_Lock":
                 if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
-                    lockState = " " + _("off")
+                    type = KeyEventType.LOCKING_UNLOCKED
                 else:
-                    lockState = " " + _("on")
+                    type = KeyEventType.LOCKING_LOCKED
 
             elif event_string == "Num_Lock":
                 # [[[TODO: richb - we are not getting a correct modifier
@@ -588,31 +608,25 @@ def _keyEcho(event):
                 # until this can be fixed.]]]
                 #
                 #if modifiers & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
-                #    event_string += " " + _("off")
+                #    type = KeyEventType.LOCKING_UNLOCKED
                 #else:
-                #    event_string += " " + _("on")
+                #    type = KeyEventType.LOCKING_LOCKED
                 pass
 
         elif _isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
                 return
+            type = KeyEventType.FUNCTION
 
         elif _isActionKey(event_string):
             if not settings.enableActionKeys:
                 return
+            type = KeyEventType.ACTION
 
         else:
             debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: event string not handled: %s" % event_string)
             return
-
-        # Check to see if there are localized words to be spoken for
-        # this key event.
-        #
-        event_string = keynames.getKeyName(event_string)
-
-        if lockState:
-            event_string += lockState
 
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
@@ -622,7 +636,7 @@ def _keyEcho(event):
         #
         orca_state.lastKeyEchoTime = time.time()
 
-        speech.speak(event_string, voice)
+        speech.speakKeyEvent(event_string, type)
 
 def _processKeyCaptured(event):
     """Called when a new key event arrives and orca_state.capturingKeys=True.
@@ -736,7 +750,6 @@ def _processKeyboardEvent(event):
     if _orcaModifierPressed:
         keyboardEvent.modifiers = keyboardEvent.modifiers \
                                   | (1 << settings.MODIFIER_ORCA)
-
 
     # Orca gets first stab at the event.  Then, the presenter gets
     # a shot. [[[TODO: WDW - might want to let the presenter try first?
