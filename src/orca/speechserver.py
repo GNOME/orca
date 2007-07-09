@@ -205,7 +205,7 @@ class SpeechServer(object):
             event_string += " " + _("off")
 
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + event_string +"'")
-        log.info("'%s'" % event_string)
+        log.info("speakKeyEvent utterance='%s'" % event_string)
 
         self.speak(event_string, acss=voice)
 
@@ -260,7 +260,7 @@ class SpeechServer(object):
         for [context, acss] in utteranceIterator:
             debug.println(debug.LEVEL_INFO,
                           "SPEECH OUTPUT: '" + context.utterance + "'")
-            log.info("'%s'" % context.utterance)
+            log.info("sayAll utterance='%s'" % context.utterance)
             self.speak(context.utterance, acss)
 
     def increaseSpeechRate(self, step=5):

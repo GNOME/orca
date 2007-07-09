@@ -504,7 +504,7 @@ class SpeechServer(speechserver.SpeechServer):
                                           "SPEECH OUTPUT: '" \
                                           + utterance \
                                           + "'")
-                            log.info("'%s'" % utterance)
+                            log.info("sayAll utterance='%s'" % utterance)
                             if utterance and len(utterance)\
                                and not utterance.isspace():
                                 self.__sayAll.idForCurrentContext = \
@@ -867,7 +867,7 @@ class SpeechServer(speechserver.SpeechServer):
             [context, acss] = utteranceIterator.next()
             debug.println(debug.LEVEL_INFO,
                           "SPEECH OUTPUT: '" + context.utterance + "'")
-            log.info("'%s'" % context.utterance)
+            log.info("sayAll utterance='%s'" % context.utterance)
             self.__sayAll = _SayAll(utteranceIterator,
                                     context,
                                     self.__speak(context.utterance, acss),

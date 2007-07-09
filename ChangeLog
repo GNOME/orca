@@ -1,3 +1,26 @@
+2007-07-09  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speechserver.py, src/orca/speech.py,
+	src/orca/braille.py, src/orca/gnomespeechfactory.py,
+	src/orca/debug.py: as potential work for bug 415061
+	(regression test results should be repeatable), make
+	better use of the logging module.  To enable the logging,
+	you can do something like this in your orca-customizations.py
+	or user-settings.py file:
+
+	import logging
+	handler = logging.FileHandler("log.out")
+	formatter = logging.Formatter('%(name)s.%(message)s')
+	handler.setFormatter(formatter)
+	for logger in ["braille", "speech"]:
+	    log = logging.getLogger(logger)
+	    log.addHandler(handler)
+	    log.setLevel(logging.INFO)
+
+2007-07-09  Willie Walker <william.walker@sun.com>
+
+	* configure.in, README: flag as v2.19.6pre
+	
 2007-07-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py: 

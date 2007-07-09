@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -25,20 +25,10 @@ determine if the content should be output."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import logging
 import sys
-logging.basicConfig()
-
-log = logging.getLogger()
-
-# Set the level to INFO if you want the logging of speech and braille
-# output.
-#
-#log.setLevel(logging.INFO)
-
 import traceback
 
 # Used to turn off all debugging.

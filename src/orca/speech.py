@@ -33,7 +33,6 @@ import time
 
 import debug
 import orca_state
-import platform
 import settings
 
 from acss import ACSS
@@ -122,6 +121,11 @@ def sayAll(utteranceIterator, progressCallback):
         return
     if _speechserver:
         _speechserver.sayAll(utteranceIterator, progressCallback)
+    else:
+        for [context, acss] in utteranceIterator:
+            debug.println(debug.LEVEL_INFO,
+                          "SPEECH OUTPUT: '" + context.utterance + "'")
+            log.info("sayAll utterance='%s'" % context.utterance)
 
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
@@ -148,7 +152,7 @@ def speak(text, acss=None, interrupt=True):
         return
 
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
-    log.info("'%s'" % text)
+    log.info("speak utterance='%s'" % text)
 
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
@@ -200,7 +204,7 @@ def speakUtterances(utterances, acss=None, interrupt=True):
     for utterance in utterances:
         debug.println(debug.LEVEL_INFO,
                       "SPEECH OUTPUT: '" + utterance + "'")
-        log.info("'%s'" % utterance)
+        log.info("speakUtterances utterance='%s'" % utterance)
 
     if _speechserver:
         _speechserver.speakUtterances(utterances,
