@@ -3391,7 +3391,6 @@ class Script(script.Script):
         message = _("Exiting learn mode.")
         speech.speak(message)
         braille.displayMessage(message)
-        self.whereAmI(None)
         return True
 
     def pursueForFlatReview(self, obj):

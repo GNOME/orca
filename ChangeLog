@@ -1,48 +1,55 @@
 2007-07-11  Willie Walker <william.walker@sun.com>
 
-	* src/orca/speech.py: Add debug/log output for speakKeyEvent,
-	{increase,decrease}Speech{Pitch,Rate} even if a speechserver
-	is not being used.
-	
+        * src/orca/default.py: remove "self.whereAmI(None)" line.  This is
+        an error (self.whereAmI is an object and not a method) and is
+        probably left over from some earlier revision of the whereAmI
+        code.
+
+2007-07-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speech.py: Add debug/log output for speakKeyEvent,
+        {increase,decrease}Speech{Pitch,Rate} even if a speechserver
+        is not being used.
+
 2007-07-09  Willie Walker <william.walker@sun.com>
 
         * src/orca/speechserver.py, src/orca/speech.py,
-	src/orca/braille.py, src/orca/gnomespeechfactory.py,
-	src/orca/debug.py: as potential work for bug 415061
-	(regression test results should be repeatable), make
-	better use of the logging module.  To enable the logging,
-	you can do something like this in your orca-customizations.py
-	or user-settings.py file:
+        src/orca/braille.py, src/orca/gnomespeechfactory.py,
+        src/orca/debug.py: as potential work for bug 415061
+        (regression test results should be repeatable), make
+        better use of the logging module.  To enable the logging,
+        you can do something like this in your orca-customizations.py
+        or user-settings.py file:
 
-	import logging
-	handler = logging.FileHandler("log.out")
-	formatter = logging.Formatter('%(name)s.%(message)s')
-	handler.setFormatter(formatter)
-	for logger in ["braille", "speech"]:
-	    log = logging.getLogger(logger)
-	    log.addHandler(handler)
-	    log.setLevel(logging.INFO)
+        import logging
+        handler = logging.FileHandler("log.out")
+        formatter = logging.Formatter('%(name)s.%(message)s')
+        handler.setFormatter(formatter)
+        for logger in ["braille", "speech"]:
+            log = logging.getLogger(logger)
+            log.addHandler(handler)
+            log.setLevel(logging.INFO)
 
 2007-07-09  Willie Walker <william.walker@sun.com>
 
-	* configure.in, README: flag as v2.19.6pre
-	
+        * configure.in, README: flag as v2.19.6pre
+
 2007-07-09  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/gnomespeechfactory.py: 
-        Correct fix for bug #439191 – sayAll by sentence can position the 
+        * src/orca/gnomespeechfactory.py:
+        Correct fix for bug #439191 – sayAll by sentence can position the
         text cursor in the wrong place when interrupted.
 
 2007-07-09  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * test/keystrokes/gedit/say-all-cursor-pos.settings,
-	test/keystrokes/gedit/say-all-dialog.setting,
-	test/keystrokes/gedit/say-all.settings,
-	test/keystrokes/gnome-terminal/swriter-say-all.settings
+        test/keystrokes/gedit/say-all-dialog.setting,
+        test/keystrokes/gedit/say-all.settings,
+        test/keystrokes/gnome-terminal/swriter-say-all.settings
 
-	New settings files for SayAll tests. These settings files
-	have the line 'orca.settings.speechServerFactory = None' 
-	commented out.
+        New settings files for SayAll tests. These settings files
+        have the line 'orca.settings.speechServerFactory = None'
+        commented out.
 
 2007-07-09  Willie Walker <william.walker@sun.com>
 
@@ -50,17 +57,17 @@
 
 2007-07-09  Willie Walker <william.walker@sun.com>
 
-	* docs/pydoc/Makefile.am, src/orca/Makefile.am: get rid of
-	cruft and realphabetize.
+        * docs/pydoc/Makefile.am, src/orca/Makefile.am: get rid of
+        cruft and realphabetize.
 
-	* src/orca/orca.py: remove import of string module since it
-	is not used.
+        * src/orca/orca.py: remove import of string module since it
+        is not used.
 
 2007-07-09  Tomas Cerha  <cerha@brailcom.org>
 
-	Fix for bug 449964 - Pass the key event information to the speech
-	system to allow more advanced key echo handling
-	
+        Fix for bug 449964 - Pass the key event information to the speech
+        system to allow more advanced key echo handling
+
         * src/orca/orca.py (KeyEventType): New class.
         (_keyEcho): Speak using `speech.speakKeyEvent()' instead of
         `speech.speak()' to allow the speech server accessing the original
