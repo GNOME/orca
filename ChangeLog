@@ -1,3 +1,9 @@
+2007-07-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: Add debug/log output for speakKeyEvent,
+	{increase,decrease}Speech{Pitch,Rate} even if a speechserver
+	is not being used.
+	
 2007-07-09  Willie Walker <william.walker@sun.com>
 
         * src/orca/speechserver.py, src/orca/speech.py,

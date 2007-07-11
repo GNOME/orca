@@ -32,6 +32,8 @@ log = logging.getLogger("speech")
 import time
 
 import debug
+import keynames
+import orca
 import orca_state
 import settings
 
@@ -171,6 +173,19 @@ def speakKeyEvent(event_string, type):
 
     if _speechserver:
         _speechserver.speakKeyEvent(event_string, type)
+    else:
+        # Check to see if there are localized words to be spoken for
+        # this key event.
+        #
+        event_string = keynames.getKeyName(event_string)
+
+        if type == orca.KeyEventType.LOCKING_LOCKED:
+            event_string += " " + _("on")
+        elif type == orca.KeyEventType.LOCKING_UNLOCKED:
+            event_string += " " + _("off")
+
+        debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + event_string +"'")
+        log.info("speakKeyEvent utterance='%s'" % event_string)
 
 def isSpeaking():
     """"Returns True if the system is currently speaking."""
@@ -218,21 +233,41 @@ def stop():
 def increaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechRate()
+    else:
+        debug.println(debug.LEVEL_INFO,
+                      "SPEECH OUTPUT: 'faster'")
+        log.info("increaseSpeechRate")
+
     return True
 
 def decreaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.decreaseSpeechRate()
+    else:
+        debug.println(debug.LEVEL_INFO,
+                      "SPEECH OUTPUT: 'slower'")
+        log.info("decreaseSpeechRate")
+
     return True
 
 def increaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechPitch()
+    else:
+        debug.println(debug.LEVEL_INFO,
+                      "SPEECH OUTPUT: 'higher'")
+        log.info("increaseSpeechPitch")
+
     return True
 
 def decreaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.decreaseSpeechPitch()
+    else:
+        debug.println(debug.LEVEL_INFO,
+                      "SPEECH OUTPUT: 'lower'")
+        log.info("decreaseSpeechPitch")
+
     return True
 
 def shutdown():
