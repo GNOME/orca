@@ -503,7 +503,7 @@ class Text(Region):
                 for i in range(0, nSelections):
                     [start, end] = text.getSelection(i)
                     maskStart = max(self.lineOffset, start) - self.lineOffset
-                    maskEnd = end - self.lineOffset
+                    maskEnd = min(end - self.lineOffset, stringLength)
                     # Combine the selection indicator with the attribute
                     # indicator.
                     #
