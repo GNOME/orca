@@ -948,10 +948,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         speakAttrColumnLabel = _("Speak")
         column = gtk.TreeViewColumn(speakAttrColumnLabel)
-        renderer = gtk.CellRendererText()
-        renderer.set_property("text", speakAttrColumnLabel)
-        renderer.set_property("visible", False)
-        column.pack_end(renderer, True)
         renderer = gtk.CellRendererToggle()
         column.pack_start(renderer, False)
         column.set_attributes(renderer, active=IS_SPOKEN)
@@ -970,10 +966,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         markAttrColumnLabel = _("Mark in braille")
         column = gtk.TreeViewColumn(markAttrColumnLabel)
-        renderer = gtk.CellRendererText()
-        renderer.set_property("text", markAttrColumnLabel)
-        renderer.set_property("visible", False)
-        column.pack_end(renderer, True)
         renderer = gtk.CellRendererToggle()
         column.pack_start(renderer, False)
         column.set_attributes(renderer, active=IS_BRAILLED)

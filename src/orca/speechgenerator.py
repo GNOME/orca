@@ -1364,6 +1364,21 @@ class SpeechGenerator:
                         showing = cell.state.count( \
                                           atspi.Accessibility.STATE_SHOWING)
                         if showing:
+                            # If this table cell has a "toggle" action, and
+                            # doesn't have any label associated with it then 
+                            # also speak the table column header.
+                            # See Orca bug #455230 for more details.
+                            #
+                            label = self._script.getDisplayedText( \
+                                self._script.getRealActiveDescendant(cell))
+                            action = cell.action
+                            if action and (label == None or len(label) == 0):
+                                for j in range(0, action.nActions):
+                                    if action.getName(j) == "toggle":
+                                        header = parent.table.getColumnHeader(i)
+                                        accHeader = atspi.Accessible.makeAccessible(header)
+                                        utterances.append(accHeader.name)
+
                             utterances.extend(self._getSpeechForTableCell(cell,
                                                            already_focused))
                 else:

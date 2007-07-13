@@ -1,3 +1,11 @@
+2007-07-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py: 
+          src/orca/braillegenerator.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #455230 – Read table cell row should insert column 
+          headers for non-text cells.
+
 2007-07-12  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/braille.py: Fix for bug 456296 - Traceback in 

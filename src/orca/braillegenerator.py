@@ -1134,6 +1134,21 @@ class BrailleGenerator:
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
+
+                    # If this table cell doesn't have any label associated 
+                    # with it then also braille the table column header.
+                    # See Orca bug #455230 for more details.
+                    #
+                    label = self._script.getDisplayedText( \
+                        self._script.getRealActiveDescendant(obj))
+                    action = obj.action
+                    if label == None or len(label) == 0:
+                        n = obj.parent.table.getColumnAtIndex(obj.index)
+                        header = obj.parent.table.getColumnHeader(n)
+                        accHeader = atspi.Accessible.makeAccessible(header)
+                        regions[0].append(braille.Region(" "))
+                        regions[0].append(braille.Region(accHeader.name))
+
                     obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
