@@ -1,58 +1,57 @@
-# DATE=09:13:04 PM 04/04/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-13-generic #2 SMP Sun Mar 25 00:21:25 UTC 2007 i686 GNU/Linux
+# TEST: "Where am I" in a tree table
 
+# Invoke the tree table demo
+#
 KEYEVENT: type=0
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746386.298217
+          deltaTime=0.000000
 KEYEVENT: type=1
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746386.431373
+          deltaTime=0.133156
 KEYEVENT: type=0
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746387.303602
+          deltaTime=0.2872229
 KEYEVENT: type=1
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746387.503315
+          deltaTime=0.199713
 KEYEVENT: type=0
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746388.559698
+          deltaTime=0.2056383
 KEYEVENT: type=1
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175746388.750512
+          deltaTime=0.190814
 
-# DATE=12:46:49 PM 04/25/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
-# KP_Enter press and release
+# Now invoke the "Where am I" functionality (KP_Enter)
 #
 KEYEVENT: type=0
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.233564
+          deltaTime=0.2577997
 KEYEVENT: type=1
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.513472
+          deltaTime=0.279908
 
 WAIT: wait_time=10

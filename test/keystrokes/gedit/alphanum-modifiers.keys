@@ -1,63 +1,70 @@
-# DATE=01:17:25 PM 04/25/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
+# TEST: ???
 
+# Open the "Open Files..." dialog
+#
 KEYEVENT: type=0
           hw_code=37
           modifiers=0
           event_string=(Control_L)
           is_text=True
-          time=1177532249.835071
+          deltaTime=0.000000
 KEYEVENT: type=0
           hw_code=32
           modifiers=4
           event_string=()
           is_text=False
-          time=1177532250.599084
+          deltaTime=0.764013
 KEYEVENT: type=1
           hw_code=32
           modifiers=4
           event_string=()
           is_text=False
-          time=1177532250.946942
+          deltaTime=0.347858
 KEYEVENT: type=1
           hw_code=37
           modifiers=4
           event_string=(Control_L)
           is_text=True
-          time=1177532250.949023
+          deltaTime=0.002081
+
+# Enter Alt+F for some strange reason
+#
 KEYEVENT: type=0
           hw_code=64
           modifiers=0
           event_string=(Alt_L)
           is_text=True
-          time=1177532274.783128
+          deltaTime=4.834105
 KEYEVENT: type=0
           hw_code=41
           modifiers=8
           event_string=(f)
           is_text=True
-          time=1177532275.311145
+          deltaTime=0.528017
 KEYEVENT: type=1
           hw_code=41
           modifiers=8
           event_string=(f)
           is_text=True
-          time=1177532275.338733
+          deltaTime=0.027588
 KEYEVENT: type=1
           hw_code=64
           modifiers=8
           event_string=(Alt_L)
           is_text=True
-          time=1177532275.513763
+          deltaTime=0.175030
+
+# Now dismiss the dialog.
+#
 KEYEVENT: type=0
           hw_code=9
           modifiers=0
           event_string=(Escape)
           is_text=True
-          time=1177532280.507220
+          deltaTime=1.993457
 KEYEVENT: type=1
           hw_code=9
           modifiers=0
           event_string=(Escape)
           is_text=True
-          time=1177532280.633675
+          deltaTime=0.126455

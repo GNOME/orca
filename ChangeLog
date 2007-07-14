@@ -1,4 +1,47 @@
-2007-07-10  Rich Burridge <rich.burridge@sun.com>
+2007-07-13  Willie Walker <william.walker@sun.com>
+
+        Work on regression testing.  There's still a ways to go, with
+        the major problems being non-deterministic event ordering from:
+
+         gnome-terminal: variable compressing of text-inserted events
+                         from text resulting from the output of a command
+
+         gedit:          differing event ordering between text inserted 
+                         events and name changed events for window title 
+                         going from "Unsaved" to "*Unsaved" 
+
+         OOo:            providing different user behavior for the same
+                         keystrokes (e.g., down arrow in the Open Files
+                         dialog sometimes takes you to the file list
+                         header, sometimes it takes you to the file)
+
+        I'm still working on the above, either trying to fix them or
+        test around them.  One step at a time, though, and I want to
+        get my work checked in just in case someone decides to steal
+        my laptop.
+
+        * src/tools/play_keystrokes.py, src/tools/record_keystrokes.py:
+        use delta times instead of absolute times (makes for much easier
+        editing of keystroke files).  Also simplify play_keystrokes.py
+        and let it use delta times when playing back files.
+
+        * test/harness/runone.sh: turn off gnome-terminal's dynamic
+        title setting.  Also improve shutdown of OOo binaries.  Add
+        ability to pass parameters to a command via the *.params file.
+        Also move logic for logging output from the settings file to
+        runone.sh.  Make the output log use the Python logging
+        facility instead of debug.py, and save the output for speech
+        and braille to separate files (makes the output easier to
+        read and helps us also understand where differences lie). 
+
+        * test/harness/runall.sh: account for the fact that output
+        is now logged to separate files.
+
+        * test/keystrokes/*: migrate to delta times, also tweak all
+        the tests to improve the timing of the keystrokes a bit.  Also
+        make sure the tests actually tested *something*.  :-)
+
+2007-07-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py: 
           src/orca/braillegenerator.py:

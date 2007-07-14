@@ -1,6 +1,6 @@
 # Orca Tools
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -28,6 +28,8 @@ import time
 
 import orca.atspi
 
+lastTime = None
+
 def processKeyEvent(event):
     """
     Arguments:
@@ -35,11 +37,23 @@ def processKeyEvent(event):
 
     Returns True if the event should be consumed.
     """
+    global lastTime
 
     if event.event_string == "F12":
         exit(None, None)
-        
-    print orca.atspi.KeystrokeListener.keyEventToString(event)
+
+    currentTime = time.time()
+    if lastTime == None:
+        lastTime = currentTime
+    deltaTime = currentTime - lastTime
+    lastTime = currentTime
+
+    # Convert the absolute time in the event to a delta time.
+    #
+    eventString = orca.atspi.KeystrokeListener.keyEventToString(event)
+    eventString = eventString[0:eventString.index("time=")]
+    eventString += "deltaTime=%f" % deltaTime
+    print eventString
 
     return False
 
@@ -55,7 +69,7 @@ def init():
     pipe.close()
     print "# DATE=%s" % time.strftime('%X %x %Z')
     print "# SYSTEM=%s" % sysinfo[0]
-    
+
     orca.atspi.Registry().registerKeystrokeListeners(processKeyEvent)
 
 def go():

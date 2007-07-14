@@ -1,45 +1,45 @@
-# DATE=11:29:09 AM 04/24/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
+TEST: Invoke SayAll in a dialog
 
+# Open the "Open Files..." dialog
+#
 KEYEVENT: type=0
           hw_code=37
           modifiers=0
           event_string=(Control_L)
           is_text=True
-          time=1177439352.205884
+          deltaTime=0.000000
 KEYEVENT: type=0
           hw_code=32
           modifiers=4
           event_string=()
           is_text=False
-          time=1177439352.933386
+          deltaTime=0.2727502
 KEYEVENT: type=1
           hw_code=32
           modifiers=4
           event_string=()
           is_text=False
-          time=1177439353.192480
+          deltaTime=0.259094
 KEYEVENT: type=1
           hw_code=37
           modifiers=4
           event_string=(Control_L)
           is_text=True
-          time=1177439353.261641
+          deltaTime=0.069161
 
-# DATE=11:34:11 AM 04/24/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
-
+# Invoke the SayAll command
+#
 KEYEVENT: type=0
           hw_code=86
           modifiers=0
           event_string=(+)
           is_text=True
-          time=1177439654.661377
+          deltaTime=1.599736
 KEYEVENT: type=1
           hw_code=86
           modifiers=0
           event_string=(+)
           is_text=True
-          time=1177439654.877221
+          deltaTime=0.215844
 
-WAIT: wait_time=180
+WAIT: wait_time=3

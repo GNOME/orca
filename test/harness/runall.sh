@@ -2,9 +2,11 @@
 #
 # runall.sh can take the following optional parameters:
 #
+# -c                 - analyze test coverage instead of regression testing
 # -h|--help          - print a usage message.
 # -k <keystrokesDir> - alternate keystroke directory (default is ../keystrokes).
 # -r <resultsDir>    - alternate results directory (default is ../results).
+# -s                 - require the tester to press return between each test
 #
 
 OPERATING_SYSTEMS="SunOS Linux"
@@ -13,7 +15,8 @@ harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
 
-# Number of seconds to wait 
+# Number of seconds to wait between each test
+#
 REGRESSION_WAIT_TIME=20
 COVERAGE_WAIT_TIME=10
 
@@ -102,7 +105,7 @@ fi
 # runone.sh script.
 #
 dirprefix=`date +%Y-%m-%d_%H:%M:%S`
-for testDir in `find $keystrokesDir -type d`
+for testDir in `find $keystrokesDir -type d | sort`
 do
   application=`basename $testDir`
   if [ $application != ".svn" ] && [ $application != `basename $keystrokesDir` ]
@@ -166,9 +169,9 @@ do
         # Copy the results (.orca) file to the output directory.
         # This is the file that will be used for regression
         # testing. 
-        newResultsFile=`basename $testFile .keys`.orca
+        newResultsFiles=`basename $testFile .keys`
         mkdir -p $currentdir/$outputdir
-        cp $newResultsFile $currentdir/$outputdir
+        cp $newResultsFiles.* $currentdir/$outputdir
 
         # Compare the results file with the golden results file.
         # echo Comparing results for $testFile

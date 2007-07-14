@@ -1,58 +1,57 @@
-# DATE=10:18:53 AM 04/04/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-13-generic #2 SMP Sun Mar 25 00:21:25 UTC 2007 i686 GNU/Linux
+# TEST: test "Where am I" in a menu
 
+# Open a menu and move to a menu item
+#
 KEYEVENT: type=0
           hw_code=76
           modifiers=0
           event_string=(F10)
           is_text=True
-          time=1175707138.812548
+          deltaTime=0.000000
 KEYEVENT: type=1
           hw_code=76
           modifiers=0
           event_string=(F10)
           is_text=True
-          time=1175707139.019630
+          deltaTime=0.207082
 KEYEVENT: type=0
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175707141.068028
+          deltaTime=0.2048398
 KEYEVENT: type=1
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175707141.347546
+          deltaTime=0.0279518
 KEYEVENT: type=0
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175707143.091960
+          deltaTime=0.2744414
 KEYEVENT: type=1
           hw_code=104
           modifiers=0
           event_string=(Down)
           is_text=True
-          time=1175707143.299628
+          deltaTime=0.207668
 
-# DATE=12:46:49 PM 04/25/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
-# KP_Enter press and release
+# Now invoke the "Where am I" functionality (KP_Enter)
 #
 KEYEVENT: type=0
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.233564
+          deltaTime=0.2933936
 KEYEVENT: type=1
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.513472
+          deltaTime=0.279908
 
-WAIT: wait_time=10
+WAIT: wait_time=5

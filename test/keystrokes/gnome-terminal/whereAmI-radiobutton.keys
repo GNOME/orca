@@ -1,47 +1,122 @@
-# DATE=09:52:08 AM 04/04/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-13-generic #2 SMP Sun Mar 25 00:21:25 UTC 2007 i686 GNU/Linux
+# TEST: Where Am I on a radio button in gnome-terminal
 
+# Open the profile editor
+#
+KEYEVENT: type=0
+          hw_code=76
+          modifiers=0
+          event_string=(F10)
+          is_text=True
+          deltaTime=0.000000
+KEYEVENT: type=1
+          hw_code=76
+          modifiers=0
+          event_string=(F10)
+          is_text=True
+          deltaTime=0.106567
+KEYEVENT: type=0
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.2191582
+KEYEVENT: type=1
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.147209
+KEYEVENT: type=0
+          hw_code=98
+          modifiers=0
+          event_string=(Up)
+          is_text=True
+          deltaTime=0.2071483
+KEYEVENT: type=1
+          hw_code=98
+          modifiers=0
+          event_string=(Up)
+          is_text=True
+          deltaTime=0.114843
 KEYEVENT: type=0
           hw_code=36
           modifiers=0
           event_string=(Return)
           is_text=True
-          time=1175705530.580767
+          deltaTime=0.2519350
 KEYEVENT: type=1
           hw_code=36
           modifiers=0
           event_string=(Return)
           is_text=True
-          time=1175705530.827956
-KEYEVENT: type=0
-          hw_code=104
-          modifiers=0
-          event_string=(Down)
-          is_text=True
-          time=1175705538.404635
-KEYEVENT: type=1
-          hw_code=104
-          modifiers=0
-          event_string=(Down)
-          is_text=True
-          time=1175705538.715779
+          deltaTime=0.103056
 
-# DATE=12:46:49 PM 04/25/2007 PDT
-# SYSTEM=Linux xochitl 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686 GNU/Linux
-# KP_Enter press and release
+WAIT: wait_time=10
+
+# Now get to a radio button
+#
+KEYEVENT: type=0
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.2647422
+KEYEVENT: type=1
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.192570
+KEYEVENT: type=0
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.2886280
+KEYEVENT: type=1
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.275617
+KEYEVENT: type=0
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.2585891
+KEYEVENT: type=1
+          hw_code=102
+          modifiers=0
+          event_string=(Right)
+          is_text=True
+          deltaTime=0.129277
+KEYEVENT: type=0
+          hw_code=23
+          modifiers=0
+          event_string=(Tab)
+          is_text=True
+          deltaTime=1.252914
+KEYEVENT: type=1
+          hw_code=23
+          modifiers=0
+          event_string=(Tab)
+          is_text=True
+          deltaTime=0.072007
+
+# Now invoke the "Where am I" functionality (KP_Enter)
 #
 KEYEVENT: type=0
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.233564
+          deltaTime=0.2863704
 KEYEVENT: type=1
           hw_code=108
           modifiers=0
           event_string=(KP_Enter)
           is_text=True
-          time=1177530412.513472
+          deltaTime=0.279908
 
 WAIT: wait_time=10
-

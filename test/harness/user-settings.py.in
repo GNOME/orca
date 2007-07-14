@@ -7,9 +7,6 @@ import orca.debug
 import orca.settings
 import orca.acss
 
-orca.debug.debugLevel = orca.debug.LEVEL_INFO
-orca.debug.debugFile = open('%debug%', 'w', 0)
-
 orca.settings.enableSpeech = True
 orca.settings.speechServerFactory = None
 
