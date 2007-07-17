@@ -3172,6 +3172,26 @@ class Script(default.Script):
         except:
             pass
 
+        # The search entries in Firefox's and Thunderbird's top toolbars
+        # contain text which functions as the label (Yahoo, Entire Message)
+        # and which gets deleted just prior to the entry gaining focus.  If
+        # we pass that event on to the default script, it will set the
+        # entry to the locus of focus silently and then the focus event
+        # will not cause the entry to be spoken.  In addition, if the
+        # Location autocomplete is expanded and Backspace is pressed,
+        # the locus of focus will be a table cell and the default script
+        # will not speak the characters being deleted from the entry.
+        #
+        if event.source and orca_state.locusOfFocus \
+           and not self.isSameObject(event.source, orca_state.locusOfFocus):
+            toolbar = self.getContainingRole(event.source,
+                                             rolenames.ROLE_TOOL_BAR)
+            if toolbar:
+                if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                    orca.setLocusOfFocus(event, event.source, False)
+                else:
+                    return
+
         default.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
