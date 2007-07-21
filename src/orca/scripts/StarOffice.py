@@ -656,8 +656,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
         if obj.parent.role == rolenames.ROLE_TOOL_BAR:
             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                # Translators: this represents the state of a check box
+                #
                 checkedState = _("on")
             else:
+                # Translators: this represents the state of a check box
+                #
                 checkedState = _("off")
 
             utterances.append(obj.name)
@@ -683,8 +687,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
         if obj.parent.role == rolenames.ROLE_TOOL_BAR:
             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                # Translators: this represents the state of a check box
+                #
                 checkedState = _("on")
             else:
+                # Translators: this represents the state of a check box
+                #
                 checkedState = _("off")
 
             utterances.append(obj.name)

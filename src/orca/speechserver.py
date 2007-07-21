@@ -200,8 +200,14 @@ class SpeechServer(object):
         event_string = keynames.getKeyName(event_string)
 
         if type == orca.KeyEventType.LOCKING_LOCKED:
+            # Translators: this represents the state of a locking modifier
+            # key (e.g., Caps Lock)
+            #
             event_string += " " + _("on")
         elif type == orca.KeyEventType.LOCKING_UNLOCKED:
+            # Translators: this represents the state of a locking modifier
+            # key (e.g., Caps Lock)
+            #
             event_string += " " + _("off")
 
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + event_string +"'")

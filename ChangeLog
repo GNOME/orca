@@ -1,3 +1,9 @@
+2007-07-21  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py, src/orca/speechserver.py,
+	src/orca/scripts/StarOffice.py: add some missing i18n notes for
+	translators.
+	
 2007-07-17  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug 456446 - Gecko autocompletes 
