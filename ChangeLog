@@ -1,12 +1,17 @@
 2007-07-21  Willie Walker <william.walker@sun.com>
 
-	* src/orca/speech.py, src/orca/speechserver.py,
-	src/orca/scripts/StarOffice.py: add some missing i18n notes for
-	translators.
-	
+        * po/POTFILES.in: fix for bug 459080 - Some files missing from
+        POTFILES.in.
+
+2007-07-21  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speech.py, src/orca/speechserver.py,
+        src/orca/scripts/StarOffice.py: add some missing i18n notes for
+        translators.
+
 2007-07-17  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug 456446 - Gecko autocompletes 
+        * src/orca/Gecko.py: Fix for bug 456446 - Gecko autocompletes
         not always spoken.
 
 2007-07-13  Willie Walker <william.walker@sun.com>
@@ -17,9 +22,9 @@
          gnome-terminal: variable compressing of text-inserted events
                          from text resulting from the output of a command
 
-         gedit:          differing event ordering between text inserted 
-                         events and name changed events for window title 
-                         going from "Unsaved" to "*Unsaved" 
+         gedit:          differing event ordering between text inserted
+                         events and name changed events for window title
+                         going from "Unsaved" to "*Unsaved"
 
          OOo:            providing different user behavior for the same
                          keystrokes (e.g., down arrow in the Open Files
@@ -43,7 +48,7 @@
         runone.sh.  Make the output log use the Python logging
         facility instead of debug.py, and save the output for speech
         and braille to separate files (makes the output easier to
-        read and helps us also understand where differences lie). 
+        read and helps us also understand where differences lie).
 
         * test/harness/runall.sh: account for the fact that output
         is now logged to separate files.
@@ -54,15 +59,15 @@
 
 2007-07-13  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/speechgenerator.py: 
+        * src/orca/speechgenerator.py:
           src/orca/braillegenerator.py:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #455230 – Read table cell row should insert column 
+          Fixed bug #455230 – Read table cell row should insert column
           headers for non-text cells.
 
 2007-07-12  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/braille.py: Fix for bug 456296 - Traceback in 
+        * src/orca/braille.py: Fix for bug 456296 - Traceback in
         braille.py when doing a "Select All" in gedit.
 
 2007-07-11  Willie Walker <william.walker@sun.com>
