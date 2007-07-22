@@ -169,14 +169,27 @@ do
         # Copy the results (.orca) file to the output directory.
         # This is the file that will be used for regression
         # testing. 
-        newResultsFiles=`basename $testFile .keys`
+        newResultsFile=`basename $testFile .keys`
         mkdir -p $currentdir/$outputdir
-        cp $newResultsFiles.* $currentdir/$outputdir
 
-        # Compare the results file with the golden results file.
-        # echo Comparing results for $testFile
-        # expectedResultsFile=$resultsDir/$application/$newResultsFile
-        # diff -s $expectedResultsFile $newResultsFile
+	# Filter the results...
+	#
+	# For braille, get rid of spurious "Desktop Frame" lines which
+	# happen when there's enough of a pause for nautilus to think
+	# it has focus.
+	#
+	# For speech, we do the same thing, but we need to get rid of
+	# several lines in a row.  So, we use sed.
+	#
+	grep -v "Desktop Frame" $newResultsFile.braille > $currentdir/$outputdir/$newResultsFile.braille 
+	mv $newResultsFile.braille $currentdir/$outputdir/$newResultsFile.braille.unfiltered
+
+	sed "/speech.speakUtterances utterance='Desktop frame'/,/speech.speakUtterances utterance='Icon View layered pane'/ d" $newResultsFile.speech > $currentdir/$outputdir/$newResultsFile.speech
+	mv $newResultsFile.speech $currentdir/$outputdir/$newResultsFile.speech.unfiltered
+
+        mv $newResultsFiles.debug $currentdir/$outputdir
+
+	rm *
 
         echo Finished running $testFile.
         if [ "x$stepMode" == "x1" ]

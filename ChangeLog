@@ -1,3 +1,19 @@
+2007-07-22  Willie Walker <william.walker@sun.com>
+
+	Work on bug 415061 - regression test results should be repeatable
+	
+	* test/harness/runall.sh: add filtering for "Desktop Frame" to
+	help eliminate differences that really shouldn't be there.
+
+	* test/keystrokes/scalc/F6-navigation.keys,
+	test/keystrokes/scalc/menu-items.keys,
+	test/keystrokes/gedit/text-attributes.keys: adjust timings and
+	test procedure to help reduce differences between runs.
+
+	* test/keystrokes/gedit/alphanum-modifiers.keys: remove this file
+	since it really wasn't testing what it was supposed to be testing
+	and it was causing differences between test runs.
+	
 2007-07-21  Willie Walker <william.walker@sun.com>
 
         * po/POTFILES.in: fix for bug 459080 - Some files missing from
