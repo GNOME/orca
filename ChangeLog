@@ -1,3 +1,9 @@
+2007-07-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          Fixed bug #409731 – Orca should speak text selected by the mouse.
+
 2007-07-22  Willie Walker <william.walker@sun.com>
 
 	Work on bug 415061 - regression test results should be repeatable

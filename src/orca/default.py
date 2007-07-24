@@ -732,6 +732,8 @@ class Script(script.Script):
             self.onFocus
         #listeners["keyboard:modifiers"]                     = \
         #    self.noOp
+        listeners["mouse:button"]                           = \
+            self.onMouseButton
         listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
         listeners["object:text-caret-moved"]                = \
@@ -3122,6 +3124,34 @@ class Script(script.Script):
         if event.source == orca_state.activeWindow:
             orca.setLocusOfFocus(event, None)
             orca_state.activeWindow = None
+
+    def onMouseButton(self, event):
+        """Called whenever the user presses or releases a mouse button.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # If we've received a mouse button released event, then check if
+        # there are and text selections for the locus of focus and speak
+        # them.
+        #
+        state = event.type[-1]
+        if state == "r":
+            obj = orca_state.locusOfFocus
+            if obj and obj.text:
+                [textContents, startOffset, endOffset] = \
+                    self.whereAmI._getTextSelections(obj, True)
+                if textContents:
+                    utterances = []
+                    utterances.append(textContents)
+
+                    # Translators: when the user selects (highlights) text in
+                    # a document, Orca lets them know this.
+                    #
+                    utterances.append(_("selected"))
+                    speech.speakUtterances(utterances)
+                self.updateBraille(orca_state.locusOfFocus)
 
     def noOp(self, event):
         """Just here to capture events.

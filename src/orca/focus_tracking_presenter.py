@@ -524,7 +524,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if (not debug.eventDebugFilter) \
                 or (debug.eventDebugFilter \
                     and debug.eventDebugFilter.match(event.type)):
-                debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
+                if not event.type.startswith("mouse:"):
+                    debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
         except CORBA.COMM_FAILURE:
             debug.printException(debug.LEVEL_WARNING)
@@ -559,7 +560,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         retryCount = 0
         oldLocusOfFocus = orca_state.locusOfFocus
         try:
-            s = self._getScript(event.source.app)
+            # If we've received a mouse event, then don't try to get
+            # event.source.app because the top most parent is of role 
+            # unknown, which will cause an ERROR message to be displayed.
+            # See Orca bug #409731 for more details.
+            #
+            if not event.type.startswith("mouse:"):
+                s = self._getScript(event.source.app)
+            else:
+                s = orca_state.activeScript
+            if not s:
+                return
         except:
             s = None
             debug.printException(debug.LEVEL_WARNING)
