@@ -1,3 +1,8 @@
+2007-07-25 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py: ARIA widgets should not consume navigation keys, 
+        bug 459618.
+
 2007-07-25  Stephen Brandt <via william.walker@sun.com>
 
         * icons/*, configure.in, Makefile.am, orca.png (remove): fix

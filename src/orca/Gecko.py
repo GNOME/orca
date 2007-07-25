@@ -4185,6 +4185,9 @@ class Script(default.Script):
 
         if not self.inDocumentContent():
             return False
+        
+        if self.isAriaWidget():
+            return False
 
         weHandleIt = True
         obj = orca_state.locusOfFocus
@@ -4259,6 +4262,9 @@ class Script(default.Script):
 
         if not structuralNavigationEnabled:
             return False
+        
+        if self.isAriaWidget():
+            return False
 
         # If the Orca_Modifier key was pressed, we're handling it.
         #
@@ -4283,6 +4289,17 @@ class Script(default.Script):
             else:
                 obj = obj.parent
 
+        return False
+            
+    def isAriaWidget(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        
+        attrs = obj.attributes
+        if attrs is None:
+            return False
+        for attr in attrs:
+            if attr.startswith('xml-roles'):
+                return True
         return False
 
     def getCharacterOffsetInParent(self, obj):
