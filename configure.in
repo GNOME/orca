@@ -142,6 +142,7 @@ docs/Makefile
 docs/pydoc/Makefile
 docs/man/Makefile
 po/Makefile.in
+icons/Makefile
 src/Makefile
 src/brl/Makefile
 src/orca/Makefile

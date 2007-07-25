@@ -1,4 +1,4 @@
-SUBDIRS = docs po src
+SUBDIRS = docs icons po src
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-pydoc
 
@@ -8,9 +8,6 @@ DISTCLEANFILES =                \
 	intltool-update		\
 	gnome-doc-utils.make	\
 	orca.desktop
-
-icondir   = $(datadir)/icons/hicolor/48x48/apps
-icon_DATA = orca.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
