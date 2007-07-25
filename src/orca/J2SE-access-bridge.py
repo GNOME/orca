@@ -91,6 +91,74 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+    def getSpeechContext(self, obj, stopAncestor=None):
+        """Get the speech that describes the names and role of
+        the container hierarchy of the object, stopping at and
+        not including the stopAncestor.
+
+        This method is identical to speechgeneratior.getSpeechContext
+        with one exception. The following test in
+        speechgenerator.getSpeechContext:
+
+            if not text and parent.text:
+                text = self._script.getDisplayedText(parent)
+
+        has be replaced by
+
+            if not text:
+                text = self._script.getDisplayedText(parent)
+
+        The Swing toolkit has components that do not implement the
+        AccessibleText interface, but getDisplayedText returns
+        a meaningful string that needs to be used if getDisplayedLabel
+        returns None.
+
+        Arguments:
+        - obj: the object
+        - stopAncestor: the anscestor to stop at and not include (None
+          means include all ancestors)
+
+        Returns a list of utterances to be spoken.
+        """
+
+        utterances = []
+
+        if not obj:
+            return utterances
+
+        if obj is stopAncestor:
+            return utterances
+
+        parent = obj.parent
+        if parent \
+            and (obj.role == rolenames.ROLE_TABLE_CELL) \
+            and (parent.role == rolenames.ROLE_TABLE_CELL):
+            parent = parent.parent
+
+        while parent and (parent.parent != parent):
+            if parent == stopAncestor:
+                break
+            if not self._script.isLayoutOnly(parent):
+                text = self._script.getDisplayedLabel(parent)
+                if not text:  # changed from speechgenerator method
+                    text = self._script.getDisplayedText(parent)
+                if text and len(text.strip()):
+                    # Push announcement of cell to the end
+                    #
+                    if not parent.role in [rolenames.ROLE_TABLE_CELL,
+                                           rolenames.ROLE_FILLER]:
+                        utterances.append(\
+                            rolenames.getSpeechForRoleName(parent))
+                    utterances.append(text)
+                    if parent.role == rolenames.ROLE_TABLE_CELL:
+                        utterances.append(\
+                            rolenames.getSpeechForRoleName(parent))
+            parent = parent.parent
+
+        utterances.reverse()
+
+        return utterances
+
 class Script(default.Script):
 
     def __init__(self, app):

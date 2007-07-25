@@ -1,3 +1,8 @@
+2007-07-25 Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * src/orca/J2SE-access-bridge.py: Bug 458142 - flat-review does 
+	not review Swing panels with titled borders
+
 2007-07-25 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py: ARIA widgets should not consume navigation keys, 
