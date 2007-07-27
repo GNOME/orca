@@ -1,3 +1,8 @@
+2007-07-27  Joanmarie Diggs <j-diggs@comcast.net>
+
+        * src/orca/Gecko.py: Fix for bug #460774 - Orca doesn't provide
+        access to message being composed in Thunderbird.
+
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

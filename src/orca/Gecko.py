@@ -3088,8 +3088,9 @@ class Script(default.Script):
         # http://bugzilla.gnome.org/show_bug.cgi?id=412677
         # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
         #
-        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME and \
-           event.source.child(0).role == rolenames.ROLE_UNKNOWN:
+        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME \
+           and event.source.childCount \
+           and event.source.child(0).role == rolenames.ROLE_UNKNOWN:
             return
 
         # Otherwise, we'll just assume that the thing in which the caret
