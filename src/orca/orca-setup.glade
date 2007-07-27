@@ -3633,7 +3633,7 @@ Bilinear</property>
 			  <property name="border_width">5</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">_Add</property>
+			  <property name="label" translatable="yes">_New entry</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>

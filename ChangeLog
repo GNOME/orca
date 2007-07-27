@@ -1,6 +1,12 @@
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
+          More work on bug #364518. Changed label and mnemonic for the 
+          "Add" button in the pronunciation pane to "New entry" and Alt-n.
+
+2007-07-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
           src/orca/app_gui_prefs.py:
           src/orca/orca_prefs.py:
           src/orca/default.py:
