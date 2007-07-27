@@ -96,6 +96,8 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
             callback.notify(type, id, offset)
 
     def say(self, text):
+        if isinstance(text, unicode):
+            text = text.encode("UTF-8")
         return self.gnome_speaker.say(text)
 
     def stop(self):

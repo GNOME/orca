@@ -1,3 +1,13 @@
+2007-07-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/gnomespeechfactory.py:
+          Fixed problem found when testing bug #364518. If you deleted
+          an entry from the pronunciated dictionary with the shortcut
+          Alt-d, then you'd get a traceback and a COMM_FAILURE. Fix was
+          in the say() routine in gnomespeechfactory.py, and was to check
+          to see if we were being passed in a unicode string, and if so, 
+          then to convert to UTF-8.
+
 2007-07-25  Willie Walker <william.walker@sun.com>
 
 	* autogen.sh: up automake requirement from 1.7.2 to 1.9
