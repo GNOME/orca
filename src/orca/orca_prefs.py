@@ -29,12 +29,15 @@ import os
 import pprint
 
 import orca_state
+import pronunciation_dict
 import settings
 
 from orca_i18n import _  # for gettext support
 
 # The same fields than in orca_gui_prefs.py:
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
+
+(ACTUAL, REPLACEMENT) = range(2)
 
 def _createDir(dirname):
     """Creates the given directory if it doesn't already exist.
@@ -346,8 +349,6 @@ def _writeKeyBindingsPreamble(prefs):
     prefs.writelines("#\n")
     prefs.writelines('def overrideKeyBindings(script, keyB):\n')
 
-    return
-
 def _writeAppKeyBindingsPreamble(prefs):
     """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
     keyBindings section."""
@@ -356,8 +357,6 @@ def _writeAppKeyBindingsPreamble(prefs):
     prefs.writelines("# Set up a user key-bindings profile\n")
     prefs.writelines("#\n")
     prefs.writelines('def overrideAppKeyBindings(script, keyB):\n')
-
-    return
 
 def _writeKeyBinding(prefs, tupl):
     """Writes a single keyBinding to the user-settings.py keyBindings section.
@@ -391,7 +390,6 @@ def _writeKeyBinding(prefs, tupl):
             prefs.writelines("      0,\n")
             prefs.writelines("      0,\n")
         prefs.writelines('      script.inputEventHandlers["'+ str(tupl[HANDLER]) +'"]))\n\n')
-    return
 
 def _writeKeyBindingsPostamble(prefs):
     """Writes the postamble to the user-settings.py keyBindings section."""
@@ -400,7 +398,6 @@ def _writeKeyBindingsPostamble(prefs):
     prefs.writelines("\n\n")
     prefs.writelines('orca.settings.overrideKeyBindings = overrideKeyBindings')
     prefs.writelines("\n")
-    return
 
 def _writeAppKeyBindingsPostamble(prefs, appName, appScript):
     """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py
@@ -414,7 +411,6 @@ def _writeAppKeyBindingsPostamble(prefs, appName, appScript):
 
     prefs.writelines('   return keyB')
     prefs.writelines("\n\n")
-    return
 
 def _writeKeyBindingsMap(prefs, treeModel):
     """Write to configuration file 'prefs' the key bindings passed in the
@@ -434,8 +430,6 @@ def _writeKeyBindingsMap(prefs, treeModel):
         iter = treeModel.iter_next(iter)
 
     _writeKeyBindingsPostamble(prefs)
-
-    return
 
 def _writeAppKeyBindingsMap(prefs, appName, appScript, treeModel):
     """Write to an application specific configuration file 'prefs', the 
@@ -462,7 +456,39 @@ def _writeAppKeyBindingsMap(prefs, appName, appScript, treeModel):
 
     _writeAppKeyBindingsPostamble(prefs, appName, appScript)
 
-    return
+def _writePronunciationMap(prefs, treeModel):
+    """Write to configuration file 'prefs' the new pronunciation dictionary
+    entries passed in the model treeModel.
+
+    Arguments:
+    - prefs: file handle for application preferences.
+    - treeModel: pronunciation dictionary tree model.
+    """
+
+    prefs.writelines("\n")
+    prefs.writelines("# User customized pronunciation dictionary settings\n")
+    prefs.writelines("#\n")
+    prefs.writelines("import orca.pronunciation_dict\n\n")
+    prefs.writelines("orca.pronunciation_dict.pronunciation_dict={}\n")
+
+    pronDict = pronunciation_dict.pronunciation_dict
+
+    # If the user has changed any of the list entries, write out a new
+    # pronunciation dictionary entry for them. If any strings with an
+    # actual string of "" are found, they are ignored.
+    #
+    iter = treeModel.get_iter_first()
+    while iter != None:
+        values = treeModel.get(iter, ACTUAL, REPLACEMENT)
+        key = values[ACTUAL]
+        value = values[REPLACEMENT]
+
+        if key != "":
+            prefs.writelines( \
+                "orca.pronunciation_dict.pronunciation_dict[\"" + \
+                                    key + "\"]=\"" + value + "\"\n")
+
+        iter = treeModel.iter_next(iter)
 
 def readPreferences():
     """Returns a dictionary containing the names and values of the
@@ -551,7 +577,8 @@ def _getValueForKey(prefsDict, key):
 
     return value
 
-def writePreferences(prefsDict, treeModel=None):
+def writePreferences(prefsDict, keyBindingsTreeModel=None,
+                                pronunciationTreeModel=None):
     """Creates the directory and files to hold user preferences.  Note
     that callers of this method may want to consider using an ordered
     dictionary so that the keys are output in a deterministic order.
@@ -559,6 +586,10 @@ def writePreferences(prefsDict, treeModel=None):
     Arguments:
     - prefsDict: a dictionary where the keys are orca preferences
     names and the values are the values for the preferences.
+    - keyBindingsTreeModel - key bindings tree model, or None if we are
+    writing out console preferences.
+    - pronunciationTreeModel - pronunciation dictionary tree model, or
+    None if we are writing out console preferences.
 
     Returns True if accessibility was enabled as a result of this
     call."""
@@ -576,8 +607,11 @@ def writePreferences(prefsDict, treeModel=None):
         if value != None:
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
-    if treeModel:
-        _writeKeyBindingsMap(prefs, treeModel)
+    if keyBindingsTreeModel:
+        _writeKeyBindingsMap(prefs, keyBindingsTreeModel)
+
+    if pronunciationTreeModel:
+        _writePronunciationMap(prefs, pronunciationTreeModel)
 
     _writePreferencesPostamble(prefs)
     prefs.close()
@@ -617,7 +651,9 @@ def _writeAppPreferencesPostamble(prefs, appName):
     prefs.writelines("except ImportError:\n")
     prefs.writelines("    pass\n")
 
-def writeAppPreferences(prefsDict, appName, appScript, treeModel=None):
+def writeAppPreferences(prefsDict, appName, appScript, 
+                        keyBindingsTreeModel=None,
+                        pronunciationTreeModel=None):
     """Creates the directory and files to hold application specific
     user preferences.  Write out any preferences that are different
     from the generic Orca preferences for this user. Note that callers 
@@ -629,7 +665,10 @@ def writeAppPreferences(prefsDict, appName, appScript, treeModel=None):
     names and the values are the values for the preferences.
     - appName: the application these preferences are for.
     - appScript: the application script.
-    - treeModel: key bindings treemodel.
+    - keyBindingsTreeModel - key bindings tree model, or None if we are
+    writing out console preferences.
+    - pronunciationTreeModel - pronunciation dictionary tree model, or
+    None if we are writing out console preferences.
     """
 
     _setupPreferencesDirs()
@@ -650,8 +689,12 @@ def writeAppPreferences(prefsDict, appName, appScript, treeModel=None):
         if oldValue != value:
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
-    if treeModel:
-        _writeAppKeyBindingsMap(prefs, appName, appScript, treeModel)
+    if keyBindingsTreeModel:
+        _writeAppKeyBindingsMap(prefs, appName, appScript,
+                                keyBindingsTreeModel)
+
+    if pronunciationTreeModel:
+        _writePronunciationMap(prefs, pronunciationTreeModel)
 
     # Write out the application unique preferences (if any) and set the
     # new values.

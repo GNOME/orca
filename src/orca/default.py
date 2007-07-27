@@ -2238,6 +2238,22 @@ class Script(script.Script):
                 if (not inSameGroup) and radioGroupLabel:
                     utterances.append(self.getDisplayedText(radioGroupLabel))
 
+            # Check to see if we are in the Pronunciation Dictionary in the 
+            # Orca Preferences dialog. If so, then we do not want to use the 
+            # pronunciation dictionary to replace the actual words in the 
+            # first column of this table.
+            #
+            rolesList = [rolenames.ROLE_TABLE_CELL, \
+                         rolenames.ROLE_TABLE, \
+                         rolenames.ROLE_SCROLL_PANE, \
+                         rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_PANEL]
+            if self.isDesiredFocusedItem(newLocusOfFocus, rolesList) and \
+               newLocusOfFocus.app.name == "orca":
+                orca_state.usePronunciationDictionary = False
+            else:
+                orca_state.usePronunciationDictionary = True
+
             # Get the text for the object itself.
             #
             utterances.extend(

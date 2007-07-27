@@ -50,6 +50,7 @@ import settings
 import default    # for the default keyBindings
 import input_event
 import keybindings
+import pronunciation_dict
 import braille
 import speech
 import speechserver
@@ -61,6 +62,8 @@ OS = None
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
 (NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
+
+(ACTUAL, REPLACEMENT) = range(2)
 
 class orcaSetupGUI(orca_glade.GladeWrapper):
 
@@ -314,7 +317,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """Write out the user's generic Orca preferences.
         """
 
-        if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
+        if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel,
+                                       self.pronunciationModel):
             self._say(_("Accessibility support for GNOME has just been enabled."))
             self._say(_("You need to log out and log back in for the change to take effect."))
 
@@ -889,7 +893,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             for i in range(0, noColumns):
                 col = self.getTextAttributesView.get_column(i)
                 if focusColumn == col:
-                    self.getTextAttributesView.set_search_column(i+1)
+                    self.getTextAttributesView.set_search_column(i)
                     break
 
     def _createTextAttributesTreeView(self):
@@ -1009,6 +1013,113 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         self.getTextAttributesView.connect("cursor_changed",
                                            self.textAttrCursorChanged)
+
+    def pronActualValueEdited(self, cell, path, new_text, model):
+        """The user has edited the value of one of the actual strings in
+        the pronunciation dictionary. Update our model to reflect this.
+
+        Arguments:
+        - cell: the cell that changed.
+        - path: the path of that cell.
+        - new_text: the new pronunciation dictionary actual string.
+        - model: the model that the cell is part of.
+        """
+
+        iter = model.get_iter(path)
+        model.set(iter, ACTUAL, new_text)
+
+    def pronReplacementValueEdited(self, cell, path, new_text, model):
+        """The user has edited the value of one of the replacement strings
+        in the pronunciation dictionary. Update our model to reflect this.
+
+        Arguments:
+        - cell: the cell that changed.
+        - path: the path of that cell.
+        - new_text: the new pronunciation dictionary replacement string.
+        - model: the model that the cell is part of.
+        """
+
+        iter = model.get_iter(path)
+        model.set(iter, REPLACEMENT, new_text)
+
+    def pronunciationCursorChanged(self, widget):
+        """Set the search column in the pronunciation dictionary tree view
+        depending upon which column the user currently has the cursor in.
+        """
+
+        [path, focusColumn] = self.pronunciationView.get_cursor()
+        if focusColumn:
+            noColumns = len(self.pronunciationView.get_columns())
+            for i in range(0, noColumns):
+                col = self.pronunciationView.get_column(i)
+                if focusColumn == col:
+                    self.pronunciationView.set_search_column(i)
+                    break
+
+    def _createPronunciationTreeView(self):
+        """Create the pronunciation dictionary tree view. The view is the
+        pronunciationTreeView GtkTreeView widget. The view will consist
+        of a list containing two columns:
+          ACTUAL      - the actual text string (word).
+          REPLACEMENT - the string that is used to pronounce that word.
+        """
+
+        self.pronunciationView = \
+                       self.widgets.get_widget("pronunciationTreeView")
+        model = gtk.ListStore(gobject.TYPE_STRING,
+                              gobject.TYPE_STRING)
+
+        # Initially setup the list store model based on the values of all
+        # existing entries in the pronunciation dictionary.
+        #
+        pronDict = pronunciation_dict.pronunciation_dict
+        for pronKey in sorted(pronDict.keys()):
+            iter = model.append() 
+            model.set(iter, 
+                      ACTUAL, pronKey,
+                      REPLACEMENT, pronDict[pronKey])
+
+        self.pronunciationView.set_model(model)
+
+        # Pronunciation Dictionary actual string (word) column (ACTUAL).
+        # 
+        # Translators: "Actual String" here refers to a text string as it
+        # actually appears in a text document. This might be an abbreviation
+        # or a particular word that is pronounced differently then the way
+        # that it looks.
+        #
+        column = gtk.TreeViewColumn(_("Actual String"))
+        column.set_min_width(250)
+        column.set_resizable(True)
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        column.pack_end(renderer, True) 
+        column.set_attributes(renderer, text=ACTUAL)
+        renderer.connect("edited", self.pronActualValueEdited, model)
+        self.pronunciationView.insert_column(column, 0)
+
+        # Pronunciation Dictionary replacement string column (REPLACEMENT)
+        #
+        # Translators: "Replacement String" here refers to the text string
+        # that will actually be used to speak it's matching "actual string".
+        # For example: if the actual string was "MHz", then the replacement
+        # (spoken) string would be "megahertz".
+        #
+        column = gtk.TreeViewColumn(_("Replacement String"))
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        column.pack_end(renderer, True)
+        column.set_attributes(renderer, text=REPLACEMENT)
+        renderer.connect("edited", self.pronReplacementValueEdited, model)
+        self.pronunciationView.insert_column(column, 1)
+
+        self.pronunciationModel = model
+
+        # Connect a handler for when the user changes columns within the
+        # view, so that we can adjust the search column for item lookups.
+        #
+        self.pronunciationView.connect("cursor_changed",
+                                       self.pronunciationCursorChanged)
 
     def _initGUIState(self):
         """Adjust the settings of the various components on the
@@ -1279,6 +1390,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             self.textBrailleBothButton.set_active(True)
         else:
             self.textBrailleNoneButton.set_active(True)
+
+        # Pronunciation dictionary pane.
+        #
+        self._createPronunciationTreeView()
 
         # General pane.
         #
@@ -2565,6 +2680,40 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
                 self.prefsDict["orcaModifierKeys"] = \
                     settings.LAPTOP_MODIFIER_KEYS
+
+    def pronunciationAddButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        pronunciationAddButton GtkButton widget. The user has clicked
+        the Add button on the Pronunciation pane. A new row will be 
+        added to the end of the pronunciation dictionary list. Both the
+        actual and replacement strings will initially be set to an empty
+        string. Focus will be moved to that row.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        model, oldIter = self.pronunciationView.get_selection().get_selected()
+        iter = model.append()
+
+        model.set(iter, ACTUAL, "", REPLACEMENT, "")
+        noRows = model.iter_n_children(None)
+        col = self.pronunciationView.get_column(0)
+        self.pronunciationView.grab_focus()
+        self.pronunciationView.set_cursor(noRows-1, col, True) 
+
+    def pronunciationDeleteButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        pronunciationDeleteButton GtkButton widget. The user has clicked
+        the Delete button on the Pronunciation pane. The row in the 
+        pronunciation dictionary list with focus will be deleted.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        model, oldIter = self.pronunciationView.get_selection().get_selected()
+        nextIter = model.remove(oldIter)
 
     def textSelectAllButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the

@@ -810,7 +810,7 @@ class SpeechServer(speechserver.SpeechServer):
             return -1
 
         text = self.__addVerbalizedPunctuation(text)
-        if orca_state.activeScript:
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
             text = orca_state.activeScript.adjustForPronunciation(text)
 
         try:

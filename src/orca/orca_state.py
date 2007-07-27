@@ -82,3 +82,8 @@ lastWord = ""
 #
 searchQuery = None
 
+# Whether we should use the pronunciation dictionary to help speak 
+# certain words. This will be True everywhere except when focus is 
+# in the Pronunciation Dictionary in the Orca Preferences dialog.
+#
+usePronunciationDictionary = True

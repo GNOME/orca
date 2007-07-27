@@ -96,7 +96,8 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         """
         moduleName = settings.getScriptModuleName(self.app)
         orca_prefs.writeAppPreferences(self.prefsDict, moduleName,
-                                       self.appScript, self.keyBindingsModel)
+                                       self.appScript, self.keyBindingsModel,
+                                       self.pronunciationModel)
         ftp = focus_tracking_presenter.FocusTrackingPresenter()
         ftp.loadAppSettings(self.appScript)
 

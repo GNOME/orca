@@ -1,5 +1,17 @@
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade:
+          src/orca/app_gui_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/orca_state.py:
+          src/orca/gnomespeechfactory.py:
+          src/orca/orca_gui_prefs.py:
+          Work on bug #364518 – Create a GUI interface to the pronunciation
+          dictionary.
+
+2007-07-27  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/gnomespeechfactory.py:
           Fixed problem found when testing bug #364518. If you deleted
           an entry from the pronunciated dictionary with the shortcut
