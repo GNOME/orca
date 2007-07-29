@@ -1,3 +1,8 @@
+2007-07-29  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS, RELEASE-HOWTO, docs/pydoc/Makefile.am:
+        prep for v2.19.6
+
 2007-07-27  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Fix for bug #460774 - Orca doesn't provide
@@ -6,7 +11,7 @@
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
-          More work on bug #364518. Changed label and mnemonic for the 
+          More work on bug #364518. Changed label and mnemonic for the
           "Add" button in the pronunciation pane to "New entry" and Alt-n.
 
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
@@ -28,21 +33,21 @@
           an entry from the pronunciated dictionary with the shortcut
           Alt-d, then you'd get a traceback and a COMM_FAILURE. Fix was
           in the say() routine in gnomespeechfactory.py, and was to check
-          to see if we were being passed in a unicode string, and if so, 
+          to see if we were being passed in a unicode string, and if so,
           then to convert to UTF-8.
 
 2007-07-25  Willie Walker <william.walker@sun.com>
 
-	* autogen.sh: up automake requirement from 1.7.2 to 1.9
+        * autogen.sh: up automake requirement from 1.7.2 to 1.9
 
 2007-07-25 Lynn MonSanto <lynn.monsanto@sun.com>
 
-        * src/orca/J2SE-access-bridge.py: Bug 458142 - flat-review does 
-	not review Swing panels with titled borders
+        * src/orca/J2SE-access-bridge.py: Bug 458142 - flat-review does
+        not review Swing panels with titled borders
 
 2007-07-25 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py: ARIA widgets should not consume navigation keys, 
+        * src/orca/Gecko.py: ARIA widgets should not consume navigation keys,
         bug 459618.
 
 2007-07-25  Stephen Brandt <via william.walker@sun.com>

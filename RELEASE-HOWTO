@@ -12,9 +12,9 @@ PREPARE SOURCES FOR THE RELEASE:
 
 Modify these lines in ./configure.in:
 
-  ORCA_MAJOR_VERSION=3
+  ORCA_MAJOR_VERSION=2
   ORCA_MINOR_VERSION=19
-  ORCA_MICRO_VERSION=0
+  ORCA_MICRO_VERSION=6
 
 Modify ./README to make sure it has the right Orca version.
 
@@ -51,8 +51,8 @@ TEST THE CANDIDATE:
 ------------------
 
 cd /tmp
-gunzip -c orca-2.19.3.tar.gz | tar xvf -
-cd orca-2.19.3
+gunzip -c orca-2.19.6.tar.gz | tar xvf -
+cd orca-2.19.6
 ./configure --prefix=/usr
 make
 sudo make install
@@ -65,15 +65,15 @@ TAG THE RELEASE:
 While in the trunk directory:
 
 svn commit
-svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_3
+svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_6
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-2.19.3.tar.gz wwalker@master.gnome.org:
+scp orca-2.19.6.tar.gz wwalker@master.gnome.org:
 ssh master.gnome.org
-install-module orca-2.19.3.tar.gz
+install-module orca-2.19.6.tar.gz
 
 
 IDENTIFY TRUNK AS "PRE":
@@ -83,7 +83,7 @@ Modify these lines in ./configure.in:
 
   ORCA_MAJOR_VERSION=2
   ORCA_MINOR_VERSION=19
-  ORCA_MICRO_VERSION=1pre
+  ORCA_MICRO_VERSION=90pre
 
 Modify ./README to make sure it has the right "pre" version.
 
@@ -92,7 +92,7 @@ ANNOUNCE THE RELEASE
 --------------------
 
 To: gnome-announce-list@gnome.org:
-Subject: Announcing Orca v2.19.0
+Subject: Announcing Orca v2.19.6
 
 ===============
 * What is Orca?
@@ -108,7 +108,7 @@ contributions from wonderful community members.
 You can also read more about Orca at http://live.gnome.org/Orca.
 
 ==================================
-* What's changed for Orca v2.19.0?
+* What's changed for Orca v2.19.6?
 ==================================
 
 <<<INSERT NEWS HERE>>>
@@ -117,10 +117,10 @@ You can also read more about Orca at http://live.gnome.org/Orca.
 * Where can I get it ?
 ======================
 
-You can obtain Orca v2.19.0 in source code form at the following:
+You can obtain Orca v2.19.6 in source code form at the following:
 
-http://download.gnome.org/sources/orca/2.19/orca-2.19.0.tar.gz
-http://download.gnome.org/sources/orca/2.19/orca-2.19.0.tar.bz2
+http://download.gnome.org/sources/orca/2.19/orca-2.19.6.tar.gz
+http://download.gnome.org/sources/orca/2.19/orca-2.19.6.tar.bz2
 
 Enjoy!
 

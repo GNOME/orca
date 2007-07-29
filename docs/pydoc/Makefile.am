@@ -6,11 +6,11 @@ DOC_FILES = \
 	orca.acss \
 	orca.app_gui_prefs \
 	orca.atspi \
+        orca.bookmarks \
 	orca.braille \
 	orca.braillegenerator \
 	orca.brl \
 	orca.brlmon \
-        orca.bookmarks \
 	orca.chnames \
 	orca.debug \
 	orca.dectalk \
@@ -71,7 +71,7 @@ DOC_FILES = \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
 	orca.scripts.nautilus \
-	orca.notification-daemon.py \
+	orca.scripts.notification-daemon \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \

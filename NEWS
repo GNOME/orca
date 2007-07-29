@@ -1,3 +1,62 @@
+2.19.6 - 29-Jul-2007
+
+General:
+
+* NOTICE: the automake requirement for Orca has been moved from 
+  automake 1.7.2 to 1.9.
+
+* Work on bug 364518 - Create a GUI interface to the pronunciation
+  dictionary
+
+* Fix for bug 409731 – Orca should speak text selected by the mouse
+
+* Work on bug 415061 - regression test results should be repeatable
+
+* Fix for bug 439191 – sayAll by sentence can position the text cursor
+  in the wrong place when interrupted
+
+* Additional fix for bug 449964 - Pass the key event information to
+  the speech system to allow more advanced key echo handling (needed
+  to eliminate a stack trace)
+
+* Fix for bug 455230 – Read table cell row should insert column
+  headers for non-text cells
+
+* Fix for bug 456296 - Traceback in braille.py when doing a 
+  "Select All" in gedit.
+
+* Fix for bug 459080 - Some files missing from POTFILES.in (sorry!)
+
+* Fix for bug 460215 - Include new Tango icons.  Many thanks to
+  Stephen Brandt for his work here!  The icons look sharp.
+
+Firefox:
+
+* Fix for bug 456446 - Gecko autocompletes not always spoken
+
+* Fix for bug 459618 - ARIA widgets should not consume navigation keys
+
+Thunderbird:
+
+* Fix for bug 460774 - Orca doesn't provide access to message being
+  composed in Thunderbird
+
+Java platform:
+
+* Fix for bug 458142 - flat-review does not review Swing panels with
+  titled borders
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    fi      Finnish              Ilkka Tuohela
+    lv      Latvian              Raivis Dejus
+    pt_BR   Brazilian Portuguese Leonardo Ferreira Fontenelle
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.19.5 - 09-Jul-2007
 
 General:
