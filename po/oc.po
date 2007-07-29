@@ -838,7 +838,7 @@ msgstr ""
 
 #: ../src/orca/orca-find.glade.h:3
 msgid "Close"
-msgstr "Barrar"
+msgstr "Tampar"
 
 #: ../src/orca/orca-find.glade.h:4
 msgid "Match _entire word only"
