@@ -1,5 +1,9 @@
 2007-07-29  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README: mark for v2.19.90pre
+
+2007-07-29  Willie Walker <william.walker@sun.com>
+
         * configure.in, README, NEWS, RELEASE-HOWTO, docs/pydoc/Makefile.am:
         prep for v2.19.6
 
