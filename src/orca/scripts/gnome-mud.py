@@ -36,7 +36,6 @@ import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
-import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -166,7 +165,7 @@ class Script(default.Script):
         #We want to speak and add it to the ringList structure only those lines
         #that contain some text and if the application is the current
         #locusOfFocus. 
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
             message=event.any_data
