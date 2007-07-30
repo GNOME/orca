@@ -37,8 +37,8 @@
           Orca V0.2.2.</para>
 
         <para>&complete; V0.2.2. SCREEN SAVER: Orca will announce that
-	  the "AT Enabled Lock Dialog" is active and you can type your
-	  password.</para>
+          the "AT Enabled Lock Dialog" is active and you can type your
+          password.</para>
 
       </section>
     </section>
@@ -52,10 +52,10 @@
       <section><title>Functional Description and Status</title>
 
         <para>&complete; V0.9.0.  Orca provides a script that will
-	restart Orca in the event of catastrophic failure, and it also
-	periodically pings and restarts Orca if necessary.
-	Furthermore, Orca will also detect hangs inside itself and
-	quit if possible.</para>
+        restart Orca in the event of catastrophic failure, and it also
+        periodically pings and restarts Orca if necessary.
+        Furthermore, Orca will also detect hangs inside itself and
+        quit if possible.</para>
 
       </section>
     </section>
@@ -128,7 +128,7 @@
       <section><title>Functional Description and Status</title>
 
         <para>&complete; V0.9.0. Orca currently provides a
-	  &styleguidelink; and a <literal>default.py</literal> script
+          &styleguidelink; and a <literal>default.py</literal> script
 
       </section>
 
@@ -153,8 +153,8 @@
       <section><title>Functional Description and Status</title>
 
         <para>&complete; V0.2.4.  Orca provides a framework for both
-	  per-application and per-toolkit customized scripts.  This
-	  framework is documented in the &scriptguidelink;.</para>
+          per-application and per-toolkit customized scripts.  This
+          framework is documented in the &scriptguidelink;.</para>
 
       </section>
 
@@ -171,49 +171,49 @@
 
         <itemizedlist>
           <listitem>
-	    <para>&complete; V0.2.2. Debug utilities to output AT-SPI
-	      and input device events. Managed via several debug level
-	      settings in the <literal>debug.py</literal>
-	      module.</para>
+            <para>&complete; V0.2.2. Debug utilities to output AT-SPI
+              and input device events. Managed via several debug level
+              settings in the <literal>debug.py</literal>
+              module.</para>
           </listitem>
           <listitem>
-	    <para>&complete; V0.2.2. Debug utilities to record and playback keystrokes.
-	      Managed via the separate
-	      <literal>src/tools/record_keystrokes.py</literal> and
-	      <literal>play_keystrokes.py</literal> modules.
-	      Keystroke recording can also be enabled by pressing the
-	      "Insert+Pause" keys while running Orca itself.</para>
+            <para>&complete; V0.2.2. Debug utilities to record and playback keystrokes.
+              Managed via the separate
+              <literal>src/tools/record_keystrokes.py</literal> and
+              <literal>play_keystrokes.py</literal> modules.
+              Keystroke recording can also be enabled by pressing the
+              "Insert+Pause" keys while running Orca itself.</para>
           </listitem>
           <listitem>
-	    <para>&complete; V0.2.2. Debug utilities to record what is being sent to
-	      speech and braille. This is managed via the debug level
-	      settings.</para>
+            <para>&complete; V0.2.2. Debug utilities to record what is being sent to
+              speech and braille. This is managed via the debug level
+              settings.</para>
           </listitem>
           <listitem>
 
-	    <para>&complete; V0.2.7.  Keystroke to speak/braille
-	      application with focus: Insert+F6.</para>
+            <para>&complete; V0.2.7.  Keystroke to speak/braille
+              application with focus: Insert+F6.</para>
 
-	  </listitem>
+          </listitem>
           <listitem>
 
-	    <para>&complete; V0.2.7. Keystroke to speak/braille
-	      the current script (and script class) in use: Insert+F6</para>
+            <para>&complete; V0.2.7. Keystroke to speak/braille
+              the current script (and script class) in use: Insert+F6</para>
 
-	  </listitem>
+          </listitem>
           <listitem>
-	    <para>&complete; V0.2.7.  Keystroke to dump
-	      all applications: Insert+F5.</para>
-	  </listitem>
+            <para>&complete; V0.2.7.  Keystroke to dump
+              all applications: Insert+F5.</para>
+          </listitem>
           <listitem>
-	    <para>&complete; V0.2.7.  Keystroke to dump the ancestors
-	      of the object with focus: Insert+F7.</para>
-	  </listitem>
+            <para>&complete; V0.2.7.  Keystroke to dump the ancestors
+              of the object with focus: Insert+F7.</para>
+          </listitem>
           <listitem>
-	    <para>&complete; V0.2.7.  Keystroke to dump the
-	      widget hierarchy of the application with
-	      focus: Insert+F8.</para>
-	  </listitem>
+            <para>&complete; V0.2.7.  Keystroke to dump the
+              widget hierarchy of the application with
+              focus: Insert+F8.</para>
+          </listitem>
         </itemizedlist>
       </section>
     </section>
@@ -232,16 +232,16 @@
           applications:</para>
 
         <table><title>Office Productivity Applications</title>
-  	  <tgroup cols='4'>
-  	    <thead>
-  	      <row>
-  	        <entry>Application Class</entry>
-  	        <entry>Target Application and Version</entry>
-  	        <entry>Status</entry>
-  	        <entry>Test Plan</entry>
-  	      </row>
+          <tgroup cols='4'>
+            <thead>
+              <row>
+                <entry>Application Class</entry>
+                <entry>Target Application and Version</entry>
+                <entry>Status</entry>
+                <entry>Test Plan</entry>
+              </row>
             </thead>
-  	  
+          
             <tbody>
               <row>
                 <entry>Desktop</entry>
@@ -249,97 +249,97 @@
                 <entry>&incomplete; metacity working well, gnome-panel
                 working OK, but the keyboard navigation model needs
                 work. &shoulddeliver; V1.0.</entry>
-		<entry>&desktoptestlink;</entry>
+                <entry>&desktoptestlink;</entry>
               </row>
               <row>
                 <entry>File System Navigation</entry>
                 <entry>Nautilus - GNOME 2.16</entry>
                 <entry>No Script Needed</entry>
-		<entry>&nautilustestlink;</entry>
+                <entry>&nautilustestlink;</entry>
               </row>
               <row>
                 <entry>Simple Text Editing</entry>
                 <entry>GEdit - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
-		<entry>&gedittestlink;</entry>
+                <entry>&gedittestlink;</entry>
               </row>
               <row>
                 <entry>E-mail</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
-		<entry>&emailtestlink;</entry>
+                <entry>&emailtestlink;</entry>
               </row>
               <row>
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&incomplete; [OWNER: RNB] month view not
                   done. &shoulddeliver; V1.1+.</entry>
-		<entry>&ecaltestlink;</entry>
+                <entry>&ecaltestlink;</entry>
               </row>
               <row>
                 <entry>Contact Management</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
-		<entry>&econtacttestlink;</entry>
+                <entry>&econtacttestlink;</entry>
               </row>
               <row>
                 <entry>Instant Messaging</entry>
                 <entry>GAIM - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
-		<entry>&gaimtestlink;</entry>
+                <entry>&gaimtestlink;</entry>
               </row>
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
                 <entry>&complete; V0.9.0 via mozilla script.</entry>
-		<entry>&yelptestlink;</entry>
+                <entry>&yelptestlink;</entry>
               </row>
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&complete; V0.9.0.</entry>
-		<entry>&sowritertestlink;</entry>
+                <entry>&sowritertestlink;</entry>
               </row>
-	      <row>
-	        <entry>Spreadsheet</entry>
+              <row>
+                <entry>Spreadsheet</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&complete; V0.9.0.</entry>
-		<entry>&socalctestlink;</entry>
-	      </row>
-	      <row>
-	        <entry>Presentation</entry>
+                <entry>&socalctestlink;</entry>
+              </row>
+              <row>
+                <entry>Presentation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&incomplete; [OWNER: RNB] &shoulddeliver; V1.1.</entry>
-		<entry>&soimpresstestlink;</entry>
-	      </row>
-	      <row>
-	        <entry>Web Browsing</entry>
-		<entry>	        	        Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
+                <entry>&soimpresstestlink;</entry>
+              </row>
+              <row>
+                <entry>Web Browsing</entry>
+                <entry>                         Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
 
-		<entry>&incomplete; [OWNER: LMS] Firefox 2.0 is
-		  probably as good as it is going to get. Working with
-		  IBM and Firefox team to provide better information
-		  via AT-SPI for FF3.  - &mustdeliver; V1.1.</entry>
+                <entry>&incomplete; [OWNER: LMS] Firefox 2.0 is
+                  probably as good as it is going to get. Working with
+                  IBM and Firefox team to provide better information
+                  via AT-SPI for FF3.  - &mustdeliver; V1.1.</entry>
 
-		<entry>&ff2testlink;</entry>
-	      </row>
-	      <row>
-	        <entry>Content Viewing</entry>
-		<entry>Adobe Reader</entry>
-		<entry>&incomplete; [OWNER: MMP] 
-		   needs work from Adobe. &shoulddeliver;
-		  V1.0</entry>
-		<entry>&acroreadtestlink;</entry>
-	      </row>
-	      <row>
-	        <entry>Java platform</entry>
-		<entry>Swing toolkit</entry>
-		<entry>&complete; V0.9.0.</entry>
-		<entry>&javatestlink;</entry>
-	      </row>
-  	    </tbody>
-	  </tgroup>
-	</table>
+                <entry>&ff2testlink;</entry>
+              </row>
+              <row>
+                <entry>Content Viewing</entry>
+                <entry>Adobe Reader</entry>
+                <entry>&incomplete; [OWNER: MMP] 
+                   needs work from Adobe. &shoulddeliver;
+                  V1.0</entry>
+                <entry>&acroreadtestlink;</entry>
+              </row>
+              <row>
+                <entry>Java platform</entry>
+                <entry>Swing toolkit</entry>
+                <entry>&complete; V0.9.0.</entry>
+                <entry>&javatestlink;</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
       </section>
       
       <section><title>Firefox details</title>
@@ -352,20 +352,20 @@
         If the user reaches the beginning or end of a frame they should wrap
         to the next or previous frame.</para>
 
-	<para>When up and down arrowing orca should as closely as
+        <para>When up and down arrowing orca should as closely as
         possible move by line in the web page.  If the line contains
         links, orca should speak the word "link" after the link.  If
         possible, the link should also be underlined with dots 7 and 8
         on the braille display.</para>
 
-	<para>If the line contains form controls, the label for the
+        <para>If the line contains form controls, the label for the
         control should be read followed by the role.  If the role is
         a text entry area and the user has placed the cursor at the location
         where text can be entered, the user should also hear
         "editable".  The braille user will see the cursor followed by
         "edit".</para>
 
-	<para>When tabbing and shift tabbing between elements the user
+        <para>When tabbing and shift tabbing between elements the user
         should hear the element followed by the role.  If a user
         encounters a combo he/she should be able to press "space" to
         expand the control in order to make a selection.  When space
@@ -375,17 +375,17 @@
         <para>If tab or shift+tab is pressed while a control is opened, it
         will be closed and focus will move to the next element.</para>
 
-	<para>Check boxes and buttons will simply be toggled by space
+        <para>Check boxes and buttons will simply be toggled by space
         as they are in any other application.</para>
 
-	<para> The letters "h" and "Shift+h" will
+        <para> The letters "h" and "Shift+h" will
         be used to move between headings.  When the heading is
         reached, orca will speak and braille the header followed by
         "heading and the heading level.  The numbers 1 through 6 will
         also be available to allow the user to move to the next
         heading at that level.</para>
 
-	<para>The letters "t" and "Shift+t" will be used to move
+        <para>The letters "t" and "Shift+t" will be used to move
         between tables.  When the table is reached its title will be
         spoken as well as the value of the cell with focus.
         Shift+Alt+{Left,Right,Up,Down} will be used to move from cell
@@ -394,18 +394,18 @@
         column or row, the appropriate headings should also be
         read.</para>
 
-	<para>The keys "orca+tab" and "shift+orca+tab"  will be used to move
+        <para>The keys "orca+tab" and "shift+orca+tab"  will be used to move
         between form fields.</para>
 
-	<para>The letters "l" and "Shift+l" will allow the user to
+        <para>The letters "l" and "Shift+l" will allow the user to
         move from list to list.</para>
 
-	<para>The letters "u" and "v" will be used to
+        <para>The letters "u" and "v" will be used to
         move between unvisited and visited links.</para>
 
-	<para>The letters "o" and "Shift+o" will be used to move
-	between large objects.  Large objects can be things such as:
-	headings, paragraphs, and tables containing text of a certain
+        <para>The letters "o" and "Shift+o" will be used to move
+        between large objects.  Large objects can be things such as:
+        headings, paragraphs, and tables containing text of a certain
         length.  For this feature, links and form controls will not be 
         considered large objects.</para>
       </section>
@@ -438,7 +438,7 @@
         or off without the need to restart Orca.</para>
       <section><title>Functional Description and Status</title>
         <para>&complete; V0.9.0. Orca provides both text-based and GUI-based
-	  configuration mechanisms.</para>
+          configuration mechanisms.</para>
       </section>
 
     </section>
@@ -460,7 +460,7 @@
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; does not provide audio cues when crossing linear
-	  boundaries. &shoulddeliver; V1.1+.</para>
+          boundaries. &shoulddeliver; V1.1+.</para>
 
       </section>
 
@@ -505,8 +505,8 @@
           from current position or from top left. &shoulddeliver;
           V1.1.</para>
 
-	<para>&incomplete; no audio cues when navigating across line
-	  boundaries. &shoulddeliver; V1.1.</para>
+        <para>&incomplete; no audio cues when navigating across line
+          boundaries. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -547,25 +547,25 @@
         <para>&textattributestestlink;</para>
 
         <para>&incomplete; text attributes ('indent',
-	'underline', 'strikethrough', 'justification', 'style',
-	'size', and 'family-name') are spoken when the user presses
-	Insert+f, but they are not presented on the braille
-	display.</para>
+        'underline', 'strikethrough', 'justification', 'style',
+        'size', and 'family-name') are spoken when the user presses
+        Insert+f, but they are not presented on the braille
+        display.</para>
 
         <para>&incomplete; capital letters are spoken with a
-	different voice, but 'verbalized' capitalization (e.g.,
-	"capital m") has not been implemented.</para>
+        different voice, but 'verbalized' capitalization (e.g.,
+        "capital m") has not been implemented.</para>
 
         <para>&incomplete; the user is notified when they
-	select text, but they are not notified if they navigate to
-	selected text.</para>
+        select text, but they are not notified if they navigate to
+        selected text.</para>
 
         <para>&incomplete; there is no option to present text bounds
-	to the user.</para>
+        to the user.</para>
         <para>&incomplete; there is no option to present text bounds
-	to the user.</para>
+        to the user.</para>
         <para>&incomplete; When autocomplete appears when a user is typing he or she is not alerted to the fact that this information has appeared.  As soon as the information pops up the first option should be spoken/brailled.  If the user continues typing and the first choice changes this should also be spoken.  It is not expected that the user would hear all possibilitys just the first.  If the user can arrow up or down through choices orca should track this as in any other list or combo.  It is okay if this information overrides the typing echo.</para>
-<para>&complete; The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  If a row or column is already set, double pressing the row or column definition on that row or column will unset it as a dinamic header.</para>	
+<para>&complete; The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  If a row or column is already set, double pressing the row or column definition on that row or column will unset it as a dinamic header.</para>        
       </section>
 
     </section>
@@ -584,7 +584,7 @@
         <para>&learnmodetestlink;</para>
 
         <para>&complete; V0.2.2.  Insert+F1 brings up learn mode and
-	Escape exits it.</para>
+        Escape exits it.</para>
 
       </section>
 
@@ -602,10 +602,10 @@
 
       <section><title>Functional Description and Status</title>
 
-	<para>&incomplete; the current way to define these is by
-	  manually editing the <literal>user-settings.py</literal> or
-	  <literal>orca-customizations.py</literal> file.
-	  &mustdeliver; V1.1.</para>
+        <para>&incomplete; the current way to define these is by
+          manually editing the <literal>user-settings.py</literal> or
+          <literal>orca-customizations.py</literal> file.
+          &mustdeliver; V1.1.</para>
 
       </section>
 
@@ -638,22 +638,22 @@
         should also present bottom-up "Where am I" when double
         pressing KP enter.  </para>
 
-	<para>There will be four commands related to "Where am I":</para>
+        <para>There will be four commands related to "Where am I":</para>
 
-	<orderedlist numeration="arabic">
-	  <listitem>
-	    <para>Basic information:  Single Press of KP_Enter</para>
-	  </listitem>
-	  <listitem>
-	    <para>Detailed information: Double Press of KP_Enter</para>
-	  </listitem>
-	  <listitem>
-	    <para>Title bar: Single Press of Insert+KP_Enter</para>
-	  </listitem>
-	  <listitem>
-	    <para>Status bar: Double Press of Insert+KP_Enter</para>
-	  </listitem>
-	</orderedlist>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Basic information:  Single Press of KP_Enter</para>
+          </listitem>
+          <listitem>
+            <para>Detailed information: Double Press of KP_Enter</para>
+          </listitem>
+          <listitem>
+            <para>Title bar: Single Press of Insert+KP_Enter</para>
+          </listitem>
+          <listitem>
+            <para>Status bar: Double Press of Insert+KP_Enter</para>
+          </listitem>
+        </orderedlist>
 
         <section><title>Basic Information: Single Press of KP_Enter</title>
 
@@ -661,426 +661,426 @@
           speak and display basic information in a specific order
           about the item with focus.  In particular:</para>
 
-	  <para>Checkboxes present the following information (an
-	  example is "Enable speech, checkbox checked, Alt E"):</para>
-	  
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>state</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
+          <para>Checkboxes present the following information (an
+          example is "Enable speech, checkbox checked, Alt E"):</para>
+          
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>state</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
               if any</para>
             </listitem>
           </orderedlist>
 
-	  <para>Radio Buttons present the following information (an
+          <para>Radio Buttons present the following information (an
           example is "Punctuation Level, Some, Radio button, selected,
           item 2 of 4, Alt M"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>group name</para>
-	    </listitem>
-	    <listitem>
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>state</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>group name</para>
+            </listitem>
+            <listitem>
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>state</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Comboboxes present the following information (an
+          <para>Comboboxes present the following information (an
           example is ""Speech system: combo box, GNOME Speech
           Services, item 1 of 1, Alt S"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>	  
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>current value</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>    
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>current value</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Spin Buttons present the following information (an
-	  example is "Scale factor: spin button, 4.00, Alt F"):</para>
+          <para>Spin Buttons present the following information (an
+          example is "Scale factor: spin button, 4.00, Alt F"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>current value</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>current value</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Push Buttons present the following information (an
-	  example is "Apply button, Alt A"):</para>
+          <para>Push Buttons present the following information (an
+          example is "Apply button, Alt A"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Sliders present the following information (examples
-	  include "Pitch slider, 5.0, 56%"; "Volume slider, 9.0, 100%"):
+          <para>Sliders present the following information (examples
+          include "Pitch slider, 5.0, 56%"; "Volume slider, 9.0, 100%"):
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>value</para>
-	    </listitem>
-	    <listitem>
-	      <para>percentage (if possible)</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>value</para>
+            </listitem>
+            <listitem>
+              <para>percentage (if possible)</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Menu items present the following information (examples
-	  include "File menu, Open..., Control + O, item 2 of 20, O",
-	  "File menu, Wizards Menu, item 4 of 20, W"):</para>
+          <para>Menu items present the following information (examples
+          include "File menu, Open..., Control + O, item 2 of 20, O",
+          "File menu, Wizards Menu, item 4 of 20, W"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>Name of the menu containing the item, followed by
-	      its role</para> 
-	    </listitem>
-	    <listitem>
-	      <para>item name, followed by its role (if a menu)
-	      followed by its accelerator key, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>Name of the menu containing the item, followed by
+              its role</para> 
+            </listitem>
+            <listitem>
+              <para>item name, followed by its role (if a menu)
+              followed by its accelerator key, if any</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Tabs in a Tab List present the following information
-	  (an example is "Tab list, braille page, item 2 of 5"):</para>
+          <para>Tabs in a Tab List present the following information
+          (an example is "Tab list, braille page, item 2 of 5"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>label + "page"</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>label + "page"</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Text boxes present the following information (an example
-	  is "Source display: text, blank, Alt O"):</para>
+          <para>Text boxes present the following information (an example
+          is "Source display: text, blank, Alt O"):</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>contents</para>
-	      <orderedlist numeration="arabic">
-	        <listitem>
-		  <para>if no text on the current line is selected, 
-		  the current line</para>
-		</listitem>
-	        <listitem>
-		  <para>if text is selected on the current line, 
-		  that text, followed by "selected"</para>
-		</listitem>
-	        <listitem>
-		  <para>if the current line is blank/empty, "blank"</para>
-		</listitem>
-	      </orderedlist>
-	    </listitem>
-	    <listitem>
-	      <para>mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</para>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label, if any</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>contents</para>
+              <orderedlist numeration="arabic">
+                <listitem>
+                  <para>if no text on the current line is selected, 
+                  the current line</para>
+                </listitem>
+                <listitem>
+                  <para>if text is selected on the current line, 
+                  that text, followed by "selected"</para>
+                </listitem>
+                <listitem>
+                  <para>if the current line is blank/empty, "blank"</para>
+                </listitem>
+              </orderedlist>
+            </listitem>
+            <listitem>
+              <para>mnemonic (i.e. Alt plus the underlined letter), 
+              if any</para>
+            </listitem>
+          </orderedlist>
 
-	  <para>Tree Tables present the following information (an example
-	  is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
+          <para>Tree Tables present the following information (an example
+          is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>current row (regardless of speak cell/row setting)</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>if expandable/collapsible: expanded/collapsed</para>
-	    </listitem>
-	    <listitem>
-	      <para>if applicable, the level</para>
-	    </listitem>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label, if any</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>current row (regardless of speak cell/row setting)</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>if expandable/collapsible: expanded/collapsed</para>
+            </listitem>
+            <listitem>
+              <para>if applicable, the level</para>
+            </listitem>
 <listitem>
 <para>all other selected rows (regardless of speak cell/row setting) followed by "selected</para>
 </listitem>
-	  </orderedlist>
-	  <para>Tree Tables present the following information (an example
-	  is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
+          </orderedlist>
+          <para>Tree Tables present the following information (an example
+          is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
-	    <listitem>
-	      <para>current row (regardless of speak cell/row setting)</para>
-	    </listitem>
-	    <listitem>
-	      <para>relative position</para>
-	    </listitem>
-	    <listitem>
-	      <para>if expandable/collapsible: expanded/collapsed</para>
-	    </listitem>
-	    <listitem>
-	      <para>if applicable, the level</para>
-	    </listitem>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label, if any</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
+            <listitem>
+              <para>current row (regardless of speak cell/row setting)</para>
+            </listitem>
+            <listitem>
+              <para>relative position</para>
+            </listitem>
+            <listitem>
+              <para>if expandable/collapsible: expanded/collapsed</para>
+            </listitem>
+            <listitem>
+              <para>if applicable, the level</para>
+            </listitem>
 <listitem>
 <para>all other selected rows (regardless of speak cell/row setting) followed by "selected</para>
 </listitem>
-	  </orderedlist>
-	  <para>Icon Panels present the following information (an example
-	  is "Icon Panel, Mike Pedersen, item 8 of 10, "):
+          </orderedlist>
+          <para>Icon Panels present the following information (an example
+          is "Icon Panel, Mike Pedersen, item 8 of 10, "):
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label, if any</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
             <para>Icon Panels present the following information (an example
-	  is "Icon Panel, Mike Pedersen, item 8 of 10, "):
+          is "Icon Panel, Mike Pedersen, item 8 of 10, "):
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>label, if any</para>
-	    </listitem>
-	    <listitem>
-	      <para>role</para>
-	    </listitem>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>label, if any</para>
+            </listitem>
+            <listitem>
+              <para>role</para>
+            </listitem>
 <listitem>
 <para>all selected icons followed by "selected</para>
 </listitem>
-	  </orderedlist>
+          </orderedlist>
 
-	  <para>Given the nature of OpenOffice Calc, Orca should
-	  override the default KP_Enter behavior when the item with
-	  focus is a cell within Calc.  In this instance, the
-	  following information should be spoken/displayed:</para>
+          <para>Given the nature of OpenOffice Calc, Orca should
+          override the default KP_Enter behavior when the item with
+          focus is a cell within Calc.  In this instance, the
+          following information should be spoken/displayed:</para>
 
-	  <orderedlist numeration="arabic">
-	    <listitem>
-	      <para>"Cell"</para>
-	    </listitem>
-	    <listitem>
-	      <para>the cell coordinates</para>
-	    </listitem>
-	    <listitem>
-	      <para>the cell contents:</para>
-	      <orderedlist>
-	        <listitem>
-		  <para>if the cell is empty, "blank"</para>
-		</listitem>
-		<listitem>
-		  <para>if the cell is being edited AND if some text
-		  within the cell is selected, the selected text
-		  followed by "selected"</para>
-		</listitem>
-		<listitem>
-		  <para>otherwise, the full contents of the cell</para>
-		</listitem>
-	      </orderedlist>
-	    </listitem>
-	  </orderedlist>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>"Cell"</para>
+            </listitem>
+            <listitem>
+              <para>the cell coordinates</para>
+            </listitem>
+            <listitem>
+              <para>the cell contents:</para>
+              <orderedlist>
+                <listitem>
+                  <para>if the cell is empty, "blank"</para>
+                </listitem>
+                <listitem>
+                  <para>if the cell is being edited AND if some text
+                  within the cell is selected, the selected text
+                  followed by "selected"</para>
+                </listitem>
+                <listitem>
+                  <para>otherwise, the full contents of the cell</para>
+                </listitem>
+              </orderedlist>
+            </listitem>
+          </orderedlist>
 
         </section>
 
         <section><title>Detailed Information: Double Press of KP_Enter</title>
 
-	  <para>When KP_Enter is pressed twice quickly, Orca will
-	  speak and display the information it currently does when
-	  performing the "Where am I" command, with the following
-	  changes:</para>
+          <para>When KP_Enter is pressed twice quickly, Orca will
+          speak and display the information it currently does when
+          performing the "Where am I" command, with the following
+          changes:</para>
 
-	  <orderedlist>
-	    <listitem>
-	      <para>Orca should pause briefly between items in the
-	      hierarchy</para>
-	    </listitem>
-	    <listitem>
-	      <para>Information regarding relative position should
-	      come after the item it pertains to, rather than
-	      before. (e.g. say/display "Euro Converter, Item 7 of 9")</para>
-	    </listitem>
-	    <listitem>
-	      <para>If focus is within a text box and text within that
-	      text box is selected, Orca should NOT read the current
-	      line.  Rather, it should state the text that is selected spanning paragraph boundries if necessary
-	      followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</para>
-	    </listitem>
-	  </orderedlist>
-
-        </section>
-
-	<section><title>Title bar: Single Press of Insert + KP_Enter</title>
-
-	  <para>When Insert + KP_Enter is pressed a single time, Orca
-	  will speak and display the following information:</para>
-
-	  <orderedlist>
-	    <listitem>
-	      <para>The contents of the title bar of the application
-	      main window</para>
-	    </listitem>
-	    <listitem>
-	      <para>If in a dialog box within an application, the
-	      contents of the title bar of the dialog box.</para>
-	    </listitem>
-	    <listitem>
-	      <para>Orca will pause briefly between these two pieces
-	      of information so that the speech user can distinguish
-	      each.</para>
-	    </listitem>
-	  </orderedlist>
-
-	  <para>Calc-Specific Handling: If Insert+KP_Enter is pressed
-	  a single time while focus is on a cell within OpenOffice
-	  Calc, Orca will speak the following information:</para>
-
-	  <orderedlist>
-	    <listitem>
-	      <para>The contents of the title bar of the application
-	      main window</para>
-	    </listitem>
-	    <listitem>
-	      <para>The title of the current worksheet</para>
-	    </listitem>
-	  </orderedlist>
-
-	  <para>Note that if the application with focus is Calc, but a
-	  cell does not have focus, the default behavior should be
-	  used.</para>
+          <orderedlist>
+            <listitem>
+              <para>Orca should pause briefly between items in the
+              hierarchy</para>
+            </listitem>
+            <listitem>
+              <para>Information regarding relative position should
+              come after the item it pertains to, rather than
+              before. (e.g. say/display "Euro Converter, Item 7 of 9")</para>
+            </listitem>
+            <listitem>
+              <para>If focus is within a text box and text within that
+              text box is selected, Orca should NOT read the current
+              line.  Rather, it should state the text that is selected spanning paragraph boundries if necessary
+              followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</para>
+            </listitem>
+          </orderedlist>
 
         </section>
 
-	<section><title>Status bar: Double Press of Insert + KP_Enter</title>
+        <section><title>Title bar: Single Press of Insert + KP_Enter</title>
 
-	  <para>When Insert+KP_Enter is pressed twice quickly, Orca
-	  will speak and display the contents of the status bar. In
-	  applications where the status bar contents are
-	  distinguishable elements (e.g. OpenOffice Writer), Orca
-	  should pause briefly between elements.  In applications
-	  where the elements of the status bar are labeled
-	  (e.g. OpenOffice Writer), Orca should also speak and display
-	  the label of a given element followed by that element.
-	  (e.g. "Page Style: Default", "Zoom: 100%")</para>
+          <para>When Insert + KP_Enter is pressed a single time, Orca
+          will speak and display the following information:</para>
 
-	</section>
+          <orderedlist>
+            <listitem>
+              <para>The contents of the title bar of the application
+              main window</para>
+            </listitem>
+            <listitem>
+              <para>If in a dialog box within an application, the
+              contents of the title bar of the dialog box.</para>
+            </listitem>
+            <listitem>
+              <para>Orca will pause briefly between these two pieces
+              of information so that the speech user can distinguish
+              each.</para>
+            </listitem>
+          </orderedlist>
+
+          <para>Calc-Specific Handling: If Insert+KP_Enter is pressed
+          a single time while focus is on a cell within OpenOffice
+          Calc, Orca will speak the following information:</para>
+
+          <orderedlist>
+            <listitem>
+              <para>The contents of the title bar of the application
+              main window</para>
+            </listitem>
+            <listitem>
+              <para>The title of the current worksheet</para>
+            </listitem>
+          </orderedlist>
+
+          <para>Note that if the application with focus is Calc, but a
+          cell does not have focus, the default behavior should be
+          used.</para>
+
+        </section>
+
+        <section><title>Status bar: Double Press of Insert + KP_Enter</title>
+
+          <para>When Insert+KP_Enter is pressed twice quickly, Orca
+          will speak and display the contents of the status bar. In
+          applications where the status bar contents are
+          distinguishable elements (e.g. OpenOffice Writer), Orca
+          should pause briefly between elements.  In applications
+          where the elements of the status bar are labeled
+          (e.g. OpenOffice Writer), Orca should also speak and display
+          the label of a given element followed by that element.
+          (e.g. "Page Style: Default", "Zoom: 100%")</para>
+
+        </section>
       </section>
     </section>
 
 
     <section id="urfind"><title>"Find" Command</title>
       <para>Orca will allow users to enter a string to search for a
-	visible text string in the current window or entire desktop.  The keystroke to invoke this dialog will be: (KP_Delete).
-	If the string is found (e.g., the string matches the
-	accessible name of an object or the string matches a string in
-	a text area), Orca will switch to "review mode" and make the
-	associated object the object of interest.  From this point,
-	the user can use a &wkc;  to go back to the object with focus,
-	give the found object focus if possible, or perform the
-	equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </para>
+        visible text string in the current window or entire desktop.  The keystroke to invoke this dialog will be: (KP_Delete).
+        If the string is found (e.g., the string matches the
+        accessible name of an object or the string matches a string in
+        a text area), Orca will switch to "review mode" and make the
+        associated object the object of interest.  From this point,
+        the user can use a &wkc;  to go back to the object with focus,
+        give the found object focus if possible, or perform the
+        equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.</para>
       <para>The search will be performed in the text flow of the
-	locale (e.g., left-to-right, top-to-bottom) from the current
-	point of interest or optionally from the top of the window, wrapping back to the beginning of the
-	window if necessary.</para> 
+        locale (e.g., left-to-right, top-to-bottom) from the current
+        point of interest or optionally from the top of the window, wrapping back to the beginning of the
+        window if necessary.</para> 
       <para>The search will provide options for requiring a full word
-	match (e.g., "ok" will not match "token") or substring match
-	(e.g., "ok" will match "token").</para> 
+        match (e.g., "ok" will not match "token") or substring match
+        (e.g., "ok" will match "token").</para> 
       <para>Finally, the "find" command will also allow the user to
-	search for text based on attribute (e.g., "bold"), and the
-	search will allow the user to search based solely on attribute
-	type, text string, or a combination of both.</para>
+        search for text based on attribute (e.g., "bold"), and the
+        search will allow the user to search based solely on attribute
+        type, text string, or a combination of both.</para>
 <para> The dialog will appear as follows; The first control will be the edit field to type the string to be found. The second will be a group of radio buttons to specify if the search is to be performed from the top or from the current position.  The third control will be a check box to determine if the search is case sensitive or not.  This will be followed by "find" and "cancel".   
       <para>&note; this feature is for searching for visible text
-	only.  Traditional searching for text in documents will be
-	supported by application functionality (e.g., the "search"
-	menu item in the application.</para>
+        only.  Traditional searching for text in documents will be
+        supported by application functionality (e.g., the "search"
+        menu item in the application.</para>
 
       <section><title>Functional Description and Status</title>
 
@@ -1093,9 +1093,9 @@
     <section id="urwatched"><title>Watched Objects</title>
 
       <para>Orca will allow users to indicate interest in an object.
-	Once interest has been given, Orca will notify the user of
-	changes to that object, whether it or its window has focus or
-	not.  A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will  press CTRLinsert+w to actually set a watched object and doublepress CTRL+Insert+w to unset it. </para>
+        Once interest has been given, Orca will notify the user of
+        changes to that object, whether it or its window has focus or
+        not.  A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will  press CTRLinsert+w to actually set a watched object and doublepress CTRL+Insert+w to unset it. </para>
 
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
@@ -1113,11 +1113,11 @@
 
     <section id="urbookmark"><title>Bookmarked Objects</title>
       <para>Orca will allow users to define a gesture (keyboard or
-	braille) that will tell Orca to enter flat review mode and make a
-	particular object the object of interest.  From this point,
-	the user can use a &wkc; to go back to the object with focus,
-	give the bookmarked object focus if possible, or perform the
-	equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.  If possible it would be really nice to play the system beep if the bookmark can't be found.</para>
+        braille) that will tell Orca to enter flat review mode and make a
+        particular object the object of interest.  From this point,
+        the user can use a &wkc; to go back to the object with focus,
+        give the bookmarked object focus if possible, or perform the
+        equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.  If possible it would be really nice to play the system beep if the bookmark can't be found.</para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the bookmarked object.</para>
       <para>&note; if the specified bookmarked object is not in the
@@ -1127,17 +1127,17 @@
         <para> If possible, many users have expressed a desire to be able to save the bookmarks that they generate.</para>
         <para> The following keystrokes should be used to perform the functions related to this feature.</para>
 
-	  <para>Alt-orca-1 through 6
+          <para>Alt-orca-1 through 6
     Add a bookmark in this numbered slot. If a bookmark already exists at this register it will be replaced with the new one. </para>
  
-	  <para>orca-1 through 6
+          <para>orca-1 through 6
     Move the pointer to the bookmark in this numbered slot. </para>
  
-	  <para>Alt-Shift-1 through 6
+          <para>Alt-Shift-1 through 6
     Report "Where am I" information for this bookmark relative to the current pointer location.</para> 
  
-	  <para>"b" and "shift+b" Move between the given bookmarks for the given application or page. </para>         
-	  <para> "Alt+orca+b" should be used to save the defined bookmarks for the current application or page.</para>
+          <para>"b" and "shift+b" Move between the given bookmarks for the given application or page. </para>         
+          <para> "Alt+orca+b" should be used to save the defined bookmarks for the current application or page.</para>
 
       <section><title>Functional Description and Status</title>
           
@@ -1176,11 +1176,11 @@
       <section><title>Functional Description and Status</title>
         <para>&sayalltestlink;</para>
         <para>&complete; V0.9.0. Reading works well, including setting
-	  the caret position when speech is interrupted.</para>
-	<para>&incomplete; text is not highlighted, nor is there an
-	  option to do so. &deliver; V1.1+.</para>
-	<para>&incomplete; audio cues not played when auto
-	  reading across line boundaries.  &shoulddeliver; V1.1.</para>
+          the caret position when speech is interrupted.</para>
+        <para>&incomplete; text is not highlighted, nor is there an
+          option to do so. &deliver; V1.1+.</para>
+        <para>&incomplete; audio cues not played when auto
+          reading across line boundaries.  &shoulddeliver; V1.1.</para>
       </section>
     </section>
 
@@ -1238,19 +1238,19 @@
             Orca will support a "default" style to be used for the
             majority (if not all) of the speaking operations.</para>
         </listitem>
-	<listitem>
+        <listitem>
           <para><emphasis role="bold">Verbalized Caps</emphasis> -
-	    When speaking a word beginning with a capital letter, Orca
-	    should offer the option of saying "cap" or "all caps"
-	    prior to speaking the word in addition to offering an
-	    optional uppercase voice. For example, one might hear "cap
-	    Willie" or "all caps WILLIE".</para>
+            When speaking a word beginning with a capital letter, Orca
+            should offer the option of saying "cap" or "all caps"
+            prior to speaking the word in addition to offering an
+            optional uppercase voice. For example, one might hear "cap
+            Willie" or "all caps WILLIE".</para>
         </listitem>
-	<listitem>
+        <listitem>
           <para><emphasis role="bold">Verbalized Links</emphasis> -
-	    When speaking a link, Orca should offer the option of
-	    saying "link" after to speaking the link in addition to
-	    offering an optional hyperlink voice.</para>
+            When speaking a link, Orca should offer the option of
+            saying "link" after to speaking the link in addition to
+            offering an optional hyperlink voice.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">Speaking Rate
@@ -1310,13 +1310,13 @@
           Insert+{left,right}_arrow.</para>
         <para>&incomplete; Multilingual text. &deliver; V1.1+.</para>
         <para>&incomplete; V0.2.7. Letter-by-letter spelling mode of
-	current flat review item performed when user quickly presses
-	KP_5 (word review) or KP_8 (line review) twice in a
-	row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a &mustdeliver; V1.1.</para>
+        current flat review item performed when user quickly presses
+        KP_5 (word review) or KP_8 (line review) twice in a
+        row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a &mustdeliver; V1.1.</para>
         <para>&complete; V0.2.6. Verbalized punctuation is a settable
-	option.</para>
+        option.</para>
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
+          [OWNER: WDW - implementation] 
           Repeated character count. &shoulddeliver; V1.1.</para>
       </section>
 
@@ -1336,12 +1336,12 @@
           word echo: key and word.  These are not mutually
           exclusive.</para>
 
-	<para>Regardless of any setting, if the user deletes a
-	  character using the Backspace or Delete keys, the next or
-	  previous visible character will be spoken, depending upon
-	  which key was used.  If action key echo is enabled (see
-	  below), the key causing the deletion should be spoken before
-	  the visible character is spoken.</para>
+        <para>Regardless of any setting, if the user deletes a
+          character using the Backspace or Delete keys, the next or
+          previous visible character will be spoken, depending upon
+          which key was used.  If action key echo is enabled (see
+          below), the key causing the deletion should be spoken before
+          the visible character is spoken.</para>
 
         <para>Key echo applies to the entire keyboard and is for
           echoing keys as they are pressed.  The keys are broken into
@@ -1350,23 +1350,23 @@
 
         <itemizedlist>
           <listitem>
-	    <para>Alphanumeric and punctuation keys: typing keys that
-	      print something on the display, with the exception of
-	      space.</para>
-	  </listitem>
+            <para>Alphanumeric and punctuation keys: typing keys that
+              print something on the display, with the exception of
+              space.</para>
+          </listitem>
           <listitem>
-	    <para>Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.</para>
-	  </listitem>
+            <para>Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.</para>
+          </listitem>
           <listitem>
-	    <para>Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.</para>
-	  </listitem>
+            <para>Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.</para>
+          </listitem>
           <listitem>
-	    <para>Function keys: The keys at the top of the keyboard.</para>
-	  </listitem>
+            <para>Function keys: The keys at the top of the keyboard.</para>
+          </listitem>
           <listitem>
-	    <para>Action keys: space, enter, escape, tab, backspace,
+            <para>Action keys: space, enter, escape, tab, backspace,
               delete, arrow keys, page up, page down, etc.</para>
-	  </listitem>
+          </listitem>
         </itemizedlist>
 
         <para>When a key from any enabled group is pressed, the key
@@ -1402,28 +1402,28 @@
           not.</para>
 
         <para>Furthermore, if either word or alphanumeric key echo are
-	  enabled, Orca will provide the following behavior:</para>
+          enabled, Orca will provide the following behavior:</para>
 
-	<itemizedlist>
-	  <listitem>
-	    <para>If word or alphanumeric key echo are enabled, any
+        <itemizedlist>
+          <listitem>
+            <para>If word or alphanumeric key echo are enabled, any
               single character surrounded by whitespace (including
               punctuation) will be spoken.  For example, if the user
               has typed "this .", "period" will be spoken when the
               user inserts a whitespace character.</para>
-	  </listitem>
-	  <listitem>
-	    <para>If word or alphanumeric key echo are enabled, any
-	      group of punctuation characters typed in a row will be
-	      spoken one at a time when the user inserts a whitespace
-	      character.</para>
-	  </listitem>
-	  <listitem>
-	    <para>OPTIONAL: if the user presses the "escape" key in a
-	      text area and the text area reverts the text back to
-	      what it was, the user should hear this.</para>
-	  </listitem>
-	</itemizedlist>
+          </listitem>
+          <listitem>
+            <para>If word or alphanumeric key echo are enabled, any
+              group of punctuation characters typed in a row will be
+              spoken one at a time when the user inserts a whitespace
+              character.</para>
+          </listitem>
+          <listitem>
+            <para>OPTIONAL: if the user presses the "escape" key in a
+              text area and the text area reverts the text back to
+              what it was, the user should hear this.</para>
+          </listitem>
+        </itemizedlist>
 
         <para>&keywordechotestlink;</para>
 
@@ -1515,26 +1515,26 @@
         <para>&complete; V0.2.2.  Work with BrlTTY.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
+          [OWNER: WDW - implementation] 
           Effective use of space.  Not addressed at all. &mustdeliver V1.1.</para>
 
         <para>&incomplete; Effective use of input buttons. Does OK for
           general panning and flat review control, but other
           functionality not supported. &shoulddeliver remainder V1.1.</para>
 
-	<para>&incomplete; Effective use of cursor routing keys.
-	  Works well for activating components and moving the caret.
-	  Second row of cursor routing keys unexplored. &shoulddeliver;
-	  V1.1+.</para>
+        <para>&incomplete; Effective use of cursor routing keys.
+          Works well for activating components and moving the caret.
+          Second row of cursor routing keys unexplored. &shoulddeliver;
+          V1.1+.</para>
 
-	<para>&incomplete; Key combinations.  Not investigated, can be
-	  done via traditional keyboard techniques.  &shoulddeliver;
-	  V1.1.</para>
+        <para>&incomplete; Key combinations.  Not investigated, can be
+          done via traditional keyboard techniques.  &shoulddeliver;
+          V1.1.</para>
 
-	<para>&incomplete; Cursor options. Rely upon BrlTTY.
-	  &deliver; BrlTTY.</para>
+        <para>&incomplete; Cursor options. Rely upon BrlTTY.
+          &deliver; BrlTTY.</para>
 
-	<para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>
+        <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -1551,10 +1551,10 @@
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; [OWNER: COMMUNITY] mimimal magnification
-	support is in Orca as of V0.9.0.  Need to work with the
-	community to further define what a compelling magnifier
-	experience means.  &shoulddeliver V1.0 or &mustdeliver; V1.1,
-	depending upon community contributions.</para>
+        support is in Orca as of V0.9.0.  Need to work with the
+        community to further define what a compelling magnifier
+        experience means.  &shoulddeliver V1.0 or &mustdeliver; V1.1,
+        depending upon community contributions.</para>
 
       </section>
 
@@ -1622,8 +1622,8 @@
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; [OWNER: WDW and COMMUNITY] documents will
-	  continually be updated, as will the Orca web site and
-	  WIKI.</para>
+          continually be updated, as will the Orca web site and
+          WIKI.</para>
 
       </section>
 

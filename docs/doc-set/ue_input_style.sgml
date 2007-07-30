@@ -60,24 +60,24 @@
       <para>In more detail, the keyboard mappings are as follows, and
         use the "Insert" key for desktop keyboards and the caps-lock key for laptops as a modifier (see the &ugcustomizationlink; 
         section of the &userguidelink; for more information on how to
-	customize this):  Note that the first key listed is for the desktop layout and the second is for laptop.</para>
+        customize this):  Note that the first key listed is for the desktop layout and the second is for laptop.</para>
   
       <itemizedlist>
         <listitem>
           <para>"KEYPAD_/" or "modifier+7": performs a left mouse click on the current
              object of interest.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
              <literal>default.Script.leftClickReviewItem</literal>.
              </para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_*" or "modifier+8":  performs a right mouse click on the current
              object of interest.</para>
-	  <para>&detail; bound to 
+          <para>&detail; bound to 
              <literal>default.Script.rightClickReviewItem</literal>.
              </para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_-" or "modifier+p: when in flat review, returns to the object
@@ -85,10 +85,10 @@
              the screen or focus to change will also do this).  If the
              user is currently in focus tracking mode, pressing this key
              activates flat review mode.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
              <literal>default.Script.toggleFlatReviewMode</literal>.
              </para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_+" or "modifier+;": reads from current position to end of
@@ -100,35 +100,35 @@
           <para>&detail; bound to
              <literal>default.Script.sayAll</literal>.
              </para>
-	  <para>&incomplete; [OWNER: RNB] As of V0.2.5. this is implemented for focus tracking mode but not yet for flat review.</para>
+          <para>&incomplete; [OWNER: RNB] As of V0.2.5. this is implemented for focus tracking mode but not yet for flat review.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER" or "modifier+enter": performs "Where Am I?"  If this key is
             pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter or modifier+/ they will hear any relevant           status bar information.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>
-	  <para>&incomplete; [OWNER: WDW] The "where am I" is implemented in V0.2.5. however pressing twice does not yet give statusbar information.</para>
+          <para>&incomplete; [OWNER: WDW] The "where am I" is implemented in V0.2.5. however pressing twice does not yet give statusbar information.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_." or "modifier+'": performs a "screen find."  Pressing this key
             brings up a dialog where a user can enter a search string
             and decide where on the screen the search should begin IE
             from the top or current position.</para>
-	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.1.</para>
+          <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_7" or "modifier+u": moves the review position to the prior line,
              landing on object closest to current object.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewPreviousLine</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_7" or "Control+modifier+u"  : moves the review position to the
             home position.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewHome</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_8" or "modifier+i": speaks current line.  If flat review has been
@@ -137,134 +137,134 @@
              focus is spoken.  When this key is pressed twice quickly
              the line is read with formatting and capitalization
              details.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewCurrentLine</literal>.</para>
-	  <para>&complete; [OWNER: RNB] handles the single press,
-	    and the double press.  &shoulddeliver; V1.0.</para>
+          <para>&complete; [OWNER: RNB] handles the single press,
+            and the double press.  &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_9" or "modifier+o": moves the review position to the next
             line.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewNextLine</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_9" or "Control+modifier+o" : moves the review position to the end
             of the review area.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewEnd</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_4" or "modifier+j": moves the review position to the prior word or
             item.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewPreviousItem</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_4" or "Control+modifier+j" : moves the review position to the word
             spatially above the current word.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewAbove</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_5" or "modifier+k": speaks the current word or item.  If this key
              is pressed twice quickly the word is spelled and any
              capitalization is  announced; three times results in
              phonetic spelling</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewCurrentItem</literal>.</para>
-	  <para>&complete; [OWNER: WDW] handles the single press,
-	    and  the double press.  &mustdeliver; V1.0.</para>
+          <para>&complete; [OWNER: WDW] handles the single press,
+            and  the double press.  &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_5": speaks the accessible containing
-	     the current review word.</para>
-	  <para>&detail; bound to
+             the current review word.</para>
+          <para>&detail; bound to
             <literal>default.Script.reviewCurrentAccessible</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_6" or "modifier+l": moves the review position to the next word or
             item.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewNextItem</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_6" or "Control+modifier+l" : moves the review position to the word
             spatially below the current word.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewBelow</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_1" or "modifier+m": moves the review position to the prior
             character.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewPreviousCharacter</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_1" or "Control+modifier+m" : moves the review position to the end
             of the line.</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewEndOfLine</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_2" or "modifier+,": speaks the current character.  If this key is
              pressed twice quickly the character is pronounced
              phonetically (if it is a letter)</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewCurrentCharacter</literal>.</para>
-	  <para>&complete; [OWNER: WDW].  &mustdeliver; V1.1.</para>
+          <para>&complete; [OWNER: WDW].  &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_3" or "modifier+.": moves the review position to the next
             character</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewNextCharacter</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>modifier+s: toggles speech on and off.</para>
-	  <para>&complete; V0.2.5.</para>
+          <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
           <para>CONTROL+modifier+space: resets connection to the speech 
             engine as well as reloads all user settings.</para>
-	  <para>&complete; V0.2.5.</para>
+          <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
           <para>modifier+v: brings up a "quick" verbosity preferences
-	     dialog to set preferences that are temporary to the
-	     current session (i.e., they are not saved permanently
-	     like the Configuration GUI would do).  Example settings
-	     include whether or not to speak indenting when working
-	     with text, speaking capitalization, speak the role of
-	     items, speak font information if it changes, speak an
-	     entire table line vs. individual cells, etc.</para>
-	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
+             dialog to set preferences that are temporary to the
+             current session (i.e., they are not saved permanently
+             like the Configuration GUI would do).  Example settings
+             include whether or not to speak indenting when working
+             with text, speaking capitalization, speak the role of
+             items, speak font information if it changes, speak an
+             entire table line vs. individual cells, etc.</para>
+          <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>modifier+RIGHT_ARROW: increases speech rate</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>speech.increaseSpeechRate</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>modifier+LEFT_ARROW: decreases speech rate</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>speech.decreaseSpeechRate</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>modifier+SPACE: brings up configuration GUI</para>
-	  <para>&complete; V0.2.5.</para>
+          <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
             <para>Alt+modifier+[1-6]: add a bookmark and bind it to that number key.</para>
@@ -312,53 +312,53 @@
       <itemizedlist>
         <listitem>
           <para>Pan left: BRL_CMD_FWINLT</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.panBrailleLeft</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Pan right: BRL_CMD_FWINRT</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.panBrailleRight</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Line up: BRL_CMD_LNUP</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewAbove</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Line down: BRL_CMD_LNDN</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewBelow</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Beginning of line: BRL_CMD_LNBEG</para>
-	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
+          <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>End of line: BRL_CMD_LNEND</para>
-	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
+          <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Top of window: BRL_CMD_TOP_LEFT</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewHome</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Bottom of window: BRL_CMD_BOT</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.reviewBottomLeft</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Return to focus: BRL_CMD_HOME</para>
-	  <para>&detail; bound to
+          <para>&detail; bound to
             <literal>default.Script.goBrailleHome</literal>.</para>
-	  <para>&complete; V0.2.2.</para>
+          <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Cursor routing/clicking</para>
@@ -368,23 +368,23 @@
             cursor at the beginning and end of the region that the
             user wishes to select in conjunction with another well
             known key on the display.</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Set watched area:</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Set Bookmarked area:</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Go to bookmarked area:</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Go to watched area:</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
       </itemizedlist>
 
@@ -396,30 +396,30 @@
           <para>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
             whether or not spaces are compressed when navigating with
             the braille display</para>
-	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.1.</para>
+          <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
-	  <para>Toggle grade two on and off.</para>
-	  <para>&incomplete; &shoulddeliver; V1.1.</para>
+          <para>Toggle grade two on and off.</para>
+          <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
-	  <para>Toggle what attributes if any are displayed.</para>
-	  <para>&incomplete; cannot reliably get dot info from BrlTTY.
-	    &shoulddeliver; V1.1.</para>
+          <para>Toggle what attributes if any are displayed.</para>
+          <para>&incomplete; cannot reliably get dot info from BrlTTY.
+            &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
-	  <para>Enter verbosity mode: BRL_CMD_PREFMENU.</para>
-	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
+          <para>Enter verbosity mode: BRL_CMD_PREFMENU.</para>
+          <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Toggle keyboard learn mode: BRL_CMD_LEARN</para>
-	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.0.</para>
+          <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Toggle display style: toggles between the default
             view, which is the logical presentation of the focus and
             the contents of the current line.</para>
-	  <para>&incomplete; &deliver; V1.1+.</para>
+          <para>&incomplete; &deliver; V1.1+.</para>
         </listitem>
       </itemizedlist>
 

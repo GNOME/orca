@@ -39,8 +39,8 @@
     <section id="interoperabilitytest"><title>Interaction with Other ATs</title>
       <para>The tests in this section are to ensure that Orca does not
         have adverse effects on other assistive technologies that may be
-	running, and that other assistive technologies do not adversely
-	effect Orca.</para>
+        running, and that other assistive technologies do not adversely
+        effect Orca.</para>
 
     </section>
 
@@ -117,7 +117,7 @@
 
       <para>The tests in this section are to ensure that the Orca
         Verbalized Punctuation functionality provides the desired
-	output for the various verbalized punctuation settings.</para>
+        output for the various verbalized punctuation settings.</para>
 
     </section>
 
@@ -125,7 +125,7 @@
 
       <para>The tests in this section are to ensure that the Orca
         Verbalized Link functionality provides the desired
-	output for the various verbalized link settings.</para>
+        output for the various verbalized link settings.</para>
 
     </section>
 
@@ -250,8 +250,8 @@
 
       <para>The tests in this section are to make sure that Orca does
         the right thing with respect to spaces and indentation on the
-	braille display and with respect to the various braille
-	spacing and indentation settings.</para>
+        braille display and with respect to the various braille
+        spacing and indentation settings.</para>
 
     </section>
   </chapter>
@@ -306,10 +306,10 @@ and action it. Focus 'Edit' button and action it.  Verify values can be changed.
 Associations' window pops up.  User can add a new file type and re-edit it's values afterwards.</para>
     <para>&tgoal; Ability   to choose different Desktop font family and size </para>
     <para>&tprocedure; Start up nautilus file manager by selecting  'Preferences'->'Display'->'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
-		this button's dialog with Space or press Alt-D>.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
-		the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </para>
-		<para>&tresult; Font
-		Preferences dialog appears.  Desktop font changes (icon text on desktop changes).  Desktop font reverts.</para>
+                this button's dialog with Space or press Alt-D>.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
+                the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </para>
+                <para>&tresult; Font
+                Preferences dialog appears.  Desktop font changes (icon text on desktop changes).  Desktop font reverts.</para>
 <para>&tgoal; Ability to change resolution and refresh rate </para>
 <para>&tprocedure; Launch 'Preferences'->'Display'->'Screen Resolution'.  Navigate to 'Resolution' combo-box and action it.  Select a different resolution.
  Navigate to 'Refresh rate' combo-box and action it.  Select a different refresh rate.  Navigate to 'Apply' confirmation button and action it.  Relaunch
@@ -346,10 +346,10 @@ press Return. </para>
 <para>&tresult; The screen locks.  The password dialog is displayed and dismisses.  The password dialog is displayed and the
 session is unlocked.</para>
       <para>&tgoal; Ability  to view system log via command line </para>
-	  <para>&tprocedure; Start up terminal by selecting  'Applications'->'System Tools'->'Terminal'.  Type in "/sbin/yast".  Press Return button.  Navigate to
-	  the 'Misc'  category in yast.  Navigate to the 'View system log' option with RightDown.  Press Return to select it.  Exit the log with Alt-O>, or
-	  Tab to 'OK' and pressing Return.  Quit out of yast with Alt-Q>.  Close the gnome terminal with 'File'->'Close Window'. </para>
-	  <para>&tresult; A
+          <para>&tprocedure; Start up terminal by selecting  'Applications'->'System Tools'->'Terminal'.  Type in "/sbin/yast".  Press Return button.  Navigate to
+          the 'Misc'  category in yast.  Navigate to the 'View system log' option with RightDown.  Press Return to select it.  Exit the log with Alt-O>, or
+          Tab to 'OK' and pressing Return.  Quit out of yast with Alt-Q>.  Close the gnome terminal with 'File'->'Close Window'. </para>
+          <para>&tresult; A
 gnome terminal appears on the desktop.  The messages log is displayed through yast.  Yast is closed and the terminal exited.</para>
 <para>&tgoal; Ability to successfully logout </para>
 <para>&tprocedure; Open a number of applications such as calculator, find files, terminal, and nautilus.  From the launch menu choose 'Log Out user'.
@@ -449,13 +449,13 @@ as "this is a changed file name".</para>
         <para>&tprocedure; Delete the word Mike found in the last test and press CTRL+q.</para>
         <para>&tresult; Orca should speak the dialog warning the user that the changes will be lost.</para>
 
-	  <para>&tgoal; Ability to  create and save a new document in Geditor </para>
-	  <para>&tprocedure; Start up gedit by selecting  'Applications'->'Accessories'->'Text Editor'. Make some changes to the newly opened document.  Select the
-	  option 'File'->'Save As' from the menubar. Enter a filename in the 'Save as..' dialog window.  Click on the 'OK' button.  Select the option 'File'->'Close'
-	  from the menubar. Select the option 'File'->'Open' from the menubar. Specify the name of the document in the 'Open File..' dialog window.  Click on the
-	  'OK' button.   Close gedit with either 'File'->'Quit' or by pressing Ctrl-Q>. </para>
-	  <para>&tresult; A new text file is created.  The file is closed
-	  from gedit.  The same text file is reopened is gedit.</para>
+          <para>&tgoal; Ability to  create and save a new document in Geditor </para>
+          <para>&tprocedure; Start up gedit by selecting  'Applications'->'Accessories'->'Text Editor'. Make some changes to the newly opened document.  Select the
+          option 'File'->'Save As' from the menubar. Enter a filename in the 'Save as..' dialog window.  Click on the 'OK' button.  Select the option 'File'->'Close'
+          from the menubar. Select the option 'File'->'Open' from the menubar. Specify the name of the document in the 'Open File..' dialog window.  Click on the
+          'OK' button.   Close gedit with either 'File'->'Quit' or by pressing Ctrl-Q>. </para>
+          <para>&tresult; A new text file is created.  The file is closed
+          from gedit.  The same text file is reopened is gedit.</para>
 
       </section>
             <section id="tpspell"><title> spell check test</title>
@@ -492,13 +492,13 @@ as "this is a changed file name".</para>
     <section id="gaimtest"><title>GAIM Test Plan</title>
       <section id="tpim"><title>instant messenger test. </title>
         <para>&tgoal; Ability to configure IM, and connect to IRC chat server </para>
-		<para>&tprocedure; Launch 'Applications'->'Internet'->'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
-		in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
-		'Show more options' expander and action it with Space.  From the 'Proxy type' combo box, choose 'SOCKS 5'.  Type "gmpea-socks.sun.com" for the 'Host:'
-		text field.  Type "1080" for the 'Port:' text field.  Press Alt-S> to save these configuration settings.  From the Accounts dialog, highlight the 'Online'
-		tickbox for the account.  Press Space to tick it. Wait for the Signon dialog to complete and for the session to connect.  From the Buddy List window,
-		choose 'Buddies'->'Signoff'.  Press Ctrl-Q> to quit. </para>
-		<para>&tresult; A new IRC account is setup in GAIM.  The IRC session connects.  The session
+                <para>&tprocedure; Launch 'Applications'->'Internet'->'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
+                in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
+                'Show more options' expander and action it with Space.  From the 'Proxy type' combo box, choose 'SOCKS 5'.  Type "gmpea-socks.sun.com" for the 'Host:'
+                text field.  Type "1080" for the 'Port:' text field.  Press Alt-S> to save these configuration settings.  From the Accounts dialog, highlight the 'Online'
+                tickbox for the account.  Press Space to tick it. Wait for the Signon dialog to complete and for the session to connect.  From the Buddy List window,
+                choose 'Buddies'->'Signoff'.  Press Ctrl-Q> to quit. </para>
+                <para>&tresult; A new IRC account is setup in GAIM.  The IRC session connects.  The session
 signs off and the Instant Messenger is exited.</para>
         <para>&tgoal; Determine if Orca reads buddy list information.</para>
         <para>&tprocedure; Open gaim, create ant AOL instant messenger account and add some buddies.  After the buddies are added arrow through the list of buddies</para>

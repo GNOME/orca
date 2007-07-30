@@ -102,29 +102,29 @@
       <section><title>Output Styles by Role</title>
 
         <section id="ROLEACCELLABEL">
-	  <title>accelerator label (ROLE_ACCEL_LABEL)</title>
+          <title>accelerator label (ROLE_ACCEL_LABEL)</title>
           <para>An accelerator label is a short string that appears at
             the end of the text for a menu item (e.g., "CTRL+Z"), and
             defines the keystrokes that will invoke the action associated
             with a menu item.</para>
-	   
-	  <para>&example; gnome-terminal: the "Paste" menu item in the "Edit"
-	    menu has an accelerator.</para>
+           
+          <para>&example; gnome-terminal: the "Paste" menu item in the "Edit"
+            menu has an accelerator.</para>
 
-	  <para>&issue; It would be nice to be able to get text bounds
-	    information for the accelerator text, but this doesn't appear
-	    to be possible with the existing implementations.</para>
+          <para>&issue; It would be nice to be able to get text bounds
+            information for the accelerator text, but this doesn't appear
+            to be possible with the existing implementations.</para>
 
           <section><title>Braille</title>
             <para>When presented, the accelerator will always be
-	      presented after the item it represents and before the
-	      marker that separates menu items.  The braille text for
-	      the accelerator will appear in parentheses with no space
-	      before the opening parenthesis.  Accelerator labels will
-	      only be presented in verbose mode, and will only appear
-	      for the item with focus.  In the event that there are
-	      other things to show (e.g., check buttons or role
-	      names), the accelerator will appear to the far right.</para>
+              presented after the item it represents and before the
+              marker that separates menu items.  The braille text for
+              the accelerator will appear in parentheses with no space
+              before the opening parenthesis.  Accelerator labels will
+              only be presented in verbose mode, and will only appear
+              for the item with focus.  In the event that there are
+              other things to show (e.g., check buttons or role
+              names), the accelerator will appear to the far right.</para>
             <itemizedlist>
               <listitem>
                 <para>Verbose Example: view menu show mumble &lt;x>(CTRL+M) _ zoom in _ ...</para>
@@ -147,10 +147,10 @@
         </section>
 
         <section id="ROLEALERT">
-	  <title>alert (ROLE_ALERT)</title>
-	  <para>&example; gtk-demo: "Dialog and Message Boxes"
-	    demo; click on the "Message Dialog" button.  The "Information"
-	    window that appears is an alert.</para>
+          <title>alert (ROLE_ALERT)</title>
+          <para>&example; gtk-demo: "Dialog and Message Boxes"
+            demo; click on the "Message Dialog" button.  The "Information"
+            window that appears is an alert.</para>
           <para>&issue; The AT-SPI makes a distinction between alerts and
             dialogs.  But, it appears as though the role "alert" is applied
             to just about any dialog.</para>
@@ -189,9 +189,9 @@
         </section>
 
         <section id="ROLEANIMATION">
-	  <title>animation (ROLE_ANIMATION)</title>
+          <title>animation (ROLE_ANIMATION)</title>
           <para>An animation contains a moving or dynamic image.</para>
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
           <section><title>Braille</title>
             <para>&todo; should this follow a pattern of "label
               description role" to be more consistent with the
@@ -219,13 +219,13 @@
         </section>
 
         <section id="ROLEARROW">
-	  <title>arrow (ROLE_ARROW)</title>
+          <title>arrow (ROLE_ARROW)</title>
           <para>An arrow is a 2D directional indicator.</para>
-	  <para>&example; Unknown.</para>
-	  <para>&issue; The AT-SPI does not appear to have a way to determine
+          <para>&example; Unknown.</para>
+          <para>&issue; The AT-SPI does not appear to have a way to determine
             which way the arrow is pointing.</para>
-	  <para>&issue; gail/gail/gailarrow.c sets the role to 
-	    ATK_ROLE_ICON.</para>
+          <para>&issue; gail/gail/gailarrow.c sets the role to 
+            ATK_ROLE_ICON.</para>
           <section><title>Braille</title>
             <para>An arrow will be represented by the direction the arrow
               is pointing followed by "arrow."  Any touch cursor associated
@@ -255,16 +255,16 @@
         </section>
 
         <section id="ROLECHECKBOX">
-	  <title>check box (ROLE_CHECK_BOX)</title>
+          <title>check box (ROLE_CHECK_BOX)</title>
           <para>A check box represents a choice that can be checked or
             unchecked and provides an indicator for the current
             state.</para>
 
-	  <para>&example; gnome-terminal: "Edit" -> "Current Profile..."; the
-	    "General" tab has a number of check boxes.</para>
+          <para>&example; gnome-terminal: "Edit" -> "Current Profile..."; the
+            "General" tab has a number of check boxes.</para>
 
-	  <para>&example; gtk-demo: "Tree Store" demo.  Most table cells are
-	    check boxes.  &issue; the AT-SPI tells us these are tables cells,
+          <para>&example; gtk-demo: "Tree Store" demo.  Most table cells are
+            check boxes.  &issue; the AT-SPI tells us these are tables cells,
             not check boxes.</para>
 
           <section><title>Braille</title>
@@ -295,13 +295,13 @@
         </section>
 
         <section id="ROLECHECKMENUITEM">
-	  <title>check menu item (ROLE_CHECK_MENU_ITEM)</title>
+          <title>check menu item (ROLE_CHECK_MENU_ITEM)</title>
           <para>A check menu represents a menu item that can be
             checked or unchecked and provides an indicator for the
             current state.</para>
 
-	  <para>&example; gnome-terminal: the "View" menu contains check menu
-	    items.</para>
+          <para>&example; gnome-terminal: the "View" menu contains check menu
+            items.</para>
 
           <para>&issue; It appears as though some toolkits allow menu items to
             have children (see the 'Menus' demo of the gtk-demo application -
@@ -340,10 +340,10 @@
         </section>
 
         <section id="ROLECOLUMNHEADER">
-	  <title>column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</title>
+          <title>column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</title>
           <para>A column header is a header for a column of data.</para>
 
-	  <para>&example; gtk-demo: "List Store" demo.  The headers are table
+          <para>&example; gtk-demo: "List Store" demo.  The headers are table
             column headers.</para>
 
           <section><title>Braille</title>
@@ -378,21 +378,21 @@
         </section>
 
         <section id="ROLECOMBOBOX">
-	  <title>combo box (ROLE_COMBO_BOX)</title>
+          <title>combo box (ROLE_COMBO_BOX)</title>
           <para>A combo box is a single line item that contains a list of
             choices the user can select from, and it can also contain
             editable text.</para>
 
-	  <para>&example; gedit: "File" -> "Open...".  Both combo boxes
-	    are simple menu combo boxes.</para>
+          <para>&example; gedit: "File" -> "Open...".  Both combo boxes
+            are simple menu combo boxes.</para>
 
-	  <para>&example; gnome-terminal: "Edit" -> "Current Profile..." ->
+          <para>&example; gnome-terminal: "Edit" -> "Current Profile..." ->
             "Effects".  The "Image file" combo box has a list in a scroll pane
             and a SINGLE_LINE EDITABLE text area as children.</para>
 
-	  <para>&example; gtk-demo: "Size Groups" demo.  This
-		creates a "GtkSizeGroup" dialog.  Each combo box
-		object in this dialog has a menu as its child.</para>
+          <para>&example; gtk-demo: "Size Groups" demo.  This
+                creates a "GtkSizeGroup" dialog.  Each combo box
+                object in this dialog has a menu as its child.</para>
 
           <section><title>Braille</title>
             <para>The verbose and brief modes will show the label followed
@@ -429,10 +429,10 @@
         </section>
 
         <section id="ROLEDESKTOPICON">
-	  <title>desktop icon (ROLE_DESKTOP_ICON)</title>
+          <title>desktop icon (ROLE_DESKTOP_ICON)</title>
           <para>A desktop icon is an iconified internal frame within a 
             desktop pane.</para>
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
           <section><title>Braille</title>
             <itemizedlist>
               <listitem>
@@ -457,9 +457,9 @@
         </section>
 
         <section id="ROLEDIAL">
-	  <title>dial (ROLE_DIAL)</title>
+          <title>dial (ROLE_DIAL)</title>
           <para>A dial is a rotatable valuator.</para>
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
           <section><title>Braille</title>
             <itemizedlist>
               <listitem>
@@ -484,7 +484,7 @@
         </section>
 
         <section id="ROLEDIALOG">
-	  <title>dialog (ROLE_DIALOG)</title>
+          <title>dialog (ROLE_DIALOG)</title>
           <para>A dialog is a top level window with a title and border.
             &todo; the AT-SPI makes a distinction between alerts and
             dialogs.  But, it appears as though the role "alert" is applied
@@ -494,8 +494,8 @@
             the "Interactive Dialog" button.  The "Dialogs" window is a
             dialog.</para>
 
-	  <para>&example; gtk-demo: "Expander" demo; the "GtkExpander" window
-	    is a dialog.</para>
+          <para>&example; gtk-demo: "Expander" demo; the "GtkExpander" window
+            is a dialog.</para>
 
           <section><title>Braille</title>    
             <para>Any window, regardless if it is an alert, dialog,
@@ -534,10 +534,10 @@
         </section>
 
         <section id="ROLEDIRECTORYPANE">
-	  <title>directory pane (ROLE_DIRECTORY_PANE)</title>
+          <title>directory pane (ROLE_DIRECTORY_PANE)</title>
           <para>A directory pane is a pane that allows the user to 
             navigate through and select the contents of a directory.</para>
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
           <section><title>Braille</title>    
 
             <para>When in a directory pane, it will be treated like a 
@@ -559,13 +559,13 @@
         </section>
 
         <section id="ROLEICON">
-	  <title>icon (ROLE_ICON)</title>
+          <title>icon (ROLE_ICON)</title>
           <para>An icon is a small fixed-sized picture typically used to
             decorate components.</para>
 
-	  <para>&example; desktop: Press Ctrl+Alt+Tab to select the
-	    "Desktop."  This will give the icons on the desktop focus
-	    and you can move between them using the arrow keys.</para>
+          <para>&example; desktop: Press Ctrl+Alt+Tab to select the
+            "Desktop."  This will give the icons on the desktop focus
+            and you can move between them using the arrow keys.</para>
 
           <para>&example; gtk-demo: "Application Main Window" demo.  This
             creates an "Application Window" frame.  Click on File->New.
@@ -611,13 +611,13 @@
         </section>
 
         <section id="ROLEIMAGE">
-	  <title>image (ROLE_IMAGE)</title>
+          <title>image (ROLE_IMAGE)</title>
           <para>An image is a picture, typically static.</para>
 
-	  <para>&issue; Most push buttons objects appear to implement the
-	    Image interface whether they show an image or not.  So...the
-	    consumer needs to be careful to determine if an image is 
-	    actually showing or not.</para>
+          <para>&issue; Most push buttons objects appear to implement the
+            Image interface whether they show an image or not.  So...the
+            consumer needs to be careful to determine if an image is 
+            actually showing or not.</para>
 
           <section><title>Braille</title>    
             <para>The label of the icon (or the component for the icon) will
@@ -647,15 +647,15 @@
         </section>
 
         <section id="ROLEHTMLCONTAINER">
-	  <title>html container (ROLE_HTML_CONTAINER)</title>
+          <title>html container (ROLE_HTML_CONTAINER)</title>
 
-	  <para>&example; mozilla.</para>
+          <para>&example; mozilla.</para>
 
-	  <para>&issue; The HTML container is a hierarchy of test objects.
-	    Non-links do not get focus, but links do.  This presents some
-	    difficulties.  For example, the first time a container is
-	    displayed, focus might be given to a link that is off the
-	    screen.</para>
+          <para>&issue; The HTML container is a hierarchy of test objects.
+            Non-links do not get focus, but links do.  This presents some
+            difficulties.  For example, the first time a container is
+            displayed, focus might be given to a link that is off the
+            screen.</para>
 
           <para>&todo; considerable thought needs to be done here.
             An idea for links, however, is that their text should
@@ -683,7 +683,7 @@
         </section>
 
         <section id="ROLELABEL">
-	  <title>label (ROLE_LABEL)</title>
+          <title>label (ROLE_LABEL)</title>
           <para>A label is a short string.  It typically labels another
             object (e.g., a text area), but may be standalone.  When it
             is standalone, it will be considered "static text."
@@ -692,10 +692,10 @@
             discover the text through review mode.</para>
 
           <para>&example; gtk-demo: Bring "Color Selector" demo.  This creates
-	    a "Color Selection" frame as a child of the gtk-demo app.  Click
-	    on "Change to above color".  This creates a "Changing color" color
-	    chooser dialog.  The numerical entry fields are spin button
-	    objects, each which is LABELED_BY a label.</para>
+            a "Color Selection" frame as a child of the gtk-demo app.  Click
+            on "Change to above color".  This creates a "Changing color" color
+            chooser dialog.  The numerical entry fields are spin button
+            objects, each which is LABELED_BY a label.</para>
 
           <section><title>Braille</title>    
 
@@ -724,7 +724,7 @@
         </section>
 
         <section id="ROLELIST">
-	  <title>list (ROLE_LIST)</title>
+          <title>list (ROLE_LIST)</title>
           <para>A list is an object that presents a list of objects to the
             user and allows them to select one or more of them.</para>
 
@@ -762,7 +762,7 @@
         </section>
 
         <section id="ROLEMENU">
-	  <title>menu (ROLE_MENU)</title>
+          <title>menu (ROLE_MENU)</title>
           <para>A menu contains menu items and lives in a menu bar.</para>
 
           <section><title>Braille</title>    
@@ -775,12 +775,12 @@
      
             <para>&example; Menus abound everywhere.</para>
 
-	    <para>&issue; A flurry of events seem to be delivered when going
-	       to/from a submenu item in the same menu.  One of these events
-	       appears to give focus to the containing menu, which causes a
-	       dilemna for determining the object that will actually end up
-	       with focus (i.e., speech output needs to ignore intermediate
-	       objects with focus).</para>
+            <para>&issue; A flurry of events seem to be delivered when going
+               to/from a submenu item in the same menu.  One of these events
+               appears to give focus to the containing menu, which causes a
+               dilemna for determining the object that will actually end up
+               with focus (i.e., speech output needs to ignore intermediate
+               objects with focus).</para>
 
             <itemizedlist>
               <listitem>
@@ -808,10 +808,10 @@
         </section>
 
         <section id="ROLEMENUBAR">
-	  <title>menu (ROLE_MENU_BAR)</title>
+          <title>menu (ROLE_MENU_BAR)</title>
           <para>A menu bar contains a set of menus.</para>
 
-	  <para>&example; Menu bars abound.</para>
+          <para>&example; Menu bars abound.</para>
 
           <section><title>Braille</title>    
 
@@ -845,10 +845,10 @@
         </section>
 
         <section id="ROLEMENUITEM">
-	  <title>menu item (ROLE_MENU_ITEM)</title>
+          <title>menu item (ROLE_MENU_ITEM)</title>
           <para>A menu item lives in a menu.</para>
 
-	  <para>&example; Menu items abound.</para>
+          <para>&example; Menu items abound.</para>
 
           <para>&issue; It appears as though some toolkits allow menu items to
             have children (see the 'Menus' demo of the gtk-demo application -
@@ -890,11 +890,11 @@
         </section>
 
         <section id="ROLEOPTIONPANE">
-	  <title>option pane (ROLE_OPTION_PANE)</title>
+          <title>option pane (ROLE_OPTION_PANE)</title>
           <para>An option pane is a specialized pane whose primary used is
             inside a dialog.</para>
 
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
 
           <section><title>Braille</title>         
             <itemizedlist>
@@ -920,7 +920,7 @@
         </section>
 
         <section id="ROLEPAGETAB">
-	  <title>page tab (ROLE_PAGE_TAB)</title>
+          <title>page tab (ROLE_PAGE_TAB)</title>
           <para>A page tab is a child of a page tab list.</para>
 
           <para>&example; gtk-demo: The panel on the right hand side of the
@@ -931,8 +931,8 @@
             is frame.  Each frame has a menu bar and a page tab list.  Each
             page tab list has a page tab.</para>
 
-	  <para>&example; gnome-terminal: "Edit" -> "Current Profile..." is a
-	    dialog containing a page tab list.</para>
+          <para>&example; gnome-terminal: "Edit" -> "Current Profile..." is a
+            dialog containing a page tab list.</para>
 
           <section><title>Braille</title>
             <para>A page tab will be viewed as a form of context.  If
@@ -966,12 +966,12 @@
         </section>
 
         <section id="ROLEPAGETABLIST">
-	  <title>page tab list (ROLE_PAGE_TAB_LIST)</title>
+          <title>page tab list (ROLE_PAGE_TAB_LIST)</title>
           <para>A page tab is an object that presents a series of 
             panels (page tabs), one at a time.</para>
 
-	  <para>&example; See <link
-	    linkend="ROLEPAGETAB">ROLE_PAGE_TAB</link>.</para>
+          <para>&example; See <link
+            linkend="ROLEPAGETAB">ROLE_PAGE_TAB</link>.</para>
 
           <section><title>Braille</title>
             <para>Orca will display "tab list" followed by the list of tabs
@@ -1002,11 +1002,11 @@
         </section>
 
         <section id="ROLEPASSWORDTEXT">
-	  <title>password text (ROLE_PASSWORD_TEXT)</title>
+          <title>password text (ROLE_PASSWORD_TEXT)</title>
           <para>Password text objects are used for passwords or other 
             places where the visible text should not be visibly shown.</para>
 
-	  <para>&example; "Launch" -> "Preferences" -> "System Preferences" ->
+          <para>&example; "Launch" -> "Preferences" -> "System Preferences" ->
             "Network Settings" -> "NFS."  Brings up a "Query" alert requesting
             the root password.</para>
 
@@ -1036,11 +1036,11 @@
         </section>
 
         <section id="ROLEPROGRESSBAR">
-	  <title>progress bar (ROLE_PROGRESS_BAR)</title>
+          <title>progress bar (ROLE_PROGRESS_BAR)</title>
           <para>A progress bar indicates how much of a task has been
             completed.</para>
 
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
 
           <section><title>Braille</title>         
             <para>Orca will show the label followed by the value followed
@@ -1068,20 +1068,20 @@
         </section>
 
         <section id="ROLEPUSHBUTTON">
-	  <title>push button (ROLE_PUSH_BUTTON)</title>
+          <title>push button (ROLE_PUSH_BUTTON)</title>
           <para>An object the user can manipulate to tell the application
             to do something.</para>
 
           <para>&example; gtk-demo: "Button Boxes" demo.  Many pushbuttons
             here.  The buttons have images and accelerators.</para>
 
-	  <para>&example; gnome-terminal: "Edit" -> "Current Profile..."  The
-	    "General" page tab has a push button labeled "Font."  The text of
-	    this push button is represented by two child labels.</para>
+          <para>&example; gnome-terminal: "Edit" -> "Current Profile..."  The
+            "General" page tab has a push button labeled "Font."  The text of
+            this push button is represented by two child labels.</para>
 
           <para>&issue; It is important to remember that push buttons can
-	    optionally have children, which is the case when they have more
-	    than one label.</para>
+            optionally have children, which is the case when they have more
+            than one label.</para>
 
           <section><title>Braille</title>         
             <para>Orca will show the name of the button followed by the
@@ -1109,19 +1109,19 @@
         </section>
 
         <section id="ROLERADIOBUTTON">
-	  <title>radio button (ROLE_RADIO_BUTTON)</title>
+          <title>radio button (ROLE_RADIO_BUTTON)</title>
           <para>A specialized check box that will cause other radio buttons
             in the same group to become unchecked when it is checked.</para>
 
-	  <para>&example; gnome-terminal: "Edit" -> "Current Profile..."
+          <para>&example; gnome-terminal: "Edit" -> "Current Profile..."
             "Effects" tab.  Radio buttons live here.</para>
 
           <para>&issue; The accessible relation interface was design for
             things like radio buttons, but it appears to be ignored or
             sporadically supported.  As such, depending upon the relation 
-	    interface appears to be a poor choice.</para>
+            interface appears to be a poor choice.</para>
 
-	  <para>&issue; In Swing, when a radio button gets focus, it is not
+          <para>&issue; In Swing, when a radio button gets focus, it is not
             automatically checked.  In GTK+, however, a radio button
             automatically is checked when it gets focus.</para>
 
@@ -1161,11 +1161,11 @@
         </section>
 
         <section id="ROLERADIOMENUITEM">
-	  <title>radio menu item (ROLE_RADIO_MENU_ITEM)</title>
+          <title>radio menu item (ROLE_RADIO_MENU_ITEM)</title>
           <para>A radio menu represents a menu item that behaves like
             a radio button.</para>
-	  <para>&example; gnome-terminal: The "Tabs" menu has radio menu
-	    items for each tab.</para>
+          <para>&example; gnome-terminal: The "Tabs" menu has radio menu
+            items for each tab.</para>
 
           <section><title>Braille</title>
             <para>All menus items from a single menu will be shown at
@@ -1197,10 +1197,10 @@
         </section>
 
         <section id="ROLEROWHEADER">
-	  <title>row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</title>
+          <title>row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</title>
           <para>A row header is a header for a row of data.</para>
 
-	  <para>&example; Unknown.</para>
+          <para>&example; Unknown.</para>
 
           <section><title>Braille</title>
             <para>Like a column header, a row header will be treated
@@ -1229,11 +1229,11 @@
         </section>
 
         <section id="ROLESCROLLBAR">
-	  <title>scroll bar (ROLE_SCROLL_BAR)</title>
+          <title>scroll bar (ROLE_SCROLL_BAR)</title>
           <para>A scroll bar allows a user to incrementally view a large
             amount of information.</para>
 
-	  <para>&example; gtk-demo: "Application Main Window" demo.  The text
+          <para>&example; gtk-demo: "Application Main Window" demo.  The text
             area is in a scroll pane.  Type enough and a scroll bar appears.
             One cannot seem to give it keyboard focus; instead normal keyboard
             navigation applies to the text area.</para>
@@ -1269,12 +1269,12 @@
         </section>
 
         <section id="ROLESLIDER">
-	  <title>slider (ROLE_SLIDER)</title>
+          <title>slider (ROLE_SLIDER)</title>
           <para>A slider allows a user to select a value from a bounded
             range.</para>
 
           <para>&example; gnome-terminal: "Edit" -> "Current Profile..."  The
-	    "Shade transparent or image background" object is a slider.</para>
+            "Shade transparent or image background" object is a slider.</para>
 
           <section><title>Braille</title>         
 
@@ -1304,7 +1304,7 @@
         </section>
 
         <section id="ROLESPINBUTTON">
-	  <title>spin button (ROLE_SPIN_BUTTON)</title>
+          <title>spin button (ROLE_SPIN_BUTTON)</title>
           <para>A spin button is a single line item that contains a list of
             choices the user can select from.</para>
 
@@ -1344,16 +1344,16 @@
         </section>
 
         <section id="ROLESPLITPANE">
-	  <title>split pane (ROLE_SPLIT_PANE)</title>
+          <title>split pane (ROLE_SPLIT_PANE)</title>
           <para>A split pane is a specialized panel that presents two panels
             at once.  It has a divider than can be dragged.</para>
 
           <para>&example; gtk-demo: "Paned Widgets" demo.  This brings up a
-	    "Panes" frame.  The top split pane is a child of the big split
-	    pane.</para>
-	  
-	  <para>&example; gedit: "File" -> "Open" brings up a split
-	    pane.</para>
+            "Panes" frame.  The top split pane is a child of the big split
+            pane.</para>
+          
+          <para>&example; gedit: "File" -> "Open" brings up a split
+            pane.</para>
 
           <section><title>Braille</title>
             <para>The words "split pane" will become part of the context and
@@ -1384,16 +1384,16 @@
         </section>
 
         <section id="ROLETABLE">
-	  <title>table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</title>
+          <title>table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</title>
 
           <para>Tables are a container of data organized in rows and
             columns.  The interesting aspects of a table include: the
             row/column headers, the contents of the various cells, and
             selection.</para>
 
-	  <para>&example; gtk-demo: "Editable Cells" demo brings up a 
-	    "Shopping list" frame that has a table with cells that have
-	    editable text (press the space key to initiate the edit).</para>
+          <para>&example; gtk-demo: "Editable Cells" demo brings up a 
+            "Shopping list" frame that has a table with cells that have
+            editable text (press the space key to initiate the edit).</para>
 
           <section><title>Braille</title>
 
@@ -1430,14 +1430,14 @@
         </section>
 
         <section id="ROLETEAROFFMENUITEM">
-	  <title>tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</title>
+          <title>tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</title>
           <para>A tear off menu item allows a menu to be removed from a menu
             bar and shown in its own window.</para>
 
           <para>&example; gtk-demo: "Menus" demo has many tear off menu items.
-	    Keyboard navigation skips the tear off menu item at first.  To get
-	    to it, you need to press the up arrow key after selecting the
-	    first "real" menu item.</para>
+            Keyboard navigation skips the tear off menu item at first.  To get
+            to it, you need to press the up arrow key after selecting the
+            first "real" menu item.</para>
 
           <section><title>Braille</title>    
 
@@ -1472,7 +1472,7 @@
         </section>
 
         <section id="ROLETEXT">
-	  <title>text (ROLE_TEXT)</title>
+          <title>text (ROLE_TEXT)</title>
 
           <para>A text object presents text to the user such that the
             text typically has a caret position, can be single line or
@@ -1491,8 +1491,8 @@
             Name" label.</para>
 
           <para>&example; gtk-demo: (LABELED_BY and SINGLE_LINE) Bring up the
-	    "Dialog and Message Boxes" demo.  "Entry 1" and "Entry 2" are
-	    SINGLE_LINE text area that are LABELED_BY.</para>
+            "Dialog and Message Boxes" demo.  "Entry 1" and "Entry 2" are
+            SINGLE_LINE text area that are LABELED_BY.</para>
 
           <para>&example; gtk-demo: the "Info" and "Source" tabs contain
             uneditable text.</para>
@@ -1500,11 +1500,11 @@
           <section><title>Braille</title>         
 
             <para>Document text will be displayed optionally with the
-	      following enhancements.  It can optionally be displayed
-	      with proper spacing shown, with a certain attribute
-	      underlined, style information displayed in status cells.
-	      If status cells exist it should be possible to toggle
-	      them between the font, the point size and the attribute.
+              following enhancements.  It can optionally be displayed
+              with proper spacing shown, with a certain attribute
+              underlined, style information displayed in status cells.
+              If status cells exist it should be possible to toggle
+              them between the font, the point size and the attribute.
               Multiline text will be followed by the current line and
               total lines.</para>
 
@@ -1525,7 +1525,7 @@
         </section>
 
         <section id="ROLETOGGLEBUTTON">
-	  <title>toggle button (ROLE_TOGGLE_BUTTON)</title>
+          <title>toggle button (ROLE_TOGGLE_BUTTON)</title>
           <para>A toggle button is a specialized push button that can
             be checked or unchecked, but does not provide a separate
             indicator for the current state.</para>
@@ -1565,7 +1565,7 @@
         </section>
 
         <section id="ROLETOOLBAR">
-	  <title>tool bar (ROLE_TOOL_BAR)</title>
+          <title>tool bar (ROLE_TOOL_BAR)</title>
           <para>A tool bar is a bar or palette usually composed of
             push buttons or toggle buttons, but may also contain other
             items such as editable text.</para>
@@ -1580,9 +1580,9 @@
           <section><title>Braille</title>         
 
             <para>Verbose mode should show the tool bar followed by
-	      "toolbar" Brief mode should simply show the tool bar.
-	      Each item will be separated with "_".  Same verbosity
-	      rules apply to each item. &todo; perhaps toolbar should
+              "toolbar" Brief mode should simply show the tool bar.
+              Each item will be separated with "_".  Same verbosity
+              rules apply to each item. &todo; perhaps toolbar should
               be treated like a context?</para>
             <itemizedlist>
               <listitem>
@@ -1608,19 +1608,19 @@
         </section>
 
         <section id="ROLETREE">
-	  <title>tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</title>
+          <title>tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</title>
           <para>A tree presents hierarchical information to the user,
             allowing them to expand/collapse nodes to limit what it
             seen.</para>
 
-	  <para>&example; gtk-demo: "Tree Store" demo brings up a tree
-	    table.</para>
+          <para>&example; gtk-demo: "Tree Store" demo brings up a tree
+            table.</para>
 
           <section><title>Braille</title>         
 
             <para>Orca should show the label for the tree followed by
-	      the current item followed by its state followed by the
-	      level followed by tree.</para>
+              the current item followed by its state followed by the
+              level followed by tree.</para>
             <itemizedlist>
               <listitem>
                 <para>Verbose Example: directory myfolder expanded level 4 tree</para>
@@ -1644,13 +1644,13 @@
         </section>
 
         <section id="ROLEWINDOW">
-	  <title>window (ROLE_WINDOW)</title>
+          <title>window (ROLE_WINDOW)</title>
           <para>A window is a top level window with no title or border.</para>
           <section><title>Braille</title>         
             <para>On Alt+Tab, the task switcher will appear.  As it is
-	      on the screen, it will be presented.  The text that
-	      appears (i.e., the window name) will be shown in
-	      braille.  When the window gets focus, it will be the
+              on the screen, it will be presented.  The text that
+              appears (i.e., the window name) will be shown in
+              braille.  When the window gets focus, it will be the
               context, and the object with focus in the window will
               be the most meaningful information.</para>
             <itemizedlist>
