@@ -1,3 +1,8 @@
+2007-07-30  Javier Dorado Martínez <via william.walker@sun.com>
+
+        * src/orca/scripts/gnome-mud.py: Fix for bug 461719 - gnome-mud
+        script failed at import
+
 2007-07-29  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark for v2.19.90pre
