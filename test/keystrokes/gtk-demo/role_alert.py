@@ -15,37 +15,10 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus        ([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running.  Down arrow to the Dialog and Message
-# Boxes demo and invoke it.
+# Once gtk-demo is running, invoke the Dialog and Message Boxes demo
 #
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
+sequence.append(TypeAction           ("Dialog and Message Boxes"))
+sequence.append(WaitForFocus        ([1, 0, 0, 0], pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction         ("Return"))
 
 ########################################################################

@@ -14,49 +14,10 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus        ([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running.  Down arrow to the Expander demo and
-# invoke it.
+# Once gtk-demo is running, invoke the Expander demo
 #
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Down"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
+sequence.append(TypeAction           ("Expander"))
+sequence.append(WaitForFocus        ([1, 0, 0, 0], pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction         ("Return"))
 
 ########################################################################

@@ -15,13 +15,10 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus        ([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running.  Down arrow to the UI Manager demo and
-# invoke it.
+# Once gtk-demo is running, invoke the UI Manager demo.
 #
-sequence.append(KeyComboAction         ("End"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
+sequence.append(TypeAction           ("UI Manager"))
+sequence.append(WaitForFocus        ([1, 0, 0, 0], pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction         ("Return"))
 
 ########################################################################
