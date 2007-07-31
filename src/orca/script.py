@@ -80,6 +80,7 @@ class Script:
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
         self.brailleBindings = self.getBrailleBindings()
+        self.app_pronunciation_dict = self.getPronunciations()
 
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
@@ -149,6 +150,15 @@ class Script:
         """
         return {}
 
+    def getPronunciations(self):
+        """Defines the application specific pronunciations for this script.
+
+        Returns a dictionary where the keys are the actual text strings and
+        the values are the replacement strings that are spoken instead.
+        """
+
+        return {}
+
     def getBrailleCommandsForInputHandler(self, inputEventHandler):
         """Returns a list of BrlTTY commands (they're in braille.py) that
         match the given inputEventHandler passed as argument.
@@ -211,6 +221,16 @@ class Script:
         """
 
         return keyBindings
+
+    def overridePronunciations(self, script, pronunciations):
+        """Allow for the customization of application specific pronunciations.
+
+        Arguments:
+        - script: the application script.
+        - pronunciations: the dictionary of pronunciations for this script.
+        """
+
+        return pronunciationDict
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This

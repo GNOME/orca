@@ -1,3 +1,15 @@
+2007-07-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/pronunciation_dict.py:
+          src/orca/script.py:
+          More work on bug #364518 – Create a GUI interface to the 
+          pronunciation dictionary. Added in proper support for application
+          specific pronunciations.
+
 2007-07-30  Javier Dorado Martínez <via william.walker@sun.com>
 
         * src/orca/scripts/gnome-mud.py: Fix for bug 461719 - gnome-mud

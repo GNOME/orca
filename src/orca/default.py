@@ -5122,6 +5122,28 @@ class Script(script.Script):
 
         return newLine.encode("UTF-8")
 
+    def _getPronunciationForSegment(self, segment):
+        """Adjust the word segment to potentially replace it with what 
+        those words actually sound like. Two pronunciation dictionaries
+        are checked. First the application specific one (which might be
+        empty), then the default (global) one.
+
+        Arguments: 
+        - segment: the string to adjust for words in the pronunciation
+          dictionaries.
+
+        Returns: a new word segment adjusted for words found in the 
+        pronunciation dictionaries, or the original word segment if there
+        was no dictionary entry.
+        """
+
+        newSegment = pronunciation_dict.getPronunciation(segment,
+                                     self.app_pronunciation_dict)
+        if newSegment == segment:
+            newSegment = pronunciation_dict.getPronunciation(segment)
+
+        return newSegment
+
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
         with what those words actually sound like.
@@ -5140,14 +5162,14 @@ class Script(script.Script):
             if self.isWordDelimiter(line[i]):
                 if len(segment) != 0:
                     newLine = newLine + \
-                              pronunciation_dict.getPronunciation(segment)
+                              self._getPronunciationForSegment(segment)
                 newLine = newLine + line[i]
                 segment = u''
             else:
                 segment += line[i]
 
         if len(segment) != 0:
-            newLine = newLine + pronunciation_dict.getPronunciation(segment)
+            newLine = newLine + self._getPronunciationForSegment(segment)
 
         return newLine.encode("UTF-8")
 

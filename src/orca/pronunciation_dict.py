@@ -44,12 +44,14 @@ pronunciation_dict[_("MHz")]     = _("megahertz")
 pronunciation_dict[_("strikethrough")] = _("strike through")
 pronunciation_dict[_("SELinux")] = _("ess ee linux")
 
-def getPronunciation(word):
+def getPronunciation(word, pronunciations=None):
     """Given a word, return a string that represents what this word
     sounds like.
 
     Arguments:
-    - key: the word to get the "sounds like" representation for.
+    - word: the word to get the "sounds like" representation for.
+    - pronunciations: an optional dictionary used to get the pronunciation
+      from.
 
     Returns a string that represents what this word sounds like, or 
     the word if there is no representation.
@@ -59,6 +61,9 @@ def getPronunciation(word):
         word = word.encode("UTF-8")
 
     try:
-        return pronunciation_dict[word]
+        if pronunciations != None:
+            return pronunciations[word]
+        else:
+            return pronunciation_dict[word]
     except:
         return word
