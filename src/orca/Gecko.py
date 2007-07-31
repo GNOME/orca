@@ -203,6 +203,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForCheckBox(self, obj)
+        
         # In document content (I'm not sure about XUL widgets yet), a
         # checkbox is its own little beast with no text.  So...  if it
         # is in document content and has a label, we're likely to be
@@ -211,8 +217,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         text = ""
         if not self._script.inDocumentContent():
-            text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
-            text = self._script.appendString(text, self._script.getDisplayedText(obj))
+            text = self._script.appendString(
+                text, self._script.getDisplayedLabel(obj))
+            text = self._script.appendString(
+                text, self._script.getDisplayedText(obj))
         else:
             isLabelled = False
             relations = obj.relations
@@ -251,6 +259,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForText", obj)
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForText(self, obj)
+        
         parent = obj.parent
         if parent.role != rolenames.ROLE_AUTOCOMPLETE:
             return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
@@ -283,6 +297,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForComboBox", obj)
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForComboBox(self, obj)
+        
         regions = []
 
         label = self._script.getDisplayedLabel(obj)
@@ -336,11 +356,17 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
+        self._debugGenerator("Gecko._getBrailleRegionsForMenuItem", obj)
+
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForMenuItem(self, obj)
+        
         if not self._script.inDocumentContent():
             bg = braillegenerator.BrailleGenerator
             return bg._getBrailleRegionsForMenuItem(self, obj)
-
-        self._debugGenerator("Gecko._getBrailleRegionsForMenuItem", obj)
 
         regions = []
 
@@ -378,11 +404,17 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
+        self._debugGenerator("Gecko._getBrailleRegionsForList", obj)
+
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForList(self, obj)
+        
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             bg = braillegenerator.BrailleGenerator
             return bg._getBrailleRegionsForList(self, obj)
-
-        self._debugGenerator("Gecko._getBrailleRegionsForList", obj)
 
         regions = []
 
@@ -423,6 +455,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForImage", obj)
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForImage(self, obj)
+        
         regions = []
 
         text = ""
@@ -464,6 +502,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForLink", obj)
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForLink(self, obj)
+        
         regions = []
 
         text = ""
@@ -554,6 +598,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForText(self, obj, already_focused)
+        
         utterances = []
         parent = obj.parent
         if parent.role == rolenames.ROLE_AUTOCOMPLETE:
@@ -604,6 +654,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForComboBox(self, obj, already_focused)
+        
         utterances = []
 
         label = self._script.getDisplayedLabel(obj)
@@ -654,6 +710,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForMenuItem(self, obj, already_focused)
+        
         if not self._script.inDocumentContent():
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForMenuItem(self, obj, already_focused)
@@ -688,6 +750,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForListItem(self, obj, already_focused)
+        
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             sg = speechgenerator.SpeechGenerator
             return sg._getDefaultSpeech(self, obj, already_focused)
@@ -711,6 +779,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForList(self, obj, already_focused)
+        
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForList(self, obj, already_focused)
@@ -768,6 +842,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForImage(self, obj, already_focused)
+        
         utterances = []
 
         if not already_focused:
@@ -809,6 +889,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForLink(self, obj, already_focused)
+        
         utterances = []
 
         if not already_focused:
@@ -852,6 +938,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForTable(self, obj, already_focused)
+        
         # [[[TODO: JD - We should decide if we want to provide
         # information about the table dimensions, whether or not
         # this is a layout table versus a data table, etc.  For now,
@@ -877,6 +969,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForRadioButton(self, obj, already_focused)
+        
         if not self._script.inDocumentContent():
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForRadioButton(self, obj, already_focused)
@@ -927,6 +1025,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForCheckBox(self, obj, already_focused)
+        
         if not self._script.inDocumentContent():
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForCheckBox(self, obj, already_focused)
@@ -3255,6 +3359,18 @@ class Script(default.Script):
            or (not len(event.source.role)):
             return
 
+        # We seem to get a focus event and a caret moved event for ARIA
+        # widgets when we up/down arrow into them.  The up/down caret
+        # moved event will speak the entire line, including the ARIA
+        # widget.  So, we'll ignore focus: events for those kinds of
+        # things.
+        #
+        if self.isAriaWidget(event.source) \
+            and isinstance(orca_state.lastInputEvent,
+                           input_event.KeyboardEvent) \
+            and orca_state.lastInputEvent.event_string in ["Up", "Down"]:
+            return
+
         # If {overflow:hidden} is in the document's style sheet, we seem
         # to get an additional item in the hierarchy:  An object of role
         # ROLE_UNKNOWN which is the single child of the document frame and
@@ -3758,7 +3874,14 @@ class Script(default.Script):
             else:
                 isFocusedObj = self.isSameObject(obj, focusedObj)
 
-            if obj.role in [rolenames.ROLE_ENTRY,
+            if self.isAriaWidget(obj):
+                # Treat ARIA widgets like normal default.py widgets
+                #
+                [regions, fRegion] = \
+                          self.brailleGenerator.getBrailleRegions(obj)
+                if isFocusedObj:
+                    focusedRegion = fRegion
+            elif obj.role in [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_PASSWORD_TEXT] \
                 or ((obj.role == rolenames.ROLE_DOCUMENT_FRAME) \
                     and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
@@ -4101,6 +4224,7 @@ class Script(default.Script):
         """
         if not obj:
             obj = orca_state.locusOfFocus
+
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
                 return True
@@ -5447,7 +5571,8 @@ class Script(default.Script):
         # We also don't want to be guessing if the item doesn't have focus.
         #
         if not self.inDocumentContent() \
-           or not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+           or not obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+           or self.isAriaWidget(obj):
             return guess
 
         # Because the guesswork is based upon spatial relations, if we're
@@ -6371,7 +6496,8 @@ class Script(default.Script):
             # Therefore, if we have a valid label for a radio button,
             # we need to add it here.
             #
-            if obj.role == rolenames.ROLE_RADIO_BUTTON:
+            if (obj.role == rolenames.ROLE_RADIO_BUTTON) \
+                and not self.isAriaWidget(obj):
                 label = self.getDisplayedLabel(obj)
                 if label:
                     utterances.append([label, self.getACSS(obj, label)])
@@ -6398,7 +6524,12 @@ class Script(default.Script):
                                      rolenames.ROLE_ENTRY,
                                      rolenames.ROLE_PASSWORD_TEXT]
 
-            if obj.text \
+            if self.isAriaWidget(obj):
+                # Treat ARIA widgets like normal default.py widgets
+                #
+                speakThisRole = False
+                strings = self.speechGenerator.getSpeech(obj, False)
+            elif obj.text \
                and not obj.role in [rolenames.ROLE_ENTRY,
                                     rolenames.ROLE_PASSWORD_TEXT,
                                     rolenames.ROLE_RADIO_BUTTON,
