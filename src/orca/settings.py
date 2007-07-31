@@ -592,6 +592,11 @@ def setGKSUGrabDisabled(disable):
 def overrideKeyBindings(script, keyBindings):
     return keyBindings
 
+# Allow for user customization of pronunciations.
+#
+def overridePronunciations(script, pronunciations):
+    return pronunciations
+
 # Which packages to search, and the order in which to search,
 # for application settings.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.

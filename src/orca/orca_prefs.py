@@ -490,6 +490,56 @@ def _writePronunciationMap(prefs, treeModel):
 
         iter = treeModel.iter_next(iter)
 
+def _writeAppPronunciationsPreamble(prefs):
+    """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
+    pronunciations section."""
+
+    prefs.writelines("\n")
+    prefs.writelines("# User customized application specific ")
+    prefs.writelines("pronunciation dictionary settings\n")
+    prefs.writelines("#\n")
+    prefs.writelines("import orca.pronunciation_dict\n\n")
+    prefs.writelines('def overridePronunciations(script, pronunciations):\n')
+
+def _writeAppPronunciationMap(prefs, treeModel):
+    """Write to configuration file 'prefs' the new application specific
+    pronunciation dictionary entries passed in the model treeModel.
+
+    Arguments:
+    - prefs: file handle for application preferences.
+    - treeModel: pronunciation dictionary tree model.
+    """
+
+    _writeAppPronunciationsPreamble(prefs)
+
+    pronDict = pronunciation_dict.pronunciation_dict
+
+    # For each of the list entries, write out a new pronunciation
+    # dictionary entry for them. If any strings with an actual
+    # string of "" are found, they are ignored.
+    #
+    iter = treeModel.get_iter_first()
+    while iter != None:
+        values = treeModel.get(iter, ACTUAL, REPLACEMENT)
+        key = values[ACTUAL]
+        value = values[REPLACEMENT]
+
+        if key != "":
+            prefs.writelines( \
+                "    pronunciations[\"" + key + "\"]=\"" + value + "\"\n")
+
+        iter = treeModel.iter_next(iter)
+
+    _writePronunciationsPostamble(prefs)
+
+def _writePronunciationsPostamble(prefs):
+    """Writes the postamble to the user-settings.py pronunciations section."""
+
+    prefs.writelines('    return pronunciations')
+    prefs.writelines("\n\n")
+    prefs.writelines('orca.settings.overridePronunciations = overridePronunciations')
+    prefs.writelines("\n")
+
 def readPreferences():
     """Returns a dictionary containing the names and values of the
     customizable features of Orca."""
@@ -694,7 +744,7 @@ def writeAppPreferences(prefsDict, appName, appScript,
                                 keyBindingsTreeModel)
 
     if pronunciationTreeModel:
-        _writePronunciationMap(prefs, pronunciationTreeModel)
+        _writeAppPronunciationMap(prefs, pronunciationTreeModel)
 
     # Write out the application unique preferences (if any) and set the
     # new values.

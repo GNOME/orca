@@ -413,6 +413,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                          self._knownAppSettings[name].overrideAppKeyBindings( \
                             script, script.keyBindings)
 
+                    # Setup the user's application specific pronunciations
+                    # (if any).
+                    #
+                    if hasattr(self._knownAppSettings[name],
+                               "overridePronunciations"):
+                        script.overridePronunciations = \
+                            self._knownAppSettings[name].overridePronunciations
+                        script.app_pronunciation_dict = \
+                         self._knownAppSettings[name].overridePronunciations( \
+                            script, script.app_pronunciation_dict)
+
                     break
                 except ImportError:
                     debug.println(debug.LEVEL_FINEST,
