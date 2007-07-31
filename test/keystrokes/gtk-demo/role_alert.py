@@ -11,15 +11,16 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the demo to come up and for focus to be on the tree table
 #
-sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus        ([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
+sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Dialog and Message Boxes demo
 #
-sequence.append(TypeAction           ("Dialog and Message Boxes"))
-sequence.append(WaitForFocus        ([1, 0, 0, 0], pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction         ("Return"))
+sequence.append(KeyComboAction("<Control>f"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(TypeAction("Dialog and Message Boxes"))
+sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # Once the demo is up, invoke the Message Dialog button and then close
@@ -27,14 +28,13 @@ sequence.append(KeyComboAction         ("Return"))
 # pressing it's OK button.
 #
 #sequence.append(WaitForWindowActivate("Dialogs",None))
-# "Message Dialog"
-sequence.append(WaitForFocus        ([1, 0, 0, 0, 0], pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction         ("Return"))
+sequence.append(WaitForFocus("Message Dialog",
+                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Return", 500))
 
 #sequence.append(WaitForWindowActivate("Information",None))
-# "OK"
-sequence.append(WaitForFocus        ([2, 0, 1, 0], pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction         ("Return"))
+sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # Once we're back to the main window of the demo, go to the
@@ -43,22 +43,21 @@ sequence.append(KeyComboAction         ("Return"))
 #
 #sequence.append(WaitForWindowActivate("Dialogs",None))
 # "Message Dialog"
-sequence.append(WaitForFocus        ([1, 0, 0, 0, 0], pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction         ("Down"))
+sequence.append(WaitForFocus("Message Dialog",
+                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Down"))
 
-# "Interactive Dialog"
-sequence.append(WaitForFocus        ([1, 0, 0, 2, 0, 0], pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction         ("Tab"))
+sequence.append(WaitForFocus("Interactive Dialog",
+                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Tab"))
 
-# ""
-sequence.append(WaitForFocus        ([1, 0, 0, 2, 1, 2], pyatspi.ROLE_TEXT))
-sequence.append(TypeAction           ("Testing"))
-sequence.append(KeyComboAction         ("Tab"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(TypeAction("Testing"))
+sequence.append(KeyComboAction("Tab", 500))
 
-# ""
-sequence.append(WaitForFocus        ([1, 0, 0, 2, 1, 0], pyatspi.ROLE_TEXT))
-sequence.append(TypeAction           ("Again"))
-sequence.append(KeyComboAction         ("<Alt>i"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(TypeAction("Again"))
+sequence.append(KeyComboAction("<Alt>i", 500))
 
 ########################################################################
 # When the Interactive Dialog demo is up, tab to the OK button and
@@ -66,34 +65,34 @@ sequence.append(KeyComboAction         ("<Alt>i"))
 #
 #sequence.append(WaitForWindowActivate("Interactive Dialog",None))
 # ""
-sequence.append(WaitForFocus        ([2, 0, 0, 1, 2], pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction         ("Tab"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(KeyComboAction("Tab"))
 
-# ""
-sequence.append(WaitForFocus        ([2, 0, 0, 1, 0], pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction         ("Tab"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(KeyComboAction("Tab"))
 
-# "OK"
-sequence.append(WaitForFocus        ([2, 0, 2, 1], pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(TypeAction           (" "))
+sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(TypeAction(" "))
 
 ########################################################################
 # Close the Dialogs demo window
 #
 #sequence.append(WaitForWindowActivate("Dialogs",None))
-# ""
-sequence.append(WaitForFocus        ([1, 0, 0, 2, 1, 0], pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction         ("<Alt>F4"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(KeyComboAction("<Alt>F4", 500))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
 # "Application main window" menu.  Let the harness kill the app.
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus        ([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction         ("Home"))
-sequence.append(WaitForEvent("object:active-descendant-changed",
-                             [0, 0, 0, 0, 0, 0],
-                             pyatspi.ROLE_TREE_TABLE))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(KeyComboAction("Home"))
+
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TREE_TABLE,
+                           5000))
 
 sequence.start()
