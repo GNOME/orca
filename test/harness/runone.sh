@@ -2,7 +2,7 @@
 #
 # runone.sh takes the following parameters:
 #
-#    keystroke_file.keys [application_name] [0|1]
+#    keystroke_file.py [application_name] [0|1]
 #
 # where:
 #
@@ -19,7 +19,7 @@ export PS1='$ '
 
 echo runone.sh: $*
 
-debugFile=`basename $1 .keys`
+debugFile=`basename $1 .py`
 
 # Number of seconds to wait for Orca and the application to start
 #
@@ -71,11 +71,6 @@ if [ -f $PARAMS_FILE ]
 then
     PARAMS=`cat $PARAMS_FILE`
 fi
-
-# Run the event listener...
-#
-# python `dirname $0`/event_listener.py > $debugFile.events &
-# sleep 2
 
 # Run the app (or gnome-terminal if no app was given) and let it settle in.
 #
@@ -132,7 +127,7 @@ fi
 #
 echo starting test application $APP_NAME $ARGS $PARAMS ...
 $APP_NAME $ARGS $PARAMS &
-sleep $WAIT_TIME
+#sleep $WAIT_TIME
 if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
 then
     APP_PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
@@ -143,20 +138,23 @@ echo $APP_NAME pid $APP_PID
 
 # Play the keystrokes.
 #
-python `dirname $0`/../../src/tools/play_keystrokes.py < $1
+python $1
+
+# Let things settle for a couple seconds...
+#
+#sleep $WAIT_TIME
 
 if [ $coverageMode -eq 0 ] 	 
 then
     # Terminate Orca
     echo terminating Orca
     orca --quit > /dev/null 2>&1
-    sleep $WAIT_TIME
 fi
 
 # Terminate the running application
 echo killing app $APP_NAME $APP_PID
 kill -9 $APP_PID > /dev/null 2>&1
 
-# Temporary hack to kill gnome-terminal help is it's running.
+# Temporary hack to kill gnome-help help if it's running.
 HELP_PID=$(ps -A | grep gnome-help | cut -d' ' -f1)
 kill -9 $HELP_PID > /dev/null 2>&1

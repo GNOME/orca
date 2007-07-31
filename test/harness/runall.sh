@@ -139,7 +139,7 @@ do
       #
       mkdir -p ./tmp/$application
       cd ./tmp/$application
-      for testFile in `find $testDir -type f -name "*.keys" | sort`; do
+      for testFile in `find $testDir -type f -name "*.py" | sort`; do
         echo ========================================
         echo Running $testFile
         if [ "$found" -gt 0 ]
@@ -163,13 +163,10 @@ do
           fi
         fi
 
-        # Wait for application to finish shutting down.
-        sleep $WAIT_TIME
-
         # Copy the results (.orca) file to the output directory.
         # This is the file that will be used for regression
         # testing. 
-        newResultsFile=`basename $testFile .keys`
+        newResultsFile=`basename $testFile .py`
         mkdir -p $currentdir/$outputdir
 
 	# Filter the results...
@@ -187,7 +184,7 @@ do
 	sed "/speech.speakUtterances utterance='Desktop frame'/,/speech.speakUtterances utterance='Icon View layered pane'/ d" $newResultsFile.speech > $currentdir/$outputdir/$newResultsFile.speech
 	mv $newResultsFile.speech $currentdir/$outputdir/$newResultsFile.speech.unfiltered
 
-        mv $newResultsFiles.debug $currentdir/$outputdir
+        mv $newResultsFile.debug $currentdir/$outputdir
 
 	rm *
 

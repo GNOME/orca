@@ -1,3 +1,13 @@
+2007-07-31  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runall.sh, test/harness/runone.sh: modify to
+        use *.py files instead of *.keys files.
+
+        * test/keystrokes/gtk-demo/*.py: new files that represent a
+        stab at the new testing model.  Requires that macaroon be
+        installed.  You can get/install macaroon from the macaroon
+        subdirectory of the accerciser module.
+
 2007-07-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:
@@ -6,7 +16,7 @@
           src/orca/focus_tracking_presenter.py:
           src/orca/pronunciation_dict.py:
           src/orca/script.py:
-          More work on bug #364518 – Create a GUI interface to the 
+          More work on bug #364518 – Create a GUI interface to the
           pronunciation dictionary. Added in proper support for application
           specific pronunciations.
 
