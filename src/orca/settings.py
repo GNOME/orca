@@ -676,6 +676,11 @@ setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "StarOffice")
 #
 setScriptMapping(re.compile(_('soffice.bin')), "StarOffice")
 
+# Translators: see the regular expression note above.  This is for
+# OpenOffice and StarOffice.
+#
+setScriptMapping(re.compile(_('soffice')), "StarOffice")
+
 # Translators: see the regular expression note above.  This is for the
 # Evolution mail application.
 #
