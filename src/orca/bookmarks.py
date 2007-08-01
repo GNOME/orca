@@ -233,4 +233,3 @@ class Bookmarks:
         context.setCurrent(bookmark['line'], bookmark['zone'], \
                            bookmark['word'], bookmark['char'])
         return context
-    

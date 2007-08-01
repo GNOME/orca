@@ -1,5 +1,11 @@
 2007-08-01  Willie Walker <william.walker@sun.com>
 
+	* src/orca/bookmarks.html: make sure there is a newline at
+	the end of the file.  The absence of newlines wreaks havoc
+	on the coverage testing.
+
+2007-08-01  Willie Walker <william.walker@sun.com>
+
         Work on bug 415061 - regression test results should be repeatable.
 	With these changes, I've had 6 simultaneous repeatable runs of
 	the new test harness.  It's starting to look promising.
