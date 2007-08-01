@@ -1,5 +1,14 @@
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_prefs.py:
+          Fixed bug #462475 – crash due Non-ASCII characters in
+          .orca/user-settings.py file. Added the line:
+          # -*- coding: utf-8 -*-
+          to the beginning of the ~/.orca/user-settings.py file (also to the
+          beginning of any application specific settings files written out).
+
+2007-08-01  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/settings.py:
           With OOo-dev 2.3.0, the accessible application name has changed
           (again) to "soffice". We needed to add a line that maps this to
