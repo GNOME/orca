@@ -1,3 +1,10 @@
+2007-08-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          With OOo-dev 2.3.0, the accessible application name has changed
+          (again) to "soffice". We needed to add a line that maps this to
+          the StarOffice.py script.
+
 2007-08-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/bookmarks.html: make sure there is a newline at
