@@ -527,6 +527,12 @@ useBlockPreventor       = False
 #
 useBonoboMain           = True
 
+# If True, we handle events asynchronously - our normal mode of
+# queueing events and processing them later on the gidle thread.
+# If False, we handle events immediately - helpful for testing.
+#
+asyncMode               = True
+
 # If True, we output debug information for the event queue.  We
 # use this in addition to log level to prevent debug logic from
 # bogging down event handling.

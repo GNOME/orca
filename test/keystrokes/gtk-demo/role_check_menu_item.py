@@ -19,7 +19,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application main window", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
@@ -48,5 +48,9 @@ sequence.append(KeyComboAction("<Alt>F4", 500))
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()

@@ -19,13 +19,13 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Tree View"))
+sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Right"))
 
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("List Store"))
+sequence.append(TypeAction("List Store", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
@@ -46,11 +46,12 @@ sequence.append(WaitForFocus("Description",
 
 ########################################################################
 # Now go down into the table to see if we read the column headers as we
-# move from column to column.
+# move from column to column.  This should also read the entire row by
+# default when we first down arrow into the table.
 #
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
-sequence.append(KeyComboAction("<Control>Left", 500))
+sequence.append(KeyComboAction("<Control>Left", 5000))
 
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
@@ -74,7 +75,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(KeyComboAction("<Alt>F4", 1000))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -85,7 +86,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
 
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Tree View"))
+sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Left"))
 sequence.append(KeyComboAction("Home"))
@@ -95,5 +96,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            pyatspi.ROLE_TREE_TABLE,
                            5000))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()

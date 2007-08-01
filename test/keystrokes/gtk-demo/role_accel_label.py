@@ -19,7 +19,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("UI Manager"))
+sequence.append(TypeAction("UI Manager", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
@@ -66,5 +66,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            pyatspi.ROLE_TREE_TABLE,
                            5000))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()

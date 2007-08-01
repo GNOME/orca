@@ -572,7 +572,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         oldLocusOfFocus = orca_state.locusOfFocus
         try:
             # If we've received a mouse event, then don't try to get
-            # event.source.app because the top most parent is of role 
+            # event.source.app because the top most parent is of role
             # unknown, which will cause an ERROR message to be displayed.
             # See Orca bug #409731 for more details.
             #
@@ -660,17 +660,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - e: an at-spi event.
         """
-
-        # Uncomment these lines if you want to see what it's like without
-        # the queue.
-        #
-        #if isinstance(e, input_event.KeyboardEvent):
-        #    self._processKeyboardEvent(e)
-        #elif isinstance(e, input_event.BrailleEvent):
-        #    self._processBrailleEvent(e)
-        #else:
-        #    self._processObjectEvent(atspi.Event(e))
-        #return
 
         if settings.debugEventQueue:
             if self._enqueueEventCount:
@@ -761,7 +750,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           ...put complete")
-            if not self._gidleId:
+            if settings.asyncMode and (not self._gidleId):
                 if settings.gilSleepTime:
                     time.sleep(settings.gilSleepTime)
                 self._gidleId = gobject.idle_add(self._dequeueEvent)
@@ -773,6 +762,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           ...released")
+
+            if not settings.asyncMode:
+                self._dequeueEvent()
+
         if settings.debugEventQueue:
             self._enqueueEventCount -= 1
 

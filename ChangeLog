@@ -1,3 +1,20 @@
+2007-08-01  Willie Walker <william.walker@sun.com>
+
+        Work on bug 415061 - regression test results should be repeatable.
+	With these changes, I've had 6 simultaneous repeatable runs of
+	the new test harness.  It's starting to look promising.
+
+	* src/orca/focus_tracking_presenter.py, src/orca/settings.py:
+	add asyncMode setting (default=True).  If True, we run in our
+	normal mode of operation of queueing events and processing
+	them on the gidle thread.  If False, we process events 
+	immediately -- very helpful for testing repeatability.
+
+	* test/harness/runone.sh: add orca.settings.asyncMode = False
+
+	* test/keystrokes/gtk-demo/*.py: tweak timings a little bit to
+	prevent event compression.
+	
 2007-07-31  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: fix for bug 459584 - ARIA widget labels

@@ -48,6 +48,8 @@ echo "Using settings file:" $SETTINGS_FILE
 cp $SETTINGS_FILE user-settings.py
 cat >> user-settings.py <<EOF
 
+orca.settings.asyncMode = False
+
 orca.debug.debugLevel = orca.debug.LEVEL_ALL
 orca.debug.debugFile = open('$debugFile.debug', 'w', 0)
 
