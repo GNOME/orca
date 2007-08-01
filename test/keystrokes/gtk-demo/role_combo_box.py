@@ -11,7 +11,7 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus([0, 0, 0, 0, 0, 0], pyatspi.ROLE_TREE_TABLE))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Combo boxes demo 

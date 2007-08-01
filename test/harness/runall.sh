@@ -15,11 +15,6 @@ harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
 
-# Number of seconds to wait between each test
-#
-REGRESSION_WAIT_TIME=20
-COVERAGE_WAIT_TIME=10
-
 # OpenOffice 2.2 executables are installed in 
 # /usr/lib/openoffice/program
 #
@@ -74,22 +69,15 @@ process_cl () {
 # Process the users command line options.
 #
 process_cl "${@}"
-if [ "$coverageMode" -eq "1" ]
-then
-    WAIT_TIME=$COVERAGE_WAIT_TIME
-else
-    WAIT_TIME=$REGRESSION_WAIT_TIME
-fi
-
 
 if [ "$coverageMode" -eq 1 ]
 then 	 
     echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
+    cp user-settings.py.in user-settings.py
     trace2html.py -o $coverageDir -w orca -r runorca.py &
     trace_pid=$!
-    sleep $WAIT_TIME 	 
-    echo ...finished generating coverage map.
+    sleep 10
 fi
 
 # Look in the keystrokes directory for directories.
@@ -200,4 +188,12 @@ do
       rm -rf ./tmp/$application
   fi
 done
+
+if [ "$coverageMode" -eq 1 ]
+then 	 
+    python quit.py
+    rm user-settings.py
+    echo ...finished generating coverage map.
+fi
+
 echo $dirprefix completed at `date +%Y-%m-%d_%H:%M:%S`

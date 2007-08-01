@@ -1,0 +1,70 @@
+#!/usr/bin/python
+
+"""Test of split pane output using the gtk-demo Paned Widgets demo.
+"""
+
+from macaroon.playback.keypress_mimic import *
+
+sequence = MacroSequence()
+
+########################################################################
+# We wait for the demo to come up and for focus to be on the tree table
+#
+sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+
+########################################################################
+# Once gtk-demo is running, invoke the Paned Widgets demo
+#
+sequence.append(KeyComboAction("<Control>f"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(TypeAction("Paned Widgets", 1000))
+sequence.append(KeyComboAction("Return", 500))
+
+########################################################################
+# When the demo comes up, interact with a few check boxes
+#
+#sequence.append(WaitForWindowActivate("Panes",None))
+# "Hi there"
+sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("F8", 500))
+
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("F8", 500))
+
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))
+sequence.append(KeyComboAction("Down", 500))
+sequence.append(KeyComboAction("Down", 500))
+sequence.append(KeyComboAction("Down", 500))
+sequence.append(KeyComboAction("Down", 500))
+sequence.append(KeyComboAction("Down", 500))
+
+########################################################################
+# Close the Panes demo window
+#
+sequence.append(KeyComboAction("<Alt>F4", 500))
+
+########################################################################
+# Go back to the main gtk-demo window and reselect the
+# "Application main window" menu.  Let the harness kill the app.
+#
+#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(KeyComboAction("Home"))
+
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TREE_TABLE,
+                           5000))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+
+sequence.start()

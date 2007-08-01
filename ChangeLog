@@ -1,3 +1,26 @@
+2007-08-01  Willie Walker <william.walker@sun.com>
+
+        Work on bug 415061 - regression test results should be repeatable.
+
+	* test/harness/runall.sh: a little work on the code coverage
+	analysis.
+
+	* test/keystrokes/gtk-demo/role_combo_box.py: tweak initial wait
+
+	* test/keystrokes/gtk-demo/role_push_button.py,
+	test/keystrokes/gtk-demo/role_table.py,
+	test/keystrokes/gtk-demo/role_tear_off_menu_item.py,
+	test/keystrokes/gtk-demo/role_radio_button.py,
+	test/keystrokes/gtk-demo/role_combo_box2.py,
+	test/keystrokes/gtk-demo/role_spin_button.py,
+	test/keystrokes/gtk-demo/role_text_multiline.py,
+	test/keystrokes/gtk-demo/role_tree_table.py,
+	test/keystrokes/gtk-demo/role_label.py,
+	test/keystrokes/gtk-demo/role_split_pane.py,
+	test/keystrokes/gtk-demo/role_toolbar.py,
+	test/keystrokes/gtk-demo/role_page_tab.py,
+	test/keystrokes/gtk-demo/role_menu.py: new tests
+	
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
