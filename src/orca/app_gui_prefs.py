@@ -30,6 +30,7 @@ import locale
 import os
 import sys
 
+import app_prefs
 import braille
 import debug
 import default
@@ -95,9 +96,9 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         """Write out the user's application-specific Orca preferences.
         """
         moduleName = settings.getScriptModuleName(self.app)
-        orca_prefs.writeAppPreferences(self.prefsDict, moduleName,
-                                       self.appScript, self.keyBindingsModel,
-                                       self.pronunciationModel)
+        app_prefs.writePreferences(self.prefsDict, moduleName,
+                                   self.appScript, self.keyBindingsModel,
+                                   self.pronunciationModel)
         ftp = focus_tracking_presenter.FocusTrackingPresenter()
         ftp.loadAppSettings(self.appScript)
 

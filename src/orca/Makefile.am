@@ -10,6 +10,7 @@ orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
 	app_gui_prefs.py \
+	app_prefs.py \
 	atspi.py \
         bookmarks.py \
 	braille.py \
