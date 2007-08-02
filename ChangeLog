@@ -1,3 +1,14 @@
+2007-08-02  Eitan Isaacson <eitan@ascender.com>
+
+	* test/keystrokes/gtk-demo/where_am_i_accel_label.py: Initial
+	commit. Might not need the KP_Insert+KP_Enter that is there right now.
+
+	* test/keystrokes/gtk-demo/where_am_i_check_box.py: Initial
+	commit. Doesn't actually give the correct result. After the
+	checkbutton is checked, it's state is not uttered in "where am I".
+
+	* test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Initial commit.
+
 2007-08-01  Willie Walker <william.walker@sun.com>
 
         Work on bug 415061 - regression test results should be repeatable.
