@@ -3021,7 +3021,8 @@ class Script(default.Script):
         # based on the user-customizable settings.
         #
         if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.role == rolenames.ROLE_ENTRY \
+           and orca_state.locusOfFocus.role in [rolenames.ROLE_ENTRY,
+                                                rolenames.ROLE_PUSH_BUTTON] \
            and orca_state.locusOfFocus.parent.role == \
                                             rolenames.ROLE_TOOL_BAR \
            and self.inDocumentContent(event.source):

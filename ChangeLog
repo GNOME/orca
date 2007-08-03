@@ -1,3 +1,11 @@
+2007-08-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: Fix for bug 461620 - Orca doesn't speak find
+        results in FF3 when focus is on Next/Previous buttons.
+
+        * src/orca/scripts/Evolution.py: Fix for bug 462650 - Traceback
+        when using whereAmI in Evolution New Contact dialog.
+
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:

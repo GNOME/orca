@@ -115,13 +115,14 @@ class WhereAmI(where_am_I.WhereAmI):
                     if (current-1) >= 0:
                         prevPanel = container.child(current-1)
                         prevObj = prevPanel.child(0)
-                        if prevObj.text.getNSelections() > 0:
-                            otherSelected = True
-                        else:
-                            displayedText = prevObj.text.getText(0, -1)
-                            if len(displayedText) == 0:
-                                current -= 1
-                                morePossibleSelections = True
+                        if prevObj and prevObj.text:
+                            if prevObj.text.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = prevObj.text.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current -= 1
+                                    morePossibleSelections = True
 
                 current = obj.parent.index
                 morePossibleSelections = True
@@ -130,13 +131,14 @@ class WhereAmI(where_am_I.WhereAmI):
                     if (current+1) < container.childCount:
                         nextPanel = container.child(current+1)
                         nextObj = nextPanel.child(0)
-                        if nextObj.text.getNSelections() > 0:
-                            otherSelected = True
-                        else:
-                            displayedText = nextObj.text.getText(0, -1)
-                            if len(displayedText) == 0:
-                                current += 1
-                                morePossibleSelections = True
+                        if nextObj and nextObj.text:
+                            if nextObj.text.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = nextObj.text.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current += 1
+                                    morePossibleSelections = True
 
         return [currentSelected, otherSelected]
 
