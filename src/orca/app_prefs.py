@@ -35,8 +35,6 @@ import settings
 
 from orca_i18n import _  # for gettext support
 
-OP = None
-
 class OrcaPrefs(orca_prefs.OrcaPrefs):
 
     def __init__(self, prefsDict, appName=None, appScript=None,
@@ -233,10 +231,6 @@ def writePreferences(prefsDict, appName=None, appScript=None,
     None if we are writing out console preferences.
     """
 
-    global OP
-
-    if not OP:
-        OP = OrcaPrefs(prefsDict, appName, appScript, 
-                       keyBindingsTreeModel, pronunciationTreeModel)
-
+    OP = OrcaPrefs(prefsDict, appName, appScript, 
+                   keyBindingsTreeModel, pronunciationTreeModel)
     OP._writePreferences()

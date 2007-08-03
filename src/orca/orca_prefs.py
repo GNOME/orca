@@ -34,8 +34,6 @@ import settings
 
 from orca_i18n import _  # for gettext support
 
-OP = None
-
 # The same fields than in orca_gui_prefs.py:
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
@@ -631,9 +629,5 @@ def writePreferences(prefsDict, keyBindingsTreeModel=None,
     None if we are writing out console preferences.
     """
 
-    global OP
-
-    if not OP:
-        OP = OrcaPrefs(prefsDict, keyBindingsTreeModel, pronunciationTreeModel)
-
+    OP = OrcaPrefs(prefsDict, keyBindingsTreeModel, pronunciationTreeModel)
     OP._writePreferences()
