@@ -1107,7 +1107,7 @@ HREF="#URWHEREAMI"
 ><DL
 ><DT
 >3.15.1. <A
-HREF="#AEN700"
+HREF="#AEN698"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1121,7 +1121,7 @@ HREF="#URFIND"
 ><DL
 ><DT
 >3.16.1. <A
-HREF="#AEN917"
+HREF="#AEN921"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1135,7 +1135,7 @@ HREF="#URWATCHED"
 ><DL
 ><DT
 >3.17.1. <A
-HREF="#AEN926"
+HREF="#AEN930"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1149,7 +1149,7 @@ HREF="#URBOOKMARK"
 ><DL
 ><DT
 >3.18.1. <A
-HREF="#AEN946"
+HREF="#AEN949"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1163,7 +1163,7 @@ HREF="#URDOCREAD"
 ><DL
 ><DT
 >3.19.1. <A
-HREF="#AEN959"
+HREF="#AEN964"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1178,7 +1178,7 @@ HREF="#URNONFOCUS"
 ><DL
 ><DT
 >3.20.1. <A
-HREF="#AEN974"
+HREF="#AEN979"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1192,7 +1192,7 @@ HREF="#URSPEECH"
 ><DL
 ><DT
 >3.21.1. <A
-HREF="#AEN1011"
+HREF="#AEN1016"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1206,7 +1206,7 @@ HREF="#URECHO"
 ><DL
 ><DT
 >3.22.1. <A
-HREF="#AEN1047"
+HREF="#AEN1052"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1220,7 +1220,7 @@ HREF="#URBRAILLE"
 ><DL
 ><DT
 >3.23.1. <A
-HREF="#AEN1110"
+HREF="#AEN1115"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1234,7 +1234,7 @@ HREF="#URMAG"
 ><DL
 ><DT
 >3.24.1. <A
-HREF="#AEN1137"
+HREF="#AEN1142"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1248,7 +1248,7 @@ HREF="#URPERF"
 ><DL
 ><DT
 >3.25.1. <A
-HREF="#AEN1156"
+HREF="#AEN1161"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1262,7 +1262,7 @@ HREF="#URDOCS"
 ><DL
 ><DT
 >3.26.1. <A
-HREF="#AEN1164"
+HREF="#AEN1169"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1295,17 +1295,17 @@ HREF="#UEOUTPUTSTYLE"
 ><DL
 ><DT
 >4.3.1. <A
-HREF="#AEN1500"
+HREF="#AEN1525"
 >General Braille Style</A
 ></DT
 ><DT
 >4.3.2. <A
-HREF="#AEN1523"
+HREF="#AEN1548"
 >General Speech Style</A
 ></DT
 ><DT
 >4.3.3. <A
-HREF="#AEN1528"
+HREF="#AEN1553"
 >Output Styles by Role</A
 ></DT
 ></DL
@@ -2659,8 +2659,8 @@ NAME="URAVAILABLE"
 ><P
 >Orca will often be the only vehicle by which many users
         will be able to access the system.  As such, it must be
-        available at all times, including at system login and
-        screen-saver screens.</P
+        available at all times, including at system login, 
+        screen-saver screens and system administration screens requiring root access.</P
 ><P
 >Orca must also be available after the system returns from
         "standby" or "sleep" mode.</P
@@ -2686,7 +2686,7 @@ CLASS="EMPHASIS"
 > V0.2.2. LOGIN: Orca will rely upon the accessible
           login feature of gdm to enable access at login.  This
           feature has been tested and verified on Open Solaris with
-          Orca V0.2.2.</P
+          Orca V0.2.2.  It still does not seem to work in Linux.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -2695,8 +2695,8 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.2. SCREEN SAVER: Orca will announce that
-	  the "AT Enabled Lock Dialog" is active and you can type your
-	  password.</P
+          the "AT Enabled Lock Dialog" is active and you can type your
+          password.</P
 ></DIV
 ></DIV
 ><DIV
@@ -2727,10 +2727,10 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.9.0.  Orca provides a script that will
-	restart Orca in the event of catastrophic failure, and it also
-	periodically pings and restarts Orca if necessary.
-	Furthermore, Orca will also detect hangs inside itself and
-	quit if possible.</P
+        restart Orca in the event of catastrophic failure, and it also
+        periodically pings and restarts Orca if necessary.
+        Furthermore, Orca will also detect hangs inside itself and
+        quit if possible.</P
 ></DIV
 ></DIV
 ><DIV
@@ -2856,7 +2856,7 @@ NAME="URSTYLE"
 ><P
 >While each script can provide dramatically different
         access to an application, it is expected that scripts will
-        provide a users with a consistent style to access
+        provide users with a consistent style to access
         applications.  To help with this consistent style, Orca will
         provide a <A
 HREF="#STYLEGUIDE"
@@ -2881,7 +2881,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.9.0. Orca currently provides a
-	  <A
+          <A
 HREF="#STYLEGUIDE"
 >style guide</A
 > and a <TT
@@ -2932,8 +2932,8 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.4.  Orca provides a framework for both
-	  per-application and per-toolkit customized scripts.  This
-	  framework is documented in the <A
+          per-application and per-toolkit customized scripts.  This
+          framework is documented in the <A
 HREF="#SCRIPTGUIDE"
 >Orca Script Writing Guide</A
 >.</P
@@ -2972,12 +2972,12 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.2. Debug utilities to output AT-SPI
-	      and input device events. Managed via several debug level
-	      settings in the <TT
+              and input device events. Managed via several debug level
+              settings in the <TT
 CLASS="LITERAL"
 >debug.py</TT
 >
-	      module.</P
+              module.</P
 ></LI
 ><LI
 ><P
@@ -2988,17 +2988,17 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.2. Debug utilities to record and playback keystrokes.
-	      Managed via the separate
-	      <TT
+              Managed via the separate
+              <TT
 CLASS="LITERAL"
 >src/tools/record_keystrokes.py</TT
 > and
-	      <TT
+              <TT
 CLASS="LITERAL"
 >play_keystrokes.py</TT
 > modules.
-	      Keystroke recording can also be enabled by pressing the
-	      "Insert+Pause" keys while running Orca itself.</P
+              Keystroke recording can also be enabled by pressing the
+              "Insert+Pause" keys while running Orca itself.</P
 ></LI
 ><LI
 ><P
@@ -3009,8 +3009,8 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.2. Debug utilities to record what is being sent to
-	      speech and braille. This is managed via the debug level
-	      settings.</P
+              speech and braille. This is managed via the debug level
+              settings.</P
 ></LI
 ><LI
 ><P
@@ -3021,7 +3021,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.7.  Keystroke to speak/braille
-	      application with focus: Insert+F6.</P
+              application with focus: Insert+F6.</P
 ></LI
 ><LI
 ><P
@@ -3032,7 +3032,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.7. Keystroke to speak/braille
-	      the current script (and script class) in use: Insert+F6</P
+              the current script (and script class) in use: Insert+F6</P
 ></LI
 ><LI
 ><P
@@ -3043,7 +3043,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.7.  Keystroke to dump
-	      all applications: Insert+F5.</P
+              all applications: Insert+F5.</P
 ></LI
 ><LI
 ><P
@@ -3054,7 +3054,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.7.  Keystroke to dump the ancestors
-	      of the object with focus: Insert+F7.</P
+              of the object with focus: Insert+F7.</P
 ></LI
 ><LI
 ><P
@@ -3065,8 +3065,8 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.7.  Keystroke to dump the
-	      widget hierarchy of the application with
-	      focus: Insert+F8.</P
+              widget hierarchy of the application with
+              focus: Insert+F8.</P
 ></LI
 ></UL
 ></DIV
@@ -3218,7 +3218,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1+.</TD
+> V2.22+.</TD
 ><TD
 ><A
 HREF="#ECALTEST"
@@ -3338,7 +3338,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1.</TD
+> V2.22.</TD
 ><TD
 ><A
 HREF="#SOIMPRESSTEST"
@@ -3349,7 +3349,7 @@ HREF="#SOIMPRESSTEST"
 ><TD
 >Web Browsing</TD
 ><TD
->	        	        Firefox 2.0 (minimal); Firefox 3.0 (better)</TD
+>                         Firefox 2.0 (minimal); Firefox 3.0 (better)</TD
 ><TD
 ><SPAN
 CLASS="emphasis"
@@ -3358,9 +3358,9 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: LMS] Firefox 2.0 is
-		  probably as good as it is going to get. Working with
-		  IBM and Firefox team to provide better information
-		  via AT-SPI for FF3.  - <SPAN
+                  probably as good as it is going to get. Working with
+                  IBM and Firefox team to provide better information
+                  via AT-SPI for FF3.  - <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3386,14 +3386,14 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: MMP] 
-		   needs work from Adobe. <SPAN
+                   needs work from Adobe. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
 >
-		  V1.0</TD
+                  V2.22</TD
 ><TD
 ><A
 HREF="#ACROREADTEST"
@@ -3493,9 +3493,10 @@ NAME="AEN573"
         move between unvisited and visited links.</P
 ><P
 >The letters "o" and "Shift+o" will be used to move
-	between large objects.  Large objects can be things such as:
-	headings, paragraphs, and tables.  For this feature, links and
-	form controls will not be considered large objects.</P
+        between large objects.  Large objects can be things such as:
+        headings, paragraphs, and tables containing text of a certain
+        length.  For this feature, links and form controls will not be 
+        considered large objects.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3554,7 +3555,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.9.0. Orca provides both text-based and GUI-based
-	  configuration mechanisms.</P
+          configuration mechanisms.</P
 ></DIV
 ></DIV
 ><DIV
@@ -3599,13 +3600,13 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > does not provide audio cues when crossing linear
-	  boundaries. <SPAN
+          boundaries. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1+.</P
+> V2.22+.</P
 ></DIV
 ></DIV
 ><DIV
@@ -3707,7 +3708,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > no audio cues when navigating across line
-	  boundaries. <SPAN
+          boundaries. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3818,10 +3819,10 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > text attributes ('indent',
-	'underline', 'strikethrough', 'justification', 'style',
-	'size', and 'family-name') are spoken when the user presses
-	Insert+f, but they are not presented on the braille
-	display.</P
+        'underline', 'strikethrough', 'justification', 'style',
+        'size', and 'family-name') are spoken when the user presses
+        Insert+f, but they are not presented on the braille
+        display.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3830,8 +3831,8 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > capital letters are spoken with a
-	different voice, but 'verbalized' capitalization (e.g.,
-	"capital m") has not been implemented.</P
+        different voice, but 'verbalized' capitalization (e.g.,
+        "capital m") has not been implemented.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3840,8 +3841,8 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > the user is notified when they
-	select text, but they are not notified if they navigate to
-	selected text.</P
+        select text, but they are not notified if they navigate to
+        selected text.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3850,7 +3851,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > there is no option to present text bounds
-	to the user.</P
+        to the user.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3859,7 +3860,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > there is no option to present text bounds
-	to the user.</P
+        to the user.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3915,7 +3916,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.2.  Insert+F1 brings up learn mode and
-	Escape exits it.</P
+        Escape exits it.</P
 ></DIV
 ></DIV
 ><DIV
@@ -3953,18 +3954,10 @@ NAME="AEN689"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
-> the current way to define these is by
-	  manually editing the <TT
-CLASS="LITERAL"
->user-settings.py</TT
-> or
-	  <TT
-CLASS="LITERAL"
->orca-customizations.py</TT
-> file.
-	  <SPAN
+> 
+          <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3998,7 +3991,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN700"
+NAME="AEN698"
 >3.15.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4013,10 +4006,21 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> V2.17.3. Orca provides top down "Where am I"
-        functionality when the user presses the KP_Enter key.  Orca
-        should also present bottom-up "Where am I" when double
-        pressing KP enter.  </P
+> V2.19.5. Gecko script provides advanced where am I 
+        information for links in the form of link previews.  These include 
+        protocol, target file name, relative location and possibly file 
+        size information.  Double-clicking the "Where am I" key in Firefox  
+        provides a page summary, which includes the total number of headings, 
+        forms, tables, visited links, and unvisited links in the document. 
+        </P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.17.3. Orca provides both brief and detailed WhereAmI information with the single and double presses of the "WhereAmI" key.  </P
 ><P
 >There will be four commands related to "Where am I":</P
 ><P
@@ -4054,7 +4058,7 @@ NAME="AEN716"
           about the item with focus.  In particular:</P
 ><P
 >Checkboxes present the following information (an
-	  example is "Enable speech, checkbox checked, Alt E"):</P
+          example is "Enable speech, checkbox checked, Alt E"):</P
 ><P
 ></P
 ><OL
@@ -4108,7 +4112,7 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
@@ -4138,12 +4142,12 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Spin Buttons present the following information (an
-	  example is "Scale factor: spin button, 4.00, Alt F"):</P
+          example is "Scale factor: spin button, 4.00, Alt F"):</P
 ><P
 ></P
 ><OL
@@ -4163,12 +4167,12 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Push Buttons present the following information (an
-	  example is "Apply button, Alt A"):</P
+          example is "Apply button, Alt A"):</P
 ><P
 ></P
 ><OL
@@ -4184,14 +4188,14 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Sliders present the following information (examples
-	  include "Pitch slider, 5.0, 56%"; "Volume slider, 9.0, 100%"):
+          include "Pitch slider, 5.0, 56%"; "Volume slider, 9.0, 100%"):
 
-	  <P
+          <P
 ></P
 ><OL
 TYPE="1"
@@ -4214,16 +4218,16 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 >
 
-	  </P
+          </P
 ><P
 >Menu items present the following information (examples
-	  include "File menu, Open..., Control + O, item 2 of 20, O",
-	  "File menu, Wizards Menu, item 4 of 20, W"):</P
+          include "File menu, Open..., Control + O, item 2 of 20, O",
+          "File menu, Wizards Menu, item 4 of 20, W"):</P
 ><P
 ></P
 ><OL
@@ -4231,12 +4235,12 @@ TYPE="1"
 ><LI
 ><P
 >Name of the menu containing the item, followed by
-	      its role</P
+              its role</P
 ></LI
 ><LI
 ><P
 >item name, followed by its role (if a menu)
-	      followed by its accelerator key, if any</P
+              followed by its accelerator key, if any</P
 ></LI
 ><LI
 ><P
@@ -4245,12 +4249,12 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Tabs in a Tab List present the following information
-	  (an example is "Tab list, braille page, item 2 of 5"):</P
+          (an example is "Tab list, braille page, item 2 of 5"):</P
 ><P
 ></P
 ><OL
@@ -4270,12 +4274,12 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Text boxes present the following information (an example
-	  is "Source display: text, blank, Alt O"):</P
+          is "Source display: text, blank, Alt O"):</P
 ><P
 ></P
 ><OL
@@ -4298,12 +4302,12 @@ TYPE="1"
 ><LI
 ><P
 >if no text on the current line is selected, 
-		  the current line</P
+                  the current line</P
 ></LI
 ><LI
 ><P
 >if text is selected on the current line, 
-		  that text, followed by "selected"</P
+                  that text, followed by "selected"</P
 ></LI
 ><LI
 ><P
@@ -4314,14 +4318,14 @@ TYPE="1"
 ><LI
 ><P
 >mnemonic (i.e. Alt plus the underlined letter), 
-	      if any</P
+              if any</P
 ></LI
 ></OL
 ><P
 >Tree Tables present the following information (an example
-	  is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
+          is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
 
-	  <P
+          <P
 ></P
 ><OL
 TYPE="1"
@@ -4355,12 +4359,12 @@ TYPE="1"
 ></LI
 ></OL
 >
-	  </P
+          </P
 ><P
 >Tree Tables present the following information (an example
-	  is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
+          is "Tree table, Mike Pedersen, item 8 of 10, tree level 2"):
 
-	  <P
+          <P
 ></P
 ><OL
 TYPE="1"
@@ -4394,15 +4398,23 @@ TYPE="1"
 ></LI
 ></OL
 >
-	  </P
+          </P
 ><P
 >Icon Panels present the following information (an example
-	  is "Icon Panel, Mike Pedersen, item 8 of 10, "):
+          is "Icon Panel, Mike Pedersen, item 8 of 10, "):
 
-	  <P
+          <P
 ></P
 ><OL
 TYPE="1"
+><LI
+><P
+>label, if any</P
+></LI
+><LI
+><P
+>role</P
+></LI
 ><LI
 ><P
 >label, if any</P
@@ -4418,12 +4430,12 @@ TYPE="1"
 ></OL
 >
 
-	  </P
+          </P
 ><P
 >Given the nature of OpenOffice Calc, Orca should
-	  override the default KP_Enter behavior when the item with
-	  focus is a cell within Calc.  In this instance, the
-	  following information should be spoken/displayed:</P
+          override the default KP_Enter behavior when the item with
+          focus is a cell within Calc.  In this instance, the
+          following information should be spoken/displayed:</P
 ><P
 ></P
 ><OL
@@ -4450,8 +4462,8 @@ TYPE="a"
 ><LI
 ><P
 >if the cell is being edited AND if some text
-		  within the cell is selected, the selected text
-		  followed by "selected"</P
+                  within the cell is selected, the selected text
+                  followed by "selected"</P
 ></LI
 ><LI
 ><P
@@ -4466,14 +4478,14 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN877"
+NAME="AEN881"
 >3.15.1.2. Detailed Information: Double Press of KP_Enter</A
 ></H4
 ><P
 >When KP_Enter is pressed twice quickly, Orca will
-	  speak and display the information it currently does when
-	  performing the "Where am I" command, with the following
-	  changes:</P
+          speak and display the information it currently does when
+          performing the "Where am I" command, with the following
+          changes:</P
 ><P
 ></P
 ><OL
@@ -4481,20 +4493,20 @@ TYPE="1"
 ><LI
 ><P
 >Orca should pause briefly between items in the
-	      hierarchy</P
+              hierarchy</P
 ></LI
 ><LI
 ><P
 >Information regarding relative position should
-	      come after the item it pertains to, rather than
-	      before. (e.g. say/display "Euro Converter, Item 7 of 9")</P
+              come after the item it pertains to, rather than
+              before. (e.g. say/display "Euro Converter, Item 7 of 9")</P
 ></LI
 ><LI
 ><P
 >If focus is within a text box and text within that
-	      text box is selected, Orca should NOT read the current
-	      line.  Rather, it should state the text that is selected spanning paragraph boundries if necessary
-	      followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</P
+              text box is selected, Orca should NOT read the current
+              line.  Rather, it should state the text that is selected spanning paragraph boundries if necessary
+              followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</P
 ></LI
 ></OL
 ></DIV
@@ -4503,12 +4515,12 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN887"
+NAME="AEN891"
 >3.15.1.3. Title bar: Single Press of Insert + KP_Enter</A
 ></H4
 ><P
 >When Insert + KP_Enter is pressed a single time, Orca
-	  will speak and display the following information:</P
+          will speak and display the following information:</P
 ><P
 ></P
 ><OL
@@ -4516,24 +4528,24 @@ TYPE="1"
 ><LI
 ><P
 >The contents of the title bar of the application
-	      main window</P
+              main window</P
 ></LI
 ><LI
 ><P
 >If in a dialog box within an application, the
-	      contents of the title bar of the dialog box.</P
+              contents of the title bar of the dialog box.</P
 ></LI
 ><LI
 ><P
 >Orca will pause briefly between these two pieces
-	      of information so that the speech user can distinguish
-	      each.</P
+              of information so that the speech user can distinguish
+              each.</P
 ></LI
 ></OL
 ><P
 >Calc-Specific Handling: If Insert+KP_Enter is pressed
-	  a single time while focus is on a cell within OpenOffice
-	  Calc, Orca will speak the following information:</P
+          a single time while focus is on a cell within OpenOffice
+          Calc, Orca will speak the following information:</P
 ><P
 ></P
 ><OL
@@ -4541,7 +4553,7 @@ TYPE="1"
 ><LI
 ><P
 >The contents of the title bar of the application
-	      main window</P
+              main window</P
 ></LI
 ><LI
 ><P
@@ -4550,27 +4562,27 @@ TYPE="1"
 ></OL
 ><P
 >Note that if the application with focus is Calc, but a
-	  cell does not have focus, the default behavior should be
-	  used.</P
+          cell does not have focus, the default behavior should be
+          used.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN904"
+NAME="AEN908"
 >3.15.1.4. Status bar: Double Press of Insert + KP_Enter</A
 ></H4
 ><P
 >When Insert+KP_Enter is pressed twice quickly, Orca
-	  will speak and display the contents of the status bar. In
-	  applications where the status bar contents are
-	  distinguishable elements (e.g. OpenOffice Writer), Orca
-	  should pause briefly between elements.  In applications
-	  where the elements of the status bar are labeled
-	  (e.g. OpenOffice Writer), Orca should also speak and display
-	  the label of a given element followed by that element.
-	  (e.g. "Page Style: Default", "Zoom: 100%")</P
+          will speak and display the contents of the status bar. In
+          applications where the status bar contents are
+          distinguishable elements (e.g. OpenOffice Writer), Orca
+          should pause briefly between elements.  In applications
+          where the elements of the status bar are labeled
+          (e.g. OpenOffice Writer), Orca should also speak and display
+          the label of a given element followed by that element.
+          (e.g. "Page Style: Default", "Zoom: 100%")</P
 ></DIV
 ></DIV
 ></DIV
@@ -4584,31 +4596,31 @@ NAME="URFIND"
 ></H2
 ><P
 >Orca will allow users to enter a string to search for a
-	visible text string in the current window or entire desktop.  The keystroke to invoke this dialog will be: (KP_Delete).
-	If the string is found (e.g., the string matches the
-	accessible name of an object or the string matches a string in
-	a text area), Orca will switch to "review mode" and make the
-	associated object the object of interest.  From this point,
-	the user can use a well known command  to go back to the object with focus,
-	give the found object focus if possible, or perform the
-	equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </P
+        visible text string in the current window or entire desktop.  The keystroke to invoke this dialog will be: (KP_Delete).
+        If the string is found (e.g., the string matches the
+        accessible name of an object or the string matches a string in
+        a text area), Orca will switch to "review mode" and make the
+        associated object the object of interest.  From this point,
+        the user can use a well known command  to go back to the object with focus,
+        give the found object focus if possible, or perform the
+        equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </P
 ><P
 >In the event the user is a magnification user, the magnifier
         will moved to the found object.</P
 ><P
 >The search will be performed in the text flow of the
-	locale (e.g., left-to-right, top-to-bottom) from the current
-	point of interest or optionally from the top of the window, wrapping back to the beginning of the
-	window if necessary.</P
+        locale (e.g., left-to-right, top-to-bottom) from the current
+        point of interest or optionally from the top of the window, wrapping back to the beginning of the
+        window if necessary.</P
 ><P
 >The search will provide options for requiring a full word
-	match (e.g., "ok" will not match "token") or substring match
-	(e.g., "ok" will match "token").</P
+        match (e.g., "ok" will not match "token") or substring match
+        (e.g., "ok" will match "token").</P
 ><P
 >Finally, the "find" command will also allow the user to
-	search for text based on attribute (e.g., "bold"), and the
-	search will allow the user to search based solely on attribute
-	type, text string, or a combination of both.</P
+        search for text based on attribute (e.g., "bold"), and the
+        search will allow the user to search based solely on attribute
+        type, text string, or a combination of both.</P
 ><P
 > The dialog will appear as follows; The first control will be the edit field to type the string to be found. The second will be a group of radio buttons to specify if the search is to be performed from the top or from the current position.  The third control will be a check box to determine if the search is case sensitive or not.  This will be followed by "find" and "cancel".   
       </P
@@ -4620,15 +4632,15 @@ CLASS="EMPHASIS"
 >NOTE:</I
 ></SPAN
 > this feature is for searching for visible text
-	only.  Traditional searching for text in documents will be
-	supported by application functionality (e.g., the "search"
-	menu item in the application.</P
+        only.  Traditional searching for text in documents will be
+        supported by application functionality (e.g., the "search"
+        menu item in the application.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN917"
+NAME="AEN921"
 >3.16.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4644,7 +4656,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.0.  The only part of this that is not yet complete is the "attribute search" portion.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4657,9 +4669,9 @@ NAME="URWATCHED"
 ></H2
 ><P
 >Orca will allow users to indicate interest in an object.
-	Once interest has been given, Orca will notify the user of
-	changes to that object, whether it or its window has focus or
-	not.  A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will  press CTRLinsert+w to actually set a watched object and doublepress CTRL+Insert+w to unset it. </P
+        Once interest has been given, Orca will notify the user of
+        changes to that object, whether it or its window has focus or
+        not.  A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will  press CTRLinsert+w to actually set a watched object and doublepress CTRL+Insert+w to unset it. </P
 ><P
 >In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
@@ -4671,7 +4683,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN926"
+NAME="AEN930"
 >3.17.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4687,7 +4699,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V2.2.20.</P
+> V2.2.22+.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4700,11 +4712,11 @@ NAME="URBOOKMARK"
 ></H2
 ><P
 >Orca will allow users to define a gesture (keyboard or
-	braille) that will tell Orca to enter flat review mode and make a
-	particular object the object of interest.  From this point,
-	the user can use a well known command to go back to the object with focus,
-	give the bookmarked object focus if possible, or perform the
-	equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.  If possible it would be really nice to play the system beep if the bookmark can't be found.</P
+        braille) that will tell Orca to enter flat review mode and make a
+        particular object the object of interest.  From this point,
+        the user can use a well known command to go back to the object with focus,
+        give the bookmarked object focus if possible, or perform the
+        equivalent of a mouse click on the bookmarked object.  Flat review only applies to non-web applications.  In firefox focus will simply move to the bookmarked position on the web page.  If possible it would be really nice to play the system beep if the bookmark can't be found.</P
 ><P
 >In the event the user is a magnification user, the magnifier
         will moved to the bookmarked object.</P
@@ -4725,16 +4737,13 @@ CLASS="EMPHASIS"
 ><P
 > The following keystrokes should be used to perform the functions related to this feature.</P
 ><P
->Alt-orca-1 through 9
+>Alt-orca-1 through 6
     Add a bookmark in this numbered slot. If a bookmark already exists at this register it will be replaced with the new one. </P
 ><P
->orca-1 through 9
+>orca-1 through 6
     Move the pointer to the bookmark in this numbered slot. </P
 ><P
->Alt-Shift-1 through 9
-    Report "Where am I" information for this bookmark relative to the root. </P
-><P
->Alt-orca-Shift-1 through 9
+>Alt-Shift-1 through 6
     Report "Where am I" information for this bookmark relative to the current pointer location.</P
 ><P
 >"b" and "shift+b" Move between the given bookmarks for the given application or page. </P
@@ -4745,7 +4754,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN946"
+NAME="AEN949"
 >3.18.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4753,7 +4762,16 @@ NAME="AEN946"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
+></SPAN
+> V2.19.3.  Functionality was implemented for all features 
+          shown above.  Magnification was not considered for the initial version.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
 ></SPAN
 > <SPAN
 CLASS="emphasis"
@@ -4761,7 +4779,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1.</P
+> V2.20.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4811,7 +4829,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN959"
+NAME="AEN964"
 >3.19.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4827,7 +4845,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.9.0. Reading works well, including setting
-	  the caret position when speech is interrupted.</P
+          the caret position when speech is interrupted.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -4836,13 +4854,13 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > text is not highlighted, nor is there an
-	  option to do so. <SPAN
+          option to do so. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >DELIVER FOR</I
 ></SPAN
-> V1.1+.</P
+> V2.22+.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -4851,13 +4869,13 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > audio cues not played when auto
-	  reading across line boundaries.  <SPAN
+          reading across line boundaries.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1.</P
+> V2.22.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4883,7 +4901,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN974"
+NAME="AEN979"
 >3.20.1. Functional Description and Status</A
 ></H3
 ><P
@@ -4971,11 +4989,11 @@ CLASS="EMPHASIS"
 >Verbalized Caps</B
 ></SPAN
 > -
-	    When speaking a word beginning with a capital letter, Orca
-	    should offer the option of saying "cap" or "all caps"
-	    prior to speaking the word in addition to offering an
-	    optional uppercase voice. For example, one might hear "cap
-	    Willie" or "all caps WILLIE".</P
+            When speaking a word beginning with a capital letter, Orca
+            should offer the option of saying "cap" or "all caps"
+            prior to speaking the word in addition to offering an
+            optional uppercase voice. For example, one might hear "cap
+            Willie" or "all caps WILLIE".</P
 ></LI
 ><LI
 ><P
@@ -4986,9 +5004,9 @@ CLASS="EMPHASIS"
 >Verbalized Links</B
 ></SPAN
 > -
-	    When speaking a link, Orca should offer the option of
-	    saying "link" after to speaking the link in addition to
-	    offering an optional hyperlink voice.</P
+            When speaking a link, Orca should offer the option of
+            saying "link" after to speaking the link in addition to
+            offering an optional hyperlink voice.</P
 ></LI
 ><LI
 ><P
@@ -5070,7 +5088,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1011"
+NAME="AEN1016"
 >3.21.1. Functional Description and Status</A
 ></H3
 ><P
@@ -5122,7 +5140,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
-> V1.1.</P
+> V2.22+.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5160,7 +5178,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >DELIVER FOR</I
 ></SPAN
-> V1.1+.</P
+> V2.22+.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5169,9 +5187,9 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > V0.2.7. Letter-by-letter spelling mode of
-	current flat review item performed when user quickly presses
-	KP_5 (word review) or KP_8 (line review) twice in a
-	row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a <SPAN
+        current flat review item performed when user quickly presses
+        KP_5 (word review) or KP_8 (line review) twice in a
+        row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -5186,7 +5204,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.6. Verbalized punctuation is a settable
-	option.</P
+        option.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5195,7 +5213,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
+          [OWNER: WDW - implementation] 
           Repeated character count. <SPAN
 CLASS="emphasis"
 ><I
@@ -5217,27 +5235,27 @@ NAME="URECHO"
 >Orca must provide a set of options to allow the user to
         enable the automatic speaking of keys as they are typed,
         alphanumeric characters as they are entered/deleted, and words
-        as they are entered.  The speech much be interruptable at any
+        as they are entered.  The speech must be interruptable at any
         time.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1047"
+NAME="AEN1052"
 >3.22.1. Functional Description and Status</A
 ></H3
 ><P
->There are be two main options for selecting key and
+>There are two main options for selecting key and
           word echo: key and word.  These are not mutually
           exclusive.</P
 ><P
 >Regardless of any setting, if the user deletes a
-	  character using the Backspace or Delete keys, the next or
-	  previous visible character will be spoken, depending upon
-	  which key was used.  If action key echo is enabled (see
-	  below), the key causing the deletion should be spoken before
-	  the visible character is spoken.</P
+          character using the Backspace or Delete keys, the next or
+          previous visible character will be spoken, depending upon
+          which key was used.  If action key echo is enabled (see
+          below), the key causing the deletion should be spoken before
+          the visible character is spoken.</P
 ><P
 >Key echo applies to the entire keyboard and is for
           echoing keys as they are pressed.  The keys are broken into
@@ -5249,8 +5267,8 @@ NAME="AEN1047"
 ><LI
 ><P
 >Alphanumeric and punctuation keys: typing keys that
-	      print something on the display, with the exception of
-	      space.</P
+              print something on the display, with the exception of
+              space.</P
 ></LI
 ><LI
 ><P
@@ -5310,7 +5328,7 @@ CLASS="EMPHASIS"
           not.</P
 ><P
 >Furthermore, if either word or alphanumeric key echo are
-	  enabled, Orca will provide the following behavior:</P
+          enabled, Orca will provide the following behavior:</P
 ><P
 ></P
 ><UL
@@ -5325,15 +5343,15 @@ CLASS="EMPHASIS"
 ><LI
 ><P
 >If word or alphanumeric key echo are enabled, any
-	      group of punctuation characters typed in a row will be
-	      spoken one at a time when the user inserts a whitespace
-	      character.</P
+              group of punctuation characters typed in a row will be
+              spoken one at a time when the user inserts a whitespace
+              character.</P
 ></LI
 ><LI
 ><P
 >OPTIONAL: if the user presses the "escape" key in a
-	      text area and the text area reverts the text back to
-	      what it was, the user should hear this.</P
+              text area and the text area reverts the text back to
+              what it was, the user should hear this.</P
 ></LI
 ></UL
 ><P
@@ -5507,7 +5525,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1110"
+NAME="AEN1115"
 >3.23.1. Functional Description and Status</A
 ></H3
 ><P
@@ -5531,7 +5549,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
+          [OWNER: WDW - implementation] 
           Effective use of space.  Not addressed at all. <SPAN
 CLASS="emphasis"
 ><I
@@ -5563,15 +5581,15 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > Effective use of cursor routing keys.
-	  Works well for activating components and moving the caret.
-	  Second row of cursor routing keys unexplored. <SPAN
+          Works well for activating components and moving the caret.
+          Second row of cursor routing keys unexplored. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
 >
-	  V1.1+.</P
+          V1.1+.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5580,14 +5598,14 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > Key combinations.  Not investigated, can be
-	  done via traditional keyboard techniques.  <SPAN
+          done via traditional keyboard techniques.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
 >
-	  V1.1.</P
+          V1.1.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5596,7 +5614,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > Cursor options. Rely upon BrlTTY.
-	  <SPAN
+          <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -5639,7 +5657,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1137"
+NAME="AEN1142"
 >3.24.1. Functional Description and Status</A
 ></H3
 ><P
@@ -5650,9 +5668,9 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: COMMUNITY] mimimal magnification
-	support is in Orca as of V0.9.0.  Need to work with the
-	community to further define what a compelling magnifier
-	experience means.  <SPAN
+        support is in Orca as of V0.9.0.  Need to work with the
+        community to further define what a compelling magnifier
+        experience means.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -5665,7 +5683,7 @@ CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
 > V1.1,
-	depending upon community contributions.</P
+        depending upon community contributions.</P
 ></DIV
 ></DIV
 ><DIV
@@ -5731,7 +5749,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1156"
+NAME="AEN1161"
 >3.25.1. Functional Description and Status</A
 ></H3
 ><DIV
@@ -5799,7 +5817,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1164"
+NAME="AEN1169"
 >3.26.1. Functional Description and Status</A
 ></H3
 ><P
@@ -5810,8 +5828,8 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > [OWNER: WDW and COMMUNITY] documents will
-	  continually be updated, as will the Orca web site and
-	  WIKI.</P
+          continually be updated, as will the Orca web site and
+          WIKI.</P
 ></DIV
 ></DIV
 ></DIV
@@ -5903,7 +5921,7 @@ HREF="#UGCUSTOMIZATION"
 HREF="#USERGUIDE"
 >Orca User Guide</A
 > for more information on how to
-	customize this):  Note that the first key listed is for the desktop layout and the second is for laptop.</P
+        customize this):  Note that the first key listed is for the desktop layout and the second is for laptop.</P
 ><P
 ></P
 ><UL
@@ -6142,7 +6160,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] handles the single press,
-	    and the double press.  <SPAN
+            and the double press.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -6276,7 +6294,7 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > [OWNER: WDW] handles the single press,
-	    and  the double press.  <SPAN
+            and  the double press.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -6287,7 +6305,7 @@ CLASS="EMPHASIS"
 ><LI
 ><P
 >"INSERT+KEYPAD_5": speaks the accessible containing
-	     the current review word.</P
+             the current review word.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -6494,13 +6512,13 @@ CLASS="EMPHASIS"
 ><LI
 ><P
 >modifier+v: brings up a "quick" verbosity preferences
-	     dialog to set preferences that are temporary to the
-	     current session (i.e., they are not saved permanently
-	     like the Configuration GUI would do).  Example settings
-	     include whether or not to speak indenting when working
-	     with text, speaking capitalization, speak the role of
-	     items, speak font information if it changes, speak an
-	     entire table line vs. individual cells, etc.</P
+             dialog to set preferences that are temporary to the
+             current session (i.e., they are not saved permanently
+             like the Configuration GUI would do).  Example settings
+             include whether or not to speak indenting when working
+             with text, speaking capitalization, speak the role of
+             items, speak font information if it changes, speak an
+             entire table line vs. individual cells, etc.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -6575,6 +6593,68 @@ CLASS="EMPHASIS"
 >COMPLETE:</I
 ></SPAN
 > V0.2.5.</P
+></LI
+><LI
+><P
+>Alt+modifier+[1-6]: add a bookmark and bind it to that number key.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.19.5.</P
+></LI
+><LI
+><P
+>modifier+[1-6]: Go to bookmark bound to this number key.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.19.5.</P
+></LI
+><LI
+><P
+>Alt+shift+[1-6]: Bookmark whereamI information relative to current 
+                position.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.19.5.</P
+></LI
+><LI
+><P
+>b; shift+b]: Move between the given bookmarks for the given application 
+                or page. </P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.19.5.</P
+></LI
+><LI
+><P
+>Alt+modifier+b: Save bookmarks</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>COMPLETE:</I
+></SPAN
+> V2.19.5.</P
 ></LI
 ></UL
 ></DIV
@@ -6960,7 +7040,7 @@ CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
 > cannot reliably get dot info from BrlTTY.
-	    <SPAN
+            <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -7050,7 +7130,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1500"
+NAME="AEN1525"
 >4.3.1. General Braille Style</A
 ></H3
 ><P
@@ -7158,7 +7238,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1523"
+NAME="AEN1548"
 >4.3.2. General Speech Style</A
 ></H3
 ><P
@@ -7181,7 +7261,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1528"
+NAME="AEN1553"
 >4.3.3. Output Styles by Role</A
 ></H3
 ><DIV
@@ -7205,7 +7285,7 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: the "Paste" menu item in the "Edit"
-	    menu has an accelerator.</P
+            menu has an accelerator.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -7214,26 +7294,26 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > It would be nice to be able to get text bounds
-	    information for the accelerator text, but this doesn't appear
-	    to be possible with the existing implementations.</P
+            information for the accelerator text, but this doesn't appear
+            to be possible with the existing implementations.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1537"
+NAME="AEN1562"
 >4.3.3.1.1. Braille</A
 ></H5
 ><P
 >When presented, the accelerator will always be
-	      presented after the item it represents and before the
-	      marker that separates menu items.  The braille text for
-	      the accelerator will appear in parentheses with no space
-	      before the opening parenthesis.  Accelerator labels will
-	      only be presented in verbose mode, and will only appear
-	      for the item with focus.  In the event that there are
-	      other things to show (e.g., check buttons or role
-	      names), the accelerator will appear to the far right.</P
+              presented after the item it represents and before the
+              marker that separates menu items.  The braille text for
+              the accelerator will appear in parentheses with no space
+              before the opening parenthesis.  Accelerator labels will
+              only be presented in verbose mode, and will only appear
+              for the item with focus.  In the event that there are
+              other things to show (e.g., check buttons or role
+              names), the accelerator will appear to the far right.</P
 ><P
 ></P
 ><UL
@@ -7252,7 +7332,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1545"
+NAME="AEN1570"
 >4.3.3.1.2. Speech</A
 ></H5
 ><P
@@ -7285,8 +7365,8 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Dialog and Message Boxes"
-	    demo; click on the "Message Dialog" button.  The "Information"
-	    window that appears is an alert.</P
+            demo; click on the "Message Dialog" button.  The "Information"
+            window that appears is an alert.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -7302,7 +7382,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1558"
+NAME="AEN1583"
 >4.3.3.2.1. Braille</A
 ></H5
 ><P
@@ -7335,7 +7415,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1567"
+NAME="AEN1592"
 >4.3.3.2.2. Speech</A
 ></H5
 ><P
@@ -7378,7 +7458,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1580"
+NAME="AEN1605"
 >4.3.3.3.1. Braille</A
 ></H5
 ><P
@@ -7409,7 +7489,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1589"
+NAME="AEN1614"
 >4.3.3.3.2. Speech</A
 ></H5
 ><P
@@ -7463,13 +7543,13 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > gail/gail/gailarrow.c sets the role to 
-	    ATK_ROLE_ICON.</P
+            ATK_ROLE_ICON.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1606"
+NAME="AEN1631"
 >4.3.3.4.1. Braille</A
 ></H5
 ><P
@@ -7501,7 +7581,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1615"
+NAME="AEN1640"
 >4.3.3.4.2. Speech</A
 ></H5
 ><P
@@ -7540,7 +7620,7 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."; the
-	    "General" tab has a number of check boxes.</P
+            "General" tab has a number of check boxes.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -7549,7 +7629,7 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Tree Store" demo.  Most table cells are
-	    check boxes.  <SPAN
+            check boxes.  <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -7562,7 +7642,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1631"
+NAME="AEN1656"
 >4.3.3.5.1. Braille</A
 ></H5
 ><P
@@ -7587,7 +7667,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1639"
+NAME="AEN1664"
 >4.3.3.5.2. Speech</A
 ></H5
 ><P
@@ -7626,7 +7706,7 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: the "View" menu contains check menu
-	    items.</P
+            items.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -7643,7 +7723,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1654"
+NAME="AEN1679"
 >4.3.3.6.1. Braille</A
 ></H5
 ><P
@@ -7671,7 +7751,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1662"
+NAME="AEN1687"
 >4.3.3.6.2. Speech</A
 ></H5
 ><P
@@ -7715,7 +7795,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1675"
+NAME="AEN1700"
 >4.3.3.7.1. Braille</A
 ></H5
 ><P
@@ -7741,7 +7821,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1683"
+NAME="AEN1708"
 >4.3.3.7.2. Speech</A
 ></H5
 ><P
@@ -7783,7 +7863,7 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gedit: "File" -&#62; "Open...".  Both combo boxes
-	    are simple menu combo boxes.</P
+            are simple menu combo boxes.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -7802,14 +7882,14 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Size Groups" demo.  This
-		creates a "GtkSizeGroup" dialog.  Each combo box
-		object in this dialog has a menu as its child.</P
+                creates a "GtkSizeGroup" dialog.  Each combo box
+                object in this dialog has a menu as its child.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1700"
+NAME="AEN1725"
 >4.3.3.8.1. Braille</A
 ></H5
 ><P
@@ -7842,7 +7922,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1709"
+NAME="AEN1734"
 >4.3.3.8.2. Speech</A
 ></H5
 ><P
@@ -7896,7 +7976,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1723"
+NAME="AEN1748"
 >4.3.3.9.1. Braille</A
 ></H5
 ><P
@@ -7917,7 +7997,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1730"
+NAME="AEN1755"
 >4.3.3.9.2. Speech</A
 ></H5
 ><P
@@ -7957,7 +8037,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1742"
+NAME="AEN1767"
 >4.3.3.10.1. Braille</A
 ></H5
 ><P
@@ -7978,7 +8058,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1749"
+NAME="AEN1774"
 >4.3.3.10.2. Speech</A
 ></H5
 ><P
@@ -8032,13 +8112,13 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Expander" demo; the "GtkExpander" window
-	    is a dialog.</P
+            is a dialog.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1764"
+NAME="AEN1789"
 >4.3.3.11.1. Braille</A
 ></H5
 ><P
@@ -8071,7 +8151,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1773"
+NAME="AEN1798"
 >4.3.3.11.2. Speech</A
 ></H5
 ><P
@@ -8116,7 +8196,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1786"
+NAME="AEN1811"
 >4.3.3.12.1. Braille</A
 ></H5
 ><P
@@ -8140,7 +8220,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1794"
+NAME="AEN1819"
 >4.3.3.12.2. Speech</A
 ></H5
 ><P
@@ -8172,8 +8252,8 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > desktop: Press Ctrl+Alt+Tab to select the
-	    "Desktop."  This will give the icons on the desktop focus
-	    and you can move between them using the arrow keys.</P
+            "Desktop."  This will give the icons on the desktop focus
+            and you can move between them using the arrow keys.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -8214,7 +8294,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1809"
+NAME="AEN1834"
 >4.3.3.13.1. Braille</A
 ></H5
 ><P
@@ -8238,7 +8318,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1817"
+NAME="AEN1842"
 >4.3.3.13.2. Speech</A
 ></H5
 ><P
@@ -8273,15 +8353,15 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > Most push buttons objects appear to implement the
-	    Image interface whether they show an image or not.  So...the
-	    consumer needs to be careful to determine if an image is 
-	    actually showing or not.</P
+            Image interface whether they show an image or not.  So...the
+            consumer needs to be careful to determine if an image is 
+            actually showing or not.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1829"
+NAME="AEN1854"
 >4.3.3.14.1. Braille</A
 ></H5
 ><P
@@ -8312,7 +8392,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1838"
+NAME="AEN1863"
 >4.3.3.14.2. Speech</A
 ></H5
 ><P
@@ -8353,10 +8433,10 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > The HTML container is a hierarchy of test objects.
-	    Non-links do not get focus, but links do.  This presents some
-	    difficulties.  For example, the first time a container is
-	    displayed, focus might be given to a link that is off the
-	    screen.</P
+            Non-links do not get focus, but links do.  This presents some
+            difficulties.  For example, the first time a container is
+            displayed, focus might be given to a link that is off the
+            screen.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -8377,7 +8457,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1853"
+NAME="AEN1878"
 >4.3.3.15.1. Braille</A
 ></H5
 ><P
@@ -8398,7 +8478,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1860"
+NAME="AEN1885"
 >4.3.3.15.2. Speech</A
 ></H5
 ><P
@@ -8434,16 +8514,16 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: Bring "Color Selector" demo.  This creates
-	    a "Color Selection" frame as a child of the gtk-demo app.  Click
-	    on "Change to above color".  This creates a "Changing color" color
-	    chooser dialog.  The numerical entry fields are spin button
-	    objects, each which is LABELED_BY a label.</P
+            a "Color Selection" frame as a child of the gtk-demo app.  Click
+            on "Change to above color".  This creates a "Changing color" color
+            chooser dialog.  The numerical entry fields are spin button
+            objects, each which is LABELED_BY a label.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1869"
+NAME="AEN1894"
 >4.3.3.16.1. Braille</A
 ></H5
 ><P
@@ -8467,7 +8547,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1877"
+NAME="AEN1902"
 >4.3.3.16.2. Speech</A
 ></H5
 ><P
@@ -8508,7 +8588,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1889"
+NAME="AEN1914"
 >4.3.3.17.1. Braille</A
 ></H5
 ><P
@@ -8536,7 +8616,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1897"
+NAME="AEN1922"
 >4.3.3.17.2. Speech</A
 ></H5
 ><P
@@ -8568,7 +8648,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1907"
+NAME="AEN1932"
 >4.3.3.18.1. Braille</A
 ></H5
 ><P
@@ -8593,11 +8673,11 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > A flurry of events seem to be delivered when going
-	       to/from a submenu item in the same menu.  One of these events
-	       appears to give focus to the containing menu, which causes a
-	       dilemna for determining the object that will actually end up
-	       with focus (i.e., speech output needs to ignore intermediate
-	       objects with focus).</P
+               to/from a submenu item in the same menu.  One of these events
+               appears to give focus to the containing menu, which causes a
+               dilemna for determining the object that will actually end up
+               with focus (i.e., speech output needs to ignore intermediate
+               objects with focus).</P
 ><P
 ></P
 ><UL
@@ -8616,7 +8696,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1919"
+NAME="AEN1944"
 >4.3.3.18.2. Speech</A
 ></H5
 ><P
@@ -8660,7 +8740,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1932"
+NAME="AEN1957"
 >4.3.3.19.1. Braille</A
 ></H5
 ><P
@@ -8686,7 +8766,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1940"
+NAME="AEN1965"
 >4.3.3.19.2. Speech</A
 ></H5
 ><P
@@ -8740,7 +8820,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1955"
+NAME="AEN1980"
 >4.3.3.20.1. Braille</A
 ></H5
 ><P
@@ -8769,7 +8849,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1963"
+NAME="AEN1988"
 >4.3.3.20.2. Speech</A
 ></H5
 ><P
@@ -8813,7 +8893,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1976"
+NAME="AEN2001"
 >4.3.3.21.1. Braille</A
 ></H5
 ><P
@@ -8834,7 +8914,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1983"
+NAME="AEN2008"
 >4.3.3.21.2. Speech</A
 ></H5
 ><P
@@ -8889,13 +8969,13 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..." is a
-	    dialog containing a page tab list.</P
+            dialog containing a page tab list.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1999"
+NAME="AEN2024"
 >4.3.3.22.1. Braille</A
 ></H5
 ><P
@@ -8925,7 +9005,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2007"
+NAME="AEN2032"
 >4.3.3.22.2. Speech</A
 ></H5
 ><P
@@ -8969,7 +9049,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2020"
+NAME="AEN2045"
 >4.3.3.23.1. Braille</A
 ></H5
 ><P
@@ -8995,7 +9075,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2028"
+NAME="AEN2053"
 >4.3.3.23.2. Speech</A
 ></H5
 ><P
@@ -9040,7 +9120,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2041"
+NAME="AEN2066"
 >4.3.3.24.1. Braille</A
 ></H5
 ><P
@@ -9064,7 +9144,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2049"
+NAME="AEN2074"
 >4.3.3.24.2. Speech</A
 ></H5
 ><P
@@ -9105,7 +9185,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2061"
+NAME="AEN2086"
 >4.3.3.25.1. Braille</A
 ></H5
 ><P
@@ -9129,7 +9209,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2069"
+NAME="AEN2094"
 >4.3.3.25.2. Speech</A
 ></H5
 ><P
@@ -9174,8 +9254,8 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."  The
-	    "General" page tab has a push button labeled "Font."  The text of
-	    this push button is represented by two child labels.</P
+            "General" page tab has a push button labeled "Font."  The text of
+            this push button is represented by two child labels.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -9184,14 +9264,14 @@ CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
 ></SPAN
 > It is important to remember that push buttons can
-	    optionally have children, which is the case when they have more
-	    than one label.</P
+            optionally have children, which is the case when they have more
+            than one label.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2085"
+NAME="AEN2110"
 >4.3.3.26.1. Braille</A
 ></H5
 ><P
@@ -9215,7 +9295,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2093"
+NAME="AEN2118"
 >4.3.3.26.2. Speech</A
 ></H5
 ><P
@@ -9262,7 +9342,7 @@ CLASS="EMPHASIS"
 > The accessible relation interface was design for
             things like radio buttons, but it appears to be ignored or
             sporadically supported.  As such, depending upon the relation 
-	    interface appears to be a poor choice.</P
+            interface appears to be a poor choice.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -9278,7 +9358,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2109"
+NAME="AEN2134"
 >4.3.3.27.1. Braille</A
 ></H5
 ><P
@@ -9308,7 +9388,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2117"
+NAME="AEN2142"
 >4.3.3.27.2. Speech</A
 ></H5
 ><P
@@ -9347,13 +9427,13 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: The "Tabs" menu has radio menu
-	    items for each tab.</P
+            items for each tab.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2130"
+NAME="AEN2155"
 >4.3.3.28.1. Braille</A
 ></H5
 ><P
@@ -9381,7 +9461,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2138"
+NAME="AEN2163"
 >4.3.3.28.2. Speech</A
 ></H5
 ><P
@@ -9421,7 +9501,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2150"
+NAME="AEN2175"
 >4.3.3.29.1. Braille</A
 ></H5
 ><P
@@ -9446,7 +9526,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2158"
+NAME="AEN2183"
 >4.3.3.29.2. Speech</A
 ></H5
 ><P
@@ -9490,7 +9570,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2170"
+NAME="AEN2195"
 >4.3.3.30.1. Braille</A
 ></H5
 ><P
@@ -9517,7 +9597,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2178"
+NAME="AEN2203"
 >4.3.3.30.2. Speech</A
 ></H5
 ><P
@@ -9553,13 +9633,13 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."  The
-	    "Shade transparent or image background" object is a slider.</P
+            "Shade transparent or image background" object is a slider.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2190"
+NAME="AEN2215"
 >4.3.3.31.1. Braille</A
 ></H5
 ><P
@@ -9583,7 +9663,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2198"
+NAME="AEN2223"
 >4.3.3.31.2. Speech</A
 ></H5
 ><P
@@ -9632,7 +9712,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2210"
+NAME="AEN2235"
 >4.3.3.32.1. Braille</A
 ></H5
 ><P
@@ -9656,7 +9736,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2218"
+NAME="AEN2243"
 >4.3.3.32.2. Speech</A
 ></H5
 ><P
@@ -9692,8 +9772,8 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Paned Widgets" demo.  This brings up a
-	    "Panes" frame.  The top split pane is a child of the big split
-	    pane.</P
+            "Panes" frame.  The top split pane is a child of the big split
+            pane.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -9702,13 +9782,13 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gedit: "File" -&#62; "Open" brings up a split
-	    pane.</P
+            pane.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2232"
+NAME="AEN2257"
 >4.3.3.33.1. Braille</A
 ></H5
 ><P
@@ -9735,7 +9815,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2240"
+NAME="AEN2265"
 >4.3.3.33.2. Speech</A
 ></H5
 ><P
@@ -9773,14 +9853,14 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Editable Cells" demo brings up a 
-	    "Shopping list" frame that has a table with cells that have
-	    editable text (press the space key to initiate the edit).</P
+            "Shopping list" frame that has a table with cells that have
+            editable text (press the space key to initiate the edit).</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2252"
+NAME="AEN2277"
 >4.3.3.34.1. Braille</A
 ></H5
 ><P
@@ -9811,7 +9891,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2260"
+NAME="AEN2285"
 >4.3.3.34.2. Speech</A
 ></H5
 ><P
@@ -9847,15 +9927,15 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Menus" demo has many tear off menu items.
-	    Keyboard navigation skips the tear off menu item at first.  To get
-	    to it, you need to press the up arrow key after selecting the
-	    first "real" menu item.</P
+            Keyboard navigation skips the tear off menu item at first.  To get
+            to it, you need to press the up arrow key after selecting the
+            first "real" menu item.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2272"
+NAME="AEN2297"
 >4.3.3.35.1. Braille</A
 ></H5
 ><P
@@ -9883,7 +9963,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2280"
+NAME="AEN2305"
 >4.3.3.35.2. Speech</A
 ></H5
 ><P
@@ -9952,8 +10032,8 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: (LABELED_BY and SINGLE_LINE) Bring up the
-	    "Dialog and Message Boxes" demo.  "Entry 1" and "Entry 2" are
-	    SINGLE_LINE text area that are LABELED_BY.</P
+            "Dialog and Message Boxes" demo.  "Entry 1" and "Entry 2" are
+            SINGLE_LINE text area that are LABELED_BY.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -9968,16 +10048,16 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2300"
+NAME="AEN2325"
 >4.3.3.36.1. Braille</A
 ></H5
 ><P
 >Document text will be displayed optionally with the
-	      following enhancements.  It can optionally be displayed
-	      with proper spacing shown, with a certain attribute
-	      underlined, style information displayed in status cells.
-	      If status cells exist it should be possible to toggle
-	      them between the font, the point size and the attribute.
+              following enhancements.  It can optionally be displayed
+              with proper spacing shown, with a certain attribute
+              underlined, style information displayed in status cells.
+              If status cells exist it should be possible to toggle
+              them between the font, the point size and the attribute.
               Multiline text will be followed by the current line and
               total lines.</P
 ><P
@@ -10000,7 +10080,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2309"
+NAME="AEN2334"
 >4.3.3.36.2. Speech</A
 ></H5
 ><P
@@ -10040,7 +10120,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2318"
+NAME="AEN2343"
 >4.3.3.37.1. Braille</A
 ></H5
 ><P
@@ -10065,7 +10145,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2326"
+NAME="AEN2351"
 >4.3.3.37.2. Speech</A
 ></H5
 ><P
@@ -10115,14 +10195,14 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2339"
+NAME="AEN2364"
 >4.3.3.38.1. Braille</A
 ></H5
 ><P
 >Verbose mode should show the tool bar followed by
-	      "toolbar" Brief mode should simply show the tool bar.
-	      Each item will be separated with "_".  Same verbosity
-	      rules apply to each item. <SPAN
+              "toolbar" Brief mode should simply show the tool bar.
+              Each item will be separated with "_".  Same verbosity
+              rules apply to each item. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -10149,7 +10229,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2348"
+NAME="AEN2373"
 >4.3.3.38.2. Speech</A
 ></H5
 ><P
@@ -10186,19 +10266,19 @@ CLASS="EMPHASIS"
 >EXAMPLE:</I
 ></SPAN
 > gtk-demo: "Tree Store" demo brings up a tree
-	    table.</P
+            table.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2360"
+NAME="AEN2385"
 >4.3.3.39.1. Braille</A
 ></H5
 ><P
 >Orca should show the label for the tree followed by
-	      the current item followed by its state followed by the
-	      level followed by tree.</P
+              the current item followed by its state followed by the
+              level followed by tree.</P
 ><P
 ></P
 ><UL
@@ -10217,7 +10297,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2368"
+NAME="AEN2393"
 >4.3.3.39.2. Speech</A
 ></H5
 ><P
@@ -10249,14 +10329,14 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2378"
+NAME="AEN2403"
 >4.3.3.40.1. Braille</A
 ></H5
 ><P
 >On Alt+Tab, the task switcher will appear.  As it is
-	      on the screen, it will be presented.  The text that
-	      appears (i.e., the window name) will be shown in
-	      braille.  When the window gets focus, it will be the
+              on the screen, it will be presented.  The text that
+              appears (i.e., the window name) will be shown in
+              braille.  When the window gets focus, it will be the
               context, and the object with focus in the window will
               be the most meaningful information.</P
 ><P
@@ -10277,7 +10357,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2386"
+NAME="AEN2411"
 >4.3.3.40.2. Speech</A
 ></H5
 ><P
@@ -10368,7 +10448,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2422"
+NAME="AEN2447"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -10536,7 +10616,7 @@ CLASS="LOT"
 ></DT
 ><DT
 >3-1. <A
-HREF="#AEN2483"
+HREF="#AEN2508"
 >High Level Orca Architecture. The main components of Orca
         are as follows: desktop  applications that support the AT-SPI,
         the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
@@ -10836,7 +10916,7 @@ NAME="ARCHITECTURE"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN2483"
+NAME="AEN2508"
 ></A
 ><P
 ><B
@@ -11901,7 +11981,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2770"
+NAME="AEN2795"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -12050,7 +12130,7 @@ CLASS="LOT"
 ></DT
 ><DT
 >3-1. <A
-HREF="#AEN2920"
+HREF="#AEN2945"
 >Orca Script Diagram</A
 ></DT
 ></DL
@@ -12698,7 +12778,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN2920"
+NAME="AEN2945"
 ></A
 ><P
 ><B
@@ -13891,7 +13971,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN3208"
+NAME="AEN3233"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -13977,42 +14057,42 @@ HREF="#KEYWORDECHOTEST"
 ><DL
 ><DT
 >1.11.1. <A
-HREF="#AEN3346"
+HREF="#AEN3371"
 >Simple Typing of Words</A
 ></DT
 ><DT
 >1.11.2. <A
-HREF="#AEN3354"
+HREF="#AEN3379"
 >Typing Words with Punctuation</A
 ></DT
 ><DT
 >1.11.3. <A
-HREF="#AEN3362"
+HREF="#AEN3387"
 >Typing Alphanumeric characters</A
 ></DT
 ><DT
 >1.11.4. <A
-HREF="#AEN3370"
+HREF="#AEN3395"
 >Typing Alphanumeric characters with modifiers</A
 ></DT
 ><DT
 >1.11.5. <A
-HREF="#AEN3386"
+HREF="#AEN3411"
 >function key echo test</A
 ></DT
 ><DT
 >1.11.6. <A
-HREF="#AEN3400"
+HREF="#AEN3425"
 >lock key echo test</A
 ></DT
 ><DT
 >1.11.7. <A
-HREF="#AEN3408"
+HREF="#AEN3433"
 >action key echo test when action key echo is selected</A
 ></DT
 ><DT
 >1.11.8. <A
-HREF="#AEN3440"
+HREF="#AEN3465"
 >action keys with no echo test</A
 ></DT
 ></DL
@@ -14111,7 +14191,7 @@ HREF="#EMAILTEST"
 ><DL
 ><DT
 >2.5.1. <A
-HREF="#AEN3705"
+HREF="#AEN3730"
 >Some Test</A
 ></DT
 ></DL
@@ -14125,7 +14205,7 @@ HREF="#ECALTEST"
 ><DL
 ><DT
 >2.6.1. <A
-HREF="#AEN3715"
+HREF="#AEN3740"
 >Some Test</A
 ></DT
 ></DL
@@ -14139,7 +14219,7 @@ HREF="#ECONTACTTEST"
 ><DL
 ><DT
 >2.7.1. <A
-HREF="#AEN3725"
+HREF="#AEN3750"
 >Some Test</A
 ></DT
 ></DL
@@ -14167,7 +14247,7 @@ HREF="#YELPTEST"
 ><DL
 ><DT
 >2.9.1. <A
-HREF="#AEN3751"
+HREF="#AEN3776"
 >Some Test</A
 ></DT
 ></DL
@@ -14181,7 +14261,7 @@ HREF="#SOWRITERTEST"
 ><DL
 ><DT
 >2.10.1. <A
-HREF="#AEN3767"
+HREF="#AEN3792"
 >Some Test</A
 ></DT
 ></DL
@@ -14195,7 +14275,7 @@ HREF="#SOCALCTEST"
 ><DL
 ><DT
 >2.11.1. <A
-HREF="#AEN3777"
+HREF="#AEN3802"
 >Some Test</A
 ></DT
 ></DL
@@ -14209,7 +14289,7 @@ HREF="#SOIMPRESSTEST"
 ><DL
 ><DT
 >2.12.1. <A
-HREF="#AEN3787"
+HREF="#AEN3812"
 >Some Test</A
 ></DT
 ></DL
@@ -14223,7 +14303,7 @@ HREF="#FF2TEST"
 ><DL
 ><DT
 >2.13.1. <A
-HREF="#AEN3797"
+HREF="#AEN3822"
 >Some Test</A
 ></DT
 ></DL
@@ -14237,7 +14317,7 @@ HREF="#FF3TEST"
 ><DL
 ><DT
 >2.14.1. <A
-HREF="#AEN3807"
+HREF="#AEN3832"
 >Some Test</A
 ></DT
 ></DL
@@ -14251,7 +14331,7 @@ HREF="#ACROREADTEST"
 ><DL
 ><DT
 >2.15.1. <A
-HREF="#AEN3817"
+HREF="#AEN3842"
 >Some Test</A
 ></DT
 ></DL
@@ -14265,7 +14345,7 @@ HREF="#JAVATEST"
 ><DL
 ><DT
 >2.16.1. <A
-HREF="#AEN3827"
+HREF="#AEN3852"
 >Some Test</A
 ></DT
 ></DL
@@ -14325,8 +14405,8 @@ NAME="INTEROPERABILITYTEST"
 ><P
 >The tests in this section are to ensure that Orca does not
         have adverse effects on other assistive technologies that may be
-	running, and that other assistive technologies do not adversely
-	effect Orca.</P
+        running, and that other assistive technologies do not adversely
+        effect Orca.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -14651,7 +14731,7 @@ NAME="VERBALIZEDPUNCTEST"
 ><P
 >The tests in this section are to ensure that the Orca
         Verbalized Punctuation functionality provides the desired
-	output for the various verbalized punctuation settings.</P
+        output for the various verbalized punctuation settings.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -14664,7 +14744,7 @@ NAME="VERBALIZEDLINKTEST"
 ><P
 >The tests in this section are to ensure that the Orca
         Verbalized Link functionality provides the desired
-	output for the various verbalized link settings.</P
+        output for the various verbalized link settings.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -14841,7 +14921,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3346"
+NAME="AEN3371"
 >1.11.1. Simple Typing of Words</A
 ></H3
 ><P
@@ -14874,7 +14954,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3354"
+NAME="AEN3379"
 >1.11.2. Typing Words with Punctuation</A
 ></H3
 ><P
@@ -14907,7 +14987,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3362"
+NAME="AEN3387"
 >1.11.3. Typing Alphanumeric characters</A
 ></H3
 ><P
@@ -14940,7 +15020,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3370"
+NAME="AEN3395"
 >1.11.4. Typing Alphanumeric characters with modifiers</A
 ></H3
 ><P
@@ -15005,7 +15085,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3386"
+NAME="AEN3411"
 >1.11.5. function key echo test</A
 ></H3
 ><P
@@ -15062,7 +15142,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3400"
+NAME="AEN3425"
 >1.11.6. lock key echo test</A
 ></H3
 ><P
@@ -15095,7 +15175,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3408"
+NAME="AEN3433"
 >1.11.7. action key echo test when action key echo is selected</A
 ></H3
 ><P
@@ -15224,7 +15304,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3440"
+NAME="AEN3465"
 >1.11.8. action keys with no echo test</A
 ></H3
 ><P
@@ -15336,8 +15416,8 @@ NAME="BRAILLETEST"
 ><P
 >The tests in this section are to make sure that Orca does
         the right thing with respect to spaces and indentation on the
-	braille display and with respect to the various braille
-	spacing and indentation settings.</P
+        braille display and with respect to the various braille
+        spacing and indentation settings.</P
 ></DIV
 ></DIV
 ><DIV
@@ -15611,8 +15691,8 @@ CLASS="EMPHASIS"
 >PROCEDURE:</I
 ></SPAN
 > Start up nautilus file manager by selecting  'Preferences'-&#62;'Display'-&#62;'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
-		this button's dialog with Space or press Alt-D&#62;.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
-		the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </P
+                this button's dialog with Space or press Alt-D&#62;.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
+                the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -15621,7 +15701,7 @@ CLASS="EMPHASIS"
 >EXPECTED RESULT:</I
 ></SPAN
 > Font
-		Preferences dialog appears.  Desktop font changes (icon text on desktop changes).  Desktop font reverts.</P
+                Preferences dialog appears.  Desktop font changes (icon text on desktop changes).  Desktop font reverts.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -15777,8 +15857,8 @@ CLASS="EMPHASIS"
 >PROCEDURE:</I
 ></SPAN
 > Start up terminal by selecting  'Applications'-&#62;'System Tools'-&#62;'Terminal'.  Type in "/sbin/yast".  Press Return button.  Navigate to
-	  the 'Misc'  category in yast.  Navigate to the 'View system log' option with RightDown.  Press Return to select it.  Exit the log with Alt-O&#62;, or
-	  Tab to 'OK' and pressing Return.  Quit out of yast with Alt-Q&#62;.  Close the gnome terminal with 'File'-&#62;'Close Window'. </P
+          the 'Misc'  category in yast.  Navigate to the 'View system log' option with RightDown.  Press Return to select it.  Exit the log with Alt-O&#62;, or
+          Tab to 'OK' and pressing Return.  Quit out of yast with Alt-Q&#62;.  Close the gnome terminal with 'File'-&#62;'Close Window'. </P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16308,9 +16388,9 @@ CLASS="EMPHASIS"
 >PROCEDURE:</I
 ></SPAN
 > Start up gedit by selecting  'Applications'-&#62;'Accessories'-&#62;'Text Editor'. Make some changes to the newly opened document.  Select the
-	  option 'File'-&#62;'Save As' from the menubar. Enter a filename in the 'Save as..' dialog window.  Click on the 'OK' button.  Select the option 'File'-&#62;'Close'
-	  from the menubar. Select the option 'File'-&#62;'Open' from the menubar. Specify the name of the document in the 'Open File..' dialog window.  Click on the
-	  'OK' button.   Close gedit with either 'File'-&#62;'Quit' or by pressing Ctrl-Q&#62;. </P
+          option 'File'-&#62;'Save As' from the menubar. Enter a filename in the 'Save as..' dialog window.  Click on the 'OK' button.  Select the option 'File'-&#62;'Close'
+          from the menubar. Select the option 'File'-&#62;'Open' from the menubar. Specify the name of the document in the 'Open File..' dialog window.  Click on the
+          'OK' button.   Close gedit with either 'File'-&#62;'Quit' or by pressing Ctrl-Q&#62;. </P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16319,7 +16399,7 @@ CLASS="EMPHASIS"
 >EXPECTED RESULT:</I
 ></SPAN
 > A new text file is created.  The file is closed
-	  from gedit.  The same text file is reopened is gedit.</P
+          from gedit.  The same text file is reopened is gedit.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -16368,7 +16448,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3705"
+NAME="AEN3730"
 >2.5.1. Some Test</A
 ></H3
 ><P
@@ -16410,7 +16490,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3715"
+NAME="AEN3740"
 >2.6.1. Some Test</A
 ></H3
 ><P
@@ -16452,7 +16532,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3725"
+NAME="AEN3750"
 >2.7.1. Some Test</A
 ></H3
 ><P
@@ -16513,11 +16593,11 @@ CLASS="EMPHASIS"
 >PROCEDURE:</I
 ></SPAN
 > Launch 'Applications'-&#62;'Internet'-&#62;'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
-		in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
-		'Show more options' expander and action it with Space.  From the 'Proxy type' combo box, choose 'SOCKS 5'.  Type "gmpea-socks.sun.com" for the 'Host:'
-		text field.  Type "1080" for the 'Port:' text field.  Press Alt-S&#62; to save these configuration settings.  From the Accounts dialog, highlight the 'Online'
-		tickbox for the account.  Press Space to tick it. Wait for the Signon dialog to complete and for the session to connect.  From the Buddy List window,
-		choose 'Buddies'-&#62;'Signoff'.  Press Ctrl-Q&#62; to quit. </P
+                in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
+                'Show more options' expander and action it with Space.  From the 'Proxy type' combo box, choose 'SOCKS 5'.  Type "gmpea-socks.sun.com" for the 'Host:'
+                text field.  Type "1080" for the 'Port:' text field.  Press Alt-S&#62; to save these configuration settings.  From the Accounts dialog, highlight the 'Online'
+                tickbox for the account.  Press Space to tick it. Wait for the Signon dialog to complete and for the session to connect.  From the Buddy List window,
+                choose 'Buddies'-&#62;'Signoff'.  Press Ctrl-Q&#62; to quit. </P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16566,7 +16646,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3751"
+NAME="AEN3776"
 >2.9.1. Some Test</A
 ></H3
 ><P
@@ -16638,7 +16718,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3767"
+NAME="AEN3792"
 >2.10.1. Some Test</A
 ></H3
 ><P
@@ -16680,7 +16760,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3777"
+NAME="AEN3802"
 >2.11.1. Some Test</A
 ></H3
 ><P
@@ -16722,7 +16802,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3787"
+NAME="AEN3812"
 >2.12.1. Some Test</A
 ></H3
 ><P
@@ -16764,7 +16844,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3797"
+NAME="AEN3822"
 >2.13.1. Some Test</A
 ></H3
 ><P
@@ -16806,7 +16886,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3807"
+NAME="AEN3832"
 >2.14.1. Some Test</A
 ></H3
 ><P
@@ -16848,7 +16928,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3817"
+NAME="AEN3842"
 >2.15.1. Some Test</A
 ></H3
 ><P
@@ -16890,7 +16970,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3827"
+NAME="AEN3852"
 >2.16.1. Some Test</A
 ></H3
 ><P
@@ -16939,7 +17019,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN3838"
+NAME="AEN3863"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
