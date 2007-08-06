@@ -631,10 +631,7 @@
         forms, tables, visited links, and unvisited links in the document. 
         </para>
     
-        <para>&incomplete; V2.17.3. Orca provides top down "Where am I"
-        functionality when the user presses the KP_Enter key.  Orca
-        should also present bottom-up "Where am I" when double
-        pressing KP enter.  </para>
+        <para>&complete; V2.17.3. Orca provides both brief and detailed WhereAmI information with the single and double presses of the "WhereAmI" key.  </para>
 
         <para>There will be four commands related to "Where am I":</para>
 
@@ -1079,7 +1076,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
+        <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.  The only part of this that is not yet complete is the "attribute search" portion.</para>
 
       </section>
 
@@ -1100,7 +1097,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &shoulddeliver; V2.2.20.</para>
+        <para>&incomplete; &shoulddeliver; V2.2.22+.</para>
 
       </section>
 
@@ -1136,10 +1133,10 @@
 
       <section><title>Functional Description and Status</title>
           
-          <para>&incomplete; V2.19.5.  Functionality was implemented for all features 
+          <para>&complete; V2.19.3.  Functionality was implemented for all features 
           shown above.  Magnification was not considered for the initial version.</para>
 
-        <para>&incomplete; &shoulddeliver; V1.1.</para>
+        <para>&complete; &shoulddeliver; V2.20.</para>
 
       </section>
 
@@ -1173,9 +1170,9 @@
         <para>&complete; V0.9.0. Reading works well, including setting
           the caret position when speech is interrupted.</para>
         <para>&incomplete; text is not highlighted, nor is there an
-          option to do so. &deliver; V1.1+.</para>
+          option to do so. &deliver; V2.22+.</para>
         <para>&incomplete; audio cues not played when auto
-          reading across line boundaries.  &shoulddeliver; V1.1.</para>
+          reading across line boundaries.  &shoulddeliver; V2.22.</para>
       </section>
     </section>
 
@@ -1298,13 +1295,12 @@
 
         <para>&complete; V0.2.2.  General synthesis.</para>
         <para>&complete; V0.2.2.  Voice styles done via ACSS.</para>
-        <para>&incomplete; Verbalized caps. &mustdeliver; V1.1.</para>
+        <para>&incomplete; Verbalized caps. &mustdeliver; V2.22+.</para>
         <para>&incomplete; [OWNER: RNB] Verbalized
         hyperlinks. &mustdeliver; V1.1.</para>
         <para>&complete; V0.2.2.  Speaking rate modification.
           Insert+{left,right}_arrow.</para>
-        <para>&incomplete; Multilingual text. &deliver; V1.1+.</para>
-        <para>&incomplete; V0.2.7. Letter-by-letter spelling mode of
+        <para>&incomplete; Multilingual text. &deliver; V2.22+.</para>        <para>&incomplete; V0.2.7. Letter-by-letter spelling mode of
         current flat review item performed when user quickly presses
         KP_5 (word review) or KP_8 (line review) twice in a
         row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a &mustdeliver; V1.1.</para>
@@ -1322,12 +1318,12 @@
       <para>Orca must provide a set of options to allow the user to
         enable the automatic speaking of keys as they are typed,
         alphanumeric characters as they are entered/deleted, and words
-        as they are entered.  The speech much be interruptable at any
+        as they are entered.  The speech must be interruptable at any
         time.</para>
 
       <section><title>Functional Description and Status</title>
 
-        <para>There are be two main options for selecting key and
+        <para>There are two main options for selecting key and
           word echo: key and word.  These are not mutually
           exclusive.</para>
 
