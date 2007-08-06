@@ -19,8 +19,8 @@
 
       <para>Orca will often be the only vehicle by which many users
         will be able to access the system.  As such, it must be
-        available at all times, including at system login and
-        screen-saver screens.</para>
+        available at all times, including at system login, 
+        screen-saver screens and system administration screens requiring root access.</para>
 
       <para>Orca must also be available after the system returns from
         "standby" or "sleep" mode.</para>
@@ -34,7 +34,7 @@
         <para>&complete; V0.2.2. LOGIN: Orca will rely upon the accessible
           login feature of gdm to enable access at login.  This
           feature has been tested and verified on Open Solaris with
-          Orca V0.2.2.</para>
+          Orca V0.2.2.  It still does not seem to work in Linux.</para>
 
         <para>&complete; V0.2.2. SCREEN SAVER: Orca will announce that
           the "AT Enabled Lock Dialog" is active and you can type your
@@ -118,7 +118,7 @@
 
       <para>While each script can provide dramatically different
         access to an application, it is expected that scripts will
-        provide a users with a consistent style to access
+        provide users with a consistent style to access
         applications.  To help with this consistent style, Orca will
         provide a &styleguidelink;, a well-documented "default"
         script, and several application scripts that demonstrate and
@@ -273,7 +273,7 @@
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&incomplete; [OWNER: RNB] month view not
-                  done. &shoulddeliver; V1.1+.</entry>
+                  done. &shoulddeliver; V2.22+.</entry>
                 <entry>&ecaltestlink;</entry>
               </row>
               <row>
@@ -309,7 +309,7 @@
               <row>
                 <entry>Presentation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] &shoulddeliver; V1.1.</entry>
+                <entry>&incomplete; [OWNER: RNB] &shoulddeliver; V2.22.</entry>
                 <entry>&soimpresstestlink;</entry>
               </row>
               <row>
@@ -328,7 +328,7 @@
                 <entry>Adobe Reader</entry>
                 <entry>&incomplete; [OWNER: MMP] 
                    needs work from Adobe. &shoulddeliver;
-                  V1.0</entry>
+                  V2.22</entry>
                 <entry>&acroreadtestlink;</entry>
               </row>
               <row>
@@ -460,7 +460,7 @@
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; does not provide audio cues when crossing linear
-          boundaries. &shoulddeliver; V1.1+.</para>
+          boundaries. &shoulddeliver; V2.22+.</para>
 
       </section>
 
@@ -602,9 +602,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; the current way to define these is by
-          manually editing the <literal>user-settings.py</literal> or
-          <literal>orca-customizations.py</literal> file.
+        <para>&complete; 
           &mustdeliver; V1.1.</para>
 
       </section>
@@ -921,10 +919,7 @@
             <listitem>
               <para>role</para>
             </listitem>
-            <para>Icon Panels present the following information (an example
-          is "Icon Panel, Mike Pedersen, item 8 of 10, "):
 
-          <orderedlist numeration="arabic">
             <listitem>
               <para>label, if any</para>
             </listitem>
