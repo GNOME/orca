@@ -1,3 +1,8 @@
+2007-08-07  Lynn MonSanto <lynn.monsanto@sun.com>
+
+        * docs/doc-set/testing.sgml, docs/doc-set/orca.html -
+	Added Java Platform Testing.
+
 2007-08-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs 

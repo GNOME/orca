@@ -14346,7 +14346,17 @@ HREF="#JAVATEST"
 ><DT
 >2.16.1. <A
 HREF="#AEN3852"
->Some Test</A
+>Swing components in SwingSet2</A
+></DT
+><DT
+>2.16.2. <A
+HREF="#AEN3898"
+>Swing components not found in SwingSet2</A
+></DT
+><DT
+>2.16.3. <A
+HREF="#AEN3920"
+>Swing text</A
 ></DT
 ></DL
 ></DD
@@ -16355,7 +16365,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >GOAL:</I
 ></SPAN
-> Determine if Orca reads the "quit without saving dialog.</P
+> Determine if Orca reads the "quit without saving dialog."</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16971,8 +16981,78 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN3852"
->2.16.1. Some Test</A
+>2.16.1. Swing components in SwingSet2</A
 ></H3
+><P
+>The J2SE 1.6 SwingSet2 application frame, and the demos it 
+      contains, use almost all of the components in the Swing toolkit. 
+      The components not found in SwingSet2 are tested in the next section. 
+			<P
+></P
+><UL
+><LI
+><P
+>SwingSet2 (JFrame, JApplet, JMenu, JMenuBar, JMenuItem, JPopupMenu, JDialog, JEditorPane)</P
+></LI
+><LI
+><P
+>ButtonDemo (JButton, JCheckBox, JRadioButton, JToggleButton)</P
+></LI
+><LI
+><P
+>ComboBoxDemo (JComboBox)</P
+></LI
+><LI
+><P
+>FileChooserDemo (JFileChooser, ImageIcon)</P
+></LI
+><LI
+><P
+>HtmlDemo (JEditorPane, JScrollPane)</P
+></LI
+><LI
+><P
+>InternalFrameDemo (JDesktopPane, JInternalFrame)</P
+></LI
+><LI
+><P
+>ListDemo (JList)</P
+></LI
+><LI
+><P
+>OptionPaneDemo (JOptionPane)</P
+></LI
+><LI
+><P
+>ProgressBarDemo (JProgressBar, JTextArea)</P
+></LI
+><LI
+><P
+>ScrollPaneDemo (JScrollPane, JScrollBar)</P
+></LI
+><LI
+><P
+>SliderDemo (JSlider)</P
+></LI
+><LI
+><P
+>SplitPaneDemo (JSplitPane, JTextField)</P
+></LI
+><LI
+><P
+>TabbedPaneDemo (JTabbedPane, JRadioButton)</P
+></LI
+><LI
+><P
+>TableDemo (JTable, JScrollPane, JScrollBar, JCheckBox, JSlider, JLabel, JTextField)</P
+></LI
+><LI
+><P
+>TreeDemo (JTree, DefaultMutableTreeNode)</P
+></LI
+></UL
+>      
+      </P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16980,7 +17060,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >GOAL:</I
 ></SPAN
-> Determine if Orca does something.</P
+> Test Swing components in SwingSet2</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16988,7 +17068,23 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >PROCEDURE:</I
 ></SPAN
-> perform this action.</P
+> For the SwingSet frame and each of the demos, 
+      do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Use the standard Java Look and Feel keystrokes to navigate to all components that accept keyboard focus and verify that Orca speaks and brailles the component correctly.</P
+><P
+></P
+></LI
+><LI
+><P
+>Use flat-review to navigate to all components and verify that Orca speaks and brailles the component correctly.
+			</P
+></LI
+></UL
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -16996,7 +17092,138 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >EXPECTED RESULT:</I
 ></SPAN
-> this should happen.</P
+> Orca speaks and brailles all of the Swing components correctly. </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN3898"
+>2.16.2. Swing components not found in SwingSet2</A
+></H3
+><P
+>The <A
+HREF="http://java.sun.com/docs/books/tutorial/uiswing/examples/components/index.html"
+TARGET="_top"
+>The Java Tutorial</A
+>
+      contains demos for testing the Swing components not found in SwingSet2.
+	      <P
+></P
+><UL
+><LI
+><P
+>BorderDemo (border.TitledBorder)</P
+></LI
+><LI
+><P
+>ProgressMonitorDemo (ProgressMonitor)</P
+></LI
+><LI
+><P
+>SpinnerDemo (JSpinner)</P
+></LI
+></UL
+>
+      </P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>GOAL:</I
+></SPAN
+> Test the Swing components not found in SwingSet2.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>PROCEDURE:</I
+></SPAN
+> For the demos listed above do the following:
+		   <P
+></P
+><UL
+><LI
+><P
+>Use the standard Java Look and Feel keystrokes to navigate to all components that accept keyboard focus and verify that Orca speaks and brailles the component correctly.</P
+></LI
+><LI
+><P
+>Use flat-review to navigate to all components and verify that Orca speaks and brailles the component correctly.</P
+></LI
+></UL
+>
+      </P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>EXPECTED RESULT:</I
+></SPAN
+> Orca speaks and brailles all of the Swing components correctly.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN3920"
+>2.16.3. Swing text</A
+></H3
+><P
+>SwingSet2 does not contain enough text to verify 
+      that Orca speak and brailles Swing text correctly. Use the 
+      <A
+HREF="http://www.jedit.org/"
+TARGET="_top"
+>jEdit Programmer's Text Editor</A
+>
+      for testing Swing text.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>GOAL:</I
+></SPAN
+> Test Swing text.</P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>PROCEDURE:</I
+></SPAN
+> Open the Orca ChangeLog text file with jEdit and do the 
+      following:
+		   <P
+></P
+><UL
+><LI
+><P
+>Use the standard Java Look and Feel keystrokes to navigate through the 
+			document and verify that Orca speaks and brailles the text correctly.</P
+></LI
+><LI
+><P
+>Use flat-review to navigate lines, words and characters within the 
+			document and verify that Orca speaks and brailles the text correctly.</P
+></LI
+></UL
+>
+      </P
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>EXPECTED RESULT:</I
+></SPAN
+> Orca speaks and brailles Swing text correctly.</P
 ></DIV
 ></DIV
 ></DIV
@@ -17019,7 +17246,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN3863"
+NAME="AEN3938"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P

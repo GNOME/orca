@@ -445,7 +445,7 @@ as "this is a changed file name".</para>
         <para>&tgoal; Determine if Orca reads the find dialog.</para>
         <para>&tprocedure; Press CTRL+f to bring up the find dialog.  Type "Mike" and press enter.</para>
         <para>&tresult; When the find dialog comes up it should be read.  When enter is pressed on Mike orca should speak that the word has been found.</para>
-        <para>&tgoal; Determine if Orca reads the "quit without saving dialog.</para>
+        <para>&tgoal; Determine if Orca reads the "quit without saving dialog."</para>
         <para>&tprocedure; Delete the word Mike found in the last test and press CTRL+q.</para>
         <para>&tresult; Orca should speak the dialog warning the user that the changes will be lost.</para>
 
@@ -574,10 +574,75 @@ page is revisited.</para>
     </section>
 
     <section id="javatest"><title>Java Platform Test Plan</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+      <section><title>Swing components in SwingSet2</title>
+      <para>The J2SE 1.6 SwingSet2 application frame, and the demos it 
+      contains, use almost all of the components in the Swing toolkit. 
+      The components not found in SwingSet2 are tested in the next section. 
+			<itemizedlist> 
+			<listitem><para>SwingSet2 (JFrame, JApplet, JMenu, JMenuBar, JMenuItem, JPopupMenu, JDialog, JEditorPane)</para></listitem>
+			<listitem><para>ButtonDemo (JButton, JCheckBox, JRadioButton, JToggleButton)</para></listitem>
+			<listitem><para>ComboBoxDemo (JComboBox)</para></listitem>
+			<listitem><para>FileChooserDemo (JFileChooser, ImageIcon)</para></listitem>
+			<listitem><para>HtmlDemo (JEditorPane, JScrollPane)</para></listitem>
+			<listitem><para>InternalFrameDemo (JDesktopPane, JInternalFrame)</para></listitem>
+			<listitem><para>ListDemo (JList)</para></listitem>
+			<listitem><para>OptionPaneDemo (JOptionPane)</para></listitem>
+			<listitem><para>ProgressBarDemo (JProgressBar, JTextArea)</para></listitem>
+			<listitem><para>ScrollPaneDemo (JScrollPane, JScrollBar)</para></listitem>
+			<listitem><para>SliderDemo (JSlider)</para></listitem>
+			<listitem><para>SplitPaneDemo (JSplitPane, JTextField)</para></listitem>
+			<listitem><para>TabbedPaneDemo (JTabbedPane, JRadioButton)</para></listitem>
+			<listitem><para>TableDemo (JTable, JScrollPane, JScrollBar, JCheckBox, JSlider, JLabel, JTextField)</para></listitem>
+			<listitem><para>TreeDemo (JTree, DefaultMutableTreeNode)</para></listitem>
+			</itemizedlist>      
+      </para>
+      <para>&tgoal; Test Swing components in SwingSet2</para>
+      <para>&tprocedure; For the SwingSet frame and each of the demos, 
+      do the following:</para>
+			<itemizedlist>
+			<listitem><para>Use the standard Java Look and Feel keystrokes to navigate to all components that accept keyboard focus and verify that Orca speaks and brailles the component correctly.<para></listitem>
+			<listitem><para>Use flat-review to navigate to all components and verify that Orca speaks and brailles the component correctly.
+			</para> 
+			</listitem>
+			</itemizedlist>
+      <para>&tresult; Orca speaks and brailles all of the Swing components correctly. </para>
+      </section>
+      
+      <section><title>Swing components not found in SwingSet2</title>
+      <para>The <ulink url="http://java.sun.com/docs/books/tutorial/uiswing/examples/components/index.html">The Java Tutorial</ulink>
+      contains demos for testing the Swing components not found in SwingSet2.
+	      <itemizedlist>
+	      <listitem><para>BorderDemo (border.TitledBorder)</para></listitem>    
+	      <listitem><para>ProgressMonitorDemo (ProgressMonitor)</para></listitem>
+	      <listitem><para>SpinnerDemo (JSpinner)</para></listitem>
+	      </itemizedlist>
+      </para>
+      <para>&tgoal; Test the Swing components not found in SwingSet2.</para>
+      <para>&tprocedure; For the demos listed above do the following:
+		   <itemizedlist>
+		   <listitem><para>Use the standard Java Look and Feel keystrokes to navigate to all components that accept keyboard focus and verify that Orca speaks and brailles the component correctly.</para></listitem>
+			<listitem><para>Use flat-review to navigate to all components and verify that Orca speaks and brailles the component correctly.</para></listitem>
+         </itemizedlist>
+      </para>
+      <para>&tresult; Orca speaks and brailles all of the Swing components correctly.</para>
+      </section>
+      
+      <section><title>Swing text</title>
+      <para>SwingSet2 does not contain enough text to verify 
+      that Orca speak and brailles Swing text correctly. Use the 
+      <ulink url="http://www.jedit.org/">jEdit Programmer's Text Editor</ulink>
+      for testing Swing text.</para>
+      <para>&tgoal; Test Swing text.</para>
+      <para>&tprocedure; Open the Orca ChangeLog text file with jEdit and do the 
+      following:
+		   <itemizedlist>
+		   <listitem><para>Use the standard Java Look and Feel keystrokes to navigate through the 
+			document and verify that Orca speaks and brailles the text correctly.</para></listitem>
+			<listitem><para>Use flat-review to navigate lines, words and characters within the 
+			document and verify that Orca speaks and brailles the text correctly.</para></listitem>
+		   </itemizedlist>
+      </para>
+      <para>&tresult; Orca speaks and brailles Swing text correctly.</para>
       </section>
     </section>
 
