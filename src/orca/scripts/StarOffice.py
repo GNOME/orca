@@ -1929,6 +1929,28 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # Check to see if we are in the Presentation startup wizard. If so,
+        # then speak the object that currently has focus.
+        #
+        if event.type == "object:state-changed:sensitive" and \
+           event.source.role == rolenames.ROLE_PANEL and \
+           event.source.state.count(atspi.Accessibility.STATE_SENSITIVE):
+            current = event.source.parent
+            while current.role != rolenames.ROLE_APPLICATION:
+                # Translators: this is the title of the window that
+                # you get when using StarOffice Presentation Wizard. The
+                # translated form has to match what
+                # StarOffice/OpenOffice is using.  We hate keying off
+                # stuff like this, but we're forced to do so in this
+                # case.
+                #
+                if current.role == rolenames.ROLE_DIALOG and \
+                   (current.name and current.name.startswith(_("Presentation Wizard"))):
+                    self.locusOfFocusChanged(event, None, 
+                                             orca_state.locusOfFocus)
+                    break
+                current = current.parent
+
         # If this is a state change "focused" event that we care about, and
         # we are in Writer, check to see if we are entering or leaving a table.
         #
