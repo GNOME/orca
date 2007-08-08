@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-"""Test "Where Am I" on A menu accelerator label using the gtk-demo UI Manager
-   demo.
+"""Test "Where Am I" on page tabs using the gtk-demo Printing demo
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -15,52 +14,45 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running, invoke the UI Manager demo.
+# Once gtk-demo is running, invoke the Printing demo 
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("UI Manager", 1000))
+sequence.append(TypeAction("Printing", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# Once the UI Manager window is up, open the file menu, arrow down
-# over the menu items, and then close the menu.
-#
-#sequence.append(WaitForWindowActivate("UI Manager"))
+# When the Printing demo window appears, navigate between the page tabs
+# 
+#sequence.append(WaitForWindowActivate("Print",None))
+sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 
-sequence.append(WaitForFocus("close", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("<Alt>f"))
+# Do "where am i"
+sequence.append(KeyComboAction("KP_Enter", 500))
 
-########################################################################
-# Once we have focus on the "New" menu item, do a "where am i"
-sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-sequence.append(KeyComboAction("KP_Enter"))
-
-########################################################################
-# Now do detailed information "where am i", double press KP_Enter.
-# But first, wait 3 seconds.
-
+# Detailed "where am I"
 sequence.append(KeyComboAction("KP_Enter", 3000))
 sequence.append(KeyComboAction("KP_Enter"))
 
-########################################################################
-# Dismiss the menu.
-#
-sequence.append(KeyComboAction("Escape"))
+sequence.append(KeyComboAction("Right", 500))
 
-########################################################################
-# Title bar, KP_Insert+KP_Enter.
-# But first, wait for close button to gain focus.
-sequence.append(WaitForFocus("close", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
 
-sequence.append(KeyPressAction(0, 90, "KP_Insert"))
+# Do "where am i"
+sequence.append(KeyComboAction("KP_Enter", 500))
+
+# Detailed "where am I"
+sequence.append(KeyComboAction("KP_Enter", 3000))
 sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(KeyReleaseAction( 0, 90, "KP_Insert"))
+
+sequence.append(KeyComboAction("Left", 500))
+
+sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ########################################################################
-# Close the UI Manager demo
-sequence.append(TypeAction(" "))
+# Close the demo
+#
+sequence.append(KeyComboAction         ("<Alt>c", 500))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the

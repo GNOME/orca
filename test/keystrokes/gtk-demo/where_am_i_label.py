@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-"""Test "Where Am I" on checkboxes using the gtk-demo Paned Widgets demo.
+"""Test of label presentation using the gtk-demo
+   Dialog and Message Boxes demo.
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -11,47 +12,56 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
+sequence.append(DebugAction("Waiting for a tree focus"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running, invoke the Paned Widgets demo
+# Once gtk-demo is running, invoke the Dialog and Message Boxes demo
 #
+sequence.append(DebugAction("Doing Control F"))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Paned Widgets", 1000))
+sequence.append(TypeAction("Dialog and Message Boxes", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the demo comes up, interact with a few check boxes
-#
-#sequence.append(WaitForWindowActivate("Panes",None))
-# "Hi there"
-sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+# Once the demo is up, invoke the Message Dialog button and navigate
+# around the labels in it.
+#sequence.append(WaitForWindowActivate("Dialogs",None))
+sequence.append(WaitForFocus("Message Dialog",
+                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Return", 500))
+
+sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Tab"))
 
-########################################################################
-# Once we have focus on the "New" menu item, do a "where am i"
-sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LABEL))
 
-sequence.append(KeyComboAction("KP_Enter"))
-
-########################################################################
-# Wait a second, and check the checkbox. Then do another "where am i"
-# TODO: "checked" state not given. This seems to work fine outside of the test.
-sequence.append(TypeAction(" ", 1000))
-sequence.append(WaitAction("object:state-changed:checked",
-                           None,
-                           None,
-                           pyatspi.ROLE_CHECK_BOX,
-                           5000))
 # Do "where am i"
-sequence.append(KeyComboAction("KP_Enter", 1000))
+# TODO: This script does not work. "where am i" is called, but the utterence 
+# seems to be empty.
+sequence.append(KeyComboAction("KP_Enter", 500))
 
+sequence.append(KeyComboAction("Home", 500))
+sequence.append(KeyComboAction("Right", 500))
+
+# Do "where am i"
+sequence.append(KeyComboAction("KP_Enter", 500))
+
+sequence.append(KeyComboAction("Tab", 500))
+
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LABEL))
+sequence.append(KeyComboAction("Tab"))
+
+sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# Close the Panes demo window
+# Close the Dialogs demo window
 #
-sequence.append(KeyComboAction("<Alt>F4", 1000))
+#sequence.append(WaitForWindowActivate("Dialogs",None))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(KeyComboAction("<Alt>F4", 500))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the

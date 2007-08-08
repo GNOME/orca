@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-"""Test of menu checkbox output using the gtk-demo Application Main Window
-   demo.
+"""Test "Where Am I" on a menu checkbox using the gtk-demo Application Main
+   Window demo.
 """
 
 from macaroon.playback.keypress_mimic import *

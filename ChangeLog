@@ -1,3 +1,25 @@
+2007-08-02  Eitan Isaacson <eitan@ascender.com>
+
+	* test/keystrokes/gtk-demo/where_am_i_accel_label.py: Updated
+	header comment.
+	* test/keystrokes/gtk-demo/where_am_i_check_box.py: Updated
+	header comment.
+	* test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Updated
+	header comment.
+	
+	* test/keystrokes/gtk-demo/where_am_i_combo_box.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_combo_box2.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_icon.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_label.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_page_tab.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_push_button.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_radio_button.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_spin_button.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_table.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_text_multiline.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_toggle_button.py: Added.
+	* test/keystrokes/gtk-demo/where_am_i_tree_table.py: Added.
+
 2007-08-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
