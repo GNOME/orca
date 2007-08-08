@@ -1,3 +1,9 @@
+2007-08-08 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py: 
+          src/orca/braille.py: 
+        Fixed bug #462509, ARIA dialogs are not being announced
+
 2007-08-02  Eitan Isaacson <eitan@ascender.com>
 
 	* test/keystrokes/gtk-demo/where_am_i_accel_label.py: Updated

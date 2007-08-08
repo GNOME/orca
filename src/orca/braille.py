@@ -435,6 +435,8 @@ class Text(Region):
         selection."""
 
         text = self.accessible.text
+        if not text:
+            return ''
 
         # Start with an empty mask.
         #

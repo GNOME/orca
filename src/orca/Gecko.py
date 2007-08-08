@@ -3710,7 +3710,6 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
-
         # Sometimes we get different accessibles for the same object.
         #
         if self.isSameObject(oldLocusOfFocus, newLocusOfFocus):
@@ -3734,7 +3733,8 @@ class Script(default.Script):
                    not self.inDocumentContent(oldLocusOfFocus):
                     oldFrame = self.getFrame(oldLocusOfFocus)
                     newFrame = self.getFrame(newLocusOfFocus)
-                    if self.isSameObject(oldFrame, newFrame):
+                    if self.isSameObject(oldFrame, newFrame) or \
+                           newLocusOfFocus.role == rolenames.ROLE_DIALOG:
                         self.setCaretPosition(newLocusOfFocus, caretOffset)
                         self.updateBraille(newLocusOfFocus)
                         self.speakContents(self.getLineContentsAtOffset(
