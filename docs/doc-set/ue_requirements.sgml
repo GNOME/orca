@@ -1487,7 +1487,7 @@
             should provide the user with the ability to show the cursor
             or not.  If shown, the user should have the ability to make
             it blink, and should also have the ability to tell it to
-            either take the entire cell or just dots 7-8.</para>
+            either take the entire cell or just dots 7-8.  It would be best if orca would just inharet the settings chosen in brltty.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">Ability to have multiple pan regions
@@ -1497,6 +1497,9 @@
             also allow the user to pan either the "main" display or the
             watched area.</para>
         </listitem>
+        <listitem>
+        <para><emphasis role="bold">Ability to switch between logical and screen layout presentations.</emphasis></para> 
+        </listitem>              
       </itemizedlist>
 
       <section><title>Functional Description and Status</title>
@@ -1525,7 +1528,10 @@
         <para>&incomplete; Cursor options. Rely upon BrlTTY.
           &deliver; BrlTTY.</para>
 
-        <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>
+        <para>&incomplete; Ability to switch between logical and screen layout . &shoulddeliver; V2.22.</para>
+        <para>Orca should provide two primary modes of braille presentation.  The first will be called logical mode which is a braille mode consisting of the item with focus as well as relevant contextual information.  
+        The second will be called screen layout mode.  This mode will accurately convey the actual layout of the screen.</para>
+        <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>        
 
       </section>
 
