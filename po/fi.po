@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-06 16:37+0300\n"
+"POT-Creation-Date: 2007-08-09 07:34+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -49,9 +49,8 @@ msgstr "Käynnistetään Orcan asetukset ohjelmalle %s. Tämä voi kestää hetk
 #. those spots.  These spots are known as 'bookmarks'.
 #.
 #: ../src/orca/bookmarks.py:72
-#, fuzzy
 msgid "bookmark entered"
-msgstr "kirjanmerkit tallennettu"
+msgstr "kirjanmerkki syötetty"
 
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
@@ -1074,13 +1073,13 @@ msgstr "tavaramerkki"
 #.
 #: ../src/orca/chnames.py:628
 msgid "almost equal to"
-msgstr ""
+msgstr "lähes yhtäsuuri kuin"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
 #: ../src/orca/chnames.py:632
 msgid "not equal to"
-msgstr ""
+msgstr "erisuuri kuin"
 
 #. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
@@ -1728,8 +1727,8 @@ msgstr "Siirry edelliseen kirjanmerkkiin."
 #: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6597
 #: ../src/orca/Gecko.py:7792 ../src/orca/scripts/Evolution.py:720
 #: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:617
-#: ../src/orca/scripts/StarOffice.py:2224
-#: ../src/orca/scripts/StarOffice.py:2236 ../src/orca/where_am_I.py:1191
+#: ../src/orca/scripts/StarOffice.py:2246
+#: ../src/orca/scripts/StarOffice.py:2258 ../src/orca/where_am_I.py:1191
 msgid "blank"
 msgstr "tyhjä"
 
@@ -3472,9 +3471,8 @@ msgstr "Läsnä, jollei"
 #. that it looks.
 #.
 #: ../src/orca/orca_gui_prefs.py:1091
-#, fuzzy
 msgid "Actual String"
-msgstr "ruotsalainen å"
+msgstr "Alkuperäinen merkkijono"
 
 #. Pronunciation Dictionary replacement string column (REPLACEMENT)
 #.
@@ -3485,7 +3483,7 @@ msgstr "ruotsalainen å"
 #.
 #: ../src/orca/orca_gui_prefs.py:1108
 msgid "Replacement String"
-msgstr ""
+msgstr "Korvaava merkkijono"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
@@ -3757,9 +3755,8 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Näppäinasettelu</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Pronunciation Dictionary</b>"
-msgstr "<b>Valinnan ilmaisin</b>"
+msgstr "<b>Äännesanakirja</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "<b>Punctuation Level</b>"
@@ -3956,9 +3953,8 @@ msgid "Pi_tch:"
 msgstr "Kor_keus:"
 
 #: ../src/orca/orca-setup.glade.h:63
-#, fuzzy
 msgid "Pronunciation"
-msgstr "Funktio"
+msgstr "Ääntämisasu"
 
 #: ../src/orca/orca-setup.glade.h:64
 msgid "Quit Orca _without confirmation"
@@ -4049,9 +4045,8 @@ msgid "_Bottom:"
 msgstr "_Alhaalla:"
 
 #: ../src/orca/orca-setup.glade.h:88
-#, fuzzy
 msgid "_Delete"
-msgstr "valittu"
+msgstr "_Poista"
 
 #: ../src/orca/orca-setup.glade.h:90
 msgid "_Enable speech"
@@ -4067,7 +4062,7 @@ msgstr "_Vasemmalla:"
 
 #: ../src/orca/orca-setup.glade.h:93
 msgid "_New entry"
-msgstr ""
+msgstr "_Uusi kohta"
 
 #: ../src/orca/orca-setup.glade.h:95
 msgid "_Person:"
@@ -4147,6 +4142,11 @@ msgid ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
+"a : aarne, b : bertta, c : celcius, d : daavid, e : eemeli, f : faarao, g : "
+"gideon, h : heikki, i : iivari, j : jussi, k : kalle, l : lauri, m : matti, "
+"n : niilo, o : otto, p : paavo, q : kuu, r : risto, s : sakari, t : tyyne, "
+"u : urho, v : vihtori, w : wiski, x : äksä, y : yrjö, z : tseta, "
+"å : åke, ä : äiti, ö : öljy"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "ASAP"
@@ -6062,7 +6062,7 @@ msgstr[1] "%d kohtaa"
 #: ../src/orca/scripts/notification-daemon.py:66
 #, python-format
 msgid "Notification %s"
-msgstr ""
+msgstr "Huomautus %s"
 
 #: ../src/orca/scripts/planner.py:76 ../src/orca/scripts/planner.py:137
 msgid "Display more options"
@@ -6245,13 +6245,24 @@ msgid "Move to cell"
 msgstr "Siirrä soluun"
 
 #. Translators: this is the title of the window that
+#. you get when using StarOffice Presentation Wizard. The
+#. translated form has to match what
+#. StarOffice/OpenOffice is using.  We hate keying off
+#. stuff like this, but we're forced to do so in this
+#. case.
+#.
+#: ../src/orca/scripts/StarOffice.py:1948
+msgid "Presentation Wizard"
+msgstr ""
+
+#. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
 #. translated form has to match what
 #. StarOffice/OpenOffice is using.  We hate keying off
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1946
+#: ../src/orca/scripts/StarOffice.py:1968
 msgid "Writer"
 msgstr "Writer"
 
@@ -6259,13 +6270,13 @@ msgstr "Writer"
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:2109
+#: ../src/orca/scripts/StarOffice.py:2131
 msgid "has formula"
 msgstr "sisältää kaavan"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:2157
+#: ../src/orca/scripts/StarOffice.py:2179
 #, python-format
 msgid "Cell %s"
 msgstr "Solu %s"
@@ -6302,9 +6313,8 @@ msgstr "soffice.bin"
 #. OpenOffice and StarOffice.
 #.
 #: ../src/orca/settings.py:688
-#, fuzzy
 msgid "soffice"
-msgstr "soffice.bin"
+msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
@@ -6653,72 +6663,6 @@ msgstr "kohta %d kaikkiaan %d"
 
 #~ msgid "Question"
 #~ msgstr "Kysymys"
-
-#~ msgid "alpha"
-#~ msgstr "Aarne"
-
-#~ msgid "bravo"
-#~ msgstr "Bertta"
-
-#~ msgid "charlie"
-#~ msgstr "Celcius"
-
-#~ msgid "delta"
-#~ msgstr "Daavid"
-
-#~ msgid "echo"
-#~ msgstr "Eemeli"
-
-#~ msgid "foxtrot"
-#~ msgstr "Faarao"
-
-#~ msgid "golf"
-#~ msgstr "Gideon"
-
-#~ msgid "hotel"
-#~ msgstr "Heikki"
-
-#~ msgid "india"
-#~ msgstr "Iivari"
-
-#~ msgid "kilo"
-#~ msgstr "Kalle"
-
-#~ msgid "lima"
-#~ msgstr "Lauri"
-
-#~ msgid "mike"
-#~ msgstr "Matti"
-
-#~ msgid "november"
-#~ msgstr "Niilo"
-
-#~ msgid "oscar"
-#~ msgstr "Otto"
-
-#~ msgid "papa"
-#~ msgstr "Paavo"
-
-#~ msgid "quebec"
-#~ msgstr "kuu"
-
-#~ msgid "sierra"
-#~ msgstr "Sakari"
-
-#~ msgid "tango"
-#~ msgstr "Tyyne"
-
-#~ msgid "victor"
-#~ msgstr "Vihtori"
-
-#~ msgid "whiskey"
-#~ msgstr "Wiski"
-
-#~ msgid "xray"
-#~ msgstr "äksä"
-
-#~ msgid "yankee"
-#~ msgstr "Yrjö"
 
 #~ msgid "chrome://"
 #~ msgstr "chrome://"
