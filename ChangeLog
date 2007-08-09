@@ -1,3 +1,8 @@
+2007-08-09  Willie Walker <william.walker@sun.com>
+
+	* MAINTAINERS: update to include names, e-mail, and userid per
+	discussion on desktop-devel-list.
+
 2007-08-08 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py: 
