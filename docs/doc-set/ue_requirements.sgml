@@ -1530,7 +1530,16 @@
 
         <para>&incomplete; Ability to switch between logical and screen layout . &shoulddeliver; V2.22.</para>
         <para>Orca should provide two primary modes of braille presentation.  The first will be called logical mode which is a braille mode consisting of the item with focus as well as relevant contextual information.  
-        The second will be called screen layout mode.  This mode will accurately convey the actual layout of the screen.</para>
+        The second will be called screen layout mode.  This mode will accurately convey the actual layout of the screen.  Wherever possible the information presented while navigating the screen with the braille display should match what is displayed while focus tracking.</para>
+        <para>See the current implementation of braille support for examples on logical mode.</para>
+        <para>Screen layout mode should where ever possible attempt to accurately present each line of the display.  Except for a few cases documented below orca will not append contextual or extra role information to the braille display.  The following examples will show how varius pieces of information should be presented on the braille display by orca in this mode.</para>
+        <para>Text should be presented honoring the actual layout as much as possible.  If space is present it should be accurately displayed on the braille display.  It is OK to continue using the tab character to show the location of tabs. Presentation of attributes will be handled in a separate RFE.</para>
+        <para>Menubars should simply present the text of the menubar accross the braille display.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
+        <para>Menus should simply present the text of each menu  item on the braille display as it is encountered.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
+        <para>Combobox labels and entries should be presented wherever they appear.  Depending on user feedback we may have to suffix this with the role but lets not do this unless many users ask for it. </para>
+        <para>Checkboxes should be indecated by the braille  checkbox marker  for checked and "< >" for not checked.  This marker should be followed by the label.</para>
+        <para>radiobuttons should be indecated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.></para>
+        <para></para>
         <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>        
 
       </section>
