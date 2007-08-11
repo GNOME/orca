@@ -1,3 +1,8 @@
+2007-08-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: Fix for bug 460284 - Orca should not allow
+        the user to arrow into the FF3 status bar.
+
 2007-08-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs 

@@ -5562,7 +5562,7 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if not obj:
+        if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
         if obj.text:
@@ -5638,7 +5638,7 @@ class Script(default.Script):
         if not obj:
             obj = self.getDocumentFrame()
 
-        if not obj:
+        if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
         if obj.text:
