@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-12 14:46+0200\n"
-"PO-Revision-Date: 2007-08-12 14:46+0200\n"
+"POT-Creation-Date: 2007-08-12 14:34+0200\n"
+"PO-Revision-Date: 2007-08-04 18:36+0200\n"
 "Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,12 +30,12 @@ msgstr ""
 "Bildschirminhalte als Sprache oder in Braille wiedergeben, oder "
 "Bildschirmausschnitte vergrößern."
 
-#: ../src/orca/app_gui_prefs.py:90
+#: ../src/orca/app_gui_prefs.py:89
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Orca-Einstellungen für %s"
 
-#: ../src/orca/app_gui_prefs.py:211
+#: ../src/orca/app_gui_prefs.py:210
 msgid "No application has focus."
 msgstr "Keine Anwendung besitzt den Fokus."
 
@@ -43,7 +43,7 @@ msgstr "Keine Anwendung besitzt den Fokus."
 #. for allowing users to set application specific settings from within
 #. Orca for the application that currently has focus.
 #.
-#: ../src/orca/app_gui_prefs.py:226
+#: ../src/orca/app_gui_prefs.py:225
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
 msgstr ""
@@ -62,14 +62,14 @@ msgstr "Lesezeichen betreten"
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
 #.
-#: ../src/orca/bookmarks.py:94 ../src/orca/Gecko.py:1342
+#: ../src/orca/bookmarks.py:94 ../src/orca/Gecko.py:1238
 msgid "bookmark is current object"
 msgstr "Lesezeichen ist das aktuelle Objekt"
 
 #. Translators: this announces that the current object's parent and
 #. the parent of the object pointed to by the bookmark are the same.
 #.
-#: ../src/orca/bookmarks.py:101 ../src/orca/Gecko.py:1349
+#: ../src/orca/bookmarks.py:101 ../src/orca/Gecko.py:1245
 msgid "bookmark and current object have same parent"
 msgstr ""
 "Lesezeichen und das aktuelle Objekt gehören zum selben übergeordneten Objekt"
@@ -77,29 +77,29 @@ msgstr ""
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
 #.
-#: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1366
+#: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1262
 #, python-format
 msgid "shared ancestor %s"
-msgstr "Gemeinsame Geschwister %s"
+msgstr "Gemeinsame Vorfahren %s"
 
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
 #.
-#: ../src/orca/bookmarks.py:125 ../src/orca/Gecko.py:1373
+#: ../src/orca/bookmarks.py:125 ../src/orca/Gecko.py:1269
 msgid "comparison unknown"
 msgstr "Vergleich nicht möglich"
 
 #. Translators: this announces that a bookmark has been saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:134 ../src/orca/Gecko.py:1388
+#: ../src/orca/bookmarks.py:134 ../src/orca/Gecko.py:1284
 msgid "bookmarks saved"
 msgstr "Lesezeichen gespeichert."
 
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:139 ../src/orca/Gecko.py:1393
+#: ../src/orca/bookmarks.py:139 ../src/orca/Gecko.py:1289
 msgid "bookmarks could not be saved"
 msgstr "Lesezeichen können nicht gespeichert werden"
 
@@ -1247,7 +1247,7 @@ msgstr "Einen Rechtsklick auf das aktuelle Objekt ausführen."
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:159 ../src/orca/Gecko.py:2039
+#: ../src/orca/default.py:159 ../src/orca/Gecko.py:1935
 #: ../src/orca/scripts/acroread.py:113 ../src/orca/scripts/Evolution.py:306
 msgid "Speaks entire document."
 msgstr "Das gesamte Dokument vorlesen."
@@ -1734,11 +1734,11 @@ msgstr "Zum vorherigen Lesezeichenort gehen."
 #: ../src/orca/default.py:1673 ../src/orca/default.py:1906
 #: ../src/orca/default.py:3705 ../src/orca/default.py:3846
 #: ../src/orca/default.py:3854 ../src/orca/default.py:3953
-#: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6597
-#: ../src/orca/Gecko.py:7792 ../src/orca/scripts/Evolution.py:720
+#: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6466
+#: ../src/orca/Gecko.py:7661 ../src/orca/scripts/Evolution.py:720
 #: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:617
-#: ../src/orca/scripts/StarOffice.py:2246
-#: ../src/orca/scripts/StarOffice.py:2258 ../src/orca/where_am_I.py:1191
+#: ../src/orca/scripts/StarOffice.py:2224
+#: ../src/orca/scripts/StarOffice.py:2236 ../src/orca/where_am_I.py:1191
 msgid "blank"
 msgstr "leer"
 
@@ -1810,7 +1810,7 @@ msgstr "das gesamte Dokument ist ausgewählt"
 #. selected or not.
 #.
 #: ../src/orca/default.py:3168 ../src/orca/default.py:5971
-#: ../src/orca/flat_review.py:327 ../src/orca/Gecko.py:987
+#: ../src/orca/flat_review.py:327 ../src/orca/Gecko.py:889
 #: ../src/orca/J2SE-access-bridge.py:81 ../src/orca/scripts/StarOffice.py:139
 #: ../src/orca/speechgenerator.py:983 ../src/orca/where_am_I.py:480
 msgid "selected"
@@ -2032,7 +2032,7 @@ msgstr "Bis zum Anfang überspringen"
 #.
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:304 ../src/orca/Gecko.py:1042
+#: ../src/orca/flat_review.py:304 ../src/orca/Gecko.py:938
 #: ../src/orca/speechgenerator.py:379 ../src/orca/speechgenerator.py:808
 #: ../src/orca/where_am_I.py:167 ../src/orca/where_am_I.py:210
 msgid "checked"
@@ -2040,7 +2040,7 @@ msgstr "ausgewählt"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:308 ../src/orca/Gecko.py:1046
+#: ../src/orca/flat_review.py:308 ../src/orca/Gecko.py:942
 #: ../src/orca/speechgenerator.py:383 ../src/orca/where_am_I.py:171
 #: ../src/orca/where_am_I.py:214
 msgid "not checked"
@@ -2065,7 +2065,7 @@ msgstr "nicht gedrückt"
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:332 ../src/orca/Gecko.py:992
+#: ../src/orca/flat_review.py:332 ../src/orca/Gecko.py:894
 #: ../src/orca/speechgenerator.py:988
 msgid "not selected"
 msgstr "nicht ausgewählt"
@@ -2074,21 +2074,21 @@ msgstr "nicht ausgewählt"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/focus_tracking_presenter.py:865
+#: ../src/orca/focus_tracking_presenter.py:872
 msgid "No focus"
 msgstr "Kein Fokus"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/Gecko.py:821
+#: ../src/orca/Gecko.py:747
 msgid "multi-select"
 msgstr "Mehrfachauswahl"
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1237
+#: ../src/orca/Gecko.py:1133
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -2098,7 +2098,7 @@ msgstr[1] "%d Überschriften"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1243
+#: ../src/orca/Gecko.py:1139
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -2108,7 +2108,7 @@ msgstr[1] "%d Formularfelder"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1249
+#: ../src/orca/Gecko.py:1145
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -2118,7 +2118,7 @@ msgstr[1] "%d Tabellen"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1255
+#: ../src/orca/Gecko.py:1151
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -2128,7 +2128,7 @@ msgstr[1] "%d weitere besuchte Links."
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1261
+#: ../src/orca/Gecko.py:1157
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -2140,197 +2140,197 @@ msgstr[1] "%d weitere nicht besuchte Links."
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/Gecko.py:1268
+#: ../src/orca/Gecko.py:1164
 #, python-format
 msgid "%d percent of document read"
 msgstr "%d Prozent des Dokumentes vorgelesen"
 
 #. Translators: this announces that a bookmark has been entered
 #.
-#: ../src/orca/Gecko.py:1296
+#: ../src/orca/Gecko.py:1192
 msgid "entered bookmark"
 msgstr "Lesezeichen eingegeben"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1676
+#: ../src/orca/Gecko.py:1572
 msgid "Goes to next character."
 msgstr "Zum nächsten Zeichen gehen."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1684
+#: ../src/orca/Gecko.py:1580
 msgid "Goes to previous character."
 msgstr "Die Übersicht zum vorherigen Zeichen bewegen."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:1692
+#: ../src/orca/Gecko.py:1588
 msgid "Goes to next word."
 msgstr "Zum nächsten Wort gehen."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:1700
+#: ../src/orca/Gecko.py:1596
 msgid "Goes to previous word."
 msgstr "Zum vorherigen Wort gehen."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:1708
+#: ../src/orca/Gecko.py:1604
 msgid "Goes to next line."
 msgstr "Zur nächsten Zeile gehen."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:1716
+#: ../src/orca/Gecko.py:1612
 msgid "Goes to previous line."
 msgstr "Zur vorherigen Zeile gehen."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/Gecko.py:1724
+#: ../src/orca/Gecko.py:1620
 msgid "Causes the current combo box to be expanded."
 msgstr "Ausklappen des Auswahlfeldes auslösen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1731
+#: ../src/orca/Gecko.py:1627
 msgid "Goes left one cell."
 msgstr "Eine Zelle nach links gehen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1738
+#: ../src/orca/Gecko.py:1634
 msgid "Goes right one cell."
 msgstr "Eine Zelle nach rechts gehen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1745
+#: ../src/orca/Gecko.py:1641
 msgid "Goes down one cell."
 msgstr "Eine Zelle nach unten gehen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1752
+#: ../src/orca/Gecko.py:1648
 msgid "Goes up one cell."
 msgstr "Eine Zelle nach oben gehen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1759
+#: ../src/orca/Gecko.py:1655
 msgid "Goes to the first cell in a table."
 msgstr "Zur ersten Zelle in einer Tabelle gehen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1766
+#: ../src/orca/Gecko.py:1662
 msgid "Goes to the last cell in a table."
 msgstr "Zur letzten Zelle in einer Tabelle gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1774
+#: ../src/orca/Gecko.py:1670
 msgid "Goes to previous heading."
 msgstr "Zur vorherigen Überschrift gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1782
+#: ../src/orca/Gecko.py:1678
 msgid "Goes to next heading."
 msgstr "Zur nächsten Überschrift gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1790
+#: ../src/orca/Gecko.py:1686
 msgid "Goes to previous heading at level 1."
 msgstr "Zur vorherigen Überschrift der Ebene 1 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1798
+#: ../src/orca/Gecko.py:1694
 msgid "Goes to next heading at level 1."
 msgstr "Zur nächsten Überschrift der Ebene 1 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:1806
+#: ../src/orca/Gecko.py:1702
 msgid "Goes to previous heading at level 2."
 msgstr "Zur vorherigen Überschrift der Ebene 2 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:1814
+#: ../src/orca/Gecko.py:1710
 msgid "Goes to next heading at level 2."
 msgstr "Zur nächsten Überschrift der Ebene 2 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:1822
+#: ../src/orca/Gecko.py:1718
 msgid "Goes to previous heading at level 3."
 msgstr "Zur vorherigen Überschrift der Ebene 3 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:1830
+#: ../src/orca/Gecko.py:1726
 msgid "Goes to next heading at level 3."
 msgstr "Zur nächsten Überschrift der Ebene 3 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:1838
+#: ../src/orca/Gecko.py:1734
 msgid "Goes to previous heading at level 4."
 msgstr "Zur vorherigen Überschrift der Ebene 4 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:1846
+#: ../src/orca/Gecko.py:1742
 msgid "Goes to next heading at level 4."
 msgstr "Zur nächsten Überschrift der Ebene 4 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:1854
+#: ../src/orca/Gecko.py:1750
 msgid "Goes to previous heading at level 5."
 msgstr "Zur vorherigen Überschrift der Ebene 5 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:1862
+#: ../src/orca/Gecko.py:1758
 msgid "Goes to next heading at level 5."
 msgstr "Zur nächsten Überschrift der Ebene 5 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1870
+#: ../src/orca/Gecko.py:1766
 msgid "Goes to previous heading at level 6."
 msgstr "Zur vorherigen Überschrift der Ebene 6 gehen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1878
+#: ../src/orca/Gecko.py:1774
 msgid "Goes to next heading at level 6."
 msgstr "Zur nächsten Überschrift der Ebene 6 gehen."
 
@@ -2338,7 +2338,7 @@ msgstr "Zur nächsten Überschrift der Ebene 6 gehen."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1887
+#: ../src/orca/Gecko.py:1783
 msgid "Goes to previous large object."
 msgstr "Zum vorherigen größeren Objekt gehen."
 
@@ -2346,99 +2346,99 @@ msgstr "Zum vorherigen größeren Objekt gehen."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1896
+#: ../src/orca/Gecko.py:1792
 msgid "Goes to next large object."
 msgstr "Zum nächsten größeren Objekt gehen."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1904
+#: ../src/orca/Gecko.py:1800
 msgid "Goes to previous list."
 msgstr "Zur vorherigen Liste gehen."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1912
+#: ../src/orca/Gecko.py:1808
 msgid "Goes to next list."
 msgstr "Zur nächsten Liste gehen."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1920
+#: ../src/orca/Gecko.py:1816
 msgid "Goes to previous list item."
 msgstr "Zum vorherigen Listeneintrag gehen."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1928
+#: ../src/orca/Gecko.py:1824
 msgid "Goes to next list item."
 msgstr "Zur nächsten Liste gehen."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1935
+#: ../src/orca/Gecko.py:1831
 msgid "Goes to previous unvisited link."
 msgstr "Zum vorherigen nicht besuchten Link gehen."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1942
+#: ../src/orca/Gecko.py:1838
 msgid "Goes to next unvisited link."
 msgstr "Zum nächsten nicht besuchten Link gehen."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1949
+#: ../src/orca/Gecko.py:1845
 msgid "Goes to previous visited link."
 msgstr "Zum vorherigen besuchten Link gehen."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1956
+#: ../src/orca/Gecko.py:1852
 msgid "Goes to next visited link."
 msgstr "Zum nächsten besuchten Link gehen."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1964
+#: ../src/orca/Gecko.py:1860
 msgid "Goes to previous form field."
 msgstr "Zum vorherigen Formularfeld gehen."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1972
+#: ../src/orca/Gecko.py:1868
 msgid "Goes to next form field."
 msgstr "Zum nächsten Formularfeld gehen."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1980
+#: ../src/orca/Gecko.py:1876
 msgid "Goes to previous blockquote."
 msgstr "Zum vorherigen Zitatenabsatz gehen."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1988
+#: ../src/orca/Gecko.py:1884
 msgid "Goes to next blockquote."
 msgstr "Zum nächsten Zitatenabsatz gehen."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:1995
+#: ../src/orca/Gecko.py:1891
 msgid "Goes to previous table."
 msgstr "Zur vorherigen Tabelle gehen."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:2002
+#: ../src/orca/Gecko.py:1898
 msgid "Goes to next table."
 msgstr "Zur nächsten Tabelle gehen."
 
@@ -2449,7 +2449,7 @@ msgstr "Zur nächsten Tabelle gehen."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2014
+#: ../src/orca/Gecko.py:1910
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Zwischen der Caret-Navigation von Gecko und Orca wechseln."
 
@@ -2460,7 +2460,7 @@ msgstr "Zwischen der Caret-Navigation von Gecko und Orca wechseln."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/Gecko.py:2026
+#: ../src/orca/Gecko.py:1922
 msgid "Toggles structural navigation keys."
 msgstr "Navigationstasten ein- oder ausschalten."
 
@@ -2471,7 +2471,7 @@ msgstr "Navigationstasten ein- oder ausschalten."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2547
+#: ../src/orca/Gecko.py:2443
 msgid "Use _Orca Caret Navigation"
 msgstr "_Orca Caret Navigation verwenden"
 
@@ -2479,7 +2479,7 @@ msgstr "_Orca Caret Navigation verwenden"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/Gecko.py:2560
+#: ../src/orca/Gecko.py:2456
 msgid "Use Orca _Structural Navigation"
 msgstr "Orca _Strukturennavigation verwenden."
 
@@ -2489,7 +2489,7 @@ msgstr "Orca _Strukturennavigation verwenden."
 #. above the current caret position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/Gecko.py:2574
+#: ../src/orca/Gecko.py:2470
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "Cursor beim vertikalen Navigieren an den Zeilenanfang _positionieren"
 
@@ -2497,7 +2497,7 @@ msgstr "Cursor beim vertikalen Navigieren an den Zeilenanfang _positionieren"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/Gecko.py:2586
+#: ../src/orca/Gecko.py:2482
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Vorlesen der Seite automatisch beim ersten _Laden starten"
 
@@ -2505,14 +2505,14 @@ msgstr "Vorlesen der Seite automatisch beim ersten _Laden starten"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/Gecko.py:2598
+#: ../src/orca/Gecko.py:2494
 msgid "Page Navigation"
 msgstr "Seitennavigation"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
-#: ../src/orca/Gecko.py:2621
+#: ../src/orca/Gecko.py:2517
 msgid "Speak _cell coordinates"
 msgstr "_Zellenkoordinaten vorlesen"
 
@@ -2520,28 +2520,28 @@ msgstr "_Zellenkoordinaten vorlesen"
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/Gecko.py:2633
+#: ../src/orca/Gecko.py:2529
 msgid "Speak _multiple cell spans"
 msgstr "_Zellenausdehnung vorlesen"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
-#: ../src/orca/Gecko.py:2644
+#: ../src/orca/Gecko.py:2540
 msgid "Announce cell _header"
 msgstr "Zellenü_berschrift vorlesen"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2655
+#: ../src/orca/Gecko.py:2551
 msgid "Skip _blank cells"
 msgstr "_Leere Zellen überspringen"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2666
+#: ../src/orca/Gecko.py:2562
 msgid "Table Navigation"
 msgstr "Tabellennavigation"
 
@@ -2549,7 +2549,7 @@ msgstr "Tabellennavigation"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2690
+#: ../src/orca/Gecko.py:2586
 msgid "Speak results during _find"
 msgstr "Treffer während der _Suche vorlesen"
 
@@ -2558,7 +2558,7 @@ msgstr "Treffer während der _Suche vorlesen"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/Gecko.py:2703
+#: ../src/orca/Gecko.py:2599
 msgid "Onl_y speak changed lines during find"
 msgstr "_Nur unterschiedliche Zeilen während der Suche vorlesen"
 
@@ -2566,33 +2566,33 @@ msgstr "_Nur unterschiedliche Zeilen während der Suche vorlesen"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2720
+#: ../src/orca/Gecko.py:2616
 msgid "Minimum length of matched text:"
 msgstr "Minimale Länge der Trefferübereinstimmung:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2744
+#: ../src/orca/Gecko.py:2640
 msgid "Find Options"
 msgstr "Suchoptionen"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3548
+#: ../src/orca/Gecko.py:3432
 msgid "Loading.  Please wait."
 msgstr "Es wird geladen. Bitte warten."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3553
+#: ../src/orca/Gecko.py:3437
 #, python-format
 msgid "Finished loading %s."
 msgstr "Laden von %s abgeschlossen."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3559
+#: ../src/orca/Gecko.py:3443
 msgid "Finished loading."
 msgstr "Laden abgeschlossen."
 
@@ -2603,7 +2603,7 @@ msgstr "Laden abgeschlossen."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/Gecko.py:3945
+#: ../src/orca/Gecko.py:3822
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -2612,7 +2612,7 @@ msgstr "h%d"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4865
+#: ../src/orca/Gecko.py:4741
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "Zelle erstreckt sich über %d Zeilen und %d Spalten."
@@ -2621,7 +2621,7 @@ msgstr "Zelle erstreckt sich über %d Zeilen und %d Spalten."
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4872
+#: ../src/orca/Gecko.py:4748
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Zelle erstreckt sich über %d Spalten"
@@ -2630,7 +2630,7 @@ msgstr "Zelle erstreckt sich über %d Spalten"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4878
+#: ../src/orca/Gecko.py:4754
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Zelle erstreckt sich über %d Zeilen."
@@ -2638,7 +2638,7 @@ msgstr "Zelle erstreckt sich über %d Zeilen."
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
-#: ../src/orca/Gecko.py:6570
+#: ../src/orca/Gecko.py:6439
 #, python-format
 msgid "level %d"
 msgstr "Ebene %d"
@@ -2649,18 +2649,18 @@ msgstr "Ebene %d"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7051 ../src/orca/Gecko.py:7112
-#: ../src/orca/Gecko.py:7207 ../src/orca/Gecko.py:7272
-#: ../src/orca/Gecko.py:7395 ../src/orca/Gecko.py:7479
-#: ../src/orca/Gecko.py:7555 ../src/orca/Gecko.py:7635
-#: ../src/orca/Gecko.py:7720 ../src/orca/Gecko.py:7814
+#: ../src/orca/Gecko.py:6920 ../src/orca/Gecko.py:6981
+#: ../src/orca/Gecko.py:7076 ../src/orca/Gecko.py:7141
+#: ../src/orca/Gecko.py:7264 ../src/orca/Gecko.py:7348
+#: ../src/orca/Gecko.py:7424 ../src/orca/Gecko.py:7504
+#: ../src/orca/Gecko.py:7589 ../src/orca/Gecko.py:7683
 msgid "Wrapping to bottom."
 msgstr "Nach unten überspringen"
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7062 ../src/orca/Gecko.py:7085
+#: ../src/orca/Gecko.py:6931 ../src/orca/Gecko.py:6954
 msgid "No more headings."
 msgstr "Keine weiteren Überschriften."
 
@@ -2670,18 +2670,18 @@ msgstr "Keine weiteren Überschriften."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7074 ../src/orca/Gecko.py:7148
-#: ../src/orca/Gecko.py:7231 ../src/orca/Gecko.py:7333
-#: ../src/orca/Gecko.py:7436 ../src/orca/Gecko.py:7513
-#: ../src/orca/Gecko.py:7590 ../src/orca/Gecko.py:7670
-#: ../src/orca/Gecko.py:7766 ../src/orca/Gecko.py:7863
+#: ../src/orca/Gecko.py:6943 ../src/orca/Gecko.py:7017
+#: ../src/orca/Gecko.py:7100 ../src/orca/Gecko.py:7202
+#: ../src/orca/Gecko.py:7305 ../src/orca/Gecko.py:7382
+#: ../src/orca/Gecko.py:7459 ../src/orca/Gecko.py:7539
+#: ../src/orca/Gecko.py:7635 ../src/orca/Gecko.py:7732
 msgid "Wrapping to top."
 msgstr "Nach oben überspringen"
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7123 ../src/orca/Gecko.py:7159
+#: ../src/orca/Gecko.py:6992 ../src/orca/Gecko.py:7028
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Keine weiteren Überschriften der Ebene %d."
@@ -2690,13 +2690,13 @@ msgstr "Keine weiteren Überschriften der Ebene %d."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:7219 ../src/orca/Gecko.py:7243
+#: ../src/orca/Gecko.py:7088 ../src/orca/Gecko.py:7112
 msgid "No more large objects."
 msgstr "Keine weiteren größeren Objekte."
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/Gecko.py:7280 ../src/orca/Gecko.py:7341
+#: ../src/orca/Gecko.py:7149 ../src/orca/Gecko.py:7210
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -2708,7 +2708,7 @@ msgstr[1] "Liste mit %d Einträgen"
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/Gecko.py:7295 ../src/orca/Gecko.py:7356
+#: ../src/orca/Gecko.py:7164 ../src/orca/Gecko.py:7225
 #, python-format
 msgid "Nesting level %d"
 msgstr "Ebene %d"
@@ -2716,7 +2716,7 @@ msgstr "Ebene %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/Gecko.py:7305 ../src/orca/Gecko.py:7366
+#: ../src/orca/Gecko.py:7174 ../src/orca/Gecko.py:7235
 msgid "No more lists."
 msgstr "Keine weiteren Listen."
 
@@ -2724,42 +2724,42 @@ msgstr "Keine weiteren Listen."
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/Gecko.py:7407 ../src/orca/Gecko.py:7448
+#: ../src/orca/Gecko.py:7276 ../src/orca/Gecko.py:7317
 msgid "No more list items."
 msgstr "Keine weiteren Listeneinträge."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7490 ../src/orca/Gecko.py:7524
+#: ../src/orca/Gecko.py:7359 ../src/orca/Gecko.py:7393
 msgid "No more unvisited links."
 msgstr "Keine weiteren nicht besuchten Links."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7566 ../src/orca/Gecko.py:7601
+#: ../src/orca/Gecko.py:7435 ../src/orca/Gecko.py:7470
 msgid "No more visited links."
 msgstr "Keine weiteren besuchten Links."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
-#: ../src/orca/Gecko.py:7646 ../src/orca/Gecko.py:7681
+#: ../src/orca/Gecko.py:7515 ../src/orca/Gecko.py:7550
 msgid "No more blockquotes."
 msgstr "Keine weiteren Zitatenabsätze."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
-#: ../src/orca/Gecko.py:7731 ../src/orca/Gecko.py:7777
+#: ../src/orca/Gecko.py:7600 ../src/orca/Gecko.py:7646
 msgid "No more form fields."
 msgstr "Keine weiteren Formularfelder."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/Gecko.py:7799
+#: ../src/orca/Gecko.py:7668
 #, python-format
 msgid "Row %d, column %d."
 msgstr "Zeile %d, Spalte %d."
@@ -2769,13 +2769,13 @@ msgstr "Zeile %d, Spalte %d."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/Gecko.py:7828 ../src/orca/Gecko.py:7877
+#: ../src/orca/Gecko.py:7697 ../src/orca/Gecko.py:7746
 msgid "Non-uniform"
 msgstr "nicht einheitlich"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7833 ../src/orca/Gecko.py:7882
+#: ../src/orca/Gecko.py:7702 ../src/orca/Gecko.py:7751
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -2784,7 +2784,7 @@ msgstr[1] "Tabelle mit %d Zeilen"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7838 ../src/orca/Gecko.py:7887
+#: ../src/orca/Gecko.py:7707 ../src/orca/Gecko.py:7756
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -2794,44 +2794,44 @@ msgstr[1] "%d Spalten"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/Gecko.py:7851 ../src/orca/Gecko.py:7899
+#: ../src/orca/Gecko.py:7720 ../src/orca/Gecko.py:7768
 msgid "No more tables."
 msgstr "Keine weiteren Tabellen."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7942
+#: ../src/orca/Gecko.py:7811
 msgid "Beginning of row."
 msgstr "Zeilenanfang."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7947 ../src/orca/Gecko.py:7999
-#: ../src/orca/Gecko.py:8047 ../src/orca/Gecko.py:8099
-#: ../src/orca/Gecko.py:8114 ../src/orca/Gecko.py:8131
+#: ../src/orca/Gecko.py:7816 ../src/orca/Gecko.py:7868
+#: ../src/orca/Gecko.py:7916 ../src/orca/Gecko.py:7968
+#: ../src/orca/Gecko.py:7983 ../src/orca/Gecko.py:8000
 msgid "Not in a table."
 msgstr "Nicht in einer Tabelle."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7994
+#: ../src/orca/Gecko.py:7863
 msgid "End of row."
 msgstr "Zeilenende."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8042
+#: ../src/orca/Gecko.py:7911
 msgid "Top of column."
 msgstr "Oberer Spaltenanfang."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8094
+#: ../src/orca/Gecko.py:7963
 msgid "Bottom of column."
 msgstr "Unteres Spaltenende."
 
@@ -2842,7 +2842,7 @@ msgstr "Unteres Spaltenende."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8149
+#: ../src/orca/Gecko.py:8018
 msgid "Gecko is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Gecko."
 
@@ -2853,7 +2853,7 @@ msgstr "Navigationssteuerung erfolgt durch Gecko."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8161
+#: ../src/orca/Gecko.py:8030
 msgid "Orca is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Orca."
 
@@ -2864,7 +2864,7 @@ msgstr "Navigationssteuerung erfolgt durch Orca."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/Gecko.py:8182
+#: ../src/orca/Gecko.py:8051
 msgid "Structural navigation keys on."
 msgstr "Navigationstasten eingeschaltet."
 
@@ -2875,7 +2875,7 @@ msgstr "Navigationstasten eingeschaltet."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/Gecko.py:8191
+#: ../src/orca/Gecko.py:8060
 msgid "Structural navigation keys off."
 msgstr "Navigationstasten ausgeschaltet."
 
@@ -6272,24 +6272,13 @@ msgid "Move to cell"
 msgstr "Zur Zelle bewegen"
 
 #. Translators: this is the title of the window that
-#. you get when using StarOffice Presentation Wizard. The
-#. translated form has to match what
-#. StarOffice/OpenOffice is using.  We hate keying off
-#. stuff like this, but we're forced to do so in this
-#. case.
-#.
-#: ../src/orca/scripts/StarOffice.py:1948
-msgid "Presentation Wizard"
-msgstr "Präsentations-Assistent"
-
-#. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
 #. translated form has to match what
 #. StarOffice/OpenOffice is using.  We hate keying off
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1968
+#: ../src/orca/scripts/StarOffice.py:1946
 msgid "Writer"
 msgstr "Writer"
 
@@ -6297,13 +6286,13 @@ msgstr "Writer"
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:2131
+#: ../src/orca/scripts/StarOffice.py:2109
 msgid "has formula"
 msgstr "hat Fomel"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:2179
+#: ../src/orca/scripts/StarOffice.py:2157
 #, python-format
 msgid "Cell %s"
 msgstr "Zelle %s"
@@ -6326,35 +6315,35 @@ msgstr "%s Leiste"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:678
+#: ../src/orca/settings.py:672
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:683
+#: ../src/orca/settings.py:677
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:688
+#: ../src/orca/settings.py:682
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:693
+#: ../src/orca/settings.py:687
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
-#: ../src/orca/settings.py:698
+#: ../src/orca/settings.py:692
 msgid "yelp"
 msgstr "yelp"
 
@@ -6362,7 +6351,7 @@ msgstr "yelp"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:704
+#: ../src/orca/settings.py:698
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -6370,7 +6359,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:710
+#: ../src/orca/settings.py:704
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -6378,35 +6367,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:716
+#: ../src/orca/settings.py:710
 msgid "Minefield"
 msgstr "Minefield"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:721
+#: ../src/orca/settings.py:715
 msgid "Mail/News"
 msgstr "Mail/Nachrichten"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:726
+#: ../src/orca/settings.py:720
 msgid "bug-buddy"
 msgstr "Bug-Buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:731
+#: ../src/orca/settings.py:725
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting pidgin, which is the new name for gaim.
 #.
-#: ../src/orca/settings.py:736
+#: ../src/orca/settings.py:730
 msgid "pidgin"
 msgstr "pidgin"
 
@@ -6479,11 +6468,11 @@ msgstr "%s Verknüpfung nach %s"
 #. link to the current page.  eg. same page, same site.
 #: ../src/orca/where_am_I.py:673
 msgid "same page"
-msgstr "Diesselbe Seite"
+msgstr "Die selbe Seite"
 
 #: ../src/orca/where_am_I.py:675 ../src/orca/where_am_I.py:683
 msgid "same site"
-msgstr "Diesselbe Website"
+msgstr "Die selbe Website"
 
 #: ../src/orca/where_am_I.py:685
 msgid "different site"
