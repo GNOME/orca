@@ -6468,11 +6468,11 @@ msgstr "%s Verknüpfung nach %s"
 #. link to the current page.  eg. same page, same site.
 #: ../src/orca/where_am_I.py:673
 msgid "same page"
-msgstr "Diesselbe Seite"
+msgstr "Die selbe Seite"
 
 #: ../src/orca/where_am_I.py:675 ../src/orca/where_am_I.py:683
 msgid "same site"
-msgstr "Diesselbe Website"
+msgstr "Die selbe Website"
 
 #: ../src/orca/where_am_I.py:685
 msgid "different site"
