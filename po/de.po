@@ -80,7 +80,7 @@ msgstr ""
 #: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1262
 #, python-format
 msgid "shared ancestor %s"
-msgstr "Gemeinsame Geschwister %s"
+msgstr "Gemeinsame Vorfahren %s"
 
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
