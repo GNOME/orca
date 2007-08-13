@@ -1,12 +1,47 @@
+2007-08-13  Tomas Cerha  <via william.walker@sun.com>
+
+        Fix for bug 455308 – Output module and voice selection with Speech
+        Dispatcher backend.  The changes also involve some minor cleanup
+        and one major improvement - automatic reconnection after losing
+        Speech Dispatcher connection (for example after SD is restarted).
+
+        * src/orca/speechdispatcherfactory.py: Try to import the `speechd'
+        module globally and set the variables `_speechd_available' and
+        `_speechd_version_ok' accordingly.
+        (SpeechServer.list_output_modules): New method.
+        (SpeechServer._getActiveServers): Method removed.
+        (SpeechServer.getSpeechServers): Create one default server and one
+        separate server for each available output module.
+        (SpeechServer._getSpeechServer): New method.
+        (getSpeechServer): Return the default server if `info' is not
+        specified.
+        (SpeechServer.__init__): Argument `lang' removed.  Rely on
+        globally imported `speechd' module and the related variables.  If
+        client initialization fails, log the error.  Initialize mapping
+        constants here, not in `_init()'.
+        (SpeechServer._init): Rely on globally imported `speechd' module.
+        Don't set the default language, rely on language setting according
+        to voice properties.  Don't initialize default voice properties,
+        let them be initialized on the first speak command.
+        (SpeechServer._send_command): New method allowing automatic
+        reconnection after Speech Dispatcher restart.
+        (SpeechServer._set_family):
+        (SpeechServer._set_rate, SpeechServer._set_pitch)
+        (SpeechServer._set_volume, SpeechServer._speak)
+        (SpeechServer._cancel, SpeechServer.speakCharacter): Use
+        `_send_command()' instead of calling the method directly.
+        (SpeechServer.getVoiceFamilies): Set the locale of the default
+        voice according to the current locale.  List snthesizer's voices.
+
 2007-08-13  Willie Walker <william.walker@sun.com>
 
-	* src/orca/Gecko.py: fix for bug 464714 - translations.  Edit 
-	docs to reduce confusion.
-	
+        * src/orca/Gecko.py: fix for bug 464714 - translations.  Edit
+        docs to reduce confusion.
+
 2007-08-13  Willie Walker <william.walker@sun.com>
 
-	* MAINTAINERS: update to include names, e-mail, and userid per
-	discussion on desktop-devel-list.
+        * MAINTAINERS: update to include names, e-mail, and userid per
+        discussion on desktop-devel-list.
 
 2007-08-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -15,7 +50,7 @@
 
 2007-08-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs 
+        * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs
         are not read.
 
 2007-08-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -29,7 +64,7 @@
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
-          Fixed bug #462475 – crash due Non-ASCII characters in 
+          Fixed bug #462475 – crash due Non-ASCII characters in
           .orca/user-settings.py file. Added the line:
           # -*- coding: utf-8 -*-
           to the beginning of the ~/.orca/user-settings.py file (also to the
@@ -44,9 +79,9 @@
 
 2007-08-01  Willie Walker <william.walker@sun.com>
 
-	* src/orca/bookmarks.html: make sure there is a newline at
-	the end of the file.  The absence of newlines wreaks havoc
-	on the coverage testing.
+        * src/orca/bookmarks.html: make sure there is a newline at
+        the end of the file.  The absence of newlines wreaks havoc
+        on the coverage testing.
 
 2007-07-30  Rich Burridge <rich.burridge@sun.com>
 
@@ -56,7 +91,7 @@
           src/orca/focus_tracking_presenter.py:
           src/orca/pronunciation_dict.py:
           src/orca/script.py:
-          More work on bug #364518 – Create a GUI interface to the 
+          More work on bug #364518 – Create a GUI interface to the
           pronunciation dictionary. Added in proper support for application
           specific pronunciations.
 
