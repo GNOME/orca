@@ -42,116 +42,178 @@ from acss import ACSS
 from orca_i18n import _
 from speechserver import VoiceFamily
 
-class SpeechDispatcherVersionError(Exception):
-    """Incompatible version of the Speech Dispatcher Python Interface."""
+try:
+    import speechd
+except:
+    _speechd_available = False
+else:    
+    _speechd_available = True
+    try:
+        from speechd import CallbackType
+    except ImportError:
+        _speechd_version_ok = False
+    else:
+        _speechd_version_ok = True
 
 class SpeechServer(speechserver.SpeechServer):
     # See the parent class for documentation.
 
-    _activeServers = {}
-
+    _active_servers = {}
+    
+    DEFAULT_SERVER_ID = 'default'
+    
+    # Translators: "Default Synthesizer" will appear in the list of available
+    # speech engines as a special item.  It refers to the default engine
+    # configured within the speech subsystem.  Apart from this item, the user
+    # will have a chance to select a particular speech engine by its real
+    # name, such as Festival, IBMTTS, etc.
+    #
+    _SERVER_NAMES = {DEFAULT_SERVER_ID: _("Default Synthesizer")}
+    
     KEY_NAMES = {
         '_':     'underscore',
         'space': 'space',
         '"':     'double-quote',
         }
 
+
     def getFactoryName():
+        # Translators: this is the name of a speech synthesis system
+        # called "Speech Dispatcher".
+        #
         return _("Speech Dispatcher")
     getFactoryName = staticmethod(getFactoryName)
 
-    def _getActiveServers(cls):
-        if not cls._activeServers:
-            import locale
-            lang = locale.getlocale(locale.LC_MESSAGES)[0]
-            if lang and lang != 'C':
-                lang = lang.split('_')[0]
-            else:
-                lang = None
-            cls('default', language=lang)
-        return cls._activeServers
-    _getActiveServers = classmethod(_getActiveServers)
-
     def getSpeechServers():
-        return SpeechServer._getActiveServers().values()
+        default = SpeechServer._getSpeechServer(SpeechServer.DEFAULT_SERVER_ID)
+        servers = [default]
+        for module in default.list_output_modules():
+            servers.append(SpeechServer._getSpeechServer(module))
+        return servers
     getSpeechServers = staticmethod(getSpeechServers)
 
+    def _getSpeechServer(cls, id):
+        """Return an active server for given id.
+
+        Attempt to create the server if it doesn't exist yet.  Returns None
+        when it is not possible to create the server.
+        
+        """
+        if not cls._active_servers.has_key(id):
+            cls(id)
+        # Don't return the instance, unless it is succesfully added
+        # to `_active_Servers'.
+        return cls._active_servers.get(id)
+    _getSpeechServer = classmethod(_getSpeechServer)
+
     def getSpeechServer(info=None):
-        servers = SpeechServer._getActiveServers()
         if info is not None:
-            return servers.get(info[1])
-        elif servers:
-            return servers.values()[0]
+            id = info[1]
         else:
-            return None
+            id = SpeechServer.DEFAULT_SERVER_ID
+        return SpeechServer._getSpeechServer(id)
     getSpeechServer = staticmethod(getSpeechServer)
 
     def shutdownActiveServers():
-        for server in SpeechServer.getSpeechServers():
+        for server in SpeechServer._active_servers.values():
             server.shutdown()
     shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     # *** Instance methods ***
 
-    def __init__(self, id, language=None):
+    def __init__(self, id):
         self._id = id
-        self._default_language = language
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
             (ACSS.GAIN, self._set_volume),
+            (ACSS.FAMILY, self._set_family),
             )
-        try:
-            self._init()
-        except ImportError:
+        if not _speechd_available:
             debug.println(debug.LEVEL_WARNING,
                           "Speech Dispatcher interface not installed.")
-        except SpeechDispatcherVersionError:
+            return
+        if not _speechd_version_ok:
             debug.println(debug.LEVEL_WARNING,
-                       "Speech Dispatcher version 0.6.2 or later is required.")
-        except:
-            debug.println(debug.LEVEL_WARNING,
-                       "Speech Dispatcher service failed to connect.")
-        else:
-            self.__class__._activeServers[self.getInfo()[1]] = self
-
-    def _init(self):
-        import speechd
-        try:
-            from speechd import CallbackType
-        except ImportError:
-            raise SpeechDispatcherVersionError()
-        self._client = client = speechd.SSIPClient('Orca', component=self._id)
-        if self._default_language is not None:
-            client.set_language(self._default_language)
-        self._current_voice_properties = {}
-        self._apply_acss(settings.voices[settings.DEFAULT_VOICE])
-        punctuation_mode = {
+                        "Speech Dispatcher version 0.6.2 or later is required.")
+            return
+        # The following constants must be initialized in runtime since they
+        # depend on the speechd module being available.
+        self._PUNCTUATION_MODE_MAP = {
             settings.PUNCTUATION_STYLE_ALL:  speechd.PunctuationMode.ALL,
             settings.PUNCTUATION_STYLE_MOST: speechd.PunctuationMode.SOME,
             settings.PUNCTUATION_STYLE_SOME: speechd.PunctuationMode.SOME,
             settings.PUNCTUATION_STYLE_NONE: speechd.PunctuationMode.NONE,
-            }[settings.verbalizePunctuationStyle]
-        client.set_punctuation(punctuation_mode)
-        self._callback_type_map = {
-            CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
-            CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
-            CallbackType.END: speechserver.SayAllContext.COMPLETED,
-            #CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
+        self._CALLBACK_TYPE_MAP = {
+            speechd.CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
+            speechd.CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
+            speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
+           #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
+            }
+        # Translators: This string will appear in the list of
+        # available voices for the current speech engine.  %s will be
+        # replaced by the name of the current speech engine, such as
+        # "Festival default voice" or "IBMTTS default voice".  It
+        # refers to the default voice configured for given speech
+        # engine within the speech subsystem.  Apart from this item,
+        # the list will contain the names of all available "real"
+        # voices provided by the speech engine.
+        #
+        self._default_voice_name = _("%s default voice") % id
+        
+        try:
+            self._init()
+        except Exception, e:
+            debug.println(debug.LEVEL_WARNING,
+                          "Speech Dispatcher service failed to connect: %s" % e)
+        else:
+            self.__class__._active_servers[id] = self
+
+    def _init(self):
+        self._client = client = speechd.SSIPClient('Orca', component=self._id)
+        if self._id != self.DEFAULT_SERVER_ID:
+            client.set_output_module(self._id)
+        self._current_voice_properties = {}
+        mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
+        client.set_punctuation(mode)
+        
+    def _send_command(self, command, *args, **kwargs):
+        if hasattr(speechd, 'SSIPCommunicationError'):
+            try:
+                return command(*args, **kwargs)
+            except speechd.SSIPCommunicationError:
+                debug.println(debug.LEVEL_CONFIGURATION,
+                              "Speech Dispatcher connection lost. "
+                              "Trying to reconnect.")
+                self.reset()
+                return command(*args, **kwargs)
+        else:
+            # It is not possible tho catch the error with older SD versions. 
+            return command(*args, **kwargs)
 
     def _set_rate(self, acss_rate):
         rate = int(2 * max(0, min(99, acss_rate)) - 98)
-        self._client.set_rate(rate)
+        self._send_command(self._client.set_rate, rate)
 
     def _set_pitch(self, acss_pitch):
         pitch = int(20 * max(0, min(9, acss_pitch)) - 90)
-        self._client.set_pitch(pitch)
+        self._send_command(self._client.set_pitch, pitch)
 
     def _set_volume(self, acss_volume):
         volume = int(15 * max(0, min(9, acss_volume)) - 35)
-        self._client.set_volume(volume)
+        self._send_command(self._client.set_volume, volume)
 
+    def _set_family(self, acss_family):
+        locale = acss_family[VoiceFamily.LOCALE]
+        if locale:
+            lang = locale.split('_')[0]
+            if lang and len(lang) == 2:
+                self._send_command(self._client.set_language, lang)
+        name = acss_family[VoiceFamily.NAME]
+        if name != self._default_voice_name:
+            self._send_command(self._client.set_synthesis_voice, name)
+            
     def _apply_acss(self, acss):
         current = self._current_voice_properties
         for property, method in self._acss_manipulators:
@@ -162,7 +224,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def _speak(self, text, acss, **kwargs):
         self._apply_acss(acss)
-        self._client.speak(text, **kwargs)
+        self._send_command(self._client.speak, text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
         """Process another sayAll chunk.
@@ -179,7 +241,7 @@ class SpeechServer(speechserver.SpeechServer):
                 # This callback is called in Speech Dispatcher listener thread.
                 # No subsequent Speech Dispatcher interaction is allowed here,
                 # so we pass the calls to the gidle thread.
-                t = self._callback_type_map[type]
+                t = self._CALLBACK_TYPE_MAP[type]
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
                         context.currentOffset = int(index_mark)
@@ -191,11 +253,11 @@ class SpeechServer(speechserver.SpeechServer):
                 if t == speechserver.SayAllContext.COMPLETED:
                     gobject.idle_add(self._say_all, iterator, orca_callback)
             self._speak(context.utterance, acss, callback=callback,
-                        event_types=self._callback_type_map.keys())
+                        event_types=self._CALLBACK_TYPE_MAP.keys())
         return False # to indicate, that we don't want to be called again.
 
     def _cancel(self):
-        self._client.cancel()
+        self._send_command(self._client.cancel)
 
     def _change_default_speech_rate(self, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
@@ -218,15 +280,24 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(decrease and _("lower.") or _("higher."), acss=acss)
 
     def getInfo(self):
-        return ["Speech Dispatcher Server (%s)" % self._id, self._id]
+        return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
     def getVoiceFamilies(self):
-        # Only one voice is currently supported -- the Speech Dispatcher
-        # configured default voice.
-        return (VoiceFamily({VoiceFamily.NAME:
-                             _("Speech Dispatcher configured default voice"),
-                             VoiceFamily.GENDER: VoiceFamily.MALE,
-                             VoiceFamily.LOCALE: self._default_language}),)
+        # Always offer the configured default voice with a language
+        # set according to the current locale.
+        from locale import getlocale, LC_MESSAGES
+        locale = getlocale(LC_MESSAGES)[0]
+        if locale is None or locale == 'C':
+            lang = None
+        else:
+            lang = locale.split('_')[0]
+        voices = ((self._default_voice_name, lang, None),) + \
+                 self._send_command(self._client.list_synthesis_voices)
+        families = [VoiceFamily({VoiceFamily.NAME: name,
+                                 #VoiceFamily.GENDER: VoiceFamily.MALE,
+                                 VoiceFamily.LOCALE: lang})
+                    for name, lang, dialect in voices]
+        return families
 
     def speak(self, text=None, acss=None, interrupt=True):
         #if interrupt:
@@ -249,7 +320,7 @@ class SpeechServer(speechserver.SpeechServer):
         gobject.idle_add(self._say_all, utteranceIterator, progressCallback)
 
     def speakCharacter(self, character, acss=None):
-        self._client.char(character)
+        self._send_command(self._client.char, character)
 
     def speakKeyEvent(self, event_string, type):
         if type == orca.KeyEventType.PRINTABLE:
@@ -260,8 +331,9 @@ class SpeechServer(speechserver.SpeechServer):
                 voice = settings.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = settings.voices[settings.DEFAULT_VOICE]
+            key = self.KEY_NAMES.get(event_string, event_string)
             self._apply_acss(voice)
-            self._client.key(self.KEY_NAMES.get(event_string, event_string))
+            self._send_command(self._client.key, key)
         else:
             return super(SpeechServer, self).speakKeyEvent(event_string, type)
 
@@ -282,9 +354,26 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         self._client.close()
-        del self.__class__._activeServers[self.getInfo()[1]]
+        del self.__class__._active_servers[self._id]
 
     def reset(self, text=None, acss=None):
-        self._cancel()
         self._client.close()
         self._init()
+        
+    def list_output_modules(self):
+        """Return names of available output modules as a tuple of strings.
+
+        This method is not a part of Orca speech API, but is used internally
+        by the Speech Dispatcher backend.
+        
+        The returned tuple can be empty if the information can not be
+        obtained (e.g. with an older Speech Dispatcher version).
+        
+        """
+        try:
+            return self._send_command(self._client.list_output_modules)
+        except AttributeError:
+            return ()
+        except speechd.SSIPCommandError:
+            return ()
+

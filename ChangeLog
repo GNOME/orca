@@ -1,8 +1,43 @@
+2007-08-13  Tomas Cerha  <via william.walker@sun.com>
+
+        Fix for bug 455308 – Output module and voice selection with Speech
+        Dispatcher backend.  The changes also involve some minor cleanup
+        and one major improvement - automatic reconnection after losing
+        Speech Dispatcher connection (for example after SD is restarted).
+
+        * src/orca/speechdispatcherfactory.py: Try to import the `speechd'
+        module globally and set the variables `_speechd_available' and
+        `_speechd_version_ok' accordingly.
+        (SpeechServer.list_output_modules): New method.
+        (SpeechServer._getActiveServers): Method removed.
+        (SpeechServer.getSpeechServers): Create one default server and one
+        separate server for each available output module.
+        (SpeechServer._getSpeechServer): New method.
+        (getSpeechServer): Return the default server if `info' is not
+        specified.
+        (SpeechServer.__init__): Argument `lang' removed.  Rely on
+        globally imported `speechd' module and the related variables.  If
+        client initialization fails, log the error.  Initialize mapping
+        constants here, not in `_init()'.
+        (SpeechServer._init): Rely on globally imported `speechd' module.
+        Don't set the default language, rely on language setting according
+        to voice properties.  Don't initialize default voice properties,
+        let them be initialized on the first speak command.
+        (SpeechServer._send_command): New method allowing automatic
+        reconnection after Speech Dispatcher restart.
+        (SpeechServer._set_family):
+        (SpeechServer._set_rate, SpeechServer._set_pitch)
+        (SpeechServer._set_volume, SpeechServer._speak)
+        (SpeechServer._cancel, SpeechServer.speakCharacter): Use
+        `_send_command()' instead of calling the method directly.
+        (SpeechServer.getVoiceFamilies): Set the locale of the default
+        voice according to the current locale.  List snthesizer's voices.
+
 2007-08-13  Willie Walker <william.walker@sun.com>
 
-	* src/orca/Gecko.py: fix for bug 464714 - translations.  Edit 
-	docs to reduce confusion.
-	
+        * src/orca/Gecko.py: fix for bug 464714 - translations.  Edit
+        docs to reduce confusion.
+
 2007-08-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 460284 - Orca should not allow
@@ -10,58 +45,58 @@
 
 2007-08-09  Mike Pedersen <michael.pedersen@sun.com>
 
-        * docs/doc-set/ue_requirements.sgml, 
-        * docs/doc-set/orca.html, 
-        * docs/doc-set/orca.pdf: 
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf:
           Update to the braille  specs
 
 2007-08-09  Willie Walker <william.walker@sun.com>
 
-	* MAINTAINERS: update to include names, e-mail, and userid per
-	discussion on desktop-devel-list.
+        * MAINTAINERS: update to include names, e-mail, and userid per
+        discussion on desktop-devel-list.
 
 2007-08-08 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py: 
-          src/orca/braille.py: 
+        * src/orca/Gecko.py:
+          src/orca/braille.py:
         Fixed bug #462509, ARIA dialogs are not being announced
 
 2007-08-02  Eitan Isaacson <eitan@ascender.com>
 
-	* test/keystrokes/gtk-demo/where_am_i_accel_label.py: Updated
-	header comment.
-	* test/keystrokes/gtk-demo/where_am_i_check_box.py: Updated
-	header comment.
-	* test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Updated
-	header comment.
-	
-	* test/keystrokes/gtk-demo/where_am_i_combo_box.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_combo_box2.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_icon.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_label.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_page_tab.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_push_button.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_radio_button.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_spin_button.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_table.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_text_multiline.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_toggle_button.py: Added.
-	* test/keystrokes/gtk-demo/where_am_i_tree_table.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_accel_label.py: Updated
+        header comment.
+        * test/keystrokes/gtk-demo/where_am_i_check_box.py: Updated
+        header comment.
+        * test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Updated
+        header comment.
+
+        * test/keystrokes/gtk-demo/where_am_i_combo_box.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_combo_box2.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_icon.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_label.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_page_tab.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_push_button.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_radio_button.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_spin_button.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_table.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_text_multiline.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_toggle_button.py: Added.
+        * test/keystrokes/gtk-demo/where_am_i_tree_table.py: Added.
 
 2007-08-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #462256 - Orca doesn't speak/braille anything when going 
+          Fixed bug #462256 - Orca doesn't speak/braille anything when going
           to the 2nd screen in the OOo Presentation startup wizard.
 
 2007-08-07  Lynn MonSanto <lynn.monsanto@sun.com>
 
         * docs/doc-set/testing.sgml, docs/doc-set/orca.html -
-	Added Java Platform Testing.
+        Added Java Platform Testing.
 
 2007-08-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs 
+        * src/orca/Gecko.py: Fix for bug 457988 - Firefox SSL Dialogs
         are not read.
 
 2007-08-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -82,38 +117,38 @@
 
 2007-08-02  Eitan Isaacson <eitan@ascender.com>
 
-	* test/keystrokes/gtk-demo/where_am_i_accel_label.py: Initial
-	commit. Might not need the KP_Insert+KP_Enter that is there right now.
+        * test/keystrokes/gtk-demo/where_am_i_accel_label.py: Initial
+        commit. Might not need the KP_Insert+KP_Enter that is there right now.
 
-	* test/keystrokes/gtk-demo/where_am_i_check_box.py: Initial
-	commit. Doesn't actually give the correct result. After the
-	checkbutton is checked, it's state is not uttered in "where am I".
+        * test/keystrokes/gtk-demo/where_am_i_check_box.py: Initial
+        commit. Doesn't actually give the correct result. After the
+        checkbutton is checked, it's state is not uttered in "where am I".
 
-	* test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Initial commit.
+        * test/keystrokes/gtk-demo/where_am_i_check_menu_item.py: Initial commit.
 
 2007-08-01  Willie Walker <william.walker@sun.com>
 
         Work on bug 415061 - regression test results should be repeatable.
 
-	* test/harness/runall.sh: a little work on the code coverage
-	analysis.
+        * test/harness/runall.sh: a little work on the code coverage
+        analysis.
 
-	* test/keystrokes/gtk-demo/role_combo_box.py: tweak initial wait
+        * test/keystrokes/gtk-demo/role_combo_box.py: tweak initial wait
 
-	* test/keystrokes/gtk-demo/role_push_button.py,
-	test/keystrokes/gtk-demo/role_table.py,
-	test/keystrokes/gtk-demo/role_tear_off_menu_item.py,
-	test/keystrokes/gtk-demo/role_radio_button.py,
-	test/keystrokes/gtk-demo/role_combo_box2.py,
-	test/keystrokes/gtk-demo/role_spin_button.py,
-	test/keystrokes/gtk-demo/role_text_multiline.py,
-	test/keystrokes/gtk-demo/role_tree_table.py,
-	test/keystrokes/gtk-demo/role_label.py,
-	test/keystrokes/gtk-demo/role_split_pane.py,
-	test/keystrokes/gtk-demo/role_toolbar.py,
-	test/keystrokes/gtk-demo/role_page_tab.py,
-	test/keystrokes/gtk-demo/role_menu.py: new tests
-	
+        * test/keystrokes/gtk-demo/role_push_button.py,
+        test/keystrokes/gtk-demo/role_table.py,
+        test/keystrokes/gtk-demo/role_tear_off_menu_item.py,
+        test/keystrokes/gtk-demo/role_radio_button.py,
+        test/keystrokes/gtk-demo/role_combo_box2.py,
+        test/keystrokes/gtk-demo/role_spin_button.py,
+        test/keystrokes/gtk-demo/role_text_multiline.py,
+        test/keystrokes/gtk-demo/role_tree_table.py,
+        test/keystrokes/gtk-demo/role_label.py,
+        test/keystrokes/gtk-demo/role_split_pane.py,
+        test/keystrokes/gtk-demo/role_toolbar.py,
+        test/keystrokes/gtk-demo/role_page_tab.py,
+        test/keystrokes/gtk-demo/role_menu.py: new tests
+
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
@@ -132,27 +167,27 @@
 
 2007-08-01  Willie Walker <william.walker@sun.com>
 
-	* src/orca/bookmarks.html: make sure there is a newline at
-	the end of the file.  The absence of newlines wreaks havoc
-	on the coverage testing.
+        * src/orca/bookmarks.html: make sure there is a newline at
+        the end of the file.  The absence of newlines wreaks havoc
+        on the coverage testing.
 
 2007-08-01  Willie Walker <william.walker@sun.com>
 
         Work on bug 415061 - regression test results should be repeatable.
-	With these changes, I've had 6 simultaneous repeatable runs of
-	the new test harness.  It's starting to look promising.
+        With these changes, I've had 6 simultaneous repeatable runs of
+        the new test harness.  It's starting to look promising.
 
-	* src/orca/focus_tracking_presenter.py, src/orca/settings.py:
-	add asyncMode setting (default=True).  If True, we run in our
-	normal mode of operation of queueing events and processing
-	them on the gidle thread.  If False, we process events 
-	immediately -- very helpful for testing repeatability.
+        * src/orca/focus_tracking_presenter.py, src/orca/settings.py:
+        add asyncMode setting (default=True).  If True, we run in our
+        normal mode of operation of queueing events and processing
+        them on the gidle thread.  If False, we process events
+        immediately -- very helpful for testing repeatability.
 
-	* test/harness/runone.sh: add orca.settings.asyncMode = False
+        * test/harness/runone.sh: add orca.settings.asyncMode = False
 
-	* test/keystrokes/gtk-demo/*.py: tweak timings a little bit to
-	prevent event compression.
-	
+        * test/keystrokes/gtk-demo/*.py: tweak timings a little bit to
+        prevent event compression.
+
 2007-07-31  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py: fix for bug 459584 - ARIA widget labels
