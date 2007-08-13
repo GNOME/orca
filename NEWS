@@ -1,8 +1,55 @@
+2.19.90 - 13-Aug-2007
+
+General:
+
+* More work on bug 364518 – Create a GUI interface to the
+  pronunciation dictionary
+
+* Fix for bug 455308 – Output module and voice selection with Speech
+  Dispatcher backend
+
+* Fix for bug 461719 - gnome-mud script failed at import
+  (many thanks to Javier Dorado Martínez for this fix)
+
+* Fix for bug 462475 – crash due Non-ASCII characters in
+  .orca/user-settings.py file
+
+* Fix for bug 462650 - Traceback when using whereAmI in Evolution New
+  Contact dialog
+
+Firefox:
+
+* Fix for bug 457988 - Firefox SSL Dialogs are not read
+
+* Fix for bug 460284 - Orca should not allow the user to arrow into
+  the FF3 status bar
+
+* Fix for bug 461620 - Orca doesn't speak find results in FF3 when
+  focus is on Next/Previous buttons
+
+* Fix for bug 464714 - translations.  Edited docs to reduce confusion.
+
+Open Office:
+
+* Add "soffice" script name mapping to accommodate the (hopefully) last
+  name change introduced in OOo 2.3.0
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de      German               Jochen Skulj
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    gu      Gujarati             Ankit Patel
+    sv      Swedish              Daniel Nylander
+    ta      Tamil                I. Felix
+
+==========
+
 2.19.6 - 29-Jul-2007
 
 General:
 
-* NOTICE: the automake requirement for Orca has been moved from 
+* NOTICE: the automake requirement for Orca has been moved from
   automake 1.7.2 to 1.9.
 
 * Work on bug 364518 - Create a GUI interface to the pronunciation
@@ -22,7 +69,7 @@ General:
 * Fix for bug 455230 – Read table cell row should insert column
   headers for non-text cells
 
-* Fix for bug 456296 - Traceback in braille.py when doing a 
+* Fix for bug 456296 - Traceback in braille.py when doing a
   "Select All" in gedit.
 
 * Fix for bug 459080 - Some files missing from POTFILES.in (sorry!)

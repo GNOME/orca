@@ -1,3 +1,7 @@
+2007-08-13  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS: prep for v2.19.90
+
 2007-08-13  Tomas Cerha  <via william.walker@sun.com>
 
         Fix for bug 455308 – Output module and voice selection with Speech
@@ -79,7 +83,7 @@
 
 2007-08-01  Willie Walker <william.walker@sun.com>
 
-        * src/orca/bookmarks.html: make sure there is a newline at
+        * src/orca/bookmarks.py: make sure there is a newline at
         the end of the file.  The absence of newlines wreaks havoc
         on the coverage testing.
 
