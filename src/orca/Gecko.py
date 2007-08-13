@@ -2566,9 +2566,9 @@ class Script(default.Script):
                                     structuralNavigationEnabled)
 
         # Translators: when the user arrows up and down in HTML content,
-        # it is some times beneficial to always position the caret at the
+        # it is some times beneficial to always position the cursor at the
         # beginning of the line rather than guessing the position directly
-        # above the current caret position.  This option allows the user
+        # above the current cursor position.  This option allows the user
         # to decide the behavior they want.
         #
         label = _("_Position cursor at start of line when navigating vertically")
@@ -8177,7 +8177,10 @@ class Script(default.Script):
             # Thus H moves you to the next heading, Shift H to the
             # previous heading, T to the next table, and so on. Some
             # users prefer to turn this off to use Firefox's search
-            # when typing feature.
+            # when typing feature.  This message is sent to both the
+            # braille display and the speech synthesizer when the user
+            # toggles the structural navigation feature of Orca.
+            # It should be a brief informative message.
             #
             string = _("Structural navigation keys on.")
         else:
@@ -8186,7 +8189,10 @@ class Script(default.Script):
             # Thus H moves you to the next heading, Shift H to the
             # previous heading, T to the next table, and so on. Some
             # users prefer to turn this off to use Firefox's search
-            # when typing feature.
+            # when typing feature.  This message is sent to both the
+            # braille display and the speech synthesizer when the user
+            # toggles the structural navigation feature of Orca.
+            # It should be a brief informative message.
             #
             string = _("Structural navigation keys off.")
 
