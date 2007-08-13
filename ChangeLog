@@ -1,3 +1,7 @@
+2007-08-13  Lynn MonSanto <lynn.monsanto@sun.com>
+	* src/orca/flat_review.py: fix for Bug 458150 - flat-review 
+	should present slider orientation
+
 2007-08-13  Tomas Cerha  <via william.walker@sun.com>
 
         Fix for bug 455308 – Output module and voice selection with Speech

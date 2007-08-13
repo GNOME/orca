@@ -359,6 +359,22 @@ class ValueZone(Zone):
 
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
+            sliderState = None
+            if self.accessible.role == rolenames.ROLE_SLIDER:
+                horizontalCount = \
+                    self.accessible.state.count(atspi.Accessibility.STATE_HORIZONTAL)
+                if horizontalCount:
+                    # Translators: The component orientation is horizontal.
+                    #
+                    sliderState = _("horizontal")
+                else:
+                    verticalCount = \
+                        self.accessible.state.count(atspi.Accessibility.STATE_VERTICAL)
+                    if verticalCount:
+                        # Translators: The component orientation is vertical.
+                        #
+                        sliderState = _("vertical")
+                        
             value = self.accessible.value
             currentValue = int(value.currentValue)
             percentValue = int((value.currentValue
@@ -366,14 +382,24 @@ class ValueZone(Zone):
                                    - value.minimumValue))
                                * 100.0)
 
-            # Translators: this is the percentage value of a
-            # progress bar.
+            speechValue = rolenames.getSpeechForRoleName(self.accessible)
+            if sliderState:
+                speechValue = speechValue + " " + sliderState
+                
+            # Translators: this is the percentage value of a slider, progress bar
+            # or other component that displays a value as a percentage.
             #
-            speechValue = (rolenames.getSpeechForRoleName(self.accessible) \
-                           + " " + _("%d percent.") % percentValue)
-            brailleValue = "%s %d%%" \
-                           % (rolenames.getBrailleForRoleName(self.accessible),
-                              percentValue)
+            speechValue = speechValue + " " + _("%d percent.") % percentValue
+
+            if sliderState:
+                brailleValue = "%s %s %d%%" \
+                               % (rolenames.getBrailleForRoleName(self.accessible),
+                                  sliderState,
+                                  percentValue)
+            else:
+                brailleValue = "%s %d%%" \
+                               % (rolenames.getBrailleForRoleName(self.accessible),
+                                  percentValue)
 
             if attr == "string":
                 return speechValue
