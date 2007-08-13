@@ -1,5 +1,10 @@
 2007-08-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: fix for bug 464714 - translations.  Edit 
+	docs to reduce confusion.
+	
+2007-08-13  Willie Walker <william.walker@sun.com>
+
 	* MAINTAINERS: update to include names, e-mail, and userid per
 	discussion on desktop-devel-list.
 
