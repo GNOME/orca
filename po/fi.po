@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 07:34+0300\n"
+"POT-Creation-Date: 2007-08-14 18:07+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -371,7 +371,7 @@ msgstr "alaviiva"
 #.
 #: ../src/orca/chnames.py:158
 msgid "grave"
-msgstr ""
+msgstr "takahipsu"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
@@ -457,7 +457,7 @@ msgstr "tekijänoikeudet"
 #.
 #: ../src/orca/chnames.py:214
 msgid "superscript a"
-msgstr ""
+msgstr "yläindeksi a"
 
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
@@ -487,7 +487,7 @@ msgstr "rekisteröity"
 #.
 #: ../src/orca/chnames.py:234
 msgid "macron"
-msgstr ""
+msgstr "yläviiva"
 
 #. Translators: this is the spoken word for the character '°' (U+00b0)
 #.
@@ -507,19 +507,19 @@ msgstr "plus-miinus"
 #.
 #: ../src/orca/chnames.py:246
 msgid "superscript 2"
-msgstr ""
+msgstr "yläindeksi 2"
 
 #. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: ../src/orca/chnames.py:250
 msgid "superscript 3"
-msgstr ""
+msgstr "yläindeksi 3"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
 #: ../src/orca/chnames.py:254
 msgid "acute accent"
-msgstr ""
+msgstr "etuhipsu"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
@@ -549,7 +549,7 @@ msgstr "cedilla"
 #.
 #: ../src/orca/chnames.py:274
 msgid "superscript 1"
-msgstr ""
+msgstr "yläindeksi 1"
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
@@ -723,13 +723,13 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:394
 msgid "O UMLAUT"
-msgstr "Ö"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
 #: ../src/orca/chnames.py:398
 msgid "times"
-msgstr "kertaa"
+msgstr "kertomerkki"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
@@ -795,13 +795,13 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:442
 msgid "a tilde"
-msgstr "a-tilde"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'ä' (U+00e4)
 #.
 #: ../src/orca/chnames.py:446
 msgid "a umlaut"
-msgstr "ä"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
@@ -819,7 +819,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:458
 msgid "c cedilla"
-msgstr "cedilla"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
@@ -879,7 +879,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:498
 msgid "n tilde"
-msgstr "i-tilde"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'ò' (U+00f2)
 #.
@@ -903,25 +903,25 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:514
 msgid "o tilde"
-msgstr "o-tilde"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'ö' (U+00f6)
 #.
 #: ../src/orca/chnames.py:518
 msgid "o umlaut"
-msgstr "ö"
+msgstr " "
 
 #. Translators: this is the spoken word for the character '÷' (U+00f7)
 #.
 #: ../src/orca/chnames.py:522
 msgid "divided by"
-msgstr "jaettu"
+msgstr "jakomerkki"
 
 #. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
 #: ../src/orca/chnames.py:526
 msgid "o stroke"
-msgstr "o-heittomerkki"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'þ' (U+00fe)
 #.
@@ -1764,9 +1764,12 @@ msgstr "Edistymispalkki %d."
 #. Translators: this is the percentage value of a
 #. progress bar.
 #.
+#. Translators: this is the percentage value of a slider, progress bar
+#. or other component that displays a value as a percentage.
+#.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2080 ../src/orca/flat_review.py:373
+#: ../src/orca/default.py:2080 ../src/orca/flat_review.py:392
 #: ../src/orca/speechgenerator.py:927
 #, python-format
 msgid "%d percent."
@@ -2058,6 +2061,18 @@ msgstr "ei painettu"
 #: ../src/orca/speechgenerator.py:988
 msgid "not selected"
 msgstr "ei valittu"
+
+#. Translators: The component orientation is horizontal.
+#.
+#: ../src/orca/flat_review.py:369
+msgid "horizontal"
+msgstr "vaaka"
+
+#. Translators: The component orientation is vertical.
+#.
+#: ../src/orca/flat_review.py:376
+msgid "vertical"
+msgstr "pysty"
 
 #. Translators: this is intended to be a short phrase to
 #. speak and braille to tell the user that no component
@@ -2473,9 +2488,9 @@ msgid "Use Orca _Structural Navigation"
 msgstr "Käytä orcan _rakenteellista navigointia"
 
 #. Translators: when the user arrows up and down in HTML content,
-#. it is some times beneficial to always position the caret at the
+#. it is some times beneficial to always position the cursor at the
 #. beginning of the line rather than guessing the position directly
-#. above the current caret position.  This option allows the user
+#. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
 #: ../src/orca/Gecko.py:2574
@@ -2851,9 +2866,12 @@ msgstr "Orca ohjaa kohdistinta."
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8182
+#: ../src/orca/Gecko.py:8185
 msgid "Structural navigation keys on."
 msgstr "Rakenteelliset navigointinäppäimet käytössä."
 
@@ -2862,9 +2880,12 @@ msgstr "Rakenteelliset navigointinäppäimet käytössä."
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8191
+#: ../src/orca/Gecko.py:8197
 msgid "Structural navigation keys off."
 msgstr "Rakenteelliset navigointinäppäimet pois käytöstä."
 
@@ -2897,7 +2918,7 @@ msgstr "miinus"
 #. synthesis engine is now speaking in a higher pitch.
 #.
 #: ../src/orca/gnomespeechfactory.py:907
-#: ../src/orca/speechdispatcherfactory.py:218
+#: ../src/orca/speechdispatcherfactory.py:280
 msgid "higher."
 msgstr "korkeampi."
 
@@ -2906,7 +2927,7 @@ msgstr "korkeampi."
 #.
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/gnomespeechfactory.py:938
-#: ../src/orca/speechdispatcherfactory.py:218
+#: ../src/orca/speechdispatcherfactory.py:280
 msgid "lower."
 msgstr "matalampi."
 
@@ -2915,7 +2936,7 @@ msgstr "matalampi."
 #. per minute).
 #.
 #: ../src/orca/gnomespeechfactory.py:967
-#: ../src/orca/speechdispatcherfactory.py:208
+#: ../src/orca/speechdispatcherfactory.py:270
 msgid "faster."
 msgstr "nopeammin."
 
@@ -2925,7 +2946,7 @@ msgstr "nopeammin."
 #.
 #. Translators: This string announces speech rate change.
 #: ../src/orca/gnomespeechfactory.py:1001
-#: ../src/orca/speechdispatcherfactory.py:208
+#: ../src/orca/speechdispatcherfactory.py:270
 msgid "slower."
 msgstr "hitaammin."
 
@@ -4145,8 +4166,8 @@ msgstr ""
 "a : aarne, b : bertta, c : celcius, d : daavid, e : eemeli, f : faarao, g : "
 "gideon, h : heikki, i : iivari, j : jussi, k : kalle, l : lauri, m : matti, "
 "n : niilo, o : otto, p : paavo, q : kuu, r : risto, s : sakari, t : tyyne, "
-"u : urho, v : vihtori, w : wiski, x : äksä, y : yrjö, z : tseta, "
-"å : åke, ä : äiti, ö : öljy"
+"u : urho, v : vihtori, w : wiski, x : äksä, y : yrjö, z : tseta, å : åke, "
+"ä : äiti, ö : öljy"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "ASAP"
@@ -6382,13 +6403,36 @@ msgstr "vte"
 msgid "pidgin"
 msgstr "pidgin"
 
-#: ../src/orca/speechdispatcherfactory.py:60
+#. Translators: "Default Synthesizer" will appear in the list of available
+#. speech engines as a special item.  It refers to the default engine
+#. configured within the speech subsystem.  Apart from this item, the user
+#. will have a chance to select a particular speech engine by its real
+#. name, such as Festival, IBMTTS, etc.
+#.
+#: ../src/orca/speechdispatcherfactory.py:71
+msgid "Default Synthesizer"
+msgstr "Oletus-_syntetisaattori"
+
+#. Translators: this is the name of a speech synthesis system
+#. called "Speech Dispatcher".
+#.
+#: ../src/orca/speechdispatcherfactory.py:84
 msgid "Speech Dispatcher"
 msgstr "Puheentuottaja"
 
-#: ../src/orca/speechdispatcherfactory.py:227
-msgid "Speech Dispatcher configured default voice"
-msgstr "Puheentuottajan määritelty oletusääni"
+#. Translators: This string will appear in the list of
+#. available voices for the current speech engine.  %s will be
+#. replaced by the name of the current speech engine, such as
+#. "Festival default voice" or "IBMTTS default voice".  It
+#. refers to the default voice configured for given speech
+#. engine within the speech subsystem.  Apart from this item,
+#. the list will contain the names of all available "real"
+#. voices provided by the speech engine.
+#.
+#: ../src/orca/speechdispatcherfactory.py:163
+#, python-format
+msgid "%s default voice"
+msgstr "%s oletusääni"
 
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
@@ -6490,6 +6534,9 @@ msgstr "%.2f megatavua"
 #, python-format
 msgid "item %d of %d"
 msgstr "kohta %d kaikkiaan %d"
+
+#~ msgid "Speech Dispatcher configured default voice"
+#~ msgstr "Puheentuottajan määritelty oletusääni"
 
 #~ msgid "underscore"
 #~ msgstr "alaviiva"
