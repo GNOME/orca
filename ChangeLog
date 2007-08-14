@@ -1,3 +1,8 @@
+2007-08-14  Tomas Cerha  <via william.walker@sun.com>
+
+	* Fix for bug 466500 - Speech Dispatcher backend crashes with
+	older SD versions
+	
 2007-08-13  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark for v2.19.91pre

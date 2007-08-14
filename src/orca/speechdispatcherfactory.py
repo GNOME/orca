@@ -210,9 +210,15 @@ class SpeechServer(speechserver.SpeechServer):
             lang = locale.split('_')[0]
             if lang and len(lang) == 2:
                 self._send_command(self._client.set_language, lang)
-        name = acss_family[VoiceFamily.NAME]
-        if name != self._default_voice_name:
-            self._send_command(self._client.set_synthesis_voice, name)
+        try:
+            # This command is not available with older SD versions.
+            set_synthesis_voice = self._client.set_synthesis_voice
+        except AttributeError:
+            pass
+        else:
+            name = acss_family[VoiceFamily.NAME]
+            if name != self._default_voice_name:
+                self._send_command(set_synthesis_voice, name)
             
     def _apply_acss(self, acss):
         current = self._current_voice_properties
@@ -291,8 +297,14 @@ class SpeechServer(speechserver.SpeechServer):
             lang = None
         else:
             lang = locale.split('_')[0]
-        voices = ((self._default_voice_name, lang, None),) + \
-                 self._send_command(self._client.list_synthesis_voices)
+        voices = ((self._default_voice_name, lang, None),)
+        try:
+            # This command is not available with older SD versions.
+            list_synthesis_voices = self._client.list_synthesis_voices
+        except AttributeError:
+            pass
+        else:
+            voices += self._send_command(list_synthesis_voices)
         families = [VoiceFamily({VoiceFamily.NAME: name,
                                  #VoiceFamily.GENDER: VoiceFamily.MALE,
                                  VoiceFamily.LOCALE: lang})
