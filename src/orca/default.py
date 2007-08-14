@@ -5235,7 +5235,8 @@ class Script(script.Script):
               and (obj != obj.parent) \
               and (obj.role != rolenames.ROLE_FRAME):
             obj = obj.parent
-            debug.println(debug.LEVEL_FINEST, "--> obj.name="
+            if obj:
+                debug.println(debug.LEVEL_FINEST, "--> obj.name="
                           + obj.accessibleNameToString())
 
         if obj and (obj.role == rolenames.ROLE_FRAME):
