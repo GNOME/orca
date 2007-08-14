@@ -1,3 +1,9 @@
+2007-08-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fix for a traceback error in getFrame() in default.py.
+          See bug #465087 for more details.
+
 2007-08-14  Tomas Cerha  <via william.walker@sun.com>
 
 	* Fix for bug 466500 - Speech Dispatcher backend crashes with
