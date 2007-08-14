@@ -1,3 +1,8 @@
+2007-08-14  Tomas Cerha  <via william.walker@sun.com>
+
+	* Fix for bug 466500 - Speech Dispatcher backend crashes with
+	older SD versions
+	
 2007-08-13  Lynn MonSanto <lynn.monsanto@sun.com>
 	* src/orca/flat_review.py: fix for Bug 458150 - flat-review 
 	should present slider orientation
