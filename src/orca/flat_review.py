@@ -383,9 +383,11 @@ class ValueZone(Zone):
                                    - value.minimumValue))
                                * 100.0)
 
-            speechValue = rolenames.getSpeechForRoleName(self.accessible)
             if orientation:
-                speechValue = speechValue + " " + orientation
+                speechValue = orientation + " " + \
+                              rolenames.getSpeechForRoleName(self.accessible)
+            else:
+                speechValue = rolenames.getSpeechForRoleName(self.accessible)
                 
             # Translators: this is the percentage value of a slider, progress bar
             # or other component that displays a value as a percentage.
@@ -394,8 +396,8 @@ class ValueZone(Zone):
 
             if orientation:
                 brailleValue = "%s %s %d%%" \
-                               % (rolenames.getBrailleForRoleName(self.accessible),
-                                  orientation,
+                               % (orientation,
+                                  rolenames.getBrailleForRoleName(self.accessible),                                  
                                   percentValue)
             else:
                 brailleValue = "%s %d%%" \
