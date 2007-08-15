@@ -3644,9 +3644,14 @@ class Script(default.Script):
         # loading.
         #
         inDialog = self.getContainingRole(event.source, rolenames.ROLE_DIALOG)
+        if not inDialog:
+            inDialog = self.getContainingRole(event.source,
+                                              rolenames.ROLE_ALERT)
+
         if self._loadingDocumentContent \
            and event.source \
-           and event.source.role != rolenames.ROLE_DIALOG \
+           and not event.source.role in [rolenames.ROLE_DIALOG,
+                                         rolenames.ROLE_ALERT] \
            and not inDialog:
             return
 
@@ -4820,13 +4825,13 @@ class Script(default.Script):
         """Returns True if the given object is a field inside of a form."""
 
         containingForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
-        isField = containingForm and \
-                  obj.role != rolenames.ROLE_LINK and \
-                  obj.role != rolenames.ROLE_MENU_ITEM and \
-                  obj.role != rolenames.ROLE_LIST_ITEM and \
-                  obj.role != rolenames.ROLE_UNKNOWN and \
-                  obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) and \
-                  obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
+        isField = containingForm \
+                  and not obj.role in [rolenames.ROLE_LINK,
+                                       rolenames.ROLE_MENU_ITEM,
+                                       rolenames.ROLE_LIST_ITEM,
+                                       rolenames.ROLE_UNKNOWN] \
+                  and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
+                  and obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
 
         return isField
 
