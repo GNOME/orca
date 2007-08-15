@@ -1,3 +1,11 @@
+2007-08-15 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py
+          src/orca/braillegenerator.py
+          src/orca/default.py
+          src/orca/speechgenerator.py: Bug #462156, No announcements for 
+          ARIA trees
+
 2007-08-15  Lynn MonSanto <lynn.monsanto@sun.com>
 	* src/orca/flat_review.py: fix for Bug 464855 - orca speaks/brailles 
 	scroll bar arrows as anonymous "push buttons"

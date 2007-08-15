@@ -95,6 +95,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForLabel
         self.brailleGenerators[rolenames.ROLE_LIST]                = \
              self._getBrailleRegionsForList
+        self.brailleGenerators[rolenames.ROLE_LIST_ITEM]           = \
+             self._getBrailleRegionsForListItem
         self.brailleGenerators[rolenames.ROLE_MENU]                = \
              self._getBrailleRegionsForMenu
         self.brailleGenerators[rolenames.ROLE_MENU_BAR]            = \
@@ -665,7 +667,59 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForList", obj)
 
         return self._getDefaultBrailleRegions(obj)
+    
+    def _getBrailleRegionsForListItem(self, obj):
+        """Get the braille for a listitem.
 
+        Arguments:
+        - obj: the listitem
+
+        """
+        
+        self._debugGenerator("_getBrailleRegionsForListItem", obj)
+
+        text = ""
+        text = self._script.appendString(
+            text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(
+            text, self._script.getDisplayedText(obj))
+
+        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
+            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = self._script.appendString(text, _('expanded'))
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = self._script.appendString(text, _('collapsed'))
+
+        if obj == orca_state.locusOfFocus:
+            text = self._script.appendString(
+                text, self._getTextForRole(obj))
+            text = self._script.appendString(
+                text, self._getTextForAvailability(obj))
+            text = self._script.appendString(
+                text, self._getTextForAccelerator(obj), "")
+
+        level = self._script.getNodeLevel(obj)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            text = self._script.appendString(text, _("LEVEL %d") \
+                                             % (level + 1))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+    
     def _getBrailleRegionsForMenu(self, obj):
         """Get the braille for a menu.
 

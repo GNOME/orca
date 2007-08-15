@@ -6032,3 +6032,4 @@ state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",
 state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
                                                         "expanded",
                                                         None)
+state_change_notifiers[rolenames.ROLE_LIST_ITEM]    = ("expanded", None)

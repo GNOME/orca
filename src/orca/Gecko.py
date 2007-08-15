@@ -3974,6 +3974,7 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
+
         if not self.inDocumentContent():
             default.Script.sayCharacter(self, obj)
             return
@@ -5047,6 +5048,17 @@ class Script(default.Script):
                     break
 
         return level
+            
+    def getNodeLevel(self, obj):
+        """ Determines the level of at which this object is at by using the
+        object attribute 'level'.  To be consistent with default.getNodeLevel()
+        this value is 0-based (Gecko return is 1-based) """
+        
+        attrs = obj.attributes
+        for attr in attrs:
+            if attr.startswith("level:"):
+                return int(attr[6:]) - 1
+        return -1
 
     def getLastObject(self):
         """Returns the last object in the document frame"""
