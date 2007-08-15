@@ -359,21 +359,22 @@ class ValueZone(Zone):
 
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
-            sliderState = None
-            if self.accessible.role == rolenames.ROLE_SLIDER:
+            orientation = None
+            if self.accessible.role in [rolenames.ROLE_SLIDER,
+                                        rolenames.ROLE_SCROLL_BAR]:
                 horizontalCount = \
                     self.accessible.state.count(atspi.Accessibility.STATE_HORIZONTAL)
                 if horizontalCount:
                     # Translators: The component orientation is horizontal.
                     #
-                    sliderState = _("horizontal")
+                    orientation = _("horizontal")
                 else:
                     verticalCount = \
                         self.accessible.state.count(atspi.Accessibility.STATE_VERTICAL)
                     if verticalCount:
                         # Translators: The component orientation is vertical.
                         #
-                        sliderState = _("vertical")
+                        orientation = _("vertical")
                         
             value = self.accessible.value
             currentValue = int(value.currentValue)
@@ -383,18 +384,18 @@ class ValueZone(Zone):
                                * 100.0)
 
             speechValue = rolenames.getSpeechForRoleName(self.accessible)
-            if sliderState:
-                speechValue = speechValue + " " + sliderState
+            if orientation:
+                speechValue = speechValue + " " + orientation
                 
             # Translators: this is the percentage value of a slider, progress bar
             # or other component that displays a value as a percentage.
             #
             speechValue = speechValue + " " + _("%d percent.") % percentValue
 
-            if sliderState:
+            if orientation:
                 brailleValue = "%s %s %d%%" \
                                % (rolenames.getBrailleForRoleName(self.accessible),
-                                  sliderState,
+                                  orientation,
                                   percentValue)
             else:
                 brailleValue = "%s %d%%" \
@@ -1068,22 +1069,22 @@ class Context:
                              cliprect.x, cliprect.y,
                              cliprect.width, cliprect.height)
 
-        if (accessible.role != rolenames.ROLE_COMBO_BOX) \
+        if (len(zones) == 0) \
+            and accessible.role in [rolenames.ROLE_SCROLL_BAR,
+                                    rolenames.ROLE_SLIDER,
+                                    rolenames.ROLE_PROGRESS_BAR]:
+            zones.append(ValueZone(accessible,
+                                   clipping[0],
+                                   clipping[1],
+                                   clipping[2],
+                                   clipping[3]))
+        elif (accessible.role != rolenames.ROLE_COMBO_BOX) \
             and (accessible.role != rolenames.ROLE_EMBEDDED) \
             and (accessible.role != rolenames.ROLE_LABEL) \
             and (accessible.role != rolenames.ROLE_MENU) \
             and (accessible.role != rolenames.ROLE_PAGE_TAB) \
             and accessible.childCount > 0:
             pass
-        elif (len(zones) == 0) \
-             and accessible.role in [rolenames.ROLE_SCROLL_BAR,
-                                     rolenames.ROLE_SLIDER,
-                                     rolenames.ROLE_PROGRESS_BAR]:
-            zones.append(ValueZone(accessible,
-                                   clipping[0],
-                                   clipping[1],
-                                   clipping[2],
-                                   clipping[3]))
         elif len(zones) == 0:
             if accessible.name and len(accessible.name):
                 string = accessible.name
@@ -1236,7 +1237,8 @@ class Context:
         if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
            or (root.role == rolenames.ROLE_COMBO_BOX) \
            or (root.role == rolenames.ROLE_EMBEDDED) \
-           or (root.role == rolenames.ROLE_TEXT):
+           or (root.role == rolenames.ROLE_TEXT) \
+           or (root.role == rolenames.ROLE_SCROLL_BAR):
             return self.getZonesFromAccessible(root, root.extents)
 
         # Otherwise, dig deeper.
