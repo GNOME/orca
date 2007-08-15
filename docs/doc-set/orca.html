@@ -5638,7 +5638,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> Ability to switch between logical and screen layout . <SPAN
+> Ability to switch between logical and window layout . <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -5647,11 +5647,11 @@ CLASS="EMPHASIS"
 > V2.22.</P
 ><P
 >Orca should provide two primary modes of braille presentation.  The first will be called logical mode which is a braille mode consisting of the item with focus as well as relevant contextual information.  
-        The second will be called screen layout mode.  This mode will accurately convey the actual layout of the screen.  Wherever possible the information presented while navigating the screen with the braille display should match what is displayed while focus tracking.</P
+        The second will be called window layout mode.  This mode will accurately convey the actual layout of the screen.  Wherever possible the information presented while navigating the screen with the braille display should match what is displayed while focus tracking.</P
 ><P
 >See the current implementation of braille support for examples on logical mode.</P
 ><P
->Screen layout mode should where ever possible attempt to accurately present each line of the display.  Except for a few cases documented below orca will not append contextual or extra role information to the braille display.  The following examples will show how varius pieces of information should be presented on the braille display by orca in this mode.  The following apply to GTK, Java, and web applications.</P
+>window layout mode should where ever possible attempt to accurately present each line of the display.  Except for a few cases documented below orca will not append contextual or extra role information to the braille display.  The following examples will show how varius pieces of information should be presented on the braille display by orca in this mode.  The following apply to GTK, Java, OpenOffice, and web applications.</P
 ><P
 >Text should be presented honoring the actual layout as much as possible.  If space is present it should be accurately displayed on the braille display.  It is OK to continue using the tab character to show the location of tabs. Presentation of attributes will be handled in a separate RFE.  If text is selected or attributes are requested in the braille preferences of the orca configuration UI they should also be shown according to the users preference.</P
 ><P
@@ -5669,7 +5669,7 @@ CLASS="EMPHASIS"
 ><P
 >radiobuttons should be indecated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.&#62;</P
 ><P
->Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble infering the context.</P
+>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble infering the context.  Vertical scrollbars should be presented at the bottom of the window on which ever side of the window they appear.</P
 ><P
 >Icon groups such as the desktop should appear as they are presented on the screen.  For example, if three icons appear next to each other on the desktop orca should attempt to place them on the braille display.  Orca should make sure that at least the icon with focus is on the braille display.</P
 ><P
