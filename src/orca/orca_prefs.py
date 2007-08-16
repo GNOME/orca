@@ -451,13 +451,18 @@ class OrcaPrefs:
         prefs.writelines("import orca.pronunciation_dict\n\n")
         prefs.writelines("orca.pronunciation_dict.pronunciation_dict={}\n")
 
-    def _writePronunciation(self, prefs, key, value):
+    def _writePronunciation(self, prefs, word, value):
         """Write out a single pronunciation entry to the 
         ~/.orca/user-setting.py settings file.
+
+        Arguments:
+        - prefs: file handle for user preferences.
+        - word: the actual word to be pronunced.
+        - value: the replacement string to use.
         """
 
-        prefs.writelines("orca.pronunciation_dict.pronunciation_dict[\"" + \
-                                             key + "\"]=\"" + value + "\"\n")
+        prefs.writelines("orca.pronunciation_dict.setPronunciation(\"" + \
+                 word + "\", \"" + value + "\")\n")
 
     def _iteratePronunciations(self, prefs, treeModel):
         """Iterate over each of the entries in the tree model and write out
@@ -468,11 +473,11 @@ class OrcaPrefs:
         iter = treeModel.get_iter_first()
         while iter != None:
             values = treeModel.get(iter, ACTUAL, REPLACEMENT)
-            key = values[ACTUAL]
+            word = values[ACTUAL]
             value = values[REPLACEMENT]
 
-            if key != "":
-                self._writePronunciation(prefs, key, value)
+            if word != "":
+                self._writePronunciation(prefs, word, value)
 
             iter = treeModel.iter_next(iter)
 

@@ -28,22 +28,6 @@ __license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 
-# pronunciation_dict is a dictionary where the keys are words and the 
-# values represent word the pronunciation of that word (in other words, 
-# what the word sounds like).
-#
-# [[[TODO: richb - need to populate this dictionary with many more values.]]]
-#
-pronunciation_dict = {}
-pronunciation_dict[_("ASAP")]    = _("as soon as possible")
-pronunciation_dict[_("GHz")]     = _("gigahertz")
-pronunciation_dict[_("IMAP")]    = _("eye map")
-pronunciation_dict[_("LDAP")]    = _("ell dap")
-pronunciation_dict[_("LOL")]     = _("laughing out loud")
-pronunciation_dict[_("MHz")]     = _("megahertz")
-pronunciation_dict[_("strikethrough")] = _("strike through")
-pronunciation_dict[_("SELinux")] = _("ess ee linux")
-
 def getPronunciation(word, pronunciations=None):
     """Given a word, return a string that represents what this word
     sounds like.
@@ -61,9 +45,43 @@ def getPronunciation(word, pronunciations=None):
         word = word.encode("UTF-8")
 
     try:
+        lowerWord = word.decode("UTF-8").lower().encode("UTF-8")
         if pronunciations != None:
-            return pronunciations[word]
+            return pronunciations[lowerWord][1]
         else:
-            return pronunciation_dict[word]
+            return pronunciation_dict[lowerWord][1]
     except:
         return word
+
+def setPronunciation(word, replacementString, pronunciations=None):
+    """Given an actual word, and a replacement string, set a key/value
+    pair in a pronunciation dictionary.
+
+    Arguments:
+    - word: the word to be pronunced.
+    - replacementString: the replacement string to use instead.
+    - pronunciations: an optional dictionary used to set the pronunciation
+      into.
+    """
+
+    key = word.decode("UTF-8").lower().encode("UTF-8")
+    if pronunciations != None:
+        pronunciations[key] = [ word, replacementString ]
+    else:
+        pronunciation_dict[key] = [ word, replacementString ]
+
+# pronunciation_dict is a dictionary where the keys are words and the
+# values represent word the pronunciation of that word (in other words,
+# what the word sounds like).
+#
+# [[[TODO: richb - need to populate this dictionary with many more values.]]]
+#
+pronunciation_dict = {}
+setPronunciation(_("ASAP"),          _("as soon as possible"))
+setPronunciation(_("GHz"),           _("gigahertz"))
+setPronunciation(_("IMAP"),          _("eye map"))
+setPronunciation(_("LDAP"),          _("ell dap"))
+setPronunciation(_("LOL"),           _("laughing out loud"))
+setPronunciation(_("MHz"),           _("megahertz"))
+setPronunciation(_("strikethrough"), _("strike through"))
+setPronunciation(_("SELinux"),       _("ess ee linux"))

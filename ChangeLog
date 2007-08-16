@@ -1,5 +1,17 @@
 2007-08-15  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_prefs.py:
+          src/orca/app_gui_prefs.py:
+          src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/pronunciation_dict.py:
+          src/orca/app_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #464754 – Pronunciation dictionary checks should be
+          case insensitive.
+
+2007-08-15  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/gedit.py:
           src/orca/scripts/Evolution.py:
           Fix for bug #466725 - Traceback when using SayAll in Gedit when 

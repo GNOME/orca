@@ -117,13 +117,18 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines('orca.settings.overridePronunciations = overridePronunciations')
         prefs.writelines("\n")
 
-    def _writePronunciation(self, prefs, key, value):
+    def _writePronunciation(self, prefs, word, value):
         """Write out a single pronunciation entry to the
         ~/.orca/app-settings/<APPNAME>.py settings file.
+
+        Arguments:
+        - prefs: file handle for application specific preferences.
+        - word: the actual word to be pronunced.
+        - value: the replace string to use.
         """
 
-        prefs.writelines( \
-                    "    pronunciations[\"" + key + "\"]=\"" + value + "\"\n")
+        prefs.writelines("    orca.pronunciation_dict.setPronunciation(\"" + \
+                    word + "\", \"" + value + "\", pronunciations)\n")
 
     def _writePronunciationMap(self, prefs, treeModel):
         """Write to configuration file 'prefs' the new application specific

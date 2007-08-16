@@ -77,6 +77,19 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
             label = gtk.Label(orca_state.locusOfFocus.app.name)
             self.notebook.append_page(vbox, label)
 
+    def _createPronunciationTreeView(self, pronunciations=None):
+        """Create the pronunciation dictionary tree view for this specific 
+        application. We call the super class method passing in the 
+        application specific pronunciation dictionary.
+
+        Arguments:
+        - pronunciations: an optional dictionary used to get the
+          pronunciation from.
+        """
+
+        orca_gui_prefs.orcaSetupGUI._createPronunciationTreeView( \
+                              self, appScript.app_pronunciation_dict)
+
     def _showGUI(self):
         """Show the app-specific Orca configuration GUI window. This 
         assumes that the GUI has already been created.

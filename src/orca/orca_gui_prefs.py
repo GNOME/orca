@@ -1056,12 +1056,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     self.pronunciationView.set_search_column(i)
                     break
 
-    def _createPronunciationTreeView(self):
+    def _createPronunciationTreeView(self, pronunciations=None):
         """Create the pronunciation dictionary tree view. The view is the
         pronunciationTreeView GtkTreeView widget. The view will consist
         of a list containing two columns:
           ACTUAL      - the actual text string (word).
           REPLACEMENT - the string that is used to pronounce that word.
+
+        Arguments:
+        - pronunciations: an optional dictionary used to get the 
+          pronunciation from.
         """
 
         self.pronunciationView = \
@@ -1072,12 +1076,24 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # Initially setup the list store model based on the values of all
         # existing entries in the pronunciation dictionary.
         #
-        pronDict = pronunciation_dict.pronunciation_dict
+        if pronunciations != None:
+            pronDict = pronunciations
+        else:
+            pronDict = pronunciation_dict.pronunciation_dict
         for pronKey in sorted(pronDict.keys()):
             iter = model.append() 
+            try:
+                actual, replacement = pronDict[pronKey]
+            except:
+                # Try to do something sensible for the previous format of
+                # pronunciation dictionary entries. See bug #464754 for
+                # more details.
+                #
+                actual = pronKey
+                replacement = pronDict[pronKey]
             model.set(iter, 
-                      ACTUAL, pronKey,
-                      REPLACEMENT, pronDict[pronKey])
+                      ACTUAL, actual,
+                      REPLACEMENT, replacement)
 
         self.pronunciationView.set_model(model)
 
