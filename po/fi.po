@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 18:07+0300\n"
+"POT-Creation-Date: 2007-08-16 11:08+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -585,145 +585,145 @@ msgstr "Kysymysmerkki ylösalaisin"
 #.
 #: ../src/orca/chnames.py:302
 msgid "a acute"
-msgstr ""
+msgstr "a hipsu"
 
 #. Translators: this is the spoken word for the character 'À' (U+00c0)
 #.
 #: ../src/orca/chnames.py:306
 msgid "A GRAVE"
-msgstr ""
+msgstr "A TAKAHIPSU"
 
 #. Translators: this is the spoken word for the character 'Á' (U+00c1)
 #.
 #: ../src/orca/chnames.py:310
 msgid "A ACUTE"
-msgstr ""
+msgstr "A HIPSU"
 
 #. Translators: this is the spoken word for the character 'Â' (U+00c2)
 #.
 #: ../src/orca/chnames.py:314
 msgid "A CIRCUMFLEX"
-msgstr ""
+msgstr "A CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ã' (U+00c3)
 #.
 #: ../src/orca/chnames.py:318
 msgid "A TILDE"
-msgstr ""
+msgstr "A TILDE"
 
 #. Translators: this is the spoken word for the character 'Ä' (U+00c4)
 #.
 #: ../src/orca/chnames.py:322
 msgid "A UMLAUT"
-msgstr ""
+msgstr "Ä"
 
 #. Translators: this is the spoken word for the character 'Å' (U+00c5)
 #.
 #: ../src/orca/chnames.py:326
 msgid "A RING"
-msgstr ""
+msgstr "RUOTSALAINEN O"
 
 #. Translators: this is the spoken word for the character 'Æ' (U+00c6)
 #.
 #: ../src/orca/chnames.py:330
 msgid "A E"
-msgstr ""
+msgstr "A E"
 
 #. Translators: this is the spoken word for the character 'Ç' (U+00c7)
 #.
 #: ../src/orca/chnames.py:334
 msgid "C CEDILLA"
-msgstr ""
+msgstr "C CEDILLA"
 
 #. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
 #: ../src/orca/chnames.py:338
 msgid "E GRAVE"
-msgstr ""
+msgstr "E TAKAHIPSU"
 
 #. Translators: this is the spoken word for the character 'É' (U+00c9)
 #.
 #: ../src/orca/chnames.py:342
 msgid "E ACUTE"
-msgstr ""
+msgstr "E HIPSU"
 
 #. Translators: this is the spoken word for the character 'Ê' (U+00ca)
 #.
 #: ../src/orca/chnames.py:346
 msgid "E CIRCUMFLEX"
-msgstr ""
+msgstr "E CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ë' (U+00cb)
 #.
 #: ../src/orca/chnames.py:350
 msgid "E UMLAUT"
-msgstr ""
+msgstr "E UMLAUT"
 
 #. Translators: this is the spoken word for the character 'Ì' (U+00cc)
 #.
 #: ../src/orca/chnames.py:354
 msgid "I GRAVE"
-msgstr ""
+msgstr "I TAKAHIPSU"
 
 #. Translators: this is the spoken word for the character 'Í' (U+00cd)
 #.
 #: ../src/orca/chnames.py:358
 msgid "I ACUTE"
-msgstr ""
+msgstr "I HIPSU"
 
 #. Translators: this is the spoken word for the character 'Î' (U+00ce)
 #.
 #: ../src/orca/chnames.py:362
 msgid "I CIRCUMFLEX"
-msgstr ""
+msgstr "I CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ï' (U+00cf)
 #.
 #: ../src/orca/chnames.py:366
 msgid "I UMLAUT"
-msgstr ""
+msgstr "I UMLAUT"
 
 #. Translators: this is the spoken word for the character 'Ð' (U+00d0)
 #.
 #: ../src/orca/chnames.py:370
 msgid "ETH"
-msgstr ""
+msgstr "ETH"
 
 #. Translators: this is the spoken word for the character 'Ñ' (U+00d1)
 #.
 #: ../src/orca/chnames.py:374
 msgid "N TILDE"
-msgstr ""
+msgstr "N TILDE"
 
 #. Translators: this is the spoken word for the character 'Ò' (U+00d2)
 #.
 #: ../src/orca/chnames.py:378
 msgid "O GRAVE"
-msgstr ""
+msgstr "O TAKAHIPSU"
 
 #. Translators: this is the spoken word for the character 'Ó' (U+00d3)
 #.
 #: ../src/orca/chnames.py:382
 msgid "O ACUTE"
-msgstr ""
+msgstr "O HIPSU"
 
 #. Translators: this is the spoken word for the character 'Ô' (U+00d4)
 #.
 #: ../src/orca/chnames.py:386
 msgid "O CIRCUMFLEX"
-msgstr ""
+msgstr "O CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Õ' (U+00d5)
 #.
 #: ../src/orca/chnames.py:390
 msgid "O TILDE"
-msgstr ""
+msgstr "O TILDE"
 
 #. Translators: this is the spoken word for the character 'Ö' (U+00d6)
 #.
 #: ../src/orca/chnames.py:394
 msgid "O UMLAUT"
-msgstr ""
+msgstr "Ö"
 
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
@@ -735,73 +735,73 @@ msgstr "kertomerkki"
 #.
 #: ../src/orca/chnames.py:402
 msgid "O STROKE"
-msgstr ""
+msgstr "NORJALAINEN Ö"
 
 #. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
 #: ../src/orca/chnames.py:406
 msgid "U GRAVE"
-msgstr ""
+msgstr "U TAKAHIPSU"
 
 #. Translators: this is the spoken word for the character 'Ú' (U+00da)
 #.
 #: ../src/orca/chnames.py:410
 msgid "U ACUTE"
-msgstr ""
+msgstr "U HIPSU"
 
 #. Translators: this is the spoken word for the character 'Û' (U+00db)
 #.
 #: ../src/orca/chnames.py:414
 msgid "U CIRCUMFLEX"
-msgstr ""
+msgstr "U CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
 #: ../src/orca/chnames.py:418
 msgid "U UMLAUT"
-msgstr ""
+msgstr "U UMLAUT"
 
 #. Translators: this is the spoken word for the character 'Ý' (U+00dd)
 #.
 #: ../src/orca/chnames.py:422
 msgid "Y ACUTE"
-msgstr ""
+msgstr "Y HIPSU"
 
 #. Translators: this is the spoken word for the character 'Þ' (U+00de)
 #.
 #: ../src/orca/chnames.py:426
 msgid "THORN"
-msgstr ""
+msgstr "THORN"
 
 #. Translators: this is the spoken word for the character 'ß' (U+00df)
 #.
 #: ../src/orca/chnames.py:430
 msgid "s sharp"
-msgstr ""
+msgstr "suhuässä"
 
 #. Translators: this is the spoken word for the character 'à' (U+00e0)
 #.
 #: ../src/orca/chnames.py:434
 msgid "a grave"
-msgstr ""
+msgstr "a takahipsu"
 
 #. Translators: this is the spoken word for the character 'â' (U+00e2)
 #.
 #: ../src/orca/chnames.py:438
 msgid "a circumflex"
-msgstr ""
+msgstr "a circumflex"
 
 #. Translators: this is the spoken word for the character 'ã' (U+00e3)
 #.
 #: ../src/orca/chnames.py:442
 msgid "a tilde"
-msgstr ""
+msgstr "a tilde"
 
 #. Translators: this is the spoken word for the character 'ä' (U+00e4)
 #.
 #: ../src/orca/chnames.py:446
 msgid "a umlaut"
-msgstr ""
+msgstr "ä"
 
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
@@ -813,31 +813,31 @@ msgstr "ruotsalainen å"
 #.
 #: ../src/orca/chnames.py:454
 msgid "a e"
-msgstr ""
+msgstr "a e"
 
 #. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
 #: ../src/orca/chnames.py:458
 msgid "c cedilla"
-msgstr ""
+msgstr "c cedilla"
 
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
 #: ../src/orca/chnames.py:462
 msgid "e grave"
-msgstr ""
+msgstr "e takahipsu"
 
 #. Translators: this is the spoken word for the character 'é' (U+00e9)
 #.
 #: ../src/orca/chnames.py:466
 msgid "e acute"
-msgstr ""
+msgstr "e hipsu"
 
 #. Translators: this is the spoken word for the character 'ê' (U+00ea)
 #.
 #: ../src/orca/chnames.py:470
 msgid "e circumflex"
-msgstr ""
+msgstr "e circumflex"
 
 #. Translators: this is the spoken word for the character 'ë' (U+00eb)
 #.
@@ -849,61 +849,61 @@ msgstr "e-umlaut"
 #.
 #: ../src/orca/chnames.py:478
 msgid "i grave"
-msgstr ""
+msgstr "i takahipsu"
 
 #. Translators: this is the spoken word for the character 'í' (U+00ed)
 #.
 #: ../src/orca/chnames.py:482
 msgid "i acute"
-msgstr ""
+msgstr "i hipsu"
 
 #. Translators: this is the spoken word for the character 'î' (U+00ee)
 #.
 #: ../src/orca/chnames.py:486
 msgid "i circumflex"
-msgstr ""
+msgstr "i circumflex"
 
 #. Translators: this is the spoken word for the character 'ï' (U+00ef)
 #.
 #: ../src/orca/chnames.py:490
 msgid "i umlaut"
-msgstr ""
+msgstr "i umlaut"
 
 #. Translators: this is the spoken word for the character 'ð' (U+00f0)
 #.
 #: ../src/orca/chnames.py:494
 msgid "eth"
-msgstr ""
+msgstr "eth"
 
 #. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
 #: ../src/orca/chnames.py:498
 msgid "n tilde"
-msgstr ""
+msgstr "n tilde"
 
 #. Translators: this is the spoken word for the character 'ò' (U+00f2)
 #.
 #: ../src/orca/chnames.py:502
 msgid "o grave"
-msgstr ""
+msgstr "o takahipsu"
 
 #. Translators: this is the spoken word for the character 'ó' (U+00f3)
 #.
 #: ../src/orca/chnames.py:506
 msgid "o acute"
-msgstr ""
+msgstr "o hipsu"
 
 #. Translators: this is the spoken word for the character 'ô' (U+00f4)
 #.
 #: ../src/orca/chnames.py:510
 msgid "o circumflex"
-msgstr ""
+msgstr "o circumflex"
 
 #. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
 #: ../src/orca/chnames.py:514
 msgid "o tilde"
-msgstr ""
+msgstr "o tilde"
 
 #. Translators: this is the spoken word for the character 'ö' (U+00f6)
 #.
@@ -921,55 +921,55 @@ msgstr "jakomerkki"
 #.
 #: ../src/orca/chnames.py:526
 msgid "o stroke"
-msgstr ""
+msgstr "norjalainen ö"
 
 #. Translators: this is the spoken word for the character 'þ' (U+00fe)
 #.
 #: ../src/orca/chnames.py:530
 msgid "thorn"
-msgstr ""
+msgstr "thorn"
 
 #. Translators: this is the spoken word for the character 'ú' (U+00fa)
 #.
 #: ../src/orca/chnames.py:534
 msgid "u acute"
-msgstr ""
+msgstr "u hipsu"
 
 #. Translators: this is the spoken word for the character 'ù' (U+00f9)
 #.
 #: ../src/orca/chnames.py:538
 msgid "u grave"
-msgstr ""
+msgstr "u takahipsu"
 
 #. Translators: this is the spoken word for the character 'û' (U+00fb)
 #.
 #: ../src/orca/chnames.py:542
 msgid "u circumflex"
-msgstr ""
+msgstr "u circumflex"
 
 #. Translators: this is the spoken word for the character 'ü' (U+00fc)
 #.
 #: ../src/orca/chnames.py:546
 msgid "u umlaut"
-msgstr ""
+msgstr "u umlaut"
 
 #. Translators: this is the spoken word for the character 'ý' (U+00fd)
 #.
 #: ../src/orca/chnames.py:550
 msgid "y acute"
-msgstr ""
+msgstr "y hipsu"
 
 #. Translators: this is the spoken word for the character 'ÿ' (U+00ff)
 #.
 #: ../src/orca/chnames.py:554
 msgid "y umlaut"
-msgstr ""
+msgstr "y umlaut"
 
 #. Translators: this is the spoken word for the character 'Ÿ' (U+0178)
 #.
 #: ../src/orca/chnames.py:558
 msgid "Y UMLAUT"
-msgstr ""
+msgstr "Y UMLAUT"
 
 #. Translators: this is the spoken word for the character 'ƒ' (U+0192)
 #.
@@ -1043,19 +1043,19 @@ msgstr "promille"
 #.
 #: ../src/orca/chnames.py:608
 msgid "prime"
-msgstr ""
+msgstr "hipsu"
 
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:612
 msgid "double prime"
-msgstr ""
+msgstr "kaksoishipsu"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:616
 msgid "hyphen bullet"
-msgstr ""
+msgstr "luotiviiva"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -6274,7 +6274,7 @@ msgstr "Siirrä soluun"
 #.
 #: ../src/orca/scripts/StarOffice.py:1948
 msgid "Presentation Wizard"
-msgstr ""
+msgstr "Esityksen ohjattu teko"
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
