@@ -176,14 +176,13 @@ class Script(default.Script):
             lastEndOffset = -1
             while offset < length:
                 [mystr, start, end] = text.getTextAtOffset(offset, mode)
+                endOffset = end
 
                 if len(mystr) != 0:
                     string += mystr
 
                 if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
                    len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
-                    endOffset = end
-
                     string = self.adjustForRepeats(string)
                     if string.isupper():
                         voice = settings.voices[settings.UPPERCASE_VOICE]

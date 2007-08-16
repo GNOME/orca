@@ -1,3 +1,10 @@
+2007-08-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gedit.py:
+          src/orca/scripts/Evolution.py:
+          Fix for bug #466725 - Traceback when using SayAll in Gedit when 
+          text lacks sentence punctuation.
+
 2007-08-15  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
