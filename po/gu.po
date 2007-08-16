@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-20.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-02 03:24+0100\n"
-"PO-Revision-Date: 2007-08-09 15:38+0530\n"
+"POT-Creation-Date: 2007-08-16 03:25+0100\n"
+"PO-Revision-Date: 2007-08-16 13:29+0530\n"
 "Last-Translator: Ankit Patel <ankit@redhat.com>\n"
 "Language-Team: Gujarati <fedora-trans-gu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -1254,7 +1255,7 @@ msgstr "વર્તમાન સપાટ રીવ્યુ વસ્તુ �
 #. interrupted.
 #.
 #: ../src/orca/default.py:159 ../src/orca/Gecko.py:1935
-#: ../src/orca/scripts/acroread.py:113 ../src/orca/scripts/Evolution.py:304
+#: ../src/orca/scripts/acroread.py:113 ../src/orca/scripts/Evolution.py:306
 msgid "Speaks entire document."
 msgstr "વર્તમાન દસ્તાવેજ બોલે છે."
 
@@ -1736,9 +1737,9 @@ msgstr "પહેલાંના બુકમાર્ક સ્થાને જ
 #: ../src/orca/default.py:1673 ../src/orca/default.py:1906
 #: ../src/orca/default.py:3705 ../src/orca/default.py:3846
 #: ../src/orca/default.py:3854 ../src/orca/default.py:3953
-#: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6461
-#: ../src/orca/Gecko.py:7656 ../src/orca/scripts/Evolution.py:718
-#: ../src/orca/scripts/Evolution.py:1240 ../src/orca/scripts/StarOffice.py:617
+#: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6471
+#: ../src/orca/Gecko.py:7666 ../src/orca/scripts/Evolution.py:720
+#: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:617
 #: ../src/orca/scripts/StarOffice.py:2224
 #: ../src/orca/scripts/StarOffice.py:2236 ../src/orca/where_am_I.py:1191
 msgid "blank"
@@ -1776,9 +1777,12 @@ msgstr "પ્રગતિદર્શક પટ્ટી %d."
 #. Translators: this is the percentage value of a
 #. progress bar.
 #.
+#. Translators: this is the percentage value of a slider, progress bar
+#. or other component that displays a value as a percentage.
+#.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2080 ../src/orca/flat_review.py:373
+#: ../src/orca/default.py:2080 ../src/orca/flat_review.py:395
 #: ../src/orca/speechgenerator.py:927
 #, python-format
 msgid "%d percent."
@@ -1811,7 +1815,7 @@ msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/default.py:3168 ../src/orca/default.py:5971
+#: ../src/orca/default.py:3168 ../src/orca/default.py:5972
 #: ../src/orca/flat_review.py:327 ../src/orca/Gecko.py:889
 #: ../src/orca/J2SE-access-bridge.py:81 ../src/orca/scripts/StarOffice.py:139
 #: ../src/orca/speechgenerator.py:983 ../src/orca/where_am_I.py:480
@@ -1863,7 +1867,9 @@ msgstr "%s %s પિક્સેલો"
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
-msgstr "શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેના વિધેયને સાંભળવા માટે કોઈપણ કી દાખલ કરો.  શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
+msgstr ""
+"શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેના વિધેયને સાંભળવા માટે કોઈપણ કી દાખલ કરો.  "
+"શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -1939,7 +1945,7 @@ msgstr[1] "%d %s અક્ષરો"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5890
+#: ../src/orca/default.py:5891
 msgid "page selected from cursor position"
 msgstr "કર્સર સ્થાનમાંથી પસંદ થયેલ પાનું"
 
@@ -1947,7 +1953,7 @@ msgstr "કર્સર સ્થાનમાંથી પસંદ થયેલ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5898
+#: ../src/orca/default.py:5899
 msgid "page selected to cursor position"
 msgstr "કર્સર સ્થાને પસંદ થયેલ પાનું"
 
@@ -1955,7 +1961,7 @@ msgstr "કર્સર સ્થાને પસંદ થયેલ પાન�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5906
+#: ../src/orca/default.py:5907
 msgid "line selected down from cursor position"
 msgstr "કર્સર સ્થાન નીચે પસંદ કરાયેલ વાક્ય"
 
@@ -1963,7 +1969,7 @@ msgstr "કર્સર સ્થાન નીચે પસંદ કરાય�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5914
+#: ../src/orca/default.py:5915
 msgid "line selected up from cursor position"
 msgstr "કર્સર સ્થાન ઉપર પસંદ કરાયેલ વાક્ય"
 
@@ -1971,7 +1977,7 @@ msgstr "કર્સર સ્થાન ઉપર પસંદ કરાયે�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5922
+#: ../src/orca/default.py:5923
 msgid "document selected to cursor position"
 msgstr "કર્સર સ્થાને પસંદ કરાયેલ દસ્તાવેજ"
 
@@ -1979,7 +1985,7 @@ msgstr "કર્સર સ્થાને પસંદ કરાયેલ દ�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5930
+#: ../src/orca/default.py:5931
 msgid "document selected from cursor position"
 msgstr "કર્સર સ્થાનમાંથી પસંદ કરાયેલ દસ્તાવેજ"
 
@@ -1987,7 +1993,7 @@ msgstr "કર્સર સ્થાનમાંથી પસંદ કરાય
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:5983 ../src/orca/J2SE-access-bridge.py:85
+#: ../src/orca/default.py:5984 ../src/orca/J2SE-access-bridge.py:85
 msgid "unselected"
 msgstr "પસંદ નહિં થયેલ"
 
@@ -2068,6 +2074,18 @@ msgstr "દબાયેલ નથી"
 #: ../src/orca/speechgenerator.py:988
 msgid "not selected"
 msgstr "પસંદ કરાયેલ નથી"
+
+#. Translators: The component orientation is horizontal.
+#.
+#: ../src/orca/flat_review.py:370
+msgid "horizontal"
+msgstr "આડું"
+
+#. Translators: The component orientation is vertical.
+#.
+#: ../src/orca/flat_review.py:377
+msgid "vertical"
+msgstr "ઊભું"
 
 #. Translators: this is intended to be a short phrase to
 #. speak and braille to tell the user that no component
@@ -2483,9 +2501,9 @@ msgid "Use Orca _Structural Navigation"
 msgstr "Orca બંધારણીય નેવીગેશન વાપરે છે (_S)"
 
 #. Translators: when the user arrows up and down in HTML content,
-#. it is some times beneficial to always position the caret at the
+#. it is some times beneficial to always position the cursor at the
 #. beginning of the line rather than guessing the position directly
-#. above the current caret position.  This option allows the user
+#. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
 #: ../src/orca/Gecko.py:2470
@@ -2578,20 +2596,20 @@ msgstr "શોધો વિકલ્પો"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3431
+#: ../src/orca/Gecko.py:3432
 msgid "Loading.  Please wait."
 msgstr "લાવી રહ્યા છીએ.  મહેરબાની કરીને રાહ જુઓ."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3436
+#: ../src/orca/Gecko.py:3437
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s લાવવાનું સમાપ્ત થયું."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3442
+#: ../src/orca/Gecko.py:3443
 msgid "Finished loading."
 msgstr "લાવવાનું સમાપ્ત થયું."
 
@@ -2602,7 +2620,7 @@ msgstr "લાવવાનું સમાપ્ત થયું."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/Gecko.py:3817
+#: ../src/orca/Gecko.py:3827
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -2611,7 +2629,7 @@ msgstr "h%d"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4736
+#: ../src/orca/Gecko.py:4746
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "ખાનું %d હરોળો અને %d સ્તંભો વિસ્તારે છે"
@@ -2620,7 +2638,7 @@ msgstr "ખાનું %d હરોળો અને %d સ્તંભો વ�
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4743
+#: ../src/orca/Gecko.py:4753
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "ખાનું %d સ્તંભો વિસ્તારે છે"
@@ -2629,7 +2647,7 @@ msgstr "ખાનું %d સ્તંભો વિસ્તારે છે"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4749
+#: ../src/orca/Gecko.py:4759
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "ખાનું %d હરોળો વિસ્તારે છે"
@@ -2637,7 +2655,7 @@ msgstr "ખાનું %d હરોળો વિસ્તારે છે"
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
-#: ../src/orca/Gecko.py:6434
+#: ../src/orca/Gecko.py:6444
 #, python-format
 msgid "level %d"
 msgstr "સ્તર %d"
@@ -2648,18 +2666,18 @@ msgstr "સ્તર %d"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:6915 ../src/orca/Gecko.py:6976
-#: ../src/orca/Gecko.py:7071 ../src/orca/Gecko.py:7136
-#: ../src/orca/Gecko.py:7259 ../src/orca/Gecko.py:7343
-#: ../src/orca/Gecko.py:7419 ../src/orca/Gecko.py:7499
-#: ../src/orca/Gecko.py:7584 ../src/orca/Gecko.py:7678
+#: ../src/orca/Gecko.py:6925 ../src/orca/Gecko.py:6986
+#: ../src/orca/Gecko.py:7081 ../src/orca/Gecko.py:7146
+#: ../src/orca/Gecko.py:7269 ../src/orca/Gecko.py:7353
+#: ../src/orca/Gecko.py:7429 ../src/orca/Gecko.py:7509
+#: ../src/orca/Gecko.py:7594 ../src/orca/Gecko.py:7688
 msgid "Wrapping to bottom."
 msgstr "તળિયે સુધી લપેટી રહ્યા છીએ."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:6926 ../src/orca/Gecko.py:6949
+#: ../src/orca/Gecko.py:6936 ../src/orca/Gecko.py:6959
 msgid "No more headings."
 msgstr "વધુ કોઈ મથાળાઓ નથી."
 
@@ -2669,18 +2687,18 @@ msgstr "વધુ કોઈ મથાળાઓ નથી."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:6938 ../src/orca/Gecko.py:7012
-#: ../src/orca/Gecko.py:7095 ../src/orca/Gecko.py:7197
-#: ../src/orca/Gecko.py:7300 ../src/orca/Gecko.py:7377
-#: ../src/orca/Gecko.py:7454 ../src/orca/Gecko.py:7534
-#: ../src/orca/Gecko.py:7630 ../src/orca/Gecko.py:7727
+#: ../src/orca/Gecko.py:6948 ../src/orca/Gecko.py:7022
+#: ../src/orca/Gecko.py:7105 ../src/orca/Gecko.py:7207
+#: ../src/orca/Gecko.py:7310 ../src/orca/Gecko.py:7387
+#: ../src/orca/Gecko.py:7464 ../src/orca/Gecko.py:7544
+#: ../src/orca/Gecko.py:7640 ../src/orca/Gecko.py:7737
 msgid "Wrapping to top."
 msgstr "ટોચ સુધી લપેટી રહ્યા છીએ."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:6987 ../src/orca/Gecko.py:7023
+#: ../src/orca/Gecko.py:6997 ../src/orca/Gecko.py:7033
 #, python-format
 msgid "No more headings at level %d."
 msgstr "સ્તર %d આગળ વધુ કોઈ મથાળાઓ નથી."
@@ -2689,13 +2707,13 @@ msgstr "સ્તર %d આગળ વધુ કોઈ મથાળાઓ નથ�
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:7083 ../src/orca/Gecko.py:7107
+#: ../src/orca/Gecko.py:7093 ../src/orca/Gecko.py:7117
 msgid "No more large objects."
 msgstr "વધુ કોઈ મોટા ઓબ્જેક્ટો નથી."
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/Gecko.py:7144 ../src/orca/Gecko.py:7205
+#: ../src/orca/Gecko.py:7154 ../src/orca/Gecko.py:7215
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -2707,7 +2725,7 @@ msgstr[1] "%d વસ્તુઓ સાથે યાદી"
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/Gecko.py:7159 ../src/orca/Gecko.py:7220
+#: ../src/orca/Gecko.py:7169 ../src/orca/Gecko.py:7230
 #, python-format
 msgid "Nesting level %d"
 msgstr "પુનરાવર્તી સ્તર %d"
@@ -2715,7 +2733,7 @@ msgstr "પુનરાવર્તી સ્તર %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/Gecko.py:7169 ../src/orca/Gecko.py:7230
+#: ../src/orca/Gecko.py:7179 ../src/orca/Gecko.py:7240
 msgid "No more lists."
 msgstr "વધુ કોઈ યાદીઓ નથી."
 
@@ -2723,42 +2741,42 @@ msgstr "વધુ કોઈ યાદીઓ નથી."
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/Gecko.py:7271 ../src/orca/Gecko.py:7312
+#: ../src/orca/Gecko.py:7281 ../src/orca/Gecko.py:7322
 msgid "No more list items."
 msgstr "વધુ કોઈ યાદી વસ્તુઓ નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7354 ../src/orca/Gecko.py:7388
+#: ../src/orca/Gecko.py:7364 ../src/orca/Gecko.py:7398
 msgid "No more unvisited links."
 msgstr "વધુ કોઈ નહિં મુલાકાત લીધેલ કડીઓ નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7430 ../src/orca/Gecko.py:7465
+#: ../src/orca/Gecko.py:7440 ../src/orca/Gecko.py:7475
 msgid "No more visited links."
 msgstr "વધુ કોઈ મુલાકાત લીધેલ કડીઓ નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
-#: ../src/orca/Gecko.py:7510 ../src/orca/Gecko.py:7545
+#: ../src/orca/Gecko.py:7520 ../src/orca/Gecko.py:7555
 msgid "No more blockquotes."
 msgstr "વધુ કોઈ બ્લોકક્વોટ નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
-#: ../src/orca/Gecko.py:7595 ../src/orca/Gecko.py:7641
+#: ../src/orca/Gecko.py:7605 ../src/orca/Gecko.py:7651
 msgid "No more form fields."
 msgstr "વધુ કોઈ ફોર્મ ક્ષેત્રો નથી."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/Gecko.py:7663
+#: ../src/orca/Gecko.py:7673
 #, python-format
 msgid "Row %d, column %d."
 msgstr "હરોળ %d, સ્તંભ %d."
@@ -2768,13 +2786,13 @@ msgstr "હરોળ %d, સ્તંભ %d."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/Gecko.py:7692 ../src/orca/Gecko.py:7741
+#: ../src/orca/Gecko.py:7702 ../src/orca/Gecko.py:7751
 msgid "Non-uniform"
 msgstr "બિન-સાર્વત્રિક"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7697 ../src/orca/Gecko.py:7746
+#: ../src/orca/Gecko.py:7707 ../src/orca/Gecko.py:7756
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -2783,7 +2801,7 @@ msgstr[1] "%d હરોળો સાથેનું કોષ્ટક"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7702 ../src/orca/Gecko.py:7751
+#: ../src/orca/Gecko.py:7712 ../src/orca/Gecko.py:7761
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -2793,44 +2811,44 @@ msgstr[1] "%d સ્તંભો"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/Gecko.py:7715 ../src/orca/Gecko.py:7763
+#: ../src/orca/Gecko.py:7725 ../src/orca/Gecko.py:7773
 msgid "No more tables."
 msgstr "વધુ કોઈ કોષ્ટકો નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7806
+#: ../src/orca/Gecko.py:7816
 msgid "Beginning of row."
 msgstr "હરોળની શરૂઆત."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7811 ../src/orca/Gecko.py:7863
-#: ../src/orca/Gecko.py:7911 ../src/orca/Gecko.py:7963
-#: ../src/orca/Gecko.py:7978 ../src/orca/Gecko.py:7995
+#: ../src/orca/Gecko.py:7821 ../src/orca/Gecko.py:7873
+#: ../src/orca/Gecko.py:7921 ../src/orca/Gecko.py:7973
+#: ../src/orca/Gecko.py:7988 ../src/orca/Gecko.py:8005
 msgid "Not in a table."
 msgstr "કોષ્ટકમાં નથી."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7858
+#: ../src/orca/Gecko.py:7868
 msgid "End of row."
 msgstr "હરોળનો અંત."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7906
+#: ../src/orca/Gecko.py:7916
 msgid "Top of column."
 msgstr "સ્તંભની ટોચ."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7958
+#: ../src/orca/Gecko.py:7968
 msgid "Bottom of column."
 msgstr "સ્તંભનું તળિયું."
 
@@ -2841,7 +2859,7 @@ msgstr "સ્તંભનું તળિયું."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8013
+#: ../src/orca/Gecko.py:8023
 msgid "Gecko is controlling the caret."
 msgstr "Gecko એ કેરેટ નિયંત્રિત કરી રહ્યું છે."
 
@@ -2852,7 +2870,7 @@ msgstr "Gecko એ કેરેટ નિયંત્રિત કરી રહ�
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8025
+#: ../src/orca/Gecko.py:8035
 msgid "Orca is controlling the caret."
 msgstr "Orca એ કેરેટ સંભાળી રહ્યું છે."
 
@@ -2861,9 +2879,12 @@ msgstr "Orca એ કેરેટ સંભાળી રહ્યું છે."
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8046
+#: ../src/orca/Gecko.py:8059
 msgid "Structural navigation keys on."
 msgstr "બંધારણીય શોધખોળ કીઓ ચાલુ છે."
 
@@ -2872,9 +2893,12 @@ msgstr "બંધારણીય શોધખોળ કીઓ ચાલુ છ�
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8055
+#: ../src/orca/Gecko.py:8071
 msgid "Structural navigation keys off."
 msgstr "બંધારણીય શોધખોળ કીઓ બંધ છે."
 
@@ -2907,7 +2931,7 @@ msgstr "ઓછા"
 #. synthesis engine is now speaking in a higher pitch.
 #.
 #: ../src/orca/gnomespeechfactory.py:907
-#: ../src/orca/speechdispatcherfactory.py:218
+#: ../src/orca/speechdispatcherfactory.py:286
 msgid "higher."
 msgstr "ઊંચુ."
 
@@ -2916,7 +2940,7 @@ msgstr "ઊંચુ."
 #.
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/gnomespeechfactory.py:938
-#: ../src/orca/speechdispatcherfactory.py:218
+#: ../src/orca/speechdispatcherfactory.py:286
 msgid "lower."
 msgstr "નીચું."
 
@@ -2925,7 +2949,7 @@ msgstr "નીચું."
 #. per minute).
 #.
 #: ../src/orca/gnomespeechfactory.py:967
-#: ../src/orca/speechdispatcherfactory.py:208
+#: ../src/orca/speechdispatcherfactory.py:276
 msgid "faster."
 msgstr "ઝડપી."
 
@@ -2935,7 +2959,7 @@ msgstr "ઝડપી."
 #.
 #. Translators: This string announces speech rate change.
 #: ../src/orca/gnomespeechfactory.py:1001
-#: ../src/orca/speechdispatcherfactory.py:208
+#: ../src/orca/speechdispatcherfactory.py:276
 msgid "slower."
 msgstr "ધીમું."
 
@@ -3317,8 +3341,8 @@ msgstr "બંધ કરો"
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.glade.h:4 ../src/orca/scripts/gedit.py:351
-#: ../src/orca/scripts/gedit.py:353
+#: ../src/orca/orca-find.glade.h:4 ../src/orca/scripts/gedit.py:350
+#: ../src/orca/scripts/gedit.py:352
 #: ../src/orca/scripts/gnome-search-tool.py:160
 msgid "Find"
 msgstr "શોધો"
@@ -5762,37 +5786,37 @@ msgstr "વાંચો"
 
 #. Translators: short braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/Evolution.py:265
+#: ../src/orca/scripts/Evolution.py:267
 msgid "calv"
 msgstr "calv"
 
 #. Translators: long braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/Evolution.py:268
+#: ../src/orca/scripts/Evolution.py:270
 msgid "CalendarView"
 msgstr "કેલેન્ડરદેખાવ"
 
 #. Translators: spoken words for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/Evolution.py:271
+#: ../src/orca/scripts/Evolution.py:273
 msgid "calendar view"
 msgstr "કેલેન્ડર દેખાવ"
 
 #. Translators: short braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/Evolution.py:279
+#: ../src/orca/scripts/Evolution.py:281
 msgid "cale"
 msgstr "cale"
 
 #. Translators: long braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/Evolution.py:282
+#: ../src/orca/scripts/Evolution.py:284
 msgid "CalendarEvent"
 msgstr "CalendarEvent"
 
 #. Translators: spoken words for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/Evolution.py:285
+#: ../src/orca/scripts/Evolution.py:287
 msgid "calendar event"
 msgstr "કેલેન્ડર ઘટના"
 
@@ -5800,7 +5824,7 @@ msgstr "કેલેન્ડર ઘટના"
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/Evolution.py:313
+#: ../src/orca/scripts/Evolution.py:315
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr "બદલો કે શું આપણે નવો મેઈલ હાજર કરવો જોઈએ જો આપણે સક્રિય સ્ક્રિપ્ટ નહિં હોય."
 
@@ -5808,7 +5832,7 @@ msgstr "બદલો કે શું આપણે નવો મેઈલ હા
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/Evolution.py:347
+#: ../src/orca/scripts/Evolution.py:349
 msgid "present new mail if this script is not active."
 msgstr "જો સ્ક્રિપ્ટ સક્રિય નહિં હોય તો નવો મેઈલ હાજર કરો."
 
@@ -5816,14 +5840,14 @@ msgstr "જો સ્ક્રિપ્ટ સક્રિય નહિં હ�
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/Evolution.py:354
+#: ../src/orca/scripts/Evolution.py:356
 msgid "do not present new mail if this script is not active."
 msgstr "જો આ સ્ક્રિપ્ટ સક્રિય નહિં હોય તો નવો મેઈલ હાજર કરશો નહિં."
 
 #. Translators: this is the name of a setup
 #. assistant window/screen in Evolution.
 #.
-#: ../src/orca/scripts/Evolution.py:404
+#: ../src/orca/scripts/Evolution.py:406
 #, python-format
 msgid "%s screen"
 msgstr "%s સ્ક્રીન"
@@ -5838,15 +5862,15 @@ msgstr "%s સ્ક્રીન"
 #. translated string here has to match what the translated
 #. string is for Evolution.
 #.
-#: ../src/orca/scripts/Evolution.py:437
+#: ../src/orca/scripts/Evolution.py:439
 msgid "Please"
 msgstr "મહેરબાની કરીને"
 
-#: ../src/orca/scripts/Evolution.py:438
+#: ../src/orca/scripts/Evolution.py:440
 msgid "Welcome"
 msgstr "સ્વાગત"
 
-#: ../src/orca/scripts/Evolution.py:439
+#: ../src/orca/scripts/Evolution.py:441
 msgid "Congratulations"
 msgstr "અભિનંદન"
 
@@ -5855,7 +5879,7 @@ msgstr "અભિનંદન"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/Evolution.py:895 ../src/orca/scripts/Evolution.py:947
+#: ../src/orca/scripts/Evolution.py:897 ../src/orca/scripts/Evolution.py:949
 msgid "Status"
 msgstr "પરિસ્થિતિ"
 
@@ -5863,7 +5887,7 @@ msgstr "પરિસ્થિતિ"
 #. indicate that an email message has not been
 #. marked as having been read.
 #.
-#: ../src/orca/scripts/Evolution.py:952
+#: ../src/orca/scripts/Evolution.py:954
 msgid "unread"
 msgstr "નહિં વંચાયેલ"
 
@@ -5872,14 +5896,14 @@ msgstr "નહિં વંચાયેલ"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/Evolution.py:961
+#: ../src/orca/scripts/Evolution.py:963
 msgid "Attachment"
 msgstr "જોડાણ"
 
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
-#: ../src/orca/scripts/Evolution.py:1125
+#: ../src/orca/scripts/Evolution.py:1127
 msgid "No appointments"
 msgstr "કોઈ મુલાકાતો નથી"
 
@@ -5887,7 +5911,7 @@ msgstr "કોઈ મુલાકાતો નથી"
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
 #.
-#: ../src/orca/scripts/Evolution.py:1203
+#: ../src/orca/scripts/Evolution.py:1205
 msgid "Directories button"
 msgstr "ડિરેક્ટરીઓ બટન"
 
@@ -5897,7 +5921,7 @@ msgstr "ડિરેક્ટરીઓ બટન"
 #. keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/Evolution.py:1359 ../src/orca/scripts/Evolution.py:1483
+#: ../src/orca/scripts/Evolution.py:1361 ../src/orca/scripts/Evolution.py:1485
 msgid "Assistant"
 msgstr "મદદનીશ"
 
@@ -5934,11 +5958,11 @@ msgstr "સંવાદ કક્ષ %s માંથી સંદેશો"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/gedit.py:266
+#: ../src/orca/scripts/gedit.py:265
 msgid "Change to:"
 msgstr "માં બદલો:"
 
-#: ../src/orca/scripts/gedit.py:267
+#: ../src/orca/scripts/gedit.py:266
 msgid "Misspelled word:"
 msgstr "ખોટી જોડણીવાળો શબ્દ:"
 
@@ -5950,15 +5974,15 @@ msgstr "ખોટી જોડણીવાળો શબ્દ:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/gedit.py:300
+#: ../src/orca/scripts/gedit.py:299
 msgid "Completed spell checking"
 msgstr "જોડણી ચકાસવાનું પૂર્ણ થયું"
 
-#: ../src/orca/scripts/gedit.py:301
+#: ../src/orca/scripts/gedit.py:300
 msgid "Spell checking is complete."
 msgstr "જોડણી ચકાસણી સમાપ્ત."
 
-#: ../src/orca/scripts/gedit.py:303
+#: ../src/orca/scripts/gedit.py:302
 msgid "Press Tab and Return to terminate."
 msgstr "બંધ કરવા માટે ટેબ અને Return દબાવો."
 
@@ -5967,7 +5991,7 @@ msgstr "બંધ કરવા માટે ટેબ અને Return દબા
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/gedit.py:427 ../src/orca/scripts/gedit.py:486
+#: ../src/orca/scripts/gedit.py:426 ../src/orca/scripts/gedit.py:485
 msgid "Check Spelling"
 msgstr "જોડણી ચકાસો"
 
@@ -5988,14 +6012,14 @@ msgstr "જોડણી ચકાસો"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/gedit.py:513
+#: ../src/orca/scripts/gedit.py:512
 msgid "Phrase not found"
 msgstr "મહાવરો મળ્યો નહિં"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/gedit.py:579
+#: ../src/orca/scripts/gedit.py:578
 msgid "Phrase found."
 msgstr "મહાવરો મળ્યો."
 
@@ -6126,14 +6150,18 @@ msgstr "ઈનપુટ વાક્યના સમાવિષ્ટો બો
 #.
 #: ../src/orca/scripts/StarOffice.py:828
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr "જ્યારે કેલ્ક ખાનાંઓ બોલી રહ્યા હોય ત્યારે હરોળને વૈશ્વિક સ્તંભ હેડરો તરીકે વાપરવા માટે સુયોજીત કરો."
+msgstr ""
+"જ્યારે કેલ્ક ખાનાંઓ બોલી રહ્યા હોય ત્યારે હરોળને વૈશ્વિક સ્તંભ હેડરો તરીકે વાપરવા માટે "
+"સુયોજીત કરો."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:836
 msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr "જ્યારે કેલ્ક ખાનાંઓ બોલી રહ્યા હોય ત્યારે સ્તંભને વૈશ્વિક હરોળ હેડરો તરીકે વાપરવા માટે સુયોજીત કરો."
+msgstr ""
+"જ્યારે કેલ્ક ખાનાંઓ બોલી રહ્યા હોય ત્યારે સ્તંભને વૈશ્વિક હરોળ હેડરો તરીકે વાપરવા માટે "
+"સુયોજીત કરો."
 
 #. Checkbox for "Speak spread sheet cell coordinates".
 #.
@@ -6376,13 +6404,36 @@ msgstr "vte"
 msgid "pidgin"
 msgstr "pidgin"
 
-#: ../src/orca/speechdispatcherfactory.py:60
+#. Translators: "Default Synthesizer" will appear in the list of available
+#. speech engines as a special item.  It refers to the default engine
+#. configured within the speech subsystem.  Apart from this item, the user
+#. will have a chance to select a particular speech engine by its real
+#. name, such as Festival, IBMTTS, etc.
+#.
+#: ../src/orca/speechdispatcherfactory.py:71
+msgid "Default Synthesizer"
+msgstr "મૂળભૂત સિન્થેસાઈઝર"
+
+#. Translators: this is the name of a speech synthesis system
+#. called "Speech Dispatcher".
+#.
+#: ../src/orca/speechdispatcherfactory.py:84
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
-#: ../src/orca/speechdispatcherfactory.py:227
-msgid "Speech Dispatcher configured default voice"
-msgstr "Speech Dispatcher મૂળભૂત અવાજ તરીકે રૂપરેખાંકિત થયું"
+#. Translators: This string will appear in the list of
+#. available voices for the current speech engine.  %s will be
+#. replaced by the name of the current speech engine, such as
+#. "Festival default voice" or "IBMTTS default voice".  It
+#. refers to the default voice configured for given speech
+#. engine within the speech subsystem.  Apart from this item,
+#. the list will contain the names of all available "real"
+#. voices provided by the speech engine.
+#.
+#: ../src/orca/speechdispatcherfactory.py:163
+#, python-format
+msgid "%s default voice"
+msgstr "%s મૂળભૂત અવાજ"
 
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
