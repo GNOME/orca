@@ -5,6 +5,7 @@
 # -c                 - analyze test coverage instead of regression testing
 # -h|--help          - print a usage message.
 # -k <keystrokesDir> - alternate keystroke directory (default is ../keystrokes).
+# -p                 - create profile information instead of regression testing
 # -r <resultsDir>    - alternate results directory (default is ../results).
 # -s                 - require the tester to press return between each test
 #
@@ -15,19 +16,21 @@ harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
 
-# OpenOffice 2.2 executables are installed in 
+# OpenOffice 2.2 executables are installed in
 # /usr/lib/openoffice/program
 #
 export PATH=$PATH:/usr/lib/openoffice/program
 
 coverageMode=0
+profileMode=0
+runOrcaOnce=0
 
 process_cl () {
     while [ $# != 0 ]; do
         case "$1" in
             -c )
                 coverageMode=1
-		;;
+                ;;
             -k )
                 shift
                 if [ $# == 0 ]; then
@@ -35,6 +38,9 @@ process_cl () {
                     exit 1
                 fi
                 keystrokesDir=$1
+                ;;
+            -p )
+                profileMode=1
                 ;;
             -r )
                 shift
@@ -50,9 +56,10 @@ process_cl () {
             -h|--help)
                 echo "Usage: $0 [options]"
                 echo "options:"
-		echo "   -c                perform code coverage analysis"
+                echo "   -c                perform code coverage analysis"
                 echo "   -h, --help        print this usage message"
                 echo "   -k keystrokeDir   specify an alternate keystrokes directory"
+                echo "   -p                create profile information"
                 echo "   -r resultsDir     specify an alternate results directory"
                 echo "   -s                require a return to be pressed between keystrokes files"
                 exit 0
@@ -71,12 +78,23 @@ process_cl () {
 process_cl "${@}"
 
 if [ "$coverageMode" -eq 1 ]
-then 	 
+then
+    runOrcaOnce=1
     echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
     cp user-settings.py.in user-settings.py
     trace2html.py -o $coverageDir -w orca -r runorca.py &
     trace_pid=$!
+    sleep 10
+fi
+
+if [ "$profileMode" -eq 1 ]
+then
+    runOrcaOnce=1
+    echo generating profile information...
+    cp user-settings.py.in user-settings.py
+    python runprofiler.py&
+    profiler_pid=$!
     sleep 10
 fi
 
@@ -132,7 +150,7 @@ do
         echo Running $testFile
         if [ "$found" -gt 0 ]
         then
-          $harnessDir/runone.sh $testFile $application $coverageMode
+          $harnessDir/runone.sh $testFile $application $runOrcaOnce
         else
           osType=`uname`
           for os in $OPERATING_SYSTEMS; do
@@ -141,40 +159,40 @@ do
               found=1
               if [ $osType == $os ]
               then
-                $harnessDir/runone.sh $testFile $coverageMode
+                $harnessDir/runone.sh $testFile $runOrcaOnce
               fi
             fi
           done
           if [ "$found" -eq 0 ]
           then
-            $harnessDir/runone.sh $testFile $coverageMode
+            $harnessDir/runone.sh $testFile $runOrcaOnce
           fi
         fi
 
-        # Copy the results (.orca) file to the output directory.
-        # This is the file that will be used for regression
-        # testing. 
-        newResultsFile=`basename $testFile .py`
-        mkdir -p $currentdir/$outputdir
+        if [ "$runOrcaOnce" -eq 0 ]
+        then
+            # Copy the results (.orca) file to the output directory.
+            # This is the file that will be used for regression
+            # testing.
+            newResultsFile=`basename $testFile .py`
+            mkdir -p $currentdir/$outputdir
 
-	# Filter the results...
-	#
-	# For braille, get rid of spurious "Desktop Frame" lines which
-	# happen when there's enough of a pause for nautilus to think
-	# it has focus.
-	#
-	# For speech, we do the same thing, but we need to get rid of
-	# several lines in a row.  So, we use sed.
-	#
-	grep -v "Desktop Frame" $newResultsFile.braille > $currentdir/$outputdir/$newResultsFile.braille 
-	mv $newResultsFile.braille $currentdir/$outputdir/$newResultsFile.braille.unfiltered
-
-	sed "/speech.speakUtterances utterance='Desktop frame'/,/speech.speakUtterances utterance='Icon View layered pane'/ d" $newResultsFile.speech > $currentdir/$outputdir/$newResultsFile.speech
-	mv $newResultsFile.speech $currentdir/$outputdir/$newResultsFile.speech.unfiltered
-
-        mv $newResultsFile.debug $currentdir/$outputdir
-
-	rm *
+            # Filter the results...
+            #
+            # For braille, get rid of spurious "Desktop Frame" lines which
+            # happen when there's enough of a pause for nautilus to think
+            # it has focus.
+            #
+            # For speech, we do the same thing, but we need to get rid of
+            # several lines in a row.  So, we use sed.
+            #
+            grep -v "Desktop Frame" $newResultsFile.braille > $currentdir/$outputdir/$newResultsFile.braille
+            mv $newResultsFile.braille $currentdir/$outputdir/$newResultsFile.braille.unfiltered
+            sed "/speech.speakUtterances utterance='Desktop frame'/,/speech.speakUtterances utterance='Icon View layered pane'/ d" $newResultsFile.speech > $currentdir/$outputdir/$newResultsFile.speech
+            mv $newResultsFile.speech $currentdir/$outputdir/$newResultsFile.speech.unfiltered
+            mv $newResultsFile.debug $currentdir/$outputdir
+            rm -f *
+        fi
 
         echo Finished running $testFile.
         if [ "x$stepMode" == "x1" ]
@@ -190,10 +208,23 @@ do
 done
 
 if [ "$coverageMode" -eq 1 ]
-then 	 
+then
     python quit.py
     rm user-settings.py
+    rm -f user-settings.pyc
     echo ...finished generating coverage map.
+fi
+
+if [ "$profileMode" -eq 1 ]
+then
+    python quit.py
+    rm -f user-settings.py
+    rm -f user-settings.pyc
+    mkdir -p ../profile
+    profileFilePrefix=../profile/`date +%Y-%m-%d_%H:%M:%S`
+    python -c "import pstats; pstats.Stats('orcaprof').sort_stats('cumulative').print_stats()" > $profileFilePrefix.txt
+    mv orcaprof $profileFilePrefix.orcaprof
+    echo ...finished generating profile information.
 fi
 
 echo $dirprefix completed at `date +%Y-%m-%d_%H:%M:%S`

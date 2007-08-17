@@ -7,10 +7,10 @@
 # where:
 #
 #    application_name is the name of the application to run
-#    0 = regular regression testing mode
-#    1 = run to determine testing coverage
+#    0 = start and stop orca inside this shell script
+#    1 = assume orca is already running
 #
-# Set up our accessibility environment for those apps that 
+# Set up our accessibility environment for those apps that
 # don't do it on their own.
 #
 export GTK_MODULES=:gail:atk-bridge:
@@ -23,8 +23,7 @@ debugFile=`basename $1 .py`
 
 # Number of seconds to wait for Orca and the application to start
 #
-REGRESSION_WAIT_TIME=5
-COVERAGE_WAIT_TIME=5
+WAIT_TIME=5
 
 # Set up our local user settings file for the output format we want.
 #
@@ -65,7 +64,7 @@ EOF
 
 # Allow us to pass parameters to the command line of the application.
 #
-# If a <testfilename>.params file exists, it contains parameters to 
+# If a <testfilename>.params file exists, it contains parameters to
 # pass to the command line of the application.
 #
 PARAMS_FILE=`dirname $1`/$debugFile.params
@@ -80,14 +79,14 @@ ARGS=""
 if [ -n "$3" ]
 then
     APP_NAME=$2
-    coverageMode=$3
+    orcaRunning=$3
 else
    APP_NAME=gnome-terminal
    if [ -n "$2" ]
    then
-       coverageMode=$2
+       orcaRunning=$2
    else
-       coverageMode=0
+       orcaRunning=0
    fi
 fi
 
@@ -101,14 +100,7 @@ then
     ARGS="-norestore"
 fi
 
-if [ $coverageMode -eq 1 ]
-then
-    WAIT_TIME=$COVERAGE_WAIT_TIME
-else
-    WAIT_TIME=$REGRESSION_WAIT_TIME
-fi
-
-if [ $coverageMode -eq 0 ] 	 
+if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
     echo starting Orca...
@@ -136,7 +128,7 @@ then
 else
     APP_PID=$!
 fi
-echo $APP_NAME pid $APP_PID 
+echo $APP_NAME pid $APP_PID
 
 # Play the keystrokes.
 #
@@ -146,7 +138,7 @@ python $1
 #
 #sleep $WAIT_TIME
 
-if [ $coverageMode -eq 0 ] 	 
+if [ $orcaRunning -eq 0 ]
 then
     # Terminate Orca
     echo terminating Orca

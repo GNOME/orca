@@ -1,3 +1,14 @@
+2007-08-17  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runone.sh, test/harness/runall.sh, test/harness/quit.py,
+	test/harness/runprofiler.py: fix for bug 467082 - Need to add profiling
+	to the test harness.  This adds a "-p" option to the runall.sh script
+	and creates profile information in the test/profile directory.  It 
+	requires the python-profiler package to be installed.  To run, type
+	"./runall.sh -p" in the test/harness directory.  (The harness also
+	requires that macaroon be installed.  You can get macaroon from the
+	macaroon subdirectory of the accerciser module.)
+	
 2007-08-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
