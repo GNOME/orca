@@ -74,14 +74,4 @@ def setPronunciation(word, replacementString, pronunciations=None):
 # values represent word the pronunciation of that word (in other words,
 # what the word sounds like).
 #
-# [[[TODO: richb - need to populate this dictionary with many more values.]]]
-#
 pronunciation_dict = {}
-setPronunciation(_("ASAP"),          _("as soon as possible"))
-setPronunciation(_("GHz"),           _("gigahertz"))
-setPronunciation(_("IMAP"),          _("eye map"))
-setPronunciation(_("LDAP"),          _("ell dap"))
-setPronunciation(_("LOL"),           _("laughing out loud"))
-setPronunciation(_("MHz"),           _("megahertz"))
-setPronunciation(_("strikethrough"), _("strike through"))
-setPronunciation(_("SELinux"),       _("ess ee linux"))
