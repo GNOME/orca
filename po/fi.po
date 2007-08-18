@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-16 11:11+0300\n"
+"POT-Creation-Date: 2007-08-18 10:14+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -4182,70 +4182,6 @@ msgstr ""
 "u : urho, v : vihtori, w : wiski, x : äksä, y : yrjö, z : tseta, å : åke, "
 "ä : äiti, ö : öljy"
 
-#: ../src/orca/pronunciation_dict.py:80
-msgid "ASAP"
-msgstr "ASAP"
-
-#: ../src/orca/pronunciation_dict.py:80
-msgid "as soon as possible"
-msgstr "niin pian kuin mahdollista"
-
-#: ../src/orca/pronunciation_dict.py:81
-msgid "GHz"
-msgstr "GHz"
-
-#: ../src/orca/pronunciation_dict.py:81
-msgid "gigahertz"
-msgstr "gigahertsi"
-
-#: ../src/orca/pronunciation_dict.py:82
-msgid "IMAP"
-msgstr "IMAP"
-
-#: ../src/orca/pronunciation_dict.py:82
-msgid "eye map"
-msgstr "imap"
-
-#: ../src/orca/pronunciation_dict.py:83
-msgid "LDAP"
-msgstr "LDAP"
-
-#: ../src/orca/pronunciation_dict.py:83
-msgid "ell dap"
-msgstr "ldap"
-
-#: ../src/orca/pronunciation_dict.py:84
-msgid "LOL"
-msgstr "LOL"
-
-#: ../src/orca/pronunciation_dict.py:84
-msgid "laughing out loud"
-msgstr "laughing out loud"
-
-#: ../src/orca/pronunciation_dict.py:85
-msgid "MHz"
-msgstr "MHz"
-
-#: ../src/orca/pronunciation_dict.py:85
-msgid "megahertz"
-msgstr "megahertsi"
-
-#: ../src/orca/pronunciation_dict.py:86
-msgid "strikethrough"
-msgstr "yliviivaus"
-
-#: ../src/orca/pronunciation_dict.py:86
-msgid "strike through"
-msgstr "yliviivaus"
-
-#: ../src/orca/pronunciation_dict.py:87
-msgid "SELinux"
-msgstr "SELinux"
-
-#: ../src/orca/pronunciation_dict.py:87
-msgid "ess ee linux"
-msgstr "äss ee Linux"
-
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
 #.
@@ -6547,6 +6483,54 @@ msgstr "%.2f megatavua"
 #, python-format
 msgid "item %d of %d"
 msgstr "kohta %d kaikkiaan %d"
+
+#~ msgid "ASAP"
+#~ msgstr "ASAP"
+
+#~ msgid "as soon as possible"
+#~ msgstr "niin pian kuin mahdollista"
+
+#~ msgid "GHz"
+#~ msgstr "GHz"
+
+#~ msgid "gigahertz"
+#~ msgstr "gigahertsi"
+
+#~ msgid "IMAP"
+#~ msgstr "IMAP"
+
+#~ msgid "eye map"
+#~ msgstr "imap"
+
+#~ msgid "LDAP"
+#~ msgstr "LDAP"
+
+#~ msgid "ell dap"
+#~ msgstr "ldap"
+
+#~ msgid "LOL"
+#~ msgstr "LOL"
+
+#~ msgid "laughing out loud"
+#~ msgstr "laughing out loud"
+
+#~ msgid "MHz"
+#~ msgstr "MHz"
+
+#~ msgid "megahertz"
+#~ msgstr "megahertsi"
+
+#~ msgid "strikethrough"
+#~ msgstr "yliviivaus"
+
+#~ msgid "strike through"
+#~ msgstr "yliviivaus"
+
+#~ msgid "SELinux"
+#~ msgstr "SELinux"
+
+#~ msgid "ess ee linux"
+#~ msgstr "äss ee Linux"
 
 #~ msgid "Speech Dispatcher configured default voice"
 #~ msgstr "Puheentuottajan määritelty oletusääni"
