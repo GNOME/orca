@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: orca 0.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-04 03:25+0100\n"
-"PO-Revision-Date: 2007-05-15 22:38+0200\n"
+"PO-Revision-Date: 2007-08-20 19:20+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:165 ../src/orca/rolenames.py:167
 msgid "alert"
-msgstr ""
+msgstr "alèrta"
 
 #: ../src/orca/rolenames.py:166
 msgid "Alert"
@@ -1656,11 +1656,11 @@ msgstr "Animacion"
 
 #: ../src/orca/rolenames.py:172
 msgid "animation"
-msgstr ""
+msgstr "animacion"
 
 #: ../src/orca/rolenames.py:175 ../src/orca/rolenames.py:177
 msgid "arrow"
-msgstr ""
+msgstr "flècha"
 
 #: ../src/orca/rolenames.py:176
 msgid "Arrow"
@@ -1676,7 +1676,7 @@ msgstr "Calendièr"
 
 #: ../src/orca/rolenames.py:182
 msgid "calendar"
-msgstr ""
+msgstr "calendièr"
 
 #: ../src/orca/rolenames.py:185
 msgid "cnv"
@@ -1756,7 +1756,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:477
 msgid "column header"
-msgstr ""
+msgstr "encap de colomna"
 
 #: ../src/orca/rolenames.py:220
 msgid "cbo"
@@ -1785,7 +1785,7 @@ msgstr ""
 #: ../src/orca/rolenames.py:230 ../src/orca/rolenames.py:305
 #: ../src/orca/rolenames.py:307
 msgid "icon"
-msgstr ""
+msgstr "icòna"
 
 #: ../src/orca/rolenames.py:231
 msgid "DesktopIcon"
@@ -1798,7 +1798,7 @@ msgstr ""
 #: ../src/orca/rolenames.py:235 ../src/orca/rolenames.py:287
 #: ../src/orca/rolenames.py:315
 msgid "frame"
-msgstr ""
+msgstr "encastre"
 
 #: ../src/orca/rolenames.py:236
 msgid "DesktopFrame"
@@ -1902,7 +1902,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:280 ../src/orca/rolenames.py:282
 msgid "form"
-msgstr ""
+msgstr "formulari"
 
 #: ../src/orca/rolenames.py:281
 msgid "Form"
@@ -2038,7 +2038,7 @@ msgstr "Menut"
 
 #: ../src/orca/rolenames.py:347
 msgid "menu"
-msgstr ""
+msgstr "menut"
 
 #: ../src/orca/rolenames.py:350
 msgid "mnubr"
@@ -2050,7 +2050,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:352
 msgid "menu bar"
-msgstr ""
+msgstr "barra de menuts"
 
 #: ../src/orca/rolenames.py:355
 msgid "mnuitm"
@@ -2062,7 +2062,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:357
 msgid "menu item"
-msgstr ""
+msgstr "element de menut"
 
 #: ../src/orca/rolenames.py:360
 msgid "optnpn"
@@ -2214,7 +2214,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:422 ../src/orca/rolenames.py:482
 msgid "row header"
-msgstr ""
+msgstr "encap de linha"
 
 #: ../src/orca/rolenames.py:425
 msgid "scbr"
@@ -2250,7 +2250,7 @@ msgstr "Seccion"
 
 #: ../src/orca/rolenames.py:437
 msgid "section"
-msgstr ""
+msgstr "seccion"
 
 #: ../src/orca/rolenames.py:440
 msgid "seprtr"
@@ -2322,7 +2322,7 @@ msgstr "Taula"
 
 #: ../src/orca/rolenames.py:467
 msgid "table"
-msgstr ""
+msgstr "taula"
 
 #: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:521
 #: ../src/orca/where_am_I.py:630
@@ -2351,7 +2351,7 @@ msgstr "Terminal"
 
 #: ../src/orca/rolenames.py:492
 msgid "terminal"
-msgstr ""
+msgstr "terminal"
 
 #: ../src/orca/rolenames.py:495
 msgid "txt"
@@ -2455,7 +2455,7 @@ msgstr "Fenèstra"
 
 #: ../src/orca/rolenames.py:539
 msgid "window"
-msgstr ""
+msgstr "fenèstra"
 
 #: ../src/orca/rolenames.py:542
 msgid "hdr"
@@ -2467,7 +2467,7 @@ msgstr "Encap"
 
 #: ../src/orca/rolenames.py:544
 msgid "header"
-msgstr ""
+msgstr "encap"
 
 #: ../src/orca/rolenames.py:547
 msgid "ftr"
@@ -2491,7 +2491,7 @@ msgstr "Paragraf"
 
 #: ../src/orca/rolenames.py:554
 msgid "paragraph"
-msgstr ""
+msgstr "paragraf"
 
 #: ../src/orca/rolenames.py:557
 msgid "app"
@@ -2503,7 +2503,7 @@ msgstr "Aplicacion"
 
 #: ../src/orca/rolenames.py:559
 msgid "application"
-msgstr ""
+msgstr "aplicacion"
 
 #: ../src/orca/rolenames.py:562
 msgid "auto"
@@ -2602,7 +2602,7 @@ msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:101
 msgid "calendar event"
-msgstr ""
+msgstr "eveniment de calendièr"
 
 # what does that means ?
 #: ../src/orca/scripts/Evolution.py:119
@@ -2933,7 +2933,7 @@ msgstr ""
 
 #: ../src/orca/settings.py:536
 msgid "yelp"
-msgstr ""
+msgstr "ajuda"
 
 #: ../src/orca/settings.py:537
 msgid "Bon Echo"
@@ -2972,7 +2972,7 @@ msgstr ""
 #: ../src/orca/speechgenerator.py:703 ../src/orca/speechgenerator.py:1189
 #: ../src/orca/speechgenerator.py:1239
 msgid "0 items"
-msgstr ""
+msgstr "0 element"
 
 #: ../src/orca/speechgenerator.py:957
 msgid "not selected"
