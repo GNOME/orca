@@ -1,20 +1,25 @@
+2007-08-20  Tomas Cerha  <via william.walker@sun.com>
+
+        * Fix for bug 467563 - Speech Dispatcher backend crashes in text
+        setup (Thanks Tomas!)
+
 2007-08-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/pronunciation_dict.py:
-          Fixed bug #467425 - Orca should default to an empty pronunciation 
+          Fixed bug #467425 - Orca should default to an empty pronunciation
           dictionary.
 
 2007-08-17  Willie Walker <william.walker@sun.com>
 
-	* test/harness/runone.sh, test/harness/runall.sh, test/harness/quit.py,
-	test/harness/runprofiler.py: fix for bug 467082 - Need to add profiling
-	to the test harness.  This adds a "-p" option to the runall.sh script
-	and creates profile information in the test/profile directory.  It 
-	requires the python-profiler package to be installed.  To run, type
-	"./runall.sh -p" in the test/harness directory.  (The harness also
-	requires that macaroon be installed.  You can get macaroon from the
-	macaroon subdirectory of the accerciser module.)
-	
+        * test/harness/runone.sh, test/harness/runall.sh, test/harness/quit.py,
+        test/harness/runprofiler.py: fix for bug 467082 - Need to add profiling
+        to the test harness.  This adds a "-p" option to the runall.sh script
+        and creates profile information in the test/profile directory.  It
+        requires the python-profiler package to be installed.  To run, type
+        "./runall.sh -p" in the test/harness directory.  (The harness also
+        requires that macaroon be installed.  You can get macaroon from the
+        macaroon subdirectory of the accerciser module.)
+
 2007-08-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
@@ -31,7 +36,7 @@
 
         * src/orca/scripts/gedit.py:
           src/orca/scripts/Evolution.py:
-          Fix for bug #466725 - Traceback when using SayAll in Gedit when 
+          Fix for bug #466725 - Traceback when using SayAll in Gedit when
           text lacks sentence punctuation.
 
 2007-08-15  Mike Pedersen <michael.pedersen@sun.com>
@@ -46,15 +51,15 @@
         * src/orca/Gecko.py
           src/orca/braillegenerator.py
           src/orca/default.py
-          src/orca/speechgenerator.py: Bug #462156, No announcements for 
+          src/orca/speechgenerator.py: Bug #462156, No announcements for
           ARIA trees
 
 2007-08-15  Lynn MonSanto <lynn.monsanto@sun.com>
-	* src/orca/flat_review.py: fix for Bug 464855 - orca speaks/brailles 
-	scroll bar arrows as anonymous "push buttons"
+        * src/orca/flat_review.py: fix for Bug 464855 - orca speaks/brailles
+        scroll bar arrows as anonymous "push buttons"
 
-	Change requested by Mike Pedersen. Orca speaks and brailles
-	Java slider and scroll bar orientation before the role.
+        Change requested by Mike Pedersen. Orca speaks and brailles
+        Java slider and scroll bar orientation before the role.
 
 2007-08-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -62,8 +67,8 @@
         access to alerts that appear when page is loading in FF3.
 
 2007-08-15  Lynn MonSanto <lynn.monsanto@sun.com>
-	* src/orca/flat_review.py: fix for Bug 464855 - orca speaks/brailles 
-	scroll bar arrows as anonymous "push buttons"
+        * src/orca/flat_review.py: fix for Bug 464855 - orca speaks/brailles
+        scroll bar arrows as anonymous "push buttons"
 
 2007-08-14  Rich Burridge <rich.burridge@sun.com>
 
@@ -73,12 +78,12 @@
 
 2007-08-14  Tomas Cerha  <via william.walker@sun.com>
 
-	* Fix for bug 466500 - Speech Dispatcher backend crashes with
-	older SD versions
-	
+        * Fix for bug 466500 - Speech Dispatcher backend crashes with
+        older SD versions
+
 2007-08-13  Lynn MonSanto <lynn.monsanto@sun.com>
-	* src/orca/flat_review.py: fix for Bug 458150 - flat-review 
-	should present slider orientation
+        * src/orca/flat_review.py: fix for Bug 458150 - flat-review
+        should present slider orientation
 
 2007-08-13  Tomas Cerha  <via william.walker@sun.com>
 
