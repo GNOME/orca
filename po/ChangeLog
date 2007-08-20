@@ -1,3 +1,8 @@
+2007-08-20  Danishka Navin  <danishka@gmail.com>
+
+	* si.po: Updated Sinhala translation by Danishka Navin.
+	* LINGUAS: Added entry 'si' (Sinhala).
+
 007-08-19  Leonardo Ferreira Fontenelle  <leonardof@svn.gnome.org>
 
 	* pt_BR.po: Brazilian Portuguese translation updated by Djavan
