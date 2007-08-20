@@ -229,7 +229,8 @@ class SpeechServer(speechserver.SpeechServer):
                 current[property] = value
 
     def _speak(self, text, acss, **kwargs):
-        self._apply_acss(acss)
+        if acss is not None:
+            self._apply_acss(acss)
         self._send_command(self._client.speak, text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
@@ -344,7 +345,8 @@ class SpeechServer(speechserver.SpeechServer):
             else:
                 voice = settings.voices[settings.DEFAULT_VOICE]
             key = self.KEY_NAMES.get(event_string, event_string)
-            self._apply_acss(voice)
+            if voice is not None:
+                self._apply_acss(voice)
             self._send_command(self._client.key, key)
         else:
             return super(SpeechServer, self).speakKeyEvent(event_string, type)
