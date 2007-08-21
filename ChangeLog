@@ -1,3 +1,10 @@
+2007-08-21  Mike Pedersen <michael.pedersen@sun.com>
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf:
+          Update to the   specs
+
 2007-08-20  Tomas Cerha  <via william.walker@sun.com>
 
         * Fix for bug 467563 - Speech Dispatcher backend crashes in text

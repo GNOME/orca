@@ -868,7 +868,7 @@
               <para>current row (regardless of speak cell/row setting)</para>
             </listitem>
             <listitem>
-              <para>relative position</para>
+              <para>relative position relative to the parent </para>
             </listitem>
             <listitem>
               <para>if expandable/collapsible: expanded/collapsed</para>
@@ -894,7 +894,7 @@
               <para>current row (regardless of speak cell/row setting)</para>
             </listitem>
             <listitem>
-              <para>relative position</para>
+              <para>relative position relative to the parent </para>
             </listitem>
             <listitem>
               <para>if expandable/collapsible: expanded/collapsed</para>
@@ -965,18 +965,9 @@
           <para>When KP_Enter is pressed twice quickly, Orca will
           speak and display the information it currently does when
           performing the "Where am I" command, with the following
-          changes:</para>
+          application specific changes:</para>
 
           <orderedlist>
-            <listitem>
-              <para>Orca should pause briefly between items in the
-              hierarchy</para>
-            </listitem>
-            <listitem>
-              <para>Information regarding relative position should
-              come after the item it pertains to, rather than
-              before. (e.g. say/display "Euro Converter, Item 7 of 9")</para>
-            </listitem>
             <listitem>
               <para>If focus is within a text box and text within that
               text box is selected, Orca should NOT read the current
@@ -1039,6 +1030,7 @@
           (e.g. OpenOffice Writer), Orca should also speak and display
           the label of a given element followed by that element.
           (e.g. "Page Style: Default", "Zoom: 100%")</para>
+          <para>If the user is in a dialog box the default button should be spoken when this key is pressed. </para>
 
         </section>
       </section>
