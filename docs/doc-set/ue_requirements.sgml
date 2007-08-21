@@ -228,7 +228,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>Orca is targetting the following office productivity
+        <para>Orca is targeting the following office productivity
           applications:</para>
 
         <table><title>Office Productivity Applications</title>
@@ -246,7 +246,7 @@
               <row>
                 <entry>Desktop</entry>
                 <entry>gnome-panel and metacity - GNOME 2.16</entry>
-                <entry>&incomplete; metacity working well, gnome-panel
+                <entry>&incomplete; meta city working well, gnome-panel
                 working OK, but the keyboard navigation model needs
                 work. &shoulddeliver; V1.0.</entry>
                 <entry>&desktoptestlink;</entry>
@@ -480,7 +480,7 @@
       <para>Play audio cues across line boundaries.</para>
       <para>In addition, when in flat review mode, Orca will
         optionally allow the mouse to follow the object of interest.  This feature will be toggled by a checkbox in the general tab of the orca config UI.</para>
-      <para>If the user is moving the mouse with flat review they will also be able to move by small increments.  If the user holds down shift while pressing flat review up, down, character previus or next they will move the mouse 5 pixels in that direction.  
+      <para>If the user is moving the mouse with flat review they will also be able to move by small increments.  If the user holds down shift while pressing flat review up, down, character previous or next they will move the mouse 5 pixels in that direction.  
       If the move the mouse feature is not enabled pressing these keys will do nothing.            
       </para>
       <para> If the process of moving the mouse should cause a tooltip to appear, orca should speak it.</para>
@@ -564,8 +564,8 @@
         to the user.</para>
         <para>&incomplete; there is no option to present text bounds
         to the user.</para>
-        <para>&incomplete; When autocomplete appears when a user is typing he or she is not alerted to the fact that this information has appeared.  As soon as the information pops up the first option should be spoken/brailled.  If the user continues typing and the first choice changes this should also be spoken.  It is not expected that the user would hear all possibilitys just the first.  If the user can arrow up or down through choices orca should track this as in any other list or combo.  It is okay if this information overrides the typing echo.</para>
-<para>&complete; The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  If a row or column is already set, double pressing the row or column definition on that row or column will unset it as a dinamic header.</para>        
+        <para>&incomplete; When autocomplete appears when a user is typing he or she is not alerted to the fact that this information has appeared.  As soon as the information pops up the first option should be spoken/brailled.  If the user continues typing and the first choice changes this should also be spoken.  It is not expected that the user would hear all possibility's just the first.  If the user can arrow up or down through choices orca should track this as in any other list or combo.  It is okay if this information overrides the typing echo.</para>
+<para>&complete; The user should be able to dynamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  If a row or column is already set, double pressing the row or column definition on that row or column will unset it as a dynamic header.</para>        
       </section>
 
     </section>
@@ -980,7 +980,7 @@
             <listitem>
               <para>If focus is within a text box and text within that
               text box is selected, Orca should NOT read the current
-              line.  Rather, it should state the text that is selected spanning paragraph boundries if necessary
+              line.  Rather, it should state the text that is selected spanning paragraph boundaries if necessary
               followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</para>
             </listitem>
           </orderedlist>
@@ -1054,7 +1054,7 @@
         associated object the object of interest.  From this point,
         the user can use a &wkc;  to go back to the object with focus,
         give the found object focus if possible, or perform the
-        equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </para>
+        equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search back word. </para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.</para>
       <para>The search will be performed in the text flow of the
@@ -1487,7 +1487,7 @@
             should provide the user with the ability to show the cursor
             or not.  If shown, the user should have the ability to make
             it blink, and should also have the ability to tell it to
-            either take the entire cell or just dots 7-8.  It would be best if orca would just inharet the settings chosen in brltty.</para>
+            either take the entire cell or just dots 7-8.  It would be best if orca would just inherit the settings chosen in brltty.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">Ability to have multiple pan regions
@@ -1533,17 +1533,17 @@
         The second will be called window layout mode.  This mode will accurately convey the actual layout of the screen.  Wherever possible the information presented while navigating the screen with the braille display should match what is displayed while focus tracking.</para>
         <para>These modes can be switched by the use of a radiobutton group in the braille section of the Orca configuration UI.  The group will be called "braille layout" and the buttons will be: "window layout" and "logical layout"</para>
         <para>See the current implementation of braille support for examples on logical mode.</para>
-        <para>window layout mode should where ever possible attempt to accurately present each line of the display.  Except for a few cases documented below orca will not append contextual or extra role information to the braille display.  The following examples will show how varius pieces of information should be presented on the braille display by orca in this mode.  The following apply to GTK, Java, OpenOffice, and web applications.</para>
+        <para>window layout mode should where ever possible attempt to accurately present each line of the display.  Except for a few cases documented below orca will not append contextual or extra role information to the braille display.  The following examples will show how various pieces of information should be presented on the braille display by orca in this mode.  The following apply to GTK, Java, OpenOffice, and web applications.</para>
         <para>Even though the window title information is not always visible on the screen and can not be focused the title should be presented at the top of the window.</para>
         <para>Text should be presented honoring the actual layout as much as possible.  If space is present it should be accurately displayed on the braille display.  It is OK to continue using the tab character to show the location of tabs. Presentation of attributes will be handled in a separate RFE.  If text is selected or attributes are requested in the braille preferences of the orca configuration UI they should also be shown according to the users preference.</para>
         <para>Frame and panel labels should be presented in relation to what they are labeling.  For example the label for a panel should be above the controls in the panel.</para>
-        <para>Menubars should simply present the text of the menubar accross the braille display.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
+        <para>Menubars should simply present the text of the menubar across the braille display.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
         <para>Menus should simply present the text of each menu  item on the braille display as it is encountered.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
         <para>Combobox labels and entries should be presented wherever they appear.  Depending on user feedback we may have to suffix this with the role but lets not do this unless many users ask for it. </para>
-        <para>Checkboxes should be indecated by the braille  checkbox marker  for checked and "< >" for not checked.  This marker should be followed by the label.</para>
+        <para>Checkboxes should be indicated by the braille  checkbox marker  for checked and "< >" for not checked.  This marker should be followed by the label.</para>
         <para>radiobutton group  labels should be presented in relation to what they are labeling.  For example the label for a button group should be above the actual radio buttons.</para>        
-        <para>radiobuttons should be indecated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.></para>
-        <para>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble infering the context.  Vertical scrollbars should be presented at the bottom of the window on which ever side of the window they appear.</para>
+        <para>radiobuttons should be indicated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.></para>
+        <para>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble inferring the context.  Vertical scrollbars should be presented at the bottom of the window on which ever side of the window they appear.</para>
         <para>Icon groups such as the desktop should appear as they are presented on the screen.  For example, if three icons appear next to each other on the desktop orca should attempt to place them on the braille display.  Orca should make sure that at least the icon with focus is on the braille display.</para>
         <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>        
 
@@ -1561,7 +1561,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: COMMUNITY] mimimal magnification
+        <para>&incomplete; [OWNER: COMMUNITY] minimal magnification
         support is in Orca as of V0.9.0.  Need to work with the
         community to further define what a compelling magnifier
         experience means.  &shoulddeliver V1.0 or &mustdeliver; V1.1,
