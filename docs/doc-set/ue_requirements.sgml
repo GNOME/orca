@@ -1151,6 +1151,7 @@
         last word spoken (if possible - this depends upon the
         capabilities of the text area as well as the speech
         engine).</para>
+        <para>If the user attempts to use the sayall feature from within a dialog box the dialog will be read from top to bottom regardless of the current focus position.  In a dialog orca should not attempt to move the focus durring a sayall.</para>
       <para>Orca will also provide options to highlight the text
         being spoken.</para>
       <para>&note; while the reading of a document will follow the
