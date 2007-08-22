@@ -1511,8 +1511,7 @@
 
         <para>&incomplete; Effective use of cursor routing keys.
           Works well for activating components and moving the caret.
-          Second row of cursor routing keys unexplored. &shoulddeliver;
-          V1.1+.</para>
+ &shoulddeliver;   V1.1+.</para>
 
         <para>&incomplete; Key combinations.  Not investigated, can be
           done via traditional keyboard techniques.  &shoulddeliver;
@@ -1520,6 +1519,11 @@
 
         <para>&incomplete; Cursor options. Rely upon BrlTTY.
           &deliver; BrlTTY.</para>
+          <para>&incomplete; Ability to specify weather or not focus is moved when navigating with the braille display. &shoulddeliver; V2.22.</para>
+          <para>Orca should provide a check box on the braille tab of the config UI called "braille display moves focus".  This feature will be unchecked by default. If this feature is enabled orca should not speak if focus was updated by pressing a Braille key.  If this feature is disabled the user should be able to wander the application with the braille display similar to flat review.</para>
+          <para>In text areas using movement commands from the braille display should move the caret.  If the user moves to the last currently visible line of the window the page should scroll.  If the act of panning does not cause the user to move to a new line it is not necessary to update the cursor position.  If the user moves the braille display up and down by line orca should try to honor the horizontal position.  </para>
+          <para>If the user moves up and down in a tree, list, combo, or the desktop  focus should be updated.</para>
+          <para>If the user is in a spreadsheet or table, focus should be updated to the cell showing on the Braille display.</para>
 
         <para>&incomplete; Ability to switch between logical and window layout . &shoulddeliver; V2.22.</para>
         <para>Orca should provide two primary modes of braille presentation.  The first will be called logical mode which is a braille mode consisting of the item with focus as well as relevant contextual information.  
