@@ -1,3 +1,9 @@
+2007-08-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #467425 - Orca causes pygtk application to generate 
+          GtkWarning messages (thanks LiYan Zhang, Yi Jin and Will).
+
 2007-08-21  Mike Pedersen <michael.pedersen@sun.com>
 
         * docs/doc-set/ue_requirements.sgml,
