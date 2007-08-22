@@ -1139,6 +1139,7 @@
         navigation techniques, caret movement should always be spoken
         with the appropriate context (e.g. character, word, line)
         depending upon why the caret moved.</para>
+        <para>Optionally orca should allow the user to hear a sound as they cross line boundaries.  This will be controlled by a check box on the general settings tab called "play sound  on line wrap".  This option will be unchecked by default.</para>
       <para>Orca must provide the ability for a user to read the
         contents of a document, such as e-mail or a word processing
         document.  As the document is read, Orca will instruct the
