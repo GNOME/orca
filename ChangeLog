@@ -1,3 +1,10 @@
+2007-08-22  Mike Pedersen <michael.pedersen@sun.com>
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf:
+          Update to the   braille specs
+
 2007-08-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
