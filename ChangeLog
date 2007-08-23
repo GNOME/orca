@@ -1,5 +1,11 @@
 2007-08-23  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/gaim.py:
+          Fixed bug #469098 - Orca should indicate when a new chat 
+          window/tab has appeared in Pidgin.
+
+2007-08-23  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/braillegenerator.py:
           src/orca/speechgenerator.py:
           Work on bug #465989 - Adding panel applets.

@@ -135,6 +135,16 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+    def getListeners(self):
+        """Add in an AT-SPI event listener ""object:children-changed:"
+        events, for this script.
+        """
+
+        listeners = default.Script.getListeners(self)
+        listeners["object:children-changed:"] = self.onChildrenChanged
+
+        return listeners
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings. In this particular case,
@@ -339,6 +349,26 @@ class Script(default.Script):
                     break
 
         return None
+
+    def onChildrenChanged(self, event):
+        """Called whenever a child object changes in some way.
+
+        Arguments:
+        - event: the text inserted Event
+        """
+
+        # Check to see if a new chat room tab has been created and if it
+        # has, then announce its name. See bug #469098 for more details.
+        #
+        if event.type == "object:children-changed:add":
+            rolesList = [rolenames.ROLE_PAGE_TAB_LIST, \
+                         rolenames.ROLE_FILLER, \
+                         rolenames.ROLE_FRAME]
+            if self.isDesiredFocusedItem(event.source, rolesList):
+                childCount = event.source.childCount
+                child = event.source.child(childCount-1)
+                line = _("New chat tab %s") % child.name
+                speech.speak(line)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Gaim's text
