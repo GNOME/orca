@@ -1234,7 +1234,7 @@ HREF="#URMAG"
 ><DL
 ><DT
 >3.24.1. <A
-HREF="#AEN1169"
+HREF="#AEN1167"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1248,7 +1248,7 @@ HREF="#URPERF"
 ><DL
 ><DT
 >3.25.1. <A
-HREF="#AEN1188"
+HREF="#AEN1186"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1262,7 +1262,7 @@ HREF="#URDOCS"
 ><DL
 ><DT
 >3.26.1. <A
-HREF="#AEN1196"
+HREF="#AEN1194"
 >Functional Description and Status</A
 ></DT
 ></DL
@@ -1295,17 +1295,17 @@ HREF="#UEOUTPUTSTYLE"
 ><DL
 ><DT
 >4.3.1. <A
-HREF="#AEN1552"
+HREF="#AEN1550"
 >General Braille Style</A
 ></DT
 ><DT
 >4.3.2. <A
-HREF="#AEN1575"
+HREF="#AEN1573"
 >General Speech Style</A
 ></DT
 ><DT
 >4.3.3. <A
-HREF="#AEN1580"
+HREF="#AEN1578"
 >Output Styles by Role</A
 ></DT
 ></DL
@@ -5632,7 +5632,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> Ability to specify weather or not focus is moved when navigating with the braille display. <SPAN
+> Ability to specify weather or not focus is moved when navigating with the braille display in a multiline text area                    . <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -5640,13 +5640,9 @@ CLASS="EMPHASIS"
 ></SPAN
 > V2.22.</P
 ><P
->Orca should provide a check box on the braille tab of the config UI called "braille display moves focus".  This feature will be unchecked by default. If this feature is enabled orca should not speak if focus was updated by pressing a Braille key.  If this feature is disabled the user should be able to wander the application with the braille display similar to flat review.</P
+>Orca should provide a check box on the braille tab of the config UI called "braille display moves cursor".  This feature will be unchecked by default. If this feature is enabled orca should not speak if focus was updated by pressing a Braille key.  If this feature is disabled the user should be able to wander the application with the braille display similar to flat review.</P
 ><P
 >In text areas using movement commands from the braille display should move the caret.  If the user moves to the last currently visible line of the window the page should scroll.  If the act of panning does not cause the user to move to a new line it is not necessary to update the cursor position.  If the user moves the braille display up and down by line orca should try to honor the horizontal position.  </P
-><P
->If the user moves up and down in a tree, list, combo, or the desktop  focus should be updated.</P
-><P
->If the user is in a spreadsheet or table, focus should be updated to the cell showing on the Braille display.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -5683,13 +5679,13 @@ CLASS="EMPHASIS"
 ><P
 >Combobox labels and entries should be presented wherever they appear.  Depending on user feedback we may have to suffix this with the role but lets not do this unless many users ask for it. </P
 ><P
->Checkboxes should be indicated by the braille  checkbox marker  for checked and "&#60; &#62;" for not checked.  This marker should be followed by the label.</P
+>Checkboxes should be indicated by the braille  checkbox marker  for checked parcially checked, and "&#60; &#62;" for not checked.  This marker should be followed by the label.</P
 ><P
 >radiobutton group  labels should be presented in relation to what they are labeling.  For example the label for a button group should be above the actual radio buttons.</P
 ><P
 >radiobuttons should be indicated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.&#62;</P
 ><P
->Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble inferring the context.  Vertical scrollbars should be presented at the bottom of the window on which ever side of the window they appear.</P
+>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble inferring the context.  Vertical scrollbars should be presented at the top of the window on which ever side of the window they appear.</P
 ><P
 >Icon groups such as the desktop should appear as they are presented on the screen.  For example, if three icons appear next to each other on the desktop orca should attempt to place them on the braille display.  Orca should make sure that at least the icon with focus is on the braille display.</P
 ><P
@@ -5728,7 +5724,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1169"
+NAME="AEN1167"
 >3.24.1. Functional Description and Status</A
 ></H3
 ><P
@@ -5820,7 +5816,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1188"
+NAME="AEN1186"
 >3.25.1. Functional Description and Status</A
 ></H3
 ><DIV
@@ -5888,7 +5884,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1196"
+NAME="AEN1194"
 >3.26.1. Functional Description and Status</A
 ></H3
 ><P
@@ -7201,7 +7197,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1552"
+NAME="AEN1550"
 >4.3.1. General Braille Style</A
 ></H3
 ><P
@@ -7309,7 +7305,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1575"
+NAME="AEN1573"
 >4.3.2. General Speech Style</A
 ></H3
 ><P
@@ -7332,7 +7328,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1580"
+NAME="AEN1578"
 >4.3.3. Output Styles by Role</A
 ></H3
 ><DIV
@@ -7372,7 +7368,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1589"
+NAME="AEN1587"
 >4.3.3.1.1. Braille</A
 ></H5
 ><P
@@ -7403,7 +7399,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1597"
+NAME="AEN1595"
 >4.3.3.1.2. Speech</A
 ></H5
 ><P
@@ -7453,7 +7449,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1610"
+NAME="AEN1608"
 >4.3.3.2.1. Braille</A
 ></H5
 ><P
@@ -7486,7 +7482,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1619"
+NAME="AEN1617"
 >4.3.3.2.2. Speech</A
 ></H5
 ><P
@@ -7529,7 +7525,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1632"
+NAME="AEN1630"
 >4.3.3.3.1. Braille</A
 ></H5
 ><P
@@ -7560,7 +7556,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1641"
+NAME="AEN1639"
 >4.3.3.3.2. Speech</A
 ></H5
 ><P
@@ -7620,7 +7616,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1658"
+NAME="AEN1656"
 >4.3.3.4.1. Braille</A
 ></H5
 ><P
@@ -7652,7 +7648,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1667"
+NAME="AEN1665"
 >4.3.3.4.2. Speech</A
 ></H5
 ><P
@@ -7713,7 +7709,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1683"
+NAME="AEN1681"
 >4.3.3.5.1. Braille</A
 ></H5
 ><P
@@ -7738,7 +7734,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1691"
+NAME="AEN1689"
 >4.3.3.5.2. Speech</A
 ></H5
 ><P
@@ -7794,7 +7790,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1706"
+NAME="AEN1704"
 >4.3.3.6.1. Braille</A
 ></H5
 ><P
@@ -7822,7 +7818,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1714"
+NAME="AEN1712"
 >4.3.3.6.2. Speech</A
 ></H5
 ><P
@@ -7866,7 +7862,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1727"
+NAME="AEN1725"
 >4.3.3.7.1. Braille</A
 ></H5
 ><P
@@ -7892,7 +7888,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1735"
+NAME="AEN1733"
 >4.3.3.7.2. Speech</A
 ></H5
 ><P
@@ -7960,7 +7956,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1752"
+NAME="AEN1750"
 >4.3.3.8.1. Braille</A
 ></H5
 ><P
@@ -7993,7 +7989,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1761"
+NAME="AEN1759"
 >4.3.3.8.2. Speech</A
 ></H5
 ><P
@@ -8047,7 +8043,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1775"
+NAME="AEN1773"
 >4.3.3.9.1. Braille</A
 ></H5
 ><P
@@ -8068,7 +8064,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1782"
+NAME="AEN1780"
 >4.3.3.9.2. Speech</A
 ></H5
 ><P
@@ -8108,7 +8104,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1794"
+NAME="AEN1792"
 >4.3.3.10.1. Braille</A
 ></H5
 ><P
@@ -8129,7 +8125,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1801"
+NAME="AEN1799"
 >4.3.3.10.2. Speech</A
 ></H5
 ><P
@@ -8189,7 +8185,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1816"
+NAME="AEN1814"
 >4.3.3.11.1. Braille</A
 ></H5
 ><P
@@ -8222,7 +8218,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1825"
+NAME="AEN1823"
 >4.3.3.11.2. Speech</A
 ></H5
 ><P
@@ -8267,7 +8263,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1838"
+NAME="AEN1836"
 >4.3.3.12.1. Braille</A
 ></H5
 ><P
@@ -8291,7 +8287,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1846"
+NAME="AEN1844"
 >4.3.3.12.2. Speech</A
 ></H5
 ><P
@@ -8365,7 +8361,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1861"
+NAME="AEN1859"
 >4.3.3.13.1. Braille</A
 ></H5
 ><P
@@ -8389,7 +8385,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1869"
+NAME="AEN1867"
 >4.3.3.13.2. Speech</A
 ></H5
 ><P
@@ -8432,7 +8428,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1881"
+NAME="AEN1879"
 >4.3.3.14.1. Braille</A
 ></H5
 ><P
@@ -8463,7 +8459,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1890"
+NAME="AEN1888"
 >4.3.3.14.2. Speech</A
 ></H5
 ><P
@@ -8528,7 +8524,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1905"
+NAME="AEN1903"
 >4.3.3.15.1. Braille</A
 ></H5
 ><P
@@ -8549,7 +8545,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1912"
+NAME="AEN1910"
 >4.3.3.15.2. Speech</A
 ></H5
 ><P
@@ -8594,7 +8590,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1921"
+NAME="AEN1919"
 >4.3.3.16.1. Braille</A
 ></H5
 ><P
@@ -8618,7 +8614,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1929"
+NAME="AEN1927"
 >4.3.3.16.2. Speech</A
 ></H5
 ><P
@@ -8659,7 +8655,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1941"
+NAME="AEN1939"
 >4.3.3.17.1. Braille</A
 ></H5
 ><P
@@ -8687,7 +8683,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1949"
+NAME="AEN1947"
 >4.3.3.17.2. Speech</A
 ></H5
 ><P
@@ -8719,7 +8715,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1959"
+NAME="AEN1957"
 >4.3.3.18.1. Braille</A
 ></H5
 ><P
@@ -8767,7 +8763,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1971"
+NAME="AEN1969"
 >4.3.3.18.2. Speech</A
 ></H5
 ><P
@@ -8811,7 +8807,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1984"
+NAME="AEN1982"
 >4.3.3.19.1. Braille</A
 ></H5
 ><P
@@ -8837,7 +8833,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1992"
+NAME="AEN1990"
 >4.3.3.19.2. Speech</A
 ></H5
 ><P
@@ -8891,7 +8887,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2007"
+NAME="AEN2005"
 >4.3.3.20.1. Braille</A
 ></H5
 ><P
@@ -8920,7 +8916,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2015"
+NAME="AEN2013"
 >4.3.3.20.2. Speech</A
 ></H5
 ><P
@@ -8964,7 +8960,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2028"
+NAME="AEN2026"
 >4.3.3.21.1. Braille</A
 ></H5
 ><P
@@ -8985,7 +8981,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2035"
+NAME="AEN2033"
 >4.3.3.21.2. Speech</A
 ></H5
 ><P
@@ -9046,7 +9042,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2051"
+NAME="AEN2049"
 >4.3.3.22.1. Braille</A
 ></H5
 ><P
@@ -9076,7 +9072,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2059"
+NAME="AEN2057"
 >4.3.3.22.2. Speech</A
 ></H5
 ><P
@@ -9120,7 +9116,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2072"
+NAME="AEN2070"
 >4.3.3.23.1. Braille</A
 ></H5
 ><P
@@ -9146,7 +9142,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2080"
+NAME="AEN2078"
 >4.3.3.23.2. Speech</A
 ></H5
 ><P
@@ -9191,7 +9187,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2093"
+NAME="AEN2091"
 >4.3.3.24.1. Braille</A
 ></H5
 ><P
@@ -9215,7 +9211,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2101"
+NAME="AEN2099"
 >4.3.3.24.2. Speech</A
 ></H5
 ><P
@@ -9256,7 +9252,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2113"
+NAME="AEN2111"
 >4.3.3.25.1. Braille</A
 ></H5
 ><P
@@ -9280,7 +9276,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2121"
+NAME="AEN2119"
 >4.3.3.25.2. Speech</A
 ></H5
 ><P
@@ -9342,7 +9338,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2137"
+NAME="AEN2135"
 >4.3.3.26.1. Braille</A
 ></H5
 ><P
@@ -9366,7 +9362,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2145"
+NAME="AEN2143"
 >4.3.3.26.2. Speech</A
 ></H5
 ><P
@@ -9429,7 +9425,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2161"
+NAME="AEN2159"
 >4.3.3.27.1. Braille</A
 ></H5
 ><P
@@ -9459,7 +9455,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2169"
+NAME="AEN2167"
 >4.3.3.27.2. Speech</A
 ></H5
 ><P
@@ -9504,7 +9500,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2182"
+NAME="AEN2180"
 >4.3.3.28.1. Braille</A
 ></H5
 ><P
@@ -9532,7 +9528,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2190"
+NAME="AEN2188"
 >4.3.3.28.2. Speech</A
 ></H5
 ><P
@@ -9572,7 +9568,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2202"
+NAME="AEN2200"
 >4.3.3.29.1. Braille</A
 ></H5
 ><P
@@ -9597,7 +9593,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2210"
+NAME="AEN2208"
 >4.3.3.29.2. Speech</A
 ></H5
 ><P
@@ -9641,7 +9637,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2222"
+NAME="AEN2220"
 >4.3.3.30.1. Braille</A
 ></H5
 ><P
@@ -9668,7 +9664,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2230"
+NAME="AEN2228"
 >4.3.3.30.2. Speech</A
 ></H5
 ><P
@@ -9710,7 +9706,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2242"
+NAME="AEN2240"
 >4.3.3.31.1. Braille</A
 ></H5
 ><P
@@ -9734,7 +9730,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2250"
+NAME="AEN2248"
 >4.3.3.31.2. Speech</A
 ></H5
 ><P
@@ -9783,7 +9779,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2262"
+NAME="AEN2260"
 >4.3.3.32.1. Braille</A
 ></H5
 ><P
@@ -9807,7 +9803,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2270"
+NAME="AEN2268"
 >4.3.3.32.2. Speech</A
 ></H5
 ><P
@@ -9859,7 +9855,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2284"
+NAME="AEN2282"
 >4.3.3.33.1. Braille</A
 ></H5
 ><P
@@ -9886,7 +9882,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2292"
+NAME="AEN2290"
 >4.3.3.33.2. Speech</A
 ></H5
 ><P
@@ -9931,7 +9927,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2304"
+NAME="AEN2302"
 >4.3.3.34.1. Braille</A
 ></H5
 ><P
@@ -9962,7 +9958,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2312"
+NAME="AEN2310"
 >4.3.3.34.2. Speech</A
 ></H5
 ><P
@@ -10006,7 +10002,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2324"
+NAME="AEN2322"
 >4.3.3.35.1. Braille</A
 ></H5
 ><P
@@ -10034,7 +10030,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2332"
+NAME="AEN2330"
 >4.3.3.35.2. Speech</A
 ></H5
 ><P
@@ -10119,7 +10115,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2352"
+NAME="AEN2350"
 >4.3.3.36.1. Braille</A
 ></H5
 ><P
@@ -10151,7 +10147,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2361"
+NAME="AEN2359"
 >4.3.3.36.2. Speech</A
 ></H5
 ><P
@@ -10191,7 +10187,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2370"
+NAME="AEN2368"
 >4.3.3.37.1. Braille</A
 ></H5
 ><P
@@ -10216,7 +10212,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2378"
+NAME="AEN2376"
 >4.3.3.37.2. Speech</A
 ></H5
 ><P
@@ -10266,7 +10262,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2391"
+NAME="AEN2389"
 >4.3.3.38.1. Braille</A
 ></H5
 ><P
@@ -10300,7 +10296,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2400"
+NAME="AEN2398"
 >4.3.3.38.2. Speech</A
 ></H5
 ><P
@@ -10343,7 +10339,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2412"
+NAME="AEN2410"
 >4.3.3.39.1. Braille</A
 ></H5
 ><P
@@ -10368,7 +10364,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2420"
+NAME="AEN2418"
 >4.3.3.39.2. Speech</A
 ></H5
 ><P
@@ -10400,7 +10396,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2430"
+NAME="AEN2428"
 >4.3.3.40.1. Braille</A
 ></H5
 ><P
@@ -10428,7 +10424,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN2438"
+NAME="AEN2436"
 >4.3.3.40.2. Speech</A
 ></H5
 ><P
@@ -10519,7 +10515,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2474"
+NAME="AEN2472"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -10687,7 +10683,7 @@ CLASS="LOT"
 ></DT
 ><DT
 >3-1. <A
-HREF="#AEN2535"
+HREF="#AEN2533"
 >High Level Orca Architecture. The main components of Orca
         are as follows: desktop  applications that support the AT-SPI,
         the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
@@ -10987,7 +10983,7 @@ NAME="ARCHITECTURE"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN2535"
+NAME="AEN2533"
 ></A
 ><P
 ><B
@@ -12052,7 +12048,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2822"
+NAME="AEN2820"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -12201,7 +12197,7 @@ CLASS="LOT"
 ></DT
 ><DT
 >3-1. <A
-HREF="#AEN2972"
+HREF="#AEN2970"
 >Orca Script Diagram</A
 ></DT
 ></DL
@@ -12849,7 +12845,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN2972"
+NAME="AEN2970"
 ></A
 ><P
 ><B
@@ -14042,7 +14038,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN3260"
+NAME="AEN3258"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P
@@ -14128,42 +14124,42 @@ HREF="#KEYWORDECHOTEST"
 ><DL
 ><DT
 >1.11.1. <A
-HREF="#AEN3398"
+HREF="#AEN3396"
 >Simple Typing of Words</A
 ></DT
 ><DT
 >1.11.2. <A
-HREF="#AEN3406"
+HREF="#AEN3404"
 >Typing Words with Punctuation</A
 ></DT
 ><DT
 >1.11.3. <A
-HREF="#AEN3414"
+HREF="#AEN3412"
 >Typing Alphanumeric characters</A
 ></DT
 ><DT
 >1.11.4. <A
-HREF="#AEN3422"
+HREF="#AEN3420"
 >Typing Alphanumeric characters with modifiers</A
 ></DT
 ><DT
 >1.11.5. <A
-HREF="#AEN3438"
+HREF="#AEN3436"
 >function key echo test</A
 ></DT
 ><DT
 >1.11.6. <A
-HREF="#AEN3452"
+HREF="#AEN3450"
 >lock key echo test</A
 ></DT
 ><DT
 >1.11.7. <A
-HREF="#AEN3460"
+HREF="#AEN3458"
 >action key echo test when action key echo is selected</A
 ></DT
 ><DT
 >1.11.8. <A
-HREF="#AEN3492"
+HREF="#AEN3490"
 >action keys with no echo test</A
 ></DT
 ></DL
@@ -14262,7 +14258,7 @@ HREF="#EMAILTEST"
 ><DL
 ><DT
 >2.5.1. <A
-HREF="#AEN3757"
+HREF="#AEN3755"
 >Some Test</A
 ></DT
 ></DL
@@ -14276,7 +14272,7 @@ HREF="#ECALTEST"
 ><DL
 ><DT
 >2.6.1. <A
-HREF="#AEN3767"
+HREF="#AEN3765"
 >Some Test</A
 ></DT
 ></DL
@@ -14290,7 +14286,7 @@ HREF="#ECONTACTTEST"
 ><DL
 ><DT
 >2.7.1. <A
-HREF="#AEN3777"
+HREF="#AEN3775"
 >Some Test</A
 ></DT
 ></DL
@@ -14318,7 +14314,7 @@ HREF="#YELPTEST"
 ><DL
 ><DT
 >2.9.1. <A
-HREF="#AEN3803"
+HREF="#AEN3801"
 >Some Test</A
 ></DT
 ></DL
@@ -14332,7 +14328,7 @@ HREF="#SOWRITERTEST"
 ><DL
 ><DT
 >2.10.1. <A
-HREF="#AEN3819"
+HREF="#AEN3817"
 >Some Test</A
 ></DT
 ></DL
@@ -14346,7 +14342,7 @@ HREF="#SOCALCTEST"
 ><DL
 ><DT
 >2.11.1. <A
-HREF="#AEN3829"
+HREF="#AEN3827"
 >Some Test</A
 ></DT
 ></DL
@@ -14360,7 +14356,7 @@ HREF="#SOIMPRESSTEST"
 ><DL
 ><DT
 >2.12.1. <A
-HREF="#AEN3839"
+HREF="#AEN3837"
 >Some Test</A
 ></DT
 ></DL
@@ -14374,7 +14370,7 @@ HREF="#FF2TEST"
 ><DL
 ><DT
 >2.13.1. <A
-HREF="#AEN3849"
+HREF="#AEN3847"
 >Some Test</A
 ></DT
 ></DL
@@ -14388,7 +14384,7 @@ HREF="#FF3TEST"
 ><DL
 ><DT
 >2.14.1. <A
-HREF="#AEN3859"
+HREF="#AEN3857"
 >Some Test</A
 ></DT
 ></DL
@@ -14402,7 +14398,7 @@ HREF="#ACROREADTEST"
 ><DL
 ><DT
 >2.15.1. <A
-HREF="#AEN3869"
+HREF="#AEN3867"
 >Some Test</A
 ></DT
 ></DL
@@ -14416,17 +14412,17 @@ HREF="#JAVATEST"
 ><DL
 ><DT
 >2.16.1. <A
-HREF="#AEN3879"
+HREF="#AEN3877"
 >Swing components in SwingSet2</A
 ></DT
 ><DT
 >2.16.2. <A
-HREF="#AEN3925"
+HREF="#AEN3923"
 >Swing components not found in SwingSet2</A
 ></DT
 ><DT
 >2.16.3. <A
-HREF="#AEN3947"
+HREF="#AEN3945"
 >Swing text</A
 ></DT
 ></DL
@@ -15002,7 +14998,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3398"
+NAME="AEN3396"
 >1.11.1. Simple Typing of Words</A
 ></H3
 ><P
@@ -15035,7 +15031,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3406"
+NAME="AEN3404"
 >1.11.2. Typing Words with Punctuation</A
 ></H3
 ><P
@@ -15068,7 +15064,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3414"
+NAME="AEN3412"
 >1.11.3. Typing Alphanumeric characters</A
 ></H3
 ><P
@@ -15101,7 +15097,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3422"
+NAME="AEN3420"
 >1.11.4. Typing Alphanumeric characters with modifiers</A
 ></H3
 ><P
@@ -15166,7 +15162,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3438"
+NAME="AEN3436"
 >1.11.5. function key echo test</A
 ></H3
 ><P
@@ -15223,7 +15219,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3452"
+NAME="AEN3450"
 >1.11.6. lock key echo test</A
 ></H3
 ><P
@@ -15256,7 +15252,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3460"
+NAME="AEN3458"
 >1.11.7. action key echo test when action key echo is selected</A
 ></H3
 ><P
@@ -15385,7 +15381,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3492"
+NAME="AEN3490"
 >1.11.8. action keys with no echo test</A
 ></H3
 ><P
@@ -16529,7 +16525,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3757"
+NAME="AEN3755"
 >2.5.1. Some Test</A
 ></H3
 ><P
@@ -16571,7 +16567,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3767"
+NAME="AEN3765"
 >2.6.1. Some Test</A
 ></H3
 ><P
@@ -16613,7 +16609,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3777"
+NAME="AEN3775"
 >2.7.1. Some Test</A
 ></H3
 ><P
@@ -16727,7 +16723,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3803"
+NAME="AEN3801"
 >2.9.1. Some Test</A
 ></H3
 ><P
@@ -16799,7 +16795,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3819"
+NAME="AEN3817"
 >2.10.1. Some Test</A
 ></H3
 ><P
@@ -16841,7 +16837,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3829"
+NAME="AEN3827"
 >2.11.1. Some Test</A
 ></H3
 ><P
@@ -16883,7 +16879,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3839"
+NAME="AEN3837"
 >2.12.1. Some Test</A
 ></H3
 ><P
@@ -16925,7 +16921,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3849"
+NAME="AEN3847"
 >2.13.1. Some Test</A
 ></H3
 ><P
@@ -16967,7 +16963,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3859"
+NAME="AEN3857"
 >2.14.1. Some Test</A
 ></H3
 ><P
@@ -17009,7 +17005,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3869"
+NAME="AEN3867"
 >2.15.1. Some Test</A
 ></H3
 ><P
@@ -17051,7 +17047,7 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3879"
+NAME="AEN3877"
 >2.16.1. Swing components in SwingSet2</A
 ></H3
 ><P
@@ -17170,7 +17166,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3925"
+NAME="AEN3923"
 >2.16.2. Swing components not found in SwingSet2</A
 ></H3
 ><P
@@ -17242,7 +17238,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN3947"
+NAME="AEN3945"
 >2.16.3. Swing text</A
 ></H3
 ><P
@@ -17317,7 +17313,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN3965"
+NAME="AEN3963"
 ></A
 ><P
 >Copyright 2005-2006, Sun Microsystems, Inc.</P

@@ -1520,11 +1520,9 @@
 
         <para>&incomplete; Cursor options. Rely upon BrlTTY.
           &deliver; BrlTTY.</para>
-          <para>&incomplete; Ability to specify weather or not focus is moved when navigating with the braille display. &shoulddeliver; V2.22.</para>
-          <para>Orca should provide a check box on the braille tab of the config UI called "braille display moves focus".  This feature will be unchecked by default. If this feature is enabled orca should not speak if focus was updated by pressing a Braille key.  If this feature is disabled the user should be able to wander the application with the braille display similar to flat review.</para>
+          <para>&incomplete; Ability to specify weather or not focus is moved when navigating with the braille display in a multiline text area                    . &shoulddeliver; V2.22.</para>
+          <para>Orca should provide a check box on the braille tab of the config UI called "braille display moves cursor".  This feature will be unchecked by default. If this feature is enabled orca should not speak if focus was updated by pressing a Braille key.  If this feature is disabled the user should be able to wander the application with the braille display similar to flat review.</para>
           <para>In text areas using movement commands from the braille display should move the caret.  If the user moves to the last currently visible line of the window the page should scroll.  If the act of panning does not cause the user to move to a new line it is not necessary to update the cursor position.  If the user moves the braille display up and down by line orca should try to honor the horizontal position.  </para>
-          <para>If the user moves up and down in a tree, list, combo, or the desktop  focus should be updated.</para>
-          <para>If the user is in a spreadsheet or table, focus should be updated to the cell showing on the Braille display.</para>
 
         <para>&incomplete; Ability to switch between logical and window layout . &shoulddeliver; V2.22.</para>
         <para>Orca should provide two primary modes of braille presentation.  The first will be called logical mode which is a braille mode consisting of the item with focus as well as relevant contextual information.  
@@ -1538,10 +1536,10 @@
         <para>Menubars should simply present the text of the menubar across the braille display.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
         <para>Menus should simply present the text of each menu  item on the braille display as it is encountered.  If a user presses a cursor routing key over one of the items that item should be activated.</para>
         <para>Combobox labels and entries should be presented wherever they appear.  Depending on user feedback we may have to suffix this with the role but lets not do this unless many users ask for it. </para>
-        <para>Checkboxes should be indicated by the braille  checkbox marker  for checked and "< >" for not checked.  This marker should be followed by the label.</para>
+        <para>Checkboxes should be indicated by the braille  checkbox marker  for checked parcially checked, and "< >" for not checked.  This marker should be followed by the label.</para>
         <para>radiobutton group  labels should be presented in relation to what they are labeling.  For example the label for a button group should be above the actual radio buttons.</para>        
         <para>radiobuttons should be indicated by the radiobutton braille marker for selected and for not selected.  This marker should be followed by the label if one exists.></para>
-        <para>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble inferring the context.  Vertical scrollbars should be presented at the bottom of the window on which ever side of the window they appear.</para>
+        <para>Sliders and Scrollbars should be presented as the value followed by the rolename.  This is an exception to our normal screen mode presentation because if we present just the value the user may have trouble inferring the context.  Vertical scrollbars should be presented at the top of the window on which ever side of the window they appear.</para>
         <para>Icon groups such as the desktop should appear as they are presented on the screen.  For example, if three icons appear next to each other on the desktop orca should attempt to place them on the braille display.  Orca should make sure that at least the icon with focus is on the braille display.</para>
         <para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>        
 
