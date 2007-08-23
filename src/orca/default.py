@@ -2168,6 +2168,7 @@ class Script(script.Script):
             newNodeLevel = -1
             if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                 if oldParent and oldParent.table and \
+                   oldLocusOfFocus and \
                    oldLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                     table = oldParent.table
                     oldRow = table.getRowAtIndex(oldLocusOfFocus.index)
