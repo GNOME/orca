@@ -1140,6 +1140,21 @@ class BrailleGenerator:
 
         regions = []
 
+        # Check to see if this table cell contains an icon (image).
+        # If yes:
+        #   1/ Try to get a description for it and speak that.
+        #   2/ Treat the object of role type ROLE_IMAGE and speak
+        #      the role name.
+        # See bug #465989 for more details.
+        #
+        if obj.image:
+            if obj.image.imageDescription:
+                regions.append(obj.image.imageDescription)
+            obj.role = rolenames.ROLE_IMAGE
+            regions.extend(self._getBrailleRegionsForImage(obj))
+            obj.role = rolenames.ROLE_TABLE_CELL
+            return regions
+
         # If this table cell has 2 children and one of them has a
         # 'toggle' action and the other does not, then present this
         # as a checkbox where:
