@@ -366,9 +366,25 @@ class Script(default.Script):
                          rolenames.ROLE_FRAME]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 childCount = event.source.childCount
-                child = event.source.child(childCount-1)
-                line = _("New chat tab %s") % child.name
-                speech.speak(line)
+
+                # As it's possible to get this component hierarchy in other
+                # places than the chat room (i.e. the Preferences dialog),
+                # we check to see if the name of the frame is the same as one
+                # of its children. If it is, then it's a chat room tab event.
+                # For a final check, we only announce the new chat tab if the
+                # last child has a name.
+                #
+                nameFound = False
+                frameName = event.source.parent.parent.name
+                for i in range(0, childCount):
+                    child = event.source.child(i)
+                    if frameName and (frameName == child.name):
+                        nameFound = True
+                if nameFound:
+                    child = event.source.child(childCount-1)
+                    if child.name:
+                        line = _("New chat tab %s") % child.name
+                        speech.speak(line)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Gaim's text

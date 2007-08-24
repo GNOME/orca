@@ -1,3 +1,10 @@
+2007-08-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          Continued to fix bug #469098 - Orca should indicate when a new chat 
+          window/tab has appeared in Pidgin. Added extra checks to prevent it
+          speaking "bogus" new chat tabs (like for the Preferences dialog).
+
 2007-08-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:
