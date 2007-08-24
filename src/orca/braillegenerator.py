@@ -1314,9 +1314,9 @@ class BrailleGenerator:
                         if i == column:
                             focusRowRegion = cellRegions[0]
                 regions = [rowRegions, focusRowRegion]
-                settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
             else:
                 regions = self._getBrailleRegionsForTableCell(obj)
+            settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
         else:
             regions = self._getBrailleRegionsForTableCell(obj)
 
