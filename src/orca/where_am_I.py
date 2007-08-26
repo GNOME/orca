@@ -202,12 +202,16 @@ class WhereAmI:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            text = Q_("selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            text = Q_("radiobutton|selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            text = Q_("not selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            text = Q_("radiobutton|not selected")
         utterances.append(text)
 
         text = self._getPositionInGroup(obj)
