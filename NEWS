@@ -1,3 +1,69 @@
+2.19.91 - 26-Aug-2007
+
+General:
+
+* Work on bug 356068 - Provide a command for identifying the default
+  button within a dialog
+
+* Fix for bug 446878 - Orca causes pygtk application to generate
+  GtkWarning messages (Thanks LiYan Zhang and Yi Jin!)
+
+* Fix for a traceback error in getFrame() in default.py.  See bug
+  465087 for more details.
+
+* Work on bug 465989 - Adding panel applets.  Added support for
+  image-only table cells to prevent silence from happening when we
+  come across these kinds of things.
+
+* Fix for bug 466500 - Speech Dispatcher backend crashes with
+  older SD versions (Thanks Tomas Cerha!)
+
+* Fix for bug 466725 - Traceback when using SayAll in GEdit when text
+  lacks sentence punctuation
+ 
+* Fix for bug 467425 - Orca should default to an empty pronunciation
+  dictionary
+
+* Fix for bug 467563 - Speech Dispatcher backend crashes in text setup
+  (Thanks Tomas Cerha!)
+
+* Work on bug 468098 - The whereAmI implementation doesn't always
+  match the whereAmI spec
+
+* Fix for bug 468786 - Braille verbosity setting not reset
+
+* Fix for bug 469615 - A few lingering i18n issues.  Many thanks to
+  Kenneth Nielsen from the l10n team for helping us with this.
+
+Firefox/Thunderbird:
+
+* Fix for bug 466764 - Orca doesn't provide access to alerts that
+  appear when page is loading in FF3
+
+* Fix for bug 468765 - Orca does not provide access to shortcuts for
+  FF3 or Thunderbird menu items
+
+* Fix for bug 470332 - Can no longer arrow to push buttons in FF3
+
+Java Platform:
+
+* Fix for bug 464855 - orca speaks/brailles scroll bar arrows as
+  anonymous "push buttons"
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da      Danish               Kenneth Nielsen
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    fi      Finnish              Ilkka Tuohela
+    gu      Gujarati             Ankit Patel
+    mk      Macedonian           Jovan Naumovski
+    nb      Norwegian Bokmål     Kjartan Maraas
+    si      Sinhala              Danishka Navin
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.19.90 - 13-Aug-2007
 
 General:
