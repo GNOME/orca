@@ -1,5 +1,9 @@
 2007-08-26  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README, NEWS: mark as v2.19.92pre
+
+2007-08-26  Willie Walker <william.walker@sun.com>
+
         * configure.in, README, NEWS: prep for v2.19.91
 
 2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
