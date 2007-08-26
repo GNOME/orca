@@ -35,6 +35,7 @@ import urlparse, urllib2
 
 from orca_i18n import _ # for gettext support
 from orca_i18n import ngettext  # for ngettext support
+from orca_i18n import Q_ # to provide qualified translatable strings
 
 class WhereAmI:
 
@@ -477,7 +478,12 @@ class WhereAmI:
 
         utterances = []
         if selected:
-            text = _("selected")
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca lets them know this.
+            #
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            text = Q_("text|selected")
             utterances.append(text)
 
         text = self._getObjMnemonic(obj)

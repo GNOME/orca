@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -46,3 +46,26 @@ try:
     gtk.glade.textdomain("orca")
 except:
     debug.printException(debug.LEVEL_FINEST)
+
+########################################################################
+#                                                                      #
+# Utility methods to facilitate easier translation                     #
+#                                                                      #
+########################################################################
+
+def Q_(s):
+    """Provide qualified translatable strings.  Some strings translate to
+    more than one string in another locale.  We provide a convention to
+    provide contextual information for the string so that translators can
+    do the right thing: we embed a '|' character in the string to be
+    translated.  The string before the '|' provides the context, and the
+    string after the '|' provides the string to translate.  For example:
+    'radiobutton|selected' and 'text|selected' are used to provide context
+    for the word 'selected'.
+
+    We need to handle the case where the string has not been translated,
+    however, and we do so by stripping off the contextual information."""
+
+    s = _(s)
+    s = s[s.find('|')+1:]
+    return s

@@ -1,5 +1,19 @@
 2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+         * src/orca/scripts/StarOffice.py,
+         * src/orca/orca-setup.glade,
+         * src/orca/flat_review.py,
+         * src/orca/speechgenerator.py,
+         * src/orca/default.py,
+         * src/orca/Gecko.py,
+         * src/orca/orca_i18n.py.in,
+         * src/orca/J2SE-access-bridge.py,
+         * src/orca/where_am_I.py,
+         * src/orca/orca_gui_prefs.py:
+         Fix for bug 469615 - A few lingering i18n issues
+
+2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/Gecko.py: Fix for bug 470332 - Can no longer arrow to 
         push buttons in FF3
 

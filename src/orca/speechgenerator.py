@@ -37,7 +37,8 @@ import orca_state
 import rolenames
 import settings
 
-from orca_i18n import _                          # for gettext support
+from orca_i18n import _   # for gettext support
+from orca_i18n import Q_  # to provide qualified translatable strings
 
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
@@ -1025,12 +1026,16 @@ class SpeechGenerator:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            selectionState = _("selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            selectionState = Q_("radiobutton|selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            selectionState = _("not selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            selectionState = Q_("radiobutton|not selected")
 
         # If it's not already focused, say it's name
         #

@@ -981,13 +981,18 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # Attribute Value column (VALUE)
         #
-        # Translators: The "Present Unless" column consists of an
-        # editable text field in which the user can specify the
-        # "default" (or not of interest) value for that attribute,
-        # such as "None" in the case of underline. Orca will only
-        # speak the attribute and/or mark it in braille if the
-        # appropriate checkboxes have been checked AND the attribute
-        # value is not the default.
+        # Translators: "Present Unless" is a column header of the text
+        # attributes pane of the Orca preferences dialog.  On this pane,
+        # the user can select a set of text attributes that they would like
+        # spoken and/or indicated in braille.  Because the list of attributes
+        # could get quite lengthy, we provide the option to always speak/
+        # braille a text attribute *unless* its value is equal to the value
+        # given by the user in this column of the list.  For example, given
+        # the text attribute "underline" and a present unless value of "none",
+        # the user is stating that he/she would like to have underlined text
+        # announced for all cases (single, double, low, etc.) except when the
+        # value of underline is none (i.e. when it's not underlined).
+        # "Present" here is being used as a verb.
         #
         column = gtk.TreeViewColumn(_("Present Unless"))
         renderer = gtk.CellRendererText()
