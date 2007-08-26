@@ -36,6 +36,7 @@ import Accessibility
 import speechgenerator
 
 from orca_i18n import _ # for gettext support
+from orca_i18n import Q_ # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -78,11 +79,19 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             #
             utterances.append(_("collapsed"))
         elif obj.state.count(Accessibility.STATE_SELECTED) != 0:
-            utterances.append(_("selected"))
+            # Translators: this represents the state of a node in a tree
+            # or list.
+            #
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            utterances.append(Q_("listitem|selected"))
             obj.was_selected = True
         elif obj.state.count(Accessibility.STATE_SELECTED) == 0 and \
                 obj.state.count(Accessibility.STATE_SELECTABLE) != 0:
-            utterances.append(_("unselected"))
+            # Translators: this represents the state of a node in a tree
+            # or list.
+            #
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            utterances.append(Q_("listitem|unselected"))
 
         self._debugGenerator("_getSpeechForLabel",
                              obj,

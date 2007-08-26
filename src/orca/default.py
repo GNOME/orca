@@ -66,6 +66,7 @@ import bookmarks
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
+from orca_i18n import Q_        # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -3166,7 +3167,9 @@ class Script(script.Script):
                     # Translators: when the user selects (highlights) text in
                     # a document, Orca lets them know this.
                     #
-                    utterances.append(_("selected"))
+                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                    #
+                    utterances.append(Q_("text|selected"))
                     speech.speakUtterances(utterances)
                 self.updateBraille(orca_state.locusOfFocus)
 
@@ -5975,7 +5978,9 @@ class Script(script.Script):
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            speech.speak(_("selected"), None, False)
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            speech.speak(Q_("text|selected"), None, False)
         else:
             if obj.__dict__.has_key("lastSelections"):
                 for i in range(0, len(obj.lastSelections)):
@@ -5987,7 +5992,9 @@ class Script(script.Script):
                         # (unhighlights) text in a document, Orca lets
                         # them know this.
                         #
-                        speech.speak(_("unselected"), None, False)
+                        # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                        #
+                        speech.speak(Q_("text|unselected"), None, False)
                         break
 
         # Save away the current text cursor position and list of text

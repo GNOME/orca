@@ -54,6 +54,7 @@ import bookmarks
 
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
+from orca_i18n import Q_        # to provide qualified translatable strings
 
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
@@ -886,12 +887,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            selectionState = _("selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            selectionState = Q_("radiobutton|selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            selectionState = _("not selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            selectionState = Q_("radiobutton|not selected")
 
         if not already_focused:
             # The label is handled as a context in default.py -- assuming we

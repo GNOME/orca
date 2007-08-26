@@ -45,6 +45,7 @@ import orca.keybindings as keybindings
 import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
+from orca_i18n import Q_     # to provide qualified translatable strings
 
 # Whether we speak spread sheet cell coordinates as the user moves around.
 #
@@ -136,7 +137,9 @@ class WhereAmI(where_am_I.WhereAmI):
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            text = _("selected")
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            text = Q_("text|selected")
             utterances.append(text)
 
         debug.println(self._debugLevel, "editable table cell utterances=%s" % \
