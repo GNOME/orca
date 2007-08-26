@@ -5421,7 +5421,10 @@ class Script(script.Script):
             accelerator    = bindingStrings[2]
         elif len(bindingStrings) > 0:
             fullShortcut   = bindingStrings[0]
-            accelerator    = ""
+            try:
+                accelerator = bindingStrings[1]
+            except:
+                acclerator = ""
         else:
             fullShortcut   = ""
             accelerator    = ""
@@ -5433,7 +5436,9 @@ class Script(script.Script):
         # If the accelerator string includes a Space, make sure we speak it.
         #
         if accelerator.endswith(" "):
-            accelerator += "space"
+            # Translators: this is the spoken word for the space character
+            #
+            accelerator += _("space")
         accelerator  = accelerator.replace("<","")
         accelerator  = accelerator.replace(">"," ")
 
