@@ -3727,7 +3727,7 @@ class Script(default.Script):
         # on the display.]]]
         #
         lineContentsOffset = focusedCharacterOffset
-        if focusedObj and focusedObj.text:
+        if focusedObj and focusedObj.text and focusedObj.text.characterCount:
             char = self.getText(focusedObj,
                                 focusedCharacterOffset,
                                 focusedCharacterOffset + 1)
@@ -3776,7 +3776,8 @@ class Script(default.Script):
                 regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
                     focusedRegion = regions[0]
-            elif obj.text and (obj.role != rolenames.ROLE_MENU_ITEM):
+            elif obj.text and obj.text.characterCount \
+                 and (obj.role != rolenames.ROLE_MENU_ITEM):
                 string = self.getText(obj, startOffset, endOffset)
                 regions = [braille.Region(
                     string,
@@ -4407,7 +4408,8 @@ class Script(default.Script):
         # item, get the object extents rather than the range extents for
         # the text.
         #
-        if obj.text and obj.role != rolenames.ROLE_MENU_ITEM:
+        if obj.text and obj.text.characterCount \
+           and obj.role != rolenames.ROLE_MENU_ITEM:
             extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
         else:
             ext = obj.extents
@@ -5570,7 +5572,7 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text:
+        if obj.text and obj.text.characterCount:
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
@@ -5646,7 +5648,7 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text:
+        if obj.text and obj.text.characterCount:
             unicodeText = self.getUnicodeText(obj)
             if startOffset == -1:
                 startOffset = len(unicodeText)
@@ -6123,7 +6125,7 @@ class Script(default.Script):
         given object or None if the object does not implement the
         accessible text specialization.
         """
-        if obj and obj.text:
+        if obj and obj.text and obj.text.characterCount:
             unicodeText = self.getUnicodeText(obj)
             return unicodeText[characterOffset].encode("UTF-8")
         else:
@@ -6156,7 +6158,7 @@ class Script(default.Script):
         encounteredText = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj == lastObj:
-            if not obj.text:
+            if not obj.text or not obj.text.characterCount:
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
@@ -6178,7 +6180,7 @@ class Script(default.Script):
         encounteredDelimiter = False
         [obj, characterOffset] = [lastObj, lastCharacterOffset]
         while obj and (obj == lastObj):
-            if not obj.text:
+            if not obj.text or not obj.text.characterCount:
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
@@ -6313,7 +6315,7 @@ class Script(default.Script):
         #if not obj.state.count(atspi.Accessibility.STATE_SHOWING):
         #    return [[None, -1, -1]]
 
-        if not obj.text:
+        if not obj.text or not obj.text.characterCount:
             return [[obj, -1, -1]]
 
         contents = []
@@ -6408,7 +6410,7 @@ class Script(default.Script):
                                      rolenames.ROLE_ENTRY,
                                      rolenames.ROLE_PASSWORD_TEXT]
 
-            if obj.text \
+            if obj.text and obj.text.characterCount \
                and not obj.role in [rolenames.ROLE_ENTRY,
                                     rolenames.ROLE_PASSWORD_TEXT,
                                     rolenames.ROLE_RADIO_BUTTON,
@@ -6420,7 +6422,7 @@ class Script(default.Script):
                 strings = self.speechGenerator.getSpeech(obj, False)
 
             if speakRole and speakThisRole:
-                if obj.text:
+                if obj.text and obj.text.characterCount:
                     strings.extend(\
                        self.speechGenerator._getSpeechForObjectRole(obj))
 
@@ -6695,7 +6697,7 @@ class Script(default.Script):
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if obj.text:
+            if obj.text and obj.text.characterCount:
                 if characterOffset > 0:
                     previousChar = \
                         obj.text.getText(characterOffset - 1, characterOffset)
@@ -6802,7 +6804,7 @@ class Script(default.Script):
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if obj.text:
+            if obj.text and obj.text.characterCount:
                 if characterOffset > 0:
                     previousChar = \
                         obj.text.getText(characterOffset - 1, characterOffset)

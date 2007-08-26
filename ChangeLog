@@ -1,3 +1,11 @@
+2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: Fix for bug 470332 - Can no longer arrow to 
+        push buttons in FF3
+
+        * src/orca/default.py: Fix for bug 468765 - Orca does not provide
+        access to shortcuts for FF3 or Thunderbird menu items
+
 2007-08-24  Eitan Isaacson <eitan@ascender.com>
 
 	* src/orca/braillegenerator.py: Reset the braille verbosity setting
