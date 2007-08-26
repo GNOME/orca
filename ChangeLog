@@ -1,5 +1,20 @@
 2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/atspi.py,
+        * src/orca/Gecko.py,
+        * src/orca/where_am_I.py:
+        Work on bug 468098 - The whereAmI implementation doesn't always
+        match the whereAmI spec and bug 356068 - Provide a command for 
+        identifying the default button within a dialog.  On the latter
+        front, double-clicking Orca_Modifier + KP_Enter (desktop layout)
+        or Orca_Modifier + / (laptop layout) should cause the default
+        button to be announced if there is a default button.  Please
+        note that this functionality requires the latest gail from svn
+        trunk. If you're using Feisty, your mileage may vary.  This is
+        intended for GNOME 2.20 and beyond.
+
+2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
          * src/orca/scripts/StarOffice.py,
          * src/orca/orca-setup.glade,
          * src/orca/flat_review.py,

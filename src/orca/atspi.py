@@ -788,6 +788,8 @@ class Accessible:
             stateString += "HORIZONTAL "
         if stateSet.count(Accessibility.STATE_ICONIFIED):
             stateString += "ICONIFIED "
+        if stateSet.count(Accessibility.STATE_IS_DEFAULT):
+            stateString += "IS_DEFAULT "
         if stateSet.count(Accessibility.STATE_MODAL):
             stateString += "MODAL "
         if stateSet.count(Accessibility.STATE_MULTI_LINE):

@@ -1194,7 +1194,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """Calls the base class method for single clicks and Gecko specific
         information presentation methods for double clicks
         """
-        if not doubleClick:
+        if not doubleClick or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, orcaKey)
         else:
             self.readPageSummary(obj)

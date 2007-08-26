@@ -47,6 +47,7 @@ class WhereAmI:
         self._script = script
         self._debugLevel = debug.LEVEL_FINEST
         self._statusBar = None
+        self._defaultButton = None
         self._lastAttributeString = ""
 
     def whereAmI(self, obj, doubleClick, orcaKey):
@@ -108,19 +109,19 @@ class WhereAmI:
         elif role == rolenames.ROLE_SLIDER:
             self._speakSlider(obj, doubleClick)
 
-        elif role == rolenames.ROLE_MENU or \
-             role == rolenames.ROLE_MENU_ITEM or \
-             role == rolenames.ROLE_CHECK_MENU or \
-             role == rolenames.ROLE_CHECK_MENU_ITEM or \
-             role == rolenames.ROLE_RADIO_MENU or \
-             role == rolenames.ROLE_RADIO_MENU_ITEM:
+        elif role in [rolenames.ROLE_MENU,
+                      rolenames.ROLE_MENU_ITEM,
+                      rolenames.ROLE_CHECK_MENU,
+                      rolenames.ROLE_CHECK_MENU_ITEM,
+                      rolenames.ROLE_RADIO_MENU,
+                      rolenames.ROLE_RADIO_MENU_ITEM]:
             self._speakMenuItem(obj, doubleClick)
 
         elif role == rolenames.ROLE_PAGE_TAB:
             self._speakPageTab(obj, doubleClick)
 
-        elif role == rolenames.ROLE_TEXT or \
-             role == rolenames.ROLE_TERMINAL:
+        elif role in [rolenames.ROLE_TEXT,
+                      rolenames.ROLE_TERMINAL]:
             self._speakText(obj, doubleClick)
 
         elif role == rolenames.ROLE_TABLE_CELL:
@@ -156,10 +157,8 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj)
-        utterances.append(text)
-
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getObjLabelAndName(obj) + " " + \
+               rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
@@ -195,29 +194,24 @@ class WhereAmI:
         text = self._getGroupLabel(obj)
         utterances.append(text)
 
-        if doubleClick:
-            text = self._getPositionInGroup(obj)
-            utterances.append(text)
-
-        text = self._getObjLabelAndName(obj)
-        utterances.append(text)
-
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getObjLabelAndName(obj) + " " + \
+               rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            # Translators: this represents the state of a checkbox.
+            # Translators: this is in reference to a radio button being
+            # selected or not.
             #
-            text = _("checked")
+            text = Q_("selected")
         else:
-            # Translators: this represents the state of a checkbox.
+            # Translators: this is in reference to a radio button being
+            # selected or not.
             #
-            text = _("not checked")
+            text = Q_("not selected")
         utterances.append(text)
 
-        if not doubleClick:
-            text = self._getPositionInGroup(obj)
-            utterances.append(text)
+        text = self._getPositionInGroup(obj)
+        utterances.append(text)
 
         text = self._getObjMnemonic(obj)
         utterances.append(text)
@@ -244,20 +238,12 @@ class WhereAmI:
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        if doubleClick:
-            # child(0) is the popup list
-            name = self._getObjName(obj)
-            text = self._getPositionInList(obj.child(0), name)
-            utterances.append(text)
+        name = self._getObjName(obj)
+        utterances.append(name)
 
-            utterances.append(name)
-        else:
-            name = self._getObjName(obj)
-            utterances.append(name)
-
-            # child(0) is the popup list
-            text = self._getPositionInList(obj.child(0), name)
-            utterances.append(text)
+        # child(0) is the popup list
+        text = self._getPositionInList(obj.child(0), name)
+        utterances.append(text)
 
         text = self._getObjMnemonic(obj)
         utterances.append(text)
@@ -277,17 +263,15 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj)
+        text = self._getObjLabel(obj)
         utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        value = obj.value
-        if value:
-            text = "%.1f" % value.currentValue
-            utterances.append(text)
-
+        name = self._getObjName(obj)
+        utterances.append(name)
+        
         text = self._getObjMnemonic(obj)
         utterances.append(text)
 
@@ -362,31 +346,57 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj.parent)
+        text = self._getObjLabelAndName(obj.parent) + " " + \
+               rolenames.getSpeechForRoleName(obj.parent)
         utterances.append(text)
-
-        if doubleClick:
-            # parent is the page tab list
-            name = self._getObjName(obj)
-            text = self._getPositionInList(obj.parent, name)
-            utterances.append(text)
 
         text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
+        if obj.role != rolenames.ROLE_MENU_ITEM:
+            text = rolenames.getSpeechForRoleName(obj)
+            utterances.append(text)
+
+        if obj.role == rolenames.ROLE_CHECK_MENU_ITEM:
+            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                # Translators: this represents the state of a checkbox.
+                #
+                text = _("checked")
+            else:
+                # Translators: this represents the state of a checkbox.
+                #
+                text = _("not checked")
+            utterances.append(text)
+
+        elif obj.role == rolenames.ROLE_RADIO_MENU_ITEM:
+            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                # Translators: this is in reference to a radio button being
+                # selected or not.
+                #
+                text = _("selected")
+            else:
+                # Translators: this is in reference to a radio button being
+                # selected or not.
+                #
+                text = _("not selected")
+            utterances.append(text)
+
         text = self._getObjAccelerator(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        name = self._getObjName(obj)
+        text = self._getPositionInList(obj.parent, name)
         utterances.append(text)
 
-        if not doubleClick:
-            # parent is the page tab list
-            name = self._getObjName(obj)
-            text = self._getPositionInList(obj.parent, name)
-            utterances.append(text)
-
         text = self._getObjShortcut(obj)
+
+        # The object's shortcut will be the full list of keys (e.g.
+        # Alt FO for the open menu item in the File menu). We only
+        # want to speak the shortcut associated with the menu item.
+        #
+        if obj.parent and obj.parent.role == rolenames.ROLE_MENU:
+            text = text[-1]
+        
         utterances.append(text)
 
         debug.println(self._debugLevel, "menu item utterances=%s" % \
@@ -404,27 +414,17 @@ class WhereAmI:
         """
 
         utterances = []
-        text = rolenames.getSpeechForRoleName(obj)
+        text = rolenames.getSpeechForRoleName(obj.parent)
         utterances.append(text)
 
-        if doubleClick:
-            # Translators: "page" is the word for a page tab in a tab list.
-            #
-            text = _("%s page") % self._getObjLabelAndName(obj)
-            utterances.append(text)
+        # Translators: "page" is the word for a page tab in a tab list.
+        #
+        text = _("%s page") % self._getObjLabelAndName(obj)
+        utterances.append(text)
 
-            name = self._getObjName(obj)
-            text = self._getPositionInList(obj.parent, name)
-            utterances.append(text)
-        else:
-            name = self._getObjName(obj)
-            text = self._getPositionInList(obj.parent, name)
-            utterances.append(text)
-
-            # Translators: "page" is the word for a page tab in a tab list.
-            #
-            text = _("%s page") % self._getObjLabelAndName(obj)
-            utterances.append(text)
+        name = self._getObjName(obj)
+        text = self._getPositionInList(obj.parent, name)
+        utterances.append(text)
 
         text = self._getObjMnemonic(obj)
         utterances.append(text)
@@ -566,7 +566,7 @@ class WhereAmI:
                 # 'collapsed' means the children are not showing.
                 #
                 text = _("collapsed")
-                utterances.append(text)
+            utterances.append(text)
 
         level = self._script.getNodeLevel(orca_state.locusOfFocus)
         if level >= 0:
@@ -773,6 +773,7 @@ class WhereAmI:
 
         name = self._getObjName(obj)
         label = self._getObjLabel(obj)
+
         if name != label:
             text = label + " " + name
         else:
@@ -806,7 +807,8 @@ class WhereAmI:
         else:
             parent = obj.parent
             while parent and (parent.parent != parent):
-                if parent.role == rolenames.ROLE_PANEL:
+                if parent.role in [rolenames.ROLE_PANEL,
+                                   rolenames.ROLE_FILLER]:
                     label = self._getObjLabelAndName(parent)
                     if label and label != "":
                         text = label
@@ -855,7 +857,9 @@ class WhereAmI:
 
         for i in range(0, obj.childCount):
             next = self._getObjName(obj.child(i))
-            if next == "" or next == "Empty" or next == "separator":
+            if next in ["", "Empty", "separator"] \
+               or not obj.child(i).state.count( \
+                atspi.Accessibility.STATE_VISIBLE):
                 continue
 
             index += 1
@@ -1329,6 +1333,11 @@ class WhereAmI:
                 self._getStatusBar(list[0])
                 if self._statusBar:
                     self._speakStatusBar()
+            window = list[1] or list[0]
+            if window:
+                self._defaultButton = None
+                self._getDefaultButton(window)
+                self._speakDefaultButton()
         else:
             if list[0]:
                 text = self._getObjLabelAndName(list[0])
@@ -1355,7 +1364,8 @@ class WhereAmI:
             #              (parent.role, self._getObjLabelAndName(parent)))
             if parent.role == rolenames.ROLE_FRAME:
                 list[0] = parent
-            if parent.role == rolenames.ROLE_DIALOG:
+            if parent.role in [rolenames.ROLE_DIALOG,
+                               rolenames.ROLE_FILE_CHOOSER]:
                 list[1] = parent
             parent = parent.parent
 
@@ -1406,5 +1416,51 @@ class WhereAmI:
                 utterances.append(text)
 
         debug.println(self._debugLevel, "statusbar utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+    def _getDefaultButton(self, obj):
+        """Gets the default button in a dialog.
+
+        Arguments:
+        - obj: the dialog box for which the default button should be obtained
+        """
+        
+        if self._defaultButton:
+            return
+
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            # debug.println(self._debugLevel,
+            #               "_getDefaultButton: child=%s, %s" % \
+            #               (child.role, self._getObjLabelAndName(child)))
+            if child.role == rolenames.ROLE_PUSH_BUTTON \
+                and child.state.count(atspi.Accessibility.STATE_IS_DEFAULT):
+                self._defaultButton = child
+                return
+
+            if child.childCount > 0:
+                self._getDefaultButton(child)
+
+    def _speakDefaultButton(self):
+        """Speaks the default button in a dialog.
+        """
+
+        if not self._defaultButton \
+           or not self._defaultButton.state.count(\
+                                      atspi.Accessibility.STATE_SENSITIVE):
+            return
+
+        utterances =[]
+
+        # Translators: The "default" button in a dialog box is the button
+        # that gets activated when Enter is pressed anywhere within that
+        # dialog box.
+        #
+        text = _("Default button is %s") % \
+               self._getObjName(self._defaultButton)
+        utterances.append(text)
+
+        debug.println(self._debugLevel, "default button utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
