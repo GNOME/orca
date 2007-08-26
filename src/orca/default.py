@@ -5424,7 +5424,7 @@ class Script(script.Script):
             try:
                 accelerator = bindingStrings[1]
             except:
-                acclerator = ""
+                accelerator = ""
         else:
             fullShortcut   = ""
             accelerator    = ""
