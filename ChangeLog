@@ -1,3 +1,11 @@
+2007-08-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/gaim.py: Fix for bug 471220 - Gaim's 
+        prefixChatMessage setting should have option to only prefix
+        non-focused tabs.  Now if you enable the app-specific setting
+        to speak chatroom name, it will only speak it when the message
+        is not in your current room.
+
 2007-08-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: One more "check" related to the fix for 
