@@ -1,3 +1,12 @@
+2007-08-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: One more "check" related to the fix for 
+        bug 470332 - Can no longer arrow to push buttons in FF3.  The
+        original fix exposed a Mozilla bug which was causing Orca to
+        hang when it encountered (un)ordered lists.  See bug #470853.
+        This update should prevent the hang while we're waiting for the
+        fix.
+
 2007-08-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/atspi.py,

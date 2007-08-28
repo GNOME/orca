@@ -4471,7 +4471,11 @@ class Script(default.Script):
             if obj.hyperlink:
                 index = 0
                 text = self.getUnicodeText(obj.parent)
-                if text:
+                # [[[TODO: JD - HACK and defensive measure.  Sometimes
+                # Gecko is giving us a bogus characterCount of 0 characters.
+                # See bug #470853.]]]
+                #
+                if text and obj.parent.text.characterCount:
                     for offset in range(0, len(text)):
                         if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
                             if index == obj.index:
