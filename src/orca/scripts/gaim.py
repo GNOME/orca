@@ -447,6 +447,12 @@ class Script(default.Script):
                 message = message[1:]
 
             chatRoomName = self.getDisplayedText(chatRoomTab)
+
+            # If the new message came from the room with focus, we don't
+            # want to speak its name even if prefixChatMessage is enabled.
+            #
+            if event.source.state.count(atspi.Accessibility.STATE_SHOWING):
+                chatRoomName = ""
             self.utterMessage(chatRoomName, message)
 
             # Add the latest message to the list of saved ones. For each
