@@ -4925,9 +4925,14 @@ class Script(default.Script):
         of 0 means there is no heading level."""
 
         level = 0
+        
+        if obj is None:
+            return level
 
         if obj.role == rolenames.ROLE_HEADING:
             attributes = obj.attributes
+            if attributes is None:
+                return level
             for attribute in attributes:
                 if attribute.startswith("level:"):
                     level = int(attribute.split(":")[1])
