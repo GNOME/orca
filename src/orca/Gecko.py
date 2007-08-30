@@ -5050,9 +5050,14 @@ class Script(default.Script):
         of 0 means there is no heading level."""
 
         level = 0
+        
+        if obj is None:
+            return level
 
         if obj.role == rolenames.ROLE_HEADING:
             attributes = obj.attributes
+            if attributes is None:
+                return level
             for attribute in attributes:
                 if attribute.startswith("level:"):
                     level = int(attribute.split(":")[1])
@@ -5065,7 +5070,12 @@ class Script(default.Script):
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
         
+        if obj is None:
+            return -1
+        
         attrs = obj.attributes
+        if attrs is None:
+            return -1
         for attr in attrs:
             if attr.startswith("level:"):
                 return int(attr[6:]) - 1

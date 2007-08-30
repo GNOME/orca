@@ -1,4 +1,8 @@
 2007-08-30 Scott Haeger <scott@bashautomation.com>
+        * src/orca/Gecko.py: Fix for bug #469686, Sanity check needed in
+        gecko.getHeadingLevel/getNodeLevel
+
+2007-08-30 Scott Haeger <scott@bashautomation.com>
         * src/orca/speechgenerator.py: Fix for bug #471885, ARIA trees 
         should output only state change if item is unchanged.
 
