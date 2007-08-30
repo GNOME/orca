@@ -765,15 +765,14 @@ class SpeechGenerator:
                 #
                 utterances.append(_("collapsed"))
                 
-        # Translators: this is the role name for this object
-        # 
-        utterances.append(rolenames.getSpeechForRoleName(obj))
-        level = self._script.getNodeLevel(obj)
-        if level >= 0:
-            # Translators: this represents the depth of a node in a tree
-            # view (i.e., how many ancestors a node has).
-            #
-            utterances.append(_('level %d') %(level + 1))
+        if not already_focused:
+            utterances.append(rolenames.getSpeechForRoleName(obj))
+            level = self._script.getNodeLevel(obj)
+            if level >= 0:
+                # Translators: this represents the depth of a node in a tree
+                # view (i.e., how many ancestors a node has).
+                #
+                utterances.append(_('level %d') %(level + 1))
 
         self._debugGenerator("_getSpeechForListItem",
                              obj,
