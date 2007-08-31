@@ -1,5 +1,10 @@
 2007-08-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/Gecko.py: Fix for bug 471955 - Orca does not provide
+        access to state changes in HTML radio buttons in FF3
+
+2007-08-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/Gecko.py: Fix for bug 471537 - We need to find a way
         to identify truly "focusable" elements in FF3.
 

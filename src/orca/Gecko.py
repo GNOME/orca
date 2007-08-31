@@ -3549,6 +3549,23 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # HTML radio buttons don't automatically become selected when
+        # they receive focus.  The user has to press the space bar on
+        # them much like checkboxes.  But if the user clicks on the
+        # radio button with the mouse, we'll wind up speaking the
+        # state twice because of the focus event.
+        #
+        if event.type == "object:state-changed:checked" \
+           and event.source \
+           and (event.source.role == rolenames.ROLE_RADIO_BUTTON) \
+           and (event.detail1 == 1) \
+           and self.inDocumentContent(event.source) \
+           and not self.isAriaWidget(event.source) \
+           and not isinstance(orca_state.lastInputEvent,
+                              input_event.MouseButtonEvent):
+            orca.visualAppearanceChanged(event, event.source)
+            return
+            
         # We care when the document frame changes it's busy state.  That
         # means it has started/stopped loading content.
         #
