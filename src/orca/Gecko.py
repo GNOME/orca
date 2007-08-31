@@ -1529,6 +1529,12 @@ class Script(default.Script):
         # means we need to know if that has already taken place.
         #
         self.madeFindAnnouncement = False
+
+        # We need to be able to distinguish focus events that are triggered
+        # by the call to grabFocus() in setCaretPosition() from those that
+        # are valid.  See bug #471537.
+        #
+        self._objectForFocusGrab = None
         
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
@@ -3068,6 +3074,14 @@ class Script(default.Script):
 
             return
 
+        # Possibility #4: We called grabFocus() on this item because it has
+        # the overflow:auto; style associated with it.  We need to ignore
+        # this event.  See bug #471537.
+        #
+        if self.isSameObject(event.source, self._objectForFocusGrab):
+            self._objectForFocusGrab = None
+            return
+
         # If Orca is controlling the caret, it is possible to arrow into
         # a menu item inside of a combo box.  This is something that is
         # not possible in Firefox caret browsing mode and seems to confuse
@@ -3253,6 +3267,15 @@ class Script(default.Script):
         return
 
     def onFocus(self, event):
+
+        # If this event is the result of our calling grabFocus() on
+        # this object in setCaretPosition(), we want to ignore it.
+        # See bug #471537.
+        #
+        if self.isSameObject(event.source, self._objectForFocusGrab):
+            orca.setLocusOfFocus(event, event.source, False)
+            return
+            
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
         # on the context.
@@ -6556,15 +6579,15 @@ class Script(default.Script):
             # of something such as a text area and back into the
             # document content.
             #
-            objectForFocus = obj
-            while objectForFocus and obj:
-                if objectForFocus.state.count(\
+            self._objectForFocusGrab = obj
+            while self._objectForFocusGrab and obj:
+                if self._objectForFocusGrab.state.count(\
                     atspi.Accessibility.STATE_FOCUSABLE):
                     break
                 else:
-                    objectForFocus = objectForFocus.parent
+                    self._objectForFocusGrab = self._objectForFocusGrab.parent
 
-            if objectForFocus:
+            if self._objectForFocusGrab:
                 # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
                 # We need to set focus on the parent of the document frame.]]]
                 #
@@ -6575,7 +6598,7 @@ class Script(default.Script):
                 #
                 #if objectForFocus.role == rolenames.ROLE_DOCUMENT_FRAME:
                 #    objectForFocus = objectForFocus.parent
-                focusGrabbed = objectForFocus.component.grabFocus()
+                focusGrabbed = self._objectForFocusGrab.component.grabFocus()
 
         # If there is a character there, we'd like to position the
         # caret the right spot.  [[[TODO: WDW - numbered lists are
