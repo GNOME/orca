@@ -1173,20 +1173,6 @@ class SpeechGenerator:
         else:
             utterances = []
             utterances.extend(self._getSpeechForObjectLabel(obj))
-
-            # Ignore the text on the slider.  See bug 340559
-            # (http://bugzilla.gnome.org/show_bug.cgi?id=340559): the
-            # implementors of the slider support decided to put in a
-            # Unicode left-to-right character as part of the text,
-            # even though that is not painted on the screen.
-            #
-            # In Java, however, there are sliders without a label. In
-            # this case, we'll add to presentation the slider name if
-            # it exists and we haven't found anything yet.
-            #
-            if not utterances:
-                utterances.extend(self._getSpeechForObjectName(obj))
-
             utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
