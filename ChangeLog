@@ -1,3 +1,10 @@
+2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/gaim.py,
+        * src/orca/default.py:
+        Fix for bug 472407-1 - Orca doesn't always announce new messages 
+        in unfocused tabs in Pidgin
+
 2007-08-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 471955 - Orca does not provide

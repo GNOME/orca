@@ -425,7 +425,8 @@ class Script(default.Script):
             # as well, but is currently untested.
             #
             allTextFields = self.findByRole(chatRoomTab,
-                                            rolenames.ROLE_TEXT)
+                                            rolenames.ROLE_TEXT,
+                                            False)
             index = len(allTextFields) - 2
             if index >= 0:
                 self.chatAreas[chatRoomTab] = allTextFields[index]
