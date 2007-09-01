@@ -5504,7 +5504,7 @@ class Script(script.Script):
                 if (child.state.count( \
                     atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0) \
                     and (child.childCount > 0):
-                    objlist.extend(self.getObjects(child))
+                    objlist.extend(self.getObjects(child, onlyShowing))
 
         return objlist
 
