@@ -37,8 +37,9 @@ import orca_state
 import rolenames
 import settings
 
-from orca_i18n import _   # for gettext support
-from orca_i18n import Q_  # to provide qualified translatable strings
+from orca_i18n import _         # for gettext support
+from orca_i18n import ngettext  # for ngettext support
+from orca_i18n import Q_        # to provide qualified translatable strings
 
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
@@ -1342,9 +1343,6 @@ class SpeechGenerator:
         utterances.append(self._script.getDisplayedText(\
                           self._script.getRealActiveDescendant(obj)))
 
-        # [[[TODO: WDW - HACK attempt to determine if this is a node;
-        # if so, describe its state.]]]
-        #
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
@@ -1352,21 +1350,25 @@ class SpeechGenerator:
                 # 'collapsed' means the children are not showing.
                 #
                 utterances.append(_("expanded"))
+                childNodes = self._script.getChildNodes(obj)
+                children = len(childNodes)
+
+                if not children \
+                   or (settings.speechVerbosityLevel == \
+                       settings.VERBOSITY_LEVEL_VERBOSE):
+                    # Translators: this is the number of items in a layered
+                    # pane or table.
+                    #
+                    itemString = ngettext("%d item",
+                                          "%d items",
+                                          children) % children
+                    utterances.append(itemString)
             else:
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
                 #
                 utterances.append(_("collapsed"))
-
-            # If this is an expandable table cell with no children, then
-            # let the user know.
-            #
-            if obj.childCount == 0:
-                # Translators: this is the number of items in a layered pane
-                # or table.
-                #
-                utterances.append(_("0 items"))
 
         self._debugGenerator("_getSpeechForTableCell",
                              obj,

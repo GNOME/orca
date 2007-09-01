@@ -5393,6 +5393,52 @@ class Script(script.Script):
 
         return len(nodes) - 1
 
+    def getChildNodes(self, obj):
+        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
+        to this expanded table cell.
+
+        Arguments:
+        -obj: the Accessible Object
+
+        Returns: a list of all the child nodes
+        """
+
+        if not obj or not obj.parent \
+           or not obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+            return []
+
+        nodes = []
+        table = obj.parent.table
+        row = table.getRowAtIndex(obj.index)
+        col = table.getColumnAtIndex(obj.index)
+        nodeLevel = self.getNodeLevel(obj)
+        done = False
+
+        # Candidates will be in the rows beneath the current row.
+        # Only check in the current column and stop checking as
+        # soon as the node level of a candidate is equal or less
+        # than our current level.
+        #
+        for i in range(row+1, table.nRows):
+            acc = table.getAccessibleAt(i, col)
+            cell = atspi.Accessible.makeAccessible(acc)
+            relations = cell.relations
+            for relation in relations:
+                if relation.getRelationType() \
+                       == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                    nodeOf = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    if self.isSameObject(obj, nodeOf):
+                        nodes.append(nodeOf)
+                    else:
+                        currentLevel = self.getNodeLevel(nodeOf)
+                        if currentLevel <= nodeLevel:
+                            done = True
+                    break
+            if done:
+                break
+
+        return nodes
+
     def getAcceleratorAndShortcut(self, obj):
         """Gets the accelerator string (and possibly shortcut) for the given
         object.
