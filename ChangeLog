@@ -1,9 +1,20 @@
 2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/speechgenerator.py,
+        * src/orca/default.py:
+        Fix for bug 456970 - Orca says "0 items" for tree tables that 
+        use NODE_CHILD_OF relationship.
+
+        * src/orca/Gecko.py: Work on bug 472029 - Cannot arrow into
+        autocompletes in HTML forms if Orca is controlling the caret
+
+2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/scripts/gaim.py,
         * src/orca/default.py:
-        Fix for bug 472407-1 - Orca doesn't always announce new messages 
+        Fix for bug 472407 - Orca doesn't always announce new messages 
         in unfocused tabs in Pidgin
+
 
 2007-08-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

@@ -1536,6 +1536,12 @@ class Script(default.Script):
         #
         self._objectForFocusGrab = None
         
+        # We don't want to prevent the user from arrowing into an
+        # autocomplete when it appears in a search form.  We need to
+        # keep track if one has appeared or disappeared.
+        #
+        self._autocompleteVisible = False
+        
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
@@ -3449,6 +3455,17 @@ class Script(default.Script):
                               input_event.MouseButtonEvent):
             orca.visualAppearanceChanged(event, event.source)
             return
+
+        # If an autocomplete appears beneath an entry, we don't want
+        # to prevent the user from being able to arrow into it.
+        #
+        if event.type == "object:state-changed:showing" \
+           and event.source \
+           and (event.source.role == rolenames.ROLE_WINDOW) \
+           and orca_state.locusOfFocus:
+            if orca_state.locusOfFocus.role in [rolenames.ROLE_ENTRY,
+                                                rolenames.ROLE_LIST_ITEM]:
+                self._autocompleteVisible = event.detail1
             
         # We care when the document frame changes it's busy state.  That
         # means it has started/stopped loading content.
@@ -4259,13 +4276,15 @@ class Script(default.Script):
             elif caretOffset <= 0:
                 weHandleIt = keyboardEvent.event_string \
                              in ["Up", "Left"]
-            elif caretOffset >= length - 1:
+            elif caretOffset >= length - 1 \
+                 and not self._autocompleteVisible:
                 weHandleIt = keyboardEvent.event_string \
                              in ["Down", "Right"]
             else:
                 weHandleIt = False
 
-            if singleLine and not weHandleIt:
+            if singleLine and not weHandleIt \
+               and not self._autocompleteVisible:
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
 
         elif keyboardEvent.modifiers & (1 << atspi.Accessibility.MODIFIER_ALT):
