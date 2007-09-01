@@ -202,7 +202,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
+        self._debugGenerator("Gecko._getBrailleRegionsForCheckBox", obj)
 
         # Treat ARIA widgets like default.py widgets
         #
@@ -236,6 +236,63 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         text = self._script.appendString(
             settings.brailleCheckBoxIndicators[
+                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            text)
+
+        text = self._script.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
+    def _getBrailleRegionsForRadioButton(self, obj):
+        """Get the braille for a radio button.  If the radio button already
+        had focus, then only the state is displayed.
+
+        Arguments:
+        - obj: the radio button
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        self._debugGenerator("Gecko._getBrailleRegionsForRadioButton", obj)
+
+        # Treat ARIA widgets like default.py widgets
+        #
+        if self._script.isAriaWidget(obj):
+            bg = braillegenerator.BrailleGenerator
+            return bg._getBrailleRegionsForRadioButton(self, obj)
+        
+        # In document content (I'm not sure about XUL widgets yet), a
+        # radio button is its own little beast with no text.  So...  if it
+        # is in document content and has a label, we're likely to be
+        # displaying that label already.  If it doesn't have a label,
+        # though, we'll display its name.
+        #
+        text = ""
+        if not self._script.inDocumentContent():
+            text = self._script.appendString(
+                text, self._script.getDisplayedLabel(obj))
+            text = self._script.appendString(
+                text, self._script.getDisplayedText(obj))
+        else:
+            isLabelled = False
+            relations = obj.relations
+            if relations:
+                for relation in relations:
+                    if relation.getRelationType() \
+                        == atspi.Accessibility.RELATION_LABELLED_BY:
+                        isLabelled = True
+                        break
+
+            if not isLabelled and obj.name and len(obj.name):
+                text = self._script.appendString(text, obj.name)
+
+        text = self._script.appendString(
+            settings.brailleRadioButtonIndicators[
                 obj.state.count(atspi.Accessibility.STATE_CHECKED)],
             text)
 
