@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-18 10:14+0300\n"
+"POT-Creation-Date: 2007-09-01 07:22+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -55,21 +55,21 @@ msgstr "kirjanmerkki syötetty"
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
 #.
-#: ../src/orca/bookmarks.py:94 ../src/orca/Gecko.py:1342
+#: ../src/orca/bookmarks.py:94 ../src/orca/Gecko.py:1347
 msgid "bookmark is current object"
 msgstr "kirjanmerkki nykyiseen kohteeseen"
 
 #. Translators: this announces that the current object's parent and
 #. the parent of the object pointed to by the bookmark are the same.
 #.
-#: ../src/orca/bookmarks.py:101 ../src/orca/Gecko.py:1349
+#: ../src/orca/bookmarks.py:101 ../src/orca/Gecko.py:1354
 msgid "bookmark and current object have same parent"
 msgstr "kirjanmerkillä ja nykyisellä kohteella on sama vanhempi"
 
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
 #.
-#: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1366
+#: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1371
 #, python-format
 msgid "shared ancestor %s"
 msgstr "jaettu vanhempi %s"
@@ -77,28 +77,28 @@ msgstr "jaettu vanhempi %s"
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
 #.
-#: ../src/orca/bookmarks.py:125 ../src/orca/Gecko.py:1373
+#: ../src/orca/bookmarks.py:125 ../src/orca/Gecko.py:1378
 msgid "comparison unknown"
 msgstr "tuntematon vertailu"
 
 #. Translators: this announces that a bookmark has been saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:134 ../src/orca/Gecko.py:1388
+#: ../src/orca/bookmarks.py:134 ../src/orca/Gecko.py:1393
 msgid "bookmarks saved"
 msgstr "kirjanmerkit tallennettu"
 
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:139 ../src/orca/Gecko.py:1393
+#: ../src/orca/bookmarks.py:139 ../src/orca/Gecko.py:1398
 msgid "bookmarks could not be saved"
 msgstr "kirjanmerkkejä ei voitu tallentaa"
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:206 ../src/orca/speechgenerator.py:202
+#: ../src/orca/braillegenerator.py:206 ../src/orca/speechgenerator.py:203
 msgid "grayed"
 msgstr "harmaa"
 
@@ -106,9 +106,9 @@ msgstr "harmaa"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:693 ../src/orca/braillegenerator.py:1226
-#: ../src/orca/J2SE-access-bridge.py:72 ../src/orca/speechgenerator.py:759
-#: ../src/orca/speechgenerator.py:1349 ../src/orca/where_am_I.py:556
+#: ../src/orca/braillegenerator.py:693 ../src/orca/braillegenerator.py:1241
+#: ../src/orca/J2SE-access-bridge.py:73 ../src/orca/speechgenerator.py:760
+#: ../src/orca/speechgenerator.py:1354 ../src/orca/where_am_I.py:567
 msgid "expanded"
 msgstr "laajennettu"
 
@@ -116,9 +116,9 @@ msgstr "laajennettu"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:699 ../src/orca/braillegenerator.py:1232
-#: ../src/orca/J2SE-access-bridge.py:79 ../src/orca/speechgenerator.py:765
-#: ../src/orca/speechgenerator.py:1355 ../src/orca/where_am_I.py:562
+#: ../src/orca/braillegenerator.py:699 ../src/orca/braillegenerator.py:1247
+#: ../src/orca/J2SE-access-bridge.py:80 ../src/orca/speechgenerator.py:766
+#: ../src/orca/speechgenerator.py:1360 ../src/orca/where_am_I.py:573
 msgid "collapsed"
 msgstr "supistettu"
 
@@ -133,7 +133,7 @@ msgstr "TASO %d"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:1239
+#: ../src/orca/braillegenerator.py:1254
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "PUUN TASO %d"
@@ -199,7 +199,7 @@ msgstr "Kohdistimen sijainti"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:38
+#: ../src/orca/chnames.py:38 ../src/orca/default.py:5444
 msgid "space"
 msgstr "välilyönti"
 
@@ -1223,7 +1223,7 @@ msgstr "oikeaan osoittava nuolenkärki"
 #. {line,word,character}.  A left click means to generate
 #. a left mouse button click on the current item.
 #.
-#: ../src/orca/default.py:131
+#: ../src/orca/default.py:132
 msgid "Performs left click on current flat review item."
 msgstr ""
 "Suorittaa vasemman napsautuksen nykyiselle tasatun tarkastelun kohdalle."
@@ -1238,7 +1238,7 @@ msgstr ""
 #. {line,word,character}.  A right click means to generate
 #. a right mouse button click on the current item.
 #.
-#: ../src/orca/default.py:146
+#: ../src/orca/default.py:147
 msgid "Performs right click on current flat review item."
 msgstr "Suorittaa oikean napsautuksen nykyiselle tasatun tarkastelun kohdalle."
 
@@ -1250,7 +1250,7 @@ msgstr "Suorittaa oikean napsautuksen nykyiselle tasatun tarkastelun kohdalle."
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:159 ../src/orca/Gecko.py:2039
+#: ../src/orca/default.py:160 ../src/orca/Gecko.py:2050
 #: ../src/orca/scripts/acroread.py:113 ../src/orca/scripts/Evolution.py:306
 msgid "Speaks entire document."
 msgstr "Puhuu koko asiakirjan."
@@ -1262,7 +1262,7 @@ msgstr "Puhuu koko asiakirjan."
 #. name of the current pushbutton with focus as well as
 #. its mnemonic.
 #.
-#: ../src/orca/default.py:171
+#: ../src/orca/default.py:172
 msgid "Performs the where am I operation."
 msgstr "Suorittaa \"Missä olen\" -toiminnon."
 
@@ -1271,7 +1271,7 @@ msgstr "Suorittaa \"Missä olen\" -toiminnon."
 #. that text.  For example, they may want to find the
 #. "OK" button.
 #.
-#: ../src/orca/default.py:181
+#: ../src/orca/default.py:182
 msgid "Opens the Orca Find dialog."
 msgstr "Avaa Orcan hakuikkunan."
 
@@ -1281,7 +1281,7 @@ msgstr "Avaa Orcan hakuikkunan."
 #. "OK" button.  This string is used for finding the
 #. next occurence of a string.
 #.
-#: ../src/orca/default.py:192
+#: ../src/orca/default.py:193
 msgid "Searches for the next instance of a string."
 msgstr "Etsii merkkijonon seuraavan esiintymän."
 
@@ -1291,7 +1291,7 @@ msgstr "Etsii merkkijonon seuraavan esiintymän."
 #. "OK" button.  This string is used for finding the
 #. previous occurence of a string.
 #.
-#: ../src/orca/default.py:203
+#: ../src/orca/default.py:204
 msgid "Searches for the previous instance of a string."
 msgstr "Etsii merkkijonon edellisen esiintymän."
 
@@ -1304,7 +1304,7 @@ msgstr "Etsii merkkijonon edellisen esiintymän."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/default.py:222
+#: ../src/orca/default.py:223
 msgid "Enters and exits flat review mode."
 msgstr "Ottaa käyttöön tai käytöstä tasatun tarkastelun tilan."
 
@@ -1317,7 +1317,7 @@ msgstr "Ottaa käyttöön tai käytöstä tasatun tarkastelun tilan."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/default.py:236
+#: ../src/orca/default.py:237
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Siirtää tasatun tarkastelun edellisen rivin alkuun."
 
@@ -1331,7 +1331,7 @@ msgstr "Siirtää tasatun tarkastelun edellisen rivin alkuun."
 #. {line,word,character}.  The home position is the
 #. beginning of the content in the window.
 #.
-#: ../src/orca/default.py:251
+#: ../src/orca/default.py:252
 msgid "Moves flat review to the home position."
 msgstr "Siirtää tasatun tarkastelun kotisijaintiin."
 
@@ -1344,7 +1344,7 @@ msgstr "Siirtää tasatun tarkastelun kotisijaintiin."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/default.py:265
+#: ../src/orca/default.py:266
 msgid "Speaks the current flat review line."
 msgstr "Puhuu nykyisen tasatun tarkastelun rivin."
 
@@ -1357,7 +1357,7 @@ msgstr "Puhuu nykyisen tasatun tarkastelun rivin."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/default.py:279
+#: ../src/orca/default.py:280
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Siirtää tasatun tarkastelun seuraavan rivin alkuun."
 
@@ -1371,7 +1371,7 @@ msgstr "Siirtää tasatun tarkastelun seuraavan rivin alkuun."
 #. {line,word,character}.  The end position is the last
 #. bit of information in the window.
 #.
-#: ../src/orca/default.py:294
+#: ../src/orca/default.py:295
 msgid "Moves flat review to the end position."
 msgstr "Siirtää tasatun tarkastelun loppusijaintiin."
 
@@ -1386,7 +1386,7 @@ msgstr "Siirtää tasatun tarkastelun loppusijaintiin."
 #. in the window until you reach the top (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/default.py:310
+#: ../src/orca/default.py:311
 msgid "Moves flat review to the previous item or word."
 msgstr "Siirtää tasatun tarkastelun edelliseen kohtaan tai sanaan."
 
@@ -1401,7 +1401,7 @@ msgstr "Siirtää tasatun tarkastelun edelliseen kohtaan tai sanaan."
 #. geographically above, as if you drew a vertical line
 #. in the window.
 #.
-#: ../src/orca/default.py:326
+#: ../src/orca/default.py:327
 msgid "Moves flat review to the word above the current word."
 msgstr "Siirtää tasatun tarkastelun nykyisen sanan yllä olevaan sanaan."
 
@@ -1416,7 +1416,7 @@ msgstr "Siirtää tasatun tarkastelun nykyisen sanan yllä olevaan sanaan."
 #. speak the word.  The 'spells' means it will spell
 #. out a word letter by letter.
 #.
-#: ../src/orca/default.py:342
+#: ../src/orca/default.py:343
 msgid "Speaks or spells the current flat review item or word."
 msgstr "Puhuu tai ääntää nykyisen tasatun tarkastelun kohdan tai sanan."
 
@@ -1432,7 +1432,7 @@ msgstr "Puhuu tai ääntää nykyisen tasatun tarkastelun kohdan tai sanan."
 #. some other GUI widget.  The 'speaks' means it will
 #. speak the text associated with the object.
 #.
-#: ../src/orca/default.py:359
+#: ../src/orca/default.py:360
 msgid "Speaks the current flat review object."
 msgstr "Puhuu nykyisen tasatun tarkastelun kohteen."
 
@@ -1447,7 +1447,7 @@ msgstr "Puhuu nykyisen tasatun tarkastelun kohteen."
 #. in the window until you reach the end (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/default.py:375
+#: ../src/orca/default.py:376
 msgid "Moves flat review to the next item or word."
 msgstr "Siirtää tasatun tarkastelun seuraavaan kohtaan tai sanaan."
 
@@ -1462,7 +1462,7 @@ msgstr "Siirtää tasatun tarkastelun seuraavaan kohtaan tai sanaan."
 #. geographically below, as if you drew a vertical line
 #. downward on the screen.
 #.
-#: ../src/orca/default.py:391
+#: ../src/orca/default.py:392
 msgid "Moves flat review to the word below the current word."
 msgstr "Siirtää tasatun tarkastelun nykyisen sanan alla olevaan sanaan."
 
@@ -1477,7 +1477,7 @@ msgstr "Siirtää tasatun tarkastelun nykyisen sanan alla olevaan sanaan."
 #. in the window until you reach the top (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/default.py:407
+#: ../src/orca/default.py:408
 msgid "Moves flat review to the previous character."
 msgstr "Siirtää tasatun tarkastelun edelliseen merkkiin."
 
@@ -1490,7 +1490,7 @@ msgstr "Siirtää tasatun tarkastelun edelliseen merkkiin."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/default.py:421
+#: ../src/orca/default.py:422
 msgid "Moves flat review to the end of the line."
 msgstr "Siirtää tasatun tarkastelun rivin loppuun."
 
@@ -1507,7 +1507,7 @@ msgstr "Siirtää tasatun tarkastelun rivin loppuun."
 #. this case will be the spoken language form of the
 #. character currently being reviewed.
 #.
-#: ../src/orca/default.py:439
+#: ../src/orca/default.py:440
 msgid "Speaks the current flat review character."
 msgstr "Puhuu valitun tasatun tarkastelun merkin."
 
@@ -1522,7 +1522,7 @@ msgstr "Puhuu valitun tasatun tarkastelun merkin."
 #. in the window until you reach the end (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/default.py:455
+#: ../src/orca/default.py:456
 msgid "Moves flat review to the next character."
 msgstr "Siirtää tasatun tarkastelun seuraavaan merkkiin."
 
@@ -1530,7 +1530,7 @@ msgstr "Siirtää tasatun tarkastelun seuraavaan merkkiin."
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:464
+#: ../src/orca/default.py:465
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Luetaanko vain nykyinen taulun solu vai koko rivi."
 
@@ -1538,7 +1538,7 @@ msgstr "Luetaanko vain nykyinen taulun solu vai koko rivi."
 #. text attributes, such as bold, italic, font name,
 #. font size, etc.
 #.
-#: ../src/orca/default.py:473
+#: ../src/orca/default.py:474
 msgid "Reads the attributes associated with the current text character."
 msgstr "Lukee tämänhetkiseen tekstin merkkiin liittyvät ominaisuudet."
 
@@ -1551,7 +1551,7 @@ msgstr "Lukee tämänhetkiseen tekstin merkkiin liittyvät ominaisuudet."
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/default.py:492
+#: ../src/orca/default.py:493
 msgid "Pans the braille display to the left."
 msgstr "Siirtää braille-näyttöä vasemmalle."
 
@@ -1564,7 +1564,7 @@ msgstr "Siirtää braille-näyttöä vasemmalle."
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/default.py:507
+#: ../src/orca/default.py:508
 msgid "Pans the braille display to the right."
 msgstr "Siirtää braille-näyttöä oikealle."
 
@@ -1578,7 +1578,7 @@ msgstr "Siirtää braille-näyttöä oikealle."
 #. {line,word,character}.  The bottom left is the bottom
 #. left of the window currently being reviewed.
 #.
-#: ../src/orca/default.py:523
+#: ../src/orca/default.py:524
 msgid "Moves flat review to the bottom left."
 msgstr "Siirtää tasatun tarkastelun vasemmalle alas."
 
@@ -1595,7 +1595,7 @@ msgstr "Siirtää tasatun tarkastelun vasemmalle alas."
 #. feature used here will return the flat review to the
 #. object with focus.
 #.
-#: ../src/orca/default.py:541
+#: ../src/orca/default.py:542
 msgid "Returns to object with keyboard focus."
 msgstr "Siirtyy olioon, jolla on näppäimistön kohdistus."
 
@@ -1606,7 +1606,7 @@ msgstr "Siirtyy olioon, jolla on näppäimistön kohdistus."
 #. particular key combination, or they might just be to
 #. echo the name of the key if Orca doesn't have a handler.
 #.
-#: ../src/orca/default.py:553
+#: ../src/orca/default.py:554
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 "Siirrytään oppimistilaan. Sulje oppimistila painamalla Escape-näppäintä."
@@ -1618,21 +1618,21 @@ msgstr ""
 #. particular key combination, or they might just be to
 #. echo the name of the key if Orca doesn't have a handler.
 #.
-#: ../src/orca/default.py:565
+#: ../src/orca/default.py:566
 msgid "Exits learn mode."
 msgstr "Sulkee oppimistilan."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
-#: ../src/orca/default.py:573
+#: ../src/orca/default.py:574
 msgid "Decreases the speech rate."
 msgstr "Hidastaa puhetta."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
-#: ../src/orca/default.py:581
+#: ../src/orca/default.py:582
 msgid "Increases the speech rate."
 msgstr "Nopeuttaa puhetta."
 
@@ -1640,7 +1640,7 @@ msgstr "Nopeuttaa puhetta."
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
-#: ../src/orca/default.py:590
+#: ../src/orca/default.py:591
 msgid "Decreases the speech pitch."
 msgstr "Madaltaa puheen korkeutta."
 
@@ -1648,11 +1648,11 @@ msgstr "Madaltaa puheen korkeutta."
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
-#: ../src/orca/default.py:599
+#: ../src/orca/default.py:600
 msgid "Increases the speech pitch."
 msgstr "Nostaa puheen korkeutta."
 
-#: ../src/orca/default.py:604
+#: ../src/orca/default.py:605
 msgid "Quits Orca"
 msgstr "Sulkee Orcan"
 
@@ -1660,7 +1660,7 @@ msgstr "Sulkee Orcan"
 #. the dialog that allows users to set their preferences
 #. for Orca.
 #.
-#: ../src/orca/default.py:618
+#: ../src/orca/default.py:619
 msgid "Displays the preferences configuration dialog."
 msgstr "Näyttää asetusten määrittelyikkunan."
 
@@ -1668,14 +1668,14 @@ msgstr "Näyttää asetusten määrittelyikkunan."
 #. dialog is the dialog that allows users to set their
 #. preferences for a specific application within Orca.
 #.
-#: ../src/orca/default.py:627
+#: ../src/orca/default.py:628
 msgid "Displays the application preferences configuration dialog."
 msgstr "Näyttää soveulluksen asetusikkunan."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
 #.
-#: ../src/orca/default.py:635
+#: ../src/orca/default.py:636
 msgid "Toggles the silencing of speech."
 msgstr "Vaihtelee puheen vaimennusta."
 
@@ -1683,42 +1683,42 @@ msgstr "Vaihtelee puheen vaimennusta."
 #. the relationship of the given bookmark to the current
 #. position
 #.
-#: ../src/orca/default.py:674
+#: ../src/orca/default.py:675
 msgid "Bookmark where am I with respect to current position."
 msgstr "Tee kirjanmerkki siitä, missä olen suhteessa nykyiseen kohtaan."
 
 #. Translators: this command moves the current position to the
 #. location stored at the bookmark.
 #.
-#: ../src/orca/default.py:682
+#: ../src/orca/default.py:683
 msgid "Go to bookmark."
 msgstr "Siirry kirjanmerkkiin."
 
 #. Translators: this event handler binds an in-page accessible
 #. object location to the given input key command.
 #.
-#: ../src/orca/default.py:690
+#: ../src/orca/default.py:691
 msgid "Add bookmark."
 msgstr "Lisää kirjanmerkki."
 
 #. Translators: this event handler saves all bookmarks for the
 #. current application to disk.
 #.
-#: ../src/orca/default.py:698
+#: ../src/orca/default.py:699
 msgid "Save bookmarks."
 msgstr "Tallenna kirjanmerkit."
 
 #. Translators: this event handler cycles through the registered
 #. bookmarks and takes the user to the next bookmark location.
 #.
-#: ../src/orca/default.py:706
+#: ../src/orca/default.py:707
 msgid "Go to next bookmark location."
 msgstr "Siirry seuraavaan kirjanmerkkiin."
 
 #. Translators: this event handler cycles through the registered
 #. bookmarks and takes the user to the previous bookmark location.
 #.
-#: ../src/orca/default.py:714
+#: ../src/orca/default.py:715
 msgid "Go to previous bookmark location."
 msgstr "Siirry edelliseen kirjanmerkkiin."
 
@@ -1731,21 +1731,21 @@ msgstr "Siirry edelliseen kirjanmerkkiin."
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:1673 ../src/orca/default.py:1906
-#: ../src/orca/default.py:3705 ../src/orca/default.py:3846
-#: ../src/orca/default.py:3854 ../src/orca/default.py:3953
-#: ../src/orca/default.py:3961 ../src/orca/Gecko.py:6614
-#: ../src/orca/Gecko.py:7809 ../src/orca/scripts/Evolution.py:720
-#: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:617
-#: ../src/orca/scripts/StarOffice.py:2246
-#: ../src/orca/scripts/StarOffice.py:2258 ../src/orca/where_am_I.py:1191
+#: ../src/orca/default.py:1674 ../src/orca/default.py:1907
+#: ../src/orca/default.py:3709 ../src/orca/default.py:3850
+#: ../src/orca/default.py:3858 ../src/orca/default.py:3957
+#: ../src/orca/default.py:3965 ../src/orca/Gecko.py:6675
+#: ../src/orca/Gecko.py:7870 ../src/orca/scripts/Evolution.py:720
+#: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:620
+#: ../src/orca/scripts/StarOffice.py:2249
+#: ../src/orca/scripts/StarOffice.py:2261 ../src/orca/where_am_I.py:1206
 msgid "blank"
 msgstr "tyhjä"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1754
+#: ../src/orca/default.py:1755
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -1755,7 +1755,7 @@ msgstr[1] "%d väliä"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1761
+#: ../src/orca/default.py:1762
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -1766,7 +1766,7 @@ msgstr[1] "%d sarkainta "
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:2072
+#: ../src/orca/default.py:2073
 #, python-format
 msgid "Progress bar %d."
 msgstr "Edistymispalkki %d."
@@ -1779,7 +1779,7 @@ msgstr "Edistymispalkki %d."
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2080 ../src/orca/flat_review.py:395
+#: ../src/orca/default.py:2081 ../src/orca/flat_review.py:400
 #: ../src/orca/speechgenerator.py:972
 #, python-format
 msgid "%d percent."
@@ -1788,7 +1788,7 @@ msgstr "%d prosenttia."
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2269 ../src/orca/where_am_I.py:570
+#: ../src/orca/default.py:2271 ../src/orca/where_am_I.py:581
 #, python-format
 msgid "tree level %d"
 msgstr "puun taso %d"
@@ -1796,34 +1796,25 @@ msgstr "puun taso %d"
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:2689
+#: ../src/orca/default.py:2691
 msgid "entire document selected"
 msgstr "koko asiakirja valittu"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#. Translators: this is in reference to a radio button being
-#. selected or not.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#. Translators: when the user selects (highlights) text in
-#. a document, Orca lets them know this.
-#.
-#. Translators: this is in reference to a radio button being
-#. selected or not.
-#.
-#: ../src/orca/default.py:3168 ../src/orca/default.py:5972
-#: ../src/orca/flat_review.py:327 ../src/orca/Gecko.py:987
-#: ../src/orca/J2SE-access-bridge.py:81 ../src/orca/scripts/StarOffice.py:139
-#: ../src/orca/speechgenerator.py:1028 ../src/orca/where_am_I.py:480
-msgid "selected"
+#: ../src/orca/default.py:3172 ../src/orca/default.py:5983
+#: ../src/orca/scripts/StarOffice.py:142 ../src/orca/where_am_I.py:491
+msgid "text|selected"
 msgstr "valittu"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3220
+#: ../src/orca/default.py:3224
 msgid "Speak row"
 msgstr "Puhu rivi"
 
@@ -1831,13 +1822,13 @@ msgstr "Puhu rivi"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3226
+#: ../src/orca/default.py:3230
 msgid "Speak cell"
 msgstr "Puhu solu"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:3276 ../src/orca/where_am_I.py:1244
+#: ../src/orca/default.py:3280 ../src/orca/where_am_I.py:1259
 msgid "bold"
 msgstr "korostettu"
 
@@ -1847,7 +1838,7 @@ msgstr "korostettu"
 #. given to us in some unknown form by the application,
 #. so we leave things in plural form here.
 #.
-#: ../src/orca/default.py:3284
+#: ../src/orca/default.py:3288
 #, python-format
 msgid "%s %s pixels"
 msgstr "%s %s pikseliä"
@@ -1860,7 +1851,7 @@ msgstr "%s %s pikseliä"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:3405
+#: ../src/orca/default.py:3409
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -1877,7 +1868,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:3416
+#: ../src/orca/default.py:3420
 msgid "Learn mode.  Press escape to exit."
 msgstr "Oppimistila. Sulje painamalla Escape-näppäintä."
 
@@ -1890,14 +1881,14 @@ msgstr "Oppimistila. Sulje painamalla Escape-näppäintä."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/default.py:3437
+#: ../src/orca/default.py:3441
 msgid "Exiting learn mode."
 msgstr "Suljetaan oppimistila."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:3710 ../src/orca/default.py:3859
+#: ../src/orca/default.py:3714 ../src/orca/default.py:3863
 msgid "white space"
 msgstr "tyhjä tila"
 
@@ -1907,7 +1898,7 @@ msgstr "tyhjä tila"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:4084
+#: ../src/orca/default.py:4088
 msgid "string not found"
 msgstr "merkkijonoa ei löydy"
 
@@ -1916,12 +1907,12 @@ msgstr "merkkijonoa ei löydy"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4927
+#: ../src/orca/default.py:4931
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Väärinkirjoitettu sana: %s"
 
-#: ../src/orca/default.py:4935
+#: ../src/orca/default.py:4939
 #, python-format
 msgid "Context is %s"
 msgstr " Konteksti on %s"
@@ -1931,7 +1922,7 @@ msgstr " Konteksti on %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:5072
+#: ../src/orca/default.py:5076
 #, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
@@ -1942,7 +1933,7 @@ msgstr[1] " %d %s merkkiä"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5891
+#: ../src/orca/default.py:5900
 msgid "page selected from cursor position"
 msgstr "sivu valittu kohdistimen sijainnista saakka"
 
@@ -1950,7 +1941,7 @@ msgstr "sivu valittu kohdistimen sijainnista saakka"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5899
+#: ../src/orca/default.py:5908
 msgid "page selected to cursor position"
 msgstr "sivu valittu kohdistimen sijaintiin saakka"
 
@@ -1958,7 +1949,7 @@ msgstr "sivu valittu kohdistimen sijaintiin saakka"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5907
+#: ../src/orca/default.py:5916
 msgid "line selected down from cursor position"
 msgstr "rivi valittu kohdistimen sijannista alkaen"
 
@@ -1966,7 +1957,7 @@ msgstr "rivi valittu kohdistimen sijannista alkaen"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5915
+#: ../src/orca/default.py:5924
 msgid "line selected up from cursor position"
 msgstr "rivi valittu kohdistimen sijaintiin saakka"
 
@@ -1974,7 +1965,7 @@ msgstr "rivi valittu kohdistimen sijaintiin saakka"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5923
+#: ../src/orca/default.py:5932
 msgid "document selected to cursor position"
 msgstr "asiakirja valittu kohdistimen sijaintiin saakka"
 
@@ -1982,7 +1973,7 @@ msgstr "asiakirja valittu kohdistimen sijaintiin saakka"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5931
+#: ../src/orca/default.py:5940
 msgid "document selected from cursor position"
 msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 
@@ -1990,8 +1981,10 @@ msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:5984 ../src/orca/J2SE-access-bridge.py:85
-msgid "unselected"
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+#: ../src/orca/default.py:5997
+msgid "text|unselected"
 msgstr "ei valittu"
 
 #. Translators: this refers to the speech synthesis services
@@ -2034,53 +2027,65 @@ msgstr "Siirrytään ylös"
 #.
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:304 ../src/orca/Gecko.py:1042
-#: ../src/orca/speechgenerator.py:381 ../src/orca/speechgenerator.py:853
-#: ../src/orca/where_am_I.py:167 ../src/orca/where_am_I.py:210
+#: ../src/orca/flat_review.py:305 ../src/orca/Gecko.py:1047
+#: ../src/orca/speechgenerator.py:382 ../src/orca/speechgenerator.py:853
+#: ../src/orca/where_am_I.py:167 ../src/orca/where_am_I.py:369
 msgid "checked"
 msgstr "merkitty"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:308 ../src/orca/Gecko.py:1046
-#: ../src/orca/speechgenerator.py:385 ../src/orca/where_am_I.py:171
-#: ../src/orca/where_am_I.py:214
+#: ../src/orca/flat_review.py:309 ../src/orca/Gecko.py:1051
+#: ../src/orca/speechgenerator.py:386 ../src/orca/where_am_I.py:171
+#: ../src/orca/where_am_I.py:373
 msgid "not checked"
 msgstr "ei merkitty"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:315 ../src/orca/scripts/planner.py:141
+#: ../src/orca/flat_review.py:316 ../src/orca/scripts/planner.py:141
 #: ../src/orca/scripts/planner.py:149 ../src/orca/scripts/planner.py:175
-#: ../src/orca/scripts/planner.py:183 ../src/orca/speechgenerator.py:1548
+#: ../src/orca/scripts/planner.py:183 ../src/orca/speechgenerator.py:1553
 msgid "pressed"
 msgstr "painettu"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:319 ../src/orca/scripts/planner.py:143
+#: ../src/orca/flat_review.py:320 ../src/orca/scripts/planner.py:143
 #: ../src/orca/scripts/planner.py:151 ../src/orca/scripts/planner.py:177
-#: ../src/orca/scripts/planner.py:185 ../src/orca/speechgenerator.py:1552
+#: ../src/orca/scripts/planner.py:185 ../src/orca/speechgenerator.py:1557
 msgid "not pressed"
 msgstr "ei painettu"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:332 ../src/orca/Gecko.py:992
-#: ../src/orca/speechgenerator.py:1033
-msgid "not selected"
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+#: ../src/orca/flat_review.py:330 ../src/orca/Gecko.py:990
+#: ../src/orca/speechgenerator.py:1030 ../src/orca/where_am_I.py:207
+msgid "radiobutton|selected"
+msgstr "valittu"
+
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+#: ../src/orca/flat_review.py:337 ../src/orca/Gecko.py:997
+#: ../src/orca/speechgenerator.py:1037 ../src/orca/where_am_I.py:214
+msgid "radiobutton|not selected"
 msgstr "ei valittu"
 
 #. Translators: The component orientation is horizontal.
 #.
-#: ../src/orca/flat_review.py:370
+#: ../src/orca/flat_review.py:375
 msgid "horizontal"
 msgstr "vaaka"
 
 #. Translators: The component orientation is vertical.
 #.
-#: ../src/orca/flat_review.py:377
+#: ../src/orca/flat_review.py:382
 msgid "vertical"
 msgstr "pysty"
 
@@ -2095,14 +2100,14 @@ msgstr "Ei kohdistusta"
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/Gecko.py:821
+#: ../src/orca/Gecko.py:822
 msgid "multi-select"
 msgstr "monivalinta"
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1237
+#: ../src/orca/Gecko.py:1242
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -2112,7 +2117,7 @@ msgstr[1] "%d otsaketta"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1243
+#: ../src/orca/Gecko.py:1248
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -2122,7 +2127,7 @@ msgstr[1] "%d kaavaketta"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1249
+#: ../src/orca/Gecko.py:1254
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -2132,7 +2137,7 @@ msgstr[1] "%d taulukkoa"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1255
+#: ../src/orca/Gecko.py:1260
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -2142,7 +2147,7 @@ msgstr[1] "%d vierailtua linkkiä"
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1261
+#: ../src/orca/Gecko.py:1266
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -2154,197 +2159,197 @@ msgstr[1] "%d vierailtua linkkiä"
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/Gecko.py:1268
+#: ../src/orca/Gecko.py:1273
 #, python-format
 msgid "%d percent of document read"
 msgstr "%d prosenttia asiakirjasta luettu"
 
 #. Translators: this announces that a bookmark has been entered
 #.
-#: ../src/orca/Gecko.py:1296
+#: ../src/orca/Gecko.py:1301
 msgid "entered bookmark"
 msgstr "syötetty kirjanmerkki"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1676
+#: ../src/orca/Gecko.py:1687
 msgid "Goes to next character."
 msgstr "Siirtää seuraavaan merkkiin."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1684
+#: ../src/orca/Gecko.py:1695
 msgid "Goes to previous character."
 msgstr "Siirtää edelliseen merkkiin."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:1692
+#: ../src/orca/Gecko.py:1703
 msgid "Goes to next word."
 msgstr "Siirtää seuraavaan sanaan."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:1700
+#: ../src/orca/Gecko.py:1711
 msgid "Goes to previous word."
 msgstr "Siirtää edelliseen sanaan."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:1708
+#: ../src/orca/Gecko.py:1719
 msgid "Goes to next line."
 msgstr "Siirtyy seuraavalle riville."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:1716
+#: ../src/orca/Gecko.py:1727
 msgid "Goes to previous line."
 msgstr "Siirtyy edelliselle riville."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/Gecko.py:1724
+#: ../src/orca/Gecko.py:1735
 msgid "Causes the current combo box to be expanded."
 msgstr "Aiheuttaa tämänhetkisen valintalaatikon laajentamisen."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1731
+#: ../src/orca/Gecko.py:1742
 msgid "Goes left one cell."
 msgstr "Siirtyy yhden solun vasemmalle."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1738
+#: ../src/orca/Gecko.py:1749
 msgid "Goes right one cell."
 msgstr "Siirtyy yhden solun oikealle."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1745
+#: ../src/orca/Gecko.py:1756
 msgid "Goes down one cell."
 msgstr "Siirtyy yhden solun alas."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1752
+#: ../src/orca/Gecko.py:1763
 msgid "Goes up one cell."
 msgstr "Siirtyy yhden solun ylös."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1759
+#: ../src/orca/Gecko.py:1770
 msgid "Goes to the first cell in a table."
 msgstr "Siirtyy taulun ensimmäiseen soluun."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:1766
+#: ../src/orca/Gecko.py:1777
 msgid "Goes to the last cell in a table."
 msgstr "Siirtyy taulun viimeiseen soluun."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1774
+#: ../src/orca/Gecko.py:1785
 msgid "Goes to previous heading."
 msgstr "Siirtyy edelliseen otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1782
+#: ../src/orca/Gecko.py:1793
 msgid "Goes to next heading."
 msgstr "Siirtyy seuraavaan otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1790
+#: ../src/orca/Gecko.py:1801
 msgid "Goes to previous heading at level 1."
 msgstr "Sirtyy edelliseen tason 1 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:1798
+#: ../src/orca/Gecko.py:1809
 msgid "Goes to next heading at level 1."
 msgstr "Siirtyy seuraavaan tason 1 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:1806
+#: ../src/orca/Gecko.py:1817
 msgid "Goes to previous heading at level 2."
 msgstr "Siirtyy edelliseen tason 2 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:1814
+#: ../src/orca/Gecko.py:1825
 msgid "Goes to next heading at level 2."
 msgstr "Siirtyy seuraavaan tason 2 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:1822
+#: ../src/orca/Gecko.py:1833
 msgid "Goes to previous heading at level 3."
 msgstr "Siirtyy edelliseen tason 3 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:1830
+#: ../src/orca/Gecko.py:1841
 msgid "Goes to next heading at level 3."
 msgstr "Siirtyy seuraavaan tason 3 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:1838
+#: ../src/orca/Gecko.py:1849
 msgid "Goes to previous heading at level 4."
 msgstr "Siirtyy edelliseen tason 4 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:1846
+#: ../src/orca/Gecko.py:1857
 msgid "Goes to next heading at level 4."
 msgstr "Siirtyy seuraavaan tason 4 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:1854
+#: ../src/orca/Gecko.py:1865
 msgid "Goes to previous heading at level 5."
 msgstr "Siirtyy edelliseen tason 5 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:1862
+#: ../src/orca/Gecko.py:1873
 msgid "Goes to next heading at level 5."
 msgstr "Siirtyy seuraavaan tason 5 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1870
+#: ../src/orca/Gecko.py:1881
 msgid "Goes to previous heading at level 6."
 msgstr "Siirtyy edelliseen tason 6 otsakkeeseen."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:1878
+#: ../src/orca/Gecko.py:1889
 msgid "Goes to next heading at level 6."
 msgstr "Siirtyy seuraavaan tason 6 otsakkeeseen."
 
@@ -2352,7 +2357,7 @@ msgstr "Siirtyy seuraavaan tason 6 otsakkeeseen."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1887
+#: ../src/orca/Gecko.py:1898
 msgid "Goes to previous large object."
 msgstr "Siirtyy edelliseen isoon kohteeseen."
 
@@ -2360,99 +2365,99 @@ msgstr "Siirtyy edelliseen isoon kohteeseen."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:1896
+#: ../src/orca/Gecko.py:1907
 msgid "Goes to next large object."
 msgstr "Siirtyy seuraavaan isoon kohteeseen."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1904
+#: ../src/orca/Gecko.py:1915
 msgid "Goes to previous list."
 msgstr "Siirtyy edelliseen luetteloon."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:1912
+#: ../src/orca/Gecko.py:1923
 msgid "Goes to next list."
 msgstr "Siirtyy seuraavaan luetteloon."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1920
+#: ../src/orca/Gecko.py:1931
 msgid "Goes to previous list item."
 msgstr "Siirtyy edelliseen luettelon kohtaan."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:1928
+#: ../src/orca/Gecko.py:1939
 msgid "Goes to next list item."
 msgstr "Siirtyy seuraavaan luettelon kohtaan."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1935
+#: ../src/orca/Gecko.py:1946
 msgid "Goes to previous unvisited link."
 msgstr "Siirtyy edelliseen tallentamattomaan linkkiin."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1942
+#: ../src/orca/Gecko.py:1953
 msgid "Goes to next unvisited link."
 msgstr "Siirtyy seuraavaan tallentamattomaan linkkiin."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1949
+#: ../src/orca/Gecko.py:1960
 msgid "Goes to previous visited link."
 msgstr "Siirtyy edelliseen vierailtuun linkkiin."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:1956
+#: ../src/orca/Gecko.py:1967
 msgid "Goes to next visited link."
 msgstr "Siirtyy seuraavaan vierailtuun linkkiin."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1964
+#: ../src/orca/Gecko.py:1975
 msgid "Goes to previous form field."
 msgstr "Siirtyy edelliseen lomakkeen kenttään."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1972
+#: ../src/orca/Gecko.py:1983
 msgid "Goes to next form field."
 msgstr "Siirtyy seuraavaan lomakkeen kenttään."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1980
+#: ../src/orca/Gecko.py:1991
 msgid "Goes to previous blockquote."
 msgstr "Siirtyy edelliseen lainattuun lohkoon."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:1988
+#: ../src/orca/Gecko.py:1999
 msgid "Goes to next blockquote."
 msgstr "Siirtyy seuraavaan lainattuun lohkoon."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:1995
+#: ../src/orca/Gecko.py:2006
 msgid "Goes to previous table."
 msgstr "Siirtyy seuraavaan tauluun."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:2002
+#: ../src/orca/Gecko.py:2013
 msgid "Goes to next table."
 msgstr "Siirtyy edelliseen tauluun."
 
@@ -2463,7 +2468,7 @@ msgstr "Siirtyy edelliseen tauluun."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2014
+#: ../src/orca/Gecko.py:2025
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Vaihtaa geckon oman ja orcan kohdistimella navigoinnin välillä."
 
@@ -2474,7 +2479,7 @@ msgstr "Vaihtaa geckon oman ja orcan kohdistimella navigoinnin välillä."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/Gecko.py:2026
+#: ../src/orca/Gecko.py:2037
 msgid "Toggles structural navigation keys."
 msgstr "Vaihtelee rakenteellisia navigointinäppäimiä."
 
@@ -2485,7 +2490,7 @@ msgstr "Vaihtelee rakenteellisia navigointinäppäimiä."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2547
+#: ../src/orca/Gecko.py:2558
 msgid "Use _Orca Caret Navigation"
 msgstr "Käytä _orcan kohdistin-navigointia"
 
@@ -2493,7 +2498,7 @@ msgstr "Käytä _orcan kohdistin-navigointia"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/Gecko.py:2560
+#: ../src/orca/Gecko.py:2571
 msgid "Use Orca _Structural Navigation"
 msgstr "Käytä orcan _rakenteellista navigointia"
 
@@ -2503,7 +2508,7 @@ msgstr "Käytä orcan _rakenteellista navigointia"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/Gecko.py:2574
+#: ../src/orca/Gecko.py:2585
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Sijoita kohdistin rivin alkuun, kun navigointaan pystysuunnassa"
 
@@ -2511,7 +2516,7 @@ msgstr "_Sijoita kohdistin rivin alkuun, kun navigointaan pystysuunnassa"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/Gecko.py:2586
+#: ../src/orca/Gecko.py:2597
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Aloita sivun puhuminen automaattisesti, kun se _ladataan"
 
@@ -2519,14 +2524,14 @@ msgstr "Aloita sivun puhuminen automaattisesti, kun se _ladataan"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/Gecko.py:2598
+#: ../src/orca/Gecko.py:2609
 msgid "Page Navigation"
 msgstr "Sivulla navigointi"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
-#: ../src/orca/Gecko.py:2621
+#: ../src/orca/Gecko.py:2632
 msgid "Speak _cell coordinates"
 msgstr "Puhu solun koordinaatit"
 
@@ -2534,28 +2539,28 @@ msgstr "Puhu solun koordinaatit"
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/Gecko.py:2633
+#: ../src/orca/Gecko.py:2644
 msgid "Speak _multiple cell spans"
 msgstr "Puhu _useita soluja kattavat solut"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
-#: ../src/orca/Gecko.py:2644
+#: ../src/orca/Gecko.py:2655
 msgid "Announce cell _header"
 msgstr "Lausu solun _otsake"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2655
+#: ../src/orca/Gecko.py:2666
 msgid "Skip _blank cells"
 msgstr "Ohita _tyhjät solut"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2666
+#: ../src/orca/Gecko.py:2677
 msgid "Table Navigation"
 msgstr "Taulukossa navigointi"
 
@@ -2563,7 +2568,7 @@ msgstr "Taulukossa navigointi"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2690
+#: ../src/orca/Gecko.py:2701
 msgid "Speak results during _find"
 msgstr "Lausu tulokset haun _aikana"
 
@@ -2572,7 +2577,7 @@ msgstr "Lausu tulokset haun _aikana"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/Gecko.py:2703
+#: ../src/orca/Gecko.py:2714
 msgid "Onl_y speak changed lines during find"
 msgstr "Lausu vain _muuttuneet rivit haun aikana"
 
@@ -2580,33 +2585,33 @@ msgstr "Lausu vain _muuttuneet rivit haun aikana"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2720
+#: ../src/orca/Gecko.py:2731
 msgid "Minimum length of matched text:"
 msgstr "Täsmätyn tekstin vähimmäispituus:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:2744
+#: ../src/orca/Gecko.py:2755
 msgid "Find Options"
 msgstr "Haun valinnat"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3548
+#: ../src/orca/Gecko.py:3593
 msgid "Loading.  Please wait."
 msgstr "Ladataan, odota."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3553
+#: ../src/orca/Gecko.py:3598
 #, python-format
 msgid "Finished loading %s."
 msgstr "Kohteen %s lataus valmistui."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3559
+#: ../src/orca/Gecko.py:3604
 msgid "Finished loading."
 msgstr "Lataus valmistui."
 
@@ -2617,7 +2622,7 @@ msgstr "Lataus valmistui."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/Gecko.py:3950
+#: ../src/orca/Gecko.py:3996
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -2626,7 +2631,7 @@ msgstr "h%d"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4871
+#: ../src/orca/Gecko.py:4922
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "Solu kattaa %d riviä ja %d saraketta"
@@ -2635,7 +2640,7 @@ msgstr "Solu kattaa %d riviä ja %d saraketta"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4878
+#: ../src/orca/Gecko.py:4929
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Solu kattaa %d saraketta"
@@ -2644,7 +2649,7 @@ msgstr "Solu kattaa %d saraketta"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:4884
+#: ../src/orca/Gecko.py:4935
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Solu kattaa %d riviä"
@@ -2655,7 +2660,7 @@ msgstr "Solu kattaa %d riviä"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/Gecko.py:6587 ../src/orca/speechgenerator.py:775
+#: ../src/orca/Gecko.py:6648 ../src/orca/speechgenerator.py:775
 #, python-format
 msgid "level %d"
 msgstr "taso %d"
@@ -2666,18 +2671,18 @@ msgstr "taso %d"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7068 ../src/orca/Gecko.py:7129
-#: ../src/orca/Gecko.py:7224 ../src/orca/Gecko.py:7289
-#: ../src/orca/Gecko.py:7412 ../src/orca/Gecko.py:7496
-#: ../src/orca/Gecko.py:7572 ../src/orca/Gecko.py:7652
-#: ../src/orca/Gecko.py:7737 ../src/orca/Gecko.py:7831
+#: ../src/orca/Gecko.py:7129 ../src/orca/Gecko.py:7190
+#: ../src/orca/Gecko.py:7285 ../src/orca/Gecko.py:7350
+#: ../src/orca/Gecko.py:7473 ../src/orca/Gecko.py:7557
+#: ../src/orca/Gecko.py:7633 ../src/orca/Gecko.py:7713
+#: ../src/orca/Gecko.py:7798 ../src/orca/Gecko.py:7892
 msgid "Wrapping to bottom."
 msgstr "Siirrytään alas."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7079 ../src/orca/Gecko.py:7102
+#: ../src/orca/Gecko.py:7140 ../src/orca/Gecko.py:7163
 msgid "No more headings."
 msgstr "Ei lisää otsakkeita."
 
@@ -2687,18 +2692,18 @@ msgstr "Ei lisää otsakkeita."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7091 ../src/orca/Gecko.py:7165
-#: ../src/orca/Gecko.py:7248 ../src/orca/Gecko.py:7350
-#: ../src/orca/Gecko.py:7453 ../src/orca/Gecko.py:7530
-#: ../src/orca/Gecko.py:7607 ../src/orca/Gecko.py:7687
-#: ../src/orca/Gecko.py:7783 ../src/orca/Gecko.py:7880
+#: ../src/orca/Gecko.py:7152 ../src/orca/Gecko.py:7226
+#: ../src/orca/Gecko.py:7309 ../src/orca/Gecko.py:7411
+#: ../src/orca/Gecko.py:7514 ../src/orca/Gecko.py:7591
+#: ../src/orca/Gecko.py:7668 ../src/orca/Gecko.py:7748
+#: ../src/orca/Gecko.py:7844 ../src/orca/Gecko.py:7941
 msgid "Wrapping to top."
 msgstr "Siirrytään ylös."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7140 ../src/orca/Gecko.py:7176
+#: ../src/orca/Gecko.py:7201 ../src/orca/Gecko.py:7237
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Ei lisää tason %d otsakkeita."
@@ -2707,13 +2712,13 @@ msgstr "Ei lisää tason %d otsakkeita."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:7236 ../src/orca/Gecko.py:7260
+#: ../src/orca/Gecko.py:7297 ../src/orca/Gecko.py:7321
 msgid "No more large objects."
 msgstr "Ei lisää isoja kohteita."
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/Gecko.py:7297 ../src/orca/Gecko.py:7358
+#: ../src/orca/Gecko.py:7358 ../src/orca/Gecko.py:7419
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -2725,7 +2730,7 @@ msgstr[1] "luettolssa %d kohtaa"
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/Gecko.py:7312 ../src/orca/Gecko.py:7373
+#: ../src/orca/Gecko.py:7373 ../src/orca/Gecko.py:7434
 #, python-format
 msgid "Nesting level %d"
 msgstr "Syvyystaso %d"
@@ -2733,7 +2738,7 @@ msgstr "Syvyystaso %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/Gecko.py:7322 ../src/orca/Gecko.py:7383
+#: ../src/orca/Gecko.py:7383 ../src/orca/Gecko.py:7444
 msgid "No more lists."
 msgstr "Ei lisää luetteloita."
 
@@ -2741,42 +2746,42 @@ msgstr "Ei lisää luetteloita."
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/Gecko.py:7424 ../src/orca/Gecko.py:7465
+#: ../src/orca/Gecko.py:7485 ../src/orca/Gecko.py:7526
 msgid "No more list items."
 msgstr "Ei lisää listan kohtia."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7507 ../src/orca/Gecko.py:7541
+#: ../src/orca/Gecko.py:7568 ../src/orca/Gecko.py:7602
 msgid "No more unvisited links."
 msgstr "Ei lisää vierailemattomia linkkejä."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:7583 ../src/orca/Gecko.py:7618
+#: ../src/orca/Gecko.py:7644 ../src/orca/Gecko.py:7679
 msgid "No more visited links."
 msgstr "Ei lisää vierailtuja linkkejä."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
-#: ../src/orca/Gecko.py:7663 ../src/orca/Gecko.py:7698
+#: ../src/orca/Gecko.py:7724 ../src/orca/Gecko.py:7759
 msgid "No more blockquotes."
 msgstr "Ei lisää lainattuja lohkoja."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
-#: ../src/orca/Gecko.py:7748 ../src/orca/Gecko.py:7794
+#: ../src/orca/Gecko.py:7809 ../src/orca/Gecko.py:7855
 msgid "No more form fields."
 msgstr "Ei lisää lomakkeen kenttiä."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/Gecko.py:7816
+#: ../src/orca/Gecko.py:7877
 #, python-format
 msgid "Row %d, column %d."
 msgstr "Rivi %d, Sarake %d"
@@ -2786,13 +2791,13 @@ msgstr "Rivi %d, Sarake %d"
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/Gecko.py:7845 ../src/orca/Gecko.py:7894
+#: ../src/orca/Gecko.py:7906 ../src/orca/Gecko.py:7955
 msgid "Non-uniform"
 msgstr "Epäyhtenäinen"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7850 ../src/orca/Gecko.py:7899
+#: ../src/orca/Gecko.py:7911 ../src/orca/Gecko.py:7960
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -2801,7 +2806,7 @@ msgstr[1] "taulu, jossa on %d riviä"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/Gecko.py:7855 ../src/orca/Gecko.py:7904
+#: ../src/orca/Gecko.py:7916 ../src/orca/Gecko.py:7965
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -2811,44 +2816,44 @@ msgstr[1] "%d saraketta"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/Gecko.py:7868 ../src/orca/Gecko.py:7916
+#: ../src/orca/Gecko.py:7929 ../src/orca/Gecko.py:7977
 msgid "No more tables."
 msgstr "Ei lisää tauluja."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7959
+#: ../src/orca/Gecko.py:8020
 msgid "Beginning of row."
 msgstr "Rivin alku."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:7964 ../src/orca/Gecko.py:8016
-#: ../src/orca/Gecko.py:8064 ../src/orca/Gecko.py:8116
-#: ../src/orca/Gecko.py:8131 ../src/orca/Gecko.py:8148
+#: ../src/orca/Gecko.py:8025 ../src/orca/Gecko.py:8077
+#: ../src/orca/Gecko.py:8125 ../src/orca/Gecko.py:8177
+#: ../src/orca/Gecko.py:8192 ../src/orca/Gecko.py:8209
 msgid "Not in a table."
 msgstr "Ei taulukossa."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8011
+#: ../src/orca/Gecko.py:8072
 msgid "End of row."
 msgstr "Rivin loppu."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8059
+#: ../src/orca/Gecko.py:8120
 msgid "Top of column."
 msgstr "Sarakkeen ylin."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8111
+#: ../src/orca/Gecko.py:8172
 msgid "Bottom of column."
 msgstr "Sarakkeen alin."
 
@@ -2859,7 +2864,7 @@ msgstr "Sarakkeen alin."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8166
+#: ../src/orca/Gecko.py:8227
 msgid "Gecko is controlling the caret."
 msgstr "Gecko ohjaa kohdistinta."
 
@@ -2870,7 +2875,7 @@ msgstr "Gecko ohjaa kohdistinta."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8178
+#: ../src/orca/Gecko.py:8239
 msgid "Orca is controlling the caret."
 msgstr "Orca ohjaa kohdistinta."
 
@@ -2884,7 +2889,7 @@ msgstr "Orca ohjaa kohdistinta."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8202
+#: ../src/orca/Gecko.py:8263
 msgid "Structural navigation keys on."
 msgstr "Rakenteelliset navigointinäppäimet käytössä."
 
@@ -2898,7 +2903,7 @@ msgstr "Rakenteelliset navigointinäppäimet käytössä."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8214
+#: ../src/orca/Gecko.py:8275
 msgid "Structural navigation keys off."
 msgstr "Rakenteelliset navigointinäppäimet pois käytöstä."
 
@@ -2931,7 +2936,7 @@ msgstr "miinus"
 #. synthesis engine is now speaking in a higher pitch.
 #.
 #: ../src/orca/gnomespeechfactory.py:907
-#: ../src/orca/speechdispatcherfactory.py:286
+#: ../src/orca/speechdispatcherfactory.py:287
 msgid "higher."
 msgstr "korkeampi."
 
@@ -2940,7 +2945,7 @@ msgstr "korkeampi."
 #.
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/gnomespeechfactory.py:938
-#: ../src/orca/speechdispatcherfactory.py:286
+#: ../src/orca/speechdispatcherfactory.py:287
 msgid "lower."
 msgstr "matalampi."
 
@@ -2949,7 +2954,7 @@ msgstr "matalampi."
 #. per minute).
 #.
 #: ../src/orca/gnomespeechfactory.py:967
-#: ../src/orca/speechdispatcherfactory.py:276
+#: ../src/orca/speechdispatcherfactory.py:277
 msgid "faster."
 msgstr "nopeammin."
 
@@ -2959,12 +2964,28 @@ msgstr "nopeammin."
 #.
 #. Translators: This string announces speech rate change.
 #: ../src/orca/gnomespeechfactory.py:1001
-#: ../src/orca/speechdispatcherfactory.py:276
+#: ../src/orca/speechdispatcherfactory.py:277
 msgid "slower."
 msgstr "hitaammin."
 
-#: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_prefs.py:1605
-#: ../src/orca/orca_gui_prefs.py:1697
+#. Translators: this represents the state of a node in a tree
+#. or list.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#: ../src/orca/J2SE-access-bridge.py:86
+msgid "listitem|selected"
+msgstr "valittu"
+
+#. Translators: this represents the state of a node in a tree
+#. or list.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#: ../src/orca/J2SE-access-bridge.py:94
+msgid "listitem|unselected"
+msgstr "ei valittu"
+
+#: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_prefs.py:1610
+#: ../src/orca/orca_gui_prefs.py:1702
 msgid "Orca"
 msgstr "Orca"
 
@@ -3485,15 +3506,20 @@ msgstr "Merkitse braillena"
 
 #. Attribute Value column (VALUE)
 #.
-#. Translators: The "Present Unless" column consists of an
-#. editable text field in which the user can specify the
-#. "default" (or not of interest) value for that attribute,
-#. such as "None" in the case of underline. Orca will only
-#. speak the attribute and/or mark it in braille if the
-#. appropriate checkboxes have been checked AND the attribute
-#. value is not the default.
+#. Translators: "Present Unless" is a column header of the text
+#. attributes pane of the Orca preferences dialog.  On this pane,
+#. the user can select a set of text attributes that they would like
+#. spoken and/or indicated in braille.  Because the list of attributes
+#. could get quite lengthy, we provide the option to always speak/
+#. braille a text attribute *unless* its value is equal to the value
+#. given by the user in this column of the list.  For example, given
+#. the text attribute "underline" and a present unless value of "none",
+#. the user is stating that he/she would like to have underlined text
+#. announced for all cases (single, double, low, etc.) except when the
+#. value of underline is none (i.e. when it's not underlined).
+#. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:992
+#: ../src/orca/orca_gui_prefs.py:997
 msgid "Present Unless"
 msgstr "Läsnä, jollei"
 
@@ -3504,7 +3530,7 @@ msgstr "Läsnä, jollei"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1107
+#: ../src/orca/orca_gui_prefs.py:1112
 msgid "Actual String"
 msgstr "Alkuperäinen merkkijono"
 
@@ -3515,15 +3541,15 @@ msgstr "Alkuperäinen merkkijono"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1124
+#: ../src/orca/orca_gui_prefs.py:1129
 msgid "Replacement String"
 msgstr "Korvaava merkkijono"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:1335 ../src/orca/orca_gui_prefs.py:1346
-#: ../src/orca/orca_gui_prefs.py:2473
+#: ../src/orca/orca_gui_prefs.py:1340 ../src/orca/orca_gui_prefs.py:1351
+#: ../src/orca/orca_gui_prefs.py:2478
 msgid "Bilinear"
 msgstr "Bilineaarinen"
 
@@ -3531,8 +3557,8 @@ msgstr "Bilineaarinen"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1341 ../src/orca/orca_gui_prefs.py:1361
-#: ../src/orca/orca_gui_prefs.py:2475 ../src/orca/orca_gui_prefs.py:2518
+#: ../src/orca/orca_gui_prefs.py:1346 ../src/orca/orca_gui_prefs.py:1366
+#: ../src/orca/orca_gui_prefs.py:2480 ../src/orca/orca_gui_prefs.py:2523
 msgid "None"
 msgstr "Ei mitään"
 
@@ -3540,8 +3566,8 @@ msgstr "Ei mitään"
 #. with the magnifier.  Centered means that Orca attempts to
 #. keep the mouse in the center of the magnified window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1359 ../src/orca/orca_gui_prefs.py:1384
-#: ../src/orca/orca_gui_prefs.py:2496
+#: ../src/orca/orca_gui_prefs.py:1364 ../src/orca/orca_gui_prefs.py:1389
+#: ../src/orca/orca_gui_prefs.py:2501
 msgid "Centered"
 msgstr "Keskitetty"
 
@@ -3553,7 +3579,7 @@ msgstr "Keskitetty"
 #. the desktop, Orca positions the mouse 25% from the left edge
 #. of the magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:1371 ../src/orca/orca_gui_prefs.py:2515
+#: ../src/orca/orca_gui_prefs.py:1376 ../src/orca/orca_gui_prefs.py:2520
 msgid "Proportional"
 msgstr "Suhteellinen"
 
@@ -3562,7 +3588,7 @@ msgstr "Suhteellinen"
 #. the magnified region until the mouse hits an edge of the
 #. magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:1378 ../src/orca/orca_gui_prefs.py:2504
+#: ../src/orca/orca_gui_prefs.py:1383 ../src/orca/orca_gui_prefs.py:2509
 msgid "Push"
 msgstr "Työnnä"
 
@@ -3571,7 +3597,7 @@ msgstr "Työnnä"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:1644 ../src/orca/orca_gui_prefs.py:1721
+#: ../src/orca/orca_gui_prefs.py:1649 ../src/orca/orca_gui_prefs.py:1726
 msgid "Braille Bindings"
 msgstr "Braille-sidokset"
 
@@ -3580,7 +3606,7 @@ msgstr "Braille-sidokset"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2046 ../src/orca/orca_gui_prefs.py:2086
+#: ../src/orca/orca_gui_prefs.py:2051 ../src/orca/orca_gui_prefs.py:2091
 #: ../src/orca/orca-setup.glade.h:27
 msgid "Dot _7"
 msgstr "Piste _7"
@@ -3589,7 +3615,7 @@ msgstr "Piste _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2053 ../src/orca/orca_gui_prefs.py:2093
+#: ../src/orca/orca_gui_prefs.py:2058 ../src/orca/orca_gui_prefs.py:2098
 #: ../src/orca/orca-setup.glade.h:28
 msgid "Dot _8"
 msgstr "Piste _8"
@@ -3598,7 +3624,7 @@ msgstr "Piste _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2060 ../src/orca/orca_gui_prefs.py:2100
+#: ../src/orca/orca_gui_prefs.py:2065 ../src/orca/orca_gui_prefs.py:2105
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Dots 7 an_d 8"
 msgstr "Pisteet 7 _ja 8"
@@ -3606,7 +3632,7 @@ msgstr "Pisteet 7 _ja 8"
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2123 ../src/orca/orca-setup.glade.h:94
+#: ../src/orca/orca_gui_prefs.py:2128 ../src/orca/orca-setup.glade.h:99
 msgid "_None"
 msgstr "Ei _mitään"
 
@@ -3615,7 +3641,7 @@ msgstr "Ei _mitään"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2131 ../src/orca/orca-setup.glade.h:70
+#: ../src/orca/orca_gui_prefs.py:2136 ../src/orca/orca-setup.glade.h:75
 msgid "So_me"
 msgstr "_Osittain"
 
@@ -3623,7 +3649,7 @@ msgstr "_Osittain"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2138 ../src/orca/orca-setup.glade.h:50
+#: ../src/orca/orca_gui_prefs.py:2143 ../src/orca/orca-setup.glade.h:50
 msgid "M_ost"
 msgstr "_Yleisimmät"
 
@@ -3631,7 +3657,7 @@ msgstr "_Yleisimmät"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2159
+#: ../src/orca/orca_gui_prefs.py:2164
 msgid "Line"
 msgstr "Rivi"
 
@@ -3639,7 +3665,7 @@ msgstr "Rivi"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2165
+#: ../src/orca/orca_gui_prefs.py:2170
 msgid "Sentence"
 msgstr "Lause"
 
@@ -3647,7 +3673,7 @@ msgstr "Lause"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2185 ../src/orca/orca_gui_prefs.py:2273
+#: ../src/orca/orca_gui_prefs.py:2190 ../src/orca/orca_gui_prefs.py:2278
 #: ../src/orca/orca-setup.glade.h:16
 msgid "Brie_f"
 msgstr "Su_ppea"
@@ -3656,7 +3682,7 @@ msgstr "Su_ppea"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2209 ../src/orca/orca-setup.glade.h:74
+#: ../src/orca/orca_gui_prefs.py:2214 ../src/orca/orca-setup.glade.h:79
 msgid "Speak current _cell"
 msgstr "Puhu valittu _solu"
 
@@ -3664,7 +3690,7 @@ msgstr "Puhu valittu _solu"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:2552
+#: ../src/orca/orca_gui_prefs.py:2557
 msgid "enter new key"
 msgstr "syötä uusi näppäin"
 
@@ -3672,7 +3698,7 @@ msgstr "syötä uusi näppäin"
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:2581
+#: ../src/orca/orca_gui_prefs.py:2586
 #, python-format
 msgid "The new key is: %s"
 msgstr "Uusi näppäin on: %s"
@@ -3682,20 +3708,20 @@ msgstr "Uusi näppäin on: %s"
 #. just entered for defining a new key binding was already
 #. defined.
 #.
-#: ../src/orca/orca_gui_prefs.py:2589
+#: ../src/orca/orca_gui_prefs.py:2594
 msgid "The key entered is the same. Nothing changed."
 msgstr "Uusi näppäin on sama kuin vanha, mikään ei muuttunut."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:2689 ../src/orca/orca-setup.glade.h:89
+#: ../src/orca/orca_gui_prefs.py:2694 ../src/orca/orca-setup.glade.h:94
 msgid "_Desktop"
 msgstr "_Työpöytä"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:2961
+#: ../src/orca/orca_gui_prefs.py:2966
 msgid "Starting Orca Preferences. This may take a while."
 msgstr "Käynnistetään orcan asetukset. Tämä voi kestää hetken."
 
@@ -3946,23 +3972,27 @@ msgstr "Suurennuslasi"
 msgid "Mouse trac_king mode:"
 msgstr "Hiiren _seurantatila:"
 
-#: ../src/orca/orca-setup.glade.h:53
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
+#: ../src/orca/orca-setup.glade.h:54
 msgid "Move _down one"
 msgstr "Siirrä alas"
 
-#: ../src/orca/orca-setup.glade.h:54
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
+#: ../src/orca/orca-setup.glade.h:56
 msgid "Move _up one"
 msgstr "Siirry yksi ylös"
 
-#: ../src/orca/orca-setup.glade.h:55
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
+#: ../src/orca/orca-setup.glade.h:58
 msgid "Move to _bottom"
 msgstr "Siirry alimmaiseen"
 
-#: ../src/orca/orca-setup.glade.h:56
+#. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
+#: ../src/orca/orca-setup.glade.h:60
 msgid "Move to _top"
 msgstr "Siirrä ylimmäiseen"
 
-#: ../src/orca/orca-setup.glade.h:57
+#: ../src/orca/orca-setup.glade.h:61
 msgid ""
 "None\n"
 "Bilinear"
@@ -3970,179 +4000,180 @@ msgstr ""
 "Ei mitään\n"
 "Bilineaarinen"
 
-#: ../src/orca/orca-setup.glade.h:59
+#: ../src/orca/orca-setup.glade.h:63
 msgid "Orca Modifier Keys"
 msgstr "Orcan muokkainnäppäimet"
 
-#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca-setup.glade.h:64
 msgid "Orca Preferences"
 msgstr "Orcan asetukset"
 
-#: ../src/orca/orca-setup.glade.h:61
+#: ../src/orca/orca-setup.glade.h:65
 msgid "Orca _Modifier Key(s):"
 msgstr "Orcan _muokkainnäppäimet:"
 
-#: ../src/orca/orca-setup.glade.h:62
+#: ../src/orca/orca-setup.glade.h:66
 msgid "Pi_tch:"
 msgstr "Kor_keus:"
 
-#: ../src/orca/orca-setup.glade.h:63
+#: ../src/orca/orca-setup.glade.h:67
 msgid "Pronunciation"
 msgstr "Ääntämisasu"
 
-#: ../src/orca/orca-setup.glade.h:64
+#: ../src/orca/orca-setup.glade.h:68
 msgid "Quit Orca _without confirmation"
 msgstr "Sulje Orca _ilman vahvistusta"
 
-#: ../src/orca/orca-setup.glade.h:65
+#: ../src/orca/orca-setup.glade.h:69
 msgid "S_ource display:"
 msgstr "Lähde_näyttö:"
 
-#: ../src/orca/orca-setup.glade.h:66
+#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
+#: ../src/orca/orca-setup.glade.h:71
 msgid "Say All B_y:"
 msgstr "Lause kaikki lähtien:"
 
-#: ../src/orca/orca-setup.glade.h:67
+#: ../src/orca/orca-setup.glade.h:72
 msgid "Scale _factor:"
 msgstr "Sovitus_kerroin:"
 
-#: ../src/orca/orca-setup.glade.h:68
+#: ../src/orca/orca-setup.glade.h:73
 msgid "Show Orca _main window"
 msgstr "Näytä Orcan _pääikkuna"
 
-#: ../src/orca/orca-setup.glade.h:69
+#: ../src/orca/orca-setup.glade.h:74
 msgid "Si_ze:"
 msgstr "Ko_ko:"
 
-#: ../src/orca/orca-setup.glade.h:71
+#: ../src/orca/orca-setup.glade.h:76
 msgid "Speak _indentation and justification"
 msgstr "Puhu _sisennykset ja tasaukset"
 
-#: ../src/orca/orca-setup.glade.h:72
+#: ../src/orca/orca-setup.glade.h:77
 msgid "Speak _none"
 msgstr "Älä puhu mitään"
 
-#: ../src/orca/orca-setup.glade.h:73
+#: ../src/orca/orca-setup.glade.h:78
 msgid "Speak blank lines"
 msgstr "Puhu tyhjät rivit"
 
-#: ../src/orca/orca-setup.glade.h:75
+#: ../src/orca/orca-setup.glade.h:80
 msgid "Speak current ro_w"
 msgstr "Puhu valittu _rivi"
 
-#: ../src/orca/orca-setup.glade.h:76
+#: ../src/orca/orca-setup.glade.h:81
 msgid "Speak progress bar _updates"
 msgstr "Puhu edistymispalkin _päivitykset"
 
-#: ../src/orca/orca-setup.glade.h:77
+#: ../src/orca/orca-setup.glade.h:82
 msgid "Speech"
 msgstr "Puhe"
 
-#: ../src/orca/orca-setup.glade.h:78
+#: ../src/orca/orca-setup.glade.h:83
 msgid "Speech _system:"
 msgstr "Puhe_järjestelmä:"
 
-#: ../src/orca/orca-setup.glade.h:79
+#: ../src/orca/orca-setup.glade.h:84
 msgid "Speech synthesi_zer:"
 msgstr "Puhe_syntetisaattori:"
 
-#: ../src/orca/orca-setup.glade.h:80
+#: ../src/orca/orca-setup.glade.h:85
 msgid "Tar_get display:"
 msgstr "K_ohdenäyttö:"
 
-#: ../src/orca/orca-setup.glade.h:81
+#: ../src/orca/orca-setup.glade.h:86
 msgid "Text Attributes"
 msgstr "Tekstin ominaisuudet"
 
-#: ../src/orca/orca-setup.glade.h:82
+#: ../src/orca/orca-setup.glade.h:87
 msgid "Update interval:"
 msgstr "Päivitysväli"
 
-#: ../src/orca/orca-setup.glade.h:83
+#: ../src/orca/orca-setup.glade.h:88
 msgid "Ver_bose"
 msgstr "_Suulas"
 
-#: ../src/orca/orca-setup.glade.h:84
+#: ../src/orca/orca-setup.glade.h:89
 msgid "Vo_lume:"
 msgstr "_Voimakkuus:"
 
-#: ../src/orca/orca-setup.glade.h:85
+#: ../src/orca/orca-setup.glade.h:90
 msgid "_Abbreviated role names"
 msgstr "_Lyhennetyt roolien nimet"
 
-#: ../src/orca/orca-setup.glade.h:86
+#: ../src/orca/orca-setup.glade.h:91
 msgid "_All"
 msgstr "K_aikki"
 
-#: ../src/orca/orca-setup.glade.h:87
+#: ../src/orca/orca-setup.glade.h:92
 msgid "_Bottom:"
 msgstr "_Alhaalla:"
 
-#: ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca-setup.glade.h:93
 msgid "_Delete"
 msgstr "_Poista"
 
-#: ../src/orca/orca-setup.glade.h:90
+#: ../src/orca/orca-setup.glade.h:95
 msgid "_Enable speech"
 msgstr "Ota _puhe käyttöön"
 
-#: ../src/orca/orca-setup.glade.h:91
+#: ../src/orca/orca-setup.glade.h:96
 msgid "_Laptop"
 msgstr "_Kannettava"
 
-#: ../src/orca/orca-setup.glade.h:92
+#: ../src/orca/orca-setup.glade.h:97
 msgid "_Left:"
 msgstr "_Vasemmalla:"
 
-#: ../src/orca/orca-setup.glade.h:93
+#: ../src/orca/orca-setup.glade.h:98
 msgid "_New entry"
 msgstr "_Uusi kohta"
 
-#: ../src/orca/orca-setup.glade.h:95
+#: ../src/orca/orca-setup.glade.h:100
 msgid "_Person:"
 msgstr "_Henkilö:"
 
-#: ../src/orca/orca-setup.glade.h:96
+#: ../src/orca/orca-setup.glade.h:101
 msgid "_Present tooltips"
 msgstr "_Näkyvät vinkit"
 
-#: ../src/orca/orca-setup.glade.h:97
+#: ../src/orca/orca-setup.glade.h:102
 msgid "_Rate:"
 msgstr "_Nopeus:"
 
-#: ../src/orca/orca-setup.glade.h:98
+#: ../src/orca/orca-setup.glade.h:103
 msgid "_Reset"
 msgstr "_Nollaa"
 
-#: ../src/orca/orca-setup.glade.h:99
+#: ../src/orca/orca-setup.glade.h:104
 msgid "_Right:"
 msgstr "_Oikealla:"
 
-#: ../src/orca/orca-setup.glade.h:100
+#: ../src/orca/orca-setup.glade.h:105
 msgid "_Smoothing:"
 msgstr "_Pehmennys:"
 
-#: ../src/orca/orca-setup.glade.h:101
+#: ../src/orca/orca-setup.glade.h:106
 msgid "_Speak all"
 msgstr "Puhu kaikki"
 
-#: ../src/orca/orca-setup.glade.h:102
+#: ../src/orca/orca-setup.glade.h:107
 msgid "_Top:"
 msgstr "_Ylhäällä:"
 
-#: ../src/orca/orca-setup.glade.h:103
+#: ../src/orca/orca-setup.glade.h:108
 msgid "_Voice settings:"
 msgstr "_Puheäänen asetukset:"
 
-#: ../src/orca/orca-setup.glade.h:104
+#: ../src/orca/orca-setup.glade.h:109
 msgid "_Width:"
 msgstr "_Leveys:"
 
-#: ../src/orca/orca-setup.glade.h:105
+#: ../src/orca/orca-setup.glade.h:110
 msgid "pixels"
 msgstr "pikseliä"
 
-#: ../src/orca/orca-setup.glade.h:106
+#: ../src/orca/orca-setup.glade.h:111
 msgid "seconds"
 msgstr "sekuntia"
 
@@ -4828,7 +4859,7 @@ msgstr "Linkki"
 
 #. Translators: spoken words for the rolename of a link.
 #.
-#: ../src/orca/rolenames.py:605 ../src/orca/scripts/StarOffice.py:1454
+#: ../src/orca/rolenames.py:605 ../src/orca/scripts/StarOffice.py:1457
 msgid "link"
 msgstr "linkki"
 
@@ -5335,8 +5366,8 @@ msgstr "Solu"
 
 #. Translators: spoken words for the rolename of a table cell.
 #.
-#: ../src/orca/rolenames.py:944 ../src/orca/scripts/StarOffice.py:89
-#: ../src/orca/scripts/StarOffice.py:127
+#: ../src/orca/rolenames.py:944 ../src/orca/scripts/StarOffice.py:90
+#: ../src/orca/scripts/StarOffice.py:128
 msgid "cell"
 msgstr "solu"
 
@@ -5687,14 +5718,14 @@ msgstr "asiakirja"
 
 #. We've entered a table.  Announce the dimensions.
 #.
-#: ../src/orca/scripts/acroread.py:263 ../src/orca/scripts/StarOffice.py:1149
+#: ../src/orca/scripts/acroread.py:263 ../src/orca/scripts/StarOffice.py:1152
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "taulu, jossa on %d riviä ja %d saraketta."
 
 #. We've left a table.  Announce this fact.
 #.
-#: ../src/orca/scripts/acroread.py:270 ../src/orca/scripts/StarOffice.py:1154
+#: ../src/orca/scripts/acroread.py:270 ../src/orca/scripts/StarOffice.py:1157
 msgid "leaving table."
 msgstr "poistutaan taulusta"
 
@@ -5709,7 +5740,7 @@ msgstr "rivi %d, sarake %d"
 #. Translators: this represents the column we're
 #. on in a table.
 #.
-#: ../src/orca/scripts/acroread.py:294 ../src/orca/scripts/StarOffice.py:96
+#: ../src/orca/scripts/acroread.py:294 ../src/orca/scripts/StarOffice.py:97
 #, python-format
 msgid "column %d"
 msgstr "sarake %d"
@@ -5862,34 +5893,39 @@ msgstr "Kansiot-painike"
 msgid "Assistant"
 msgstr "Apulainen"
 
-#: ../src/orca/scripts/gaim.py:151
+#: ../src/orca/scripts/gaim.py:161
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "Liitetäänkö keskusteluhuoneen viestien alkuun huoneen nimi vai ei."
 
-#: ../src/orca/scripts/gaim.py:159
+#: ../src/orca/scripts/gaim.py:169
 msgid "Speak and braille a previous chat room message."
 msgstr "Lausu ja näytä braillena edellinen keskusteluhuoneen viesti."
 
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room.
 #.
-#: ../src/orca/scripts/gaim.py:206
+#: ../src/orca/scripts/gaim.py:216
 msgid "Speak Chat Room name"
 msgstr "Lausu keskusteluhuoneen nimi. "
 
-#: ../src/orca/scripts/gaim.py:267
+#: ../src/orca/scripts/gaim.py:277
 msgid "speak chat room name."
 msgstr "lausu keskusteluhuoneen nimi. "
 
-#: ../src/orca/scripts/gaim.py:270
+#: ../src/orca/scripts/gaim.py:280
 msgid "Do not speak chat room name."
 msgstr "Älä lausu keskusteluhuoneen nimiä. "
 
-#: ../src/orca/scripts/gaim.py:290
+#: ../src/orca/scripts/gaim.py:300
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Viesti keskusteluhuoneesta %s"
+
+#: ../src/orca/scripts/gaim.py:386
+#, python-format
+msgid "New chat tab %s"
+msgstr "Uusi keskusteluvälilehti %s"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -6040,7 +6076,7 @@ msgstr "Näytä lisää valintoja"
 
 #. Translators: this represents the row number of a table.
 #.
-#: ../src/orca/scripts/StarOffice.py:101
+#: ../src/orca/scripts/StarOffice.py:102
 #, python-format
 msgid "row %d"
 msgstr "rivi %d"
@@ -6051,8 +6087,8 @@ msgstr "rivi %d"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/scripts/StarOffice.py:484 ../src/orca/speechgenerator.py:714
-#: ../src/orca/speechgenerator.py:1268 ../src/orca/speechgenerator.py:1364
+#: ../src/orca/scripts/StarOffice.py:487 ../src/orca/speechgenerator.py:715
+#: ../src/orca/speechgenerator.py:1258 ../src/orca/speechgenerator.py:1369
 msgid "0 items"
 msgstr "nolla kohtaa"
 
@@ -6061,7 +6097,7 @@ msgstr "nolla kohtaa"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/scripts/StarOffice.py:661 ../src/orca/scripts/StarOffice.py:692
+#: ../src/orca/scripts/StarOffice.py:664 ../src/orca/scripts/StarOffice.py:695
 #: ../src/orca/speechserver.py:206 ../src/orca/speech.py:186
 msgid "on"
 msgstr "päällä"
@@ -6071,7 +6107,7 @@ msgstr "päällä"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/scripts/StarOffice.py:665 ../src/orca/scripts/StarOffice.py:696
+#: ../src/orca/scripts/StarOffice.py:668 ../src/orca/scripts/StarOffice.py:699
 #: ../src/orca/speechserver.py:211 ../src/orca/speech.py:191
 msgid "off"
 msgstr "pois päältä"
@@ -6079,14 +6115,14 @@ msgstr "pois päältä"
 #. Translators: this is the input line of a spreadsheet
 #. (i.e., the place where enter formulas)
 #.
-#: ../src/orca/scripts/StarOffice.py:820
+#: ../src/orca/scripts/StarOffice.py:823
 msgid "Speaks the contents of the input line."
 msgstr "Puhuu syöterivin sisällön."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:828
+#: ../src/orca/scripts/StarOffice.py:831
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr ""
 "Aseta soluja puhuttaessa dynaamisina sarakkeen otsakkeina käytettävä rivi."
@@ -6094,7 +6130,7 @@ msgstr ""
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:836
+#: ../src/orca/scripts/StarOffice.py:839
 msgid ""
 "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
@@ -6106,7 +6142,7 @@ msgstr ""
 #. of the current spread sheet cell. Coordinates are the row and
 #. column position within the spread sheet (i.e. A1, B1, C2 ...)
 #.
-#: ../src/orca/scripts/StarOffice.py:887
+#: ../src/orca/scripts/StarOffice.py:890
 msgid "Speak spread sheet cell coordinates"
 msgstr "Lausu taulukkolaskennen solun koordinaatit"
 
@@ -6116,42 +6152,42 @@ msgstr "Lausu taulukkolaskennen solun koordinaatit"
 #. really try to avoid doing this kind of thing, but sometimes
 #. it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/StarOffice.py:1111
+#: ../src/orca/scripts/StarOffice.py:1114
 msgid "Calc"
 msgstr "Laskin"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/StarOffice.py:1179
+#: ../src/orca/scripts/StarOffice.py:1182
 msgid "empty"
 msgstr "tyhjä"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1249
+#: ../src/orca/scripts/StarOffice.py:1252
 msgid "Dynamic column header cleared."
 msgstr "Dynaaminen sarakkeen otsikko tyhjennetty."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1259
+#: ../src/orca/scripts/StarOffice.py:1262
 msgid "Dynamic column header set for row "
 msgstr "Dynaaminen sarakkeen otsikko asetettu riville "
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1316
+#: ../src/orca/scripts/StarOffice.py:1319
 msgid "Dynamic row header cleared."
 msgstr "Dynaaminen rivin otsikko tyhjennetty."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1326
+#: ../src/orca/scripts/StarOffice.py:1329
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dynaaminen rivn otsikko asetettu sarakkeelle %s"
@@ -6162,7 +6198,7 @@ msgstr "Dynaaminen rivn otsikko asetettu sarakkeelle %s"
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1478
+#: ../src/orca/scripts/StarOffice.py:1481
 msgid "Welcome to StarOffice"
 msgstr "Tervetuloa StarOfficeen"
 
@@ -6173,7 +6209,7 @@ msgstr "Tervetuloa StarOfficeen"
 #. keying off stuff like this, but we're forced to do so in
 #. this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1581
+#: ../src/orca/scripts/StarOffice.py:1584
 msgid "Text Document"
 msgstr "Tekstiasiakirja"
 
@@ -6183,16 +6219,16 @@ msgstr "Tekstiasiakirja"
 #. hate keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1647
-#: ../src/orca/scripts/StarOffice.py:1883
+#: ../src/orca/scripts/StarOffice.py:1650
+#: ../src/orca/scripts/StarOffice.py:1886
 msgid "Spellcheck:"
 msgstr "Oikeinkirjoitus:"
 
-#: ../src/orca/scripts/StarOffice.py:1675
+#: ../src/orca/scripts/StarOffice.py:1678
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Huomaa, että alasvierityksen painiketta täytyy painaa useita kertoja."
 
-#: ../src/orca/scripts/StarOffice.py:1689
+#: ../src/orca/scripts/StarOffice.py:1692
 msgid "License Agreement Accept button now has focus."
 msgstr "Lisenssisopimuksen hyväksymispainike on nyt kohdistettu."
 
@@ -6202,7 +6238,7 @@ msgstr "Lisenssisopimuksen hyväksymispainike on nyt kohdistettu."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1718
+#: ../src/orca/scripts/StarOffice.py:1721
 msgid "First name"
 msgstr "Etunimi"
 
@@ -6210,7 +6246,7 @@ msgstr "Etunimi"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/StarOffice.py:1792
+#: ../src/orca/scripts/StarOffice.py:1795
 msgid "Move to cell"
 msgstr "Siirrä soluun"
 
@@ -6221,7 +6257,7 @@ msgstr "Siirrä soluun"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1948
+#: ../src/orca/scripts/StarOffice.py:1951
 msgid "Presentation Wizard"
 msgstr "Esityksen ohjattu teko"
 
@@ -6232,7 +6268,7 @@ msgstr "Esityksen ohjattu teko"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1968
+#: ../src/orca/scripts/StarOffice.py:1971
 msgid "Writer"
 msgstr "Writer"
 
@@ -6240,13 +6276,13 @@ msgstr "Writer"
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:2131
+#: ../src/orca/scripts/StarOffice.py:2134
 msgid "has formula"
 msgstr "sisältää kaavan"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:2179
+#: ../src/orca/scripts/StarOffice.py:2182
 #, python-format
 msgid "Cell %s"
 msgstr "Solu %s"
@@ -6386,32 +6422,46 @@ msgstr "%s oletusääni"
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
 #.
-#: ../src/orca/speechgenerator.py:1498
+#: ../src/orca/speechgenerator.py:1503
 msgid "tear off"
 msgstr "irrota"
 
 #. Translators: this is the percentage value of a slider.
 #.
-#: ../src/orca/where_am_I.py:342
+#: ../src/orca/where_am_I.py:332
 #, python-format
 msgid "%s percent"
 msgstr "%s prosenttia"
 
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#: ../src/orca/where_am_I.py:381
+msgid "selected"
+msgstr "valittu"
+
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#: ../src/orca/where_am_I.py:386
+msgid "not selected"
+msgstr "ei valittu"
+
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
-#: ../src/orca/where_am_I.py:412 ../src/orca/where_am_I.py:425
+#: ../src/orca/where_am_I.py:427
 #, python-format
 msgid "%s page"
 msgstr "%s sivu"
 
 #. Translators: this in reference to a row in a table.
 #.
-#: ../src/orca/where_am_I.py:525 ../src/orca/where_am_I.py:547
+#: ../src/orca/where_am_I.py:536 ../src/orca/where_am_I.py:558
 #, python-format
 msgid "row %d of %d"
 msgstr "rivi %d kaikkiaan %d"
 
-#: ../src/orca/where_am_I.py:595
+#: ../src/orca/where_am_I.py:606
 msgid "Icon panel"
 msgstr "Kuvakepaneeli"
 
@@ -6419,7 +6469,7 @@ msgstr "Kuvakepaneeli"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:611
+#: ../src/orca/where_am_I.py:622
 #, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
@@ -6430,33 +6480,33 @@ msgstr[1] "%d/%d kohdetta valittu"
 #. protocols.
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/where_am_I.py:653
+#: ../src/orca/where_am_I.py:664
 #, python-format
 msgid "%s link"
 msgstr "%s-linkki"
 
-#: ../src/orca/where_am_I.py:663
+#: ../src/orca/where_am_I.py:674
 #, python-format
 msgid "%s link to %s"
 msgstr "%s linkki kohteeseen %s"
 
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
-#: ../src/orca/where_am_I.py:673
+#: ../src/orca/where_am_I.py:684
 msgid "same page"
 msgstr "sama sivu"
 
-#: ../src/orca/where_am_I.py:675 ../src/orca/where_am_I.py:683
+#: ../src/orca/where_am_I.py:686 ../src/orca/where_am_I.py:694
 msgid "same site"
 msgstr "sama sivusto"
 
-#: ../src/orca/where_am_I.py:685
+#: ../src/orca/where_am_I.py:696
 msgid "different site"
 msgstr "eri sivusto"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/where_am_I.py:713
+#: ../src/orca/where_am_I.py:724
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -6465,300 +6515,31 @@ msgstr[1] "%d tavua"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/where_am_I.py:717
+#: ../src/orca/where_am_I.py:728
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilotavua"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/where_am_I.py:721
+#: ../src/orca/where_am_I.py:732
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megatavua"
 
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:834 ../src/orca/where_am_I.py:864
+#: ../src/orca/where_am_I.py:847 ../src/orca/where_am_I.py:879
 #, python-format
 msgid "item %d of %d"
 msgstr "kohta %d kaikkiaan %d"
 
-#~ msgid "ASAP"
-#~ msgstr "ASAP"
+#. Translators: The "default" button in a dialog box is the button
+#. that gets activated when Enter is pressed anywhere within that
+#. dialog box.
+#.
+#: ../src/orca/where_am_I.py:1465
+#, python-format
+msgid "Default button is %s"
+msgstr "Oletuspainike on %s"
 
-#~ msgid "as soon as possible"
-#~ msgstr "niin pian kuin mahdollista"
-
-#~ msgid "GHz"
-#~ msgstr "GHz"
-
-#~ msgid "gigahertz"
-#~ msgstr "gigahertsi"
-
-#~ msgid "IMAP"
-#~ msgstr "IMAP"
-
-#~ msgid "eye map"
-#~ msgstr "imap"
-
-#~ msgid "LDAP"
-#~ msgstr "LDAP"
-
-#~ msgid "ell dap"
-#~ msgstr "ldap"
-
-#~ msgid "LOL"
-#~ msgstr "LOL"
-
-#~ msgid "laughing out loud"
-#~ msgstr "laughing out loud"
-
-#~ msgid "MHz"
-#~ msgstr "MHz"
-
-#~ msgid "megahertz"
-#~ msgstr "megahertsi"
-
-#~ msgid "strikethrough"
-#~ msgstr "yliviivaus"
-
-#~ msgid "strike through"
-#~ msgstr "yliviivaus"
-
-#~ msgid "SELinux"
-#~ msgstr "SELinux"
-
-#~ msgid "ess ee linux"
-#~ msgstr "äss ee Linux"
-
-#~ msgid "Speech Dispatcher configured default voice"
-#~ msgstr "Puheentuottajan määritelty oletusääni"
-
-#~ msgid "underscore"
-#~ msgstr "alaviiva"
-
-#~ msgid "multiply"
-#~ msgstr "kerro"
-
-#~ msgid "Paints and prints the visible zones in the active window."
-#~ msgstr "Piirtää ja näyttää näkyvät alueet aktiivisessa ikkunassa."
-
-#~ msgid "Reports information on current script."
-#~ msgstr "Kertoo tietoja nykyisestä skriptistä."
-
-#~ msgid "Toggles keystroke recording on and off."
-#~ msgstr "Valitsee käytetäänkö näppäinlyöntien tallennnuta vai ei."
-
-#~ msgid "Reloads user settings and reinitializes services as necessary."
-#~ msgstr ""
-#~ "Lataa käyttäjän asetukset uudestaan ja alustaa palvelut tarvittaessa."
-
-#~ msgid ""
-#~ "Prints a debug listing of all known applications to the console where "
-#~ "Orca is running."
-#~ msgstr ""
-#~ "Tulostaa vianetsintälistauksen kaikista sovelluksista päätteeseen, jolla "
-#~ "Orcaa suoritetaan."
-
-#~ msgid "Cycles the debug level at run time."
-#~ msgstr "Vaihtaa ajonaikaista vianetsinnän seurantatasoa."
-
-#~ msgid ""
-#~ "Prints debug information about the currently active application to the "
-#~ "console where Orca is running."
-#~ msgstr ""
-#~ "Tulostaa vianetsintätietoja tällä hetkellä aktiivisesta sovellusesta "
-#~ "päätteeseen, jolla Orcaa suoritetaan."
-
-#~ msgid "Prints debug information about the ancestry of the object with focus"
-#~ msgstr "Tulostaa vianetsintätietoja sovelluksesta, joka on kohdistettu"
-
-#~ msgid "Prints debug information about the application with focus"
-#~ msgstr "Tulostaa vianetsintätietoja sovelluksesta, jota ei ole kohdistettu"
-
-#~ msgid "Switches to the next presentation manager."
-#~ msgstr "Siirtyy seuraavaan esityksenhallintaohjelmaan."
-
-#~ msgid "1 space "
-#~ msgstr "1 välilyönti"
-
-#~ msgid "1 tab "
-#~ msgstr "1 sarkain"
-
-#~ msgid "row"
-#~ msgstr "rivi"
-
-#~ msgid "Switching to focus tracking mode."
-#~ msgstr "Siirrytään kohdistuksen seurantatilaan."
-
-#~ msgid "Switching to hierarchical navigation mode."
-#~ msgstr "Siirrytään hiearkiseen navigointitilaan."
-
-#~ msgid "%d. %s"
-#~ msgstr "%d. %s"
-
-#~ msgid "Orca Find"
-#~ msgstr "Orcan haku"
-
-#~ msgid "Handler"
-#~ msgstr "Käsittelijä"
-
-#~ msgid "Mod.Mask 1"
-#~ msgstr "Muok.peite 1"
-
-#~ msgid "Use Mod.1"
-#~ msgstr "Käytä muok.1"
-
-#~ msgid "Key1"
-#~ msgstr "Näppäin1"
-
-#~ msgid "Mod.Mask 2"
-#~ msgstr "Muok.peite 2"
-
-#~ msgid "Use Mod.2"
-#~ msgstr "Käytä muok.2"
-
-#~ msgid "Key2"
-#~ msgstr "Näppäin2"
-
-#~ msgid "Speech not available."
-#~ msgstr "Puhe ei ole käytettävissä."
-
-#~ msgid "User logged out - shutting down."
-#~ msgstr "Käyttäjä kirjautui ulos, sammutetaan"
-
-#~ msgid "Debug level all."
-#~ msgstr "Vianetsintätasona kaikki."
-
-#~ msgid "Debug level finest."
-#~ msgstr "Vianetsintätasona hienoin."
-
-#~ msgid "Debug level finer."
-#~ msgstr "Vianetsintätasona hieno."
-
-#~ msgid " off"
-#~ msgstr "pois päältä"
-
-#~ msgid " on"
-#~ msgstr "päällä"
-
-#~ msgid "Num_Lock"
-#~ msgstr "Num_Lock"
-
-#~ msgid "goodbye."
-#~ msgstr "näkemiin."
-
-#~ msgid "Usage: orca [OPTION...]"
-#~ msgstr "Käyttö: orca [VALITSI...]"
-
-#~ msgid "-?, --help                   Show this help message"
-#~ msgstr "-?, --help                   Näytä tämä ohjeviesti"
-
-#~ msgid "-v, --version                %s"
-#~ msgstr "-v, --version                %s"
-
-#~ msgid "-s, --setup, --gui-setup     Set up user preferences"
-#~ msgstr "-s, --setup, --gui-setup     Määrittele käyttäjän asetukset"
-
-#~ msgid "-t, --text-setup             Set up user preferences (text version)"
-#~ msgstr ""
-#~ "-t, --text-setup             Määrittele käyttäjän asetukset (tekstiversio)"
-
-#~ msgid "-n, --no-setup               Skip set up of user preferences"
-#~ msgstr "-n, --no-setup               Ohita käyttäjien asetusten määrittely"
-
-#~ msgid ""
-#~ "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
-#~ msgstr ""
-#~ "-u, --user-prefs-dir=kansio Käytä käyttäjän asetuksille muuta kansiota"
-
-#~ msgid ""
-#~ "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
-#~ "use of option"
-#~ msgstr ""
-#~ "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] "
-#~ "Pakota valinta käyttöön"
-
-#~ msgid ""
-#~ "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] "
-#~ "Prevent use of option"
-#~ msgstr ""
-#~ "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Estä "
-#~ "valinnan käyttö"
-
-#~ msgid "-q, --quit                   Quits Orca (if shell script used)"
-#~ msgstr "-q, --quit                   Sulkee Orcan (jos käytettiin skriptiä)"
-
-#~ msgid ""
-#~ "If Orca has not been previously set up by the user, Orca\n"
-#~ "will automatically launch the preferences set up unless\n"
-#~ "the -n or --no-setup option is used."
-#~ msgstr ""
-#~ "Jos Orcan asetuksia käyttäjälle ei ole aiemmin asetettu, Orca\n"
-#~ "käynnistyy automaattisesti asetusikkunaan, jollei valitsinta\n"
-#~ "-n tai --no-setup käytetä."
-
-#~ msgid "Report bugs to orca-list@gnome.org."
-#~ msgstr "Kerro vioista osoitteeseen orca-list@gnome.org."
-
-#~ msgid "Do you really want to quit Orca?"
-#~ msgstr "Haluatko varmasti sulkea Orcan?"
-
-#~ msgid "Question"
-#~ msgstr "Kysymys"
-
-#~ msgid "chrome://"
-#~ msgstr "chrome://"
-
-#~ msgid "time-admin"
-#~ msgstr "ajanhallinta"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%s %s"
-#~ msgstr "%s %s"
-
-#~ msgid "%s text %s %s"
-#~ msgstr "%s teksti %s %s"
-
-#~ msgid "text %s %s"
-#~ msgstr "teksti %s %s"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "To exit learn mode, press the escape key."
-#~ msgstr "Sulje oppimistila painamalla Escape-näppäintä."
-
-#~ msgid ""
-#~ "You will have to log out for the change to take effect.\n"
-#~ "Do you want to log out now? "
-#~ msgstr ""
-#~ "Sinun täytyy kirjautua ulos, jotta muutokset tulevat voimaan.\n"
-#~ "Haluatko kirjautua ylös heti?"
-
-#~ msgid "Assistive Technologies for Blind and Visually Impaired People"
-#~ msgstr "Esteettömyystekniikat sokeille ja huononäköisille"
-
-#~ msgid "_cell"
-#~ msgstr "_solu"
-
-#~ msgid "bar"
-#~ msgstr "palkki"
-
-#~ msgid "     "
-#~ msgstr "     "
-
-#~ msgid "Family:"
-#~ msgstr "Perhe:"
-
-#~ msgid "Select desired speech server"
-#~ msgstr "Valitse haluttu puhepalvelin"
-
-#~ msgid "Select desired voice settings"
-#~ msgstr "Valitse halutu puheasetukset"
-
-#~ msgid "_Apply"
-#~ msgstr "_Toteuta"
