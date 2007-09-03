@@ -3,18 +3,18 @@
 # Clytie Siddall <clytie@riverland.net.au>, 2007.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007.
 msgid ""
-""
-msgstr "Project-Id-Version: orca HEAD\n"
+msgstr ""
+"Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-29 03:26+0100\n"
-"PO-Revision-Date: 2007-07-01 10:56-0400\n"
+"POT-Creation-Date: 2007-08-26 22:14+0100\n"
+"PO-Revision-Date: 2007-09-03 21:17+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.6.4a5\n"
+"X-Generator: LocFactoryEditor 1.7b1\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -23,18 +23,19 @@ msgstr "Bộ Đọc và Phóng To Màn Hình Orca"
 #: ../orca.desktop.in.h:2
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Đưa ra thông tin trên màn hình như là tiếng nói hay chữ nổi, hoặc phóng to màn hình"
+msgstr ""
+"Đưa ra thông tin trên màn hình như là tiếng nói hay chữ nổi, hoặc phóng to màn hình"
 
 #: ../src/orca/app_gui_prefs.py:89
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Tùy thích Orca cho %s"
 
-#: ../src/orca/app_gui_prefs.py:209
+#: ../src/orca/app_gui_prefs.py:210
 msgid "No application has focus."
 msgstr "Không có ứng dụng có tiêu điểm."
 
-#: ../src/orca/app_gui_prefs.py:224
+#: ../src/orca/app_gui_prefs.py:225
 #, python-format
 #. Translators: Orca Preferences in this case, is a configuration GUI
 #. for allowing users to set application specific settings from within
@@ -43,18 +44,76 @@ msgstr "Không có ứng dụng có tiêu điểm."
 msgid "Starting Orca Preferences for %s. This may take a while."
 msgstr "Đang khởi chạy Tùy thích Orca cho %s. Có thể hơi lâu."
 
+#: ../src/orca/bookmarks.py:72
+#. Translators: this announces that a bookmark has been entered.
+#. Orca allows users to tell it to remember a particular spot in an
+#. application window and provides keystrokes for the user to jump to
+#. those spots.  These spots are known as 'bookmarks'.
+#.
+msgid "bookmark entered"
+msgstr "liên kết lưu đã nhập"
+
+#: ../src/orca/bookmarks.py:94
+#: ../src/orca/Gecko.py:1243
+#. Translators: this announces that the current object is the same
+#. object pointed to by the bookmark.
+#.
+msgid "bookmark is current object"
+msgstr "liên kết lưu là đối tượng hiện thời"
+
+#: ../src/orca/bookmarks.py:101
+#: ../src/orca/Gecko.py:1250
+#. Translators: this announces that the current object's parent and
+#. the parent of the object pointed to by the bookmark are the same.
+#.
+msgid "bookmark and current object have same parent"
+msgstr "liên kết lưu và đối tượng hiện thời có cùng cha"
+
+#: ../src/orca/bookmarks.py:118
+#: ../src/orca/Gecko.py:1267
+#, python-format
+#. Translators: this announces that the bookmark and the current
+#. object share a common ancestor
+#.
+msgid "shared ancestor %s"
+msgstr "cùng tổ tiên %s"
+
+#: ../src/orca/bookmarks.py:125
+#: ../src/orca/Gecko.py:1274
+#. Translators: This announces that a comparison between the bookmark
+#. and the current object can not be determined.
+#.
+msgid "comparison unknown"
+msgstr "so sánh không rõ"
+
+#: ../src/orca/bookmarks.py:134
+#: ../src/orca/Gecko.py:1289
+#. Translators: this announces that a bookmark has been saved to
+#. disk
+#.
+msgid "bookmarks saved"
+msgstr "các liên kết lưu đã được lưu"
+
+#: ../src/orca/bookmarks.py:139
+#: ../src/orca/Gecko.py:1294
+#. Translators: this announces that a bookmark could not be saved to
+#. disk
+#.
+msgid "bookmarks could not be saved"
+msgstr "không thể lưu các liên kết lưu"
+
 #: ../src/orca/braillegenerator.py:204
-#: ../src/orca/speechgenerator.py:200
+#: ../src/orca/speechgenerator.py:201
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
 msgid "grayed"
 msgstr "xám"
 
-#: ../src/orca/braillegenerator.py:1157
-#: ../src/orca/J2SE-access-bridge.py:72
-#: ../src/orca/speechgenerator.py:1304
-#: ../src/orca/where_am_I.py:556
+#: ../src/orca/braillegenerator.py:1187
+#: ../src/orca/J2SE-access-bridge.py:73
+#: ../src/orca/speechgenerator.py:1324
+#: ../src/orca/where_am_I.py:566
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
@@ -62,10 +121,10 @@ msgstr "xám"
 msgid "expanded"
 msgstr "đã bung"
 
-#: ../src/orca/braillegenerator.py:1163
-#: ../src/orca/J2SE-access-bridge.py:79
-#: ../src/orca/speechgenerator.py:1310
-#: ../src/orca/where_am_I.py:562
+#: ../src/orca/braillegenerator.py:1193
+#: ../src/orca/J2SE-access-bridge.py:80
+#: ../src/orca/speechgenerator.py:1330
+#: ../src/orca/where_am_I.py:572
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
@@ -73,7 +132,7 @@ msgstr "đã bung"
 msgid "collapsed"
 msgstr "đã thu gọn"
 
-#: ../src/orca/braillegenerator.py:1170
+#: ../src/orca/braillegenerator.py:1200
 #, python-format
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -141,6 +200,7 @@ msgid "Cursor Position"
 msgstr "Vị trí con nháy"
 
 #: ../src/orca/chnames.py:38
+#: ../src/orca/default.py:5444
 #. Translators: this is the spoken word for the space character
 #.
 msgid "space"
@@ -1160,7 +1220,7 @@ msgstr "mũi tên phải"
 msgid "right-pointing arrowhead"
 msgstr "đầu mũi tên phải"
 
-#: ../src/orca/default.py:131
+#: ../src/orca/default.py:132
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1174,7 +1234,7 @@ msgstr "đầu mũi tên phải"
 msgid "Performs left click on current flat review item."
 msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 
-#: ../src/orca/default.py:146
+#: ../src/orca/default.py:147
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1188,10 +1248,10 @@ msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 msgid "Performs right click on current flat review item."
 msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 
-#: ../src/orca/default.py:159
-#: ../src/orca/Gecko.py:1659
+#: ../src/orca/default.py:160
+#: ../src/orca/Gecko.py:1940
 #: ../src/orca/scripts/acroread.py:113
-#: ../src/orca/scripts/Evolution.py:304
+#: ../src/orca/scripts/Evolution.py:306
 #. Translators: the Orca "SayAll" command allows the
 #. user to press a key and have the entire document in
 #. a window be automatically spoken to the user.  If
@@ -1203,7 +1263,7 @@ msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 msgid "Speaks entire document."
 msgstr "Nói toàn tài liệu."
 
-#: ../src/orca/default.py:171
+#: ../src/orca/default.py:172
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
 #. about their current context spoken and brailled to
@@ -1214,7 +1274,7 @@ msgstr "Nói toàn tài liệu."
 msgid "Performs the where am I operation."
 msgstr "Thực hiện thao tác Tôi ở đâu?"
 
-#: ../src/orca/default.py:181
+#: ../src/orca/default.py:182
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
 #. that text.  For example, they may want to find the
@@ -1223,7 +1283,7 @@ msgstr "Thực hiện thao tác Tôi ở đâu?"
 msgid "Opens the Orca Find dialog."
 msgstr "Mở hộp thoại Tìm."
 
-#: ../src/orca/default.py:192
+#: ../src/orca/default.py:193
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
 #. that text.  For example, they may want to find the
@@ -1233,7 +1293,7 @@ msgstr "Mở hộp thoại Tìm."
 msgid "Searches for the next instance of a string."
 msgstr "Tìm chuỗi tương tự lần nữa"
 
-#: ../src/orca/default.py:203
+#: ../src/orca/default.py:204
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
 #. that text.  For example, they may want to find the
@@ -1243,7 +1303,7 @@ msgstr "Tìm chuỗi tương tự lần nữa"
 msgid "Searches for the previous instance of a string."
 msgstr "Tìm chuỗi cũ."
 
-#: ../src/orca/default.py:222
+#: ../src/orca/default.py:223
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1256,7 +1316,7 @@ msgstr "Tìm chuỗi cũ."
 msgid "Enters and exits flat review mode."
 msgstr "Vào và rời chế độ xem lại phẳng."
 
-#: ../src/orca/default.py:236
+#: ../src/orca/default.py:237
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1269,7 +1329,7 @@ msgstr "Vào và rời chế độ xem lại phẳng."
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Chuyển điểm xem lại phẳng về đầu dòng trước."
 
-#: ../src/orca/default.py:251
+#: ../src/orca/default.py:252
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1283,7 +1343,7 @@ msgstr "Chuyển điểm xem lại phẳng về đầu dòng trước."
 msgid "Moves flat review to the home position."
 msgstr "Chuyển điểm xem lại phẳng về."
 
-#: ../src/orca/default.py:265
+#: ../src/orca/default.py:266
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1296,7 +1356,7 @@ msgstr "Chuyển điểm xem lại phẳng về."
 msgid "Speaks the current flat review line."
 msgstr "Nói dòng xem lại phẳng hiện có."
 
-#: ../src/orca/default.py:279
+#: ../src/orca/default.py:280
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1309,7 +1369,7 @@ msgstr "Nói dòng xem lại phẳng hiện có."
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Chuyển điểm xem lại phẳng tới đầu dòng kế tiếp."
 
-#: ../src/orca/default.py:294
+#: ../src/orca/default.py:295
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1323,7 +1383,7 @@ msgstr "Chuyển điểm xem lại phẳng tới đầu dòng kế tiếp."
 msgid "Moves flat review to the end position."
 msgstr "Chuyển điểm xem lại phẳng tới vị trí cuối."
 
-#: ../src/orca/default.py:310
+#: ../src/orca/default.py:311
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1338,7 +1398,7 @@ msgstr "Chuyển điểm xem lại phẳng tới vị trí cuối."
 msgid "Moves flat review to the previous item or word."
 msgstr "Chuyển điểm xem lại phẳng về mục hay từ trước đó."
 
-#: ../src/orca/default.py:326
+#: ../src/orca/default.py:327
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1353,7 +1413,7 @@ msgstr "Chuyển điểm xem lại phẳng về mục hay từ trước đó."
 msgid "Moves flat review to the word above the current word."
 msgstr "Chuyển điểm xem lại phẳng lên từ trên từ hiện có."
 
-#: ../src/orca/default.py:342
+#: ../src/orca/default.py:343
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1368,7 +1428,7 @@ msgstr "Chuyển điểm xem lại phẳng lên từ trên từ hiện có."
 msgid "Speaks or spells the current flat review item or word."
 msgstr "Nói hay chính tả mục hay từ xem lại phẳng hiện thời."
 
-#: ../src/orca/default.py:359
+#: ../src/orca/default.py:360
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1384,7 +1444,7 @@ msgstr "Nói hay chính tả mục hay từ xem lại phẳng hiện thời."
 msgid "Speaks the current flat review object."
 msgstr "Nói đối tượng xem lại phẳng hiện có."
 
-#: ../src/orca/default.py:375
+#: ../src/orca/default.py:376
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1399,7 +1459,7 @@ msgstr "Nói đối tượng xem lại phẳng hiện có."
 msgid "Moves flat review to the next item or word."
 msgstr "Chuyển điểm xem lại phẳng tới mục hay từ kế tiếp."
 
-#: ../src/orca/default.py:391
+#: ../src/orca/default.py:392
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1414,7 +1474,7 @@ msgstr "Chuyển điểm xem lại phẳng tới mục hay từ kế tiếp."
 msgid "Moves flat review to the word below the current word."
 msgstr "Chuyển điểm xem lại phẳng xuống từ dưới từ hiện có."
 
-#: ../src/orca/default.py:407
+#: ../src/orca/default.py:408
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1429,7 +1489,7 @@ msgstr "Chuyển điểm xem lại phẳng xuống từ dưới từ hiện có.
 msgid "Moves flat review to the previous character."
 msgstr "Chuyển điểm xem lại phẳng về ký tự trước đó."
 
-#: ../src/orca/default.py:421
+#: ../src/orca/default.py:422
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1442,7 +1502,7 @@ msgstr "Chuyển điểm xem lại phẳng về ký tự trước đó."
 msgid "Moves flat review to the end of the line."
 msgstr "Chuyển điểm xem lại phẳng tới cuối dòng."
 
-#: ../src/orca/default.py:439
+#: ../src/orca/default.py:440
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1459,7 +1519,7 @@ msgstr "Chuyển điểm xem lại phẳng tới cuối dòng."
 msgid "Speaks the current flat review character."
 msgstr "Nói ký tự xem lại phẳng hiện có."
 
-#: ../src/orca/default.py:455
+#: ../src/orca/default.py:456
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1474,7 +1534,7 @@ msgstr "Nói ký tự xem lại phẳng hiện có."
 msgid "Moves flat review to the next character."
 msgstr "Chuyển điểm xem lại phẳng tới ký tự kế tiếp."
 
-#: ../src/orca/default.py:464
+#: ../src/orca/default.py:465
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -1482,7 +1542,7 @@ msgstr "Chuyển điểm xem lại phẳng tới ký tự kế tiếp."
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Bật/tắt có nên đọc chỉ ô bảng hiện thời, hoặc toàn bộ hàng."
 
-#: ../src/orca/default.py:473
+#: ../src/orca/default.py:474
 #. Translators: the attributes being presented are the
 #. text attributes, such as bold, italic, font name,
 #. font size, etc.
@@ -1490,7 +1550,7 @@ msgstr "Bật/tắt có nên đọc chỉ ô bảng hiện thời, hoặc toàn 
 msgid "Reads the attributes associated with the current text character."
 msgstr "Đọc các thuộc tính liên quan đến ký tự chữ hiện có."
 
-#: ../src/orca/default.py:492
+#: ../src/orca/default.py:493
 #. Translators: a refreshable braille display is an
 #. external hardware device that presents braille
 #. character to the user.  There are a limited number
@@ -1503,7 +1563,7 @@ msgstr "Đọc các thuộc tính liên quan đến ký tự chữ hiện có."
 msgid "Pans the braille display to the left."
 msgstr "Kéo ngang vùng hiển thị nổi qua trái."
 
-#: ../src/orca/default.py:507
+#: ../src/orca/default.py:508
 #. Translators: a refreshable braille display is an
 #. external hardware device that presents braille
 #. character to the user.  There are a limited number
@@ -1516,7 +1576,7 @@ msgstr "Kéo ngang vùng hiển thị nổi qua trái."
 msgid "Pans the braille display to the right."
 msgstr "Kéo ngang vùng hiển thị nổi qua phải."
 
-#: ../src/orca/default.py:523
+#: ../src/orca/default.py:524
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1530,7 +1590,7 @@ msgstr "Kéo ngang vùng hiển thị nổi qua phải."
 msgid "Moves flat review to the bottom left."
 msgstr "Chuyển điểm xem lại phẳng qua trái, góc dưới."
 
-#: ../src/orca/default.py:541
+#: ../src/orca/default.py:542
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -1547,7 +1607,7 @@ msgstr "Chuyển điểm xem lại phẳng qua trái, góc dưới."
 msgid "Returns to object with keyboard focus."
 msgstr "Trở về đối tượng có tiêu điểm bàn phím."
 
-#: ../src/orca/default.py:553
+#: ../src/orca/default.py:554
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1558,7 +1618,7 @@ msgstr "Trở về đối tượng có tiêu điểm bàn phím."
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Vào chế độ học. Hãy bấm phím Escape để thoát khỏi chế độ học."
 
-#: ../src/orca/default.py:565
+#: ../src/orca/default.py:566
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1569,21 +1629,21 @@ msgstr "Vào chế độ học. Hãy bấm phím Escape để thoát khỏi ch�
 msgid "Exits learn mode."
 msgstr "Thoát khỏi chế độ học."
 
-#: ../src/orca/default.py:573
+#: ../src/orca/default.py:574
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
 msgid "Decreases the speech rate."
 msgstr "Giảm tốc độ nói tiếng."
 
-#: ../src/orca/default.py:581
+#: ../src/orca/default.py:582
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
 msgid "Increases the speech rate."
 msgstr "Tăng tốc độ nói tiếng."
 
-#: ../src/orca/default.py:590
+#: ../src/orca/default.py:591
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
@@ -1591,7 +1651,7 @@ msgstr "Tăng tốc độ nói tiếng."
 msgid "Decreases the speech pitch."
 msgstr "Giảm độ cao giọng nói."
 
-#: ../src/orca/default.py:599
+#: ../src/orca/default.py:600
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
@@ -1599,11 +1659,11 @@ msgstr "Giảm độ cao giọng nói."
 msgid "Increases the speech pitch."
 msgstr "Tăng độ cao giọng nói."
 
-#: ../src/orca/default.py:604
+#: ../src/orca/default.py:605
 msgid "Quits Orca"
 msgstr "Thoát khỏi Orca"
 
-#: ../src/orca/default.py:618
+#: ../src/orca/default.py:619
 #. Translators: the preferences configuration dialog is
 #. the dialog that allows users to set their preferences
 #. for Orca.
@@ -1611,7 +1671,7 @@ msgstr "Thoát khỏi Orca"
 msgid "Displays the preferences configuration dialog."
 msgstr "Hiển thị hộp thoại cấu hình tùy thích."
 
-#: ../src/orca/default.py:627
+#: ../src/orca/default.py:628
 #. Translators: the application preferences configuration
 #. dialog is the dialog that allows users to set their
 #. preferences for a specific application within Orca.
@@ -1619,27 +1679,70 @@ msgstr "Hiển thị hộp thoại cấu hình tùy thích."
 msgid "Displays the application preferences configuration dialog."
 msgstr "Hiển thị hộp thoại cấu hình tùy thích của ứng dụng."
 
-#: ../src/orca/default.py:635
+#: ../src/orca/default.py:636
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
 #.
 msgid "Toggles the silencing of speech."
 msgstr "Bật/tắt câm giọng nói."
 
-#: ../src/orca/default.py:1553
-#: ../src/orca/default.py:1786
-#: ../src/orca/default.py:3542
-#: ../src/orca/default.py:3683
-#: ../src/orca/default.py:3691
-#: ../src/orca/default.py:3790
-#: ../src/orca/default.py:3798
-#: ../src/orca/Gecko.py:6130
-#: ../src/orca/Gecko.py:7325
-#: ../src/orca/scripts/Evolution.py:718
-#: ../src/orca/scripts/Evolution.py:1240
-#: ../src/orca/scripts/StarOffice.py:617
-#: ../src/orca/scripts/StarOffice.py:2216
-#: ../src/orca/scripts/StarOffice.py:2228
+#: ../src/orca/default.py:675
+#. Translators: this command announces information regarding
+#. the relationship of the given bookmark to the current
+#. position
+#.
+msgid "Bookmark where am I with respect to current position."
+msgstr "Lưu liên kết đến vị trí hiện thời."
+
+#: ../src/orca/default.py:683
+#. Translators: this command moves the current position to the
+#. location stored at the bookmark.
+#.
+msgid "Go to bookmark."
+msgstr "Tới liên kết lưu."
+
+#: ../src/orca/default.py:691
+#. Translators: this event handler binds an in-page accessible
+#. object location to the given input key command.
+#.
+msgid "Add bookmark."
+msgstr "Lưu liên kết."
+
+#: ../src/orca/default.py:699
+#. Translators: this event handler saves all bookmarks for the
+#. current application to disk.
+#.
+msgid "Save bookmarks."
+msgstr "Lưu các liên kết lưu."
+
+#: ../src/orca/default.py:707
+#. Translators: this event handler cycles through the registered
+#. bookmarks and takes the user to the next bookmark location.
+#.
+msgid "Go to next bookmark location."
+msgstr "Tới vị trí liên kết lưu kế tiếp."
+
+#: ../src/orca/default.py:715
+#. Translators: this event handler cycles through the registered
+#. bookmarks and takes the user to the previous bookmark location.
+#.
+msgid "Go to previous bookmark location."
+msgstr "Về vị trí liên kết lưu trước."
+
+#: ../src/orca/default.py:1674
+#: ../src/orca/default.py:1907
+#: ../src/orca/default.py:3709
+#: ../src/orca/default.py:3850
+#: ../src/orca/default.py:3858
+#: ../src/orca/default.py:3957
+#: ../src/orca/default.py:3965
+#: ../src/orca/Gecko.py:6478
+#: ../src/orca/Gecko.py:7673
+#: ../src/orca/scripts/Evolution.py:720
+#: ../src/orca/scripts/Evolution.py:1242
+#: ../src/orca/scripts/StarOffice.py:620
+#: ../src/orca/scripts/StarOffice.py:2227
+#: ../src/orca/scripts/StarOffice.py:2239
 #: ../src/orca/where_am_I.py:1205
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
@@ -1653,7 +1756,7 @@ msgstr "Bật/tắt câm giọng nói."
 msgid "blank"
 msgstr "trắng"
 
-#: ../src/orca/default.py:1634
+#: ../src/orca/default.py:1755
 #, python-format
 #. Translators: this is the number of space characters on a line
 #. of text.
@@ -1662,16 +1765,16 @@ msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d dấu cách"
 
-#: ../src/orca/default.py:1641
+#: ../src/orca/default.py:1762
 #, python-format
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] "%d tab "
+msgstr[0] "%d tab"
 
-#: ../src/orca/default.py:1952
+#: ../src/orca/default.py:2073
 #, python-format
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -1680,19 +1783,23 @@ msgstr[0] "%d tab "
 msgid "Progress bar %d."
 msgstr "Thanh tiến hành %d."
 
-#: ../src/orca/default.py:1960
-#: ../src/orca/speechgenerator.py:927
+#: ../src/orca/default.py:2081
+#: ../src/orca/flat_review.py:400
+#: ../src/orca/speechgenerator.py:928
 #, python-format
 #. Translators: this is the percentage value of a
 #. progress bar.
+#.
+#. Translators: this is the percentage value of a slider, progress bar
+#. or other component that displays a value as a percentage.
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
 msgid "%d percent."
 msgstr "%d phần trăm."
 
-#: ../src/orca/default.py:2133
-#: ../src/orca/where_am_I.py:570
+#: ../src/orca/default.py:2271
+#: ../src/orca/where_am_I.py:580
 #, python-format
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -1700,14 +1807,26 @@ msgstr "%d phần trăm."
 msgid "tree level %d"
 msgstr "cấp cây %d"
 
-#: ../src/orca/default.py:2553
+#: ../src/orca/default.py:2691
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
 msgid "entire document selected"
 msgstr "toàn bộ tài liệu đã chọn"
 
-#: ../src/orca/default.py:3056
+#: ../src/orca/default.py:3172
+#: ../src/orca/default.py:5983
+#: ../src/orca/scripts/StarOffice.py:142
+#: ../src/orca/where_am_I.py:490
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca lets them know this.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+msgid "text|selected"
+msgstr "đã chọn"
+
+#: ../src/orca/default.py:3224
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -1715,7 +1834,7 @@ msgstr "toàn bộ tài liệu đã chọn"
 msgid "Speak row"
 msgstr "Nói hàng"
 
-#: ../src/orca/default.py:3062
+#: ../src/orca/default.py:3230
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -1723,14 +1842,14 @@ msgstr "Nói hàng"
 msgid "Speak cell"
 msgstr "Nói ô"
 
-#: ../src/orca/default.py:3112
+#: ../src/orca/default.py:3280
 #: ../src/orca/where_am_I.py:1258
 #. Translators: bold as in the font sense.
 #.
 msgid "bold"
 msgstr "đậm"
 
-#: ../src/orca/default.py:3120
+#: ../src/orca/default.py:3288
 #, python-format
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
@@ -1741,7 +1860,7 @@ msgstr "đậm"
 msgid "%s %s pixels"
 msgstr "%s %s điểm ảnh"
 
-#: ../src/orca/default.py:3241
+#: ../src/orca/default.py:3409
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1750,12 +1869,14 @@ msgstr "%s %s điểm ảnh"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-msgid "Entering learn mode.  Press any key to hear its function.  To exit learn "
+msgid ""
+"Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
-msgstr "Đang vào chế độ học. Hãy bấm bất cứ phím nào để nghe chức năng của nó. "
-"Để thoát khỏi chế độ học này, bấm phím thoát (Esc)."
+msgstr ""
+"Đang vào chế độ học. Hãy bấm bất cứ phím nào để nghe chức năng của nó. Để "
+"thoát khỏi chế độ học này, bấm phím thoát (Esc)."
 
-#: ../src/orca/default.py:3252
+#: ../src/orca/default.py:3420
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1768,7 +1889,7 @@ msgstr "Đang vào chế độ học. Hãy bấm bất cứ phím nào để ngh
 msgid "Learn mode.  Press escape to exit."
 msgstr "Chế độ học. Hãy bấm phim Escape để thoát."
 
-#: ../src/orca/default.py:3273
+#: ../src/orca/default.py:3441
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
 #. the effects of that key would be.  The effects might
@@ -1781,15 +1902,15 @@ msgstr "Chế độ học. Hãy bấm phim Escape để thoát."
 msgid "Exiting learn mode."
 msgstr "Đang thoát khỏi chế độ học."
 
-#: ../src/orca/default.py:3547
-#: ../src/orca/default.py:3696
+#: ../src/orca/default.py:3714
+#: ../src/orca/default.py:3863
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
 msgid "white space"
 msgstr "khoảng trắng"
 
-#: ../src/orca/default.py:3921
+#: ../src/orca/default.py:4088
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
 #. that text.  For example, they may want to find the
@@ -1799,7 +1920,7 @@ msgstr "khoảng trắng"
 msgid "string not found"
 msgstr "không tìm thấy"
 
-#: ../src/orca/default.py:4725
+#: ../src/orca/default.py:4931
 #, python-format
 #. Translators: Orca will provide more compelling output of
 #. the spell checking dialog in some applications.  The first
@@ -1809,12 +1930,12 @@ msgstr "không tìm thấy"
 msgid "Misspelled word: %s"
 msgstr "Từ sai chính tả : %s"
 
-#: ../src/orca/default.py:4733
+#: ../src/orca/default.py:4939
 #, python-format
 msgid "Context is %s"
 msgstr "Ngữ cảnh là %s"
 
-#: ../src/orca/default.py:4870
+#: ../src/orca/default.py:5076
 #, python-format
 #. Translators: Orca will tell you how many characters
 #. are repeated on a line of text.  For example: "22
@@ -1825,7 +1946,7 @@ msgid "%d %s character"
 msgid_plural "%d %s characters"
 msgstr[0] "%d %s ký tự"
 
-#: ../src/orca/default.py:5666
+#: ../src/orca/default.py:5900
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1833,7 +1954,7 @@ msgstr[0] "%d %s ký tự"
 msgid "page selected from cursor position"
 msgstr "trang được chọn từ vị trí con trỏ"
 
-#: ../src/orca/default.py:5674
+#: ../src/orca/default.py:5908
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1841,7 +1962,7 @@ msgstr "trang được chọn từ vị trí con trỏ"
 msgid "page selected to cursor position"
 msgstr "trang được chọn đến vị trí con trỏ"
 
-#: ../src/orca/default.py:5682
+#: ../src/orca/default.py:5916
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1849,7 +1970,7 @@ msgstr "trang được chọn đến vị trí con trỏ"
 msgid "line selected down from cursor position"
 msgstr "dòng được chọn bên dưới vị trí con trỏ"
 
-#: ../src/orca/default.py:5690
+#: ../src/orca/default.py:5924
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1857,7 +1978,7 @@ msgstr "dòng được chọn bên dưới vị trí con trỏ"
 msgid "line selected up from cursor position"
 msgstr "dòng được chọn bên trên vị trí con trỏ"
 
-#: ../src/orca/default.py:5698
+#: ../src/orca/default.py:5932
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1865,7 +1986,7 @@ msgstr "dòng được chọn bên trên vị trí con trỏ"
 msgid "document selected to cursor position"
 msgstr "tài liệu được chọn đến vị trí con trỏ"
 
-#: ../src/orca/default.py:5706
+#: ../src/orca/default.py:5940
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
@@ -1873,34 +1994,14 @@ msgstr "tài liệu được chọn đến vị trí con trỏ"
 msgid "document selected from cursor position"
 msgstr "tài liệu được chọn từ vị trí con trỏ"
 
-#: ../src/orca/default.py:5747
-#: ../src/orca/Gecko.py:886
-#: ../src/orca/J2SE-access-bridge.py:81
-#: ../src/orca/scripts/StarOffice.py:139
-#: ../src/orca/speechgenerator.py:983
-#: ../src/orca/where_am_I.py:480
-#. Translators: when the user selects (highlights) text in
-#. a document, Orca lets them know this.
-#.
-#. Translators: this is in reference to a radio button being
-#. selected or not.
-#.
-#. Translators: when the user selects (highlights) text in
-#. a document, Orca lets them know this.
-#.
-#. Translators: this is in reference to a radio button being
-#. selected or not.
-#.
-msgid "selected"
-msgstr "đã chọn"
-
-#: ../src/orca/default.py:5759
-#: ../src/orca/J2SE-access-bridge.py:85
+#: ../src/orca/default.py:5997
 #. Translators: when the user unselects
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-msgid "unselected"
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+msgid "text|unselected"
 msgstr "chưa chọn"
 
 #: ../src/orca/espeechfactory.py:98
@@ -1937,34 +2038,12 @@ msgstr "Cuộn đến đáy"
 msgid "Wrapping to Top"
 msgstr "Cuộn đến đỉnh"
 
-#: ../src/orca/focus_tracking_presenter.py:850
-#. Translators: this is intended to be a short phrase to
-#. speak and braille to tell the user that no component
-#. has keyboard focus.
-#.
-msgid "No focus"
-msgstr "Không có tiêu điểm"
-
-#: ../src/orca/Gecko.py:744
-#. Translators: "multi-select" refers to a web form list
-#. in which more than one item can be selected at a time.
-#.
-msgid "multi-select"
-msgstr "đa chọn"
-
-#: ../src/orca/Gecko.py:891
-#: ../src/orca/speechgenerator.py:988
-#. Translators: this is in reference to a radio button being
-#. selected or not.
-#.
-msgid "not selected"
-msgstr "chưa chọn"
-
-#: ../src/orca/Gecko.py:935
-#: ../src/orca/speechgenerator.py:379
-#: ../src/orca/speechgenerator.py:808
+#: ../src/orca/flat_review.py:305
+#: ../src/orca/Gecko.py:943
+#: ../src/orca/speechgenerator.py:380
+#: ../src/orca/speechgenerator.py:809
 #: ../src/orca/where_am_I.py:167
-#: ../src/orca/where_am_I.py:210
+#: ../src/orca/where_am_I.py:368
 #. Translators: this represents the state of a checkbox.
 #.
 #. Translators: this represents the state of a checked menu item.
@@ -1974,234 +2053,334 @@ msgstr "chưa chọn"
 msgid "checked"
 msgstr "đã kiểm tra"
 
-#: ../src/orca/Gecko.py:939
-#: ../src/orca/speechgenerator.py:383
+#: ../src/orca/flat_review.py:309
+#: ../src/orca/Gecko.py:947
+#: ../src/orca/speechgenerator.py:384
 #: ../src/orca/where_am_I.py:171
-#: ../src/orca/where_am_I.py:214
+#: ../src/orca/where_am_I.py:372
 #. Translators: this represents the state of a checkbox.
 #.
 msgid "not checked"
 msgstr "chưa kiểm tra"
 
-#: ../src/orca/Gecko.py:1127
+#: ../src/orca/flat_review.py:316
+#: ../src/orca/scripts/planner.py:141
+#: ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:175
+#: ../src/orca/scripts/planner.py:183
+#: ../src/orca/speechgenerator.py:1523
+#. Translators: the state of a toggle button.
+#.
+msgid "pressed"
+msgstr "đã bấm"
+
+#: ../src/orca/flat_review.py:320
+#: ../src/orca/scripts/planner.py:143
+#: ../src/orca/scripts/planner.py:151
+#: ../src/orca/scripts/planner.py:177
+#: ../src/orca/scripts/planner.py:185
+#: ../src/orca/speechgenerator.py:1527
+#. Translators: the state of a toggle button.
+#.
+msgid "not pressed"
+msgstr "chưa bấm"
+
+#: ../src/orca/flat_review.py:330
+#: ../src/orca/Gecko.py:892
+#: ../src/orca/speechgenerator.py:986
+#: ../src/orca/where_am_I.py:207
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+msgid "radiobutton|selected"
+msgstr "đã chọn"
+
+#: ../src/orca/flat_review.py:337
+#: ../src/orca/Gecko.py:899
+#: ../src/orca/speechgenerator.py:993
+#: ../src/orca/where_am_I.py:214
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#.
+msgid "radiobutton|not selected"
+msgstr "chưa chọn"
+
+#: ../src/orca/flat_review.py:375
+#. Translators: The component orientation is horizontal.
+#.
+msgid "horizontal"
+msgstr "nằm ngang"
+
+#: ../src/orca/flat_review.py:382
+#. Translators: The component orientation is vertical.
+#.
+msgid "vertical"
+msgstr "thẳng đứng"
+
+#: ../src/orca/focus_tracking_presenter.py:872
+#. Translators: this is intended to be a short phrase to
+#. speak and braille to tell the user that no component
+#. has keyboard focus.
+#.
+msgid "No focus"
+msgstr "Không có tiêu điểm"
+
+#: ../src/orca/Gecko.py:748
+#. Translators: "multi-select" refers to a web form list
+#. in which more than one item can be selected at a time.
+#.
+msgid "multi-select"
+msgstr "đa chọn"
+
+#: ../src/orca/Gecko.py:1138
 #, python-format
+#. Translators: Announces the number of headings in the
+#. web page that is currently being displayed.
+#.
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d phần đầu"
 
-#: ../src/orca/Gecko.py:1130
+#: ../src/orca/Gecko.py:1144
 #, python-format
+#. Translators: Announces the number of forms in the
+#. web page that is currently being displayed.
+#.
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d mẫu"
 
-#: ../src/orca/Gecko.py:1133
+#: ../src/orca/Gecko.py:1150
 #, python-format
+#. Translators: Announces the number of non-layout tables in the
+#. web page that is currently being displayed.
+#.
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "%d bảng"
 
-#: ../src/orca/Gecko.py:1136
+#: ../src/orca/Gecko.py:1156
 #, python-format
+#. Translators: Announces the number of visited links in the
+#. web page that is currently being displayed.
+#.
 msgid "%d visited link"
 msgid_plural "%d visited links"
 msgstr[0] "%d liên kết đã thăm"
 
-#: ../src/orca/Gecko.py:1139
+#: ../src/orca/Gecko.py:1162
 #, python-format
+#. Translators: Announces the number of unvisited links in the
+#. web page that is currently being displayed.
+#.
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
 msgstr[0] "%d liên kết chưa thăm"
 
-#: ../src/orca/Gecko.py:1141
+#: ../src/orca/Gecko.py:1169
 #, python-format
+#. Translators: Announces the percentage of the document that has
+#. been read.  This is calculated by knowing the index of the
+#. current position divided by the total number of objects on the
+#. page.
+#.
 msgid "%d percent of document read"
 msgstr "%d phần trăm tài liệu đã đọc"
 
-#: ../src/orca/Gecko.py:1296
+#: ../src/orca/Gecko.py:1197
+#. Translators: this announces that a bookmark has been entered
+#.
+msgid "entered bookmark"
+msgstr "liên kết lưu đã nhập"
+
+#: ../src/orca/Gecko.py:1577
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
 msgid "Goes to next character."
 msgstr "Tới ký tự kế tiếp."
 
-#: ../src/orca/Gecko.py:1304
+#: ../src/orca/Gecko.py:1585
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
 msgid "Goes to previous character."
 msgstr "Về ký tự trước đó."
 
-#: ../src/orca/Gecko.py:1312
+#: ../src/orca/Gecko.py:1593
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
 msgid "Goes to next word."
 msgstr "Tới từ kế tiếp."
 
-#: ../src/orca/Gecko.py:1320
+#: ../src/orca/Gecko.py:1601
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
 msgid "Goes to previous word."
 msgstr "Về từ trước đó."
 
-#: ../src/orca/Gecko.py:1328
+#: ../src/orca/Gecko.py:1609
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
 msgid "Goes to next line."
 msgstr "Tới dòng kế tiếp."
 
-#: ../src/orca/Gecko.py:1336
+#: ../src/orca/Gecko.py:1617
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
 msgid "Goes to previous line."
 msgstr "Về dòng trước đó."
 
-#: ../src/orca/Gecko.py:1344
+#: ../src/orca/Gecko.py:1625
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
 msgid "Causes the current combo box to be expanded."
 msgstr "Gây ra hộp tổ hợp được bung ra."
 
-#: ../src/orca/Gecko.py:1351
+#: ../src/orca/Gecko.py:1632
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes left one cell."
 msgstr "Chuyển bên trái theo một ô"
 
-#: ../src/orca/Gecko.py:1358
+#: ../src/orca/Gecko.py:1639
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes right one cell."
 msgstr "Chuyển bên phải theo một ô"
 
-#: ../src/orca/Gecko.py:1365
+#: ../src/orca/Gecko.py:1646
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes down one cell."
 msgstr "Chuyển bên dưới theo một ô"
 
-#: ../src/orca/Gecko.py:1372
+#: ../src/orca/Gecko.py:1653
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes up one cell."
 msgstr "Chuyển bên trên theo một ô"
 
-#: ../src/orca/Gecko.py:1379
+#: ../src/orca/Gecko.py:1660
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes to the first cell in a table."
 msgstr "Tới ô đầu của bảng."
 
-#: ../src/orca/Gecko.py:1386
+#: ../src/orca/Gecko.py:1667
 #. Translators: this is for navigating inside HTML tables.
 #.
 msgid "Goes to the last cell in a table."
 msgstr "Tới ô cuối của bảng."
 
-#: ../src/orca/Gecko.py:1394
+#: ../src/orca/Gecko.py:1675
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to previous heading."
 msgstr "Về tiêu đề trước đó."
 
-#: ../src/orca/Gecko.py:1402
+#: ../src/orca/Gecko.py:1683
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to next heading."
 msgstr "Tới tiêu đề kế tiếp."
 
-#: ../src/orca/Gecko.py:1410
+#: ../src/orca/Gecko.py:1691
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to previous heading at level 1."
 msgstr "Về tiêu đề trước ở cấp 1."
 
-#: ../src/orca/Gecko.py:1418
+#: ../src/orca/Gecko.py:1699
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
 msgid "Goes to next heading at level 1."
 msgstr "Tới tiêu đề kế ở cấp 1."
 
-#: ../src/orca/Gecko.py:1426
+#: ../src/orca/Gecko.py:1707
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
 msgid "Goes to previous heading at level 2."
 msgstr "Về tiêu đề trước ở cấp 2."
 
-#: ../src/orca/Gecko.py:1434
+#: ../src/orca/Gecko.py:1715
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
 msgid "Goes to next heading at level 2."
 msgstr "Tới tiêu đề kế ở cấp 2."
 
-#: ../src/orca/Gecko.py:1442
+#: ../src/orca/Gecko.py:1723
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
 msgid "Goes to previous heading at level 3."
 msgstr "Về tiêu đề trước ở cấp 3."
 
-#: ../src/orca/Gecko.py:1450
+#: ../src/orca/Gecko.py:1731
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
 msgid "Goes to next heading at level 3."
 msgstr "Tới tiêu đề kế ở cấp 3."
 
-#: ../src/orca/Gecko.py:1458
+#: ../src/orca/Gecko.py:1739
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
 msgid "Goes to previous heading at level 4."
 msgstr "Về tiêu đề trước ở cấp 4."
 
-#: ../src/orca/Gecko.py:1466
+#: ../src/orca/Gecko.py:1747
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
 msgid "Goes to next heading at level 4."
 msgstr "Tới tiêu đề kế ở cấp 4."
 
-#: ../src/orca/Gecko.py:1474
+#: ../src/orca/Gecko.py:1755
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
 msgid "Goes to previous heading at level 5."
 msgstr "Về tiêu đề trước ở cấp 5."
 
-#: ../src/orca/Gecko.py:1482
+#: ../src/orca/Gecko.py:1763
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
 msgid "Goes to next heading at level 5."
 msgstr "Tới tiêu đề kế ở cấp 5."
 
-#: ../src/orca/Gecko.py:1490
+#: ../src/orca/Gecko.py:1771
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
 msgid "Goes to previous heading at level 6."
 msgstr "Về tiêu đề trước ở cấp 6."
 
-#: ../src/orca/Gecko.py:1498
+#: ../src/orca/Gecko.py:1779
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
 msgid "Goes to next heading at level 6."
 msgstr "Tới tiêu đề kế ở cấp 6."
 
-#: ../src/orca/Gecko.py:1507
+#: ../src/orca/Gecko.py:1788
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2209,7 +2388,7 @@ msgstr "Tới tiêu đề kế ở cấp 6."
 msgid "Goes to previous large object."
 msgstr "Về đối tượng lớn trước."
 
-#: ../src/orca/Gecko.py:1516
+#: ../src/orca/Gecko.py:1797
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2217,99 +2396,99 @@ msgstr "Về đối tượng lớn trước."
 msgid "Goes to next large object."
 msgstr "Tới đối tượng lớn kế tiếp."
 
-#: ../src/orca/Gecko.py:1524
+#: ../src/orca/Gecko.py:1805
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
 msgid "Goes to previous list."
 msgstr "Về danh sách trước."
 
-#: ../src/orca/Gecko.py:1532
+#: ../src/orca/Gecko.py:1813
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
 msgid "Goes to next list."
 msgstr "Tới danh sách kế tiếp."
 
-#: ../src/orca/Gecko.py:1540
+#: ../src/orca/Gecko.py:1821
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
 msgid "Goes to previous list item."
 msgstr "Về mục danh sách trước."
 
-#: ../src/orca/Gecko.py:1548
+#: ../src/orca/Gecko.py:1829
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
 msgid "Goes to next list item."
 msgstr "Tới mục danh sách kế tiếp."
 
-#: ../src/orca/Gecko.py:1555
+#: ../src/orca/Gecko.py:1836
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to previous unvisited link."
 msgstr "Về liên kết chưa thăm trước."
 
-#: ../src/orca/Gecko.py:1562
+#: ../src/orca/Gecko.py:1843
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to next unvisited link."
 msgstr "Tới liên kết chưa thăm kế tiếp."
 
-#: ../src/orca/Gecko.py:1569
+#: ../src/orca/Gecko.py:1850
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to previous visited link."
 msgstr "Về liên kết đã thăm trước."
 
-#: ../src/orca/Gecko.py:1576
+#: ../src/orca/Gecko.py:1857
 #. Translators: this is for navigating between links in HTML
 #.
 msgid "Goes to next visited link."
 msgstr "Tới liên kết đã tham kế tiếp."
 
-#: ../src/orca/Gecko.py:1584
+#: ../src/orca/Gecko.py:1865
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 msgid "Goes to previous form field."
 msgstr "Về trường mẫu trước."
 
-#: ../src/orca/Gecko.py:1592
+#: ../src/orca/Gecko.py:1873
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 msgid "Goes to next form field."
 msgstr "Tới trường mẫu kế tiếp."
 
-#: ../src/orca/Gecko.py:1600
+#: ../src/orca/Gecko.py:1881
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 msgid "Goes to previous blockquote."
 msgstr "Về khối trích dẫn trước."
 
-#: ../src/orca/Gecko.py:1608
+#: ../src/orca/Gecko.py:1889
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 msgid "Goes to next blockquote."
 msgstr "Tới khối trích dẫn kế tiếp."
 
-#: ../src/orca/Gecko.py:1615
+#: ../src/orca/Gecko.py:1896
 #. Translators: this is for navigating between tables in HTML
 #.
 msgid "Goes to previous table."
 msgstr "Về bảng trước."
 
-#: ../src/orca/Gecko.py:1622
+#: ../src/orca/Gecko.py:1903
 #. Translators: this is for navigating between tables in HTML
 #.
 msgid "Goes to next table."
 msgstr "Tới bảng kế tiếp."
 
-#: ../src/orca/Gecko.py:1634
+#: ../src/orca/Gecko.py:1915
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2318,9 +2497,10 @@ msgstr "Tới bảng kế tiếp."
 #. Orca mode.
 #.
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr "Chuyển đổi giữa cách duyệt qua sở hữu của Gecko và kiểu dấu mũ của Oca."
+msgstr ""
+"Chuyển đổi giữa cách duyệt qua sở hữu của Gecko và kiểu dấu mũ của Oca."
 
-#: ../src/orca/Gecko.py:1646
+#: ../src/orca/Gecko.py:1927
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
@@ -2331,7 +2511,7 @@ msgstr "Chuyển đổi giữa cách duyệt qua sở hữu của Gecko và ki�
 msgid "Toggles structural navigation keys."
 msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 
-#: ../src/orca/Gecko.py:2165
+#: ../src/orca/Gecko.py:2448
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2342,7 +2522,7 @@ msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 msgid "Use _Orca Caret Navigation"
 msgstr "Dùng khả năng duyệt qua dấu mũ _Orca"
 
-#: ../src/orca/Gecko.py:2178
+#: ../src/orca/Gecko.py:2461
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
@@ -2350,17 +2530,17 @@ msgstr "Dùng khả năng duyệt qua dấu mũ _Orca"
 msgid "Use Orca _Structural Navigation"
 msgstr "Dùng khả năng duyệt qua cấu trúc O_rca"
 
-#: ../src/orca/Gecko.py:2192
+#: ../src/orca/Gecko.py:2475
 #. Translators: when the user arrows up and down in HTML content,
-#. it is some times beneficial to always position the caret at the
+#. it is some times beneficial to always position the cursor at the
 #. beginning of the line rather than guessing the position directly
-#. above the current caret position.  This option allows the user
+#. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "Để con chạy ở đầu dòng khi duyệt qua theo chiều dọc"
 
-#: ../src/orca/Gecko.py:2204
+#: ../src/orca/Gecko.py:2487
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
@@ -2368,7 +2548,7 @@ msgstr "Để con chạy ở đầu dòng khi duyệt qua theo chiều dọc"
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Tự động _bắt đầu nói một trang mới nạp"
 
-#: ../src/orca/Gecko.py:2216
+#: ../src/orca/Gecko.py:2499
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
@@ -2376,14 +2556,14 @@ msgstr "Tự động _bắt đầu nói một trang mới nạp"
 msgid "Page Navigation"
 msgstr "Duyệt qua Trang"
 
-#: ../src/orca/Gecko.py:2239
+#: ../src/orca/Gecko.py:2522
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
 msgid "Speak _cell coordinates"
 msgstr "Nói t_oạ độ ô"
 
-#: ../src/orca/Gecko.py:2251
+#: ../src/orca/Gecko.py:2534
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
@@ -2391,28 +2571,28 @@ msgstr "Nói t_oạ độ ô"
 msgid "Speak _multiple cell spans"
 msgstr "Nói ô th_eo nhiều hàng"
 
-#: ../src/orca/Gecko.py:2262
+#: ../src/orca/Gecko.py:2545
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
 msgid "Announce cell _header"
 msgstr "T_hông báo phần đầu ô"
 
-#: ../src/orca/Gecko.py:2273
+#: ../src/orca/Gecko.py:2556
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
 msgid "Skip _blank cells"
 msgstr "Bỏ qua ô _rỗng"
 
-#: ../src/orca/Gecko.py:2284
+#: ../src/orca/Gecko.py:2567
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
 msgid "Table Navigation"
 msgstr "Duyệt qua Bảng"
 
-#: ../src/orca/Gecko.py:2308
+#: ../src/orca/Gecko.py:2591
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
@@ -2420,7 +2600,7 @@ msgstr "Duyệt qua Bảng"
 msgid "Speak results during _find"
 msgstr "Nói _kết quả trong khi tìm"
 
-#: ../src/orca/Gecko.py:2321
+#: ../src/orca/Gecko.py:2604
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
 #. be spoken, or only spoken if it is a different line than the
@@ -2429,7 +2609,7 @@ msgstr "Nói _kết quả trong khi tìm"
 msgid "Onl_y speak changed lines during find"
 msgstr "Chỉ nói dòng nào tha_y đổi trong khi tìm"
 
-#: ../src/orca/Gecko.py:2338
+#: ../src/orca/Gecko.py:2621
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
@@ -2437,33 +2617,33 @@ msgstr "Chỉ nói dòng nào tha_y đổi trong khi tìm"
 msgid "Minimum length of matched text:"
 msgstr "Độ dài văn bản khớp tối thiểu :"
 
-#: ../src/orca/Gecko.py:2362
+#: ../src/orca/Gecko.py:2645
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
 msgid "Find Options"
 msgstr "Tùy chọn tìm"
 
-#: ../src/orca/Gecko.py:3131
+#: ../src/orca/Gecko.py:3437
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Loading.  Please wait."
 msgstr "Đang nạp. Vui lòng chờ."
 
-#: ../src/orca/Gecko.py:3136
+#: ../src/orca/Gecko.py:3442
 #, python-format
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Finished loading %s."
 msgstr "Hoàn tất nạp %s."
 
-#: ../src/orca/Gecko.py:3142
+#: ../src/orca/Gecko.py:3448
 #. Translators: this is in reference to loading a web page.
 #.
 msgid "Finished loading."
 msgstr "Hoàn tất nạp."
 
-#: ../src/orca/Gecko.py:3517
+#: ../src/orca/Gecko.py:3833
 #, python-format
 #. Translators: the 'h' below represents a heading level
 #. attribute for content that you might find in something
@@ -2475,7 +2655,7 @@ msgstr "Hoàn tất nạp."
 msgid "h%d"
 msgstr "h%d"
 
-#: ../src/orca/Gecko.py:4405
+#: ../src/orca/Gecko.py:4753
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2484,7 +2664,7 @@ msgstr "h%d"
 msgid "Cell spans %d rows and %d columns"
 msgstr "Ô theo %d hàng và %d cột"
 
-#: ../src/orca/Gecko.py:4412
+#: ../src/orca/Gecko.py:4760
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2493,7 +2673,7 @@ msgstr "Ô theo %d hàng và %d cột"
 msgid "Cell spans %d columns"
 msgstr "Ô theo %d cột"
 
-#: ../src/orca/Gecko.py:4418
+#: ../src/orca/Gecko.py:4766
 #, python-format
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2502,7 +2682,7 @@ msgstr "Ô theo %d cột"
 msgid "Cell spans %d rows"
 msgstr "Ô theo %d hàng"
 
-#: ../src/orca/Gecko.py:6103
+#: ../src/orca/Gecko.py:6451
 #, python-format
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
@@ -2510,16 +2690,16 @@ msgstr "Ô theo %d hàng"
 msgid "level %d"
 msgstr "cấp %d"
 
-#: ../src/orca/Gecko.py:6584
-#: ../src/orca/Gecko.py:6645
-#: ../src/orca/Gecko.py:6740
-#: ../src/orca/Gecko.py:6805
-#: ../src/orca/Gecko.py:6928
-#: ../src/orca/Gecko.py:7012
+#: ../src/orca/Gecko.py:6932
+#: ../src/orca/Gecko.py:6993
 #: ../src/orca/Gecko.py:7088
-#: ../src/orca/Gecko.py:7168
-#: ../src/orca/Gecko.py:7253
-#: ../src/orca/Gecko.py:7347
+#: ../src/orca/Gecko.py:7153
+#: ../src/orca/Gecko.py:7276
+#: ../src/orca/Gecko.py:7360
+#: ../src/orca/Gecko.py:7436
+#: ../src/orca/Gecko.py:7516
+#: ../src/orca/Gecko.py:7601
+#: ../src/orca/Gecko.py:7695
 #. Translators: when the user is attempting to locate a
 #. particular object and the top of the web page has been
 #. reached without that object being found, we "wrap" to
@@ -2529,24 +2709,24 @@ msgstr "cấp %d"
 msgid "Wrapping to bottom."
 msgstr "Cuộn đến đáy."
 
-#: ../src/orca/Gecko.py:6595
-#: ../src/orca/Gecko.py:6618
+#: ../src/orca/Gecko.py:6943
+#: ../src/orca/Gecko.py:6966
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
 msgid "No more headings."
 msgstr "Không còn đầu đề nào nữa."
 
-#: ../src/orca/Gecko.py:6607
-#: ../src/orca/Gecko.py:6681
-#: ../src/orca/Gecko.py:6764
-#: ../src/orca/Gecko.py:6866
-#: ../src/orca/Gecko.py:6969
-#: ../src/orca/Gecko.py:7046
-#: ../src/orca/Gecko.py:7123
-#: ../src/orca/Gecko.py:7203
-#: ../src/orca/Gecko.py:7299
-#: ../src/orca/Gecko.py:7396
+#: ../src/orca/Gecko.py:6955
+#: ../src/orca/Gecko.py:7029
+#: ../src/orca/Gecko.py:7112
+#: ../src/orca/Gecko.py:7214
+#: ../src/orca/Gecko.py:7317
+#: ../src/orca/Gecko.py:7394
+#: ../src/orca/Gecko.py:7471
+#: ../src/orca/Gecko.py:7551
+#: ../src/orca/Gecko.py:7647
+#: ../src/orca/Gecko.py:7744
 #. Translators: when the user is attempting to locate a
 #. particular object and the bottom of the web page has been
 #. reached without that object being found, we "wrap" to the
@@ -2556,8 +2736,8 @@ msgstr "Không còn đầu đề nào nữa."
 msgid "Wrapping to top."
 msgstr "Cuộn đến đỉnh."
 
-#: ../src/orca/Gecko.py:6656
-#: ../src/orca/Gecko.py:6692
+#: ../src/orca/Gecko.py:7004
+#: ../src/orca/Gecko.py:7040
 #, python-format
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -2565,8 +2745,8 @@ msgstr "Cuộn đến đỉnh."
 msgid "No more headings at level %d."
 msgstr "Không còn phần đầu nào nữa ở cấp %d."
 
-#: ../src/orca/Gecko.py:6752
-#: ../src/orca/Gecko.py:6776
+#: ../src/orca/Gecko.py:7100
+#: ../src/orca/Gecko.py:7124
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
@@ -2574,8 +2754,8 @@ msgstr "Không còn phần đầu nào nữa ở cấp %d."
 msgid "No more large objects."
 msgstr "Không còn đối tượng lớn nào nữa."
 
-#: ../src/orca/Gecko.py:6813
-#: ../src/orca/Gecko.py:6874
+#: ../src/orca/Gecko.py:7161
+#: ../src/orca/Gecko.py:7222
 #, python-format
 #. Translators: this represents a list in HTML.
 #.
@@ -2583,8 +2763,8 @@ msgid "List with %d item"
 msgid_plural "List with %d items"
 msgstr[0] "Danh sách có %d mục"
 
-#: ../src/orca/Gecko.py:6828
-#: ../src/orca/Gecko.py:6889
+#: ../src/orca/Gecko.py:7176
+#: ../src/orca/Gecko.py:7237
 #, python-format
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
@@ -2594,16 +2774,16 @@ msgstr[0] "Danh sách có %d mục"
 msgid "Nesting level %d"
 msgstr "Cấp lồng nhau %d"
 
-#: ../src/orca/Gecko.py:6838
-#: ../src/orca/Gecko.py:6899
+#: ../src/orca/Gecko.py:7186
+#: ../src/orca/Gecko.py:7247
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
 msgid "No more lists."
 msgstr "Không còn danh sách nào nữa."
 
-#: ../src/orca/Gecko.py:6940
-#: ../src/orca/Gecko.py:6981
+#: ../src/orca/Gecko.py:7288
+#: ../src/orca/Gecko.py:7329
 #. Translators: this is for navigating HTML content by
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
@@ -2611,39 +2791,39 @@ msgstr "Không còn danh sách nào nữa."
 msgid "No more list items."
 msgstr "Không còn mục danh sách nào nữa."
 
-#: ../src/orca/Gecko.py:7023
-#: ../src/orca/Gecko.py:7057
+#: ../src/orca/Gecko.py:7371
+#: ../src/orca/Gecko.py:7405
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 msgid "No more unvisited links."
 msgstr "Không còn liên kết chưa thăm nào nữa."
 
-#: ../src/orca/Gecko.py:7099
-#: ../src/orca/Gecko.py:7134
+#: ../src/orca/Gecko.py:7447
+#: ../src/orca/Gecko.py:7482
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 msgid "No more visited links."
 msgstr "Không còn liên kết đã thăm nào nữa."
 
-#: ../src/orca/Gecko.py:7179
-#: ../src/orca/Gecko.py:7214
+#: ../src/orca/Gecko.py:7527
+#: ../src/orca/Gecko.py:7562
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
 msgid "No more blockquotes."
 msgstr "Không còn khối trích dẫn nào nữa."
 
-#: ../src/orca/Gecko.py:7264
-#: ../src/orca/Gecko.py:7310
+#: ../src/orca/Gecko.py:7612
+#: ../src/orca/Gecko.py:7658
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
 msgid "No more form fields."
 msgstr "Không còn trường mẫu nào nữa."
 
-#: ../src/orca/Gecko.py:7332
+#: ../src/orca/Gecko.py:7680
 #, python-format
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
@@ -2651,8 +2831,8 @@ msgstr "Không còn trường mẫu nào nữa."
 msgid "Row %d, column %d."
 msgstr "Hàng %d, cột %d."
 
-#: ../src/orca/Gecko.py:7361
-#: ../src/orca/Gecko.py:7410
+#: ../src/orca/Gecko.py:7709
+#: ../src/orca/Gecko.py:7758
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
 #. In contrast, a non-uniform table is one in which at least
@@ -2661,8 +2841,8 @@ msgstr "Hàng %d, cột %d."
 msgid "Non-uniform"
 msgstr "Không đều"
 
-#: ../src/orca/Gecko.py:7366
-#: ../src/orca/Gecko.py:7415
+#: ../src/orca/Gecko.py:7714
+#: ../src/orca/Gecko.py:7763
 #, python-format
 #. Translators: this represents the number of rows in an HTML table.
 #.
@@ -2670,8 +2850,8 @@ msgid "Table with %d row"
 msgid_plural "Table with %d rows"
 msgstr[0] "Bảng %d hàng"
 
-#: ../src/orca/Gecko.py:7371
-#: ../src/orca/Gecko.py:7420
+#: ../src/orca/Gecko.py:7719
+#: ../src/orca/Gecko.py:7768
 #, python-format
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -2679,55 +2859,55 @@ msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d cột"
 
-#: ../src/orca/Gecko.py:7384
-#: ../src/orca/Gecko.py:7432
+#: ../src/orca/Gecko.py:7732
+#: ../src/orca/Gecko.py:7780
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
 msgid "No more tables."
 msgstr "Không còn bảng nào nữa."
 
-#: ../src/orca/Gecko.py:7475
+#: ../src/orca/Gecko.py:7823
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Beginning of row."
 msgstr "Đầu hàng."
 
-#: ../src/orca/Gecko.py:7480
-#: ../src/orca/Gecko.py:7532
-#: ../src/orca/Gecko.py:7580
-#: ../src/orca/Gecko.py:7632
-#: ../src/orca/Gecko.py:7647
-#: ../src/orca/Gecko.py:7664
+#: ../src/orca/Gecko.py:7828
+#: ../src/orca/Gecko.py:7880
+#: ../src/orca/Gecko.py:7928
+#: ../src/orca/Gecko.py:7980
+#: ../src/orca/Gecko.py:7995
+#: ../src/orca/Gecko.py:8012
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Not in a table."
 msgstr "Không phải trong bảng."
 
-#: ../src/orca/Gecko.py:7527
+#: ../src/orca/Gecko.py:7875
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "End of row."
 msgstr "Cuối hàng."
 
-#: ../src/orca/Gecko.py:7575
+#: ../src/orca/Gecko.py:7923
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Top of column."
 msgstr "Đầu cột."
 
-#: ../src/orca/Gecko.py:7627
+#: ../src/orca/Gecko.py:7975
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 msgid "Bottom of column."
 msgstr "Cuối cột."
 
-#: ../src/orca/Gecko.py:7682
+#: ../src/orca/Gecko.py:8030
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2738,7 +2918,7 @@ msgstr "Cuối cột."
 msgid "Gecko is controlling the caret."
 msgstr "Gecko đang điều khiển dấu mũ."
 
-#: ../src/orca/Gecko.py:7694
+#: ../src/orca/Gecko.py:8042
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -2749,34 +2929,40 @@ msgstr "Gecko đang điều khiển dấu mũ."
 msgid "Orca is controlling the caret."
 msgstr "Orca đang điều khiển dấu mũ."
 
-#: ../src/orca/Gecko.py:7715
+#: ../src/orca/Gecko.py:8066
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
 msgid "Structural navigation keys on."
 msgstr "Các phím duyệt qua kiểu cấu trúc đã bật."
 
-#: ../src/orca/Gecko.py:7724
+#: ../src/orca/Gecko.py:8078
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
 #. Thus H moves you to the next heading, Shift H to the
 #. previous heading, T to the next table, and so on. Some
 #. users prefer to turn this off to use Firefox's search
-#. when typing feature.
+#. when typing feature.  This message is sent to both the
+#. braille display and the speech synthesizer when the user
+#. toggles the structural navigation feature of Orca.
+#. It should be a brief informative message.
 #.
 msgid "Structural navigation keys off."
 msgstr "Các phím duyệt qua kiểu cấu trúc bị tắt."
 
-#: ../src/orca/gnomespeechfactory.py:163
+#: ../src/orca/gnomespeechfactory.py:165
 msgid "GNOME Speech Services"
 msgstr "Dịch vụ Nói tiếng Gnome"
 
-#: ../src/orca/gnomespeechfactory.py:665
-#: ../src/orca/gnomespeechfactory.py:666
+#: ../src/orca/gnomespeechfactory.py:685
+#: ../src/orca/gnomespeechfactory.py:686
 #. Translators: we replace the ellipses (both manual and UTF-8)
 #. with a spoken string.  The extra space you see at the beginning
 #. is because we need the speech synthesis engine to speak the
@@ -2786,7 +2972,7 @@ msgstr "Dịch vụ Nói tiếng Gnome"
 msgid " dot dot dot"
 msgstr " chấm chấm chấm"
 
-#: ../src/orca/gnomespeechfactory.py:731
+#: ../src/orca/gnomespeechfactory.py:757
 #. Translators: this is to be sent to a speech synthesis
 #. engine to prefix a negative number (e.g., "-56" turns
 #. into "minus 56".  We cannot always be sure of the type
@@ -2797,16 +2983,16 @@ msgstr " chấm chấm chấm"
 msgid "minus"
 msgstr "trừ"
 
-#: ../src/orca/gnomespeechfactory.py:881
-#: ../src/orca/speechdispatcherfactory.py:212
+#: ../src/orca/gnomespeechfactory.py:907
+#: ../src/orca/speechdispatcherfactory.py:287
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a higher pitch.
 #.
 msgid "higher."
 msgstr "cao hơn."
 
-#: ../src/orca/gnomespeechfactory.py:912
-#: ../src/orca/speechdispatcherfactory.py:212
+#: ../src/orca/gnomespeechfactory.py:938
+#: ../src/orca/speechdispatcherfactory.py:287
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a lower pitch.
 #.
@@ -2814,8 +3000,8 @@ msgstr "cao hơn."
 msgid "lower."
 msgstr "thấp hơn."
 
-#: ../src/orca/gnomespeechfactory.py:941
-#: ../src/orca/speechdispatcherfactory.py:202
+#: ../src/orca/gnomespeechfactory.py:967
+#: ../src/orca/speechdispatcherfactory.py:277
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking at a faster rate (words
 #. per minute).
@@ -2823,8 +3009,8 @@ msgstr "thấp hơn."
 msgid "faster."
 msgstr "nhanh hơn."
 
-#: ../src/orca/gnomespeechfactory.py:975
-#: ../src/orca/speechdispatcherfactory.py:202
+#: ../src/orca/gnomespeechfactory.py:1001
+#: ../src/orca/speechdispatcherfactory.py:277
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking at a slower rate (words
 #. per minute).
@@ -2833,9 +3019,25 @@ msgstr "nhanh hơn."
 msgid "slower."
 msgstr "chậm hơn."
 
+#: ../src/orca/J2SE-access-bridge.py:86
+#. Translators: this represents the state of a node in a tree
+#. or list.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+msgid "listitem|selected"
+msgstr "đã chọn"
+
+#: ../src/orca/J2SE-access-bridge.py:94
+#. Translators: this represents the state of a node in a tree
+#. or list.
+#.
+#. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+msgid "listitem|unselected"
+msgstr "chưa chọn"
+
 #: ../src/orca/keybindings.py:152
-#: ../src/orca/orca_gui_prefs.py:1357
-#: ../src/orca/orca_gui_prefs.py:1449
+#: ../src/orca/orca_gui_prefs.py:1594
+#: ../src/orca/orca_gui_prefs.py:1686
 msgid "Orca"
 msgstr "Orca"
 
@@ -3204,8 +3406,8 @@ msgid "Close"
 msgstr "Đóng"
 
 #: ../src/orca/orca-find.glade.h:4
-#: ../src/orca/scripts/gedit.py:351
-#: ../src/orca/scripts/gedit.py:353
+#: ../src/orca/scripts/gedit.py:350
+#: ../src/orca/scripts/gedit.py:352
 #: ../src/orca/scripts/gnome-search-tool.py:160
 #. Translators: this is used to tell us if the focus is on the
 #. "Find" button in gedit's Find dialog.  It must match what
@@ -3265,7 +3467,7 @@ msgstr "Đỉ_nh cửa sổ"
 msgid "_Wrap around"
 msgstr "_Cuộn lại"
 
-#: ../src/orca/orca_gui_prefs.py:115
+#: ../src/orca/orca_gui_prefs.py:118
 #. Translators: Function is a table column header where the
 #. cells in the column are a sentence that briefly describes
 #. what action Orca will take when the user invokes an Orca-specific
@@ -3274,7 +3476,7 @@ msgstr "_Cuộn lại"
 msgid "Function"
 msgstr "Hàm"
 
-#: ../src/orca/orca_gui_prefs.py:166
+#: ../src/orca/orca_gui_prefs.py:169
 #. Translators: Key Binding is a table column header where
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
@@ -3282,7 +3484,7 @@ msgstr "Hàm"
 msgid "Key Binding"
 msgstr "Liên kết phím"
 
-#: ../src/orca/orca_gui_prefs.py:220
+#: ../src/orca/orca_gui_prefs.py:223
 #. Translators: Alternate is a table column header where
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.  These
@@ -3293,7 +3495,7 @@ msgstr "Liên kết phím"
 msgid "Alternate"
 msgstr "Thay thế"
 
-#: ../src/orca/orca_gui_prefs.py:254
+#: ../src/orca/orca_gui_prefs.py:257
 #. Translators: Modified is a table column header where the
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
@@ -3301,63 +3503,123 @@ msgstr "Thay thế"
 msgid "Modified"
 msgstr "Điều chỉnh"
 
-#: ../src/orca/orca_gui_prefs.py:293
-#: ../src/orca/orca_gui_prefs.py:338
+#: ../src/orca/orca_gui_prefs.py:296
+#: ../src/orca/orca_gui_prefs.py:342
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
 msgid "Default"
 msgstr "Mặc định"
 
-#: ../src/orca/orca_gui_prefs.py:299
-#: ../src/orca/orca_gui_prefs.py:344
+#: ../src/orca/orca_gui_prefs.py:302
+#: ../src/orca/orca_gui_prefs.py:348
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
 msgid "Uppercase"
 msgstr "Chữ hoa"
 
-#: ../src/orca/orca_gui_prefs.py:305
-#: ../src/orca/orca_gui_prefs.py:354
+#: ../src/orca/orca_gui_prefs.py:308
+#: ../src/orca/orca_gui_prefs.py:358
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
 msgid "Hyperlink"
 msgstr "Siêu liên kết"
 
-#: ../src/orca/orca_gui_prefs.py:318
+#: ../src/orca/orca_gui_prefs.py:322
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "Mới hiệu lực hỗ trợ khả năng truy cập GNOME."
 
-#: ../src/orca/orca_gui_prefs.py:319
+#: ../src/orca/orca_gui_prefs.py:323
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "Bạn cần phải đăng xuất rồi đăng nhập lại để thay đổi có tác động."
 
-#: ../src/orca/orca_gui_prefs.py:877
-#. Attribute Name column (IS_SPOKEN and NAME).
+#: ../src/orca/orca_gui_prefs.py:938
+#. Attribute Name column (NAME).
+#.
+#. Translators: Attribute here refers to text attributes such
+#. as bold, underline, family-name, etc.
 #.
 msgid "Attribute Name"
 msgstr "Tên thuộc tính"
 
-#: ../src/orca/orca_gui_prefs.py:896
+#: ../src/orca/orca_gui_prefs.py:953
+#. Attribute Speak column (IS_SPOKEN).
+#.
+#. Translators: the "Speak" column consists of a single checkbox
+#. for each text attribute.  If the checkbox is checked, Orca
+#. will speak that attribute, if it is present, when the user
+#. presses Orca_Modifier+F.
+#.
+msgid "Speak"
+msgstr "Nói"
+
+#: ../src/orca/orca_gui_prefs.py:971
+#. Attribute Mark in Braille column (IS_BRAILLED).
+#.
+#. Translators: The "Mark in braille" column consists of a single
+#. checkbox for each text attribute.  If the checkbox is checked,
+#. Orca will "underline" that attribute, if it is present, on
+#. the refreshable braille display.
+#.
+msgid "Mark in braille"
+msgstr "Đánh dấu bằng chữ nổi"
+
+#: ../src/orca/orca_gui_prefs.py:997
 #. Attribute Value column (VALUE)
 #.
-msgid "Speak Unless"
-msgstr "Nói trừ khi"
+#. Translators: "Present Unless" is a column header of the text
+#. attributes pane of the Orca preferences dialog.  On this pane,
+#. the user can select a set of text attributes that they would like
+#. spoken and/or indicated in braille.  Because the list of attributes
+#. could get quite lengthy, we provide the option to always speak/
+#. braille a text attribute *unless* its value is equal to the value
+#. given by the user in this column of the list.  For example, given
+#. the text attribute "underline" and a present unless value of "none",
+#. the user is stating that he/she would like to have underlined text
+#. announced for all cases (single, double, low, etc.) except when the
+#. value of underline is none (i.e. when it's not underlined).
+#. "Present" here is being used as a verb.
+#.
+msgid "Present Unless"
+msgstr "Ở nếu không"
 
-#: ../src/orca/orca_gui_prefs.py:1101
-#: ../src/orca/orca_gui_prefs.py:1112
-#: ../src/orca/orca_gui_prefs.py:2120
+#: ../src/orca/orca_gui_prefs.py:1096
+#. Pronunciation Dictionary actual string (word) column (ACTUAL).
+#.
+#. Translators: "Actual String" here refers to a text string as it
+#. actually appears in a text document. This might be an abbreviation
+#. or a particular word that is pronounced differently then the way
+#. that it looks.
+#.
+msgid "Actual String"
+msgstr "Chuỗi thật"
+
+#: ../src/orca/orca_gui_prefs.py:1113
+#. Pronunciation Dictionary replacement string column (REPLACEMENT)
+#.
+#. Translators: "Replacement String" here refers to the text string
+#. that will actually be used to speak it's matching "actual string".
+#. For example: if the actual string was "MHz", then the replacement
+#. (spoken) string would be "megahertz".
+#.
+msgid "Replacement String"
+msgstr "Chuỗi thay thế"
+
+#: ../src/orca/orca_gui_prefs.py:1324
+#: ../src/orca/orca_gui_prefs.py:1335
+#: ../src/orca/orca_gui_prefs.py:2462
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
 msgid "Bilinear"
 msgstr "Tuyến kép"
 
-#: ../src/orca/orca_gui_prefs.py:1107
-#: ../src/orca/orca_gui_prefs.py:1127
-#: ../src/orca/orca_gui_prefs.py:2122
-#: ../src/orca/orca_gui_prefs.py:2165
+#: ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:1350
+#: ../src/orca/orca_gui_prefs.py:2464
+#: ../src/orca/orca_gui_prefs.py:2507
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
@@ -3365,9 +3627,9 @@ msgstr "Tuyến kép"
 msgid "None"
 msgstr "Không có"
 
-#: ../src/orca/orca_gui_prefs.py:1125
-#: ../src/orca/orca_gui_prefs.py:1150
-#: ../src/orca/orca_gui_prefs.py:2143
+#: ../src/orca/orca_gui_prefs.py:1348
+#: ../src/orca/orca_gui_prefs.py:1373
+#: ../src/orca/orca_gui_prefs.py:2485
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Centered means that Orca attempts to
 #. keep the mouse in the center of the magnified window.
@@ -3375,8 +3637,8 @@ msgstr "Không có"
 msgid "Centered"
 msgstr "Giữa lại"
 
-#: ../src/orca/orca_gui_prefs.py:1137
-#: ../src/orca/orca_gui_prefs.py:2162
+#: ../src/orca/orca_gui_prefs.py:1360
+#: ../src/orca/orca_gui_prefs.py:2504
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Proportional means that Orca attempts
 #. to position the mouse in the magnifier window in a way
@@ -3388,8 +3650,8 @@ msgstr "Giữa lại"
 msgid "Proportional"
 msgstr "Co giãn"
 
-#: ../src/orca/orca_gui_prefs.py:1144
-#: ../src/orca/orca_gui_prefs.py:2151
+#: ../src/orca/orca_gui_prefs.py:1367
+#: ../src/orca/orca_gui_prefs.py:2493
 #. Translators: this is an algorithm for tracking the mouse
 #. with the magnifier.  Push means that Orca will not move
 #. the magnified region until the mouse hits an edge of the
@@ -3398,47 +3660,102 @@ msgstr "Co giãn"
 msgid "Push"
 msgstr "Đẩy"
 
-#: ../src/orca/orca_gui_prefs.py:1396
-#: ../src/orca/orca_gui_prefs.py:1473
+#: ../src/orca/orca_gui_prefs.py:1633
+#: ../src/orca/orca_gui_prefs.py:1710
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
 msgid "Braille Bindings"
-msgstr "Liên kết Braille"
+msgstr "Liên kết chữ nổi"
 
-#: ../src/orca/orca_gui_prefs.py:1791
-#: ../src/orca/orca-setup.glade.h:85
+#: ../src/orca/orca_gui_prefs.py:2035
+#: ../src/orca/orca_gui_prefs.py:2075
+#: ../src/orca/orca-setup.glade.h:27
+#. Translators: A single braille cell on a refreshable
+#. braille display consists of 8 dots.  If the user
+#. chooses this setting, the dot in the bottom left
+#. corner will be used to 'underline' text of interest.
+#.
+msgid "Dot _7"
+msgstr "Chấm _7"
+
+#: ../src/orca/orca_gui_prefs.py:2042
+#: ../src/orca/orca_gui_prefs.py:2082
+#: ../src/orca/orca-setup.glade.h:28
+#. Translators: If the user chooses this setting, the
+#. dot in the bottom right corner of the braille cell
+#. will be used to 'underline' text of interest.
+#.
+msgid "Dot _8"
+msgstr "Chấm _8"
+
+#: ../src/orca/orca_gui_prefs.py:2049
+#: ../src/orca/orca_gui_prefs.py:2089
+#: ../src/orca/orca-setup.glade.h:29
+#. Translators: If the user chooses this setting, the
+#. two dots at the bottom of the braille cell will be
+#. used to 'underline' text of interest.
+#.
+msgid "Dots 7 an_d 8"
+msgstr "Chấm 7 _và 8"
+
+#: ../src/orca/orca_gui_prefs.py:2112
+#: ../src/orca/orca-setup.glade.h:99
+#. Translators: If this setting is chosen, no punctuation
+#. symbols will be spoken as a user reads a document.
+#.
 msgid "_None"
 msgstr "Khô_ng có"
 
-#: ../src/orca/orca_gui_prefs.py:1794
-#: ../src/orca/orca-setup.glade.h:63
+#: ../src/orca/orca_gui_prefs.py:2120
+#: ../src/orca/orca-setup.glade.h:75
+#. Translators: If this setting is chosen, common punctuation
+#. symbols (like comma, period, question mark) will not be
+#. spoken as a user reads a document, but less common symbols
+#. (such as #, @, $) will.
+#.
 msgid "So_me"
 msgstr "Một _số"
 
-#: ../src/orca/orca_gui_prefs.py:1797
-#: ../src/orca/orca-setup.glade.h:44
+#: ../src/orca/orca_gui_prefs.py:2127
+#: ../src/orca/orca-setup.glade.h:50
+#. Translators: If this setting is chosen, the majority of
+#. punctuation symbols will be spoken as a user reads a
+#. document.
+#.
 msgid "M_ost"
 msgstr "Phần _lớn"
 
-#: ../src/orca/orca_gui_prefs.py:1814
+#: ../src/orca/orca_gui_prefs.py:2148
+#. Translators: If this setting is chosen and the user is reading
+#. over an entire document, Orca will pause at the end of each
+#. line.
+#.
 msgid "Line"
 msgstr "Dòng"
 
-#: ../src/orca/orca_gui_prefs.py:1816
+#: ../src/orca/orca_gui_prefs.py:2154
+#. Translators: If this setting is chosen and the user is reading
+#. over an entire document, Orca will pause at the end of each
+#. sentence.
+#.
 msgid "Sentence"
 msgstr "Câu"
 
-#: ../src/orca/orca_gui_prefs.py:1832
-#: ../src/orca/orca_gui_prefs.py:1920
-#: ../src/orca/orca-setup.glade.h:13
+#: ../src/orca/orca_gui_prefs.py:2174
+#: ../src/orca/orca_gui_prefs.py:2262
+#: ../src/orca/orca-setup.glade.h:16
+#. Translators: This refers to the amount of information
+#. Orca provides about a particular object that receives
+#. focus.
+#.
 msgid "Brie_f"
 msgstr "_Ngắn"
 
-#: ../src/orca/orca_gui_prefs.py:1856
-#: ../src/orca/orca-setup.glade.h:67
+#: ../src/orca/orca_gui_prefs.py:2198
+#: ../src/orca/orca-setup.glade.h:79
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -3446,7 +3763,7 @@ msgstr "_Ngắn"
 msgid "Speak current _cell"
 msgstr "Nói ô hiện _có"
 
-#: ../src/orca/orca_gui_prefs.py:2199
+#: ../src/orca/orca_gui_prefs.py:2541
 #. Translators: this is a spoken prompt asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
@@ -3454,7 +3771,7 @@ msgstr "Nói ô hiện _có"
 msgid "enter new key"
 msgstr "nhập phím mới"
 
-#: ../src/orca/orca_gui_prefs.py:2228
+#: ../src/orca/orca_gui_prefs.py:2570
 #, python-format
 #. Translators: this is a spoken prompt confirming the key
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
@@ -3463,7 +3780,7 @@ msgstr "nhập phím mới"
 msgid "The new key is: %s"
 msgstr "Phím mới là: %s"
 
-#: ../src/orca/orca_gui_prefs.py:2236
+#: ../src/orca/orca_gui_prefs.py:2578
 #. Translators: this is a spoken prompt letting the user
 #. know that the key combination (e.g., Ctrl+Alt+f) they
 #. just entered for defining a new key binding was already
@@ -3472,15 +3789,15 @@ msgstr "Phím mới là: %s"
 msgid "The key entered is the same. Nothing changed."
 msgstr "Phím được nhập như nhau. Không có gì thay đổi."
 
-#: ../src/orca/orca_gui_prefs.py:2336
-#: ../src/orca/orca-setup.glade.h:81
+#: ../src/orca/orca_gui_prefs.py:2678
+#: ../src/orca/orca-setup.glade.h:94
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
 msgid "_Desktop"
 msgstr "_Máy để bàn"
 
-#: ../src/orca/orca_gui_prefs.py:2562
+#: ../src/orca/orca_gui_prefs.py:2950
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
 msgid "Starting Orca Preferences. This may take a while."
@@ -3498,27 +3815,15 @@ msgstr "Tùy thích"
 msgid "Quit"
 msgstr "Thoát"
 
-#: ../src/orca/orca.py:237
-#: ../src/orca/orca.py:1190
-#: ../src/orca/orca.py:1191
+#: ../src/orca/orca.py:236
+#: ../src/orca/orca.py:1202
+#: ../src/orca/orca.py:1203
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
 msgid "Goodbye."
 msgstr "Tạm biệt nhé."
 
-#: ../src/orca/orca.py:580
-#: ../src/orca/scripts/StarOffice.py:661
-#: ../src/orca/scripts/StarOffice.py:688
-msgid "off"
-msgstr "tắt"
-
-#: ../src/orca/orca.py:582
-#: ../src/orca/scripts/StarOffice.py:659
-#: ../src/orca/scripts/StarOffice.py:686
-msgid "on"
-msgstr "bật"
-
-#: ../src/orca/orca.py:643
+#: ../src/orca/orca.py:656
 #, python-format
 #. Translators: this is a spoken prompt letting the user know
 #. Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -3527,21 +3832,21 @@ msgstr "bật"
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Đã bắt phím: %s. Nhấn enter để xác nhận."
 
-#: ../src/orca/orca.py:842
+#: ../src/orca/orca.py:854
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
 msgid "Speech enabled."
 msgstr "Tiếng nói đã bật."
 
-#: ../src/orca/orca.py:847
+#: ../src/orca/orca.py:859
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
 msgid "Speech disabled."
 msgstr "Tiếng nói bị tắt."
 
-#: ../src/orca/orca.py:899
+#: ../src/orca/orca.py:911
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
@@ -3549,7 +3854,7 @@ msgstr "Tiếng nói bị tắt."
 msgid "Orca user settings reloaded."
 msgstr "Thiết lập người dùng Orca đã được tải lại."
 
-#: ../src/orca/orca.py:1453
+#: ../src/orca/orca.py:1465
 msgid "Welcome to Orca."
 msgstr "Chúc mừng bạn dùng Orca."
 
@@ -3559,7 +3864,8 @@ msgid ""
 "\n"
 "This will stop all speech output and screen magnification.\n"
 "\n"
-msgstr "<b><big>Thoát khỏi Orca không?</big></b>\n"
+msgstr ""
+"<b><big>Thoát khỏi Orca không?</big></b>\n"
 "\n"
 "Việc này sẽ thôi toàn bộ kết xuất nói và sự phóng đại màn hình.\n"
 "\n"
@@ -3568,352 +3874,386 @@ msgstr "<b><big>Thoát khỏi Orca không?</big></b>\n"
 msgid ""
 "<b>Adjust selected\n"
 "attributes</b>"
-msgstr "<b>Điều chỉnh các\n"
+msgstr ""
+"<b>Điều chỉnh các\n"
 "thuộc tính đã chọn.</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Braille Indicator</b>"
+msgstr "<b>Cái chỉ chữ nổi</b>"
+
+#: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Cross-hair Settings</b>"
 msgstr "<b>Thiết lập chữ thập</b>"
 
-#: ../src/orca/orca-setup.glade.h:4
+#: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Cursor Settings</b>"
 msgstr "<b>Thiết lập con chạy</b>"
 
-#: ../src/orca/orca-setup.glade.h:5
+#: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Bố trí bàn phím</b>"
 
-#: ../src/orca/orca-setup.glade.h:6
+#: ../src/orca/orca-setup.glade.h:7
+msgid "<b>Pronunciation Dictionary</b>"
+msgstr "<b>Từ điển phát âm</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Cấp chấm câu</b>"
 
-#: ../src/orca/orca-setup.glade.h:7
+#: ../src/orca/orca-setup.glade.h:9
+msgid "<b>Selection Indicator</b>"
+msgstr "<b>Cái chỉ vùng chọn</b>"
+
+#: ../src/orca/orca-setup.glade.h:10
 msgid "<b>Table Row Speech</b>"
 msgstr "<b>Tiếng nói hàng bảng</b>"
 
-#: ../src/orca/orca-setup.glade.h:8
+#: ../src/orca/orca-setup.glade.h:11
 msgid "<b>Text attributes</b>"
 msgstr "<b>Thuộc tính văn bản</b>"
 
-#: ../src/orca/orca-setup.glade.h:9
+#: ../src/orca/orca-setup.glade.h:12
 msgid "<b>Verbosity</b>"
 msgstr "<b>Độ chi tiết</b>"
 
-#: ../src/orca/orca-setup.glade.h:10
+#: ../src/orca/orca-setup.glade.h:13
 msgid "<b>Zoomer Position</b>"
 msgstr "<b>Vị trí bộ thu phóng</b>"
 
-#: ../src/orca/orca-setup.glade.h:11
+#: ../src/orca/orca-setup.glade.h:14
 msgid "<b>Zoomer Settings</b>"
 msgstr "<b>Thiết lập bộ thu phóng</b>"
 
-#: ../src/orca/orca-setup.glade.h:12
+#: ../src/orca/orca-setup.glade.h:15
 msgid "Braille"
 msgstr "Chữ nổi"
 
-#: ../src/orca/orca-setup.glade.h:14
+#: ../src/orca/orca-setup.glade.h:17
 msgid ""
 "Centered\n"
 "None\n"
 "Proportional\n"
 "Push"
-msgstr "Giữa lại\n"
+msgstr ""
+"Giữa lại\n"
 "Không có\n"
 "Co giãn\n"
 "Đẩy"
 
-#: ../src/orca/orca-setup.glade.h:18
+#: ../src/orca/orca-setup.glade.h:21
 msgid "Color:"
 msgstr "Màu :"
 
-#: ../src/orca/orca-setup.glade.h:19
+#: ../src/orca/orca-setup.glade.h:22
 msgid "Custom siz_e"
 msgstr "Cỡ _riêng"
 
-#: ../src/orca/orca-setup.glade.h:20
+#: ../src/orca/orca-setup.glade.h:23
 msgid ""
 "Default\n"
 "Uppercase\n"
 "Hyperlink"
-msgstr "Mặc định\n"
+msgstr ""
+"Mặc định\n"
 "Chữ hoa\n"
 "Siêu liên kết"
 
-#: ../src/orca/orca-setup.glade.h:23
+#: ../src/orca/orca-setup.glade.h:26
 msgid "Disable gksu _keyboard grab"
 msgstr "Tắt bắt phím _gksu"
 
-#: ../src/orca/orca-setup.glade.h:24
+#: ../src/orca/orca-setup.glade.h:30
 msgid "Enable Braille _monitor"
 msgstr "Dùng bộ trình bày chữ _nổi"
 
-#: ../src/orca/orca-setup.glade.h:25
+#: ../src/orca/orca-setup.glade.h:31
 msgid "Enable Braille _support"
 msgstr "Bật khả năng _hỗ trợ chữ nổi"
 
-#: ../src/orca/orca-setup.glade.h:26
+#: ../src/orca/orca-setup.glade.h:32
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Bật phím _abc và chấm câu"
 
-#: ../src/orca/orca-setup.glade.h:27
+#: ../src/orca/orca-setup.glade.h:33
 msgid "Enable _function keys"
 msgstr "Bật phím chức _năng"
 
-#: ../src/orca/orca-setup.glade.h:28
+#: ../src/orca/orca-setup.glade.h:34
 msgid "Enable _key echo"
 msgstr "Bật _phản hồi phím"
 
-#: ../src/orca/orca-setup.glade.h:29
+#: ../src/orca/orca-setup.glade.h:35
 msgid "Enable _magnifier"
 msgstr "Bật _kính lúp"
 
-#: ../src/orca/orca-setup.glade.h:30
+#: ../src/orca/orca-setup.glade.h:36
 msgid "Enable _modifier keys"
 msgstr "Bật phí_m sửa đổi"
 
-#: ../src/orca/orca-setup.glade.h:31
+#: ../src/orca/orca-setup.glade.h:37
 msgid "Enable ac_tion keys"
 msgstr "Bậ_t phím hành động"
 
-#: ../src/orca/orca-setup.glade.h:32
+#: ../src/orca/orca-setup.glade.h:38
 msgid "Enable c_ursor"
 msgstr "Bật con chạ_y"
 
-#: ../src/orca/orca-setup.glade.h:33
+#: ../src/orca/orca-setup.glade.h:39
 msgid "Enable cross-h_air"
 msgstr "Bật _chữ thập"
 
-#: ../src/orca/orca-setup.glade.h:34
+#: ../src/orca/orca-setup.glade.h:40
 msgid "Enable cross-hair cli_p"
 msgstr "Bật trích chữ thậ_p"
 
-#: ../src/orca/orca-setup.glade.h:35
+#: ../src/orca/orca-setup.glade.h:41
 msgid "Enable echo by _word"
 msgstr "Bật phản hồi th_eo từ"
 
-#: ../src/orca/orca-setup.glade.h:36
+#: ../src/orca/orca-setup.glade.h:42
 msgid "Enable lockin_g keys"
 msgstr "Bật _khoá phím"
 
-#: ../src/orca/orca-setup.glade.h:37
+#: ../src/orca/orca-setup.glade.h:43
 msgid "General"
 msgstr "Chung"
 
-#: ../src/orca/orca-setup.glade.h:38
+#: ../src/orca/orca-setup.glade.h:44
 msgid "In_vert colors"
 msgstr "Đả_o màu"
 
-#: ../src/orca/orca-setup.glade.h:39
+#: ../src/orca/orca-setup.glade.h:45
 msgid "Key Binding List"
 msgstr "Danh sách liên kết bàn phím"
 
-#: ../src/orca/orca-setup.glade.h:40
+#: ../src/orca/orca-setup.glade.h:46
 msgid "Key Bindings"
 msgstr "Liên kết bàn phím"
 
-#: ../src/orca/orca-setup.glade.h:41
+#: ../src/orca/orca-setup.glade.h:47
 msgid "Key Echo"
 msgstr "Phản hồi phím"
 
-#: ../src/orca/orca-setup.glade.h:42
+#: ../src/orca/orca-setup.glade.h:48
 msgid ""
 "Line\n"
 "Sentence"
-msgstr "Dòng\n"
+msgstr ""
+"Dòng\n"
 "Câu"
 
-#: ../src/orca/orca-setup.glade.h:45
+#: ../src/orca/orca-setup.glade.h:51
 msgid "Magnifier"
 msgstr "Kính lúp"
 
-#: ../src/orca/orca-setup.glade.h:46
+#: ../src/orca/orca-setup.glade.h:52
 msgid "Mouse trac_king mode:"
 msgstr "Chế độ theo _dõi chuột:"
 
-#: ../src/orca/orca-setup.glade.h:47
+#: ../src/orca/orca-setup.glade.h:54
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 msgid "Move _down one"
 msgstr "Chuyển _xuống một"
 
-#: ../src/orca/orca-setup.glade.h:48
+#: ../src/orca/orca-setup.glade.h:56
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 msgid "Move _up one"
 msgstr "Chuyển _lên một"
 
-#: ../src/orca/orca-setup.glade.h:49
+#: ../src/orca/orca-setup.glade.h:58
+#. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 msgid "Move to _bottom"
 msgstr "Chuyển xuống _dưới"
 
-#: ../src/orca/orca-setup.glade.h:50
+#: ../src/orca/orca-setup.glade.h:60
+#. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 msgid "Move to _top"
 msgstr "Chuyển lên _trên"
 
-#: ../src/orca/orca-setup.glade.h:51
+#: ../src/orca/orca-setup.glade.h:61
 msgid ""
 "None\n"
 "Bilinear"
-msgstr "Không có\n"
+msgstr ""
+"Không có\n"
 "Tuyến kép"
 
-#: ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca-setup.glade.h:63
 msgid "Orca Modifier Keys"
 msgstr "Phím bổ trợ Orca"
 
-#: ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca-setup.glade.h:64
 msgid "Orca Preferences"
 msgstr "Tùy thích Orca"
 
-#: ../src/orca/orca-setup.glade.h:55
+#: ../src/orca/orca-setup.glade.h:65
 msgid "Orca _Modifier Key(s):"
 msgstr "Phím _bổ trợ Orca:"
 
-#: ../src/orca/orca-setup.glade.h:56
+#: ../src/orca/orca-setup.glade.h:66
 msgid "Pi_tch:"
 msgstr "C_ao:"
 
-#: ../src/orca/orca-setup.glade.h:57
+#: ../src/orca/orca-setup.glade.h:67
+msgid "Pronunciation"
+msgstr "Phát âm"
+
+#: ../src/orca/orca-setup.glade.h:68
 msgid "Quit Orca _without confirmation"
 msgstr "Thoát khỏi Orca, không cần _xác nhận"
 
-#: ../src/orca/orca-setup.glade.h:58
+#: ../src/orca/orca-setup.glade.h:69
 msgid "S_ource display:"
 msgstr "Hiển thị n_guồn:"
 
-#: ../src/orca/orca-setup.glade.h:59
+#: ../src/orca/orca-setup.glade.h:71
+#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 msgid "Say All B_y:"
 msgstr "Nói tất cả th_eo :"
 
-#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca-setup.glade.h:72
 msgid "Scale _factor:"
 msgstr "_Hệ số co dãn:"
 
-#: ../src/orca/orca-setup.glade.h:61
+#: ../src/orca/orca-setup.glade.h:73
 msgid "Show Orca _main window"
 msgstr "Hiện _cửa sổ Orca chính"
 
-#: ../src/orca/orca-setup.glade.h:62
+#: ../src/orca/orca-setup.glade.h:74
 msgid "Si_ze:"
 msgstr "_Cỡ :"
 
-#: ../src/orca/orca-setup.glade.h:64
+#: ../src/orca/orca-setup.glade.h:76
 msgid "Speak _indentation and justification"
 msgstr "Cũng nó_i sự thụt lề và canh đều"
 
-#: ../src/orca/orca-setup.glade.h:65
+#: ../src/orca/orca-setup.glade.h:77
 msgid "Speak _none"
 msgstr "Không _nói"
 
-#: ../src/orca/orca-setup.glade.h:66
+#: ../src/orca/orca-setup.glade.h:78
 msgid "Speak blank lines"
 msgstr "Đọc dòng trống"
 
-#: ../src/orca/orca-setup.glade.h:68
+#: ../src/orca/orca-setup.glade.h:80
 msgid "Speak current ro_w"
 msgstr "Nói _hàng hiện có"
 
-#: ../src/orca/orca-setup.glade.h:69
+#: ../src/orca/orca-setup.glade.h:81
 msgid "Speak progress bar _updates"
 msgstr "Nói sự _cập nhật thanh tiến hành"
 
-#: ../src/orca/orca-setup.glade.h:70
+#: ../src/orca/orca-setup.glade.h:82
 msgid "Speech"
 msgstr "Tiếng nói"
 
-#: ../src/orca/orca-setup.glade.h:71
+#: ../src/orca/orca-setup.glade.h:83
 msgid "Speech _system:"
 msgstr "Hệ thống tiếng _nói:"
 
-#: ../src/orca/orca-setup.glade.h:72
+#: ../src/orca/orca-setup.glade.h:84
 msgid "Speech synthesi_zer:"
 msgstr "Bộ tổng hợ_p tiếng nói:"
 
-#: ../src/orca/orca-setup.glade.h:73
+#: ../src/orca/orca-setup.glade.h:85
 msgid "Tar_get display:"
 msgstr "Hiển thị đí_ch:"
 
-#: ../src/orca/orca-setup.glade.h:74
+#: ../src/orca/orca-setup.glade.h:86
 msgid "Text Attributes"
 msgstr "Thuộc tính văn bản"
 
-#: ../src/orca/orca-setup.glade.h:75
+#: ../src/orca/orca-setup.glade.h:87
 msgid "Update interval:"
 msgstr "Khoảng cập nhật:"
 
-#: ../src/orca/orca-setup.glade.h:76
+#: ../src/orca/orca-setup.glade.h:88
 msgid "Ver_bose"
 msgstr "Ch_i tiết"
 
-#: ../src/orca/orca-setup.glade.h:77
+#: ../src/orca/orca-setup.glade.h:89
 msgid "Vo_lume:"
 msgstr "Âm _lượng:"
 
-#: ../src/orca/orca-setup.glade.h:78
+#: ../src/orca/orca-setup.glade.h:90
 msgid "_Abbreviated role names"
 msgstr "Tên v_ai viết tắt"
 
-#: ../src/orca/orca-setup.glade.h:79
+#: ../src/orca/orca-setup.glade.h:91
 msgid "_All"
 msgstr "Tất _cả"
 
-#: ../src/orca/orca-setup.glade.h:80
+#: ../src/orca/orca-setup.glade.h:92
 msgid "_Bottom:"
 msgstr "_Dưới:"
 
-#: ../src/orca/orca-setup.glade.h:82
+#: ../src/orca/orca-setup.glade.h:93
+msgid "_Delete"
+msgstr "_Xoá"
+
+#: ../src/orca/orca-setup.glade.h:95
 msgid "_Enable speech"
 msgstr "Bật _nói"
 
-#: ../src/orca/orca-setup.glade.h:83
+#: ../src/orca/orca-setup.glade.h:96
 msgid "_Laptop"
 msgstr "_Laptop"
 
-#: ../src/orca/orca-setup.glade.h:84
+#: ../src/orca/orca-setup.glade.h:97
 msgid "_Left:"
 msgstr "T_rái:"
 
-#: ../src/orca/orca-setup.glade.h:86
+#: ../src/orca/orca-setup.glade.h:98
+msgid "_New entry"
+msgstr "_Mục nhập mới"
+
+#: ../src/orca/orca-setup.glade.h:100
 msgid "_Person:"
 msgstr "N_gười:"
 
-#: ../src/orca/orca-setup.glade.h:87
+#: ../src/orca/orca-setup.glade.h:101
 msgid "_Present tooltips"
 msgstr "_Hiện mẹo công cụ"
 
-#: ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca-setup.glade.h:102
 msgid "_Rate:"
 msgstr "_Tỷ lệ:"
 
-#: ../src/orca/orca-setup.glade.h:89
+#: ../src/orca/orca-setup.glade.h:103
 msgid "_Reset"
 msgstr "Đặt _lại"
 
-#: ../src/orca/orca-setup.glade.h:90
+#: ../src/orca/orca-setup.glade.h:104
 msgid "_Right:"
 msgstr "_Phải:"
 
-#: ../src/orca/orca-setup.glade.h:91
+#: ../src/orca/orca-setup.glade.h:105
 msgid "_Smoothing:"
 msgstr "Làm _mịn:"
 
-#: ../src/orca/orca-setup.glade.h:92
+#: ../src/orca/orca-setup.glade.h:106
 msgid "_Speak all"
 msgstr "_Nói tất cả"
 
-#: ../src/orca/orca-setup.glade.h:93
+#: ../src/orca/orca-setup.glade.h:107
 msgid "_Top:"
 msgstr "_Trên:"
 
-#: ../src/orca/orca-setup.glade.h:94
+#: ../src/orca/orca-setup.glade.h:108
 msgid "_Voice settings:"
 msgstr "Thiết lập giọng _nói:"
 
-#: ../src/orca/orca-setup.glade.h:95
+#: ../src/orca/orca-setup.glade.h:109
 msgid "_Width:"
 msgstr "_Rộng:"
 
-#: ../src/orca/orca-setup.glade.h:96
+#: ../src/orca/orca-setup.glade.h:110
 msgid "pixels"
 msgstr "điểm ảnh"
 
-#: ../src/orca/orca-setup.glade.h:97
+#: ../src/orca/orca-setup.glade.h:111
 msgid "seconds"
 msgstr "giây"
 
@@ -3941,78 +4281,16 @@ msgstr "giây"
 #. interesting tidbits about local conventions in the sections
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
-msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+msgid ""
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
 "golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+msgstr ""
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
 "golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-
-#: ../src/orca/pronunciation_dict.py:38
-msgid "ASAP"
-msgstr "ASAP"
-
-#: ../src/orca/pronunciation_dict.py:38
-msgid "as soon as possible"
-msgstr "ngay khi có thể"
-
-#: ../src/orca/pronunciation_dict.py:39
-msgid "GHz"
-msgstr "GHz"
-
-#: ../src/orca/pronunciation_dict.py:39
-msgid "gigahertz"
-msgstr "gigahertz"
-
-#: ../src/orca/pronunciation_dict.py:40
-msgid "IMAP"
-msgstr "IMAP"
-
-#: ../src/orca/pronunciation_dict.py:40
-msgid "eye map"
-msgstr "sơ đồ mắt"
-
-#: ../src/orca/pronunciation_dict.py:41
-msgid "LDAP"
-msgstr "LDAP"
-
-#: ../src/orca/pronunciation_dict.py:41
-msgid "ell dap"
-msgstr "ell dap"
-
-#: ../src/orca/pronunciation_dict.py:42
-msgid "LOL"
-msgstr "LOL"
-
-#: ../src/orca/pronunciation_dict.py:42
-msgid "laughing out loud"
-msgstr "cười to"
-
-#: ../src/orca/pronunciation_dict.py:43
-msgid "MHz"
-msgstr "MHz"
-
-#: ../src/orca/pronunciation_dict.py:43
-msgid "megahertz"
-msgstr "megahertz"
-
-#: ../src/orca/pronunciation_dict.py:44
-msgid "strikethrough"
-msgstr "gạch đè"
-
-#: ../src/orca/pronunciation_dict.py:44
-msgid "strike through"
-msgstr "gạch đè"
-
-#: ../src/orca/pronunciation_dict.py:45
-msgid "SELinux"
-msgstr "SELinux"
-
-#: ../src/orca/pronunciation_dict.py:45
-msgid "ess ee linux"
-msgstr "ess ee linux"
 
 #: ../src/orca/rolenames.py:160
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -4668,7 +4946,7 @@ msgid "Link"
 msgstr "Liên kết"
 
 #: ../src/orca/rolenames.py:605
-#: ../src/orca/scripts/StarOffice.py:1446
+#: ../src/orca/scripts/StarOffice.py:1457
 #. Translators: spoken words for the rolename of a link.
 #.
 msgid "link"
@@ -5179,8 +5457,8 @@ msgid "Cell"
 msgstr "Ô"
 
 #: ../src/orca/rolenames.py:944
-#: ../src/orca/scripts/StarOffice.py:89
-#: ../src/orca/scripts/StarOffice.py:127
+#: ../src/orca/scripts/StarOffice.py:90
+#: ../src/orca/scripts/StarOffice.py:128
 #. Translators: spoken words for the rolename of a table cell.
 #.
 msgid "cell"
@@ -5533,7 +5811,7 @@ msgid "document"
 msgstr "tài liệu"
 
 #: ../src/orca/scripts/acroread.py:263
-#: ../src/orca/scripts/StarOffice.py:1141
+#: ../src/orca/scripts/StarOffice.py:1152
 #, python-format
 #. We've entered a table.  Announce the dimensions.
 #.
@@ -5541,7 +5819,7 @@ msgid "table with %d rows and %d columns."
 msgstr "bảng %d hàng %d cột."
 
 #: ../src/orca/scripts/acroread.py:270
-#: ../src/orca/scripts/StarOffice.py:1146
+#: ../src/orca/scripts/StarOffice.py:1157
 #. We've left a table.  Announce this fact.
 #.
 msgid "leaving table."
@@ -5556,7 +5834,7 @@ msgid "row %d, column %d"
 msgstr "hàng %d, cột %d"
 
 #: ../src/orca/scripts/acroread.py:294
-#: ../src/orca/scripts/StarOffice.py:96
+#: ../src/orca/scripts/StarOffice.py:97
 #, python-format
 #. Translators: this represents the column we're
 #. on in a table.
@@ -5571,43 +5849,43 @@ msgstr "cột %d"
 msgid "Read"
 msgstr "Đọc"
 
-#: ../src/orca/scripts/Evolution.py:265
+#: ../src/orca/scripts/Evolution.py:267
 #. Translators: short braille for the rolename of a calendar view.
 #.
 msgid "calv"
 msgstr "calv"
 
-#: ../src/orca/scripts/Evolution.py:268
+#: ../src/orca/scripts/Evolution.py:270
 #. Translators: long braille for the rolename of a calendar view.
 #.
 msgid "CalendarView"
 msgstr "Khung xem lịch"
 
-#: ../src/orca/scripts/Evolution.py:271
+#: ../src/orca/scripts/Evolution.py:273
 #. Translators: spoken words for the rolename of a calendar view.
 #.
 msgid "calendar view"
 msgstr "khung xem lịch"
 
-#: ../src/orca/scripts/Evolution.py:279
+#: ../src/orca/scripts/Evolution.py:281
 #. Translators: short braille for the rolename of a calendar event.
 #.
 msgid "cale"
 msgstr "kiện"
 
-#: ../src/orca/scripts/Evolution.py:282
+#: ../src/orca/scripts/Evolution.py:284
 #. Translators: long braille for the rolename of a calendar event.
 #.
 msgid "CalendarEvent"
 msgstr "Sự kiện lịch"
 
-#: ../src/orca/scripts/Evolution.py:285
+#: ../src/orca/scripts/Evolution.py:287
 #. Translators: spoken words for the rolename of a calendar event.
 #.
 msgid "calendar event"
 msgstr "sự kiện lịch"
 
-#: ../src/orca/scripts/Evolution.py:313
+#: ../src/orca/scripts/Evolution.py:315
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
@@ -5615,7 +5893,7 @@ msgstr "sự kiện lịch"
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr "Bật tắt hiển thị thư mới khi không phải là script đang hoạt động."
 
-#: ../src/orca/scripts/Evolution.py:347
+#: ../src/orca/scripts/Evolution.py:349
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
@@ -5623,7 +5901,7 @@ msgstr "Bật tắt hiển thị thư mới khi không phải là script đang h
 msgid "present new mail if this script is not active."
 msgstr "hiển thị thư mới nếu script không hoạt động."
 
-#: ../src/orca/scripts/Evolution.py:354
+#: ../src/orca/scripts/Evolution.py:356
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
@@ -5631,7 +5909,7 @@ msgstr "hiển thị thư mới nếu script không hoạt động."
 msgid "do not present new mail if this script is not active."
 msgstr "không hiển thị thư mới nếu script không hoạt động."
 
-#: ../src/orca/scripts/Evolution.py:404
+#: ../src/orca/scripts/Evolution.py:406
 #, python-format
 #. Translators: this is the name of a setup
 #. assistant window/screen in Evolution.
@@ -5639,7 +5917,7 @@ msgstr "không hiển thị thư mới nếu script không hoạt động."
 msgid "%s screen"
 msgstr "màn hình %s"
 
-#: ../src/orca/scripts/Evolution.py:437
+#: ../src/orca/scripts/Evolution.py:439
 #. Most of the Setup Assistant screens have a useful piece
 #. of text starting with the word "Please". We want to speak
 #. these. For the first screen, the useful piece of text
@@ -5653,16 +5931,16 @@ msgstr "màn hình %s"
 msgid "Please"
 msgstr "Xin hãy"
 
-#: ../src/orca/scripts/Evolution.py:438
+#: ../src/orca/scripts/Evolution.py:440
 msgid "Welcome"
 msgstr "Chúc mừng"
 
-#: ../src/orca/scripts/Evolution.py:439
+#: ../src/orca/scripts/Evolution.py:441
 msgid "Congratulations"
 msgstr "Chúc mừng"
 
-#: ../src/orca/scripts/Evolution.py:895
-#: ../src/orca/scripts/Evolution.py:947
+#: ../src/orca/scripts/Evolution.py:897
+#: ../src/orca/scripts/Evolution.py:949
 #. Translators: this is the name of the
 #. status column header in the message
 #. list in Evolution.  The name needs to
@@ -5671,7 +5949,7 @@ msgstr "Chúc mừng"
 msgid "Status"
 msgstr "Trạng thái"
 
-#: ../src/orca/scripts/Evolution.py:952
+#: ../src/orca/scripts/Evolution.py:954
 #. Translators: we present this to the user to
 #. indicate that an email message has not been
 #. marked as having been read.
@@ -5679,7 +5957,7 @@ msgstr "Trạng thái"
 msgid "unread"
 msgstr "chưa đọc"
 
-#: ../src/orca/scripts/Evolution.py:961
+#: ../src/orca/scripts/Evolution.py:963
 #. Translators: this is the name of the
 #. attachment column header in the message
 #. list in Evolution.  The name needs to
@@ -5688,14 +5966,14 @@ msgstr "chưa đọc"
 msgid "Attachment"
 msgstr "Đính kèm"
 
-#: ../src/orca/scripts/Evolution.py:1125
+#: ../src/orca/scripts/Evolution.py:1127
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
 msgid "No appointments"
 msgstr "Không có cuộc hẹn"
 
-#: ../src/orca/scripts/Evolution.py:1203
+#: ../src/orca/scripts/Evolution.py:1205
 #. Translators: this is the unlabelled arrow button near the
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
@@ -5703,8 +5981,8 @@ msgstr "Không có cuộc hẹn"
 msgid "Directories button"
 msgstr "Nút thư mục"
 
-#: ../src/orca/scripts/Evolution.py:1359
-#: ../src/orca/scripts/Evolution.py:1483
+#: ../src/orca/scripts/Evolution.py:1361
+#: ../src/orca/scripts/Evolution.py:1485
 #. Translators: this is the ending of the name of the
 #. Evolution Setup Assistant window.  The translated
 #. form has to match what Evolution is using.  We hate
@@ -5717,33 +5995,34 @@ msgstr "Trợ lý"
 #: ../src/orca/scripts/gaim.py:151
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "Bật/tắt thêm tên của phòng trò chuyện trước tin nhắn trong phòng trò chuyện."
+msgstr ""
+"Bật/tắt thêm tên của phòng trò chuyện trước tin nhắn trong phòng trò chuyện."
 
-#: ../src/orca/scripts/gaim.py:156
+#: ../src/orca/scripts/gaim.py:159
 msgid "Speak and braille a previous chat room message."
 msgstr "Nói và hiển thị bằng chữ nổi một tin nhắn phòng trò chuyện trước."
 
-#: ../src/orca/scripts/gaim.py:200
+#: ../src/orca/scripts/gaim.py:206
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room.
 #.
 msgid "Speak Chat Room name"
 msgstr "Nói tên phòng trò chuyện"
 
-#: ../src/orca/scripts/gaim.py:261
+#: ../src/orca/scripts/gaim.py:267
 msgid "speak chat room name."
 msgstr "nói tên của phòng trò chuyện."
 
-#: ../src/orca/scripts/gaim.py:264
+#: ../src/orca/scripts/gaim.py:270
 msgid "Do not speak chat room name."
 msgstr "Đừng nói tên của phòng trò chuyện."
 
-#: ../src/orca/scripts/gaim.py:284
+#: ../src/orca/scripts/gaim.py:290
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Tin nhắn từ phòng trò chuyện %s "
 
-#: ../src/orca/scripts/gedit.py:266
+#: ../src/orca/scripts/gedit.py:265
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
 #. keying off stuff like this, but we're forced to do so in
@@ -5752,11 +6031,11 @@ msgstr "Tin nhắn từ phòng trò chuyện %s "
 msgid "Change to:"
 msgstr "Đổi sang:"
 
-#: ../src/orca/scripts/gedit.py:267
+#: ../src/orca/scripts/gedit.py:266
 msgid "Misspelled word:"
 msgstr "Từ sai chính tả :"
 
-#: ../src/orca/scripts/gedit.py:300
+#: ../src/orca/scripts/gedit.py:299
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
@@ -5768,16 +6047,16 @@ msgstr "Từ sai chính tả :"
 msgid "Completed spell checking"
 msgstr "Mới kiểm tra xong chính tả"
 
-#: ../src/orca/scripts/gedit.py:301
+#: ../src/orca/scripts/gedit.py:300
 msgid "Spell checking is complete."
 msgstr "Việc kiểm tra chính tả là hoàn tất."
 
-#: ../src/orca/scripts/gedit.py:303
+#: ../src/orca/scripts/gedit.py:302
 msgid "Press Tab and Return to terminate."
 msgstr "Hãy bấm phím Tab và Return để kết thúc."
 
-#: ../src/orca/scripts/gedit.py:427
-#: ../src/orca/scripts/gedit.py:486
+#: ../src/orca/scripts/gedit.py:426
+#: ../src/orca/scripts/gedit.py:485
 #. Translators: this is the name of the "Check Spelling" window
 #. in gedit and must be the same as what gedit uses.  We hate
 #. keying off stuff like this, but we're forced to do so in this
@@ -5786,7 +6065,7 @@ msgstr "Hãy bấm phím Tab và Return để kết thúc."
 msgid "Check Spelling"
 msgstr "Kiểm tra chính tả"
 
-#: ../src/orca/scripts/gedit.py:513
+#: ../src/orca/scripts/gedit.py:512
 #. Fall-thru to process the event with the default handler.
 #. 2) find dialog - phrase not found.
 #.
@@ -5807,7 +6086,7 @@ msgstr "Kiểm tra chính tả"
 msgid "Phrase not found"
 msgstr "Không tìm thấy"
 
-#: ../src/orca/scripts/gedit.py:579
+#: ../src/orca/scripts/gedit.py:578
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
@@ -5878,42 +6157,29 @@ msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] "%d mục"
 
+#: ../src/orca/scripts/notification-daemon.py:66
+#, python-format
+#. Translators: This denotes a notification to the user of some sort.
+#.
+msgid "Notification %s"
+msgstr "Thông báo %s"
+
 #: ../src/orca/scripts/planner.py:76
 #: ../src/orca/scripts/planner.py:137
 msgid "Display more options"
 msgstr "Hiển thị tùy chọn thêm"
 
-#: ../src/orca/scripts/planner.py:141
-#: ../src/orca/scripts/planner.py:149
-#: ../src/orca/scripts/planner.py:175
-#: ../src/orca/scripts/planner.py:183
-#: ../src/orca/speechgenerator.py:1488
-#. Translators: the state of a toggle button.
-#.
-msgid "pressed"
-msgstr "đã bấm"
-
-#: ../src/orca/scripts/planner.py:143
-#: ../src/orca/scripts/planner.py:151
-#: ../src/orca/scripts/planner.py:177
-#: ../src/orca/scripts/planner.py:185
-#: ../src/orca/speechgenerator.py:1492
-#. Translators: the state of a toggle button.
-#.
-msgid "not pressed"
-msgstr "chưa bấm"
-
-#: ../src/orca/scripts/StarOffice.py:101
+#: ../src/orca/scripts/StarOffice.py:102
 #, python-format
 #. Translators: this represents the row number of a table.
 #.
 msgid "row %d"
 msgstr "hàng %d"
 
-#: ../src/orca/scripts/StarOffice.py:484
-#: ../src/orca/speechgenerator.py:712
-#: ../src/orca/speechgenerator.py:1223
-#: ../src/orca/speechgenerator.py:1319
+#: ../src/orca/scripts/StarOffice.py:487
+#: ../src/orca/speechgenerator.py:713
+#: ../src/orca/speechgenerator.py:1228
+#: ../src/orca/speechgenerator.py:1339
 #. Translators: this indicates that there are zero items in
 #. a layered pane or table.
 #.
@@ -5923,28 +6189,53 @@ msgstr "hàng %d"
 msgid "0 items"
 msgstr "0 mục"
 
-#: ../src/orca/scripts/StarOffice.py:812
+#: ../src/orca/scripts/StarOffice.py:664
+#: ../src/orca/scripts/StarOffice.py:695
+#: ../src/orca/speechserver.py:206
+#: ../src/orca/speech.py:186
+#. Translators: this represents the state of a check box
+#.
+#. Translators: this represents the state of a locking modifier
+#. key (e.g., Caps Lock)
+#.
+msgid "on"
+msgstr "bật"
+
+#: ../src/orca/scripts/StarOffice.py:668
+#: ../src/orca/scripts/StarOffice.py:699
+#: ../src/orca/speechserver.py:211
+#: ../src/orca/speech.py:191
+#. Translators: this represents the state of a check box
+#.
+#. Translators: this represents the state of a locking modifier
+#. key (e.g., Caps Lock)
+#.
+msgid "off"
+msgstr "tắt"
+
+#: ../src/orca/scripts/StarOffice.py:823
 #. Translators: this is the input line of a spreadsheet
 #. (i.e., the place where enter formulas)
 #.
 msgid "Speaks the contents of the input line."
 msgstr "Nói đoạn nằm trên dòng nhập."
 
-#: ../src/orca/scripts/StarOffice.py:820
+#: ../src/orca/scripts/StarOffice.py:831
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr "Đặt hàng cần dùng làm phần đầu cột động khi nói ô kiểu tính."
 
-#: ../src/orca/scripts/StarOffice.py:828
+#: ../src/orca/scripts/StarOffice.py:839
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid ""
+"Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr "Đặt cột cần dùng làm phần đầu hàng động khi nói ô bảng tính."
 
-#: ../src/orca/scripts/StarOffice.py:879
+#: ../src/orca/scripts/StarOffice.py:890
 #. Checkbox for "Speak spread sheet cell coordinates".
 #.
 #. Translators: If checked, then Orca will speak the coordinates
@@ -5954,7 +6245,7 @@ msgstr "Đặt cột cần dùng làm phần đầu hàng động khi nói ô b�
 msgid "Speak spread sheet cell coordinates"
 msgstr "Nói toạ độ ô trong bảng tính"
 
-#: ../src/orca/scripts/StarOffice.py:1103
+#: ../src/orca/scripts/StarOffice.py:1114
 #. Translators: this represents a match on a window title.
 #. We're looking for frame that ends in "Calc", representing
 #. an OpenOffice or StarOffice spreadsheet window.  We
@@ -5964,35 +6255,35 @@ msgstr "Nói toạ độ ô trong bảng tính"
 msgid "Calc"
 msgstr "Calc"
 
-#: ../src/orca/scripts/StarOffice.py:1171
+#: ../src/orca/scripts/StarOffice.py:1182
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
 msgid "empty"
 msgstr "rỗng"
 
-#: ../src/orca/scripts/StarOffice.py:1241
+#: ../src/orca/scripts/StarOffice.py:1252
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
 msgid "Dynamic column header cleared."
 msgstr "Phần đầu cột động bị xoá."
 
-#: ../src/orca/scripts/StarOffice.py:1251
+#: ../src/orca/scripts/StarOffice.py:1262
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
 msgid "Dynamic column header set for row "
 msgstr "Phần đầu cột động đã đặt cho hàng "
 
-#: ../src/orca/scripts/StarOffice.py:1308
+#: ../src/orca/scripts/StarOffice.py:1319
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
 msgid "Dynamic row header cleared."
 msgstr "Phần đầu hàng động bị xoá."
 
-#: ../src/orca/scripts/StarOffice.py:1318
+#: ../src/orca/scripts/StarOffice.py:1329
 #, python-format
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
@@ -6000,7 +6291,7 @@ msgstr "Phần đầu hàng động bị xoá."
 msgid "Dynamic row header set for column %s"
 msgstr "Phần đầu hàng động đã đặt cho cột %s "
 
-#: ../src/orca/scripts/StarOffice.py:1470
+#: ../src/orca/scripts/StarOffice.py:1481
 #. Translators: this is the title of the window that
 #. you get when starting StarOffice.  The translated
 #. form has to match what StarOffice/OpenOffice is
@@ -6010,7 +6301,7 @@ msgstr "Phần đầu hàng động đã đặt cho cột %s "
 msgid "Welcome to StarOffice"
 msgstr "Chúc mừng bạn dùng StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1573
+#: ../src/orca/scripts/StarOffice.py:1584
 #. Translators: this is the name of the menu item people
 #. use in StarOffice to create a new text document.  It's
 #. at File->New->Text Document.  The translated form has to
@@ -6021,8 +6312,8 @@ msgstr "Chúc mừng bạn dùng StarOffice"
 msgid "Text Document"
 msgstr "Tài liệu văn bản"
 
-#: ../src/orca/scripts/StarOffice.py:1639
-#: ../src/orca/scripts/StarOffice.py:1875
+#: ../src/orca/scripts/StarOffice.py:1650
+#: ../src/orca/scripts/StarOffice.py:1886
 #. Translators: this is what the name of spell checking
 #. window in StarOffice begins with.  The translated form
 #. has to match what StarOffice/OpenOffice is using.  We
@@ -6032,15 +6323,15 @@ msgstr "Tài liệu văn bản"
 msgid "Spellcheck:"
 msgstr "Bắt lỗi chính tả :"
 
-#: ../src/orca/scripts/StarOffice.py:1667
+#: ../src/orca/scripts/StarOffice.py:1678
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Ghi chú rằng cái nút Cuộn Xuống cần được bấm nhiều lần."
 
-#: ../src/orca/scripts/StarOffice.py:1681
+#: ../src/orca/scripts/StarOffice.py:1692
 msgid "License Agreement Accept button now has focus."
 msgstr "Cái nút chấp nhận giấy phép lúc bây giờ là hoạt động."
 
-#: ../src/orca/scripts/StarOffice.py:1710
+#: ../src/orca/scripts/StarOffice.py:1721
 #. Translators: this is the name of the field in the StarOffice
 #. setup dialog that is asking for the first name of the user.
 #. The translated form has to match what StarOffice/OpenOffice
@@ -6050,7 +6341,7 @@ msgstr "Cái nút chấp nhận giấy phép lúc bây giờ là hoạt động.
 msgid "First name"
 msgstr "Tên"
 
-#: ../src/orca/scripts/StarOffice.py:1784
+#: ../src/orca/scripts/StarOffice.py:1795
 #. Translators: this is our made up name for the nameless field
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
@@ -6058,7 +6349,7 @@ msgstr "Tên"
 msgid "Move to cell"
 msgstr "Chuyển sang ô"
 
-#: ../src/orca/scripts/StarOffice.py:1938
+#: ../src/orca/scripts/StarOffice.py:1949
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
 #. translated form has to match what
@@ -6069,7 +6360,7 @@ msgstr "Chuyển sang ô"
 msgid "Writer"
 msgstr "Writer"
 
-#: ../src/orca/scripts/StarOffice.py:2101
+#: ../src/orca/scripts/StarOffice.py:2112
 #. Translators: this means a particular
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -6077,7 +6368,7 @@ msgstr "Writer"
 msgid "has formula"
 msgstr "có công thức"
 
-#: ../src/orca/scripts/StarOffice.py:2149
+#: ../src/orca/scripts/StarOffice.py:2160
 #, python-format
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
@@ -6092,7 +6383,7 @@ msgstr "Ô %s"
 msgid "%s panel"
 msgstr "bảng điều khiển %s"
 
-#: ../src/orca/settings.py:634
+#: ../src/orca/settings.py:672
 #. Translators: the regular expression here represents a string to
 #. match in the localized application name as seen by at-poke.  For
 #. most cases, the application name is the name of the binary used to
@@ -6105,28 +6396,36 @@ msgstr "bảng điều khiển %s"
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:639
+#: ../src/orca/settings.py:677
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:644
+# Tên của văn lệnh khởi chạy chương trình OpenOffice.org.
+#: ../src/orca/settings.py:682
+#. Translators: see the regular expression note above.  This is for
+#. OpenOffice and StarOffice.
+#.
+msgid "soffice"
+msgstr "soffice"
+
+#: ../src/orca/settings.py:687
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:649
+#: ../src/orca/settings.py:692
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
 msgid "yelp"
 msgstr "yelp"
 
-#: ../src/orca/settings.py:655
+#: ../src/orca/settings.py:698
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6134,7 +6433,7 @@ msgstr "yelp"
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:661
+#: ../src/orca/settings.py:704
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6142,7 +6441,7 @@ msgstr "Deer Park"
 msgid "Bon Echo"
 msgstr "Phản hồi Bon"
 
-#: ../src/orca/settings.py:667
+#: ../src/orca/settings.py:710
 #. Translators: see the regular expression note above.  This is for a
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
@@ -6150,77 +6449,113 @@ msgstr "Phản hồi Bon"
 msgid "Minefield"
 msgstr "Minefield"
 
-#: ../src/orca/settings.py:672
+#: ../src/orca/settings.py:715
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
 msgid "Mail/News"
 msgstr "Thư/Tin tức"
 
-#: ../src/orca/settings.py:677
+#: ../src/orca/settings.py:720
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:682
+#: ../src/orca/settings.py:725
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:687
+#: ../src/orca/settings.py:730
 #. Translators: see the regular expression note above.  This is for
 #. supporting pidgin, which is the new name for gaim.
 #.
 msgid "pidgin"
 msgstr "pidgin"
 
-#: ../src/orca/speechdispatcherfactory.py:54
+#: ../src/orca/speechdispatcherfactory.py:71
+#. Translators: "Default Synthesizer" will appear in the list of available
+#. speech engines as a special item.  It refers to the default engine
+#. configured within the speech subsystem.  Apart from this item, the user
+#. will have a chance to select a particular speech engine by its real
+#. name, such as Festival, IBMTTS, etc.
+#.
+msgid "Default Synthesizer"
+msgstr "Bộ tổng hợp mặc định"
+
+#: ../src/orca/speechdispatcherfactory.py:84
+#. Translators: this is the name of a speech synthesis system
+#. called "Speech Dispatcher".
+#.
 msgid "Speech Dispatcher"
 msgstr "Bộ Phát Tiếng Nói"
 
-#: ../src/orca/speechdispatcherfactory.py:221
-msgid "Speech Dispatcher configured default voice"
-msgstr "Bộ Phát Tiếng Nói đã cấu hình tiếng nói mặc định"
+#: ../src/orca/speechdispatcherfactory.py:163
+#, python-format
+#. Translators: This string will appear in the list of
+#. available voices for the current speech engine.  %s will be
+#. replaced by the name of the current speech engine, such as
+#. "Festival default voice" or "IBMTTS default voice".  It
+#. refers to the default voice configured for given speech
+#. engine within the speech subsystem.  Apart from this item,
+#. the list will contain the names of all available "real"
+#. voices provided by the speech engine.
+#.
+msgid "%s default voice"
+msgstr "Giọng nói mặc định %s"
 
-#: ../src/orca/speechgenerator.py:1438
+#: ../src/orca/speechgenerator.py:1473
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
 #.
 msgid "tear off"
 msgstr "tách rời"
 
-#: ../src/orca/where_am_I.py:342
+#: ../src/orca/where_am_I.py:331
 #, python-format
 #. Translators: this is the percentage value of a slider.
 #.
 msgid "%s percent"
 msgstr "%s phần trăm"
 
-#: ../src/orca/where_am_I.py:412
-#: ../src/orca/where_am_I.py:425
+#: ../src/orca/where_am_I.py:380
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+msgid "selected"
+msgstr "đã chọn"
+
+#: ../src/orca/where_am_I.py:385
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+msgid "not selected"
+msgstr "chưa chọn"
+
+#: ../src/orca/where_am_I.py:426
 #, python-format
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
 msgid "%s page"
 msgstr "%s trang"
 
-#: ../src/orca/where_am_I.py:525
-#: ../src/orca/where_am_I.py:547
+#: ../src/orca/where_am_I.py:535
+#: ../src/orca/where_am_I.py:557
 #, python-format
 #. Translators: this in reference to a row in a table.
 #.
 msgid "row %d of %d"
 msgstr "hàng %d trên %d"
 
-#: ../src/orca/where_am_I.py:595
+#: ../src/orca/where_am_I.py:605
 msgid "Icon panel"
 msgstr "Bảng biểu tượng"
 
-#: ../src/orca/where_am_I.py:611
+#: ../src/orca/where_am_I.py:621
 #, python-format
 #. Translators: this is a count of the number of selected icons
 #. and the count of the total number of icons within an icon panel.
@@ -6230,7 +6565,7 @@ msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
 msgstr[0] "%d trên %d mục đã chọn"
 
-#: ../src/orca/where_am_I.py:653
+#: ../src/orca/where_am_I.py:663
 #, python-format
 #. initialize our three outputs.  Output may change below for some
 #. protocols.
@@ -6239,27 +6574,27 @@ msgstr[0] "%d trên %d mục đã chọn"
 msgid "%s link"
 msgstr "liên kết %s"
 
-#: ../src/orca/where_am_I.py:663
+#: ../src/orca/where_am_I.py:673
 #, python-format
 msgid "%s link to %s"
 msgstr "liên kết %s tới %s"
 
-#: ../src/orca/where_am_I.py:673
+#: ../src/orca/where_am_I.py:683
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
 msgid "same page"
 msgstr "cùng trang"
 
-#: ../src/orca/where_am_I.py:675
-#: ../src/orca/where_am_I.py:683
+#: ../src/orca/where_am_I.py:685
+#: ../src/orca/where_am_I.py:693
 msgid "same site"
 msgstr "cùng nơi Mạng"
 
-#: ../src/orca/where_am_I.py:685
+#: ../src/orca/where_am_I.py:695
 msgid "different site"
 msgstr "nơi Mạng khác"
 
-#: ../src/orca/where_am_I.py:713
+#: ../src/orca/where_am_I.py:723
 #, python-format
 #. Translators: This is the size of a file in bytes
 #.
@@ -6267,27 +6602,90 @@ msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d byte"
 
-#: ../src/orca/where_am_I.py:717
+#: ../src/orca/where_am_I.py:727
 #, python-format
 #. Translators: This is the size of a file in kilobytes
 #.
 msgid "%.2f kilobytes"
 msgstr "%.2f kilôbyte"
 
-#: ../src/orca/where_am_I.py:721
+#: ../src/orca/where_am_I.py:731
 #, python-format
 #. Translators: This is the size of a file in megabytes
 #.
 msgid "%.2f megabytes"
 msgstr "%.2f megabyte"
 
-#: ../src/orca/where_am_I.py:848
+#: ../src/orca/where_am_I.py:846
 #: ../src/orca/where_am_I.py:878
 #, python-format
 #. Translators: this is an item in a list.
 #.
 msgid "item %d of %d"
 msgstr "mục %d trên %d"
+
+#: ../src/orca/where_am_I.py:1464
+#, python-format
+#. Translators: The "default" button in a dialog box is the button
+#. that gets activated when Enter is pressed anywhere within that
+#. dialog box.
+#.
+msgid "Default button is %s"
+msgstr "Cái nút mặc định là %s"
+
+#~ msgid "Speak Unless"
+#~ msgstr "Nói trừ khi"
+
+#~ msgid "ASAP"
+#~ msgstr "ASAP"
+
+#~ msgid "as soon as possible"
+#~ msgstr "ngay khi có thể"
+
+#~ msgid "GHz"
+#~ msgstr "GHz"
+
+#~ msgid "gigahertz"
+#~ msgstr "gigahertz"
+
+#~ msgid "IMAP"
+#~ msgstr "IMAP"
+
+#~ msgid "eye map"
+#~ msgstr "sơ đồ mắt"
+
+#~ msgid "LDAP"
+#~ msgstr "LDAP"
+
+#~ msgid "ell dap"
+#~ msgstr "ell dap"
+
+#~ msgid "LOL"
+#~ msgstr "LOL"
+
+#~ msgid "laughing out loud"
+#~ msgstr "cười to"
+
+#~ msgid "MHz"
+#~ msgstr "MHz"
+
+#~ msgid "megahertz"
+#~ msgstr "megahertz"
+
+#~ msgid "strikethrough"
+#~ msgstr "gạch đè"
+
+#~ msgid "strike through"
+#~ msgstr "gạch đè"
+
+#~ msgid "SELinux"
+#~ msgstr "SELinux"
+
+#~ msgid "ess ee linux"
+#~ msgstr "ess ee linux"
+
+#~ msgid "Speech Dispatcher configured default voice"
+#~ msgstr "Bộ Phát Tiếng Nói đã cấu hình tiếng nói mặc định"
 
 #~ msgid "underscore"
 #~ msgstr "gạch chân"
@@ -6310,7 +6708,8 @@ msgstr "mục %d trên %d"
 #~ msgid ""
 #~ "Prints a debug listing of all known applications to the console where "
 #~ "Orca is running."
-#~ msgstr "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca "
+#~ msgstr ""
+#~ "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca "
 #~ "đang chạy."
 
 #~ msgid "Cycles the debug level at run time."
@@ -6319,7 +6718,8 @@ msgstr "mục %d trên %d"
 #~ msgid ""
 #~ "Prints debug information about the currently active application to the "
 #~ "console where Orca is running."
-#~ msgstr "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
+#~ msgstr ""
+#~ "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
 #~ "Orca đang chạy."
 
 #~ msgid "Prints debug information about the ancestry of the object with focus"
@@ -6417,10 +6817,12 @@ msgstr "mục %d trên %d"
 #~ msgstr "-s, --setup, --gui-setup     _Thiết lập_ tùy thích người dùng"
 
 #~ msgid "-t, --text-setup             Set up user preferences (text version)"
-#~ msgstr "-t, --text-setup            _Thiết lập_ tùy thích người dùng (kiểu _chữ_)"
+#~ msgstr ""
+#~ "-t, --text-setup            _Thiết lập_ tùy thích người dùng (kiểu _chữ_)"
 
 #~ msgid "-n, --no-setup               Skip set up of user preferences"
-#~ msgstr "-n, --no-setup               Bỏ qua việc thiết lập tùy thích người dùng\n"
+#~ msgstr ""
+#~ "-n, --no-setup               Bỏ qua việc thiết lập tùy thích người dùng\n"
 #~ "\t\t\t\t\t\t(_không thiết lập_)"
 
 #~ msgid "-q, --quit                   Quits Orca (if shell script used)"
@@ -6430,7 +6832,8 @@ msgstr "mục %d trên %d"
 #~ "If Orca has not been previously set up by the user, Orca\n"
 #~ "will automatically launch the preferences set up unless\n"
 #~ "the -n or --no-setup option is used."
-#~ msgstr "Nếu Orca chưa được thiết lập bởi người dùng, Orca sẽ khởi chạy tự động "
+#~ msgstr ""
+#~ "Nếu Orca chưa được thiết lập bởi người dùng, Orca sẽ khởi chạy tự động "
 #~ "hộp thoại thiết lập tùy thích, nếu tùy chọn « -n » hay « --no-setup » "
 #~ "không được dùng."
 
@@ -6468,5 +6871,6 @@ msgstr "mục %d trên %d"
 #~ msgid ""
 #~ "You will have to log out for the change to take effect.\n"
 #~ "Do you want to log out now? "
-#~ msgstr "Bạn sẽ cần phải đăng xuất để thay đổi có tác động.\n"
+#~ msgstr ""
+#~ "Bạn sẽ cần phải đăng xuất để thay đổi có tác động.\n"
 #~ "Bạn có muốn đăng xuất ngay bây giờ không?"
