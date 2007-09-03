@@ -1,3 +1,7 @@
+2007-09-03  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS: prep for v2.19.92
+
 2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Work on bug 472377 - Need to fix braille
@@ -6,12 +10,11 @@
         2) The label and name of radio buttons and checkboxes needs to
         be reversed.  1) is easy and now done.  2) will take some thought.
 
-
 2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/speechgenerator.py,
         * src/orca/default.py:
-        Fix for bug 456970 - Orca says "0 items" for tree tables that 
+        Fix for bug 456970 - Orca says "0 items" for tree tables that
         use NODE_CHILD_OF relationship.
 
         * src/orca/Gecko.py: Work on bug 472029 - Cannot arrow into
@@ -21,7 +24,7 @@
 
         * src/orca/scripts/gaim.py,
         * src/orca/default.py:
-        Fix for bug 472407 - Orca doesn't always announce new messages 
+        Fix for bug 472407 - Orca doesn't always announce new messages
         in unfocused tabs in Pidgin
 
 
@@ -41,7 +44,7 @@
 
 2007-08-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * src/orca/scripts/gaim.py: Fix for bug 471220 - Gaim's 
+        * src/orca/scripts/gaim.py: Fix for bug 471220 - Gaim's
         prefixChatMessage setting should have option to only prefix
         non-focused tabs.  Now if you enable the app-specific setting
         to speak chatroom name, it will only speak it when the message
@@ -49,7 +52,7 @@
 
 2007-08-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * src/orca/Gecko.py: One more "check" related to the fix for 
+        * src/orca/Gecko.py: One more "check" related to the fix for
         bug 470332 - Can no longer arrow to push buttons in FF3.  The
         original fix exposed a Mozilla bug which was causing Orca to
         hang when it encountered (un)ordered lists.  See bug #470853.

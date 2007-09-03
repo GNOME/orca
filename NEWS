@@ -1,3 +1,59 @@
+2.19.92 - 03-Sep-2007
+
+General:
+
+* Fix for bug 456970 - Orca says "0 items" for tree tables that use
+  NODE_CHILD_OF relationship.
+
+* Fix for bug 471220 - Gaim's prefixChatMessage setting should have
+  option to only prefix non-focused tabs.  Now if you enable the
+  app-specific setting to speak chatroom name, it will only speak it
+  when the message is not in your current room.
+
+* Work on bug 472377 - Need to fix braille for radio buttons and
+  checkboxes in HTML content.  There are two issues: 1) repetition of
+  labels with radio buttons and 2) The label and name of radio buttons
+  and checkboxes needs to be reversed.  1) is easy and now done.  
+  2) will take some thought and will likely wait until after
+  GNOME 2.20.
+
+* Fix for bug 472407 - Orca doesn't always announce new messages in
+  unfocused tabs in Pidgin.
+
+Gecko:
+
+* Fix for bug 469686 - Sanity check needed in gecko.getHeadingLevel.
+
+* One more "check" related to the fix for bug 470332 - Can no longer
+  arrow to push buttons in FF3.  The original fix exposed a Mozilla
+  bug which was causing Orca to hang when it encountered (un)ordered
+  lists.  See bug 470853.  This update should prevent the hang while
+  we're waiting for the fix.
+
+* Fix for bug 471537 - We need to find a way to identify truly
+  "focusable" elements in FF3.
+
+* Fix for bug 471955 - Orca does not provide access to state changes
+  in HTML radio buttons in FF3.
+
+* Work on bug 472029 - Cannot arrow into autocompletes in HTML forms
+  if Orca is controlling the caret.  There's an outstanding bug in
+  Firefox that can cause some odd behavior with autocompletes.
+  Monitor bug 472029 to track it.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Claude Paroz and Stéphane Raimbault
+    gu      Gujarati             Ankit Patel
+    sv      Swedish              Daniel Nylander
+    ta      Tamil                Tirumurthi Vasudevan and I. Felix
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.19.91 - 26-Aug-2007
 
 General:
