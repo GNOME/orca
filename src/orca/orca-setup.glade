@@ -1237,6 +1237,9 @@ Hyperlink</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
+                              <accessibility>
+                                <atkrelation target="speakProgressBarSpinButton" type="label-for"/>
+                              </accessibility>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -1256,6 +1259,9 @@ Hyperlink</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
 			      <property name="adjustment">10 1 9999 1 10 10</property>
+                              <accessibility>
+                                <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
+                              </accessibility>
 			      <signal name="value_changed" handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT"/>
 			    </widget>
 			    <packing>
@@ -1282,6 +1288,9 @@ Hyperlink</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
+                              <accessibility>
+                                <atkrelation target="speakProgressBarSpinButton" type="label-for"/>
+                              </accessibility>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -2420,6 +2429,9 @@ Push</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+                                                  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2439,6 +2451,9 @@ Push</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">1 1 256 1 10 10</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
+                                                  </accessibility>
 						  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
 						</widget>
 						<packing>
@@ -2465,6 +2480,9 @@ Push</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+                                                  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3268,6 +3286,9 @@ Bilinear</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
+                                                  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3287,6 +3308,9 @@ Bilinear</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">1 1 256 1 10 10</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
+                                                  </accessibility>
 						  <signal name="value_changed" handler="magCursorSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:31:48 GMT"/>
 						</widget>
 						<packing>
@@ -3313,6 +3337,9 @@ Bilinear</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
+                                                  <accessibility>
+                                                    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
+                                                  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
