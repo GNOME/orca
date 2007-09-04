@@ -460,12 +460,12 @@ def showPreferencesUI():
 
     logoutNeeded = orca_prefs.writePreferences(prefsDict)
     if logoutNeeded:
-        sayAndPrint(_("Accessibility support for GNOME has just been enabled. "),
+        sayAndPrint(_("Accessibility support for GNOME has just been enabled."),
                     logoutNeeded,
                     False,
                     speechServerChoice,
                     speechVoiceChoice)
-        sayAndPrint(_("You need to log out and log back in for the change to take effect. "),
+        sayAndPrint(_("You need to log out and log back in for the change to take effect."),
                     False,
                     False,
                     speechServerChoice,

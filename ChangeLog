@@ -1,3 +1,8 @@
+2007-09-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_console_prefs.py: fix for bug 472962 - Trailing
+	space at end of message/string.
+	
 2007-09-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Work on bug 472377 - Need to fix braille
