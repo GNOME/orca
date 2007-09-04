@@ -1,3 +1,9 @@
+2007-09-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Fix bug #473420 – Orca speaking an extra "seconds" for 
+          the Preferences dialog.
+
 2007-09-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 472345 - Cannot arrow out of
