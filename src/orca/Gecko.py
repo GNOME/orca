@@ -3249,6 +3249,19 @@ class Script(default.Script):
             self._objectForFocusGrab = None
             return
 
+        # Possibility #5: Orca is controlling the caret, we just left an
+        # entry, and text was inserted into that entry via javascript as
+        # a result of it losing focus.  This is a bogus event, but a fix
+        # might not make it into Firefox 3.  :-(  See GNOME bug 472345
+        # as well as https://bugzilla.mozilla.org/show_bug.cgi?id=394493.
+        #
+        if event.source \
+           and event.source.role == rolenames.ROLE_ENTRY \
+           and event.source.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
+           and not event.source.state.count( \
+                                           atspi.Accessibility.STATE_FOCUSED):
+            return
+
         # If Orca is controlling the caret, it is possible to arrow into
         # a menu item inside of a combo box.  This is something that is
         # not possible in Firefox caret browsing mode and seems to confuse
