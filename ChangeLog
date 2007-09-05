@@ -8,6 +8,9 @@
         * src/orca/Gecko.py: Fix for bug #471878, ARIA widgets should not 
         echo characters during traversal using arrows
 
+        * src/orca/Gecko.py: Fix for bug #473585, Caret not being set to ARIA 
+        listbox when navigating to it
+
 2007-09-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

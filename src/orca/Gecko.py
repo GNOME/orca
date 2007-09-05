@@ -6863,8 +6863,9 @@ class Script(default.Script):
         #
         character = self.getCharacterAtOffset(obj, characterOffset)
         if character:
-            if not (obj.role == rolenames.ROLE_LIST_ITEM and not \
-                    obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+            if self.isAriaWidget() \
+                 or not (obj.role == rolenames.ROLE_LIST_ITEM \
+                 and not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 caretSet = obj.text.setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
                                       obj,
