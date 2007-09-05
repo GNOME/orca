@@ -3262,6 +3262,19 @@ class Script(default.Script):
                                            atspi.Accessibility.STATE_FOCUSED):
             return
 
+        # Possibility #6: We are looking at an ARIA widget where the user
+        # has traversed the widget (eg. tree) with the arrows.  We are getting
+        # an extra caret-moved event in these situations. See bug #471878 and
+        # Mozilla bug #394318.
+        #
+        if self.isAriaWidget(event.source) \
+                and isinstance(orca_state.lastInputEvent,
+                           input_event.KeyboardEvent) \
+                and orca_state.lastInputEvent.event_string in \
+                                              ["Up", "Down", "Left", "Right"] \
+                and orca_state.locusOfFocus.role != rolenames.ROLE_ENTRY:
+            return
+
         # If Orca is controlling the caret, it is possible to arrow into
         # a menu item inside of a combo box.  This is something that is
         # not possible in Firefox caret browsing mode and seems to confuse
@@ -3462,18 +3475,6 @@ class Script(default.Script):
         #
         if (event.source.role == rolenames.ROLE_FRAME) \
            or (not len(event.source.role)):
-            return
-
-        # We seem to get a focus event and a caret moved event for ARIA
-        # widgets when we up/down arrow into them.  The up/down caret
-        # moved event will speak the entire line, including the ARIA
-        # widget.  So, we'll ignore focus: events for those kinds of
-        # things.
-        #
-        if self.isAriaWidget(event.source) \
-            and isinstance(orca_state.lastInputEvent,
-                           input_event.KeyboardEvent) \
-            and orca_state.lastInputEvent.event_string in ["Up", "Down"]:
             return
 
         # If {overflow:hidden} is in the document's style sheet, we seem

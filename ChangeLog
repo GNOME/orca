@@ -1,3 +1,7 @@
+2007-09-05 Scott Haeger <scott@bashautomation.com>
+        * src/orca/Gecko.py: Fix for bug #471878, ARIA widgets should not 
+        echo characters during traversal using arrows
+
 2007-09-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
