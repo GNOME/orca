@@ -45,7 +45,7 @@ import orca.keybindings as keybindings
 import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
-from orca_i18n import Q_     # to provide qualified translatable strings
+from orca.orca_i18n import Q_     # to provide qualified translatable strings
 
 # Whether we speak spread sheet cell coordinates as the user moves around.
 #

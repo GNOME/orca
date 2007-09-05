@@ -1,5 +1,10 @@
 2007-09-05  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py:
+          Incorrect import line for importing Q_ from orca_i18n
+
+2007-09-05  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/speechgenerator.py:
           Fix bug #473422 – Orca has traceback when giving focus to the 
           pidgin application.
