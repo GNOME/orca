@@ -34,9 +34,11 @@
   <!ENTITY scriptguidelink '<link linkend="scriptguide">Orca Script Writing Guide</link>'>
 
 <!ENTITY testing SYSTEM "testing.sgml">
-  <!ENTITY tgoal '<emphasis>GOAL:</emphasis>'>
-  <!ENTITY tprocedure '<emphasis>PROCEDURE:</emphasis>'>
-  <!ENTITY tresult '<emphasis>EXPECTED RESULT:</emphasis>'>
+  <!ENTITY gtktesting SYSTEM "gtk_testing.sgml">
+  <!ENTITY tgoal '<emphasis>GOAL</emphasis>'>
+  <!ENTITY tprocedure '<emphasis>PROCEDURE</emphasis>'>
+  <!ENTITY tresult '<emphasis>EXPECTED RESULT</emphasis>'>
+  <!ENTITY autotest '<emphasis>AUTOMATED TEST</emphasis>'>
 
   <!ENTITY desktoptestlink '<link linkend="desktoptest">Desktop Test Plan</link>'>
   <!ENTITY flatreviewtestlink '<link linkend="flatreviewtest">Flat Review Test Plan</link>'>

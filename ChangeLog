@@ -1,3 +1,10 @@
+2007-09-05  Willie Walker <william.walker@sun.com>
+
+	* docs/doc-set/orca.sgml, docs/doc-set/testing.sgml,
+	docs/doc-set/gtk_testing.sgml, docs/doc-set/orca.html,
+	docs/doc-set/orca.pdf: begin writing up GTK+ testing
+	section.
+	
 2007-09-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/gaim.py: Fix for bug 473991 - Orca doesn't announce

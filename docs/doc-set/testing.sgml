@@ -30,6 +30,8 @@
   ************************************************************************
   -->
 
+  &gtktesting;
+
   <chapter id="generaltest"><title>General Orca Functionality</title>
 
     <para>The tests in this section are meant to test general Orca

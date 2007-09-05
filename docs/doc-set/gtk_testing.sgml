@@ -1,0 +1,347 @@
+<!-- Copyright 2007, Sun Microsystems, Inc. -->
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * GTK TESTING                                                          *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="gtktesting"><title>GTK+ Testing</title>
+
+    <para>This section discusses testing specific to the AT-SPI
+    implementation provided by GTK+.  The applications gtk-demo,
+    gedit, nautilus, metacity, and others are required for these
+    tests.</para>
+
+    <para>Unless otherwise specified, the default values for speech
+    and braille should be enabled, and the braille monitor should be
+    showing.</para>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Accelerator Label                                                  *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkaccellabel"><title>Accelerator Label</title>
+      <section><title>&tgoal;</title>
+      <para>Test speech presentation of accelerators on menu items.</para>
+      </section>
+
+      <section><title>&tprocedure;</title>
+      <orderedlist>
+
+        <listitem><para>Run the "UI Manager" demo of
+	  <literal>gtk-demo</literal>.</para>
+        </listitem>
+
+        <listitem><para>Press <literal>Alt+F</literal> to bring up the
+          "File" menu.  Observe speech and braille.  See &tresult; 1.</para>
+        </listitem>
+
+	<listitem><para>Arrow down through each of the menu items,
+          observing speech and braille output.  See &tresult; 2.</para> 
+        </listitem>
+
+        <listitem><para>When you reach the "Quit" item, press 
+          <literal>Escape</literal> to dismiss the menu.</para>
+        </listitem>
+
+        <listitem><para>Quit <literal>gtk-demo</literal>.<para>
+        </listitem>
+
+      </orderedlist>
+      </section>
+
+      <section><title>&tresult; 1</title>
+      <para>The "File" menu and "New" menu item are spoken:</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "File menu", "New Control n"</para></listitem>
+        <listitem><para>Braille: "<emphasis
+          role='underline'>N</emphasis>ew(Control n)"</para>
+        </listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&tresult; 2</title>
+      <para>Each menu item should be spoken and brailled 
+      with its accelerator information.  Example:</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "Open Control o"</para></listitem>
+        <listitem><para>Braille: "<emphasis
+          role='underline'>O</emphasis>pen(Control o)"</para>
+        </listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&autotest;</title>
+      <para><literal>keystrokes/gtk-demo/role_accel_label.py</literal></para>
+      </section>
+    </section>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Alert                                                              *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkalert"><title>Alert</title>
+      <section><title>&tgoal;</title>
+      <para>Test automatic presentation of dialog contents.</para>
+      </section>
+
+      <section><title>&tprocedure;</title>
+      <orderedlist>
+
+        <listitem><para>Run the "Dialog and Message Boxes" demo of
+          <literal>gtk-demo</literal>.<para>
+        </listitem>
+
+        <listitem><para>Press the "Message Dialog" button, observing
+          speech and braille output when the informational message box
+          appears.  See &tresult; 1 below.</para> 
+        </listitem>
+
+        <listitem><para>Press <literal>Return</literal> to dismiss 
+          the message dialog.</para>
+        </listitem>
+
+        <listitem><para><literal>Tab</literal> to the "Entry 1" and
+	  "Entry 2" text areas, filling in "Testing" for Entry 1 and
+	  "Again" for Entry 2.</para>
+	</listitem>
+
+	<listitem><para>Press <literal>Alt+i</literal> to bring up
+	  the "Interactive Dialog" dialog, observing speech and
+	  braille output when the dialog appears.  See
+	  &tresult; 2 below.</para>
+	</listitem>
+
+        <listitem><para>Quit <literal>gtk-demo</literal>.<para>
+        </listitem>
+
+      </orderedlist>
+      </section>
+
+      <section><title>&tresult; 1</title>
+      <para>Unbound text is automatically presented.</para>
+      <itemizedlist>
+        <listitem><para>Speech: "Information This message box has
+          been popped up the following number of times: 1", "OK button."</para>
+        </listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>O</emphasis>K Button"
+      </itemizedlist>
+      </section>
+
+      <section><title>&tresult; 2</title>
+      <para>Bound text (e.g., labels for objects) is not presented</para>
+      <itemizedlist>
+        <listitem><para>Speech: "Interactive Dialog", "Entry 1 text Testing"</para>
+        </listitem>
+
+        <listitem><para>Braille: "Entry 1 Testing<emphasis
+          role='underline'>_</emphasis>$l"</para>
+        </listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&autotest;</title>
+      <para><literal>keystrokes/gtk-demo/role_alert.py</literal></para>
+      </section>
+
+    </section>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Check Box                                                          *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkcheckbox"><title>Check Box</title>
+      <section><title>&tgoal;</title>
+      <para>Test presentation of check boxes.</para>
+      </section>
+
+      <section><title>&tprocedure;</title>
+      <orderedlist>
+
+        <listitem><para>Run the "Paned Widgets" demo of
+	  <literal>gtk-demo</literal>.</para>
+        </listitem>
+
+        <listitem><para>Tab to the unchecked "Resize" check box in the 
+	  "Horizontal" panel under the "Left" column.  Observe
+          what is presented via speech and braille.  See &tresult; 1
+	  below.</para>
+        </listitem>
+
+        <listitem><para>Change the state of this unchecked "Resize" 
+          button by pressing <literal>Space</literal>.  Observe
+          what is presented via speech and braille.  See &tresult; 2
+	  below.</para>
+        </listitem>
+
+	<listitem><para>Repeat for the "Resize" check box under the
+          "Right" column.  The results should be similar, except
+          there should not be speech notification when moving from
+          the "Left" "Resize" check box to the "Right" "Resize" check
+          box.</para></listitem>
+
+        <listitem><para>Quit <literal>gtk-demo</literal>.<para>
+        </listitem>
+
+      </orderedlist>
+      </section>
+
+      <section><title>&tresult; 1</title>
+      <para>Check box label and state should be presented when you
+        first tab to a check box:</para>
+
+      <para>&note; this also tests the automatic presentation of
+        contextual information provided by named panels.  For example,
+        when first tabbing to an item in the "Horizontal" panel,
+        "Horizontal panel" should be spoken.  When tabbing from
+        a component inside to the "Horizontal" panel to another
+        component inside the "Horizontal" panel, "Horizontal panel"
+	should not be spoken.</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "Horizontal panel", "Resize check box not checked"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>&lt;</emphasis>&nbsp;&gt; Resize CheckBox"</para></listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&tresult; 2</title>
+      <para>Just the new state is presented when the state changes</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "checked"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>&lt;</emphasis>x&gt; Resize CheckBox"</para></listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&autotest;</title>
+      <para><literal>keystrokes/gtk-demo/role_checkbox.py</literal></para>
+      </section>
+
+    </section>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Animation                                                          *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkanimation"><title>Animation</title>
+      <para>No known example to test.</para>
+    </section>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Arrow                                                              *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkarrow"><title>Arrow</title>
+      <para>No known example to test.</para>
+    </section>
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * Column Header                                                      *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <section id="gtkcolumnheader"><title>Column Header</title>
+      <section><title>&tgoal;</title>
+      <para>Test presentation of column headers.</para>
+      </section>
+
+      <section><title>&tprocedure;</title>
+      <orderedlist>
+
+        <listitem><para>Run the "Tree View -> List Store" demo of
+	  <literal>gtk-demo</literal>.</para>
+        </listitem>
+
+        <listitem><para>Observe speech and braille when the
+	  "GtkListStore demo" dialog first appears.  See
+	  &tresult; 1 below.</para>
+        </listitem>
+
+        <listitem><para>Arrow <literal>Right</literal> to the
+          "Severity" and "Description column headers.  Observe speech
+          and braille.  See &tresult; 2
+          below.</para> 
+        </listitem>
+
+        <listitem><para><literal>Down</literal> arrow to the first row
+          of the table.  Observe speech and braille.  See
+          &tresult; 3 below.</para> 
+        </listitem>
+
+        <listitem><para>Arrow <literal>Ctrl+Left</literal> to the
+          previous cells in the same row.  Observe speech
+          and braille.  See &tresult; 4
+          below.</para> 
+        </listitem>
+
+        <listitem><para>Quit <literal>gtk-demo</literal>.<para>
+        </listitem>
+
+      </orderedlist>
+      </section>
+
+      <section><title>&tresult; 1</title>
+      <para>The focused column header is read when the dialog first appears.</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "GtkListStore demo frame","Bug number column header"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>B</emphasis>ug number ColumnHeader"</para></listitem>
+      </itemizedlist>
+      </section>
+        
+      <section><title>&tresult; 2</title>
+      <para>Moving in the headers themselves should read the header. Example:</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "Severity column header"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>S</emphasis>everity ColumnHeader"</para></listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&tresult; 3</title>
+      <para>Arrowing down in tables should read the whole row</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>s</emphasis>crollable notebooks and hidden tabs"</para></listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&tresult; 4</title>
+      <para>Arrowing left in tables should read the column header and cell.  Example:</para>
+
+      <itemizedlist>
+        <listitem><para>Speech: "Severity column header", "Normal"</para></listitem>
+        <listitem><para>Braille: "<emphasis role='underline'>N</emphasis>ormal"</para></listitem>
+      </itemizedlist>
+      </section>
+
+      <section><title>&autotest;</title>
+      <para><literal>keystrokes/gtk-demo/role_column_header.py</literal></para>
+      </section>
+
+    </section>
+
+  </chapter>
