@@ -1,3 +1,9 @@
+2007-09-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py:
+          Fix bug #473422 – Orca has traceback when giving focus to the 
+          pidgin application.
+
 2007-09-05 Scott Haeger <scott@bashautomation.com>
         * src/orca/Gecko.py: Fix for bug #471878, ARIA widgets should not 
         echo characters during traversal using arrows

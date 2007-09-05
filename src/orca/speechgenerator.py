@@ -1249,7 +1249,7 @@ class SpeechGenerator:
         hasItems = False
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child.state.count(atspi.Accessibility.STATE_SHOWING):
+            if child and child.state.count(atspi.Accessibility.STATE_SHOWING):
                 hasItems = True
                 break
         if not hasItems:
