@@ -41,6 +41,7 @@ import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
+import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
@@ -415,6 +416,21 @@ class Script(default.Script):
             #
             self.previousMessages.append(message)
             self.previousChatRoomNames.append(chatRoomName)
+
+        elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+             and orca_state.lastNonModifierKeyEvent \
+             and (orca_state.lastNonModifierKeyEvent.event_string == "Tab") \
+             and (event.any_data != "\t"):
+            # This is autocompleted text (the name of a user in an IRC
+            # chatroom).  The default script isn't announcing it because
+            # it's not selected.
+            #
+            text = event.any_data
+            if text.isupper():
+                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+            else:
+                speech.speak(text)
+
         else:
             # Pass the event onto the parent class to be handled in the
             # default way.

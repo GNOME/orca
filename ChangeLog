@@ -1,3 +1,8 @@
+2007-09-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/gaim.py: Fix for bug 473991 - Orca doesn't 
+        announce autocompleted user names in Pidgin.
+
 2007-09-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
