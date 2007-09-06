@@ -1,3 +1,8 @@
+2007-09-06  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py: Fix for bug #468633, No output when tabbing to 
+        ARIA slider
+
 2007-09-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
