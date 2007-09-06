@@ -420,7 +420,7 @@ class Script(default.Script):
         elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
              and orca_state.lastNonModifierKeyEvent \
              and (orca_state.lastNonModifierKeyEvent.event_string == "Tab") \
-             and (event.any_data != "\t"):
+             and event.any_data and (event.any_data != "\t"):
             # This is autocompleted text (the name of a user in an IRC
             # chatroom).  The default script isn't announcing it because
             # it's not selected.
