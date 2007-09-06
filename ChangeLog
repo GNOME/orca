@@ -1,3 +1,10 @@
+2007-09-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/StarOffice.py:
+          Fixed bug #469367 - Orca StarOffice script not properly
+          announcing (potential) indentation in OOo Writer.
+
 2007-09-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/gaim.py: Fix for bug 473991 - Orca doesn't 

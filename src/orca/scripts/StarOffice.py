@@ -769,7 +769,8 @@ class Script(default.Script):
         # only difference over the default set in settings.py is to add
         # in "left-margin:" and "right-margin:".
 
-        settings.enabledTextAttributes = "size:; family-name:; weight:400; indent:0; left-margin:0; right-margin:0; underline:none; strikethrough:false; justification:left; style:normal;"
+        self.enabledBrailledTextAttributes = "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; right-margin:0mm; underline:none; strikethrough:none; justification:left; style:normal;"
+        self.enabledSpokenTextAttributes = "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; right-margin:0mm; underline:none; strikethrough:none; justification:left; style:normal;"
 
         # [[[TODO: JD - HACK because we won't get events from toggle
         # buttons on the Formatting toolbar until we "tickle/poke"
@@ -783,9 +784,17 @@ class Script(default.Script):
         self.savedreadTableCellRow = settings.readTableCellRow
         settings.readTableCellRow = False
 
+        self.savedEnabledBrailledTextAttributes = settings.enabledBrailledTextAttributes
+        settings.enabledBrailledTextAttributes = self.enabledBrailledTextAttributes
+
+        self.savedEnabledSpokenTextAttributes = settings.enabledSpokenTextAttributes
+        settings.enabledSpokenTextAttributes = self.enabledSpokenTextAttributes
+
     def deactivate(self):
         """Called when this script is deactivated."""
         settings.readTableCellRow = self.savedreadTableCellRow
+        settings.enabledBrailledTextAttributes = self.savedEnabledBrailledTextAttributes
+        settings.enabledSpokenTextAttributes = self.savedEnabledSpokenTextAttributes
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.

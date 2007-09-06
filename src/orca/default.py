@@ -38,6 +38,7 @@ try:
 except:
     pass
 
+import locale
 import time
 
 import atspi
@@ -3279,13 +3280,24 @@ class Script(script.Script):
                         #
                         line = _("bold")
                     elif key == "left-margin" or key == "right-margin":
-                        # Translators: these represent the number of pixels
-                        # for the left or right margins in a document.  We
-                        # are hesitant to interpret the values -- they are
-                        # given to us in some unknown form by the application,
-                        # so we leave things in plural form here.
+                        # We need to test if we are getting a margin value
+                        # that includes unit information (OOo now provides
+                        # this). If not, then we will assume it's pixels.
                         #
-                        line = _("%s %s pixels") % (key, attribute)
+                        numericPoint = locale.localeconv()["decimal_point"]
+                        lastChar = attribute[len(attribute) - 1]
+                        if lastChar == numericPoint or \
+                           lastChar in string.digits:
+                            # Translators: these represent the number of pixels
+                            # for the left or right margins in a document.  We
+                            # are hesitant to interpret the values -- they are
+                            # given to us in some unknown form by the 
+                            # application, so we leave things in plural form 
+                            # here.
+                            #
+                            line = _("%s %s pixels") % (key, attribute)
+                        else:
+                            line = key + " " + attribute
                     else:
                         line = key + " " + attribute
                     speech.speak(line)
