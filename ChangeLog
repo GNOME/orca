@@ -1,5 +1,12 @@
 2007-09-07  Willie Walker <william.walker@sun.com>
 
+	* src/orca/rolenames.py: fix for bug 472978 - Short Braille and
+	spoken word for "dial" should be different messages.  Used
+	Q_("shortbraille|dial") for the short braille word.  Also did
+	the same for "form" since it had the same problem.
+	
+2007-09-07  Willie Walker <william.walker@sun.com>
+
 	* src/orca/chnames.py: fix for bug 472907 - Characters "°" and "º"
 	shouldn't have the same description.  Made the "º" character be
 	"ordinal" instead of "degrees".

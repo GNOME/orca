@@ -30,7 +30,8 @@ __license__   = "LGPL"
 import debug
 import settings
 
-from orca_i18n import _ # for gettext support
+from orca_i18n import _  # for gettext support
+from orca_i18n import Q_ # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -379,8 +380,13 @@ rolenames[ROLE_DESKTOP_FRAME] = Rolename(
 rolenames[ROLE_DIAL] = Rolename(
     ROLE_DIAL,
     # Translators: short braille for the rolename of a dial.
+    # You should attempt to treat it as an abbreviation of
+    # the translated word for "dial".  It is OK to use an
+    # unabbreviated word as long as it is relatively short.
     #
-    _("dial"),
+    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+    #
+    Q_("shortbraille|dial"),
     # Translators: long braille for the rolename of a dial.
     #
     _("Dial"),
@@ -475,8 +481,13 @@ rolenames[ROLE_FONT_CHOOSER] = Rolename(
 rolenames[ROLE_FORM] = Rolename(
     ROLE_FORM,
     # Translators: short braille for the rolename of a form.
+    # You should attempt to treat it as an abbreviation of
+    # the translated word for "form".  It is OK to use an
+    # unabbreviated word as long as it is relatively short.
     #
-    _("form"),
+    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+    #
+    Q_("shortbraille|form"),
     # Translators: long braille for the rolename of a form.
     #
     _("Form"),
