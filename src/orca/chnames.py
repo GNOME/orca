@@ -275,7 +275,7 @@ chnames[u'\u00b9'] = _("superscript 1")
 
 # Translators: this is the spoken word for the character 'º' (U+00ba)
 #
-chnames[u'\u00ba'] = _("degrees")
+chnames[u'\u00ba'] = _("ordinal")
 
 # Translators: this is the spoken word for the character '»' (U+00bb)
 #
