@@ -1,3 +1,9 @@
+2007-09-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Open and save Glade file in glade-2 so that the hand-edited
+          translation changes don't keep appearing in other Glade patches.
+
 2007-09-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/httpserver.py: add support to allow log file and
