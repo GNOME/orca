@@ -123,104 +123,128 @@ do
         # the tests under the directory if the directory name matches
         # the result of `uname`.
         #
-	oldifs="$IFS"
-	IFS=:
-	found=0
-	for dir in $PATH; do
-	    test -x "$dir/$application" && {
-		found=1
-		break
-	    }
-	done
-	IFS="$oldifs"
-	outputdir=$dirprefix/$application
-	currentdir=`pwd`
+        oldifs="$IFS"
+        IFS=:
+        found=0
+        for dir in $PATH; do
+            test -x "$dir/$application" && {
+                found=1
+                break
+            }
+        done
+        IFS="$oldifs"
+        outputdir=$dirprefix/$application
+        currentdir=`pwd`
 
-	COMMAND=$application
-	ARGS=""
+        COMMAND=$application
+        ARGS=""
 
         if [ "$found" -eq 0 ]
         then
-	    osType=`uname`
-	    if [ $application == $osType ]
-	    then
-		COMMAND=""
-		found=1
-	    else
-		echo Skipping $application because I cannot find it
-		continue
-	    fi
-	else
+            osType=`uname`
+            if [ $application == $osType ]
+            then
+                COMMAND=""
+                found=1
+            else
+                echo Skipping $application because I cannot find it
+                continue
+            fi
+        else
             # Don't let gnome-terminal change the title on us -- it
             # wreaks havoc on the output.
             #
             if [ "$application" == "gnome-terminal" ]
-	    then
-	        gconftool-2 --set /apps/gnome-terminal/profiles/Default/title_mode --type string ignore
-	    fi	    
+            then
+                gconftool-2 --set /apps/gnome-terminal/profiles/Default/title_mode --type string ignore
+            fi
 
             # Tell OpenOffice Writer and Calc to not attempt to
             # recover edited files after a crash.
-	    #
-	    if [ "$application" == "swriter" ] || [ "$application" == "scalc" ]
+            #
+            if [ "$application" == "swriter" ] || [ "$application" == "scalc" ] || [ "$application" == "soffice" ] || [ "$application" == "soffice" ]
             then
-		ARGS="-norestore"
-	    fi
-	fi
+                SOFFICE=1
+                ARGS="-norestore"
+            fi
+        fi
 
-	hasTests=`find $testDir -type f -name "*.py" | sort`
-	if [ "x$hasTests" == "x" ]
+        hasTests=`find $testDir -type f -name "*.py" | sort`
+        if [ "x$hasTests" == "x" ]
         then
             echo Skipping $application because there are no tests for it
-	    continue
-	fi
+            continue
+        fi
 
-	echo ========================================
-	echo Running tests for $application
+        echo ========================================
+        echo Running tests for $application
 
         # We run under ./tmp as a means to help provide consistent
         # output for things that expose directory paths.
         #
-	mkdir -p ./tmp/$application
-	cd ./tmp/$application
+        mkdir -p ./tmp/$application
+        cd ./tmp/$application
 
         PID=0
-	testFiles=`find $testDir -type f -name "*.py" | sort`
+        testFiles=`find $testDir -type f -name "*.py" | sort`
         for testFile in $testFiles
         do
-	    # Make sure the application is running, restarting it if
-	    # necessary.
-	    #
-	    if [ "x$COMMAND" != "x" ]
+            # Make sure the application is running, restarting it if
+            # necessary.
+            #
+            if [ "x$COMMAND" != "x" ]
             then
+                # Allow us to pass parameters to the command line of
+                # the application.
+                #
+                # If a <testfilename>.params file exists, it contains
+                # parameters to pass to the command line of the
+                # application.
+                #
+                # NOTE: the type of application we expect to be able
+                # to use applications with are applications like
+                # gedit, soffice, nautilus, etc., which don't launch
+                # a new application instance each time you run them
+                # from the command line.
+                #
+                PARAMS_FILE=$testDir/`basename $testFile .py`.params
+                if [ -f $PARAMS_FILE ]
+                then
+                    PARAMS=`cat $PARAMS_FILE`
+                fi
+
                 PID_RUNNING=`ps -p $PID > /dev/null 2>&1`
-	        if [ $? -eq 1 ] 
+                if [ $? -eq 1 ]
                 then
                     if [ $PID -ne 0 ]
                     then
                         echo "ERROR: $COMMAND $ARGS CRASHED!  RESTARTING..."
                     fi
 
-		    echo "COMMAND: $COMMAND $ARGS"
+                    echo "COMMAND: $COMMAND $ARGS $PARAMS"
 
-	            $COMMAND $ARGS &
-	            if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
-	            then
-		        PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
-	            else
-		        PID=$!
-	            fi
-	            sleep 10
-		fi
-	    fi
+                    $COMMAND $ARGS $PARAMS &
+                    if [ "x$SOFFICE" == "x1" ]
+                    then
+                        PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
+                    else
+                        PID=$!
+                    fi
+                    sleep 10
+                elif [ "x$PARAMS" != "x" ]
+                then
+                    echo "COMMAND: $COMMAND $ARGS $PARAMS"
+                    $COMMAND $ARGS $PARAMS &
+                fi
+            fi
 
-            echo === Starting $testFile
+            echo === $testFile
             newResultsFile=`basename $testFile .py`
-	    wget --output-file /dev/null --post-data="debug:0:./tmp/$application/$newResultsFile" localhost:20433
-	    wget --output-file /dev/null --post-data="log:./tmp/$application/$newResultsFile" localhost:20433
-	    python $testFile
-	    wget --output-file /dev/null --post-data="log:" localhost:20433
-	    wget --output-file /dev/null --post-data="debug:10000" localhost:20433
+            wget --output-file /dev/null --post-data="debug:0:./tmp/$application/$newResultsFile" localhost:20433
+            wget --output-file /dev/null --post-data="log:./tmp/$application/$newResultsFile" localhost:20433
+            python $testFile
+            wget --output-file /dev/null --post-data="log:" localhost:20433
+            wget --output-file /dev/null --post-data="debug:10000" localhost:20433
 
             # Copy the results (.orca) file to the output directory.
             # This is the file that will be used for regression
@@ -243,14 +267,13 @@ do
             mv $newResultsFile.debug $currentdir/$outputdir
             rm -f *
 
-            echo "    Finished $testFile"
-	    if [ "x$stepMode" == "x1" ]
-		then
-		echo Press Return to continue...
-		read foo
-	    fi
+            if [ "x$stepMode" == "x1" ]
+                then
+                echo Press Return to continue...
+                read foo
+            fi
         done
-	kill -9 $PID > /dev/null 2>&1
+        kill -9 $PID > /dev/null 2>&1
         cd $currentdir
         rm -rf ./tmp/$application
     fi

@@ -508,6 +508,15 @@ learnModeEnabled        = False
 #
 userPrefsDir = os.path.join(os.environ["HOME"], ".orca")
 
+# Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
+# always mean an object disappeared - there just might be a network
+# glitch.  So, on COMM_FAILURES, we might retry a few times before
+# giving up on an object.  This might need to be overridden by the
+# script.
+#
+commFailureWaitTime = 0.1
+commFailureAttemptLimit = 5
+
 # If non-zero, we use time.sleep() in various places to attempt to
 # free up the global interpreter lock.  Take a look at the following
 # URLs for more information:

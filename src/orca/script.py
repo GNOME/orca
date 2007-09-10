@@ -98,8 +98,8 @@ class Script:
         # giving up on an object.  This might need to be overridden by the
         # script.  See bug #397787.
         #
-        self.commFailureWaitTime = 0.1
-        self.commFailureAttemptLimit = 5
+        self.commFailureWaitTime = settings.commFailureWaitTime
+        self.commFailureAttemptLimit = settings.commFailureAttemptLimit
 
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 

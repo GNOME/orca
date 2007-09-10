@@ -144,7 +144,7 @@ sequence.append(WaitAction("object:state-changed:selected",
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
 
-sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("<Control>Right", 500))
 
 sequence.append(WaitAction("object:active-descendants-changed",
                            None,

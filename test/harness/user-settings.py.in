@@ -20,3 +20,6 @@ orca.settings.enableActionKeys = False
 
 orca.settings.enableBraille = True
 orca.settings.enableBrailleMonitor = False
+
+orca.settings.commFailureWaitTime = 0.1
+orca.settings.commFailureAttemptLimit = -1

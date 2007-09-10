@@ -1,3 +1,21 @@
+2007-09-07  Willie Walker <william.walker@sun.com>
+
+        *  test/harness/user-settings.py.in, src/orca/settings.py, 
+        src/orca/script.py: allow default commFailure settings to be 
+        customzable in user-settings.
+
+        * test/keystrokes/gtk-demo/where_am_i_tree_table.py: use Ctrl+Right 
+        instead of just Right to navigate tree.
+
+        * test/harness/harness.sh: a bit more mucking to allow things like 
+        soffice, gedit, and nautilus to be run with command line parameters.
+
+        * test/keystrokes/soffice/role_alert.py, 
+        test/keystrokes/soffice/say-all.params, 
+        test/keystrokes/soffice/say-all.py, 
+        test/keystrokes/soffice/role_accel_label.py: beginning of keystrokes 
+        to work with soffice.
+
 2007-09-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
