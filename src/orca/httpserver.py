@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@ service."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import threading
@@ -37,13 +37,22 @@ import speech
 
 _httpRequestThread = None
 
+
+# FileHandlers for logging speech and braille output.
+#
+loggingFileHandlers = {}
+
 class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Provides support for communicating with Orca via HTTP.  This is
     mainly to support self-voicing applications that want to use Orca
     as a speech service.
 
     The protocol is simple: POST content is 'stop', 'speak:<text>',
-    or 'isSpeaking'.
+    or 'isSpeaking'.  A POST content of 'log:filename' will also
+    instruct Orca to log speech and braille output to
+    'filename.speech' and 'filename.braille'.  A POST content of
+    'debug:level:filename' will instruct Orca to send debug output
+    at 'level' (an integer value) to 'filename.debug'.
 
     To test this, run:
 
@@ -55,7 +64,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Override to avoid getting a log message on stdout for
         each GET, POST, etc. request"""
         pass
-        
+
     def do_GET(self):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
@@ -82,6 +91,33 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
                 self.wfile.write("%s" % speech.isSpeaking())
+            elif inputBody.startswith("log:"):
+                import logging
+                logFile = inputBody[4:]
+                for logger in ['braille', 'speech']:
+                    log = logging.getLogger(logger)
+                    formatter = logging.Formatter('%(name)s.%(message)s')
+                    try:
+                        loggingFileHandlers[logger].close()
+                        log.removeHandler(loggingFileHandlers[logger])
+                    except:
+                        pass
+                    if logFile and len(logFile):
+                        loggingFileHandlers[logger] = logging.FileHandler(
+                            '%s.%s' % (logFile, logger), 'w')
+                        loggingFileHandlers[logger].setFormatter(formatter)
+                        log.addHandler(loggingFileHandlers[logger])
+                    log.setLevel(logging.INFO)
+                self.send_response(200, 'OK')
+            elif inputBody.startswith("debug:"):
+                split = inputBody.split(':')
+                debug.debugLevel = int(split[1])
+                if debug.debugFile:
+                    debug.debugFile.close()
+                    debug.debugFile = None
+                if (len(split) == 3) and (len(split[2])):
+                    debug.debugFile = open('%s.debug' % split[2], 'w', 0)
+                self.send_response(200, 'OK')
         else:
             debug.println(debug.LEVEL_FINEST,
                           "httpserver._HTTPRequestHandler received no data")

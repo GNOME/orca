@@ -1,5 +1,15 @@
 2007-09-07  Willie Walker <william.walker@sun.com>
 
+	* src/orca/httpserver.py: add support to allow log file and
+	debug file switching via HTTP POST requests.
+
+	* test/harness/harness.sh: a new file to work on the idea of
+	only running the target application once for an entire set of
+	test files.  If this works, it will be a replacement for
+	runall.sh and runone.sh.
+	
+2007-09-07  Willie Walker <william.walker@sun.com>
+
 	* src/orca/rolenames.py: fix for bug 472978 - Short Braille and
 	spoken word for "dial" should be different messages.  Used
 	Q_("shortbraille|dial") for the short braille word.  Also did
