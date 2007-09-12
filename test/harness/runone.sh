@@ -95,7 +95,7 @@ fi
 # should be a general way specify command line arguments when
 # starting test applications.
 #
-if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
+if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ] || [ "$APP_NAME" = "soffice" ]
 then
     ARGS="-norestore"
 fi
@@ -122,7 +122,7 @@ fi
 echo starting test application $APP_NAME $ARGS $PARAMS ...
 $APP_NAME $ARGS $PARAMS &
 #sleep $WAIT_TIME
-if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ]
+if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ] || [ "$APP_NAME" = "soffice" ]
 then
     APP_PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
 else

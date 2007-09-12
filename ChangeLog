@@ -1,5 +1,10 @@
 2007-09-12  Willie Walker <william.walker@sun.com>
 
+	* test/harness/runone.sh: also use -norestore when running
+	soffice.
+	
+2007-09-12  Willie Walker <william.walker@sun.com>
+
 	* src/orca/scripts/nautilus.py: fix problem where the util.xxx
 	module methods were still being referenced rather than using 
 	the self.xxx stuff.
