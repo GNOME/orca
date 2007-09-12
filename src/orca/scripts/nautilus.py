@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id:$"
 __version__   = "$Revision:$"
 __date__      = "$Date:$"
-__copyright__ = "Copyright (c) 2007 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.atspi as atspi
@@ -31,7 +31,6 @@ import orca.debug as debug
 import orca.default as default
 import orca.rolenames as rolenames
 import orca.speech as speech
-import orca.util as util
 
 from orca.orca_i18n import _         # for gettext support
 from orca.orca_i18n import ngettext  # for ngettext support
@@ -78,7 +77,7 @@ class Script(default.Script):
 
         itemCount = -1
         itemCountString = " "
-        allScrollPanes = util.findByRole(frame, rolenames.ROLE_SCROLL_PANE)
+        allScrollPanes = self.findByRole(frame, rolenames.ROLE_SCROLL_PANE)
         rolesList = [rolenames.ROLE_SCROLL_PANE, \
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_FILLER, \
@@ -93,7 +92,7 @@ class Script(default.Script):
         # Create a string of the number of items in the folder.
         #
         for pane in allScrollPanes:
-            if util.isDesiredFocusedItem(pane, rolesList):
+            if self.isDesiredFocusedItem(pane, rolesList):
                 for i in range(0, pane.childCount):
                     child = pane.child(i)
                     if child.role == rolenames.ROLE_LAYERED_PANE:
@@ -119,8 +118,6 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        #util.printAncestry(event.source)
-
         if event.source.role == rolenames.ROLE_FRAME:
 
             # If we've changed folders, announce the new folder name and
@@ -142,7 +139,7 @@ class Script(default.Script):
             allTokens = event.source.name.split(" - ")
             newFolderName = allTokens[0] 
 
-            allPanels = util.findByRole(event.source, rolenames.ROLE_PANEL)
+            allPanels = self.findByRole(event.source, rolenames.ROLE_PANEL)
             rolesList = [rolenames.ROLE_PANEL, \
                          rolenames.ROLE_FILLER, \
                          rolenames.ROLE_PANEL, \
@@ -152,7 +149,7 @@ class Script(default.Script):
                          rolenames.ROLE_APPLICATION]
             locationBarFound = False
             for panel in allPanels:
-                if util.isDesiredFocusedItem(panel, rolesList):
+                if self.isDesiredFocusedItem(panel, rolesList):
                     locationBarFound = True
                     break
 
@@ -162,7 +159,7 @@ class Script(default.Script):
                     child = panel.child(i)
                     if child.role == rolenames.ROLE_TOGGLE_BUTTON and \
                        child.state.count(atspi.Accessibility.STATE_CHECKED):
-                        if not util.isSameObject(child, self.pathChild):
+                        if not self.isSameObject(child, self.pathChild):
                             self.pathChild = child
                             shouldAnnounce = True
                             break
