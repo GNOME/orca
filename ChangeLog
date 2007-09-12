@@ -1,3 +1,9 @@
+2007-09-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/nautilus.py: fix problem where the util.xxx
+	module methods were still being referenced rather than using 
+	the self.xxx stuff.
+
 2007-09-07  Willie Walker <william.walker@sun.com>
 
         *  test/harness/user-settings.py.in, src/orca/settings.py, 
