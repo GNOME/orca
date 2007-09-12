@@ -230,7 +230,7 @@ class Script:
         - pronunciations: the dictionary of pronunciations for this script.
         """
 
-        return pronunciationDict
+        return pronunciations
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
