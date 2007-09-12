@@ -512,7 +512,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # generally do not like object:children-changed:remove events,
         # either.
         #
-        if event.type == "object:children-changed:remove":
+        if event.type.startswith("object:children-changed:remove"):
             if event.source == atspi.Accessible.makeAccessible(
                                    self.registry.desktop):
                 self._reclaimScripts()
@@ -601,8 +601,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # in use, and then issues a focus: event on the
                     # main window, which is a frame.]]]
                     #
-                    if (event.type == "window:activate") \
-                       or ((event.type == "focus:") \
+                    if event.type.startswith("window:activate") \
+                       or (event.type.startswith("focus:") \
                            and (event.source.role == rolenames.ROLE_FRAME)):
 
                         # We'll let someone else decide if it's important
@@ -688,7 +688,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # We ignore defunct objects and let the atspi module take
             # care of them for us.
             #
-            if (e.type == "object:state-changed:defunct"):
+            if e.type.startswith("object:state-changed:defunct"):
                 if settings.debugEventQueue:
                     self._enqueueEventCount -= 1
                 return
@@ -699,7 +699,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # hierarchy, so we just ignore them and let the atspi
             # module take care of it for us.
             #
-            if e.type == "object:property-change:accessible-parent":
+            if e.type.startswith("object:property-change:accessible-parent"):
                 if settings.debugEventQueue:
                     self._enqueueEventCount -= 1
                 return
@@ -707,7 +707,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # At this point in time, we only care when objects are
             # removed from the desktop.
             #
-            if (e.type == "object:children-changed:remove") \
+            if e.type.startswith("object:children-changed:remove") \
                 and (e.source != self.registry.desktop):
                 if settings.debugEventQueue:
                     self._enqueueEventCount -= 1

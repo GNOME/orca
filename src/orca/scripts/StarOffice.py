@@ -1550,7 +1550,7 @@ class Script(default.Script):
         # comment #18 of bug #354463.
         #
         if self.findCommandRun and \
-           event.type == "object:state-changed:focused":
+           event.type.startswith("object:state-changed:focused"):
             self.findCommandRun = False
             self.find()
             return
@@ -1944,7 +1944,7 @@ class Script(default.Script):
         # Check to see if we are in the Presentation startup wizard. If so,
         # then speak the object that currently has focus.
         #
-        if event.type == "object:state-changed:sensitive" and \
+        if event.type.startswith("object:state-changed:sensitive") and \
            event.source.role == rolenames.ROLE_PANEL and \
            event.source.state.count(atspi.Accessibility.STATE_SENSITIVE):
             current = event.source.parent
@@ -1966,7 +1966,7 @@ class Script(default.Script):
         # If this is a state change "focused" event that we care about, and
         # we are in Writer, check to see if we are entering or leaving a table.
         #
-        if event.type == "object:state-changed:focused" and event.detail1 == 1:
+        if event.type.startswith("object:state-changed:focused") and event.detail1 == 1:
             current = event.source.parent
             while current.role != rolenames.ROLE_APPLICATION:
                 # Translators: this is the title of the window that
@@ -1986,7 +1986,7 @@ class Script(default.Script):
         # Prevent  "object:state-changed:active" events from activating
         # the find operation. See comment #18 of bug #354463.
         #
-        if event.type == "object:state-changed:active":
+        if event.type.startswith("object:state-changed:active"):
             if self.findCommandRun:
                 return
 
@@ -2004,7 +2004,7 @@ class Script(default.Script):
         # Announce when the toolbar buttons are toggled if we just toggled
         # them; not if we navigated to some text.
         #
-        if event.type == "object:state-changed:checked" and \
+        if event.type.startswith("object:state-changed:checked") and \
            (event.source.role == rolenames.ROLE_TOGGLE_BUTTON or \
             event.source.role == rolenames.ROLE_PUSH_BUTTON):
             weToggledIt = False
@@ -2032,7 +2032,7 @@ class Script(default.Script):
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then speak/braille that parent table cell (see bug #382415).
         #
-        if event.type == "object:state-changed:focused" and \
+        if event.type.startswith("object:state-changed:focused") and \
            event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
            event.detail1 == 0 and \
@@ -2064,7 +2064,7 @@ class Script(default.Script):
         # instead of focus:). The second is a caret-moved
         # event. Just set the locusOfFocus for the first event.
         #
-        if event.type == "object:state-changed:focused" and \
+        if event.type.startswith("object:state-changed:focused") and \
            event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source != self.currentParagraph:
             self.currentParagraph = event.source

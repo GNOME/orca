@@ -91,12 +91,12 @@ class Event:
             # http://bugzilla.gnome.org/show_bug.cgi?id=395749 for
             # more information.
             #
-            if self.type == "object:active-descendant-changed":
+            if self.type.startswith("object:active-descendant-changed"):
                 self.any_data = Accessible.makeAccessible(
                     self.any_data.value())
-            elif self.type == "object:text-changed:insert":
+            elif self.type.startswith("object:text-changed:insert"):
                 self.any_data = self.any_data.value()
-            elif self.type == "object:text-changed:delete":
+            elif self.type.startswith("object:text-changed:delete"):
                 self.any_data = self.any_data.value()
         else:
             self.source   = None
@@ -535,7 +535,7 @@ class Accessible:
         if Accessible._cache.has_key(e.source):
             # Let's get rid of defunct objects.  We hate them.
             #
-            if e.type == "object:state-changed:defunct":
+            if e.type.startswith("object:state-changed:defunct"):
                 Accessible.deleteAccessible(e.source)
             else:
                 obj = Accessible._cache[e.source]

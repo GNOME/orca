@@ -454,7 +454,7 @@ def magnifyAccessible(event, obj, extents=None):
 
     if extents:
         [x, y, width, height] = extents
-    elif event and (event.type == "object:text-caret-moved") \
+    elif event and event.type.startswith("object:text-caret-moved") \
        and obj.text and (obj.text.caretOffset >= 0):
         offset = obj.text.caretOffset
         [x, y, width, height] = obj.text.getCharacterExtents(offset,

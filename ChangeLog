@@ -1,3 +1,20 @@
+2007-09-12  Scott Haeger <scott@bashautomation.com> 
+	    Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/gedit.py,
+	  src/orca/scripts/gnome-panel.py,
+	  src/orca/scripts/gaim.py,
+          src/orca/scripts/metacity.py,
+          src/orca/scripts/acroread.py,
+          src/orca/scripts/StarOffice.py,
+          src/orca/mag.py,
+          src/orca/atspi.py,
+          src/orca/default.py,
+          src/orca/focus_tracking_presenter.py,
+          src/orca/Gecko.py,
+          src/orca/J2SE-access-bridge.py: 
+	  fix for bug 475177 - Support new AT-SPI event name format
+
 2007-09-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/script.py: make sure to return pronunciations

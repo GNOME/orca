@@ -533,7 +533,7 @@ class Script(default.Script):
         # from the text area when it regains focus.
         # (See bug #350854 for more details).
         #
-        if (event.type == "object:state-changed:focused") \
+        if event.type.startswith("object:state-changed:focused") \
            and (event.detail1):
             orca.setLocusOfFocus(event, event.source)
 

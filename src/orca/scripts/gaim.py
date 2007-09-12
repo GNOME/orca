@@ -361,7 +361,7 @@ class Script(default.Script):
         # Check to see if a new chat room tab has been created and if it
         # has, then announce its name. See bug #469098 for more details.
         #
-        if event.type == "object:children-changed:add":
+        if event.type.startswith("object:children-changed:add"):
             rolesList = [rolenames.ROLE_PAGE_TAB_LIST, \
                          rolenames.ROLE_FILLER, \
                          rolenames.ROLE_FRAME]
