@@ -1,3 +1,8 @@
+2007-09-12  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/role_accel_label.py: add example
+	test for firefox.
+
 2007-09-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 475956 - Orca sometimes "guesses"
