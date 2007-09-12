@@ -1,3 +1,8 @@
+2007-09-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: Fix for bug 475956 - Orca sometimes "guesses"
+        index.htm* as the base name for a link in FF3.
+
 2007-09-12  Scott Haeger <scott@bashautomation.com> 
 	    Willie Walker <william.walker@sun.com>
 
