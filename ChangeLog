@@ -1,5 +1,13 @@
 2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/role_accel_label.py,
+          test/keystrokes/firefox/role_check_box.py,
+          test/keystrokes/firefox/role_check_menu_item.py:
+         Wait for the main FF window to get focus again and
+         add a pause at the end.
+
+2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/role_check_box.py, (new)
           test/keystrokes/firefox/role_check_menu_item.py: (new)
           Macaroon test files for Firefox.

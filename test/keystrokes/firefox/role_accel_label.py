@@ -41,4 +41,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Send Link...", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(KeyComboAction("Escape"))
 
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus("Minefield", acc_role=pyatspi.ROLE_FRAME))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+
 sequence.start()

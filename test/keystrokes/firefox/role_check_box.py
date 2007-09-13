@@ -38,9 +38,20 @@ sequence.append(WaitAction("object:state-changed:checked",
                            5000))
 sequence.append(TypeAction(" "))
 
+sequence.append(WaitAction("object:state-changed:checked",
+                           None,
+                           None,
+                           pyatspi.ROLE_CHECK_BOX,
+                           5000))
+
 ########################################################################
 # Close the dialog
 #
 sequence.append(KeyComboAction("Escape"))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(WaitForFocus("Minefield", acc_role=pyatspi.ROLE_FRAME))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()
