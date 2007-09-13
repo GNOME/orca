@@ -126,7 +126,7 @@ class Script(default.Script):
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onStateChanged(self, event)
-        elif (event.type == "object:state-changed:showing") \
+        elif (event.type.startswith("object:state-changed:showing")) \
             and event.detail1:
             self.presentStatusBar(event.source)
 

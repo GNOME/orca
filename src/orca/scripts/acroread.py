@@ -520,7 +520,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.type == "object:state-changed:checked" and \
+        if event.type.startswith("object:state-changed:checked") and \
            event.source.role == rolenames.ROLE_RADIO_BUTTON:
             # Radio buttons in the Search panel are not automatically
             # selected when you arrow to them.  You have to press Space
@@ -529,7 +529,7 @@ class Script(default.Script):
             orca.visualAppearanceChanged(event, event.source)
             return
 
-        elif event.type == "object:state-changed:focused" and \
+        elif event.type.startswith("object:state-changed:focused") and \
              event.detail1 == 1:
             if event.source.role == rolenames.ROLE_PUSH_BUTTON:
                 # Try to minimize chattiness in the Search panel

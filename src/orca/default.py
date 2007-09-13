@@ -2277,7 +2277,7 @@ class Script(script.Script):
             # focus event that occurs when something like the "OK"
             # button gets focus shortly after the window appears.
             #
-            shouldNotInterrupt = (event and event.type == "focus:") \
+            shouldNotInterrupt = (event and event.type.startswith("focus:")) \
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
 
@@ -2956,13 +2956,13 @@ class Script(script.Script):
 
         # Do we care?
         #
-        if event.type == "object:state-changed:active":
+        if event.type.startswith("object:state-changed:active"):
             if self.findCommandRun:
                 self.findCommandRun = False
                 self.find()
                 return
 
-        if event.type == "object:state-changed:focused":
+        if event.type.startswith("object:state-changed:focused"):
             iconified = False
             try:
                 window = self.getTopLevel(event.source)
@@ -2988,7 +2988,7 @@ class Script(script.Script):
         if event.source.role == rolenames.ROLE_TOOL_TIP:
             obj = event.source
 
-            if event.type == "object:state-changed:showing":
+            if event.type.startswith("object:state-changed:showing"):
                 if event.detail1 == 1:
                     self.presentTooltip(obj)
                 elif orca_state.locusOfFocus \

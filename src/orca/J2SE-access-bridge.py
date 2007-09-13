@@ -261,7 +261,7 @@ class Script(default.Script):
         # item.
         #
         if event.source.role == rolenames.ROLE_ROOT_PANE and \
-               event.type == "object:state-changed:focused" and \
+               event.type.startswith("object:state-changed:focused") and \
                event.detail1 == 1:
 
             for i in range(0, event.source.childCount):
@@ -281,21 +281,21 @@ class Script(default.Script):
         # In java applications the events are comming in other order:
         # "focus:" event comes before "state-changed:focused" event
         #
-        if (event.type == "object:state-changed:focused"):
+        if event.type.startswith("object:state-changed:focused"):
             return
 
         # Hand state changes when JTree labels become expanded
         # or collapsed.
         #
-        if ((event.source.role == rolenames.ROLE_LABEL) and \
-            (event.type == "object:state-changed:expanded")):
+        if (event.source.role == rolenames.ROLE_LABEL) and \
+            event.type.startswith("object:state-changed:expanded"):
             orca.visualAppearanceChanged(event, event.source)
             return
 
         # Present a value change in case of an focused popup menu.
         # Fix for Swing file chooser.
         #
-        if event.type == "object:state-changed:visible" and \
+        if event.type.startswith("object:state-changed:visible") and \
                 event.source.role == rolenames.ROLE_POPUP_MENU and \
                 event.source.parent.state.count(Accessibility.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source.parent)
@@ -370,7 +370,7 @@ class Script(default.Script):
         # manage check boxes in java application
         #
         if event.source.role == rolenames.ROLE_CHECK_BOX and \
-               event.type == "object:property-change:accessible-value":
+               event.type.startswith("object:property-change:accessible-value"):
             return
 
         default.Script.onValueChanged(self, event)

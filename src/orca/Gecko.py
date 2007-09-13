@@ -3515,7 +3515,7 @@ class Script(default.Script):
         # radio button with the mouse, we'll wind up speaking the
         # state twice because of the focus event.
         #
-        if event.type == "object:state-changed:checked" \
+        if event.type.startswith("object:state-changed:checked") \
            and event.source \
            and (event.source.role == rolenames.ROLE_RADIO_BUTTON) \
            and (event.detail1 == 1) \
@@ -3529,7 +3529,7 @@ class Script(default.Script):
         # If an autocomplete appears beneath an entry, we don't want
         # to prevent the user from being able to arrow into it.
         #
-        if event.type == "object:state-changed:showing" \
+        if event.type.startswith("object:state-changed:showing") \
            and event.source \
            and (event.source.role == rolenames.ROLE_WINDOW) \
            and orca_state.locusOfFocus:
@@ -3540,7 +3540,7 @@ class Script(default.Script):
         # We care when the document frame changes it's busy state.  That
         # means it has started/stopped loading content.
         #
-        if event.type == "object:state-changed:busy":
+        if event.type.startswith("object:state-changed:busy"):
             if event.source \
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
                 finishedLoading = False

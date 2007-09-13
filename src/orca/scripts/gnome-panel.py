@@ -77,7 +77,7 @@ class Script(default.Script):
         # Handle tooltip popups.
         #
         if obj.role == rolenames.ROLE_TOOL_TIP:
-            if event.type == "object:state-changed:showing" and \
+            if event.type.startswith("object:state-changed:showing") and \
                event.detail1 == 1:
                 braille.displayMessage(obj.name)
                 speech.speak(obj.name)
@@ -95,7 +95,7 @@ class Script(default.Script):
         # and updates the braille display to "panel."
         #
         elif obj.role == rolenames.ROLE_PANEL and \
-             event.type == "object:state-changed:focused" and \
+             event.type.startswith("object:state-changed:focused") and \
              event.detail1 == 1 and not \
              event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             return
