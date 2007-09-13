@@ -100,9 +100,13 @@ then
     ARGS="-norestore"
 fi
 
+# If we're using Firefox, give it a known profile to work from.
+#
 if [ "$APP_NAME" = "firefox" ]
 then
-    ARGS="about:blank"
+    foo=`dirname $0`
+    harnessDir=`cd $foo; pwd`
+    ARGS="-profile $harnessDir/../html/FirefoxProfile"
 fi
 
 if [ $orcaRunning -eq 0 ]

@@ -167,6 +167,15 @@ do
                 SOFFICE=1
                 ARGS="-norestore"
             fi
+	
+	    # If we're using Firefox, give it a known profile to work from.
+	    #
+	    if [ "$APP_NAME" = "firefox" ]
+	    then
+		foo=`dirname $0`
+		harnessDir=`cd $foo; pwd`
+		ARGS="-profile $harnessDir/../html/FirefoxProfile"
+	    fi
         fi
 
         hasTests=`find $testDir -type f -name "*.py" | sort`
