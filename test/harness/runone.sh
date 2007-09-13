@@ -100,6 +100,11 @@ then
     ARGS="-norestore"
 fi
 
+if [ "$APP_NAME" = "firefox" ]
+then
+    ARGS="about:blank"
+fi
+
 if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
@@ -146,8 +151,14 @@ then
 fi
 
 # Terminate the running application
-echo killing app $APP_NAME $APP_PID
-kill -9 $APP_PID > /dev/null 2>&1
+if [ "$APP_NAME" = "firefox" ]
+then
+    echo killing firefox
+    pkill firefox
+else
+    killing app $APP_NAME $APP_PID
+    kill -9 $APP_PID > /dev/null 2>&1
+fi
 
 # Temporary hack to kill gnome-help help if it's running.
 HELP_PID=$(ps -A | grep gnome-help | cut -d' ' -f1)

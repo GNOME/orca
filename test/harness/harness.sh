@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 #
 # harness.sh can take the following optional parameters:
 #
@@ -273,7 +273,12 @@ do
                 read foo
             fi
         done
-        kill -9 $PID > /dev/null 2>&1
+        if [ "x$application" == "xfirefox" ]
+	then
+	    pkill firefox
+	else
+            kill -9 $PID > /dev/null 2>&1
+	fi
         cd $currentdir
         rm -rf ./tmp/$application
     fi
