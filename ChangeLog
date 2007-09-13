@@ -1,3 +1,14 @@
+2007-09-13  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runone.sh: open log files for overwriting, not
+	appending.
+	
+	* test/harness/user-settings.py.in: disable attempting to 
+	connect to BrlTTY to eliminate a Traceback in the debug file.
+	This will allow us to look for Tracebacks in the debug files
+	as a means to catch other problems (e.g., badness in the Orca
+	code).
+	
 2007-09-12  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/role_accel_label.py: add example

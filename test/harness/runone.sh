@@ -56,7 +56,7 @@ import logging
 for logger in ['braille', 'speech']:
     log = logging.getLogger(logger)
     formatter = logging.Formatter('%(name)s.%(message)s')
-    handler = logging.FileHandler('$debugFile.%s' % logger)
+    handler = logging.FileHandler('$debugFile.%s' % logger, 'w')
     handler.setFormatter(formatter)
     log.addHandler(handler)
     log.setLevel(logging.INFO)
