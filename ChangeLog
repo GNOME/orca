@@ -3,6 +3,14 @@
         * test/keystrokes/firefox/role_accel_label.py,
           test/keystrokes/firefox/role_check_box.py,
           test/keystrokes/firefox/role_check_menu_item.py:
+        In the "third time's charm" department:  It's the DOCUMENT_FRAME
+        that issues the focus: event; not the FRAME.
+
+2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/role_accel_label.py,
+          test/keystrokes/firefox/role_check_box.py,
+          test/keystrokes/firefox/role_check_menu_item.py:
          Wait for the main FF window to get focus again and
          add a pause at the end.
 
