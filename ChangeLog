@@ -1,5 +1,11 @@
 2007-09-14  Willie Walker <william.walker@sun.com>
 
+	* text/keystrokes/firefox/dojo_slider.py: use new macaroon
+	support to wait for document load and also type in the
+	URL instead of obtaining it from the *.params file.
+
+2007-09-14  Willie Walker <william.walker@sun.com>
+
 	* text/keystrokes/firefox/dojo_slider.py: press Ctrl+Home
 	to guarantee we start at the top of the page.
 

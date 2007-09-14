@@ -12,13 +12,21 @@ sequence = MacroSequence()
 # to move to the "Dojo Slider Widget Demo" frame.
 #
 sequence.append(WaitForWindowActivate("Minefield",None))
-sequence.append(WaitForFocus("Dojo Slider Widget Demo", pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Make sure we start at the top of the page (Ctrl+Home) and then move
-# to the first slider.
+# Load the dojo slider demo.
 #
-sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(KeyComboAction("<Control>l"))
+sequence.append(WaitForFocus("Location", pyatspi.ROLE_ENTRY))
+sequence.append(TypeAction("http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/form/test_Slider.html"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(WaitForDocLoad())
+sequence.append(WaitForFocus("Dojo Slider Widget Demo", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+
+
+########################################################################
+# Tab to the first slider.
+#
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_SLIDER))
@@ -92,6 +100,10 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
+
+########################################################################
+# Tab to the next slider.
+#
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
@@ -169,11 +181,14 @@ sequence.append(KeyComboAction("Down"))
 ########################################################################
 # Close the demo
 #
-sequence.append(KeyComboAction("<Control>w"))
+sequence.append(KeyComboAction("<Control>l"))
+sequence.append(WaitForFocus("Location", pyatspi.ROLE_ENTRY))
+sequence.append(TypeAction("about:blank"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(WaitForDocLoad())
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()
