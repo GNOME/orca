@@ -1,3 +1,8 @@
+2007-09-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py: Fix for bug 476786 - whereAmI fails in
+        Firefox menus.
+
 2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/role_radio_button.py, (new)

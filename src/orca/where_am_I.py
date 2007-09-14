@@ -399,7 +399,7 @@ class WhereAmI:
         # Alt FO for the open menu item in the File menu). We only
         # want to speak the shortcut associated with the menu item.
         #
-        if obj.parent and obj.parent.role == rolenames.ROLE_MENU:
+        if text and obj.parent and obj.parent.role == rolenames.ROLE_MENU:
             text = text[-1]
         
         utterances.append(text)
