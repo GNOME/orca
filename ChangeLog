@@ -1,3 +1,8 @@
+2007-09-13  Willie Walker <william.walker@sun.com>
+
+        * test/harness/user-settings.py.in: set commFailureAttemptLimit 
+	to 0 so Orca will actually process events when testing (D'Oh!).
+
 2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/role_accel_label.py,

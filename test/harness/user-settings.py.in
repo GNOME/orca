@@ -7,7 +7,6 @@ import orca.debug
 import orca.settings
 import orca.acss
 
-orca.settings.enableBraille = False
 orca.settings.enableSpeech = True
 orca.settings.speechServerFactory = None
 
@@ -22,5 +21,4 @@ orca.settings.enableActionKeys = False
 orca.settings.enableBraille = False
 orca.settings.enableBrailleMonitor = False
 
-orca.settings.commFailureWaitTime = 0.1
-orca.settings.commFailureAttemptLimit = -1
+orca.settings.commFailureAttemptLimit = 0
