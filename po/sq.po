@@ -1,5 +1,5 @@
 # Përkthimi i orca.HEAD në shqip.
-Copyright (C) 2007 Free Software Foundation, Inc.
+# Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the ORCA package.
 #
 # Laurent Dhima <laurenti@alblinux.net>, 2007.
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-13 19:48+0200\n"
+"POT-Creation-Date: 2007-09-14 12:48+0200\n"
 "PO-Revision-Date: 2007-09-14 12:21+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -22,7 +22,8 @@ msgstr "Orca, lexues dhe zmadhues ekrani"
 
 #: ../orca.desktop.in.h:2
 #, fuzzy
-msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
 msgstr "në shqiptimi braille"
 
 #: ../src/orca/app_gui_prefs.py:103
@@ -72,8 +73,7 @@ msgstr "dhe prind"
 #. object share a common ancestor
 #.
 #: ../src/orca/bookmarks.py:118 ../src/orca/Gecko.py:1428
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "shared ancestor %s"
 msgstr "pasardhës"
 
@@ -1638,7 +1638,8 @@ msgstr "me tastiera."
 #.
 #: ../src/orca/default.py:555
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Aktivon modalitetin e mësimit.  Shtyp escape për të dalë nga ky modalitet."
+msgstr ""
+"Aktivon modalitetin e mësimit.  Shtyp escape për të dalë nga ky modalitet."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -1701,7 +1702,8 @@ msgstr "Shfaq dritaren e dialogut të konfigurimit të preferimeve."
 #.
 #: ../src/orca/default.py:629
 msgid "Displays the application preferences configuration dialog."
-msgstr "Shfaq dritaren e dialogut të konfigurimit të preferimeve të aplikativit."
+msgstr ""
+"Shfaq dritaren e dialogut të konfigurimit të preferimeve të aplikativit."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2157,8 +2159,7 @@ msgstr[1] "%d tituj"
 #. web page that is currently being displayed.
 #.
 #: ../src/orca/Gecko.py:1305
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "formular"
@@ -2168,8 +2169,7 @@ msgstr[1] "formular"
 #. web page that is currently being displayed.
 #.
 #: ../src/orca/Gecko.py:1311
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "tabelë"
@@ -2179,8 +2179,7 @@ msgstr[1] "tabelë"
 #. web page that is currently being displayed.
 #.
 #: ../src/orca/Gecko.py:1317
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
 msgstr[0] "lidhje"
@@ -2190,8 +2189,7 @@ msgstr[1] "lidhje"
 #. web page that is currently being displayed.
 #.
 #: ../src/orca/Gecko.py:1323
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
 msgstr[0] "lidhje"
@@ -2203,8 +2201,7 @@ msgstr[1] "lidhje"
 #. page.
 #.
 #: ../src/orca/Gecko.py:1330
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d percent of document read"
 msgstr "nga"
 
@@ -2697,8 +2694,7 @@ msgstr ""
 #. Translators: this is in reference to loading a web page.
 #.
 #: ../src/orca/Gecko.py:3686
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Finished loading %s."
 msgstr "Përfundoi."
 
@@ -2726,8 +2722,7 @@ msgstr ""
 #. more than a single row and/or column.
 #.
 #: ../src/orca/Gecko.py:5012
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "Qeli rreshta dhe kollona"
 
@@ -2736,8 +2731,7 @@ msgstr "Qeli rreshta dhe kollona"
 #. more than a single row and/or column.
 #.
 #: ../src/orca/Gecko.py:5019
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Cell spans %d columns"
 msgstr "Qeli kollona"
 
@@ -2746,8 +2740,7 @@ msgstr "Qeli kollona"
 #. more than a single row and/or column.
 #.
 #: ../src/orca/Gecko.py:5025
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Cell spans %d rows"
 msgstr "Qeli rreshta"
 
@@ -2758,8 +2751,7 @@ msgstr "Qeli rreshta"
 #. view (i.e., how many ancestors a node has).
 #.
 #: ../src/orca/Gecko.py:6740 ../src/orca/speechgenerator.py:776
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "level %d"
 msgstr "etiketa"
 
@@ -2805,8 +2797,7 @@ msgstr "sipër."
 #. by heading (e.g., <h1>).
 #.
 #: ../src/orca/Gecko.py:7294 ../src/orca/Gecko.py:7330
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "No more headings at level %d."
 msgstr "Jo etiketa."
 
@@ -2822,8 +2813,7 @@ msgstr "Jo."
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/Gecko.py:7451 ../src/orca/Gecko.py:7512
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
 msgstr[0] "Lista me element"
@@ -2835,8 +2825,7 @@ msgstr[1] "Lista me element"
 #. that's inside another list).
 #.
 #: ../src/orca/Gecko.py:7466 ../src/orca/Gecko.py:7527
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Nesting level %d"
 msgstr "etiketa"
 
@@ -2893,8 +2882,7 @@ msgstr "Jo formular."
 #. a cell in a table.
 #.
 #: ../src/orca/Gecko.py:7970
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Row %d, column %d."
 msgstr "Rresht."
 
@@ -2910,8 +2898,7 @@ msgstr ""
 #. Translators: this represents the number of rows in an HTML table.
 #.
 #: ../src/orca/Gecko.py:8004 ../src/orca/Gecko.py:8053
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
 msgstr[0] "Tabela me"
@@ -3897,8 +3884,7 @@ msgstr "shkruaj i ri"
 #. creating a new key binding.
 #.
 #: ../src/orca/orca_gui_prefs.py:2586
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "The new key is: %s"
 msgstr "i ri është"
 
@@ -3953,8 +3939,7 @@ msgstr ""
 #. based upon their input.
 #.
 #: ../src/orca/orca.py:656
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Kyçi Shtypi shkruaj."
 
@@ -6123,8 +6108,7 @@ msgstr ""
 #. We've entered a table.  Announce the dimensions.
 #.
 #: ../src/orca/scripts/acroread.py:263 ../src/orca/scripts/StarOffice.py:1161
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tabelë me rreshta dhe kollona."
 
@@ -6312,7 +6296,8 @@ msgstr "Asistenti"
 
 #: ../src/orca/scripts/gaim.py:162
 #, fuzzy
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "Kavo me emri nga."
 
 #: ../src/orca/scripts/gaim.py:170
@@ -6339,14 +6324,12 @@ msgid "Do not speak chat room name."
 msgstr "nuk emri."
 
 #: ../src/orca/scripts/gaim.py:301
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Message from chat room %s"
 msgstr "Mesazhi"
 
 #: ../src/orca/scripts/gaim.py:387
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "New chat tab %s"
 msgstr "E re tab"
 
@@ -6453,8 +6436,7 @@ msgid "Search complete."
 msgstr "Kërko."
 
 #: ../src/orca/scripts/gnome-search-tool.py:171
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "U gjet %d file"
@@ -6496,8 +6478,7 @@ msgstr ""
 #. pane or table.
 #.
 #: ../src/orca/scripts/nautilus.py:103 ../src/orca/speechgenerator.py:1362
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] "element"
@@ -6574,7 +6555,8 @@ msgstr ""
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:848
-msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid ""
+"Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 
 #. Checkbox for "Speak spread sheet cell coordinates".
@@ -6633,8 +6615,7 @@ msgstr "kreu."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:1338
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "kreu për"
 
@@ -6736,8 +6717,7 @@ msgstr ""
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
 #: ../src/orca/scripts/StarOffice.py:2191
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Cell %s"
 msgstr "Qeli"
 
@@ -6745,8 +6725,7 @@ msgstr "Qeli"
 #.
 #: ../src/orca/scripts/Thunderbird.py:215
 #: ../src/orca/scripts/Thunderbird.py:232
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s panel"
 msgstr "panel"
 
@@ -6875,8 +6854,7 @@ msgstr "Speech"
 #. voices provided by the speech engine.
 #.
 #: ../src/orca/speechdispatcherfactory.py:163
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s default voice"
 msgstr "prezgjedhur"
 
@@ -6913,16 +6891,14 @@ msgstr "nuk zgjedhur"
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
 #: ../src/orca/where_am_I.py:427
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s page"
 msgstr "faqe"
 
 #. Translators: this in reference to a row in a table.
 #.
 #: ../src/orca/where_am_I.py:536 ../src/orca/where_am_I.py:558
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "row %d of %d"
 msgstr "nga"
 
@@ -6936,8 +6912,7 @@ msgstr "Ikona panel"
 #. An example of an icon panel is the Nautilus folder view.
 #.
 #: ../src/orca/where_am_I.py:622
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
 msgstr[0] "nga element zgjedhur"
@@ -6948,14 +6923,12 @@ msgstr[1] "nga element zgjedhur"
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
 #: ../src/orca/where_am_I.py:664
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s link"
 msgstr "lidhje"
 
 #: ../src/orca/where_am_I.py:674
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s link to %s"
 msgstr "lidhje"
 
@@ -6977,8 +6950,7 @@ msgstr ""
 #. Translators: This is the size of a file in bytes
 #.
 #: ../src/orca/where_am_I.py:724
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d byte"
@@ -6987,8 +6959,7 @@ msgstr[1] "%d byte"
 #. Translators: This is the size of a file in kilobytes
 #.
 #: ../src/orca/where_am_I.py:728
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "%.2f kilobytes"
 msgstr "kilobytes"
 
@@ -7002,8 +6973,7 @@ msgstr ""
 #. Translators: this is an item in a list.
 #.
 #: ../src/orca/where_am_I.py:847 ../src/orca/where_am_I.py:879
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "item %d of %d"
 msgstr "element nga"
 
@@ -7012,8 +6982,6 @@ msgstr "element nga"
 #. dialog box.
 #.
 #: ../src/orca/where_am_I.py:1465
-#, python-format
-#, fuzzy
+#, fuzzy, python-format
 msgid "Default button is %s"
 msgstr "E prezgjedhur është"
-
