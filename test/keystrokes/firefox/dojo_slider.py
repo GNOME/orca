@@ -13,6 +13,12 @@ sequence = MacroSequence()
 #
 sequence.append(WaitForWindowActivate("Minefield",None))
 sequence.append(WaitForFocus("Dojo Slider Widget Demo", pyatspi.ROLE_DOCUMENT_FRAME))
+
+########################################################################
+# Make sure we start at the top of the page (Ctrl+Home) and then move
+# to the first slider.
+#
+sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_SLIDER))
