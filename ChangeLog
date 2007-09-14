@@ -1,3 +1,9 @@
+2007-09-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/role_radio_button.py, (new)
+          test/keystrokes/firefox/role_radio_menu_item.py: (new)
+          Macaroon test files for Firefox.
+
 2007-09-13  Willie Walker <william.walker@sun.com>
 
         * test/harness/user-settings.py.in: set commFailureAttemptLimit 
