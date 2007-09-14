@@ -14,6 +14,10 @@
           Macaroon test file for bug #342602 - StarOffice Writer - order 
           of speaking information of table cells is incorrect.
 
+        * test/keystrokes/oowriter/bug_350219.py:  (new)
+          Macaroon test file for bug #350219 – In OOo, no announcement 
+          when you create a new document.
+
 2007-09-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py: Fix for bug 476786 - whereAmI fails in
