@@ -1,3 +1,13 @@
+2007-09-14  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runall.sh, test/harness/harness.sh: add "-a" option
+	to allow you to specify the name of an application directory to
+	use so you can restrict the running of tests to just one
+	application.
+
+	* test/keystrokes/firefox/*: experimenting with repeatability
+	issues.
+
 2007-09-14  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_469367.py:  (new)

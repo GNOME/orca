@@ -2,6 +2,7 @@
 #
 # harness.sh can take the following optional parameters:
 #
+# -a <appDir>        - absolute path to directory with tests for a single app 
 # -c                 - analyze test coverage instead of regression testing
 # -h|--help          - print a usage message
 # -k <keystrokesDir> - alternate keystroke directory (default is ../keystrokes)
@@ -30,6 +31,14 @@ profileMode=0
 process_args () {
     while [ $# != 0 ]; do
         case "$1" in
+            -a )
+                shift
+                if [ $# == 0 ]; then
+                    echo "Option -a requires an argument."
+                    exit 1
+                fi
+                testDirs=$1
+                ;;
             -c )
                 coverageMode=1
                 ;;
@@ -58,6 +67,7 @@ process_args () {
             -h|--help)
                 echo "Usage: $0 [options]"
                 echo "options:"
+		echo "   -a appDir         run tests only from appDir (absolute path)"
                 echo "   -c                perform code coverage analysis"
                 echo "   -h, --help        print this usage message"
                 echo "   -k keystrokeDir   specify an alternate keystrokes directory"
@@ -110,7 +120,11 @@ sleep 10
 # to specific files.
 #
 dirprefix=`date +%Y-%m-%d_%H:%M:%S`
-testDirs=`find $keystrokesDir -type d | grep -v "[.]svn" | sort`
+if [ "x$testDirs" == "x" ]
+then 
+    testDirs=`find $keystrokesDir -type d | grep -v "[.]svn" | sort`
+fi
+
 for testDir in $testDirs
 do
     application=`basename $testDir`

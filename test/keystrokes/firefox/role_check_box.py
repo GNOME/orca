@@ -25,7 +25,8 @@ sequence.append(TypeAction("u"))
 # state twice.
 #
 sequence.append(WaitForWindowActivate("Page Setup",None))
-sequence.append(WaitForFocus("Portrait", pyatspi.ROLE_RADIO_BUTTON))
+# [[[WDW: radio button doen't issue a focus event!]]]
+#sequence.append(WaitForFocus("Portrait", pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("Shrink To Fit Page Width", pyatspi.ROLE_CHECK_BOX))
@@ -51,7 +52,7 @@ sequence.append(KeyComboAction("Escape"))
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus("about:blank", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
 sequence.start()
