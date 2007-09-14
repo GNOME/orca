@@ -1,5 +1,16 @@
 2007-09-14  Willie Walker <william.walker@sun.com>
 
+	* test/harness/harness.sh: adjust a little bit for running
+	command and waiting.
+
+	* test/harness/user-settings.py.in: disable automatic say 
+	all when loading a page in Gecko.
+
+	* text/keystrokes/firefox/dojo_slider.py: adjust a little bit
+	to test additional slider on page.
+
+2007-09-14  Willie Walker <william.walker@sun.com>
+
 	* test/harness/runall.sh, test/harness/harness.sh: add "-a" option
 	to allow you to specify the name of an application directory to
 	use so you can restrict the running of tests to just one

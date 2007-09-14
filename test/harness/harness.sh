@@ -2,7 +2,7 @@
 #
 # harness.sh can take the following optional parameters:
 #
-# -a <appDir>        - absolute path to directory with tests for a single app 
+# -a <appDir>        - absolute path to directory with tests for a single app
 # -c                 - analyze test coverage instead of regression testing
 # -h|--help          - print a usage message
 # -k <keystrokesDir> - alternate keystroke directory (default is ../keystrokes)
@@ -67,7 +67,7 @@ process_args () {
             -h|--help)
                 echo "Usage: $0 [options]"
                 echo "options:"
-		echo "   -a appDir         run tests only from appDir (absolute path)"
+                echo "   -a appDir         run tests only from appDir (absolute path)"
                 echo "   -c                perform code coverage analysis"
                 echo "   -h, --help        print this usage message"
                 echo "   -k keystrokeDir   specify an alternate keystrokes directory"
@@ -104,7 +104,7 @@ fi
 
 cp user-settings.py.in user-settings.py
 $orcaCommand&
-sleep 10
+sleep 5
 
 # Look in the keystrokes directory for directories.
 # The name of each directory under the keystrokes directory
@@ -121,7 +121,7 @@ sleep 10
 #
 dirprefix=`date +%Y-%m-%d_%H:%M:%S`
 if [ "x$testDirs" == "x" ]
-then 
+then
     testDirs=`find $keystrokesDir -type d | grep -v "[.]svn" | sort`
 fi
 
@@ -181,15 +181,15 @@ do
                 SOFFICE=1
                 ARGS="-norestore"
             fi
-	
-	    # If we're using Firefox, give it a known profile to work from.
-	    #
-	    if [ "$APP_NAME" = "firefox" ]
-	    then
-		foo=`dirname $0`
-		harnessDir=`cd $foo; pwd`
-		ARGS="-profile $harnessDir/../html/FirefoxProfile"
-	    fi
+
+            # If we're using Firefox, give it a known profile to work from.
+            #
+            if [ "$application" = "firefox" ]
+            then
+                foo=`dirname $0`
+                harnessDir=`cd $foo; pwd`
+                ARGS="-profile $harnessDir/../html/FirefoxProfile"
+            fi
         fi
 
         hasTests=`find $testDir -type f -name "*.py" | sort`
@@ -212,11 +212,30 @@ do
         testFiles=`find $testDir -type f -name "*.py" | sort`
         for testFile in $testFiles
         do
-            # Make sure the application is running, restarting it if
-            # necessary.
-            #
             if [ "x$COMMAND" != "x" ]
             then
+                # Make sure the application is running, restarting it if
+                # necessary.
+                #
+                PID_RUNNING=`ps -p $PID > /dev/null 2>&1`
+                if [ $? -eq 1 ]
+                then
+                    if [ $PID -ne 0 ]
+                    then
+                        echo "ERROR: $COMMAND $ARGS CRASHED!  RESTARTING..."
+                    fi
+
+                    echo "COMMAND: $COMMAND $ARGS"
+                    $COMMAND $ARGS &
+                    if [ "x$SOFFICE" == "x1" ]
+                    then
+                        PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
+                    else
+                        PID=$!
+                    fi
+                    sleep 10
+                fi
+
                 # Allow us to pass parameters to the command line of
                 # the application.
                 #
@@ -234,30 +253,14 @@ do
                 if [ -f $PARAMS_FILE ]
                 then
                     PARAMS=`cat $PARAMS_FILE`
+                else
+                    PARAMS=
                 fi
-
-                PID_RUNNING=`ps -p $PID > /dev/null 2>&1`
-                if [ $? -eq 1 ]
-                then
-                    if [ $PID -ne 0 ]
-                    then
-                        echo "ERROR: $COMMAND $ARGS CRASHED!  RESTARTING..."
-                    fi
-
-                    echo "COMMAND: $COMMAND $ARGS $PARAMS"
-
-                    $COMMAND $ARGS $PARAMS &
-                    if [ "x$SOFFICE" == "x1" ]
-                    then
-                        PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
-                    else
-                        PID=$!
-                    fi
-                    sleep 10
-                elif [ "x$PARAMS" != "x" ]
+                if [ "x$PARAMS" != "x" ]
                 then
                     echo "COMMAND: $COMMAND $ARGS $PARAMS"
                     $COMMAND $ARGS $PARAMS &
+                    sleep 5
                 fi
             fi
 
@@ -297,19 +300,19 @@ do
             fi
         done
         if [ "x$application" == "xfirefox" ]
-	then
-	    pkill firefox
-	else
+        then
+            pkill firefox
+        else
             kill -9 $PID > /dev/null 2>&1
-	fi
+        fi
         cd $currentdir
         rm -rf ./tmp/$application
     fi
 done
 
+sleep 5
 python quit.py
-rm user-settings.py
-rm -f user-settings.pyc
+rm -f user-settings.py user-settings.pyc
 
 if [ "$coverageMode" -eq 1 ]
 then

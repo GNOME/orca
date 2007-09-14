@@ -22,3 +22,6 @@ orca.settings.enableBraille = False
 orca.settings.enableBrailleMonitor = False
 
 orca.settings.commFailureAttemptLimit = 0
+
+import orca.Gecko
+orca.Gecko.sayAllOnLoad = False

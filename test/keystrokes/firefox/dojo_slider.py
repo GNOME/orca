@@ -16,6 +16,76 @@ sequence.append(WaitForFocus("Dojo Slider Widget Demo", pyatspi.ROLE_DOCUMENT_FR
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_SLIDER))
+sequence.append(KeyComboAction("Right"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Right"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Right"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Right"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Right"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Left"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Left"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Left"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Left"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
+sequence.append(KeyComboAction("Left"))
+
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SLIDER,
+                           5000))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
