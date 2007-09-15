@@ -1,4 +1,4 @@
-#!/bin/bash -v
+#!/bin/bash
 #
 # harness.sh can take the following optional parameters:
 #
@@ -176,7 +176,7 @@ do
             # Tell OpenOffice Writer and Calc to not attempt to
             # recover edited files after a crash.
             #
-            if [ "$application" == "swriter" ] || [ "$application" == "scalc" ] || [ "$application" == "soffice" ] || [ "$application" == "soffice" ]
+            if [ "$application" == "swriter" ] || [ "$application" == "oowriter" ] || [ "$application" == "scalc" ] || [ "$application" == "oocalc" ] || [ "$application" == "soffice" ] || [ "$application" == "ooffice" ]
             then
                 SOFFICE=1
                 ARGS="-norestore"
@@ -227,12 +227,7 @@ do
 
                     echo "COMMAND: $COMMAND $ARGS"
                     $COMMAND $ARGS &
-                    if [ "x$SOFFICE" == "x1" ]
-                    then
-                        PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
-                    else
-                        PID=$!
-                    fi
+                    PID=$!
                     sleep 10
                 fi
 
@@ -299,10 +294,16 @@ do
                 read foo
             fi
         done
+        if [ "x$SOFFICE" == "x1" ]
+        then
+            PID=$(ps -eo pid,ruid,args | grep norestore | grep -v grep | awk '{ print $1 }')
+        fi
         if [ "x$application" == "xfirefox" ]
         then
             pkill firefox
-        else
+        elif [ "x$COMMAND" != "x" ]
+        then
+            echo killing $application $PID
             kill -9 $PID > /dev/null 2>&1
         fi
         cd $currentdir

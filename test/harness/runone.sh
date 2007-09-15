@@ -95,8 +95,9 @@ fi
 # should be a general way specify command line arguments when
 # starting test applications.
 #
-if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ] || [ "$APP_NAME" = "soffice" ]
+if [ "$APP_NAME" == "swriter" ] || [ "$APP_NAME" == "oowriter" ] || [ "$APP_NAME" == "scalc" ] || [ "$APP_NAME" == "oocalc" ] || [ "$APP_NAME" == "soffice" ] || [ "$APP_NAME" == "ooffice" ]
 then
+    SOFFICE=1
     ARGS="-norestore"
 fi
 
@@ -131,12 +132,8 @@ fi
 echo starting test application $APP_NAME $ARGS $PARAMS ...
 $APP_NAME $ARGS $PARAMS &
 #sleep $WAIT_TIME
-if [ "$APP_NAME" = "swriter" ] || [ "$APP_NAME" = "scalc" ] || [ "$APP_NAME" = "soffice" ]
-then
-    APP_PID=$(ps -eo pid,ruid,args | grep soffice | grep -v grep | awk '{ print $1 }')
-else
-    APP_PID=$!
-fi
+APP_PID=$!
+
 echo $APP_NAME pid $APP_PID
 
 # Play the keystrokes.
@@ -155,12 +152,17 @@ then
 fi
 
 # Terminate the running application
-if [ "$APP_NAME" = "firefox" ]
+if [ "x$SOFFICE" == "x1" ]
+then
+    APP_PID=$(ps -eo pid,ruid,args | grep norestore | grep -v grep | awk '{ print $1 }')
+fi
+
+if [ "$APP_NAME" == "firefox" ]
 then
     echo killing firefox
     pkill firefox
 else
-    killing app $APP_NAME $APP_PID
+    echo killing app $APP_NAME $APP_PID
     kill -9 $APP_PID > /dev/null 2>&1
 fi
 

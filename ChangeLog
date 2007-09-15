@@ -1,3 +1,19 @@
+2007-09-15  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runone.sh, test/harness/harness.sh: delay
+	the determination of OpenOffice PIDs until it is time to
+	kill OpenOffice.  Doing it earlier might miss some spawned
+	processes.  Also add in knowledge of oowriter, oocalc, and
+	ooffice.
+	
+	* test/keystrokes/oowriter/bug_342602.py, 
+	test/keystrokes/oowriter/bug_469367.py,
+	test/keystrokes/oowriter/bug_350219.py: remove paths from
+	Wait actions, play a little with what to wait for (focus
+	on object versus focus on window), and wait at end to try
+	to ensure OpenOffice is in the same state it was when the
+	test was started.
+
 2007-09-14  Willie Walker <william.walker@sun.com>
 
 	* text/keystrokes/firefox/dojo_slider.py: use new macaroon
