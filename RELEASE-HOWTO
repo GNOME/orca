@@ -33,7 +33,8 @@ For sanity, you can run pychecker -- we still have a lot of work to do
 to eliminate the lint-ish warnings, but pychecker can help flag some
 bad problems we might not have caught during testing:
 
-pychecker -T -# 1000 /usr/lib/python2.4/site-packages/orca/*.py
+pychecker -T -# 1000 /usr/local/lib/python2.5/site-packages/orca/*.py
+pychecker -T -# 1000 /usr/local/lib/python2.5/site-packages/orca/scripts/*.py
 
 You should also make the pydoc:
 
@@ -53,7 +54,7 @@ TEST THE CANDIDATE:
 cd /tmp
 gunzip -c orca-2.19.6.tar.gz | tar xvf -
 cd orca-2.19.6
-./configure --prefix=/usr
+./configure
 make
 sudo make install
 orca
