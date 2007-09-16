@@ -19,6 +19,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -132,9 +133,9 @@ msgstr "col·lapsat"
 #. view (i.e., how many ancestors a node has).
 #.
 #: ../src/orca/braillegenerator.py:714
-#, fuzzy, python-format
+#, python-format
 msgid "LEVEL %d"
-msgstr "NIVELL DE L'ARBRE %d"
+msgstr "NIVELL %d"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -568,9 +569,8 @@ msgstr "superíndex 1"
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
 #: ../src/orca/chnames.py:278
-#, fuzzy
 msgid "ordinal"
-msgstr "marcar"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
