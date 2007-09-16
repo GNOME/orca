@@ -1,4 +1,8 @@
-2007-09-17  Willie Walker <william.walker@sun.com>
+2007-09-16  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README: mark as v2.20.1pre
+
+2007-09-16  Willie Walker <william.walker@sun.com>
 
         * configure.in, README, NEWS: prep for v2.20.0
 
