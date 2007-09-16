@@ -1,3 +1,7 @@
+2007-09-16  Gil Forcada  <gforcada@svn.gnome.org>
+
+	* ca.po: Fixed a msgfmt error.
+
 2007-09-16  Gintautas Miliauskas  <gintas@akl.lt>
 
 	* lt.po: Updated Lithuanian translation (thanks to Romas Mažeika).
