@@ -1,4 +1,4 @@
-Orca v2.20.0pre
+Orca v2.20.0
 
 Introduction
 ========================================================================
@@ -27,7 +27,7 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca is supported on GNOME 2.16 or better, but works best on the
+Orca is supported on GNOME 2.18 or better, but works best on the
 latest releases of GNOME.  We highly suggest you use the latest
 releases of GNOME because they contain accessibility infrastructure
 and application bug fixes that help Orca work better.

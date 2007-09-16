@@ -1,3 +1,62 @@
+2.20.0 - 16-Sep-2007
+
+General: 
+
+* Fix for bug 472962 - Trailing space at end of message/string
+  in console-based preferences set up.
+
+* Fix for bug 473420 – Orca speaking an extra "seconds" for
+  Preferences dialog.
+
+* Fix for bug 473422 – Orca has traceback when giving focus to 
+  Pidgin.
+
+* Fix for bug 473991 - Orca doesn't announce autocompleted user 
+  names in Pidgin.
+
+* Fix for bug 475277 - support new AT-SPI event name format.
+
+* Make sure to return pronunciations in script.py
+  overridePronunciations.
+
+* Fix problem in nautilus.py where the util.xxx module methods were
+  still being referenced rather than using the self.xxx stuff.
+
+Firefox:
+
+* Fix for bug 468633 - No output when tabbing to ARIA slider.
+
+* Fix for bug 472345 - Cannot arrow out of entries in FF3 if text 
+  is inserted via javascript.
+
+OpenOffice:
+
+* Fix for bug 469367 - Orca StarOffice script not properly announcing
+  (potential) indentation in OOo Writer.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    bg      Bulgarian            Alexander Shopov
+    da      Danish               Kenneth Nielsen
+    de      German               Jochen Skulj
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Claude Paroz and Stéphane Raimbault
+    it      Italian              Luca Ferretti
+    ja      Japanese             Takeshi Aihana
+    li      Lithuanian           Gintautas Miliauskas and Romas Mažeika
+    mk      Macedonian           Jovan Naumovski
+    pt      Portuguese           Duarte Loreto
+    pt_BR   Brazilian Portuguese Djavan Fagundes and Raphael Higino
+    ru      Russian              Anatoly Kamynin
+    sq      Albanian             Laurent Dhima
+    sv      Swedish              Daniel Nylander
+    th      Thai                 Theppitak Karoonboonyanan
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.19.92 - 03-Sep-2007
 
 General:
