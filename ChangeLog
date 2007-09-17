@@ -4,6 +4,10 @@
           Macaroon test file for bug #3353268 - Orca is double reading 
           lines in openoffice with latest Ubuntu live CD.
 
+        * test/keystrokes/oowriter/bug_355733.py:  (new)
+          Macaroon test file for bug #355733 - Function "Say all" doesn't 
+          work correctly in Openoffice writer.
+
 2007-09-16  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/role_radio_button.py,
