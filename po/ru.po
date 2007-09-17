@@ -2163,9 +2163,9 @@ msgstr[2] "%d посещённых ссылок"
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
-msgstr[0] "%d посещённая ссылка"
-msgstr[1] "%d посещённых ссылки"
-msgstr[2] "%d посещённых ссылок"
+msgstr[0] "%d непосещённая ссылка"
+msgstr[1] "%d непосещённых ссылки"
+msgstr[2] "%d непосещённых ссылок"
 
 #. Translators: Announces the percentage of the document that has
 #. been read.  This is calculated by knowing the index of the
@@ -2523,7 +2523,7 @@ msgstr "Использовать _структурную навигацию Orca
 #.
 #: ../src/orca/Gecko.py:2648
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr "_Перемещать курсок к началу строки во время вертикальных перемещений"
+msgstr "_Перемещать курсор к началу строки во время вертикальных перемещений"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
