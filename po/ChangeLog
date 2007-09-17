@@ -1,3 +1,7 @@
+2007-09-17  Danishka Navin  <snavin@gnome.org>
+
+	* si.po: Updated Sinhala File for Translation by Harshana Weerasinghe.
+	
 2007-09-16  Luca Ferretti  <elle.uca@libero.it>
 
 	* it.po: Updated Italian translation.
@@ -60,6 +64,7 @@
 	* bg.po: Updated Bulgarian translation by
 	Alexander Shopov <ash@contact.bg>
 
+>>>>>>> .r2864
 2007-09-04  Raphael Higino  <raphaelh@svn.gnome.org>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation
