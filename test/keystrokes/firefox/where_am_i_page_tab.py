@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-"""Test of radio button output using Firefox.
+"""Test "Where Am I" on a page tab in Firefox.
 """
+
 
 from macaroon.playback.keypress_mimic import *
 
@@ -21,16 +22,14 @@ sequence.append(WaitForFocus("New Window", pyatspi.ROLE_MENU_ITEM))
 sequence.append(TypeAction("u"))
 
 ########################################################################
-# In the Page Setup dialog, focus should already be on the "Portrait"
-# radio button.  Right Arrow to "Landscape" and Left Arrow back.
+# In the Page Setup dialog, shift+tab to the page tabs, wait 3 seconds,
+# then do a where am I on the current page tab.
 #
 sequence.append(WaitForWindowActivate("Page Setup",None))
-sequence.append(KeyComboAction("Right"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 
-sequence.append(WaitForFocus("Landscape", pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(KeyComboAction("Left"))
-
-sequence.append(WaitForFocus("Portrait", pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(WaitForFocus("Format & Options", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(KeyComboAction("KP_Enter", 3000))
 
 ########################################################################
 # Close the dialog

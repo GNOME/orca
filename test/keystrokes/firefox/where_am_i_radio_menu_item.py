@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of menu radio button output using Firefox.
+"""Test "Where Am I" on a menu radio button in Firefox.
 """
 from macaroon.playback.keypress_mimic import *
 
@@ -13,7 +13,7 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
 # Open the "View" menu and press Y for the "Page Style" menu.  Then
-# arrow to each of the two items.
+# arrow to each of the two items and do a where am I on each.
 #
 sequence.append(KeyComboAction("<Alt>v"))
 
@@ -21,12 +21,11 @@ sequence.append(WaitForFocus("Toolbars", pyatspi.ROLE_MENU))
 sequence.append(TypeAction("y"))
 
 sequence.append(WaitForFocus("No Style", pyatspi.ROLE_RADIO_MENU_ITEM))
+sequence.append(KeyComboAction("KP_Enter", 3000))
 sequence.append(KeyComboAction("Down"))
 
 sequence.append(WaitForFocus("Basic Page Style", pyatspi.ROLE_RADIO_MENU_ITEM))
-sequence.append(KeyComboAction("Up"))
-
-sequence.append(WaitForFocus("No Style", pyatspi.ROLE_RADIO_MENU_ITEM))
+sequence.append(KeyComboAction("KP_Enter", 3000))
 
 ########################################################################
 # Dismiss the "Page Style" menu and then the "View" menu.

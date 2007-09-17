@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of radio button output using Firefox.
+"""Test "Where Am I" on a checkbox in Firefox.
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -21,16 +21,23 @@ sequence.append(WaitForFocus("New Window", pyatspi.ROLE_MENU_ITEM))
 sequence.append(TypeAction("u"))
 
 ########################################################################
-# In the Page Setup dialog, focus should already be on the "Portrait"
-# radio button.  Right Arrow to "Landscape" and Left Arrow back.
+# In the Page Setup dialog, tab to the first check box, wait three seconds
+# then do a where am I. Toggle its state and repeat the where am I.
 #
 sequence.append(WaitForWindowActivate("Page Setup",None))
-sequence.append(KeyComboAction("Right"))
+sequence.append(KeyComboAction("Tab"))
 
-sequence.append(WaitForFocus("Landscape", pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(KeyComboAction("Left"))
+sequence.append(WaitForFocus("Shrink To Fit Page Width", pyatspi.ROLE_CHECK_BOX))
+sequence.append(KeyComboAction("KP_Enter", 3000))
 
-sequence.append(WaitForFocus("Portrait", pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(TypeAction(" "))
+sequence.append(WaitAction("object:state-changed:checked",
+                           None,
+                           None,
+                           pyatspi.ROLE_CHECK_BOX,
+                           5000))
+
+sequence.append(KeyComboAction("KP_Enter", 3000))
 
 ########################################################################
 # Close the dialog

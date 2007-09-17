@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of radio button output using Firefox.
+"""Test "Where Am I" on a radio button in Firefox.
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -22,15 +22,14 @@ sequence.append(TypeAction("u"))
 
 ########################################################################
 # In the Page Setup dialog, focus should already be on the "Portrait"
-# radio button.  Right Arrow to "Landscape" and Left Arrow back.
+# radio button. Right Arrow to Landscape, wait three seconds, then do
+# a where am I.
 #
 sequence.append(WaitForWindowActivate("Page Setup",None))
 sequence.append(KeyComboAction("Right"))
 
 sequence.append(WaitForFocus("Landscape", pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(KeyComboAction("Left"))
-
-sequence.append(WaitForFocus("Portrait", pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(KeyComboAction("KP_Enter", 3000))
 
 ########################################################################
 # Close the dialog

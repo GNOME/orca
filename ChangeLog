@@ -1,3 +1,21 @@
+2007-09-16  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/role_radio_button.py,
+          test/keystrokes/firefox/role_radio_menu_item.py:
+        Make consistent with a change Will had made in the other
+        Firefox tests.
+
+        * test/keystrokes/firefox/role_push_button.py, (new)
+          test/keystrokes/firefox/role_page_tab.py, (new)
+          test/keystrokes/firefox/where_am_i_accel_label.py, (new)
+          test/keystrokes/firefox/where_am_i_check_box.py, (new)
+          test/keystrokes/firefox/where_am_i_check_menu_item.py, (new)
+          test/keystrokes/firefox/where_am_i_page_tab.py, (new)
+          test/keystrokes/firefox/where_am_i_push_button.py, (new)
+          test/keystrokes/firefox/where_am_i_radio_button.py, (new)
+          test/keystrokes/firefox/where_am_i_radio_menu_item.py: (new)
+        More keystroke files.
+
 2007-09-15  Willie Walker <william.walker@sun.com>
 
 	* test/harness/runone.sh, test/harness/harness.sh: delay
