@@ -1,4 +1,4 @@
-# translation of orca.gnome-2-20.lt.po to Lithuanian
+# translation of lt.po to Lithuanian
 # Lithuanian translation of orca.
 # Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
@@ -9,12 +9,12 @@
 # Romas Mazeika <romas@mazeika.lt>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.gnome-2-20.lt\n"
+"Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-16 13:29+0300\n"
-"PO-Revision-Date: 2007-09-10 16:49+0300\n"
+"POT-Creation-Date: 2007-09-17 20:01+0300\n"
+"PO-Revision-Date: 2007-09-17 20:01+0300\n"
 "Last-Translator: Romas Mazeika <romas@mazeika.lt>\n"
-"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,21 +58,21 @@ msgstr "Atveriami Orca nustatymai %s programai. Tai gali užtrukti."
 #.
 #: ../src/orca/bookmarks.py:72
 msgid "bookmark entered"
-msgstr "žymeklis įvestas"
+msgstr "žymelė įvesta"
 
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
 #.
 #: ../src/orca/bookmarks.py:94 ../src/orca/Gecko.py:1300
 msgid "bookmark is current object"
-msgstr "žymeklis yra esamas objektas"
+msgstr "žymelė yra esamas objektas"
 
 #. Translators: this announces that the current object's parent and
 #. the parent of the object pointed to by the bookmark are the same.
 #.
 #: ../src/orca/bookmarks.py:101 ../src/orca/Gecko.py:1307
 msgid "bookmark and current object have same parent"
-msgstr "žymeklis ir esamas objektas priklauso tam pačiam elementui"
+msgstr "žymelė ir esamas objektas priklauso tam pačiam elementui"
 
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
@@ -94,14 +94,14 @@ msgstr "palyginimas negalimas"
 #.
 #: ../src/orca/bookmarks.py:134 ../src/orca/Gecko.py:1346
 msgid "bookmarks saved"
-msgstr "žymeklis išsaugotas"
+msgstr "žymelė išsaugota"
 
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
 #: ../src/orca/bookmarks.py:139 ../src/orca/Gecko.py:1351
 msgid "bookmarks could not be saved"
-msgstr "žymeklio išsaugoti nepavyko"
+msgstr "žymelės išsaugoti nepavyko"
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
@@ -318,9 +318,8 @@ msgstr "kabliataškis"
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:118
-#, fuzzy
 msgid "less"
-msgstr "mažiau negu"
+msgstr "mažiau nei"
 
 #. Translators: this is the spoken word for the character '=' (U+003d)
 #.
@@ -331,9 +330,8 @@ msgstr "lygu"
 #. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:126
-#, fuzzy
 msgid "greater"
-msgstr "daugiau negu"
+msgstr "daugiau nei"
 
 #. Translators: this is the spoken word for the character '?' (U+003f)
 #.
@@ -374,9 +372,8 @@ msgstr "stogelio ženklas"
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
 #: ../src/orca/chnames.py:154
-#, fuzzy
 msgid "underline"
-msgstr "nauja eilutė"
+msgstr "pabraukimas"
 
 #. Translators: this is the spoken word for the character '`' (U+0060)
 #.
@@ -393,9 +390,8 @@ msgstr "kairysis riestinis skliaustas"
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
 #: ../src/orca/chnames.py:166
-#, fuzzy
 msgid "vertical bar"
-msgstr "vertikali linija"
+msgstr "vertikalus brūšnelis"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
@@ -418,14 +414,12 @@ msgstr "apverstas šauktukas"
 #. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
 #: ../src/orca/chnames.py:182
-#, fuzzy
 msgid "cents"
-msgstr "procentas"
+msgstr "centai"
 
 #. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: ../src/orca/chnames.py:186
-#, fuzzy
 msgid "pounds"
 msgstr "svaras"
 
@@ -444,9 +438,8 @@ msgstr "jena"
 #. Translators: this is the spoken word for the character '¦' (U+00a6)
 #.
 #: ../src/orca/chnames.py:198
-#, fuzzy
 msgid "broken bar"
-msgstr "perlaužtas brūkšnelis"
+msgstr "perlaužtas vertikalus brūkšnelis"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
@@ -478,7 +471,7 @@ msgstr "viršutinis indeksas"
 #.
 #: ../src/orca/chnames.py:218
 msgid "left double angle bracket"
-msgstr ""
+msgstr "kairysis dvigubas kampinis skliaustas"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
@@ -490,7 +483,7 @@ msgstr "loginis ne"
 #.
 #: ../src/orca/chnames.py:226
 msgid "soft hyphen"
-msgstr "kėlimo ženklas"
+msgstr "kėlimo brūkšnelis"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
@@ -533,7 +526,6 @@ msgstr "pakelta kubu"
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
 #: ../src/orca/chnames.py:254
-#, fuzzy
 msgid "acute accent"
 msgstr "kairinis kirtis"
 
@@ -546,9 +538,8 @@ msgstr "miu"
 #. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
 #: ../src/orca/chnames.py:262
-#, fuzzy
 msgid "paragraph marker"
-msgstr "paragrafas"
+msgstr "paragrafo žymuo"
 
 #. Translators: this is the spoken word for the character '·' (U+00b7)
 #.
@@ -572,7 +563,7 @@ msgstr "pakelta pirmuoju"
 #.
 #: ../src/orca/chnames.py:282
 msgid "right double angle bracket"
-msgstr ""
+msgstr "dešinysis dvigubas kampinis skliaustas"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
@@ -644,7 +635,7 @@ msgstr "A SU ŽIEDU"
 #.
 #: ../src/orca/chnames.py:330
 msgid "A E"
-msgstr ""
+msgstr "A E"
 
 #. Translators: this is the spoken word for the character 'Ç' (U+00c7)
 #.
@@ -704,7 +695,7 @@ msgstr "I SU UMLIAUTU"
 #.
 #: ../src/orca/chnames.py:370
 msgid "ETH"
-msgstr ""
+msgstr "ETH"
 
 #. Translators: this is the spoken word for the character 'Ñ' (U+00d1)
 #.
@@ -752,7 +743,7 @@ msgstr "padauginta iš"
 #.
 #: ../src/orca/chnames.py:402
 msgid "O STROKE"
-msgstr ""
+msgstr "PERBRAUKTA O"
 
 #. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
@@ -788,7 +779,7 @@ msgstr "Y SU DEŠININIU KIRČIU"
 #.
 #: ../src/orca/chnames.py:426
 msgid "THORN"
-msgstr ""
+msgstr "SPYGLYS"
 
 #. Translators: this is the spoken word for the character 'ß' (U+00df)
 #.
@@ -824,13 +815,13 @@ msgstr "a su umliautu"
 #.
 #: ../src/orca/chnames.py:450
 msgid "a ring"
-msgstr ""
+msgstr "a su skrituliuku"
 
 #. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
 #: ../src/orca/chnames.py:454
 msgid "a e"
-msgstr ""
+msgstr "a e"
 
 #. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
@@ -890,7 +881,7 @@ msgstr "i su umliautu"
 #.
 #: ../src/orca/chnames.py:494
 msgid "eth"
-msgstr ""
+msgstr "eth"
 
 #. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
@@ -938,13 +929,13 @@ msgstr "padalinta iš"
 #.
 #: ../src/orca/chnames.py:526
 msgid "o stroke"
-msgstr ""
+msgstr "perbraukta o"
 
 #. Translators: this is the spoken word for the character 'þ' (U+00fe)
 #.
 #: ../src/orca/chnames.py:530
 msgid "thorn"
-msgstr ""
+msgstr "spyglys"
 
 #. Translators: this is the spoken word for the character 'ú' (U+00fa)
 #.
@@ -992,12 +983,11 @@ msgstr "Y SU UMLIAUTU"
 #.
 #: ../src/orca/chnames.py:562
 msgid "florin"
-msgstr ""
+msgstr "florinas"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:566
-#, fuzzy
 msgid "en dash"
 msgstr "brūkšnelis"
 
@@ -1031,49 +1021,49 @@ msgstr "dešiniosios kabutės"
 #.
 #: ../src/orca/chnames.py:588
 msgid "dagger"
-msgstr ""
+msgstr "durklas"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: ../src/orca/chnames.py:592
 msgid "double dagger"
-msgstr ""
+msgstr "dvigubas durklas"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: ../src/orca/chnames.py:596
 msgid "bullet"
-msgstr ""
+msgstr "ženklelis"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
 #: ../src/orca/chnames.py:600
 msgid "triangular bullet"
-msgstr ""
+msgstr "trikampio formos ženklelis"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:604
 msgid "per mille"
-msgstr "per mylią"
+msgstr "promilė"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
 #: ../src/orca/chnames.py:608
 msgid "prime"
-msgstr "pirminis"
+msgstr "štrich"
 
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:612
 msgid "double prime"
-msgstr ""
+msgstr "štrich štrich"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:616
 msgid "hyphen bullet"
-msgstr ""
+msgstr "brūkšnelio formos ženklelis"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -1678,9 +1668,8 @@ msgstr "Parodo nustatymų konfigūravimo langą."
 #. preferences for a specific application within Orca.
 #.
 #: ../src/orca/default.py:629
-#, fuzzy
 msgid "Displays the application preferences configuration dialog."
-msgstr "Parodo nustatymų konfigūravimo langą."
+msgstr "Parodo programos nustatymų konfigūravimo dialogą."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -1854,7 +1843,7 @@ msgstr "paryškinta"
 #: ../src/orca/default.py:3298
 #, python-format
 msgid "%s %s pixels"
-msgstr ""
+msgstr "%s %s pikselių"
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -1865,13 +1854,12 @@ msgstr ""
 #. This text here is what is spoken to the user.
 #.
 #: ../src/orca/default.py:3421
-#, fuzzy
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
 msgstr ""
 "Pradedamas mokymosi režimas. Norėdami išgirsti jo funkciją paspauskite bet "
-"kokį klavišą."
+"kokį klavišą. Išėjimui iš mokymosi režimo, paspauskite grįžties klavišą."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2117,7 +2105,7 @@ msgstr "Nėra fokusavimo"
 #.
 #: ../src/orca/Gecko.py:805
 msgid "multi-select"
-msgstr ""
+msgstr "multi-pažymėjimas"
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
@@ -2490,7 +2478,7 @@ msgstr "Perkelia prie sekančios lentelės."
 #.
 #: ../src/orca/Gecko.py:1984
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr ""
+msgstr "Perjungia navigaciją tarp prigimtinės Gecko ir Orca žymeklio"
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -2501,7 +2489,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:1996
 msgid "Toggles structural navigation keys."
-msgstr ""
+msgstr "Perjungia navigacijos pagal struktūrą klavišus"
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -2512,7 +2500,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2517
 msgid "Use _Orca Caret Navigation"
-msgstr ""
+msgstr "Naudoti navigaciją Orca žymekliu"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
@@ -2520,7 +2508,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2530
 msgid "Use Orca _Structural Navigation"
-msgstr ""
+msgstr "Naudoti Orca struktūrine navigaciją"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -2530,7 +2518,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2544
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
+msgstr "Naviguojant vertikaliai, žymeklį laikyti eilutės pradžioje"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -2539,6 +2527,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:2556
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr ""
+"Automatiškai pradėti garsiai skaityti puslapį, kai jis pirmą kartą įkrautas"
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -2546,14 +2535,14 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2568
 msgid "Page Navigation"
-msgstr ""
+msgstr "Puslapio navigacija"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
 #: ../src/orca/Gecko.py:2591
 msgid "Speak _cell coordinates"
-msgstr ""
+msgstr "Garsiai perskaityti langelio koordinates"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many
@@ -2561,29 +2550,28 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2603
 msgid "Speak _multiple cell spans"
-msgstr ""
+msgstr "Garsiai perskaityti langelio dydį"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
 #: ../src/orca/Gecko.py:2614
 msgid "Announce cell _header"
-msgstr ""
+msgstr "Paskelbti langelio antraštę"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
 #: ../src/orca/Gecko.py:2625
-#, fuzzy
 msgid "Skip _blank cells"
-msgstr "Skaityti tuščias eilutes"
+msgstr "Praleisti tuščius langelius"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
 #: ../src/orca/Gecko.py:2636
 msgid "Table Navigation"
-msgstr ""
+msgstr "Lentelės navigacija"
 
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
@@ -2591,7 +2579,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2660
 msgid "Speak results during _find"
-msgstr ""
+msgstr "Garsiai perskaityti rezultatus paieškos metu"
 
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
@@ -2600,7 +2588,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2673
 msgid "Onl_y speak changed lines during find"
-msgstr ""
+msgstr "Paieškos metu garsiai skaityti tik pakeistas eilutes"
 
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
@@ -2608,14 +2596,14 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2690
 msgid "Minimum length of matched text:"
-msgstr ""
+msgstr "Mažiausias atitikimo tekstui ilgis:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
 #: ../src/orca/Gecko.py:2714
 msgid "Find Options"
-msgstr ""
+msgstr "Paieškos nustatymai"
 
 #. Translators: this is in reference to loading a web page.
 #.
@@ -2679,7 +2667,7 @@ msgstr "Langelis iš %d eilučių"
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
 #: ../src/orca/Gecko.py:6589
-#, fuzzy, python-format
+#, python-format
 msgid "level %d"
 msgstr "medžio lygis %d"
 
@@ -2694,9 +2682,8 @@ msgstr "medžio lygis %d"
 #: ../src/orca/Gecko.py:7414 ../src/orca/Gecko.py:7498
 #: ../src/orca/Gecko.py:7574 ../src/orca/Gecko.py:7654
 #: ../src/orca/Gecko.py:7739 ../src/orca/Gecko.py:7833
-#, fuzzy
 msgid "Wrapping to bottom."
-msgstr "Grįžtama į pabaigą"
+msgstr "Einama iki apačios."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -2716,36 +2703,34 @@ msgstr "Daugiau antraščių nėra."
 #: ../src/orca/Gecko.py:7455 ../src/orca/Gecko.py:7532
 #: ../src/orca/Gecko.py:7609 ../src/orca/Gecko.py:7689
 #: ../src/orca/Gecko.py:7785 ../src/orca/Gecko.py:7882
-#, fuzzy
 msgid "Wrapping to top."
-msgstr "Grįžtama į pradžią"
+msgstr "Einama iki viršaus."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
 #: ../src/orca/Gecko.py:7142 ../src/orca/Gecko.py:7178
-#, fuzzy, python-format
+#, python-format
 msgid "No more headings at level %d."
-msgstr "Daugiau antraščių nėra."
+msgstr "Medžio lygyje %d daugiau antraščių nėra."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
 #: ../src/orca/Gecko.py:7238 ../src/orca/Gecko.py:7262
-#, fuzzy
 msgid "No more large objects."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau didelių objektų nėra."
 
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/Gecko.py:7299 ../src/orca/Gecko.py:7360
-#, fuzzy, python-format
+#, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] "sąrašo elementas"
-msgstr[1] "sąrašo elementas"
-msgstr[2] "sąrašo elementas"
+msgstr[0] "Sąrašas su %d elementu"
+msgstr[1] "Sąrašas su %d elementais"
+msgstr[2] "Sąrašas su %d elementų"
 
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
@@ -2753,66 +2738,60 @@ msgstr[2] "sąrašo elementas"
 #. that's inside another list).
 #.
 #: ../src/orca/Gecko.py:7314 ../src/orca/Gecko.py:7375
-#, fuzzy, python-format
+#, python-format
 msgid "Nesting level %d"
-msgstr "medžio lygis %d"
+msgstr "Pošakių lygis %d"
 
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
 #: ../src/orca/Gecko.py:7324 ../src/orca/Gecko.py:7385
-#, fuzzy
 msgid "No more lists."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau sąrašų nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
 #: ../src/orca/Gecko.py:7426 ../src/orca/Gecko.py:7467
-#, fuzzy
 msgid "No more list items."
-msgstr "sąrašo elementas"
+msgstr "Daugiau sąrašo elementų nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 #: ../src/orca/Gecko.py:7509 ../src/orca/Gecko.py:7543
-#, fuzzy
 msgid "No more unvisited links."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau neaplankytų nuorodų nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 #: ../src/orca/Gecko.py:7585 ../src/orca/Gecko.py:7620
-#, fuzzy
 msgid "No more visited links."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau aplankytų nuorodų nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
 #: ../src/orca/Gecko.py:7665 ../src/orca/Gecko.py:7700
-#, fuzzy
 msgid "No more blockquotes."
-msgstr "Daugiau blokų nėra."
+msgstr "Daugiau citatos blokų nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
 #: ../src/orca/Gecko.py:7750 ../src/orca/Gecko.py:7796
-#, fuzzy
 msgid "No more form fields."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau anketos laukų nėra."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
 #: ../src/orca/Gecko.py:7818
-#, fuzzy, python-format
+#, python-format
 msgid "Row %d, column %d."
-msgstr "eilutė %d, stulpelis %d"
+msgstr "Eilutė %d, stulpelis %d."
 
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
@@ -2820,37 +2799,35 @@ msgstr "eilutė %d, stulpelis %d"
 #. one table cell occupies more than one row and/or column.
 #.
 #: ../src/orca/Gecko.py:7847 ../src/orca/Gecko.py:7896
-#, fuzzy
 msgid "Non-uniform"
-msgstr "uniform"
+msgstr "Nevienalytis"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
 #: ../src/orca/Gecko.py:7852 ../src/orca/Gecko.py:7901
-#, fuzzy, python-format
+#, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
-msgstr[0] "lentelė iš %d eilučių ir %d stulpelių."
-msgstr[1] "lentelė iš %d eilučių ir %d stulpelių."
-msgstr[2] "lentelė iš %d eilučių ir %d stulpelių."
+msgstr[0] "Lentelė iš %d eilutės"
+msgstr[1] "lentelė iš %d eilučių"
+msgstr[2] "lentelė iš %d eilučių"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
 #: ../src/orca/Gecko.py:7857 ../src/orca/Gecko.py:7906
-#, fuzzy, python-format
+#, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] "eilutė %d, stulpelis %d"
-msgstr[1] "eilutė %d, stulpelis %d"
-msgstr[2] "eilutė %d, stulpelis %d"
+msgstr[0] "%d stulpelis"
+msgstr[1] "%d stulpeliai"
+msgstr[2] "%d stulpelių"
 
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
 #: ../src/orca/Gecko.py:7870 ../src/orca/Gecko.py:7918
-#, fuzzy
 msgid "No more tables."
-msgstr "Daugiau antraščių nėra."
+msgstr "Daugiau lentelių nėra."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
@@ -2865,7 +2842,6 @@ msgstr "Eilutės pradžia"
 #: ../src/orca/Gecko.py:7966 ../src/orca/Gecko.py:8018
 #: ../src/orca/Gecko.py:8066 ../src/orca/Gecko.py:8118
 #: ../src/orca/Gecko.py:8133 ../src/orca/Gecko.py:8150
-#, fuzzy
 msgid "Not in a table."
 msgstr "išeinama iš lentelės."
 
@@ -2899,7 +2875,7 @@ msgstr "Stulpelio apačia"
 #.
 #: ../src/orca/Gecko.py:8168
 msgid "Gecko is controlling the caret."
-msgstr ""
+msgstr "Gecko valdo žymeklį."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -2910,7 +2886,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8180
 msgid "Orca is controlling the caret."
-msgstr ""
+msgstr "Orca valdo žymeklį."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -2924,7 +2900,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8204
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "Struktūrinės navigacijos klavišai įjungti."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -2938,7 +2914,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8216
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "Struktūrinės navigacijos klavišai išjungti."
 
 #: ../src/orca/gnomespeechfactory.py:165
 msgid "GNOME Speech Services"
@@ -3006,18 +2982,16 @@ msgstr "lėčiau."
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-#, fuzzy
 msgid "listitem|selected"
-msgstr "pasirinkta"
+msgstr "sąrašo elementas|pasirinktas"
 
 #. Translators: this represents the state of a node in a tree
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-#, fuzzy
 msgid "listitem|unselected"
-msgstr "nepasirinkta"
+msgstr "sąrašo elementas|nepasirinktas"
 
 #: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_prefs.py:1594
 #: ../src/orca/orca_gui_prefs.py:1686
@@ -3519,9 +3493,8 @@ msgstr "Požymio pavadinimas"
 #. presses Orca_Modifier+F.
 #.
 #: ../src/orca/orca_gui_prefs.py:953
-#, fuzzy
 msgid "Speak"
-msgstr "Kalbėti "
+msgstr "Garsiai skaityti"
 
 #. Attribute Mark in Braille column (IS_BRAILLED).
 #.
@@ -3532,7 +3505,7 @@ msgstr "Kalbėti "
 #.
 #: ../src/orca/orca_gui_prefs.py:971
 msgid "Mark in braille"
-msgstr ""
+msgstr "Pažymėti brailiu"
 
 #. Attribute Value column (VALUE)
 #.
@@ -3551,7 +3524,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:997
 msgid "Present Unless"
-msgstr ""
+msgstr "Nenaudojama, kai"
 
 #. Pronunciation Dictionary actual string (word) column (ACTUAL).
 #.
@@ -3562,7 +3535,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1096
 msgid "Actual String"
-msgstr ""
+msgstr "Tikroji eilutė"
 
 #. Pronunciation Dictionary replacement string column (REPLACEMENT)
 #.
@@ -3573,7 +3546,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1113
 msgid "Replacement String"
-msgstr ""
+msgstr "Pakeičiančioji eilutė"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
@@ -3639,7 +3612,7 @@ msgstr "Brailio priskyrimai"
 #: ../src/orca/orca_gui_prefs.py:2035 ../src/orca/orca_gui_prefs.py:2075
 #: ../src/orca/orca-setup.glade.h:27
 msgid "Dot _7"
-msgstr ""
+msgstr "_7 taškas"
 
 #. Translators: If the user chooses this setting, the
 #. dot in the bottom right corner of the braille cell
@@ -3648,7 +3621,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2042 ../src/orca/orca_gui_prefs.py:2082
 #: ../src/orca/orca-setup.glade.h:28
 msgid "Dot _8"
-msgstr ""
+msgstr "_8 taškas"
 
 #. Translators: If the user chooses this setting, the
 #. two dots at the bottom of the braille cell will be
@@ -3657,7 +3630,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2049 ../src/orca/orca_gui_prefs.py:2089
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Dots 7 an_d 8"
-msgstr ""
+msgstr "7 i_r 8 taškai"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
@@ -3688,18 +3661,16 @@ msgstr "_Dauguma"
 #. line.
 #.
 #: ../src/orca/orca_gui_prefs.py:2148
-#, fuzzy
 msgid "Line"
-msgstr "Nuoroda"
+msgstr "Eilutė"
 
 #. Translators: If this setting is chosen and the user is reading
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
 #: ../src/orca/orca_gui_prefs.py:2154
-#, fuzzy
 msgid "Sentence"
-msgstr "Centruotas"
+msgstr "Sakinys"
 
 #. Translators: This refers to the amount of information
 #. Orca provides about a particular object that receives
@@ -3847,9 +3818,8 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Klaviatūros išdėstymas</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Pronunciation Dictionary</b>"
-msgstr "<b>Skyrybos lygis</b>"
+msgstr "<b>Tarimo žodynas</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "<b>Punctuation Level</b>"
@@ -4050,9 +4020,8 @@ msgid "Pi_tch:"
 msgstr "Aukš_tumas:"
 
 #: ../src/orca/orca-setup.glade.h:67
-#, fuzzy
 msgid "Pronunciation"
-msgstr "Funkcija"
+msgstr "Tarimas"
 
 #: ../src/orca/orca-setup.glade.h:68
 msgid "Quit Orca _without confirmation"
@@ -4065,7 +4034,7 @@ msgstr "Š_altinio rodymas:"
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:71
 msgid "Say All B_y:"
-msgstr ""
+msgstr "Garsiai skaityti viską _po"
 
 #: ../src/orca/orca-setup.glade.h:72
 msgid "Scale _factor:"
@@ -4084,9 +4053,8 @@ msgid "Speak _indentation and justification"
 msgstr "Garsiai skaityt_i įtraukas ir lygiuotes"
 
 #: ../src/orca/orca-setup.glade.h:77
-#, fuzzy
 msgid "Speak _none"
-msgstr "Kalbėti "
+msgstr "Garsiai neskaityti nieko"
 
 #: ../src/orca/orca-setup.glade.h:78
 msgid "Speak blank lines"
@@ -4097,9 +4065,8 @@ msgid "Speak current ro_w"
 msgstr "Garsiai skaityti esamą eil_utę"
 
 #: ../src/orca/orca-setup.glade.h:81
-#, fuzzy
 msgid "Speak progress bar _updates"
-msgstr "pažangos juosta"
+msgstr "Garsiai skaityti pažangos juostos duomenis"
 
 #: ../src/orca/orca-setup.glade.h:82
 msgid "Speech"
@@ -4146,9 +4113,8 @@ msgid "_Bottom:"
 msgstr "A_pačia:"
 
 #: ../src/orca/orca-setup.glade.h:93
-#, fuzzy
 msgid "_Delete"
-msgstr "pasirinkta"
+msgstr "_Ištrinti"
 
 #: ../src/orca/orca-setup.glade.h:95
 msgid "_Enable speech"
@@ -4172,7 +4138,7 @@ msgstr "_Asmuo:"
 
 #: ../src/orca/orca-setup.glade.h:101
 msgid "_Present tooltips"
-msgstr ""
+msgstr "_Rodyti paaiškinimus"
 
 #: ../src/orca/orca-setup.glade.h:102
 msgid "_Rate:"
@@ -4180,7 +4146,7 @@ msgstr "_Dažnis:"
 
 #: ../src/orca/orca-setup.glade.h:103
 msgid "_Reset"
-msgstr ""
+msgstr "_Atstatyti"
 
 #: ../src/orca/orca-setup.glade.h:104
 msgid "_Right:"
@@ -4191,9 +4157,8 @@ msgid "_Smoothing:"
 msgstr "_Glotninimas:"
 
 #: ../src/orca/orca-setup.glade.h:106
-#, fuzzy
 msgid "_Speak all"
-msgstr "Kalbėti "
+msgstr "Garsiai skaityti viską"
 
 #: ../src/orca/orca-setup.glade.h:107
 msgid "_Top:"
@@ -4245,6 +4210,11 @@ msgid ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
+"a : andrius, b : benediktas, c : citrina, d : darius, e : erelis, f : "
+"fokstrotas, g : golfas, h : henrikas, i : indija, j : jonas, k : kilogramas, "
+"l : lima, m : mikas, n : namas, o : opera, p : petras, q : quebec, r : "
+"romeo, s : siera, t : tango, u : uniforma, v : viktoras, w : whiskey, x : "
+"xray, y : ypatingas, z : zenonas"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4293,9 +4263,8 @@ msgstr "prieigos klavišas"
 #. other rolenames, and they typically act like an abbreviation.
 #.
 #: ../src/orca/rolenames.py:191
-#, fuzzy
 msgid "alrt"
-msgstr "įspėjimas"
+msgstr "įspj"
 
 #. Translators: long braille for the rolename of an alert dialog.
 #. NOTE for all the long braille words: we typically make them
@@ -4318,9 +4287,8 @@ msgstr "įspėjimas"
 #. Translators: short braille for the rolename of an animation widget.
 #.
 #: ../src/orca/rolenames.py:209
-#, fuzzy
 msgid "anim"
-msgstr "Anim"
+msgstr "anim"
 
 #. Translators: long braille for the rolename of an animation widget.
 #.
@@ -4337,9 +4305,8 @@ msgstr "animacija"
 #. Translators: short braille for the rolename of an arrow widget.
 #.
 #: ../src/orca/rolenames.py:221
-#, fuzzy
 msgid "arw"
-msgstr "rodyklė"
+msgstr "rod"
 
 #. Translators: long braille for the rolename of an animation widget.
 #.
@@ -4546,7 +4513,6 @@ msgstr "datos redaktorius"
 #. Translators: short braille for the rolename of a icon.
 #.
 #: ../src/orca/rolenames.py:359 ../src/orca/rolenames.py:539
-#, fuzzy
 msgid "icn"
 msgstr "pktg"
 
@@ -4831,9 +4797,8 @@ msgstr "paveikslėlis"
 #. Translators: short braille for the rolename of an internal frame.
 #.
 #: ../src/orca/rolenames.py:563
-#, fuzzy
 msgid "ifrm"
-msgstr "rėm"
+msgstr "vrėm"
 
 #. Translators: long braille for the rolename of an internal frame.
 #.
@@ -5393,9 +5358,8 @@ msgstr "lentelė"
 #. Translators: short braille for the rolename of a table cell.
 #.
 #: ../src/orca/rolenames.py:938
-#, fuzzy
 msgid "cll"
-msgstr "langelis"
+msgstr "lang"
 
 #. Translators: long braille for the rolename of a table cell.
 #.
@@ -5521,9 +5485,8 @@ msgstr "paaiškinimas"
 #. Translators: short braille for the rolename of a tree.
 #.
 #: ../src/orca/rolenames.py:1048
-#, fuzzy
 msgid "tre"
-msgstr "medis"
+msgstr "med"
 
 #. Translators: long braille for the rolename of a tree.
 #.
@@ -5948,9 +5911,8 @@ msgstr "Skaityti ir rodyti Brailiu ankstesnį pokalbių kambario pranešimą."
 #. the name of the chat room.
 #.
 #: ../src/orca/scripts/gaim.py:207
-#, fuzzy
 msgid "Speak Chat Room name"
-msgstr "skaityti pokalbių kambario pavadinimą."
+msgstr "Garsiai skaitytii pokalbių kambario pavadinimą"
 
 #: ../src/orca/scripts/gaim.py:268
 msgid "speak chat room name."
@@ -5961,9 +5923,9 @@ msgid "Do not speak chat room name."
 msgstr "Neskaityti pokalbių kambario pavadinimo."
 
 #: ../src/orca/scripts/gaim.py:291
-#, fuzzy, python-format
+#, python-format
 msgid "Message from chat room %s"
-msgstr "Žinutė iš pokalbių kambario "
+msgstr "Žinutė iš pokalbių kambario %s"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -6058,12 +6020,12 @@ msgid "Search complete."
 msgstr "Paieška baigta."
 
 #: ../src/orca/scripts/gnome-search-tool.py:171
-#, fuzzy, python-format
+#, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] " failų rasta"
-msgstr[1] " failų rasta"
-msgstr[2] " failų rasta"
+msgstr[0] "Rastas %d failas"
+msgstr[1] "Rasti %d failai"
+msgstr[2] "Rasta %d failų"
 
 #: ../src/orca/scripts/gnome-search-tool.py:176
 msgid "No files found."
@@ -6311,16 +6273,15 @@ msgstr "Teksto redaktorius"
 #. (e.g., "=sum(a1:d1)")
 #.
 #: ../src/orca/scripts/StarOffice.py:2121
-#, fuzzy
 msgid "has formula"
-msgstr " su formule"
+msgstr "su formule"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
 #: ../src/orca/scripts/StarOffice.py:2169
-#, fuzzy, python-format
+#, python-format
 msgid "Cell %s"
-msgstr "Langelis "
+msgstr "Langelis %s"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
@@ -6497,75 +6458,72 @@ msgid "row %d of %d"
 msgstr "eilutė %d iš %d"
 
 #: ../src/orca/where_am_I.py:605
-#, fuzzy
 msgid "Icon panel"
-msgstr "parinkčių polangis"
+msgstr "piktogramų skydelis"
 
 #. Translators: this is a count of the number of selected icons
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
 #: ../src/orca/where_am_I.py:621
-#, fuzzy, python-format
+#, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
-msgstr[0] "nepasirinkta"
-msgstr[1] "nepasirinkta"
-msgstr[2] "nepasirinkta"
+msgstr[0] "Pasirinktas %d elementas iš %d"
+msgstr[1] "Pasirinkti %d elementai iš %d"
+msgstr[2] "Pasirinkta %d elementų iš %d"
 
 #. initialize our three outputs.  Output may change below for some
 #. protocols.
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
 #: ../src/orca/where_am_I.py:663
-#, fuzzy, python-format
+#, python-format
 msgid "%s link"
-msgstr "nuoroda"
+msgstr "%s nuoroda"
 
 #: ../src/orca/where_am_I.py:673
 #, python-format
 msgid "%s link to %s"
-msgstr ""
+msgstr "%s nuoroda į %s"
 
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
 #: ../src/orca/where_am_I.py:683
-#, fuzzy
 msgid "same page"
-msgstr "%s puslapių"
+msgstr "tas pats puslapis"
 
 #: ../src/orca/where_am_I.py:685 ../src/orca/where_am_I.py:693
-#, fuzzy
 msgid "same site"
-msgstr "meniu elementas"
+msgstr "ta pati svetainė"
 
 #: ../src/orca/where_am_I.py:695
 msgid "different site"
-msgstr ""
+msgstr "kita svetainė"
 
 #. Translators: This is the size of a file in bytes
 #.
 #: ../src/orca/where_am_I.py:723
-#, fuzzy, python-format
+#, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
-msgstr[0] "%d elementas"
-msgstr[1] "%d elementai"
-msgstr[2] "%d elementų"
+msgstr[0] "%d baitas"
+msgstr[1] "%d baitai"
+msgstr[2] "%d baitų"
 
 #. Translators: This is the size of a file in kilobytes
 #.
 #: ../src/orca/where_am_I.py:727
 #, python-format
 msgid "%.2f kilobytes"
-msgstr ""
+msgstr "%.2f kilobaitai"
 
 #. Translators: This is the size of a file in megabytes
 #.
 #: ../src/orca/where_am_I.py:731
 #, python-format
 msgid "%.2f megabytes"
-msgstr ""
+msgstr "%.2f megabaitai"
 
 #. Translators: this is an item in a list.
 #.
@@ -6581,4 +6539,4 @@ msgstr "eilutė %d iš %d"
 #: ../src/orca/where_am_I.py:1464
 #, python-format
 msgid "Default button is %s"
-msgstr ""
+msgstr "Mygtukas pagal nutylėjimą yra %s"
