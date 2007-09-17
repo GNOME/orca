@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: si\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-20 03:23+0100\n"
-"PO-Revision-Date: 2007-09-05 11:39+0530\n"
+"PO-Revision-Date: 2007-09-17 09:17+0530\n"
 "Last-Translator: Danishka Navin <snavin@redhat.com>\n"
 "Language-Team: Sinhala <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -789,7 +789,7 @@ msgstr "ගාම්භීර a"
 #.
 #: ../src/orca/chnames.py:438
 msgid "a circumflex"
-msgstr ""
+msgstr "ලකුණ a"
 
 #. Translators: this is the spoken word for the character 'Ã£' (U+00e3)
 #.
@@ -3231,7 +3231,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:358
 msgid "Enable action keys?  Enter y or n: "
-msgstr ""
+msgstr "ක්‍රියා යතුරු සක්‍රීය කරන්නද ?  y හෝ n ඇතුලත් කරන්න: "
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3287,7 +3287,7 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:475
 msgid "Do you want to logout now?  Enter y or n: "
-msgstr ""
+msgstr "ඔබට දැන් ඉවත් වීමට අවශ්‍යද ? y හෝ n ඇතුලත් කරන්න:"
 
 #: ../src/orca/orca_console_prefs.py:481
 msgid "Setup complete. Logging out now."
@@ -3827,6 +3827,9 @@ msgid ""
 "Uppercase\n"
 "Hyperlink"
 msgstr ""
+"පෙරනිමිය\n"
+"කැපිටල්\n"
+"සබැදිය"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Disable gksu _keyboard grab"
@@ -3854,15 +3857,15 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Enable _magnifier"
-msgstr ""
+msgstr "විශාලකය සක්‍රීය කරන්න (_m)"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Enable _modifier keys"
-msgstr ""
+msgstr "විකරණක යතුරු සක්‍රීය කරන්න (_m)"
 
 #: ../src/orca/orca-setup.glade.h:37
 msgid "Enable ac_tion keys"
-msgstr ""
+msgstr "ක්‍රියා යතුරු සක්‍රීය කරන්න (_t)"
 
 #: ../src/orca/orca-setup.glade.h:38
 msgid "Enable c_ursor"
@@ -3922,19 +3925,19 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid "Move _down one"
-msgstr ""
+msgstr "එකක් පහලට යන්න (_d)"
 
 #: ../src/orca/orca-setup.glade.h:54
 msgid "Move _up one"
-msgstr ""
+msgstr "එකක් උඩට යන්න (_u)"
 
 #: ../src/orca/orca-setup.glade.h:55
 msgid "Move to _bottom"
-msgstr ""
+msgstr "යටටම යන්න (_b)"
 
 #: ../src/orca/orca-setup.glade.h:56
 msgid "Move to _top"
-msgstr ""
+msgstr "උඩටම යන්න (_t)"
 
 #: ../src/orca/orca-setup.glade.h:57
 msgid ""
