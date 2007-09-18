@@ -1,3 +1,9 @@
+2007-09-18  Rich Burridge <rich.burridge@sun.com>
+
+        * test/keystrokes/oowriter/bug_353268.py:  (new)
+          Macaroon test file for bug #361747 - Orca should use weight to 
+          determine if text is bolded in OO writer and calc.
+
 2007-09-17  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_353268.py:  (new)
