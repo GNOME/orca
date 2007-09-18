@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
-"""Test to verify bug #469367 is still fixed.
-   Orca StarOffice script not properly announcing (potential) indentation
-   in OOo Writer.
+"""Test to verify bug #382418 is still fixed.
+   Orca should announce when you enter/leave a table in OOo Writer documents.
 """
 
 from macaroon.playback.keypress_mimic import *
