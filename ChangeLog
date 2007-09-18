@@ -8,6 +8,10 @@
           Macaroon test file for bug #364765 - Escaping out of Wizards 
           submenu in OOo Writer causes Orca to report "Format menu".
 
+        * test/keystrokes/oowriter/bug_382418.py:  (new)
+          Macaroon test file for bug #382418 – Orca should announce when 
+          you enter/leave a table in OOo Writer documents.
+
 2007-09-17  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_353268.py:  (new)
