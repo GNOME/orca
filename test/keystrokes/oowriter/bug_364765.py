@@ -39,4 +39,17 @@ sequence.append(WaitForFocus("Wizards", acc_role=pyatspi.ROLE_MENU))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("File", acc_role=pyatspi.ROLE_MENU))
 
+######################################################################
+# 6. Press Escape to put focus back in the document.
+#
+sequence.append(KeyComboAction("Escape"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+
+######################################################################
+# 7. Wait for things to get back to normal.
+#
+sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+
 sequence.start()
