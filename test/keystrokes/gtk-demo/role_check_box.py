@@ -25,19 +25,67 @@ sequence.append(KeyComboAction("Return", 500))
 # When the demo comes up, interact with a few check boxes
 #
 #sequence.append(WaitForWindowActivate("Panes",None))
-# "Hi there"
 sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Tab"))
 
+########################################################################
+# When the "Resize" checkbox gets focus, the following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel < > Resize CheckBox'
+#      VISIBLE:  '< > Resize CheckBox', cursor=1
+#
+# SPEECH OUTPUT: 'Horizontal panel'
+# SPEECH OUTPUT: 'Resize check box not checked'
+#
 sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(TypeAction(" "))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel < > Resize CheckBox'
+#      VISIBLE:  '< > Resize CheckBox', cursor=1
+# SPEECH OUTPUT: 'Resize check box'
+# SPEECH OUTPUT: 'not checked'
+# SPEECH OUTPUT: ' Alt r'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+
+########################################################################
+# Now, change its state.  The following should be presented in speech
+# and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel <x> Resize CheckBox'
+#      VISIBLE:  '<x> Resize CheckBox', cursor=1
+#
+# SPEECH OUTPUT: 'checked'
+#
+sequence.append(TypeAction(" ", 3000))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
-sequence.append(TypeAction(" "))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel <x> Resize CheckBox'
+#      VISIBLE:  '<x> Resize CheckBox', cursor=1
+#
+# SPEECH OUTPUT: 'Resize check box'
+# SPEECH OUTPUT: 'checked'
+# SPEECH OUTPUT: ' Alt r'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+
+########################################################################
+# Change the state back and move on to a few more check boxes.  The
+# presentation in speech and braille should be similar to the above.
+#
+sequence.append(TypeAction(" ", 3000))
 
 sequence.append(WaitAction("object:state-changed:checked",
                            None,

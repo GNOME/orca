@@ -1,3 +1,19 @@
+2007-09-19  Willie Walker <william.walker@sun.com>
+
+	* test/keystrokes/gtk-demo/role_combo_box.py,
+	test/keystrokes/gtk-demo/role_alert.py,
+	test/keystrokes/gtk-demo/role_check_menu_item.py,
+	test/keystrokes/gtk-demo/role_check_box.py,
+	test/keystrokes/gtk-demo/role_column_header.py:
+	begin rolling Where Am I tests into GTK+ tests.
+	Also start including expected speech and braille
+	output into the *.py files so they are somewhat
+	self contained.  Furthermore, as I encountered
+	what *might* be bugs, I just flagged them as 
+	[[[BUG?: blah blah blah]]] in the test file.  Will
+	go back later and re-evaluate these once the 
+	Where Am I stuff is integrated.
+	
 2007-09-18  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_361747.py:  (new)
