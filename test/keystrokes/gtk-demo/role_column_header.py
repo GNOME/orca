@@ -4,7 +4,7 @@
    under the Tree View area.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -43,7 +43,8 @@ sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("GtkListStore demo",None))
 sequence.append(WaitForFocus("Bug number",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
-sequence.append(KeyComboAction("Right", 3000))
+sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Right"))
 
 sequence.append(WaitForFocus("Severity",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
@@ -62,7 +63,8 @@ sequence.append(WaitForFocus("Description",
 # mentioning of "Fixed? ColumnHeader" in both speech and braille a bug?
 # The actual column header we're under at this point is "Description"]]]:
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'
+# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader
+#                 < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'
 #      VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1
 #
 # SPEECH OUTPUT: ''
@@ -107,6 +109,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
 # SPEECH OUTPUT: 'row 1 of 14'
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Now move to the cell to the left containing the number "60482".  The
@@ -119,7 +122,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 # SPEECH OUTPUT: 'Bug number column header'
 # SPEECH OUTPUT: '60482'
 #
-sequence.append(KeyComboAction("<Control>Left", 3000))
+sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
@@ -187,6 +190,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

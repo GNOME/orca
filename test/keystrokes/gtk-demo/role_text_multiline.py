@@ -4,7 +4,7 @@
    demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -40,45 +40,111 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(TypeAction("Tis this and thus thou art in Rome?", 500))
 sequence.append(KeyComboAction("Return", 500))
 
-# Go to the beginning of the text area and arrow past "This "
+########################################################################
+# Go to the beginning of the text area.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
+#      VISIBLE:  'This is a test. $l', cursor=1
+#
+# SPEECH OUTPUT: 'This is a test.'
 #
 sequence.append(KeyComboAction("<Control>Home", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
 
-# Select "is a test" word by word
+########################################################################
+# Now, arrow right to the end of the word "This" and select "is a test"
+# word by word.  When you are done the last thing presented should be:
 #
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
+#      VISIBLE:  'This is a test. $l', cursor=15
+#
+# SPEECH OUTPUT: ' test'
+# SPEECH OUTPUT: 'selected'
+# SPEECH OUTPUT: ' is a test'
+# SPEECH OUTPUT: 'selected'
+#
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("Right", 500))
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
 
-# Unselect "test"
+########################################################################
+# Unselect "test".  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
+#      VISIBLE:  'This is a test. $l', cursor=11
+#
+# SPEECH OUTPUT: 'test'
+# SPEECH OUTPUT: 'unselected'
 #
 sequence.append(KeyComboAction("<Shift><Control>Left", 500))
 
-# Arrow down to "I'm typing away..."
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: what is the difference between this and the
+# extended Where Am I you get with double KP_Enter?]]]:
 #
-sequence.append(KeyComboAction("Down", 500))
-sequence.append(KeyComboAction("Down", 500))
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
+#      VISIBLE:  'This is a test. $l', cursor=11
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'text'
+# SPEECH OUTPUT: ' is a '
+# SPEECH OUTPUT: 'selected'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
-# Select to the end of the line
+########################################################################
+# Arrow down to "I'm typing away..." and Select to the end of the line.
+# The following should be presented:
 #
+# BRAILLE LINE:  'I'm just typing away like a monkey with nothing better to do in my life than eat fruit and type. $l'
+#      VISIBLE:  'y life than eat fruit and type. ', cursor=32
+#
+# SPEECH OUTPUT: 'yping away like a monkey with nothing better to do in my life than eat fruit and type.'
+# SPEECH OUTPUT: 'selected'
+#
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down", 500))
 sequence.append(KeyComboAction("<Shift>End", 500))
 
-# Right arrow to the beginning of the next line
+########################################################################
+# Right arrow to the beginning of the next line.  The following should
+# be presented:
+#
+# BRAILLE LINE:  'The keyboard sure can get sticky. $l'
+#      VISIBLE:  'The keyboard sure can get sticky', cursor=1
+#      
+# SPEECH OUTPUT: 'newline'
+# SPEECH OUTPUT: 'T'
 #
 sequence.append(KeyComboAction("Right", 500))
 
-# Try a "SayAll"
+########################################################################
+# Try a "SayAll".  The following should be presented:
+#
+# BRAILLE LINE:  'Tis this and thus thou art in Rome? $l'
+#      VISIBLE:  'this and thus thou art in Rome? ', cursor=32
+#
+# SPEECH OUTPUT: '
+# The keyboard sure can get sticky.'
+# SPEECH OUTPUT: '
+# Tis this and thus thou art in Rome?'
+# SPEECH OUTPUT: '
+# '
 #
 sequence.append(KeyComboAction("KP_Add", 500))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window
 #
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -89,6 +155,6 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

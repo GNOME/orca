@@ -3,7 +3,7 @@
 """Test of radio button output using the gtk-demo Printing demo
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -22,24 +22,77 @@ sequence.append(TypeAction("Printing", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Printing demo window appears, navigate to the radio buttons
+# When the Printing demo window appears, navigate to the "All" radio
+# button.  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Print Pages Filler &=y All RadioButton'
+#      VISIBLE:  '&=y All RadioButton', cursor=1
+# SPEECH OUTPUT: 'Print Pages'
+# SPEECH OUTPUT: 'All selected radio button'
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(KeyComboAction("<Alt>a", 500))
-
-sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(KeyComboAction("Down", 500))
-
-sequence.append(WaitForFocus("Range: ", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(KeyComboAction("Up", 500))
-
 sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 
 ########################################################################
-# Close the demo
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
 #
-sequence.append(KeyComboAction         ("<Alt>c", 500))
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Print Pages Filler &=y All RadioButton'
+#      VISIBLE:  '&=y All RadioButton', cursor=1
+#
+# SPEECH OUTPUT: 'Print Pages'
+# SPEECH OUTPUT: 'All radio button'
+# SPEECH OUTPUT: 'selected'
+# SPEECH OUTPUT: 'item 1 of 3'
+# SPEECH OUTPUT: ' Alt a'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Down arrow to the "Range:" radio button.  The following should be
+# presented [[[BUG?: when you first arrow to a radio button, we present
+# it as not selected in the tests, but manual testing presents it as
+# selected.  It should be presented as selected.  Something's wrong,
+# but I suspect we're getting a focus event before the state change
+# event.  Because our normal operating mode of Orca is asynchronous,
+# it's likely that the state has already changed by the time we handle
+# the focus event.]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Print Pages Filler &=y Range:  RadioButton'
+#      VISIBLE:  '&=y Range:  RadioButton', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Range:  not selected radio button'
+#
+sequence.append(KeyComboAction("Down"))
+sequence.append(WaitForFocus("Range: ", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented (there's a grayed radio button between the "All" and
+# "Range:" radio buttons):
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Print Pages Filler &=y Range:  RadioButton'
+#      VISIBLE:  '&=y Range:  RadioButton', cursor=1
+#
+# SPEECH OUTPUT: 'Print Pages'
+# SPEECH OUTPUT: 'Range: radio button'
+# SPEECH OUTPUT: 'selected'
+# SPEECH OUTPUT: 'item 3 of 3'
+# SPEECH OUTPUT: ' Alt n'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Put everything back and close the demo.
+#
+sequence.append(KeyComboAction("Up"))
+sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(KeyComboAction("<Alt>c", 500))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -57,6 +110,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

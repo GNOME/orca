@@ -3,7 +3,7 @@
 """Test of dialog autoreading using the gtk-demo Expander button demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -22,10 +22,34 @@ sequence.append(TypeAction("Expander", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# Once the demo is up, close it. :-)
+# Once the demo is up, the following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'
+#      VISIBLE:  '& y Details ToggleButton', cursor=1
+#
+# SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Details toggle button not pressed'
 #
 #sequence.append(WaitForWindowActivate("GtkExpander",None))
 sequence.append(WaitForFocus("Details", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'
+#      VISIBLE:  '& y Details ToggleButton', cursor=1
+#
+# SPEECH OUTPUT: 'Details'
+# SPEECH OUTPUT: 'toggle button'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Now close the demo and leave.
+#
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("Close", acc_role=pyatspi.ROLE_PUSH_BUTTON))
@@ -47,6 +71,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

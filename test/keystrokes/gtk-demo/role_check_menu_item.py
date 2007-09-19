@@ -4,7 +4,7 @@
    demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -48,6 +48,7 @@ sequence.append(WaitForFocus("Bold", acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech and braille:
+#
 # BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem(Control b)'
 #      VISIBLE:  '<x> Bold CheckItem(Control b)', cursor=1
 #
@@ -60,11 +61,12 @@ sequence.append(WaitForFocus("Bold", acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 # SPEECH OUTPUT: 'b'
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window
 #
-sequence.append(KeyComboAction("Escape", 3000))
+sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("<Alt>F4", 500))
 
@@ -77,6 +79,6 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

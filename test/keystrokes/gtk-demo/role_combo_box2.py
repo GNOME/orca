@@ -4,7 +4,7 @@
 gets us a labelled combo box.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -24,7 +24,14 @@ sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the Printing demo window appears, navigate to the "Only print"
-# combobox on the "Page Setup" tab.
+# combo box on the "Page Setup" tab.  When the combo box gets focus,
+# the following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'
+#      VISIBLE:  'All sheets Combo', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Only print: All sheets combo box'
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
@@ -34,13 +41,55 @@ sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(KeyComboAction         ("Tab"))
 
 sequence.append(WaitForFocus("All sheets", acc_role=pyatspi.ROLE_COMBO_BOX))
-sequence.append(KeyComboAction("Down"))
-sequence.append(KeyComboAction("Down", 500))
 
 ########################################################################
-# Close the demo
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
 #
-sequence.append(KeyComboAction         ("<Alt>c", 500))
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'
+#      VISIBLE:  'All sheets Combo', cursor=1
+#
+# SPEECH OUTPUT: 'Only print:'
+# SPEECH OUTPUT: 'combo box'
+# SPEECH OUTPUT: 'All sheets'
+# SPEECH OUTPUT: 'item 1 of 3'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Down arrow to select the "Even sheets" item in the combo box.  The
+# following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'
+#      VISIBLE:  'Even sheets Combo', cursor=1
+#
+# SPEECH OUTPUT: 'Even sheets'
+#
+sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'
+#      VISIBLE:  'Even sheets Combo', cursor=1
+#
+# SPEECH OUTPUT: 'Only print:'
+# SPEECH OUTPUT: 'combo box'
+# SPEECH OUTPUT: 'Even sheets'
+# SPEECH OUTPUT: 'item 2 of 3'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Put things back the way they were and close the demo.
+#
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("<Alt>c", 500))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -58,6 +107,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

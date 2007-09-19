@@ -3,7 +3,7 @@
 """Test of split pane output using the gtk-demo Paned Widgets demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -22,31 +22,47 @@ sequence.append(TypeAction("Paned Widgets", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the demo comes up, interact with a few check boxes
+# When the demo comes up, go to the split pane.  The following should
+# be presented [[[BUG?: No value for speech?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'
+#      VISIBLE:  '60 SplitPane', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'split pane'
 #
 #sequence.append(WaitForWindowActivate("Panes",None))
-# "Hi there"
 sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("F8", 500))
-
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(KeyComboAction("F8", 500))
-
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))
-sequence.append(KeyComboAction("Down", 500))
-sequence.append(KeyComboAction("Down", 500))
-sequence.append(KeyComboAction("Down", 500))
-sequence.append(KeyComboAction("Down", 500))
-sequence.append(KeyComboAction("Down", 500))
 
 ########################################################################
-# Close the Panes demo window
+# Move the split pane to the right.  The following should be presented
+# [[[BUG?: No speech output?]]]:
 #
+# BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'
+#      VISIBLE:  '61 SplitPane', cursor=1
+#
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("Right", 500))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: No speech output?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'
+#      VISIBLE:  '61 SplitPane', cursor=1
+#
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Put things back the way they were and close the Panes demo window
+#
+sequence.append(KeyComboAction("Left"))
 sequence.append(KeyComboAction("<Alt>F4", 500))
 
 ########################################################################
@@ -65,6 +81,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

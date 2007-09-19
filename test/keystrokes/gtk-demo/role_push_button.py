@@ -3,7 +3,7 @@
 """Test of page tab output using the gtk-demo Printing demo
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -22,80 +22,61 @@ sequence.append(TypeAction("Button Boxes", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Button Boxes demo window appears, navigate around the buttons
+# When the Button Boxes demo window appears, the following should be
+# presented [[[BUG?: is the "Spread Spread" in braille a bug?  Same
+# with "Horizontal Button Boxes". That kind of duplication is
+# pervasive throughout this test.]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel OK Button'
+#      VISIBLE:  'OK Button', cursor=1
+#
+# SPEECH OUTPUT: 'Button Boxes frame'
+# SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel'
+# SPEECH OUTPUT: 'OK button'
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
-
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel OK Button'
+#      VISIBLE:  'OK Button', cursor=1
+#
+# SPEECH OUTPUT: 'OK'
+# SPEECH OUTPUT: 'button'
+# SPEECH OUTPUT: ' Alt o'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Tab to the Cancel button.  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel Cancel Button'
+#      VISIBLE:  'Cancel Button', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Cancel button'
+#
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
 
+########################################################################
+# Tab to the next "OK" button in the "Edge" panel.  The following should
+# be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Edge Edge Panel OK Button'
+#      VISIBLE:  'OK Button', cursor=1
+#      
+# SPEECH OUTPUT: 'Edge panel'
+# SPEECH OUTPUT: 'OK button'
+#
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Tab"))
-
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ########################################################################
 # Close the demo
@@ -118,6 +99,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-"""Test "Where Am I" on a push button in the Button Boxess demo.
+"""Test of status bar output using the gtk-demo Application Main Window
+   demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -14,27 +15,31 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
-# Once gtk-demo is running, invoke the Printing demo 
+# Once gtk-demo is running, invoke the Application Main Window demo
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Button Boxes", 1000))
+sequence.append(TypeAction("Application main window", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Button Boxes demo window appears, navigate around the buttons
-# 
-#sequence.append(WaitForWindowActivate("Print",None))
+# When the demo comes up, do a "Where Am I" to get the status bar info
+# via double KP_Insert+KP_Enter.  The following should be presented
+# [[[BUG?: the status bar information is not presented.]]]
+#
+#sequence.append(WaitForWindowActivate("Application Window",None))
+sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
-# Do "where am i"
-sequence.append(KeyComboAction("KP_Enter", 500))
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
-# Close the demo
+# Dismiss the menu and close the Application Window demo window
 #
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -42,16 +47,9 @@ sequence.append(KeyComboAction("<Alt>F4", 500))
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction("Home"))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

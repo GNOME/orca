@@ -4,7 +4,7 @@
    gtk-demo Application Main Window demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -23,72 +23,128 @@ sequence.append(TypeAction("Application main window", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the demo comes up, go to the Bold check menu item in the
-# Preferences menu.
+# When the demo comes up, open the File menu via F10.  The following
+# should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'
+#      VISIBLE:  'File Menu', cursor=1
+# SPEECH OUTPUT: 'File menu'
 #
 #sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("F10"))
-
 sequence.append(WaitForFocus("File",
                              acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Down"))
 
-sequence.append(WaitForFocus("New",
-                             acc_role=pyatspi.ROLE_MENU_ITEM))
-sequence.append(KeyComboAction("Down"))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'
+#      VISIBLE:  'File Menu', cursor=1
+#
+# SPEECH OUTPUT: ' menu bar'
+# SPEECH OUTPUT: 'File'
+# SPEECH OUTPUT: 'menu'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'item 1 of 3'
+# SPEECH OUTPUT: 'Alt f'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
-sequence.append(WaitForFocus("Open",
-                             acc_role=pyatspi.ROLE_MENU_ITEM))
+########################################################################
+# Right arrow to the "Preferences" menu.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'
+#      VISIBLE:  'Preferences Menu', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Preferences menu'
+#
 sequence.append(KeyComboAction("Right"))
+sequence.append(WaitForFocus("Preferences",
+                             acc_role=pyatspi.ROLE_MENU))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'
+#      VISIBLE:  'Preferences Menu', cursor=1
+#
+# SPEECH OUTPUT: ' menu bar'
+# SPEECH OUTPUT: 'Preferences'
+# SPEECH OUTPUT: 'menu'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'item 2 of 3'
+# SPEECH OUTPUT: 'Alt p'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Go down to the "Color" menu.  The following should be presented
+# [[[BUG?: Should parent menus be shown in the braille context?  For
+# example, should the "Preferences" menu appear here?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'
+#      VISIBLE:  'Color Menu', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Color menu'
+#
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Color",
                              acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Right"))
 
-sequence.append(WaitForFocus("Red",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'
+#      VISIBLE:  'Color Menu', cursor=1
+#
+# SPEECH OUTPUT: 'Preferences menu'
+# SPEECH OUTPUT: 'Color'
+# SPEECH OUTPUT: 'menu'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'item 1 of 3'
+# SPEECH OUTPUT: 'c'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Go down to the "Shape" menu.  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'
+#      VISIBLE:  'Shape Menu', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Shape menu'
+#
 sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Green",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Blue",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Left"))
-
-sequence.append(WaitForFocus("Color",
-                             acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Down"))
-
 sequence.append(WaitForFocus("Shape",
                              acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Right"))
 
-sequence.append(WaitForFocus("Square",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Rectangle",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Oval",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Left"))
-
-sequence.append(WaitForFocus("Shape",
-                             [1, 0, 3, 1, 2],
-                             acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Bold",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(KeyComboAction("Right"))
-
-sequence.append(WaitForFocus("About",
-                             acc_role=pyatspi.ROLE_MENU_ITEM))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'
+#      VISIBLE:  'Shape Menu', cursor=1
+#
+# SPEECH OUTPUT: 'Preferences menu'
+# SPEECH OUTPUT: 'Shape'
+# SPEECH OUTPUT: 'menu'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'item 2 of 3'
+# SPEECH OUTPUT: 's'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window
@@ -106,6 +162,6 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

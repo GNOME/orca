@@ -3,7 +3,7 @@
 """Test of page tab output using the gtk-demo Printing demo
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -22,21 +22,67 @@ sequence.append(TypeAction("Printing", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Printing demo window appears, navigate between the page tabs
+# When the Printing demo window appears, the following should be
+# presented [[[BUG?: should the braille for the page tab rolename be
+# presented in braille?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog General'
+#      VISIBLE:  'General', cursor=1
+#
+# SPEECH OUTPUT: 'Print Print Pages Copies'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'General page'
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
-sequence.append(KeyComboAction("Right", 500))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog General'
+#      VISIBLE:  'General', cursor=1
+#
+# SPEECH OUTPUT: 'tab list'
+# SPEECH OUTPUT: 'General page'
+# SPEECH OUTPUT: 'item 1 of 2'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Arrow Right to the "Page Setup" tab.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'
+#      VISIBLE:  'Page Setup', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Page Setup page'
+# 
+sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
-sequence.append(KeyComboAction("Left", 500))
 
-sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'
+#      VISIBLE:  'Page Setup', cursor=1
+# 
+# SPEECH OUTPUT: 'tab list'
+# SPEECH OUTPUT: 'Page Setup page'
+# SPEECH OUTPUT: 'item 2 of 2'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Close the demo
 #
-sequence.append(KeyComboAction         ("<Alt>c", 500))
+sequence.append(KeyComboAction         ("<Alt>c"))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -54,6 +100,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

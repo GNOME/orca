@@ -4,7 +4,7 @@
    under the Tree View area.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -29,107 +29,99 @@ sequence.append(TypeAction("Editable Cells", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Shopping list demo window appears, navigate the table cells
-# using both read table cell row and read table cell (Insert+F11).
+# When the Shopping list demo window appears, the following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'
+#      VISIBLE:  '3 bottles of coke', cursor=1
+#
+# SPEECH OUTPUT: 'Shopping list frame'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Number column header'
+# SPEECH OUTPUT: '3 bottles of coke'
 #
 #sequence.append(WaitForWindowActivate("Shopping list",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
-sequence.append(KeyComboAction("Down", 1000))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: No column header information output?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'
+#      VISIBLE:  '3 bottles of coke', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'cell'
+# SPEECH OUTPUT: '3'
+# SPEECH OUTPUT: 'bottles of coke'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'row 1 of 5'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Down arrow to the next line.  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'
+#      VISIBLE:  '5 packages of noodles', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: '5 packages of noodles'
+#
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
-sequence.append(KeyComboAction("Down", 500))
 
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: No column header information output?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5'
+#      VISIBLE:  '5', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'cell'
+# SPEECH OUTPUT: '5'
+# SPEECH OUTPUT: 'packages of noodles'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'row 2 of 5'
+#
+sequence.append(KeyComboAction("KP_Enter"))
 
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
+########################################################################
+# Turn reading of rows off.
+#
+sequence.append(KeyPressAction(0, None,"KP_Insert"))
+sequence.append(KeyComboAction("F11"))
+sequence.append(KeyReleaseAction(0, None,"KP_Insert"))
 
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyPressAction  (    0, 106,"Insert")) # Press Insert
-sequence.append(KeyPressAction  (  167,  95,"F11")) # Press F11
-sequence.append(KeyReleaseAction(  144, 106,"Insert")) # Release Insert
-sequence.append(KeyReleaseAction(   39,  95,"F11")) # Release F11
-sequence.append(KeyComboAction("<Control>Right", 1000))
-
+########################################################################
+# Move right one cell to the "packages of noodles" cell and then go
+# up one line to "bottles of coke".  The following should be presented
+# when "bottles of coke" gets focus:
+#
+# BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Product ColumnHeader bottles of coke Cell'
+#      VISIBLE:  'bottles of coke Cell', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'bottles of coke'
+#
+sequence.append(KeyComboAction("<Control>Right", 500))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
 sequence.append(KeyComboAction("Up", 500))
-
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
-sequence.append(KeyComboAction("Up", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Up", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Up", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("<Control>Left", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
-sequence.append(KeyComboAction("Down", 500))
 
 ########################################################################
 # Close the Shopping list demo
@@ -163,6 +155,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

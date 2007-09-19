@@ -3,7 +3,7 @@
 """Test of checkbox output using the gtk-demo Paned Widgets demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -51,6 +51,7 @@ sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
 # SPEECH OUTPUT: ' Alt r'
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Now, change its state.  The following should be presented in speech
@@ -61,7 +62,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 #
 # SPEECH OUTPUT: 'checked'
 #
-sequence.append(TypeAction(" ", 3000))
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
@@ -80,12 +81,13 @@ sequence.append(WaitAction("object:state-changed:checked",
 # SPEECH OUTPUT: ' Alt r'
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Change the state back and move on to a few more check boxes.  The
 # presentation in speech and braille should be similar to the above.
 #
-sequence.append(TypeAction(" ", 3000))
+sequence.append(TypeAction(" "))
 
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
@@ -171,6 +173,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

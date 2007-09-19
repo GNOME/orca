@@ -4,7 +4,7 @@
    the Icon View area.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -29,25 +29,99 @@ sequence.append(TypeAction("Icon View Basics", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# Once the GtkIconView demo is up, arrow around a few icons
+# Once the GtkIconView demo is up, the following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'
+#      VISIBLE:  'LayeredPane', cursor=1
+#
+# SPEECH OUTPUT: 'GtkIconView demo frame'
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'layered pane'
 #
 #sequence.append(WaitForWindowActivate("GtkIconView demo",None))
 # ""
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LAYERED_PANE))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'
+#      VISIBLE:  'LayeredPane', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'layered pane'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+
+########################################################################
+# Down into the icon list, finally making something be selected in the
+# view.  The following should be presented:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'
+#      VISIBLE:  'bin Icon', cursor=1
+#     
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'bin icon'
+#
 sequence.append(KeyComboAction("Down", 500))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 
-sequence.append(WaitForFocus("bin", acc_role=pyatspi.ROLE_ICON))
-sequence.append(KeyComboAction("Right", 500))
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: the bin icon is shown as selected in the view,
+# so should it be "1 of n items selected"?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'
+#      VISIBLE:  'bin Icon', cursor=1
+#
+# SPEECH OUTPUT: 'Icon panel'
+# SPEECH OUTPUT: 'bin'
+# SPEECH OUTPUT: 'icon'
+# SPEECH OUTPUT: '0 of 26 items selected'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
-sequence.append(WaitForFocus("boot", acc_role=pyatspi.ROLE_ICON))
-sequence.append(KeyComboAction("Right", 500))
+########################################################################
+# Arrow right and wait for the next icon to be selected.  The
+# presentation should be similar to the following:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane boot Icon'
+#      VISIBLE:  'boot Icon', cursor=1
+#
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'boot icon'
+#
+sequence.append(KeyComboAction("Right"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 
-sequence.append(WaitForFocus("cdrom", acc_role=pyatspi.ROLE_ICON))
+########################################################################
+# Select more than one icon by doing Shift+Right.  [[[BUG?: should
+# Orca announce "selected" when an icon is selected?]]]
+#
+sequence.append(KeyComboAction("<Shift>Right", 500))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented [[[BUG?: should it be "2 of n items selected"?]]]:
+#
+# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'
+#      VISIBLE:  'cdrom Icon', cursor=1
+#
+# SPEECH OUTPUT: 'Icon panel'
+# SPEECH OUTPUT: 'cdrom'
+# SPEECH OUTPUT: 'icon'
+# SPEECH OUTPUT: '0 of 26 items selected'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Close the GtkIconView demo window
 #
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -71,6 +145,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

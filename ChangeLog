@@ -1,3 +1,9 @@
+2007-09-19  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/*.py: roll Where Am I tests
+	into the role-by-role tests.  Upgrade to latest macaroon API.
+	Use PauseAction's.  Roll in speech and braille output.
+
 2007-09-19  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_342602.py:

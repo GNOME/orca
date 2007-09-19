@@ -4,7 +4,7 @@
    gtk-demo Dialog and Message Boxes demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -46,17 +46,18 @@ sequence.append(WaitForFocus("Message Dialog",
 #      VISIBLE:  'OK Button', cursor=1
 #
 # SPEECH OUTPUT: 'Information This message box has been popped up the following
-#                 number of times: 1'
+# number of times: 1'
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'OK button'
 #
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Dismiss the information window by activating the OK button.
 #
-sequence.append(KeyComboAction("Return", 3000))
+sequence.append(KeyComboAction("Return"))
 
 ########################################################################
 # Once we're back to the main window of the demo, go to the
@@ -109,11 +110,12 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Tab to the OK button and dismiss the window.
 #
-sequence.append(KeyComboAction("Tab", 3000))
+sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction("Tab"))
@@ -144,6 +146,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

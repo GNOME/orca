@@ -3,7 +3,7 @@
 """Test of combobox output using the gtk-demo Combo boxes demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -65,6 +65,7 @@ sequence.append(WaitForFocus("Warning", acc_role=pyatspi.ROLE_MENU_ITEM))
 # SPEECH OUTPUT: ''
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Now arrow down and select the "New" item.  The following should be
@@ -76,7 +77,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'New'
 #
-sequence.append(KeyComboAction("Down", 3000))
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 ########################################################################
@@ -93,12 +94,13 @@ sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 # SPEECH OUTPUT: ''
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Select the "New" entry and tab to the editable text combo box.  Skip
 # the middle combo.  It's bizarre.
 #
-sequence.append(KeyComboAction("Return", 3000))
+sequence.append(KeyComboAction("Return"))
 
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(KeyComboAction("Tab"))
@@ -132,6 +134,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 #
 sequence.append(TypeAction("Four"))
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box.  The
@@ -143,7 +146,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'Four combo box'
 #
-sequence.append(KeyComboAction("Tab", 3000))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 
 ########################################################################
@@ -194,6 +197,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 # SPEECH OUTPUT: ''
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box and open
@@ -207,7 +211,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 # SPEECH OUTPUT: 'Editable panel'
 # SPEECH OUTPUT: 'menu'
 #
-sequence.append(KeyComboAction("Tab", 3000))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(TypeAction(" "))
 
@@ -267,6 +271,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

@@ -4,7 +4,7 @@
    demo.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -54,6 +54,7 @@ sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 # SPEECH OUTPUT: 'n'
 #
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -66,7 +67,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'Open Control o' 
 #
-sequence.append(KeyComboAction("Down", 3000))
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 ########################################################################
@@ -135,11 +136,12 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Activate the "close" button, dismissing the UI Manager demo window.
 #
-sequence.append(TypeAction(" ", 3000))
+sequence.append(TypeAction(" "))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
@@ -157,6 +159,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()
