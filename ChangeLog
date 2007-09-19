@@ -22,6 +22,10 @@
           Macaroon test file for bug #362979 - In OOo, cannot read first 
           character on line with bullets.
 
+        * test/keystrokes/oowriter/bug_384893.py:  (new)
+          Macaroon test file for bug #384893 - Orca no longer reports bold 
+          or underline in OOo Writer when Insert F is pressed.
+
 2007-09-19  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_combo_box.py,
