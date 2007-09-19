@@ -4,7 +4,7 @@
    StarOffice Writer - order of speaking information of table cells is incorrect.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -53,12 +53,22 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 5. Enter a and Tab (Inserts "a" into cell A1 and moves to cell B1).
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph a $l'
+# VISIBLE:  'Paragraph', cursor=1
+# SPEECH OUTPUT: 'Cell B1'
+# SPEECH OUTPUT: 'blank'
+#
 sequence.append(TypeAction("a"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 6. Enter Shift-Tab (Returns to cell A1).
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'
+# VISIBLE:  'a Paragraph', cursor=1
+# SPEECH OUTPUT: 'Cell A1'
+# SPEECH OUTPUT: 'a'
 #
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))

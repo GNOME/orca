@@ -5,7 +5,7 @@
    in OOo Writer.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -41,11 +41,25 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 4. Enter up arrow to position the text caret on the first line.
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view                    This is a test. $l'
+# VISIBLE:  '                   This is a test. $l', cursor=1
+# SPEECH OUTPUT: '3 spaces 2 tabs '
+# SPEECH OUTPUT: '                   This is a test.
+#
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 5. Enter Insert-f to get text information.
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view                    This is a test. $l'
+# VISIBLE:  '                   This is a test. $l', cursor=1
+# SPEECH OUTPUT: 'size 12'
+# SPEECH OUTPUT: 'family-name Thorndale'
+# SPEECH OUTPUT: 'indent 0'
+# SPEECH OUTPUT: 'left-margin 0 pixels'
+# SPEECH OUTPUT: 'right-margin 0 pixels'
+# SPEECH OUTPUT: 'strikethrough false'
 #
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))

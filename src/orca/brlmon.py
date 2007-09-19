@@ -150,6 +150,8 @@ class BrlMon(gtk.Window):
                 char = "&lt;"
             elif string[i] == "&":
                 char = "&amp;"
+            elif string[i] == "\t":
+                char = "$t"
             else:
                 char = string[i]
 

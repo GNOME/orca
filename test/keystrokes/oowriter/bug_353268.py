@@ -4,7 +4,7 @@
    Orca is double reading lines in openoffice with latest Ubuntu live CD.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -41,16 +41,29 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 4. Enter Control-Home to return to the top of the document.
 #
+# BRAILLE OUTPUT:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
+# VISIBLE:  'Line 1 $l', cursor=1
+# SPEECH OUTPUT: 'Line 1'
+#
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 5. Arrow down over the first line of text.
+#
+# BRAILLE OUTPUT:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 2 $l'
+# VISIBLE:  'Line 2 $l', cursor=1
+# SPEECH OUTPUT: 'Line 2'
+#
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 6. Arrow down over the second line of text.
+#
+# BRAILLE OUTPUT:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 2 $l'
+# VISIBLE:  ' Line 2 $l', cursor=1
+# SPEECH OUTPUT: 'blank'
 #
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))

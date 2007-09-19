@@ -4,7 +4,7 @@
    Orca should announce when you enter/leave a table in OOo Writer documents.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -57,11 +57,21 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 6. Type Control-Home to move the text caret to the start of the
 #    document (and leave the table).
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
+# VISIBLE:  'Line 1 $l', cursor=1
+# SPEECH OUTPUT: 'leaving table.'
+# SPEECH OUTPUT: 'Line 1'
+#
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 7. Type a down arrow to enter the table.
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
+# VISIBLE:  ' Line 1 $l', cursor=1
+# SPEECH OUTPUT: 'table with 2 rows and 2 columns.'
+# SPEECH OUTPUT: 'Cell A1'
 #
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))

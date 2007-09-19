@@ -5,7 +5,7 @@
    "Format menu".
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -24,11 +24,20 @@ sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
 ######################################################################
 # 3. Press W to open the Wizards submenu.
 #
+# BRAILLE LINE:  'soffice Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Letter...'
+# VISIBLE:  'Letter...', cursor=1
+# SPEECH OUTPUT: 'Wizards menu'
+# SPEECH OUTPUT: 'Letter...'
+#
 sequence.append(TypeAction("w"))
 sequence.append(WaitForFocus("Letter...", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 ######################################################################
 # 4. Press Escape to close the Wizards submenu.
+#
+# BRAILLE LINE:  'soffice Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Wizards Menu'
+# VISIBLE:  'Wizards Menu', cursor=1
+# SPEECH OUTPUT: 'Wizards menu'
 #
 sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Wizards", acc_role=pyatspi.ROLE_MENU))

@@ -4,7 +4,7 @@
    Orca should use weight to determine if text is bolded in OO writer and calc.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -45,11 +45,21 @@ sequence.append(TypeAction(" normal"))
 # 4. Enter Control-Home to position the text caret to the left of
 #    the first character in the line.
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'
+# VISIBLE:  'bold italic normal $l'
+# SPEECH OUTPUT: 'bold italic normal'
+#
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 5. Type Insert-f to get the text information for the bold word.
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'
+# VISIBLE:  'bold italic normal $l' cursor=1
+# SPEECH OUTPUT: 'size 12'
+# SPEECH OUTPUT: 'family-name Times'
+# SPEECH OUTPUT: 'bold'
 #
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))
@@ -59,6 +69,12 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 # 6. Type Control-right and Insert-f to get the text information
 #    for the italic word.
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'
+# VISIBLE:  'bold italic normal $l', cursor=7
+# SPEECH OUTPUT: 'size 12'
+# SPEECH OUTPUT: 'family-name Times'
+# SPEECH OUTPUT: 'style italic'
+#
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))
@@ -67,6 +83,11 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 ######################################################################
 # 7. Type Control-right and Insert-f to get the text information
 #    for the regular word.
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'
+# VISIBLE:  'bold italic normal $l', cursor=13
+# SPEECH OUTPUT: 'size 12'
+# SPEECH OUTPUT: 'family-name Times'
 #
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert

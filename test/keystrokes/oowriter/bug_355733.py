@@ -4,7 +4,7 @@
    Function "Say all" doesn't work correctly in Openoffice writer.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 
@@ -50,11 +50,22 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 4. Enter Control-Home to return to the top of the document.
 #
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
+# VISIBLE:  'Line 1 $l', cursor=1
+# SPEECH OUTPUT: 'Line 1'
+#
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 5. Enter KP+ to perform a "say all" on the document.
+#
+# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 4 $l'
+# VISIBLE:  'Line 4 $l', cursor=7
+# SPEECH OUTPUT: 'Line 1'
+# SPEECH OUTPUT: 'Line 2'
+# SPEECH OUTPUT: 'Line 3'
+# SPEECH OUTPUT: 'Line 4'
 #
 sequence.append(KeyComboAction("KP_Plus", 3000))
 
