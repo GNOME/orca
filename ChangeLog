@@ -1,4 +1,5 @@
-2007-09-18  Rich Burridge <rich.burridge@sun.com>
+2007-09-19  Rich Burridge <rich.burridge@sun.com>
+
         * test/keystrokes/oowriter/bug_342602.py:
           test/keystrokes/oowriter/bug_350219.py:
           test/keystrokes/oowriter/bug_353268.py:
@@ -10,6 +11,10 @@
           Adjusted Macaroon OOo Writer tests to include comments giving the
           interesting braille lines and speech outputs (removed from the 
           wiki entries).
+
+        * test/keystrokes/oowriter/bug_362979.py:  (new)
+          Macaroon test file for bug #362979 - In OOo, cannot read first 
+          character on line with bullets.
 
 2007-09-19  Willie Walker <william.walker@sun.com>
 
