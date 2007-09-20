@@ -3,7 +3,9 @@
 """Test of Dojo slider presentation using Firefox.
 """
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
+
+import utils
 
 sequence = MacroSequence()
 
@@ -18,11 +20,10 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/form/test_Slider.html"))
+sequence.append(TypeAction(utils.DojoURLPrefix + "form/test_Slider.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Dojo Slider Widget Demo", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-
 
 ########################################################################
 # Tab to the first slider.
@@ -189,6 +190,6 @@ sequence.append(WaitForDocLoad())
 
 # Just a little extra wait to let some events get through.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()
