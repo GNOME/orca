@@ -1,5 +1,11 @@
 2007-09-20  Willie Walker <william.walker@sun.com>
 
+	* test/harness/runone.sh: add harness directory to PYTHONPATH
+	so we can easily import Python files into our macaroon test
+	scripts.
+
+2007-09-20  Willie Walker <william.walker@sun.com>
+
 	* test/keystrokes/gtk-demo/role_table.py,
 	test/keystrokes/gtk-demo/role_icon.py,
 	test/keystrokes/gtk-demo/role_column_header.py,

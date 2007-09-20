@@ -17,6 +17,10 @@ export GTK_MODULES=:gail:atk-bridge:
 export PATH=/usr/lib/openoffice/program:$PATH
 export PS1='$ '
 
+foo=`dirname $0`
+harnessDir=`cd $foo; pwd`
+export PYTHONPATH=$harnessDir:$PYTHONPATH
+
 echo runone.sh: $*
 
 debugFile=`basename $1 .py`
@@ -105,8 +109,6 @@ fi
 #
 if [ "$APP_NAME" = "firefox" ]
 then
-    foo=`dirname $0`
-    harnessDir=`cd $foo; pwd`
     ARGS="-profile $harnessDir/../html/FirefoxProfile"
 fi
 
