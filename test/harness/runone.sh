@@ -109,7 +109,11 @@ fi
 #
 if [ "$APP_NAME" = "firefox" ]
 then
-    ARGS="-profile $harnessDir/../html/FirefoxProfile"
+    FF_PROFILE_DIR=/tmp/FirefoxProfile
+    mkdir -p $FF_PROFILE_DIR
+    cp $harnessDir/../html/FirefoxProfile/prefs.js $FF_PROFILE_DIR
+    cp $harnessDir/../html/FirefoxProfile/localstore.rdf $FF_PROFILE_DIR
+    ARGS="-profile $FF_PROFILE_DIR"
 fi
 
 if [ $orcaRunning -eq 0 ]
@@ -163,6 +167,7 @@ if [ "$APP_NAME" == "firefox" ]
 then
     echo killing firefox
     pkill firefox
+    rm -rf $FF_PROFILE_DIR
 else
     echo killing app $APP_NAME $APP_PID
     kill -9 $APP_PID > /dev/null 2>&1

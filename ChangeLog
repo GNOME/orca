@@ -1,5 +1,12 @@
 2007-09-20  Willie Walker <william.walker@sun.com>
 
+	* test/harness/runone.sh: copy FirefoxProfile stuff to
+	/tmp and use it from there rather than pointing to our
+	copy from SVN.  This prevents Firefox from modifying
+	our SVN copy.
+
+2007-09-20  Willie Walker <william.walker@sun.com>
+
 	* test/keystrokes/firefox/dojo_slider.py,
 	test/harness/utils.py: add use of utils.py to define the
 	URL prefix for finding Dojo tests.  Also bring dojo_slider.py
