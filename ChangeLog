@@ -11,6 +11,10 @@
           Macaroon test file for bug #430402 – Orca unable to speak last 
           character of each "sentence" when doing a sayAll in OOo Writer.
 
+        * test/keystrokes/oowriter/bug_413909.py:  (new)
+          Macaroon test file for bug #413909 – Orca can no longer provide 
+          "smarts" for spell checking in OOo Writer v2.1 (or later).
+
 2007-09-20  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_column_header.py: actually do
