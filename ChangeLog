@@ -1,3 +1,19 @@
+2007-09-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/role_push_button.py,
+          test/keystrokes/firefox/role_check_menu_item.py,
+          test/keystrokes/firefox/role_check_box.py,
+          test/keystrokes/firefox/role_radio_button.py,
+          test/keystrokes/firefox/role_radio_menu_item.py,
+          test/keystrokes/firefox/role_page_tab.py,
+          test/keystrokes/firefox/role_accel_label.py:
+          Adjusted Macaroon Gecko tests to include comments with speech
+          and braille output.  Rolled the Where Am I tests into the role
+          tests.  Switched the wait at the end to the new PauseAction(). 
+          And finally: Caught a dumb mistake that was causing some timeouts.  
+          Now we are only timing out when Firefox lies to us and says a menu
+          is really a menu item when it's really not. :-)
+
 2007-09-19  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/*.py: roll Where Am I tests
