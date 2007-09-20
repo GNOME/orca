@@ -1518,6 +1518,57 @@ class Script(default.Script):
         for label in allLabels:
             self.speakSetupLabel(label)
 
+    def __isAvailableFieldsPanel(self, event):
+        """If we are in the sbase Table Wizard, try to reduce the numerous
+        utterances of "Available fields panel". See bug #465087 for more 
+        details.
+
+        Arguments:
+        - event: the object state change event.
+        """
+
+        # Translators: this represents a match with the name of the
+        # "Available fields" list in the Tables wizard dialog in the
+        # the OOo oobase database application. We're looking for the
+        # accessible object name starting with "Available fields".
+        # We really try to avoid doing this kind of thing, but
+        # sometimes it is necessary and we apologize.
+        #
+        panelName = _("Available fields")
+
+        isPanel = False
+        if event.type == "object:state-changed:focused":
+            rolesList = [rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_SCROLL_PANE, \
+                         rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_OPTION_PANE, \
+                         rolenames.ROLE_DIALOG, \
+                         rolenames.ROLE_APPLICATION]
+            if self.isDesiredFocusedItem(event.source, rolesList):
+                if event.source.parent.parent.name.startswith(panelName):
+                    isPanel = True
+
+            if not isPanel:
+                rolesList = [rolenames.ROLE_SCROLL_PANE, \
+                             rolenames.ROLE_PANEL, \
+                             rolenames.ROLE_OPTION_PANE, \
+                             rolenames.ROLE_DIALOG, \
+                             rolenames.ROLE_APPLICATION]
+                if self.isDesiredFocusedItem(event.source, rolesList):
+                    if event.source.parent.name.startswith(panelName):
+                        isPanel = True
+
+            if not isPanel:
+                rolesList = [rolenames.ROLE_PANEL, \
+                             rolenames.ROLE_OPTION_PANE, \
+                             rolenames.ROLE_DIALOG, \
+                             rolenames.ROLE_APPLICATION]
+                if self.isDesiredFocusedItem(event.source, rolesList):
+                    if event.source.name.startswith(panelName):
+                        isPanel = True
+
+        return isPanel
+
     # This method tries to detect and handle the following cases:
     # 0) Writer: find command.
     # 1) Writer: text paragraph.
@@ -2069,6 +2120,13 @@ class Script(default.Script):
            event.source != self.currentParagraph:
             self.currentParagraph = event.source
             orca.setLocusOfFocus(event, event.source, False)
+            return
+
+        # If we are in the sbase Table Wizard, try to reduce the numerous
+        # utterances of "Available fields panel". See bug #465087 for
+        # more details.
+        #
+        if self.__isAvailableFieldsPanel(event):
             return
 
         # If we get "object:state-changed:focused" events for children of
