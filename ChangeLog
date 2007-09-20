@@ -1,3 +1,8 @@
+2007-09-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py: Fix for bug 476786 - whereAmI fails in
+        Firefox menus.
+
 2007-09-16  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as v2.20.1pre
