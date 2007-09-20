@@ -22,6 +22,10 @@
           Macaroon test file for bug #413909 – Orca can no longer provide 
           "smarts" for spell checking in OOo Writer v2.1 (or later).
 
+        * test/keystrokes/oowriter/bug_385828.py:  (new)
+          Macaroon test file for bug #385828 – Can not use agenda wizard 
+          in OpenOffice.org.
+
 2007-09-20  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_column_header.py: actually do
