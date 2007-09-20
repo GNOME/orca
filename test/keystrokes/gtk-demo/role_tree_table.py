@@ -22,6 +22,11 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Right"))
+sequence.append(WaitAction("object:state-changed:expanded",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE_CELL,
+                           5000))
 
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
@@ -247,6 +252,12 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Left"))
+sequence.append(WaitAction("object:state-changed:expanded",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE_CELL,
+                           5000))
+
 sequence.append(KeyComboAction("Home"))
 
 sequence.append(WaitAction("object:active-descendant-changed",
