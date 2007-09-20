@@ -4929,6 +4929,8 @@ class Script(default.Script):
                     basename = basename.split('/')[-1]
                 else:
                     basename = uri.split('/')[-1]
+                    if basename.startswith("index"):
+                        basename = uri.split('/')[-2]
 
                     # Now, try to strip off the suffixes.
                     #
