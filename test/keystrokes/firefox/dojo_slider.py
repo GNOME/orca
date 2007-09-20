@@ -17,7 +17,7 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 # Load the dojo slider demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/form/test_Slider.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -182,7 +182,7 @@ sequence.append(KeyComboAction("Down"))
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

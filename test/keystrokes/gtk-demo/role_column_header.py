@@ -167,6 +167,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
 # SPEECH OUTPUT: 'Normal'
 # SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'
 # SPEECH OUTPUT: 'row 1 of 14'
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
  
 ########################################################################
 # Close the GtkListStore demo

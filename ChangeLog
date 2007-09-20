@@ -1,5 +1,13 @@
 2007-09-20  Willie Walker <william.walker@sun.com>
 
+	* test/keystrokes/gtk-demo/role_column_header.py: actually do
+	a "Where Am I" instead of just saying we'll be doing it.
+
+	* test/keystrokes/firefox/dojo_slider.py: make sure acc_role
+	is used in WaitForFocus actions.
+	
+2007-09-20  Willie Walker <william.walker@sun.com>
+
 	* test/harness/runone.sh: add harness directory to PYTHONPATH
 	so we can easily import Python files into our macaroon test
 	scripts.
