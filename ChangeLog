@@ -19,6 +19,12 @@
           Macaroon test file for bug #435201 – Orca is too chatty when 
           navigating by paragraph in OOo Writer.
 
+        * test/keystrokes/oowriter/bug_382415.py:      (new)
+          test/keystrokes/oowriter/bug_382415.params:  (new)
+          test/keystrokes/oowriter/table-sample.odt:   (new)
+          Macaroon test file for bug #382415 – Speak cell/row setting 
+          ignored in OOo Writer tables.
+
 2007-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
