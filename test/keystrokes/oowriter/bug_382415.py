@@ -81,7 +81,11 @@ sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
 
 sequence.append(KeyComboAction("<Alt>c"))
-sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(WaitAction("object:property-change:accessible-name",
+                           None,
+                           None,
+                           pyatspi.ROLE_ROOT_PANE,
+                           30000))
 
 ######################################################################
 # 9. Enter Alt-f, right arrow and Return, (File->New->Text Document),
@@ -95,11 +99,15 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitAction("object:property-change:accessible-name",
+                           None,
+                           None,
+                           pyatspi.ROLE_ROOT_PANE,
+                           30000))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 11. Wait for things to get back to normal.
+# 10. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
 
