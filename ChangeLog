@@ -1,3 +1,19 @@
+2007-09-21  Eitan Isaacson  <eitan@ascender.com>
+
+	* test/keystrokes/java: Added Java Swing testing.
+	* test/keystrokes/java/role_accel_label.params: 
+	* test/keystrokes/java/role_accel_label.py: Added new role test.
+	* test/keystrokes/java/role_check_box.params: 
+	* test/keystrokes/java/role_check_box.py: Added new role test.
+	* test/keystrokes/java/role_check_menu_item.params: 
+	* test/keystrokes/java/role_check_menu_item.py: Added new role test.
+	* test/keystrokes/java/role_combo_box.params: 
+	* test/keystrokes/java/role_combo_box.py: Added new role test.
+	* test/keystrokes/java/role_dialog.params: 
+	* test/keystrokes/java/role_dialog.py: Added new role test.
+	* test/keystrokes/java/role_push_button.params: 
+	* test/keystrokes/java/role_push_button.py: Added new role test.
+
 2007-09-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/html/FirefoxProfile/localstore.rdf: Changed last
