@@ -15,7 +15,7 @@
   <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"
                    screenX="190"
                    screenY="33"
-                   lastSelected="paneAdvanced" />
+                   lastSelected="paneMain" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul">
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>

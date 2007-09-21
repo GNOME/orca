@@ -1,3 +1,9 @@
+2007-09-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/html/FirefoxProfile/localstore.rdf: Changed last
+        selected pane in the Preferences dialog from Advanced
+        to Main.
+
 2007-09-21  Scott Haeger <scott@bashautomation.com>
 	* Added partially finished ARIA test scripts
         test/keystrokes/dojo_checkbox.py  
