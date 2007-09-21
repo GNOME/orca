@@ -84,16 +84,9 @@ sequence.append(KeyComboAction("<Alt>c"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ######################################################################
-# 9. Enter Tab and Return to discard the current changes.
-#
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Discard", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("Return"))
-
-######################################################################
-# 10. Enter Alt-f, right arrow and Return, (File->New->Text Document),
-#     to get the application back to the state it was in when the
-#     test started.
+# 9. Enter Alt-f, right arrow and Return, (File->New->Text Document),
+#    to get the application back to the state it was in when the
+#    test started.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
@@ -102,14 +95,12 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 11. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()
