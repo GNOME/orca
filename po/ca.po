@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-15 17:41+0200\n"
+"POT-Creation-Date: 2007-09-23 19:10+0200\n"
 "PO-Revision-Date: 2007-08-27 19:27+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -570,7 +570,7 @@ msgstr "superíndex 1"
 #.
 #: ../src/orca/chnames.py:278
 msgid "ordinal"
-msgstr ""
+msgstr "o elevada"
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
@@ -642,7 +642,7 @@ msgstr "A DIÈRESI"
 #.
 #: ../src/orca/chnames.py:326
 msgid "A RING"
-msgstr ""
+msgstr "A AMB CERCLE"
 
 #. Translators: this is the spoken word for the character 'Æ' (U+00c6)
 #.
@@ -708,7 +708,7 @@ msgstr "I DIÈRESI"
 #.
 #: ../src/orca/chnames.py:370
 msgid "ETH"
-msgstr ""
+msgstr "ETH"
 
 #. Translators: this is the spoken word for the character 'Ñ' (U+00d1)
 #.
@@ -792,13 +792,13 @@ msgstr "Y AGUDA"
 #.
 #: ../src/orca/chnames.py:426
 msgid "THORN"
-msgstr ""
+msgstr "THORN"
 
 #. Translators: this is the spoken word for the character 'ß' (U+00df)
 #.
 #: ../src/orca/chnames.py:430
 msgid "s sharp"
-msgstr ""
+msgstr "eszet"
 
 #. Translators: this is the spoken word for the character 'à' (U+00e0)
 #.
@@ -828,7 +828,7 @@ msgstr "a dièresi"
 #.
 #: ../src/orca/chnames.py:450
 msgid "a ring"
-msgstr ""
+msgstr "a amb cercle"
 
 #. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
@@ -894,7 +894,7 @@ msgstr "i dièresi"
 #.
 #: ../src/orca/chnames.py:494
 msgid "eth"
-msgstr ""
+msgstr "eth"
 
 #. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
@@ -948,7 +948,7 @@ msgstr "o barrada"
 #.
 #: ../src/orca/chnames.py:530
 msgid "thorn"
-msgstr ""
+msgstr "thorn"
 
 #. Translators: this is the spoken word for the character 'ú' (U+00fa)
 #.
@@ -996,7 +996,7 @@ msgstr "Y dièresi"
 #.
 #: ../src/orca/chnames.py:562
 msgid "florin"
-msgstr ""
+msgstr "florin"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
@@ -1034,13 +1034,13 @@ msgstr "cometes dretes"
 #.
 #: ../src/orca/chnames.py:588
 msgid "dagger"
-msgstr ""
+msgstr "creu"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: ../src/orca/chnames.py:592
 msgid "double dagger"
-msgstr ""
+msgstr "creu doble"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
@@ -1058,25 +1058,25 @@ msgstr "pic triangular"
 #.
 #: ../src/orca/chnames.py:604
 msgid "per mille"
-msgstr "tan per mil"
+msgstr "tant per mil"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
 #: ../src/orca/chnames.py:608
 msgid "prime"
-msgstr ""
+msgstr "prima"
 
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:612
 msgid "double prime"
-msgstr ""
+msgstr "prima doble"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:616
 msgid "hyphen bullet"
-msgstr ""
+msgstr "guió petit"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -1747,8 +1747,8 @@ msgstr "Vés a la ubicació del marcador anterior."
 #: ../src/orca/default.py:3977 ../src/orca/Gecko.py:6767
 #: ../src/orca/Gecko.py:7963 ../src/orca/scripts/Evolution.py:720
 #: ../src/orca/scripts/Evolution.py:1242 ../src/orca/scripts/StarOffice.py:620
-#: ../src/orca/scripts/StarOffice.py:2258
-#: ../src/orca/scripts/StarOffice.py:2270 ../src/orca/where_am_I.py:1206
+#: ../src/orca/scripts/StarOffice.py:2316
+#: ../src/orca/scripts/StarOffice.py:2328 ../src/orca/where_am_I.py:1206
 msgid "blank"
 msgstr "buida"
 
@@ -2760,7 +2760,7 @@ msgstr "No hi ha cap més llista."
 #.
 #: ../src/orca/Gecko.py:7578 ../src/orca/Gecko.py:7619
 msgid "No more list items."
-msgstr "No hi ha cap més elment de llista"
+msgstr "No hi ha cap més element de llista"
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
@@ -3084,7 +3084,7 @@ msgstr "alternativa dreta"
 #.
 #: ../src/orca/keynames.py:61
 msgid "right control"
-msgstr "control dret"
+msgstr "control dreta"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
@@ -3102,13 +3102,13 @@ msgstr "meta dreta"
 #.
 #: ../src/orca/keynames.py:73
 msgid "num lock"
-msgstr "bloqueig de números"
+msgstr "fixació de teclat numèric"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
 #: ../src/orca/keynames.py:77
 msgid "caps lock"
-msgstr "bloqueig de majúscules"
+msgstr "fixació de majúscules"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
@@ -3132,7 +3132,7 @@ msgstr "pàgina avall"
 #.
 #: ../src/orca/keynames.py:93
 msgid "left tab"
-msgstr "tab esquerra"
+msgstr "tabulació esquerra"
 
 #. Translators: this is how someone would speak the name of the F11 key
 #.
@@ -3478,7 +3478,7 @@ msgstr "Majúscules"
 #.
 #: ../src/orca/orca_gui_prefs.py:308 ../src/orca/orca_gui_prefs.py:358
 msgid "Hyperlink"
-msgstr "Hiperenllaç"
+msgstr "Enllaç"
 
 #. Attribute Name column (NAME).
 #.
@@ -3779,7 +3779,7 @@ msgstr "S'ha inhabilitat la pronunciació."
 #.
 #: ../src/orca/orca.py:911
 msgid "Orca user settings reloaded."
-msgstr "S'han recarregat les configuracions de l'usuari per a l'Orca."
+msgstr "S'han tornat a carregar les configuracions de l'usuari per a l'Orca."
 
 #: ../src/orca/orca.py:1465
 msgid "Welcome to Orca."
@@ -3885,7 +3885,7 @@ msgid ""
 msgstr ""
 "Predeterminat\n"
 "Majúscules\n"
-"Hiperenllaç"
+"Enllaç"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Disable gksu _keyboard grab"
@@ -4005,11 +4005,11 @@ msgid ""
 "Bilinear"
 msgstr ""
 "Cap\n"
-"Bilinial"
+"Bilineal"
 
 #: ../src/orca/orca-setup.glade.h:63
 msgid "Orca Modifier Keys"
-msgstr "Modificador de tecles de l'Orca"
+msgstr "Tecles de modificació de l'Orca"
 
 #: ../src/orca/orca-setup.glade.h:64
 msgid "Orca Preferences"
@@ -4017,7 +4017,7 @@ msgstr "Preferències de l'Orca"
 
 #: ../src/orca/orca-setup.glade.h:65
 msgid "Orca _Modifier Key(s):"
-msgstr "_Modificador de tecles de l'Orca:"
+msgstr "Tecles de _modificació de l'Orca:"
 
 #: ../src/orca/orca-setup.glade.h:66
 msgid "Pi_tch:"
@@ -4033,7 +4033,7 @@ msgstr "Surt de l'Orca _sense confirmació"
 
 #: ../src/orca/orca-setup.glade.h:69
 msgid "S_ource display:"
-msgstr "Visualització f_ont:"
+msgstr "Visualització de la f_ont:"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:71
@@ -4215,11 +4215,10 @@ msgid ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"a : alemanya, b : barcelona, c : canadà, d : dinamarca, e : estònia, f : "
-"frança, g : girona, h : hotel, i : itàlia, j : jordània, k : kilo, l : "
-"lleida, m : mònaco, n : noruega, o : oslo, p : portugal, q : quebèc, r : "
-"rwanda, s : suècia, t : tarragona, u : urgell, v : vielha, w : whiskey, x : "
-"xina, y : yankee, z : zimbawe"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
+"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
+"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4562,7 +4561,7 @@ msgstr "marc d'escriptori"
 #.
 #: ../src/orca/rolenames.py:389
 msgid "shortbraille|dial"
-msgstr ""
+msgstr "marcar"
 
 #. Translators: long braille for the rolename of a dial.
 #.
@@ -4713,7 +4712,7 @@ msgstr "selector de tipus de lletra"
 #.
 #: ../src/orca/rolenames.py:490
 msgid "shortbraille|form"
-msgstr ""
+msgstr "form"
 
 #. Translators: long braille for the rolename of a form.
 #.
@@ -5407,13 +5406,13 @@ msgstr "elemnúdes"
 #.
 #: ../src/orca/rolenames.py:988
 msgid "TearOffMenuItem"
-msgstr "Element de menú desprendible"
+msgstr "Element de menú esquinçable"
 
 #. Translators: spoken words for the rolename of a tear off menu item.
 #.
 #: ../src/orca/rolenames.py:991
 msgid "tear off menu item"
-msgstr "element de menú desprendible"
+msgstr "element de menú esquinçable"
 
 #. Translators: short braille for the rolename of a terminal.
 #.
@@ -5953,7 +5952,7 @@ msgstr "Missatge de la sala de xat %s"
 #: ../src/orca/scripts/gaim.py:387
 #, python-format
 msgid "New chat tab %s"
-msgstr ""
+msgstr "Pestanya nova de xat %s"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -6148,7 +6147,7 @@ msgstr "inactiu"
 #.
 #: ../src/orca/scripts/StarOffice.py:832
 msgid "Speaks the contents of the input line."
-msgstr "Pronuncia el cotingut de la línia d'entrada."
+msgstr "Pronuncia el contingut de la línia d'entrada."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -6235,6 +6234,17 @@ msgstr "S'ha establert la capçalera de fila dinàmica per a la columna %s"
 msgid "Welcome to StarOffice"
 msgstr "Benvingut a l'StarOffice"
 
+#. Translators: this represents a match with the name of the
+#. "Available fields" list in the Tables wizard dialog in the
+#. the OOo oobase database application. We're looking for the
+#. accessible object name starting with "Available fields".
+#. We really try to avoid doing this kind of thing, but
+#. sometimes it is necessary and we apologize.
+#.
+#: ../src/orca/scripts/StarOffice.py:1537
+msgid "Available fields"
+msgstr "Camps disponibles"
+
 #. Translators: this is the name of the menu item people
 #. use in StarOffice to create a new text document.  It's
 #. at File->New->Text Document.  The translated form has to
@@ -6242,7 +6252,7 @@ msgstr "Benvingut a l'StarOffice"
 #. keying off stuff like this, but we're forced to do so in
 #. this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1593
+#: ../src/orca/scripts/StarOffice.py:1644
 msgid "Text Document"
 msgstr "Document de text"
 
@@ -6252,17 +6262,17 @@ msgstr "Document de text"
 #. hate keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1659
-#: ../src/orca/scripts/StarOffice.py:1895
+#: ../src/orca/scripts/StarOffice.py:1710
+#: ../src/orca/scripts/StarOffice.py:1946
 msgid "Spellcheck:"
 msgstr "Verificació de l'escriptura:"
 
-#: ../src/orca/scripts/StarOffice.py:1687
+#: ../src/orca/scripts/StarOffice.py:1738
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Tingueu en compte que el botó de baixar s'ha de prémer diverses vegades."
 
-#: ../src/orca/scripts/StarOffice.py:1701
+#: ../src/orca/scripts/StarOffice.py:1752
 msgid "License Agreement Accept button now has focus."
 msgstr "El botó d'acceptar l'acord de llicència té el focus."
 
@@ -6272,7 +6282,7 @@ msgstr "El botó d'acceptar l'acord de llicència té el focus."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1730
+#: ../src/orca/scripts/StarOffice.py:1781
 msgid "First name"
 msgstr "Nom"
 
@@ -6280,7 +6290,7 @@ msgstr "Nom"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/StarOffice.py:1804
+#: ../src/orca/scripts/StarOffice.py:1855
 msgid "Move to cell"
 msgstr "Mou a la cel·la"
 
@@ -6291,9 +6301,9 @@ msgstr "Mou a la cel·la"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1960
+#: ../src/orca/scripts/StarOffice.py:2011
 msgid "Presentation Wizard"
-msgstr ""
+msgstr "Assistent de presentació"
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
@@ -6302,7 +6312,7 @@ msgstr ""
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1980
+#: ../src/orca/scripts/StarOffice.py:2031
 msgid "Writer"
 msgstr "Writer"
 
@@ -6310,13 +6320,13 @@ msgstr "Writer"
 #. cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:2143
+#: ../src/orca/scripts/StarOffice.py:2201
 msgid "has formula"
 msgstr "conté una fórmula"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:2191
+#: ../src/orca/scripts/StarOffice.py:2249
 #, python-format
 msgid "Cell %s"
 msgstr "Cel·la %s"
@@ -6942,4 +6952,4 @@ msgstr "El botó predeterminat és %s"
 
 #~ msgid "Assistive Technologies for Blind and Visually Impaired People"
 #~ msgstr ""
-#~ "Tecnologies assistives per persones cegues i amb deficències visuals"
+#~ "Tecnologies assistives per persones cegues i amb deficiències visuals"
