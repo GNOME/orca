@@ -25,31 +25,90 @@ sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("DHTML Checkbox", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Give the widget a moment to construct itself
+# Tab to the first checkbox.  The following will be presented.
 #
-sequence.append(PauseAction(3000))
-
-########################################################################
-# Tab to the first checkbox and uncheck it.
+# BRAILLE LINE:  '<x>  Include decorative fruit basket  CheckBox'
+# VISIBLE:  '<x>  Include decorative fruit ba', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Include decorative fruit basket  check box checked'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Include decorative fruit basket", acc_role=pyatspi.ROLE_CHECK_BOX))
+
+########################################################################
+# Now, change its state.  The following should be presented in speech
+# and braille:
+#
+# BRAILLE LINE:  '< >  Include decorative fruit basket  CheckBox'
+#     VISIBLE:  '< >  Include decorative fruit ba', cursor=1
+# SPEECH OUTPUT: 'not checked'
+#
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# Tab to the second checkbox and uncheck it.
+# Tab to the second checkbox.  The following will be presented.
+#
+# BRAILLE LINE:  '<x>  Required checkbox  CheckBox'
+#     VISIBLE:  '<x>  Required checkbox  CheckBox', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Required checkbox  check box checked'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Required checkbox", acc_role=pyatspi.ROLE_CHECK_BOX))
+
+########################################################################
+# Now, change its state.  The following should be presented in speech
+# and braille:
+#
+# BRAILLE LINE:  '< >  Required checkbox  CheckBox'
+#     VISIBLE:  '< >  Required checkbox  CheckBox', cursor=1
+# SPEECH OUTPUT: 'not checked'
+#
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# Tab to the third checkbox and uncheck it then check it.
+# Tab to the third checkbox.  The following will be presented.
+#
+# BRAILLE LINE:  '<x>  Invalid checkbox  CheckBox'
+#     VISIBLE:  '<x>  Invalid checkbox  CheckBox', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Invalid checkbox  check box checked'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Invalid checkbox", acc_role=pyatspi.ROLE_CHECK_BOX))
+
+########################################################################
+# Now, change its state.  The following should be presented in speech
+# and braille:
+#
+# BRAILLE LINE:  '< >  Invalid checkbox  CheckBox'
+#     VISIBLE:  '< >  Invalid checkbox  CheckBox', cursor=1
+# SPEECH OUTPUT: 'not checked'
+#
 sequence.append(TypeAction(" "))
+
+########################################################################
+# Now, change its state back.  The following should be presented in speech
+# and braille:
+#
+# BRAILLE LINE:  '<x>  Invalid checkbox  CheckBox'
+#     VISIBLE:  '<x>  Invalid checkbox  CheckBox', cursor=1
+# SPEECH OUTPUT: 'checked'
+#
 sequence.append(TypeAction(" "))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  '< >  Invalid checkbox CheckBox'
+#     VISIBLE:  '< >  Invalid checkbox CheckBox', cursor=1
+# SPEECH OUTPUT: 'Invalid checkbox check box'
+# SPEECH OUTPUT: 'not checked'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Close the demo

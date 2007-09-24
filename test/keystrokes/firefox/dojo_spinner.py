@@ -30,25 +30,139 @@ sequence.append(WaitForFocus("Dojo Spinner Widget Test", acc_role=pyatspi.ROLE_D
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Tab to the first spinner.
+# Tab to the first spinner.  The following will be presented.  Note: ^ is an
+# ascii substitute for the unicode up arrow to force the script to be syntactically
+# correct. 
 #
-
+# BRAILLE LINE:  'Spinbox #1:  900 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  900 $l ^ Section', cursor=17
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Spinbox #1:  900 spin button'
+#
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Spinbox #1:", acc_role=pyatspi.ROLE_SPIN_BUTTON))
+
+########################################################################
+# Use down arrow to decrement spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  899 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  899 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '899'
+#
 sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Use down arrow to decrement spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  898 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  898 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '898'
+#
 sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Use down arrow to decrement spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  897 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  897 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '897'
+#
 sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Use down arrow to decrement spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  896 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  896 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '896'
+#
 sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Use down arrow to decrement spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  895 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  895 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '895'
+#
 sequence.append(KeyComboAction("Down"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  896 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  896 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '896'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  897 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  897 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '897'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  898 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  898 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '898'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  899 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  899 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '899'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  900 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  900 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '900'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  901 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  901 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '901'
+#
 sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Use up arrow to increment spinner value.  The following will be presented.
+#
+# BRAILLE LINE:  'Spinbox #1:  902 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  902 $l ^ Section', cursor=17
+# SPEECH OUTPUT: '902'
+#
 sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  'Spinbox #1:  902 $l ^ Section'
+#      VISIBLE:  'Spinbox #1:  902 $l ^ Section', cursor=17
+# SPEECH OUTPUT: 'Spinbox #1: '
+# SPEECH OUTPUT: 'spin button'
+# SPEECH OUTPUT: '902'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Close the demo
