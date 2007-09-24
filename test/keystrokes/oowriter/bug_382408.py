@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-"""Test to verify bug #382415 is still fixed.
-   Speak cell/row setting ignored in OOo Writer tables.
+"""Test to verify bug #382408 is still fixed.
+   Significant sluggishness when navigating in OOo Writer tables.
 """
 
 from macaroon.playback import *
@@ -9,7 +9,7 @@ from macaroon.playback import *
 sequence = MacroSequence()
 
 ######################################################################
-# 1. Start oowriter. There is a bug_382415.params file that will
+# 1. Start oowriter. There is a bug_382408.params file that will
 #    automatically load table-sample.odt
 #
 sequence.append(WaitForWindowActivate("table-sample - OpenOffice.org Writer",None))
@@ -20,7 +20,14 @@ sequence.append(WaitForWindowActivate("table-sample - OpenOffice.org Writer",Non
 sequence.append(KeyComboAction("<Control>Home"))
 
 ######################################################################
-# 3. Type a down arrow to move to the next line.
+# 3. Type Insert-F11 to switch to read table cells by row.
+#
+sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyComboAction("F11"))
+sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+
+######################################################################
+# 4. Type a down arrow to move to the next line.
 #
 # BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'
 # VISIBLE:  'This is a test. $l', cursor=16
@@ -30,7 +37,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 4. Type a down arrow to move to the Mon table column header.
+# 5. Type a down arrow to move to the Mon table column header.
 #
 # BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'
 # VISIBLE:  'Mon Paragraph', cursor=1
@@ -42,39 +49,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 5. Type a down arrow to move to the blank table cell on the next row.
-#
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'
-# VISIBLE:  'Mon Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B2'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-
-######################################################################
-# 6. Type a down arrow to move to the "4" table cell on the next row.
-#
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'
-# VISIBLE:  'Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B3'
-# SPEECH OUTPUT: '4'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-
-######################################################################
-# 7. Type a down arrow to move to the "11" table cell on the next row.
-#
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'
-# VISIBLE:  '11 Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B4'
-# SPEECH OUTPUT: '11'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-
-######################################################################
-# 8. Enter Alt-f, Alt-c to close this Writer application.
+# 6. Enter Alt-f, Alt-c to close this Writer application.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
@@ -87,7 +62,7 @@ sequence.append(WaitAction("object:property-change:accessible-name",
                            30000))
 
 ######################################################################
-# 9. Enter Alt-f, right arrow and Return, (File->New->Text Document),
+# 7. Enter Alt-f, right arrow and Return, (File->New->Text Document),
 #    to get the application back to the state it was in when the
 #    test started.
 #
@@ -106,7 +81,7 @@ sequence.append(WaitAction("object:property-change:accessible-name",
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 10. Wait for things to get back to normal.
+# 8. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
 

@@ -108,7 +108,6 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 11. Enter Alt-f, Alt-c to close this Writer application.
-#     A save dialog will appear.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))

@@ -16,6 +16,11 @@
           test/keystrokes/oowriter/bug_362979.py:
           Scripts adjusted to use "sequence.append(PauseAction(3000))".
 
+        * test/keystrokes/oowriter/bug_382408.py:      (new)
+          test/keystrokes/oowriter/bug_382408.params:  (new)
+          Macaroon test file for bug #382408 – Significant sluggishness 
+          when navigating in OOo Writer tables.
+
         * test/keystrokes/oowriter/bug_382880.py:      (new)
           test/keystrokes/oowriter/bug_382880.params:  (new)
           Macaroon test file for bug #382880 – No speech output when 
