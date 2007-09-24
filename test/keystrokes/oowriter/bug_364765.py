@@ -57,6 +57,6 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 7. Wait for things to get back to normal.
 #
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

@@ -44,6 +44,6 @@ sequence.append(KeyComboAction("<Alt>c"))
 #
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
+sequence.append(PauseAction(3000))
 
 sequence.start()

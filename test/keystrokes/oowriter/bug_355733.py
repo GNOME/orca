@@ -86,4 +86,9 @@ sequence.append(WaitForFocus("Discard", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 sequence.append(KeyComboAction("Return"))
 
+######################################################################
+# 8. Wait for things to get back to normal.
+#
+sequence.append(PauseAction(3000))
+
 sequence.start()
