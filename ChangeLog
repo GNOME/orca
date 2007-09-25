@@ -1,3 +1,16 @@
+2007-09-24  Eitan Isaacson  <eitan@ascender.com>
+
+	* test/keystrokes/java/role_accel_label.py: 
+	* test/keystrokes/java/role_check_box.py: 
+	* test/keystrokes/java/role_check_menu_item.py: 
+	* test/keystrokes/java/role_combo_box.py: 
+	* test/keystrokes/java/role_dialog.py: Put proper header comments.
+	* test/keystrokes/java/role_menu.(py|params): 
+	* test/keystrokes/java/role_page_tab.(py|params): 
+	* test/keystrokes/java/role_radio_button.(py|params): 
+	* test/keystrokes/java/role_radio_menu_item.(py|params): 
+	New role tests.
+
 2007-09-24  Scott Haeger <scott@bashautomation.com>
 	* Updated ARIA test scripts to include output comments and whereami
         test/keystrokes/firefox/dojo_checkbox.py  

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of push buttons in Java's SwingSet2.
+"""Test of check menu items in Java's SwingSet2.
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -62,7 +62,8 @@ sequence.append(WaitForFocus("Enable Drag Support",
 # SPEECH OUTPUT: 'not checked'
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'item 2 of 2'
-# SPEECH OUTPUT: ''sequence.append(KeyComboAction("KP_Enter"))
+# SPEECH OUTPUT: ''
+sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 
 ########################################################################

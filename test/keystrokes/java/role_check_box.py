@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of push buttons in Java's SwingSet2.
+"""Test of check boxes in Java's SwingSet2.
 """
 
 from macaroon.playback.keypress_mimic import *
@@ -148,7 +148,6 @@ sequence.append(WaitForFocus("One ", acc_role=pyatspi.ROLE_CHECK_BOX))
 # SPEECH OUTPUT: 'One check box'
 # SPEECH OUTPUT: 'checked'
 # SPEECH OUTPUT: ''
-
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 

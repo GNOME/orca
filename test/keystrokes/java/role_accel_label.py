@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Test of push buttons in Java's SwingSet2.
+"""Test of accelerator labels in Java's SwingSet2.
 """
 
 from macaroon.playback.keypress_mimic import *
