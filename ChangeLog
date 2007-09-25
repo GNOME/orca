@@ -15,6 +15,12 @@
           Macaroon test file for bug #450210 – StarOffice.py needs 
           null-check for self.getFrame(event.source).
 
+        * test/keystrokes/oowriter/bug_361624.py:      (new)
+          test/keystrokes/oowriter/bug_361624.params:  (new)
+          test/keystrokes/oowriter/column-example.odt: (new)
+          Macaroon test file for bug #361624 – Flat review sometimes fails 
+          to move to second column of text in OOo Writer documents.
+
 2007-09-24  Eitan Isaacson  <eitan@ascender.com>
 
 	* test/keystrokes/java/role_accel_label.py: 
