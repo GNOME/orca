@@ -11,6 +11,10 @@
           Macaroon test file for bug #435226 – Where-am-I doesn't correctly 
           handle multiple selected paragraphs in OOo Writer and Evolution.
 
+        * test/keystrokes/oowriter/bug_450210.py:      (new)
+          Macaroon test file for bug #450210 – StarOffice.py needs 
+          null-check for self.getFrame(event.source).
+
 2007-09-24  Eitan Isaacson  <eitan@ascender.com>
 
 	* test/keystrokes/java/role_accel_label.py: 
