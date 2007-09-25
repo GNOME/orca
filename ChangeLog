@@ -6,6 +6,11 @@
           Adjusted test to open spanish.odt instead of creating its
           contents. spanish.odt is going to be needed by another test.
 
+        * test/keystrokes/oowriter/bug_435226.py:      (new)
+          test/keystrokes/oowriter/bug_435226.params:  (new)
+          Macaroon test file for bug #435226 – Where-am-I doesn't correctly 
+          handle multiple selected paragraphs in OOo Writer and Evolution.
+
 2007-09-24  Eitan Isaacson  <eitan@ascender.com>
 
 	* test/keystrokes/java/role_accel_label.py: 
