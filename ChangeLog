@@ -1,5 +1,21 @@
 2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/html/FirefoxProfile/prefs.js: set 
+        dom.disable_window_status_change to false so that we can test
+        the changing contents of the status bar in Firefox.
+
+        * test/html/status-bar.html: (new) Test case for use in regression
+        testing of status bar access in Firefox.
+
+        * test/harness/utils.py: Add htmlURLPrefix so that we can work
+        out the location of the local html test cases (i.e. the ones
+        in test/html).
+
+        * test/keystrokes/firefox/xul_where_am_i_status_bar.py: (new)
+        Another test.
+
+2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/xul_role_accel_label.py,
           test/keystrokes/firefox/xul_role_check_menu_item.py,
           test/keystrokes/firefox/xul_role_check_box.py,

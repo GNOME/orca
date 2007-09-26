@@ -28,6 +28,7 @@ user_pref("browser.startup.page", 0);
 user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnOpen", false);
 user_pref("browser.warnOnQuit", false);
+user_pref("dom.disable_window_status_change", false);
 user_pref("extensions.lastAppVersion", "3.0a8pre");
 user_pref("intl.charsetmenu.browser.cache", "UTF-8, ISO-8859-1");
 user_pref("network.cookie.prefsMigrated", true);
