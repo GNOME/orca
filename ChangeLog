@@ -6,6 +6,11 @@
           Macaroon test file for bug #361167 – Add dynamic row and column 
           header support in Orca for StarOffice/OpenOffice calc.
 
+        * test/keystrokes/oocalc/bug_363802.py:      (new)
+          test/keystrokes/oocalc/bug_363802.params:  (new)
+          Macaroon test file for bug #363802 – When navigating in Calc 
+          from cell to cell, Orca should not say "cell".
+
 2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/html/FirefoxProfile/prefs.js: set 
