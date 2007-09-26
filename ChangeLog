@@ -11,6 +11,10 @@
           Macaroon test file for bug #363802 – When navigating in Calc 
           from cell to cell, Orca should not say "cell".
 
+        * test/keystrokes/oocalc/bug_364086.py:      (new)
+          Macaroon test file for bug #364086 – Orca reports "paragraph 0 
+          paragraph" <char> when you begin typing in a Calc cell.
+
 2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/html/FirefoxProfile/prefs.js: set 
