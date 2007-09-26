@@ -30,6 +30,10 @@
         being able to test XUL trees, tree tables, and possibly multi-
         line textboxes.
 
+        * test/harness/runone.sh:
+        Added bookmarks.html as one of the FirefoxProfile files to be
+        copied to /tmp during the testing.
+
 2007-09-24  Scott Haeger <scott@bashautomation.com>
 	* Bug #468633, No output when tabbing to ARIA slider
 	 src/orca/Gecko.py
