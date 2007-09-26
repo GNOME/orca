@@ -21,6 +21,9 @@ orca.settings.enableActionKeys = False
 orca.settings.enableBraille = False
 orca.settings.enableBrailleMonitor = False
 
+orca.settings.enableProgressBarUpdates = True
+orca.settings.progressBarUpdateInterval = 0
+
 orca.settings.commFailureAttemptLimit = 0
 
 import orca.Gecko

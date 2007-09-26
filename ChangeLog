@@ -1,4 +1,8 @@
-2007-09-24  Scott Haeger <scott@bashautomation.com>
+2007-09-26  Scott Haeger <scott@bashautomation.com>
+        * Updated user_setting.py.in for progressbars
+        test/harness/user_setting.py.in
+
+2007-09-26  Scott Haeger <scott@bashautomation.com>
 	* Updated ARIA test scripts to include output comments and whereami
         test/keystrokes/firefox/moz_slider.py  
 	test/keystrokes/firefox/moz_progressbar.py  
