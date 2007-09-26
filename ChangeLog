@@ -1,3 +1,11 @@
+2007-09-26  Rich Burridge <rich.burridge@sun.com>
+
+        * test/keystrokes/oocalc/bug_361167.py:      (new)
+          test/keystrokes/oocalc/bug_361167.params:  (new)
+          test/keystrokes/oocalc/fruit.ods: (new)
+          Macaroon test file for bug #361167 – Add dynamic row and column 
+          header support in Orca for StarOffice/OpenOffice calc.
+
 2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/html/FirefoxProfile/prefs.js: set 
