@@ -25,11 +25,146 @@ sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("DHTML Progress Bar", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Tab to the button and press it.  This starts the progressbar.
+# Tab to the button and press it.  The following will be presented.
+# Note: unicode chars removed from between 'schedule' and 'Cancel'
+#
+#  BRAILLE LINE:  'Load schedule   Cancel'
+#       VISIBLE:  'Load schedule   Cancel', cursor=0
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: 'Load schedule button'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Load schedule", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+
+
+########################################################################
+# Push the button to start progressbar.  The following will be presented
+# on each update.
+# [[[Bug?: no Braille output]]]
+#
 sequence.append(KeyComboAction("Return"))
+
+# SPEECH OUTPUT: '5 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '10 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '15 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '20 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '25 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '30 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '35 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '40 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '45 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '50 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '55 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '60 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '65 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '70 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '75 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '80 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '85 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '90 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '95 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
+# SPEECH OUTPUT: '100 percent. '
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_PROGRESS_BAR,
+                           5000))
 
 ########################################################################
 # Wait for the table to pop up indicating that the task is done.  Note:

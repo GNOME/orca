@@ -25,37 +25,86 @@ sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("text/html: Button Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Give the widget a moment to construct itself
+# Tab to the first button.  The following will be presented.
 #
-sequence.append(PauseAction(3000))
-
-########################################################################
-# Tab to the first button and push it.
+#  BRAILLE LINE:  ' Reduce Text 1 Button'
+#       VISIBLE:  ' Reduce Text 1 Button', cursor=1
+# SPEECH OUTPUT: 'Button example 1 panel'
+# SPEECH OUTPUT: ' Reduce Text 1 button'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Reduce Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  The following should be
+# presented in speech and braille:
+#
+# BRAILLE LINE:  ' Reduce Text 1 Button'
+#      VISIBLE:  ' Reduce Text 1 Button', cursor=1
+# SPEECH OUTPUT: 'Reduce Text 1'
+# SPEECH OUTPUT: 'button'
+# SPEECH OUTPUT: ''
+#
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+
+########################################################################
+# Now push the first button.  The following will be presented.
+#
+# [[[Bug?: No output when button is pressed.]]]
+#
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# Tab to the second button and push it.
+# Tab to the second button.
+#
+# BRAILLE LINE:  ' Enlarge Text 1 Button'
+#      VISIBLE:  ' Enlarge Text 1 Button', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Enlarge Text 1 button'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Enlarge Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+########################################################################
+# Now push the second button.  The following will be presented.
+#
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# Tab to the third button and push it.
+# Tab to the third button.
 #
+#  BRAILLE LINE:  ' Italicize Text 1 Button'
+#       VISIBLE:  ' Italicize Text 1 Button', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Italicize Text 1 button'
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Italicize Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+########################################################################
+# Now push the third button.  The following will be presented.
+#
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# Tab to the fourth button and push it twice.
+# Tab to the fourth button.  The following will be presented.
+#
+#  BRAILLE LINE:  ' Bold Text 1 Button'
+#       VISIBLE:  ' Bold Text 1 Button', cursor=1
+# SPEECH OUTPUT: ''
+# SPEECH OUTPUT: ' Bold Text 1 button'
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(" Bold Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+########################################################################
+# Now push the fourth button.  The following will be presented.
+#
 sequence.append(TypeAction           ("  "))
+
+########################################################################
+# Now push the fourth button again.  The following will be presented.
+#
 sequence.append(TypeAction           ("  "))
 
 ########################################################################
