@@ -1,3 +1,8 @@
+2007-09-26  Scott Haeger <scott@bashautomation.com>
+	* Bug #468633, No output when tabbing to ARIA slider
+        src/orca/Gecko.py
+        src/orca/speechgenerator.py
+
 2007-09-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: Fix for bug 475956 - Orca sometimes "guesses"

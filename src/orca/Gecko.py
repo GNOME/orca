@@ -565,6 +565,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
              self._getSpeechForLink
         self.speechGenerators[rolenames.ROLE_LIST_ITEM]      = \
              self._getSpeechForListItem
+        self.speechGenerators[rolenames.ROLE_SLIDER]         = \
+             self._getSpeechForSlider
 
     def _getSpeechForObjectRole(self, obj):
         """Prevents some roles from being spoken."""
@@ -1128,7 +1130,68 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
             
-            
+    def _getSpeechForSlider(self, obj, already_focused):
+        """Get the speech for a slider.  If the object already
+        had focus, just the value is spoken.
+
+        Arguments:
+        - obj: the slider
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        value = obj.value
+
+        # OK, this craziness is all about trying to figure out the most
+        # meaningful formatting string for the floating point values.
+        # The number of places to the right of the decimal point should
+        # be set by the minimumIncrement, but the minimumIncrement isn't
+        # always set.  So...we'll default the minimumIncrement to 1/100
+        # of the range.  But, if max == min, then we'll just go for showing
+        # them off to two meaningful digits.
+        #
+        try:
+            minimumIncrement = value.minimumIncrement
+        except:
+            minimumIncrement = 0.0
+
+        if minimumIncrement == 0.0:
+            minimumIncrement = (value.maximumValue - value.minimumValue) \
+                               / 100.0
+
+        try:
+            decimalPlaces = max(0, -math.log10(minimumIncrement))
+        except:
+            try:
+                decimalPlaces = max(0, -math.log10(value.minimumValue))
+            except:
+                try:
+                    decimalPlaces = max(0, -math.log10(value.maximumValue))
+                except:
+                    decimalPlaces = 0
+
+        formatter = "%%.%df" % decimalPlaces
+        valueString = formatter % value.currentValue
+        #minString   = formatter % value.minimumValue
+        #maxString   = formatter % value.maximumValue
+
+        if already_focused:
+            utterances = [valueString]
+        else:
+            utterances = []
+            utterances.extend(self._getSpeechForObjectLabel(obj))
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.append(valueString)
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        self._debugGenerator("_getSpeechForSlider",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+                        
 ########################################################################
 #                                                                      #
 # Custom WhereAmI                                                      #
