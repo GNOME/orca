@@ -1,3 +1,35 @@
+2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/xul_role_accel_label.py,
+          test/keystrokes/firefox/xul_role_check_menu_item.py,
+          test/keystrokes/firefox/xul_role_check_box.py,
+          test/keystrokes/firefox/xul_role_page_tab.py,
+          test/keystrokes/firefox/xul_role_push_button.py,
+          test/keystrokes/firefox/xul_role_radio_button.py,
+          test/keystrokes/firefox/xul_role_radio_menu_item.py:
+        The above have new names so that we can more readily identify
+        the various widget groups.  In addition, I added quite some
+        grep-able "bug" comments.
+
+        * test/keystrokes/firefox/xul_role_alert.py,        (new)
+          test/keystrokes/firefox/xul_role_combo_box.py,    (new)
+          test/keystrokes/firefox/xul_role_list_item.py,    (new)
+          test/keystrokes/firefox/xul_role_menu_bar.py,     (new)
+          test/keystrokes/firefox/xul_where_am_i_dialog.py: (new)
+        More tests, more grep-able "bug" comments.
+
+        * test/html/FirefoxProfile/prefs.js:
+        set browser.startup.homepage_override.mstone to "ignore".  This
+        should solve the issue of each new milestone release (e.g. from
+        3.0a8 to 3.0a9) insisting upon displaying the what's new stuff
+        rather than about:blank.  Okay, Will, so you were right and I
+        was wrong. ;-) ;-) ;-)
+
+        * test/html/FirefoxProfile/bookmarks.html: (new)
+        Added some hierarchically-arranged bookmarks for the purpose of
+        being able to test XUL trees, tree tables, and possibly multi-
+        line textboxes.
+
 2007-09-24  Scott Haeger <scott@bashautomation.com>
 	* Bug #468633, No output when tabbing to ARIA slider
 	 src/orca/Gecko.py
