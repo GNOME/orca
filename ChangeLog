@@ -19,6 +19,11 @@
           Macaroon test file for bug #363801 – Provide confirmation when 
           the user presses Insert R/C in Calc.
 
+        * test/keystrokes/oocalc/bug_433398.py:      (new)
+          test/keystrokes/oocalc/bug_433398.params:  (new)
+          Macaroon test file for bug #433398 – Orca does not provide access 
+          to the state of checked menu items in OOo.
+
 2007-09-26  Scott Haeger <scott@bashautomation.com>
         * Updated user_setting.py.in for progressbars
         test/harness/user_setting.py.in
