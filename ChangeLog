@@ -5,6 +5,11 @@
           Macaroon test file for bug #356334 – readCharAttributes crashes 
           OOo Calc 2.0.4 RC1.
 
+        * test/keystrokes/oocalc/bug_363801.py:      (new)
+          test/keystrokes/oocalc/bug_363801.params:  (new)
+          Macaroon test file for bug #363801 – Provide confirmation when 
+          the user presses Insert R/C in Calc.
+
 2007-09-26  Scott Haeger <scott@bashautomation.com>
         * Updated user_setting.py.in for progressbars
         test/harness/user_setting.py.in
