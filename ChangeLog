@@ -1,4 +1,4 @@
-2007-09-26  Rich Burridge <rich.burridge@sun.com>
+2007-09-27  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oocalc/bug_356334.py:      (new)
           test/keystrokes/oocalc/bug_356334.params:  (new)
