@@ -251,8 +251,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         table = self._script.getTable(obj)
         parent = obj.parent
 
-        if parent.__dict__.has_key("lastColumn") and \
-           parent.lastColumn != parent.table.getColumnAtIndex(obj.index):
+        if self._script.pointOfReference.has_key("lastColumn") and \
+              self._script.pointOfReference["lastColumn"] != \
+              parent.table.getColumnAtIndex(obj.index):
             if self._script.dynamicColumnHeaders.has_key(table):
                 row = self._script.dynamicColumnHeaders[table]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
@@ -267,8 +268,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     if text:
                         regions.append(braille.Region(" " + text + " "))
 
-        if parent.__dict__.has_key("lastRow") and \
-           parent.lastRow != parent.table.getRowAtIndex(obj.index):
+        if self._script.pointOfReference.has_key("lastRow") and \
+              self._script.pointOfReference['lastRow'] != \
+              parent.table.getRowAtIndex(obj.index):
             if self._script.dynamicRowHeaders.has_key(table):
                 column = self._script.dynamicRowHeaders[table]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
@@ -305,11 +307,13 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 # the same row).
                 #
                 speakAll = True
-                if parent.__dict__.has_key("lastRow") and \
-                    parent.__dict__.has_key("lastColumn"):
-                    speakAll = (parent.lastRow != row) or \
+                if self._script.pointOfReference.has_key("lastRow") and \
+                    self._script.pointOfReference.has_key("lastColumn"):
+                    pointOfReference = self._script.pointOfReference
+                    speakAll = \
+                        (pointOfReference["lastRow"] != row) or \
                            ((row == 0 or row == parent.table.nRows-1) and \
-                            parent.lastColumn == column)
+                            pointOfReference["lastColumn"] == column)
 
                 if speakAll:
                     focusRowRegion = None
@@ -513,8 +517,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             table = self._script.getTable(obj)
             parent = obj.parent
 
-            if parent.__dict__.has_key("lastColumn") and \
-               parent.lastColumn != \
+            if self._script.pointOfReference.has_key("lastColumn") and \
+               self._script.pointOfReference["lastColumn"] != \
                parent.table.getColumnAtIndex(obj.index):
                 if self._script.dynamicColumnHeaders.has_key(table):
                     row = self._script.dynamicColumnHeaders[table]
@@ -530,8 +534,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         if text:
                             utterances.append(text)
 
-            if parent.__dict__.has_key("lastRow") and \
-               parent.lastRow != parent.table.getRowAtIndex(obj.index):
+            if self._script.pointOfReference.has_key("lastRow") and \
+               self._script.pointOfReference["lastRow"] != \
+               parent.table.getRowAtIndex(obj.index):
                 if self._script.dynamicRowHeaders.has_key(table):
                     column = self._script.dynamicRowHeaders[table]
                     header = self._script.getDynamicColumnHeaderCell(obj,
@@ -560,11 +565,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     # the same row).
                     #
                     speakAll = True
-                    if parent.__dict__.has_key("lastRow") and \
-                        parent.__dict__.has_key("lastColumn"):
-                        speakAll = (parent.lastRow != row) or \
+                    if self._script.pointOfReference.has_key("lastRow") and \
+                        self._script.pointOfReference.has_key("lastColumn"):
+                        pointOfReference = self._script.pointOfReference
+                        speakAll = (pointOfReference["lastRow"] != row) or \
                                ((row == 0 or row == parent.table.nRows-1) and \
-                                parent.lastColumn == column)
+                                pointOfReference["lastColumn"] == column)
 
                     if speakAll:
                         [startIndex, endIndex] = \

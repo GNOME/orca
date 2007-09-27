@@ -2141,6 +2141,17 @@ class Script(script.Script):
         else:
             newParent = None
 
+        # Clear the point of reference.
+        # If the point of reference is a cell, we want to keep the 
+        # table-related points of reference.
+        if oldParent == newParent and \
+              getattr(newParent, 'role', None) == rolenames.ROLE_TABLE:
+          for key in self.pointOfReference.keys():
+            if key not in ('lastRow', 'lastColumn'):
+              del self.pointOfReference[key]
+        else:
+          self.pointOfReference = {}
+
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
@@ -2296,9 +2307,9 @@ class Script(script.Script):
                 if newParent and newParent.table:
                     table = newParent.table
                     column = table.getColumnAtIndex(newLocusOfFocus.index)
-                    newParent.lastColumn = column
+                    self.pointOfReference['lastColumn'] = column
                     row = table.getRowAtIndex(newLocusOfFocus.index)
-                    newParent.lastRow = row
+                    self.pointOfReference['lastRow'] = row
         else:
             orca_state.noFocusTimeStamp = time.time()
 
@@ -2605,7 +2616,7 @@ class Script(script.Script):
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
-        hasLastPos = event.source.__dict__.has_key("lastCursorPosition")
+        hasLastPos = self.pointOfReference.has_key("lastCursorPosition")
 
         if (string == "Up") or (string == "Down"):
             # If the user has typed Shift-Up or Shift-Down, then we want
@@ -2614,7 +2625,8 @@ class Script(script.Script):
             # currently positioned.
             #
             if hasLastPos and isShiftKey and not isControlKey:
-                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                self.sayPhrase(event.source, 
+                               self.pointOfReference["lastCursorPosition"],
                                event.source.text.caretOffset)
             else:
                 self.sayLine(event.source)
@@ -2627,7 +2639,8 @@ class Script(script.Script):
             # the character at the text cursor position.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                self.sayPhrase(event.source, 
+                               self.pointOfReference["lastCursorPosition"],
                                event.source.text.caretOffset)
             elif isControlKey:
                 self.sayWord(event.source)
@@ -2642,7 +2655,8 @@ class Script(script.Script):
             # position otherwise we speak the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                self.sayPhrase(event.source, 
+                               self.pointOfReference["lastCursorPosition"],
                                event.source.text.caretOffset)
             elif isControlKey:
                 self.sayCharacter(event.source)
@@ -2656,7 +2670,8 @@ class Script(script.Script):
             # the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                self.sayPhrase(event.source, 
+                               self.pointOfReference["lastCursorPosition"],
                                event.source.text.caretOffset)
             else:
                 self.sayLine(event.source)
@@ -2669,7 +2684,8 @@ class Script(script.Script):
             # to the right of the current text cursor position.
             #
             if hasLastPos and isShiftKey and not isControlKey:
-                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                self.sayPhrase(event.source, 
+                               self.pointOfReference["lastCursorPosition"],
                                event.source.text.caretOffset)
             elif isControlKey:
                 self.sayLine(event.source)
@@ -6040,10 +6056,12 @@ class Script(script.Script):
             #
             speech.speak(Q_("text|selected"), None, False)
         else:
-            if obj.__dict__.has_key("lastSelections"):
-                for i in range(0, len(obj.lastSelections)):
-                    startSelOffset = obj.lastSelections[0][0]
-                    endSelOffset = obj.lastSelections[0][1]
+            if self.pointOfReference.has_key("lastSelections"):
+                for i in xrange(len(self.pointOfReference["lastSelections"])):
+                    startSelOffset = \
+                        self.pointOfReference["lastSelections"][0][0]
+                    endSelOffset = \
+                        self.pointOfReference["lastSelections"][0][1]
                     if (startOffset >= startSelOffset) \
                         and (endOffset <= endSelOffset):
                         # Translators: when the user unselects
@@ -6058,10 +6076,11 @@ class Script(script.Script):
         # Save away the current text cursor position and list of text
         # selections for next time.
         #
-        obj.lastCursorPosition = obj.text.caretOffset
-        obj.lastSelections = []
+        self.pointOfReference["lastCursorPosition"] = obj.text.caretOffset
+        self.pointOfReference["lastSelections"] = []
         for i in range(0, obj.text.getNSelections()):
-            obj.lastSelections.append(obj.text.getSelection(i))
+            self.pointOfReference["lastSelections"].append(
+              obj.text.getSelection(i))
 
     def getURI(self, obj):
         """Return the URI for a given link object.

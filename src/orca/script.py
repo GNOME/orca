@@ -77,6 +77,7 @@ class Script:
         self.presentIfInactive = True
 
         self.inputEventHandlers = {}
+        self.pointOfReference = {}
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
         self.brailleBindings = self.getBrailleBindings()

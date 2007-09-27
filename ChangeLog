@@ -1,3 +1,12 @@
+2007-09-27  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/braillegenerator.py: 
+	* src/orca/default.py: 
+	* src/orca/script.py: 
+	* src/orca/scripts/StarOffice.py: 
+	* src/orca/speechgenerator.py: Got rid of accessible annotations
+	(bug #476639).
+
 2007-09-27  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oocalc/bug_356334.py:      (new)

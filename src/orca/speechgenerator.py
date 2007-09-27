@@ -1415,11 +1415,12 @@ class SpeechGenerator:
                 # the same row).
                 #
                 speakAll = True
-                if parent.__dict__.has_key("lastRow") and \
-                    parent.__dict__.has_key("lastColumn"):
-                    speakAll = (parent.lastRow != row) or \
-                           ((row == 0 or row == parent.table.nRows-1) and \
-                            parent.lastColumn == column)
+                if self._script.pointOfReference.has_key("lastRow") and \
+                    self._script.pointOfReference.has_key("lastColumn"):
+                    pointOfReference = self._script.pointOfReference
+                    speakAll = (pointOfReference["lastRow"] != row) or \
+                        ((row == 0 or row == parent.table.nRows-1) and \
+                           pointOfReference["lastColumn"] == column)
 
                 if speakAll:
                     for i in range(0, parent.table.nColumns):
