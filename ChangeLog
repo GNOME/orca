@@ -5,6 +5,10 @@
           Macaroon test file for bug #363804 – Add ability to turn off 
           coordinate announcement when navigating in Calc.
 
+        * test/keystrokes/oocalc/bug_364407.py:      (new)
+          Macaroon test file for bug #364407 – Shift+Ctrl+T in OOCalc 
+          results in very verbose output.
+
 2007-09-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/mag.py: fix for bug 477683 - Orca failed to bring full
