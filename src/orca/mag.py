@@ -68,7 +68,8 @@ _magnifier = None
 _roiWidth = 0
 _roiHeight = 0
 
-# Minimum values for the center of the ROI
+# Minimum/maximum values for the center of the ROI
+# in source screen coordinates.
 #
 _minROIX = 0
 _maxROIX = 0
@@ -77,19 +78,31 @@ _maxROIY = 0
 
 # The current region of interest.
 #
+# A GNOME.Magnifier.RectBounds object which consists of x1, y1, x2, y2 values
+# that are in source screen coordinates.
+#
 _roi = None
 
-# The area we are magnifying
+# The area of the source display that is not covered by the magnifier.
+#
+# A GNOME.Magnifier.RectBounds object which consists of x1, y1, x2, y2 values
+# that are in source screen coordinates.  If the COMPOSITE support is enabled
+# in gnome-mag, then this typically becomes the entire source screen.  If it
+# it not enabled, however, and the target and source displays are the same,
+# this ends up becoming the portion of the screen that is not covered by the
+# magnifier.
 #
 _sourceDisplayBounds = None
 
-# The area where we are magnifying
+# The area on the target display where we are placing the magnifier.
+#
+# A GNOME.Magnifier.RectBounds object which consists of x1, y1, x2, y2 values
+# that are in target screen coordinates.
 #
 _targetDisplayBounds = None
 
-# The ZoomRegion we care about [[[TODO: WDW - we should be more careful about
-# just what we're doing here.  The Magnifier allows more than one ZoomRegion
-# and we're just picking up the first one.]]]
+# The ZoomRegion we care about.  We only use one ZoomRegion and we
+# make it occupy the whole magnifier.
 #
 _zoomer = None
 
@@ -111,7 +124,11 @@ def __setROI(rect):
 
     global _roi
 
+    debug.println(debug.LEVEL_ALL, "mag.py:__setROI: (%d, %d), (%d, %d)" \
+                  % (rect.x1, rect.y1, rect.x2, rect.y2))
+
     _roi = rect
+
     _zoomer.setROI(_roi)
     _zoomer.markDirty(_roi)  # [[[TODO: WDW - for some reason, this seems
                              # necessary.]]]
@@ -289,16 +306,25 @@ def applySettings():
 
     _magnifier.clearAllZoomRegions()
 
+    # Define where the magnifier will live.
+    #
     try:
         _magnifier.TargetDisplay = settings.magTargetDisplay
     except:
         pass
 
+    # Define what will be magnified.
+    #
     try:
         _magnifier.SourceDisplay = settings.magSourceDisplay
     except:
         pass
 
+    # Now, tell the magnifier where we want it to live on the target display.
+    # The coordinates are in screen coordinates of the target display.
+    # This will have the side effect of setting up other stuff for us, such
+    # as source-display-bouinds.
+    #
     magnifierPBag = _magnifier.getProperties()
 
     try:
@@ -315,6 +341,8 @@ def applySettings():
     except:
         debug.printException(debug.LEVEL_OFF)
 
+    # Set a bunch of other magnifier properties...
+    #
     if settings.enableMagCursor:
         bonobo.pbclient_set_float(
             magnifierPBag, "cursor-scale-factor", 1.0 * settings.magZoomFactor)
@@ -375,24 +403,98 @@ def applySettings():
     #                                                                      #
     ########################################################################
 
-    _sourceDisplayBounds = magnifierPBag.getValue(
-        "source-display-bounds").value()
-
+    # We set the target-display-bounds above, but let's ask gnome-mag for
+    # what it really set it to.  Hopefully, it was the same thing.
+    #
     _targetDisplayBounds = magnifierPBag.getValue(
         "target-display-bounds").value()
 
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier target bounds preferences: (%d, %d), (%d, %d)" \
+                  % (settings.magZoomerLeft, settings.magZoomerTop, \
+                     settings.magZoomerRight, settings.magZoomerBottom))
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier target bounds actual: (%d, %d), (%d, %d)" \
+                  % (_targetDisplayBounds.x1, _targetDisplayBounds.y1, \
+                     _targetDisplayBounds.x2, _targetDisplayBounds.y2))
+
+    # If the COMPOSITE support is not enabled in gnome-mag, then the
+    # source-display-bounds will be adjusted to accomodate portion of the
+    # display not being covered by the magnifier (assuming there is only
+    # one display).  Otherwise, the source-display-bounds will be the
+    # entire source screen.
+    #
+    _sourceDisplayBounds = magnifierPBag.getValue(
+        "source-display-bounds").value()
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier source bounds actual: (%d, %d), (%d, %d)" \
+                  % (_sourceDisplayBounds.x1, _sourceDisplayBounds.y1, \
+                     _sourceDisplayBounds.x2, _sourceDisplayBounds.y2))
+
+    # If there is nothing we can possibly magnify, then abort our mission.
+    #
+    if ((_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1) == 0) \
+        or ((_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1) == 0):
+        debug.println(
+            debug.LEVEL_SEVERE,
+            "There is nothing to magnify.  This is usually caused\n" \
+            "by a preferences setting that tries to take up the\n" \
+            "full screen for magnification, but the underlying\n"
+            "system does not support full screen magnification.\n"
+            "The causes of that are generally that COMPOSITE\n" \
+            "support has not been enabled in gnome-mag or the\n" \
+            "X Window System Server.  As a result of this issue\n" \
+            "Magnification will not be used.\n")
+        raise RuntimeError, "Nothing can be magnified"
+
+    # Now, we create a zoom region to occupy the whole magnifier (i.e.,
+    # the viewport is in target region coordinates and we make the
+    # viewport be the whole target region).  Note, since we're starting
+    # at (0, 0), the viewportWidth and viewportHeight are the same as
+    # the x2, y2 values for a rectangular region.
+    #
+    viewportWidth = _targetDisplayBounds.x2 - _targetDisplayBounds.x1
+    viewportHeight = _targetDisplayBounds.y2 - _targetDisplayBounds.y1
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier zoomer viewport desired: (0, 0), (%d, %d)" \
+                  % (viewportWidth, viewportHeight))
+
+    # Now, let's see what the ROI looks like.
+    #
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier source width: %d (viewport can show %d)" \
+                  % (_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
+                   viewportWidth / settings.magZoomFactor))
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier source height: %d (viewport can show %d)" \
+                  % (_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1,
+                   viewportHeight / settings.magZoomFactor))
+
+    # Adjust the ROI in the event the source window is too small for the
+    # target window.  This usually happens when someone expects COMPOSITE
+    # to be enabled, but it isn't.  As a result, they usually have a very
+    # big grey magnifier on their screen.
+    #
+    _roiWidth  = min(_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
+                     viewportWidth / settings.magZoomFactor)
+    _roiHeight = min(_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1,
+                     viewportHeight / settings.magZoomFactor)
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier zoomer ROI size desired: width=%d, height=%d)" \
+                  % (_roiWidth, _roiHeight))
+
+    # Create the zoomer with a magnification factor, an initial ROI, and
+    # where in magnifier we want it to be (we want it to be in the whole
+    # magnifier).
+    #
     _zoomer = _magnifier.createZoomRegion(
         settings.magZoomFactor, settings.magZoomFactor,
-        GNOME.Magnifier.RectBounds(0,
-                                   0,
-                                   -1,
-                                   -1),
-        GNOME.Magnifier.RectBounds(0,
-                                   0,
-                                   _targetDisplayBounds.x2 \
-                                   - _targetDisplayBounds.x1,
-                                   _targetDisplayBounds.y2 \
-                                   - _targetDisplayBounds.y1))
+        GNOME.Magnifier.RectBounds(0, 0, _roiWidth, _roiHeight),
+        GNOME.Magnifier.RectBounds(0, 0, viewportWidth, viewportHeight))
 
     zoomerPBag = _zoomer.getProperties()
     bonobo.pbclient_set_boolean(zoomerPBag, "is-managed", True)
@@ -420,17 +522,31 @@ def applySettings():
 
     viewport = zoomerPBag.getValue("viewport").value()
 
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier viewport actual: (%d, %d), (%d, %d)" \
+                  % (viewport.x1, viewport.y1, viewport.x2, viewport.y2))
+
     magx = zoomerPBag.getValue("mag-factor-x").value()
     magy = zoomerPBag.getValue("mag-factor-y").value()
 
-    _roiWidth = (viewport.x2 - viewport.x1) / magx
-    _roiHeight = (viewport.y2 - viewport.y1) / magy
+    _roiWidth  = min(_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
+                     (viewport.x2 - viewport.x1) / magx)
+    _roiHeight = min(_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1,
+                     (viewport.y2 - viewport.y1) / magy)
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier zoomer ROI size actual: width=%d, height=%d)" \
+                  % (_roiWidth, _roiHeight))
 
     _minROIX = _sourceDisplayBounds.x1 + (_roiWidth / 2)
     _minROIY = _sourceDisplayBounds.y1 + (_roiHeight / 2)
 
     _maxROIX = _sourceDisplayBounds.x2 - (_roiWidth / 2)
     _maxROIY = _sourceDisplayBounds.y2 - (_roiHeight / 2)
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier ROI min/max center: (%d, %d), (%d, %d)" \
+                  % (_minROIX, _minROIY, _maxROIX, _maxROIY))
 
     _magnifier.addZoomRegion(_zoomer)
 
@@ -552,18 +668,18 @@ def init():
 
     try:
         applySettings()
+        atspi.Registry().registerEventListener(__onMouseEvent, "mouse:abs")
+
+        _initialized = True
+
+        # Zoom to the upper left corner of the display for now.
+        #
+        __setROICenter(0, 0)
+
+        return True
     except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    atspi.Registry().registerEventListener(__onMouseEvent, "mouse:abs")
-
-    _initialized = True
-
-    # Zoom to the upper left corner of the display for now.
-    #
-    __setROICenter(0, 0)
-
-    return True
+        _magnifier.dispose()
+        raise
 
 def shutdown():
     """Shuts down the magnifier module.
