@@ -1953,8 +1953,8 @@ class Script(script.Script):
         else:
             orcaKey = (inputEvent.event_string == "/")
 
-        doubleClick = \
-           (self.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
+        clickCount = self.getClickCount(self.lastWhereAmIEvent, inputEvent)
+        doubleClick = clickCount == 2
         self.lastWhereAmIEvent = inputEvent
 
         return self.whereAmI.whereAmI(obj, doubleClick, orcaKey)
@@ -4893,9 +4893,12 @@ class Script(script.Script):
         - inputEvent: the current input event.
         """
 
-        if not isinstance(lastInputEvent, input_event.KeyboardEvent) or \
-           not isinstance(inputEvent, input_event.KeyboardEvent):
+        if not isinstance(inputEvent, input_event.KeyboardEvent):
             orca_state.clickCount = 0
+            return orca_state.clickCount
+
+        if not isinstance(lastInputEvent, input_event.KeyboardEvent):
+            orca_state.clickCount = 1
             return orca_state.clickCount
 
         if (lastInputEvent.hw_code != inputEvent.hw_code) or \
@@ -4906,8 +4909,8 @@ class Script(script.Script):
         if (inputEvent.time - lastInputEvent.time) < settings.doubleClickTimeout:
             orca_state.clickCount += 1
         else:
-            orca_state.clickCount = 0
-        return orca_state.clickCount+1
+            orca_state.clickCount = 1
+        return orca_state.clickCount
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of

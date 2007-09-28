@@ -1,3 +1,8 @@
+2007-09-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py: Fix for bug 481101 - getClickCount() 
+        sometimes returns bogus values.
+
 2007-09-27  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/braillegenerator.py: 
