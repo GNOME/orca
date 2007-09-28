@@ -1,3 +1,9 @@
+2007-09-28  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca_gui_prefs.py: fix for bug 481343 - Initial
+        top/left/bottom/right zoomer position settings don't match screen
+        size.
+	
 2007-09-28  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oocalc/bug_363804.py:      (new)

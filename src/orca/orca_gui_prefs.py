@@ -1291,32 +1291,48 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # the height of the screen.
         #
         topPosition = prefs["magZoomerTop"]
-        self.magZoomerTopSpinButton.set_value(topPosition)
-        self.magZoomerTopSpinButton.set_range(0, self.screenHeight)
+        adjustment = gtk.Adjustment(
+            topPosition, 
+            0, self.screenHeight, 
+            1,
+            self.screenHeight / 16, self.screenHeight)
+        self.magZoomerTopSpinButton.set_adjustment(adjustment)
 
         # Get the zoomer placement left preference and set the left spin
         # button value accordingly. Set the left spin button "max size" to
         # the width of the screen.
         #
         leftPosition = prefs["magZoomerLeft"]
-        self.magZoomerLeftSpinButton.set_value(leftPosition)
-        self.magZoomerLeftSpinButton.set_range(0, self.screenWidth)
+        adjustment = gtk.Adjustment(
+            leftPosition, 
+            0, self.screenWidth, 
+            1,
+            self.screenWidth / 16, self.screenWidth)
+        self.magZoomerLeftSpinButton.set_adjustment(adjustment)
 
         # Get the zoomer placement right preference and set the right spin
         # button value accordingly. Set the right spin button "max size" to
         # the width of the screen.
         #
         rightPosition = prefs["magZoomerRight"]
-        self.magZoomerRightSpinButton.set_value(rightPosition)
-        self.magZoomerRightSpinButton.set_range(0, self.screenWidth)
+        adjustment = gtk.Adjustment(
+            rightPosition, 
+            0, self.screenWidth, 
+            1,
+            self.screenWidth / 16, self.screenWidth)
+        self.magZoomerRightSpinButton.set_adjustment(adjustment)
 
         # Get the zoomer placement bottom preference and set the bottom
         # spin button value accordingly. Set the bottom spin button "max size"
         # to the height of the screen.
         #
         bottomPosition = prefs["magZoomerBottom"]
-        self.magZoomerBottomSpinButton.set_value(bottomPosition)
-        self.magZoomerBottomSpinButton.set_range(0, self.screenHeight)
+        adjustment = gtk.Adjustment(
+            bottomPosition, 
+            0, self.screenHeight, 
+            1,
+            self.screenHeight / 16, self.screenHeight)
+        self.magZoomerBottomSpinButton.set_adjustment(adjustment)
 
         # Get the zoom factor preference and set the zoom factor spin
         # button value accordingly.
