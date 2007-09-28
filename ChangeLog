@@ -1,5 +1,11 @@
 2007-09-28  Willie Walker <william.walker@sun.com>
 
+        * src/orca/orca_gui_prefs.py: fix for bug 481343 - Initial
+        top/left/bottom/right zoomer position settings don't match screen
+        size.
+	
+2007-09-28  Willie Walker <william.walker@sun.com>
+
 	* src/orca/mag.py: fix for bug 477683 - Orca failed to bring full
 	screen mag up.  While there were some changes to gnome-mag that
 	may have an impact on it crashing, we also made changes to Orca
