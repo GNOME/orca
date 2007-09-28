@@ -1,3 +1,12 @@
+2007-09-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/mag.py: fix for bug 477683 - Orca failed to bring full
+	screen mag up.  While there were some changes to gnome-mag that
+	may have an impact on it crashing, we also made changes to Orca
+	to prevent it from using the magnifier if the user tries to do
+	full screen magnification when full screen magnification is not
+	supported by gnome-mag.
+	
 2007-09-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py: Fix for bug 481101 - getClickCount() 
