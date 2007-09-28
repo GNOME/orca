@@ -1,3 +1,10 @@
+2007-09-28  Rich Burridge <rich.burridge@sun.com>
+
+        * test/keystrokes/oocalc/bug_363804.py:      (new)
+          test/keystrokes/oocalc/bug_363804.params:  (new)
+          Macaroon test file for bug #363804 – Add ability to turn off 
+          coordinate announcement when navigating in Calc.
+
 2007-09-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/mag.py: fix for bug 477683 - Orca failed to bring full
