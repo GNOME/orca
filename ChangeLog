@@ -1,5 +1,11 @@
 2007-10-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/harness/user-settings.py.in: Added the line
+        "# -*- coding: utf-8 -*-" to deal with unicode chars that appear
+        in tests.
+
+2007-10-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/Gecko.py: Fix for bug 481907 - Traceback in 
         Gecko.locusOfFocusChanged()
 
