@@ -1,5 +1,10 @@
 2007-10-01  Willie Walker <william.walker@sun.com>
 
+        * src/orca/braillegenerator.py: fix for bug 480331 - tree table
+        headers should not be repeated in braille
+
+2007-10-01  Willie Walker <william.walker@sun.com>
+
         * src/orca/orca.py: fix for bug 457198 - Orca shouldn't exit if
         user-settings import fails.  With this fix, Orca now logs 
         non-ImportError exceptions at the SEVERE level.
