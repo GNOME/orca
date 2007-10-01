@@ -1176,21 +1176,6 @@ class BrailleGenerator:
 
         regions = []
 
-        # Check to see if this table cell contains an icon (image).
-        # If yes:
-        #   1/ Try to get a description for it and speak that.
-        #   2/ Treat the object of role type ROLE_IMAGE and speak
-        #      the role name.
-        # See bug #465989 for more details.
-        #
-        if obj.image:
-            if obj.image.imageDescription:
-                regions.append(obj.image.imageDescription)
-            obj.role = rolenames.ROLE_IMAGE
-            regions.extend(self._getBrailleRegionsForImage(obj))
-            obj.role = rolenames.ROLE_TABLE_CELL
-            return regions
-
         # If this table cell has 2 children and one of them has a
         # 'toggle' action and the other does not, then present this
         # as a checkbox where:
@@ -1264,6 +1249,23 @@ class BrailleGenerator:
             [cellRegions, focusRegion] = self._getDefaultBrailleRegions(\
                 self._script.getRealActiveDescendant(obj))
             regions[0].extend(cellRegions)
+
+        # Check to see if this table cell contains an icon (image).
+        # If yes:
+        #   1/ Try to get a description for it and speak that.
+        #   2/ Treat the object of role type ROLE_IMAGE and speak
+        #      the role name.
+        # See bug #465989 for more details.
+        #
+        displayedText = self._script.getDisplayedText( \
+                          self._script.getRealActiveDescendant(obj))
+        if (not displayedText or len(displayedText) == 0) and obj.image:
+            if obj.image.imageDescription:
+                regions[0].append(obj.image.imageDescription)
+            obj.role = rolenames.ROLE_IMAGE
+            [cellRegions, focusRegion] = self._getBrailleRegionsForImage(obj)
+            regions[0].extend(cellRegions)
+            obj.role = rolenames.ROLE_TABLE_CELL
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]

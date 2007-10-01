@@ -1,3 +1,15 @@
+2007-10-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py:
+          src/orca/braillegenerator.py:
+          Work on bug #465989 – Adding panel applets.
+          Implemented the suggested fix in comment #25 of this bug.
+          If there is no displayed text, check to see if this table cell
+          contains an icon (image). If yes:
+            1/ Try to get a description for it and speak that.
+            2/ Treat the object of role type ROLE_IMAGE and speak/braille
+               the role name.
+
 2007-10-01  Willie Walker <william.walker@sun.com>
 
         * src/orca/braillegenerator.py,
