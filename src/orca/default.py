@@ -5459,7 +5459,7 @@ class Script(script.Script):
                        == atspi.Accessibility.RELATION_NODE_CHILD_OF:
                     nodeOf = atspi.Accessible.makeAccessible(relation.getTarget(0))
                     if self.isSameObject(obj, nodeOf):
-                        nodes.append(nodeOf)
+                        nodes.append(cell)
                     else:
                         currentLevel = self.getNodeLevel(nodeOf)
                         if currentLevel <= nodeLevel:

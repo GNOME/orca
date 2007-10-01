@@ -1,3 +1,12 @@
+2007-10-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py,
+          src/orca/speechgenerator.py,
+          src/orca/default.py,
+          src/orca/where_am_I.py:
+        Fix for bug 480021 - Need to handle list items in whereAmI and 
+        better address XUL list items.
+
 2007-10-01  Willie Walker <william.walker@sun.com>
 
         * src/orca/braillegenerator.py,

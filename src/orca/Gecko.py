@@ -812,7 +812,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         # Treat ARIA widgets like default.py widgets
         #
-        if self._script.isAriaWidget(obj):
+        if self._script.isAriaWidget(obj) \
+           or not self._script.inDocumentContent(obj):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForListItem(self, obj, already_focused)
         
@@ -5272,7 +5273,7 @@ class Script(default.Script):
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
         
-        if obj is None:
+        if obj is None or obj.role == rolenames.ROLE_HEADING:
             return -1
         
         attrs = obj.attributes
