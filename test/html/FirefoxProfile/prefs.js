@@ -17,7 +17,7 @@ user_pref("app.update.lastUpdateTime.microsummary-generator-update-timer", 11897
 user_pref("app.update.lastUpdateTime.search-engine-update-timer", 1189712566);
 user_pref("browser.download.manager.retention", 0);
 user_pref("browser.formfill.enable", false);
-user_pref("browser.history_expire_days", 0);
+user_pref("browser.history_expire_days", 1);
 user_pref("browser.history_expire_days.mirror", 180);
 user_pref("browser.preferences.advanced.selectedTabIndex", 1);
 user_pref("browser.sessionstore.enabled", false);

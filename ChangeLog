@@ -1,5 +1,25 @@
 2007-09-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/html_role_combo_box.py,        (new)
+          test/keystrokes/firefox/html_role_lists.py,            (new)
+          test/keystrokes/firefox/html_role_links.py,            (new)
+          test/keystrokes/firefox/html_struct_nav_list_item.py,  (new)
+          test/keystrokes/firefox/html_struct_nav_lists.py,      (new)
+          test/keystrokes/firefox/html_struct_nav_blockquote.py, (new)
+          test/keystrokes/firefox/html_struct_nav_links.py:      (new)
+        More tests.
+
+        * test/html/anchors2.html,    (new)
+          test/html/blockquotes.html, (new)
+          test/html/combobox.html:
+        New and modified test cases
+
+        * test/html/FirefoxProfile/prefs.js: 
+        increased browser.history_expire_days to 1 so that we can have
+        a history for the purpose of testing visited links.
+
+2007-09-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/xul_role_entry.py,      (new)
           test/keystrokes/firefox/xul_role_tree.py,       (new)
           test/keystrokes/firefox/xul_role_tree_table.py: (new)
