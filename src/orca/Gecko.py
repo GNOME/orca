@@ -3960,13 +3960,15 @@ class Script(default.Script):
         # This will keep Orca from chatting too much while a page is
         # loading.
         #
-        inDialog = self.getContainingRole(event.source, rolenames.ROLE_DIALOG)
-        if not inDialog:
+        if event:
             inDialog = self.getContainingRole(event.source,
-                                              rolenames.ROLE_ALERT)
+                                              rolenames.ROLE_DIALOG)
+            if not inDialog:
+                inDialog = self.getContainingRole(event.source,
+                                                  rolenames.ROLE_ALERT)
 
         if self._loadingDocumentContent \
-           and event.source \
+           and event and event.source \
            and not event.source.role in [rolenames.ROLE_DIALOG,
                                          rolenames.ROLE_ALERT] \
            and not inDialog:
