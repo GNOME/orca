@@ -107,6 +107,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForPageTab
         self.brailleGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
              self._getBrailleRegionsForPageTabList
+        self.brailleGenerators[rolenames.ROLE_PANEL]               = \
+             self._getBrailleRegionsForPanel
         self.brailleGenerators[rolenames.ROLE_PARAGRAPH]           = \
              self._getBrailleRegionsForText
         self.brailleGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
@@ -839,6 +841,40 @@ class BrailleGenerator:
 
         return self._getDefaultBrailleRegions(obj)
 
+    def _getBrailleRegionsForPanel(self, obj):
+        """Gets text to be displayed for a panel.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("_getBrailleRegionsForPanel", obj)
+
+        regions = []
+
+        text = ""
+        text = self._script.appendString(
+            text, self._script.getDisplayedLabel(obj))
+
+        # If there was no label for the panel, but it has a name, we'll
+        # use the name.
+        #
+        if len(text) == 0:
+            text = self._script.appendString(
+                text, self._script.getDisplayedText(obj))
+
+        text = self._script.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     def _getBrailleRegionsForProgressBar(self, obj):
         """Get the braille for a progress bar.  If the object already
         had focus, just the new value is displayed.
@@ -1150,7 +1186,7 @@ class BrailleGenerator:
                     obj.role = rolenames.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
 
-                    # If this table cell doesn't have any label associated 
+                    # If this table cell doesn't have any label associated
                     # with it then also braille the table column header.
                     # See Orca bug #455230 for more details.
                     #
