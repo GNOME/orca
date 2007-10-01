@@ -23,11 +23,9 @@ sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the Button Boxes demo window appears, the following should be
-# presented [[[BUG?: is the "Spread Spread" in braille a bug?  Same
-# with "Horizontal Button Boxes". That kind of duplication is
-# pervasive throughout this test.]]]:
+# presented:
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel OK Button'
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'
 #      VISIBLE:  'OK Button', cursor=1
 #
 # SPEECH OUTPUT: 'Button Boxes frame'
@@ -41,7 +39,7 @@ sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented:
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel OK Button'
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'
 #      VISIBLE:  'OK Button', cursor=1
 #
 # SPEECH OUTPUT: 'OK'
@@ -54,7 +52,7 @@ sequence.append(PauseAction(3000))
 ########################################################################
 # Tab to the Cancel button.  The following should be presented:
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Spread Spread Panel Cancel Button'
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel Cancel Button'
 #      VISIBLE:  'Cancel Button', cursor=1
 #
 # SPEECH OUTPUT: ''
@@ -67,7 +65,7 @@ sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 # Tab to the next "OK" button in the "Edge" panel.  The following should
 # be presented:
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Horizontal Button Boxes Panel Edge Edge Panel OK Button'
+# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Edge Panel OK Button'
 #      VISIBLE:  'OK Button', cursor=1
 #      
 # SPEECH OUTPUT: 'Edge panel'
