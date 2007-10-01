@@ -36,10 +36,9 @@ sequence.append(KeyComboAction("Return", 500))
 ########################################################################
 # When the GtkListStore demo window appears, navigate the table headers.
 # Presentation similar to the following should appear when each column
-# header gets focus [[[BUG?: is the repeat of "Bug number ColumnHeader"
-# in braille a bug???]]]:
+# header gets focus:
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader'
 #      VISIBLE:  'Bug number ColumnHeader', cursor=1
 #
 # SPEECH OUTPUT: ''

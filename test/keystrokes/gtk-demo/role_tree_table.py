@@ -35,10 +35,9 @@ sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the Card planning sheet demo window appears, the following should
-# be presented [[[BUG?: is the duplication of Holiday ColumnHeader in
-# braille a bug?]]]:
+# be presented:
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader Holiday ColumnHeader'
+# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader'
 #      VISIBLE:  'Holiday ColumnHeader', cursor=1
 #
 # SPEECH OUTPUT: 'Card planning sheet frame'

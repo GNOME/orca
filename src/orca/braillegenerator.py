@@ -1622,7 +1622,9 @@ class BrailleGenerator:
         parent = obj.parent
         if parent and parent.table:
             row = parent.table.getRowAtIndex(obj.index)
-            if row >= 0:
+            if (row >= 0) \
+                and (not obj.role in [rolenames.ROLE_ROW_HEADER,
+                                      rolenames.ROLE_TABLE_ROW_HEADER]):
                 desc = parent.table.getRowDescription(row)
             else:
                 desc = None
@@ -1641,7 +1643,9 @@ class BrailleGenerator:
                 regions.append(braille.Region(text))
 
             col = parent.table.getColumnAtIndex(obj.index)
-            if col >= 0:
+            if (col >= 0) \
+                and (not obj.role in [rolenames.ROLE_COLUMN_HEADER,
+                                      rolenames.ROLE_TABLE_COLUMN_HEADER]):
                 desc = parent.table.getColumnDescription(col)
             else:
                 desc = None
