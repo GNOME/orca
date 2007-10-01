@@ -748,6 +748,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        if not self._script.inDocumentContent(obj):
+            sg = speechgenerator.SpeechGenerator
+            return sg._getSpeechForListItem(self, obj, already_focused)
+
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             sg = speechgenerator.SpeechGenerator
             return sg._getDefaultSpeech(self, obj, already_focused)

@@ -96,6 +96,8 @@ class SpeechGenerator:
              self._getSpeechForLayeredPane
         self.speechGenerators[rolenames.ROLE_LIST]                = \
              self._getSpeechForList
+        self.speechGenerators[rolenames.ROLE_LIST_ITEM]           = \
+             self._getSpeechForListItem
         self.speechGenerators[rolenames.ROLE_MENU]                = \
              self._getSpeechForMenu
         self.speechGenerators[rolenames.ROLE_MENU_BAR]            = \
@@ -735,6 +737,41 @@ class SpeechGenerator:
                              already_focused,
                              utterances)
 
+        return utterances
+
+    def _getSpeechForListItem(self, obj, already_focused):
+        """Get the speech for a listitem.
+
+        Arguments:
+        - obj: the listitem
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = self._getDefaultSpeech(obj, already_focused)
+
+        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
+            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("expanded"))
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("collapsed"))
+                
+        if not already_focused:
+            utterances.append(rolenames.getSpeechForRoleName(obj))
+
+        self._debugGenerator("_getSpeechForListItem",
+                             obj,
+                             already_focused,
+                             utterances)
         return utterances
 
     def _getSpeechForMenu(self, obj, already_focused):

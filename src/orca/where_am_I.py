@@ -127,6 +127,9 @@ class WhereAmI:
         elif role == rolenames.ROLE_TABLE_CELL:
             self._speakTableCell(obj, doubleClick)
 
+        elif role == rolenames.ROLE_LIST_ITEM:
+            self._speakListItem(obj, doubleClick)
+
         elif role == rolenames.ROLE_PARAGRAPH:
             self._speakParagraph(obj, doubleClick)
 
@@ -583,6 +586,66 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
+    def _speakListItem(self, obj, doubleClick):
+        """List items should be treated like tree cells:
+
+        1. label, if any
+        2. role
+        3. name
+        4. relative position
+        5. if expandable/collapsible: expanded/collapsed
+        6. if applicable, the level
+        """
+
+        utterances = []
+
+        text = self._getObjLabel(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+
+        text = self._getObjName(obj)
+        utterances.append(text)
+
+        parent = obj.parent
+        relations = obj.relations
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                parent = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                break
+
+        name = self._getObjName(obj)
+        text = self._getPositionInList(parent, name)
+        utterances.append(text)
+
+        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
+            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("expanded")
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("collapsed")
+            utterances.append(text)
+
+        level = self._script.getNodeLevel(orca_state.locusOfFocus)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            utterances.append(_("tree level %d") % (level + 1))
+
+        debug.println(self._debugLevel, "list item utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
     def _speakParagraph(self, obj, doubleClick):
         """Speak a paragraph object.
         """
@@ -856,21 +919,32 @@ class WhereAmI:
         index = 0
         total = 0
 
-        debug.println(self._debugLevel, "obj=%s, count=%d, name=%s" % \
-                      (obj.role, obj.childCount, name))
+        # We want to return the position relative to this hierarchical
+        # level and not the entire list.  If the object in question
+        # uses the NODE_CHILD_OF relationship, we need to use it instead
+        # of the childCount.
+        #
+        childNodes = self._script.getChildNodes(obj)
+        total = len(childNodes)
+        for i in range(0, total):
+            childName = self._getObjName(childNodes[i])
+            if childName == name:
+                position = i+1
+                break
 
-        for i in range(0, obj.childCount):
-            next = self._getObjName(obj.child(i))
-            if next in ["", "Empty", "separator"] \
-               or not obj.child(i).state.count( \
-                atspi.Accessibility.STATE_VISIBLE):
-                continue
+        if not total:
+            for i in range(0, obj.childCount):
+                next = self._getObjName(obj.child(i))
+                if next in ["", "Empty", "separator"] \
+                   or not obj.child(i).state.count( \
+                    atspi.Accessibility.STATE_VISIBLE):
+                    continue
 
-            index += 1
-            total += 1
+                index += 1
+                total += 1
 
-            if next == name:
-                position = index
+                if next == name:
+                    position = index
 
         if position >= 0:
             # Translators: this is an item in a list.
