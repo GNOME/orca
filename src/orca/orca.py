@@ -888,11 +888,15 @@ def loadUserSettings(script=None, inputEvent=None):
             reloaded = True
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
     else:
         try:
             _userSettings = __import__("user-settings")
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
     # If any settings were added to the command line, they take
     # precedence over everything else.
