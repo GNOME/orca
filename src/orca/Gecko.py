@@ -475,28 +475,29 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             return bg._getBrailleRegionsForList(self, obj)
 
         regions = []
-
-        label = self._script.getDisplayedLabel(obj)
-        if not label:
-            label = obj.name
-
         focusedRegionIndex = 0
-        if label and len(label):
-            regions.append(braille.Region(label + " "))
-            focusedRegionIndex = 1
 
-        item = None
-        for i in range(0, obj.childCount):
-            if obj.selection.isChildSelected(i):
-                item = obj.child(i)
-                break
-        if not item:
-            item = obj.child(0)
-        regions.append(braille.Region(item.name))
+        if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            label = self._script.getDisplayedLabel(obj)
+            if not label:
+                label = obj.name
+
+            if label and len(label):
+                regions.append(braille.Region(label + " "))
+                focusedRegionIndex = 1
+
+            item = None
+            for i in range(0, obj.childCount):
+                if obj.selection.isChildSelected(i):
+                    item = obj.child(i)
+                    break
+            if not item:
+                item = obj.child(0)
+            regions.append(braille.Region(item.name + " "))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
-                " " + rolenames.getBrailleForRoleName(obj)))
+                rolenames.getBrailleForRoleName(obj)))
 
         return [regions, regions[focusedRegionIndex]]
 
@@ -852,27 +853,28 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
 
-        label = self._script.getDisplayedLabel(obj)
-        if not label:
-            if not self._script.inDocumentContent():
-                label = obj.name
-            else:
-                label = self._script.guessTheLabel(obj)
+        if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            label = self._script.getDisplayedLabel(obj)
+            if not label:
+                if not self._script.inDocumentContent():
+                    label = obj.name
+                else:
+                    label = self._script.guessTheLabel(obj)
 
-        if not already_focused and label:
-            utterances.append(label)
+            if not already_focused and label:
+                utterances.append(label)
 
-        item = None
-        for i in range(0, obj.childCount):
-            if obj.selection.isChildSelected(i):
-                item = obj.child(i)
-                break
-        if i == obj.childCount - 1:
-            item = obj.child(0)
-        if item:
-            name = self._getSpeechForObjectName(item)
-            if name != label:
-                utterances.extend(name)
+            item = None
+            for i in range(0, obj.childCount):
+                if obj.selection.isChildSelected(i):
+                    item = obj.child(i)
+                    break
+            if i == obj.childCount - 1:
+                item = obj.child(0)
+            if item:
+                name = self._getSpeechForObjectName(item)
+                if name != label:
+                    utterances.extend(name)
 
         if not already_focused:
             if obj.state.count(atspi.Accessibility.STATE_MULTISELECTABLE):
@@ -880,7 +882,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 # in which more than one item can be selected at a time.
                 #
                 utterances.append(_("multi-select"))
-            utterances.extend(self._getSpeechForObjectRole(obj))
+
+            # Translators: this represents a list in HTML.
+            #
+            itemString = ngettext("List with %d item",
+                                  "List with %d items",
+                                  obj.childCount) % obj.childCount
+            utterances.append(itemString)
 
         self._debugGenerator("Gecko._getSpeechForList",
                              obj,
@@ -4822,14 +4830,17 @@ class Script(default.Script):
 
     def isLabellingContents(self, obj, contents):
         """Given and obj and a list of [obj, startOffset, endOffset] tuples,
-        determine if obj is labelling anything in the tuples."""
+        determine if obj is labelling anything in the tuples.
+
+        Returns the object being labelled, or None.
+        """
 
         if obj.role != rolenames.ROLE_LABEL:
-            return False
+            return None
 
         relations = obj.relations
         if not relations:
-            return False
+            return None
 
         for relation in relations:
             if relation.getRelationType() \
@@ -4839,9 +4850,9 @@ class Script(default.Script):
                         relation.getTarget(i))
                     for content in contents:
                         if content[0] == target:
-                            return True
+                            return target
 
-        return False
+        return None
 
     def getAutocompleteEntry(self, obj):
         """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
@@ -5573,7 +5584,8 @@ class Script(default.Script):
             #
             aboveIsFormField = self.isFormField(content[0]) \
                             or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
-                                                   rolenames.ROLE_MENU_ITEM]
+                                                   rolenames.ROLE_MENU_ITEM,
+                                                   rolenames.ROLE_LIST]
 
             # [[[TODO - JD: Nearby text that's not actually in the form
             # may need to be ignored.  Let's do so unless it's directly
@@ -5627,7 +5639,8 @@ class Script(default.Script):
             #
             belowIsFormField = self.isFormField(content[0]) \
                             or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
-                                                   rolenames.ROLE_MENU_ITEM]
+                                                   rolenames.ROLE_MENU_ITEM,
+                                                   rolenames.ROLE_LIST]
 
             # [[[TODO - JD: Nearby text that's not actually in the form
             # may need to be ignored.  Let's try that for now and adjust
@@ -5931,7 +5944,8 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text and obj.text.characterCount:
+        if obj.text and obj.text.characterCount \
+                    and not self.isAriaWidget(obj=obj):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
@@ -5943,13 +5957,21 @@ class Script(default.Script):
                         return self.findNextCaretInOrder(child,
                                                          -1,
                                                          includeNonText)
-        elif obj.childCount and obj.child(0):
+
+        # If this is a list in an HTML form, we don't want to place the
+        # caret inside the list, but rather treat the list as a single
+        # object.  Otherwise, if it has children, look there.
+        #
+        elif obj.childCount and obj.child(0) \
+             and not ((obj.role == rolenames.ROLE_LIST) \
+                 and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
             try:
                 return self.findNextCaretInOrder(obj.child(0),
                                                  -1,
                                                  includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
+
         elif includeNonText and (startOffset < 0) \
             and (not self.isLayoutOnly(obj)):
             extents = obj.extents
@@ -5962,6 +5984,15 @@ class Script(default.Script):
         documentFrame = self.getDocumentFrame()
         if self.isSameObject(obj, documentFrame):
             return [None, -1]
+
+        # If we've found a list item in an HTML form, the caret had been
+        # just before the list.  Set obj to the parent list so we can
+        # maneuver around it rather than wander into it.
+        #
+        if obj.role == rolenames.ROLE_LIST_ITEM \
+           and (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
+                or self.isAriaWidget()):
+            obj = obj.parent
 
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
@@ -6007,7 +6038,8 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text and obj.text.characterCount:
+        if obj.text and obj.text.characterCount \
+                    and not self.isAriaWidget(obj=obj):
             unicodeText = self.getUnicodeText(obj)
             if startOffset == -1:
                 startOffset = len(unicodeText)
@@ -6021,7 +6053,15 @@ class Script(default.Script):
                         obj.child(self.getChildIndex(obj, previousOffset)),
                         -1,
                         includeNonText)
-        elif obj.childCount and obj.child(obj.childCount - 1):
+
+        # If this is a list in an HTML form, we don't want to place the
+        # caret inside the list, but rather treat the list as a single
+        # object.  Otherwise, if it has children, look there.
+        #
+        elif obj.childCount and obj.child(obj.childCount - 1) \
+             and not ((obj.role == rolenames.ROLE_LIST) \
+                 and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+
             try:
                 return self.findPreviousCaretInOrder(
                     obj.child(obj.childCount - 1),
@@ -6029,6 +6069,7 @@ class Script(default.Script):
                     includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
+
         elif includeNonText and (startOffset < 0) \
             and (not self.isLayoutOnly(obj)):
             extents = obj.extents
@@ -6041,6 +6082,15 @@ class Script(default.Script):
         documentFrame = self.getDocumentFrame()
         if self.isSameObject(obj, documentFrame):
             return [None, -1]
+
+        # If we've found a list item in an HTML form, the caret had been
+        # just after the list.  Set obj to the parent list so we can
+        # maneuver around it rather than wander into it.
+        #
+        if obj.role == rolenames.ROLE_LIST_ITEM \
+           and (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
+                 or self.isAriaWidget()):
+            obj = obj.parent
 
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
@@ -6584,7 +6634,15 @@ class Script(default.Script):
             obj, characterOffset, characterOffset + 1)
 
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        while obj:
+
+        # If we're in a focused HTML list, treat this object as if
+        # it's the only thing on this line.
+        #
+        limitToThis = obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+                      and obj.role in [rolenames.ROLE_LIST_ITEM,
+                                       rolenames.ROLE_LIST]
+
+        while obj and not limitToThis:
             [obj, characterOffset] = \
                   self.findPreviousCaretInOrder(obj, characterOffset)
 
@@ -6635,7 +6693,8 @@ class Script(default.Script):
                     # menu item which is showing.
                     #
                     pass
-                elif not self.onSameLine(extents, lineExtents):
+                elif not self.onSameLine(extents, lineExtents) \
+                     or (limitToThis and (lastObj != obj)):
                     break
                 elif (lastObj == obj) and len(contents):
                     contents[-1][2] = characterOffset + 1
@@ -6731,9 +6790,12 @@ class Script(default.Script):
                 continue
 
             # If this is a label that's labelling something else, we'll
-            # get the label via a speech generator.
+            # get the label via a speech generator -- unless it's a
+            # focusable list that doesn't have focus.
             #
-            if self.isLabellingContents(obj, contents):
+            labelledContent = self.isLabellingContents(obj, contents)
+            if labelledContent \
+               and labelledContent.role != rolenames.ROLE_LIST:
                 continue
 
             # The radio button's label gets added to the context in
@@ -6895,6 +6957,15 @@ class Script(default.Script):
             cell = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
             if not cell:
                 self.lastTableCell = [-1, -1]
+
+        # If the item is a focusable list in an HTML form, we're here
+        # because we've arrowed to it.  We don't want to grab focus on
+        # it and trap the user in the list.
+        #
+        if obj.role == rolenames.ROLE_LIST \
+           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            [obj, characterOffset] = self.findPreviousCaretInOrder(obj=obj,
+                                     includeNonText=False)
 
         # Reset focus if need be.
         #
@@ -7962,9 +8033,17 @@ class Script(default.Script):
             speech.speak(_("Wrapping to bottom."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
+            # We actively avoid grabbing focus on lists in HTML forms
+            # in setCaretPosition() so that a user doesn't accidentally
+            # arrow into one and change its value.  Here we actually
+            # do want to grab focus should we be on a list.
+            #
+            if obj.role == rolenames.ROLE_LIST:
+                focusGrabbed = obj.component.grabFocus()
+            else:
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents(self.getObjectContentsAtOffset(obj,
                                                              characterOffset))
         else:
             # Translators: this is for navigating HTML content by
@@ -7981,6 +8060,9 @@ class Script(default.Script):
         # For performance purposes, we do not want to examine each item
         # in the current combo box or list via findNextObject.
         #
+        if obj.role == rolenames.ROLE_LIST_ITEM \
+           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+            obj = obj.parent
         if obj.role == rolenames.ROLE_LIST \
            and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.child(obj.childCount - 1)
@@ -8008,9 +8090,18 @@ class Script(default.Script):
             speech.speak(_("Wrapping to top."))
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
+
+            # We actively avoid grabbing focus on lists in HTML forms
+            # in setCaretPosition() so that a user doesn't accidentally
+            # arrow into one and change its value.  Here we actually
+            # do want to grab focus should we be on a list.
+            #
+            if obj.role == rolenames.ROLE_LIST:
+                focusGrabbed = obj.component.grabFocus()
+            else:
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents(self.getObjectContentsAtOffset(obj,
                                                              characterOffset))
         else:
             # Translators: this is for navigating HTML content by

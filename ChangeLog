@@ -1,3 +1,8 @@
+2007-10-02  Scott Haeger <scott@bashautomation.com>
+        * Bug #478204, Orca should handle navigation around HTML focusable 
+        lists better
+        src/orca/Gecko.py
+
 2007-10-02  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca_gui_prefs.py: Fix for bug 481398 - Absence of a
@@ -5,6 +10,7 @@
         Preferences dialog
 	
 2007-10-02  Scott Haeger <scott@bashautomation.com>
+
         * Added navigate to large object test
         test/keystrokes/firefox/html_struct_nav_large_obj.py
 
@@ -21,6 +27,7 @@
           before assignment.
 
 2007-10-02  Scott Haeger <scott@bashautomation.com>
+
         * Added page summary and Orca bookmarks tests
         test/keystrokes/firefox/page_summary.py
         test/keystrokes/firefox/orca_bookmarks.py
