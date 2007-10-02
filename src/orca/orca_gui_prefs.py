@@ -652,6 +652,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         if len(self.speechSystemsChoices) == 0:
+            self.speechSystemsChoice = None
             return
 
         valueSet = False
@@ -711,7 +712,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             self.speechSystemsModel.append((i, name))
             i += 1
 
-        self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
+        if self.prefsDict["speechServerFactory"]:
+            self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
+        else:
+            self.speechSystemsChoice = None
 
         debug.println(
             debug.LEVEL_FINEST,
