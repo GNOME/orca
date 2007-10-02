@@ -1,3 +1,7 @@
+2007-10-02  Scott Haeger <scott@bashautomation.com>
+        * Added navigate to large object test
+        test/keystrokes/firefox/html_struct_nav_large_obj.py
+
 2007-10-02  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oocalc/bug_435852.py:   (new)
