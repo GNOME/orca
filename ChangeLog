@@ -1,3 +1,8 @@
+2007-10-02  Scott Haeger <scott@bashautomation.com>
+        * Added page summary and Orca bookmarks tests
+        test/keystrokes/firefox/page_summary.py
+        test/keystrokes/firefox/orca_bookmarks.py
+
 2007-10-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py:
