@@ -4,6 +4,12 @@
           Macaroon test file for bug #435852 – Orca and OpenOffice Calc 
           have a memory lovefest.
 
+        * test/keystrokes/oocalc/bug_435307.py:   (new)
+          test/keystrokes/oocalc/bug_435307.params:   (new)
+          Macaroon test file for bug #435307 – OOo Calc output traceback 
+          for UnboundLocalError: local variable 'focusRegion' referenced 
+          before assignment.
+
 2007-10-02  Scott Haeger <scott@bashautomation.com>
         * Added page summary and Orca bookmarks tests
         test/keystrokes/firefox/page_summary.py
