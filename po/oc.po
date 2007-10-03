@@ -5290,13 +5290,13 @@ msgstr ""
 #.
 #: ../src/orca/rolenames.py:929
 msgid "Table"
-msgstr "Taula"
+msgstr "Tablèu"
 
 #. Translators: spoken words for the rolename of a table.
 #.
 #: ../src/orca/rolenames.py:932
 msgid "table"
-msgstr "taula"
+msgstr "tablèu"
 
 #. Translators: short braille for the rolename of a table cell.
 #.
