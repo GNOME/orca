@@ -1,5 +1,10 @@
 2007-10-03  Willie Walker <william.walker@sun.com>
 
+        * src/orca/Gecko.py: add import of math module (flagged by running
+        pychecker)
+
+2007-10-03  Willie Walker <william.walker@sun.com>
+
         * configure.in, README, NEWS, RELEASE-HOWTO, src/orca/Makefile.am,
         docs/pydoc/Makefile.am: prep for v2.21.0
 

@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 import atk
 import gtk
+import math
 import pickle
 import urlparse
 
