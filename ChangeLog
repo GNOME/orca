@@ -1,5 +1,9 @@
 2007-10-03  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README: mark as GNOME 2.21.1pre
+
+2007-10-03  Willie Walker <william.walker@sun.com>
+
         * src/orca/Gecko.py: add import of math module (flagged by running
         pychecker)
 
