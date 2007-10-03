@@ -16,6 +16,10 @@
           anything when going to the 2nd screen in the OOo Presentation 
           startup wizard.
 
+        * test/keystrokes/ooimpress/bug_462547.py:     (new)
+          Macaroon test file for bug #462547 – OOo-dev 2.3.0 simpress 
+          application startup wizard hangs the desktop.
+
 2007-10-03  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as GNOME 2.21.1pre
