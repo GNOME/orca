@@ -11,6 +11,11 @@
           Added "simpress" and "ooimpress" to the list of applications that
           need to be adjusted to SOFFICE.
 
+        * test/keystrokes/ooimpress/bug_462256.py:     (new)
+          Macaroon test file for bug #462256 – Orca doesn't speak/braille 
+          anything when going to the 2nd screen in the OOo Presentation 
+          startup wizard.
+
 2007-10-03  Willie Walker <william.walker@sun.com>
 
         * configure.in, README: mark as GNOME 2.21.1pre
