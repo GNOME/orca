@@ -1,7 +1,12 @@
+2007-10-03  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS, RELEASE-HOWTO, src/orca/Makefile.am,
+        docs/pydoc/Makefile.am: prep for v2.21.0
+
 2007-10-02  Scott Haeger <scott@bashautomation.com>
-        * Bug #478204, Orca should handle navigation around HTML focusable 
-        lists better
-        src/orca/Gecko.py
+
+        * src/orca/Gecko.py: Fix for bug 478204 - Orca should handle
+        navigation around HTML focusable lists better
 
 2007-10-02  Willie Walker <william.walker@sun.com>
 
@@ -17,12 +22,12 @@
 2007-10-02  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oocalc/bug_435852.py:   (new)
-          Macaroon test file for bug #435852 – Orca and OpenOffice Calc 
+          Macaroon test file for bug #435852 - Orca and OpenOffice Calc 
           have a memory lovefest.
 
         * test/keystrokes/oocalc/bug_435307.py:   (new)
           test/keystrokes/oocalc/bug_435307.params:   (new)
-          Macaroon test file for bug #435307 – OOo Calc output traceback 
+          Macaroon test file for bug #435307 - OOo Calc output traceback 
           for UnboundLocalError: local variable 'focusRegion' referenced 
           before assignment.
 
@@ -36,7 +41,7 @@
 
         * src/orca/speechgenerator.py:
           src/orca/braillegenerator.py:
-          Work on bug #465989 – Adding panel applets.
+          Work on bug #465989 - Adding panel applets.
           Implemented the suggested fix in comment #25 of this bug.
           If there is no displayed text, check to see if this table cell
           contains an icon (image). If yes:
@@ -120,11 +125,11 @@
 
         * test/keystrokes/oocalc/bug_363804.py:      (new)
           test/keystrokes/oocalc/bug_363804.params:  (new)
-          Macaroon test file for bug #363804 – Add ability to turn off 
+          Macaroon test file for bug #363804 - Add ability to turn off 
           coordinate announcement when navigating in Calc.
 
         * test/keystrokes/oocalc/bug_364407.py:      (new)
-          Macaroon test file for bug #364407 – Shift+Ctrl+T in OOCalc 
+          Macaroon test file for bug #364407 - Shift+Ctrl+T in OOCalc 
           results in very verbose output.
 
 2007-09-28  Willie Walker <william.walker@sun.com>
@@ -154,17 +159,17 @@
 
         * test/keystrokes/oocalc/bug_356334.py:      (new)
           test/keystrokes/oocalc/bug_356334.params:  (new)
-          Macaroon test file for bug #356334 – readCharAttributes crashes 
+          Macaroon test file for bug #356334 - readCharAttributes crashes 
           OOo Calc 2.0.4 RC1.
 
         * test/keystrokes/oocalc/bug_363801.py:      (new)
           test/keystrokes/oocalc/bug_363801.params:  (new)
-          Macaroon test file for bug #363801 – Provide confirmation when 
+          Macaroon test file for bug #363801 - Provide confirmation when 
           the user presses Insert R/C in Calc.
 
         * test/keystrokes/oocalc/bug_433398.py:      (new)
           test/keystrokes/oocalc/bug_433398.params:  (new)
-          Macaroon test file for bug #433398 – Orca does not provide access 
+          Macaroon test file for bug #433398 - Orca does not provide access 
           to the state of checked menu items in OOo.
 
 2007-09-26  Scott Haeger <scott@bashautomation.com>
@@ -183,16 +188,16 @@
         * test/keystrokes/oocalc/bug_361167.py:      (new)
           test/keystrokes/oocalc/bug_361167.params:  (new)
           test/keystrokes/oocalc/fruit.ods: (new)
-          Macaroon test file for bug #361167 – Add dynamic row and column 
+          Macaroon test file for bug #361167 - Add dynamic row and column 
           header support in Orca for StarOffice/OpenOffice calc.
 
         * test/keystrokes/oocalc/bug_363802.py:      (new)
           test/keystrokes/oocalc/bug_363802.params:  (new)
-          Macaroon test file for bug #363802 – When navigating in Calc 
+          Macaroon test file for bug #363802 - When navigating in Calc 
           from cell to cell, Orca should not say "cell".
 
         * test/keystrokes/oocalc/bug_364086.py:      (new)
-          Macaroon test file for bug #364086 – Orca reports "paragraph 0 
+          Macaroon test file for bug #364086 - Orca reports "paragraph 0 
           paragraph" <char> when you begin typing in a Calc cell.
 
 2007-09-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -262,17 +267,17 @@
 
         * test/keystrokes/oowriter/bug_435226.py:      (new)
           test/keystrokes/oowriter/bug_435226.params:  (new)
-          Macaroon test file for bug #435226 – Where-am-I doesn't correctly 
+          Macaroon test file for bug #435226 - Where-am-I doesn't correctly 
           handle multiple selected paragraphs in OOo Writer and Evolution.
 
         * test/keystrokes/oowriter/bug_450210.py:      (new)
-          Macaroon test file for bug #450210 – StarOffice.py needs 
+          Macaroon test file for bug #450210 - StarOffice.py needs 
           null-check for self.getFrame(event.source).
 
         * test/keystrokes/oowriter/bug_361624.py:      (new)
           test/keystrokes/oowriter/bug_361624.params:  (new)
           test/keystrokes/oowriter/column-example.odt: (new)
-          Macaroon test file for bug #361624 – Flat review sometimes fails 
+          Macaroon test file for bug #361624 - Flat review sometimes fails 
           to move to second column of text in OOo Writer documents.
 
 2007-09-24  Eitan Isaacson  <eitan@ascender.com>
@@ -321,17 +326,17 @@
 
         * test/keystrokes/oowriter/bug_382408.py:      (new)
           test/keystrokes/oowriter/bug_382408.params:  (new)
-          Macaroon test file for bug #382408 – Significant sluggishness 
+          Macaroon test file for bug #382408 - Significant sluggishness 
           when navigating in OOo Writer tables.
 
         * test/keystrokes/oowriter/bug_382880.py:      (new)
           test/keystrokes/oowriter/bug_382880.params:  (new)
-          Macaroon test file for bug #382880 – No speech output when 
+          Macaroon test file for bug #382880 - No speech output when 
           tabbing among cells in OOo Writer tables.
 
         * test/keystrokes/oowriter/bug_382888.py:      (new)
           test/keystrokes/oowriter/bug_382888.params:  (new)
-          Macaroon test file for bug #382888 – Orca should announce when 
+          Macaroon test file for bug #382888 - Orca should announce when 
           you cross a cell boundary in OOo Writer tables.
 
 2007-09-21  Eitan Isaacson  <eitan@ascender.com>
@@ -374,19 +379,19 @@
 2007-09-21  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_435201.py:  (new)
-          Macaroon test file for bug #435201 – Orca is too chatty when 
+          Macaroon test file for bug #435201 - Orca is too chatty when 
           navigating by paragraph in OOo Writer.
 
         * test/keystrokes/oowriter/bug_382415.py:      (new)
           test/keystrokes/oowriter/bug_382415.params:  (new)
           test/keystrokes/oowriter/table-sample.odt:   (new)
-          Macaroon test file for bug #382415 – Speak cell/row setting 
+          Macaroon test file for bug #382415 - Speak cell/row setting 
           ignored in OOo Writer tables.
 
 2007-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #465087 – Orca speaks "Available fields panel" too 
+          Fixed bug #465087 - Orca speaks "Available fields panel" too 
           many times with OOo sbase Tables wizard.
 
 2007-09-20  Willie Walker <william.walker@sun.com>
@@ -406,15 +411,15 @@
 2007-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oowriter/bug_430402.py:  (new)
-          Macaroon test file for bug #430402 – Orca unable to speak last 
+          Macaroon test file for bug #430402 - Orca unable to speak last 
           character of each "sentence" when doing a sayAll in OOo Writer.
 
         * test/keystrokes/oowriter/bug_413909.py:  (new)
-          Macaroon test file for bug #413909 – Orca can no longer provide 
+          Macaroon test file for bug #413909 - Orca can no longer provide 
           "smarts" for spell checking in OOo Writer v2.1 (or later).
 
         * test/keystrokes/oowriter/bug_385828.py:  (new)
-          Macaroon test file for bug #385828 – Can not use agenda wizard 
+          Macaroon test file for bug #385828 - Can not use agenda wizard 
           in OpenOffice.org.
 
 2007-09-20  Willie Walker <william.walker@sun.com>
@@ -511,7 +516,7 @@
           submenu in OOo Writer causes Orca to report "Format menu".
 
         * test/keystrokes/oowriter/bug_382418.py:  (new)
-          Macaroon test file for bug #382418 – Orca should announce when 
+          Macaroon test file for bug #382418 - Orca should announce when 
           you enter/leave a table in OOo Writer documents.
 
 2007-09-17  Rich Burridge <rich.burridge@sun.com>
@@ -597,7 +602,7 @@
           of speaking information of table cells is incorrect.
 
         * test/keystrokes/oowriter/bug_350219.py:  (new)
-          Macaroon test file for bug #350219 – In OOo, no announcement 
+          Macaroon test file for bug #350219 - In OOo, no announcement 
           when you create a new document.
 
 2007-09-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -797,7 +802,7 @@
 2007-09-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py:
-          Fix bug #473422 – Orca has traceback when giving focus to the 
+          Fix bug #473422 - Orca has traceback when giving focus to the 
           pidgin application.
 
 2007-09-05 Scott Haeger <scott@bashautomation.com>
@@ -810,7 +815,7 @@
 2007-09-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
-          Fix bug #473420 – Orca speaking an extra "seconds" for 
+          Fix bug #473420 - Orca speaking an extra "seconds" for 
           the Preferences dialog.
 
 2007-09-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -1006,7 +1011,7 @@
           src/orca/pronunciation_dict.py:
           src/orca/app_prefs.py:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #464754 – Pronunciation dictionary checks should be
+          Fixed bug #464754 - Pronunciation dictionary checks should be
           case insensitive.
 
 2007-08-15  Rich Burridge <rich.burridge@sun.com>
@@ -1064,7 +1069,7 @@
 
 2007-08-13  Tomas Cerha  <via william.walker@sun.com>
 
-        Fix for bug 455308 – Output module and voice selection with Speech
+        Fix for bug 455308 - Output module and voice selection with Speech
         Dispatcher backend.  The changes also involve some minor cleanup
         and one major improvement - automatic reconnection after losing
         Speech Dispatcher connection (for example after SD is restarted).
@@ -1177,7 +1182,7 @@
           src/orca/orca_prefs.py:
           src/orca/app_prefs.py:  (New)
           src/orca/Makefile.am:
-          Fixed bug #462627 – Refactor orca_prefs.py.
+          Fixed bug #462627 - Refactor orca_prefs.py.
 
 2007-08-02  Eitan Isaacson <eitan@ascender.com>
 
@@ -1216,7 +1221,7 @@
 2007-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
-          Fixed bug #462475 – crash due Non-ASCII characters in
+          Fixed bug #462475 - crash due Non-ASCII characters in
           .orca/user-settings.py file. Added the line:
           # -*- coding: utf-8 -*-
           to the beginning of the ~/.orca/user-settings.py file (also to the
@@ -1275,7 +1280,7 @@
           src/orca/focus_tracking_presenter.py:
           src/orca/pronunciation_dict.py:
           src/orca/script.py:
-          More work on bug #364518 – Create a GUI interface to the
+          More work on bug #364518 - Create a GUI interface to the
           pronunciation dictionary. Added in proper support for application
           specific pronunciations.
 
@@ -1313,7 +1318,7 @@
           src/orca/orca_state.py:
           src/orca/gnomespeechfactory.py:
           src/orca/orca_gui_prefs.py:
-          Work on bug #364518 – Create a GUI interface to the pronunciation
+          Work on bug #364518 - Create a GUI interface to the pronunciation
           dictionary.
 
 2007-07-27  Rich Burridge <rich.burridge@sun.com>
@@ -1349,7 +1354,7 @@
 
         * src/orca/default.py:
           src/orca/focus_tracking_presenter.py:
-          Fixed bug #409731 – Orca should speak text selected by the mouse.
+          Fixed bug #409731 - Orca should speak text selected by the mouse.
 
 2007-07-22  Willie Walker <william.walker@sun.com>
 
@@ -1431,7 +1436,7 @@
         * src/orca/speechgenerator.py:
           src/orca/braillegenerator.py:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #455230 – Read table cell row should insert column
+          Fixed bug #455230 - Read table cell row should insert column
           headers for non-text cells.
 
 2007-07-12  Joanmarie Diggs <j-diggs@comcast.net>
@@ -1478,7 +1483,7 @@
 2007-07-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:
-        Correct fix for bug #439191 – sayAll by sentence can position the
+        Correct fix for bug #439191 - sayAll by sentence can position the
         text cursor in the wrong place when interrupted.
 
 2007-07-09  Lynn MonSanto <lynn.monsanto@sun.com>
@@ -1561,7 +1566,7 @@
 
 2007-07-03  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/gnomespeechfactory.py: Fixed bug #439191 – sayAll by
+        * src/orca/gnomespeechfactory.py: Fixed bug #439191 - sayAll by
         sentence can position the text cursor in the wrong place when
         interrupted.
 
@@ -1591,7 +1596,7 @@
 
         * src/orca/Gecko.py, src/orca/default.py, src/orca/bookmarks.py,
         src/orca/Makefile.am, src/orca/script.py, src/orca/where_am_I.py:
-        Fixed bug #354468 – Bookmarked Objects.  - Also included removal
+        Fixed bug #354468 - Bookmarked Objects.  - Also included removal
         of whereamI relative to current key bindings and trimming down
         number of bookmarks to 6
 
@@ -1613,7 +1618,7 @@
 
 2007-06-27  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/orca_gui_prefs.py: Fixed bug #442069 – Unneeded
+        * src/orca/orca_gui_prefs.py: Fixed bug #442069 - Unneeded
         gnome-speech drivers not stopped when GUI setup window is
         dismissed.
 
@@ -1645,11 +1650,11 @@
 
 2007-06-25  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/scripts/StarOffice.py: Fixed bug #450210 –
+        * src/orca/scripts/StarOffice.py: Fixed bug #450210 -
         StarOffice.py needs null-check for self.getFrame(event.source)
 
         * src/orca/settings.py: src/orca/httpserver.py: Work on bug
-        #395146 – Crash at start. Try to start an HTTP server on
+        #395146 - Crash at start. Try to start an HTTP server on
         settings.httpServerPort. If this fails, retry
         settings.maxHttpServerRetries times, each time incrementing the
         server port number by 1. If we are still unable to start a server,
@@ -1687,7 +1692,7 @@
 
 2007-06-22  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/orca.py: Fixed bug #449978 – Punctuation keys not
+        * src/orca/orca.py: Fixed bug #449978 - Punctuation keys not
           echoed (thanks Tomas Cerha!)
 
 2007-06-21  Lynn MonSanto <lynn.monsanto@sun.com>
@@ -1706,7 +1711,7 @@
 
 2007-06-21  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/default.py: Fixed bug #446881 – Orca braillegenerator
+        * src/orca/default.py: Fixed bug #446881 - Orca braillegenerator
         code assumes that what's in a table is a table cell. Don't try to
         get row description if we are passed a row number < 0.
 
@@ -1731,7 +1736,7 @@
         * src/orca/default.py, src/orca/speechgenerator.py,
         src/orca/Gecko.py, src/orca/settings.py,
         src/orca/orca-setup.glade, src/orca/orca_gui_prefs.py: Work on bug
-        #438333 – Need to present progress bar activity.  Implementation
+        #438333 - Need to present progress bar activity.  Implementation
         of speech support for progress bars as outlined by Mike in comment
         #6, plus the following changes (per email from Will):
 
@@ -1769,9 +1774,9 @@
 
 2007-06-19 Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary
+        * src/orca/Gecko.py Fixed bug #447191 - Firefox read page summary
 
-        * src/orca/Gecko.py Fixed bug #447191 – Firefox read page summary,
+        * src/orca/Gecko.py Fixed bug #447191 - Firefox read page summary,
         make announcements only when items > 0
 
 2007-06-18  Willie Walker <william.walker@sun.com>
@@ -1816,7 +1821,7 @@
 
         * src/orca/scripts/StarOffice.py, src/orca/settings.py,
           src/orca/orca-setup.glade, src/orca/orca_prefs.py,
-          src/orca/orca_gui_prefs.py: Fixed bug #376515 – Add GUI support
+          src/orca/orca_gui_prefs.py: Fixed bug #376515 - Add GUI support
           for the new customizable text-attribute feature. There is a new
           "Text Attributes" pane in the Orca preferences dialog for
           this. It can also be set on an individual app-specific basis.
@@ -1863,7 +1868,7 @@
 2007-06-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-system-monitor.py (new),
-          src/orca/scripts/Makefile.am: Fixed bug #433818 – Messages on
+          src/orca/scripts/Makefile.am: Fixed bug #433818 - Messages on
           system tab of gnome-system-monitor are not reported by Orca.
 
 2007-06-05  Rich Burridge <rich.burridge@sun.com>
@@ -1928,7 +1933,7 @@
 2007-06-04  Willie Walker <william.walker@sun.com>
 
         * po/POTFILES.in, docs/pydoc/Makefile.am: remove reference to
-        users-admin.py, which was removed as part of work on bug 376015 –
+        users-admin.py, which was removed as part of work on bug 376015 -
         [a11y] time-admin time servers table is not accessible
 
 2007-06-03  Joanmarie Diggs <j-diggs@comcast.net>
@@ -2043,7 +2048,7 @@
           src/orca/settings.py:
           src/orca/scripts/Makefile.am:
           src/orca/scripts/users-admin.py: (removed)
-          More work on bug #376015 – [a11y] time-admin time servers table
+          More work on bug #376015 - [a11y] time-admin time servers table
           is not accessible. Changes to _getSpeechForTableCell() and
           _getBrailleRegionsForTableCell().
           If this table cell has 2 children and one of them has a
@@ -2060,25 +2065,25 @@
 
 2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 440079 – Orca cannot arrow past
+        * src/orca/Gecko.py: Fix for Bug 440079 - Orca cannot arrow past
         certain combo boxes in Firefox
 
 2007-05-28  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Better solution for Bug 441484 – Need to
+        * src/orca/Gecko.py: Better solution for Bug 441484 - Need to
         adjust FF form field navigation to accommodate FF changes.
 
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py:
-        1. More work on Bug 441484 – Need to adjust FF form field
+        1. More work on Bug 441484 - Need to adjust FF form field
            navigation to accommodate FF changes.
-        2. Fix for Bug 441610 – Orca should identify bogus/redundant
+        2. Fix for Bug 441610 - Orca should identify bogus/redundant
            checkbox labels in Firefox.
 
 2007-05-27  Joanmarie Diggs <j-diggs@comcast.net>
 
-        *  src/orca/chnames.py: Bug 441723 – Orca should not speak
+        *  src/orca/chnames.py: Bug 441723 - Orca should not speak
         "double prime" for the number 3
 
 2007-05-27  Mario Lang <via william.walker@sun.com>
@@ -2091,14 +2096,14 @@
         * src/orca/Gecko.py:
         1. Fix for Bug 441476 Orca should attempt to detect erroneously-
            marked list labels in Firefox.
-        2. Fix for Bug 441484 – Need to adjust FF form field navigation
+        2. Fix for Bug 441484 - Need to adjust FF form field navigation
            to accommodate FF changes.
 
 2007-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
           src/orca/chnames.py:
-          More work on bug #345399 – Key echo missing alpha numeric and
+          More work on bug #345399 - Key echo missing alpha numeric and
           punctuation keys. Included extended chnames dictionary entries
           (thanks Joanie).
 
@@ -2118,14 +2123,14 @@
 
         * src/orca/where_am_I.py:
           src/orca/scripts/Evolution.py:
-          More work on bug #435226 – Where-am-I doesn't correctly handle
+          More work on bug #435226 - Where-am-I doesn't correctly handle
           multiple selected paragraphs in OOo Writer and Evolution. Orca
           should hopefully now handle speaking selections that start or
           include blank lines/paragraphs.
 
 2007-05-23  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 440529 – Orca bounces out of
+        * src/orca/Gecko.py: Fix for Bug 440529 - Orca bounces out of
         Firefox Help Contents tree and into the document frame.
 
 2007-05-23  Rich Burridge <rich.burridge@sun.com>
@@ -2137,12 +2142,12 @@
 2007-05-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gcalctool.py:
-          Fixed bug #440592 – Orca doesn't speak gcalctool's status bar
+          Fixed bug #440592 - Orca doesn't speak gcalctool's status bar
           correctly.
 
 2007-05-22  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 439286 – Gecko.py's
+        * src/orca/Gecko.py: Fix for Bug 439286 - Gecko.py's
         find{Next,Previous}Object fails when object is document_frame.
 
 2007-05-21  Rich Burridge <rich.burridge@sun.com>
@@ -2155,7 +2160,7 @@
 
 2007-05-21  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 433655 – Orca's structural
+        * src/orca/Gecko.py: Fix for Bug 433655 - Orca's structural
         navigation should wrap at the end of a page.
 
 2007-05-21  Mario Lang <mlang@delysid.org>
@@ -2166,12 +2171,12 @@
 2007-05-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
-          Potential fix for bug #345399 – Key echo missing alpha numeric
+          Potential fix for bug #345399 - Key echo missing alpha numeric
           and punctuation keys.
 
 2007-05-19  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: More work on Bug 420540 – Firefox keyboard
+        * src/orca/Gecko.py: More work on Bug 420540 - Firefox keyboard
         control wish list. Q/Shift+Q can now be used to navigate among
         blockquotes.  I also added a new method, getLastObject(), which
         I need for a couple of other RFE's I'm working on.
@@ -2183,13 +2188,13 @@
 
 2007-05-18  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 414657 – Linked headings should
+        * src/orca/Gecko.py: Fix for Bug 414657 - Linked headings should
         be announced as both heading and link.
 
 2007-05-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435852 – Orca and OpenOffice Calc have a memory
+          Fix for bug #435852 - Orca and OpenOffice Calc have a memory
           lovefest, found by Will (thanks!). We now override the
           _getSpeechForTable() method in the subclassed SpeechGenerator
           class in the StarOffice.py script, and just check against
@@ -2202,7 +2207,7 @@
 
 2007-05-17  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py, src/orca/default.py: Fix for Bug 437986 –
+        * src/orca/Gecko.py, src/orca/default.py: Fix for Bug 437986 -
         Orca should not first speak page and frame title when opening a
         menu in firefox.
 
@@ -2228,7 +2233,7 @@
 
         * src/orca/where_am_I.py:
           src/orca/scripts/Evolution.py:
-          Fixed bug #435226 – Where-am-I doesn't correctly handle multiple
+          Fixed bug #435226 - Where-am-I doesn't correctly handle multiple
           selected paragraphs in OOo Writer and Evolution.
 
 2007-05-16  Rich Burridge <rich.burridge@sun.com>
@@ -2270,12 +2275,12 @@
 
 2007-05-12  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for Bug 412677 – Navigation to links
+        * src/orca/Gecko.py: Fix for Bug 412677 - Navigation to links
         with { overflow:hidden } stylesheet results in bad behavior.
 
 2007-05-11  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug #407663 – Support the "Find"
+        * src/orca/Gecko.py: Fix for bug #407663 - Support the "Find"
         operation in Firefox better.  There are several new behaviors
         and features which will be announced on the Orca list soon.
         If you can't wait, be sure that you have at least the 9th May
@@ -2365,7 +2370,7 @@
 
 2007-05-09  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: More work on bug #423427 – Need to add
+        * src/orca/Gecko.py: More work on bug #423427 - Need to add
         form field structural navigation in Firefox.  The a11y guys
         at Firefox have been hard at work fixing the bugs we needed
         fixed to have more reliable form field structural navigation.
@@ -2377,7 +2382,7 @@
         * src/orca/orca_gui_prefs.py:
           src/orca/settings.py:
           src/orca/orca-setup.glade:
-          Fixed bug #368640 – Allow user to optionally ignore or be
+          Fixed bug #368640 - Allow user to optionally ignore or be
           notified of tool tips. There is now a "Present Tooltips"
           checkbox available on the General pane of the Orca Preferences
           dialog that allows the user to un/set this feature.
@@ -2392,7 +2397,7 @@
 
         * src/orca/script.py:
           src/orca/focus_tracking_presenter.py:
-          Fixed bug #437004 – Add in hooks for allowing
+          Fixed bug #437004 - Add in hooks for allowing
           activation/deactivation script methods.
           Added two new methods to the Script class in script.py:
 
@@ -2406,13 +2411,13 @@
           to self.setActiveScript().
 
         * src/orca/where_am_I.py:
-          Fixed bug #435223 – Where-am-I doesn't correctly identify
+          Fixed bug #435223 - Where-am-I doesn't correctly identify
           multiple selected objects in Nautilus.
 
 2007-05-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #363804 – Add ability to turn off coordinate
+          Fix for bug #363804 - Add ability to turn off coordinate
           announcement when navigating in Calc.
           Added a new "Speak spread sheet cell coordinates" checkbox to
           the app-specific GUI settings for StarOffice/OpenOffice.
@@ -2454,7 +2459,7 @@
 2007-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435201 – Orca is too chatty when navigating by
+          Fix for bug #435201 - Orca is too chatty when navigating by
           paragraph in OOo Writer.
           Ignore "object:text-caret-moved" events when moving my paragraph
           in OOo Writer using Control-Up/Down, if event.detail1 is -1.
@@ -2485,14 +2490,14 @@
 2007-05-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/focus_tracking_presenter.py:
-          Hopefully the last fix for bug #433146 – Add ability to
+          Hopefully the last fix for bug #433146 - Add ability to
           configure app-unique settings via GUI. New app-specific
           keybindings are now automatically working (once they've
           been set), without having to Alt-Tab away and back or
           reloading Orca.
 
         * src/orca/settings.py:
-          Part of the fallout of working on bug #435852 – Orca and
+          Part of the fallout of working on bug #435852 - Orca and
           OpenOffice Calc have a memory lovefest. The default setting
           for "readTableCellRow" is now False rather than True. This
           improves memory performance in OOo Calc spreadsheets which,
@@ -2523,7 +2528,7 @@
 2007-05-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #435852 – Orca and OpenOffice Calc have a memory lovefest.
+          Fixed bug #435852 - Orca and OpenOffice Calc have a memory lovefest.
           (Fix from Will and Joanie - thanks).
 
 2007-05-04  Willie Walker <william.walker@sun.com>
@@ -2537,11 +2542,11 @@
         * src/orca/braillegenerator.py:
           src/orca/speechgenerator.py:
           Provided an adequate workaround for the problem in bug
-          #433398 – Orca does not provide access to the state of
+          #433398 - Orca does not provide access to the state of
           checked menu items in OOo.
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #435307 – OOo Calc output traceback for
+          Fix for bug #435307 - OOo Calc output traceback for
           UnboundLocalError: local variable 'focusRegion'
           referenced before assignment. Just needed to initialize
           focusRegion to None need the beginning of the
@@ -2580,7 +2585,7 @@
         * src/orca/app_gui_prefs.py:
           src/orca/orca_prefs.py:
           src/orca/focus_tracking_presenter.py:
-          Hopefully the final fixes for bug #433146 – Add ability to
+          Hopefully the final fixes for bug #433146 - Add ability to
           configure app-unique settings via GUI.
 
           There were three problems:
@@ -2616,7 +2621,7 @@
           src/orca/orca_prefs.py:
           src/orca/app_gui_prefs.py:
           src/orca/script.py:
-          Work on bug #433146 – Add ability to configure app-unique
+          Work on bug #433146 - Add ability to configure app-unique
           settings via GUI.
 
           Added two new methods to the Script class:
@@ -2659,7 +2664,7 @@
 2007-04-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
-          Re-fixed bug 434394 – orca -t causes traceback.
+          Re-fixed bug 434394 - orca -t causes traceback.
           The change to writePreference() in orca_prefs.py should have
           been checking against None.
 
@@ -2677,7 +2682,7 @@
 2007-04-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_prefs.py:
-          Fixed bug 434394 – orca -t causes traceback.
+          Fixed bug 434394 - orca -t causes traceback.
 
 2007-04-27  Mike Pedersen <michael.pedersen@sun.com>
 
@@ -2770,7 +2775,7 @@
           src/orca/orca_gui_prefs.py:
           src/orca/orca_prefs.py:
           src/orca/settings.py:
-          Fixed bug #372273 – Add ability to configure app-specific
+          Fixed bug #372273 - Add ability to configure app-specific
           settings via GUI.
 
           Adjusted <ORCA MODIFIER>+Control+Space to now bring up
@@ -2795,7 +2800,7 @@
 
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: More work on bug 423427 – Need to add form
+        * src/orca/Gecko.py: More work on bug 423427 - Need to add form
         field structural navigation in Firefox.  In the determination of
         what constitutes a form field we want to navigate to, be sure it
         does not have a role of UNKNOWN.  Also be sure it has a state of
@@ -2803,7 +2808,7 @@
 
 2007-04-24  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Work on bug 423427 – Need to add form
+        * src/orca/Gecko.py: Work on bug 423427 - Need to add form
         field structural navigation in Firefox.  Now Orca Modifier Key
         + Tab should move you to the next form field and Orca Modifier
         Key + Shift Tab should move you to the previous form field.
@@ -2880,7 +2885,7 @@
 2007-04-19  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/Evolution.py: More work for the workaround
-        for Evolution bug 347964 – When deleting messages in Evolution,
+        for Evolution bug 347964 - When deleting messages in Evolution,
         Orca initially speaks the wrong tree item.
 
 2007-04-18  Willie Walker <william.walker@sun.com>
@@ -2915,7 +2920,7 @@
           src/orca/scripts/StarOffice.py:
           src/orca/default.py:
           src/orca/where_am_I.py:
-          Fixed bug #430278 – The Where_Am_I script does not work in most
+          Fixed bug #430278 - The Where_Am_I script does not work in most
           applications.
 
           No longer need to pass a speech context into the whereAmI()
@@ -2923,7 +2928,7 @@
           code is now in the app specific scripts. Moved the Evolution
           specific "where am I" code to the Evolution script.
 
-          Fixed bug #427481 – "where am I" does not speak Evolution
+          Fixed bug #427481 - "where am I" does not speak Evolution
           Mail...Tasks toggle buttons.
 
           The problem here was that those objects were toggle buttons and
@@ -2960,7 +2965,7 @@
 2007-04-17  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/scripts/Evolution.py: Workaround for Evolution bug
-        347964 – When deleting messages in Evolution, Orca initially
+        347964 - When deleting messages in Evolution, Orca initially
         speaks the wrong tree item.
 
 2007-04-17  Rich Burridge <rich.burridge@sun.com>
@@ -2971,7 +2976,7 @@
           src/orca/orca_gui_prefs.py:
           src/orca/scripts/gedit.py:
           src/orca/scripts/Evolution.py:
-          More work on bug #400716 – sayAll should be done by sentences.
+          More work on bug #400716 - sayAll should be done by sentences.
           Added a "Say All By" combo box to the speech pane of the Orca
           Preferences dialog (accelerator is Alt-y). Current valid choices
           are "Line" and "Sentence". Adjusted the existing textLines()
@@ -3071,17 +3076,17 @@
 2007-04-09  Joanmarie Diggs <j-diggs@comcast.net>
 
         * src/orca/Gecko.py: Several fixes:
-        1) Bug 426336 – refactor Gecko.py's find{Next, Previous}Role.
+        1) Bug 426336 - refactor Gecko.py's find{Next, Previous}Role.
            Also, L and Shift+L will only move you among ordered/unordered
            lists.  Before, form field lists were included because they,
            too, have a role of ROLE_LIST.
 
-        2) Bug 426684 – Orca does not speak entry text in Firefox when the
+        2) Bug 426684 - Orca does not speak entry text in Firefox when the
            caret is at the end of line.   This fix also solves Bug 426687
-           – Orca should only speak entry text when arrowing Up/Down in an
+           - Orca should only speak entry text when arrowing Up/Down in an
            entry in Firefox.
 
-        3) Bug 413990 – [blocked] orca should not speak table over and over
+        3) Bug 413990 - [blocked] orca should not speak table over and over
            again when tabbing through a web page.  This fix should also
            make it less likely that T and Shift+T will land on layout
            tables.
@@ -3126,7 +3131,7 @@
         * src/orca/default.py:
           src/orca/scripts/gedit.py:
           src/orca/scripts/Evolution.py:
-          Fix for bug #400716 – [requirement] sayAll should be done by
+          Fix for bug #400716 - [requirement] sayAll should be done by
           sentences..
           textLines() now uses TEXT_BOUNDARY_SENTENCE_END instead of
           TEXT_BOUNDARY_LINE_START to break apart chunks to read (thanks
@@ -3146,7 +3151,7 @@
 2007-04-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
-          Removed the partial fix for bug #422487 – Ability to jump to
+          Removed the partial fix for bug #422487 - Ability to jump to
           the start of the message in Evolution. We will wait for the
           Evolution folks to implement bug #423395.
 
@@ -3157,7 +3162,7 @@
 
 2007-04-05  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: Fix for bug #423198 – Orca should not speak
+        * src/orca/Gecko.py: Fix for bug #423198 - Orca should not speak
         "text" repeatedly when moving around in a text entry area on a
         web page.
 
@@ -3306,7 +3311,7 @@
           src/orca/default.py:
           src/orca/orca_gui_main.py:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #425498 – option to allow Orca to quit without
+          Fixed bug #425498 - option to allow Orca to quit without
           confirmation when user presses Insert-q.
 
 2007-04-02  Joanmarie Diggs <j-diggs@comcast.net>
@@ -3317,12 +3322,12 @@
 2007-03-29  Rich Burridge <rich.burridge@sun.com>
 
         * docs/man/orca.sgml:  (removed).
-          Part of the fix for bug #414981 – Orca manual pages for 2.18.
+          Part of the fix for bug #414981 - Orca manual pages for 2.18.
 
         * src/orca/orca-find.glade:
           src/orca/orca-quit.glade:
           src/orca/orca-setup.glade:
-          Fixed bug #413109 – HIG violations. Revamped Glade files from
+          Fixed bug #413109 - HIG violations. Revamped Glade files from
           Calum Benson (thanks!)
 
 2007-03-28  Willie Walker <william.walker@sun.com>
@@ -3353,14 +3358,14 @@
 2007-03-28  Rich Burridge <rich.burridge@sun.com>
 
         * docs/man/orca.1:
-          Fixed bug #414981 – Orca manual pages for 2.18.
+          Fixed bug #414981 - Orca manual pages for 2.18.
           Actually the manual pages for beyond 2.18. Revised to just give
           name, synopsis, brief description, command line options, author
           and see also, which gives pointers to the Orca wiki and mailing
           list.
 
         * src/orca/scripts/Evolution.py:
-          Fixed bug #422487 – Ability to jump to the start of the message
+          Fixed bug #422487 - Ability to jump to the start of the message
           in Evolution. Focus (and text caret) are now moved to the first
           line of the mail message. That first lines is brailled and spoken.
 
@@ -3368,7 +3373,7 @@
           src/orca/default.py:
           src/orca/where_am_I.py:
           src/orca/scripts/StarOffice.py:
-          Fixed bug #423011 – Need to refactor where_am_I.py
+          Fixed bug #423011 - Need to refactor where_am_I.py
           Further changes to move the StarOffice specific code into a
           subclass of the WhereAmI class in the StarOffice.py script.
 
@@ -3419,7 +3424,7 @@
 2007-03-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
-          Further fixup to bug #402494 – For statement refactoring.
+          Further fixup to bug #402494 - For statement refactoring.
           Needed to reinstate the old code in the speakMisspeltWord()
           routine, as the variable "i" was being used.
 
@@ -3460,7 +3465,7 @@
           Removed extra blank lines and spurious whitespace.
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #419089 – Refactor StarOffice.py script.
+          Fixed bug #419089 - Refactor StarOffice.py script.
           Now that we have self._script available to the SpeechGenerator
           and BrailleGenerator classes, the StarOffice.py scripts needed to
           be adjusted to move all the global routines into the Script() class.
@@ -3490,7 +3495,7 @@
 
 2007-03-26  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: fix for bug 423009 – Orca should not
+        * src/orca/Gecko.py: fix for bug 423009 - Orca should not
         speak the rolename "list item" on web pages.
 
 2007-03-25  Mike Pedersen <michael.pedersen@sun.com>
@@ -3533,7 +3538,7 @@
 
 2007-03-15  Joanmarie Diggs <j-diggs@comcast.net>
 
-        * src/orca/Gecko.py: fix for bug 418430 – Empty sections
+        * src/orca/Gecko.py: fix for bug 418430 - Empty sections
         should be treated as layout objects in Firefox.  Added
         Link structural navigation:  U moves you to the next
         unvisited link; Shift U to the previous unvisited link;
@@ -3572,7 +3577,7 @@
         * src/orca/orca.py:
           src/orca/focus_tracking_presenter.py:
           src/orca/hierarchical_presenter.py:
-          Reworked changes for bug #404052 – Say something to let the
+          Reworked changes for bug #404052 - Say something to let the
           user know the Preferences dialog is loading.
 
         * src/orca/scripts/Evolution.py:
@@ -3629,7 +3634,7 @@
           src/orca/scripts/StarOffice.py:
           src/orca/scripts/gnome-terminal.py:
           From Joanmarie Diggs <j-diggs@comcast.net>
-          Fixed bug #402192 – Orca does not speak text that is pasted
+          Fixed bug #402192 - Orca does not speak text that is pasted
           in by middle mouse click.
 
 2007-03-11  Rich Burridge <rich.burridge@sun.com>
@@ -3673,13 +3678,13 @@
 2007-03-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca//gnomespeechfactory.py:
-          Refixed bug #392939 – "-" should be spoken when used as a
+          Refixed bug #392939 - "-" should be spoken when used as a
           negative sign at "some" punctuation. Correctly handle the
           situation where a line starts with a minus sign.
 
         * src/orca/scripts/gnome-mud.py: (new)
           src/orca/scripts/Makefile.am:
-          Fixed bug #410302 – Better support for gnome-mud application.
+          Fixed bug #410302 - Better support for gnome-mud application.
           (Thanks to community member Javier for this fix).
 
 2007-03-07  Willie Walker <william.walker@sun.com>
@@ -3707,12 +3712,12 @@
         * src/orca/scripts/nautilus.py: (new)
           src/orca/scripts/Makefile.am:
           po/POTFILES.in:
-          Refixed bug #350674 – make Orca announce when a new folder is
+          Refixed bug #350674 - make Orca announce when a new folder is
           opened and announce number of items.
           [Further adjusted to use ngettext for the item count string].
 
         * src/orca/orca_gui_prefs.py:
-          Fixed bug #404052 – Say something to let the user know the
+          Fixed bug #404052 - Say something to let the user know the
           Preferences dialog is loading.
 
         * src/orca/scripts/gedit.py:
@@ -3724,7 +3729,7 @@
           src/orca/where_am_I.py:
           src/orca/hierarchical_presenter.py:
           src/orca/keybindings.py:
-          Fixed bug #402494 – For statement refactoring.
+          Fixed bug #402494 - For statement refactoring.
 
         * src/orca/scripts/planner.py:
           src/orca/scripts/gcalctool.py:
@@ -4359,13 +4364,13 @@
 2007-02-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
-          Fixed bug #408174 – Some laptop keybindings defined in
+          Fixed bug #408174 - Some laptop keybindings defined in
           default.py doesn't work
           (Thanks to community member Juan Ramon Jimenez for this fix).
 
         * src/orca/scripts/nautilus.py: (new)
           src/orca/scripts/Makefile.am:
-          Fixed bug #350674 – make Orca announce when a new folder is
+          Fixed bug #350674 - make Orca announce when a new folder is
           opened and announce number of items.
 
 2007-02-14  Willie Walker <william.walker@sun.com>
@@ -4402,7 +4407,7 @@
 2007-02-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
-          Fixed bug #405624 – Orca failed to report the label if it was
+          Fixed bug #405624 - Orca failed to report the label if it was
           same as previous one.
 
 2007-02-13  Willie Walker <william.walker@sun.com>
@@ -4540,12 +4545,12 @@
 2007-02-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
-          Fixed bug #380050 – New window should be focused after user
+          Fixed bug #380050 - New window should be focused after user
           presses "Quit" or "Preferences" button in Orca Preferences
           window. Thanks to Joanie for extensively testing this.
 
         * src/orca/focus_tracking_presenter.py:
-          Work on bug #400763 – Orca hangs after starting the update
+          Work on bug #400763 - Orca hangs after starting the update
           process in update manager. Checked in a patch that checks to
           see whether the event.source.valid field is set or not for each
           event, in the _enqueueEvent() routine and ignores invalid events.
@@ -4661,7 +4666,7 @@
 2007-01-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/bugs.html:
-          Added in an entry for bug #397724 – Orca incorrect echo's
+          Added in an entry for bug #397724 - Orca incorrect echo's
           certain input in gnome-terminal when key echo is set to off
           (on Ubuntu Feisty).
 
@@ -4816,7 +4821,7 @@
 2007-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
-          Fix for bug #376791 – Orca does not provide access to the buddy
+          Fix for bug #376791 - Orca does not provide access to the buddy
           list in Gaim 2.0.0 beta 5.
 
 2007-01-11  Willie Walker <william.walker@sun.com>
@@ -4849,7 +4854,7 @@
 2007-01-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:
-          Fix for bug #392939 – "-" should be spoken when used as a
+          Fix for bug #392939 - "-" should be spoken when used as a
           negative sign at "some" punctuation.
 
 2007-01-09  Willie Walker <william.walker@sun.com>
@@ -4921,11 +4926,11 @@
 2007-01-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
-          Fixed bug #393074 – Repeated characters are not correctly read.
+          Fixed bug #393074 - Repeated characters are not correctly read.
           (Thanks to community member Juan Ramon Jimenez for this fix).
 
         * src/orca/default.py:
-          Further work on bug #376517 – Orca does not report indentation
+          Further work on bug #376517 - Orca does not report indentation
           in OOo Writer documents correctly. It will now speak the unit
           of measure (pixels) after the left-margin and/or right-margin
           text attributes, if they differ from the norm.
@@ -4941,7 +4946,7 @@
 2007-01-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Workaround for the problem reported in bug #376517 – Orca does
+          Workaround for the problem reported in bug #376517 - Orca does
           not report indentation in OOo Writer documents correctly. The
           StarOffice.py script will now speak the text attribute
           "left-margin:" if it's different from the norm (0).
@@ -4980,7 +4985,7 @@
 
         * src/orca/orca-setup.glade:
           src/orca/orca_gui_prefs.py:
-          Fixed bug #347124 – Orca hangs when attempting to access apps
+          Fixed bug #347124 - Orca hangs when attempting to access apps
           started via gksu.
 
         * src/orca/orca-setup.glade:
@@ -4990,7 +4995,7 @@
         * po/POTFILES.in:
           src/orca/scripts/Makefile.am:
           src/orca/scripts/liferea.py:
-          Fixed bug #350233 – Orca should better support Liferea application.
+          Fixed bug #350233 - Orca should better support Liferea application.
           Supplied by community member Javier (thanks!)
 
         * bugs/bugs.html:
@@ -5000,7 +5005,7 @@
 2007-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
-          Added in an entry for atk/gail bug #387960 – Calls to
+          Added in an entry for atk/gail bug #387960 - Calls to
           text.getAttributeRun cause gedit to crash when running with Orca.
 
 2007-01-02  Willie Walker <william.walker@sun.com>
@@ -5112,11 +5117,11 @@
 
         * src/orca/scripts/StarOffice.py:
           (With help from Joanmarie Diggs -- thanks!)
-          Fixed bug #382890 – Extend dynamic row and column header
+          Fixed bug #382890 - Extend dynamic row and column header
           support to OOo Writer tables.
 
         * src/orca/scripts/Evolution.py:
-          Fixed bug #386267 – In Evolution orca should speak/braille
+          Fixed bug #386267 - In Evolution orca should speak/braille
           the unread instead of the read status.
 
 2006-12-18  Willie Walker <william.walker@sun.com>
@@ -5189,7 +5194,7 @@
 2006-12-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug #382418 – Orca should announce when you enter/leave a
+          Fixed bug #382418 - Orca should announce when you enter/leave a
           table in OOo Writer documents.
 
 2006-12-13  Willie Walker <william.walker@sun.com>
@@ -5228,7 +5233,7 @@
           in OOo Writer tables.
           Fixed bug #382888 - New: Orca should announce when you cross a
           cell boundary in OOo Writer tables.
-          Fixed bug #382415 – Speak cell/row setting ignored in OOo Writer
+          Fixed bug #382415 - Speak cell/row setting ignored in OOo Writer
           tables.
 
 2006-12-12  Willie Walker <william.walker@sun.com>
@@ -5383,14 +5388,14 @@
 2006-12-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          Fix for bug #382408 – Significant sluggishness when navigating
+          Fix for bug #382408 - Significant sluggishness when navigating
           in OOo Writer tables.
 
           Also added in a check for a event.source.parent != None
           that was causing a traceback as I was testing the above fix.
 
         * src/orca/orca_i18n.py.in:
-          Fix for bug #382495 – orca --setup is not localized
+          Fix for bug #382495 - orca --setup is not localized
           (thanks Takao!).
 
 2006-12-05  Willie Walker <william.walker@sun.com>
@@ -5448,7 +5453,7 @@
 
         * src/orca/find.py:
           src/orca/default.py:
-          More work on bug #354463 – [requirement] "Find" command.
+          More work on bug #354463 - [requirement] "Find" command.
           - Fixed problem described in comment #13.
           - Added in laptop keyboard bindings.
 
@@ -5495,7 +5500,7 @@
           src/orca/orca_state.py:
           src/orca/script.py:
           src/orca/settings.py:
-          Fixed bug #354463 – [requirement] "Find" command.
+          Fixed bug #354463 - [requirement] "Find" command.
 
         * bugs/bugs.html:
           Added in an entry for OpenOffice Writer issue #72155:

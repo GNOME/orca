@@ -12,7 +12,7 @@ orca_python_PYTHON = \
 	app_gui_prefs.py \
 	app_prefs.py \
 	atspi.py \
-        bookmarks.py \
+	bookmarks.py \
 	braille.py \
 	braillegenerator.py \
 	brlmon.py \

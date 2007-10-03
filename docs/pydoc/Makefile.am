@@ -6,7 +6,7 @@ DOC_FILES = \
 	orca.acss \
 	orca.app_gui_prefs \
 	orca.atspi \
-        orca.bookmarks \
+	orca.bookmarks \
 	orca.braille \
 	orca.braillegenerator \
 	orca.brl \

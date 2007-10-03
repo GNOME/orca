@@ -65,7 +65,7 @@ TAG THE RELEASE:
 While in the trunk directory:
 
 svn commit
-svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_6
+svn cp . svn+ssh://svn.gnome.org/svn/orca/tags/ORCA_2_19_6
 
 
 UPLOAD THE RELEASE:
