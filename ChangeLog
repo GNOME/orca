@@ -1,3 +1,7 @@
+2007-10-03  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_tooltip.py: add test for tooltips.
+
 2007-10-03  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/ooimpress/bug_462239.py:     (new)
@@ -12,12 +16,12 @@
           need to be adjusted to SOFFICE.
 
         * test/keystrokes/ooimpress/bug_462256.py:     (new)
-          Macaroon test file for bug #462256 – Orca doesn't speak/braille 
+          Macaroon test file for bug #462256 - Orca doesn't speak/braille 
           anything when going to the 2nd screen in the OOo Presentation 
           startup wizard.
 
         * test/keystrokes/ooimpress/bug_462547.py:     (new)
-          Macaroon test file for bug #462547 – OOo-dev 2.3.0 simpress 
+          Macaroon test file for bug #462547 - OOo-dev 2.3.0 simpress 
           application startup wizard hangs the desktop.
 
 2007-10-03  Willie Walker <william.walker@sun.com>
