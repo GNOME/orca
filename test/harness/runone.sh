@@ -99,7 +99,7 @@ fi
 # should be a general way specify command line arguments when
 # starting test applications.
 #
-if [ "$APP_NAME" == "swriter" ] || [ "$APP_NAME" == "oowriter" ] || [ "$APP_NAME" == "scalc" ] || [ "$APP_NAME" == "oocalc" ] || [ "$APP_NAME" == "simpress" ] || [ "$APP_NAME" == "ooimpress" ] || [ "$APP_NAME" == "soffice" ] || [ "$APP_NAME" == "ooffice" ]
+if [ "$APP_NAME" == "swriter" ] || [ "$APP_NAME" == "oowriter" ] || [ "$APP_NAME" == "scalc" ] || [ "$APP_NAME" == "oocalc" ] || [ "$APP_NAME" == "simpress" ] || [ "$APP_NAME" == "ooimpress" ] || [ "$APP_NAME" == "sbase" ] || [ "$APP_NAME" == "oobase" ] || [ "$APP_NAME" == "soffice" ] || [ "$APP_NAME" == "ooffice" ]
 then
     SOFFICE=1
     ARGS="-norestore"
