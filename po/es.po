@@ -8,24 +8,24 @@
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.HEAD.es\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-26 22:14+0100\n"
-"PO-Revision-Date: 2007-08-27 08:29+0200\n"
+"PO-Revision-Date: 2007-10-04 21:07+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Lector de pantalla y magnificador Orca"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Presenta información sobre lo que hay en la pantalla por medio de voz, "
 "braille o magnificando ésta"
@@ -46,8 +46,7 @@ msgstr "Ninguna aplicación tiene el foco."
 #: ../src/orca/app_gui_prefs.py:225
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
-msgstr ""
-"Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
+msgstr "Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
 
 #. Translators: this announces that a bookmark has been entered.
 #. Orca allows users to tell it to remember a particular spot in an
@@ -1667,8 +1666,7 @@ msgstr "Muestra el diálogo de configuración de preferencias."
 #.
 #: ../src/orca/default.py:628
 msgid "Displays the application preferences configuration dialog."
-msgstr ""
-"Muestra el diálogo de configuración de preferencias para la aplicación."
+msgstr "Muestra el diálogo de configuración de preferencias para la aplicación."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2508,8 +2506,7 @@ msgstr "Usar la navegación _estructural de Orca"
 #.
 #: ../src/orca/Gecko.py:2475
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
-"_Posicionar el cursor al principio de línea cuando se navega verticalmente"
+msgstr "_Posicionar el cursor al principio de línea cuando se navega verticalmente"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -3283,7 +3280,7 @@ msgstr "Seleccione la distribución de teclado deseada."
 #.
 #: ../src/orca/orca_console_prefs.py:389
 msgid "1. Desktop"
-msgstr "1. Escritorio"
+msgstr "1. Sobremesa"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3295,8 +3292,7 @@ msgstr "2. Portátil"
 
 #: ../src/orca/orca_console_prefs.py:410
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr ""
-"Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
+msgstr "Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
@@ -5792,8 +5788,7 @@ msgstr "evento del calendario"
 #.
 #: ../src/orca/scripts/Evolution.py:315
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr ""
-"Conmutar si se presenta el correo nuevo si no se tiene el script activo."
+msgstr "Conmutar si se presenta el correo nuevo si no se tiene el script activo."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -5893,8 +5888,7 @@ msgid "Assistant"
 msgstr "Asistente"
 
 #: ../src/orca/scripts/gaim.py:151
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 "conmutar si se prefijan los mensajes de la sala de charla con el nombre de "
 "la sala de charla."
@@ -6128,8 +6122,7 @@ msgstr ""
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:839
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Establece la columna que usar como cabeceras dinámicas de fila para usar al "
 "decir las celdas de cálculo."
@@ -6532,56 +6525,3 @@ msgstr "elemento %d de %d"
 msgid "Default button is %s"
 msgstr "El botón predeterminado es %s"
 
-#~ msgid "ASAP"
-#~ msgstr "ASAP"
-
-#~ msgid "as soon as possible"
-#~ msgstr "tan pronto como sea posible"
-
-#~ msgid "GHz"
-#~ msgstr "GHz"
-
-#~ msgid "gigahertz"
-#~ msgstr "gigahertz"
-
-#~ msgid "IMAP"
-#~ msgstr "IMAP"
-
-#~ msgid "eye map"
-#~ msgstr "eye map"
-
-#~ msgid "LDAP"
-#~ msgstr "LDAP"
-
-#~ msgid "ell dap"
-#~ msgstr "ell dap"
-
-#~ msgid "LOL"
-#~ msgstr "LOL"
-
-#~ msgid "laughing out loud"
-#~ msgstr "carcajadas"
-
-#~ msgid "MHz"
-#~ msgstr "MHz"
-
-#~ msgid "megahertz"
-#~ msgstr "megahertz"
-
-#~ msgid "strikethrough"
-#~ msgstr "strikethrough"
-
-#~ msgid "strike through"
-#~ msgstr "strike through"
-
-#~ msgid "SELinux"
-#~ msgstr "SELinux"
-
-#~ msgid "ess ee linux"
-#~ msgstr "ess ee linux"
-
-#~ msgid "Speech Dispatcher configured default voice"
-#~ msgstr "Voz por defecto configurada SpeechDispatcher"
-
-#~ msgid "Speak Unless"
-#~ msgstr "Leer a menos que"
