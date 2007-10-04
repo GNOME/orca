@@ -4,9 +4,9 @@
           Added "sbase" and "oobase" to the list of applications that
           need to be adjusted to SOFFICE.
 
-        * test/keystrokes/oobase/bug_465109.py:     (new)
-          Macaroon test file for bug #465109 – OOo sbase application 
-          crashes when entering a database record.
+        * test/keystrokes/oobase/bug_463172.py:     (new)
+          Macaroon test file for bug #463172 – OpenOffice sbase application 
+          crashes when Orca is running.
 
 2007-10-03  Willie Walker <william.walker@sun.com>
 
