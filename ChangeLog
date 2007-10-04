@@ -8,6 +8,10 @@
           Macaroon test file for bug #463172 – OpenOffice sbase application 
           crashes when Orca is running.
 
+        * src/orca/default.py:
+          Fixed bug #376517 – Orca does not report indentation in OOo 
+          Writer documents correctly.
+
 2007-10-03  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/role_tooltip.py: add test for tooltips.

@@ -3311,7 +3311,9 @@ class Script(script.Script):
                             # application, so we leave things in plural form 
                             # here.
                             #
-                            line = _("%s %s pixels") % (key, attribute)
+                            line = ngettext("%s %s pixel",
+                                            "%s %s pixels",
+                                            int(attribute)) % (key, attribute)
                         else:
                             line = key + " " + attribute
                     else:
