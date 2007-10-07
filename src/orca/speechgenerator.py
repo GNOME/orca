@@ -766,9 +766,6 @@ class SpeechGenerator:
                 #
                 utterances.append(_("collapsed"))
                 
-        if not already_focused:
-            utterances.append(rolenames.getSpeechForRoleName(obj))
-
         self._debugGenerator("_getSpeechForListItem",
                              obj,
                              already_focused,
