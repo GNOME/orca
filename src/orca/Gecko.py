@@ -5986,15 +5986,6 @@ class Script(default.Script):
         if self.isSameObject(obj, documentFrame):
             return [None, -1]
 
-        # If we've found a list item in an HTML form, the caret had been
-        # just before the list.  Set obj to the parent list so we can
-        # maneuver around it rather than wander into it.
-        #
-        if obj.role == rolenames.ROLE_LIST_ITEM \
-           and (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
-                or self.isAriaWidget()):
-            obj = obj.parent
-
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
@@ -6083,15 +6074,6 @@ class Script(default.Script):
         documentFrame = self.getDocumentFrame()
         if self.isSameObject(obj, documentFrame):
             return [None, -1]
-
-        # If we've found a list item in an HTML form, the caret had been
-        # just after the list.  Set obj to the parent list so we can
-        # maneuver around it rather than wander into it.
-        #
-        if obj.role == rolenames.ROLE_LIST_ITEM \
-           and (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
-                 or self.isAriaWidget()):
-            obj = obj.parent
 
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
@@ -6915,11 +6897,12 @@ class Script(default.Script):
         given object."""
         character = self.getCharacterAtOffset(obj, characterOffset)
         if obj:
-            if character:
+            if character and character != self.EMBEDDED_OBJECT_CHARACTER:
                 speech.speak(character, self.getACSS(obj, character), False)
             else:
                 # We'll run into this when we hit a component with no
-                # text, such as a checkbox.  In these cases, we'll
+                # text, such as a checkbox or when we reset the caret to the
+                # parent's characterOffset (lists).  In these cases, we'll
                 # just speak the entire component.
                 #
                 utterances = self.speechGenerator.getSpeech(obj, False)
@@ -6965,8 +6948,9 @@ class Script(default.Script):
         #
         if obj.role == rolenames.ROLE_LIST \
            and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
-            [obj, characterOffset] = self.findPreviousCaretInOrder(obj=obj,
-                                     includeNonText=False)
+            characterOffset = self.getCharacterOffsetInParent(obj)
+            obj = obj.parent
+            self.setCaretContext(obj, characterOffset)
 
         # Reset focus if need be.
         #
@@ -7026,7 +7010,7 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.findNextCaretInOrder(obj,
                                                                characterOffset)
-            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+            if obj and obj.state.count(atspi.Accessibility.STATE_VISIBLE):
                 break
         if obj:
             self.setCaretPosition(obj, characterOffset)
@@ -7044,7 +7028,7 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.findPreviousCaretInOrder(
                 obj, characterOffset)
-            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+            if obj and obj.state.count(atspi.Accessibility.STATE_VISIBLE):
                 break
 
         if obj:
@@ -7088,6 +7072,7 @@ class Script(default.Script):
 
         # Find the beginning of the current word
         #
+        print 'goNextWord'
         [obj, characterOffset] = self.getCaretContext()
         contents = self.getWordContentsAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
@@ -7620,11 +7605,13 @@ class Script(default.Script):
 
     def goNextList(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
+        print obj.role
         found = False
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
                   self.findNextRole([rolenames.ROLE_LIST], wrap, obj)
+            print obj.role
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7635,7 +7622,7 @@ class Script(default.Script):
             # focusable; (un)ordered lists are not.
             #
             if obj and \
-               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
