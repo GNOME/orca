@@ -1,3 +1,8 @@
+2007-10-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/speechgenerator.py: Fix for bug #484428 - Orca should not 
+        speak role for list items when navigating.
+
 2007-10-02  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca_gui_prefs.py: Fix for bug 481398 - Absence of a
