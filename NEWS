@@ -1,3 +1,56 @@
+2.20.0.1 - 08-Oct-2007
+
+General:
+
+* Fix for bug 457198 - Orca shouldn't exit if user-settings import fails
+
+* Work on bug 465989 - Adding panel applets
+
+* Fix for bug 477683 - Orca failed to bring full screen mag up
+
+* Fix for bug 480331 - tree table headers should not be repeated in
+  braille
+
+* Fix for bug 480746 - Labels for panels should not be repeated in
+  braille
+
+* Fix for bug 481101 - getClickCount() sometimes returns bogus values
+
+* Fix for bug 481343 - Initial top/left/bottom/right zoomer position
+  settings don't match screen size
+
+* Fix for bug 481398 - Absence of a defined speech server causes Orca
+  to fail to display its Preferences dialog
+
+* Fix for bug 484428 - Orca should not speak role for list items when
+  navigating
+
+Firefox:
+
+* Fix for bug 468633 - No output when tabbing to ARIA slider
+
+* Fix for bug 475956 - Orca sometimes "guesses" index.htm* as the base
+  name for a link in FF3
+
+* Fix for bug 476786 - whereAmI fails in Firefox menus
+
+* Fix for bug 480021 - Need to handle list items in whereAmI and
+  better address XUL list items
+
+* Fix for bug 481907 - Traceback in Gecko.locusOfFocusChanged()
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca      Catalan              Gil Forcada and Joan Duran
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    lt      Lithuanian           Gintautas Miliauskas
+    si      Sinhala              Danishka Navin
+    tr      Turkish              Deniz Kocak and Baris Cicek
+    uk      Ukrainian            Maxim Dziumanenko
+
+==========
+
 2.20.0 - 16-Sep-2007
 
 General: 
@@ -5,10 +58,10 @@ General:
 * Fix for bug 472962 - Trailing space at end of message/string
   in console-based preferences set up.
 
-* Fix for bug 473420 – Orca speaking an extra "seconds" for
+* Fix for bug 473420 - Orca speaking an extra "seconds" for
   Preferences dialog.
 
-* Fix for bug 473422 – Orca has traceback when giving focus to 
+* Fix for bug 473422 - Orca has traceback when giving focus to 
   Pidgin.
 
 * Fix for bug 473991 - Orca doesn't announce autocompleted user 
@@ -183,16 +236,16 @@ New and updated translations (THANKS EVERYONE!!!):
 
 General:
 
-* More work on bug 364518 – Create a GUI interface to the
+* More work on bug 364518 - Create a GUI interface to the
   pronunciation dictionary
 
-* Fix for bug 455308 – Output module and voice selection with Speech
+* Fix for bug 455308 - Output module and voice selection with Speech
   Dispatcher backend
 
 * Fix for bug 461719 - gnome-mud script failed at import
   (many thanks to Javier Dorado Martínez for this fix)
 
-* Fix for bug 462475 – crash due Non-ASCII characters in
+* Fix for bug 462475 - crash due Non-ASCII characters in
   .orca/user-settings.py file
 
 * Fix for bug 462650 - Traceback when using whereAmI in Evolution New
@@ -236,18 +289,18 @@ General:
 * Work on bug 364518 - Create a GUI interface to the pronunciation
   dictionary
 
-* Fix for bug 409731 – Orca should speak text selected by the mouse
+* Fix for bug 409731 - Orca should speak text selected by the mouse
 
 * Work on bug 415061 - regression test results should be repeatable
 
-* Fix for bug 439191 – sayAll by sentence can position the text cursor
+* Fix for bug 439191 - sayAll by sentence can position the text cursor
   in the wrong place when interrupted
 
 * Additional fix for bug 449964 - Pass the key event information to
   the speech system to allow more advanced key echo handling (needed
   to eliminate a stack trace)
 
-* Fix for bug 455230 – Read table cell row should insert column
+* Fix for bug 455230 - Read table cell row should insert column
   headers for non-text cells
 
 * Fix for bug 456296 - Traceback in braille.py when doing a
@@ -310,7 +363,7 @@ General:
   text on the braille display and support accurate presentation of
   text attributes on the braille display
 
-* Work on bug 395146 – Crash at start. Try to start an HTTP server on
+* Work on bug 395146 - Crash at start. Try to start an HTTP server on
   settings.httpServerPort. If this fails, retry
   settings.maxHttpServerRetries times, each time incrementing the
   server port number by 1. If we are still unable to start a server,
@@ -319,21 +372,21 @@ General:
 * Fix for bug 436888 - Include widget status information in speech and
   braille for flat review
 
-* Fix for bug 438333 – Need to present progress bar activity
+* Fix for bug 438333 - Need to present progress bar activity
 
-* Fix for bug 439191 – sayAll by sentence can position the text cursor
+* Fix for bug 439191 - sayAll by sentence can position the text cursor
   in the wrong place when interrupted
 
-* Fix for bug 442069 – Unneeded gnome-speech drivers not stopped when
+* Fix for bug 442069 - Unneeded gnome-speech drivers not stopped when
   GUI setup window is dismissed
 
-* Fix for bug 446881 – Orca braillegenerator code assumes that what's
+* Fix for bug 446881 - Orca braillegenerator code assumes that what's
   in a table is a table cell
 
 * Fix for bug 449964 - Pass the key event information to the speech
   system to allow more advanced key echo handling (thanks Tomas Cerha!)
 
-* Fix for bug 449978 – Punctuation keys not echoed (thanks Tomas Cerha!)
+* Fix for bug 449978 - Punctuation keys not echoed (thanks Tomas Cerha!)
 
 * Fix for bug 450037 - Password field for gdm speaks characters you
   type instead of "star star star star"
@@ -349,7 +402,7 @@ Firefox:
 * Fix for bug 409728 - Orca repeats mouse-selected text numerous times
   in Gecko
 
-* Fix for bug 447191 – Firefox read page summary
+* Fix for bug 447191 - Firefox read page summary
 
 * Fix for bug 448096 - Orca does not provide access to progress bars
   for FF3 downloads
@@ -369,7 +422,7 @@ Thunderbird:
 
 OpenOffice:
 
-* Fix for bug 450210 – StarOffice.py needs null-check for
+* Fix for bug 450210 - StarOffice.py needs null-check for
   self.getFrame(event.source)
 
 New and updated translations (THANKS EVERYONE!!!):
@@ -390,7 +443,7 @@ General:
   the Orca preferences dialog for this. It can also be set on an
   individual app-specific basis.
 
-* Fix for bug 433818 – Messages on system tab of gnome-system-monitor
+* Fix for bug 433818 - Messages on system tab of gnome-system-monitor
   are not reported by Orca.
 
 * Fix for bug 433951 - making changes in the Orca Preferences dialog
@@ -451,13 +504,13 @@ General Orca:
 * Present checkbox and radio button indicators before label/name in
   braille (thanks Mario Lang!)
 
-* Fix for bug 345399 – Key echo missing alpha numeric and punctuation
+* Fix for bug 345399 - Key echo missing alpha numeric and punctuation
   keys
 
 * Fix for bug 349394 to make Speech Dispatcher Factory work better
   with Orca GUI preferences (thanks Tomas Cerha!)
 
-* Fix for bug 376015 – [a11y] time-admin time servers table is not
+* Fix for bug 376015 - [a11y] time-admin time servers table is not
   accessible
 
 * Fix for bug 412837 - Need a single number to summarize test code
@@ -466,7 +519,7 @@ General Orca:
 * Fix for bug 434600 - cursor routing keys cannot be used to position
   caret at end of line
 
-* Fix for bug 435226 – Where-am-I doesn't correctly handle multiple
+* Fix for bug 435226 - Where-am-I doesn't correctly handle multiple
   selected paragraphs in OOo Writer and Evolution
 
 * Fix for bug 439155 - Flat review is broken in gcalctool
@@ -477,7 +530,7 @@ General Orca:
 * Fix for bug 439509 - Run Application Dialog prints entered text
   twice in braille (thanks Mario Lang!)
 
-* Fix for bug 440592 – Orca doesn't speak gcalctool's status bar
+* Fix for bug 440592 - Orca doesn't speak gcalctool's status bar
   correctly
 
 * Fix for bug 440294 - Voice Properties in Speech Dispatcher backend
@@ -489,7 +542,7 @@ General Orca:
 * Fix for bug 441673 - Define InputEventHandler.__eq__
   (thanks Mario Lang!)
 
-* Fix for bug 441723 – Orca should not speak "double prime" for the
+* Fix for bug 441723 - Orca should not speak "double prime" for the
   number 3
 
 * Fix for bug 443012 - atspi.py:_onParentChanged upsets
@@ -499,41 +552,41 @@ Firefox:
 
 * Fix for bug 407941 - Infer labels for objects in HTML content
 
-* Fix for bug 414657 – Linked headings should be announced as both
+* Fix for bug 414657 - Linked headings should be announced as both
   heading and link
 
-* Fix for bug 420540 – Firefox keyboard control wish list. Q/Shift+Q
+* Fix for bug 420540 - Firefox keyboard control wish list. Q/Shift+Q
   can now be used to navigate among blockquotes.
 
 * Fix for bug 423435 - Orca is too chatty when loading a page in
   Firefox
 
-* Fix for Bug 433655 – Orca's structural navigation should wrap at the
+* Fix for Bug 433655 - Orca's structural navigation should wrap at the
   end of a page
 
 * Fix for bug 437753 - Orca should speak and braille the current locus
   of focus after a page is loaded in Firefox and then start reading
   the page
 
-* Fix for bug 437986 – Orca should not first speak page and frame
+* Fix for bug 437986 - Orca should not first speak page and frame
   title when opening a menu in firefox
 
-* Fix for bug 439286 – Gecko.py's find{Next,Previous}Object fails when
+* Fix for bug 439286 - Gecko.py's find{Next,Previous}Object fails when
   object is document_frame.
 
-* Fix for bug 440079 – Orca cannot arrow past certain combo boxes in
+* Fix for bug 440079 - Orca cannot arrow past certain combo boxes in
   Firefox
 
-* Fix for bug 440529 – Orca bounces out of Firefox Help Contents tree
+* Fix for bug 440529 - Orca bounces out of Firefox Help Contents tree
   and into the document frame
 
 * Fix for bug 441476 Orca should attempt to detect erroneously-marked
   list labels in Firefox
 
-* Fix for bug 441484 – Need to adjust Firefox form field navigation to
+* Fix for bug 441484 - Need to adjust Firefox form field navigation to
   accommodate Firefox changes.
 
-* Fix for bug 441610 – Orca should identify bogus/redundant checkbox
+* Fix for bug 441610 - Orca should identify bogus/redundant checkbox
   labels in Firefox.
 
 * Fix for bug 442083 - Orca skips over empty entries with Up/Down
@@ -559,10 +612,10 @@ OpenOffice:
 * Additional fix for bug 435201 - Orca is too chatty when navigating
   by paragraph in OOo Writer
 
-* Fix for bug 435226 – Where-am-I doesn't correctly handle multiple
+* Fix for bug 435226 - Where-am-I doesn't correctly handle multiple
   selected paragraphs in OOo Writer and Evolution
 
-* Fix for bug 435852 – Orca and OpenOffice Calc have a memory lovefest
+* Fix for bug 435852 - Orca and OpenOffice Calc have a memory lovefest
 
 Java platform:
 
@@ -629,10 +682,10 @@ General Orca:
 
 Firefox:
 
-* Fix for bug 407663 – Support the "Find" operation in Firefox
+* Fix for bug 407663 - Support the "Find" operation in Firefox
   better.  Requires Firefox 3 from at least May 9, 2007.
 
-* Fix for bug 412677 – Navigation to links with { overflow:hidden }
+* Fix for bug 412677 - Navigation to links with { overflow:hidden }
   stylesheet results in bad behavior
 
 * Partial fix for bug 420540 - Firefox keyboard control wish list.
