@@ -1,5 +1,11 @@
 2007-10-09  Rich Burridge <rich.burridge@sun.com>
 
+        * test/keystrokes/oobase/bug_465109.odb:
+          test/keystrokes/oobase/bug_465109.params:
+          test/keystrokes/oobase/bug_465109.py:
+          Macaroon test file for bug #465109 - OOo sbase application 
+          crashes when entering a database record.
+
         * src/orca/where_am_I.py:
           Fixed bug #480278 - where-am-I ("double click") for StarOffice.py 
           smushs the output.
