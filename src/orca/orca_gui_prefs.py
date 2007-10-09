@@ -1146,6 +1146,92 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.pronunciationView.connect("cursor_changed",
                                        self.pronunciationCursorChanged)
 
+    def _setZoomerSpinButtons(self):
+        """Populate/update the values and ranges of the four zoomer
+        spin buttons on the Magnifier pane.
+        """
+
+        # Get the width and the height of the target screen. If there is
+        # no target screen set, use the default.
+        #
+        display = gtk.gdk.display_get_default()
+        nScreens = display.get_n_screens()
+        targetScreen = display.get_default_screen()
+        targetDisplay = self.magTargetDisplayEntry.get_text()
+        if targetDisplay:
+            t = targetDisplay.split(".")
+            try:
+                targetNumber = int(t[-1])
+                if targetNumber in range(0, nScreens):
+                    targetScreen = display.get_screen(targetNumber)
+            except:
+                pass
+
+        targetWidth = targetScreen.get_width()
+        targetHeight = targetScreen.get_height()
+
+        prefs = self.prefsDict
+        
+        # Get the zoomer placement top preference and set the top spin
+        # button value accordingly. Set the top spin button "max size" to
+        # the height of the target screen.  If there is no target screen
+        # set, use the default.
+        #
+        topPosition = prefs["magZoomerTop"]
+        adjustment = gtk.Adjustment(
+            min(topPosition, targetHeight), 
+            0, targetHeight, 
+            1,
+            targetHeight / 16, targetHeight)
+        self.magZoomerTopSpinButton.set_adjustment(adjustment)
+        if topPosition > targetHeight:
+            self.magZoomerTopSpinButton.update()
+
+        # Get the zoomer placement left preference and set the left spin
+        # button value accordingly. Set the left spin button "max size" to
+        # the width of the target screen. If there is no target screen set,
+        # use the default.
+        #
+        leftPosition = prefs["magZoomerLeft"]
+        adjustment = gtk.Adjustment(
+            min(leftPosition, targetWidth),
+            0, targetWidth, 
+            1,
+            targetWidth / 16, targetWidth)
+        self.magZoomerLeftSpinButton.set_adjustment(adjustment)
+        if leftPosition > targetWidth:
+            self.magZoomerLeftSpinButton.update()
+
+        # Get the zoomer placement right preference and set the right spin
+        # button value accordingly. Set the right spin button "max size" to
+        # the width of the target screen. If there is no target screen set,
+        # use the default.
+        #
+        rightPosition = prefs["magZoomerRight"]
+        adjustment = gtk.Adjustment(
+            min(rightPosition, targetWidth),
+            0, targetWidth, 
+            1,
+            targetWidth / 16, targetWidth)
+        self.magZoomerRightSpinButton.set_adjustment(adjustment)
+        if rightPosition > targetWidth:
+            self.magZoomerRightSpinButton.update()
+
+        # Get the zoomer placement bottom preference and set the bottom
+        # spin button value accordingly. Set the bottom spin button "max size"
+        # to the height of the target screen.  If there is no target screen
+        # set, use the default.
+        #
+        bottomPosition = prefs["magZoomerBottom"]
+        adjustment = gtk.Adjustment(
+            min(bottomPosition, targetHeight),
+            0, targetHeight, 
+            1,
+            targetHeight / 16, targetHeight)
+        self.magZoomerBottomSpinButton.set_adjustment(adjustment)
+        if bottomPosition > targetHeight:
+            self.magZoomerBottomSpinButton.update()
+
     def _initGUIState(self):
         """Adjust the settings of the various components on the
         configuration GUI depending upon the users preferences.
@@ -1285,58 +1371,36 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         crosshairSize = prefs["magCrossHairSize"]
         self.magCrossHairSizeSpinButton.set_value(crosshairSize)
 
-        # Get the width and the height of the screen.
+        # Get the magnification source and target displays.
         #
-        self.screenWidth = gtk.gdk.screen_get_default().get_width()
-        self.screenHeight = gtk.gdk.screen_get_default().get_height()
+        sourceDisplay = prefs["magSourceDisplay"]
+        self.magSourceDisplayEntry.set_text(sourceDisplay)
 
-        # Get the zoomer placement top preference and set the top spin
-        # button value accordingly. Set the top spin button "max size" to
-        # the height of the screen.
-        #
-        topPosition = prefs["magZoomerTop"]
-        adjustment = gtk.Adjustment(
-            topPosition, 
-            0, self.screenHeight, 
-            1,
-            self.screenHeight / 16, self.screenHeight)
-        self.magZoomerTopSpinButton.set_adjustment(adjustment)
+        targetDisplay = prefs["magTargetDisplay"]
+        self.magTargetDisplayEntry.set_text(targetDisplay)
 
-        # Get the zoomer placement left preference and set the left spin
-        # button value accordingly. Set the left spin button "max size" to
-        # the width of the screen.
+        # Get the width and the height of the source screen. If there is
+        # no source screen set, use the default.
         #
-        leftPosition = prefs["magZoomerLeft"]
-        adjustment = gtk.Adjustment(
-            leftPosition, 
-            0, self.screenWidth, 
-            1,
-            self.screenWidth / 16, self.screenWidth)
-        self.magZoomerLeftSpinButton.set_adjustment(adjustment)
+        display = gtk.gdk.display_get_default()
+        nScreens = display.get_n_screens()
+        sourceScreen = display.get_default_screen()
+        if sourceDisplay:
+            s = sourceDisplay.split(".")
+            try:
+                sourceNumber = int(s[-1])
+                if sourceNumber in range(0, nScreens):
+                    sourceScreen = display.get_screen(sourceNumber)
+            except:
+                pass
 
-        # Get the zoomer placement right preference and set the right spin
-        # button value accordingly. Set the right spin button "max size" to
-        # the width of the screen.
-        #
-        rightPosition = prefs["magZoomerRight"]
-        adjustment = gtk.Adjustment(
-            rightPosition, 
-            0, self.screenWidth, 
-            1,
-            self.screenWidth / 16, self.screenWidth)
-        self.magZoomerRightSpinButton.set_adjustment(adjustment)
+        self.screenWidth = sourceScreen.get_width()
+        self.screenHeight = sourceScreen.get_height()
 
-        # Get the zoomer placement bottom preference and set the bottom
-        # spin button value accordingly. Set the bottom spin button "max size"
-        # to the height of the screen.
+        # Populate the zoomer spin buttons based on the size of the target
+        # display.
         #
-        bottomPosition = prefs["magZoomerBottom"]
-        adjustment = gtk.Adjustment(
-            bottomPosition, 
-            0, self.screenHeight, 
-            1,
-            self.screenHeight / 16, self.screenHeight)
-        self.magZoomerBottomSpinButton.set_adjustment(adjustment)
+        self._setZoomerSpinButtons()
 
         # Get the zoom factor preference and set the zoom factor spin
         # button value accordingly.
@@ -1409,14 +1473,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             mode = _("Centered")
         index = self._getComboBoxIndex(self.magMouseTrackingComboBox, mode)
         self.magMouseTrackingComboBox.set_active(index)
-
-        # Get the magnification source and target displays.
-        #
-        sourceDisplay = prefs["magSourceDisplay"]
-        self.magSourceDisplayEntry.set_text(sourceDisplay)
-
-        targetDisplay = prefs["magTargetDisplay"]
-        self.magTargetDisplayEntry.set_text(targetDisplay)
 
         # Text attributes pane.
         #
@@ -2640,6 +2696,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["magTargetDisplay"] = widget.get_text()
+        self._setZoomerSpinButtons()
 
     def showMainWindowChecked(self, widget):
         """Signal handler for the "toggled" signal for the

@@ -1,3 +1,8 @@
+2007-10-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/orca_gui_prefs.py: Fix for bug #462984 - Orca failed to 
+        detect the resolution of second screen.
+
 2007-10-07  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py: Additional work for bug 478204, Orca should handle
