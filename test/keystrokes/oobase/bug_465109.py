@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+"""Test to verify bug #465109 is still fixed.
+   OOo sbase application crashes when entering a database record.
+"""
+
 from macaroon.playback import *
 
 sequence = MacroSequence()
