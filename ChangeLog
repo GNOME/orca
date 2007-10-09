@@ -1,3 +1,9 @@
+2007-10-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/where_am_I.py:
+          Fixed bug #480278 – where-am-I ("double click") for StarOffice.py 
+          smushs the output.
+
 2007-10-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/orca_gui_prefs.py: Fix for bug #462984 - Orca failed to 

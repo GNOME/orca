@@ -1130,7 +1130,7 @@ class WhereAmI:
                         if prevObj.text.getNSelections() > 0:
                             [newTextContents, start, end] = \
                                          self._getTextSelection(prevObj)
-                            textContents = newTextContents + textContents
+                            textContents = newTextContents + " " + textContents
                             current = prevObj
                             morePossibleSelections = True
                         else:
@@ -1152,7 +1152,7 @@ class WhereAmI:
                         if nextObj.text.getNSelections() > 0:
                             [newTextContents, start, end] = \
                                          self._getTextSelection(nextObj)
-                            textContents += newTextContents
+                            textContents += " " + newTextContents
                             current = nextObj
                             morePossibleSelections = True
                         else:
