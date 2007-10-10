@@ -1248,13 +1248,7 @@ class SpeechGenerator:
 
         # If this is a table with no children, then let the user know.
         #
-        hasItems = False
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
-            if child and child.state.count(atspi.Accessibility.STATE_SHOWING):
-                hasItems = True
-                break
-        if not hasItems:
+        if not obj.childCount:
             # Translators: this is the number of items in a layered pane
             # or table.
             #

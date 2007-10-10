@@ -1,3 +1,10 @@
+2007-10-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py:
+          Refixed bug #435852 - Orca and OpenOffice Calc have a memory 
+          lovefest. Applied the same fix that had previously been applied 
+          to the StarOffice script, to the default speech generator.
+
 2007-10-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py.py:
