@@ -1321,34 +1321,6 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "Left",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["decreaseSpeechRateHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["increaseSpeechRateHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["decreaseSpeechPitchHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["increaseSpeechPitchHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
                 "q",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
