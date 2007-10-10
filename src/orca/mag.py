@@ -115,6 +115,10 @@ _lastMouseEventTime = time.time()
 #
 _pollMouseDisabled = False
 
+# Whether or not composite is being used.
+#
+_fullScreenCapable = True
+
 def __setROI(rect):
     """Sets the region of interest.
 
@@ -297,6 +301,7 @@ def applySettings():
     global _maxROIX
     global _maxROIY
     global _pollMouseDisabled
+    global _fullScreenCapable
 
     ########################################################################
     #                                                                      #
@@ -320,26 +325,92 @@ def applySettings():
     except:
         pass
 
+    # Find out where the user wants to place the target display.
+    #
+    prefLeft   = settings.magZoomerLeft
+    prefTop    = settings.magZoomerTop
+    prefRight  = settings.magZoomerRight
+    prefBottom = settings.magZoomerBottom
+    updateTarget = True
+
+    # Find out if we're using composite.
+    #
+    try:
+        _fullScreenCapable = _magnifier.fullScreenCapable()
+    except:
+        debug.printException(debug.LEVEL_WARNING)
+
+    magnifierPBag = _magnifier.getProperties()
+    
+    # If we're not using composite, bad things will happen if we allow the
+    # target display to occupy more than 50% of the full screen.  Also, if
+    # it occupies the same space as something that should be magnified (e.g.
+    # the Applications menu), that item will not be magnified. Therefore,
+    # we're going to prefer the right half of the screen for the target
+    # display -- unless gnome-mag is already running and not in "full screen"
+    # mode.
+    #
+    if not _fullScreenCapable \
+       and _magnifier.SourceDisplay == _magnifier.TargetDisplay:
+        # At this point, the target display bounds have not been set. if they
+        # are all 0, then we know that gnome-mag isn't already running.
+        #
+        magAlreadyRunning = False
+        tdb = magnifierPBag.getValue("target-display-bounds").value()
+        if tdb.x1 or tdb.x2 or tdb.y1 or tdb.y2:
+            magAlreadyRunning = True
+
+        # At this point, because we haven't set the target display bounds,
+        # gnome-mag has not modified the source display bounds. Therefore,
+        # we can use the current source display bounds to get the
+        # dimensions of the full screen -- assuming gnome-mag has not
+        # already been launched with a split screen. Comparing the values
+        # of the source and target display bounds lets us know if gnome-mag
+        # has been started in "full screen" mode.
+        #
+        sdb = magnifierPBag.getValue("source-display-bounds").value()
+        magFullScreen = magAlreadyRunning \
+                        and (tdb.x1 == sdb.x1) and (tdb.x2 == sdb.x2) \
+                        and (tdb.y1 == sdb.y1) and (tdb.y2 == sdb.y2)
+
+        sourceArea = (sdb.x2 - sdb.x1) * (sdb.y2 - sdb.y1)
+        prefArea = (prefRight - prefLeft) * (prefBottom - prefTop)
+        if prefArea > sourceArea/2:
+            debug.println(
+                debug.LEVEL_WARNING,
+                "Composite is not being used. The preferred target area is\n"\
+                "greater than 50% of the source area.  These settings can\n"\
+                "render the contents of the screen inaccessible.")
+            if not magAlreadyRunning or magFullScreen:
+                debug.println(
+                    debug.LEVEL_WARNING,
+                    "Setting the target display to the screen's right half.")
+                prefRight  = sdb.x2
+                prefLeft   = sdb.x2/2
+                prefTop    = sdb.y1
+                prefBottom = sdb.y2
+            else:
+                updateTarget = False
+                debug.println(
+                    debug.LEVEL_WARNING,
+                    "Gnome-mag is already running.  Using those settings.")
+
     # Now, tell the magnifier where we want it to live on the target display.
     # The coordinates are in screen coordinates of the target display.
     # This will have the side effect of setting up other stuff for us, such
     # as source-display-bouinds.
     #
-    magnifierPBag = _magnifier.getProperties()
-
-    try:
+    if updateTarget:
         tdb = magnifierPBag.getValue("target-display-bounds").value()
         magnifierPBag.setValue(
             "target-display-bounds",
             atspi.ORBit.CORBA.Any(
                 atspi.ORBit.CORBA.TypeCode(
                     tdb.__typecode__.repo_id),
-                GNOME.Magnifier.RectBounds(settings.magZoomerLeft,
-                                           settings.magZoomerTop,
-                                           settings.magZoomerRight,
-                                           settings.magZoomerBottom)))
-    except:
-        debug.printException(debug.LEVEL_OFF)
+                GNOME.Magnifier.RectBounds(prefLeft,
+                                           prefTop,
+                                           prefRight,
+                                           prefBottom)))
 
     # Set a bunch of other magnifier properties...
     #
