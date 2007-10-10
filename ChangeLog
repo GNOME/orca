@@ -4,6 +4,11 @@
           Fixed bug #483018 - We should remove (or redefine) the orca 
           speech change hotkeys.
 
+        * src/orca/speechgenerator.py:
+          Refixed bug #435852 - Orca and OpenOffice Calc have a memory 
+          lovefest. Applied the same fix that had previously been applied 
+          to the StarOffice script, to the default speech generator.
+
 2007-10-09  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/oobase/bug_465109.odb:
