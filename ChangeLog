@@ -1,5 +1,11 @@
 2007-10-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/braillegenerator.py:
+          Fixed bug #484499 - Orca should not braille the node level
+          for every cell in row.
+
+2007-10-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/mag.py:
           Fixed bug #467664 - unmagnified area becomes too small to use.
 

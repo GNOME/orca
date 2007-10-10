@@ -1284,14 +1284,6 @@ class BrailleGenerator:
                 #
                 regions[0].append(braille.Region(" " + _("collapsed")))
 
-        level = self._script.getNodeLevel(obj)
-        if level >= 0:
-            # Translators: this represents the depth of a node in a tree
-            # view (i.e., how many ancestors a node has).
-            #
-            regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
-                                             % (level + 1)))
-
         return regions
 
     def _getBrailleRegionsForTableCellRow(self, obj):
@@ -1358,6 +1350,14 @@ class BrailleGenerator:
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
         else:
             regions = self._getBrailleRegionsForTableCell(obj)
+
+        level = self._script.getNodeLevel(obj)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
+                                             % (level + 1)))
 
         return regions
 
