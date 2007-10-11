@@ -502,11 +502,9 @@ class SpeechServer(speechserver.SpeechServer):
                             [self.__sayAll.currentContext, acss] = \
                                 self.__sayAll.utteranceIterator.next()
                             utterance = self.__sayAll.currentContext.utterance
-                            debug.println(debug.LEVEL_INFO,
-                                          "SPEECH OUTPUT: '" \
-                                          + utterance \
-                                          + "'")
-                            log.info("sayAll utterance='%s'" % utterance)
+                            logLine = "SPEECH OUTPUT: '" + utterance + "'"
+                            debug.println(debug.LEVEL_INFO, logLine)
+                            log.info(logLine)
                             if utterance and len(utterance)\
                                and not utterance.isspace():
                                 self.__sayAll.idForCurrentContext = \
@@ -700,7 +698,7 @@ class SpeechServer(speechserver.SpeechServer):
             oldText = oldText.replace("\n", "", 1)
 
         # Used to keep a list of character offsets into the new text string,
-        # once it has been converted to use verbalized punctuation, one for 
+        # once it has been converted to use verbalized punctuation, one for
         # each character in the original string.
         #
         self.textCharIndices = []
@@ -867,9 +865,9 @@ class SpeechServer(speechserver.SpeechServer):
         """
         try:
             [context, acss] = utteranceIterator.next()
-            debug.println(debug.LEVEL_INFO,
-                          "SPEECH OUTPUT: '" + context.utterance + "'")
-            log.info("sayAll utterance='%s'" % context.utterance)
+            logLine = "SPEECH OUTPUT: '" + context.utterance + "'"
+            debug.println(debug.LEVEL_INFO, logLine)
+            log.info(logLine)
             self.__sayAll = _SayAll(utteranceIterator,
                                     context,
                                     self.__speak(context.utterance, acss),

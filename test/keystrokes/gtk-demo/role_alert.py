@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -20,39 +21,29 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Dialog and Message Boxes", 1000))
+#sequence.append(WaitForWindowActivate("Dialogs",None))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # Once the demo is up, wait for focus to appear on the "Message Dialog"
-# button.  The following should be presented in speech and braille,
-# where the name of the "Dialogs" border is spoken when the button
-# gets focus:
+# button and then invoke it.
 #
-# BRAILLE LINE:  'gtk-demo Application Dialogs Frame Dialogs Dialogs Panel Message Dialog Button'
-#      VISIBLE:  'Message Dialog Button', cursor=1
-#
-# SPEECH OUTPUT: 'Dialogs panel'
-# SPEECH OUTPUT: 'Message Dialog button'
-#
-#sequence.append(WaitForWindowActivate("Dialogs",None))
 sequence.append(WaitForFocus("Message Dialog",
                              acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
-########################################################################
-# Now invoke the "Message Dialog" button.  When the window appears,
-# the following should be presented in speech and braille:
-#
-# BRAILLE LINE:  'gtk-demo Application Information Alert OK Button'
-#      VISIBLE:  'OK Button', cursor=1
-#
-# SPEECH OUTPUT: 'Information This message box has been popped up the following
-# number of times: 1'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'OK button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Information Alert automatic presentation",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert'", 
+     "     VISIBLE:  'Information Alert', cursor=1", 
+     "BRAILLE LINE:  'gtk-demo Application Information Alert OK Button'", 
+     "     VISIBLE:  'OK Button', cursor=1", 
+     "SPEECH OUTPUT: 'Information This message box has been popped up the following", 
+     "number of times: 1'", 
+     "SPEECH OUTPUT: ''", 
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Dismiss the information window by activating the OK button.
@@ -79,38 +70,35 @@ sequence.append(KeyComboAction("Tab", 500))
 
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Again"))
-sequence.append(KeyComboAction("<Alt>i", 500))
 
-########################################################################
-# When the Interactive Dialog demo comes up, the following should be
-# presented in speech and braille:
-#
-# BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'
-#      VISIBLE:  'Entry 1 Testing $l', cursor=16
-#
-# SPEECH OUTPUT: 'Interactive Dialog'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Entry 1 text Testing'
-# SPEECH OUTPUT: 'Testing'
-# SPEECH OUTPUT: 'selected'
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Alt>i", 500))
 #sequence.append(WaitForWindowActivate("Interactive Dialog",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.AssertPresentationAction(
+    "Interactive Dialog no automatic presentation",
+    ["BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog'",
+     "     VISIBLE:  'Interactive Dialog Dialog', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
+     "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
+     "SPEECH OUTPUT: 'Interactive Dialog'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Entry 1 text Testing'"]))
 
 ########################################################################
 # Now, do a "Where Am I" in the Interactive Dialog to get the title
-# info via KP_Insert+KP_Enter.  The following should be presented in
-# speech and braille:
+# info via KP_Insert+KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'
-#      VISIBLE:  'Entry 1 Testing $l', cursor=16
-#
-# SPEECH OUTPUT: 'Interactive Dialog'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Interactive Dialog Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
+     "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
+     "SPEECH OUTPUT: 'Interactive Dialog'"]))
 
 ########################################################################
 # Tab to the OK button and dismiss the window.

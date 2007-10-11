@@ -125,9 +125,9 @@ def sayAll(utteranceIterator, progressCallback):
         _speechserver.sayAll(utteranceIterator, progressCallback)
     else:
         for [context, acss] in utteranceIterator:
-            debug.println(debug.LEVEL_INFO,
-                          "SPEECH OUTPUT: '" + context.utterance + "'")
-            log.info("sayAll utterance='%s'" % context.utterance)
+            logLine = "SPEECH OUTPUT: '" + context.utterance + "'"
+            debug.println(debug.LEVEL_INFO, logLine)
+            log.info(logLine)
 
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
@@ -153,8 +153,9 @@ def speak(text, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
-    log.info("speak utterance='%s'" % text)
+    logLine = "SPEECH OUTPUT: '" + text + "'"
+    debug.println(debug.LEVEL_INFO, logLine)
+    log.info(logLine)
 
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
@@ -190,8 +191,9 @@ def speakKeyEvent(event_string, type):
             #
             event_string += " " + _("off")
 
-        debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + event_string +"'")
-        log.info("speakKeyEvent utterance='%s'" % event_string)
+        logLine = "SPEECH OUTPUT: '" + event_string +"'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
 def isSpeaking():
     """"Returns True if the system is currently speaking."""
@@ -223,9 +225,9 @@ def speakUtterances(utterances, acss=None, interrupt=True):
         return
 
     for utterance in utterances:
-        debug.println(debug.LEVEL_INFO,
-                      "SPEECH OUTPUT: '" + utterance + "'")
-        log.info("speakUtterances utterance='%s'" % utterance)
+        logLine = "SPEECH OUTPUT: '" + utterance + "'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
     if _speechserver:
         _speechserver.speakUtterances(utterances,
@@ -240,9 +242,9 @@ def increaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechRate()
     else:
-        debug.println(debug.LEVEL_INFO,
-                      "SPEECH OUTPUT: 'faster'")
-        log.info("increaseSpeechRate")
+        logLine = "SPEECH OUTPUT: 'faster'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
     return True
 
@@ -250,9 +252,9 @@ def decreaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.decreaseSpeechRate()
     else:
-        debug.println(debug.LEVEL_INFO,
-                      "SPEECH OUTPUT: 'slower'")
-        log.info("decreaseSpeechRate")
+        logLine = "SPEECH OUTPUT: 'slower'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
     return True
 
@@ -260,9 +262,9 @@ def increaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechPitch()
     else:
-        debug.println(debug.LEVEL_INFO,
-                      "SPEECH OUTPUT: 'higher'")
-        log.info("increaseSpeechPitch")
+        logLine = "SPEECH OUTPUT: 'higher'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
     return True
 
@@ -270,9 +272,9 @@ def decreaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.decreaseSpeechPitch()
     else:
-        debug.println(debug.LEVEL_INFO,
-                      "SPEECH OUTPUT: 'lower'")
-        log.info("decreaseSpeechPitch")
+        logLine = "SPEECH OUTPUT: 'lower'"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
     return True
 

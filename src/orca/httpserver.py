@@ -38,9 +38,10 @@ import speech
 _httpRequestThread = None
 
 
-# FileHandlers for logging speech and braille output.
+# Handlers for logging speech and braille output.
 #
 loggingFileHandlers = {}
+loggingStreamHandlers = {}
 
 class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Provides support for communicating with Orca via HTTP.  This is
@@ -96,8 +97,9 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 logFile = inputBody[4:]
                 for logger in ['braille', 'speech']:
                     log = logging.getLogger(logger)
-                    formatter = logging.Formatter('%(name)s.%(message)s')
+                    formatter = logging.Formatter('%(message)s')
                     try:
+                        loggingFileHandlers[logger].flush()
                         loggingFileHandlers[logger].close()
                         log.removeHandler(loggingFileHandlers[logger])
                     except:
@@ -109,6 +111,47 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         log.addHandler(loggingFileHandlers[logger])
                     log.setLevel(logging.INFO)
                 self.send_response(200, 'OK')
+            elif inputBody == "recordStart":
+                import logging
+                import StringIO
+                for logger in ['braille', 'speech']:
+                    log = logging.getLogger(logger)
+                    try:
+                        [stringIO, handler] = loggingStreamHandlers[logger]
+                        handler.close()
+                        log.removeHandler(handler)
+                        stringIO.close()
+                    except:
+                        pass
+                    formatter = logging.Formatter('%(message)s')
+                    stringIO = StringIO.StringIO()
+                    handler = logging.StreamHandler(stringIO)
+                    handler.setFormatter(formatter)
+                    log.addHandler(handler)
+                    loggingStreamHandlers[logger] = [stringIO, handler]
+                    log.setLevel(logging.INFO)
+                self.send_response(200, 'OK')
+            elif inputBody == "recordStop":
+                import logging
+                import StringIO
+                result = ''
+                for logger in ['braille', 'speech']:
+                    log = logging.getLogger(logger)
+                    try:
+                        [stringIO, handler] = loggingStreamHandlers[logger]
+                        handler.flush()
+                        handler.close()
+                        log.removeHandler(handler)
+                        result += stringIO.getvalue()
+                        stringIO.close()
+                    except:
+                        debug.printException(debug.LEVEL_OFF)
+                        pass
+                    stringIO = StringIO.StringIO()
+                self.send_response(200, 'OK')
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write(result)
             elif inputBody.startswith("debug:"):
                 split = inputBody.split(':')
                 debug.debugLevel = int(split[1])

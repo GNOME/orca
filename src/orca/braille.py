@@ -832,12 +832,12 @@ def refresh(panToCursor=True, targetCursorCell=0):
     else:
         cursorCell += 1 # Normalize to 1-based offset
 
-    debug.println(debug.LEVEL_INFO, "BRAILLE LINE:  '%s'" % string)
-    debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
-                  % (string[startPos:endPos], cursorCell))
-
-    log.info("refresh line='%s', visible='%s', cursor=%d" \
-             % (string, string[startPos:endPos], cursorCell))
+    logLine = "BRAILLE LINE:  '%s'" % string
+    debug.println(debug.LEVEL_INFO, logLine)
+    log.info(logLine)
+    logLine = "     VISIBLE:  '%s', cursor=%d" % (string[startPos:endPos], cursorCell)
+    debug.println(debug.LEVEL_INFO, logLine)
+    log.info(logLine)
 
     string = string.decode("UTF-8")
     substring = string[startPos:endPos].encode("UTF-8")
