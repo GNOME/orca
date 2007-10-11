@@ -1237,9 +1237,9 @@ Hyperlink</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-                              <accessibility>
-                                <atkrelation target="speakProgressBarSpinButton" type="label-for"/>
-                              </accessibility>
+			      <accessibility>
+				<atkrelation target="speakProgressBarSpinButton" type="label-for"/>
+			      </accessibility>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -1259,9 +1259,10 @@ Hyperlink</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
 			      <property name="adjustment">10 1 9999 1 10 10</property>
-                              <accessibility>
-                                <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
-                              </accessibility>
+			      <accessibility>
+				<atkrelation target="speakProgressBarUnitLabel" type="labelled-by"/>
+				<atkrelation target="speakProgressBarLabel" type="labelled-by"/>
+			      </accessibility>
 			      <signal name="value_changed" handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT"/>
 			    </widget>
 			    <packing>
@@ -1272,7 +1273,7 @@ Hyperlink</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="label25">
+			    <widget class="GtkLabel" id="speakProgressBarUnitLabel">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">seconds</property>
 			      <property name="use_underline">False</property>
@@ -1288,9 +1289,9 @@ Hyperlink</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-                              <accessibility>
-                                <atkrelation target="speakProgressBarSpinButton" type="label-for"/>
-                              </accessibility>
+			      <accessibility>
+				<atkrelation target="speakProgressBarSpinButton" type="label-for"/>
+			      </accessibility>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -1362,7 +1363,8 @@ Hyperlink</property>
 		      <child>
 			<widget class="GtkLabel" id="sayAllLabel">
 			  <property name="visible">True</property>
-                          <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>			  <property name="use_underline">True</property>
+			  <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -2429,9 +2431,9 @@ Push</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+						  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2451,9 +2453,10 @@ Push</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">1 1 256 1 10 10</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
+						    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
+						  </accessibility>
 						  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
 						</widget>
 						<packing>
@@ -2480,9 +2483,9 @@ Push</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+						  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3286,9 +3289,9 @@ Bilinear</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
+						  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3308,9 +3311,10 @@ Bilinear</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">1 1 256 1 10 10</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
+						    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
+						  </accessibility>
 						  <signal name="value_changed" handler="magCursorSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:31:48 GMT"/>
 						</widget>
 						<packing>
@@ -3337,9 +3341,9 @@ Bilinear</property>
 						  <property name="width_chars">-1</property>
 						  <property name="single_line_mode">False</property>
 						  <property name="angle">0</property>
-                                                  <accessibility>
-                                                    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
-                                                  </accessibility>
+						  <accessibility>
+						    <atkrelation target="magCursorSizeSpinButton" type="label-for"/>
+						  </accessibility>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3928,7 +3932,7 @@ Bilinear</property>
 				      <property name="border_width">5</property>
 				      <property name="visible">True</property>
 				      <property name="can_focus">True</property>
-                                      <property name="label" translatable="yes" comments="Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move to _top</property>
+				      <property name="label" translatable="yes" comments="Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move to _top</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
 				      <property name="focus_on_click">True</property>
@@ -3946,7 +3950,7 @@ Bilinear</property>
 				      <property name="border_width">5</property>
 				      <property name="visible">True</property>
 				      <property name="can_focus">True</property>
-                                      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move _up one</property>
+				      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move _up one</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
 				      <property name="focus_on_click">True</property>
@@ -3964,7 +3968,7 @@ Bilinear</property>
 				      <property name="border_width">5</property>
 				      <property name="visible">True</property>
 				      <property name="can_focus">True</property>
-                                      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move _down one</property>
+				      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move _down one</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
 				      <property name="focus_on_click">True</property>
@@ -3982,7 +3986,7 @@ Bilinear</property>
 				      <property name="border_width">5</property>
 				      <property name="visible">True</property>
 				      <property name="can_focus">True</property>
-                                      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move to _bottom</property>
+				      <property name="label" translatable="yes" comments="Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move to _bottom</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
 				      <property name="focus_on_click">True</property>
