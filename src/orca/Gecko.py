@@ -1329,10 +1329,22 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """Calls the base class method for single clicks and Gecko specific
         information presentation methods for double clicks
         """
-        if not doubleClick or not self._script.inDocumentContent(obj):
+        if not doubleClick or orcaKey \
+           or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, orcaKey)
         else:
             self.readPageSummary(obj)
+
+    def _speakDefaultButton(self, obj):
+        """Speaks the default button in a dialog.
+
+        Arguments:
+        - obj: the dialog box for which the default button should be obtained
+        """
+
+        if not (self._script.inDocumentContent(orca_state.locusOfFocus) \
+                and not self._script.isAriaWidget(orca_state.locusOfFocus)):
+            where_am_I.WhereAmI._speakDefaultButton(self, obj)
             
     def readPageSummary(self, obj):
         """Reads the quantity of headings, forms, tables, visited and unvisited links, 

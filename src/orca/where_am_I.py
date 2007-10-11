@@ -47,7 +47,6 @@ class WhereAmI:
         self._script = script
         self._debugLevel = debug.LEVEL_FINEST
         self._statusBar = None
-        self._defaultButton = None
         self._lastAttributeString = ""
 
     def whereAmI(self, obj, doubleClick, orcaKey):
@@ -1414,9 +1413,7 @@ class WhereAmI:
                     self._speakStatusBar()
             window = list[1] or list[0]
             if window:
-                self._defaultButton = None
-                self._getDefaultButton(window)
-                self._speakDefaultButton()
+                self._speakDefaultButton(window)
         else:
             if list[0]:
                 text = self._getObjLabelAndName(list[0])
@@ -1504,10 +1501,8 @@ class WhereAmI:
         Arguments:
         - obj: the dialog box for which the default button should be obtained
         """
-        
-        if self._defaultButton:
-            return
 
+        defaultButton = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
             # debug.println(self._debugLevel,
@@ -1515,18 +1510,25 @@ class WhereAmI:
             #               (child.role, self._getObjLabelAndName(child)))
             if child.role == rolenames.ROLE_PUSH_BUTTON \
                 and child.state.count(atspi.Accessibility.STATE_IS_DEFAULT):
-                self._defaultButton = child
-                return
+                defaultButton = child
+            else:
+                defaultButton = self._getDefaultButton(child)
 
-            if child.childCount > 0:
-                self._getDefaultButton(child)
+            if defaultButton:
+                break
 
-    def _speakDefaultButton(self):
+        return defaultButton
+
+    def _speakDefaultButton(self, obj):
         """Speaks the default button in a dialog.
+
+        Arguments:
+        - obj: the dialog box for which the default button should be obtained
         """
 
-        if not self._defaultButton \
-           or not self._defaultButton.state.count(\
+        defaultButton = self._getDefaultButton(obj)
+        if not defaultButton \
+           or not defaultButton.state.count(\
                                       atspi.Accessibility.STATE_SENSITIVE):
             return
 
@@ -1537,7 +1539,7 @@ class WhereAmI:
         # dialog box.
         #
         text = _("Default button is %s") % \
-               self._getObjName(self._defaultButton)
+               self._getObjName(defaultButton)
         utterances.append(text)
 
         debug.println(self._debugLevel, "default button utterances=%s" % \
