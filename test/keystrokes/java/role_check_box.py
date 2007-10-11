@@ -73,6 +73,7 @@ sequence.append(WaitForFocus("Check Boxes", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(KeyComboAction("Tab"))
 
 ########################################################################
+# [[[BUG 483206: Braille output of unchecked checkbox appears as checked.]]]
 # When the "One" checkbox gets focus, the following should be
 # presented in speech and braille:
 #

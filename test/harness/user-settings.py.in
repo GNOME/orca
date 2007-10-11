@@ -11,6 +11,8 @@ import orca.acss
 orca.settings.enableSpeech = True
 orca.settings.speechServerFactory = None
 
+orca.settings.asyncMode = False
+
 orca.settings.enableEchoByWord = False
 orca.settings.enableKeyEcho = False
 orca.settings.enablePrintableKeys = False

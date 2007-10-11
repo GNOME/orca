@@ -52,7 +52,7 @@ sequence.append(WaitForFocus("Enable Drag Support",
                              acc_role=pyatspi.ROLE_CHECK_BOX))
 
 ########################################################################
-# TODO: We actually get an exception here.
+# [[[Bug 483208: Exception raised when performing where am I]]]
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech:
 #
@@ -85,7 +85,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ROOT_PANE))
 sequence.append(KeyComboAction("Down"))
 
 ########################################################################
-# TODO: It seems like this focus output is different with the similar one above.
+# [[[Bug 483209: Context that appears in braille differs on same item.]]]
 # Maybe because we invoked the menu with <Alt>p?
 # When the second menu item "Enable Drag Support" gets focus, the following
 # should be presented in speech and braille:

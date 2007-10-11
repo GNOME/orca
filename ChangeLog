@@ -1,3 +1,23 @@
+2007-10-10  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/default.py: 
+	Removed activeDescendantInfo accessible object annotation (bug #476639).
+	* test/harness/runall.sh: 
+	Make it easier to run tests from alternative directories.
+	Specifically in coverage mode.
+	* test/harness/user-settings.py.in:
+	Set asynchronous to False.
+	* test/keystrokes/java/role_check_box.py: 
+	* test/keystrokes/java/role_check_menu_item.py: 
+	* test/keystrokes/java/role_combo_box.py: 
+	* test/keystrokes/java/role_dialog.py: 
+	* test/keystrokes/java/role_menu.py: 
+	* test/keystrokes/java/role_table.params: 
+	* test/keystrokes/java/role_table.py: 
+	* test/keystrokes/java/role_tree.params: 
+	* test/keystrokes/java/role_tree.py: 
+	Added new tests and referenced bug numbers in existing ones.
+
 2007-10-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/braillegenerator.py:

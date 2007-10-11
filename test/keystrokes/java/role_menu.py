@@ -29,10 +29,10 @@ sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("File", acc_role=pyatspi.ROLE_MENU))
 
 ########################################################################
+# [[[Bug 483208: Exception raised when performing where am I]]]
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech:
 #
-# TODO: Getting an exception here.
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 
@@ -95,10 +95,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Audio", acc_role=pyatspi.ROLE_MENU))
 
 ########################################################################
+# [[[Bug 483208: Exception raised when performing where am I]]]
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech:
 #
-# TODO: Getting an exception here.
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 

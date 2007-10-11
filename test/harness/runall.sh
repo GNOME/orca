@@ -92,8 +92,10 @@ then
     runOrcaOnce=1
     echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
-    cp user-settings.py.in user-settings.py
-    trace2html.py -o $coverageDir -w orca -r runorca.py &
+    mkdir -p $coverageDir
+    cp $harnessDir/user-settings.py.in user-settings.py
+    echo $harnessDir/user-settings.py.in
+    trace2html.py -o $coverageDir -w orca -r $harnessDir/runorca.py &
     trace_pid=$!
     sleep 10
 fi
@@ -225,7 +227,7 @@ done
 
 if [ "$coverageMode" -eq 1 ]
 then
-    python quit.py
+    python $harnessDir/quit.py
     rm user-settings.py
     rm -f user-settings.pyc
     echo ...finished generating coverage map.
@@ -233,7 +235,7 @@ fi
 
 if [ "$profileMode" -eq 1 ]
 then
-    python quit.py
+    python $harnessDir/quit.py
     rm -f user-settings.py
     rm -f user-settings.pyc
     mkdir -p ../profile

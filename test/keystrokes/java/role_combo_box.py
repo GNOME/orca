@@ -120,7 +120,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL))
 
 ########################################################################
-# TODO: Shouldn't this have more info? Like "item x of y"?
+# [[[BUG 483212: Missing significant information when performing where am i on combo box items]]]
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented:
 #

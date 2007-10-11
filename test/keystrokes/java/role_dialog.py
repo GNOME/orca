@@ -62,7 +62,7 @@ sequence.append(WaitForFocus("Show Input Dialog", acc_role=pyatspi.ROLE_PUSH_BUT
 sequence.append(TypeAction(" "))
 
 ########################################################################
-# TODO: Shouldn't braille also read the label?
+# [[[BUG 483213: Braille does not output unrelated text when a dialog pops up]]]
 # Expected output when "Input" dialog is activated
 # 
 # BRAILLE LINE:  'SwingSet2 Application Input Dialog'
@@ -87,7 +87,7 @@ sequence.append(TypeAction("RoboCop"))
 sequence.append(KeyComboAction("Return"))
 
 ########################################################################
-# TODO: Shouldn't braille also read the label?
+# [[[BUG 483213: Braille does not output unrelated text when a dialog pops up]]]
 # Expected output when "Message" dialog gets activated.
 # 
 # BRAILLE LINE:  'SwingSet2 Application Message Dialog'

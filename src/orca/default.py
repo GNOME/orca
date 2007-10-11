@@ -2510,8 +2510,9 @@ class Script(script.Script):
                 # Otherwise, we might have tucked away some information
                 # for this thing in the onActiveDescendantChanged method.
                 #
-                elif event.source.__dict__.has_key("activeDescendantInfo"):
-                    [parent, index] = event.source.activeDescendantInfo
+                elif self.pointOfReference.has_key("activeDescendantInfo"):
+                    [parent, index] = \
+                        self.pointOfReference['activeDescendantInfo']
                     newFocus = parent.child(index)
 
         orca.setLocusOfFocus(event, newFocus)
@@ -2909,11 +2910,9 @@ class Script(script.Script):
         #
         if orca_state.locusOfFocus \
            and (orca_state.locusOfFocus != event.source):
-            event.source.activeDescendantInfo = \
+            self.pointOfReference['activeDescendantInfo'] = \
                 [orca_state.locusOfFocus.parent,
                  orca_state.locusOfFocus.index]
-        elif event.source.__dict__.has_key("activeDescendantInfo"):
-            del event.source.__dict__["activeDescendantInfo"]
 
     def onLinkSelected(self, event):
         """Called when a hyperlink is selected in a text area.
