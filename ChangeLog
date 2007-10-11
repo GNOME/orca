@@ -1,3 +1,9 @@
+2007-10-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Fix for bug 473699 - Adjust Orca Preferences dialog to 
+          speak/braille three components that are multiply labelled.
+
 2007-10-11  Willie Walker <william.walker@sun.com>
 
         * test/harness/utils.py
