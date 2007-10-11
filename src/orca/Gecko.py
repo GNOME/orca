@@ -4410,7 +4410,8 @@ class Script(default.Script):
             caretOffset = text.caretOffset
             singleLine  = obj.state.count(
                 atspi.Accessibility.STATE_SINGLE_LINE)
-            if length == 0:
+            if length == 0 \
+               or ((length == 1) and (text.getText(0, -1) == "\n")):
                 weHandleIt = True
             elif caretOffset <= 0:
                 weHandleIt = keyboardEvent.event_string \
@@ -5864,7 +5865,7 @@ class Script(default.Script):
 
         if obj.text and obj.text.characterCount:
             unicodeText = self.getUnicodeText(obj)
-            if startOffset == -1:
+            if (startOffset == -1) or (startOffset > len(unicodeText)):
                 startOffset = len(unicodeText)
             previousOffset = startOffset - 1
             if previousOffset >= 0:
@@ -6341,9 +6342,10 @@ class Script(default.Script):
         """
         if obj and obj.text and obj.text.characterCount:
             unicodeText = self.getUnicodeText(obj)
-            return unicodeText[characterOffset].encode("UTF-8")
-        else:
-            return None
+            if characterOffset < len(unicodeText):
+                return unicodeText[characterOffset].encode("UTF-8")
+
+        return None
 
     def getWordContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
