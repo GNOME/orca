@@ -1,3 +1,10 @@
+2007-10-11  Scott Haeger <scott@bashautomation.com>
+
+	* src/orca/Gecko.py:
+          src/orca/default.py:
+        Bug #480264 - ARIA sliders not outputting Braille/ childCount:embed 
+        defense.
+
 2007-10-10  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/default.py: 

@@ -4746,7 +4746,8 @@ class Script(script.Script):
             unicodeText = displayedText.decode("UTF-8")
             if unicodeText \
                and (len(unicodeText) == 1) \
-               and (unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER):
+               and (unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER) \
+               and obj.childCount > 0:
                 try:
                     displayedText = self.getDisplayedText(obj.child(0))
                 except:

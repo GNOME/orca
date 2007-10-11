@@ -5897,6 +5897,8 @@ class Script(default.Script):
                                      characterOffset,
                                      characterOffset + 1).decode("UTF-8")
             if character == self.EMBEDDED_OBJECT_CHARACTER:
+                if obj.childCount <= 0:
+                     return self.findFirstCaretContext(obj,characterOffset + 1)
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
                     return self.findFirstCaretContext(obj.child(childIndex), 0)
@@ -5949,7 +5951,7 @@ class Script(default.Script):
                     and not self.isAriaWidget(obj=obj):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
-            if nextOffset < len(unicodeText):
+            while nextOffset < len(unicodeText):
                 if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
@@ -5957,7 +5959,12 @@ class Script(default.Script):
                     if child:
                         return self.findNextCaretInOrder(child,
                                                          -1,
-                                                         includeNonText)
+                                                       includeNonText)
+                    else:
+                        nextOffset += 1
+                else:
+                    nextOffset += 1
+
 
         # If this is a list in an HTML form, we don't want to place the
         # caret inside the list, but rather treat the list as a single
@@ -6036,15 +6043,20 @@ class Script(default.Script):
             if startOffset == -1:
                 startOffset = len(unicodeText)
             previousOffset = startOffset - 1
-            if previousOffset >= 0:
+            while previousOffset >= 0:
                 if unicodeText[previousOffset] \
                     != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, previousOffset]
+                elif obj.childCount:
+                    child = obj.child(self.getChildIndex(obj, previousOffset))
+                    if child:
+                        return self.findPreviousCaretInOrder(child,
+                                                             -1,
+                                                             includeNonText)
+                    else:
+                        previousOffset -= 1
                 else:
-                    return self.findPreviousCaretInOrder(
-                        obj.child(self.getChildIndex(obj, previousOffset)),
-                        -1,
-                        includeNonText)
+                    previousOffset -= 1
 
         # If this is a list in an HTML form, we don't want to place the
         # caret inside the list, but rather treat the list as a single
