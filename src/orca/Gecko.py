@@ -1627,13 +1627,13 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             return []
         else:
             path = []
-            path.append(start_obj.index)
+            path.append(start_obj.getIndexInParent())
             p = start_obj.parent
             while p:
                 if p.getRole() == 'document frame':
                     path.reverse()
                     return path
-                path.append(p.index)
+                path.append(p.getIndexInParent())
                 p = p.parent
             
             return []
@@ -4408,7 +4408,8 @@ class Script(default.Script):
                         contents += "\n"
                     elif obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                         parent = obj.parent
-                        if parent.table.getColumnAtIndex(obj.index) != 0:
+                        index = obj.getIndexInParent()
+                        if parent.table.getColumnAtIndex(index) != 0:
                             contents += " "
                     elif obj.getRole() == pyatspi.ROLE_LINK:
                         contents += "<"
@@ -4701,7 +4702,7 @@ class Script(default.Script):
                 if text and obj.parent.text.characterCount:
                     for offset in range(0, len(text)):
                         if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
-                            if index == obj.index:
+                            if index == obj.getIndexInParent():
                                 obj.characterOffsetInParent = offset
                                 break
                             else:
@@ -4888,8 +4889,8 @@ class Script(default.Script):
 
         parent = obj.parent
         if parent and parent.table:
-            row = parent.table.getRowAtIndex(obj.index)
-            col = parent.table.getColumnAtIndex(obj.index)
+            row = parent.table.getRowAtIndex(obj.getIndexInParent())
+            col = parent.table.getColumnAtIndex(obj.getIndexInParent())
             return [row, col]
 
         return [0, 0]
@@ -4966,7 +4967,7 @@ class Script(default.Script):
 
         allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            row = obj.parent.table.getRowAtIndex(obj.index)
+            row = obj.parent.table.getRowAtIndex(obj.getIndexInParent())
             nCols = obj.parent.table.nColumns
             for col in range(0, nCols):
                 accCell = obj.parent.table.getAccessibleAt(row, col)
@@ -4988,7 +4989,7 @@ class Script(default.Script):
 
         allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            col = obj.parent.table.getColumnAtIndex(obj.index)
+            col = obj.parent.table.getColumnAtIndex(obj.getIndexInParent())
             nRows = obj.parent.table.nRows
             for row in range(0, nRows):
                 accCell = obj.parent.table.getAccessibleAt(row, col)
@@ -5498,8 +5499,9 @@ class Script(default.Script):
             endOffset = -1
             if self.isSameObject(obj.parent,onLeft):
                 endOffset = self.getCharacterOffsetInParent(obj)
-                if obj.index > 0:
-                    prevSibling = onLeft[obj.index - 1]
+                index = obj.getIndexInParent()
+                if index > 0:
+                    prevSibling = onLeft[index - 1]
                     if self.isFormField(prevSibling):
                         startOffset = \
                                   self.getCharacterOffsetInParent(prevSibling)
@@ -5528,8 +5530,9 @@ class Script(default.Script):
                 endOffset = -1
                 if self.isSameObject(obj.parent, onRight):
                     startOffset = self.getCharacterOffsetInParent(obj)
-                    if obj.index < onRight.childCount - 1:
-                        nextSibling = onRight[obj.index + 1]
+                    index = obj.getIndexInParent()
+                    if index < onRight.childCount - 1:
+                        nextSibling = onRight[index + 1]
                         if self.isFormField(nextSibling):
                             endOffset = \
                                   self.getCharacterOffsetInParent(nextSibling)
@@ -6013,7 +6016,7 @@ class Script(default.Script):
                                                  characterOffsetInParent,
                                                  includeNonText)
             else:
-                index = obj.index + 1
+                index = obj.getIndexInParent() + 1
                 if index < obj.parent.childCount:
                     try:
                         return self.findNextCaretInOrder(
@@ -6107,7 +6110,7 @@ class Script(default.Script):
                                                      characterOffsetInParent,
                                                      includeNonText)
             else:
-                index = obj.index - 1
+                index = obj.getIndexInParent() - 1
                 if index >= 0:
                     try:
                         return self.findPreviousCaretInOrder(
@@ -6139,7 +6142,7 @@ class Script(default.Script):
         if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
 
-        index = obj.index - 1
+        index = obj.getIndexInParent() - 1
         if (index < 0):
             if not self.isSameObject(obj, documentFrame):
                 previousObj = obj.parent
@@ -6241,7 +6244,7 @@ class Script(default.Script):
         # a bit of a challenge.]]]
         #
         if not nextObj:
-            index = obj.index + 1
+            index = obj.getIndexInParent() + 1
             while index < obj.parent.childCount:
                 child = obj.parent.child(index)
                 if isinstance(child, atspi.Accessible):
@@ -6257,7 +6260,7 @@ class Script(default.Script):
             # Go up until we find a parent that might have a sibling to
             # the right for us.
             #
-            while (candidate.index >= (candidate.parent.childCount - 1)) \
+            while (candidate.getIndexInParent() >= (candidate.parent.childCount - 1)) \
                 and not self.isSameObject(candidate, documentFrame):
                 candidate = candidate.parent
 
@@ -6267,7 +6270,7 @@ class Script(default.Script):
             # a bit of a challenge.]]]
             #
             if not self.isSameObject(candidate, documentFrame):
-                index = candidate.index + 1
+                index = candidate.getIndexInParent() + 1
                 while index < candidate.parent.childCount:
                     child = candidate.parent.child(index)
                     if isinstance(child, atspi.Accessible):
