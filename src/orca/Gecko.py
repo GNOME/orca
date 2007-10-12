@@ -33,6 +33,7 @@ import atk
 import gtk
 import math
 import pickle
+import pyatspi
 import urlparse
 
 import atspi
@@ -4479,10 +4480,10 @@ class Script(default.Script):
         #
         documentFrame = None
         for i in range(0, self.app.childCount):
-            child = self.app.child(i)
-            if child.role == rolenames.ROLE_FRAME:
-                relations = child.relations
-                for relation in relations:
+            child = self.app[i]
+            if child.getRole() == pyatspi.ROLE_FRAME:
+                relationSet = child.getRelationSet()
+                for relation in relationSet:
                     if relation.getRelationType()  \
                         == atspi.Accessibility.RELATION_EMBEDS:
                         documentFrame = atspi.Accessible.makeAccessible( \
