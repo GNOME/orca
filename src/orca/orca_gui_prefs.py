@@ -17,11 +17,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# TODO:
-#
-# - Improve reclaimation of "old" speech servers in _setupSpeechServers().
-# - Implement the Help button callback.
-
 """Displays a GUI for the user to set Orca preferences."""
 
 __id__        = "$Id$"
@@ -2955,7 +2950,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        print "Help not currently implemented."
+        orca.helpForOrca()
 
     def applyButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the applyButton

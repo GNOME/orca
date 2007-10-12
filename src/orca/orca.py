@@ -45,6 +45,7 @@ except:
     pass
 
 import getopt
+import gnome
 import os
 import signal
 import time
@@ -1056,6 +1057,19 @@ def _showPreferencesConsole(script=None, inputEvent=None):
     except:
         debug.printException(debug.LEVEL_SEVERE)
         pass
+
+    return True
+
+def helpForOrca(script=None, inputEvent=None):
+    """Show Orca Help window (part of the GNOME Access Guide).
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    props = { gnome.PARAM_APP_DATADIR : '/usr/share'}
+    prog = gnome.program_init('orca', '1.0', properties=props)
+    gnome.help_display_with_doc_id(prog, 'gnome-access-guide', 
+                                         'gnome-access-guide', 'ats-2')
 
     return True
 
