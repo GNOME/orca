@@ -743,3 +743,6 @@ setScriptMapping(re.compile(_('vte')), "gnome-terminal")
 # supporting pidgin, which is the new name for gaim.
 #
 setScriptMapping(re.compile(_('pidgin')), "gaim")
+
+# Show deprecated messeges in debug output.
+deprecatedMessages = False

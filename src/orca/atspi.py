@@ -33,6 +33,8 @@ gobject.threads_init()
 
 import bonobo
 import ORBit
+import traceback
+import settings
 
 ORBit.load_typelib("Accessibility")
 
@@ -55,6 +57,19 @@ import debug
 import rolenames
 import settings
 
+try:
+  import pyatspi
+except ImportError, e:
+  import sys
+  print sys.path
+  raise e
+
+pyatspi.ROLE_CHECK_MENU = -1 # For backward compatability
+pyatspi.ROLE_RADIO_MENU = -2 # For backward compatability
+
+#if True:
+#    pyatspi.setCacheLevel(pyatspi.CACHE_INTERFACES)
+  
 class Event:
     """Converts the source of an event to an Accessible object.  We
     need this since the event object we get from the atspi is
@@ -70,34 +85,10 @@ class Event:
             self.type     = e.type
             self.detail1  = e.detail1
             self.detail2  = e.detail2
-
-            # If were talking to AT-SPI 1.7.0 or greater, we can get the
-            # application information right away because it is tucked in
-            # the EventDetails data new for 1.7.0.
-            #
-            if e.any_data and (e.any_data.typecode().name) == "EventDetails":
-                details = e.any_data.value()
-                self.any_data = details.any_data
-                if self.source and details.host_application:
-                    self.source.app = Accessible.makeAccessible(
-                        details.host_application)
+            if isinstance(e.any_data, Accessibility.Accessible):
+                self.any_data = Accessible.makeAccessible(e.any_data)
             else:
                 self.any_data = e.any_data
-
-            # We need to make sure we reference any object that comes
-            # to us via an any_data because we process events
-            # asynchronously.  If we don't reference them, we may
-            # end up with OBJECT_NOT_EXIST errors.  Please see
-            # http://bugzilla.gnome.org/show_bug.cgi?id=395749 for
-            # more information.
-            #
-            if self.type.startswith("object:active-descendant-changed"):
-                self.any_data = Accessible.makeAccessible(
-                    self.any_data.value())
-            elif self.type.startswith("object:text-changed:insert"):
-                self.any_data = self.any_data.value()
-            elif self.type.startswith("object:text-changed:delete"):
-                self.any_data = self.any_data.value()
         else:
             self.source   = None
             self.type     = None
@@ -126,59 +117,23 @@ class Registry:
         self.__dict__ = self.__sharedState
         self.__instanceCount += 1
         if not self.__dict__.has_key("registry"):
-            self.registry = bonobo.get_object(
-                "OAFIID:Accessibility_Registry:1.0",
-                "Accessibility/Registry")
+            self.registry = pyatspi.Registry
         if not self.__dict__.has_key("desktop"):
             self.desktop = self.registry.getDesktop(0)
-
-    def __blockPreventor(self):
-        """[[[TODO: HACK to attempt to prevent deadlocks.  We call time.sleep
-        here as a means to sidestep the global interpreter lock (GIL).]]]
-        """
-        if settings.gilSleepTime:
-            time.sleep(settings.gilSleepTime)
-        return True
 
     def start(self):
         """Starts event notification with the AT-SPI Registry.  This method
         only returns after 'stop' has been called.
         """
-        Accessible.init(self)
 
-        # We'll try our own main loop to help debug things.  Code borrowed
-        # "The Whole PyGtk FAQ": http://www.async.com.br/faq/pygtk/
-        #
-        if settings.useBonoboMain:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "atspi.start: using bonobo.main; "
-                          + "gilSleepTime=%f" % settings.gilSleepTime)
-            if settings.useBlockPreventor and settings.gilSleepTime:
-                gobject.idle_add(self.__blockPreventor)
-            bonobo.main()
-        else:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "atspi.start: using our custom main loop; "
-                          + "gilSleepTime=%f" % settings.gilSleepTime)
-            self.running = True
-            context = gobject.MainLoop().get_context()
-            while self.running:
-                if settings.gilSleepTime:
-                    time.sleep(settings.gilSleepTime)
-                context.iteration(False)
+        self.registry.start()
 
     def stop(self):
         """Unregisters any event or keystroke listeners registered with
         the AT-SPI Registry and then stops event notification with the
         AT-SPI Registry.
         """
-        Accessible.shutdown(self)
-        for listener in (self.__listeners + self.__keystrokeListeners):
-            listener.deregister()
-        if settings.useBonoboMain:
-            bonobo.main_quit()
-        else:
-            self.running = False
+        self.registry.stop()
 
     def registerEventListener(self, callback, eventType):
         """Registers the given eventType and callback with the Registry.
@@ -187,8 +142,7 @@ class Registry:
         - callback: function to call with an AT-SPI event instance
         - eventType: string representing the type of event
         """
-        listener = EventListener(self.registry, callback, eventType)
-        self.__listeners.append(listener)
+        self.registry.registerEventListener(callback, eventType)
 
     def deregisterEventListener(self, callback, eventType):
         """Unregisters the given eventType and callback with the Registry.
@@ -197,97 +151,24 @@ class Registry:
         - callback: function to call with an AT-SPI event instance
         - eventType: string representing the type of event
         """
-        found = True
-        while len(self.__listeners) and found:
-            for i in range(0, len(self.__listeners)):
-                if (self.__listeners[i].callback == callback) \
-                   and (self.__listeners[i].eventType == eventType):
-                    # The __del__ method of the listener will unregister it.
-                    #
-                    self.__listeners.pop(i)
-                    found = True
-                    break
-                else:
-                    found = False
+        self.registry.deregisterEventListener(callback, eventType)
 
     def registerKeystrokeListeners(self, callback):
         """Registers a single callback for all possible keystrokes.
         """
-        for i in range(0, (1 << (Accessibility.MODIFIER_NUMLOCK + 1))):
-            self.__keystrokeListeners.append(
-                KeystrokeListener(self.registry,
-                                  callback, # callback
-                                  [],       # keyset
-                                  i,        # modifier mask
-                                  [Accessibility.KEY_PRESSED_EVENT,
-                                  Accessibility.KEY_RELEASED_EVENT],
-                                  True,     # synchronous
-                                  True,     # preemptive
-                                  False))   # global
+        masks = []
+        mask = 0
+        while mask <= (1 << pyatspi.MODIFIER_NUMLOCK):
+            masks.append(mask)
+            mask += 1
+        pyatspi.Registry.registerKeystrokeListener(
+            callback,
+            mask=masks,
+            kind=(pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT))
 
-########################################################################
-#                                                                      #
-# Event listener classes for global and keystroke events               #
-#                                                                      #
-########################################################################
-
-class EventListener(Accessibility__POA.EventListener):
-    """Registers a callback directly with the AT-SPI Registry for the
-    given event type.  Most users of this module will not use this
-    class directly, but will instead use the registerEventListener method
-    of the Registry."""
-
-    def __init__(self, registry, callback, eventType):
-        self.registry  = registry
-        self.callback  = callback
-        self.eventType = eventType
-        self.register()
-
-    def ref(self): pass
-
-    def unref(self): pass
-
-    def queryInterface(self, repo_id):
-        thiz = None
-        if repo_id == "IDL:Accessibility/EventListener:1.0":
-            thiz = self._this()
-        return thiz
-
-    def register(self):
-        self._default_POA().the_POAManager.activate()
-        self.registry.registerGlobalEventListener(self._this(),
-                                                  self.eventType)
-        self.__registered = True
-        return self.__registered
-
-    def deregister(self):
-        if not self.__registered:
-            return
-        self.registry.deregisterGlobalEventListener(self._this(),
-                                                    self.eventType)
-        self.__registered = False
-
-    def notifyEvent(self, event):
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.signal(signal.SIGALRM, settings.timeoutCallback)
-            signal.alarm(settings.timeoutTime)
-
-        try:
-            self.callback(event)
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.alarm(0)
-
-    def __del__(self):
-        self.deregister()
 
 class KeystrokeListener(Accessibility__POA.DeviceEventListener):
-    """Registers a callback directly with the AT-SPI Registry for the
-    given keystroke.  Most users of this module will not use this
-    class directly, but will instead use the registerKeystrokeListeners
-    method of the Registry."""
+    """Placeholder for API compatability."""
 
     def keyEventToString(event):
         return ("KEYEVENT: type=%d\n" % event.type) \
@@ -299,78 +180,6 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
 
     keyEventToString = staticmethod(keyEventToString)
 
-    def __init__(self, registry, callback,
-                 keyset, mask, type, synchronous, preemptive, isGlobal):
-        self._default_POA().the_POAManager.activate()
-
-        self.registry         = registry
-        self.callback         = callback
-        self.keyset           = keyset
-        self.mask             = mask
-        self.type             = type
-        self.mode             = Accessibility.EventListenerMode()
-        self.mode.synchronous = synchronous
-        self.mode.preemptive  = preemptive
-        self.mode._global     = isGlobal
-        self.register()
-
-    def ref(self): pass
-
-    def unref(self): pass
-
-    def queryInterface(self, repo_id):
-        thiz = None
-        if repo_id == "IDL:Accessibility/EventListener:1.0":
-            thiz = self._this()
-        return thiz
-
-    def register(self):
-        d = self.registry.getDeviceEventController()
-        if d.registerKeystrokeListener(self._this(),
-                                       self.keyset,
-                                       self.mask,
-                                       self.type,
-                                       self.mode):
-            self.__registered = True
-        else:
-            self.__registered = False
-        return self.__registered
-
-    def deregister(self):
-        if not self.__registered:
-            return
-        d = self.registry.getDeviceEventController()
-        d.deregisterKeystrokeListener(self._this(),
-                                      self.keyset,
-                                      self.mask,
-                                      self.type)
-        self.__registered = False
-
-    def notifyEvent(self, event):
-        """Called by the at-spi registry when a key is pressed or released.
-
-        Arguments:
-        - event: an at-spi DeviceEvent
-
-        Returns True if the event has been consumed.
-        """
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.signal(signal.SIGALRM, settings.timeoutCallback)
-            signal.alarm(settings.timeoutTime)
-
-        try:
-            consumed = self.callback(event)
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            consumed = False
-
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.alarm(0)
-
-        return consumed
-
-    def __del__(self):
-        self.deregister()
 
 ########################################################################
 #                                                                      #
@@ -389,175 +198,54 @@ class Accessible:
     Accessible objects obtained so far, and will return an element
     from that cache instead of creating a duplicate object.
     """
-
-    # The cache of the currently active accessible objects.  The key is
-    # the AT-SPI Accessible, and the value is the Python Accessible.
-    # [[[TODO: WDW - probably should look at the __new__ method as a means
-    # to handle singletons.]]]
-    #
     _cache = {}
+    _legacyAttributes = {'index': 'getIndexInParent', 
+                         'role': 'getRoleName',
+                         'localizedRoleName': 'getLocalizedRoleName',
+                         'state': 'getState',
+                         'relations': 'getRelationSet',
+                         'app': 'getApplication',
+                         'attributes': 'getAttributes'}
 
-    def init(registry):
-        """Registers various event listeners with the Registry to keep
-        the Accessible cache up to date.
+    _legacyIfaceAccess = {'action': 'queryAction',
+                          'component': 'queryComponent',
+                          'hyperlink': 'queryHyperlink',
+                          'hypertext': 'queryHypertext',
+                          'image': 'queryImage',
+                          'selection': 'querySelection',
+                          'table': 'queryTable',
+                          'text': 'queryText',
+                          'value': 'queryValue',
+                          'document': 'queryDocument'}
 
-        Arguments:
-        - registry: an instance of Registry
+    _legacyProxyAttribs = {'extents': '_get_extents'}
+
+    _legacyWritableAttribs = ['lastRow', 'lastColumn', 'role', 
+                              'lastCursorPosition', 'lastSelections']
+
+    class _CrackDict(dict):
+        """This is here to allow some good old-fashioned direct __dict__ access.
+        It's crack.
         """
-        registry.registerEventListener(
-            Accessible._onRoleChanged,
-            "object:property-change:accessible-role")
-        registry.registerEventListener(
-            Accessible._onNameChanged,
-            "object:property-change:accessible-name")
-        registry.registerEventListener(
-            Accessible._onDescriptionChanged,
-            "object:property-change:accessible-description")
-        registry.registerEventListener(
-            Accessible._onParentChanged,
-            "object:property-change:accessible-parent")
-        registry.registerEventListener(
-            Accessible._onStateChanged,
-            "object:state-changed:")
-        registry.registerEventListener(
-            Accessible._onChildrenChanged,
-            "object:children-changed:")
+        def __init__(self, container):
+            self._container = container
+        
+        def __getitem__(self, key):
+            try:
+                return dict.__getitem__(self, key)
+            except KeyError:
+                try:
+                    d = self._container.accessible.user_data
+                except AttributeError:
+                    d = {} 
+                return d[key]
 
-    init = staticmethod(init)
-
-    def shutdown(registry):
-        """Unregisters the event listeners that were registered in the
-        init method.
-
-        Arguments:
-        - registry: an instance of Registry
-        """
-        registry.deregisterEventListener(
-            Accessible._onRoleChanged,
-            "object:property-change:accessible-role")
-        registry.deregisterEventListener(
-            Accessible._onNameChanged,
-            "object:property-change:accessible-name")
-        registry.deregisterEventListener(
-            Accessible._onDescriptionChanged,
-            "object:property-change:accessible-description")
-        registry.deregisterEventListener(
-            Accessible._onParentChanged,
-            "object:property-change:accessible-parent")
-        registry.deregisterEventListener(
-            Accessible._onStateChanged,
-            "object:state-changed:")
-        registry.deregisterEventListener(
-            Accessible._onChildrenChanged,
-            "object:children-changed:")
-
-    shutdown = staticmethod(shutdown)
-
-    def _onRoleChanged(e):
-        """Core module event listener called when an object's role
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        if Accessible._cache.has_key(e.source):
-            obj = Accessible._cache[e.source]
-            if obj.__dict__.has_key("role"):
-                del obj.__dict__["role"]
-
-    _onRoleChanged = staticmethod(_onRoleChanged)
-
-    def _onNameChanged(e):
-        """Core module event listener called when an object's name
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        if Accessible._cache.has_key(e.source):
-            obj = Accessible._cache[e.source]
-            if obj.__dict__.has_key("name"):
-                del obj.__dict__["name"]
-            if obj.__dict__.has_key("label"):
-                del obj.__dict__["label"]
-
-    _onNameChanged = staticmethod(_onNameChanged)
-
-    def _onDescriptionChanged(e):
-        """Core module event listener called when an object's description
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        if Accessible._cache.has_key(e.source):
-            obj = Accessible._cache[e.source]
-            if obj.__dict__.has_key("description"):
-                del obj.__dict__["description"]
-            if obj.__dict__.has_key("label"):
-                del obj.__dict__["label"]
-
-    _onDescriptionChanged = staticmethod(_onDescriptionChanged)
-
-    def _onParentChanged(e):
-        """Core module event listener called when an object's parent
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        # When the parent of an object changes, just forget about the
-        # parent -- we'll lazily ask for it the next time someone is
-        # really interested.
-        #
-        try:
-            obj = Accessible._cache[e.source]
-            del obj.__dict__["parent"]
-        except:
-            pass
-
-        return
-
-    _onParentChanged = staticmethod(_onParentChanged)
-
-    def _onStateChanged(e):
-        """Core module event listener called when an object's state
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        if Accessible._cache.has_key(e.source):
-            # Let's get rid of defunct objects.  We hate them.
-            #
-            if e.type.startswith("object:state-changed:defunct"):
-                Accessible.deleteAccessible(e.source)
-            else:
-                obj = Accessible._cache[e.source]
-                if obj.__dict__.has_key("state"):
-                    del obj.state
-
-    _onStateChanged = staticmethod(_onStateChanged)
-
-    def _onChildrenChanged(e):
-        """Core module event listener called when an object's child count
-        changes.  Updates the cache accordingly.
-
-        Arguments:
-        - e: AT-SPI event from the AT-SPI registry
-        """
-
-        if Accessible._cache.has_key(e.source):
-            obj = Accessible._cache[e.source]
-            if obj.__dict__.has_key("childCount"):
-                del obj.childCount
-
-    _onChildrenChanged = staticmethod(_onChildrenChanged)
+        def has_key(self, key):
+            try:
+                d = self._container.accessible.user_data
+            except AttributeError:
+                d = {} 
+            return dict.has_key(self, key) or d.has_key(key)
 
     def makeAccessible(acc):
         """Make an Accessible.  This is used instead of a simple calls to
@@ -569,7 +257,6 @@ class Accessible:
 
         Returns a Python Accessible.
         """
-
         obj = None
 
         if not acc:
@@ -591,23 +278,7 @@ class Accessible:
         # shouldn't cache those kind of children because we're likely
         # to cause a memory leak. Logged as bugzilla bug 319675.]]]
         #
-        if not settings.cacheAccessibles:
-            obj = Accessible(acc)
-            return obj
-
-        if Accessible._cache.has_key(acc):
-            obj = Accessible._cache[acc]
-            if not obj.valid:
-                del Accessible._cache[acc]
-                obj = None
-
-        if not obj:
-            obj = Accessible(acc)
-
-        if obj.valid:
-            Accessible._cache[acc] = obj
-        else:
-            obj = None
+        obj = Accessible(acc)
 
         return obj
 
@@ -620,19 +291,44 @@ class Accessible:
         - acc: the AT-SPI Accessibility_Accessible
         """
 
-        # Just a little sanity check in case someone sent us a
-        # Python Accessible instance instead of a CORBA object.
-        #
-        if isinstance(acc, Accessible):
-            acc = acc._acc
-
-        if acc and Accessible._cache.has_key(acc):
-            try:
-                del Accessible._cache[acc]
-            except:
-                pass
+        pass
 
     deleteAccessible = staticmethod(deleteAccessible)
+
+    def relationToString(acc):
+        """Returns a space-delimited string composed of the given object's
+        Accessible relations attribute.  This is for debug purposes.
+        """
+
+        relations = acc.getRelationSet()
+        relation_strings = []
+
+        for relation in relations:
+            rel_string = repr(relation.getRelationType())
+            rel_string = rel_string.replace('RELATION_','')
+            relation_strings.append(rel_string)
+
+        return ' '.join(relation_strings)
+
+    relationToString = staticmethod(relationToString)
+    
+    def stateToString(acc):
+        """Returns a space-delimited string composed of the given object's
+        Accessible state attribute.  This is for debug purposes.
+        """
+
+        stateSet = acc.getState()
+        states = stateSet.getStates()
+        state_strings = []
+
+        for state in states:
+            state_string = repr(state)
+            state_string = state_string.replace('STATE_','')
+            state_strings.append(state_string)
+
+        return ' '.join(state_strings)
+
+    stateToString = staticmethod(stateToString)
 
     def __init__(self, acc):
         """Obtains, and creates if necessary, a Python Accessible from
@@ -645,6 +341,8 @@ class Accessible:
         Returns the associated Python Accessible.
         """
 
+        # Crack!
+        self.__dict__ = Accessible._CrackDict(self)
         # The setting of self._acc to None here is to help with manual
         # and unit testing of this module.  Furthermore, it helps us
         # determine if this particular instance is really backed by an
@@ -659,40 +357,29 @@ class Accessible:
         #
         self.valid = False
 
-        # [[[TODO: WDW - should do an assert here to make sure we're
-        # getting a raw AT-SPI Accessible and not one of our own locally
-        # cached Accessible instances. Logged as bugzilla bug 319673.]]]
-        #
-        assert (not Accessible._cache.has_key(acc)), \
-               "Attempt to create an Accessible that's already been made."
-
         # See if we have an application. Via bridges such as the Java
         # access bridge, we might be getting a CORBA::Object, which is
         # of little use to us.  We need to narrow it down to something
         # we can use.  The first attempt is to see if we can get an
         # application out of it.  Then we go for an accessible.
         #
-        self.accessible = None
-        try:
-            self.accessible = acc._narrow(Accessibility.Application)
-            try:
-                self.toolkitName = self.accessible.toolkitName
-            except:
-                self.toolkitName = None
-            try:
-                self.version = self.accessible.version
-            except:
-                self.version = None
-        except:
-            try:
-                self.accessible = acc._narrow(Accessibility.Accessible)
-            except:
-                debug.printException(debug.LEVEL_WARNING)
-                debug.println(debug.LEVEL_WARNING,
-                              "atspi.py:Accessible.__init__" \
+        if isinstance(acc, Accessibility.Accessible):
+            self.accessible = acc            
+            if isinstance(self.accessible, Accessibility.Application):
+                try:
+                    self.toolkitName = self.accessible.toolkitName
+                except:
+                    self.toolkitName = None
+                try:
+                    self.version = self.accessible.version
+                except:
+                    self.version = None
+        else:
+            debug.println(debug.LEVEL_WARNING,
+                          "atspi.py:Accessible.__init__" \
                               + " NOT GIVEN AN ACCESSIBLE!")
-                self.accessible = None
-
+            self.accessible = acc
+            
         # Save a reference to the AT-SPI object.
         #
         if self.accessible:
@@ -708,124 +395,14 @@ class Accessible:
         Accessible relations attribute.  This is for debug purposes.
         """
 
-        relations = self.relations
-        relString = " "
-        for relation in relations:
-            if relation.getRelationType() == Accessibility.RELATION_LABEL_FOR:
-                relString += "LABEL_FOR "
-            if relation.getRelationType() == Accessibility.RELATION_LABELLED_BY:
-                relString += "LABELLED_BY "
-            if relation.getRelationType() == \
-                                       Accessibility.RELATION_CONTROLLER_FOR:
-                relString += "CONTROLLER_FOR "
-            if relation.getRelationType() == \
-                                       Accessibility.RELATION_CONTROLLED_BY:
-                relString += "CONTROLLED_BY "
-            if relation.getRelationType() == Accessibility.RELATION_MEMBER_OF:
-                relString += "MEMBER_OF "
-            if relation.getRelationType() == Accessibility.RELATION_TOOLTIP_FOR:
-                relString += "TOOLTIP_FOR "
-            if relation.getRelationType() == \
-                                       Accessibility.RELATION_NODE_CHILD_OF:
-                relString += "NODE_CHILD_OF "
-            if relation.getRelationType() == Accessibility.RELATION_EXTENDED:
-                relString += "RELATION_EXTENDED "
-            if relation.getRelationType() == Accessibility.RELATION_FLOWS_TO:
-                relString += "FLOWS_TO "
-            if relation.getRelationType() == Accessibility.RELATION_FLOWS_FROM:
-                relString += "FLOWS_FROM "
-            if relation.getRelationType() == \
-                                       Accessibility.RELATION_SUBWINDOW_OF:
-                relString += "SUBWINDOW_OF "
-            if relation.getRelationType() == Accessibility.RELATION_EMBEDS:
-                relString += "EMBEDS "
-            if relation.getRelationType() == Accessibility.RELATION_EMBEDDED_BY:
-                relString += "EMBEDDED_BY "
-            if relation.getRelationType() == Accessibility.RELATION_POPUP_FOR:
-                relString += "POPUP_FOR "
-            if relation.getRelationType() == \
-                                       Accessibility.RELATION_PARENT_WINDOW_OF:
-                relString += "WINDOW_OF "
-
-        return relString.strip()
+        return Accessible.relationToString(self)
 
     def getStateString(self):
         """Returns a space-delimited string composed of the given object's
         Accessible state attribute.  This is for debug purposes.
         """
-
-        stateSet = self.state
-        stateString = " "
-        if stateSet.count(Accessibility.STATE_INVALID):
-            stateString += "INVALID "
-        if stateSet.count(Accessibility.STATE_ACTIVE):
-            stateString += "ACTIVE "
-        if stateSet.count(Accessibility.STATE_ARMED):
-            stateString += "ARMED "
-        if stateSet.count(Accessibility.STATE_BUSY):
-            stateString += "BUSY "
-        if stateSet.count(Accessibility.STATE_CHECKED):
-            stateString += "CHECKED "
-        if stateSet.count(Accessibility.STATE_COLLAPSED):
-            stateString += "COLLAPSED "
-        if stateSet.count(Accessibility.STATE_DEFUNCT):
-            stateString += "DEFUNCT "
-        if stateSet.count(Accessibility.STATE_EDITABLE):
-            stateString += "EDITABLE "
-        if stateSet.count(Accessibility.STATE_ENABLED):
-            stateString += "ENABLED "
-        if stateSet.count(Accessibility.STATE_EXPANDABLE):
-            stateString += "EXPANDABLE "
-        if stateSet.count(Accessibility.STATE_EXPANDED):
-            stateString += "EXPANDED "
-        if stateSet.count(Accessibility.STATE_FOCUSABLE):
-            stateString += "FOCUSABLE "
-        if stateSet.count(Accessibility.STATE_FOCUSED):
-            stateString += "FOCUSED "
-        if stateSet.count(Accessibility.STATE_HAS_TOOLTIP):
-            stateString += "HAS_TOOLTIP "
-        if stateSet.count(Accessibility.STATE_HORIZONTAL):
-            stateString += "HORIZONTAL "
-        if stateSet.count(Accessibility.STATE_ICONIFIED):
-            stateString += "ICONIFIED "
-        if stateSet.count(Accessibility.STATE_IS_DEFAULT):
-            stateString += "IS_DEFAULT "
-        if stateSet.count(Accessibility.STATE_MODAL):
-            stateString += "MODAL "
-        if stateSet.count(Accessibility.STATE_MULTI_LINE):
-            stateString += "MULTI_LINE "
-        if stateSet.count(Accessibility.STATE_MULTISELECTABLE):
-            stateString += "MULTISELECTABLE "
-        if stateSet.count(Accessibility.STATE_OPAQUE):
-            stateString += "OPAQUE "
-        if stateSet.count(Accessibility.STATE_PRESSED):
-            stateString += "PRESSED "
-        if stateSet.count(Accessibility.STATE_RESIZABLE):
-            stateString += "RESIZABLE "
-        if stateSet.count(Accessibility.STATE_SELECTABLE):
-            stateString += "SELECTABLE "
-        if stateSet.count(Accessibility.STATE_SELECTED):
-            stateString += "SELECTED "
-        if stateSet.count(Accessibility.STATE_SENSITIVE):
-            stateString += "SENSITIVE "
-        if stateSet.count(Accessibility.STATE_SHOWING):
-            stateString += "SHOWING "
-        if stateSet.count(Accessibility.STATE_SINGLE_LINE):
-            stateString += "SINGLE_LINE "
-        if stateSet.count(Accessibility.STATE_STALE):
-            stateString += "STALE "
-        if stateSet.count(Accessibility.STATE_TRANSIENT):
-            stateString += "TRANSIENT "
-        if stateSet.count(Accessibility.STATE_VERTICAL):
-            stateString += "VERTICAL "
-        if stateSet.count(Accessibility.STATE_VISIBLE):
-            stateString += "VISIBLE "
-        if stateSet.count(Accessibility.STATE_MANAGES_DESCENDANTS):
-            stateString += "MANAGES_DESCENDANTS "
-        if stateSet.count(Accessibility.STATE_INDETERMINATE):
-            stateString += "INDETERMINATE "
-
-        return stateString.strip()
+        
+        return Accessible.stateToString(self)
 
     def accessibleNameToString(self):
         """Returns the accessible's name in single quotes or
@@ -856,489 +433,34 @@ class Accessible:
             self._acc = None
             self.app = None
 
-    def __get_name(self):
-        """Returns the object's accessible name as a string.
+    def _get_extents(self, coordinateType = 0):
         """
-
-        # Combo boxes don't seem to issue accessible-name changed
-        # events, so we can't cache their names.  The main culprit
-        # here seems to be the combo box in gaim's "Join Chat" window.
-        #
-        name = self.accessible.name
-
-        if name and settings.cacheValues \
-            and (self.role != rolenames.ROLE_COMBO_BOX):
-            self.name = name
-
-        return name
-
-    def __get_description(self):
-        """Returns the object's accessible description as a string.
+        This should probably go away.
         """
-
-        description = self.accessible.description
-
-        if description and settings.cacheValues and settings.cacheDescriptions:
-            self.description = description
-
-        return description
-
-    def __get_parent(self):
-        """Returns the object's parent as a Python Accessible.  If
-        this object has no parent, None will be returned.
-        """
-
-        # We will never set self.parent if the backing accessible doesn't
-        # have a parent.  The reason we do this is that we may sometimes
-        # get events for objects without a parent, but then the object ends
-        # up getting a parent later on.
-        #
-        accParent = self.accessible.parent
-
-        if not accParent:
-            return None
-        else:
-            parent = Accessible.makeAccessible(accParent);
-
-            if settings.cacheValues:
-                self.parent = parent
-
-            return parent;
-
-    def __get_child_count(self):
-        """Returns the number of children for this object.
-        """
-
-        childCount = self.accessible.childCount
-
-        # We don't want to cache this value because it's possible that it
-        # will continually change.
-        # if settings.cacheValues:
-        #     self.childCount = childCount
-
-        return childCount
-
-    def __get_index(self):
-        """Returns the index of this object in its parent's child list.
-        """
-
-        index = self.accessible.getIndexInParent()
-
-        # We don't want to cache this value because it's possible that it
-        # will continually change.
-        # if settings.cacheValues:
-        #     self.index = index
-
-        return index
-
-    def __get_role(self):
-        """Returns the Accessible role name of this object as a string.
-        This string is not localized and can be used for comparison.
-
-        Note that this fudges the rolename of the object to match more closely
-        what it is.  The only thing that is being fudged right now is to
-        coalesce radio and check menu items that are also submenus; gtk-demo
-        has an example of this in its menus demo.
-        """
-
-        role = self.accessible.getRoleName()
-
-        # [[[TODO: WDW - HACK to handle the situation where some
-        # things might not be quite lined up with the ATK and AT-SPI.
-        # That is, some roles might have ids but no string yet.  See
-        # http://bugzilla.gnome.org/show_bug.cgi?id=361757.
-        #
-        if not len(role):
-            try:
-                roleId = self.accessible.getRole()
-                if roleId == Accessibility.ROLE_LINK:
-                    role = rolenames.ROLE_LINK
-                elif roleId == Accessibility.ROLE_INPUT_METHOD_WINDOW:
-                    role = rolenames.ROLE_INPUT_METHOD_WINDOW
-            except:
-                pass
-
-        # [[[TODO: HACK to coalesce menu items with children into
-        # menus.  The menu demo in gtk-demo does this, and one
-        # might view that as an edge case.  But, in
-        # gnome-terminal, "Terminal" -> "Set Character Encoding"
-        # is a menu item with children, but it behaves like a
-        # menu.]]]
-        #
-        if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_CHECK_MENU
-        elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_RADIO_MENU
-        elif (role == rolenames.ROLE_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_MENU
-
-        # [[[TODO: HACK because Java gives us radio button role and
-        # check box role for menu item objects, instead of giving us
-        # radio menu item role and check menu item role (see SwingSet
-        # menus).]]]
-        #
-        if (self.parent) and (self.parent.role == rolenames.ROLE_MENU):
-            if (role == rolenames.ROLE_RADIO_BUTTON):
-                role = rolenames.ROLE_RADIO_MENU_ITEM
-            elif (role == rolenames.ROLE_CHECK_BOX):
-                role = rolenames.ROLE_CHECK_MENU_ITEM
-
-        # [[[TODO: HACK because we sometimes get an object with an
-        # unknown role but it's role changes later on and we are not
-        # notified.  An example of this is gnome-terminal.  So...to
-        # help with this, we will not cache the role if it is unknown.
-        # See http://bugzilla.gnome.org/show_bug.cgi?id=344218 for
-        # more info.]]]
-        #
-        if role and settings.cacheValues \
-            and (role != rolenames.ROLE_UNKNOWN):
-            self.role = role
-
-        return role
-
-    def __get_localized_rolename(self):
-        """Returns the Accessible role name of this object as a
-        localized string.  Most callers should use __get_role instead
-        since it returns a non-localized string that can be used for
-        comparison.
-        """
-
-        localizedRoleName = self.accessible.getLocalizedRoleName()
-
-        if localizedRoleName and settings.cacheValues:
-            self.localizedRoleName = localizedRoleName
-
-        return localizedRoleName
-
-    def __get_state(self):
-        """Returns the Accessible StateSeq of this object, which is a
-        sequence of Accessible StateTypes.
-        """
-
-        try:
-            stateSet = self.accessible.getState()
-        except:
-            stateSet = None
-        if stateSet:
-            try:
-                state = stateSet._narrow(Accessibility.StateSet).getStates()
-            except:
-                state = []
-        else:
-            state = []
-
-        # [[[WDW - we don't seem to always get appropriate state changed
-        # information, so we will not cache state information.]]]
-        #
-        #if state and settings.cacheValues:
-        #    self.state = state
-
-        return state
-
-    def __get_relations(self):
-        """Returns the Accessible RelationSet of this object as a list.
-        """
-
-        relations = []
-
-        relationSet = self.accessible.getRelationSet()
-
-        for relation in relationSet:
-            try:
-                relations.append(relation._narrow(Accessibility.Relation))
-            except:
-                pass
-
-        return relations
-
-    def __get_app(self):
-        """Returns the AT-SPI Accessibility_Application associated with this
-        object.  Returns None if the application cannot be found (usually
-        the indication of an AT-SPI bug).
-        """
-
-        # [[[TODO: WDW - this code seems like it might break if this
-        # object is an application to begin with. Logged as bugzilla
-        # bug 319677.]]]
-        #
-        debug.println(debug.LEVEL_FINEST,
-                      "Finding app for source.name=" \
-                      + self.accessibleNameToString())
-        obj = self
-        while obj.parent and (obj != obj.parent):
-            obj = obj.parent
-            debug.println(debug.LEVEL_FINEST,
-                          "--> parent.name=" + obj.accessibleNameToString())
-
-        if (obj == obj.parent):
-            debug.println(debug.LEVEL_SEVERE,
-                          "ERROR in Accessible.__get_app: obj == obj.parent!")
-            return None
-        elif (obj.role != rolenames.ROLE_APPLICATION):
-            debug.println(debug.LEVEL_FINEST,
-                          "ERROR in Accessible.__get_app: top most parent " \
-                          "(name='%s') is of role %s" % (obj.name, obj.role))
-
-            # [[[TODO: We'll let this fall through for some cases.  It
-            # seems as though we don't always end up with an
-            # application, but we do end up with *something* that is
-            # uniquely identifiable as the app.
-            #
-            if (obj.role != rolenames.ROLE_INVALID) \
-               and (obj.role != rolenames.ROLE_FRAME):
-                return None
-
-        debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
-                      % (self.accessibleNameToString(), \
-                         obj.accessibleNameToString()))
-
-        if settings.cacheValues:
-            self.app = obj
-
-        return obj
-
-    def __get_extents(self, coordinateType = 0):
-        """Returns the object's accessible extents as an
-        Accessibility.BoundingBox object, or None if the object doesn't
-        implement the Accessibility Component interface.
-
-        Arguments:
-        - coordinateType: 0 = get the extents in screen coordinates,
-                          1 = get the extents in window coordinates
-
-        Returns:
-        This object's accessible extents as an Accessibility.BoundingBox
-        object, or None if the object doesn't implement the Accessibility
-        Component interface.
-        """
-
-        component = self.component
-
-        if not component:
-            return None
+        component = self.accessible.queryComponent()
 
         extents = component.getExtents(coordinateType)
 
-        # [[[TODO: WDW - caching the extents is dangerous because
-        # the object may move, resulting in the current extents
-        # becoming way out of date.  Perhaps need to cache just
-        # the component interface and suffer the hit for getting
-        # the extents if we cannot figure out how to determine if
-        # the cached extents is out of date. Logged as bugzilla
-        # bug 319678.]]]
-        #
-        #if settings.cacheValues:
-        #    self.extents = extents
-
         return extents
 
-    def __get_action(self):
-        """Returns an object that implements the Accessibility_Action
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Action interface.
+    def __setattr__(self, attr, value):
+        """Traditionally we were able to simply write attributes to the 
+        accessible object and access them across the board, this is not 
+        possible any more, but we still have a user_data attribute we could 
+        use to tack on stuff.
         """
-
-        action = self.accessible.queryInterface("IDL:Accessibility/Action:1.0")
-
-        if action:
+        if attr in self._legacyWritableAttribs:
+            _deprecatedMessage(
+              msg="Don't write attributes to accessible objects."
+              " Use user_data.")
             try:
-                action = action._narrow(Accessibility.Action)
-            except:
-                action = None
-
-        if action and settings.cacheValues:
-            self.action = action
-
-        return action
-
-    def __get_component(self):
-        """Returns an object that implements the Accessibility_Component
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Component interface.
-        """
-
-        component = self.accessible.queryInterface(\
-            "IDL:Accessibility/Component:1.0")
-
-        if component:
-            try:
-                component = component._narrow(Accessibility.Component)
-            except:
-                component = None
-
-        if component and settings.cacheValues:
-            self.component = component
-
-        return component
-
-    def __get_hyperlink(self):
-        """Returns an object that implements the Accessibility_Hyperlink
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Hyperlink interface.
-        """
-
-        hyperlink = self.accessible.queryInterface(\
-            "IDL:Accessibility/Hyperlink:1.0")
-
-        if hyperlink:
-            try:
-                hyperlink = hyperlink._narrow(Accessibility.Hyperlink)
-            except:
-                hyperlink = None
-
-        if hyperlink and settings.cacheValues:
-            self.hyperlink = hyperlink
-
-        return hyperlink
-
-    def __get_hypertext(self):
-        """Returns an object that implements the Accessibility_Hypertext
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Hypertext interface.
-        """
-
-        hypertext = self.accessible.queryInterface(\
-            "IDL:Accessibility/Hypertext:1.0")
-
-        if hypertext:
-            try:
-                hypertext = hypertext._narrow(Accessibility.Hypertext)
-            except:
-                hypertext = None
-
-        if hypertext and settings.cacheValues:
-            self.hypertext = hypertext
-
-        return hypertext
-
-    def __get_image(self):
-        """Returns an object that implements the Accessibility_Image
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Image interface.
-        """
-
-        image = self.accessible.queryInterface(\
-            "IDL:Accessibility/Image:1.0")
-
-        if image:
-            try:
-                image = image._narrow(Accessibility.Image)
-            except:
-                image = None
-
-        if image and settings.cacheValues:
-            self.image = image
-
-        return image
-
-    def __get_selection(self):
-        """Returns an object that implements the Accessibility_Selection
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Selection interface.
-        """
-
-        selection = self.accessible.queryInterface(\
-            "IDL:Accessibility/Selection:1.0")
-
-        if selection:
-            try:
-                selection = selection._narrow(Accessibility.Selection)
-            except:
-                selection = None
-
-        if selection and settings.cacheValues:
-            self.selection = selection
-
-        return selection
-
-    def __get_document(self):
-        """Returns an object that implements the Accessibility_Document
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Document interface.
-        """
-        document = self.accessible.queryInterface(\
-            "IDL:Accessibility/Document:1.0")
-
-        if document:
-            try:
-                document = document._narrow(Accessibility.Document)
-            except:
-                document = None
-
-        if document and settings.cacheValues:
-            self.document = document
-
-        return document
-
-    def __get_table(self):
-        """Returns an object that implements the Accessibility_Table
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Table interface.
-        """
-
-        table = self.accessible.queryInterface("IDL:Accessibility/Table:1.0")
-
-        if table:
-            try:
-                table = table._narrow(Accessibility.Table)
-            except:
-                table = None
-
-        if table and settings.cacheValues:
-            self.table = table
-
-        return table
-
-    def __get_text(self):
-        """Returns an object that implements the Accessibility_Text
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Text interface.
-        """
-        text = self.accessible.queryInterface("IDL:Accessibility/Text:1.0")
-
-        if text:
-            try:
-                text = text._narrow(Accessibility.Text)
-            except:
-                text = None
-
-        if text and settings.cacheValues:
-            self.text = text
-
-        return text
-
-    def __get_value(self):
-        """Returns an object that implements the Accessibility_Value
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Value interface.
-        """
-
-        value = self.accessible.queryInterface("IDL:Accessibility/Value:1.0")
-
-        if value:
-            try:
-                value = value._narrow(Accessibility.Value)
-            except:
-                value = None
-
-        if value and settings.cacheValues:
-            self.value = value
-
-        return value
-
-    def __get_attributes(self):
-        """Returns an Accessibility_AttributeSet of the object.
-        """
-
-        try:
-            attributes = self.accessible.getAttributes()
-        except:
-            attributes = None
-
-        return attributes
+                user_data = self.accessible.user_data
+            except AttributeError:
+                user_data = {}
+            user_data[attr] = value
+            self.accessible.user_data = user_data
+        else:
+            self.__dict__[attr] = value
 
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
@@ -1352,55 +474,52 @@ class Accessible:
 
         Returns the value of the given attribute.
         """
-
-        if attr == "name":
-            return self.__get_name()
-        elif attr == "description":
-            return self.__get_description()
-        elif attr == "parent":
-            return self.__get_parent()
-        elif attr == "childCount":
-            return self.__get_child_count()
-        elif attr == "index":
-            return self.__get_index()
-        elif attr == "role":
-            return self.__get_role()
-        elif attr == "localizedRoleName":
-            return self.__get_localized_rolename()
-        elif attr == "state":
-            return self.__get_state()
-        elif attr == "relations":
-            return self.__get_relations()
-        elif attr == "app":
-            return self.__get_app()
-        elif attr == "extents":
-            return self.__get_extents()
-        elif attr == "action":
-            return self.__get_action()
-        elif attr == "component":
-            return self.__get_component()
-        elif attr == "hyperlink":
-            return self.__get_hyperlink()
-        elif attr == "hypertext":
-            return self.__get_hypertext()
-        elif attr == "image":
-            return self.__get_image()
-        elif attr == "selection":
-            return self.__get_selection()
-        elif attr == "table":
-            return self.__get_table()
-        elif attr == "text":
-            return self.__get_text()
-        elif attr == "value":
-            return self.__get_value()
-        elif attr == "attributes":
-            return self.__get_attributes()
-        elif attr == "document":
-            return self.__get_document()
-        elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError, attr
+        if self._legacyAttributes.has_key(attr):
+            method_name = self._legacyAttributes[attr]
+            _deprecatedMessage(attr, '%s()' % method_name)
+            method = getattr(self.accessible, method_name)
+            try:
+                rv = method()
+            except LookupError:
+                if attr in ('state', 'relations'):
+                    rv = []
+                else:
+                    rv = None
+        elif self._legacyIfaceAccess.has_key(attr):
+            method_name = self._legacyIfaceAccess[attr]
+            _deprecatedMessage(attr, '%s()' % method_name)
+            method = getattr(self.accessible, method_name)
+            try:
+              rv =  method()
+            except:
+              rv = None
+        elif self._legacyProxyAttribs.has_key(attr):
+            method_name = self._legacyProxyAttribs[attr]
+            method = getattr(self, method_name)
+            _deprecatedMessage(attr, 'something else')
+            try:
+              rv =  method()
+            except Exception, e:
+              rv = None
+        elif attr in self._legacyWritableAttribs:
+          try:
+            rv = self.accessible.user_data[attr]
+          except:
+            raise AttributeError
         else:
-            return self.__dict__[attr]
+            try:
+                rv = getattr(self.accessible, attr)
+            except AttributeError, e:
+                raise e
+            except:
+                rv = None
+
+        if isinstance(rv, Accessibility.Accessible):
+            return Accessible.makeAccessible(rv)
+        elif isinstance(rv, Accessibility.StateSet):
+            return rv.getStates()
+        else:
+            return rv
 
     def child(self, index):
         """Returns the specified child of this object.
@@ -1411,6 +530,7 @@ class Accessible:
         Returns the child at the given index or raise an exception if the
         index is out of bounds or the child is invalid.
         """
+        _deprecatedMessage('accessible.child(i)', 'accessible[i]')
 
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
         # when we repeatedly ask for the same child of a parent that manages
@@ -1419,25 +539,62 @@ class Accessible:
         #
         # Save away details we now know about this child
         #
+        
         newChild = None
-        if index >= 0 and index < self.accessible.childCount:
-            accChild = self.accessible.getChildAtIndex(index)
+        try:
+            accChild = self.accessible[index]
             if accChild:
                 newChild = Accessible.makeAccessible(accChild)
-                newChild.index = index
-                newChild.parent = self
-                newChild.app = self.app
-
-        if not newChild:
+        except IndexError:
             # The problem with a child not existing is a bad one.
             # We want to issue a warning and we also want to know
             # where it happens.
-            #
             debug.printStack(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "Child at index %d is not an Accessible" % index)
-
+            
         return newChild
+
+    def __iter__(self):
+        '''
+        A temporary copy/paste from pyatspi.accessible._AccessibleMixin
+        We will use this for emulating pyatspi's container 
+        interface for accessibles.
+        '''
+        for i in xrange(self.accessible.childCount):
+            try:
+                yield Accessible.makeAccessible(
+                  self.accessible.getChildAtIndex(i))
+            except LookupError:
+                yield None
+
+    def __getitem__(self, index):
+        '''
+        Proxy pyatspi.accessible._AccessibleMixin
+        We will use this for emulating pyatspi's container 
+        interface for accessibles.
+        '''
+        newChild = None
+        accChild = self.accessible[index]
+        if accChild:
+            newChild = Accessible.makeAccessible(accChild)
+        
+        return newChild
+
+
+    def __len__(self):
+        '''
+        Proxy pyatspi.accessible._AccessibleMixin
+        We will use this for emulating pyatspi's container 
+        interface for accessibles.
+        '''
+        return len(self.accessible)
+
+    def __str__(self):
+      return '%s (Legacy)' % self.accessible
+
+    def __cmp__(self, other):
+      return cmp(self.accessible, getattr(other, 'accessible', None))
 
     def toString(self, indent="", includeApp=True):
 
@@ -1451,9 +608,10 @@ class Accessible:
         """
 
         if includeApp:
-            if self.app:
+            app = self.accessible.getApplication()
+            if app:
                 string = indent + "app.name=%-20s " \
-                         % self.app.accessibleNameToString()
+                         % "'"+app.name+"'"
             else:
                 string = indent + "app=None "
         else:
@@ -1461,11 +619,38 @@ class Accessible:
 
         string += "name=%s role='%s' state='%s' relations='%s'" \
                   % (self.accessibleNameToString(),
-                     self.role,
+                     self.getRoleName(),
                      self.getStateString(),
                      self.getRelationString())
 
         return string
+
+########################################################################
+#                                                                      #
+# Deprecated message                                                   #
+#                                                                      #
+########################################################################
+
+def _deprecatedMessage(legacy_attrib=None, new_attrib=None, msg=None):
+    if not settings.deprecatedMessages:
+        return
+    stack = traceback.extract_stack(limit=3)
+    if len(stack) > 0:
+        frame = stack[0]
+        try:
+            fname = frame[0][frame[0].index('/orca/')+1:]
+        except ValueError:
+            fname = frame[0]
+        context = '%s:%s (%s)' % (fname, frame[1], frame[2])
+    else:
+        context = 'UNKNOWN'
+    if msg:
+        dep_msg = 'DEPRECATED: %s %s' % (context, msg)
+    else:
+        dep_msg = 'DEPRECATED: %s Instead of %s, use %s' % \
+            (context, legacy_attrib, new_attrib)
+    debug.println(debug.LEVEL_WARNING, dep_msg)
+
 
 ########################################################################
 #                                                                      #
@@ -1477,7 +662,8 @@ def __printTopObject(child):
     parent = child
     while parent:
         if not parent.parent:
-            print "RAW TOP:", parent.name, parent.role
+            print "RAW TOP:", parent.name, parent.role, \
+                parent.state.count(Accessibility.STATE_DEFUNCT)
         parent = parent.parent
     if (child.parent):
         accessible = Accessible.makeAccessible(child)
@@ -1500,9 +686,10 @@ def __notifyEvent(event):
         print event.type, event.source.name, \
               event.detail1, event.detail2,  \
               event.any_data
-        __printTopObject(event.source)
-        if not event.source.parent:
-            print "NO PARENT:", event.source.name, event.source.role
+        source = Accessible.makeAccessible(event.source)
+        __printTopObject(source)
+        if not source.parent:
+            print "NO PARENT:", source.name, source.role
 
 def __notifyKeystroke(event):
     print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
@@ -1531,9 +718,9 @@ def __test():
         "object:state-changed",
         "object:state-changed:focused",
         "object:selection-changed",
-        "object:children-changed"
-        "object:active-descendant-changed"
-        "object:visible-data-changed"
+        "object:children-changed",
+        "object:active-descendant-changed",
+        "object:visible-data-changed",
         "object:text-selection-changed",
         "object:text-caret-moved",
         "object:text-changed",
@@ -1579,6 +766,9 @@ def __test():
     registry.start()
 
 if __name__ == "__main__":
+    debug.debugLevel = debug.LEVEL_INFO
     signal.signal(signal.SIGINT, __shutdownAndExit)
     signal.signal(signal.SIGQUIT, __shutdownAndExit)
     __test()
+
+

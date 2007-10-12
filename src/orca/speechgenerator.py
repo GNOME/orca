@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 import math
 
+import pyatspi
 import atspi
 import debug
 import orca_state
@@ -58,105 +59,103 @@ class SpeechGenerator:
         # that generate speech for objects that implement that role.
         #
         self.speechGenerators = {}
-        self.speechGenerators[rolenames.ROLE_ALERT]               = \
+        self.speechGenerators[pyatspi.ROLE_ALERT]               = \
              self._getSpeechForAlert
-        self.speechGenerators[rolenames.ROLE_ANIMATION]           = \
+        self.speechGenerators[pyatspi.ROLE_ANIMATION]           = \
              self._getSpeechForAnimation
-        self.speechGenerators[rolenames.ROLE_ARROW]               = \
+        self.speechGenerators[pyatspi.ROLE_ARROW]               = \
              self._getSpeechForArrow
-        self.speechGenerators[rolenames.ROLE_CHECK_BOX]           = \
+        self.speechGenerators[pyatspi.ROLE_CHECK_BOX]           = \
              self._getSpeechForCheckBox
-        self.speechGenerators[rolenames.ROLE_CHECK_MENU]          = \
+        self.speechGenerators[pyatspi.ROLE_CHECK_MENU]          = \
              self._getSpeechForCheckMenuItem
-        self.speechGenerators[rolenames.ROLE_CHECK_MENU_ITEM]     = \
+        self.speechGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
              self._getSpeechForCheckMenuItem
-        self.speechGenerators[rolenames.ROLE_COLUMN_HEADER]       = \
+        self.speechGenerators[pyatspi.ROLE_COLUMN_HEADER]       = \
              self._getSpeechForColumnHeader
-        self.speechGenerators[rolenames.ROLE_COMBO_BOX]           = \
+        self.speechGenerators[pyatspi.ROLE_COMBO_BOX]           = \
              self._getSpeechForComboBox
-        self.speechGenerators[rolenames.ROLE_DESKTOP_ICON]        = \
+        self.speechGenerators[pyatspi.ROLE_DESKTOP_ICON]        = \
              self._getSpeechForDesktopIcon
-        self.speechGenerators[rolenames.ROLE_DIAL]                = \
+        self.speechGenerators[pyatspi.ROLE_DIAL]                = \
              self._getSpeechForDial
-        self.speechGenerators[rolenames.ROLE_DIALOG]              = \
+        self.speechGenerators[pyatspi.ROLE_DIALOG]              = \
              self._getSpeechForDialog
-        self.speechGenerators[rolenames.ROLE_DIRECTORY_PANE]      = \
+        self.speechGenerators[pyatspi.ROLE_DIRECTORY_PANE]      = \
              self._getSpeechForDirectoryPane
-        self.speechGenerators[rolenames.ROLE_FRAME]               = \
+        self.speechGenerators[pyatspi.ROLE_FRAME]               = \
              self._getSpeechForFrame
-        self.speechGenerators[rolenames.ROLE_HTML_CONTAINER]      = \
+        self.speechGenerators[pyatspi.ROLE_HTML_CONTAINER]      = \
              self._getSpeechForHtmlContainer
-        self.speechGenerators[rolenames.ROLE_ICON]                = \
+        self.speechGenerators[pyatspi.ROLE_ICON]                = \
              self._getSpeechForIcon
-        self.speechGenerators[rolenames.ROLE_IMAGE]               = \
+        self.speechGenerators[pyatspi.ROLE_IMAGE]               = \
              self._getSpeechForImage
-        self.speechGenerators[rolenames.ROLE_LABEL]               = \
+        self.speechGenerators[pyatspi.ROLE_LABEL]               = \
              self._getSpeechForLabel
-        self.speechGenerators[rolenames.ROLE_LAYERED_PANE]        = \
+        self.speechGenerators[pyatspi.ROLE_LAYERED_PANE]        = \
              self._getSpeechForLayeredPane
-        self.speechGenerators[rolenames.ROLE_LIST]                = \
+        self.speechGenerators[pyatspi.ROLE_LIST]                = \
              self._getSpeechForList
-        self.speechGenerators[rolenames.ROLE_LIST_ITEM]           = \
-             self._getSpeechForListItem
-        self.speechGenerators[rolenames.ROLE_MENU]                = \
+        self.speechGenerators[pyatspi.ROLE_MENU]                = \
              self._getSpeechForMenu
-        self.speechGenerators[rolenames.ROLE_MENU_BAR]            = \
+        self.speechGenerators[pyatspi.ROLE_MENU_BAR]            = \
              self._getSpeechForMenuBar
-        self.speechGenerators[rolenames.ROLE_MENU_ITEM]           = \
+        self.speechGenerators[pyatspi.ROLE_MENU_ITEM]           = \
              self._getSpeechForMenuItem
-        self.speechGenerators[rolenames.ROLE_OPTION_PANE]         = \
+        self.speechGenerators[pyatspi.ROLE_OPTION_PANE]         = \
              self._getSpeechForOptionPane
-        self.speechGenerators[rolenames.ROLE_PAGE_TAB]            = \
+        self.speechGenerators[pyatspi.ROLE_PAGE_TAB]            = \
              self._getSpeechForPageTab
-        self.speechGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
+        self.speechGenerators[pyatspi.ROLE_PAGE_TAB_LIST]       = \
              self._getSpeechForPageTabList
-        self.speechGenerators[rolenames.ROLE_PARAGRAPH]           = \
+        self.speechGenerators[pyatspi.ROLE_PARAGRAPH]           = \
              self._getSpeechForText
-        self.speechGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
+        self.speechGenerators[pyatspi.ROLE_PASSWORD_TEXT]       = \
              self._getSpeechForText
-        self.speechGenerators[rolenames.ROLE_PROGRESS_BAR]        = \
+        self.speechGenerators[pyatspi.ROLE_PROGRESS_BAR]        = \
              self._getSpeechForProgressBar
-        self.speechGenerators[rolenames.ROLE_PUSH_BUTTON]         = \
+        self.speechGenerators[pyatspi.ROLE_PUSH_BUTTON]         = \
              self._getSpeechForPushButton
-        self.speechGenerators[rolenames.ROLE_RADIO_BUTTON]        = \
+        self.speechGenerators[pyatspi.ROLE_RADIO_BUTTON]        = \
              self._getSpeechForRadioButton
-        self.speechGenerators[rolenames.ROLE_RADIO_MENU]          = \
+        self.speechGenerators[pyatspi.ROLE_RADIO_MENU]          = \
              self._getSpeechForRadioMenuItem
-        self.speechGenerators[rolenames.ROLE_RADIO_MENU_ITEM]     = \
+        self.speechGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
              self._getSpeechForRadioMenuItem
-        self.speechGenerators[rolenames.ROLE_ROW_HEADER]          = \
+        self.speechGenerators[pyatspi.ROLE_ROW_HEADER]          = \
              self._getSpeechForRowHeader
-        self.speechGenerators[rolenames.ROLE_SCROLL_BAR]          = \
+        self.speechGenerators[pyatspi.ROLE_SCROLL_BAR]          = \
              self._getSpeechForScrollBar
-        self.speechGenerators[rolenames.ROLE_SLIDER]              = \
+        self.speechGenerators[pyatspi.ROLE_SLIDER]              = \
              self._getSpeechForSlider
-        self.speechGenerators[rolenames.ROLE_SPIN_BUTTON]         = \
+        self.speechGenerators[pyatspi.ROLE_SPIN_BUTTON]         = \
              self._getSpeechForSpinButton
-        self.speechGenerators[rolenames.ROLE_SPLIT_PANE]          = \
+        self.speechGenerators[pyatspi.ROLE_SPLIT_PANE]          = \
              self._getSpeechForSplitPane
-        self.speechGenerators[rolenames.ROLE_TABLE]               = \
+        self.speechGenerators[pyatspi.ROLE_TABLE]               = \
              self._getSpeechForTable
-        self.speechGenerators[rolenames.ROLE_TABLE_CELL]          = \
+        self.speechGenerators[pyatspi.ROLE_TABLE_CELL]          = \
              self._getSpeechForTableCellRow
-        self.speechGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
+        self.speechGenerators[pyatspi.ROLE_TABLE_COLUMN_HEADER] = \
              self._getSpeechForTableColumnHeader
-        self.speechGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
+        self.speechGenerators[pyatspi.ROLE_TABLE_ROW_HEADER]    = \
              self._getSpeechForTableRowHeader
-        self.speechGenerators[rolenames.ROLE_TEAR_OFF_MENU_ITEM]  = \
+        self.speechGenerators[pyatspi.ROLE_TEAROFF_MENU_ITEM]  = \
              self._getSpeechForMenu
-        self.speechGenerators[rolenames.ROLE_TERMINAL]            = \
+        self.speechGenerators[pyatspi.ROLE_TERMINAL]            = \
              self._getSpeechForTerminal
-        self.speechGenerators[rolenames.ROLE_TEXT]                = \
+        self.speechGenerators[pyatspi.ROLE_TEXT]                = \
              self._getSpeechForText
-        self.speechGenerators[rolenames.ROLE_TOGGLE_BUTTON]       = \
+        self.speechGenerators[pyatspi.ROLE_TOGGLE_BUTTON]       = \
              self._getSpeechForToggleButton
-        self.speechGenerators[rolenames.ROLE_TOOL_BAR]            = \
+        self.speechGenerators[pyatspi.ROLE_TOOL_BAR]            = \
              self._getSpeechForToolBar
-        self.speechGenerators[rolenames.ROLE_TREE]                = \
+        self.speechGenerators[pyatspi.ROLE_TREE]                = \
              self._getSpeechForTable
-        self.speechGenerators[rolenames.ROLE_TREE_TABLE]          = \
+        self.speechGenerators[pyatspi.ROLE_TREE_TABLE]          = \
              self._getSpeechForTable
-        self.speechGenerators[rolenames.ROLE_WINDOW]              = \
+        self.speechGenerators[pyatspi.ROLE_WINDOW]              = \
              self._getSpeechForWindow
 
     def _getSpeechForObjectAccelerator(self, obj):
@@ -197,7 +196,8 @@ class SpeechGenerator:
 
         Returns a list of utterances to be spoken.
         """
-        if obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_SENSITIVE):
             # Translators: this represents an item on the screen that has
             # been set insensitive (or grayed out).
             #
@@ -222,7 +222,7 @@ class SpeechGenerator:
             return []
 
     def _getSpeechForObjectRole(self, obj):
-        if (obj.role != rolenames.ROLE_UNKNOWN):
+        if (obj.getRole() != pyatspi.ROLE_UNKNOWN):
             return [rolenames.getSpeechForRoleName(obj)]
         else:
             return []
@@ -242,7 +242,7 @@ class SpeechGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           obj             = %s" % obj.name)
         debug.println(debug.LEVEL_FINER,
-                      "           role            = %s" % obj.role)
+                      "           role            = %s" % obj.getRoleName())
         debug.println(debug.LEVEL_FINER,
                       "           already_focused = %s" % already_focused)
         debug.println(debug.LEVEL_FINER,
@@ -377,7 +377,8 @@ class SpeechGenerator:
         """
 
         utterances = []
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             checkedState = _("checked")
@@ -630,9 +631,13 @@ class SpeechGenerator:
         name = self._getSpeechForObjectName(obj)
         if name != label:
             utterances.extend(name)
-
-        if obj.image:
-            description = obj.image.imageDescription
+        
+        try:
+            image = obj.queryImage()
+        except NotImplementedError:
+            pass
+        else:
+            description = image.imageDescription
             if description and len(description):
                 utterances.append(description)
 
@@ -704,9 +709,9 @@ class SpeechGenerator:
         # If this has no children, then let the user know.
         #
         hasItems = False
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
-            if child.state.count(atspi.Accessibility.STATE_SHOWING):
+        for child in obj:
+            state = child.getState()
+            if state.contains(pyatspi.STATE_SHOWING):
                 hasItems = True
                 break
         if not hasItems:
@@ -839,7 +844,8 @@ class SpeechGenerator:
         # menu item" that is currently unchecked and speak that state. 
         # See Orca bug #433398 for more details.
         #
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
             #
             utterances.append(_("checked"))
@@ -870,7 +876,7 @@ class SpeechGenerator:
         if len(utterances) == 0:
             if obj.name and (len(obj.name)):
                 utterances.append(obj.name)
-        if obj.role != rolenames.ROLE_PARAGRAPH:
+        if obj.getRole() != pyatspi.ROLE_PARAGRAPH:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
@@ -1013,7 +1019,8 @@ class SpeechGenerator:
         """
 
         utterances = []
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
@@ -1279,9 +1286,12 @@ class SpeechGenerator:
         if obj.childCount == 2:
             cellOrder = []
             hasToggle = [ False, False ]
-            for i in range(0, obj.childCount):
-                action = obj.child(i).action
-                if action:
+            for child in obj:
+                try:
+                    action = obj.queryAction()
+                except NotImplementedError:
+                    continue
+                else:
                     for j in range(0, action.nActions):
                         if action.getName(j) == "toggle":
                             hasToggle[i] = True
@@ -1309,17 +1319,20 @@ class SpeechGenerator:
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
         # bugzilla bug 319750.]]]
         #
-        action = obj.action
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            action = None
         if action:
             for i in range(0, action.nActions):
                 debug.println(debug.LEVEL_FINEST,
                     "speechgenerator.__getTableCellUtterances " \
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
-                    obj.role = rolenames.ROLE_CHECK_BOX
+#                    obj.role = rolenames.ROLE_CHECK_BOX
                     utterances = self._getSpeechForCheckBox(obj,
                                                             already_focused)
-                    obj.role = rolenames.ROLE_TABLE_CELL
+#                    obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
         displayedText = self._script.getDisplayedText( \
@@ -1333,15 +1346,17 @@ class SpeechGenerator:
         #      the role name.
         # See bug #465989 for more details.
         #
-        if (not displayedText or len(displayedText) == 0) and obj.image:
-            if obj.image.imageDescription:
-                utterances.append(obj.image.imageDescription)
-            obj.role = rolenames.ROLE_IMAGE
-            utterances.extend(self._getSpeechForImage(obj, already_focused))
-            obj.role = rolenames.ROLE_TABLE_CELL
+        # [[TODO: eitani - incorprate this in new rolenames ]]
+        # if (not displayedText or len(displayedText) == 0) and obj.image:
+        #     if obj.image.imageDescription:
+        #         utterances.append(obj.image.imageDescription)
+        #     obj.role = rolenames.ROLE_IMAGE
+        #     utterances.extend(self._getSpeechForImage(obj, already_focused))
+        #     obj.role = rolenames.ROLE_TABLE_CELL
 
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -1388,11 +1403,15 @@ class SpeechGenerator:
         utterances = []
 
         if (not already_focused):
-            if settings.readTableCellRow and obj.parent.table \
+            try:
+                parent_table = obj.parent.queryTable()
+            except NotImplementedError:
+                parent_table = None
+            if settings.readTableCellRow and parent_table \
                 and (not self._script.isLayoutOnly(obj.parent)):
                 parent = obj.parent
-                row = parent.table.getRowAtIndex(obj.index)
-                column = parent.table.getColumnAtIndex(obj.index)
+                row = parent_table.getRowAtIndex(obj.getIndexInParent())
+                column = parent_table.getColumnAtIndex(obj.getIndexInParent())
 
                 # This is an indication of whether we should speak all the
                 # table cells (the user has moved focus up or down a row),
@@ -1408,11 +1427,11 @@ class SpeechGenerator:
                            pointOfReference["lastColumn"] == column)
 
                 if speakAll:
-                    for i in range(0, parent.table.nColumns):
-                        accRow = parent.table.getAccessibleAt(row, i)
+                    for i in range(0, parent_table.nColumns):
+                        accRow = parent_table.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)
-                        showing = cell.state.count( \
-                                          atspi.Accessibility.STATE_SHOWING)
+                        state = cell.getState()
+                        showing = state.contains(pyatspi.STATE_SHOWING)
                         if showing:
                             # If this table cell has a "toggle" action, and
                             # doesn't have any label associated with it then 
@@ -1421,11 +1440,14 @@ class SpeechGenerator:
                             #
                             label = self._script.getDisplayedText( \
                                 self._script.getRealActiveDescendant(cell))
-                            action = cell.action
+                            try:
+                                action = cell.queryAction()
+                            except NotImplementedError:
+                                action = None
                             if action and (label == None or len(label) == 0):
                                 for j in range(0, action.nActions):
                                     if action.getName(j) == "toggle":
-                                        header = parent.table.getColumnHeader(i)
+                                        header = parent_table.getColumnHeader(i)
                                         accHeader = atspi.Accessible.makeAccessible(header)
                                         utterances.append(accHeader.name)
 
@@ -1547,7 +1569,8 @@ class SpeechGenerator:
         """
 
         utterances = []
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: the state of a toggle button.
             #
             checkedState = _("pressed")
@@ -1665,9 +1688,9 @@ class SpeechGenerator:
 
         Returns a list of utterances to be spoken.
         """
-
-        if self.speechGenerators.has_key(obj.role):
-            generator = self.speechGenerators[obj.role]
+        role = obj.getRole()
+        if self.speechGenerators.has_key(role):
+            generator = self.speechGenerators[role]
         else:
             generator = self._getDefaultSpeech
 
@@ -1691,13 +1714,13 @@ class SpeechGenerator:
         if not obj:
             return utterances
 
-        if obj is stopAncestor:
+        if obj == stopAncestor:
             return utterances
 
         parent = obj.parent
         if parent \
-            and (obj.role == rolenames.ROLE_TABLE_CELL) \
-            and (parent.role == rolenames.ROLE_TABLE_CELL):
+            and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+            and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
             parent = parent.parent
 
         while parent and (parent.parent != parent):
@@ -1705,17 +1728,17 @@ class SpeechGenerator:
                 break
             if not self._script.isLayoutOnly(parent):
                 text = self._script.getDisplayedLabel(parent)
-                if not text and parent.text:
+                if not text and 'Text' in pyatspi.listInterfaces(parent):
                     text = self._script.getDisplayedText(parent)
                 if text and len(text.strip()):
                     # Push announcement of cell to the end
                     #
-                    if not parent.role in [rolenames.ROLE_TABLE_CELL,
-                                           rolenames.ROLE_FILLER]:
+                    if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
+                                                pyatspi.ROLE_FILLER]:
                         utterances.append(\
                             rolenames.getSpeechForRoleName(parent))
                     utterances.append(text)
-                    if parent.role == rolenames.ROLE_TABLE_CELL:
+                    if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
                         utterances.append(\
                             rolenames.getSpeechForRoleName(parent))
             parent = parent.parent

@@ -36,6 +36,7 @@ log = logging.getLogger("braille")
 
 import signal
 
+import pyatspi
 import atspi
 
 # We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
@@ -377,7 +378,7 @@ class Text(Region):
             [string, startOffset, endOffset] = \
                 self.accessible.text.getTextAtOffset(
                     0,
-                    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                    pyatspi.TEXT_BOUNDARY_LINE_START)
 
         cursorOffset = min(self.caretOffset - self.lineOffset, len(string))
 
@@ -434,8 +435,9 @@ class Text(Region):
         write structure for the purpose of indicating text attributes and
         selection."""
 
-        text = self.accessible.text
-        if not text:
+        try:
+            text = self.accessible.queryText()
+        except NotImplementedError:
             return ''
 
         # Start with an empty mask.

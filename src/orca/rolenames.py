@@ -30,6 +30,8 @@ __license__   = "LGPL"
 import debug
 import settings
 
+import pyatspi
+
 from orca_i18n import _  # for gettext support
 from orca_i18n import Q_ # to provide qualified translatable strings
 
@@ -38,6 +40,9 @@ from orca_i18n import Q_ # to provide qualified translatable strings
 # Rolenames derived from atk/atk/atkobject.c:role_items.               #
 #                                                                      #
 ########################################################################
+
+#[[[TODO: eitani - These are here for backward compatability, they should 
+#disappear]]]
 
 ROLE_INVALID             = "invalid"
 ROLE_ACCEL_LABEL         = "accelerator label"
@@ -1196,6 +1201,20 @@ rolenames[ROLE_EMBEDDED] = Rolename(
     #
     _("embedded component"))
 
+
+# [[[TODO: eitani - This is for backward compatability, we now put in pyatspi 
+# keys into the dictionary]]]
+
+_legacy_rolename_keys = rolenames.keys()
+
+for sym in dir(pyatspi):
+    if sym.startswith('ROLE_'):
+        possible_key = sym.replace('ROLE_','').replace('_','').lower()
+        for key in _legacy_rolename_keys:
+            if key.replace(' ','') == possible_key:
+                pyatspi_role = getattr(pyatspi, sym)
+                rolenames[pyatspi_role] = rolenames[key]
+
 def getSpeechForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
@@ -1207,17 +1226,40 @@ def getSpeechForRoleName(obj):
     Returns a string containing the localized name of the object suitable
     to be spoken.
     """
+    role = obj.getRole()
+    # Speak out a check box if the table cell is checkable.
+    if role == pyatspi.ROLE_TABLE_CELL:
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            supported_actions = []
+        else:
+            supported_actions = \
+                [action.getName(i) for i in xrange(action.nActions)]
+        if 'toggle' in supported_actions:
+          role = pyatspi.ROLE_CHECK_BOX
 
-    name = obj.role
-    if rolenames.has_key(name):
-        return rolenames[name].speech
+    # Return fake "menu" role names.
+    #[[[TODO: eitani - Discontinue ]]
+    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_CHECK_MENU
+    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_RADIO_MENU
+    elif (role == pyatspi.ROLE_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_MENU
+
+    if rolenames.has_key(role):
+        return rolenames[role].speech
     else:
-        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        localizedRoleName = obj.localizedRoleName
+        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
+        localizedRoleName = obj.getLocalizedRoleName()
         if localizedRoleName and len(localizedRoleName):
             return localizedRoleName
         else:
-            return name
+            return repr(role)
 
 def getShortBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
@@ -1231,16 +1273,29 @@ def getShortBrailleForRoleName(obj):
     suitable for a Braille display.
     """
 
-    name = obj.role
-    if rolenames.has_key(name):
-        return rolenames[name].brailleShort
+    role = obj.getRoe()
+
+    # Return fake "menu" role names.
+    #[[[TODO: eitani - Discontinue ]]
+    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_CHECK_MENU
+    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_RADIO_MENU
+    elif (role == pyatspi.ROLE_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_MENU
+
+    if rolenames.has_key(role):
+        return rolenames[role].brailleShort
     else:
-        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        localizedRoleName = obj.localizedRoleName
+        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
+        localizedRoleName = obj.getLocalizedRoleName()
         if localizedRoleName and len(localizedRoleName):
             return localizedRoleName
         else:
-            return name
+            return repr(role)
 
 def getLongBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
@@ -1253,17 +1308,32 @@ def getLongBrailleForRoleName(obj):
     Returns a string containing the localized name of the object suitable for
     a Braille display.
     """
+    role = obj.getRole()
 
-    name = obj.role
-    if rolenames.has_key(name):
-        return rolenames[name].brailleLong
+    # Return fake "menu" role names.
+    #[[[TODO: eitani - Discontinue ]]
+    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_CHECK_MENU
+    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_RADIO_MENU
+    elif (role == pyatspi.ROLE_MENU_ITEM) \
+          and (obj.childCount > 0):
+      role = ROLE_MENU
+
+    if rolenames.has_key(role):
+        return rolenames[role].brailleLong
     else:
-        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        localizedRoleName = obj.localizedRoleName
+        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
+        localizedRoleName = obj.getLocalizedRoleName()
         if localizedRoleName and len(localizedRoleName):
             return localizedRoleName
         else:
-            return name
+            return repr(role)
+
+
+
 
 def getBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is

@@ -30,6 +30,7 @@ __license__   = "LGPL"
 
 import sys
 import traceback
+import atspi
 
 # Used to turn off all debugging.
 #
@@ -205,7 +206,38 @@ def printDetails(level, indent, accessible, includeApp=True):
     """
 
     if level >= debugLevel and accessible:
-        println(level, accessible.toString(indent, includeApp))
+        println(level, _accToString(accessible, indent, includeApp))
+
+def _accToString(acc, indent="", includeApp=True):
+    """Returns a string, suitable for printing, that describes the
+    given accessible.
+
+    Arguments:
+    - indent: A string to prefix the output with
+    - includeApp: If True, include information about the app
+                  for this accessible.
+    """
+
+    if includeApp:
+        app = acc.getApplication()
+        if app:
+            string = indent + "app.name='%s' %s" \
+                     % (app.name, ' '*(18-len(app.name)))
+        else:
+            string = indent + "app=None "
+    else:
+        string = indent
+
+    state_string = atspi.Accessible.stateToString(acc)
+
+    rel_string = atspi.Accessible.relationToString(acc)
+
+    string += "name='%s' role='%s' state='%s' relations='%s'" \
+              % (acc.name or 'None', acc.getRoleName(),
+                 state_string, rel_string)
+
+    return string
+
 
 # The following code has been borrowed from the following URL:
 # 

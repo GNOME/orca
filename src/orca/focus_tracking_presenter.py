@@ -30,6 +30,7 @@ import Queue
 import threading
 import time
 
+import pyatspi
 import atspi
 import braille
 import default
@@ -37,9 +38,9 @@ import debug
 import input_event
 import orca_state
 import presentation_manager
-import rolenames
 import settings
 import speech
+import traceback
 
 from orca_i18n import _ # for gettext support
 
@@ -65,7 +66,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # is what delves them out, we keep at most one listener to avoid
         # receiving the same event twice in a row.
         #
-        self.registry        = atspi.Registry()
+        self.registry        = pyatspi.Registry
         self._knownScripts   = {}
         self._knownAppSettings = {}
         self._oldAppSettings = None
@@ -207,11 +208,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # default script. Note that this search is restricted to the "orca"
         # package for now.
         #
-        if (not script) \
-            and app \
-            and app.__dict__.has_key("toolkitName") \
-            and app.toolkitName:
-
+        if (not script) and app and getattr(app, "toolkitName", None):
             try:
                 debug.println(
                     debug.LEVEL_FINE,
@@ -299,19 +296,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         """
 
         objectsRemoved = 0
-        for obj in atspi.Accessible._cache.values():
-            try:
-                if obj.state.count(atspi.Accessibility.STATE_DEFUNCT):
-                    atspi.Accessible.deleteAccessible(obj)
-                    objectsRemoved += 1
-                else:
-                    # Try to force a COMM_FAILURE
-                    #
-                    obj.toString()
-            except CORBA.COMM_FAILURE:
-                atspi.Accessible.deleteAccessible(obj)
-                objectsRemoved += 1
-
         debug.println(debug.LEVEL_FINEST,
                       "_cleanupCache: %d objects removed." % objectsRemoved)
 
@@ -321,7 +305,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         gc.collect()
         for obj in gc.garbage:
             try:
-                if isinstance(obj, atspi.Accessible):
+                if isinstance(obj, pyatspi.Accessibility.Accessible):
                     gc.garbage.remove(obj)
                     obj.__del__()
             except:
@@ -340,19 +324,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # didn't reclaim this time.
         #
         try:
-            apps = []
-            desktop = self.registry.desktop
-            for i in range(0, desktop.childCount):
-                try:
-                    acc = desktop.getChildAtIndex(i)
-                    app = atspi.Accessible.makeAccessible(acc)
-                    if app:
-                        apps.insert(0, app)
-                except:
-                    pass
+            desktop = self.registry.getDesktop(0)
 
             for app in self._knownScripts.keys():
-                if apps.count(app) == 0:
+                if app not in desktop:
                     script = self._knownScripts[app]
                     self._deregisterEventListeners(script)
 
@@ -362,7 +337,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # cycle of the application referring to itself.
                     #
                     del self._knownScripts[app]
-                    app.app = None
                     del app
                     del script
         except:
@@ -482,7 +456,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # this problem.]]]
         #
         try:
-            if event.source.role == rolenames.ROLE_TOOL_TIP:
+            if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
                 # Check that it's okay to present tool tips. Always present
                 # tooltips initiated by the user pressing Control-F1 on the
                 # keyboard.
@@ -513,8 +487,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # either.
         #
         if event.type.startswith("object:children-changed:remove"):
-            if event.source == atspi.Accessible.makeAccessible(
-                                   self.registry.desktop):
+            if event.source == self.registry.getDesktop(0):
                 self._reclaimScripts()
                 self._cleanupCache()
                 if settings.debugMemoryUsage:
@@ -525,12 +498,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # We don't want to touch a defunct object.  It's useless and it
             # can cause hangs.
             #
-            if event.source \
-               and event.source.state.count(atspi.Accessibility.STATE_DEFUNCT):
-                debug.println(debug.LEVEL_FINEST,
-                              "IGNORING DEFUNCT OBJECT")
-                atspi.Accessible.deleteAccessible(event.source)
-                return
+            if event.source:
+                state = event.source.getState()
+                if state.contains(pyatspi.STATE_DEFUNCT):
+                    debug.println(debug.LEVEL_FINEST,
+                                  "IGNORING DEFUNCT OBJECT")
+                    return
 
             if (not debug.eventDebugFilter) \
                 or (debug.eventDebugFilter \
@@ -538,17 +511,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if not event.type.startswith("mouse:"):
                     debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
-        except CORBA.COMM_FAILURE:
-            debug.printException(debug.LEVEL_WARNING)
-            debug.println(debug.LEVEL_FINEST,
-                          "COMM_FAILURE above while processing event: " \
-                          + event.type)
-        except CORBA.OBJECT_NOT_EXIST:
+        except LookupError:
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
-                          "OBJECT_NOT_EXIST above while processing event: " \
-                          + event.type)
-            atspi.Accessible.deleteAccessible(event.source)
+                          "LookupError above while processing event: %s" %\
+                          event.type)
             return
         except:
             debug.printException(debug.LEVEL_WARNING)
@@ -577,7 +544,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # See Orca bug #409731 for more details.
             #
             if not event.type.startswith("mouse:"):
-                s = self._getScript(event.source.app)
+                s = self._getScript(event.source.getApplication())
             else:
                 s = orca_state.activeScript
             if not s:
@@ -590,8 +557,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         while s and retryCount <= s.commFailureAttemptLimit:
             try:
-                if not event.source.state.count( \
-                                      atspi.Accessibility.STATE_ICONIFIED):
+                state = event.source.getState()
+                if not state.contains(pyatspi.STATE_ICONIFIED):
 
                     # [[[TODO: WDW - HACK we look for frame that get
                     # focus: as a means to detect active scripts
@@ -601,17 +568,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # in use, and then issues a focus: event on the
                     # main window, which is a frame.]]]
                     #
-                    if event.type.startswith("window:activate") \
-                       or (event.type.startswith("focus:") \
-                           and (event.source.role == rolenames.ROLE_FRAME)):
-
+                    if (event.type == "window:activate") \
+                       or ((event.type.startswith("focus")) 
+                           and (event.source.getRole() == pyatspi.ROLE_FRAME)):
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
 
-                        self.setActiveScript(self._getScript(event.source.app))
+                        self.setActiveScript(
+                            self._getScript(event.source.getApplication()))
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
@@ -623,17 +590,19 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         #
                         braille.setupKeyRanges(\
                             orca_state.activeScript.brailleBindings.keys())
-
-                    s.processObjectEvent(event)
+                    # [[[TODO: eitani - Remove this wrappage when scripts are
+                    # pyatspi compliant.]]]
+                    back_compat_event = atspi.Event(event)
+                    s.processObjectEvent(back_compat_event)
                     if retryCount:
                         debug.println(debug.LEVEL_WARNING,
                                       "  SUCCEEDED AFTER %d TRIES" % retryCount)
                 break
-            except CORBA.COMM_FAILURE:
+            except LookupError:
                 debug.printException(debug.LEVEL_WARNING)
                 debug.println(debug.LEVEL_WARNING,
-                              "COMM_FAILURE above while processing: " \
-                              + event.type)
+                              "LookupError above while processing: %s" % \
+                              event.type)
                 retryCount += 1
                 if retryCount <= s.commFailureAttemptLimit:
                     # We want the old locus of focus to be reset so
@@ -671,11 +640,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         event = None
         if isinstance(e, input_event.KeyboardEvent):
-            if e.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+            if e.type == pyatspi.KEY_PRESSED_EVENT:
                 debug.println(debug.LEVEL_ALL,
                               "----------> QUEUEING KEYPRESS '%s' (%d)"
                               % (e.event_string, e.hw_code))
-            elif e.type == atspi.Accessibility.KEY_RELEASED_EVENT:
+            elif e.type == pyatspi.KEY_RELEASED_EVENT:
                 debug.println(debug.LEVEL_ALL,
                               "----------> QUEUEING KEYRELEASE '%s' (%d)"
                               % (e.event_string, e.hw_code))
@@ -708,20 +677,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # removed from the desktop.
             #
             if e.type.startswith("object:children-changed:remove") \
-                and (e.source != self.registry.desktop):
+                and (e.source != self.registry.getDesktop(0)):
                 if settings.debugEventQueue:
                     self._enqueueEventCount -= 1
                 return
 
-            # We create the event here because it will ref everything
-            # we want it to ref, thus allowing things to survive until
-            # they are processed on the gidle thread.
-            #
             # If the event doesn't have a source or that source is not marked
             # valid, then we don't care about this event. Just return.
             #
-            event = atspi.Event(e)
-            if not event.source or not event.source.valid:
+            
+            event = e
+            if not event.source or event.source._non_existent():
                 debug.println(debug.LEVEL_FINEST,
                       "---------> IGNORING INVALID EVENT %s" % e.type)
                 if settings.debugEventQueue:
@@ -797,12 +763,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             event = self._eventQueue.get_nowait()
 
             if isinstance(event, input_event.KeyboardEvent):
-                if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                if event.type == pyatspi.KEY_PRESSED_EVENT:
                     debug.println(debug.LEVEL_ALL,
                                   "DEQUEUED KEYPRESS '%s' (%d) <----------" \
                                   % (event.event_string, event.hw_code))
                     pressRelease = "PRESS"
-                elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT:
+                elif event.type == pyatspi.KEY_RELEASED_EVENT:
                     debug.println(debug.LEVEL_ALL,
                                   "DEQUEUED KEYRELEASE '%s' (%d) <----------" \
                                   % (event.event_string, event.hw_code))
@@ -997,12 +963,20 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # Generate a fake window activation event so the application
             # can tell the user about itself.
             #
-            e = atspi.Event()
-            e.source   = win._acc
-            e.type     = "window:activate"
-            e.detail1  = 0
-            e.detail2  = 0
-            e.any_data = None
+            class _FakeEvent:
+                pass
+            class _FakeData:
+              def value(self):
+                return None
+            fe = _FakeEvent()
+            # [[[TODO: eitani - This just unwraps the accessible object, remove
+            # this when it becomes redundant, and make a direct assignment.]]]
+            fe.source   = getattr(win, '_acc', win)
+            fe.type     = "window:activate"
+            fe.detail1  = 0
+            fe.detail2  = 0
+            fe.any_data = _FakeData()
+            e = pyatspi.event.Event(fe)
             self._enqueueEvent(e)
 
     def deactivate(self):

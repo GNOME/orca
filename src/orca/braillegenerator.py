@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 import math
 
+import pyatspi
 import atspi
 import braille
 import debug
@@ -46,10 +47,10 @@ class BrailleGenerator:
     primary entry point.  Subclasses can feel free to override/extend
     the brailleGenerators instance field as they see fit."""
 
-    SKIP_CONTEXT_ROLES = (rolenames.ROLE_MENU,
-                          rolenames.ROLE_MENU_BAR,
-                          rolenames.ROLE_PAGE_TAB_LIST,
-                          rolenames.ROLE_COMBO_BOX)
+    SKIP_CONTEXT_ROLES = (pyatspi.ROLE_MENU,
+                          pyatspi.ROLE_MENU_BAR,
+                          pyatspi.ROLE_PAGE_TAB_LIST,
+                          pyatspi.ROLE_COMBO_BOX)
 
     def __init__(self, script):
 
@@ -59,105 +60,103 @@ class BrailleGenerator:
         self._script = script
 
         self.brailleGenerators = {}
-        self.brailleGenerators[rolenames.ROLE_ALERT]               = \
+        self.brailleGenerators[pyatspi.ROLE_ALERT]               = \
              self._getBrailleRegionsForAlert
-        self.brailleGenerators[rolenames.ROLE_ANIMATION]           = \
+        self.brailleGenerators[pyatspi.ROLE_ANIMATION]           = \
              self._getBrailleRegionsForAnimation
-        self.brailleGenerators[rolenames.ROLE_ARROW]               = \
+        self.brailleGenerators[pyatspi.ROLE_ARROW]               = \
              self._getBrailleRegionsForArrow
-        self.brailleGenerators[rolenames.ROLE_CHECK_BOX]           = \
+        self.brailleGenerators[pyatspi.ROLE_CHECK_BOX]           = \
              self._getBrailleRegionsForCheckBox
-        self.brailleGenerators[rolenames.ROLE_CHECK_MENU]          = \
+        self.brailleGenerators[pyatspi.ROLE_CHECK_MENU]          = \
              self._getBrailleRegionsForCheckMenuItem
-        self.brailleGenerators[rolenames.ROLE_CHECK_MENU_ITEM]     = \
+        self.brailleGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
              self._getBrailleRegionsForCheckMenuItem
-        self.brailleGenerators[rolenames.ROLE_COLUMN_HEADER]       = \
+        self.brailleGenerators[pyatspi.ROLE_COLUMN_HEADER]       = \
              self._getBrailleRegionsForColumnHeader
-        self.brailleGenerators[rolenames.ROLE_COMBO_BOX]           = \
+        self.brailleGenerators[pyatspi.ROLE_COMBO_BOX]           = \
              self._getBrailleRegionsForComboBox
-        self.brailleGenerators[rolenames.ROLE_DESKTOP_ICON]        = \
+        self.brailleGenerators[pyatspi.ROLE_DESKTOP_ICON]        = \
              self._getBrailleRegionsForDesktopIcon
-        self.brailleGenerators[rolenames.ROLE_DIAL]                = \
+        self.brailleGenerators[pyatspi.ROLE_DIAL]                = \
              self._getBrailleRegionsForDial
-        self.brailleGenerators[rolenames.ROLE_DIALOG]              = \
+        self.brailleGenerators[pyatspi.ROLE_DIALOG]              = \
              self._getBrailleRegionsForDialog
-        self.brailleGenerators[rolenames.ROLE_DIRECTORY_PANE]      = \
+        self.brailleGenerators[pyatspi.ROLE_DIRECTORY_PANE]      = \
              self._getBrailleRegionsForDirectoryPane
-        self.brailleGenerators[rolenames.ROLE_FRAME]               = \
+        self.brailleGenerators[pyatspi.ROLE_FRAME]               = \
              self._getBrailleRegionsForFrame
-        self.brailleGenerators[rolenames.ROLE_HTML_CONTAINER]      = \
+        self.brailleGenerators[pyatspi.ROLE_HTML_CONTAINER]      = \
              self._getBrailleRegionsForHtmlContainer
-        self.brailleGenerators[rolenames.ROLE_ICON]                = \
+        self.brailleGenerators[pyatspi.ROLE_ICON]                = \
              self._getBrailleRegionsForIcon
-        self.brailleGenerators[rolenames.ROLE_IMAGE]               = \
+        self.brailleGenerators[pyatspi.ROLE_IMAGE]               = \
              self._getBrailleRegionsForImage
-        self.brailleGenerators[rolenames.ROLE_LABEL]               = \
+        self.brailleGenerators[pyatspi.ROLE_LABEL]               = \
              self._getBrailleRegionsForLabel
-        self.brailleGenerators[rolenames.ROLE_LIST]                = \
+        self.brailleGenerators[pyatspi.ROLE_LIST]                = \
              self._getBrailleRegionsForList
-        self.brailleGenerators[rolenames.ROLE_LIST_ITEM]           = \
-             self._getBrailleRegionsForListItem
-        self.brailleGenerators[rolenames.ROLE_MENU]                = \
+        self.brailleGenerators[pyatspi.ROLE_MENU]                = \
              self._getBrailleRegionsForMenu
-        self.brailleGenerators[rolenames.ROLE_MENU_BAR]            = \
+        self.brailleGenerators[pyatspi.ROLE_MENU_BAR]            = \
              self._getBrailleRegionsForMenuBar
-        self.brailleGenerators[rolenames.ROLE_MENU_ITEM]           = \
+        self.brailleGenerators[pyatspi.ROLE_MENU_ITEM]           = \
              self._getBrailleRegionsForMenuItem
-        self.brailleGenerators[rolenames.ROLE_OPTION_PANE]         = \
+        self.brailleGenerators[pyatspi.ROLE_OPTION_PANE]         = \
              self._getBrailleRegionsForOptionPane
-        self.brailleGenerators[rolenames.ROLE_PAGE_TAB]            = \
+        self.brailleGenerators[pyatspi.ROLE_PAGE_TAB]            = \
              self._getBrailleRegionsForPageTab
-        self.brailleGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
+        self.brailleGenerators[pyatspi.ROLE_PAGE_TAB_LIST]       = \
              self._getBrailleRegionsForPageTabList
-        self.brailleGenerators[rolenames.ROLE_PANEL]               = \
+        self.brailleGenerators[pyatspi.ROLE_PANEL]               = \
              self._getBrailleRegionsForPanel
-        self.brailleGenerators[rolenames.ROLE_PARAGRAPH]           = \
+        self.brailleGenerators[pyatspi.ROLE_PARAGRAPH]           = \
              self._getBrailleRegionsForText
-        self.brailleGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
+        self.brailleGenerators[pyatspi.ROLE_PASSWORD_TEXT]       = \
              self._getBrailleRegionsForText
-        self.brailleGenerators[rolenames.ROLE_PROGRESS_BAR]        = \
+        self.brailleGenerators[pyatspi.ROLE_PROGRESS_BAR]        = \
              self._getBrailleRegionsForProgressBar
-        self.brailleGenerators[rolenames.ROLE_PUSH_BUTTON]         = \
+        self.brailleGenerators[pyatspi.ROLE_PUSH_BUTTON]         = \
              self._getBrailleRegionsForPushButton
-        self.brailleGenerators[rolenames.ROLE_RADIO_BUTTON]        = \
+        self.brailleGenerators[pyatspi.ROLE_RADIO_BUTTON]        = \
              self._getBrailleRegionsForRadioButton
-        self.brailleGenerators[rolenames.ROLE_RADIO_MENU]          = \
+        self.brailleGenerators[pyatspi.ROLE_RADIO_MENU]          = \
              self._getBrailleRegionsForRadioMenuItem
-        self.brailleGenerators[rolenames.ROLE_RADIO_MENU_ITEM]     = \
+        self.brailleGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
              self._getBrailleRegionsForRadioMenuItem
-        self.brailleGenerators[rolenames.ROLE_ROW_HEADER]          = \
+        self.brailleGenerators[pyatspi.ROLE_ROW_HEADER]          = \
              self._getBrailleRegionsForRowHeader
-        self.brailleGenerators[rolenames.ROLE_SCROLL_BAR]          = \
+        self.brailleGenerators[pyatspi.ROLE_SCROLL_BAR]          = \
              self._getBrailleRegionsForScrollBar
-        self.brailleGenerators[rolenames.ROLE_SLIDER]              = \
+        self.brailleGenerators[pyatspi.ROLE_SLIDER]              = \
              self._getBrailleRegionsForSlider
-        self.brailleGenerators[rolenames.ROLE_SPIN_BUTTON]         = \
+        self.brailleGenerators[pyatspi.ROLE_SPIN_BUTTON]         = \
              self._getBrailleRegionsForSpinButton
-        self.brailleGenerators[rolenames.ROLE_SPLIT_PANE]          = \
+        self.brailleGenerators[pyatspi.ROLE_SPLIT_PANE]          = \
              self._getBrailleRegionsForSplitPane
-        self.brailleGenerators[rolenames.ROLE_TABLE]               = \
+        self.brailleGenerators[pyatspi.ROLE_TABLE]               = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators[rolenames.ROLE_TABLE_CELL]          = \
+        self.brailleGenerators[pyatspi.ROLE_TABLE_CELL]          = \
              self._getBrailleRegionsForTableCellRow
-        self.brailleGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
+        self.brailleGenerators[pyatspi.ROLE_TABLE_COLUMN_HEADER] = \
              self._getBrailleRegionsForTableColumnHeader
-        self.brailleGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
+        self.brailleGenerators[pyatspi.ROLE_TABLE_ROW_HEADER]    = \
              self._getBrailleRegionsForTableRowHeader
-        self.brailleGenerators[rolenames.ROLE_TEAR_OFF_MENU_ITEM]  = \
+        self.brailleGenerators[pyatspi.ROLE_TEAROFF_MENU_ITEM]  = \
              self._getBrailleRegionsForMenu
-        self.brailleGenerators[rolenames.ROLE_TERMINAL]            = \
+        self.brailleGenerators[pyatspi.ROLE_TERMINAL]            = \
              self._getBrailleRegionsForTerminal
-        self.brailleGenerators[rolenames.ROLE_TEXT]                = \
+        self.brailleGenerators[pyatspi.ROLE_TEXT]                = \
              self._getBrailleRegionsForText
-        self.brailleGenerators[rolenames.ROLE_TOGGLE_BUTTON]       = \
+        self.brailleGenerators[pyatspi.ROLE_TOGGLE_BUTTON]       = \
              self._getBrailleRegionsForToggleButton
-        self.brailleGenerators[rolenames.ROLE_TOOL_BAR]            = \
+        self.brailleGenerators[pyatspi.ROLE_TOOL_BAR]            = \
              self._getBrailleRegionsForToolBar
-        self.brailleGenerators[rolenames.ROLE_TREE]                = \
+        self.brailleGenerators[pyatspi.ROLE_TREE]                = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators[rolenames.ROLE_TREE_TABLE]          = \
+        self.brailleGenerators[pyatspi.ROLE_TREE_TABLE]          = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators[rolenames.ROLE_WINDOW]              = \
+        self.brailleGenerators[pyatspi.ROLE_WINDOW]              = \
              self._getBrailleRegionsForWindow
 
     def _getTextForAccelerator(self, obj):
@@ -201,7 +200,8 @@ class BrailleGenerator:
         Returns a string to be displayed.
         """
 
-        if obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_SENSITIVE):
             # Translators: this represents an item on the screen that has
             # been set insensitive (or grayed out).
             #
@@ -218,9 +218,9 @@ class BrailleGenerator:
         Returns a string representing the value.
         """
 
-        value = obj.value
-
-        if not value:
+        try:
+            value = obj.queryValue()
+        except NotImplementedError:
             return ""
 
         # OK, this craziness is all about trying to figure out the most
@@ -264,7 +264,7 @@ class BrailleGenerator:
     def _getTextForRole(self, obj):
         if (settings.brailleVerbosityLevel \
             == settings.VERBOSITY_LEVEL_VERBOSE)\
-           and (obj.role != rolenames.ROLE_UNKNOWN):
+           and (obj.getRole() != pyatspi.ROLE_UNKNOWN):
             return rolenames.getBrailleForRoleName(obj)
         else:
             return None
@@ -283,7 +283,7 @@ class BrailleGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           obj             = %s" % obj.name)
         debug.println(debug.LEVEL_FINER,
-                      "           role            = %s" % obj.role)
+                      "           role            = %s" % obj.getRoleName())
 
     def _getDefaultBrailleRegions(self, obj):
         """Gets text to be displayed for the current object's name,
@@ -390,11 +390,11 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
         text = ""
-
+        state = obj.getState()
         text = self._script.appendString(
             text,
             settings.brailleCheckBoxIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)])
+                int(state.contains(pyatspi.STATE_CHECKED))])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -423,11 +423,11 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
 
         text = ""
-
+        state = obj.getState()
         text = self._script.appendString(
             text,
             settings.brailleCheckBoxIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)])
+                int(state.contains(pyatspi.STATE_CHECKED))])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -610,9 +610,12 @@ class BrailleGenerator:
             text, self._script.getDisplayedLabel(obj))
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
-
-        if obj.image:
-            description = obj.image.imageDescription
+        try:
+            image = obj.queryImage()
+        except NotImplementedError:
+            pass
+        else:
+            description = image.imageDescription
             if len(description):
                 text = self._script.appendString(text, description)
 
@@ -790,7 +793,8 @@ class BrailleGenerator:
         # menu item" that is currently unchecked and braille that state.
         # See Orca bug #433398 for more details.
         #
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             text = self._script.appendString(
                 text,
                 settings.brailleCheckBoxIndicators[1])
@@ -993,10 +997,10 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-
+        state = obj.getState()
         text = self._script.appendString(
             settings.brailleRadioButtonIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+                int(state.contains(pyatspi.STATE_CHECKED))],
             text)
 
         text = self._script.appendString(
@@ -1186,9 +1190,12 @@ class BrailleGenerator:
         if obj.childCount == 2:
             cellOrder = []
             hasToggle = [ False, False ]
-            for i in range(0, obj.childCount):
-                action = obj.child(i).action
-                if action:
+            for child in obj:
+                try:
+                    action = child.queryAction()
+                except:
+                    continue
+                else:
                     for j in range(0, action.nActions):
                         if action.getName(j) == "toggle":
                             hasToggle[i] = True
@@ -1215,14 +1222,19 @@ class BrailleGenerator:
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
         # bugzilla bug 319750.]]]
         #
-        action = obj.action
-        if action:
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            pass
+        else:
             for i in range(0, action.nActions):
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator._getBrailleRegionsForTableCell " \
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
-                    obj.role = rolenames.ROLE_CHECK_BOX
+                    # I think this deserves a WTF. Why are we assignig a role 
+                    # to an accessible? Is there no better way of doing this?
+                    # obj.role = pyatspi.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
 
                     # If this table cell doesn't have any label associated
@@ -1231,15 +1243,17 @@ class BrailleGenerator:
                     #
                     label = self._script.getDisplayedText( \
                         self._script.getRealActiveDescendant(obj))
-                    action = obj.action
+
                     if label == None or len(label) == 0:
-                        n = obj.parent.table.getColumnAtIndex(obj.index)
-                        header = obj.parent.table.getColumnHeader(n)
+                        table = obj.parent.queryTable()
+                        n = table.getColumnAtIndex(obj.getIndexInParent())
+                        header = table.getColumnHeader(n)
                         accHeader = atspi.Accessible.makeAccessible(header)
                         regions[0].append(braille.Region(" "))
                         regions[0].append(braille.Region(accHeader.name))
 
-                    obj.role = rolenames.ROLE_TABLE_CELL
+                    # See WTF above.
+                    # obj.role = pyatspi.ROLE_TABLE_CELL
                     break
 
         if len(regions) == 0:
@@ -1270,8 +1284,9 @@ class BrailleGenerator:
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
         #
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -1305,7 +1320,11 @@ class BrailleGenerator:
         # valid table. It's possible that the parent could be a
         # table cell too (see bug #351501).
         #
-        if settings.readTableCellRow and obj.parent.table \
+        try:
+            table = obj.parent.queryTable()
+        except NotImplementedError:
+            table = None
+        if settings.readTableCellRow and table \
             and (not self._script.isLayoutOnly(obj.parent)):
             rowRegions = []
             savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
@@ -1313,8 +1332,8 @@ class BrailleGenerator:
                                          settings.VERBOSITY_LEVEL_BRIEF
 
             parent = obj.parent
-            row = parent.table.getRowAtIndex(obj.index)
-            column = parent.table.getColumnAtIndex(obj.index)
+            row = table.getRowAtIndex(obj.getIndexInParent())
+            column = table.getColumnAtIndex(obj.getIndexInParent())
 
             # This is an indication of whether we should speak all the
             # table cells (the user has moved focus up or down a row),
@@ -1331,11 +1350,11 @@ class BrailleGenerator:
 
             if speakAll:
                 focusRowRegion = None
-                for i in range(0, parent.table.nColumns):
-                    accRow = parent.table.getAccessibleAt(row, i)
+                for i in range(0, table.nColumns):
+                    accRow = table.getAccessibleAt(row, i)
                     cell = atspi.Accessible.makeAccessible(accRow)
-                    showing = cell.state.count( \
-                                    atspi.Accessibility.STATE_SHOWING)
+                    state = cell.getState()
+                    showing = state.contains(pyatspi.STATE_SHOWING)
                     if showing:
                         [cellRegions, focusRegion] = \
                             self._getBrailleRegionsForTableCell(cell)
@@ -1537,20 +1556,21 @@ class BrailleGenerator:
         if settings.enableBrailleGrouping and groupChildren:
             parent = obj.parent
             isChild = parent \
-                      and ((parent.role == rolenames.ROLE_MENU) \
-                           or (parent.role == rolenames.ROLE_MENU_BAR) \
-                           or (parent.role == rolenames.ROLE_PAGE_TAB_LIST))
+                      and ((parent.getRole() == pyatspi.ROLE_MENU) \
+                           or (parent.getRole() == pyatspi.ROLE_MENU_BAR) \
+                           or (parent.getRole() == pyatspi.ROLE_PAGE_TAB_LIST))
             if isChild:
                 obj = parent
                 reallyGroupChildren = True
             else:
                 reallyGroupChildren = \
-                    (obj.role == rolenames.ROLE_MENU) \
-                    or (obj.role == rolenames.ROLE_MENU_BAR) \
-                    or (obj.role == rolenames.ROLE_PAGE_TAB_LIST)
+                    (obj.getRole() == pyatspi.ROLE_MENU) \
+                    or (obj.getRole() == pyatspi.ROLE_MENU_BAR) \
+                    or (obj.getRole() == pyatspi.ROLE_PAGE_TAB_LIST)
 
-        if self.brailleGenerators.has_key(obj.role):
-            generator = self.brailleGenerators[obj.role]
+        role = obj.getRole()
+        if self.brailleGenerators.has_key(role):
+            generator = self.brailleGenerators[role]
         else:
             generator = self._getDefaultBrailleRegions
 
@@ -1561,17 +1581,16 @@ class BrailleGenerator:
         if reallyGroupChildren:
             regions.append(braille.Region(" "))
             selection = obj.selection
-            for i in range(0, obj.childCount):
+            for child in obj:
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator.getBrailleRegions " \
                     + "looking at child %d" % i)
-                child = obj.child(i)
 
                 # [[[TODO: richb - Need to investigate further.
                 # Sometimes, for some unknown reason, the child is None.
                 # We now test for this, rather than cause a traceback.
                 #
-                if child and (child.role != rolenames.ROLE_SEPARATOR):
+                if child and (child.getRole() != pyatspi.ROLE_SEPARATOR):
 
                 # the following line has been removed because insensitive
                 # menu items can get focus in StarOffice.
@@ -1611,7 +1630,7 @@ class BrailleGenerator:
 
         regions = []
         parent = obj.parent
-        if parent and (parent.role in self.SKIP_CONTEXT_ROLES):
+        if parent and (parent.getRole() in self.SKIP_CONTEXT_ROLES):
             parent = parent.parent
         while parent and (parent.parent != parent):
             # [[[TODO: WDW - we might want to include more things here
@@ -1619,9 +1638,9 @@ class BrailleGenerator:
             # page tab lists might be a nice thing to include. Logged
             # as bugzilla bug 319751.]]]
             #
-            if (parent.role != rolenames.ROLE_FILLER) \
-                and (parent.role != rolenames.ROLE_SECTION) \
-                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
+            if (parent.getRole() != pyatspi.ROLE_FILLER) \
+                and (parent.getRole() != pyatspi.ROLE_SECTION) \
+                and (parent.getRole() != pyatspi.ROLE_SPLIT_PANE) \
                 and (not self._script.isLayoutOnly(parent)):
 
                 # Announce the label and text of the object in the hierarchy.
@@ -1640,7 +1659,7 @@ class BrailleGenerator:
             # container for the grouped objects.  When we detect this,
             # we add the label to the overall context.]]]
             #
-            if parent.role == rolenames.ROLE_FILLER:
+            if parent.getRole() == pyatspi.ROLE_FILLER:
                 label = self._script.getDisplayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     regions.append(braille.Region(" "))
@@ -1658,12 +1677,16 @@ class BrailleGenerator:
         # we first show the row header then the column header.
         #
         parent = obj.parent
-        if parent and parent.table:
-            row = parent.table.getRowAtIndex(obj.index)
+        try:
+            table = parent.queryTable()
+        except NotImplementedError:
+            table = None
+        if parent and table:
+            row = table.getRowAtIndex(obj.getIndexInParent())
             if (row >= 0) \
                 and (not obj.role in [rolenames.ROLE_ROW_HEADER,
                                       rolenames.ROLE_TABLE_ROW_HEADER]):
-                desc = parent.table.getRowDescription(row)
+                desc = table.getRowDescription(row)
             else:
                 desc = None
             if desc and len(desc):
@@ -1672,19 +1695,19 @@ class BrailleGenerator:
                     if brailleRolenameStyle \
                            == settings.BRAILLE_ROLENAME_STYLE_LONG:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_ROW_HEADER].brailleLong + " "
+                            pyatspi.ROLE_ROW_HEADER].brailleLong + " "
                     else:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_ROW_HEADER].brailleShort + " "
+                            pyatspi.ROLE_ROW_HEADER].brailleShort + " "
                 else:
                     text = desc
                 regions.append(braille.Region(text))
 
-            col = parent.table.getColumnAtIndex(obj.index)
+            col = table.getColumnAtIndex(obj.getIndexInParent())
             if (col >= 0) \
                 and (not obj.role in [rolenames.ROLE_COLUMN_HEADER,
                                       rolenames.ROLE_TABLE_COLUMN_HEADER]):
-                desc = parent.table.getColumnDescription(col)
+                desc = table.getColumnDescription(col)
             else:
                 desc = None
             if desc and len(desc):
@@ -1693,10 +1716,10 @@ class BrailleGenerator:
                     if brailleRolenameStyle \
                            == settings.BRAILLE_ROLENAME_STYLE_LONG:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_COLUMN_HEADER].brailleLong + " "
+                            pyatspi.ROLE_COLUMN_HEADER].brailleLong + " "
                     else:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_COLUMN_HEADER].brailleShort + " "
+                            pyatspi.ROLE_COLUMN_HEADER].brailleShort + " "
                 else:
                     text = desc
                 regions.append(braille.Region(text))

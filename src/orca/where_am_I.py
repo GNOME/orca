@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
 import atspi
 import debug
 import orca_state
@@ -47,6 +48,7 @@ class WhereAmI:
         self._script = script
         self._debugLevel = debug.LEVEL_FINEST
         self._statusBar = None
+        self._defaultButton = None
         self._lastAttributeString = ""
 
     def whereAmI(self, obj, doubleClick, orcaKey):
@@ -77,65 +79,65 @@ class WhereAmI:
            \n  orca-key=%s" % \
             (self._getObjLabel(obj),
              self._getObjName(obj),
-             obj.role,
+             obj.getRoleName(),
              self._script.getAcceleratorAndShortcut(obj),
              self._getObjLabel(obj.parent),
              self._getObjName(obj.parent),
-             obj.parent.role,
+             obj.parent.getRoleName(),
              doubleClick,
              orcaKey))
 
-        role = obj.role
+        role = obj.getRole()
 
         if orcaKey:
             self._processOrcaKey(obj, doubleClick)
 
-        elif role == rolenames.ROLE_CHECK_BOX:
+        elif role == pyatspi.ROLE_CHECK_BOX:
             self._speakCheckBox(obj, doubleClick)
 
-        elif role == rolenames.ROLE_RADIO_BUTTON:
+        elif role == pyatspi.ROLE_RADIO_BUTTON:
             self._speakRadioButton(obj, doubleClick)
 
-        elif role == rolenames.ROLE_COMBO_BOX:
+        elif role == pyatspi.ROLE_COMBO_BOX:
             self._speakComboBox(obj, doubleClick)
 
-        elif role == rolenames.ROLE_SPIN_BUTTON:
+        elif role == pyatspi.ROLE_SPIN_BUTTON:
             self._speakSpinButton(obj, doubleClick)
 
-        elif role == rolenames.ROLE_PUSH_BUTTON:
+        elif role == pyatspi.ROLE_PUSH_BUTTON:
             self._speakPushButton(obj, doubleClick)
 
-        elif role == rolenames.ROLE_SLIDER:
+        elif role == pyatspi.ROLE_SLIDER:
             self._speakSlider(obj, doubleClick)
 
-        elif role in [rolenames.ROLE_MENU,
-                      rolenames.ROLE_MENU_ITEM,
-                      rolenames.ROLE_CHECK_MENU,
-                      rolenames.ROLE_CHECK_MENU_ITEM,
-                      rolenames.ROLE_RADIO_MENU,
-                      rolenames.ROLE_RADIO_MENU_ITEM]:
+        elif role in [pyatspi.ROLE_MENU,
+                      pyatspi.ROLE_MENU_ITEM,
+                      pyatspi.ROLE_CHECK_MENU,
+                      pyatspi.ROLE_CHECK_MENU_ITEM,
+                      pyatspi.ROLE_RADIO_MENU,
+                      pyatspi.ROLE_RADIO_MENU_ITEM]:
             self._speakMenuItem(obj, doubleClick)
 
-        elif role == rolenames.ROLE_PAGE_TAB:
+        elif role == pyatspi.ROLE_PAGE_TAB:
             self._speakPageTab(obj, doubleClick)
 
-        elif role in [rolenames.ROLE_TEXT,
-                      rolenames.ROLE_TERMINAL]:
+        elif role in [pyatspi.ROLE_TEXT,
+                      pyatspi.ROLE_TERMINAL]:
             self._speakText(obj, doubleClick)
 
-        elif role == rolenames.ROLE_TABLE_CELL:
+        elif role == pyatspi.ROLE_TABLE_CELL:
             self._speakTableCell(obj, doubleClick)
 
-        elif role == rolenames.ROLE_LIST_ITEM:
+        elif role == pyatspi.ROLE_LIST_ITEM:
             self._speakListItem(obj, doubleClick)
 
-        elif role == rolenames.ROLE_PARAGRAPH:
+        elif role == pyatspi.ROLE_PARAGRAPH:
             self._speakParagraph(obj, doubleClick)
 
-        elif role == rolenames.ROLE_ICON:
+        elif role == pyatspi.ROLE_ICON:
             self._speakIconPanel(obj, doubleClick)
             
-        elif role == rolenames.ROLE_LINK:
+        elif role == pyatspi.ROLE_LINK:
             self._speakLink(obj, doubleClick)
 
         else:
@@ -163,7 +165,8 @@ class WhereAmI:
                rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             text = _("checked")
@@ -200,7 +203,8 @@ class WhereAmI:
                rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
@@ -360,12 +364,14 @@ class WhereAmI:
         text = self._getObjLabelAndName(obj)
         utterances.append(text)
 
-        if obj.role != rolenames.ROLE_MENU_ITEM:
+        state = obj.getState()
+
+        if obj.getRole() != pyatspi.ROLE_MENU_ITEM:
             text = rolenames.getSpeechForRoleName(obj)
             utterances.append(text)
 
-        if obj.role == rolenames.ROLE_CHECK_MENU_ITEM:
-            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        if obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
+            if state.contains(pyatspi.STATE_CHECKED):
                 # Translators: this represents the state of a checkbox.
                 #
                 text = _("checked")
@@ -375,8 +381,8 @@ class WhereAmI:
                 text = _("not checked")
             utterances.append(text)
 
-        elif obj.role == rolenames.ROLE_RADIO_MENU_ITEM:
-            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        elif obj.getRole() == pyatspi.ROLE_RADIO_MENU_ITEM:
+            if state.contains(pyatspi.STATE_CHECKED):
                 # Translators: this is in reference to a radio button being
                 # selected or not.
                 #
@@ -516,7 +522,7 @@ class WhereAmI:
 
         # Speak the first two items (and possibly the position)
         utterances = []
-        if obj.parent.role == rolenames.ROLE_TABLE_CELL:
+        if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
         parent = obj.parent
 
@@ -531,11 +537,12 @@ class WhereAmI:
 
         utterances = []
         if doubleClick:
-            table = parent.table
-            row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+            table = parent.queryTable()
+            row = table.getRowAtIndex(
+              orca_state.locusOfFocus.getIndexInParent())
             # Translators: this in reference to a row in a table.
             #
-            text = _("row %d of %d") % ((row+1), parent.table.nRows)
+            text = _("row %d of %d") % ((row+1), table.nRows)
             utterances.append(text)
             speech.speakUtterances(utterances)
 
@@ -549,16 +556,79 @@ class WhereAmI:
         utterances = []
 
         if not doubleClick:
-            table = parent.table
-            if not table:
-                debug.println(self._debugLevel, "??? parent=%s" % parent.role)
+            try:
+                table = parent.queryTable()
+            except NotImplementedError:
+                debug.println(self._debugLevel, 
+                              "??? parent=%s" % parent.getRoleName())
                 return
+            else:
+                row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+                # Translators: this in reference to a row in a table.
+                #
+                text = _("row %d of %d") % ((row+1), table.nRows)
+                utterances.append(text)
 
-            row = table.getRowAtIndex(orca_state.locusOfFocus.index)
-            # Translators: this in reference to a row in a table.
-            #
-            text = _("row %d of %d") % ((row+1), parent.table.nRows)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("expanded")
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("collapsed")
             utterances.append(text)
+
+        level = self._script.getNodeLevel(orca_state.locusOfFocus)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            utterances.append(_("tree level %d") % (level + 1))
+
+        debug.println(self._debugLevel, "third table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+    def _speakListItem(self, obj, doubleClick):
+        """List items should be treated like tree cells:
+
+        1. label, if any
+        2. role
+        3. name
+        4. relative position
+        5. if expandable/collapsible: expanded/collapsed
+        6. if applicable, the level
+        """
+
+        utterances = []
+
+        text = self._getObjLabel(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+
+        text = self._getObjName(obj)
+        utterances.append(text)
+
+        parent = obj.parent
+        relations = obj.relations
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                parent = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                break
+
+        name = self._getObjName(obj)
+        text = self._getPositionInList(parent, name)
+        utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
@@ -582,7 +652,7 @@ class WhereAmI:
             #
             utterances.append(_("tree level %d") % (level + 1))
 
-        debug.println(self._debugLevel, "third table cell utterances=%s" % \
+        debug.println(self._debugLevel, "list item utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
 
@@ -671,9 +741,9 @@ class WhereAmI:
 
         selectedItems = []
         totalSelectedItems = 0
-        for i in range(0, childCount):
-            child = panel.child(i)
-            if child.state.count(atspi.Accessibility.STATE_SELECTED):
+        for child in panel:
+            state = child.getState()
+            if state.contains(pyatspi.STATE_SELECTED):
                 totalSelectedItems += 1
                 selectedItems.append(child)
 
@@ -817,7 +887,7 @@ class WhereAmI:
 
         if name and name != "None":
             text = name
-        # debug.println(self._debugLevel, "%s name=<%s>" % (obj.role, text))
+        debug.println(self._debugLevel, "%s name=<%s>" % (obj.role, text))
 
         return text
 
@@ -830,7 +900,8 @@ class WhereAmI:
 
         if label and label != "None":
             text = label
-        # debug.println(self._debugLevel, "%s label=<%s>" % (obj.role, text))
+
+        debug.println(self._debugLevel, "%s label=<%s>" % (obj.role, text))
 
         return text
 
@@ -846,11 +917,16 @@ class WhereAmI:
         else:
             text = label
 
-        if obj.text:
-            [string, startOffset, endOffset] = obj.text.getTextAtOffset(0,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        try:
+            textObj = obj.queryText()
+        except NotImplementedError:
+            pass
+        else:
+            [string, startOffset, endOffset] = textObj.getTextAtOffset(0,
+                pyatspi.TEXT_BOUNDARY_LINE_START)
 
-            debug.println(self._debugLevel, "%s text=<%s>" % (obj.role, string))
+            debug.println(self._debugLevel, "%s text=<%s>" % \
+                            (obj.getRoleName(), string))
 
         return text.strip()
 
@@ -861,10 +937,9 @@ class WhereAmI:
         text = ""
         labelledBy = None
 
-        relations = obj.relations
+        relations = obj.getRelationSet()
         for relation in relations:
-            if relation.getRelationType() ==  \
-                   atspi.Accessibility.RELATION_LABELLED_BY:
+            if relation.getRelationType() ==  pyatspi.RELATION_LABELLED_BY:
                 labelledBy = atspi.Accessible.makeAccessible( \
                                                       relation.getTarget(0))
                 break
@@ -874,8 +949,8 @@ class WhereAmI:
         else:
             parent = obj.parent
             while parent and (parent.parent != parent):
-                if parent.role in [rolenames.ROLE_PANEL,
-                                   rolenames.ROLE_FILLER]:
+                if parent.getRole() in [pyatspi.ROLE_PANEL,
+                                        pyatspi.ROLE_FILLER]:
                     label = self._getObjLabelAndName(parent)
                     if label and label != "":
                         text = label
@@ -892,9 +967,9 @@ class WhereAmI:
         position = -1
         total = -1
 
-        relations = obj.relations
+        relations = obj.getRelationSet()
         for relation in relations:
-            if relation.getRelationType() == atspi.Accessibility.RELATION_MEMBER_OF:
+            if relation.getRelationType() == pyatspi.RELATION_MEMBER_OF:
                 total = relation.getNTargets()
                 for i in range(0, total):
                     target = atspi.Accessible.makeAccessible( \
@@ -933,11 +1008,11 @@ class WhereAmI:
                 break
 
         if not total:
-            for i in range(0, obj.childCount):
-                next = self._getObjName(obj.child(i))
+            for child in obj:
+                next = self._getObjName(child)
+                state = child.getState()
                 if next in ["", "Empty", "separator"] \
-                   or not obj.child(i).state.count( \
-                    atspi.Accessibility.STATE_VISIBLE):
+                   or not state.contains(pyatspi.STATE_VISIBLE):
                     continue
 
                 index += 1
@@ -945,6 +1020,7 @@ class WhereAmI:
 
                 if next == name:
                     position = index
+
 
         if position >= 0:
             # Translators: this is an item in a list.
@@ -1023,21 +1099,22 @@ class WhereAmI:
         utterances = []
 
         parent = obj.parent
-        table = parent.table
-        if not table:
+        try:
+            table = parent.queryTable()
+        except NotImplementedError:
             debug.println(self._debugLevel, "??? parent=%s" % parent.role)
             return []
+        else:
+            row = table.getRowAtIndex(obj.index)
 
-        row = parent.table.getRowAtIndex(obj.index)
+            for i in range(0, table.nColumns):
+                cell = table.getAccessibleAt(row, i)
+                acc = atspi.Accessible.makeAccessible(cell)
+                utterances.append(self._getTableCell(acc))
 
-        for i in range(0, parent.table.nColumns):
-            cell = parent.table.getAccessibleAt(row, i)
-            acc = atspi.Accessible.makeAccessible(cell)
-            utterances.append(self._getTableCell(acc))
+            debug.println(self._debugLevel, "row=<%s>" % utterances)
 
-        debug.println(self._debugLevel, "row=<%s>" % utterances)
-
-        return utterances
+            return utterances
 
     def _getTableCell(self, obj):
         """Get the speech utterances for a single table cell.
@@ -1045,14 +1122,18 @@ class WhereAmI:
 
         # Don't speak check box cells that area not checked.
         notChecked = False
-        action = obj.action
-        if action:
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            pass
+        else:
             for i in range(0, action.nActions):
                 if action.getName(i) == "toggle":
-                    obj.role = rolenames.ROLE_CHECK_BOX
-                    if not obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    #obj.role = rolenames.ROLE_CHECK_BOX
+                    state = obj.getState()
+                    if not state.contains(pyatspi.STATE_CHECKED):
                         notChecked = True
-                    obj.role = rolenames.ROLE_TABLE_CELL
+                    #obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
         if notChecked:
@@ -1076,7 +1157,7 @@ class WhereAmI:
         """
 
         textContents = ""
-        textObj = obj.text
+        textObj = obj.queryText()
         nSelections = textObj.getNSelections()
         for i in range(0, nSelections):
             [startOffset, endOffset] = textObj.getSelection(i)
@@ -1112,7 +1193,8 @@ class WhereAmI:
         textContents = ""
         startOffset = 0
         endOffset = 0
-        if obj.text.getNSelections() > 0:
+        text = obj.queryText()
+        if text.getNSelections() > 0:
             [textContents, startOffset, endOffset] = \
                                             self._getTextSelection(obj)
 
@@ -1121,9 +1203,9 @@ class WhereAmI:
             morePossibleSelections = True
             while morePossibleSelections:
                 morePossibleSelections = False
-                for relation in current.relations:
+                for relation in current.getRelationSet():
                     if relation.getRelationType() == \
-                           atspi.Accessibility.RELATION_FLOWS_FROM:
+                           pyatspi.RELATION_FLOWS_FROM:
                         prevObj = atspi.Accessible.makeAccessible( \
                                                   relation.getTarget(0))
                         if prevObj.text.getNSelections() > 0:
@@ -1143,9 +1225,9 @@ class WhereAmI:
             morePossibleSelections = True
             while morePossibleSelections:
                 morePossibleSelections = False
-                for relation in current.relations:
+                for relation in current.getRelationSet():
                     if relation.getRelationType() == \
-                           atspi.Accessibility.RELATION_FLOWS_TO:
+                           pyatspi.RELATION_FLOWS_TO:
                         nextObj = atspi.Accessible.makeAccessible( \
                                                   relation.getTarget(0))
                         if nextObj.text.getNSelections() > 0:
@@ -1179,20 +1261,22 @@ class WhereAmI:
 
         currentSelected = False
         otherSelected = False
-        nSelections = obj.text.getNSelections()
+        text = obj.queryText()
+        nSelections = text.getNSelections()
         if nSelections:
             currentSelected = True
         else:
             otherSelected = False
-            displayedText = obj.text.getText(0, -1)
+            text = obj.queryText()
+            displayedText = text.getText(0, -1)
             if len(displayedText) == 0:
                 current = obj
                 morePossibleSelections = True
                 while morePossibleSelections:
                     morePossibleSelections = False
-                    for relation in current.relations:
+                    for relation in current.getRelationSet():
                         if relation.getRelationType() == \
-                               atspi.Accessibility.RELATION_FLOWS_FROM:
+                               pyatspi.RELATION_FLOWS_FROM:
                             prevObj = atspi.Accessible.makeAccessible( \
                                                       relation.getTarget(0))
                             if prevObj.text.getNSelections() > 0:
@@ -1208,9 +1292,9 @@ class WhereAmI:
                 morePossibleSelections = True
                 while morePossibleSelections:
                     morePossibleSelections = False
-                    for relation in current.relations:
+                    for relation in current.getRelationSet():
                         if relation.getRelationType() == \
-                               atspi.Accessibility.RELATION_FLOWS_TO:
+                               pyatspi.RELATION_FLOWS_TO:
                             nextObj = atspi.Accessible.makeAccessible( \
                                                       relation.getTarget(0))
                             if nextObj.text.getNSelections() > 0:
@@ -1233,7 +1317,7 @@ class WhereAmI:
         C. if the current line is blank/empty, 'blank'
         """
 
-        textObj = obj.text
+        textObj = obj.queryText()
         caretOffset = textObj.caretOffset
         textContents = ""
         selected = False
@@ -1256,7 +1340,7 @@ class WhereAmI:
             #
             [line, startOffset, endOffset] = textObj.getTextAtOffset(
                 textObj.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                pyatspi.TEXT_BOUNDARY_LINE_START)
             debug.println(self._debugLevel, \
                 "_getTextContents: len=%d, start=%d, end=%d, line=<%s>" % \
                 (len(line), startOffset, endOffset, line))
@@ -1266,7 +1350,7 @@ class WhereAmI:
                 textContents = line
             else:
                 char = textObj.getTextAtOffset(caretOffset,
-                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+                    pyatspi.TEXT_BOUNDARY_CHAR)
                 debug.println(self._debugLevel,
                     "_getTextContents: character=<%s>, start=%d, end=%d" % \
                     (char[0], char[1], char[2]))
@@ -1284,8 +1368,9 @@ class WhereAmI:
         """Adjust line to include attribute information.
         """
 
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return ""
 
         newLine = ""
@@ -1405,6 +1490,7 @@ class WhereAmI:
         utterances = []
 
         list = self._getFrameAndDialog(obj)
+
         if doubleClick:
             if list[0]:
                 self._statusBar = None
@@ -1438,10 +1524,10 @@ class WhereAmI:
             #debug.println(self._debugLevel,
             #              "_getFrameAndDialog: parent=%s, %s" % \
             #              (parent.role, self._getObjLabelAndName(parent)))
-            if parent.role == rolenames.ROLE_FRAME:
+            if parent.getRole() == pyatspi.ROLE_FRAME:
                 list[0] = parent
-            if parent.role in [rolenames.ROLE_DIALOG,
-                               rolenames.ROLE_FILE_CHOOSER]:
+            if parent.getRole() in [pyatspi.ROLE_DIALOG,
+                                    pyatspi.ROLE_FILE_CHOOSER]:
                 list[1] = parent
             parent = parent.parent
 
@@ -1455,9 +1541,8 @@ class WhereAmI:
 
         # debug.println(self._debugLevel, "_findStatusBar: ROOT=%s, %s" % \
         #               (obj.role, self._getObjLabelAndName(obj)))
-
-        managesDescendants = obj.state.count(\
-            atspi.Accessibility.STATE_MANAGES_DESCENDANTS)
+        state = obj.getState()
+        managesDescendants = state.contains(pyatspi.STATE_MANAGES_DESCENDANTS)
         if managesDescendants:
             return
 
@@ -1466,7 +1551,7 @@ class WhereAmI:
             # debug.println(self._debugLevel,
             #               "_findStatusBar: child=%s, %s" % \
             #               (child.role, self._getObjLabelAndName(child)))
-            if child.role == rolenames.ROLE_STATUSBAR:
+            if child.getRole() == pyatspi.ROLE_STATUS_BAR:
                 self._statusBar = child
                 return
 

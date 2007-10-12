@@ -50,7 +50,7 @@ import signal
 import time
 import unicodedata
 
-import atspi
+import pyatspi
 import braille
 import debug
 import httpserver
@@ -67,6 +67,7 @@ from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
 from input_event import InputEventHandler
+from input_event import keyEventToString
 
 from orca_i18n import _           # for gettext support
 
@@ -169,16 +170,17 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
 
     if orca_state.locusOfFocus:
         appname = ""
-        if not orca_state.locusOfFocus.app:
+        app = orca_state.locusOfFocus.getApplication()
+        if not app:
             appname = "None"
         else:
-            appname = "'" + orca_state.locusOfFocus.app.name + "'"
+            appname = "'" + app.name + "'"
 
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
                       % (appname,
                          orca_state.locusOfFocus.name,
-                         orca_state.locusOfFocus.role))
+                         orca_state.locusOfFocus.getRoleName()))
 
         if event:
             debug.println(debug.LEVEL_FINE,
@@ -226,13 +228,13 @@ def _onChildrenChanged(e):
     - e: at-spi event from the at-api registry
     """
 
-    registry = atspi.Registry()
-    if e.source == registry.desktop:
+    desktop = pyatspi.Registry.getDesktop(0)
+    if e.source == desktop:
 
         # If the desktop is empty, the user has logged out-- shutdown Orca
         #
         try:
-            if registry.desktop.childCount == 0:
+            if desktop.childCount == 0:
                 speech.speak(_("Goodbye."))
                 shutdown()
                 return
@@ -248,15 +250,15 @@ def _onMouseButton(e):
     - e: at-spi event from the at-api registry
     """
 
-    event = atspi.Event(e)
-    orca_state.lastInputEvent = MouseButtonEvent(event)
+    mouse_event = MouseButtonEvent(e)
+    orca_state.lastInputEvent = mouse_event
 
     # A mouse button event looks like: mouse:button:1p, where the
     # number is the button number and the 'p' is either 'p' or 'r',
     # meaning pressed or released.  We only want to stop speech on
     # button presses.
     #
-    if event.type.endswith("p"):
+    if mouse_event.pressed:
         speech.stop()
 
 ########################################################################
@@ -564,7 +566,7 @@ def _keyEcho(event):
     # field, then don't echo it.
     #
     if orca_state.locusOfFocus \
-        and (orca_state.locusOfFocus.role == rolenames.ROLE_PASSWORD_TEXT):
+        and (orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PASSWORD_TEXT):
         return
 
     event_string = event.event_string
@@ -595,7 +597,7 @@ def _keyEcho(event):
             modifiers = event.modifiers
 
             if event_string == "Caps_Lock":
-                if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
+                if modifiers & (1 << pyatspi.Accessibility.MODIFIER_SHIFTLOCK):
                     type = KeyEventType.LOCKING_UNLOCKED
                 else:
                     type = KeyEventType.LOCKING_LOCKED
@@ -606,7 +608,7 @@ def _keyEcho(event):
                 # Commenting out the speaking of the bogus on/off state
                 # until this can be fixed.]]]
                 #
-                #if modifiers & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
+                #if modifiers & (1 << pyatspi.Accessibility.MODIFIER_NUMLOCK):
                 #    type = KeyEventType.LOCKING_UNLOCKED
                 #else:
                 #    type = KeyEventType.LOCKING_LOCKED
@@ -683,7 +685,7 @@ def _processKeyboardEvent(event):
     # however, will translate the event_string for control
     # characters to their upper case ASCII equivalent.
     #
-    string = atspi.KeystrokeListener.keyEventToString(event)
+    string = keyEventToString(event)
     if _recordingKeystrokes and _keystrokesFile \
        and (event.event_string != "Pause") \
        and (event.event_string != "F21"):
@@ -726,7 +728,7 @@ def _processKeyboardEvent(event):
 
     isOrcaModifier = allPossibleKeysyms.count(keyboardEvent.event_string) > 0
 
-    if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+    if event.type == pyatspi.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
         #
         speech.stop()
@@ -743,7 +745,7 @@ def _processKeyboardEvent(event):
             _orcaModifierPressed = True
 
     elif isOrcaModifier \
-        and (keyboardEvent.type == atspi.Accessibility.KEY_RELEASED_EVENT):
+        and (keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT):
         _orcaModifierPressed = False
 
     if _orcaModifierPressed:
@@ -766,7 +768,7 @@ def _processKeyboardEvent(event):
                            processKeyboardEvent(keyboardEvent)
             if (not consumed) and settings.learnModeEnabled:
                 if keyboardEvent.type \
-                    == atspi.Accessibility.KEY_PRESSED_EVENT:
+                    == pyatspi.KEY_PRESSED_EVENT:
                     clickCount = orca_state.activeScript.getClickCount(\
                                                 orca_state.lastInputEvent,
                                                 keyboardEvent)
@@ -1138,7 +1140,15 @@ def init(registry):
 
     loadUserSettings()
 
-    registry.registerKeystrokeListeners(_processKeyboardEvent)
+    masks = []
+    mask = 0
+    while mask <= (1 << pyatspi.MODIFIER_NUMLOCK):
+        masks.append(mask)
+        mask += 1
+    pyatspi.Registry.registerKeystrokeListener(
+        _processKeyboardEvent,
+        mask=masks,
+        kind=(pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT))
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -1208,11 +1218,10 @@ def shutdown(script=None, inputEvent=None):
 
     # Deregister our event listeners
     #
-    registry = atspi.Registry()
-    registry.deregisterEventListener(_onChildrenChanged,
-                                     "object:children-changed:")
-    registry.deregisterEventListener(_onMouseButton,
-                                     "mouse:button")
+    pyatspi.Registry.deregisterEventListener(_onChildrenChanged,
+                                             "object:children-changed:")
+    pyatspi.Registry.deregisterEventListener(_onMouseButton,
+                                             "mouse:button")
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
@@ -1226,7 +1235,7 @@ def shutdown(script=None, inputEvent=None):
     if settings.enableMagnifier:
         mag.shutdown();
 
-    registry.stop()
+    pyatspi.Registry.stop()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -1462,8 +1471,7 @@ def main():
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
 
-    registry = atspi.Registry()
-    init(registry)
+    init(pyatspi.Registry)
 
     try:
         message = _("Welcome to Orca.")
@@ -1486,7 +1494,7 @@ def main():
         else:
             _showPreferencesConsole()
 
-    start(registry) # waits until we stop the registry
+    start(pyatspi.Registry) # waits until we stop the registry
     return 0
 
 if __name__ == "__main__":
