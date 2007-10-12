@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -22,132 +23,154 @@ sequence.append(TypeAction("Combo boxes", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Combo boxes demo window appears, the following should be
-# presented in speech and braille [[[BUG?: where is that extra "Some
-# stock icons" coming from in braille?  It happens throughout this
-# test.]]]:
+# When the Combo boxes demo window appears, open the combo box.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Some stock icons Panel Warning Combo'
-#      VISIBLE:  'Warning Combo', cursor=1
-# 
-# SPEECH OUTPUT: 'Combo boxes frame'
-# SPEECH OUTPUT: 'Some stock icons panel'
-# SPEECH OUTPUT: 'Warning combo box'
-# 
 #sequence.append(WaitForWindowActivate("Combo boxes",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 
-########################################################################
-# Open the combo box.  The following should be presented in speech and
-# braille:
-#
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Some stock icons Panel  ComboWarning Warning'
-#      VISIBLE:  'Warning', cursor=1
-#
-# SPEECH OUTPUT: 'window'
-# SPEECH OUTPUT: 'Some stock icons panel'
-# SPEECH OUTPUT: 'Warning'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(WaitForFocus("Warning", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Warning combo box item",
+    ["BRAILLE LINE:  'gtk-demo Application Window'",
+     "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
+     "     VISIBLE:  'Warning', cursor=1",
+     "SPEECH OUTPUT: 'window'",
+     "SPEECH OUTPUT: 'Some stock icons panel'",
+     "SPEECH OUTPUT: 'Warning'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Some stock icons Panel  ComboWarning Warning'
-#      VISIBLE:  'Warning', cursor=1
-#
-# SPEECH OUTPUT: ' menu'
-# SPEECH OUTPUT: 'Warning'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 1 of 5'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Warning combo box item Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
+     "     VISIBLE:  'Warning', cursor=1",
+     "SPEECH OUTPUT: ' menu'",
+     "SPEECH OUTPUT: 'Warning'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 5'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Now arrow down and select the "New" item.  The following should be
-# presented in speech and braille:
+# Now arrow down and select the "New" item.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Some stock icons Panel  ComboWarning New'
-#      VISIBLE:  'New', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'New'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "New combo box item",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
+     "     VISIBLE:  'New', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'New'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Some stock icons Panel  ComboWarning New'
-#      VISIBLE:  'New', cursor=1
-#
-# SPEECH OUTPUT: ' menu'
-# SPEECH OUTPUT: 'New'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 3 of 5'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "New combo box item Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
+     "     VISIBLE:  'New', cursor=1",
+     "SPEECH OUTPUT: ' menu'",
+     "SPEECH OUTPUT: 'New'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 3 of 5'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Select the "New" entry and tab to the editable text combo box.  Skip
 # the middle combo.  It's bizarre.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_COMBO_BOX))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "New combo box item selection",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame'",
+     "     VISIBLE:  'Combo boxes Frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
+     "     VISIBLE:  'New Combo', cursor=1",
+     "SPEECH OUTPUT: 'Combo boxes frame'",
+     "SPEECH OUTPUT: 'Some stock icons panel'",
+     "SPEECH OUTPUT: 'New combo box'"]))
 
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Boston", acc_role=pyatspi.ROLE_COMBO_BOX))
+
+########################################################################
+# Land on the editable text combo box.
+#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
-########################################################################
-# When you land on the editable text combo box, the following should
-# be presented in speech and braille:
-#
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel  $l'
-#      VISIBLE:  ' $l', cursor=1
-#
-# SPEECH OUTPUT: 'Editable panel'
-# SPEECH OUTPUT: 'text '
-#
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'Editable panel'",
+     "SPEECH OUTPUT: 'text '"]))
 
 ########################################################################
-# Type "Four" in the text area and do a basic "Where Am I" via
-# KP_Enter.  The following should be presented in speech and braille:
+# Type "Four" in the text area.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Four $l'
-#      VISIBLE:  'Four $l', cursor=5
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text'
-# SPEECH OUTPUT: 'Four'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("Four"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box typing",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
+     "     VISIBLE:  'F $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
+     "     VISIBLE:  'F $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fo $l'",
+     "     VISIBLE:  'Fo $l', cursor=3",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fo $l'",
+     "     VISIBLE:  'Fo $l', cursor=3",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fou $l'",
+     "     VISIBLE:  'Fou $l', cursor=4",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fou $l'",
+     "     VISIBLE:  'Fou $l', cursor=4",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5"]))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.
+#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'Four'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Tab to the triangular down arrow of the editable combo box.  The
-# following should be presented in speech and braille:
+# Tab to the triangular down arrow of the editable combo box.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Four Combo'
-#      VISIBLE:  'Four Combo', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Four combo box'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box open button",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four Combo'",
+     "     VISIBLE:  'Four Combo', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Four combo box'"]))
 
 ########################################################################
 # Tab back to the top combo box and put things back the way they were.
@@ -168,87 +191,94 @@ sequence.append(WaitForFocus("Warning", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus("Boston", acc_role=pyatspi.ROLE_COMBO_BOX))
+
+########################################################################
+# When you land on the "Four" combo box, the text should be selected.
+#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
-########################################################################
-# When you land on the "Four" combo box, the following should be
-# presented in speech and braille [[[BUG?: the text "Four" is selected,
-# shouldn't that be mentioned in speech?  It is displayed as such in
-# braille.]]]:
-#
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Four $l'
-#      VISIBLE:  'Four $l', cursor=5
-#
-# SPEECH OUTPUT: 'Editable panel'
-# SPEECH OUTPUT: 'text Four'
-#
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box with selected text",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
+     "SPEECH OUTPUT: 'Editable panel'",
+     "SPEECH OUTPUT: 'text Four' [[[BUG? - should the selected state be spoken?]]]"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Four $l'
-#      VISIBLE:  'Four $l', cursor=5
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text'
-# SPEECH OUTPUT: 'Four'
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box with selected text Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'Four'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box and open
-# the combo box.  The following should be presented -- note that it
-# just mentions a 'menu' since nothing in the menu is selected yet:
-#
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Menu'
-#      VISIBLE:  'Menu', cursor=1
-#
-# SPEECH OUTPUT: 'window'
-# SPEECH OUTPUT: 'Editable panel'
-# SPEECH OUTPUT: 'menu'
+# the combo box.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
-
-########################################################################
-# Now down arrow to the "Two" item.  The following should be presented
-# [[[BUG?: "Two Two" showing up instead of "Two" and double space
-# between "Panel ComboTwo":
-#
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel  ComboTwo Two'
-#      VISIBLE:  'Two', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Two'
-#
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_MENU))
-sequence.append(KeyComboAction("Down"))
-
 sequence.append(WaitForFocus("One", acc_role=pyatspi.ROLE_MENU_ITEM))
-sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus("Two", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box menu",
+    ["BRAILLE LINE:  'gtk-demo Application Window'",
+     "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
+     "     VISIBLE:  'One', cursor=1",
+     "SPEECH OUTPUT: 'window'",
+     "SPEECH OUTPUT: 'Editable panel'", "SPEECH OUTPUT: 'One'"]))
 
 ########################################################################
-# Select "Two" and Shift+Tab back to the text area.  The following
-# should be presented [[[BUG?: Shouldn't the selection state of "Two"
-# be spoken?  The state is shown in braille.]]]:
+# Now down arrow to the "Two" item.
 #
-# BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Editable Panel Two $l'
-#      VISIBLE:  'Two $l', cursor=4
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(WaitForFocus("Two", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box One item",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour Two'",
+     "     VISIBLE:  'Two', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Two'"]))
+
+########################################################################
+# Select "Two" and Shift+Tab back to the text area.
 #
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text Two'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("Two", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box Two selected",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame'",
+     "     VISIBLE:  'Combo boxes Frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two Combo'",
+     "     VISIBLE:  'Two Combo', cursor=1",
+     "SPEECH OUTPUT: 'Combo boxes frame'",
+     "SPEECH OUTPUT: 'Editable panel'",
+     "SPEECH OUTPUT: 'Two combo box'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.AssertPresentationAction(
+    "Editable text combo box Two text selected",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
+     "     VISIBLE:  'Two $l', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
+     "     VISIBLE:  'Two $l', cursor=4",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text Two' [[[BUG? - should the selected state be spoken?]]]"]))
 
 ########################################################################
 # Close the Combo boxes demo

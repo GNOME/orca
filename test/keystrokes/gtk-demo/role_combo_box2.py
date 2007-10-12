@@ -5,6 +5,7 @@ gets us a labelled combo box.
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -24,66 +25,71 @@ sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the Printing demo window appears, navigate to the "Only print"
-# combo box on the "Page Setup" tab.  When the combo box gets focus,
-# the following should be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'
-#      VISIBLE:  'All sheets Combo', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Only print: All sheets combo box'
+# combo box on the "Page Setup" tab.
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(KeyComboAction("Right"))
 
 sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction         ("Tab"))
-
 sequence.append(WaitForFocus("All sheets", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "All sheets combo box item",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'",
+     "     VISIBLE:  'All sheets Combo', cursor=1",
+     "SPEECH OUTPUT: 'Layout'",
+     "SPEECH OUTPUT: 'Only print: All sheets combo box'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'
-#      VISIBLE:  'All sheets Combo', cursor=1
-#
-# SPEECH OUTPUT: 'Only print:'
-# SPEECH OUTPUT: 'combo box'
-# SPEECH OUTPUT: 'All sheets'
-# SPEECH OUTPUT: 'item 1 of 3'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "All sheets combo box item Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'",
+     "     VISIBLE:  'All sheets Combo', cursor=1",
+     "SPEECH OUTPUT: 'Only print:'",
+     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'All sheets'",
+     "SPEECH OUTPUT: 'item 1 of 3'",
+     "SPEECH OUTPUT: ' Alt o'"]))
 
 ########################################################################
-# Down arrow to select the "Even sheets" item in the combo box.  The
-# following should be presented:
+# Down arrow to select the "Even sheets" item in the combo box.
 #
-# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'
-#      VISIBLE:  'Even sheets Combo', cursor=1
-#
-# SPEECH OUTPUT: 'Even sheets'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:selection-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_COMBO_BOX,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Event sheets combo box item",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'",
+     "     VISIBLE:  'Even sheets Combo', cursor=1",
+     "SPEECH OUTPUT: 'Even sheets'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'
-#      VISIBLE:  'Even sheets Combo', cursor=1
-#
-# SPEECH OUTPUT: 'Only print:'
-# SPEECH OUTPUT: 'combo box'
-# SPEECH OUTPUT: 'Even sheets'
-# SPEECH OUTPUT: 'item 2 of 3'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Even sheets combo box item Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'",
+     "     VISIBLE:  'Even sheets Combo', cursor=1",
+     "SPEECH OUTPUT: 'Only print:'",
+     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'Even sheets'",
+     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: ' Alt o'"]))
 
 ########################################################################
 # Put things back the way they were and close the demo.

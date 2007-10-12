@@ -6,6 +6,7 @@
 from macaroon.playback import *
 
 sequence = MacroSequence()
+import utils
 
 ########################################################################
 # We wait for the demo to come up and for focus to be on the tree table
@@ -26,131 +27,190 @@ sequence.append(KeyComboAction("Return", 500))
 #
 #sequence.append(WaitForWindowActivate("Panes",None))
 sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
-########################################################################
-# When the "Resize" checkbox gets focus, the following should be
-# presented in speech and braille:
-#
-# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel < > Resize CheckBox'
-#      VISIBLE:  '< > Resize CheckBox', cursor=1
-#
-# SPEECH OUTPUT: 'Horizontal panel'
-# SPEECH OUTPUT: 'Resize check box not checked'
-#
 sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "Left resize check box unchecked plus panel context",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'Horizontal panel'",
+     "SPEECH OUTPUT: 'Resize check box not checked'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel < > Resize CheckBox'
-#      VISIBLE:  '< > Resize CheckBox', cursor=1
-# SPEECH OUTPUT: 'Resize check box'
-# SPEECH OUTPUT: 'not checked'
-# SPEECH OUTPUT: ' Alt r'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Left resize check box unchecked Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'Resize check box'",
+     "SPEECH OUTPUT: 'not checked'",
+     "SPEECH OUTPUT: ' Alt r'"]))
 
 ########################################################################
-# Now, change its state.  The following should be presented in speech
-# and braille:
+# Now, change its state.
 #
-# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel <x> Resize CheckBox'
-#      VISIBLE:  '<x> Resize CheckBox', cursor=1
-#
-# SPEECH OUTPUT: 'checked'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Left resize check box checked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Horizontal Panel <x> Resize CheckBox'
-#      VISIBLE:  '<x> Resize CheckBox', cursor=1
-#
-# SPEECH OUTPUT: 'Resize check box'
-# SPEECH OUTPUT: 'checked'
-# SPEECH OUTPUT: ' Alt r'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Left resize check box checked Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'Resize check box'",
+     "SPEECH OUTPUT: 'checked'",
+     "SPEECH OUTPUT: ' Alt r'"]))
 
 ########################################################################
 # Change the state back and move on to a few more check boxes.  The
 # presentation in speech and braille should be similar to the above.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
-
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Left resize check box unchecked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Right resize check box checked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Resize check box checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Right resize check box unchecked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Right resize check box checked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
+
 sequence.append(KeyComboAction("Tab"))
-
 sequence.append(WaitForFocus("Shrink", acc_role=pyatspi.ROLE_CHECK_BOX))
 sequence.append(KeyComboAction("Tab"))
-
 sequence.append(WaitForFocus("Shrink", acc_role=pyatspi.ROLE_CHECK_BOX))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
 sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Top resize check box checked plus panel context",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'Vertical panel'",
+     "SPEECH OUTPUT: 'Resize check box not checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Top resize check box unchecked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Top resize check box checked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
 sequence.append(WaitForFocus("Resize", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Bottom resize check box checked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Resize check box checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
-sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Bottom resize check box unchecked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel < > Resize CheckBox'",
+     "     VISIBLE:  '< > Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_CHECK_BOX,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Bottom resize check box unchecked",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel <x> Resize CheckBox'",
+     "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
 # Close the Panes demo window

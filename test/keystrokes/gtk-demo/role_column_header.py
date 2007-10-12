@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -31,144 +32,149 @@ sequence.append(WaitAction("object:state-changed:expanded",
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("List Store", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the GtkListStore demo window appears, navigate the table headers.
-# Presentation similar to the following should appear when each column
-# header gets focus:
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader'
-#      VISIBLE:  'Bug number ColumnHeader', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Bug number column header'
-# 
+sequence.append(KeyComboAction("Return", 1000))
 #sequence.append(WaitForWindowActivate("GtkListStore demo",None))
 sequence.append(WaitForFocus("Bug number",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("Right"))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Severity",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
-sequence.append(KeyComboAction("Right", 500))
+sequence.append(utils.AssertPresentationAction(
+    "Severity column header",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader'",
+     "     VISIBLE:  'Severity ColumnHeader', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Severity column header'"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Right", 500))
 sequence.append(WaitForFocus("Description",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
+sequence.append(utils.AssertPresentationAction(
+    "Description column header",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader'",
+     "     VISIBLE:  'Description ColumnHeader', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Description column header'"]))
 
 ########################################################################
 # Now go down into the table to see if we read the column headers as we
 # move from column to column.  You should end up in the "scrollable
 # notebooks and hidden tabs" cell.
 #
-# When first going into the table, the entire row should be read.  The
-# presentation in speech and braille should be as follows [[[BUG?: is the
-# mentioning of "Fixed? ColumnHeader" in both speech and braille a bug?
-# The actual column header we're under at this point is "Description"]]]:
-#
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader
-#                 < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'
-#      VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Fixed? column header'
-# SPEECH OUTPUT: 'Fixed? check box not checked  60482 Normal scrollable notebooks and hidden tabs'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
+sequence.append(utils.AssertPresentationAction(
+    "Enter table for first time",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table'",
+     "     VISIBLE:  'Table', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table [[[BUG? - this should be Description]]] ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  'scrollable notebooks and hidden tabs', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '[[[BUG? - this should be Description]]] column header'"
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Fixed? check box not checked  60482 Normal scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
-# Now move to the cell to the left containing the word "Normal".  The
-# following should be presented in speech and braille:
+# Now move to the cell to the left containing the word "Normal".
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Normal'
-#      VISIBLE:  'Normal', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Severity column header'
-# SPEECH OUTPUT: 'Normal'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left", 5000))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Normal cell",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Normal'",
+     "     VISIBLE:  'Normal', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Severity column header'",
+     "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille [[[BUG?: shouldn't the contents of
-# the cell be spoken?]]]:
+# Do a basic "Where Am I" via KP_Enter.  [[[BUG? - is there a way to 
+# determine the column and/or row header via Where Am I?]]]
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'
-#      VISIBLE:  'Normal scrollable notebooks and ', cursor=1
-#      
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: '60482'
-# SPEECH OUTPUT: 'Normal'
-# SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'
-# SPEECH OUTPUT: 'row 1 of 14'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Normal cell Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '[[[BUG? - this should give checkbox state.]]]'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '60482'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'",
+     "SPEECH OUTPUT: 'row 1 of 14'"]))
 
 ########################################################################
-# Now move to the cell to the left containing the number "60482".  The
-# following should be presented in speech and braille:
+# Now move to the cell to the left containing the number "60482".
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader 60482'
-#      VISIBLE:  '60482', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Bug number column header'
-# SPEECH OUTPUT: '60482'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "60482 cell",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader 60482'",
+     "     VISIBLE:  '60482', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bug number column header'",
+     "SPEECH OUTPUT: '60482'"]))
 
 ########################################################################
-# Now move to the cell to the left containing the checkbox.  The
-# following should be presented in speech and braille:
+# Now move to the cell to the left containing the checkbox.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed?'
-#      VISIBLE:  '< > Fixed?', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Fixed? column header'
-# SPEECH OUTPUT: 'check box not checked '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left", 500))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Checkbox cell",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed?'",
+     "     VISIBLE:  '< > Fixed?', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Fixed? column header'",
+     "SPEECH OUTPUT: 'check box not checked '"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille [[[BUG?: shouldn't the contents/state
-# of the cell be spoken?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'
-#      VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: '60482'
-# SPEECH OUTPUT: 'Normal'
-# SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'
-# SPEECH OUTPUT: 'row 1 of 14'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Checkbox cell Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '[[[BUG? - this should give checkbox state.]]]'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '60482'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'",
+     "SPEECH OUTPUT: 'row 1 of 14'"]))
  
 ########################################################################
 # Close the GtkListStore demo

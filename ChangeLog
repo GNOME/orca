@@ -1,3 +1,14 @@
+2007-10-12  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_combo_box.py
+          test/keystrokes/gtk-demo/role_check_menu_item.py
+          test/keystrokes/gtk-demo/role_check_box.py
+          test/keystrokes/gtk-demo/role_combo_box2.py
+          test/keystrokes/gtk-demo/role_column_header.py:
+          Add test assertions.  Things that are possibly bugs are
+          flagged in the expected output as BUG?.  This guarantees
+          the assertion fails so we don't overlook these things.
+
 2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
