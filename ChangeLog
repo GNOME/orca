@@ -1,6 +1,11 @@
 2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          pyatspi migration: use obj[i] instead of obj.child(i)
+
+2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           pyatspi migration: use obj.getState() instead of 
           obj.state. Also use pyatspi.STATE_WHATEVER instead of
           atspi.Accessibility.STATE_WHATEVER.

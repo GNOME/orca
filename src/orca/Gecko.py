@@ -741,13 +741,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         #
         menu = None
         for i in range(0, obj.childCount):
-            child = obj.child(i)
+            child = obj[i]
             if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
             for i in range(0, menu.childCount):
-                child = menu.child(i)
+                child = menu[i]
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     utterances.append(child.name)
 
@@ -5396,7 +5396,7 @@ class Script(default.Script):
                 count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
                 for i in range(0, count):
                     index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
-                    child = obj.child(i)
+                    child = obj[i]
                     childText = self.expandEOCs(child)
                     if not childText:
                         childText = ""
@@ -5499,7 +5499,7 @@ class Script(default.Script):
             if self.isSameObject(obj.parent,onLeft):
                 endOffset = self.getCharacterOffsetInParent(obj)
                 if obj.index > 0:
-                    prevSibling = onLeft.child(obj.index - 1)
+                    prevSibling = onLeft[obj.index - 1]
                     if self.isFormField(prevSibling):
                         startOffset = \
                                   self.getCharacterOffsetInParent(prevSibling)
@@ -5529,7 +5529,7 @@ class Script(default.Script):
                 if self.isSameObject(obj.parent, onRight):
                     startOffset = self.getCharacterOffsetInParent(obj)
                     if obj.index < onRight.childCount - 1:
-                        nextSibling = onRight.child(obj.index + 1)
+                        nextSibling = onRight[obj.index + 1]
                         if self.isFormField(nextSibling):
                             endOffset = \
                                   self.getCharacterOffsetInParent(nextSibling)
@@ -5968,7 +5968,7 @@ class Script(default.Script):
                 if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
-                    child = obj.child(self.getChildIndex(obj, nextOffset))
+                    child = obj[self.getChildIndex(obj, nextOffset)]
                     if child:
                         return self.findNextCaretInOrder(child,
                                                          -1,
@@ -5983,11 +5983,11 @@ class Script(default.Script):
         # caret inside the list, but rather treat the list as a single
         # object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj.child(0) \
+        elif obj.childCount and obj[0] \
              and not ((obj.getRole() == pyatspi.ROLE_LIST) \
                  and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
             try:
-                return self.findNextCaretInOrder(obj.child(0),
+                return self.findNextCaretInOrder(obj[0],
                                                  -1,
                                                  includeNonText)
             except:
@@ -6017,7 +6017,7 @@ class Script(default.Script):
                 if index < obj.parent.childCount:
                     try:
                         return self.findNextCaretInOrder(
-                            obj.parent.child(index),
+                            obj.parent[index],
                             -1,
                             includeNonText)
                     except:
@@ -6061,7 +6061,7 @@ class Script(default.Script):
                     != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, previousOffset]
                 elif obj.childCount:
-                    child = obj.child(self.getChildIndex(obj, previousOffset))
+                    child = obj[self.getChildIndex(obj, previousOffset)]
                     if child:
                         return self.findPreviousCaretInOrder(child,
                                                              -1,
@@ -6075,13 +6075,13 @@ class Script(default.Script):
         # caret inside the list, but rather treat the list as a single
         # object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj.child(obj.childCount - 1) \
+        elif obj.childCount and obj[obj.childCount - 1] \
              and not ((obj.getRole() == pyatspi.ROLE_LIST) \
                  and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
 
             try:
                 return self.findPreviousCaretInOrder(
-                    obj.child(obj.childCount - 1),
+                    obj[obj.childCount - 1],
                     -1,
                     includeNonText)
             except:
@@ -6111,7 +6111,7 @@ class Script(default.Script):
                 if index >= 0:
                     try:
                         return self.findPreviousCaretInOrder(
-                            obj.parent.child(index),
+                            obj.parent[index],
                             -1,
                             includeNonText)
                     except:
@@ -6749,7 +6749,7 @@ class Script(default.Script):
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
             if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
-                child = obj.child(self.getChildIndex(obj, offset))
+                child = obj[self.getChildIndex(obj, offset)]
                 if child:
                     contents.extend(self.getObjectContentsAtOffset(child, 0))
             elif len(contents):
