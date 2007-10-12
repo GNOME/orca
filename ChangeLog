@@ -1,6 +1,11 @@
 2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          pyatspi migration: converted all role testing.
+
+2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Fix for bug #486084 - [pyatspi] Orca doesn't work in Firefox 3.
 
 2007-10-12  Eitan Isaacson  <eitan@ascender.com>

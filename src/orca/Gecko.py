@@ -130,21 +130,21 @@ largeObjectTextLength = 75
 
 # Roles that imply their text starts on a new line.
 #
-NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
-                 rolenames.ROLE_SEPARATOR,
-                 rolenames.ROLE_LIST_ITEM,
-                 rolenames.ROLE_HEADING]
+NEWLINE_ROLES = [pyatspi.ROLE_PARAGRAPH,
+                 pyatspi.ROLE_SEPARATOR,
+                 pyatspi.ROLE_LIST_ITEM,
+                 pyatspi.ROLE_HEADING]
 
 # Roles that represent a logical chunk of information in a document
 #
-OBJECT_ROLES = [rolenames.ROLE_HEADING,
-                rolenames.ROLE_PARAGRAPH,
-                rolenames.ROLE_TABLE,
-                rolenames.ROLE_TABLE_CELL,
-                rolenames.ROLE_TEXT,
-                rolenames.ROLE_SECTION,
-                rolenames.ROLE_DOCUMENT_FRAME,
-                rolenames.ROLE_AUTOCOMPLETE]
+OBJECT_ROLES = [pyatspi.ROLE_HEADING,
+                pyatspi.ROLE_PARAGRAPH,
+                pyatspi.ROLE_TABLE,
+                pyatspi.ROLE_TABLE_CELL,
+                pyatspi.ROLE_TEXT,
+                pyatspi.ROLE_SECTION,
+                pyatspi.ROLE_DOCUMENT_FRAME,
+                pyatspi.ROLE_AUTOCOMPLETE]
 
 ########################################################################
 #                                                                      #
@@ -158,11 +158,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
     def __init__(self, script):
         braillegenerator.BrailleGenerator.__init__(self, script)
-        self.brailleGenerators[rolenames.ROLE_AUTOCOMPLETE] = \
+        self.brailleGenerators[pyatspi.ROLE_AUTOCOMPLETE] = \
              self._getBrailleRegionsForAutocomplete
-        self.brailleGenerators[rolenames.ROLE_ENTRY]        = \
+        self.brailleGenerators[pyatspi.ROLE_ENTRY]        = \
              self._getBrailleRegionsForText
-        self.brailleGenerators[rolenames.ROLE_LINK]         = \
+        self.brailleGenerators[pyatspi.ROLE_LINK]         = \
              self._getBrailleRegionsForLink
 
     def _getBrailleRegionsForAutocomplete(self, obj):
@@ -326,7 +326,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             return bg._getBrailleRegionsForText(self, obj)
         
         parent = obj.parent
-        if parent.role != rolenames.ROLE_AUTOCOMPLETE:
+        if parent.getRole() != pyatspi.ROLE_AUTOCOMPLETE:
             return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
                 self, obj)
 
@@ -381,7 +381,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         menu = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child.role == rolenames.ROLE_MENU:
+            if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
@@ -443,7 +443,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions.append(braille.Region(obj.name))
 
         comboBox = \
-                 self._script.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+                 self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
         if comboBox \
            and not obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
            and (settings.brailleVerbosityLevel == \
@@ -531,7 +531,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
         #
-        link = self._script.getContainingRole(obj, rolenames.ROLE_LINK)
+        link = self._script.getContainingRole(obj, pyatspi.ROLE_LINK)
         if len(text) == 0:
             if link:
                 [linkRegions, focusedRegion] = \
@@ -604,25 +604,25 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
-        self.speechGenerators[rolenames.ROLE_DOCUMENT_FRAME] = \
+        self.speechGenerators[pyatspi.ROLE_DOCUMENT_FRAME] = \
              self._getSpeechForDocumentFrame
-        self.speechGenerators[rolenames.ROLE_ENTRY]          = \
+        self.speechGenerators[pyatspi.ROLE_ENTRY]          = \
              self._getSpeechForText
-        self.speechGenerators[rolenames.ROLE_LINK]           = \
+        self.speechGenerators[pyatspi.ROLE_LINK]           = \
              self._getSpeechForLink
-        self.speechGenerators[rolenames.ROLE_LIST_ITEM]      = \
+        self.speechGenerators[pyatspi.ROLE_LIST_ITEM]      = \
              self._getSpeechForListItem
-        self.speechGenerators[rolenames.ROLE_SLIDER]         = \
+        self.speechGenerators[pyatspi.ROLE_SLIDER]         = \
              self._getSpeechForSlider
 
     def _getSpeechForObjectRole(self, obj):
         """Prevents some roles from being spoken."""
-        if obj.role in [rolenames.ROLE_PARAGRAPH,
-                        rolenames.ROLE_SECTION,
-                        rolenames.ROLE_LABEL,
-                        rolenames.ROLE_LIST_ITEM,
-                        rolenames.ROLE_MENU_ITEM,
-                        rolenames.ROLE_UNKNOWN]:
+        if obj.getRole() in [pyatspi.ROLE_PARAGRAPH,
+                             pyatspi.ROLE_SECTION,
+                             pyatspi.ROLE_LABEL,
+                             pyatspi.ROLE_LIST_ITEM,
+                             pyatspi.ROLE_MENU_ITEM,
+                             pyatspi.ROLE_UNKNOWN]:
             return []
         else:
             return [rolenames.getSpeechForRoleName(obj)]
@@ -669,7 +669,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         
         utterances = []
         parent = obj.parent
-        if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+        if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             # This is the main difference between this class and the default
             # class - we'll give this thing a name here, and we'll make it
             # be the name of the autocomplete.
@@ -678,8 +678,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if not label or not len(label):
                 label = parent.name
             utterances.append(label)
-        elif obj.role in [rolenames.ROLE_ENTRY,
-                          rolenames.ROLE_PASSWORD_TEXT] \
+        elif obj.getRole() in [pyatspi.ROLE_ENTRY,
+                               pyatspi.ROLE_PASSWORD_TEXT] \
             and self._script.inDocumentContent():
             # This is a form field in web content.  If we don't get a label,
             # we'll try to guess what text on the page is functioning as
@@ -742,7 +742,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         menu = None
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child.role == rolenames.ROLE_MENU:
+            if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
@@ -792,7 +792,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         #
         if not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
             comboBox = \
-                 self._script.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+                 self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
             if comboBox:
                 utterances.extend(self._getSpeechForObjectRole(comboBox))
 
@@ -931,7 +931,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # If there's no text for the image, expose the link to
             # the user if the image is in a link.
             #
-            link = self._script.getContainingRole(obj, rolenames.ROLE_LINK)
+            link = self._script.getContainingRole(obj, pyatspi.ROLE_LINK)
             if not len(utterances):
                 if link:
                     utterances.extend(self._getSpeechForLink(link,
@@ -1172,14 +1172,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             # If the rolename is unknown, skip this item.
             #
-            if parent.role == rolenames.ROLE_UNKNOWN:
+            if parent.getRole() == pyatspi.ROLE_UNKNOWN:
                 parent = parent.parent
                 continue
 
             # To be consistent with how we provide access to other
             # applications, don't speak the name of menu bars.
             #
-            if parent.role == rolenames.ROLE_MENU_BAR:
+            if parent.getRole() == pyatspi.ROLE_MENU_BAR:
                 parent = parent.parent
                 continue
 
@@ -1187,7 +1187,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # of Firefox where menus were nested in kind of an odd
             # dual nested menu hierarchy.
             #
-            if (parent.role == rolenames.ROLE_MENU) \
+            if (parent.getRole() == pyatspi.ROLE_MENU) \
                and not parent.state.count(atspi.Accessibility.STATE_FOCUSABLE):
                 parent = parent.parent
                 continue
@@ -1196,8 +1196,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # the entry give us the name -- unless we're in a toolbar.
             #
             containingToolbar = \
-                  self._script.getContainingRole(obj, rolenames.ROLE_TOOL_BAR)
-            if parent.role == rolenames.ROLE_AUTOCOMPLETE and \
+                  self._script.getContainingRole(obj, pyatspi.ROLE_TOOL_BAR)
+            if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE and \
                not containingToolbar:
                 parent = parent.parent
                 continue
@@ -1232,8 +1232,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Well...if we made it this far, we will now append the
             # role, then the text, and then the label.
             #
-            if not parent.role in [rolenames.ROLE_TABLE_CELL,
-                                   rolenames.ROLE_FILLER] \
+            if not parent.getRole() in [pyatspi.ROLE_TABLE_CELL,
+                                        pyatspi.ROLE_FILLER] \
                 and len(newUtterances):
                     utterances.append(rolenames.getSpeechForRoleName(parent))
 
@@ -1366,14 +1366,14 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             nodetotal += 1
             if obj == currentobj:
                 obj_index = nodetotal
-            role = obj.role
-            if role == rolenames.ROLE_HEADING:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
                 headings += 1
-            elif role == rolenames.ROLE_FORM:
+            elif role == pyatspi.ROLE_FORM:
                 forms += 1
-            elif role == rolenames.ROLE_TABLE and not self._script.isLayoutOnly(obj):
+            elif role == pyatspi.ROLE_TABLE and not self._script.isLayoutOnly(obj):
                 tables += 1
-            elif role == rolenames.ROLE_LINK:
+            elif role == pyatspi.ROLE_LINK:
                 if obj.state.count(atspi.Accessibility.STATE_VISITED):
                     vlinks += 1
                 else:
@@ -1516,7 +1516,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
                 # Translators: this announces that the bookmark and the current
                 # object share a common ancestor
                 #
-                speech.speak(_('shared ancestor %s') %p.role)
+                speech.speak(_('shared ancestor %s') %p.getRole())
                 return
             p = p.parent
         
@@ -1623,14 +1623,14 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         if not start_obj:
             [start_obj, characterOffset] = self._script.getCaretContext()    
             
-        if start_obj is None or start_obj.role == 'document frame':
+        if start_obj is None or start_obj.getRole() == 'document frame':
             return []
         else:
             path = []
             path.append(start_obj.index)
             p = start_obj.parent
             while p:
-                if p.role == 'document frame':
+                if p.getRole() == 'document frame':
                     path.reverse()
                     return path
                 path.append(p.index)
@@ -3098,7 +3098,7 @@ class Script(default.Script):
             for i in range(0, (len(clumped))):
                 [obj, startOffset, endOffset] = \
                                              contents[min(i, len(contents)-1)]
-                if obj.role == rolenames.ROLE_LABEL and len(obj.relations):
+                if obj.getRole() == pyatspi.ROLE_LABEL and len(obj.relations):
                     # This label is labelling something and will be spoken
                     # in conjunction with the object with which it is
                     # associated.
@@ -3117,13 +3117,13 @@ class Script(default.Script):
                 # table.  We need to be sure that we don't "find" one of those
                 # children with findNextObject().
                 #
-                if obj.childCount and obj.role != rolenames.ROLE_TABLE:
+                if obj.childCount and obj.getRole() != pyatspi.ROLE_TABLE:
                     obj = obj.child(obj.childCount - 1)
                 while obj and not moreLines:
                     obj = self.findNextObject(obj)
                     if obj:
-                        if obj.role in [rolenames.ROLE_LIST,
-                                        rolenames.ROLE_LIST_ITEM]:
+                        if obj.getRole() in [pyatspi.ROLE_LIST,
+                                             pyatspi.ROLE_LIST_ITEM]:
                             # Adjust the offset so that the item number is
                             # spoken.
                             #
@@ -3155,9 +3155,9 @@ class Script(default.Script):
             # makes them disappear and sayAll to subsequently stop.
             #
             if context.currentOffset == 0 and \
-               context.obj.role in [rolenames.ROLE_HEADING,
-                                    rolenames.ROLE_SECTION,
-                                    rolenames.ROLE_PARAGRAPH]:
+               context.obj.getRole() in [pyatspi.ROLE_HEADING,
+                                         pyatspi.ROLE_SECTION,
+                                         pyatspi.ROLE_PARAGRAPH]:
                 characterCount = context.obj.text.characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
         elif type == speechserver.SayAllContext.INTERRUPTED:
@@ -3214,8 +3214,8 @@ class Script(default.Script):
             #
             bogus = False
             if self.inDocumentContent() \
-               and obj.role in [rolenames.ROLE_COMBO_BOX,
-                                rolenames.ROLE_LIST]:
+               and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                     pyatspi.ROLE_LIST]:
                 # Bogus case #1:
                 # <label></label> surrounding the entire combo box/list which
                 # makes the entire combo box's/list's contents serve as the
@@ -3223,7 +3223,7 @@ class Script(default.Script):
                 # label is the combo box/list. See bug #428114, #441476.
                 #
                 if label.childCount:
-                    bogus = (label.child(0).role == obj.role)
+                    bogus = (label.child(0).getRole() == obj.getRole())
 
             if not bogus:
                 # Bogus case #2:
@@ -3277,7 +3277,7 @@ class Script(default.Script):
         # the locus of focus.
         #
         if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.role == rolenames.ROLE_LIST_ITEM \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LIST_ITEM \
            and not self.inDocumentContent(orca_state.locusOfFocus) \
            and self.inDocumentContent(event.source):
             self.setCaretContext(event.source, event.detail1)
@@ -3290,10 +3290,10 @@ class Script(default.Script):
         # based on the user-customizable settings.
         #
         if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.role in [rolenames.ROLE_ENTRY,
-                                                rolenames.ROLE_PUSH_BUTTON] \
-           and orca_state.locusOfFocus.parent.role == \
-                                            rolenames.ROLE_TOOL_BAR \
+           and orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
+                                                pyatspi.ROLE_PUSH_BUTTON] \
+           and orca_state.locusOfFocus.parent.getRole() == \
+                                            pyatspi.ROLE_TOOL_BAR \
            and self.inDocumentContent(event.source):
             [obj, offset] = self.getCaretContext()
             self.setCaretContext(event.source, event.detail1)
@@ -3347,7 +3347,7 @@ class Script(default.Script):
         # as well as https://bugzilla.mozilla.org/show_bug.cgi?id=394493.
         #
         if event.source \
-           and event.source.role == rolenames.ROLE_ENTRY \
+           and event.source.getRole() == pyatspi.ROLE_ENTRY \
            and event.source.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
            and not event.source.state.count( \
                                            atspi.Accessibility.STATE_FOCUSED):
@@ -3363,7 +3363,7 @@ class Script(default.Script):
                            input_event.KeyboardEvent) \
                 and orca_state.lastInputEvent.event_string in \
                                               ["Up", "Down", "Left", "Right"] \
-                and orca_state.locusOfFocus.role != rolenames.ROLE_ENTRY:
+                and orca_state.locusOfFocus.getRole() != pyatspi.ROLE_ENTRY:
             return
 
         # If Orca is controlling the caret, it is possible to arrow into
@@ -3376,7 +3376,7 @@ class Script(default.Script):
         # to be set there.  So for now, let's just ignore these.
         #
         if orca_state.locusOfFocus \
-            and orca_state.locusOfFocus.role == rolenames.ROLE_MENU_ITEM \
+            and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM \
             and self.inDocumentContent(event.source):
             return
 
@@ -3392,9 +3392,9 @@ class Script(default.Script):
         # http://bugzilla.gnome.org/show_bug.cgi?id=412677
         # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
         #
-        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME \
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
            and event.source.childCount \
-           and event.source.child(0).role == rolenames.ROLE_UNKNOWN:
+           and event.source.child(0).getRole() == pyatspi.ROLE_UNKNOWN:
             return
 
         # Otherwise, we'll just assume that the thing in which the caret
@@ -3490,9 +3490,9 @@ class Script(default.Script):
         if event.source and orca_state.locusOfFocus \
            and not self.isSameObject(event.source, orca_state.locusOfFocus):
             toolbar = self.getContainingRole(event.source,
-                                             rolenames.ROLE_TOOL_BAR)
+                                             pyatspi.ROLE_TOOL_BAR)
             if toolbar:
-                if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                     orca.setLocusOfFocus(event, event.source, False)
                 else:
                     return
@@ -3520,7 +3520,7 @@ class Script(default.Script):
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #
-        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
@@ -3528,7 +3528,7 @@ class Script(default.Script):
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #
-        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False
 
     def onDocumentLoadStopped(self, event):
@@ -3536,7 +3536,7 @@ class Script(default.Script):
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #
-        if event.source.role == rolenames.ROLE_DOCUMENT_FRAME:
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False
 
     def onNameChanged(self, event):
@@ -3564,8 +3564,8 @@ class Script(default.Script):
         # are often intermingled with menu activity, wreaking havoc
         # on the context.
         #
-        if (event.source.role == rolenames.ROLE_FRAME) \
-           or (not len(event.source.role)):
+        if (event.source.getRole() == pyatspi.ROLE_FRAME) \
+           or (not event.source.getRole()):
             return
 
         # If {overflow:hidden} is in the document's style sheet, we seem
@@ -3580,7 +3580,7 @@ class Script(default.Script):
         # http://bugzilla.gnome.org/show_bug.cgi?id=412677
         # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
         #
-        if event.source.role == rolenames.ROLE_UNKNOWN:
+        if event.source.getRole() == pyatspi.ROLE_UNKNOWN:
             return
 
         # We also ignore focus events on the panel that holds the document
@@ -3589,7 +3589,7 @@ class Script(default.Script):
         # those cases, we want the locus of focus to be the subcomponent
         # that really holds the caret.
         #
-        if event.source.role == rolenames.ROLE_PANEL:
+        if event.source.getRole() == pyatspi.ROLE_PANEL:
             documentFrame = self.getDocumentFrame()
             if documentFrame and (documentFrame.parent == event.source):
                 return
@@ -3603,7 +3603,7 @@ class Script(default.Script):
                 #
                 containingPanel = \
                             self.getContainingRole(orca_state.locusOfFocus,
-                                                   rolenames.ROLE_PANEL)
+                                                   pyatspi.ROLE_PANEL)
                 if self.isSameObject(containingPanel, event.source):
                     return
 
@@ -3614,7 +3614,7 @@ class Script(default.Script):
         # we set the focus on the object that's holding the caret.
         #
         if event.source \
-            and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
+            and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
             try:
                 [obj, characterOffset] = self.getCaretContext()
                 orca.setLocusOfFocus(event, obj)
@@ -3632,9 +3632,9 @@ class Script(default.Script):
         # from Lynn Monsanto that it was getting in the way for Firefox
         # and Yelp.]]]
         #
-        #if (event.source.role == rolenames.ROLE_MENU) \
+        #if (event.source.getRole() == pyatspi.ROLE_MENU) \
         #   and event.source.parent \
-        #   and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
+        #   and (event.source.parent.getRole() == pyatspi.ROLE_MENU_BAR):
         #    return
 
         # Autocomplete widgets are a complex beast as well.  When they
@@ -3642,7 +3642,7 @@ class Script(default.Script):
         # Their child also issues a focus: event, so we just ignore
         # the autocomplete focus: event.
         #
-        if event.source.role == rolenames.ROLE_AUTOCOMPLETE:
+        if event.source.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             # [[[WDW - we used to force the locus of focus to the
             # entry.  The idea was that even if the entry issued
             # a focus: event, the locus of focus would not change.
@@ -3661,9 +3661,9 @@ class Script(default.Script):
         # image, as we often see in web pages.  In these cases, we give
         # the image focus and announce it.
         #
-        if event.source.role == rolenames.ROLE_LINK:
+        if event.source.getRole() == pyatspi.ROLE_LINK:
             containingLink = self.getContainingRole(orca_state.locusOfFocus,
-                                                    rolenames.ROLE_LINK)
+                                                    pyatspi.ROLE_LINK)
             if containingLink == event.source:
                 return
             elif event.source.childCount == 1:
@@ -3691,7 +3691,7 @@ class Script(default.Script):
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-            #print "onLinkSelected", event.source.role, string,
+            #print "onLinkSelected", event.source.getRole() , string,
             #print "  caretOffset:     ", text.caretOffset
             #print "  line startOffset:", startOffset
             #print "  line endOffset:  ", startOffset
@@ -3725,7 +3725,7 @@ class Script(default.Script):
         #
         if event.type.startswith("object:state-changed:checked") \
            and event.source \
-           and (event.source.role == rolenames.ROLE_RADIO_BUTTON) \
+           and (event.source.getRole() == pyatspi.ROLE_RADIO_BUTTON) \
            and (event.detail1 == 1) \
            and self.inDocumentContent(event.source) \
            and not self.isAriaWidget(event.source) \
@@ -3739,10 +3739,10 @@ class Script(default.Script):
         #
         if event.type.startswith("object:state-changed:showing") \
            and event.source \
-           and (event.source.role == rolenames.ROLE_WINDOW) \
+           and (event.source.getRole() == pyatspi.ROLE_WINDOW) \
            and orca_state.locusOfFocus:
-            if orca_state.locusOfFocus.role in [rolenames.ROLE_ENTRY,
-                                                rolenames.ROLE_LIST_ITEM]:
+            if orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
+                                                     pyatspi.ROLE_LIST_ITEM]:
                 self._autocompleteVisible = event.detail1
             
         # We care when the document frame changes it's busy state.  That
@@ -3750,11 +3750,11 @@ class Script(default.Script):
         #
         if event.type.startswith("object:state-changed:busy"):
             if event.source \
-                and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
+                and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
                 finishedLoading = False
                 if orca_state.locusOfFocus \
-                    and (orca_state.locusOfFocus.role \
-                         == rolenames.ROLE_LIST_ITEM) \
+                    and (orca_state.locusOfFocus.getRole() \
+                         == pyatspi.ROLE_LIST_ITEM) \
                    and not self.inDocumentContent(orca_state.locusOfFocus):
                     # The event is for the changing contents of the help
                     # frame as the user navigates from topic to topic in
@@ -3856,7 +3856,7 @@ class Script(default.Script):
         # See if we have a frame who has a document frame.
         #
         documentFrame = None
-        if (event.source.role == rolenames.ROLE_FRAME) \
+        if (event.source.getRole() == pyatspi.ROLE_FRAME) \
             and event.source.state.count(atspi.Accessibility.STATE_ACTIVE):
 
             documentFrame = self.getDocumentFrame()
@@ -3873,7 +3873,7 @@ class Script(default.Script):
             speech.speak(
                 "%s %s" \
                 % (documentFrame.name,
-                   rolenames.rolenames[rolenames.ROLE_PAGE_TAB].speech))
+                   rolenames.rolenames[pyatspi.ROLE_PAGE_TAB].speech))
 
             [obj, characterOffset] = self.getCaretContext()
             if not obj:
@@ -3900,10 +3900,10 @@ class Script(default.Script):
         - obj:  the Accessible progress bar object.
         """
 
-        rolesList = [rolenames.ROLE_PROGRESS_BAR, \
-                     rolenames.ROLE_STATUSBAR, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_PROGRESS_BAR, \
+                     pyatspi.ROLE_STATUSBAR, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
         if not self.isDesiredFocusedItem(event.source, rolesList):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
@@ -3920,7 +3920,7 @@ class Script(default.Script):
         - obj: the Accessible whose visual appearance changed.
         """
 
-        if (obj.role == rolenames.ROLE_CHECK_BOX) \
+        if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
             and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
             orca.setLocusOfFocus(event, obj, False)
 
@@ -3958,7 +3958,7 @@ class Script(default.Script):
                     oldFrame = self.getFrame(oldLocusOfFocus)
                     newFrame = self.getFrame(newLocusOfFocus)
                     if self.isSameObject(oldFrame, newFrame) or \
-                           newLocusOfFocus.role == rolenames.ROLE_DIALOG:
+                           newLocusOfFocus.getRole() == pyatspi.ROLE_DIALOG:
                         self.setCaretPosition(newLocusOfFocus, caretOffset)
                         self.updateBraille(newLocusOfFocus)
                         self.speakContents(self.getLineContentsAtOffset(
@@ -3975,8 +3975,8 @@ class Script(default.Script):
         # self.madeFindAnnouncement.
         #
         if newLocusOfFocus and \
-           newLocusOfFocus.role == rolenames.ROLE_ENTRY and \
-           newLocusOfFocus.parent.role == rolenames.ROLE_TOOL_BAR:
+           newLocusOfFocus.getRole() == pyatspi.ROLE_ENTRY and \
+           newLocusOfFocus.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             self.madeFindAnnouncement = False
 
         # We'll ignore focus changes when the document frame is busy.
@@ -3985,15 +3985,15 @@ class Script(default.Script):
         #
         if event:
             inDialog = self.getContainingRole(event.source,
-                                              rolenames.ROLE_DIALOG)
+                                              pyatspi.ROLE_DIALOG)
             if not inDialog:
                 inDialog = self.getContainingRole(event.source,
-                                                  rolenames.ROLE_ALERT)
+                                                  pyatspi.ROLE_ALERT)
 
         if self._loadingDocumentContent \
            and event and event.source \
-           and not event.source.role in [rolenames.ROLE_DIALOG,
-                                         rolenames.ROLE_ALERT] \
+           and not event.source.getRole() in [pyatspi.ROLE_DIALOG,
+                                              pyatspi.ROLE_ALERT] \
            and not inDialog:
             return
 
@@ -4002,7 +4002,7 @@ class Script(default.Script):
         # just speak the role.
         #
         if newLocusOfFocus \
-           and newLocusOfFocus.role == rolenames.ROLE_HTML_CONTAINER:
+           and newLocusOfFocus.getRole() == pyatspi.ROLE_HTML_CONTAINER:
             # We always automatically go back to focus tracking mode when
             # the focus changes.
             #
@@ -4019,7 +4019,7 @@ class Script(default.Script):
         # future.]]]
         #
         #elif newLocusOfFocus \
-        #    and newLocusOfFocus.role == rolenames.ROLE_LINK:
+        #    and newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
         #    # Gecko issues focus: events for a link when you move the
         #    # caret to or tab to a link.  By the time we've gotten here,
         #    # though, we've already presented the link via a caret moved
@@ -4102,10 +4102,10 @@ class Script(default.Script):
             # as the same object for the purposes of displaying the
             # item in braille.
             #
-            if focusedObj.role == rolenames.ROLE_COMBO_BOX \
-               and obj.role == rolenames.ROLE_MENU_ITEM:
+            if focusedObj.getRole() == pyatspi.ROLE_COMBO_BOX \
+               and obj.getRole() == pyatspi.ROLE_MENU_ITEM:
                 comboBox = self.getContainingRole(obj,
-                                                  rolenames.ROLE_COMBO_BOX)
+                                                  pyatspi.ROLE_COMBO_BOX)
                 isFocusedObj = self.isSameObject(comboBox, focusedObj)
             else:
                 isFocusedObj = self.isSameObject(obj, focusedObj)
@@ -4117,24 +4117,24 @@ class Script(default.Script):
                           self.brailleGenerator.getBrailleRegions(obj)
                 if isFocusedObj:
                     focusedRegion = fRegion
-            elif obj.role in [rolenames.ROLE_ENTRY,
-                            rolenames.ROLE_PASSWORD_TEXT] \
-                or ((obj.role == rolenames.ROLE_DOCUMENT_FRAME) \
+            elif obj.getRole() in [pyatspi.ROLE_ENTRY,
+                                   pyatspi.ROLE_PASSWORD_TEXT] \
+                or ((obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME) \
                     and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
                 label = self.getDisplayedLabel(obj)
                 regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
                     focusedRegion = regions[0]
             elif obj.text and obj.text.characterCount \
-                 and (obj.role != rolenames.ROLE_MENU_ITEM):
+                 and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
                 string = self.getText(obj, startOffset, endOffset)
                 regions = [braille.Region(
                     string,
                     focusedCharacterOffset - startOffset)]
-                if obj.role == rolenames.ROLE_LINK:
+                if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
                 else:
-                    link = self.getContainingRole(obj, rolenames.ROLE_LINK)
+                    link = self.getContainingRole(obj, pyatspi.ROLE_LINK)
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
@@ -4157,15 +4157,15 @@ class Script(default.Script):
             # heading contains no children.
             #
             containingHeading = \
-                self.getContainingRole(obj, rolenames.ROLE_HEADING)
+                self.getContainingRole(obj, pyatspi.ROLE_HEADING)
             isLastObject = contents.index(content) == (len(contents) - 1)
-            if obj.role == rolenames.ROLE_HEADING:
+            if obj.getRole() == pyatspi.ROLE_HEADING:
                 appendRole = isLastObject or not obj.childCount
             elif containingHeading and isLastObject:
                 obj = containingHeading
                 appendRole = True
 
-            if obj.role == rolenames.ROLE_HEADING and appendRole:
+            if obj.getRole() == pyatspi.ROLE_HEADING and appendRole:
                 level = self.getHeadingLevel(obj)
                 # Translators: the 'h' below represents a heading level
                 # attribute for content that you might find in something
@@ -4184,7 +4184,7 @@ class Script(default.Script):
             # If we're inside of a combo box, we only want to display
             # the selected menu item.
             #
-            if obj.role == rolenames.ROLE_MENU_ITEM \
+            if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
                and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
                 break
 
@@ -4253,7 +4253,7 @@ class Script(default.Script):
         # with entries, we need to handle word navigation in entries here.
         #
         wordContents = self.getWordContentsAtOffset(obj, characterOffset)
-        if obj.role != rolenames.ROLE_ENTRY:
+        if obj.getRole() != pyatspi.ROLE_ENTRY:
             self.speakContents(wordContents)
         else:
             [textObj, startOffset, endOffset] = wordContents[0]
@@ -4268,7 +4268,7 @@ class Script(default.Script):
         # things, however, we can defer to the default scripts.
         #
         if not self.inDocumentContent() or \
-           obj.role == rolenames.ROLE_ENTRY:
+           obj.getRole() == pyatspi.ROLE_ENTRY:
             default.Script.sayLine(self, obj)
             return
 
@@ -4313,11 +4313,11 @@ class Script(default.Script):
             self.dumpInfo(obj.parent)
 
         print "---"
-        if obj.role != rolenames.ROLE_DOCUMENT_FRAME and obj.text:
+        if obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME and obj.text:
             string = self.getText(obj, 0, -1)
         else:
             string = ""
-        print obj, obj.name, obj.role, \
+        print obj, obj.name, obj.getRole(), \
               obj.accessible.getIndexInParent(), string
         offset = self.getCharacterOffsetInParent(obj)
         if offset >= 0:
@@ -4399,24 +4399,24 @@ class Script(default.Script):
                 characterExtents = self.getExtents(
                     obj, characterOffset, characterOffset + 1)
                 if lastObj and (lastObj != obj):
-                    if obj.role == rolenames.ROLE_LIST_ITEM:
+                    if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
                         contents += "\n"
-                    if lastObj.role == rolenames.ROLE_LINK:
+                    if lastObj.getRole() == pyatspi.ROLE_LINK:
                         contents += ">"
                     elif (lastCharacterExtents[1] < characterExtents[1]):
                         contents += "\n"
-                    elif obj.role == rolenames.ROLE_TABLE_CELL:
+                    elif obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                         parent = obj.parent
                         if parent.table.getColumnAtIndex(obj.index) != 0:
                             contents += " "
-                    elif obj.role == rolenames.ROLE_LINK:
+                    elif obj.getRole() == pyatspi.ROLE_LINK:
                         contents += "<"
                 contents += self.getCharacterAtOffset(obj, characterOffset)
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
                 lastCharacterExtents = characterExtents
             [obj, characterOffset] = self.findNextCaretInOrder(obj,
                                                                characterOffset)
-        if lastObj and lastObj.role == rolenames.ROLE_LINK:
+        if lastObj and lastObj.getRole() == pyatspi.ROLE_LINK:
             contents += ">"
         return contents
 
@@ -4438,12 +4438,12 @@ class Script(default.Script):
                     self.getExtents(obj, startOffset, endOffset),
                     extents)
                 if obj.text:
-                    string += "[%s] text='%s' " % (obj.role,
+                    string += "[%s] text='%s' " % (obj.getRole(),
                                                    self.getText(obj,
                                                                 startOffset,
                                                                 endOffset))
                 else:
-                    string += "[%s] name='%s' " % (obj.role, obj.name)
+                    string += "[%s] name='%s' " % (obj.getRole(), obj.name)
             else:
                 string += "\nNEWLINE\n"
         print "==========================="
@@ -4464,7 +4464,7 @@ class Script(default.Script):
             obj = orca_state.locusOfFocus
 
         while obj:
-            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 return True
             else:
                 obj = obj.parent
@@ -4554,7 +4554,7 @@ class Script(default.Script):
 
         weHandleIt = True
         obj = orca_state.locusOfFocus
-        if obj and (obj.role == rolenames.ROLE_ENTRY):
+        if obj and (obj.getRole() == pyatspi.ROLE_ENTRY):
             text        = obj.text
             length      = text.characterCount
             caretOffset = text.caretOffset
@@ -4590,21 +4590,21 @@ class Script(default.Script):
             # expects.
             #
             weHandleIt = (keyboardEvent.event_string == "Down") \
-                         and obj.role == rolenames.ROLE_MENU_ITEM
+                         and obj.getRole() == pyatspi.ROLE_MENU_ITEM
 
-        elif obj and (obj.role == rolenames.ROLE_COMBO_BOX):
+        elif obj and (obj.getRole() == pyatspi.ROLE_COMBO_BOX):
             # We'll let Firefox handle the navigation of combo boxes.
             #
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
-        elif obj and (obj.role == rolenames.ROLE_MENU_ITEM):
+        elif obj and (obj.getRole() == pyatspi.ROLE_MENU_ITEM):
             # We'll let Firefox handle the navigation of combo boxes.
             #
             weHandleIt = \
                        not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
 
-        elif obj and obj.role in [rolenames.ROLE_LIST,
-                                  rolenames.ROLE_LIST_ITEM]:
+        elif obj and obj.getRole() in [pyatspi.ROLE_LIST,
+                                       pyatspi.ROLE_LIST_ITEM]:
             # We'll let Firefox handle the navigation of lists in forms.
             #
             weHandleIt = \
@@ -4619,12 +4619,12 @@ class Script(default.Script):
         navigation stuff to work.]]]
         """
 
-        letThemDoItEditableRoles = [rolenames.ROLE_ENTRY,
-                                    rolenames.ROLE_TEXT,
-                                    rolenames.ROLE_PASSWORD_TEXT]
-        letThemDoItSelectionRoles = [rolenames.ROLE_LIST,
-                                     rolenames.ROLE_LIST_ITEM,
-                                     rolenames.ROLE_MENU_ITEM]
+        letThemDoItEditableRoles = [pyatspi.ROLE_ENTRY,
+                                    pyatspi.ROLE_TEXT,
+                                    pyatspi.ROLE_PASSWORD_TEXT]
+        letThemDoItSelectionRoles = [pyatspi.ROLE_LIST,
+                                     pyatspi.ROLE_LIST_ITEM,
+                                     pyatspi.ROLE_MENU_ITEM]
 
         if not structuralNavigationEnabled:
             return False
@@ -4642,15 +4642,15 @@ class Script(default.Script):
 
         obj = orca_state.locusOfFocus
         while obj:
-            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 # Don't use the structural navivation model if the
                 # user is editing the document.
                 return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
-            elif obj.role in letThemDoItEditableRoles:
+            elif obj.getRole() in letThemDoItEditableRoles:
                 return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
-            elif obj.role in letThemDoItSelectionRoles:
+            elif obj.getRole() in letThemDoItSelectionRoles:
                 return not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
-            elif obj.role == rolenames.ROLE_COMBO_BOX:
+            elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
                 return False
             else:
                 obj = obj.parent
@@ -4767,7 +4767,7 @@ class Script(default.Script):
         # the text.
         #
         if obj.text and obj.text.characterCount \
-           and obj.role != rolenames.ROLE_MENU_ITEM:
+           and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
             extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
         else:
             ext = obj.extents
@@ -4850,7 +4850,7 @@ class Script(default.Script):
         Returns the object being labelled, or None.
         """
 
-        if obj.role != rolenames.ROLE_LABEL:
+        if obj.getRole() != pyatspi.ROLE_LABEL:
             return None
 
         relations = obj.relations
@@ -4875,7 +4875,7 @@ class Script(default.Script):
         """
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child and (child.role == rolenames.ROLE_ENTRY):
+            if child and (child.getRole() == pyatspi.ROLE_ENTRY):
                 return child
         return None
 
@@ -4884,8 +4884,8 @@ class Script(default.Script):
         if the coordinates cannot be found.
         """
 
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
 
         parent = obj.parent
         if parent and parent.table:
@@ -4925,7 +4925,7 @@ class Script(default.Script):
             return False
         else:
             for i in range(0, obj.childCount):
-                if obj.child(i).role == rolenames.ROLE_LINK:
+                if obj.child(i).getRole() == pyatspi.ROLE_LINK:
                      return False
 
             return True
@@ -4966,7 +4966,7 @@ class Script(default.Script):
         """
 
         allHeaders = False
-        if obj and obj.role == rolenames.ROLE_TABLE_CELL:
+        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             row = obj.parent.table.getRowAtIndex(obj.index)
             nCols = obj.parent.table.nColumns
             for col in range(0, nCols):
@@ -4988,7 +4988,7 @@ class Script(default.Script):
         """
 
         allHeaders = False
-        if obj and obj.role == rolenames.ROLE_TABLE_CELL:
+        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             col = obj.parent.table.getColumnAtIndex(obj.index)
             nRows = obj.parent.table.nRows
             for row in range(0, nRows):
@@ -5094,7 +5094,7 @@ class Script(default.Script):
         spanned by a table cell when multiple rows and/or columns are spanned.
         """
 
-        if not obj or (obj.role != rolenames.ROLE_TABLE_CELL):
+        if not obj or (obj.getRole() != pyatspi.ROLE_TABLE_CELL):
             return
 
         [row, col] = self.getCellCoordinates(obj)
@@ -5129,7 +5129,7 @@ class Script(default.Script):
         """
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child and (child.role == rolenames.ROLE_CAPTION):
+            if child and (child.getRole() == pyatspi.ROLE_CAPTION):
                 return child
         return None
 
@@ -5176,10 +5176,10 @@ class Script(default.Script):
 
         obj = obj.parent
         while obj and (obj != obj.parent):
-            if obj.role == role:
+            if obj.getRole() == role:
                 containingObj = obj
                 break
-            elif obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            elif obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 break
             else:
                 obj = obj.parent
@@ -5189,12 +5189,12 @@ class Script(default.Script):
     def isFormField(self, obj):
         """Returns True if the given object is a field inside of a form."""
 
-        containingForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
+        containingForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
         isField = containingForm \
-                  and not obj.role in [rolenames.ROLE_LINK,
-                                       rolenames.ROLE_MENU_ITEM,
-                                       rolenames.ROLE_LIST_ITEM,
-                                       rolenames.ROLE_UNKNOWN] \
+                  and not obj.getRole() in [pyatspi.ROLE_LINK,
+                                            pyatspi.ROLE_MENU_ITEM,
+                                            pyatspi.ROLE_LIST_ITEM,
+                                            pyatspi.ROLE_UNKNOWN] \
                   and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
                   and obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
 
@@ -5221,12 +5221,12 @@ class Script(default.Script):
         useless = False
 
         if obj and not obj.text and \
-           obj.role == rolenames.ROLE_PARAGRAPH:
+           obj.getRole() == pyatspi.ROLE_PARAGRAPH:
             useless = True
 
-        elif obj.role in [rolenames.ROLE_IMAGE, \
-                          rolenames.ROLE_TABLE_CELL, \
-                          rolenames.ROLE_SECTION]:
+        elif obj.getRole() in [pyatspi.ROLE_IMAGE, \
+                               pyatspi.ROLE_TABLE_CELL, \
+                               pyatspi.ROLE_SECTION]:
             text = self.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
                 text = self.getDisplayedLabel(obj)
@@ -5234,7 +5234,7 @@ class Script(default.Script):
                     useless = True
 
         if useless:
-            link = self.getContainingRole(obj, rolenames.ROLE_LINK)
+            link = self.getContainingRole(obj, pyatspi.ROLE_LINK)
             if link:
                 useless = False
 
@@ -5268,7 +5268,7 @@ class Script(default.Script):
         # Firefox is currently showing the user, we skip it.
         #
         pursue = default.Script.pursueForFlatReview(self, obj)
-        if pursue and (obj.role == rolenames.ROLE_DOCUMENT_FRAME):
+        if pursue and (obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
             documentFrame = self.getDocumentFrame()
             pursue = obj == documentFrame
 
@@ -5283,7 +5283,7 @@ class Script(default.Script):
         if obj is None:
             return level
 
-        if obj.role == rolenames.ROLE_HEADING:
+        if obj.getRole() == pyatspi.ROLE_HEADING:
             attributes = obj.attributes
             if attributes is None:
                 return level
@@ -5299,7 +5299,7 @@ class Script(default.Script):
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
         
-        if obj is None or obj.role == rolenames.ROLE_HEADING:
+        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
             return -1
         
         attrs = obj.attributes
@@ -5342,7 +5342,7 @@ class Script(default.Script):
         text = None
         extents = ()
         isField = False
-        if not cell or cell.role != rolenames.ROLE_TABLE_CELL:
+        if not cell or cell.getRole() != pyatspi.ROLE_TABLE_CELL:
             return [newCell, text, extents, isField]
 
         [row, col] = self.getCellCoordinates(cell)
@@ -5466,15 +5466,15 @@ class Script(default.Script):
         # or a checkbox. [[[TODO - JD: Language direction should also be
         # taken into account.]]]
         #
-        preferRight = obj.role in [rolenames.ROLE_CHECK_BOX,
-                                   rolenames.ROLE_RADIO_BUTTON]
+        preferRight = obj.getRole() in [pyatspi.ROLE_CHECK_BOX,
+                                        pyatspi.ROLE_RADIO_BUTTON]
 
         # [[[TODO: JD: Nearby text that's not actually in the form may need
         # to be ignored.  Let's try that for now and adjust based on feedback
         # and testing.]]]
         #
-        leftIsInForm = self.getContainingRole(onLeft, rolenames.ROLE_FORM)
-        rightIsInForm = self.getContainingRole(onRight, rolenames.ROLE_FORM)
+        leftIsInForm = self.getContainingRole(onLeft, pyatspi.ROLE_FORM)
+        rightIsInForm = self.getContainingRole(onRight, pyatspi.ROLE_FORM)
 
         # [[[TODO: Grayed out buttons don't pass the isFormField() test
         # because they are neither focusable nor showing -- and thus
@@ -5485,10 +5485,10 @@ class Script(default.Script):
         #
         if onLeft:
             leftIsFormField = self.isFormField(onLeft) \
-                              or onLeft.role == rolenames.ROLE_PUSH_BUTTON
+                              or onLeft.getRole() == pyatspi.ROLE_PUSH_BUTTON
         if onRight:
             rightIsFormField = self.isFormField(onRight) \
-                               or onRight.role == rolenames.ROLE_PUSH_BUTTON
+                               or onRight.getRole() == pyatspi.ROLE_PUSH_BUTTON
 
         if onLeft and leftIsInForm and not leftIsFormField:
             # We want to get the text on the left including embedded objects
@@ -5506,7 +5506,7 @@ class Script(default.Script):
                                   self.getCharacterOffsetInParent(prevSibling)
 
             guess = self.expandEOCs(onLeft, startOffset, endOffset)
-            if not guess and onLeft.role == rolenames.ROLE_IMAGE:
+            if not guess and onLeft.getRole() == pyatspi.ROLE_IMAGE:
                 guess = onLeft.name
 
         if (preferRight or not guess) \
@@ -5538,7 +5538,7 @@ class Script(default.Script):
                                 return None
 
                 guess = self.expandEOCs(onRight, startOffset, endOffset)
-                if not guess and onRight.role == rolenames.ROLE_IMAGE:
+                if not guess and onRight.getRole() == pyatspi.ROLE_IMAGE:
                     guess = onRight.name
 
         return guess
@@ -5571,11 +5571,11 @@ class Script(default.Script):
         # because expanding the combo box will cover up the label. Labels
         # for lists probably won't be below the list either.
         #
-        if not obj.role in [rolenames.ROLE_COMBO_BOX,
-                            rolenames.ROLE_MENU,
-                            rolenames.ROLE_MENU_ITEM,
-                            rolenames.ROLE_LIST,
-                            rolenames.ROLE_LIST_ITEM]:
+        if not obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                 pyatspi.ROLE_MENU,
+                                 pyatspi.ROLE_MENU_ITEM,
+                                 pyatspi.ROLE_LIST,
+                                 pyatspi.ROLE_LIST_ITEM]:
             [nextObj, nextOffset] = self.findNextLine(obj, 0)
             nextLineContents = self.getLineContentsAtOffset(nextObj,
                                                             nextOffset)
@@ -5598,17 +5598,17 @@ class Script(default.Script):
             # live.gnome.org. We want to ignore menu items as well.]]]
             #
             aboveIsFormField = self.isFormField(content[0]) \
-                            or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
-                                                   rolenames.ROLE_MENU_ITEM,
-                                                   rolenames.ROLE_LIST]
+                        or content[0].getRole() in [pyatspi.ROLE_PUSH_BUTTON,
+                                                    pyatspi.ROLE_MENU_ITEM,
+                                                    pyatspi.ROLE_LIST]
 
             # [[[TODO - JD: Nearby text that's not actually in the form
             # may need to be ignored.  Let's do so unless it's directly
             # above the form field or the text above is contained in the
             # form's parent and adjust based on feedback, testing.]]]
             #
-            theForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
-            aboveForm = self.getContainingRole(obj, rolenames.ROLE_FORM)
+            theForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
+            aboveForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
             aboveIsInForm = self.isSameObject(theForm, aboveForm)
             formIsInAbove = theForm \
                             and self.isSameObject(theForm.parent, content[0])
@@ -5653,16 +5653,16 @@ class Script(default.Script):
             # live.gnome.org. We want to ignore menu items as well.]]]
             #
             belowIsFormField = self.isFormField(content[0]) \
-                            or content[0].role in [rolenames.ROLE_PUSH_BUTTON,
-                                                   rolenames.ROLE_MENU_ITEM,
-                                                   rolenames.ROLE_LIST]
+                        or content[0].getRole() in [pyatspi.ROLE_PUSH_BUTTON,
+                                                    pyatspi.ROLE_MENU_ITEM,
+                                                    pyatspi.ROLE_LIST]
 
             # [[[TODO - JD: Nearby text that's not actually in the form
             # may need to be ignored.  Let's try that for now and adjust
             # based on feedback and testing.]]]
             #
             belowIsInForm = self.getContainingRole(content[0],
-                                                   rolenames.ROLE_FORM)
+                                                   pyatspi.ROLE_FORM)
 
             # If the horizontal starting point of the object is the
             # same as the horizontal starting point of the text
@@ -5733,7 +5733,7 @@ class Script(default.Script):
         extents = obj.component.getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
         containingCell = \
-                       self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+                       self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
 
         # If we're not in a table cell, pursuing this further is silly. If
         # we're in a table cell but are not the sole occupant of that cell,
@@ -5745,7 +5745,7 @@ class Script(default.Script):
             return guess
         else:
             containingParagraph = \
-                         self.getContainingRole(obj, rolenames.ROLE_PARAGRAPH)
+                         self.getContainingRole(obj, pyatspi.ROLE_PARAGRAPH)
             if containingParagraph:
                 return guess
 
@@ -5853,7 +5853,7 @@ class Script(default.Script):
         # in a list, look from the perspective of the first list item rather
         # than from the list as a whole.
         #
-        if obj.role == rolenames.ROLE_LIST:
+        if obj.getRole() == pyatspi.ROLE_LIST:
             obj = obj.child(0)
 
         guess = self.guessLabelFromLine(obj)
@@ -5985,7 +5985,7 @@ class Script(default.Script):
         # object.  Otherwise, if it has children, look there.
         #
         elif obj.childCount and obj.child(0) \
-             and not ((obj.role == rolenames.ROLE_LIST) \
+             and not ((obj.getRole() == pyatspi.ROLE_LIST) \
                  and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
             try:
                 return self.findNextCaretInOrder(obj.child(0),
@@ -6077,7 +6077,7 @@ class Script(default.Script):
         # object.  Otherwise, if it has children, look there.
         #
         elif obj.childCount and obj.child(obj.childCount - 1) \
-             and not ((obj.role == rolenames.ROLE_LIST) \
+             and not ((obj.getRole() == pyatspi.ROLE_LIST) \
                  and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
 
             try:
@@ -6305,7 +6305,7 @@ class Script(default.Script):
             [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
-        nestableRoles = [rolenames.ROLE_LIST, rolenames.ROLE_TABLE]
+        nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
         obj = currentObj.parent
         while obj:
             ancestors.append(obj)
@@ -6315,10 +6315,10 @@ class Script(default.Script):
         obj = self.findPreviousObject(currentObj)
         while obj:
             isNestedItem = ((obj != currentObj.parent) \
-                            and (currentObj.parent.role == obj.role) \
-                            and (obj.role in nestableRoles))
+                            and (currentObj.parent.getRole() == obj.getRole()) \
+                            and (obj.getRole() in nestableRoles))
             if ((not obj in ancestors) or isNestedItem) \
-               and (obj.role in roles) \
+               and (obj.getRole() in roles) \
                and (not self.isLayoutOnly(obj)):
                 if wrapped and self.isSameObject(currentObj, obj):
                     obj = None
@@ -6361,7 +6361,7 @@ class Script(default.Script):
             obj = documentFrame.child(0)
             wrapped = True
         while obj:
-            if (not obj in ancestors) and (obj.role in roles) \
+            if (not obj in ancestors) and (obj.getRole() in roles) \
                 and (not self.isLayoutOnly(obj)):
                 if wrapped and self.isSameObject(currentObj, obj):
                     obj = None
@@ -6394,7 +6394,7 @@ class Script(default.Script):
             [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
-        nestableRoles = [rolenames.ROLE_LIST, rolenames.ROLE_TABLE]
+        nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
         obj = currentObj.parent
         while obj:
             ancestors.append(obj)
@@ -6404,8 +6404,8 @@ class Script(default.Script):
         obj = self.findPreviousObject(currentObj)
         while obj:
             isNestedItem = ((obj != currentObj.parent) \
-                            and (currentObj.parent.role == obj.role) \
-                            and (obj.role in nestableRoles))
+                            and (currentObj.parent.getRole() == obj.getRole()) \
+                            and (obj.getRole() in nestableRoles))
             if ((not obj in ancestors) or isNestedItem) and pred(obj):
                 if wrapped and self.isSameObject(currentObj, obj):
                     obj = None
@@ -6649,8 +6649,8 @@ class Script(default.Script):
         # it's the only thing on this line.
         #
         limitToThis = obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
-                      and obj.role in [rolenames.ROLE_LIST_ITEM,
-                                       rolenames.ROLE_LIST]
+                      and obj.getRole() in [pyatspi.ROLE_LIST_ITEM,
+                                            pyatspi.ROLE_LIST]
 
         while obj and not limitToThis:
             [obj, characterOffset] = \
@@ -6678,7 +6678,7 @@ class Script(default.Script):
             # have extents of (0, 0, 0, 0).  We need to work around this
             # for now.  See bug #416971.]]]
             #
-            elif obj.role == rolenames.ROLE_LIST_ITEM:
+            elif obj.getRole() == pyatspi.ROLE_LIST_ITEM:
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
         # [[[TODO: WDW - efficiency alert - we could always start from
@@ -6697,7 +6697,7 @@ class Script(default.Script):
             # fixed at some point, but we just ignore it for now.
             #
             if extents != (0, 0, 0, 0):
-                if obj.role == rolenames.ROLE_MENU_ITEM \
+                if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
                    and not obj.state.count(atspi.Accessibility.STATE_SHOWING):
                     # If a combo box is on the current line, only append the
                     # menu item which is showing.
@@ -6719,7 +6719,7 @@ class Script(default.Script):
             # have extents of (0, 0, 0, 0).  We need to work around this
             # for now.  See bug #416971.]]]
             #
-            elif (obj.role == rolenames.ROLE_LIST_ITEM) and (lastObj == obj):
+            elif (obj.getRole() == pyatspi.ROLE_LIST_ITEM) and (lastObj == obj):
                 if len(contents):
                     contents[-1][2] = characterOffset + 1
                 else:
@@ -6772,7 +6772,7 @@ class Script(default.Script):
 
     def getACSS(self, obj, string):
         """Returns the ACSS to speak anything for the given obj."""
-        if obj.role == rolenames.ROLE_LINK:
+        if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
         elif string and string.isupper() and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
@@ -6805,7 +6805,7 @@ class Script(default.Script):
             #
             labelledContent = self.isLabellingContents(obj, contents)
             if labelledContent \
-               and labelledContent.role != rolenames.ROLE_LIST:
+               and labelledContent.getRole() != pyatspi.ROLE_LIST:
                 continue
 
             # The radio button's label gets added to the context in
@@ -6814,7 +6814,7 @@ class Script(default.Script):
             # Therefore, if we have a valid label for a radio button,
             # we need to add it here.
             #
-            if (obj.role == rolenames.ROLE_RADIO_BUTTON) \
+            if (obj.getRole() == pyatspi.ROLE_RADIO_BUTTON) \
                 and not self.isAriaWidget(obj):
                 label = self.getDisplayedLabel(obj)
                 if label:
@@ -6825,9 +6825,9 @@ class Script(default.Script):
             # heading contains no children.
             #
             containingHeading = \
-                self.getContainingRole(obj, rolenames.ROLE_HEADING)
+                self.getContainingRole(obj, pyatspi.ROLE_HEADING)
             isLastObject = contents.index(content) == (len(contents) - 1)
-            if obj.role == rolenames.ROLE_HEADING:
+            if obj.getRole() == pyatspi.ROLE_HEADING:
                 speakThisRole = isLastObject or not obj.childCount
             else:
                 # We also don't want to speak the role if it's a documement
@@ -6837,10 +6837,10 @@ class Script(default.Script):
                 # in that field.  We don't want to repeat the role.
                 #
                 speakThisRole = \
-                    not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
-                                     rolenames.ROLE_TABLE_CELL,
-                                     rolenames.ROLE_ENTRY,
-                                     rolenames.ROLE_PASSWORD_TEXT]
+                    not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                          pyatspi.ROLE_TABLE_CELL,
+                                          pyatspi.ROLE_ENTRY,
+                                          pyatspi.ROLE_PASSWORD_TEXT]
 
             if self.isAriaWidget(obj):
                 # Treat ARIA widgets like normal default.py widgets
@@ -6848,10 +6848,10 @@ class Script(default.Script):
                 speakThisRole = False
                 strings = self.speechGenerator.getSpeech(obj, False)
             elif obj.text and obj.text.characterCount \
-               and not obj.role in [rolenames.ROLE_ENTRY,
-                                    rolenames.ROLE_PASSWORD_TEXT,
-                                    rolenames.ROLE_RADIO_BUTTON,
-                                    rolenames.ROLE_MENU_ITEM]:
+               and not obj.getRole() in [pyatspi.ROLE_ENTRY,
+                                         pyatspi.ROLE_PASSWORD_TEXT,
+                                         pyatspi.ROLE_RADIO_BUTTON,
+                                         pyatspi.ROLE_MENU_ITEM]:
                 strings = [self.getText(obj, startOffset, endOffset)]
             elif self.isLayoutOnly(obj):
                 continue
@@ -6873,7 +6873,7 @@ class Script(default.Script):
 
             if speakRole and \
                speakThisRole and \
-               obj.role == rolenames.ROLE_HEADING:
+               obj.getRole() == pyatspi.ROLE_HEADING:
                 level = self.getHeadingLevel(obj)
                 if level:
                     utterances.append([" ", self.getACSS(obj, " ")])
@@ -6964,8 +6964,8 @@ class Script(default.Script):
 
         # If we're not in a table cell, reset self.lastTableCell.
         #
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            cell = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            cell = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
             if not cell:
                 self.lastTableCell = [-1, -1]
 
@@ -6973,7 +6973,7 @@ class Script(default.Script):
         # because we've arrowed to it.  We don't want to grab focus on
         # it and trap the user in the list.
         #
-        if obj.role == rolenames.ROLE_LIST \
+        if obj.getRole() == pyatspi.ROLE_LIST \
            and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             characterOffset = self.getCharacterOffsetInParent(obj)
             obj = obj.parent
@@ -7007,7 +7007,7 @@ class Script(default.Script):
                 # won't follow the advice from 363214.  Besides, if we
                 # follow that advice, it doesn't work.]]]
                 #
-                #if objectForFocus.role == rolenames.ROLE_DOCUMENT_FRAME:
+                #if objectForFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 #    objectForFocus = objectForFocus.parent
                 focusGrabbed = self._objectForFocusGrab.component.grabFocus()
 
@@ -7020,7 +7020,7 @@ class Script(default.Script):
         character = self.getCharacterAtOffset(obj, characterOffset)
         if character:
             if self.isAriaWidget() \
-                 or not (obj.role == rolenames.ROLE_LIST_ITEM \
+                 or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
                  and not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
                 caretSet = obj.text.setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
@@ -7140,7 +7140,7 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        #print "FPL STARTING AT", obj.role, characterOffset
+        #print "FPL STARTING AT", obj.getRole(), characterOffset
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
@@ -7159,7 +7159,7 @@ class Script(default.Script):
                 previousChar = None
                 currentChar = None
 
-            #print "FPL LOOKING AT", obj.role, extents
+            #print "FPL LOOKING AT", obj.getRole(), extents
 
             # Sometimes the reported width and/or height of a character
             # is a large negative number.  When that occurs, we want to
@@ -7182,7 +7182,7 @@ class Script(default.Script):
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
-                        elif obj.role == rolenames.ROLE_ENTRY:
+                        elif obj.getRole() == pyatspi.ROLE_ENTRY:
                             crossedLineBoundary = True
                         if crossedLineBoundary:
                             lineExtents = extents
@@ -7199,7 +7199,7 @@ class Script(default.Script):
             [obj, characterOffset] = \
                   self.findPreviousCaretInOrder(obj, characterOffset)
 
-        #print "FPL ENDED UP AT", lastObj.role, lineExtents
+        #print "FPL ENDED UP AT", lastObj.getRole(), lineExtents
 
         contents = self.getLineContentsAtOffset(lastObj,
                                                 lastCharacterOffset)
@@ -7215,7 +7215,7 @@ class Script(default.Script):
             # Move back to the first character in the list before setting
             # the caret position.
             #
-            if lastObj.role == rolenames.ROLE_LIST_ITEM and not \
+            if lastObj.getRole() == pyatspi.ROLE_LIST_ITEM and not \
                lastObj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
                 extents = self.getExtents(lastObj,
                                           lastCharacterOffset,
@@ -7247,7 +7247,7 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        #print "FNL STARTING AT", obj.role, characterOffset
+        #print "FNL STARTING AT", obj.getRole(), characterOffset
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
@@ -7266,7 +7266,7 @@ class Script(default.Script):
                 previousChar = None
                 currentChar = None
 
-            #print "FNL LOOKING AT", obj.role, extents
+            #print "FNL LOOKING AT", obj.getRole(), extents
 
             # Sometimes the reported width and/or height of a character
             # is a large negative number.  When that occurs, we want to
@@ -7289,7 +7289,7 @@ class Script(default.Script):
                             crossedLineBoundary = True
                         elif previousChar == "\n":
                             crossedLineBoundary = True
-                        elif obj.role == rolenames.ROLE_ENTRY:
+                        elif obj.getRole() == pyatspi.ROLE_ENTRY:
                             crossedLineBoundary = True
                         if crossedLineBoundary:
                             lineExtents = extents
@@ -7353,8 +7353,8 @@ class Script(default.Script):
         """
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role == rolenames.ROLE_MENU_ITEM:
-            comboBox = self.getContainingRole(obj, rolenames.ROLE_COMBO_BOX)
+        if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
+            comboBox = self.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
             if comboBox and comboBox.action:
                 orca.setLocusOfFocus(None, comboBox)
                 focusGrabbed = comboBox.component.grabFocus()
@@ -7366,7 +7366,7 @@ class Script(default.Script):
 
     def goPreviousHeading(self, inputEvent):
         wrap = True
-        [obj, wrapped] = self.findPreviousRole([rolenames.ROLE_HEADING], wrap)
+        [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_HEADING], wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -7389,7 +7389,7 @@ class Script(default.Script):
 
     def goNextHeading(self, inputEvent):
         wrap = True
-        [obj, wrapped] = self.findNextRole([rolenames.ROLE_HEADING], wrap)
+        [obj, wrapped] = self.findNextRole([pyatspi.ROLE_HEADING], wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -7414,12 +7414,12 @@ class Script(default.Script):
         found = False
         level = 0
         [obj, characterOffset] = self.getCaretContext()
-        if obj.parent.role == rolenames.ROLE_HEADING:
+        if obj.parent.getRole() == pyatspi.ROLE_HEADING:
             obj = obj.parent
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findPreviousRole([rolenames.ROLE_HEADING], wrap, obj)
+                  self.findPreviousRole([pyatspi.ROLE_HEADING], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7455,7 +7455,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findNextRole([rolenames.ROLE_HEADING], wrap, obj)
+                  self.findNextRole([pyatspi.ROLE_HEADING], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7574,7 +7574,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findPreviousRole([rolenames.ROLE_LIST], wrap, obj)
+                  self.findPreviousRole([pyatspi.ROLE_LIST], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7599,7 +7599,7 @@ class Script(default.Script):
         if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
-                if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
+                if obj.child(i).getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -7609,7 +7609,7 @@ class Script(default.Script):
             speech.speak(itemString)
             nestingLevel = 0
             parent = obj.parent
-            while parent.role == rolenames.ROLE_LIST:
+            while parent.getRole() == pyatspi.ROLE_LIST:
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
@@ -7632,13 +7632,11 @@ class Script(default.Script):
 
     def goNextList(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        print obj.role
         found = False
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findNextRole([rolenames.ROLE_LIST], wrap, obj)
-            print obj.role
+                  self.findNextRole([pyatspi.ROLE_LIST], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7662,7 +7660,7 @@ class Script(default.Script):
         if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
-                if obj.child(i).role == rolenames.ROLE_LIST_ITEM:
+                if obj.child(i).getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -7672,7 +7670,7 @@ class Script(default.Script):
             speech.speak(itemString)
             nestingLevel = 0
             parent = obj.parent
-            while parent.role == rolenames.ROLE_LIST:
+            while parent.getRole() == pyatspi.ROLE_LIST:
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
@@ -7699,7 +7697,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findPreviousRole([rolenames.ROLE_LIST_ITEM], wrap, obj)
+                  self.findPreviousRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7740,7 +7738,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findNextRole([rolenames.ROLE_LIST_ITEM], wrap, obj)
+                  self.findNextRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7781,7 +7779,7 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingRole(obj, rolenames.ROLE_LINK)
+        containingLink = self.getContainingRole(obj, pyatspi.ROLE_LINK)
         if containingLink:
             obj = containingLink
 
@@ -7789,7 +7787,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findPreviousRole([rolenames.ROLE_LINK], wrap, obj)
+                  self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7823,7 +7821,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findNextRole([rolenames.ROLE_LINK], wrap, obj)
+                  self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7857,7 +7855,7 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingRole(obj, rolenames.ROLE_LINK)
+        containingLink = self.getContainingRole(obj, pyatspi.ROLE_LINK)
         if containingLink:
             obj = containingLink
 
@@ -7865,7 +7863,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findPreviousRole([rolenames.ROLE_LINK], wrap, obj)
+                  self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7899,7 +7897,7 @@ class Script(default.Script):
         wrap = True
         while obj and not found:
             [obj, wrapped] = \
-                  self.findNextRole([rolenames.ROLE_LINK], wrap, obj)
+                  self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
             # We should only wrap if we haven't already done so.
             #
             if wrapped:
@@ -7935,7 +7933,7 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         candidate = obj
         while candidate and (candidate != candidate.parent) and \
-              (candidate.role != rolenames.ROLE_DOCUMENT_FRAME):
+              (candidate.getRole() != pyatspi.ROLE_DOCUMENT_FRAME):
             if self.isBlockquote(candidate):
                 obj = candidate
                 break
@@ -8016,7 +8014,7 @@ class Script(default.Script):
         #
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
-        if obj.role == rolenames.ROLE_LIST_ITEM and \
+        if obj.getRole() == pyatspi.ROLE_LIST_ITEM and \
            obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.parent
 
@@ -8033,7 +8031,7 @@ class Script(default.Script):
                 # our way up through list items in search of the
                 # parent list.
                 #
-                if obj.role == rolenames.ROLE_LIST_ITEM:
+                if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
                     obj = obj.parent
                 found = self.isFormField(obj)
                 if wrapped and self.isSameObject(currentObj, obj):
@@ -8053,7 +8051,7 @@ class Script(default.Script):
             # arrow into one and change its value.  Here we actually
             # do want to grab focus should we be on a list.
             #
-            if obj.role == rolenames.ROLE_LIST:
+            if obj.getRole() == pyatspi.ROLE_LIST:
                 focusGrabbed = obj.component.grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
@@ -8075,13 +8073,13 @@ class Script(default.Script):
         # For performance purposes, we do not want to examine each item
         # in the current combo box or list via findNextObject.
         #
-        if obj.role == rolenames.ROLE_LIST_ITEM \
+        if obj.getRole() == pyatspi.ROLE_LIST_ITEM \
            and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.parent
-        if obj.role == rolenames.ROLE_LIST \
+        if obj.getRole() == pyatspi.ROLE_LIST \
            and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
             obj = obj.child(obj.childCount - 1)
-        elif obj.role == rolenames.ROLE_COMBO_BOX:
+        elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             menu = obj.child(0)
             obj = menu.child(menu.childCount - 1)
 
@@ -8111,7 +8109,7 @@ class Script(default.Script):
             # arrow into one and change its value.  Here we actually
             # do want to grab focus should we be on a list.
             #
-            if obj.role == rolenames.ROLE_LIST:
+            if obj.getRole() == pyatspi.ROLE_LIST:
                 focusGrabbed = obj.component.grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
@@ -8151,7 +8149,7 @@ class Script(default.Script):
 
     def goPreviousTable(self, inputEvent):
         wrap = True
-        [obj, wrapped] = self.findPreviousRole([rolenames.ROLE_TABLE], wrap)
+        [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_TABLE], wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -8200,7 +8198,7 @@ class Script(default.Script):
 
     def goNextTable(self, inputEvent):
         wrap = True
-        [obj, wrapped] = self.findNextRole([rolenames.ROLE_TABLE], wrap)
+        [obj, wrapped] = self.findNextRole([pyatspi.ROLE_TABLE], wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -8248,8 +8246,8 @@ class Script(default.Script):
 
     def goCellLeft(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
@@ -8296,8 +8294,8 @@ class Script(default.Script):
 
     def goCellRight(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
@@ -8348,8 +8346,8 @@ class Script(default.Script):
 
     def goCellUp(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
@@ -8396,8 +8394,8 @@ class Script(default.Script):
 
     def goCellDown(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE_CELL)
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
@@ -8448,8 +8446,8 @@ class Script(default.Script):
 
     def goCellFirst(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE)
+        if obj.getRole() != pyatspi.ROLE_TABLE:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
         if obj:
             cell = obj.table.getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
@@ -8463,8 +8461,8 @@ class Script(default.Script):
 
     def goCellLast(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
-        if obj.role != rolenames.ROLE_TABLE:
-            obj = self.getContainingRole(obj, rolenames.ROLE_TABLE)
+        if obj.getRole() != pyatspi.ROLE_TABLE:
+            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
         if obj:
             lastRow = obj.table.nRows - 1
             lastCol = obj.table.nColumns - 1
@@ -8554,7 +8552,7 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
     def __matchChunk(self, obj):
-        if obj.role in OBJECT_ROLES:
+        if obj.getRole() in OBJECT_ROLES:
             text = obj.text
             if text and text.characterCount > largeObjectTextLength and \
                     not self.isUselessObject(obj):
