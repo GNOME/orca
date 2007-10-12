@@ -226,9 +226,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 text, self._script.getDisplayedText(obj))
         else:
             isLabelled = False
-            relations = obj.relations
-            if relations:
-                for relation in relations:
+            relationSet = obj.getRelationSet()
+            if relationSet:
+                for relation in relationSet:
                     if relation.getRelationType() \
                         == atspi.Accessibility.RELATION_LABELLED_BY:
                         isLabelled = True
@@ -282,9 +282,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 text, self._script.getDisplayedText(obj))
         else:
             isLabelled = False
-            relations = obj.relations
-            if relations:
-                for relation in relations:
+            relationSet = obj.getRelationSet()
+            if relationSet:
+                for relation in relationSet:
                     if relation.getRelationType() \
                         == atspi.Accessibility.RELATION_LABELLED_BY:
                         isLabelled = True
@@ -3098,7 +3098,8 @@ class Script(default.Script):
             for i in range(0, (len(clumped))):
                 [obj, startOffset, endOffset] = \
                                              contents[min(i, len(contents)-1)]
-                if obj.getRole() == pyatspi.ROLE_LABEL and len(obj.relations):
+                if obj.getRole() == pyatspi.ROLE_LABEL \
+                   and len(obj.getRelationSet()):
                     # This label is labelling something and will be spoken
                     # in conjunction with the object with which it is
                     # associated.
@@ -4660,7 +4661,7 @@ class Script(default.Script):
     def isAriaWidget(self, obj=None):
         obj = obj or orca_state.locusOfFocus
         
-        attrs = obj.attributes
+        attrs = obj.getAttributes()
         if attrs is None:
             return False
         for attr in attrs:
@@ -4853,11 +4854,11 @@ class Script(default.Script):
         if obj.getRole() != pyatspi.ROLE_LABEL:
             return None
 
-        relations = obj.relations
-        if not relations:
+        relationSet = obj.getRelationSet()
+        if not relationSet:
             return None
 
-        for relation in relations:
+        for relation in relationSet:
             if relation.getRelationType() \
                 == atspi.Accessibility.RELATION_LABEL_FOR:
                 for i in range(0, relation.getNTargets()):
@@ -5284,7 +5285,7 @@ class Script(default.Script):
             return level
 
         if obj.getRole() == pyatspi.ROLE_HEADING:
-            attributes = obj.attributes
+            attributes = obj.getAttributes()
             if attributes is None:
                 return level
             for attribute in attributes:
@@ -5302,7 +5303,7 @@ class Script(default.Script):
         if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
             return -1
         
-        attrs = obj.attributes
+        attrs = obj.getAttributes()
         if attrs is None:
             return -1
         for attr in attrs:
