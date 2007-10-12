@@ -1,3 +1,13 @@
+2007-10-12  Rich Burridge <rich.burridge@sun.com>
+ 
+        * src/orca/orca-setup.glade:
+          src/orca/orca-mainwin.glade:
+          src/orca/orca.py:
+          src/orca/default.py:
+          src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #474958 - Orca has no onboard help.
+
 2007-10-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

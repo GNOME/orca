@@ -73,6 +73,17 @@ class orcaMainGUI(orca_glade.GladeWrapper):
 
         self.mainWindow.hide()
 
+    def helpButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the helpButton
+           GtkButton widget. The user has clicked the Help button.
+           Call the method to bring up the Orca help window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        orca.helpForOrca()
+
     def quitButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the quitButton
            GtkButton widget. The user has clicked the Quit button.
