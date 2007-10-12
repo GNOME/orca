@@ -221,7 +221,9 @@ class Accessible:
     _legacyProxyAttribs = {'extents': '_get_extents'}
 
     _legacyWritableAttribs = ['lastRow', 'lastColumn', 'role', 
-                              'lastCursorPosition', 'lastSelections']
+                              'lastCursorPosition', 'lastSelections',
+                              'characterOffsetInParent', 'childrenIndices',
+                              'unicodeText']
 
     class _CrackDict(dict):
         """This is here to allow some good old-fashioned direct __dict__ access.
@@ -451,8 +453,7 @@ class Accessible:
         """
         if attr in self._legacyWritableAttribs:
             _deprecatedMessage(
-              msg="Don't write attributes to accessible objects."
-              " Use user_data.")
+              msg="Don't write attributes to accessible objects!")
             try:
                 user_data = self.accessible.user_data
             except AttributeError:

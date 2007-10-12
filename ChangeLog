@@ -1,3 +1,10 @@
+2007-10-12  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/atspi.py:
+	Added a couple of writable attribute names.
+	* src/orca/focus_tracking_presenter.py:
+	Wrap application accessibles before we pass them to the scripts.
+
 2007-10-12  Rich Burridge <rich.burridge@sun.com>
  
          * src/orca/orca-setup.glade:

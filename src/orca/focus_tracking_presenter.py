@@ -194,7 +194,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                       "While attempting to import %s" % name)
             if module:
                 try:
-                    script = module.Script(app)
+                    # [[[TODO: eitani - Remove this wrappage when scripts are
+                    # pyatspi compliant.]]]
+                    script = module.Script(atspi.Accessible.makeAccessible(app))
                 except:
                     # We do not want the getScript method to fail.  If it does,
                     # we want to let the script developer know what went wrong,
