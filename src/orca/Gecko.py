@@ -236,9 +236,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
+        indicatorIndex = 0 + obj.getState().contains(pyatspi.STATE_CHECKED)
         text = self._script.appendString(
-            settings.brailleCheckBoxIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            settings.brailleCheckBoxIndicators[indicatorIndex],
             text)
 
         text = self._script.appendString(text, self._getTextForRole(obj))
@@ -293,9 +293,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
+        indicatorIndex = 0 + obj.getState().contains(pyatspi.STATE_CHECKED)
         text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            settings.brailleRadioButtonIndicators[indicatorIndex],
             text)
 
         text = self._script.appendString(text, self._getTextForRole(obj))
@@ -387,7 +387,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if menu:
             for i in range(0, menu.childCount):
                 child = menu.child(i)
-                if child.state.count(atspi.Accessibility.STATE_SELECTED):
+                if child.getState().contains(pyatspi.STATE_SELECTED):
                     regions.append(braille.Region(child.name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -445,7 +445,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         comboBox = \
                  self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
         if comboBox \
-           and not obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+           and not obj.getState().contains(pyatspi.STATE_FOCUSED) \
            and (settings.brailleVerbosityLevel == \
                 settings.VERBOSITY_LEVEL_VERBOSE):
             regions.append(braille.Region(
@@ -472,14 +472,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             bg = braillegenerator.BrailleGenerator
             return bg._getBrailleRegionsForList(self, obj)
         
-        if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             bg = braillegenerator.BrailleGenerator
             return bg._getBrailleRegionsForList(self, obj)
 
         regions = []
         focusedRegionIndex = 0
 
-        if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
             label = self._script.getDisplayedLabel(obj)
             if not label:
                 label = obj.name
@@ -748,7 +748,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if menu:
             for i in range(0, menu.childCount):
                 child = menu.child(i)
-                if child.state.count(atspi.Accessibility.STATE_SELECTED):
+                if child.getState().contains(pyatspi.STATE_SELECTED):
                     utterances.append(child.name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
@@ -790,7 +790,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # item is not focused (if the menu item is focused, it means we're
         # navigating in the combo box)
         #
-        if not obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
             comboBox = \
                  self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
             if comboBox:
@@ -820,7 +820,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForListItem(self, obj, already_focused)
         
-        if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             sg = speechgenerator.SpeechGenerator
             return sg._getDefaultSpeech(self, obj, already_focused)
 
@@ -849,13 +849,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForList(self, obj, already_focused)
         
-        if not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForList(self, obj, already_focused)
 
         utterances = []
 
-        if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
             label = self._script.getDisplayedLabel(obj)
             if not label:
                 if not self._script.inDocumentContent():
@@ -879,7 +879,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.extend(name)
 
         if not already_focused:
-            if obj.state.count(atspi.Accessibility.STATE_MULTISELECTABLE):
+            if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
                 # Translators: "multi-select" refers to a web form list
                 # in which more than one item can be selected at a time.
                 #
@@ -1051,7 +1051,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return sg._getSpeechForRadioButton(self, obj, already_focused)
 
         utterances = []
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
@@ -1111,7 +1111,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return sg._getSpeechForCheckBox(self, obj, already_focused)
 
         utterances = []
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             checkedState = _("checked")
@@ -1188,7 +1188,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # dual nested menu hierarchy.
             #
             if (parent.getRole() == pyatspi.ROLE_MENU) \
-               and not parent.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+               and not parent.getState().contains(pyatspi.STATE_FOCUSABLE):
                 parent = parent.parent
                 continue
 
@@ -1374,7 +1374,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             elif role == pyatspi.ROLE_TABLE and not self._script.isLayoutOnly(obj):
                 tables += 1
             elif role == pyatspi.ROLE_LINK:
-                if obj.state.count(atspi.Accessibility.STATE_VISITED):
+                if obj.getState().contains(pyatspi.STATE_VISITED):
                     vlinks += 1
                 else:
                     uvlinks += 1
@@ -3264,8 +3264,8 @@ class Script(default.Script):
         # UNLESS focus was moved from a form field  to non-focusable
         # text in the document frame via mouse click.
         #
-        focusable = atspi.Accessibility.STATE_FOCUSABLE
-        if not event.source.state.count(focusable) and \
+        focusable = pyatspi.STATE_FOCUSABLE
+        if not event.source.getState().contains(focusable) and \
            self.isFormField(orca_state.locusOfFocus) and \
             not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
@@ -3349,9 +3349,9 @@ class Script(default.Script):
         #
         if event.source \
            and event.source.getRole() == pyatspi.ROLE_ENTRY \
-           and event.source.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
-           and not event.source.state.count( \
-                                           atspi.Accessibility.STATE_FOCUSED):
+           and event.source.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           and not event.source.getState().contains( \
+                                           pyatspi.STATE_FOCUSED):
             return
 
         # Possibility #6: We are looking at an ARIA widget where the user
@@ -3406,8 +3406,8 @@ class Script(default.Script):
         # focus.
         #
         if orca_state.locusOfFocus \
-            and not orca_state.locusOfFocus.state.count(
-                        atspi.Accessibility.STATE_FOCUSED):
+            and not orca_state.locusOfFocus.getState().contains(
+                        pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         # We need to handle HTML content differently because we do our
@@ -3808,8 +3808,8 @@ class Script(default.Script):
                     if not obj:
                         return
                     elif not atTop \
-                        and not obj.state.count(\
-                            atspi.Accessibility.STATE_EDITABLE):
+                        and not obj.getState().contains(\
+                            pyatspi.STATE_EDITABLE):
                         self.clearCaretContext()
                         [obj, characterOffset] = self.getCaretContext()
                         if not obj:
@@ -3834,7 +3834,7 @@ class Script(default.Script):
                     #
                     self.updateBraille(obj)
 
-                    if obj.state.count(atspi.Accessibility.STATE_EDITABLE):
+                    if obj.getState().contains(pyatspi.STATE_EDITABLE):
                         speech.speakUtterances(\
                             self.speechGenerator.getSpeech(obj, True))
                     elif not sayAllOnLoad:
@@ -3858,7 +3858,7 @@ class Script(default.Script):
         #
         documentFrame = None
         if (event.source.getRole() == pyatspi.ROLE_FRAME) \
-            and event.source.state.count(atspi.Accessibility.STATE_ACTIVE):
+            and event.source.getState().contains(pyatspi.STATE_ACTIVE):
 
             documentFrame = self.getDocumentFrame()
 
@@ -3922,7 +3922,7 @@ class Script(default.Script):
         """
 
         if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
-            and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            and obj.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, obj, False)
 
         default.Script.visualAppearanceChanged(self, event, obj)
@@ -4121,7 +4121,7 @@ class Script(default.Script):
             elif obj.getRole() in [pyatspi.ROLE_ENTRY,
                                    pyatspi.ROLE_PASSWORD_TEXT] \
                 or ((obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME) \
-                    and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
+                    and obj.getState().contains(pyatspi.STATE_EDITABLE)):
                 label = self.getDisplayedLabel(obj)
                 regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
@@ -4186,7 +4186,7 @@ class Script(default.Script):
             # the selected menu item.
             #
             if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
-               and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+               and obj.getState().contains(pyatspi.STATE_FOCUSED):
                 break
 
         if extraRegion:
@@ -4340,7 +4340,7 @@ class Script(default.Script):
         self.clearCaretContext()
         [obj, characterOffset] = self.getCaretContext()
         while obj:
-            if True or obj.state.count(atspi.Accessibility.STATE_SHOWING):
+            if True or obj.getState().contains(pyatspi.STATE_SHOWING):
                 if obj.text:
                     # Check for text being on a different line.  Gecko
                     # gives us odd character extents sometimes, so we
@@ -4396,7 +4396,7 @@ class Script(default.Script):
         lastCharacterExtents = None
         [obj, characterOffset] = self.getCaretContext()
         while obj:
-            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+            if obj and obj.getState().contains(pyatspi.STATE_SHOWING):
                 characterExtents = self.getExtents(
                     obj, characterOffset, characterOffset + 1)
                 if lastObj and (lastObj != obj):
@@ -4489,8 +4489,8 @@ class Script(default.Script):
                         == atspi.Accessibility.RELATION_EMBEDS:
                         documentFrame = atspi.Accessible.makeAccessible( \
                             relation.getTarget(0))
-                        if documentFrame.state.count( \
-                            atspi.Accessibility.STATE_SHOWING):
+                        if documentFrame.getState().contains( \
+                            pyatspi.STATE_SHOWING):
                             break
                         else:
                             documentFrame = None
@@ -4559,8 +4559,8 @@ class Script(default.Script):
             text        = obj.text
             length      = text.characterCount
             caretOffset = text.caretOffset
-            singleLine  = obj.state.count(
-                atspi.Accessibility.STATE_SINGLE_LINE)
+            singleLine  = obj.getState().contains(
+                pyatspi.STATE_SINGLE_LINE)
             if length == 0 \
                or ((length == 1) and (text.getText(0, -1) == "\n")):
                 weHandleIt = True
@@ -4601,15 +4601,13 @@ class Script(default.Script):
         elif obj and (obj.getRole() == pyatspi.ROLE_MENU_ITEM):
             # We'll let Firefox handle the navigation of combo boxes.
             #
-            weHandleIt = \
-                       not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
+            weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSED)
 
         elif obj and obj.getRole() in [pyatspi.ROLE_LIST,
                                        pyatspi.ROLE_LIST_ITEM]:
             # We'll let Firefox handle the navigation of lists in forms.
             #
-            weHandleIt = \
-                       not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)
+            weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
 
         return weHandleIt
 
@@ -4646,11 +4644,11 @@ class Script(default.Script):
             if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 # Don't use the structural navivation model if the
                 # user is editing the document.
-                return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
+                return not obj.getState().contains(pyatspi.STATE_EDITABLE)
             elif obj.getRole() in letThemDoItEditableRoles:
-                return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
+                return not obj.getState().contains(pyatspi.STATE_EDITABLE)
             elif obj.getRole() in letThemDoItSelectionRoles:
-                return not obj.state.count(atspi.Accessibility.STATE_FOCUSED)
+                return not obj.getState().contains(pyatspi.STATE_FOCUSED)
             elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
                 return False
             else:
@@ -5196,8 +5194,8 @@ class Script(default.Script):
                                             pyatspi.ROLE_MENU_ITEM,
                                             pyatspi.ROLE_LIST_ITEM,
                                             pyatspi.ROLE_UNKNOWN] \
-                  and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE) \
-                  and obj.state.count(atspi.Accessibility.STATE_SENSITIVE)
+                  and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+                  and obj.getState().contains(pyatspi.STATE_SENSITIVE)
 
         return isField
 
@@ -5846,7 +5844,7 @@ class Script(default.Script):
         # We also don't want to be guessing if the item doesn't have focus.
         #
         if not self.inDocumentContent() \
-           or not obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+           or not obj.getState().contains(pyatspi.STATE_FOCUSED) \
            or self.isAriaWidget(obj):
             return guess
 
@@ -5987,7 +5985,7 @@ class Script(default.Script):
         #
         elif obj.childCount and obj.child(0) \
              and not ((obj.getRole() == pyatspi.ROLE_LIST) \
-                 and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                 and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
             try:
                 return self.findNextCaretInOrder(obj.child(0),
                                                  -1,
@@ -6079,7 +6077,7 @@ class Script(default.Script):
         #
         elif obj.childCount and obj.child(obj.childCount - 1) \
              and not ((obj.getRole() == pyatspi.ROLE_LIST) \
-                 and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                 and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
 
             try:
                 return self.findPreviousCaretInOrder(
@@ -6649,7 +6647,7 @@ class Script(default.Script):
         # If we're in a focused HTML list, treat this object as if
         # it's the only thing on this line.
         #
-        limitToThis = obj.state.count(atspi.Accessibility.STATE_FOCUSED) \
+        limitToThis = obj.getState().contains(pyatspi.STATE_FOCUSED) \
                       and obj.getRole() in [pyatspi.ROLE_LIST_ITEM,
                                             pyatspi.ROLE_LIST]
 
@@ -6699,7 +6697,7 @@ class Script(default.Script):
             #
             if extents != (0, 0, 0, 0):
                 if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
-                   and not obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                   and not obj.getState().contains(pyatspi.STATE_SHOWING):
                     # If a combo box is on the current line, only append the
                     # menu item which is showing.
                     #
@@ -6741,7 +6739,7 @@ class Script(default.Script):
         stopping at the given object.
         """
 
-        #if not obj.state.count(atspi.Accessibility.STATE_SHOWING):
+        #if not obj.getState().contains(pyatspi.STATE_SHOWING):
         #    return [[None, -1, -1]]
 
         if not obj.text or not obj.text.characterCount:
@@ -6975,7 +6973,7 @@ class Script(default.Script):
         # it and trap the user in the list.
         #
         if obj.getRole() == pyatspi.ROLE_LIST \
-           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             characterOffset = self.getCharacterOffsetInParent(obj)
             obj = obj.parent
             self.setCaretContext(obj, characterOffset)
@@ -6993,8 +6991,8 @@ class Script(default.Script):
             #
             self._objectForFocusGrab = obj
             while self._objectForFocusGrab and obj:
-                if self._objectForFocusGrab.state.count(\
-                    atspi.Accessibility.STATE_FOCUSABLE):
+                if self._objectForFocusGrab.getState().contains(\
+                    pyatspi.STATE_FOCUSABLE):
                     break
                 else:
                     self._objectForFocusGrab = self._objectForFocusGrab.parent
@@ -7022,7 +7020,7 @@ class Script(default.Script):
         if character:
             if self.isAriaWidget() \
                  or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
-                 and not obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                 and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 caretSet = obj.text.setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
                                       obj,
@@ -7038,7 +7036,7 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.findNextCaretInOrder(obj,
                                                                characterOffset)
-            if obj and obj.state.count(atspi.Accessibility.STATE_VISIBLE):
+            if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
                 break
         if obj:
             self.setCaretPosition(obj, characterOffset)
@@ -7056,7 +7054,7 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.findPreviousCaretInOrder(
                 obj, characterOffset)
-            if obj and obj.state.count(atspi.Accessibility.STATE_VISIBLE):
+            if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
                 break
 
         if obj:
@@ -7217,7 +7215,7 @@ class Script(default.Script):
             # the caret position.
             #
             if lastObj.getRole() == pyatspi.ROLE_LIST_ITEM and not \
-               lastObj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+               lastObj.getState().contains(pyatspi.STATE_FOCUSABLE):
                 extents = self.getExtents(lastObj,
                                           lastCharacterOffset,
                                           lastCharacterOffset + 1)
@@ -7586,7 +7584,7 @@ class Script(default.Script):
             # focusable; (un)ordered lists are not.
             #
             if obj and \
-               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 found = True
 
         if wrapped:
@@ -7648,7 +7646,7 @@ class Script(default.Script):
             # focusable; (un)ordered lists are not.
             #
             if obj and \
-                (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+                (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7710,7 +7708,7 @@ class Script(default.Script):
             # not.
             #
             if obj and \
-               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7751,7 +7749,7 @@ class Script(default.Script):
             # not.
             #
             if obj and \
-               not (obj.state.count(atspi.Accessibility.STATE_FOCUSABLE)):
+               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7794,7 +7792,7 @@ class Script(default.Script):
             if wrapped:
                 wrap = False
             if obj and \
-               not obj.state.count(atspi.Accessibility.STATE_VISITED):
+               not obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7828,7 +7826,7 @@ class Script(default.Script):
             if wrapped:
                 wrap = False
             if obj and \
-               not obj.state.count(atspi.Accessibility.STATE_VISITED):
+               not obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7870,7 +7868,7 @@ class Script(default.Script):
             if wrapped:
                 wrap = False
             if obj and \
-               obj.state.count(atspi.Accessibility.STATE_VISITED):
+               obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7905,7 +7903,7 @@ class Script(default.Script):
                 wrap = False
 
             if obj and \
-               obj.state.count(atspi.Accessibility.STATE_VISITED):
+               obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -8016,7 +8014,7 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
         if obj.getRole() == pyatspi.ROLE_LIST_ITEM and \
-           obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+           obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             obj = obj.parent
 
         found = False
@@ -8075,10 +8073,10 @@ class Script(default.Script):
         # in the current combo box or list via findNextObject.
         #
         if obj.getRole() == pyatspi.ROLE_LIST_ITEM \
-           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             obj = obj.parent
         if obj.getRole() == pyatspi.ROLE_LIST \
-           and obj.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             obj = obj.child(obj.childCount - 1)
         elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             menu = obj.child(0)
