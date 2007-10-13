@@ -490,7 +490,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
             item = None
             for i in range(0, obj.childCount):
-                if obj.selection.isChildSelected(i):
+                if obj.querySelection().isChildSelected(i):
                     item = obj.child(i)
                     break
             if not item:
@@ -868,7 +868,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             item = None
             for i in range(0, obj.childCount):
-                if obj.selection.isChildSelected(i):
+                if obj.querySelection().isChildSelected(i):
                     item = obj.child(i)
                     break
             if i == obj.childCount - 1:
@@ -5383,7 +5383,7 @@ class Script(default.Script):
         elif direction == "down" and (row + rowspan <= nRows - 1):
             nextCell = (row + rowspan, col)
         if nextCell:
-            accCell = ctable.getAccessibleAt(nextCell[0], nextCell[1])
+            accCell = table.getAccessibleAt(nextCell[0], nextCell[1])
             newCell = atspi.Accessible.makeAccessible(accCell)
             if newCell:
                 [obj, offset] = self.findFirstCaretContext(newCell, 0)
@@ -7379,13 +7379,17 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
             comboBox = self.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
-            if comboBox and comboBox.action:
+            try:
+                action = comboBox.queryAction()
+            except:
+                pass
+            else:
                 orca.setLocusOfFocus(None, comboBox)
                 focusGrabbed = comboBox.component.grabFocus()
-                for i in range(0, comboBox.action.nActions):
-                    name = comboBox.action.getName(i)
+                for i in range(0, action.nActions):
+                    name = action.getName(i)
                     if name == "open":
-                        success = comboBox.action.doAction(i)
+                        success = action.doAction(i)
                         break
 
     def goPreviousHeading(self, inputEvent):
