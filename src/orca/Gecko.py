@@ -4409,7 +4409,7 @@ class Script(default.Script):
                     elif obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                         parent = obj.parent
                         index = obj.getIndexInParent()
-                        if parent.table.getColumnAtIndex(index) != 0:
+                        if parent.queryTable().getColumnAtIndex(index) != 0:
                             contents += " "
                     elif obj.getRole() == pyatspi.ROLE_LINK:
                         contents += "<"
@@ -4692,7 +4692,11 @@ class Script(default.Script):
         try:
             return obj.characterOffsetInParent
         except:
-            if obj.hyperlink:
+            try:
+                hyperlink = obj.queryHyperlink()
+            except NotImplementedError:
+                obj.characterOffsetInParent = -1
+            else:
                 index = 0
                 text = self.getUnicodeText(obj.parent)
                 # [[[TODO: JD - HACK and defensive measure.  Sometimes
@@ -4709,9 +4713,6 @@ class Script(default.Script):
                                 index += 1
                 else:
                     obj.characterOffsetInParent = -1
-            else:
-                obj.characterOffsetInParent = -1
-
         try:
             return obj.characterOffsetInParent
         except:
@@ -4888,9 +4889,13 @@ class Script(default.Script):
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
 
         parent = obj.parent
-        if parent and parent.table:
-            row = parent.table.getRowAtIndex(obj.getIndexInParent())
-            col = parent.table.getColumnAtIndex(obj.getIndexInParent())
+        try:
+            table = parent.queryTable()
+        except:
+            pass
+        else:
+            row = table.getRowAtIndex(obj.getIndexInParent())
+            col = table.getColumnAtIndex(obj.getIndexInParent())
             return [row, col]
 
         return [0, 0]
@@ -4905,9 +4910,13 @@ class Script(default.Script):
         - coordinates2: [row, col]
         """
 
-        if obj and obj.table:
-            index1 = obj.table.getIndexAt(coordinates1[0], coordinates1[1])
-            index2 = obj.table.getIndexAt(coordinates2[0], coordinates2[1])
+        try:
+            table = obj.queryTable()
+        except:
+            pass
+        else:
+            index1 = table.getIndexAt(coordinates1[0], coordinates1[1])
+            index2 = table.getIndexAt(coordinates2[0], coordinates2[1])
             return (index1 == index2)
 
         return False
@@ -4938,10 +4947,14 @@ class Script(default.Script):
         - obj: the table to examine
         """
 
-        if obj and obj.table:
+        try:
+            table = obj.queryTable()
+        except:
+            pass
+        else:
             for i in range(0, obj.childCount):
                 [isCell, row, col, rowExtents, colExtents, isSelected] = \
-                                       obj.table.getRowColumnExtentsAtIndex(i)
+                                       table.getRowColumnExtentsAtIndex(i)
                 if (rowExtents > 1) or (colExtents > 1):
                     return True
 
@@ -4967,10 +4980,11 @@ class Script(default.Script):
 
         allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            row = obj.parent.table.getRowAtIndex(obj.getIndexInParent())
-            nCols = obj.parent.table.nColumns
+            table = obj.parent.queryTable()
+            row = table.getRowAtIndex(obj.getIndexInParent())
+            nCols = table.nColumns
             for col in range(0, nCols):
-                accCell = obj.parent.table.getAccessibleAt(row, col)
+                accCell = table.getAccessibleAt(row, col)
                 cell = atspi.Accessible.makeAccessible(accCell)
                 if not self.isHeader(cell):
                     break
@@ -4989,10 +5003,11 @@ class Script(default.Script):
 
         allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            col = obj.parent.table.getColumnAtIndex(obj.getIndexInParent())
-            nRows = obj.parent.table.nRows
+            table = obj.parent.queryTable()
+            col = table.getColumnAtIndex(obj.getIndexInParent())
+            nRows = table.nRows
             for row in range(0, nRows):
-                accCell = obj.parent.table.getAccessibleAt(row, col)
+                accCell = table.getAccessibleAt(row, col)
                 cell = atspi.Accessible.makeAccessible(accCell)
                 if not self.isHeader(cell):
                     break
@@ -5010,15 +5025,18 @@ class Script(default.Script):
         if not obj:
             return rowHeaders
 
-        parent = obj.parent
-        if parent and parent.table:
+        try:
+            table = obj.parent.queryTable()
+        except:
+           pass
+        else:
             [row, col] = self.getCellCoordinates(obj)
             # Theoretically, we should be able to quickly get the text
             # of a {row, column}Header via get{Row,Column}Description().
             # Mozilla doesn't expose the information that way, however.
             # get{Row, Column}Header seems to work sometimes.
             #
-            accHeader = parent.table.getRowHeader(row)
+            accHeader = table.getRowHeader(row)
             if accHeader:
                 header = atspi.Accessible.makeAccessible(accHeader)
                 rowHeaders.append(header)
@@ -5030,14 +5048,14 @@ class Script(default.Script):
                 # If our cell spans multiple rows, we want to get all of
                 # the headers that apply.
                 #
-                rowspan = obj.parent.table.getRowExtentAt(row, col)
+                rowspan = table.getRowExtentAt(row, col)
                 for r in range(row, row+rowspan):
                     # We could have multiple headers for a given row, one
                     # header per column.  Presumably all of the headers are
                     # prior to our present location.
                     #
                     for c in range(0, col):
-                        accCell = parent.table.getAccessibleAt(r, c)
+                        accCell = table.getAccessibleAt(r, c)
                         cell = atspi.Accessible.makeAccessible(accCell)
                         if self.isHeader(cell) and cell.text and \
                            not cell in rowHeaders:
@@ -5054,15 +5072,18 @@ class Script(default.Script):
         if not obj:
             return columnHeaders
 
-        parent = obj.parent
-        if parent and parent.table:
+        try:
+            table = obj.parent.queryTable()
+        except:
+            pass
+        else:
             [row, col] = self.getCellCoordinates(obj)
             # Theoretically, we should be able to quickly get the text
             # of a {row, column}Header via get{Row,Column}Description().
             # Mozilla doesn't expose the information that way, however.
             # get{Row, Column}Header seems to work sometimes.
             #
-            accHeader = parent.table.getColumnHeader(col)
+            accHeader = table.getColumnHeader(col)
             if accHeader:
                 header = atspi.Accessible.makeAccessible(accHeader)
                 columnHeaders.append(header)
@@ -5074,14 +5095,14 @@ class Script(default.Script):
                 # If our cell spans multiple columns, we want to get all of
                 # the headers that apply.
                 #
-                colspan = obj.parent.table.getColumnExtentAt(row, col)
+                colspan = table.getColumnExtentAt(row, col)
                 for c in range(col, col+colspan):
                     # We could have multiple headers for a given column, one
                     # header per row.  Presumably all of the headers are
                     # prior to our present location.
                     #
                     for r in range(0, row):
-                        accCell = parent.table.getAccessibleAt(r, c)
+                        accCell = table.getAccessibleAt(r, c)
                         cell = atspi.Accessible.makeAccessible(accCell)
                         if self.isHeader(cell) and cell.text and \
                            not cell in columnHeaders:
@@ -5098,8 +5119,9 @@ class Script(default.Script):
             return
 
         [row, col] = self.getCellCoordinates(obj)
-        rowspan = obj.parent.table.getRowExtentAt(row, col)
-        colspan = obj.parent.table.getColumnExtentAt(row, col)
+        table = obj.parent.queryTable()
+        rowspan = table.getRowExtentAt(row, col)
+        colspan = table.getColumnExtentAt(row, col)
         spanString = None
         if (colspan > 1) and (rowspan > 1):
             # Translators: The cell here refers to a cell within an HTML
@@ -5346,10 +5368,11 @@ class Script(default.Script):
             return [newCell, text, extents, isField]
 
         [row, col] = self.getCellCoordinates(cell)
-        rowspan = cell.parent.table.getRowExtentAt(row, col)
-        colspan = cell.parent.table.getColumnExtentAt(row, col)
-        nRows = cell.parent.table.nRows
-        nCols = cell.parent.table.nColumns
+        table = cell.parent.queryTable()
+        rowspan = table.getRowExtentAt(row, col)
+        colspan = table.getColumnExtentAt(row, col)
+        nRows = table.nRows
+        nCols = table.nColumns
         nextCell = None
         if direction == "left" and col > 0:
             nextCell = (row, col - 1)
@@ -5360,8 +5383,7 @@ class Script(default.Script):
         elif direction == "down" and (row + rowspan <= nRows - 1):
             nextCell = (row + rowspan, col)
         if nextCell:
-            accCell = cell.parent.table.getAccessibleAt(nextCell[0],
-                                                        nextCell[1])
+            accCell = ctable.getAccessibleAt(nextCell[0], nextCell[1])
             newCell = atspi.Accessible.makeAccessible(accCell)
             if newCell:
                 [obj, offset] = self.findFirstCaretContext(newCell, 0)
@@ -5815,7 +5837,7 @@ class Script(default.Script):
                         done = True
 
             if grid:
-                cell = nextCell.parent.table.getAccessibleAt(0, col)
+                cell = nextCell.parent.queryTable().getAccessibleAt(0, col)
                 topCol = atspi.Accessible.makeAccessible(cell)
                 [objTop, offset] = self.findFirstCaretContext(topCol, 0)
                 if topCol.text and not self.isFormField(topCol):
@@ -7586,8 +7608,7 @@ class Script(default.Script):
             # list rather than a list in a form field. Form field lists are
             # focusable; (un)ordered lists are not.
             #
-            if obj and \
-               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+            if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
                 found = True
 
         if wrapped:
@@ -7648,8 +7669,7 @@ class Script(default.Script):
             # list rather than a list in a form field. Form field lists are
             # focusable; (un)ordered lists are not.
             #
-            if obj and \
-                (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+            if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
                 found = True
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -8161,6 +8181,7 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to bottom."))
         if obj:
+            table = obj.queryTable()
             caption = self.getTableCaption(obj)
             if caption and caption.text:
                 text = self.getDisplayedText(caption)
@@ -8174,8 +8195,8 @@ class Script(default.Script):
                 # one table cell occupies more than one row and/or column.
                 #
                 nonUniformString = _("Non-uniform")
-            nRows = obj.table.nRows
-            nColumns = obj.table.nColumns
+            nRows = table.nRows
+            nColumns = table.nColumns
             # Translators: this represents the number of rows in an HTML table.
             #
             rowString = ngettext("Table with %d row",
@@ -8188,7 +8209,7 @@ class Script(default.Script):
                                   nColumns) % nColumns
             speech.speak(nonUniformString + " " + rowString + " " + colString)
 
-            cell = obj.table.getAccessibleAt(0, 0)
+            cell = table.getAccessibleAt(0, 0)
             obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
 
@@ -8210,6 +8231,7 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to top."))
         if obj:
+            table = obj.queryTable()
             caption = self.getTableCaption(obj)
             if caption and caption.text:
                 text = self.getDisplayedText(caption)
@@ -8223,8 +8245,8 @@ class Script(default.Script):
                 # one table cell occupies more than one row and/or column.
                 #
                 nonUniformString = _("Non-uniform")
-            nRows = obj.table.nRows
-            nColumns = obj.table.nColumns
+            nRows = table.nRows
+            nColumns = table.nColumns
             # Translators: this represents the number of rows in an HTML table.
             #
             rowString = ngettext("Table with %d row",
@@ -8236,7 +8258,7 @@ class Script(default.Script):
                                  "%d columns",
                                   nColumns) % nColumns
             speech.speak(nonUniformString + " " + rowString + " " + colString)
-            cell = obj.table.getAccessibleAt(0, 0)
+            cell = table.getAccessibleAt(0, 0)
             obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
 
@@ -8254,15 +8276,16 @@ class Script(default.Script):
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getColumnHeaders(obj)
-            table = obj.parent
-            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+            parent = obj.parent
+            table = parent.queryTable()
+            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
                 # The stored row helps us maintain the correct position
                 # when traversing cells that span multiple rows.
                 #
                 row = storedRow
             found = False
             while not found and col > 0:
-                cell = table.table.getAccessibleAt(row, col - 1)
+                cell = table.getAccessibleAt(row, col - 1)
                 self.lastTableCell = [row, col - 1]
                 obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
@@ -8302,17 +8325,18 @@ class Script(default.Script):
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getColumnHeaders(obj)
-            table = obj.parent
-            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+            parent = obj.parent
+            table = parent.queryTable()
+            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
                 # The stored row helps us maintain the correct position
                 # when traversing cells that span multiple rows.
                 #
                 row = storedRow
-            colspan = table.table.getColumnExtentAt(row, col)
+            colspan = table.getColumnExtentAt(row, col)
             nextCol = col + colspan
             found = False
-            while not found and (nextCol <= table.table.nColumns - 1):
-                cell = table.table.getAccessibleAt(row, nextCol)
+            while not found and (nextCol <= table.nColumns - 1):
+                cell = table.getAccessibleAt(row, nextCol)
                 self.lastTableCell = [row, nextCol]
                 obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
@@ -8320,7 +8344,7 @@ class Script(default.Script):
                     found = True
                 else:
                     col += 1
-                    colspan = table.table.getColumnExtentAt(row, col)
+                    colspan = table.getColumnExtentAt(row, col)
                     nextCol = col + colspan
 
             if found:
@@ -8354,15 +8378,16 @@ class Script(default.Script):
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getRowHeaders(obj)
-            table = obj.parent
-            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+            parent = obj.parent
+            table = parent.queryTable()
+            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
                 # The stored column helps us maintain the correct position
                 # when traversing cells that span multiple columns.
                 #
                 col = storedCol
             found = False
             while not found and row > 0:
-                cell = table.table.getAccessibleAt(row - 1, col)
+                cell = table.getAccessibleAt(row - 1, col)
                 self.lastTableCell = [row - 1, col]
                 obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
@@ -8402,17 +8427,18 @@ class Script(default.Script):
             [row, col] = self.getCellCoordinates(obj)
             [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getRowHeaders(obj)
-            table = obj.parent
-            if self.isSameCell(table, [row, col], [storedRow, storedCol]):
+            parent = obj.parent
+            table = parent.queryTable()
+            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
                 # The stored column helps us maintain the correct position
                 # when traversing cells that span multiple columns.
                 #
                 col = storedCol
-            rowspan = table.table.getRowExtentAt(row, col)
+            rowspan = table.getRowExtentAt(row, col)
             nextRow = row + rowspan
             found = False
-            while not found and (nextRow <= table.table.nRows - 1):
-                cell = table.table.getAccessibleAt(nextRow, col)
+            while not found and (nextRow <= table.nRows - 1):
+                cell = table.getAccessibleAt(nextRow, col)
                 self.lastTableCell = [nextRow, col]
                 obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
@@ -8420,7 +8446,7 @@ class Script(default.Script):
                     found = True
                 else:
                     row += 1
-                    rowspan = table.table.getRowExtentAt(row, col)
+                    rowspan = table.getRowExtentAt(row, col)
                     nextRow = row + rowspan
 
             if found:
@@ -8451,7 +8477,7 @@ class Script(default.Script):
         if obj.getRole() != pyatspi.ROLE_TABLE:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
         if obj:
-            cell = obj.table.getAccessibleAt(0, 0)
+            cell = obj.queryTable().getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
             obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
@@ -8466,9 +8492,10 @@ class Script(default.Script):
         if obj.getRole() != pyatspi.ROLE_TABLE:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
         if obj:
-            lastRow = obj.table.nRows - 1
-            lastCol = obj.table.nColumns - 1
-            cell = obj.table.getAccessibleAt(lastRow, lastCol)
+            table = obj.queryTable()
+            lastRow = table.nRows - 1
+            lastCol = table.nColumns - 1
+            cell = table.getAccessibleAt(lastRow, lastCol)
             self.lastTableCell = [lastRow, lastCol]
             obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
