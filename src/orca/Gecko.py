@@ -4769,7 +4769,7 @@ class Script(default.Script):
            and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
             extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
         else:
-            ext = obj.extents
+            ext = obj.queryComponent().getExtents(0)
             extents = [ext.x, ext.y, ext.width, ext.height]
         return extents
 
@@ -6017,8 +6017,8 @@ class Script(default.Script):
                 debug.printException(debug.LEVEL_SEVERE)
 
         elif includeNonText and (startOffset < 0) \
-            and (not self.isLayoutOnly(obj)):
-            extents = obj.extents
+             and (not self.isLayoutOnly(obj)):
+            extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
 
@@ -6112,7 +6112,7 @@ class Script(default.Script):
 
         elif includeNonText and (startOffset < 0) \
             and (not self.isLayoutOnly(obj)):
-            extents = obj.extents
+            extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
 
@@ -7122,7 +7122,6 @@ class Script(default.Script):
 
         # Find the beginning of the current word
         #
-        print 'goNextWord'
         [obj, characterOffset] = self.getCaretContext()
         contents = self.getWordContentsAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]

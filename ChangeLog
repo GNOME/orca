@@ -1,6 +1,12 @@
 2007-10-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          pyatspi migration: use obj.queryComponent().getExtents(0) 
+          instead of obj.extents.
+
+2007-10-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           pyatspi migration: use obj.queryComponent() instead of 
           obj.component.  More use acc[i] instead of acc.child(i).
 
