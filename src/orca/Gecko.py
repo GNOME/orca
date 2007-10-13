@@ -3902,7 +3902,7 @@ class Script(default.Script):
         """
 
         rolesList = [pyatspi.ROLE_PROGRESS_BAR, \
-                     pyatspi.ROLE_STATUSBAR, \
+                     pyatspi.ROLE_STATUS_BAR, \
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
         if not self.isDesiredFocusedItem(event.source, rolesList):
@@ -4659,13 +4659,14 @@ class Script(default.Script):
             
     def isAriaWidget(self, obj=None):
         obj = obj or orca_state.locusOfFocus
-        
-        attrs = obj.getAttributes()
-        if attrs is None:
-            return False
-        for attr in attrs:
-            if attr.startswith('xml-roles'):
-                return True
+        try:
+            attrs = obj.getAttributes()
+        except:
+            pass
+        else:
+            for attr in attrs:
+                if attr.startswith('xml-roles'):
+                    return True
         return False
 
     def getCharacterOffsetInParent(self, obj):
