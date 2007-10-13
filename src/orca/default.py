@@ -605,11 +605,6 @@ class Script(script.Script):
                 orca.quitOrca,
                 _("Quits Orca"))
 
-        self.inputEventHandlers["helpHandler"] = \
-            input_event.InputEventHandler(
-                orca.helpForOrca,
-                _("Display help information for Orca"))
-
         self.inputEventHandlers["keystrokeRecordingHandler"] = \
             input_event.InputEventHandler(
                 orca.toggleKeystrokeRecording,
@@ -1330,13 +1325,6 @@ class Script(script.Script):
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["shutdownHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "h",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["helpHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
