@@ -15,32 +15,19 @@
         <property name="n_rows">1</property>
         <property name="n_columns">4</property>
         <child>
-          <widget class="GtkButton" id="quitButton">
+          <widget class="GtkButton" id="preferencesButton">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="label">gtk-quit</property>
+            <property name="label">gtk-preferences</property>
             <property name="use_stock">True</property>
             <property name="response_id">0</property>
-            <signal name="clicked" handler="quitButtonClicked"/>
+            <signal name="clicked" handler="preferencesButtonClicked"/>
           </widget>
           <packing>
-            <property name="left_attach">1</property>
-            <property name="right_attach">2</property>
             <property name="x_options"></property>
             <property name="y_options"></property>
+            <property name="x_padding">5</property>
             <property name="y_padding">5</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkLabel" id="label1">
-            <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="label" translatable="yes">          </property>
-          </widget>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="right_attach">3</property>
-            <property name="y_options"></property>
           </packing>
         </child>
         <child>
@@ -62,18 +49,32 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkButton" id="preferencesButton">
+          <widget class="GtkLabel" id="label1">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="label">gtk-preferences</property>
-            <property name="use_stock">True</property>
-            <property name="response_id">0</property>
-            <signal name="clicked" handler="preferencesButtonClicked"/>
+            <property name="xalign">0</property>
+            <property name="use_markup">True</property>
           </widget>
           <packing>
-            <property name="x_options"></property>
+            <property name="left_attach">2</property>
+            <property name="right_attach">3</property>
             <property name="y_options"></property>
             <property name="x_padding">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkButton" id="quitButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="label">gtk-quit</property>
+            <property name="use_stock">True</property>
+            <property name="response_id">0</property>
+            <signal name="clicked" handler="quitButtonClicked"/>
+          </widget>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="right_attach">2</property>
+            <property name="x_options"></property>
+            <property name="y_options"></property>
             <property name="y_padding">5</property>
           </packing>
         </child>
