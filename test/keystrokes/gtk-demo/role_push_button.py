@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -19,62 +20,74 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Button Boxes", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# When the Button Boxes demo window appears, the following should be
-# presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'
-#      VISIBLE:  'OK Button', cursor=1
-#
-# SPEECH OUTPUT: 'Button Boxes frame'
-# SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel'
-# SPEECH OUTPUT: 'OK button'
-# 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "OK button",
+    ["BRAILLE LINE:  'Window Button Boxes $l'",
+     "     VISIBLE:  'Window Button Boxes $l', cursor=20",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1'",
+     "     VISIBLE:  'Button Boxes TREE LEVEL 1', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame'",
+     "     VISIBLE:  'Button Boxes Frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
+     "SPEECH OUTPUT: 'Button Boxes'",
+     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'Button Boxes frame'",
+     "SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel'",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'
-#      VISIBLE:  'OK Button', cursor=1
-#
-# SPEECH OUTPUT: 'OK'
-# SPEECH OUTPUT: 'button'
-# SPEECH OUTPUT: ' Alt o'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "OK button Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'OK'",
+     "SPEECH OUTPUT: 'button'",
+     "SPEECH OUTPUT: ' Alt o'"]))
 
 ########################################################################
-# Tab to the Cancel button.  The following should be presented:
+# Tab to the Cancel button.
 #
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel Cancel Button'
-#      VISIBLE:  'Cancel Button', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Cancel button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Cancel", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Cancel button",
+    ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel Cancel Button'",
+     "     VISIBLE:  'Cancel Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Cancel button'"]))
 
 ########################################################################
-# Tab to the next "OK" button in the "Edge" panel.  The following should
-# be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Edge Panel OK Button'
-#      VISIBLE:  'OK Button', cursor=1
-#      
-# SPEECH OUTPUT: 'Edge panel'
-# SPEECH OUTPUT: 'OK button'
+# Tab to the next "OK" button in the "Edge" panel.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Help", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "OK Edge button",
+    ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Edge Panel OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'Edge panel'",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Close the demo

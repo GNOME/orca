@@ -1,5 +1,15 @@
 2007-10-13  Willie Walker <william.walker@sun.com>
 
+        * test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_radio_button.py:
+          test/keystrokes/gtk-demo/role_radio_menu_item.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_menu.py:
+          More work on test assertions.  102 assertions in 16 files
+          so far.  10 more files to go for the gtk-demo tests.
+
+2007-10-13  Willie Walker <william.walker@sun.com>
+
         * src/orca/default.py:
           Pull helpHandler (Insert+h) support.
 
@@ -8,11 +18,11 @@
 
 2007-10-12  Willie Walker <william.walker@sun.com>
 
-        * harness/utils.py
-          keystrokes/gtk-demo/role_combo_box.py
-          keystrokes/gtk-demo/role_label.py
-          keystrokes/gtk-demo/role_icon.py
-          keystrokes/gtk-demo/role_dialog.py
+        * harness/utils.py:
+          keystrokes/gtk-demo/role_combo_box.py:
+          keystrokes/gtk-demo/role_label.py:
+          keystrokes/gtk-demo/role_icon.py:
+          keystrokes/gtk-demo/role_dialog.py:
           keystrokes/gtk-demo/role_column_header.py:
           More work on assertions.  Also try to flag possible bugs in 
           a way to make them easier to identify.  Also make the actual

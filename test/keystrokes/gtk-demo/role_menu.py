@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -23,128 +24,131 @@ sequence.append(TypeAction("Application main window", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the demo comes up, open the File menu via F10.  The following
-# should be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'
-#      VISIBLE:  'File Menu', cursor=1
-# SPEECH OUTPUT: 'File menu'
+# When the demo comes up, open the File menu via F10.
 #
 #sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F10"))
 sequence.append(WaitForFocus("File",
                              acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "File menu",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'File menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'
-#      VISIBLE:  'File Menu', cursor=1
-#
-# SPEECH OUTPUT: ' menu bar'
-# SPEECH OUTPUT: 'File'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 1 of 3'
-# SPEECH OUTPUT: 'Alt f'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "File menu Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "SPEECH OUTPUT: ' menu bar'",
+     "SPEECH OUTPUT: 'File'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 3'",
+     "SPEECH OUTPUT: 'Alt f'"]))
 
 ########################################################################
-# Right arrow to the "Preferences" menu.  The following should be
-# presented:
+# Right arrow to the "Preferences" menu.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'
-#      VISIBLE:  'Preferences Menu', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Preferences menu'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Preferences",
                              acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "Preferences menu",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
+     "     VISIBLE:  'Preferences Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Preferences menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'
-#      VISIBLE:  'Preferences Menu', cursor=1
-#
-# SPEECH OUTPUT: ' menu bar'
-# SPEECH OUTPUT: 'Preferences'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 2 of 3'
-# SPEECH OUTPUT: 'Alt p'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Preferences menu Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
+     "     VISIBLE:  'Preferences Menu', cursor=1",
+     "SPEECH OUTPUT: ' menu bar'",
+     "SPEECH OUTPUT: 'Preferences'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 'Alt p'"]))
 
 ########################################################################
-# Go down to the "Color" menu.  The following should be presented
-# [[[BUG?: Should parent menus be shown in the braille context?  For
-# example, should the "Preferences" menu appear here?]]]:
+# Go down to the "Color" menu.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'
-#      VISIBLE:  'Color Menu', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Color menu'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Color",
                              acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "Color menu",
+    ["BUG? - should parent menus be shown in braille context?",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
+     "     VISIBLE:  'Color Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Color menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'
-#      VISIBLE:  'Color Menu', cursor=1
-#
-# SPEECH OUTPUT: 'Preferences menu'
-# SPEECH OUTPUT: 'Color'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 1 of 3'
-# SPEECH OUTPUT: 'c'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Color menu Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
+     "     VISIBLE:  'Color Menu', cursor=1",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Color'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 3'",
+     "SPEECH OUTPUT: 'c'"]))
 
 ########################################################################
-# Go down to the "Shape" menu.  The following should be presented:
+# Go down to the "Shape" menu.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'
-#      VISIBLE:  'Shape Menu', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Shape menu'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Shape",
                              acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "Shape menu",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
+     "     VISIBLE:  'Shape Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Shape menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'
-#      VISIBLE:  'Shape Menu', cursor=1
-#
-# SPEECH OUTPUT: 'Preferences menu'
-# SPEECH OUTPUT: 'Shape'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 2 of 3'
-# SPEECH OUTPUT: 's'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Shape menu Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
+     "     VISIBLE:  'Shape Menu', cursor=1",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Shape'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 's'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

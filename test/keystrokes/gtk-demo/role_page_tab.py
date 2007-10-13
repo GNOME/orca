@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -19,65 +20,82 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Printing", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# When the Printing demo window appears, the following should be
-# presented [[[BUG?: should the braille for the page tab rolename be
-# presented in braille?]]]:
-#
-# BRAILLE LINE:  'gtk-demo Application Print Dialog General'
-#      VISIBLE:  'General', cursor=1
-#
-# SPEECH OUTPUT: 'Print Print Pages Copies'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'General page'
-# 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "General page tab",
+    ["BUG? - should the page tab role be presented in braille?",
+     "BRAILLE LINE:  'Window Printing $l'",
+     "     VISIBLE:  'Window Printing $l', cursor=16",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
+     "     VISIBLE:  'Printing TREE LEVEL 1', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
+     "     VISIBLE:  'Print Dialog', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList'",
+     "     VISIBLE:  'TabList', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog General'",
+     "     VISIBLE:  'General', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
+     "SPEECH OUTPUT: 'Printing'",
+     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'Print Print Pages Copies'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'General page'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Print Dialog General'
-#      VISIBLE:  'General', cursor=1
-#
-# SPEECH OUTPUT: 'tab list'
-# SPEECH OUTPUT: 'General page'
-# SPEECH OUTPUT: 'item 1 of 2'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "General page tab Where Am I",
+    ["BUG? - should the page tab role be presented in braille?",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog General'",
+     "     VISIBLE:  'General', cursor=1",
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'General page'",
+     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Arrow Right to the "Page Setup" tab.  The following should be
-# presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'
-#      VISIBLE:  'Page Setup', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Page Setup page'
+# Arrow Right to the "Page Setup" tab.
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "Page Setup page tab",
+    ["BUG? - should the page tab role be presented in braille?",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'",
+     "     VISIBLE:  'Page Setup', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Page Setup page'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'
-#      VISIBLE:  'Page Setup', cursor=1
-# 
-# SPEECH OUTPUT: 'tab list'
-# SPEECH OUTPUT: 'Page Setup page'
-# SPEECH OUTPUT: 'item 2 of 2'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Page Setup page tab Where Am I",
+    ["BUG? - should the page tab role be presented in braille?",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'",
+     "     VISIBLE:  'Page Setup', cursor=1",
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'Page Setup page'",
+     "SPEECH OUTPUT: 'item 2 of 2'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Close the demo
