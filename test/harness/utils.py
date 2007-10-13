@@ -56,7 +56,7 @@ def assertListEquality(rawOrcaResults, expectedList):
 
     results = rawOrcaResults.strip().split("\n")
     if results != expectedList:
-        return "%s" % results
+        return results
     else:
         return None
 
@@ -107,9 +107,17 @@ class AssertPresentationAction(AtomicAction):
                                AssertPresentationAction.totalCount, 
                                self._name)
             print >> myErr, "EXPECTED:"
-            print >> myErr, self._expectedResults
+            if isinstance(self._expectedResults, [].__class__):
+                for result in self._expectedResults:
+                    print >> myErr, '     "%s",' % result
+            else:
+                print >> myErr, '     "%s"' % self._expectedResults
             print >> myErr, "ACTUAL:"
-            print >> myErr, results
+            if isinstance(results, [].__class__):
+                for result in results:
+                    print >> myErr, '     "%s",' % result
+            else:
+                print >> myErr, '     "%s"' % results
    
     def __str__(self):
         return 'Assert Presentation Action: %s' % self._name

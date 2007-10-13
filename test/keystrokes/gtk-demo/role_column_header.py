@@ -76,12 +76,14 @@ sequence.append(utils.AssertPresentationAction(
     "Enter table for first time",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table'",
      "     VISIBLE:  'Table', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table [[[BUG? - this should be Description]]] ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "BUG? - the ColumnHeader should be Description",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'scrollable notebooks and hidden tabs', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '[[[BUG? - this should be Description]]] column header'"
+     "BUG? - the column header should be Description",
+     "SPEECH OUTPUT: 'Fixed? column header'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Fixed? check box not checked  60482 Normal scrollable notebooks and hidden tabs'"]))
 
@@ -104,18 +106,19 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  [[[BUG? - is there a way to 
-# determine the column and/or row header via Where Am I?]]]
+# Do a basic "Where Am I" via KP_Enter.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Normal cell Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BUG? - should we present column and/or row header?",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '[[[BUG? - this should give checkbox state.]]]'",
+     "BUG? - the following should contain the checkbox state'",
+     "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '60482'",
      "SPEECH OUTPUT: 'Normal'",
@@ -169,7 +172,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '[[[BUG? - this should give checkbox state.]]]'",
+     "BUG? - the following should contain the checkbox state'",
+     "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '60482'",
      "SPEECH OUTPUT: 'Normal'",

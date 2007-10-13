@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -33,127 +34,177 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ########################################################################
-# Tab to the "This message box..." label.  The following should be
-# presented:
+# Tab to the "This message box..." label.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-#      
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'This message box has been popped up the following
-# number of times: label'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LABEL))
+sequence.append(WaitAction("object:state-changed:focused",
+                           None,
+                           None,
+                           pyatspi.ROLE_LABEL,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times: label'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: the label text is selected, should it be marked
-# as such in braille?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-#
-# SPEECH OUTPUT: 'This message box has been popped up the following
-# number of times:'
-# SPEECH OUTPUT: 'label'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label Where Am I",
+    ["BUG? - text is selected but not presented as such in speech or braille",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
-# Do an extended "Where Am I" via double KP_Enter.  The following should
-# be presented [[[BUG?: the label text is selected -- should it be
-# presented?]]]:
+# Do an extended "Where Am I" via double KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-#
-# SPEECH OUTPUT: 'This message box has been popped up the following
-# number of times:'
-# SPEECH OUTPUT: 'label'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label Extended Where Am I",
+    ["BUG? - text is selected but not presented as such in speech or braille",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
 # Position the caret at the beginning of the label and move right one
-# character.  The following should be presented [[[BUG?: the caret
-# position in braille doesn't update.  This becomes worse as you scroll
-# to text that is off the braille display -- the display doesn't scroll
-# to show the text.  This cursor offset bug is prevalent throughout this
-# test.]]]
+# character.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-#
-# SPEECH OUTPUT: 'h'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Home"))
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_LABEL,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret movement to 'h'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "BUG? - the cursor should be at 2 in the following braille output",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'h'"]))
 
 ########################################################################
-# Select the rest of the word "This".  [[[BUG?: we should be presenting
-# the new selection, but we're not.]]]
+# Select the rest of the word "This".
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-selection-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_LABEL,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret select 'his' of 'This'",
+    ["BUG? - no selection is announced?"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: the label text is selected, should it be marked
-# as such in braille?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-# SPEECH OUTPUT: 'This message box has been popped up the following
-# number of times:'
-# SPEECH OUTPUT: 'label'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret selection Where Am I",
+    ["BUG? - text selection not presented in speech or braille",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "BUG? - the cursor is wrong in the following braille output",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
-# Do an extended "Where Am I" via double KP_Enter.  The following should
-# be presented [[[BUG?: the label text is selected -- should it be
-# presented?]]]:
+# Do an extended "Where Am I" via double KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-# SPEECH OUTPUT: 'This message box has been popped up the following
-# number of times:'
-# SPEECH OUTPUT: 'label'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret selection Extended Where Am I",
+    ["BUG? - text selection not presented in speech or braille",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "BUG? - the cursor is wrong in the following braille output",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "BUG? - the cursor is wrong in the following braille output",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times:'",
+     "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
 # Arrow left to clear the selection and then do a Shift+Control+Left to
-# select the beginning of the word "This".  The following should be
-# presented:
+# select the beginning of the word "This".
 #
-# BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following
-# number of times: Label'
-#      VISIBLE:  'This message box has been popped', cursor=1
-#      
-# SPEECH OUTPUT: 'T'
-# SPEECH OUTPUT: 'selected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left", 500))
 sequence.append(KeyComboAction("<Shift><Control>Left", 500))
+sequence.append(WaitAction("object:text-selection-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_LABEL,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret select 'T' in 'This'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'T'", "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
-# Reselect the rest of the word "This".  [[[BUG?: we should be presenting
-# the new selection, but we're not.]]]
+# Reselect the rest of the word "This".
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-selection-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_LABEL,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "This message box label caret select rest of 'This'",
+    ["BUG? - new text selection not presented in speech or braille",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
+     "number of times: Label'",
+     "BUG? - the cursor is wrong in the following braille output",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'unselected'"]))
 
 ########################################################################
 # Close the demo subwindow.

@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -33,95 +34,83 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Icon View Basics", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# Once the GtkIconView demo is up, the following should be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'
-#      VISIBLE:  'LayeredPane', cursor=1
-#
-# SPEECH OUTPUT: 'GtkIconView demo frame'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'layered pane'
-#
-#sequence.append(WaitForWindowActivate("GtkIconView demo",None))
-# ""
+sequence.append(utils.StartRecordingAction())
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LAYERED_PANE))
+sequence.append(utils.AssertPresentationAction(
+    "Layered pane focus",
+    ["BUG? - should something be presented here?"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'
-#      VISIBLE:  'LayeredPane', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'layered pane'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Layered pane Where Am I",
+    ["BUG? - should we present the number of items in the layered pane?",
+     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
+     "     VISIBLE:  'LayeredPane', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'layered pane'"]))
 
 ########################################################################
 # Down into the icon list, finally making something be selected in the
-# view.  The following should be presented:
+# view.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'
-#      VISIBLE:  'bin Icon', cursor=1
-#     
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'bin icon'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
+sequence.append(utils.AssertPresentationAction(
+    "bin icon",
+    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
+     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane Desktop Icon'",
+     "     VISIBLE:  'Desktop Icon', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Desktop icon'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: the bin icon is shown as selected in the view,
-# so should it be "1 of n items selected"?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'
-#      VISIBLE:  'bin Icon', cursor=1
-#
-# SPEECH OUTPUT: 'Icon panel'
-# SPEECH OUTPUT: 'bin'
-# SPEECH OUTPUT: 'icon'
-# SPEECH OUTPUT: '0 of 26 items selected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "bin icon Where Am I",
+    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
+     "BUG? - the icon is shown as selected, so we should present 1 of 26 items selected."]))
 
 ########################################################################
-# Arrow right and wait for the next icon to be selected.  The
-# presentation should be similar to the following:
+# Arrow right and wait for the next icon to be selected.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane boot Icon'
-#      VISIBLE:  'boot Icon', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'boot icon'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
+sequence.append(utils.AssertPresentationAction(
+    "boot icon",
+    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /"]))
 
 ########################################################################
-# Select more than one icon by doing Shift+Right.  [[[BUG?: should
-# Orca announce "selected" when an icon is selected?]]]
+# Select more than one icon by doing Shift+Right.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Right", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
+sequence.append(utils.AssertPresentationAction(
+    "icon selection",
+    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
+     "BUG? - we do not announce selection of icons when they are selected."]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: should it be "2 of n items selected"?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'
-#      VISIBLE:  'cdrom Icon', cursor=1
-#
-# SPEECH OUTPUT: 'Icon panel'
-# SPEECH OUTPUT: 'cdrom'
-# SPEECH OUTPUT: 'icon'
-# SPEECH OUTPUT: '0 of 26 items selected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "icon selection Where Am I",
+    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
+     "BUG? - we do not announce selection of icons (e.g., 2 of 26 items selected)."]))
 
 ########################################################################
 # Close the GtkIconView demo window

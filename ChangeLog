@@ -1,3 +1,16 @@
+2007-10-12  Willie Walker <william.walker@sun.com>
+
+        * harness/utils.py
+          keystrokes/gtk-demo/role_combo_box.py
+          keystrokes/gtk-demo/role_label.py
+          keystrokes/gtk-demo/role_icon.py
+          keystrokes/gtk-demo/role_dialog.py
+          keystrokes/gtk-demo/role_column_header.py:
+          More work on assertions.  Also try to flag possible bugs in 
+          a way to make them easier to identify.  Also make the actual
+          output something that can be easily cut/pasted into a test
+          file (helps with creating assertions).
+
 2007-10-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

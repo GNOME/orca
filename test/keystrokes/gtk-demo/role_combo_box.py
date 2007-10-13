@@ -203,7 +203,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
      "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'text Four' [[[BUG? - should the selected state be spoken?]]]"]))
+     "BUG? - should the selected state be spoken below?",
+     "SPEECH OUTPUT: 'text Four'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -278,7 +279,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
      "     VISIBLE:  'Two $l', cursor=4",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text Two' [[[BUG? - should the selected state be spoken?]]]"]))
+     "BUG? - should the selected state be spoken below?",
+     "SPEECH OUTPUT: 'text Two'"]))
 
 ########################################################################
 # Close the Combo boxes demo
