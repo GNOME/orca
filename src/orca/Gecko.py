@@ -380,13 +380,13 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         menu = None
         for i in range(0, obj.childCount):
-            child = obj.child(i)
+            child = obj[i]
             if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
             for i in range(0, menu.childCount):
-                child = menu.child(i)
+                child = menu[i]
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     regions.append(braille.Region(child.name))
 
@@ -491,10 +491,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             item = None
             for i in range(0, obj.childCount):
                 if obj.querySelection().isChildSelected(i):
-                    item = obj.child(i)
+                    item = obj[i]
                     break
             if not item:
-                item = obj.child(0)
+                item = obj[0]
             regions.append(braille.Region(item.name + " "))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -869,10 +869,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             item = None
             for i in range(0, obj.childCount):
                 if obj.querySelection().isChildSelected(i):
-                    item = obj.child(i)
+                    item = obj[i]
                     break
             if i == obj.childCount - 1:
-                item = obj.child(0)
+                item = obj[0]
             if item:
                 name = self._getSpeechForObjectName(item)
                 if name != label:
@@ -1361,7 +1361,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         currentobj = obj
         
         # start at the first object after document frame
-        obj = self._script.getDocumentFrame().child(0)
+        obj = self._script.getDocumentFrame()[0]
         while obj:
             nodetotal += 1
             if obj == currentobj:
@@ -1652,7 +1652,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         returnobj = self._script.getDocumentFrame()
         
         for childnumber in path:
-            next = returnobj.child(childnumber)
+            next = returnobj[childnumber]
             if next:
                 returnobj = next
             else:
@@ -3119,7 +3119,7 @@ class Script(default.Script):
                 # children with findNextObject().
                 #
                 if obj.childCount and obj.getRole() != pyatspi.ROLE_TABLE:
-                    obj = obj.child(obj.childCount - 1)
+                    obj = obj[obj.childCount - 1]
                 while obj and not moreLines:
                     obj = self.findNextObject(obj)
                     if obj:
@@ -3224,7 +3224,7 @@ class Script(default.Script):
                 # label is the combo box/list. See bug #428114, #441476.
                 #
                 if label.childCount:
-                    bogus = (label.child(0).getRole() == obj.getRole())
+                    bogus = (label[0].getRole() == obj.getRole())
 
             if not bogus:
                 # Bogus case #2:
@@ -3395,7 +3395,7 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
            and event.source.childCount \
-           and event.source.child(0).getRole() == pyatspi.ROLE_UNKNOWN:
+           and event.source[0].getRole() == pyatspi.ROLE_UNKNOWN:
             return
 
         # Otherwise, we'll just assume that the thing in which the caret
@@ -3668,7 +3668,7 @@ class Script(default.Script):
             if containingLink == event.source:
                 return
             elif event.source.childCount == 1:
-                child = event.source.child(0)
+                child = event.source[0]
                 orca.setLocusOfFocus(event, child)
                 return
 
@@ -4875,7 +4875,7 @@ class Script(default.Script):
         None if the entry cannot be found.
         """
         for i in range(0, obj.childCount):
-            child = obj.child(i)
+            child = obj[i]
             if child and (child.getRole() == pyatspi.ROLE_ENTRY):
                 return child
         return None
@@ -4934,7 +4934,7 @@ class Script(default.Script):
             return False
         else:
             for i in range(0, obj.childCount):
-                if obj.child(i).getRole() == pyatspi.ROLE_LINK:
+                if obj[i].getRole() == pyatspi.ROLE_LINK:
                      return False
 
             return True
@@ -5150,7 +5150,7 @@ class Script(default.Script):
         if the caption cannot be found.
         """
         for i in range(0, obj.childCount):
-            child = obj.child(i)
+            child = obj[i]
             if child and (child.getRole() == pyatspi.ROLE_CAPTION):
                 return child
         return None
@@ -5336,7 +5336,7 @@ class Script(default.Script):
         """Returns the last object in the document frame"""
 
         documentFrame = self.getDocumentFrame()
-        lastChild = documentFrame.child(documentFrame.childCount - 1)
+        lastChild = documentFrame[documentFrame.childCount - 1]
         while lastChild:
             lastObj = self.findNextObject(lastChild)
             if lastObj:
@@ -5450,7 +5450,7 @@ class Script(default.Script):
         # Reverse this order for radio buttons and check boxes
         #
         guess = None
-        extents = obj.component.getExtents(0)
+        extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
         lineContents = self.getLineContentsAtOffset(obj, 0)
 
@@ -5461,7 +5461,7 @@ class Script(default.Script):
         objectsOnLine = []
         for content in lineContents:
             objectsOnLine.append(content[0])
-            extents = content[0].component.getExtents(0)
+            extents = content[0].queryComponent().getExtents(0)
             contentExtents = \
                      [extents.x, extents.y, extents.width, extents.height]
             if objExtents == contentExtents:
@@ -5474,12 +5474,12 @@ class Script(default.Script):
         onRight = None
         if ourIndex > 0:
             onLeft = objectsOnLine[ourIndex - 1]
-            extents = content[0].component.getExtents(0)
+            extents = content[0].queryComponent().getExtents(0)
             onLeftExtents = \
                      [extents.x, extents.y, extents.width, extents.height]
         if 0 <= ourIndex < len(objectsOnLine) - 1:
             onRight = objectsOnLine[ourIndex + 1]
-            extents = content[0].component.getExtents(0)
+            extents = content[0].queryComponent().getExtents(0)
             onRightExtents = \
                      [extents.x, extents.y, extents.width, extents.height]
 
@@ -5583,7 +5583,7 @@ class Script(default.Script):
         # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
         #
         guess = None
-        extents = obj.component.getExtents(0)
+        extents = obj.queryComponent().getExtents(0)
         objExtents = \
                [extents.x, extents.y, extents.width, extents.height]
 
@@ -5609,7 +5609,7 @@ class Script(default.Script):
 
         above = None
         for content in prevLineContents:
-            extents = content[0].component.getExtents(0)
+            extents = content[0].queryComponent().getExtents(0)
             aboveExtents = \
                  [extents.x, extents.y, extents.width, extents.height]
 
@@ -5665,7 +5665,7 @@ class Script(default.Script):
 
         below = None
         for content in nextLineContents:
-            extents = content[0].component.getExtents(0)
+            extents = content[0].queryComponent().getExtents(0)
             belowExtents = \
                  [extents.x, extents.y, extents.width, extents.height]
             # [[[TODO: Grayed out buttons don't pass the isFormField()
@@ -5754,7 +5754,7 @@ class Script(default.Script):
         # testing "in the wild."
         #
         guess = None
-        extents = obj.component.getExtents(0)
+        extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
         containingCell = \
                        self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
@@ -5878,7 +5878,7 @@ class Script(default.Script):
         # than from the list as a whole.
         #
         if obj.getRole() == pyatspi.ROLE_LIST:
-            obj = obj.child(0)
+            obj = obj[0]
 
         guess = self.guessLabelFromLine(obj)
         # print "guess from line: ", guess
@@ -5939,7 +5939,7 @@ class Script(default.Script):
                      return self.findFirstCaretContext(obj,characterOffset + 1)
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
-                    return self.findFirstCaretContext(obj.child(childIndex), 0)
+                    return self.findFirstCaretContext(obj[childIndex], 0)
                 except:
                     return [obj, -1]
             else:
@@ -6181,7 +6181,7 @@ class Script(default.Script):
             #
             while not isinstance(previousObj, atspi.Accessible) \
                 and index >= 0:
-                previousObj = obj.parent.child(index)
+                previousObj = obj.parent[index]
                 index -= 1
 
             # Now that we're at a child we can work with, we need to
@@ -6203,7 +6203,7 @@ class Script(default.Script):
             while previousObj.childCount:
                 index = previousObj.childCount - 1
                 while index >= 0:
-                    child = previousObj.child(index)
+                    child = previousObj[index]
                     childOffset = self.getCharacterOffsetInParent(child)
                     if isinstance(child, atspi.Accessible) \
                        and not (self.isSameObject(previousObj, documentFrame) \
@@ -6246,7 +6246,7 @@ class Script(default.Script):
         #
         index = 0
         while index < obj.childCount:
-            child = obj.child(index)
+            child = obj[index]
             # bandaid for Gecko broken hierarchy
             if child is None:
                 index += 1
@@ -6268,7 +6268,7 @@ class Script(default.Script):
         if not nextObj:
             index = obj.getIndexInParent() + 1
             while index < obj.parent.childCount:
-                child = obj.parent.child(index)
+                child = obj.parent[index]
                 if isinstance(child, atspi.Accessible):
                     nextObj = child
                     break
@@ -6294,7 +6294,7 @@ class Script(default.Script):
             if not self.isSameObject(candidate, documentFrame):
                 index = candidate.getIndexInParent() + 1
                 while index < candidate.parent.childCount:
-                    child = candidate.parent.child(index)
+                    child = candidate.parent[index]
                     if isinstance(child, atspi.Accessible):
                         nextObj = child
                         break
@@ -6382,7 +6382,7 @@ class Script(default.Script):
         obj = self.findNextObject(currentObj)
         if not obj and wrap:
             documentFrame = self.getDocumentFrame()
-            obj = documentFrame.child(0)
+            obj = documentFrame[0]
             wrapped = True
         while obj:
             if (not obj in ancestors) and (obj.getRole() in roles) \
@@ -6394,7 +6394,7 @@ class Script(default.Script):
                 obj = self.findNextObject(obj)
                 if not obj and wrap and not wrapped:
                     documentFrame = self.getDocumentFrame()
-                    obj = documentFrame.child(0)
+                    obj = documentFrame[0]
                     wrapped = True
 
         return [None, wrapped]
@@ -6469,7 +6469,7 @@ class Script(default.Script):
         obj = self.findNextObject(currentObj)
         if not obj and wrap:
             documentFrame = self.getDocumentFrame()
-            obj = documentFrame.child(0)
+            obj = documentFrame[0]
             wrapped = True
 
         while obj:
@@ -6481,7 +6481,7 @@ class Script(default.Script):
                 obj = self.findNextObject(obj)
                 if not obj and wrap and not wrapped:
                     documentFrame = self.getDocumentFrame()
-                    obj = documentFrame.child(0)
+                    obj = documentFrame[0]
                     wrapped = True
 
         return [None, wrapped]
@@ -7033,7 +7033,8 @@ class Script(default.Script):
                 #
                 #if objectForFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 #    objectForFocus = objectForFocus.parent
-                focusGrabbed = self._objectForFocusGrab.component.grabFocus()
+                focusGrabbed = \
+                        self._objectForFocusGrab.queryComponent().grabFocus()
 
         # If there is a character there, we'd like to position the
         # caret the right spot.  [[[TODO: WDW - numbered lists are
@@ -7385,7 +7386,7 @@ class Script(default.Script):
                 pass
             else:
                 orca.setLocusOfFocus(None, comboBox)
-                focusGrabbed = comboBox.component.grabFocus()
+                focusGrabbed = comboBox.queryComponent().grabFocus()
                 for i in range(0, action.nActions):
                     name = action.getName(i)
                     if name == "open":
@@ -7626,7 +7627,7 @@ class Script(default.Script):
         if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
-                if obj.child(i).getRole() == pyatspi.ROLE_LIST_ITEM:
+                if obj[i].getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -7686,7 +7687,7 @@ class Script(default.Script):
         if obj and found:
             nItems = 0
             for i in range(0, obj.childCount):
-                if obj.child(i).getRole() == pyatspi.ROLE_LIST_ITEM:
+                if obj[i].getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -8007,7 +8008,7 @@ class Script(default.Script):
             obj = self.findNextObject(obj)
             if not obj and wrap and not wrapped:
                 documentFrame = self.getDocumentFrame()
-                obj = documentFrame.child(0)
+                obj = documentFrame[0]
                 wrapped = True
             if obj and self.isBlockquote(obj) and \
                not self.isSameObject(currentObj, obj):
@@ -8078,7 +8079,7 @@ class Script(default.Script):
             # do want to grab focus should we be on a list.
             #
             if obj.getRole() == pyatspi.ROLE_LIST:
-                focusGrabbed = obj.component.grabFocus()
+                focusGrabbed = obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)
@@ -8104,16 +8105,16 @@ class Script(default.Script):
             obj = obj.parent
         if obj.getRole() == pyatspi.ROLE_LIST \
            and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            obj = obj.child(obj.childCount - 1)
+            obj = obj[obj.childCount - 1]
         elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            menu = obj.child(0)
-            obj = menu.child(menu.childCount - 1)
+            menu = obj[0]
+            obj = menu[menu.childCount - 1]
 
         while obj and not found:
             obj = self.findNextObject(obj)
             if not obj and wrap and not wrapped:
                 documentFrame = self.getDocumentFrame()
-                obj = documentFrame.child(0)
+                obj = documentFrame[0]
                 wrapped = True
             if obj:
                 found = self.isFormField(obj)
@@ -8136,7 +8137,7 @@ class Script(default.Script):
             # do want to grab focus should we be on a list.
             #
             if obj.getRole() == pyatspi.ROLE_LIST:
-                focusGrabbed = obj.component.grabFocus()
+                focusGrabbed = obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)
