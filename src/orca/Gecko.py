@@ -4659,11 +4659,8 @@ class Script(default.Script):
             
     def isAriaWidget(self, obj=None):
         obj = obj or orca_state.locusOfFocus
-        try:
+        if obj:
             attrs = obj.getAttributes()
-        except:
-            pass
-        else:
             for attr in attrs:
                 if attr.startswith('xml-roles'):
                     return True
