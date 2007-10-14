@@ -1,3 +1,41 @@
+2.20.1 - 14-Oct-2007
+
+General:
+
+* Fix for bug #462984 - Orca failed to detect the resolution of second
+  screen
+
+* Fix for bug #473699 - Adjust Orca Preferences dialog to
+  speak/braille three components that are multiply labelled
+
+* Fix for bug #474958 - Orca has no onboard help
+
+* Fix for bug #484499 - Orca should not braille the node level
+  for every cell in row
+
+Firefox: 
+
+* More work on bug #472345 - Cannot arrow out of entries in FF3 
+  if text is inserted via javascript
+
+* Fix for bug #480501 - readPageSummary() prevents access to FF
+  status bar contents
+
+OpenOffice:
+
+* Refixed bug #435852 - Orca and OpenOffice Calc have a memory
+  lovefest
+
+* Fix for bug #480278 - where-am-I ("double click") for StarOffice.py
+  smushs the output
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da      Danish               Kenneth Nielsen
+    nl      Dutch                Tino Meinen and Vincent van Adrighem
+
+==========
+
 2.20.0.1 - 08-Oct-2007
 
 General:

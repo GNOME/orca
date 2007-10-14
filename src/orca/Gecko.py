@@ -29,6 +29,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import math
 import atk
 import gtk
 import pickle

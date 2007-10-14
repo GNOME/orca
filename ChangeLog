@@ -1,3 +1,16 @@
+2007-10-14  Willie Walker <william.walker@sun.com>
+
+        * configure.in
+          README
+          NEWS
+          RELEASE-HOWTO
+          src/orca/Makefile.am
+          docs/pydoc/Makefile.am: 
+          Prep for v2.21.0
+
+        * src/orca/Gecko.py:
+          Add import of math module (flagged by running pychecker)
+
 2007-10-13  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca-mainwin.glade:
