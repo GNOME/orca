@@ -1754,7 +1754,8 @@ msgstr "void"
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
-msgstr[0] "espaci"
+msgstr[0] "%d espaci"
+msgstr[1] "%d espacis"
 
 #. Translators: this is the number of tab characters on a line
 #. of text.
@@ -1763,7 +1764,8 @@ msgstr[0] "espaci"
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] "tab"
+msgstr[0] "%d onglet"
+msgstr[1] "%d onglets"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -2122,7 +2124,8 @@ msgstr ""
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
-msgstr[0] "Cap"
+msgstr[0] "%d encap"
+msgstr[1] "%d encaps"
 
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
@@ -5999,6 +6002,7 @@ msgstr ""
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d fichièr trobat"
+msgstr[1] "%d fichièrs trobats"
 
 #: ../src/orca/scripts/gnome-search-tool.py:176
 msgid "No files found."
@@ -6016,7 +6020,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/metacity.py:85
 msgid "Workspace "
-msgstr ""
+msgstr "Espaci de trabalh"
 
 #: ../src/orca/scripts/metacity.py:85
 msgid "Desk "
@@ -6493,6 +6497,7 @@ msgstr ""
 msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d octet"
+msgstr[1] "%d octets"
 
 #. Translators: This is the size of a file in kilobytes
 #.
