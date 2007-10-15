@@ -583,25 +583,25 @@ def _keyEcho(event):
         if _isPrintableKey(event_string):
             if not settings.enablePrintableKeys:
                 return
-            type = KeyEventType.PRINTABLE
+            eventType = KeyEventType.PRINTABLE
 
         elif _isModifierKey(event_string):
             if not settings.enableModifierKeys:
                 return
-            type = KeyEventType.MODIFIER
+            eventType = KeyEventType.MODIFIER
 
         elif _isLockingKey(event_string):
             if not settings.enableLockingKeys:
                 return
-            type = KeyEventType.LOCKING
+            eventType = KeyEventType.LOCKING
 
             modifiers = event.modifiers
 
             if event_string == "Caps_Lock":
                 if modifiers & (1 << pyatspi.Accessibility.MODIFIER_SHIFTLOCK):
-                    type = KeyEventType.LOCKING_UNLOCKED
+                    eventType = KeyEventType.LOCKING_UNLOCKED
                 else:
-                    type = KeyEventType.LOCKING_LOCKED
+                    eventType = KeyEventType.LOCKING_LOCKED
 
             elif event_string == "Num_Lock":
                 # [[[TODO: richb - we are not getting a correct modifier
@@ -610,20 +610,20 @@ def _keyEcho(event):
                 # until this can be fixed.]]]
                 #
                 #if modifiers & (1 << pyatspi.Accessibility.MODIFIER_NUMLOCK):
-                #    type = KeyEventType.LOCKING_UNLOCKED
+                #    eventType = KeyEventType.LOCKING_UNLOCKED
                 #else:
-                #    type = KeyEventType.LOCKING_LOCKED
+                #    eventType = KeyEventType.LOCKING_LOCKED
                 pass
 
         elif _isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
                 return
-            type = KeyEventType.FUNCTION
+            eventType = KeyEventType.FUNCTION
 
         elif _isActionKey(event_string):
             if not settings.enableActionKeys:
                 return
-            type = KeyEventType.ACTION
+            eventType = KeyEventType.ACTION
 
         else:
             debug.println(debug.LEVEL_FINEST,
@@ -638,7 +638,7 @@ def _keyEcho(event):
         #
         orca_state.lastKeyEchoTime = time.time()
 
-        speech.speakKeyEvent(event_string, type)
+        speech.speakKeyEvent(event_string, eventType)
 
 def _processKeyCaptured(event):
     """Called when a new key event arrives and orca_state.capturingKeys=True.

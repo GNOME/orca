@@ -382,7 +382,6 @@ class ValueZone(Zone):
                         orientation = _("vertical")
                         
             value = self.accessible.value
-            currentValue = int(value.currentValue)
             percentValue = int((value.currentValue
                                 / (value.maximumValue
                                    - value.minimumValue))

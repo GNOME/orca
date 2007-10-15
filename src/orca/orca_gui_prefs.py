@@ -2787,9 +2787,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         model, oldIter = self.pronunciationView.get_selection().get_selected()
-        iter = model.append()
+        thisIter = model.append()
 
-        model.set(iter, ACTUAL, "", REPLACEMENT, "")
+        model.set(thisIter, ACTUAL, "", REPLACEMENT, "")
         noRows = model.iter_n_children(None)
         col = self.pronunciationView.get_column(0)
         self.pronunciationView.grab_focus()
@@ -2876,8 +2876,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         textSelection = self.getTextAttributesView.get_selection()
         [model, paths] = textSelection.get_selected_rows()
         for path in paths:
-            iter = model.get_iter(path)
-            model.move_after(iter, None)
+            thisIter = model.get_iter(path)
+            model.move_after(thisIter, None)
         self._updateTextDictEntry()
 
     def textMoveUpOneButtonClicked(self, widget):

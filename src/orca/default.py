@@ -792,6 +792,9 @@ class Script(script.Script):
         numeric keypad for focus tracking and flat review.
         """
 
+        orcaModMask      = 1 << settings.MODIFIER_ORCA
+        orcaShiftModMask = (1 << settings.MODIFIER_ORCA |
+                            1 << atspi.Accessibility.MODIFIER_SHIFT)
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -832,53 +835,50 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["findHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                1 << settings.MODIFIER_ORCA,
+                orcaShiftModMask,
+                orcaModMask,
                 self.inputEventHandlers["findNextHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_SHIFT),
+                orcaShiftModMask,
+                orcaShiftModMask,
                 self.inputEventHandlers["findPreviousHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
@@ -898,141 +898,141 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
@@ -1070,195 +1070,177 @@ class Script(script.Script):
         the main keyboard keys for focus tracking and flat review.
         """
 
+        orcaModMask        = 1 << settings.MODIFIER_ORCA
+        orcaControlModMask = (1 << settings.MODIFIER_ORCA |
+                              1 << atspi.Accessibility.MODIFIER_CONTROL)
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "7",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["leftClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "8",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["rightClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "p",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleFlatReviewModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "semicolon",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["sayAllHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Return",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["whereAmIHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "slash",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["whereAmIHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "bracketleft",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["findHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["findNextHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["findPreviousHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "i",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewCurrentLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "j",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "j",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "k",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "k",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "m",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "m",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "comma",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewCurrentCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "period",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reviewNextCharacterHandler"]))
 
         return keyBindings
@@ -1268,6 +1250,17 @@ class Script(script.Script):
 
         Returns an instance of keybindings.KeyBindings.
         """
+
+        orcaModMask         = 1 << settings.MODIFIER_ORCA
+        orcaControlModMask  = (1 << settings.MODIFIER_ORCA |
+                               1 << atspi.Accessibility.MODIFIER_CONTROL)
+        orcaAltModMask      = (1 << settings.MODIFIER_ORCA |
+                               1 << atspi.Accessibility.MODIFIER_ALT)
+        orcaShiftAltModMask = (1 << settings.MODIFIER_ORCA |
+                               1 << atspi.Accessibility.MODIFIER_ALT |
+                               1 << atspi.Accessibility.MODIFIER_SHIFT)
+        shiftAltModMask     = (1 << atspi.Accessibility.MODIFIER_SHIFT |
+                               1 << atspi.Accessibility.MODIFIER_ALT)
         keyBindings = script.Script.getKeyBindings(self)
 
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1280,50 +1273,50 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Num_Lock",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["showZonesHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F11",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleTableCellReadModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "SunF36",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleTableCellReadModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "f",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["readCharAttributesHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F3",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["reportScriptInfoHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F1",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["enterLearnModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["shutdownHandler"]))
 
         keyBindings.add(
@@ -1336,73 +1329,65 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["preferencesSettingsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                orcaControlModMask,
+                orcaControlModMask,
                 self.inputEventHandlers["appPreferencesSettingsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "s",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleSilenceSpeechHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F5",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["listAppsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F4",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["cycleDebugLevelHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F6",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                orcaModMask,
+                orcaModMask,
                 self.inputEventHandlers["printActiveAppHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F7",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["printAncestryHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F8",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                orcaControlModMask,
+                orcaModMask,
                 self.inputEventHandlers["printHierarchyHandler"]))
 
         if settings.debugMemoryUsage:
             keyBindings.add(
                 keybindings.KeyBinding(
                     "F8",
-                    (1 << settings.MODIFIER_ORCA
-                     | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                    (1 << settings.MODIFIER_ORCA
-                     | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                    orcaControlModMask,
+                    orcaControlModMask,
                     self.inputEventHandlers["printMemoryUsageHandler"]))
                     
         #####################################################################
@@ -1414,30 +1399,22 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
-                (1 << settings.MODIFIER_ORCA
-                        | 1 << atspi.Accessibility.MODIFIER_ALT
-                        | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                (1 << settings.MODIFIER_ORCA
-                        | 1 << atspi.Accessibility.MODIFIER_ALT),
+                orcaShiftAltModMask,
+                orcaAltModMask,
                 self.inputEventHandlers["saveBookmarks"])) 
         # key binding to move to the previous bookmark         
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
-                (1 << settings.MODIFIER_ORCA
-                     | 1 << atspi.Accessibility.MODIFIER_ALT
-                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                (1 << settings.MODIFIER_ORCA
-                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                orcaShiftAltModMask,
+                orcaAltModMask,
                 self.inputEventHandlers["goToPrevBookmark"])) 
         # key binding to move to the next bookmark             
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
-                (1 << settings.MODIFIER_ORCA
-                     | 1 << atspi.Accessibility.MODIFIER_ALT
-                     | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                (1 << settings.MODIFIER_ORCA),
+                orcaShiftAltModMask,
+                orcaModMask,
                 self.inputEventHandlers["goToNextBookmark"]))    
                 
         # key bindings for '1' through '6' for relevant commands            
@@ -1446,32 +1423,24 @@ class Script(script.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     str(key),
-                    (1 << settings.MODIFIER_ORCA \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT \
-                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                    (1 << settings.MODIFIER_ORCA
-                        | 1 << atspi.Accessibility.MODIFIER_ALT),
+                    orcaShiftAltModMask,
+                    orcaAltModMask,
                     self.inputEventHandlers["addBookmark"]))
                     
             # 'Go to bookmark' key bindings
             keyBindings.add(
                 keybindings.KeyBinding(
                     str(key),
-                    (1 << settings.MODIFIER_ORCA \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT \
-                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                    1 << settings.MODIFIER_ORCA,
+                    orcaShiftAltModMask,
+                    orcaModMask,
                     self.inputEventHandlers["goToBookmark"]))
                     
             # key binding for WhereAmI information with respect to root acc      
             keyBindings.add(
                 keybindings.KeyBinding(
                     str(key),
-                    (1 << settings.MODIFIER_ORCA \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT \
-                    | 1 << atspi.Accessibility.MODIFIER_SHIFT),
-                    (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                    | 1 << atspi.Accessibility.MODIFIER_ALT),
+                    orcaShiftAltModMask,
+                    shiftAltModMask,
                     self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
                     
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
@@ -2019,7 +1988,6 @@ class Script(script.Script):
                 lastProgressBarTime = self.lastProgressBarTime[obj]
                 lastProgressBarValue = self.lastProgressBarValue[obj]
                 value = obj.value
-                currentValue = int(value.currentValue)
                 percentValue = int((value.currentValue / \
                     (value.maximumValue - value.minimumValue)) * 100.0)
 
@@ -3235,7 +3203,7 @@ class Script(script.Script):
         text attribute string and a dictionary of key/value items.
         """
 
-        list = []
+        keyList = []
         dictionary = {}
         allTokens = str.split(";")
         for token in allTokens:
@@ -3243,10 +3211,10 @@ class Script(script.Script):
             if len(item) == 2:
                 key = item[0].strip()
                 attribute = item[1].strip()
-                list.append(key)
+                keyList.append(key)
                 dictionary[key] = attribute
 
-        return [list, dictionary]
+        return [keyList, dictionary]
 
     def outputCharAttributes(self, keys, attributes):
         """Speak each of the text attributes given dictionary.
@@ -4236,7 +4204,6 @@ class Script(script.Script):
 
     def _printObjInfo(self, indent, obj):
         """Prints information about an object, if we care about it."""
-        import inspect
         if self._isInterestingObj(obj):
             print indent, obj.__class__.__name__, `obj`
 
@@ -4921,12 +4888,12 @@ class Script(script.Script):
         #
         for i in range(0, len(allTokens)):
             if allTokens[i].startswith(badWord):
-                min = i - 5
-                if min < 0:
-                    min = 0
-                max = i + 5
-                if max > (len(allTokens) - 1):
-                    max = len(allTokens) - 1
+                minIndex = i - 5
+                if minIndex < 0:
+                    minIndex = 0
+                maxIndex = i + 5
+                if maxIndex > (len(allTokens) - 1):
+                    maxIndex = len(allTokens) - 1
 
                 # Translators: Orca will provide more compelling output of
                 # the spell checking dialog in some applications.  The first
@@ -4940,7 +4907,7 @@ class Script(script.Script):
                 # thing it does is give the phrase containing the misspelled
                 # word in the document.  This is known as the context.
                 #
-                contextPhrase = " ".join(allTokens[min:max+1])
+                contextPhrase = " ".join(allTokens[minIndex:maxIndex+1])
                 utterances.append(_("Context is %s") % contextPhrase)
 
                 # Turn the list of utterances into a string.
@@ -5344,7 +5311,6 @@ class Script(script.Script):
             if (text.characterCount == 1):
                 string = text.getText(caretOffset, caretOffset + 1)
                 startOffset = caretOffset
-                endOffset = caretOffset + 1
             else:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
                     caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -6000,24 +5966,24 @@ class Script(script.Script):
             # the startOffset and endOffset to exclude them.
             #
             try:
-                str = obj.text.getText(startOffset, endOffset).decode("UTF-8")
+                tmpStr = obj.text.getText(startOffset, endOffset).decode("UTF-8")
             except:
-                str = u''
-            n = len(str)
+                tmpStr = u''
+            n = len(tmpStr)
 
             # Don't strip whitespace if string length is one (might be a
             # space).
             #
             if n > 1:
                 while endOffset > startOffset:
-                    if self.isWordDelimiter(str[n-1]):
+                    if self.isWordDelimiter(tmpStr[n-1]):
                         n -= 1
                         endOffset -= 1
                     else:
                         break
                 n = 0
                 while startOffset < endOffset:
-                    if self.isWordDelimiter(str[n]):
+                    if self.isWordDelimiter(tmpStr[n]):
                         n += 1
                         startOffset += 1
                     else:

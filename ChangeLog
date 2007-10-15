@@ -1,3 +1,13 @@
+2007-10-15  Rich Burridge <rich.burridge@sun.com>
+ 
+         * src/orca/bookmarks.py:
+           src/orca/flat_review.py:
+           src/orca/default.py:
+           src/orca/orca.py:
+           src/orca/focus_tracking_presenter.py:
+           src/orca/orca_gui_prefs.py:
+           Work on bug #486726 - Eliminate pychecker warnings/errors.
+
 2007-10-15  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/where_am_I.py:

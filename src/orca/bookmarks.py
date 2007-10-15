@@ -195,10 +195,10 @@ class Bookmarks:
         orcaDir = settings.userPrefsDir
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         try:
-            input = open( os.path.join( orcaBookmarksDir, \
+            inputFile = open( os.path.join( orcaBookmarksDir, \
                         '%s.pkl' %self._script.name.split(' ')[0]), "r")
-            bookmarks = pickle.load(input)
-            input.close()
+            bookmarks = pickle.load(inputFile)
+            inputFile.close()
             return bookmarks
         except (IOError, EOFError, OSError):
             return None

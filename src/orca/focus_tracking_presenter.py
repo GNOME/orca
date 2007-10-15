@@ -360,7 +360,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         app = script.app
         settingsPackages = settings.settingsPackages
         moduleName = settings.getScriptModuleName(app)
-        module = None
 
         if moduleName and len(moduleName):
             for package in settingsPackages:
@@ -585,8 +584,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # Load in the application specific settings for the
                         # app for this event (if found).
                         #
-                        appSettings = self.loadAppSettings( \
-                                                      orca_state.activeScript)
+                        self.loadAppSettings(orca_state.activeScript)
 
                         # Tell BrlTTY which commands we care about.
                         #
