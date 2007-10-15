@@ -1,5 +1,10 @@
 2007-10-15  Scott Haeger <scott@bashautomation.com>
         
+        * src/orca/flat_review.py:
+          pyatspi migration.
+
+2007-10-15  Scott Haeger <scott@bashautomation.com>
+        
         * src/orca/debug.py:
           pyatspi migration.
 

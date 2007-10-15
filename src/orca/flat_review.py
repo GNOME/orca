@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import re
 import sys
 
-import atspi
+import pyatspi
 import braille
 import debug
 import eventsynthesizer
@@ -118,13 +118,13 @@ class Word:
 
         if attr == "chars":
             if isinstance(self.zone, TextZone):
-                text = self.zone.accessible.text
+                text = self.zone.accessible.queryText()
                 self.chars = []
                 i = 0
                 while i < self.length:
                     [char, startOffset, endOffset] = text.getTextAtOffset(
                         self.startOffset + i,
-                        atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+                        pyatspi.TEXT_BOUNDARY_CHAR)
                     [x, y, width, height] = text.getRangeExtents(
                         startOffset,
                         endOffset,
@@ -248,7 +248,7 @@ class TextZone(Zone):
         """
 
         if attr == "words":
-            text = self.accessible.text
+            text = self.accessible.queryText()
             self.words = []
             wordIndex = 0
             offset = self.startOffset
@@ -292,13 +292,15 @@ class StateZone(Zone):
 
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
-            stateCount = \
-                self.accessible.state.count(atspi.Accessibility.STATE_CHECKED)
-
-            if self.accessible.role in [rolenames.ROLE_CHECK_BOX,
-                                        rolenames.ROLE_CHECK_MENU_ITEM,
-                                        rolenames.ROLE_CHECK_MENU,
-                                        rolenames.ROLE_TABLE_CELL]:
+            # stateCount is used as a boolean and as an index
+            if stateset.contains(pyatspi.STATE_CHECKED):
+                stateCount = 1
+            else:
+                stateCount = 0
+            if self.accessible.getRole() in [pyatspi.ROLE_CHECK_BOX,
+                                        pyatspi.ROLE_CHECK_MENU_ITEM,
+                                        pyatspi.ROLE_CHECK_MENU,
+                                        pyatspi.ROLE_TABLE_CELL]:
                 if stateCount:
                     # Translators: this represents the state of a checkbox.
                     #
@@ -309,7 +311,7 @@ class StateZone(Zone):
                     speechState = _("not checked")
                 brailleState = \
                     settings.brailleCheckBoxIndicators[stateCount]
-            elif self.accessible.role == rolenames.ROLE_TOGGLE_BUTTON:
+            elif self.accessible.getRole() == pyatspi.ROLE_TOGGLE_BUTTON:
                 if stateCount:
                     # Translators: the state of a toggle button.
                     #
@@ -365,23 +367,19 @@ class ValueZone(Zone):
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
             orientation = None
-            if self.accessible.role in [rolenames.ROLE_SLIDER,
-                                        rolenames.ROLE_SCROLL_BAR]:
-                horizontalCount = \
-                    self.accessible.state.count(atspi.Accessibility.STATE_HORIZONTAL)
-                if horizontalCount:
+            if self.accessible.getRole() in [pyatspi.ROLE_SLIDER,
+                                        pyatspi.ROLE_SCROLL_BAR]:
+                stateset = self.accessible.getState()
+                if stateset.contains(pyatspi.STATE_HORIZONTAL):
                     # Translators: The component orientation is horizontal.
                     #
                     orientation = _("horizontal")
-                else:
-                    verticalCount = \
-                        self.accessible.state.count(atspi.Accessibility.STATE_VERTICAL)
-                    if verticalCount:
-                        # Translators: The component orientation is vertical.
-                        #
-                        orientation = _("vertical")
+                elif stateset.contains(pyatspi.STATE_VERTICAL):
+                    # Translators: The component orientation is vertical.
+                    #
+                    orientation = _("vertical")
                         
-            value = self.accessible.value
+            value = self.accessible.queryValue()
             percentValue = int((value.currentValue
                                 / (value.maximumValue
                                    - value.minimumValue))
@@ -486,9 +484,9 @@ class Line:
                 # The 'isinstance(zone, TextZone)' test is a sanity check
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
-                   ((zone.accessible.role == rolenames.ROLE_TEXT) \
-                    or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
-                    or (zone.accessible.role == rolenames.ROLE_TERMINAL)):
+                   ((zone.accessible.getRole() == pyatspi.ROLE_TEXT) \
+                    or (zone.accessible.getRole() == pyatspi.ROLE_PASSWORD_TEXT) \
+                    or (zone.accessible.getRole() == pyatspi.ROLE_TERMINAL)):
                     region = braille.ReviewText(zone.accessible,
                                                 zone.string,
                                                 zone.startOffset,
@@ -549,7 +547,8 @@ class Context:
         self.script    = script
 
         if (not orca_state.locusOfFocus) \
-            or (orca_state.locusOfFocus.app != self.script.app):
+            or (orca_state.locusOfFocus.getApplication() \
+                != self.script.getApplication()):
             self.lines = []
         else:
             # We want to stop at the window or frame or equivalent level.
@@ -557,7 +556,7 @@ class Context:
             obj = orca_state.locusOfFocus
             while obj \
                       and obj.parent \
-                      and (obj.parent.role != rolenames.ROLE_APPLICATION) \
+                      and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION) \
                       and (obj != obj.parent):
                 obj = obj.parent
             if obj:
@@ -571,7 +570,7 @@ class Context:
         currentCharIndex = 0
 
         if orca_state.locusOfFocus and \
-           orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+           orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
             searchZone = orca_state.activeScript.getRealActiveDescendant(\
                                                    orca_state.locusOfFocus)
         else:
@@ -736,7 +735,7 @@ class Context:
         #
         anyVisible = False
         zones = []
-        text = accessible.text
+        text = accessible.queryText()
         substringStartOffset = startOffset
         substringEndOffset   = startOffset
         unicodeStartOffset   = 0
@@ -816,12 +815,12 @@ class Context:
 
         debug.println(debug.LEVEL_FINEST, "  looking at text:")
 
-        if accessible.text:
+        text = accessible.queryText()
+        if text:
             zones = []
         else:
             return []
 
-        text = accessible.text
         length = text.characterCount
 
         offset = 0
@@ -830,7 +829,7 @@ class Context:
 
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 offset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                pyatspi.TEXT_BOUNDARY_LINE_START)
 
             #NEED TO SKIP OVER EMBEDDED_OBJECT_CHARACTERS
 
@@ -861,7 +860,7 @@ class Context:
                               "garbage from getTextAtOffset for accessible "\
                               "name='%s' role'='%s': offset used=%d, "\
                               "start/end offset returned=(%d,%d), string='%s'"\
-                              % (accessible.name, accessible.role,
+                              % (accessible.name, accessible.getRoleName(),
                                  offset, startOffset, endOffset, string))
                 break
 
@@ -904,10 +903,10 @@ class Context:
         # act as a text entry area.
         #
         if len(zones) == 0:
-            if (accessible.role == rolenames.ROLE_TEXT) \
-               or ((accessible.role == rolenames.ROLE_ENTRY)) \
-               or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
-                extents = accessible.component.getExtents(0)
+            if (accessible.getRole() == pyatspi.ROLE_TEXT) \
+               or ((accessible.getRole() == pyatspi.ROLE_ENTRY)) \
+               or ((accessible.getRole() == pyatspi.ROLE_PASSWORD_TEXT)):
+                extents = accessible.queryComponent().getExtents(0)
                 zones.append(TextZone(accessible,
                                       0,
                                       "",
@@ -924,26 +923,27 @@ class Context:
         zone = None
         stateOnLeft = True
 
-        if accessible.role in [rolenames.ROLE_CHECK_BOX,
-                               rolenames.ROLE_CHECK_MENU_ITEM,
-                               rolenames.ROLE_CHECK_MENU,
-                               rolenames.ROLE_RADIO_BUTTON,
-                               rolenames.ROLE_RADIO_MENU_ITEM,
-                               rolenames.ROLE_RADIO_MENU]:
+        if accessible.getRole() in [pyatspi.ROLE_CHECK_BOX,
+                               pyatspi.ROLE_CHECK_MENU_ITEM,
+                               pyatspi.ROLE_CHECK_MENU,
+                               pyatspi.ROLE_RADIO_BUTTON,
+                               pyatspi.ROLE_RADIO_MENU_ITEM,
+                               pyatspi.ROLE_RADIO_MENU]:
 
             # Attempt to infer if the indicator is to the left or
             # right of the text.
             #
-            extents = accessible.component.getExtents(0)
+            extents = accessible.queryComponent().getExtents(0)
             stateX = extents.x
             stateY = extents.y
             stateWidth = 1
             stateHeight = extents.height
 
-            if accessible.text:
+            text = accessible.queryText()
+            if text:
                 [x, y, width, height] = \
-                    accessible.text.getRangeExtents( \
-                        0, accessible.text.characterCount, 0)
+                    text.getRangeExtents( \
+                        0, text.characterCount, 0)
                 textToLeftEdge = x - extents.x
                 textToRightEdge = (extents.x + extents.width) - (x + width)
                 stateOnLeft = textToLeftEdge > 20
@@ -956,30 +956,31 @@ class Context:
             zone = StateZone(accessible,
                              stateX, stateY, stateWidth, stateHeight)
 
-        elif accessible.role ==  rolenames.ROLE_TOGGLE_BUTTON:
+        elif accessible.getRole() ==  pyatspi.ROLE_TOGGLE_BUTTON:
             # [[[TODO: WDW - This is a major hack.  We make up an
             # indicator for a toggle button to let the user know
             # whether a toggle button is pressed or not.]]]
             #
-            extents = accessible.component.getExtents(0)
+            extents = accessible.queryComponent().getExtents(0)
             zone = StateZone(accessible,
                              extents.x, extents.y, 1, extents.height)
 
-        elif accessible.role == rolenames.ROLE_TABLE_CELL \
-            and accessible.action:
+        elif accessible.getRole() == pyatspi.ROLE_TABLE_CELL \
+            and accessible.queryAction():
             # Handle table cells that act like check boxes.
             #
-            action = accessible.action
+            action = accessible.queryAction()
             hasToggle = False
             for i in range(0, action.nActions):
                 if action.getName(i) == "toggle":
                     hasToggle = True
                     break
             if hasToggle:
-                savedRole = accessible.role
-                accessible.role = rolenames.ROLE_CHECK_BOX
+                savedRole = accessible.getRole()
+                # TODO pyatspi integration. what to do with these two things?
+             #   accessible.role = pyatspi.ROLE_CHECK_BOX
                 self._insertStateZone(zones, accessible)
-                accessible.role = savedRole
+             #   accessible.role = savedRole
 
         if zone:
             if stateOnLeft:
@@ -994,13 +995,13 @@ class Context:
         - accessible: the accessible
         - cliprect: the extents that the Zones must fit inside.
         """
-
-        if not accessible.component:
+        icomponent = accessible.queryComponent()
+        if not icomponent:
             return []
 
         # Get the component extents in screen coordinates.
         #
-        extents = accessible.component.getExtents(0)
+        extents = icomponent.getExtents(0)
 
         if not self.visible(extents.x, extents.y,
                             extents.width, extents.height,
@@ -1011,14 +1012,14 @@ class Context:
         debug.println(
             debug.LEVEL_FINEST,
             "flat_review.getZonesFromAccessible (name=%s role=%s)" \
-            % (accessible.name, accessible.role))
+            % (accessible.name, accessible.getRoleName()))
 
         # Now see if there is any accessible text.  If so, find new zones,
         # where each zone represents a line of this text object.  When
         # creating the zone, only keep track of the text that is actually
         # showing on the screen.
         #
-        if accessible.text:
+        if accessible.queryText():
             zones = self.getZonesFromText(accessible, cliprect)
         else:
             zones = []
@@ -1026,7 +1027,7 @@ class Context:
         # We really want the accessible text information.  But, if we have
         # an image, and it has a description, we can fall back on it.
         #
-        if (len(zones) == 0) and accessible.image:
+        if (len(zones) == 0) and accessible.queryImage():
             # Check for accessible.name, if it exists and has len > 0, use it
             # Otherwise, do the same for accessible.description
             # Otherwise, do the same for accessible.image.description
@@ -1074,21 +1075,22 @@ class Context:
                              extents.width, extents.height,
                              cliprect.x, cliprect.y,
                              cliprect.width, cliprect.height)
+        role = accessible.getRole()
 
         if (len(zones) == 0) \
-            and accessible.role in [rolenames.ROLE_SCROLL_BAR,
-                                    rolenames.ROLE_SLIDER,
-                                    rolenames.ROLE_PROGRESS_BAR]:
+            and role in [pyatspi.ROLE_SCROLL_BAR,
+                         pyatspi.ROLE_SLIDER,
+                         pyatspi.ROLE_PROGRESS_BAR]:
             zones.append(ValueZone(accessible,
                                    clipping[0],
                                    clipping[1],
                                    clipping[2],
                                    clipping[3]))
-        elif (accessible.role != rolenames.ROLE_COMBO_BOX) \
-            and (accessible.role != rolenames.ROLE_EMBEDDED) \
-            and (accessible.role != rolenames.ROLE_LABEL) \
-            and (accessible.role != rolenames.ROLE_MENU) \
-            and (accessible.role != rolenames.ROLE_PAGE_TAB) \
+        elif (role != pyatspi.ROLE_COMBO_BOX) \
+            and (role != pyatspi.ROLE_EMBEDDED) \
+            and (role != pyatspi.ROLE_LABEL) \
+            and (role != pyatspi.ROLE_MENU) \
+            and (role != pyatspi.ROLE_PAGE_TAB) \
             and accessible.childCount > 0:
             pass
         elif len(zones) == 0:
@@ -1100,8 +1102,8 @@ class Context:
                 string = ""
 
             if (string == "") \
-                and (accessible.role != rolenames.ROLE_TABLE_CELL):
-                string = accessible.role
+                and (role != pyatspi.ROLE_TABLE_CELL):
+                string = role
 
             if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
                 zones.append(Zone(accessible,
@@ -1124,7 +1126,7 @@ class Context:
         and column format.
         """
 
-        if (not parent) or (not parent.component):
+        if (not parent) or (not parent.queryComponent()):
             return []
 
         # A minimal chunk to jump around should we not really know where we
@@ -1134,7 +1136,7 @@ class Context:
 
         descendants = []
 
-        parentExtents = parent.component.getExtents(0)
+        parentExtents = parent.queryComponent().getExtents(0)
 
         # [[[TODO: WDW - HACK related to GAIL bug where table column
         # headers seem to be ignored:
@@ -1146,14 +1148,16 @@ class Context:
         # accidentally accounts for this offset, yet it should also
         # work when bug 325809 is fixed.]]]
         #
-        table = parent.table
+        table = parent.queryTable()
         if table:
             for i in range(0, table.nColumns):
                 obj = table.getColumnHeader(i)
                 if obj:
+                    # TODO: remove as part of pyatspi integration
                     header = atspi.Accessible.makeAccessible(obj)
-                    extents = header.extents
-                    if header.state.count(atspi.Accessibility.STATE_SHOWING) \
+                    extents = header.queryComponent().getExtents(0)
+                    stateset = header.getState()
+                    if stateset.contains(pyatspi.STATE_SHOWING) \
                        and (extents.x >= 0) and (extents.y >= 0) \
                        and (extents.width > 0) and (extents.height > 0) \
                        and self.visible(extents.x, extents.y,
@@ -1176,8 +1180,9 @@ class Context:
                                                             currentY,
                                                             0)
                 if obj:
+                    # TODO remove as part of pyatspi integration
                     child = atspi.Accessible.makeAccessible(obj)
-                    extents = child.extents
+                    extents = child.queryComponent().getExtents(0)
                     if extents.x >= 0 and extents.y >= 0:
                         newX = extents.x + extents.width
                         minHeight = min(minHeight, extents.height)
@@ -1215,21 +1220,24 @@ class Context:
             return []
 
         zones = []
+        rootexts = root.queryComponent.getExtents(0)
+        rootrole = root.getRole()
 
         # If we're at a leaf node, then we've got a good one on our hands.
         #
         if root.childCount <= 0:
-            return self.getZonesFromAccessible(root, root.extents)
+            return self.getZonesFromAccessible(root, rootexts)
 
         # Handle non-leaf Java JTree nodes. If the node is collapsed,
         # treat it as a leaf node. If it's expanded, add it to the
         # Zones list.
         #
-        if root.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if root.state.count(atspi.Accessibility.STATE_COLLAPSED):
-                return self.getZonesFromAccessible(root, root.extents)
-            elif root.state.count(atspi.Accessibility.STATE_EXPANDED):
-                treenode = self.getZonesFromAccessible(root, root.extents)
+        stateset = root.getState()
+        if stateset.contains(pyatspi.STATE_EXPANDABLE):
+            if stateset.contains(pyatspi.STATE_COLLAPSED):
+                return self.getZonesFromAccessible(root, rootexts)
+            elif stateset.contains(pyatspi.STATE_EXPANDED):
+                treenode = self.getZonesFromAccessible(root, rootexts)
                 if treenode:
                     zones.extend(treenode)
 
@@ -1240,12 +1248,12 @@ class Context:
         # they are not showing.  Until I can figure out a reliable way to
         # get past these lies, I'm going to ignore them.]]]
         #
-        if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
-           or (root.role == rolenames.ROLE_COMBO_BOX) \
-           or (root.role == rolenames.ROLE_EMBEDDED) \
-           or (root.role == rolenames.ROLE_TEXT) \
-           or (root.role == rolenames.ROLE_SCROLL_BAR):
-            return self.getZonesFromAccessible(root, root.extents)
+        if (root.parent and (root.parent.getRole() == pyatspi.ROLE_MENU_BAR)) \
+           or (rootrole == pyatspi.ROLE_COMBO_BOX) \
+           or (rootrole == pyatspi.ROLE_EMBEDDED) \
+           or (rootrole == pyatspi.ROLE_TEXT) \
+           or (rootrole == pyatspi.ROLE_SCROLL_BAR):
+            return self.getZonesFromAccessible(root, rootexts)
 
         # Otherwise, dig deeper.
         #
@@ -1254,19 +1262,20 @@ class Context:
         # parents, especially those that implement accessible text.  Logged
         # as bugzilla bug 319773.]]]
         #
-        if root.role == rolenames.ROLE_PAGE_TAB:
-            zones.extend(self.getZonesFromAccessible(root, root.extents))
+        if rootrole == pyatspi.ROLE_PAGE_TAB:
+            zones.extend(self.getZonesFromAccessible(root, rootexts))
 
         if (len(zones) == 0) and root.text:
-            zones = self.getZonesFromAccessible(root, root.extents)
+            zones = self.getZonesFromAccessible(root, rootexts)
 
-        if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
+        stateset = root.getState()
+        if stateset.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
            and (root.childCount > 50):
             for child in self.getShowingDescendants(root):
                 zones.extend(self.getShowingZones(child))
         else:
             for i in range(0, root.childCount):
-                child = root.child(i)
+                child = root.getChild(i)
                 if child == root:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
@@ -1361,7 +1370,7 @@ class Context:
                  self.zoneIndex)
 
         zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-        text = zone.accessible.text
+        text = zone.accessible.queryText()
 
         if not text:
             print "  Not Accessibility_Text"
@@ -1370,36 +1379,36 @@ class Context:
         print "  getTextBeforeOffset: %d" % text.caretOffset
         [string, startOffset, endOffset] = text.getTextBeforeOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+            pyatspi.TEXT_BOUNDARY_WORD_START)
         print "    WORD_START: start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
         [string, startOffset, endOffset] = text.getTextBeforeOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_END)
+            pyatspi.TEXT_BOUNDARY_WORD_END)
         print "    WORD_END:   start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
 
         print "  getTextAtOffset: %d" % text.caretOffset
         [string, startOffset, endOffset] = text.getTextAtOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+            pyatspi.TEXT_BOUNDARY_WORD_START)
         print "    WORD_START: start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
         [string, startOffset, endOffset] = text.getTextAtOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_END)
+            pyatspi.TEXT_BOUNDARY_WORD_END)
         print "    WORD_END:   start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
 
         print "  getTextAfterOffset: %d" % text.caretOffset
         [string, startOffset, endOffset] = text.getTextAfterOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+            pyatspi.TEXT_BOUNDARY_WORD_START)
         print "    WORD_START: start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
         [string, startOffset, endOffset] = text.getTextAfterOffset(
             text.caretOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_END)
+            pyatspi.TEXT_BOUNDARY_WORD_END)
         print "    WORD_END:   start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
 
