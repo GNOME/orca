@@ -422,15 +422,15 @@ class OrcaPrefs:
         out all that the user has modified.
         """
 
-        iter = treeModel.get_iter_first()
-        while iter != None:
-            iterChild = treeModel.iter_children(iter)
+        thisIter = treeModel.get_iter_first()
+        while thisIter != None:
+            iterChild = treeModel.iter_children(thisIter)
             while iterChild != None:
                 values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9,10,11)
                 if values[MODIF]:
                     self._writeKeyBinding(prefs, values)
                 iterChild = treeModel.iter_next(iterChild)
-            iter = treeModel.iter_next(iter)
+            thisIter = treeModel.iter_next(thisIter)
 
     def _writeKeyBindingsMap(self, prefs, treeModel):
         """Write to configuration file 'prefs' the key bindings passed in the
@@ -470,16 +470,16 @@ class OrcaPrefs:
         actual string of "" are found, they are ignored.
         """
 
-        iter = treeModel.get_iter_first()
-        while iter != None:
-            values = treeModel.get(iter, ACTUAL, REPLACEMENT)
+        thisIter = treeModel.get_iter_first()
+        while thisIter != None:
+            values = treeModel.get(thisIter, ACTUAL, REPLACEMENT)
             word = values[ACTUAL]
             value = values[REPLACEMENT]
 
             if word != "":
                 self._writePronunciation(prefs, word, value)
 
-            iter = treeModel.iter_next(iter)
+            thisIter = treeModel.iter_next(thisIter)
 
     def _writePronunciationMap(self, prefs, treeModel):
         """Write to configuration file 'prefs' the new pronunciation dictionary
@@ -491,7 +491,6 @@ class OrcaPrefs:
         """
 
         self._writePronunciationsPreamble(prefs)
-        pronDict = pronunciation_dict.pronunciation_dict
         self._iteratePronunciations(prefs, treeModel)
 
     def _setupPreferencesDirs(self):

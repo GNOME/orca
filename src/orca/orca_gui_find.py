@@ -33,9 +33,7 @@ import gtk
 import gtk.glade
 import locale
 
-import default
 import find
-import orca
 import orca_glade
 import orca_state
 import platform
@@ -62,19 +60,20 @@ class orcaFindGUI(orca_glade.GladeWrapper):
         already been created.
         """
 
+        findDialog = self.get_widget("findDialog")
+
         # Set the current time on the Find GUI dialog so that it'll
         # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
         # It's surronded by a try/except block here so that if it's not found,
         # then we can fail gracefully.
         #
         try:
-            self.findDialog.realize()
-            self.findDialog.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
+            findDialog.realize()
+            findDialog.window.set_user_time(orca_state.lastInputEventTimestamp)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 
-        self.findDialog.show()
+        findDialog.show()
 
         # Populate the dialog box from the previous searchQuery, should
         # one exist.  Note:  This is necessary because we are destroying
@@ -82,19 +81,18 @@ class orcaFindGUI(orca_glade.GladeWrapper):
         # search.
 
         try:
-            self.searchForEntry.set_text(\
-                orca_state.searchQuery.searchString)
-            self.searchForEntry.select_region (0,
-                len(self.searchForEntry.get_text()))
+            searchForEntry = self.get_widget("searchForEntry")
+            searchForEntry.set_text(orca_state.searchQuery.searchString)
+            searchForEntry.select_region(0, len(searchForEntry.get_text()))
             if orca_state.searchQuery.startAtTop:
-                self.topRadioButton.set_active(True)
-            self.matchCaseCheckbox.set_active(\
+                self.get_widget("topRadioButton").set_active(True)
+            self.get_widget("matchCaseCheckbox").set_active(\
                 orca_state.searchQuery.caseSensitive)
-            self.matchEntireWordCheckbox.set_active(\
+            self.get_widget("matchEntireWordCheckbox").set_active(\
                 orca_state.searchQuery.matchEntireWord)
-            self.wrapAroundCheckbox.set_active(\
+            self.get_widget("wrapAroundCheckbox").set_active(\
                 orca_state.searchQuery.windowWrap)
-            self.searchBackwardsCheckbox.set_active(\
+            self.get_widget("searchBackwardsCheckbox").set_active(\
                 orca_state.searchQuery.searchBackwards)
         except:
             pass
@@ -109,10 +107,11 @@ class orcaFindGUI(orca_glade.GladeWrapper):
         """
 
         self.searchString = widget.get_text()
+        findButton = self.get_widget("findButton")
         if len(self.searchString) > 0:
-            self.findButton.set_sensitive(True)
+            findButton.set_sensitive(True)
         else:
-            self.findButton.set_sensitive(False)
+            findButton.set_sensitive(False)
 
     def startingPointChanged(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -184,7 +183,7 @@ class orcaFindGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.findDialog.hide()
+        self.get_widget("findDialog").hide()
 
     def findButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the findButton
@@ -207,7 +206,7 @@ class orcaFindGUI(orca_glade.GladeWrapper):
 
         # Merely hiding the dialog causes the find to take place before
         # the original window has fully regained focus.
-        self.findDialog.destroy()
+        self.get_widget("findDialog").destroy()
 
 
     def findDialogDestroyed(self, widget):

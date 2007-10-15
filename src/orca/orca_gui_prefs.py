@@ -268,9 +268,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self._setKeyEchoItems()
 
-        self.speechSystemsModel  = self._initComboBox(self.speechSystems)
-        self.speechServersModel  = self._initComboBox(self.speechServers)
-        self.speechFamiliesModel = self._initComboBox(self.speechFamilies)
+        self.speechSystemsModel  = \
+                        self._initComboBox(self.get_widget("speechSystems"))
+        self.speechServersModel  = \
+                        self._initComboBox(self.get_widget("speechServers"))
+        self.speechFamiliesModel = \
+                        self._initComboBox(self.get_widget("speechFamilies"))
         self._initSpeechState()
 
         self._initGUIState()
@@ -492,15 +495,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         rate = self._getRateForVoiceType(voiceType)
         if rate:
-            self.rateScale.set_value(rate)
+            self.get_widget("rateScale").set_value(rate)
 
         pitch = self._getPitchForVoiceType(voiceType)
         if pitch:
-            self.pitchScale.set_value(pitch)
+            self.get_widget("pitchScale").set_value(pitch)
 
         volume = self._getVolumeForVoiceType(voiceType)
         if volume:
-            self.volumeScale.set_value(volume)
+            self.get_widget("volumeScale").set_value(volume)
 
     def _setSpeechFamiliesChoice(self, familyName):
         """Sets the active item in the families ("Person:") combo box
@@ -519,7 +522,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         for family in self.speechFamiliesChoices:
             name = family[speechserver.VoiceFamily.NAME]
             if name == familyName:
-                self.speechFamilies.set_active(i)
+                self.get_widget("speechFamilies").set_active(i)
                 self.speechFamiliesChoice = self.speechFamiliesChoices[i]
                 valueSet = True
                 break
@@ -529,7 +532,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             debug.println(debug.LEVEL_FINEST,
                           "Could not find speech family match for %s" \
                           % familyName)
-            self.speechFamilies.set_active(0)
+            self.get_widget("speechFamilies").set_active(0)
             self.speechFamiliesChoice = self.speechFamiliesChoices[0]
 
     def _setupFamilies(self):
@@ -561,8 +564,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # voice type.  Whenever the families change, we'll reset the
         # voice type selection to the first one ("Default").
         #
-        self.voiceTypes.set_active(0)
-        voiceType = self.voiceTypes.get_active_text()
+        self.get_widget("voiceTypes").set_active(0)
+        voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setVoiceSettingsForVoiceType(voiceType)
 
     def _setSpeechServersChoice(self, serverInfo):
@@ -588,7 +591,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         i = 0
         for server in self.speechServersChoices:
             if serverInfo == server.getInfo():
-                self.speechServers.set_active(i)
+                self.get_widget("speechServers").set_active(i)
                 self.speechServersChoice = server
                 valueSet = True
                 break
@@ -598,7 +601,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             debug.println(debug.LEVEL_FINEST,
                           "Could not find speech server match for %s" \
                           %  repr(serverInfo))
-            self.speechServers.set_active(0)
+            self.get_widget("speechServers").set_active(0)
             self.speechServersChoice = self.speechServersChoices[0]
 
         self._setupFamilies()
@@ -655,7 +658,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         for speechSystem in self.speechSystemsChoices:
             name = speechSystem.__name__
             if name.endswith(systemName):
-                self.speechSystems.set_active(i)
+                self.get_widget("speechSystems").set_active(i)
                 self.speechSystemsChoice = self.speechSystemsChoices[i]
                 valueSet = True
                 break
@@ -665,7 +668,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             debug.println(debug.LEVEL_FINEST,
                           "Could not find speech system match for %s" \
                           % systemName)
-            self.speechSystems.set_active(0)
+            self.get_widget("speechSystems").set_active(0)
             self.speechSystemsChoice = self.speechSystemsChoices[0]
 
         self._setupSpeechServers()
@@ -772,14 +775,14 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
                 if attrList[i] == model[path][NAME]:
-                    iter = model.get_iter(path)
-                    model.set(iter, NAME, attrList[i],
-                                    IS_SPOKEN, state,
-                                    VALUE, attrDict[attrList[i]])
+                    thisIter = model.get_iter(path)
+                    model.set(thisIter, NAME, attrList[i],
+                                        IS_SPOKEN, state,
+                                        VALUE, attrDict[attrList[i]])
                     if moveToTop:
-                        iter = model.get_iter(path)
+                        thisIter = model.get_iter(path)
                         otherIter = model.get_iter(i)
-                        model.move_before(iter, otherIter)
+                        model.move_before(thisIter, otherIter)
                     break
 
         view.set_model(model)
@@ -806,8 +809,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
                 if attrList[i] == model[path][NAME]:
-                    iter = model.get_iter(path)
-                    model.set(iter, IS_BRAILLED, state)
+                    thisIter = model.get_iter(path)
+                    model.set(thisIter, IS_BRAILLED, state)
                     break
 
         view.set_model(model)
@@ -845,8 +848,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - model: the model that the cell is part of.
         """
 
-        iter = model.get_iter(path)
-        model.set(iter, IS_SPOKEN, not model[path][IS_SPOKEN])
+        thisIter = model.get_iter(path)
+        model.set(thisIter, IS_SPOKEN, not model[path][IS_SPOKEN])
         self._updateTextDictEntry()
 
     def textAttributeBrailledToggled(self, cell, path, model):
@@ -860,8 +863,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - model: the model that the cell is part of.
         """
 
-        iter = model.get_iter(path)
-        model.set(iter, IS_BRAILLED, not model[path][IS_BRAILLED])
+        thisIter = model.get_iter(path)
+        model.set(thisIter, IS_BRAILLED, not model[path][IS_BRAILLED])
         self._updateTextDictEntry()
 
     def textAttrValueEdited(self, cell, path, new_text, model):
@@ -877,8 +880,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - model: the model that the cell is part of.
         """
 
-        iter = model.get_iter(path)
-        model.set(iter, VALUE, new_text)
+        thisIter = model.get_iter(path)
+        model.set(thisIter, VALUE, new_text)
         self._updateTextDictEntry()
 
     def textAttrCursorChanged(self, widget):
@@ -921,11 +924,11 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         [allAttrList, allAttrDict] = \
                 defScript.textAttrsToDictionary(settings.allTextAttributes)
         for i in range(0, len(allAttrList)):
-            iter = model.append()
-            model.set(iter, NAME, allAttrList[i],
-                            IS_SPOKEN, False,
-                            IS_BRAILLED, False,
-                            VALUE, allAttrDict[allAttrList[i]])
+            thisIter = model.append()
+            model.set(thisIter, NAME, allAttrList[i],
+                                IS_SPOKEN, False,
+                                IS_BRAILLED, False,
+                                VALUE, allAttrDict[allAttrList[i]])
 
         self.getTextAttributesView.set_model(model)
 
@@ -1029,8 +1032,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - model: the model that the cell is part of.
         """
 
-        iter = model.get_iter(path)
-        model.set(iter, ACTUAL, new_text)
+        thisIter = model.get_iter(path)
+        model.set(thisIter, ACTUAL, new_text)
 
     def pronReplacementValueEdited(self, cell, path, new_text, model):
         """The user has edited the value of one of the replacement strings
@@ -1043,8 +1046,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - model: the model that the cell is part of.
         """
 
-        iter = model.get_iter(path)
-        model.set(iter, REPLACEMENT, new_text)
+        thisIter = model.get_iter(path)
+        model.set(thisIter, REPLACEMENT, new_text)
 
     def pronunciationCursorChanged(self, widget):
         """Set the search column in the pronunciation dictionary tree view
@@ -1085,7 +1088,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         else:
             pronDict = pronunciation_dict.pronunciation_dict
         for pronKey in sorted(pronDict.keys()):
-            iter = model.append() 
+            thisIter = model.append() 
             try:
                 actual, replacement = pronDict[pronKey]
             except:
@@ -1095,7 +1098,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                 #
                 actual = pronKey
                 replacement = pronDict[pronKey]
-            model.set(iter, 
+            model.set(thisIter, 
                       ACTUAL, actual,
                       REPLACEMENT, replacement)
 
@@ -1152,7 +1155,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         display = gtk.gdk.display_get_default()
         nScreens = display.get_n_screens()
         targetScreen = display.get_default_screen()
-        targetDisplay = self.magTargetDisplayEntry.get_text()
+        targetDisplay = self.get_widget("magTargetDisplayEntry").get_text()
         if targetDisplay:
             t = targetDisplay.split(".")
             try:
@@ -1178,9 +1181,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             0, targetHeight, 
             1,
             targetHeight / 16, targetHeight)
-        self.magZoomerTopSpinButton.set_adjustment(adjustment)
+        self.get_widget("magZoomerTopSpinButton").set_adjustment(adjustment)
         if topPosition > targetHeight:
-            self.magZoomerTopSpinButton.update()
+            self.get_widget("magZoomerTopSpinButton").update()
 
         # Get the zoomer placement left preference and set the left spin
         # button value accordingly. Set the left spin button "max size" to
@@ -1193,9 +1196,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             0, targetWidth, 
             1,
             targetWidth / 16, targetWidth)
-        self.magZoomerLeftSpinButton.set_adjustment(adjustment)
+        self.get_widget("magZoomerLeftSpinButton").set_adjustment(adjustment)
         if leftPosition > targetWidth:
-            self.magZoomerLeftSpinButton.update()
+            self.get_widget("magZoomerLeftSpinButton").update()
 
         # Get the zoomer placement right preference and set the right spin
         # button value accordingly. Set the right spin button "max size" to
@@ -1208,9 +1211,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             0, targetWidth, 
             1,
             targetWidth / 16, targetWidth)
-        self.magZoomerRightSpinButton.set_adjustment(adjustment)
+        self.get_widget("magZoomerRightSpinButton").set_adjustment(adjustment)
         if rightPosition > targetWidth:
-            self.magZoomerRightSpinButton.update()
+            self.get_widget("magZoomerRightSpinButton").update()
 
         # Get the zoomer placement bottom preference and set the bottom
         # spin button value accordingly. Set the bottom spin button "max size"
@@ -1223,9 +1226,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             0, targetHeight, 
             1,
             targetHeight / 16, targetHeight)
-        self.magZoomerBottomSpinButton.set_adjustment(adjustment)
+        self.get_widget("magZoomerBottomSpinButton").set_adjustment(adjustment)
         if bottomPosition > targetHeight:
-            self.magZoomerBottomSpinButton.update()
+            self.get_widget("magZoomerBottomSpinButton").update()
 
     def _initGUIState(self):
         """Adjust the settings of the various components on the
@@ -1237,80 +1240,89 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # Speech pane.
         #
         enable = prefs["enableSpeech"]
-        self.speechSupportCheckbutton.set_active(enable)
-        self.speechTable.set_sensitive(enable)
+        self.get_widget("speechSupportCheckbutton").set_active(enable)
+        self.get_widget("speechTable").set_sensitive(enable)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
-            self.noneButton.set_active(True)
+            self.get_widget("noneButton").set_active(True)
         elif prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_SOME:
-            self.someButton.set_active(True)
+            self.get_widget("someButton").set_active(True)
         elif prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_MOST:
-            self.mostButton.set_active(True)
+            self.get_widget("mostButton").set_active(True)
         else:
-            self.allButton.set_active(True)
+            self.get_widget("allButton").set_active(True)
 
         if prefs["speechVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
-            self.speechBriefButton.set_active(True)
+            self.get_widget("speechBriefButton").set_active(True)
         else:
-            self.speechVerboseButton.set_active(True)
+            self.get_widget("speechVerboseButton").set_active(True)
 
         if prefs["readTableCellRow"]:
-            self.rowSpeechButton.set_active(True)
+            self.get_widget("rowSpeechButton").set_active(True)
         else:
-            self.cellSpeechButton.set_active(True)
+            self.get_widget("cellSpeechButton").set_active(True)
 
-        self.speechIndentationCheckbutton.set_active(\
+        self.get_widget("speechIndentationCheckbutton").set_active(\
             prefs["enableSpeechIndentation"])
 
-        self.speakBlankLinesCheckButton.set_active(\
+        self.get_widget("speakBlankLinesCheckButton").set_active(\
             prefs["speakBlankLines"])
 
-        self.sayAllStyle.set_active(prefs["sayAllStyle"])
+        self.get_widget("sayAllStyle").set_active(prefs["sayAllStyle"])
 
         # Set the sensitivity of the "Update Interval" items, depending
         # upon whether the "Speak progress bar updates" checkbox is checked.
         #
         enable = prefs["enableProgressBarUpdates"]
-        self.speechProgressBarCheckbutton.set_active(enable)
-        self.speakUpdateIntervalHBox.set_sensitive(enable)
+        self.get_widget("speechProgressBarCheckbutton").set_active(enable)
+        self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
 
         interval = prefs["progressBarUpdateInterval"]
-        self.speakProgressBarSpinButton.set_value(interval)
+        self.get_widget("speakProgressBarSpinButton").set_value(interval)
 
         # Braille pane.
         #
-        self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
-        self.brailleMonitorCheckbutton.set_active(prefs["enableBrailleMonitor"])
+        self.get_widget("brailleSupportCheckbutton").set_active( \
+                        prefs["enableBraille"])
+        self.get_widget("brailleMonitorCheckbutton").set_active( \
+                        prefs["enableBrailleMonitor"])
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
-        self.abbrevRolenames.set_active(state)
+        self.get_widget("abbrevRolenames").set_active(state)
         if prefs["brailleVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
-            self.brailleBriefButton.set_active(True)
+            self.get_widget("brailleBriefButton").set_active(True)
         else:
-            self.brailleVerboseButton.set_active(True)
+            self.get_widget("brailleVerboseButton").set_active(True)
 
         selectionIndicator = prefs["brailleSelectorIndicator"]
         if selectionIndicator == settings.BRAILLE_SEL_7:
-            self.brailleSelection7Button.set_active(True)
+            self.get_widget("brailleSelection7Button").set_active(True)
         elif selectionIndicator == settings.BRAILLE_SEL_8:
-            self.brailleSelection8Button.set_active(True)
+            self.get_widget("brailleSelection8Button").set_active(True)
         elif selectionIndicator == settings.BRAILLE_SEL_BOTH:
-            self.brailleSelectionBothButton.set_active(True)
+            self.get_widget("brailleSelectionBothButton").set_active(True)
         else:
-            self.brailleSelectionNoneButton.set_active(True)
+            self.get_widget("brailleSelectionNoneButton").set_active(True)
 
         # Key Echo pane.
         #
-        self.keyEchoCheckbutton.set_active(prefs["enableKeyEcho"])
-        self.printableCheckbutton.set_active(prefs["enablePrintableKeys"])
-        self.modifierCheckbutton.set_active(prefs["enableModifierKeys"])
-        self.lockingCheckbutton.set_active(prefs["enableLockingKeys"])
-        self.functionCheckbutton.set_active(prefs["enableFunctionKeys"])
-        self.actionCheckbutton.set_active(prefs["enableActionKeys"])
-        self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
+        self.get_widget("keyEchoCheckbutton").set_active( \
+                        prefs["enableKeyEcho"])
+        self.get_widget("printableCheckbutton").set_active( \
+                        prefs["enablePrintableKeys"])
+        self.get_widget("modifierCheckbutton").set_active( \
+                        prefs["enableModifierKeys"])
+        self.get_widget("lockingCheckbutton").set_active( \
+                        prefs["enableLockingKeys"])
+        self.get_widget("functionCheckbutton").set_active( \
+                        prefs["enableFunctionKeys"])
+        self.get_widget("actionCheckbutton").set_active( \
+                        prefs["enableActionKeys"])
+        self.get_widget("echoByWordCheckbutton").set_active( \
+                        prefs["enableEchoByWord"])
 
         # Magnifier pane.
         #
@@ -1318,61 +1330,64 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # upon whether the "Enable Magnifier" checkbox is checked.
         #
         enable = prefs["enableMagnifier"]
-        self.magnifierSupportCheckbutton.set_active(enable)
-        self.magnifierTable.set_sensitive(enable)
+        self.get_widget("magnifierSupportCheckbutton").set_active(enable)
+        self.get_widget("magnifierTable").set_sensitive(enable)
 
         # Get the 'Cursor on/off' preference and set the checkbox accordingly.
         #
         value = prefs["enableMagCursor"]
-        self.magCursorOnOffCheckButton.set_active(value)
+        self.get_widget("magCursorOnOffCheckButton").set_active(value)
 
         # Get the 'Explicit cursor size' preference and set the checkbox
         # accordingly. If the value is not checked, then the cursor size
         # spin button and label need to be set insensitive.
         #
         explicitSizeChecked = prefs["enableMagCursorExplicitSize"]
-        self.magCursorSizeCheckButton.set_active(explicitSizeChecked)
-        self.magCursorSizeSpinButton.set_sensitive(explicitSizeChecked)
-        self.magCursorSizeLabel.set_sensitive(explicitSizeChecked)
+        self.get_widget("magCursorSizeCheckButton").set_active( \
+                        explicitSizeChecked)
+        self.get_widget("magCursorSizeSpinButton").set_sensitive( \
+                        explicitSizeChecked)
+        self.get_widget("magCursorSizeLabel").set_sensitive( \
+                        explicitSizeChecked)
 
         # Get the cursor size preference and set the cursor size spin
         # button value accordingly.
         #
         cursorSize = prefs["magCursorSize"]
-        self.magCursorSizeSpinButton.set_value(cursorSize)
+        self.get_widget("magCursorSizeSpinButton").set_value(cursorSize)
 
         # Get the cursor color preference and set the cursor color button
         # accordingly.
         #
         cursorColor = prefs["magCursorColor"]
         color = gtk.gdk.color_parse(cursorColor)
-        self.magCursorColorButton.set_color(color)
+        self.get_widget("magCursorColorButton").set_color(color)
 
         # Get the 'Cross-hair on/off' preference and set the checkbox
         # accordingly.
         #
         value = prefs["enableMagCrossHair"]
-        self.magCrossHairOnOffCheckButton.set_active(value)
+        self.get_widget("magCrossHairOnOffCheckButton").set_active(value)
 
         # Get the 'Cross-hair clip on/off' preference and set the checkbox
         # accordingly.
         #
         value = prefs["enableMagCrossHairClip"]
-        self.magCrossHairClipCheckButton.set_active(value)
+        self.get_widget("magCrossHairClipCheckButton").set_active(value)
 
         # Get the cross-hair size preference and set the cross-hair size
         # spin button value accordingly.
         #
         crosshairSize = prefs["magCrossHairSize"]
-        self.magCrossHairSizeSpinButton.set_value(crosshairSize)
+        self.get_widget("magCrossHairSizeSpinButton").set_value(crosshairSize)
 
         # Get the magnification source and target displays.
         #
         sourceDisplay = prefs["magSourceDisplay"]
-        self.magSourceDisplayEntry.set_text(sourceDisplay)
+        self.get_widget("magSourceDisplayEntry").set_text(sourceDisplay)
 
         targetDisplay = prefs["magTargetDisplay"]
-        self.magTargetDisplayEntry.set_text(targetDisplay)
+        self.get_widget("magTargetDisplayEntry").set_text(targetDisplay)
 
         # Get the width and the height of the source screen. If there is
         # no source screen set, use the default.
@@ -1401,12 +1416,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # button value accordingly.
         #
         zoomFactor = prefs["magZoomFactor"]
-        self.magZoomFactorSpinButton.set_value(zoomFactor)
+        self.get_widget("magZoomFactorSpinButton").set_value(zoomFactor)
 
         # Get the 'Invert Colors' preference and set the checkbox accordingly.
         #
         value = prefs["enableMagZoomerColorInversion"]
-        self.magInvertColorsCheckBox.set_active(value)
+        self.get_widget("magInvertColorsCheckBox").set_active(value)
 
         # Get the smoothing preference and set the active value for the
         # smoothing combobox accordingly.
@@ -1428,8 +1443,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             # on the screen.
             #
             mode = _("Bilinear")
-        index = self._getComboBoxIndex(self.magSmoothingComboBox, mode)
-        self.magSmoothingComboBox.set_active(index)
+        magSmoothingComboBox = self.get_widget("magSmoothingComboBox")
+        index = self._getComboBoxIndex(magSmoothingComboBox, mode)
+        magSmoothingComboBox.set_active(index)
 
         # Get the mouse tracking preference and set the active value for
         # the mouse tracking combobox accordingly.
@@ -1466,8 +1482,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             # keep the mouse in the center of the magnified window.
             #
             mode = _("Centered")
-        index = self._getComboBoxIndex(self.magMouseTrackingComboBox, mode)
-        self.magMouseTrackingComboBox.set_active(index)
+        magMouseTrackingComboBox = self.get_widget("magMouseTrackingComboBox")
+        index = self._getComboBoxIndex(magMouseTrackingComboBox, mode)
+        magMouseTrackingComboBox.set_active(index)
 
         # Text attributes pane.
         #
@@ -1475,13 +1492,13 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         brailleIndicator = prefs["textAttributesBrailleIndicator"]
         if brailleIndicator == settings.TEXT_ATTR_BRAILLE_7:
-            self.textBraille7Button.set_active(True)
+            self.get_widget("textBraille7Button").set_active(True)
         elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_8:
-            self.textBraille8Button.set_active(True)
+            self.get_widget("textBraille8Button").set_active(True)
         elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_BOTH:
-            self.textBrailleBothButton.set_active(True)
+            self.get_widget("textBrailleBothButton").set_active(True)
         else:
-            self.textBrailleNoneButton.set_active(True)
+            self.get_widget("textBrailleNoneButton").set_active(True)
 
         # Pronunciation dictionary pane.
         #
@@ -1489,18 +1506,21 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # General pane.
         #
-        self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
-        self.confirmQuitCheckButton.set_active(prefs["quitOrcaNoConfirmation"])
-        self.presentTooltipsCheckButton.set_active( \
+        self.get_widget("showMainWindowCheckButton").set_active( \
+                        prefs["showMainWindow"])
+        self.get_widget("confirmQuitCheckButton").set_active( \
+                        prefs["quitOrcaNoConfirmation"])
+        self.get_widget("presentTooltipsCheckButton").set_active( \
             prefs["presentToolTips"] and settings.canPresentToolTips)
 
         self.disableKeyGrabPref = settings.isGKSUGrabDisabled()
-        self.disableKeyGrabCheckButton.set_active(self.disableKeyGrabPref)
+        self.get_widget("disableKeyGrabCheckButton").set_active( \
+                        self.disableKeyGrabPref)
 
         if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            self.generalDesktopButton.set_active(True)
+            self.get_widget("generalDesktopButton").set_active(True)
         else:
-            self.generalLaptopButton.set_active(True)
+            self.get_widget("generalLaptopButton").set_active(True)
 
     def _getComboBoxIndex(self, combobox, str):
         """ For each of the entries in the given combo box, look for str.
@@ -1529,6 +1549,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         the GUI has already been created.
         """
 
+        orcaSetupWindow = self.get_widget("orcaSetupWindow")
+
         # We want the Orca preferences window to have focus when it is
         # shown. First try using the present() call. If this isn't present
         # in the version of pygtk that the user is using, fall back to
@@ -1536,16 +1558,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # set_user_time. If that isn't found, then catch the exception and
         # fail gracefully.
         #
-        self.orcaSetupWindow.realize()
+        orcaSetupWindow.realize()
         try:
             if settings.showMainWindow:
-                self.orcaSetupWindow.present()
+                orcaSetupWindow.present()
             else:
-                self.orcaSetupWindow.window.set_user_time(\
+                orcaSetupWindow.window.set_user_time(\
                     orca_state.lastInputEventTimestamp)
         except:
             try:
-                self.orcaSetupWindow.window.set_user_time(\
+                orcaSetupWindow.window.set_user_time(\
                     orca_state.lastInputEventTimestamp)
             except AttributeError:
                 debug.printException(debug.LEVEL_FINEST)
@@ -1556,7 +1578,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self._setSpokenTextAttributes(self.getTextAttributesView,
                             settings.enabledSpokenTextAttributes, True, True)
 
-        self.orcaSetupWindow.show()
+        orcaSetupWindow.show()
 
     def _initComboBox(self, combobox):
         """Initialize the given combo box to take a list of int/str pairs.
@@ -1578,12 +1600,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         depending upon whether the value of the key echo check button is set.
         """
 
-        enable = self.keyEchoCheckbutton.get_active()
-        self.printableCheckbutton.set_sensitive(enable)
-        self.modifierCheckbutton.set_sensitive(enable)
-        self.lockingCheckbutton.set_sensitive(enable)
-        self.functionCheckbutton.set_sensitive(enable)
-        self.actionCheckbutton.set_sensitive(enable)
+        enable = self.get_widget("keyEchoCheckbutton").get_active()
+        self.get_widget("printableCheckbutton").set_sensitive(enable)
+        self.get_widget("modifierCheckbutton").set_sensitive(enable)
+        self.get_widget("lockingCheckbutton").set_sensitive(enable)
+        self.get_widget("functionCheckbutton").set_sensitive(enable)
+        self.get_widget("actionCheckbutton").set_sensitive(enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally
@@ -1831,7 +1853,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableSpeech"] = enable
-        self.speechTable.set_sensitive(enable)
+        self.get_widget("speechTable").set_sensitive(enable)
 
     def speechSystemsChanged(self, widget):
         """Signal handler for the "changed" signal for the speechSystems
@@ -1899,7 +1921,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
             language = family[speechserver.VoiceFamily.LOCALE]
-            voiceType = self.voiceTypes.get_active_text()
+            voiceType = self.get_widget("voiceTypes").get_active_text()
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -1932,7 +1954,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         rate = widget.get_value()
-        voiceType = self.voiceTypes.get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setRateForVoiceType(voiceType, rate)
 
     def pitchValueChanged(self, widget):
@@ -1946,7 +1968,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         pitch = widget.get_value()
-        voiceType = self.voiceTypes.get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setPitchForVoiceType(voiceType, pitch)
 
     def volumeValueChanged(self, widget):
@@ -1960,7 +1982,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         volume = widget.get_value()
-        voiceType = self.voiceTypes.get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setVolumeForVoiceType(voiceType, volume)
 
     def speechIndentationChecked(self, widget):
@@ -2301,7 +2323,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableProgressBarUpdates"] = enable
-        self.speakUpdateIntervalHBox.set_sensitive(enable)
+        self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
 
     def speakProgressBarValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2367,7 +2389,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableMagnifier"] = enable
-        self.magnifierTable.set_sensitive(enable)
+        self.get_widget("magnifierTable").set_sensitive(enable)
 
     def magCursorOnOffChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2397,8 +2419,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableMagCursorExplicitSize"] = enable
-        self.magCursorSizeSpinButton.set_sensitive(enable)
-        self.magCursorSizeLabel.set_sensitive(enable)
+        self.get_widget("magCursorSizeSpinButton").set_sensitive(enable)
+        self.get_widget("magCursorSizeLabel").set_sensitive(enable)
 
     def magCursorSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2806,7 +2828,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         model, oldIter = self.pronunciationView.get_selection().get_selected()
-        nextIter = model.remove(oldIter)
+        model.remove(oldIter)
 
     def textSelectAllButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
@@ -2895,10 +2917,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         textSelection = self.getTextAttributesView.get_selection()
         [model, paths] = textSelection.get_selected_rows()
         for path in paths:
-            iter = model.get_iter(path)
+            thisIter = model.get_iter(path)
             if path[0]:
                 otherIter = model.iter_nth_child(None, path[0]-1)
-                model.swap(iter, otherIter)
+                model.swap(thisIter, otherIter)
         self._updateTextDictEntry()
 
     def textMoveDownOneButtonClicked(self, widget):
@@ -2917,10 +2939,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         [model, paths] = textSelection.get_selected_rows()
         noRows = model.iter_n_children(None)
         for path in paths:
-            iter = model.get_iter(path)
+            thisIter = model.get_iter(path)
             if path[0] < noRows-1:
-                otherIter = model.iter_next(iter)
-                model.swap(iter, otherIter)
+                otherIter = model.iter_next(thisIter)
+                model.swap(thisIter, otherIter)
         self._updateTextDictEntry()
 
     def textMoveToBottomButtonClicked(self, widget):
@@ -2938,8 +2960,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         textSelection = self.getTextAttributesView.get_selection()
         [model, paths] = textSelection.get_selected_rows()
         for path in paths:
-            iter = model.get_iter(path)
-            model.move_before(iter, None)
+            thisIter = model.get_iter(path)
+            model.move_before(thisIter, None)
         self._updateTextDictEntry()
 
     def helpButtonClicked(self, widget):
@@ -2966,7 +2988,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        enable = self.speechSupportCheckbutton.get_active()
+        enable = self.get_widget("speechSupportCheckbutton").get_active()
         self.prefsDict["enableSpeech"] = enable
         self.prefsDict["speechServerFactory"] = \
             self.speechSystemsChoice.__name__
@@ -2997,7 +3019,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self._cleanupSpeechServers()
-        self.orcaSetupWindow.destroy()
+        self.get_widget("orcaSetupWindow").destroy()
 
     def okButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the okButton
@@ -3014,7 +3036,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.applyButtonClicked(widget)
         self._cleanupSpeechServers()
-        self.orcaSetupWindow.hide()
+        self.get_widget("orcaSetupWindow").hide()
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow

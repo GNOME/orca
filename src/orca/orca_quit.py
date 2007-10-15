@@ -53,19 +53,20 @@ class orcaQuitGUI(orca_glade.GladeWrapper):
         already been created.
         """
 
+        quitDialog = self.get_widget("quitDialog")
+
         # Set the current time on the quit GUI dialog so that it'll
         # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
         # It's surronded by a try/except block here so that if it's not found,
         # then we can fail gracefully.
         #
         try:
-            self.quitDialog.realize()
-            self.quitDialog.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
+            quitDialog.realize()
+            quitDialog.window.set_user_time(orca_state.lastInputEventTimestamp)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 
-        self.quitDialog.show()
+        quitDialog.show()
 
     def quitNoButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the quitNoButton
@@ -77,7 +78,7 @@ class orcaQuitGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.quitDialog.hide()
+        self.get_widget("quitDialog").hide()
         if settings.showMainWindow:
             orca._showMainWindowGUI()
 

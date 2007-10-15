@@ -52,30 +52,30 @@ OS = None
 
 class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
-    def _initAppGUIState(self, appScript):
+    def _initAppGUIState(self, thisAppScript):
         """Before we show the GUI to the user we want to remove the
         General tab and gray out the Speech systems and servers 
         controls on the speech tab.
 
         Arguments:
-        - appScript: the application script.
+        - thisAppScript: the application script.
         """
 
         # Save away the application script so that it can be used later
         # by writeUserPreferences().
         #
-        self.appScript = appScript
+        self.appScript = thisAppScript
 
-        self.notebook.remove_page(0)
-        self.speechSystemsLabel.set_sensitive(False)
-        self.speechSystems.set_sensitive(False)
-        self.speechServersLabel.set_sensitive(False)
-        self.speechServers.set_sensitive(False)
+        self.get_widget("notebook").remove_page(0)
+        self.get_widget("speechSystemsLabel").set_sensitive(False)
+        self.get_widget("speechSystems").set_sensitive(False)
+        self.get_widget("speechServersLabel").set_sensitive(False)
+        self.get_widget("speechServers").set_sensitive(False)
 
-        vbox = appScript.getAppPreferencesGUI()
+        vbox = self.appScript.getAppPreferencesGUI()
         if vbox:
             label = gtk.Label(orca_state.locusOfFocus.app.name)
-            self.notebook.append_page(vbox, label)
+            self.get_widget("notebook").append_page(vbox, label)
 
     def _createPronunciationTreeView(self, pronunciations=None):
         """Create the pronunciation dictionary tree view for this specific 
@@ -101,7 +101,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         self.app = orca_state.locusOfFocus.app
         self.applicationName = self.app.name 
         title = _("Orca Preferences for %s") % self.applicationName
-        self.orcaSetupWindow.set_title(title)
+        self.get_widget("orcaSetupWindow").set_title(title)
 
         orca_gui_prefs.orcaSetupGUI._showGUI(self)
 
@@ -199,7 +199,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         """
 
         self.applyButtonClicked(widget)
-        self.orcaSetupWindow.destroy()
+        self.get_widget("orcaSetupWindow").destroy()
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow

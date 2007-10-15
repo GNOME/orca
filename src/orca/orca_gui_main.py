@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import os
 import sys
-import debug
 import gettext
 import gtk
 import gtk.glade
@@ -35,7 +34,6 @@ import locale
 
 import orca
 import orca_glade
-import orca_state
 import platform
 
 from orca_i18n import _  # for gettext support
@@ -56,7 +54,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         except:
             return
 
-        self.mainWindow.set_icon(icon)
+        self.get_widget("mainWindow").set_icon(icon)
 
     def _showGUI(self):
         """Show the Orca main window GUI. This assumes that the GUI has 
@@ -64,14 +62,14 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         """
 
         self._setMainWindowIcon()
-        self.mainWindow.show()
+        self.get_widget("mainWindow").show()
 
     def _hideGUI(self):
         """Hide the Orca main window GUI. This assumes that the GUI has
         already been created.
         """
 
-        self.mainWindow.hide()
+        self.get_widget("mainWindow").hide()
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton

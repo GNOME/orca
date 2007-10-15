@@ -55,6 +55,21 @@ class GladeWrapper:
             instance_attributes[attribute] = getattr(self, attribute)
         self.widgets.signal_autoconnect(instance_attributes)
 
+    def get_widget(self, attribute):
+        """Return the requested widget. This routine has been introduced
+        (and calls to it made by the Orca Glade sub-classes), to prevent
+        "No class attribute" pychecker errors caused when using __getattr__.
+
+        Arguments:
+        - attribute: name of the widget to return.
+        """
+
+        widget = self.widgets.get_widget(attribute)
+        if widget is None:
+            raise AttributeError("Widget [" + attribute + "] not found")
+
+        return widget
+
     def __getattr__(self, attribute):   # Called when no attribute in __dict__
         widget = self.widgets.get_widget(attribute)
         if widget is None:

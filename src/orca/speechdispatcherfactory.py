@@ -29,10 +29,7 @@ __author__    = "Tomas Cerha <cerha@brailcom.org>"
 __copyright__ = "Copyright (c) 2006, 2007 Brailcom, o.p.s."
 __license__   = "LGPL"
 
-import threading
 import gobject
-import time
-import re
 
 import debug
 import speechserver
@@ -108,10 +105,10 @@ class SpeechServer(speechserver.SpeechServer):
 
     def getSpeechServer(info=None):
         if info is not None:
-            id = info[1]
+            thisId = info[1]
         else:
-            id = SpeechServer.DEFAULT_SERVER_ID
-        return SpeechServer._getSpeechServer(id)
+            thisId = SpeechServer.DEFAULT_SERVER_ID
+        return SpeechServer._getSpeechServer(thisId)
     getSpeechServer = staticmethod(getSpeechServer)
 
     def shutdownActiveServers():
@@ -222,11 +219,11 @@ class SpeechServer(speechserver.SpeechServer):
             
     def _apply_acss(self, acss):
         current = self._current_voice_properties
-        for property, method in self._acss_manipulators:
-            value = acss.get(property)
-            if value is not None and current.get(property) != value:
+        for thisProperty, method in self._acss_manipulators:
+            value = acss.get(thisProperty)
+            if value is not None and current.get(thisProperty) != value:
                 method(value)
-                current[property] = value
+                current[thisProperty] = value
 
     def _speak(self, text, acss, **kwargs):
         if acss is not None:
