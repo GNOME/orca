@@ -30,7 +30,7 @@ __license__   = "LGPL"
 
 import sys
 import traceback
-import atspi
+import pyatspi
 
 # Used to turn off all debugging.
 #
@@ -228,9 +228,20 @@ def _accToString(acc, indent="", includeApp=True):
     else:
         string = indent
 
-    state_string = atspi.Accessible.stateToString(acc)
+    # create the States string
+    stateSet = acc.getState()
+    states = stateSet.getStates()
+    state_strings = []
+    for state in states:
+        state_strings.append(pyatspi.stateToString(state))
+    state_string = ' '.join(state_strings)
 
-    rel_string = atspi.Accessible.relationToString(acc)
+    # create the relations string
+    relations = acc.getRelationSet()
+    relation_strings = []
+    for relation in relations:
+        relation_strings.append(pyatspi.relationToString(relation))
+    rel_string = ' '.join(relation_strings)
 
     string += "name='%s' role='%s' state='%s' relations='%s'" \
               % (acc.name or 'None', acc.getRoleName(),
