@@ -407,7 +407,7 @@ class WhereAmI:
         # Alt FO for the open menu item in the File menu). We only
         # want to speak the shortcut associated with the menu item.
         #
-        if text and obj.parent and obj.parent.role == rolenames.ROLE_MENU:
+        if text and obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU:
             text = text[-1]
         
         utterances.append(text)
@@ -619,19 +619,20 @@ class WhereAmI:
         utterances.append(text)
 
         parent = obj.parent
-        relations = obj.relations
-        for relation in relations:
-            if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_NODE_CHILD_OF:
-                parent = atspi.Accessible.makeAccessible(relation.getTarget(0))
+        relationset = obj.getRelations()
+        for relation in relationset:
+            if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
+                parent = atspi.Accessible.makeAccessible( \
+                                                      relation.getTarget(0))
                 break
 
         name = self._getObjName(obj)
         text = self._getPositionInList(parent, name)
         utterances.append(text)
 
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contain(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -679,19 +680,20 @@ class WhereAmI:
         utterances.append(text)
 
         parent = obj.parent
-        relations = obj.relations
-        for relation in relations:
-            if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_NODE_CHILD_OF:
-                parent = atspi.Accessible.makeAccessible(relation.getTarget(0))
+        relationset = obj.getRelations()
+        for relation in relationset:
+            if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
+                parent = atspi.Accessible.makeAccessible( \
+                                                     relation.getTarget(0))
                 break
 
         name = self._getObjName(obj)
         text = self._getPositionInList(parent, name)
         utterances.append(text)
 
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -887,7 +889,7 @@ class WhereAmI:
 
         if name and name != "None":
             text = name
-        debug.println(self._debugLevel, "%s name=<%s>" % (obj.role, text))
+        debug.println(self._debugLevel, "%s name=<%s>" % (obj.getRole(), text))
 
         return text
 
@@ -901,7 +903,7 @@ class WhereAmI:
         if label and label != "None":
             text = label
 
-        debug.println(self._debugLevel, "%s label=<%s>" % (obj.role, text))
+        debug.println(self._debugLevel, "%s label=<%s>" % (obj.getRole(), text))
 
         return text
 
@@ -1072,7 +1074,7 @@ class WhereAmI:
         """Returns the slider's current value and percentage.
         """
 
-        value = obj.value
+        value = obj.queryValue()
 
         currentValue = "%.1f" % value.currentValue
         percent = value.currentValue / value.maximumValue * 100
@@ -1102,7 +1104,7 @@ class WhereAmI:
         try:
             table = parent.queryTable()
         except NotImplementedError:
-            debug.println(self._debugLevel, "??? parent=%s" % parent.role)
+            debug.println(self._debugLevel, "??? parent=%s" % parent.getRole())
             return []
         else:
             row = table.getRowAtIndex(obj.index)
@@ -1593,8 +1595,9 @@ class WhereAmI:
             # debug.println(self._debugLevel,
             #               "_getDefaultButton: child=%s, %s" % \
             #               (child.role, self._getObjLabelAndName(child)))
-            if child.role == rolenames.ROLE_PUSH_BUTTON \
-                and child.state.count(atspi.Accessibility.STATE_IS_DEFAULT):
+            state = child.getState()
+            if child.getRole() == pyatspi.ROLE_PUSH_BUTTON \
+                and state.contains(pyatspi.STATE_IS_DEFAULT):
                 defaultButton = child
             else:
                 defaultButton = self._getDefaultButton(child)
@@ -1612,9 +1615,12 @@ class WhereAmI:
         """
 
         defaultButton = self._getDefaultButton(obj)
-        if not defaultButton \
-           or not defaultButton.state.count(\
-                                      atspi.Accessibility.STATE_SENSITIVE):
+
+        if not defaultButton:
+            return
+
+        state = defaultButton.getState()
+        if not state.contains(pyatspi.STATE_SENSITIVE):
             return
 
         utterances =[]

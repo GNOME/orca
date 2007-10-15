@@ -1,3 +1,8 @@
+2007-10-15  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/where_am_I.py:
+          pyatspi migration: additional review
+
 2007-10-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
