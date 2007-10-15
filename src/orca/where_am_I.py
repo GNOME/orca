@@ -619,7 +619,7 @@ class WhereAmI:
         utterances.append(text)
 
         parent = obj.parent
-        relationset = obj.getRelations()
+        relationset = obj.getRelationSet()
         for relation in relationset:
             if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
                 parent = atspi.Accessible.makeAccessible( \
@@ -680,7 +680,7 @@ class WhereAmI:
         utterances.append(text)
 
         parent = obj.parent
-        relationset = obj.getRelations()
+        relationset = obj.getRelationSet()
         for relation in relationset:
             if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
                 parent = atspi.Accessible.makeAccessible( \
