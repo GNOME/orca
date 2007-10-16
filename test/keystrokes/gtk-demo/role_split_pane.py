@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -22,53 +23,75 @@ sequence.append(TypeAction("Paned Widgets", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the demo comes up, go to the split pane.  The following should
-# be presented [[[BUG?: No value for speech?]]]:
-#
-# BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'
-#      VISIBLE:  '60 SplitPane', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'split pane'
+# When the demo comes up, go to the split pane.
 #
 #sequence.append(WaitForWindowActivate("Panes",None))
 sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F8", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))
+sequence.append(utils.AssertPresentationAction(
+    "Split pane",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'",
+     "     VISIBLE:  '60 SplitPane', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "BUG? - no value spoken?",
+     "SPEECH OUTPUT: 'split pane'"]))
 
 ########################################################################
-# Move the split pane to the right.  The following should be presented
-# [[[BUG?: No speech output?]]]:
+# Move the split pane to the right.
 #
-# BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'
-#      VISIBLE:  '61 SplitPane', cursor=1
-#
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SPLIT_PANE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Split pane increment value",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'",
+     "     VISIBLE:  '61 SplitPane', cursor=1",
+     "BUG? - no presentation in speech?",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: No speech output?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'
-#      VISIBLE:  '61 SplitPane', cursor=1
-#
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Split pane Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'",
+     "     VISIBLE:  '61 SplitPane', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "BUG? - no value spoken?",
+     "SPEECH OUTPUT: 'split pane'"]))
 
 ########################################################################
-# Put things back the way they were and close the Panes demo window
+# Put things back the way they were
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(WaitAction("object:property-change:accessible-value",
+                           None,
+                           None,
+                           pyatspi.ROLE_SPLIT_PANE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Split pane decrement value",
+    ["BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'",
+     "     VISIBLE:  '60 SplitPane', cursor=1",
+     "BUG? - no presentation in speech",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
 # "Application main window" menu.  Let the harness kill the app.
 #
+sequence.append(KeyComboAction("<Alt>F4", 500))
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("Home"))
