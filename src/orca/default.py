@@ -41,6 +41,7 @@ except:
 import locale
 import time
 
+import pyatspi
 import atspi
 import braille
 import chnames
@@ -3415,7 +3416,7 @@ class Script(script.Script):
     def pursueForFlatReview(self, obj):
         """Determines if we should look any further at the object
         for flat review."""
-        return obj.state.count(atspi.Accessibility.STATE_SHOWING)
+        return obj.getState().contains(pyatspi.STATE_SHOWING)
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""

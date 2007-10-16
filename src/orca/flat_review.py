@@ -1289,7 +1289,7 @@ class Context:
         try:
             itext = root.queryText()
             if len(zones) == 0:
-                zones = self.getZonesFromAccessible(root, root.extents)
+                zones = self.getZonesFromAccessible(root, rootexts)
         except NotImplementedError:
             pass
         
@@ -1300,9 +1300,7 @@ class Context:
                 zones.extend(self.getShowingZones(child))
         else:
             for i in range(0, root.childCount):
-                # TODO pyatspi migration.  commented code should work but does not.
-                child = root.child(i)
-              #  child = root.getChildAtIndex(i)
+                child = root.getChildAtIndex(i)
                 if child == root:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
