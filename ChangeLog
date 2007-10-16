@@ -1,5 +1,10 @@
 2007-10-15  Willie Walker <william.walker@sun.com>
 
+        * test/keystrokes/gtk-demo/role_window.py:
+          More work on test assertions.
+
+2007-10-15  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/gtk-demo/role_status_bar.py
           test/keystrokes/gtk-demo/role_split_pane.py
           test/keystrokes/gtk-demo/role_spin_button.py:
