@@ -487,7 +487,7 @@ class WhereAmI:
         speech.speakUtterances(utterances)
 
         if doubleClick:
-            verbalizePunctuationStyle = savedStyle
+            settings.verbalizePunctuationStyle = savedStyle
 
         utterances = []
         if selected:
@@ -1036,13 +1036,13 @@ class WhereAmI:
         if either exists.
         """
 
-        list = self._script.getAcceleratorAndShortcut(obj)
+        results = self._script.getAcceleratorAndShortcut(obj)
 
         text = ""
-        if not list[1]:
-            text = list[0]
+        if not results[1]:
+            text = results[0]
         else:
-            text = list[0] + " " +  list[1]
+            text = results[0] + " " +  results[1]
 
         return text
 
@@ -1050,11 +1050,11 @@ class WhereAmI:
         """Returns the accelerator for the object, if it exists.
         """
 
-        list = self._script.getAcceleratorAndShortcut(obj)
+        results = self._script.getAcceleratorAndShortcut(obj)
 
         text = ""
-        if list[0]:
-            text = list[0]
+        if results[0]:
+            text = results[0]
 
         return text
 
@@ -1062,11 +1062,11 @@ class WhereAmI:
         """Returns the shortcut for the object, if it exists.
         """
 
-        list = self._script.getAcceleratorAndShortcut(obj)
+        results = self._script.getAcceleratorAndShortcut(obj)
 
         text = ""
-        if list[1]:
-            text = list[1]
+        if results[1]:
+            text = results[1]
 
         return text
 
@@ -1323,8 +1323,6 @@ class WhereAmI:
         caretOffset = textObj.caretOffset
         textContents = ""
         selected = False
-        startSelOffset = -1
-        endSelOffset = -1
 
         nSelections = textObj.getNSelections()
         debug.println(self._debugLevel,
@@ -1491,23 +1489,23 @@ class WhereAmI:
 
         utterances = []
 
-        list = self._getFrameAndDialog(obj)
+        results = self._getFrameAndDialog(obj)
 
         if doubleClick:
-            if list[0]:
+            if results[0]:
                 self._statusBar = None
-                self._getStatusBar(list[0])
+                self._getStatusBar(results[0])
                 if self._statusBar:
                     self._speakStatusBar()
-            window = list[1] or list[0]
+            window = results[1] or results[0]
             if window:
                 self._speakDefaultButton(window)
         else:
-            if list[0]:
-                text = self._getObjLabelAndName(list[0])
+            if results[0]:
+                text = self._getObjLabelAndName(results[0])
                 utterances.append(text)
-            if list[1]:
-                text = self._getObjLabelAndName(list[1])
+            if results[1]:
+                text = self._getObjLabelAndName(results[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel, "titlebar utterances=%s" % \
@@ -1519,7 +1517,7 @@ class WhereAmI:
         the object.
         """
 
-        list = [None, None]
+        results = [None, None]
 
         parent = obj.parent
         while parent and (parent.parent != parent):
@@ -1527,13 +1525,13 @@ class WhereAmI:
             #              "_getFrameAndDialog: parent=%s, %s" % \
             #              (parent.role, self._getObjLabelAndName(parent)))
             if parent.getRole() == pyatspi.ROLE_FRAME:
-                list[0] = parent
+                results[0] = parent
             if parent.getRole() in [pyatspi.ROLE_DIALOG,
                                     pyatspi.ROLE_FILE_CHOOSER]:
-                list[1] = parent
+                results[1] = parent
             parent = parent.parent
 
-        return list
+        return results
 
     def _getStatusBar(self, obj):
         """Gets the status bar.

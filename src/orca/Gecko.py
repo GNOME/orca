@@ -3446,7 +3446,6 @@ class Script(default.Script):
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string
-            mods = orca_state.lastInputEvent.modifiers
             if (string == "Left") or (string == "Right"):
                 [obj, characterOffset] = self.getCaretContext()
                 self.targetCharacterExtents = \
@@ -4691,7 +4690,8 @@ class Script(default.Script):
             return obj.characterOffsetInParent
         except:
             try:
-                hyperlink = obj.queryHyperlink()
+                # Check to see if the hypertext interface has been implemented.
+                obj.queryHyperlink()
             except NotImplementedError:
                 obj.characterOffsetInParent = -1
             else:
@@ -5473,8 +5473,8 @@ class Script(default.Script):
         if ourIndex > 0:
             onLeft = objectsOnLine[ourIndex - 1]
             extents = content[0].queryComponent().getExtents(0)
-            onLeftExtents = \
-                     [extents.x, extents.y, extents.width, extents.height]
+            # onLeftExtents = \
+            #          [extents.x, extents.y, extents.width, extents.height]
         if 0 <= ourIndex < len(objectsOnLine) - 1:
             onRight = objectsOnLine[ourIndex + 1]
             extents = content[0].queryComponent().getExtents(0)

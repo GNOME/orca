@@ -54,11 +54,10 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
           None if we are writing out console preferences.
         """
 
-        self.prefsDict = prefsDict
+        orca_prefs.OrcaPrefs.__init__(self, prefsDict, keyBindingsTreeModel,
+                                      pronunciationTreeModel)
         self.appName = appName
         self.appScript = appScript
-        self.keyBindingsTreeModel = keyBindingsTreeModel
-        self.pronunciationTreeModel = pronunciationTreeModel
 
     def _writeKeyBindingsPreamble(self, prefs):
         """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
@@ -140,7 +139,6 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         """
 
         self._writePronunciationsPreamble(prefs)
-        pronDict = pronunciation_dict.pronunciation_dict
         self._iteratePronunciations(prefs, treeModel)
         self._writePronunciationsPostamble(prefs)
 

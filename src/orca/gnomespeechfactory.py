@@ -475,28 +475,28 @@ class SpeechServer(speechserver.SpeechServer):
 
         # Added in the notify method below.
         #
-        # id     = the id of the utterance we sent to gnome-speech
+        # thisId = the id of the utterance we sent to gnome-speech
         # type   = the type of progress we're getting
         # offset = character offset into the utterance
         #
-        (id, type, offset) = self.__eventQueue.get()
+        (thisId, thisType, offset) = self.__eventQueue.get()
 
         offset = self.__adjustTextCharIndex(offset)
 
         if self.__sayAll:
-            if self.__sayAll.idForCurrentContext == id:
+            if self.__sayAll.idForCurrentContext == thisId:
                 context = self.__sayAll.currentContext
-                if type == GNOME.Speech.speech_callback_speech_started:
+                if thisType == GNOME.Speech.speech_callback_speech_started:
                     context.currentOffset = context.startOffset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
                         speechserver.SayAllContext.PROGRESS)
-                elif type == GNOME.Speech.speech_callback_speech_progress:
+                elif thisType == GNOME.Speech.speech_callback_speech_progress:
                     context.currentOffset = context.startOffset + offset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
                         speechserver.SayAllContext.PROGRESS)
-                elif type == GNOME.Speech.speech_callback_speech_ended:
+                elif thisType == GNOME.Speech.speech_callback_speech_ended:
                     try:
                         while True:
                             [self.__sayAll.currentContext, acss] = \
