@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import re
 import sys
 
+import atspi  # TODO remove me
 import pyatspi
 import braille
 import debug
@@ -275,6 +276,7 @@ class TextZone(Zone):
         else:
             return self.__dict__[attr]
 
+
 class StateZone(Zone):
     """Represents a Zone for an accessible that shows a state using
     a graphical indicator, such as a checkbox or radio button."""
@@ -415,6 +417,7 @@ class ValueZone(Zone):
         else:
             return Zone.__getattr__(self, attr)
 
+
 class Line:
     """A Line is a single line across a window and is composed of Zones."""
 
@@ -543,12 +546,13 @@ class Context:
         """Create a new Context that will be used for handling flat
         review mode.
         """
-
         self.script    = script
-
+        # TODO pyatspi migration:  the commented out code should work but does not.
         if (not orca_state.locusOfFocus) \
-            or (orca_state.locusOfFocus.getApplication() \
-                != self.script.getApplication()):
+            or (orca_state.locusOfFocus.app != self.script.app):
+  #      if (not orca_state.locusOfFocus) \
+  #          or (orca_state.locusOfFocus.getApplication() \
+  #              != self.script.app):
             self.lines = []
         else:
             # We want to stop at the window or frame or equivalent level.
@@ -664,6 +668,7 @@ class Context:
         # by line.
         #
         self.targetCharInfo = None
+
 
     def visible(self,
                 ax, ay, awidth, aheight,
@@ -1019,15 +1024,22 @@ class Context:
         # creating the zone, only keep track of the text that is actually
         # showing on the screen.
         #
-        if accessible.queryText():
-            zones = self.getZonesFromText(accessible, cliprect)
-        else:
+        try:
+            itext = accessible.queryText()
+        except NotImplementedError:
             zones = []
+        else:
+            zones = self.getZonesFromText(accessible, cliprect)
 
         # We really want the accessible text information.  But, if we have
         # an image, and it has a description, we can fall back on it.
-        #
-        if (len(zones) == 0) and accessible.queryImage():
+        # First, try to get the image interface.
+        try:
+            iimage = accessible.queryImage()
+        except NotImplementedError:
+            iimage = None
+        
+        if (len(zones) == 0) and iimage:
             # Check for accessible.name, if it exists and has len > 0, use it
             # Otherwise, do the same for accessible.description
             # Otherwise, do the same for accessible.image.description
@@ -1036,12 +1048,12 @@ class Context:
                 imageName = accessible.name
             elif accessible.description and len(accessible.description):
                 imageName = accessible.description
-            elif accessible.image.imageDescription and \
-                     len(accessible.image.imageDescription):
-                imageName = accessible.image.imageDescription
+            elif iimage.imageDescription and \
+                     len(iimage.imageDescription):
+                imageName = iimage.imageDescription
 
-            [x, y] = accessible.image.getImagePosition(0)
-            [width, height] = accessible.image.getImageSize()
+            [x, y] = iimage.getImagePosition(0)
+            [width, height] = iimage.getImageSize()
 
             if (width != 0) and (height != 0) \
                    and self.visible(x, y, width, height,
@@ -1103,7 +1115,7 @@ class Context:
 
             if (string == "") \
                 and (role != pyatspi.ROLE_TABLE_CELL):
-                string = role
+                string = accessible.getRoleName()
 
             if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
                 zones.append(Zone(accessible,
@@ -1126,7 +1138,12 @@ class Context:
         and column format.
         """
 
-        if (not parent) or (not parent.queryComponent()):
+        if not parent:
+            return []
+
+        try:
+            icomponent = parent.queryComponent()
+        except NotImplementedError:
             return []
 
         # A minimal chunk to jump around should we not really know where we
@@ -1136,7 +1153,7 @@ class Context:
 
         descendants = []
 
-        parentExtents = parent.queryComponent().getExtents(0)
+        parentExtents = icomponent.getExtents(0)
 
         # [[[TODO: WDW - HACK related to GAIL bug where table column
         # headers seem to be ignored:
@@ -1148,7 +1165,11 @@ class Context:
         # accidentally accounts for this offset, yet it should also
         # work when bug 325809 is fixed.]]]
         #
-        table = parent.queryTable()
+        try:
+            table = parent.queryTable()
+        except NotImplementedError:
+            table = None
+            
         if table:
             for i in range(0, table.nColumns):
                 obj = table.getColumnHeader(i)
@@ -1220,7 +1241,7 @@ class Context:
             return []
 
         zones = []
-        rootexts = root.queryComponent.getExtents(0)
+        rootexts = root.queryComponent().getExtents(0)
         rootrole = root.getRole()
 
         # If we're at a leaf node, then we've got a good one on our hands.
@@ -1265,9 +1286,13 @@ class Context:
         if rootrole == pyatspi.ROLE_PAGE_TAB:
             zones.extend(self.getZonesFromAccessible(root, rootexts))
 
-        if (len(zones) == 0) and root.text:
-            zones = self.getZonesFromAccessible(root, rootexts)
-
+        try:
+            itext = root.queryText()
+            if len(zones) == 0:
+                zones = self.getZonesFromAccessible(root, root.extents)
+        except NotImplementedError:
+            pass
+        
         stateset = root.getState()
         if stateset.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
            and (root.childCount > 50):
@@ -1275,7 +1300,9 @@ class Context:
                 zones.extend(self.getShowingZones(child))
         else:
             for i in range(0, root.childCount):
-                child = root.getChild(i)
+                # TODO pyatspi migration.  commented code should work but does not.
+                child = root.child(i)
+              #  child = root.getChildAtIndex(i)
                 if child == root:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
