@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -31,208 +32,195 @@ sequence.append(WaitAction("object:state-changed:expanded",
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Tree Store", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# When the Card planning sheet demo window appears, the following should
-# be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader'
-#      VISIBLE:  'Holiday ColumnHeader', cursor=1
-#
-# SPEECH OUTPUT: 'Card planning sheet frame'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Holiday column header'
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("Card planning sheet",None))
 sequence.append(WaitForFocus("Holiday",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
+sequence.append(utils.AssertPresentationAction(
+    "Tree table initial focus",
+    ["BRAILLE LINE:  'Window Tree Store $l'",
+     "     VISIBLE:  'Window Tree Store $l', cursor=18",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree Store TREE LEVEL 2'",
+     "     VISIBLE:  'Tree Store TREE LEVEL 2', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame'",
+     "     VISIBLE:  'Card planning sheet Frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader'",
+     "     VISIBLE:  'Holiday ColumnHeader', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
+     "SPEECH OUTPUT: 'Tree Store'",
+     "SPEECH OUTPUT: 'tree level 2'",
+     "SPEECH OUTPUT: 'Card planning sheet frame'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Holiday column header'"]))
 
 ########################################################################
-# Down arrow twice to select the "January" cell.  The following should
-# be presented when the "January" cell is selected:
-#
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded TREE LEVEL 1 < > Alex < > Havoc < > Tim < > Owen < > Dave'
-#      VISIBLE:  'January expanded TREE LEVEL 1 < ', cursor=1
-#
-# SPEECH OUTPUT: 'January expanded 3 items Alex check box not checked  Havoc check box not checked  Tim check box not checked  Owen check box not checked  Dave check box not checked '
-# SPEECH OUTPUT: 'tree level 1'
+# Down arrow twice to select the "January" cell.
 #
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitAction("object:state-changed:selected",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "January cell focus",
+    ["BUG? - nothing spoken and line not brailled"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: should column header be presented?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded TREE LEVEL 1 < > Alex < > Havoc < > Tim < > Owen < > Dave'
-#      VISIBLE:  'January expanded TREE LEVEL 1 < ', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: 'January'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'row 1 of 53'
-# SPEECH OUTPUT: 'expanded'
-# SPEECH OUTPUT: 'tree level 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "January cell Where Am I",
+    ["BUG? - we're on the January cell",
+     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable'",
+     "     VISIBLE:  'TreeTable', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tree table'"]))
 
 ########################################################################
-# Collapse the cell.  The following should be presented [[[BUG?: should
-# "January" be spoken -- it violates the rule of not speaking the name
-# if the object already has focus.]]]:
+# Collapse the cell.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed TREE LEVEL 1 < > Alex < > Havoc < > Tim < > Owen < > Dave'
-#      VISIBLE:  'January collapsed TREE LEVEL 1 <', cursor=1
-#
-# SPEECH OUTPUT: 'January collapsed'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Left", 500))
 sequence.append(WaitAction("object:state-changed:expanded",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "January cell collapsed",
+    ["BUG? - nothing presented", "BUG? - the cell name 'January' should not be spoken"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: should column header be presented?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed TREE LEVEL 1 < > Alex < > Havoc < > Tim < > Owen < > Dave'
-#      VISIBLE:  'January collapsed TREE LEVEL 1 <', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: 'January'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'row 1 of 50'
-# SPEECH OUTPUT: 'collapsed'
-# SPEECH OUTPUT: 'tree level 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "January cell collapsed Where Am I",
+    ["BUG? - we're on the January cell",
+     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable'",
+     "     VISIBLE:  'TreeTable', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tree table'"]))
 
 ########################################################################
-# Expand the cell again.  The following should be presented:
+# Expand the cell again.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded TREE LEVEL 1 < > Alex < > Havoc < > Tim < > Owen < > Dave'
-#      VISIBLE:  'January expanded TREE LEVEL 1 < ', cursor=1
-#
-# SPEECH OUTPUT: 'January expanded 3 items'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Right"))
 sequence.append(WaitAction("object:state-changed:expanded",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "January cell expanded",
+    ["BUG? - nothing presented", "BUG? - the cell name 'January' should not be spoken"]))
 
 ########################################################################
-# Arrow down a row.  The following should be presented:
+# Arrow down a row.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader New Years Day TREE LEVEL 2'
-#      VISIBLE:  'New Years Day TREE LEVEL 2', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '
-# SPEECH OUTPUT: 'tree level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitAction("object:state-changed:selected",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "New Year's Day cell",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave TREE LEVEL 2'",
+     "     VISIBLE:  'New Years Day <x> Alex <x> Havoc', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Holiday column header'",
+     "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-# Arrow right to a column.  The following should be presented:
+# Arrow right to a column.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'
-#      VISIBLE:  '<x> Alex', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Alex column header'
-# SPEECH OUTPUT: 'check box checked '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right", 500))
 sequence.append(WaitAction("object:active-descendant-changed",
                            None,
                            None,
                            pyatspi.ROLE_TABLE,
                            5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "Alex checkbox cell",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Alex column header'",
+     "BUG? - should not speak entire row after moving right one cell",
+     "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '"]))
 
 #
 # [[[BUG?: Somewhere around here, the demo flakes out.]]]
 #
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: should column header be presented?]]] [[[BUG?: why
-# is 'New Years Day' presented?  It should be the check box.]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader New Years Day TREE LEVEL 2'
-#      VISIBLE:  'New Years Day TREE LEVEL 2', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: 'New Years Day'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'row 2 of 53'
-# SPEECH OUTPUT: 'tree level 2'
-#
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Alex checkbox cell Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
+     "     VISIBLE:  '<x> Alex', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "BUG? - checkbox state should be presented",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'New Years Day'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'row 2 of 53'"]))
 
 ########################################################################
-# Change the state of the checkbox.  The following should be presented:
+# Change the state of the checkbox.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader < > Alex'
-#      VISIBLE:  '< > Alex', cursor=1
-#
-# SPEECH OUTPUT: 'not checked '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Alex checkbox cell unchecked",
+    ["BUG? - nothing presented"]))
 
 ########################################################################
-# Change the state of the checkbox.  The following should be presented:
+# Change the state of the checkbox.
 #
-# BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'
-#      VISIBLE:  '<x> Alex', cursor=1
-#
-# SPEECH OUTPUT: 'checked '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Alex checkbox cell checked",
+    ["BUG? - nothing presented"]))
 
 ########################################################################
 # Close the Card planning sheet demo

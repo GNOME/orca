@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -30,8 +31,76 @@ sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("This is a test.", 500))
 sequence.append(KeyComboAction("Return", 500))
+sequence.append(utils.AssertPresentationAction(
+    "Typing",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane T $l'",
+     "     VISIBLE:  'T $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane T $l'",
+     "     VISIBLE:  'T $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane Th $l'",
+     "     VISIBLE:  'Th $l', cursor=3",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane Th $l'",
+     "     VISIBLE:  'Th $l', cursor=3",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane Thi $l'",
+     "     VISIBLE:  'Thi $l', cursor=4",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane Thi $l'",
+     "     VISIBLE:  'Thi $l', cursor=4",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This $l'",
+     "     VISIBLE:  'This $l', cursor=5",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This $l'",
+     "     VISIBLE:  'This $l', cursor=5",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This  $l'",
+     "     VISIBLE:  'This  $l', cursor=6",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This  $l'",
+     "     VISIBLE:  'This  $l', cursor=6",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This i $l'",
+     "     VISIBLE:  'This i $l', cursor=7",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This i $l'",
+     "     VISIBLE:  'This i $l', cursor=7",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is $l'",
+     "     VISIBLE:  'This is $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is $l'",
+     "     VISIBLE:  'This is $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is  $l'",
+     "     VISIBLE:  'This is  $l', cursor=9",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is  $l'",
+     "     VISIBLE:  'This is  $l', cursor=9",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a $l'",
+     "     VISIBLE:  'This is a $l', cursor=10",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a $l'",
+     "     VISIBLE:  'This is a $l', cursor=10",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a  $l'",
+     "     VISIBLE:  'This is a  $l', cursor=11",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a  $l'",
+     "     VISIBLE:  'This is a  $l', cursor=11",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a t $l'",
+     "     VISIBLE:  'This is a t $l', cursor=12",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a t $l'",
+     "     VISIBLE:  'This is a t $l', cursor=12",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a te $l'",
+     "     VISIBLE:  'This is a te $l', cursor=13",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a te $l'",
+     "     VISIBLE:  'This is a te $l', cursor=13",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a tes $l'",
+     "     VISIBLE:  'This is a tes $l', cursor=14",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a tes $l'",
+     "     VISIBLE:  'This is a tes $l', cursor=14",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test $l'",
+     "     VISIBLE:  'This is a test $l', cursor=15",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test $l'",
+     "     VISIBLE:  'This is a test $l', cursor=15",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=16",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=16",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1"]))
+
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(TypeAction("I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.", 500))
 sequence.append(KeyComboAction("Return", 500))
@@ -41,104 +110,198 @@ sequence.append(TypeAction("Tis this and thus thou art in Rome?", 500))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# Go to the beginning of the text area.  The following should be
-# presented:
+# Go to the beginning of the text area.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
-#      VISIBLE:  'This is a test. $l', cursor=1
-#
-# SPEECH OUTPUT: 'This is a test.'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Navigate home",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=1",
+     "SPEECH OUTPUT: 'This is a test.'"]))
 
 ########################################################################
 # Now, arrow right to the end of the word "This" and select "is a test"
-# word by word.  When you are done the last thing presented should be:
+# word by word.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
-#      VISIBLE:  'This is a test. $l', cursor=15
-#
-# SPEECH OUTPUT: ' test'
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: ' is a test'
-# SPEECH OUTPUT: 'selected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Arrow to end of 'This'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=3",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=4",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=5",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'space'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Select 'is a test'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=10",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=15",
+     "SPEECH OUTPUT: ' is'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ' a'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ' test'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
-# Unselect "test".  The following should be presented:
+# Unselect "test".
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
-#      VISIBLE:  'This is a test. $l', cursor=11
-#
-# SPEECH OUTPUT: 'test'
-# SPEECH OUTPUT: 'unselected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift><Control>Left", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Unselect 'test'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=11",
+     "SPEECH OUTPUT: 'test'",
+     "SPEECH OUTPUT: 'unselected'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
-#      VISIBLE:  'This is a test. $l', cursor=11
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text'
-# SPEECH OUTPUT: ' is a '
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=11",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: ' is a '",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Arrow down to "I'm typing away..." and Select to the end of the line.
-# The following should be presented:
 #
-# BRAILLE LINE:  'I'm just typing away like a monkey with nothing better to do in my life than eat fruit and type. $l'
-#      VISIBLE:  'y life than eat fruit and type. ', cursor=32
-#
-# SPEECH OUTPUT: 'yping away like a monkey with nothing better to do in my life than eat fruit and type.'
-# SPEECH OUTPUT: 'selected'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("Down", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("<Shift>End", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Select to end of line",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
+     "     VISIBLE:  'I'm just typing away like a mad ', cursor=12",
+     "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
+     "     VISIBLE:  'y life than eat fruit and type. ', cursor=32",
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
+     "SPEECH OUTPUT: 'ping away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
-# Right arrow to the beginning of the next line.  The following should
-# be presented:
+# Right arrow to the beginning of the next line.
 #
-# BRAILLE LINE:  'The keyboard sure can get sticky. $l'
-#      VISIBLE:  'The keyboard sure can get sticky', cursor=1
-#      
-# SPEECH OUTPUT: 'newline'
-# SPEECH OUTPUT: 'T'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Move to beginning of next line",
+    ["BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
+     "     VISIBLE:  'The keyboard sure can get sticky', cursor=1",
+     "SPEECH OUTPUT: 'newline'",
+     "SPEECH OUTPUT: 'T'"]))
 
 ########################################################################
-# Try a "SayAll".  The following should be presented:
+# Try a "SayAll".
 #
-# BRAILLE LINE:  'Tis this and thus thou art in Rome? $l'
-#      VISIBLE:  'this and thus thou art in Rome? ', cursor=32
-#
-# SPEECH OUTPUT: '
-# The keyboard sure can get sticky.'
-# SPEECH OUTPUT: '
-# Tis this and thus thou art in Rome?'
-# SPEECH OUTPUT: '
-# '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add", 500))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "SayAll",
+    ["SPEECH OUTPUT: '",
+     "The keyboard sure can get sticky.'",
+     "SPEECH OUTPUT: '",
+     "Tis this and thus thou art in Rome?'",
+     "SPEECH OUTPUT: '",
+     "'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window
