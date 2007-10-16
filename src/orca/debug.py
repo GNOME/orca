@@ -238,10 +238,14 @@ def _accToString(acc, indent="", includeApp=True):
 
     # create the relations string
     relations = acc.getRelationSet()
-    relation_strings = []
-    for relation in relations:
-        relation_strings.append(pyatspi.relationToString(relation))
-    rel_string = ' '.join(relation_strings)
+    if relations:
+        relation_strings = []
+        for relation in relations:
+            relation_strings.append( \
+                          pyatspi.relationToString(relation.getRelationType()))
+        rel_string = ' '.join(relation_strings)
+    else:
+        rel_string = ''
 
     string += "name='%s' role='%s' state='%s' relations='%s'" \
               % (acc.name or 'None', acc.getRoleName(),
