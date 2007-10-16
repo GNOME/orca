@@ -1,5 +1,16 @@
 2007-10-15  Willie Walker <william.walker@sun.com>
 
+        * keystrokes/gtk-demo/role_toggle_button.py
+          keystrokes/gtk-demo/role_tear_off_menu_item.py
+          keystrokes/gtk-demo/role_table.py
+          keystrokes/gtk-demo/role_toolbar.py
+          keystrokes/gtk-demo/role_menu.py
+          keystrokes/gtk-demo/role_text_multiline.py:
+          More work on test assertions.  2 more files to go
+          under gtk-demos.
+
+2007-10-15  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/gtk-demo/role_window.py:
           More work on test assertions.
 

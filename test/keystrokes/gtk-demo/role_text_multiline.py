@@ -84,8 +84,7 @@ sequence.append(KeyComboAction("<Shift><Control>Left", 500))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: what is the difference between this and the
-# extended Where Am I you get with double KP_Enter?]]]:
+# presented:
 #
 # BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'
 #      VISIBLE:  'This is a test. $l', cursor=11

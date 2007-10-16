@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -19,78 +20,91 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Expander", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# When the demo comes up, the following should be presented:
-#
-# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'
-#      VISIBLE:  '& y Details ToggleButton', cursor=1
-#
-# SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Details toggle button not pressed'
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("GtkExpander",None))
 sequence.append(WaitForFocus("Details", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Toggle button initial focus",
+    ["BRAILLE LINE:  'Window Expander $l'",
+     "     VISIBLE:  'Window Expander $l', cursor=16",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'Window  $l'",
+     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
+     "     VISIBLE:  'Expander TREE LEVEL 1', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog'",
+     "     VISIBLE:  'GtkExpander Dialog', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
+     "     VISIBLE:  '& y Details ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
+     "SPEECH OUTPUT: 'Expander'",
+     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: pressed state not presented?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'
-#      VISIBLE:  '& y Details ToggleButton', cursor=1
-#
-# SPEECH OUTPUT: 'Details'
-# SPEECH OUTPUT: 'toggle button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Toggle button Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
+     "     VISIBLE:  '& y Details ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'Details'",
+     "BUG? - pressed state not spoken?",
+     "SPEECH OUTPUT: 'toggle button'"]))
 
 ########################################################################
-# Toggle the state of the "Details" button.  The following should be
-# presented:
+# Toggle the state of the "Details" button.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'
-#      VISIBLE:  '&=y Details ToggleButton', cursor=1
-#
-# SPEECH OUTPUT: 'pressed'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitAction("object:state-changed:expanded",
                            "Details",
                            None,
                            pyatspi.ROLE_TOGGLE_BUTTON,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Toggle button pressed",
+    ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'",
+     "     VISIBLE:  '&=y Details ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'pressed'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented [[[BUG?: pressed state not presented?]]]:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'
-#      VISIBLE:  '&=y Details ToggleButton', cursor=1
-#
-# SPEECH OUTPUT: 'Details'
-# SPEECH OUTPUT: 'toggle button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Toggle button pressed Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'",
+     "     VISIBLE:  '&=y Details ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'Details'",
+     "BUG? - pressed state not spoken?",
+     "SPEECH OUTPUT: 'toggle button'"]))
 
 ########################################################################
-# Toggle the state of the "Details" button.  The following should be
-# presented:
+# Toggle the state of the "Details" button.
 #
-# BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'
-#      VISIBLE:  '& y Details ToggleButton', cursor=1
-#
-# SPEECH OUTPUT: 'not pressed'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitAction("object:state-changed:expanded",
                            "Details",
                            None,
                            pyatspi.ROLE_TOGGLE_BUTTON,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "Toggle button not pressed",
+    ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
+     "     VISIBLE:  '& y Details ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
 # Close the demo.

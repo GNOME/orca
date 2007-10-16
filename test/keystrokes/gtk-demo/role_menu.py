@@ -96,8 +96,7 @@ sequence.append(WaitForFocus("Color",
                              acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "Color menu",
-    ["BUG? - should parent menus be shown in braille context?",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))

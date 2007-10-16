@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -23,16 +24,7 @@ sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the menus demo window appears, go to the tear off menu item.
-# The following should be presented [[[BUG?: see also role_menu.py --
-# I think the parent menu item should be shown in the braille
-# context.]]]:
-#
-# BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'
-#      VISIBLE:  'TearOffMenuItem', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'tear off menu item'
-#
+# 
 #sequence.append(WaitForWindowActivate("menus",None))
 sequence.append(WaitForFocus("Flip", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("F10"))
@@ -42,22 +34,29 @@ sequence.append(KeyComboAction("Down"))
 
 sequence.append(WaitForFocus("item  2 - 1",
                              acc_role=pyatspi.ROLE_RADIO_MENU_ITEM))
-sequence.append(KeyComboAction("Up"))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEAROFF_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Tear off menu item",
+    ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
+     "     VISIBLE:  'TearOffMenuItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tear off menu item'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'
-#      VISIBLE:  'TearOffMenuItem', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'tear off menu item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Tear off menu item Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
+     "     VISIBLE:  'TearOffMenuItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tear off menu item'"]))
 
 ########################################################################
 # Get out of the menu and close the menus demo window.
