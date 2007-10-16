@@ -1,3 +1,10 @@
+2007-10-15  Willie Walker <william.walker@sun.com>
+
+        * src/orca/outloud.py:
+          Work on bug #486726 - Eliminate pychecker warnings/errors.
+          Make 'kit' and 'child' use the child average pitch instead
+          of the female average pitch.
+
 2007-10-15  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/flat_review.py:

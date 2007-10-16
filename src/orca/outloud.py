@@ -158,9 +158,9 @@ _child_ap = [
     ]
 
 _update_map(_table, ('kit', 'average-pitch'),
-            " `vb%s `vh% s",_female_ap)
+            " `vb%s `vh% s",_child_ap)
 _update_map(_table, ('child', 'average-pitch'),
-            " `vb%s `vh% s",_female_ap)
+            " `vb%s `vh% s",_child_ap)
 
 
 # pitch-range for male:
