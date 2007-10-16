@@ -1335,7 +1335,8 @@ class Script(default.Script):
             default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-            table = event.source.parent.parent.parent.parent.parent
+            tmp = event.source.parent.parent
+            table = tmp.parent.parent.parent
             cell = table.child(table.childCount-1)
             allText = self.findByRole(cell, rolenames.ROLE_TEXT)
             utterance = "for " + self.getText(allText[0], 0, -1)

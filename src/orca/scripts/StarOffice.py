@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import atk
 import gtk
 
 import orca.debug as debug
@@ -316,7 +315,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                             pointOfReference["lastColumn"] == column)
 
                 if speakAll:
-                    focusRowRegion = None
                     [startIndex, endIndex] = \
                         self._script.getSpreadSheetRowRange(obj)
                     for i in range(startIndex, endIndex+1):
@@ -330,8 +328,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                             if len(rowRegions):
                                 rowRegions.append(braille.Region(" "))
                             rowRegions.append(cellRegions[0])
-                            if i == column:
-                                focusRowRegion = cellRegions[0]
                     regions.extend(rowRegions)
                     settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
                 else:
@@ -1551,7 +1547,8 @@ class Script(default.Script):
                          rolenames.ROLE_DIALOG, \
                          rolenames.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
-                if event.source.parent.parent.name.startswith(panelName):
+                tmp = event.source.parent.parent
+                if tmp.name.startswith(panelName):
                     isPanel = True
 
             if not isPanel:
@@ -1593,7 +1590,6 @@ class Script(default.Script):
         """
 
         brailleGen = self.brailleGenerator
-        speechGen = self.speechGenerator
 
         debug.printObjectEvent(self.debugLevel,
                                event,
@@ -1914,9 +1910,6 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
-        brailleGen = self.brailleGenerator
-        speechGen = self.speechGenerator
 
         debug.printObjectEvent(self.debugLevel,
                                event,
@@ -2290,14 +2283,14 @@ class Script(default.Script):
                 return
 
             caretOffset = event.source.text.caretOffset
-            len = event.source.text.characterCount
+            charLen = event.source.text.characterCount
 
             # If you are in a table cell and you arrow Right, the caret
             # will focus at the end of the current paragraph before moving
             # into the next cell. To be similar to the way that caret
             # navigation works in other paragraphs in OOo, just return.
             #
-            if event_string == "Right" and caretOffset == len:
+            if event_string == "Right" and caretOffset == charLen:
                 return
 
             # If we have moved left and the caret position is at the end of
@@ -2307,7 +2300,7 @@ class Script(default.Script):
             # to by-row), then speak the cell name, otherwise just return
             # (see bug #382418).
             #
-            if (event_string == "Left" and caretOffset == len) or \
+            if (event_string == "Left" and caretOffset == charLen) or \
                (event_string == "Right" and caretOffset == 0) or \
                (event_string == "Tab" or event_string == "ISO_Left_Tab"):
                 if not settings.readTableCellRow:

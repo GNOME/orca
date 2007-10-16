@@ -13,6 +13,15 @@
           src/orca/gnomespeechfactory.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
 
+        * src/orca/scripts/gnome-mud.py:
+          src/orca/scripts/gedit.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/Gecko.py:
+          src/orca/speechdispatcherfactory.py:
+          src/orca/app_prefs.py:
+          More work on bug #486726 - Eliminate pychecker warnings/errors.
+
 2007-10-16  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/flat_review.py:

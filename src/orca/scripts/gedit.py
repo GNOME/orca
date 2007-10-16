@@ -173,7 +173,6 @@ class Script(default.Script):
         #
         done = False
         while not done:
-            lastEndOffset = -1
             while offset < length:
                 [mystr, start, end] = text.getTextAtOffset(offset, mode)
                 endOffset = end
@@ -346,10 +345,11 @@ class Script(default.Script):
         # gedit is using.  We hate keying off stuff like this, but
         # we're forced to do so in this case.
         #
+        tmp = obj.parent.parent
         if (self.isDesiredFocusedItem(obj, rolesList1) \
             and obj.name == _("Find")) \
             or (self.isDesiredFocusedItem(obj, rolesList2) \
-                and obj.parent.parent.parent.parent.name == _("Find")):
+                and tmp.parent.parent.name == _("Find")):
             return True
         else:
             return False
@@ -366,9 +366,6 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
-
-        brailleGen = self.brailleGenerator
-        speechGen = self.speechGenerator
 
         debug.printObjectEvent(self.debugLevel,
                                event,
@@ -417,7 +414,8 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER,
                      rolenames.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            frame = event.source.parent.parent.parent.parent
+            tmp = event.source.parent.parent
+            frame = tmp.parent.parent
             # Translators: this is the name of the "Check Spelling" window
             # in gedit and must be the same as what gedit uses.  We hate
             # keying off stuff like this, but we're forced to do so in this
@@ -446,9 +444,6 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
-        brailleGen = self.brailleGenerator
-        speechGen = self.speechGenerator
 
         debug.printObjectEvent(self.debugLevel,
                                event,

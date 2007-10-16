@@ -68,7 +68,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines("#\n")
         prefs.writelines('def overrideAppKeyBindings(script, keyB):\n')
 
-    def _writeKeyBindingsPostamble(self, prefs, appName, appScript):
+    def _writeAppKeyBindingsPostamble(self, prefs, appName, appScript):
         """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py
         keyBindings section.
 
@@ -81,7 +81,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines('   return keyB')
         prefs.writelines("\n\n")
 
-    def _writeKeyBindingsMap(self, prefs, appName, appScript, treeModel):
+    def _writeAppKeyBindingsMap(self, prefs, appName, appScript, treeModel):
         """Write to an application specific configuration file 'prefs', the
         key bindings passed in the model treeModel.
 
@@ -94,7 +94,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
 
         self._writeKeyBindingsPreamble(prefs)
         self._iterateKeyBindings(prefs, treeModel)
-        self._writeKeyBindingsPostamble(prefs, appName, appScript)
+        self._writeAppKeyBindingsPostamble(prefs, appName, appScript)
 
     def _writePronunciationsPreamble(self, prefs):
         """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
@@ -142,7 +142,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         self._iteratePronunciations(prefs, treeModel)
         self._writePronunciationsPostamble(prefs)
 
-    def _writePreferencesPreamble(self, prefs, appName):
+    def _writeAppPreferencesPreamble(self, prefs, appName):
         """Writes the preamble to the ~/.orca/app-settings/<APPNAME>.py file.
 
         Arguments:
@@ -160,7 +160,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines("import orca.acss\n")
         prefs.writelines("\n")
 
-    def _writePreferencesPostamble(self, prefs, appName):
+    def _writeAppPreferencesPostamble(self, prefs, appName):
         """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py file.
 
         Arguments:
@@ -191,7 +191,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         orcaSettingsDir = os.path.join(orcaDir, "app-settings")
         appFileName = "%s.py" % self.appName
         prefs = open(os.path.join(orcaSettingsDir, appFileName), "w")
-        self._writePreferencesPreamble(prefs, self.appName)
+        self._writeAppPreferencesPreamble(prefs, self.appName)
 
         for key in settings.userCustomizableSettings:
             value = self._getValueForKey(self.prefsDict, key)
@@ -200,8 +200,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
                 prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
         if self.keyBindingsTreeModel:
-            self._writeKeyBindingsMap(prefs, self.appName, self.appScript,
-                                 self.keyBindingsTreeModel)
+            self._writeAppKeyBindingsMap(prefs, self.appName, self.appScript,
+                                         self.keyBindingsTreeModel)
 
         if self.pronunciationTreeModel:
             self._writePronunciationMap(prefs, self.pronunciationTreeModel)
@@ -211,7 +211,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         #
         self.appScript.setAppPreferences(prefs)
 
-        self._writePreferencesPostamble(prefs, self.appName)
+        self._writeAppPreferencesPostamble(prefs, self.appName)
         prefs.close()
 
 def writePreferences(prefsDict, appName=None, appScript=None,

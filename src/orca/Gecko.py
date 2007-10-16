@@ -4413,7 +4413,7 @@ class Script(default.Script):
                     elif obj.getRole() == pyatspi.ROLE_LINK:
                         contents += "<"
                 contents += self.getCharacterAtOffset(obj, characterOffset)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+                lastObj = obj
                 lastCharacterExtents = characterExtents
             [obj, characterOffset] = self.findNextCaretInOrder(obj,
                                                                characterOffset)
@@ -7031,8 +7031,7 @@ class Script(default.Script):
                 #
                 #if objectForFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 #    objectForFocus = objectForFocus.parent
-                focusGrabbed = \
-                        self._objectForFocusGrab.queryComponent().grabFocus()
+                self._objectForFocusGrab.queryComponent().grabFocus()
 
         # If there is a character there, we'd like to position the
         # caret the right spot.  [[[TODO: WDW - numbered lists are
@@ -7045,7 +7044,7 @@ class Script(default.Script):
             if self.isAriaWidget() \
                  or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
                  and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                caretSet = obj.text.setCaretOffset(characterOffset)
+                obj.text.setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
                                       obj,
                                       self.getExtents(obj,
@@ -7383,11 +7382,11 @@ class Script(default.Script):
                 pass
             else:
                 orca.setLocusOfFocus(None, comboBox)
-                focusGrabbed = comboBox.queryComponent().grabFocus()
+                comboBox.queryComponent().grabFocus()
                 for i in range(0, action.nActions):
                     name = action.getName(i)
                     if name == "open":
-                        success = action.doAction(i)
+                        action.doAction(i)
                         break
 
     def goPreviousHeading(self, inputEvent):
@@ -8076,7 +8075,7 @@ class Script(default.Script):
             # do want to grab focus should we be on a list.
             #
             if obj.getRole() == pyatspi.ROLE_LIST:
-                focusGrabbed = obj.queryComponent().grabFocus()
+                obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)
@@ -8134,7 +8133,7 @@ class Script(default.Script):
             # do want to grab focus should we be on a list.
             #
             if obj.getRole() == pyatspi.ROLE_LIST:
-                focusGrabbed = obj.queryComponent().grabFocus()
+                obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)

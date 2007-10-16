@@ -37,7 +37,6 @@ import settings
 import orca
 from acss import ACSS
 from orca_i18n import _
-from speechserver import VoiceFamily
 
 try:
     import speechd
@@ -202,7 +201,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._send_command(self._client.set_volume, volume)
 
     def _set_family(self, acss_family):
-        locale = acss_family[VoiceFamily.LOCALE]
+        locale = acss_family[speechserver.VoiceFamily.LOCALE]
         if locale:
             lang = locale.split('_')[0]
             if lang and len(lang) == 2:
@@ -213,7 +212,7 @@ class SpeechServer(speechserver.SpeechServer):
         except AttributeError:
             pass
         else:
-            name = acss_family[VoiceFamily.NAME]
+            name = acss_family[speechserver.VoiceFamily.NAME]
             if name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
             
@@ -303,9 +302,10 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             voices += self._send_command(list_synthesis_voices)
-        families = [VoiceFamily({VoiceFamily.NAME: name,
-                                 #VoiceFamily.GENDER: VoiceFamily.MALE,
-                                 VoiceFamily.LOCALE: lang})
+        families = [speechserver.VoiceFamily({ \
+              speechserver.VoiceFamily.NAME: name,
+              #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
+              speechserver.VoiceFamily.LOCALE: lang})
                     for name, lang, dialect in voices]
         return families
 

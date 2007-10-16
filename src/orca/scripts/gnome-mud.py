@@ -29,7 +29,6 @@ import orca.debug as debug
 import orca.default as default
 import orca.atspi as atspi
 import orca.input_event as input_event
-import orca.debug as debug
 import orca.keybindings as keybindings
 import orca.rolenames as rolenames
 import orca.braille as braille
