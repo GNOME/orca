@@ -69,14 +69,14 @@ speechVoiceChoice  = None
 YESEXPR = re.compile(_("^[Yy1]"))
 
 def checkYes(value) :
-     """Checks if a string represents a yes.
+    """Checks if a string represents a yes.
 
-     Arguments:
-     - value: a string read from the console
+    Arguments:
+    - value: a string read from the console
 
-     Returns True if the argument represents a yes
-     """
-     return YESEXPR.match(value) != None
+    Returns True if the argument represents a yes
+    """
+    return YESEXPR.match(value) != None
 
 def sayAndPrint(text,
                 stop=False,
@@ -314,7 +314,8 @@ def setupSpeech(prefsDict):
         # Translators: this is in reference to key echo for
         # normal text entry keys.
         #
-        answer = sayAndPrint(_("Enable alphanumeric and punctuation keys?  Enter y or n: "),
+        answer = sayAndPrint( \
+          _("Enable alphanumeric and punctuation keys?  Enter y or n: "),
                              True,
                              True,
                              speechServerChoice,
@@ -464,14 +465,16 @@ def showPreferencesUI():
                     False,
                     speechServerChoice,
                     speechVoiceChoice)
-        sayAndPrint(_("You need to log out and log back in for the change to take effect."),
+        sayAndPrint( \
+        _("You need to log out and log back in for the change to take effect."),
                     False,
                     False,
                     speechServerChoice,
                     speechVoiceChoice)
 
         if desktopRunning:
-            answer = sayAndPrint(_("Do you want to logout now?  Enter y or n: "),
+            answer = sayAndPrint( \
+                _("Do you want to logout now?  Enter y or n: "),
                                  False,
                                  True,
                                  speechServerChoice,

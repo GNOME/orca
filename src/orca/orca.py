@@ -1314,12 +1314,16 @@ def usage():
     print "-s, --setup, --gui-setup     Set up user preferences"
     print "-t, --text-setup             Set up user preferences (text version)"
     print "-n, --no-setup               Skip set up of user preferences"
-    print "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
-    print "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
+    print "-u, --user-prefs-dir=dirname",
+    print " Use alternate directory for user preferences"
+    print "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window]",
+    print " Force use of option"
     print "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
     print "-q, --quit                   Quits Orca (if shell script used)"
     print
-    print "If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used."
+    print "If Orca has not been previously set up by the user, Orca"
+    print "will automatically launch the preferences set up unless"
+    print "the -n or --no-setup option is used."
     print
     print "Report bugs to orca-list@gnome.org."
     pass

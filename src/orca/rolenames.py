@@ -1237,19 +1237,19 @@ def getSpeechForRoleName(obj):
             supported_actions = \
                 [action.getName(i) for i in xrange(action.nActions)]
         if 'toggle' in supported_actions:
-          role = pyatspi.ROLE_CHECK_BOX
+            role = pyatspi.ROLE_CHECK_BOX
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
     if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_CHECK_MENU
+        role = ROLE_CHECK_MENU
     elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_RADIO_MENU
+        role = ROLE_RADIO_MENU
     elif (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_MENU
+        role = ROLE_MENU
 
     if rolenames.has_key(role):
         return rolenames[role].speech
@@ -1279,13 +1279,13 @@ def getShortBrailleForRoleName(obj):
     #[[[TODO: eitani - Discontinue ]]
     if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_CHECK_MENU
+        role = ROLE_CHECK_MENU
     elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_RADIO_MENU
+        role = ROLE_RADIO_MENU
     elif (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_MENU
+        role = ROLE_MENU
 
     if rolenames.has_key(role):
         return rolenames[role].brailleShort
@@ -1314,13 +1314,13 @@ def getLongBrailleForRoleName(obj):
     #[[[TODO: eitani - Discontinue ]]
     if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_CHECK_MENU
+        role = ROLE_CHECK_MENU
     elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_RADIO_MENU
+        role = ROLE_RADIO_MENU
     elif (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
-      role = ROLE_MENU
+        role = ROLE_MENU
 
     if rolenames.has_key(role):
         return rolenames[role].brailleLong

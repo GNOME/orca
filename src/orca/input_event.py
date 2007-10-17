@@ -186,10 +186,9 @@ class InputEventHandler:
         return consumed
 
 def keyEventToString(event):
-  return ("KEYEVENT: type=%d\n" % event.type) \
-      + ("          hw_code=%d\n" % event.hw_code) \
-      + ("          modifiers=%d\n" % event.modifiers) \
-      + ("          event_string=(%s)\n" % event.event_string) \
-      + ("          is_text=%s\n" % event.is_text) \
-      + ("          time=%f" % time.time())
-
+    return ("KEYEVENT: type=%d\n" % event.type) \
+        + ("          hw_code=%d\n" % event.hw_code) \
+        + ("          modifiers=%d\n" % event.modifiers) \
+        + ("          event_string=(%s)\n" % event.event_string) \
+        + ("          is_text=%s\n" % event.is_text) \
+        + ("          time=%f" % time.time())

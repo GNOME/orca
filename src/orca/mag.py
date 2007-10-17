@@ -247,9 +247,11 @@ def __onMouseEvent(e):
 
     if settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
         __setROIPush(x, y)
-    elif settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
+    elif settings.magMouseTrackingMode == \
+                                settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
         __setROIProportional(x, y)
-    elif settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+    elif settings.magMouseTrackingMode == \
+                                    settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
         __setROICenter(x, y)
 
 def __getValueText(slot, value):
@@ -642,11 +644,12 @@ def magnifyAccessible(event, obj, extents=None):
     elif event and event.type.startswith("object:text-caret-moved") \
        and obj.text and (obj.text.caretOffset >= 0):
         offset = obj.text.caretOffset
-        [x, y, width, height] = obj.text.getCharacterExtents(offset,
-                                                             0) # coord type screen
+        [x, y, width, height] = \
+            obj.text.getCharacterExtents(offset, 0) # coord type screen
     elif obj.extents:
         extents = obj.extents
-        [x, y, width, height] = [extents.x, extents.y, extents.width, extents.height]
+        [x, y, width, height] = \
+            [extents.x, extents.y, extents.width, extents.height]
     else:
         return
 

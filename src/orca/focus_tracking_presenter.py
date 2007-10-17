@@ -19,7 +19,7 @@
 
 """Provides the FocusTrackingPresenter for Orca."""
 
-__id__        = "$Id$"
+__id__  = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
@@ -461,7 +461,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 #
                 if isinstance(orca_state.lastInputEvent, \
                               input_event.KeyboardEvent):
-                    if not orca_state.lastNonModifierKeyEvent.event_string == "F1":
+                    if not orca_state.lastNonModifierKeyEvent.event_string \
+                                                                     == "F1":
                         return
 
                     # Mouse move events don't update orca_state.lastInputEvent
@@ -963,8 +964,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             class _FakeEvent:
                 pass
             class _FakeData:
-              def value(self):
-                return None
+                def value(self):
+                    return None
             fe = _FakeEvent()
             # [[[TODO: eitani - This just unwraps the accessible object, remove
             # this when it becomes redundant, and make a direct assignment.]]]
