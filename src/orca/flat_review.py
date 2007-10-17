@@ -295,6 +295,7 @@ class StateZone(Zone):
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
             # stateCount is used as a boolean and as an index
+            stateset = self.accessible.getState()
             if stateset.contains(pyatspi.STATE_CHECKED):
                 stateCount = 1
             else:
@@ -981,7 +982,7 @@ class Context:
                     hasToggle = True
                     break
             if hasToggle:
-                savedRole = accessible.getRole()
+                #savedRole = accessible.getRole()
                 # TODO pyatspi integration. what to do with these two things?
              #   accessible.role = pyatspi.ROLE_CHECK_BOX
                 self._insertStateZone(zones, accessible)
@@ -1025,7 +1026,7 @@ class Context:
         # showing on the screen.
         #
         try:
-            itext = accessible.queryText()
+            accessible.queryText()
         except NotImplementedError:
             zones = []
         else:
@@ -1287,7 +1288,7 @@ class Context:
             zones.extend(self.getZonesFromAccessible(root, rootexts))
 
         try:
-            itext = root.queryText()
+            root.queryText()
             if len(zones) == 0:
                 zones = self.getZonesFromAccessible(root, rootexts)
         except NotImplementedError:

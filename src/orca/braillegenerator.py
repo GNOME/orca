@@ -1190,6 +1190,7 @@ class BrailleGenerator:
         if obj.childCount == 2:
             cellOrder = []
             hasToggle = [ False, False ]
+            i = 0
             for child in obj:
                 try:
                     action = child.queryAction()
@@ -1200,6 +1201,7 @@ class BrailleGenerator:
                         if action.getName(j) == "toggle":
                             hasToggle[i] = True
                             break
+                i += 1
 
             if hasToggle[0] and not hasToggle[1]:
                 cellOrder = [ 0, 1 ]
@@ -1581,6 +1583,7 @@ class BrailleGenerator:
         if reallyGroupChildren:
             regions.append(braille.Region(" "))
             selection = obj.selection
+            i = 0
             for child in obj:
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator.getBrailleRegions " \
@@ -1613,6 +1616,7 @@ class BrailleGenerator:
                     if (selection and selection.isChildSelected(i)) \
                        or child.state.count(atspi.Accessibility.STATE_ARMED):
                         selectedRegion = result[1]
+                i += 1
 
         return [regions, selectedRegion]
 

@@ -1286,9 +1286,10 @@ class SpeechGenerator:
         if obj.childCount == 2:
             cellOrder = []
             hasToggle = [ False, False ]
+            i = 0
             for child in obj:
                 try:
-                    action = obj.queryAction()
+                    action = child.queryAction()
                 except NotImplementedError:
                     continue
                 else:
@@ -1296,6 +1297,7 @@ class SpeechGenerator:
                         if action.getName(j) == "toggle":
                             hasToggle[i] = True
                             break
+                i += 1
 
             if hasToggle[0] and not hasToggle[1]:
                 cellOrder = [ 1, 0 ] 
