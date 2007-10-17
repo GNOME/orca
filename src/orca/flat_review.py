@@ -948,8 +948,11 @@ class Context:
             stateWidth = 1
             stateHeight = extents.height
 
-            text = accessible.queryText()
-            if text:
+            try:
+              text = accessible.queryText()
+            except NotImplementedError:
+              pass
+            else:
                 [x, y, width, height] = \
                     text.getRangeExtents( \
                         0, text.characterCount, 0)
@@ -1202,7 +1205,7 @@ class Context:
             currentX = parentExtents.x
             minHeight = sys.maxint
             while currentX < (parentExtents.x + parentExtents.width):
-                obj = parent.component.getAccessibleAtPoint(currentX,
+                obj = icomponent.getAccessibleAtPoint(currentX,
                                                             currentY,
                                                             0)
                 if obj:
