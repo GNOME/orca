@@ -34,7 +34,6 @@ import braille
 import debug
 import eventsynthesizer
 import orca_state
-import rolenames
 import settings
 
 from orca_i18n import _         # for gettext support
@@ -402,7 +401,7 @@ class ValueZone(Zone):
             if orientation:
                 brailleValue = "%s %s %d%%" \
                                % (orientation,
-                                  rolenames.getBrailleForRoleName(self.accessible),                                  
+                                  rolenames.getBrailleForRoleName(self.accessible),      
                                   percentValue)
             else:
                 brailleValue = "%s %d%%" \
@@ -548,12 +547,10 @@ class Context:
         review mode.
         """
         self.script    = script
-        # TODO pyatspi migration:  the commented out code should work but does not.
+
         if (not orca_state.locusOfFocus) \
-            or (orca_state.locusOfFocus.app != self.script.app):
-  #      if (not orca_state.locusOfFocus) \
-  #          or (orca_state.locusOfFocus.getApplication() \
-  #              != self.script.app):
+            or (orca_state.locusOfFocus.getApplication() \
+                != self.script.app):
             self.lines = []
         else:
             # We want to stop at the window or frame or equivalent level.
@@ -609,7 +606,10 @@ class Context:
             accessible  = zone.accessible
             lineIndex   = currentLineIndex
             zoneIndex   = currentZoneIndex
-            caretOffset = zone.accessible.text.caretOffset
+            try:
+                caretOffset = zone.accessible.queryText().caretOffset
+            except NotImplementedError:
+                caretOffset = -1
             foundZoneWithCaret = False
             checkForEOF = False
             while lineIndex < len(self.lines):
@@ -1025,6 +1025,7 @@ class Context:
         # creating the zone, only keep track of the text that is actually
         # showing on the screen.
         #
+
         try:
             accessible.queryText()
         except NotImplementedError:

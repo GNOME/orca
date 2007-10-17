@@ -1,3 +1,10 @@
+2007-10-17  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/flat_review.py:
+          src/orca/atspi.py:
+          Additional work for pyatspi migration of flat_review.py including
+          changes to __cmp__ in atspi.py.
+
 2007-10-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/flat_review.py:

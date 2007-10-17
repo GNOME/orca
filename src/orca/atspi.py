@@ -595,7 +595,10 @@ class Accessible:
       return '%s (Legacy)' % self.accessible
 
     def __cmp__(self, other):
-      return cmp(self.accessible, getattr(other, 'accessible', None))
+       if self.accessible.__class__ == other.__class__:
+         return cmp(self.accessible, other)
+       else:
+         return cmp(self.accessible, getattr(other, 'accessible', None))
 
     def toString(self, indent="", includeApp=True):
 
