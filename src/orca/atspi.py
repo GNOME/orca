@@ -500,10 +500,10 @@ class Accessible:
             except Exception, e:
                 rv = None
         elif attr in self._legacyWritableAttribs:
-          try:
-              rv = self.accessible.user_data[attr]
-          except:
-              raise AttributeError
+            try:
+                rv = self.accessible.user_data[attr]
+            except:
+                raise AttributeError
         else:
             try:
                 rv = getattr(self.accessible, attr)

@@ -256,7 +256,8 @@ def _accToString(acc, indent="", includeApp=True):
 
 # The following code has been borrowed from the following URL:
 # 
-# http://www.dalkescientific.com/writings/diary/archive/2005/04/20/tracing_python_code.html
+# http://www.dalkescientific.com/writings/diary/archive/ \
+#                                     2005/04/20/tracing_python_code.html
 #
 import linecache
 

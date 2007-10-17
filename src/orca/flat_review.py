@@ -394,20 +394,20 @@ class ValueZone(Zone):
             else:
                 speechValue = rolenames.getSpeechForRoleName(self.accessible)
                 
-            # Translators: this is the percentage value of a slider, progress bar
-            # or other component that displays a value as a percentage.
+            # Translators: this is the percentage value of a slider, 
+            # progress bar or other component that displays a value as 
+            # a percentage.
             #
             speechValue = speechValue + " " + _("%d percent.") % percentValue
 
             if orientation:
-                brailleValue = "%s %s %d%%" \
-                               % (orientation,
-                                  rolenames.getBrailleForRoleName(self.accessible),      
-                                  percentValue)
+                brailleValue = "%s %s %d%%" % (orientation,
+                    rolenames.getBrailleForRoleName(self.accessible),      
+                    percentValue)
             else:
-                brailleValue = "%s %d%%" \
-                               % (rolenames.getBrailleForRoleName(self.accessible),
-                                  percentValue)
+                brailleValue = "%s %d%%" % \
+                    (rolenames.getBrailleForRoleName(self.accessible),
+                    percentValue)
 
             if attr == "string":
                 return speechValue
@@ -489,7 +489,8 @@ class Line:
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
                    ((zone.accessible.getRole() == pyatspi.ROLE_TEXT) \
-                    or (zone.accessible.getRole() == pyatspi.ROLE_PASSWORD_TEXT) \
+                    or (zone.accessible.getRole() == \
+                                                pyatspi.ROLE_PASSWORD_TEXT) \
                     or (zone.accessible.getRole() == pyatspi.ROLE_TERMINAL)):
                     region = braille.ReviewText(zone.accessible,
                                                 zone.string,
@@ -735,8 +736,8 @@ class Context:
         # We convert the string to unicode and walk through it.  While doing
         # this, we keep two sets of offsets:
         #
-        # substring{Start,End}Offset: where in the accessible text implementation
-        #                             we are
+        # substring{Start,End}Offset: where in the accessible text 
+        # implementation we are
         #
         # unicodeStartOffset: where we are in the unicodeString
         #
@@ -750,16 +751,16 @@ class Context:
         #print "LOOKING AT '%s'" % unicodeString
         for i in range(0, len(unicodeString) + 1):
             if (i != len(unicodeString)) \
-               and (unicodeString[i] != orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER):
+               and (unicodeString[i] != \
+                        orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER):
                 substringEndOffset += 1
             elif (substringEndOffset == substringStartOffset):
                 substringStartOffset += 1
                 substringEndOffset   = substringStartOffset
                 unicodeStartOffset   = i + 1
             else:
-                [x, y, width, height] = text.getRangeExtents(substringStartOffset,
-                                                             substringEndOffset,
-                                                             0)
+                [x, y, width, height] = text.getRangeExtents( \
+                          substringStartOffset, substringEndOffset, 0)
                 if self.visible(x, y, width, height,
                                 cliprect.x, cliprect.y,
                                 cliprect.width, cliprect.height):
@@ -844,7 +845,8 @@ class Context:
             #      % (offset, startOffset, endOffset, string)
             #if startOffset > offset:
             #    embedded = text.getText(offset, offset + 1).decode("UTF-8")
-            #    if embedded[0] == orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER:
+            #    if embedded[0] == \
+            #            orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER:
             #        offset = startOffset
 
             debug.println(debug.LEVEL_FINEST,
@@ -1908,11 +1910,11 @@ class Context:
                     moved = True
                 elif (wrap & Context.WRAP_TOP_BOTTOM) \
                      and (self.lineIndex != 0):
-                        self.lineIndex = 0
-                        self.zoneIndex = 0
-                        self.wordIndex = 0
-                        self.charIndex = 0
-                        moved = True
+                    self.lineIndex = 0
+                    self.zoneIndex = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
+                    moved = True
         else:
             raise Exception("Invalid type: %d" % type)
 

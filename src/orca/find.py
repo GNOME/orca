@@ -158,8 +158,10 @@ class SearchQuery:
                     [currentZone, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.ZONE)
                     debug.println(self.debugLevel, \
-                        "findQuery: current zone=`%s` x=%d y=%d width=%d height=%d" \
-                            % (currentZone, x, y, width, height))
+                        "findQuery: current zone=`%s` x=%d y=%d " % \
+                        (currentZone, x, y))
+                    debug.println(self.debugLevel, \
+                        "width=%d height=%d" % (width, height))
 
                     if re.search(pattern, currentZone):
                         # It's in this zone at least once.
@@ -195,7 +197,8 @@ class SearchQuery:
                                     context.charIndex = 0
                                     found = True
                                 elif not offsetDiff and \
-                                    (not startedInThisZone or justEnteredFlatReview):
+                                    (not startedInThisZone or \
+                                     justEnteredFlatReview):
                                     # We landed on a match by happenstance.
                                     # This can occur when the nextInstance is
                                     # the first thing we come across.

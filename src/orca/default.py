@@ -709,8 +709,9 @@ class Script(script.Script):
         self.inputEventHandlers["goToPrevBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToPrevBookmark,
-                # Translators: this event handler cycles through the registered
-                # bookmarks and takes the user to the previous bookmark location.
+                # Translators: this event handler cycles through the 
+                # registered bookmarks and takes the user to the previous 
+                # bookmark location.
                 #
                 _("Go to previous bookmark location."))
 
@@ -1434,7 +1435,7 @@ class Script(script.Script):
                     orcaModMask,
                     self.inputEventHandlers["goToBookmark"]))
                     
-            # key binding for WhereAmI information with respect to root acc      
+            # key binding for WhereAmI information with respect to root acc 
             keyBindings.add(
                 keybindings.KeyBinding(
                     str(key),
@@ -1581,8 +1582,11 @@ class Script(script.Script):
         #
         [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         debug.println(debug.LEVEL_FINEST, \
-            "sayLine: line=<%s>, len=%d, start=%d, caret=%d, speakBlankLines=%s" % \
-            (line, len(line), startOffset, caretOffset, settings.speakBlankLines))
+            "sayLine: line=<%s>, len=%d, start=%d, " % \
+            (line, len(line), startOffset))
+        debug.println(debug.LEVEL_FINEST, \
+            "caret=%d, speakBlankLines=%s" % \
+            (caretOffset, settings.speakBlankLines))
 
         if len(line):
             if line.isupper():
@@ -1820,8 +1824,11 @@ class Script(script.Script):
         prevChar = self.getText(obj, startOffset-1, endOffset-1)
 
         debug.println(debug.LEVEL_FINEST, \
-            "sayCharacter: prev=<%s>, char=<%s>, startOffset=%d, caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
-            (prevChar, character, startOffset, offset, endOffset, settings.speakBlankLines))
+            "sayCharacter: prev=<%s>, char=<%s>, startOffset=%d, " % \
+            (prevChar, character, startOffset))
+        debug.println(debug.LEVEL_FINEST, \
+            "caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
+            (offset, endOffset, settings.speakBlankLines))
 
         # Handle speaking newlines when the right-arrow key is pressed.
         if orca_state.lastNonModifierKeyEvent.event_string == "Right":
@@ -2948,7 +2955,8 @@ class Script(script.Script):
                 elif orca_state.locusOfFocus \
                     and isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent) \
-                    and (orca_state.lastNonModifierKeyEvent.event_string == "F1"):
+                    and (orca_state.lastNonModifierKeyEvent.event_string \
+                                                                  == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
                     speech.speakUtterances(self.speechGenerator.getSpeech(
                         orca_state.locusOfFocus,
@@ -4101,8 +4109,8 @@ class Script(script.Script):
         bookmarks.goToBookmark(inputEvent)
     
     def addBookmark(self, inputEvent): 
-        """ Add an in-page accessible object bookmark for this key. Delegates to 
-        Bookmark.addBookmark """
+        """ Add an in-page accessible object bookmark for this key.
+        Delegates to Bookmark.addBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.addBookmark(inputEvent)
     
@@ -4352,7 +4360,8 @@ class Script(script.Script):
             parent1 = obj1
             parent2 = obj2
             while (parent1 and parent2 and \
-                    parent1.state.count(atspi.Accessibility.STATE_TRANSIENT) and \
+                    parent1.state.count( \
+                        atspi.Accessibility.STATE_TRANSIENT) and \
                     parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
                 if parent1.index != parent2.index:
                     return False
@@ -4743,7 +4752,8 @@ class Script(script.Script):
                 if child.role == rolenames.ROLE_LABEL:
                     childText = self.getDisplayedText(child)
                     if childText and len(childText):
-                        displayedText = self.appendString(displayedText, childText)
+                        displayedText = self.appendString(displayedText,
+                                                          childText)
 
         return displayedText
 
@@ -4846,7 +4856,8 @@ class Script(script.Script):
             orca_state.clickCount = 1
             return orca_state.clickCount
 
-        if (inputEvent.time - lastInputEvent.time) < settings.doubleClickTimeout:
+        if (inputEvent.time - lastInputEvent.time) < \
+                settings.doubleClickTimeout:
             orca_state.clickCount += 1
         else:
             orca_state.clickCount = 1
@@ -5343,7 +5354,8 @@ class Script(script.Script):
             for relation in relations:
                 if relation.getRelationType() \
                        == atspi.Accessibility.RELATION_NODE_CHILD_OF:
-                    node = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    node = atspi.Accessible.makeAccessible( \
+                                                    relation.getTarget(0))
                     break
 
             # We want to avoid situations where something gives us an
@@ -5396,7 +5408,8 @@ class Script(script.Script):
             for relation in relations:
                 if relation.getRelationType() \
                        == atspi.Accessibility.RELATION_NODE_CHILD_OF:
-                    nodeOf = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    nodeOf = atspi.Accessible.makeAccessible( \
+                                                   relation.getTarget(0))
                     if self.isSameObject(obj, nodeOf):
                         nodes.append(cell)
                     else:
@@ -5965,7 +5978,8 @@ class Script(script.Script):
             # the startOffset and endOffset to exclude them.
             #
             try:
-                tmpStr = obj.text.getText(startOffset, endOffset).decode("UTF-8")
+                tmpStr = obj.text.getText(startOffset, 
+                                          endOffset).decode("UTF-8")
             except:
                 tmpStr = u''
             n = len(tmpStr)

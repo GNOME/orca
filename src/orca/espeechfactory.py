@@ -240,7 +240,8 @@ class SpeechServer(speechserver.SpeechServer):
         if acss:
             code =self.getvoice(acss)
             for t in list:
-                self._output.write("q { %s %s %s }\n" %(code[0], str(t), code[1]))
+                self._output.write("q { %s %s %s }\n" % \
+                                   (code[0], str(t), code[1]))
         else:
             for t in list:
                 self._output.write("q { %s }\n" % str(t))
