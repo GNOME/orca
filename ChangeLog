@@ -123,6 +123,12 @@
           Fixed up more pylint "Line too long" and "Bad indentation" warnings,
           plus numerous "Operator not preceded by a space" warnings.
 
+        * src/orca/braillegenerator.py:
+          src/orca/speechgenerator.py:
+          More work on bug #486726 - Eliminate pychecker warnings/errors.
+          Adjustments to use enumerate() to get index into list (thanks
+          Eitan).
+
 2007-10-16  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/flat_review.py:
