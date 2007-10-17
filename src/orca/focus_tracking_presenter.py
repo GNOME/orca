@@ -40,11 +40,8 @@ import orca_state
 import presentation_manager
 import settings
 import speech
-import traceback
 
 from orca_i18n import _ # for gettext support
-
-import CORBA
 
 class FocusTrackingPresenter(presentation_manager.PresentationManager):
     """Maintain a set of scripts for all running applications, and

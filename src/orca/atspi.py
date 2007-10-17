@@ -31,7 +31,6 @@ import time
 import gobject
 gobject.threads_init()
 
-import bonobo
 import ORBit
 import traceback
 import settings
@@ -54,8 +53,6 @@ import Accessibility
 import Accessibility__POA
 
 import debug
-import rolenames
-import settings
 
 try:
   import pyatspi

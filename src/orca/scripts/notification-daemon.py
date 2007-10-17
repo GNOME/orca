@@ -26,10 +26,7 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.orca as orca
 import orca.default as default
-import orca.debug as debug
-import orca.settings as settings
 import orca.speech as speech
 import orca.rolenames as rolenames
 

@@ -28,7 +28,6 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.atspi as atspi
-import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state

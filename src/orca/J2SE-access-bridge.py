@@ -29,7 +29,6 @@ import debug
 import orca
 import orca_state
 import keybindings
-import settings
 import speech
 import rolenames
 import Accessibility

@@ -32,7 +32,6 @@ import orca.default as default
 import orca.rolenames as rolenames
 import orca.speech as speech
 
-from orca.orca_i18n import _         # for gettext support
 from orca.orca_i18n import ngettext  # for ngettext support
 
 ########################################################################

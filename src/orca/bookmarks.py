@@ -23,12 +23,10 @@ import pickle
 import os
 
 import speech
-import flat_review
 import settings
 import orca_state
 
 from orca_i18n import _
-from orca_i18n import ngettext  # for ngettext support
 
 class Bookmarks:
     """Represents a default bookmark handler."""

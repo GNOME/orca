@@ -415,7 +415,6 @@ def logoutUser():
     """Automatically log the user out of the GNOME desktop."""
 
     import gnome
-    import gnome.ui
 
     gnome.init(platform.package, platform.version)
     client = gnome.ui.master_client()

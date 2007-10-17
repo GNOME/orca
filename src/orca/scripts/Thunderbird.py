@@ -31,8 +31,6 @@ import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
 import orca.rolenames as rolenames
-import orca.settings as settings
-import orca.braille as braille
 import orca.speech as speech
 import orca.Gecko as Gecko
 

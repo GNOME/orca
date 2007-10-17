@@ -34,6 +34,7 @@ import braille
 import debug
 import eventsynthesizer
 import orca_state
+import rolenames
 import settings
 
 from orca_i18n import _         # for gettext support

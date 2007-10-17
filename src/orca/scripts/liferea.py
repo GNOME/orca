@@ -19,15 +19,10 @@
 
 import orca.debug as debug
 import orca.default as default
-import orca.atspi as atspi
-import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
-import orca.settings as settings
-import orca.speechgenerator as speechgenerator
-import orca.braillegenerator as braillegenerator
 import orca.eventsynthesizer as eventsynthesizer
 
 from orca.orca_i18n import _ # for gettext support

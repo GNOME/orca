@@ -28,11 +28,7 @@ __license__   = "LGPL"
 import os
 import pprint
 
-import orca_state
-import pronunciation_dict
 import settings
-
-from orca_i18n import _  # for gettext support
 
 # The same fields than in orca_gui_prefs.py:
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)

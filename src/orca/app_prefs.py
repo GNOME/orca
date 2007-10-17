@@ -30,10 +30,7 @@ __license__   = "LGPL"
 import os
 
 import orca_prefs
-import pronunciation_dict
 import settings
-
-from orca_i18n import _  # for gettext support
 
 class OrcaPrefs(orca_prefs.OrcaPrefs):
 

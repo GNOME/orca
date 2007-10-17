@@ -24,7 +24,6 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gettext
 import gtk
 import locale
 import os
@@ -38,7 +37,6 @@ import focus_tracking_presenter
 import input_event
 import keybindings
 import orca_gui_prefs
-import orca_prefs
 import orca_state
 import platform
 import settings

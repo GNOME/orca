@@ -25,13 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import os
-import sys
-import debug
 import gettext
 import gtk
-import gtk.glade
-import locale
 
 class GladeWrapper:
     """

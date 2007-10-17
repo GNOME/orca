@@ -26,15 +26,12 @@ __date__      = "$Date: 2007-04-04 18:42:41 -0700 (Wed, 04 Apr 2007) $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.orca as orca
 import orca.atspi as atspi
 import orca.default as default
 import orca.debug as debug
 import orca.braille as braille
 import orca.speech as speech
 import orca.rolenames as rolenames
-
-from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #

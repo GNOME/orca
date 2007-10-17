@@ -28,9 +28,7 @@ __license__   = "LGPL"
 import os
 import sys
 import debug
-import gettext
 import gtk
-import gtk.glade
 import locale
 
 import find

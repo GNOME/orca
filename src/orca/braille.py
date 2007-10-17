@@ -37,7 +37,6 @@ log = logging.getLogger("braille")
 import signal
 
 import pyatspi
-import atspi
 
 # We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
 # are available.  Otherwise, we'll fall back to our own bindings.
@@ -70,8 +69,6 @@ import orca_state
 import settings
 
 from orca_i18n import _                          # for gettext support
-from rolenames import getShortBrailleForRoleName # localized role names
-from rolenames import getLongBrailleForRoleName  # localized role names
 
 # If True, this module has been initialized.
 #

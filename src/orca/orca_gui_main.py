@@ -27,16 +27,12 @@ __license__   = "LGPL"
 
 import os
 import sys
-import gettext
 import gtk
-import gtk.glade
 import locale
 
 import orca
 import orca_glade
 import platform
-
-from orca_i18n import _  # for gettext support
 
 OS = None
 

@@ -26,8 +26,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from orca_i18n import _ # for gettext support
-
 def getPronunciation(word, pronunciations=None):
     """Given a word, return a string that represents what this word
     sounds like.

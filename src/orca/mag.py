@@ -51,8 +51,6 @@ try:
 except:
     pass
 
-import time
-
 # If True, this module has been initialized.
 #
 _initialized = False

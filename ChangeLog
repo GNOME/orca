@@ -24,6 +24,47 @@
           src/orca/Gecko.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
 
+        * src/orca/bookmarks.py:
+          src/orca/scripts/gnome-mud.py:
+          src/orca/scripts/gedit.py:
+          src/orca/scripts/planner.py:
+          src/orca/scripts/gdmlogin.py:
+          src/orca/scripts/gnome-panel.py:
+          src/orca/scripts/nautilus.py:
+          src/orca/scripts/liferea.py:
+          src/orca/scripts/gcalctool.py:
+          src/orca/scripts/Thunderbird.py:
+          src/orca/scripts/gnome-system-monitor.py:
+          src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/metacity.py:
+          src/orca/scripts/gnome-search-tool.py:
+          src/orca/scripts/gnome-keyring-ask.py:
+          src/orca/scripts/notification-daemon.py:
+          src/orca/mag.py:
+          src/orca/orca_console_prefs.py:
+          src/orca/flat_review.py:
+          src/orca/find.py:
+          src/orca/atspi.py:
+          src/orca/orca_glade.py:
+          src/orca/app_gui_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/orca.py:
+          src/orca/orca_quit.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/Gecko.py:
+          src/orca/orca_gui_find.py:
+          src/orca/pronunciation_dict.py:
+          src/orca/J2SE-access-bridge.py:
+          src/orca/orca_gui_main.py:
+          src/orca/braille.py:
+          src/orca/app_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          More work on bug #486726 - Eliminate pychecker warnings/errors.
+          This eliminates all the warnings from pyflakes for the Python
+          files "owned" by the Orca module. Pyflakes still generates
+          warnings for gnome-power-manager.py, gnome_segv2.py and ubiquity.py.
+
 2007-10-16  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/flat_review.py:

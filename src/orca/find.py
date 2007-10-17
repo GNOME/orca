@@ -29,7 +29,6 @@ __license__   = "LGPL"
 import copy
 import re
 
-import braille
 import debug
 import flat_review
 import orca_state

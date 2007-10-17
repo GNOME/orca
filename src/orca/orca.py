@@ -60,14 +60,12 @@ import keybindings
 import mag
 import orca_state
 import platform
-import rolenames
 import settings
 import speech
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
-from input_event import InputEventHandler
 from input_event import keyEventToString
 
 from orca_i18n import _           # for gettext support

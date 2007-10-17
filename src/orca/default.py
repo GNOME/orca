@@ -63,8 +63,6 @@ import settings
 import speech
 import speechserver
 import string
-import where_am_I
-import bookmarks
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support

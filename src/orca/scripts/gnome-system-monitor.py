@@ -32,8 +32,6 @@ import orca.debug as debug
 import orca.rolenames as rolenames
 import orca.speech as speech
 
-from orca.orca_i18n import _
-
 ########################################################################
 #                                                                      #
 # The gnome-power-manager script class.                                #
