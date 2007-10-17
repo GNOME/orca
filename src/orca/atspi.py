@@ -55,11 +55,11 @@ import Accessibility__POA
 import debug
 
 try:
-  import pyatspi
+    import pyatspi
 except ImportError, e:
-  import sys
-  print sys.path
-  raise e
+    import sys
+    print sys.path
+    raise e
 
 pyatspi.ROLE_CHECK_MENU = -1 # For backward compatability
 pyatspi.ROLE_RADIO_MENU = -2 # For backward compatability
@@ -488,22 +488,22 @@ class Accessible:
             _deprecatedMessage(attr, '%s()' % method_name)
             method = getattr(self.accessible, method_name)
             try:
-              rv =  method()
+                rv =  method()
             except:
-              rv = None
+                rv = None
         elif self._legacyProxyAttribs.has_key(attr):
             method_name = self._legacyProxyAttribs[attr]
             method = getattr(self, method_name)
             _deprecatedMessage(attr, 'something else')
             try:
-              rv =  method()
+                rv =  method()
             except Exception, e:
-              rv = None
+                rv = None
         elif attr in self._legacyWritableAttribs:
           try:
-            rv = self.accessible.user_data[attr]
+              rv = self.accessible.user_data[attr]
           except:
-            raise AttributeError
+              raise AttributeError
         else:
             try:
                 rv = getattr(self.accessible, attr)
@@ -589,13 +589,13 @@ class Accessible:
         return len(self.accessible)
 
     def __str__(self):
-      return '%s (Legacy)' % self.accessible
+        return '%s (Legacy)' % self.accessible
 
     def __cmp__(self, other):
-       if self.accessible.__class__ == other.__class__:
-         return cmp(self.accessible, other)
-       else:
-         return cmp(self.accessible, getattr(other, 'accessible', None))
+        if self.accessible.__class__ == other.__class__:
+            return cmp(self.accessible, other)
+        else:
+            return cmp(self.accessible, getattr(other, 'accessible', None))
 
     def toString(self, indent="", includeApp=True):
 
@@ -684,13 +684,13 @@ def __printDesktops():
                   % (j, app.name, app.getRoleName())
 
 def __notifyEvent(event):
-        print event.type, event.source.name, \
-              event.detail1, event.detail2,  \
-              event.any_data
-        source = Accessible.makeAccessible(event.source)
-        __printTopObject(source)
-        if not source.parent:
-            print "NO PARENT:", source.name, source.role
+    print event.type, event.source.name, \
+          event.detail1, event.detail2,  \
+          event.any_data
+    source = Accessible.makeAccessible(event.source)
+    __printTopObject(source)
+    if not source.parent:
+        print "NO PARENT:", source.name, source.role
 
 def __notifyKeystroke(event):
     print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \

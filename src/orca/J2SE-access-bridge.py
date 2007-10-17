@@ -226,7 +226,8 @@ class Script(default.Script):
             if selectedItem:
                 orca.setLocusOfFocus(event, selectedItem)
             else:
-                # if impossible to get selection or list has 0 items, present list
+                # if impossible to get selection or list has 0 items,
+                # present list
                 orca.setLocusOfFocus(event, event.source)
         elif role == rolenames.ROLE_LABEL:
             # In FileChooserDemo, when enter in a new folder, a focus event for
@@ -250,7 +251,8 @@ class Script(default.Script):
         """
 
         self._debug("onStateChanged: %s: %s '%s' (%d,%d)" % \
-                    (event.type, event.source.role, event.source.name, event.detail1, event.detail2))
+                    (event.type, event.source.role, 
+                     event.source.name, event.detail1, event.detail2))
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)
         # where popup menu events are not sent to Orca.
@@ -267,10 +269,12 @@ class Script(default.Script):
                 # search the layered pane for a popup menu
                 child = event.source.child(i)
                 if child.role == rolenames.ROLE_LAYERED_PANE:
-                    popup = self.findByRole(child, rolenames.ROLE_POPUP_MENU, False)
+                    popup = self.findByRole(child, 
+                                             rolenames.ROLE_POPUP_MENU, False)
                     if len(popup) > 0:
                         # set the locus of focus to the armed menu item
-                        items = self.findByRole(popup[0], rolenames.ROLE_MENU_ITEM, False)
+                        items = self.findByRole(popup[0], 
+                                              rolenames.ROLE_MENU_ITEM, False)
                         for item in items:
                             if item.state.count(Accessibility.STATE_ARMED):
                                 orca.setLocusOfFocus(event, item)
@@ -335,18 +339,19 @@ class Script(default.Script):
                 selectedItem = atspi.Accessible.makeAccessible(
                                         selection.getSelectedChild(0))
 
-                # If the selected list item is the same with the last focused object,
-                # present it only if the item was not selected and has SELECTED state
-                # or if the item doesn't have SELECTED state, but SELECTABLE and
-                # it was selected.
+                # If the selected list item is the same with the last 
+                # focused object, present it only if the item was not 
+                # selected and has SELECTED state or if the item doesn't 
+                # have SELECTED state, but SELECTABLE and it was selected.
                 #
                 if orca_state.activeScript and \
                    orca_state.activeScript.isSameObject(selectedItem,  \
                                                     orca_state.locusOfFocus):
-                    if (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) != 0 \
-                                and not orca_state.locusOfFocus.was_selected)   \
-                        or (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) == 0 \
-                                and orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTABLE) != 0 \
+                    stateCount = orca_state.locusOfFocus.state.count
+                    if (stateCount(Accessibility.STATE_SELECTED) != 0 \
+                              and not orca_state.locusOfFocus.was_selected)   \
+                        or (stateCount(Accessibility.STATE_SELECTED) == 0 \
+                          and stateCount(Accessibility.STATE_SELECTABLE) != 0 \
                                 and orca_state.locusOfFocus.was_selected):
                         orca.visualAppearanceChanged(event, selectedItem)
                     return
@@ -399,7 +404,8 @@ class Script(default.Script):
         if orca_state.activeScript.isSameObject(obj, orca_state.locusOfFocus):
             if obj.role == rolenames.ROLE_LABEL:
                 self.updateBraille(orca_state.locusOfFocus)
-                speech.speakUtterances(self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
+                speech.speakUtterances( \
+                  self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
                 return
 
         if obj.role == rolenames.ROLE_SPIN_BOX:

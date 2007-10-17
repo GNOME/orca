@@ -834,7 +834,8 @@ def refresh(panToCursor=True, targetCursorCell=0):
     logLine = "BRAILLE LINE:  '%s'" % string
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
-    logLine = "     VISIBLE:  '%s', cursor=%d" % (string[startPos:endPos], cursorCell)
+    logLine = "     VISIBLE:  '%s', cursor=%d" % \
+                    (string[startPos:endPos], cursorCell)
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
 
@@ -1064,27 +1065,27 @@ def _processBrailleEvent(command):
     return consumed
 
 def _brlAPIKeyReader(source, condition):
-        """Method to read a key from the BrlAPI bindings.  This is a
-        gobject IO watch handler.
-        """
-        key = brlAPI.readKey(False)
-        if key:
-            flags = key >> 32
-            lower = key & 0xFFFFFFFF
-            keyType = lower >> 29
-            keyCode = lower & 0x1FFFFFFF
+    """Method to read a key from the BrlAPI bindings.  This is a
+    gobject IO watch handler.
+    """
+    key = brlAPI.readKey(False)
+    if key:
+        flags = key >> 32
+        lower = key & 0xFFFFFFFF
+        keyType = lower >> 29
+        keyCode = lower & 0x1FFFFFFF
 
-            # [[TODO: WDW - HACK If we have a cursor routing key, map
-            # it back to the code we used to get with earlier versions
-            # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
-            # routing key instead of 0x1000).  This may change before
-            # the offical BrlAPI Python bindings are released.]]]
-            #
-            if keyCode & 0x10000:
-                keyCode = 0x100 | (keyCode & 0xFF)
-            if keyCode:
-                _processBrailleEvent(keyCode)
-        return brlAPIRunning
+        # [[TODO: WDW - HACK If we have a cursor routing key, map
+        # it back to the code we used to get with earlier versions
+        # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
+        # routing key instead of 0x1000).  This may change before
+        # the offical BrlAPI Python bindings are released.]]]
+        #
+        if keyCode & 0x10000:
+            keyCode = 0x100 | (keyCode & 0xFF)
+        if keyCode:
+            _processBrailleEvent(keyCode)
+    return brlAPIRunning
 
 def setupKeyRanges(keys):
     """Hacky method to tell BrlTTY what to send and not send us via
