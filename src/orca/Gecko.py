@@ -524,8 +524,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
@@ -571,8 +573,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # URI to the user.
@@ -1213,7 +1217,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 unicodeText = displayedText.decode("UTF-8")
                 if unicodeText \
                     and (len(unicodeText) == 1) \
-                    and (unicodeText[0] == self._script.EMBEDDED_OBJECT_CHARACTER):
+                    and (unicodeText[0] == \
+                                     self._script.EMBEDDED_OBJECT_CHARACTER):
                     parent = parent.parent
                     continue
 
@@ -1234,7 +1239,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if not parent.getRole() in [pyatspi.ROLE_TABLE_CELL,
                                         pyatspi.ROLE_FILLER] \
                 and len(newUtterances):
-                    utterances.append(rolenames.getSpeechForRoleName(parent))
+                utterances.append(rolenames.getSpeechForRoleName(parent))
 
             utterances.extend(newUtterances)
 
@@ -1315,7 +1320,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 #                                                                      #
 # Custom WhereAmI                                                      #
 #                                                                      #
-########################################################################            
+######################################################################## 
+
 class GeckoWhereAmI(where_am_I.WhereAmI):
     def __init__(self, script):
         """Gecko specific WhereAmI that will be used to speak information
@@ -1347,8 +1353,8 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             where_am_I.WhereAmI._speakDefaultButton(self, obj)
             
     def readPageSummary(self, obj):
-        """Reads the quantity of headings, forms, tables, visited and unvisited links, 
-        plus the locale.
+        """Reads the quantity of headings, forms, tables, visited and 
+        unvisited links, plus the locale.
         """
         headings = 0 
         forms = 0
@@ -1370,7 +1376,8 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                 headings += 1
             elif role == pyatspi.ROLE_FORM:
                 forms += 1
-            elif role == pyatspi.ROLE_TABLE and not self._script.isLayoutOnly(obj):
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self._script.isLayoutOnly(obj):
                 tables += 1
             elif role == pyatspi.ROLE_LINK:
                 if obj.getState().contains(pyatspi.STATE_VISITED):
@@ -1466,8 +1473,8 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             # restore the location
             self._script.setCaretPosition(obj, characterOffset)
             self._script.updateBraille(obj)
-            self._script.speakContents(self._script.getObjectContentsAtOffset(obj,
-                                                                characterOffset))
+            self._script.speakContents( \
+                self._script.getObjectContentsAtOffset(obj, characterOffset))
             # update the currentbookmark
             self._currentbookmarkindex[index[1]] = index[0]
         else:
@@ -1508,7 +1515,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         while p:
             bookmark_ancestors.append(p)
             p = p.parent
-        # look at current object's ancestors to compare to bookmark's ancestors    
+        # look at current object's ancestors to compare to bookmark's ancestors
         p = cur_obj.parent
         while p:
             if bookmark_ancestors.count(p) > 0:
@@ -1547,9 +1554,10 @@ class GeckoBookmarks(bookmarks.Bookmarks):
     def goToNextBookmark(self, inputEvent):
         """ Go to the next bookmark location.  If no bookmark has yet to be
         selected, the first bookmark will be used.  """
-        # The convenience of using a dictionary to add/goto a bookmark is offset
-        # by the difficulty in finding the next bookmark.  We will need to sort our
-        # keys to determine the next bookmark on a page by page basis.
+        # The convenience of using a dictionary to add/goto a bookmark is 
+        # offset by the difficulty in finding the next bookmark.  We will 
+        # need to sort our keys to determine the next bookmark on a page by 
+        # page basis.
         bm_keys = self._bookmarks.keys()
         current_uri = self._getURIKey()
         
@@ -1573,8 +1581,10 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # find current bookmark hw_code in our sorted list.  
         # Go to next one if possible
         try:
-            index = thispage_hwkeys.index(self._currentbookmarkindex[current_uri])
-            self.goToBookmark(None, index=(thispage_hwkeys[index+1], current_uri))
+            index = thispage_hwkeys.index( \
+                                 self._currentbookmarkindex[current_uri])
+            self.goToBookmark(None, index=( \
+                                 thispage_hwkeys[index+1], current_uri))
         except (ValueError, KeyError, IndexError):
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))
             
@@ -1604,14 +1614,16 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # find current bookmark hw_code in our sorted list.  
         # Go to next one if possible
         try:
-            index = thispage_hwkeys.index(self._currentbookmarkindex[current_uri])
-            self.goToBookmark(None, index=(thispage_hwkeys[index-1], current_uri))
+            index = thispage_hwkeys.index( \
+                            self._currentbookmarkindex[current_uri])
+            self.goToBookmark(None, 
+                              index=(thispage_hwkeys[index-1], current_uri))
         except (ValueError, KeyError, IndexError):
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))    
             
     def _objToPickle(self, obj=None):
-        """Given an object, return it's saving (pickleable) format.  In this case,
-        the obj path is determined relative to the document frame and is 
+        """Given an object, return it's saving (pickleable) format.  In this 
+        case, the obj path is determined relative to the document frame and is 
         returned as a list.  If obj is not provided, the current caret context
         is used.  """
         return self._objToPath(start_obj=obj)
@@ -2735,7 +2747,8 @@ class Script(default.Script):
         # above the current cursor position.  This option allows the user
         # to decide the behavior they want.
         #
-        label = _("_Position cursor at start of line when navigating vertically")
+        label = \
+            _("_Position cursor at start of line when navigating vertically")
         self.arrowToLineBeginningCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.arrowToLineBeginningCheckButton)
         gtk.Box.pack_start(generalVBox, self.arrowToLineBeginningCheckButton,
@@ -2747,7 +2760,8 @@ class Script(default.Script):
         # can optionally tell Orca to automatically start reading a
         # page from beginning to end.
         #
-        label = _("Automatically start speaking a page when it is first _loaded")
+        label = \
+            _("Automatically start speaking a page when it is first _loaded")
         self.sayAllOnLoadCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.sayAllOnLoadCheckButton)
         gtk.Box.pack_start(generalVBox, self.sayAllOnLoadCheckButton,
@@ -2891,7 +2905,8 @@ class Script(default.Script):
         self.minimumFindLengthSpinButton = \
                        gtk.SpinButton(self.minimumFindLengthAdjustment, 0.0, 0)
         gtk.Widget.show(self.minimumFindLengthSpinButton)
-        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton, False, False, 5)
+        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton, 
+                           False, False, 5)
 
         acc_targets = []
         acc_src = self.minimumFindLengthLabel.get_accessible()
@@ -3320,7 +3335,7 @@ class Script(default.Script):
                     #
                     if (obj == event.source) and (offset > event.detail1) \
                         and lineChanged:
-                            self.madeFindAnnouncement = False
+                        self.madeFindAnnouncement = False
 
                     if enoughSelected:
                         if lineChanged or not self.madeFindAnnouncement or \
@@ -4505,7 +4520,8 @@ class Script(default.Script):
         # Getting a link's URI requires a little workaround due to  
         # https://bugzilla.mozilla.org/show_bug.cgi?id=379747.  You should be
         # able to use getURI() directly on the link but instead must use
-        # ihypertext.getLink(0) on parent then use getURI on returned ihyperlink.
+        # ihypertext.getLink(0) on parent then use getURI on returned 
+        # ihyperlink.
         ihyperlink = obj.parent.hypertext.getLink(0)
         return ihyperlink.getURI(0)
     
@@ -4930,7 +4946,7 @@ class Script(default.Script):
         else:
             for i in range(0, obj.childCount):
                 if obj[i].getRole() == pyatspi.ROLE_LINK:
-                     return False
+                    return False
 
             return True
 
@@ -5023,7 +5039,7 @@ class Script(default.Script):
         try:
             table = obj.parent.queryTable()
         except:
-           pass
+            pass
         else:
             [row, col] = self.getCellCoordinates(obj)
             # Theoretically, we should be able to quickly get the text
@@ -5931,7 +5947,7 @@ class Script(default.Script):
                                      characterOffset + 1).decode("UTF-8")
             if character == self.EMBEDDED_OBJECT_CHARACTER:
                 if obj.childCount <= 0:
-                     return self.findFirstCaretContext(obj,characterOffset + 1)
+                    return self.findFirstCaretContext(obj,characterOffset + 1)
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
                     return self.findFirstCaretContext(obj[childIndex], 0)
@@ -6277,7 +6293,8 @@ class Script(default.Script):
             # Go up until we find a parent that might have a sibling to
             # the right for us.
             #
-            while (candidate.getIndexInParent() >= (candidate.parent.childCount - 1)) \
+            while (candidate.getIndexInParent() >= \
+                  (candidate.parent.childCount - 1)) \
                 and not self.isSameObject(candidate, documentFrame):
                 candidate = candidate.parent
 
@@ -6883,8 +6900,8 @@ class Script(default.Script):
                        self.speechGenerator._getSpeechForObjectRole(obj))
 
                 if containingHeading and isLastObject:
-                   obj = containingHeading
-                   strings.extend(\
+                    obj = containingHeading
+                    strings.extend(\
                         self.speechGenerator._getSpeechForObjectRole(obj))
 
             for string in strings:
