@@ -123,10 +123,15 @@ class Script(default.Script):
 
         # Initially populate the cyclic lists with empty strings.
         #
-        for i in range(0, self.previousMessages.maxsize()):
+        i = 0
+        while i < self.previousMessages.maxsize():
             self.previousMessages.append("")
-        for i in range(0, self.previousChatRoomNames.maxsize()):
+            i += 1
+
+        i = 0
+        while i < self.previousChatRoomNames.maxsize():
             self.previousChatRoomNames.append("")
+            i += 1
 
         # Keep track of the various text areas for chatting.
         # The key is the tab and the value is the text area where

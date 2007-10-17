@@ -78,7 +78,8 @@ class BrlMon(gtk.Window):
         self.add(hbox)
         self.cellFrames = []
         self.cellLabels = []
-        for i in range(0, numCells):
+        i = 0
+        while (i < numCells):
             frame = gtk.Frame()
             frame.set_shadow_type(gtk.SHADOW_OUT)
             label = gtk.Label(" ")
@@ -87,6 +88,7 @@ class BrlMon(gtk.Window):
             hbox.add(frame)
             self.cellFrames.append(frame)
             self.cellLabels.append(label)
+            i += 1
 
         # This prevents it from getting focus.
         #

@@ -100,9 +100,11 @@ class Script(default.Script):
         self.MESSAGE_LIST_LENGTH=10
         self.previousMessages=RingList(self.MESSAGE_LIST_LENGTH)
 
-        #Initially populate the cyclic list with empty strings
-        for i in range(0, self.previousMessages.maxsize()):
-           self.previousMessages.append("")
+        # Initially populate the cyclic list with empty strings
+        i = 0
+        while i < self.previousMessages.maxsize():
+            self.previousMessages.append("")
+            i += 1
 
         default.Script.__init__(self, app)
 

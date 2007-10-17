@@ -611,8 +611,10 @@ def readPreferences():
 
     prefsDict = {}
     for key in settings.userCustomizableSettings:
-        if settings.__dict__.has_key(key):
-            prefsDict[key] = settings.__dict__[key]
+        try:
+            prefsDict[key] = getattr(settings, key)
+        except:
+            pass 
 
     return prefsDict
 

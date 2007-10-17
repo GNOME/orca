@@ -5772,7 +5772,7 @@ class Script(script.Script):
 
         for key in settings.userCustomizableSettings:
             if prefsDict.has_key(key):
-                settings.__dict__[key] = prefsDict[key]
+                setattr(settings, key, prefsDict[key])
 
     ########################################################################
     #                                                                      #

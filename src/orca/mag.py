@@ -174,22 +174,22 @@ def __setROIPush(x, y):
     - y: integer in unzoomed system coordinates representing y component
     """
 
-    needNewROI = False
+    #needNewROI = False
     newROI = GNOME.Magnifier.RectBounds(_roi.x1, _roi.y1, _roi.x2, _roi.y2)
     if x < _roi.x1:
-        needNewROI = True
+        #needNewROI = True
         newROI.x1 = x
         newROI.x2 = x + _roiWidth
     elif x > _roi.x2:
-        needNewROI = True
+        #needNewROI = True
         newROI.x2 = x
         newROI.x1 = x - _roiWidth
     if y < _roi.y1:
-        needNewROI = True
+        #needNewROI = True
         newROI.y1 = y
         newROI.y2 = y + _roiHeight
     elif y > _roi.y2:
-        needNewROI = True
+        #needNewROI = True
         newROI.y2 = y
         newROI.y1 = y - _roiHeight
 

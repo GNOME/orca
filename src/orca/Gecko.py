@@ -4729,9 +4729,7 @@ class Script(default.Script):
         # We cache these offsets so we don't need to keep finding them
         # over and over again.
         #
-        try:
-            indices = obj.childrenIndices
-        except:
+        if not hasattr(obj, "childrenIndices"):
             obj.childrenIndices = {}
 
         try:

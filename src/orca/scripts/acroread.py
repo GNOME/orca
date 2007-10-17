@@ -570,7 +570,7 @@ class Script(default.Script):
 
         default.Script.onWindowDeactivated(self, event)
 
-    def textLines(self, obj, nodeList=None):
+    def textLinesFromNodeList(self, obj, nodeList=None):
         """A generator that can be used to iterate over each line of a
         text object, starting at the caret offset. Overridden here
         because we are not getting any RELATION_FLOWS_TO from acroread.
@@ -601,7 +601,7 @@ class Script(default.Script):
             # doesn't seem to respond to setCaretOffset, so we cannot
             # update our location when sayAll is interrupted or finished.
             #
-            speech.sayAll(self.textLines(document, nodeList),
+            speech.sayAll(self.textLinesFromNodeList(document, nodeList),
                           self.__sayAllProgressCallback)
         else:
             default.Script.sayAll(self, inputEvent)

