@@ -5842,7 +5842,7 @@ class Script(default.Script):
                 if dWidth > 1 or dHeight > 1:
                     done = True
                 if not isField:
-                    [row, col]=  self.getCellCoordinates(nextCell)
+                    [row, col] = self.getCellCoordinates(nextCell)
                     if row == 0:
                         grid = True
                         done = True

@@ -1447,7 +1447,9 @@ class Script(default.Script):
         line = text.getTextAtOffset(caretOffset, \
             atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
-        debug.println(debug.LEVEL_FINEST, "speakBlankLine: start=%d, end=%d, line=<%s>" % (line[1], line[2], line[0]))
+        debug.println(debug.LEVEL_FINEST, 
+            "speakBlankLine: start=%d, end=%d, line=<%s>" % \
+            (line[1], line[2], line[0]))
 
         # If this is a blank line, announce it if the user requested
         # that blank lines be spoken.

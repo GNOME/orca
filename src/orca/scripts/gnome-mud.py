@@ -93,10 +93,10 @@ class Script(default.Script):
         """
         # Set the debug level for all the methods in this script.
         #
-        self.debugLevel=debug.LEVEL_FINEST
+        self.debugLevel = debug.LEVEL_FINEST
 
-        self.MESSAGE_LIST_LENGTH=10
-        self.previousMessages=RingList(self.MESSAGE_LIST_LENGTH)
+        self.MESSAGE_LIST_LENGTH = 10
+        self.previousMessages = RingList(self.MESSAGE_LIST_LENGTH)
 
         # Initially populate the cyclic list with empty strings
         i = 0
@@ -143,11 +143,11 @@ class Script(default.Script):
         debug.println(self.debugLevel, "gnome-mud.readPreviousMessage.")
 
         if inputEvent.event_string == "0":
-           inputEvent.event_string="10"
+            inputEvent.event_string = "10"
         i = int(inputEvent.event_string)
         messageNo = self.MESSAGE_LIST_LENGTH-i
      
-        text=""
+        text = ""
         messages = self.previousMessages.get()
         for i in range (messageNo, self.MESSAGE_LIST_LENGTH):
             message = messages[i]
@@ -158,8 +158,8 @@ class Script(default.Script):
 
     def onTextInserted(self, event):
 
-        rolesList=[rolenames.ROLE_TERMINAL,
-                   rolenames.ROLE_FILLER]
+        rolesList = [rolenames.ROLE_TERMINAL,
+                     rolenames.ROLE_FILLER]
         #Whenever a new text is inserted in the incoming message text area,
         #We want to speak and add it to the ringList structure only those lines
         #that contain some text and if the application is the current
@@ -167,7 +167,7 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
-            message=event.any_data
+            message = event.any_data
             if message and (not message.isspace()) and message != "\n":
                 debug.println(debug.LEVEL_FINEST, \
                     message + " inserted in ringlist:")

@@ -2092,11 +2092,11 @@ class Script(script.Script):
         # table-related points of reference.
         if oldParent == newParent and \
               getattr(newParent, 'role', None) == rolenames.ROLE_TABLE:
-          for key in self.pointOfReference.keys():
-            if key not in ('lastRow', 'lastColumn'):
-              del self.pointOfReference[key]
+            for key in self.pointOfReference.keys():
+                if key not in ('lastRow', 'lastColumn'):
+                    del self.pointOfReference[key]
         else:
-          self.pointOfReference = {}
+            self.pointOfReference = {}
 
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
@@ -4558,8 +4558,8 @@ class Script(script.Script):
                 for i in range(0, candidate.childCount):
                     child = candidate.child(i)
                     if child.role == rolenames.ROLE_FILLER:
-                       candidate = child
-                       break
+                        candidate = child
+                        break
                 # If there are labels in this embedded component,
                 # they should be here.
                 #
@@ -5638,21 +5638,21 @@ class Script(script.Script):
             speech.speak(string, voice)
 
     def printAncestry(self, child):
-       """Prints a hierarchical view of a child's ancestry."""
+        """Prints a hierarchical view of a child's ancestry."""
 
-       if not child:
-           return
+        if not child:
+            return
 
-       ancestorList = [child]
-       parent = child.parent
-       while parent and (parent.parent != parent):
-          ancestorList.insert(0, parent)
-          parent = parent.parent
+        ancestorList = [child]
+        parent = child.parent
+        while parent and (parent.parent != parent):
+            ancestorList.insert(0, parent)
+            parent = parent.parent
 
-       indent = ""
-       for ancestor in ancestorList:
-          print ancestor.toString(indent + "+-", False)
-          indent += "  "
+        indent = ""
+        for ancestor in ancestorList:
+            print ancestor.toString(indent + "+-", False)
+            indent += "  "
 
     def printHierarchy(self, root, ooi, indent="",
                        onlyShowing=True, omitManaged=True):
@@ -5670,9 +5670,9 @@ class Script(script.Script):
             return
 
         if root == ooi:
-           print root.toString(indent + "(*)", False)
+            print root.toString(indent + "(*)", False)
         else:
-           print root.toString(indent + "+-", False)
+            print root.toString(indent + "+-", False)
 
         rootManagesDescendants = root.state.count(\
             atspi.Accessibility.STATE_MANAGES_DESCENDANTS)
@@ -5693,11 +5693,11 @@ class Script(script.Script):
                              or (omitManaged and not rootManagesDescendants))
 
                 if paint:
-                   self.printHierarchy(child,
-                                       ooi,
-                                       indent + "  ",
-                                       onlyShowing,
-                                       omitManaged)
+                    self.printHierarchy(child,
+                                        ooi,
+                                        indent + "  ",
+                                        onlyShowing,
+                                        omitManaged)
 
     def printApps(self):
         """Prints a list of all applications to stdout."""

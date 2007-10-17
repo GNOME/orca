@@ -39,7 +39,7 @@ Each mode is defined below. The 4 bits of information listed here are:
     actual symbol or be inserted before the symbol.
 """
 
-__id__        = "$Id$"
+__id__  = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."

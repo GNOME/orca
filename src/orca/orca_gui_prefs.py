@@ -52,7 +52,8 @@ from orca_i18n import _  # for gettext support
 
 OS = None
 
-(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
+(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, \
+ MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
 (NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
 
@@ -315,7 +316,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel,
                                        self.pronunciationModel):
-            self._say(_("Accessibility support for GNOME has just been enabled."))
+            self._say( \
+                _("Accessibility support for GNOME has just been enabled."))
             self._say(_("You need to log out and log back in for the change to take effect."))
 
     def _getKeyValueForVoiceType(self, voiceType, key, useDefault=True):
@@ -402,7 +404,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             voiceACSS = self._getACSSForVoiceType(voiceType)
             voiceACSS[acss.ACSS.FAMILY] = {}
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
-            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = language
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = \
+                                                                     language
 
         #voiceACSS = self._getACSSForVoiceType(voiceType)
         #settings.voices[voiceType] = voiceACSS
@@ -1716,7 +1719,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         else:
             return None
 
-    def _insertRowBraille(self, handl, com, inputEvHand, parent=None, modif=False):
+    def _insertRowBraille(self, handl, com, inputEvHand, 
+                          parent=None, modif=False):
         """Appends a new row with the new braille binding data to the treeview
 
         Arguments:
@@ -1769,7 +1773,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                 iterChild = treeModel.iter_children(myiter)
                 while iterChild != None:
                     descrip = treeModel.get_value(iterChild, DESCRIP)
-                    keyBind.handler=input_event.InputEventHandler(None,descrip)
+                    keyBind.handler = \
+                        input_event.InputEventHandler(None,descrip)
                     if keyBinds.hasKeyBinding(keyBind,
                                               typeOfSearch="description"):
                         treeModel.set_value(iterChild, MODIF, True)
@@ -2649,7 +2654,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         orca_state.capturingKeys = True
         return
 
-    def editedKey(self, cell, path, new_text, treeModel, modMask, modUsed, key, text):
+    def editedKey(self, cell, path, new_text, treeModel, 
+                  modMask, modUsed, key, text):
         """The user changes the key for a Keybinding:
             update the model of the treeview
         """

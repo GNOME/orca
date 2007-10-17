@@ -147,9 +147,9 @@ mainWindowModule = "orca_gui_main"
 # Orca preferences.  Each module is expected to have the method,
 # showPreferencesUI, which will prompt the user for preferences.
 #
-guiPreferencesModule    = "orca_gui_prefs"
-consolePreferencesModule= "orca_console_prefs"
-appGuiPreferencesModule = "app_gui_prefs"
+guiPreferencesModule     = "orca_gui_prefs"
+consolePreferencesModule = "orca_console_prefs"
+appGuiPreferencesModule  = "app_gui_prefs"
 
 # The name of the module that hold the user interface for quitting Orca.
 # This module is expected to have the method, showQuitUI, which will
@@ -252,7 +252,9 @@ silenceSpeech           = False
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #
-speechFactoryModules    = ["espeechfactory","gnomespeechfactory","speechdispatcherfactory"]
+speechFactoryModules    = ["espeechfactory", \
+                           "gnomespeechfactory", \
+                           "speechdispatcherfactory"]
 speechServerFactory     = "gnomespeechfactory"
 speechServerInfo        = None # None means let the factory decide.
 
@@ -523,7 +525,8 @@ commFailureAttemptLimit = 5
 #
 # http://mail.python.org/pipermail/python-list/2002-October/126632.html
 # http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
-# http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html
+# http://www.pyzine.com/Issue001/Section_Articles/ \
+#                                 article_ThreadingGlobalInterpreter.html
 #
 gilSleepTime            = 0.00001
 

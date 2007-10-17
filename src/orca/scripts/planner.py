@@ -59,8 +59,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getDisplayedText(obj))
 
         # First special toggle button is the one in the toolbar and
         # that it has no name Application should implement an
@@ -119,16 +121,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     #
     def _getSpeechForToggleButton(self, obj, already_focused):
 
-        utterances=[]
-        tmp=[]
+        utterances = []
+        tmp = []
 
         # Application should implement an accessible name in this
         # component, but until this is made We speech/braille "display
         # more options" when the focus is in one of these toggle
         # buttons.
         #
-        roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
-                  rolenames.ROLE_TOOL_BAR]
+        roleList = [rolenames.ROLE_TOGGLE_BUTTON,\
+                    rolenames.ROLE_TOOL_BAR]
 
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             if not already_focused:
@@ -166,7 +168,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                           + "one of the four graphic toggle buttons.")
             if not already_focused:
                 filler = obj.parent
-                allLabels = self._script.findByRole(filler, rolenames.ROLE_LABEL)
+                allLabels = self._script.findByRole(filler, 
+                                                    rolenames.ROLE_LABEL)
                 tmp.append(allLabels[0].name)
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
                 if obj.state.count(atspi.Accessibility.STATE_CHECKED):

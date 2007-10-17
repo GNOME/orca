@@ -786,17 +786,22 @@ class Script(default.Script):
         self.savedreadTableCellRow = settings.readTableCellRow
         settings.readTableCellRow = False
 
-        self.savedEnabledBrailledTextAttributes = settings.enabledBrailledTextAttributes
-        settings.enabledBrailledTextAttributes = self.enabledBrailledTextAttributes
+        self.savedEnabledBrailledTextAttributes = \
+            settings.enabledBrailledTextAttributes
+        settings.enabledBrailledTextAttributes = \
+            self.enabledBrailledTextAttributes
 
-        self.savedEnabledSpokenTextAttributes = settings.enabledSpokenTextAttributes
+        self.savedEnabledSpokenTextAttributes = \
+            settings.enabledSpokenTextAttributes
         settings.enabledSpokenTextAttributes = self.enabledSpokenTextAttributes
 
     def deactivate(self):
         """Called when this script is deactivated."""
         settings.readTableCellRow = self.savedreadTableCellRow
-        settings.enabledBrailledTextAttributes = self.savedEnabledBrailledTextAttributes
-        settings.enabledSpokenTextAttributes = self.savedEnabledSpokenTextAttributes
+        settings.enabledBrailledTextAttributes = \
+            self.savedEnabledBrailledTextAttributes
+        settings.enabledSpokenTextAttributes = \
+            self.savedEnabledSpokenTextAttributes
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -1286,7 +1291,7 @@ class Script(default.Script):
         Returns a string representing the spread sheet column.
         """
 
-        BASE26="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        BASE26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
         if column <= len(BASE26):
             return BASE26[column-1]
@@ -1666,7 +1671,8 @@ class Script(default.Script):
                         if started:
                             endOffset = i
                             self.sayWriterWord(event.source,
-                                result[0][startOffset:endOffset+1].encode("UTF-8"),
+                                result[0][startOffset:endOffset+1].encode( \
+                                                                    "UTF-8"),
                                 startOffset, endOffset)
                             startOffset = i
                             started = False
@@ -1751,7 +1757,8 @@ class Script(default.Script):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: accept button.")
-                speech.speak(_("License Agreement Accept button now has focus."))
+                speech.speak( \
+                    _("License Agreement Accept button now has focus."))
 
             # Check for 3. Personal Data: Transfer Personal Data check box.
             #
@@ -2007,7 +2014,8 @@ class Script(default.Script):
                 # case.
                 #
                 if current.role == rolenames.ROLE_DIALOG and \
-                   (current.name and current.name.startswith(_("Presentation Wizard"))):
+                   (current.name and \
+                    current.name.startswith(_("Presentation Wizard"))):
                     self.locusOfFocusChanged(event, None, 
                                              orca_state.locusOfFocus)
                     break
@@ -2016,7 +2024,8 @@ class Script(default.Script):
         # If this is a state change "focused" event that we care about, and
         # we are in Writer, check to see if we are entering or leaving a table.
         #
-        if event.type.startswith("object:state-changed:focused") and event.detail1 == 1:
+        if event.type.startswith("object:state-changed:focused") and \
+           event.detail1 == 1:
             current = event.source.parent
             while current.role != rolenames.ROLE_APPLICATION:
                 # Translators: this is the title of the window that
@@ -2064,7 +2073,8 @@ class Script(default.Script):
                 y = orca_state.lastInputEvent.y
                 weToggledIt = event.source.component.contains(x, y, 0)
 
-            elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            elif isinstance(orca_state.lastInputEvent, \
+                            input_event.KeyboardEvent):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
                 navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
@@ -2190,7 +2200,8 @@ class Script(default.Script):
                         if cellText and len(cellText):
                             if self.inputLineForCell and \
                                self.inputLineForCell.text:
-                                inputLine = self.getText(self.inputLineForCell,0,-1)
+                                inputLine = self.getText( \
+                                                 self.inputLineForCell, 0, -1)
                                 if inputLine and (len(inputLine) > 1) \
                                     and (inputLine[0] == "="):
                                     # Translators: this means a particular

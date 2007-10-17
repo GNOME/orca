@@ -151,8 +151,8 @@ CMD_RESTARTBRL        = 0x43
 CMD_RESTARTSPEECH     = 0x44
 CMD_MAX               = 0x44
 
-BRL_FLG_REPEAT_INITIAL= 0x800000
-BRL_FLG_REPEAT_DELAY  = 0x400000
+BRL_FLG_REPEAT_INITIAL = 0x800000
+BRL_FLG_REPEAT_DELAY   = 0x400000
 
 # Common names for most used BrlTTY commands, to be shown in the GUI:
 # ATM, the ones used in default.py are:

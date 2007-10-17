@@ -504,10 +504,10 @@ class Script(default.Script):
            and self.isFocusOnFindDialog() \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
            and event.source.name == _("Phrase not found"):
-                debug.println(self.debugLevel,
-                              "gedit.onNameChanged - phrase not found.")
+            debug.println(self.debugLevel,
+                          "gedit.onNameChanged - phrase not found.")
 
-                speech.speak(event.source.name)
+            speech.speak(event.source.name)
 
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.onNameChanged(self, event)

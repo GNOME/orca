@@ -103,8 +103,8 @@ class Registry:
     __sharedState = {}
     __instanceCount = 0
 
-    __listeners=[]
-    __keystrokeListeners=[]
+    __listeners = []
+    __keystrokeListeners = []
 
     def __init__(self):
 

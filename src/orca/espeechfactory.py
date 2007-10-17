@@ -44,7 +44,7 @@ __version__ = "$Revision$"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2005 Google Inc."
 __license__ = "LGPL"
-__all__=['Speaker']
+__all__ = ['Speaker']
 
 import os
 
@@ -73,7 +73,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     """
 
-    location="/usr/share/emacs/site-lisp/emacspeak/servers"
+    location = "/usr/share/emacs/site-lisp/emacspeak/servers"
 
     config = {'splitcaps' : 1,
               'rate' : 70,
@@ -177,7 +177,7 @@ class SpeechServer(speechserver.SpeechServer):
         #print "Command = ", cmd
         #self._output = os.popen(cmd, "w", 1)
         [self._output, stdout, stderr] = os.popen3(cmd, "w", 1)
-        self._settings ={}
+        self._settings = {}
         if initial:
             self._settings.update(initial)
             self.configure(self._settings)
@@ -217,7 +217,7 @@ class SpeechServer(speechserver.SpeechServer):
         """Queue text to be spoken.
         Output is produced by next call to say() or speak()."""
         if acss:
-            code =self.getvoice(acss)
+            code = self.getvoice(acss)
             self._output.write("q {%s %s %s}\n" %(code[0], text,
         code[1]))
         else:
@@ -238,7 +238,7 @@ class SpeechServer(speechserver.SpeechServer):
     def speakUtterances(self, list, acss=None, interrupt=True):
         """Speak list of utterances."""
         if acss:
-            code =self.getvoice(acss)
+            code = self.getvoice(acss)
             for t in list:
                 self._output.write("q { %s %s %s }\n" % \
                                    (code[0], str(t), code[1]))
@@ -256,7 +256,7 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         if acss:
-            code =self.getvoice(acss)
+            code = self.getvoice(acss)
             self._output.write("q {%s %s %s}\nd\n" %(code[0], text, code[1]))
         else:
             self._output.write("q {%s}\nd\n" %text)
@@ -352,8 +352,8 @@ def _test():
     """Self test."""
     import time
     import acss
-    s=SpeechServer()
-    a=acss.ACSS()
+    s = SpeechServer()
+    a = acss.ACSS()
     s.punctuations('some')
     s.queueText("This is an initial test.");
     s.queueText("Next, we'll test audio formatted output.")
@@ -370,4 +370,4 @@ def _test():
     s.shutdown()
 
 
-if __name__=="__main__": _test()
+if __name__ == "__main__": _test()

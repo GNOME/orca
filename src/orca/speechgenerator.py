@@ -1450,7 +1450,8 @@ class SpeechGenerator:
                                 for j in range(0, action.nActions):
                                     if action.getName(j) == "toggle":
                                         header = parent_table.getColumnHeader(i)
-                                        accHeader = atspi.Accessible.makeAccessible(header)
+                                        accHeader = \
+                                         atspi.Accessible.makeAccessible(header)
                                         utterances.append(accHeader.name)
 
                             utterances.extend(self._getSpeechForTableCell(cell,

@@ -37,7 +37,7 @@ _defined_voices = {}
 
 # Map from ACSS dimensions to Dectalk settings:
 
-_table ={}
+_table = {}
 #family codes:
 
 _table['family'] = {
@@ -68,7 +68,7 @@ _table['family'] = {
 
 def _update_map(table, key, format,  settings):
     """Internal function to update acss->synth mapping."""
-    table[key] ={}
+    table[key] = {}
     for setting  in  settings:
         _table[key][setting[0]] = format % setting[1:]
 
@@ -338,7 +338,7 @@ _update_map(_table, ('child', 'pitch-range'),
 # and the quickness --a parameter that controls whether the final
 # frequency targets are completely achieved in the phonetic transitions.
 
-_male_stress =[
+_male_stress = [
     (0, 0, 0, 0, 0),
     (1, 3, 6, 20, 3),
     (2, 6, 12, 40, 6),
@@ -505,21 +505,21 @@ def getvoice(acss):
     specified  ACSS setting.
     Synthesizer code is a tupple of the form (open,close)
     where open sets the voice, and close resets it."""
-    name=acss.name()
+    name = acss.name()
     if name in _defined_voices: return _defined_voices[name]
-    _defined_voices[name] =acss2voice(acss)
+    _defined_voices[name] = acss2voice(acss)
     return _defined_voices[name]
 
 def acss2voice(acss):
     """Return synthesizer code."""
     code = ""
-    familyName ='male'
+    familyName = 'male'
     if 'family' in acss:
         familyName = acss['family']['name']
         if familyName in _table['family']:
             code += _table['family'][familyName]
     if 'rate' in acss: code += " :ra %s" % getrate(acss['rate'])
-    if 'punctuations' in acss: code += " :punc %s" %acss['punctuations']
+    if 'punctuations' in acss: code += " :punc %s" % acss['punctuations']
     if 'gain' in acss: code += " :volume set %s" % getvolume(acss['gain'])
     voice = ""
     dv = ""

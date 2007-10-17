@@ -188,7 +188,8 @@ class SearchQuery:
                             while not found and (i < len(offsets)):
                                 [nextInstance, offset] = \
                                    theZone.getWordAtOffset(offsets[i])
-                                offsetDiff=nextInstance.index-context.wordIndex
+                                offsetDiff = \
+                                    nextInstance.index-context.wordIndex
                                 if self.searchBackwards and \
                                               (offsetDiff < 0) or \
                                    not self.searchBackwards and \

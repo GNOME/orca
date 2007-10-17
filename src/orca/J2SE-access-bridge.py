@@ -59,7 +59,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances=[]
+        utterances = []
         if (not already_focused):
             utterances = self._getDefaultSpeech(obj, already_focused)
 

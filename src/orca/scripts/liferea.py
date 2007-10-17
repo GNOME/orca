@@ -108,37 +108,37 @@ class Script(default.Script):
         # (frame), inside a filler and inside another filler.
         #
         if self.isDesiredFocusedItem(event.source, rolesList):
-             # If we are focusing this button we construct a utterance and 
-             # a braille region to speak/braille "online/offline button".
-             # Here we declare utterances and add the localized string 
-             # "online/offline".
-             #
-             utterances = []
-             utterances.append(_("Work online / offline")) 
+            # If we are focusing this button we construct a utterance and 
+            # a braille region to speak/braille "online/offline button".
+            # Here we declare utterances and add the localized string 
+            # "online/offline".
+            #
+            utterances = []
+            utterances.append(_("Work online / offline")) 
 
-             # Here we extend the utterances with the speech generator for 
-             # the object with focus (the push button).
-             #
-             utterances.extend(speechGen.getSpeech(event.source,False))
+            # Here we extend the utterances with the speech generator for 
+            # the object with focus (the push button).
+            #
+            utterances.extend(speechGen.getSpeech(event.source,False))
 
-             # Finally we speak/braille the utterances/regions.
-             #
-             speech.speakUtterances(utterances)
+            # Finally we speak/braille the utterances/regions.
+            #
+            speech.speakUtterances(utterances)
            
-             regions = brailleGen.getBrailleRegions(event.source)
-             regions[0].insert(0, braille.Region(utterances[0] + " "))
-             braille.displayRegions(regions)
+            regions = brailleGen.getBrailleRegions(event.source)
+            regions[0].insert(0, braille.Region(utterances[0] + " "))
+            braille.displayRegions(regions)
            
-             return
+            return
 
         # Here we handle the case when the focus is in the headlines table.
         # See comment #3 of bug #350233.
         # http://bugzilla.gnome.org/show_bug.cgi?id=350233
         #
         if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_COLUMN_HEADER:
-             table = event.source.parent
-             cells = self.findByRole(table, rolenames.ROLE_TABLE_CELL)
-             eventsynthesizer.clickObject(cells[1], 1)
+            table = event.source.parent
+            cells = self.findByRole(table, rolenames.ROLE_TABLE_CELL)
+            eventsynthesizer.clickObject(cells[1], 1)
         
         default.Script.locusOfFocusChanged(self, event, 
                                            oldLocusOfFocus, newLocusOfFocus)

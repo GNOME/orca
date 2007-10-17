@@ -836,7 +836,7 @@ class WhereAmI:
         Get the http header for a given uri and try to extract the size (Content-length).
         '''
         try:
-            x=urllib2.urlopen(uri)
+            x = urllib2.urlopen(uri)
             try:
                 return x.info()['Content-length']
             except KeyError:
@@ -1621,7 +1621,7 @@ class WhereAmI:
         if not state.contains(pyatspi.STATE_SENSITIVE):
             return
 
-        utterances =[]
+        utterances = []
 
         # Translators: The "default" button in a dialog box is the button
         # that gets activated when Enter is pressed anywhere within that

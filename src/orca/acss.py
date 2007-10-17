@@ -87,7 +87,7 @@ class ACSS(dict):
         """Update name based on settings."""
 
     def name(self):
-        _name='acss-'
+        _name = 'acss-'
         names = self.keys()
         if names:
             names.sort()
