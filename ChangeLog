@@ -4,6 +4,7 @@
           src/orca/scripts/gnome-panel.py:
           src/orca/scripts/gnome-search-tool.py:
           src/orca/scripts/planner.py:
+          src/orca/scripts/nautilus.py:
           pyatspi migration of various application specific scripts
           including changes in default.isDesiredFocusedItem() and
           default.findByRole() to support the migration.

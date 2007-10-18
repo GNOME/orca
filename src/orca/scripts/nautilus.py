@@ -25,11 +25,10 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.atspi as atspi
+import pyatspi
 import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
-import orca.rolenames as rolenames
 import orca.speech as speech
 
 from orca.orca_i18n import ngettext  # for ngettext support
@@ -76,14 +75,14 @@ class Script(default.Script):
 
         itemCount = -1
         itemCountString = " "
-        allScrollPanes = self.findByRole(frame, rolenames.ROLE_SCROLL_PANE)
-        rolesList = [rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_SPLIT_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        allScrollPanes = self.findByRole(frame, pyatspi.ROLE_SCROLL_PANE)
+        rolesList = [pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_SPLIT_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
 
         # Look for the scroll pane containing the folder items. If this 
         # window is showing an icon view, then the child will be a layered
@@ -93,11 +92,14 @@ class Script(default.Script):
         for pane in allScrollPanes:
             if self.isDesiredFocusedItem(pane, rolesList):
                 for i in range(0, pane.childCount):
-                    child = pane.child(i)
-                    if child.role == rolenames.ROLE_LAYERED_PANE:
+                    child = pane.getChildAtIndex(i)
+                    if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
                         itemCount = child.childCount
-                    elif child.role == rolenames.ROLE_TABLE:
-                        itemCount = child.table.nRows
+                    elif child.getRole() == pyatspi.ROLE_TABLE:
+                        try:
+                            itemCount = child.queryTable().nRows
+                        except NotImplementedError:
+                            itemCount = -1
                     if itemCount != -1:
                         itemCountString = " " + ngettext("%d item",
                                                          "%d items",
@@ -117,7 +119,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        if event.source.role == rolenames.ROLE_FRAME:
+        if event.source.getRole() == pyatspi.ROLE_FRAME:
 
             # If we've changed folders, announce the new folder name and
             # the number of items in it (see bug #350674).
@@ -138,14 +140,14 @@ class Script(default.Script):
             allTokens = event.source.name.split(" - ")
             newFolderName = allTokens[0] 
 
-            allPanels = self.findByRole(event.source, rolenames.ROLE_PANEL)
-            rolesList = [rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_FILLER, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_TOOL_BAR, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_FRAME, \
-                         rolenames.ROLE_APPLICATION]
+            allPanels = self.findByRole(event.source, pyatspi.ROLE_PANEL)
+            rolesList = [pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_FILLER, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_TOOL_BAR, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_FRAME, \
+                         pyatspi.ROLE_APPLICATION]
             locationBarFound = False
             for panel in allPanels:
                 if self.isDesiredFocusedItem(panel, rolesList):
@@ -155,9 +157,9 @@ class Script(default.Script):
             shouldAnnounce = False
             if locationBarFound:
                 for i in range(0, panel.childCount):
-                    child = panel.child(i)
-                    if child.role == rolenames.ROLE_TOGGLE_BUTTON and \
-                       child.state.count(atspi.Accessibility.STATE_CHECKED):
+                    child = panel.getChildAtIndex(i)
+                    if child.getRole() == pyatspi.ROLE_TOGGLE_BUTTON and \
+                       child.getState().contains(pyatspi.STATE_CHECKED):
                         if not self.isSameObject(child, self.pathChild):
                             self.pathChild = child
                             shouldAnnounce = True
