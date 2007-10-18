@@ -38,14 +38,15 @@ except:
     pass
 import time
 
-import atspi
+import pyatspi
 import debug
 import settings
 
 _magnifierAvailable = False
 
 try:
-    atspi.ORBit.load_typelib('GNOME_Magnifier')
+    import ORBit
+    ORBit.load_typelib('GNOME_Magnifier')
     import GNOME.Magnifier
     _magnifierAvailable = True
 except:
@@ -404,8 +405,8 @@ def applySettings():
         tdb = magnifierPBag.getValue("target-display-bounds").value()
         magnifierPBag.setValue(
             "target-display-bounds",
-            atspi.ORBit.CORBA.Any(
-                atspi.ORBit.CORBA.TypeCode(
+            ORBit.CORBA.Any(
+                ORBit.CORBA.TypeCode(
                     tdb.__typecode__.repo_id),
                 GNOME.Magnifier.RectBounds(prefLeft,
                                            prefTop,
@@ -447,14 +448,14 @@ def applySettings():
     color = magnifierPBag.getValue("cursor-color")
     magnifierPBag.setValue(
         "cursor-color",
-        atspi.ORBit.CORBA.Any(
+        ORBit.CORBA.Any(
             color.typecode(),
             long(colorString, 0)))
 
     color = magnifierPBag.getValue("crosswire-color")
     magnifierPBag.setValue(
         "crosswire-color",
-        atspi.ORBit.CORBA.Any(
+        ORBit.CORBA.Any(
             color.typecode(),
             long(colorString, 0)))
 
@@ -639,18 +640,31 @@ def magnifyAccessible(event, obj, extents=None):
     if not _initialized:
         return
 
+    haveSomethingToMagnify = False
+
     if extents:
         [x, y, width, height] = extents
-    elif event and event.type.startswith("object:text-caret-moved") \
-       and obj.text and (obj.text.caretOffset >= 0):
-        offset = obj.text.caretOffset
-        [x, y, width, height] = \
-            obj.text.getCharacterExtents(offset, 0) # coord type screen
-    elif obj.extents:
-        extents = obj.extents
-        [x, y, width, height] = \
-            [extents.x, extents.y, extents.width, extents.height]
-    else:
+        haveSomethingToMagnify = True
+    elif event and event.type.startswith("object:text-caret-moved"):
+        try:
+            text = obj.queryText()
+            if text and (text.caretOffset >= 0):
+                [x, y, width, height] = \
+                    text.getCharacterExtents(text.caretOffset, 0)
+                haveSomethingToMagnify = True
+        except:
+            haveSomethingToMagnify = False
+
+    if not haveSomethingToMagnify:
+        try:
+            extents = obj.queryComponent().getExtents(0)
+            [x, y, width, height] = \
+                [extents.x, extents.y, extents.width, extents.height]
+            haveSomethingToMagnify = True
+        except:
+            haveSomethingToMagnify = False
+
+    if not haveSomethingToMagnify:
         return
 
     # Avoid jerking the display around if the mouse is what ended up causing
@@ -740,7 +754,7 @@ def init():
 
     try:
         applySettings()
-        atspi.Registry().registerEventListener(__onMouseEvent, "mouse:abs")
+        pyatspi.Registry.registerEventListener(__onMouseEvent, "mouse:abs")
 
         _initialized = True
 
@@ -768,7 +782,7 @@ def shutdown():
     if not _initialized:
         return False
 
-    atspi.Registry().deregisterEventListener(__onMouseEvent,"mouse:abs")
+    pyatspi.Registry.deregisterEventListener(__onMouseEvent,"mouse:abs")
 
     # Someone might have killed the magnifier on us.  They shouldn't
     # have done so, but we need to be able to recover if they did.
