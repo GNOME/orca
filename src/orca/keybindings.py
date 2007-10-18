@@ -33,10 +33,10 @@ try:
     # the desktop is not running.
     #
     import gtk
-except:
+except ImportError:
     pass
 
-import atspi
+import pyatspi
 import debug
 import settings
 
@@ -150,41 +150,41 @@ def getModifierNames(mods):
     text = ""
     if mods & (1 << settings.MODIFIER_ORCA):
         text += _("Orca") + "+"
-    #if mods & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
+    #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:
         # Translators: this is presented in a GUI to represent the
         # "right alt" modifier.
         #
         text += _("Alt_R") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_META3):
+    if mods & (1 << pyatspi.MODIFIER_META3):
         # Translators: this is presented in a GUI to represent the
         # "super" modifier.
         #
         text += _("Super") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_META2):
+    if mods & (1 << pyatspi.MODIFIER_META2):
         # Translators: this is presented in a GUI to represent the
         # "meta 2" modifier.
         #
         text += _("Meta2") + "+"
-    #if mods & (1 << atspi.Accessibility.MODIFIER_META):
+    #if mods & (1 << pyatspi.MODIFIER_META):
     #    text += _("Meta") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_ALT):
+    if mods & (1 << pyatspi.MODIFIER_ALT):
         # Translators: this is presented in a GUI to represent the
         # "left alt" modifier.
         #
         text += _("Alt_L") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_CONTROL):
+    if mods & (1 << pyatspi.MODIFIER_CONTROL):
         # Translators: this is presented in a GUI to represent the
         # "control" modifier.
         #
         text += _("Ctrl") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
+    if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK):
         # Translators: this is presented in a GUI to represent the
         # "caps lock" modifier.
         #
         text += _("Caps_Lock") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_SHIFT):
+    if mods & (1 << pyatspi.MODIFIER_SHIFT):
         # Translators: this is presented in a GUI to represent the
         # "shift " modifier.
         #
@@ -204,10 +204,10 @@ class KeyBinding:
           from /usr/include/X11/keysymdef.h with the preceding 'XK_'
           removed (e.g., XK_KP_Enter becomes the string 'KP_Enter').
         - modifier_mask: bit mask where a set bit tells us what modifiers
-          we care about (see atspi.Accessibility.MODIFIER_*)
+          we care about (see pyatspi.MODIFIER_*)
         - modifiers: the state the modifiers we care about must be in for
           this key binding to match an input event (see also
-          atspi.Accessibility.MODIFIER_*)
+          pyatspi.MODIFIER_*)
         - handler: the InputEventHandler for this key binding
         """
 
@@ -334,7 +334,7 @@ class KeyBindings:
         handler = self.getInputHandler(keyboardEvent)
         if handler:
             consumed = True
-            if keyboardEvent.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+            if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
                 try:
                     handler.processInputEvent(script, keyboardEvent)
                 except:

@@ -1,5 +1,10 @@
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
+        * src/orca/keybindings.py:
+          pyatspi migration.
+
+2007-10-18  Scott Haeger <scott@bashautomation.com>
+        
         * src/orca/scripts/liferea.py:
           src/orca/scripts/gnome-panel.py:
           src/orca/scripts/gnome-search-tool.py:
