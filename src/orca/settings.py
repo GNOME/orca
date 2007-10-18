@@ -748,4 +748,5 @@ setScriptMapping(re.compile(_('vte')), "gnome-terminal")
 setScriptMapping(re.compile(_('pidgin')), "gaim")
 
 # Show deprecated messeges in debug output.
+# Set this to True to help find potential pyatspi porting problems
 deprecatedMessages = False
