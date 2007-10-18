@@ -29,10 +29,10 @@ import orca.braille as braille
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
-import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
 import orca.where_am_I as where_am_I
+import pyatspi
 
 class WhereAmI(where_am_I.WhereAmI):
 
@@ -67,7 +67,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         hints being given to us by gcalctool for it's mathematical
         operator buttons."""
 
-        if obj.role != rolenames.ROLE_PUSH_BUTTON:
+        if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
             return speechgenerator.SpeechGenerator._getSpeechForObjectName(\
                 self, obj)
 
@@ -126,7 +126,7 @@ class Script(default.Script):
         # look for the display in this window
         #
         if (self._resultsDisplay is None) \
-               and (event.source.role == rolenames.ROLE_FRAME):
+               and (event.source.getRole() == pyatspi.ROLE_FRAME):
 
             # The widget hierarchy for gcalctool differs depending upon the
             # version.
@@ -139,9 +139,9 @@ class Script(default.Script):
             # the text_view display. This can be found by looking for an
             # accessible object with a role of ROLE_EDITBAR.
             #
-            d = self.findByRole(event.source, rolenames.ROLE_TEXT)
+            d = self.findByRole(event.source, pyatspi.ROLE_TEXT)
             if len(d) == 0:
-                d = self.findByRole(event.source, rolenames.ROLE_EDITBAR)
+                d = self.findByRole(event.source, pyatspi.ROLE_EDITBAR)
 
             # If d is an empty list at this point, we're unable to get the
             # gcalctool display. Inform the user.

@@ -1,3 +1,8 @@
+2007-10-18  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/scripts/gcalctool.py:
+          pyatspi migration.
+
 2007-10-18  Willie Walker <william.walker@sun.com>
 
         * src/orca/mag.py:
