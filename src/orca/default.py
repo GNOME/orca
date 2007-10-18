@@ -2130,16 +2130,20 @@ class Script(script.Script):
                 if oldParent and oldParent.table and \
                    oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                     table = oldParent.table
-                    oldRow = table.getRowAtIndex(oldLocusOfFocus.index)
-                    oldCol = table.getColumnAtIndex(oldLocusOfFocus.index)
+                    oldRow = table.getRowAtIndex( \
+                                           oldLocusOfFocus.getIndexInParent())
+                    oldCol = table.getColumnAtIndex( \
+                                           oldLocusOfFocus.getIndexInParent())
                 else:
                     oldRow = -1
                     oldCol = -1
 
                 if newParent and newParent.table:
                     table = newParent.table
-                    newRow = table.getRowAtIndex(newLocusOfFocus.index)
-                    newCol = table.getColumnAtIndex(newLocusOfFocus.index)
+                    newRow = table.getRowAtIndex( \
+                                  newLocusOfFocus.getIndexInParent())
+                    newCol = table.getColumnAtIndex( \
+                                  newLocusOfFocus.getIndexInParent())
 
                     if (newRow != oldRow) or (oldParent != newParent):
                         desc = newParent.table.getRowDescription(newRow)
@@ -2253,9 +2257,11 @@ class Script(script.Script):
             if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 if newParent and newParent.table:
                     table = newParent.table
-                    column = table.getColumnAtIndex(newLocusOfFocus.index)
+                    column = table.getColumnAtIndex( \
+                                    newLocusOfFocus.getIndexInParent())
                     self.pointOfReference['lastColumn'] = column
-                    row = table.getRowAtIndex(newLocusOfFocus.index)
+                    row = table.getRowAtIndex( \
+                                    newLocusOfFocus.getIndexInParent())
                     self.pointOfReference['lastRow'] = row
         else:
             orca_state.noFocusTimeStamp = time.time()
@@ -2887,7 +2893,7 @@ class Script(script.Script):
            and (orca_state.locusOfFocus != event.source):
             self.pointOfReference['activeDescendantInfo'] = \
                 [orca_state.locusOfFocus.parent,
-                 orca_state.locusOfFocus.index]
+                 orca_state.locusOfFocus.getIndexInParent()]
 
     def onLinkSelected(self, event):
         """Called when a hyperlink is selected in a text area.
@@ -4365,7 +4371,7 @@ class Script(script.Script):
                     parent1.state.count( \
                         atspi.Accessibility.STATE_TRANSIENT) and \
                     parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
-                if parent1.index != parent2.index:
+                if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent
                 parent2 = parent2.parent
@@ -4383,7 +4389,7 @@ class Script(script.Script):
             while parent1 and parent2 and \
                     parent1.getRole() == pyatspi.ROLE_LABEL and \
                     parent2.getRole() == pyatspi.ROLE_LABEL:
-                if parent1.index != parent2.index:
+                if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent
                 parent2 = parent2.parent
@@ -5392,8 +5398,8 @@ class Script(script.Script):
 
         nodes = []
         table = obj.parent.table
-        row = table.getRowAtIndex(obj.index)
-        col = table.getColumnAtIndex(obj.index)
+        row = table.getRowAtIndex(obj.getIndexInParent())
+        col = table.getColumnAtIndex(obj.getIndexInParent())
         nodeLevel = self.getNodeLevel(obj)
         done = False
 

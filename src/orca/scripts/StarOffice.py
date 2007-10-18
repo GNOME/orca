@@ -253,7 +253,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         if self._script.pointOfReference.has_key("lastColumn") and \
               self._script.pointOfReference["lastColumn"] != \
-              parent.table.getColumnAtIndex(obj.index):
+              parent.table.getColumnAtIndex(obj.getIndexInParent()):
             if self._script.dynamicColumnHeaders.has_key(table):
                 row = self._script.dynamicColumnHeaders[table]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
@@ -270,7 +270,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         if self._script.pointOfReference.has_key("lastRow") and \
               self._script.pointOfReference['lastRow'] != \
-              parent.table.getRowAtIndex(obj.index):
+              parent.table.getRowAtIndex(obj.getIndexInParent()):
             if self._script.dynamicRowHeaders.has_key(table):
                 column = self._script.dynamicRowHeaders[table]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
