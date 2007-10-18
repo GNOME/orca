@@ -29,7 +29,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import atspi
+import pyatspi
 import debug
 import settings
 import time
@@ -70,7 +70,7 @@ class KeyboardEvent(InputEvent):
         # mapping ASCII control characters to UTF-8.]]]
         #
         event_string = event.event_string
-        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+        if (event.modifiers & (1 << pyatspi.MODIFIER_CONTROL)) \
             and (not event.is_text) and (len(event_string) == 1):
             value = ord(event.event_string[0])
             if value < 32:
