@@ -4874,10 +4874,9 @@ class Script(script.Script):
 
         Returns True if all roles match.
         """
-
         current = obj
         for role in rolesList:
-            if (current == None) or (current.role != role):
+            if (current == None) or (current.getRole() != role):
                 return False
             current = current.parent
 
@@ -5556,7 +5555,7 @@ class Script(script.Script):
         objlist = []
         allobjs = self.getObjects(root, onlyShowing)
         for o in allobjs:
-            if o.role == role:
+            if o.getRole() == role:
                 objlist.append(o)
         return objlist
 

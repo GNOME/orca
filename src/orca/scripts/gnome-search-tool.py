@@ -27,13 +27,12 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.default as default
-import orca.atspi as atspi
-import orca.rolenames as rolenames
 import orca.speech as speech
 
 from orca.orca_i18n import _        # for gettext support
 from orca.orca_i18n import ngettext # for gettext support
 
+import pyatspi
 import time
 import gobject
 gobject.threads_init()
@@ -106,14 +105,13 @@ class Script(default.Script):
 
         # self.printAncestry(event.source)
 
-        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
-                    rolenames.ROLE_FILLER, \
-                    rolenames.ROLE_FILLER, \
-                    rolenames.ROLE_FILLER, \
-                    rolenames.ROLE_FRAME, \
-                    rolenames.ROLE_APPLICATION]
-        visible = event.source.state.count( \
-                               atspi.Accessibility.STATE_VISIBLE)
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_FRAME, \
+                    pyatspi.ROLE_APPLICATION]
+        visible = event.source.getState().contains(pyatspi.STATE_VISIBLE)
 
         # Check to see if we have just had an "object:state-changed:showing"
         # event for the Stop button. If the name is "Stop", and one of its
@@ -138,7 +136,7 @@ class Script(default.Script):
             #
             if not self.fileTable:
                 frame = self.getTopLevel(event.source)
-                allTables = self.findByRole(frame, rolenames.ROLE_TABLE)
+                allTables = self.findByRole(frame, pyatspi.ROLE_TABLE)
                 self.fileTable = allTables[0]
 
             gobject.idle_add(self._speakSearching)
@@ -161,10 +159,13 @@ class Script(default.Script):
 
             self.searching = False
             speech.speak(_("Search complete."))
-            sensitive = self.fileTable.state.count( \
-                               atspi.Accessibility.STATE_SENSITIVE)
+            sensitive = self.fileTable.getState().contains( \
+                                                pyatspi.STATE_SENSITIVE)
             if sensitive:
-                fileCount = self.fileTable.table.nRows
+                try:
+                    fileCount = self.fileTable.queryTable().nRows
+                except NotImplementedError:
+                    fileCount = 0
                 noFilesString = ngettext("%d file found",
                                          "%d files found",
                                          fileCount) % fileCount

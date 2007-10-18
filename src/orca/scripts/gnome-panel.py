@@ -26,12 +26,11 @@ __date__      = "$Date: 2007-04-04 18:42:41 -0700 (Wed, 04 Apr 2007) $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.atspi as atspi
 import orca.default as default
 import orca.debug as debug
 import orca.braille as braille
 import orca.speech as speech
-import orca.rolenames as rolenames
+import pyatspi
 
 ########################################################################
 #                                                                      #
@@ -73,16 +72,11 @@ class Script(default.Script):
 
         # Handle tooltip popups.
         #
-        if obj.role == rolenames.ROLE_TOOL_TIP:
+        if obj.getRole() == pyatspi.ROLE_TOOL_TIP:
             if event.type.startswith("object:state-changed:showing") and \
                event.detail1 == 1:
                 braille.displayMessage(obj.name)
                 speech.speak(obj.name)
-            # Delete the cached accessible to force the AT-SPI to update
-            # the accessible cache. Otherwise, the event references the
-            # previous popup object.
-            #
-            atspi.Accessible.deleteAccessible(obj._acc)
 
         # If focus moves to something within a panel and focus was not
         # already in the containing panel, the panel will issue its
@@ -91,10 +85,10 @@ class Script(default.Script):
         # plus the extraneous event results in unnecessary chattiness
         # and updates the braille display to "panel."
         #
-        elif obj.role == rolenames.ROLE_PANEL and \
+        elif obj.getRole() == pyatspi.ROLE_PANEL and \
              event.type.startswith("object:state-changed:focused") and \
              event.detail1 == 1 and not \
-             event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+             event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
         else:

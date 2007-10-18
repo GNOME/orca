@@ -27,12 +27,11 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.default as default
-import orca.atspi as atspi
-import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.settings as settings
 import orca.speechgenerator as speechgenerator
 import orca.braillegenerator as braillegenerator
+import pyatspi
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -70,7 +69,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # speech/braille "display more options" when the focus is in
         # one of these toggle buttons.
         #
-        roleList = [rolenames.ROLE_TOGGLE_BUTTON, rolenames.ROLE_TOOL_BAR]
+        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_TOOL_BAR]
 
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             text += _("Display more options")
@@ -82,22 +81,26 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # label that should be associated and its state (checked or
         # not)
         #
-        rolesList = [rolenames.ROLE_TOGGLE_BUTTON,\
-                     rolenames.ROLE_FILLER,\
-                     rolenames.ROLE_FILLER,\
-                     rolenames.ROLE_PANEL,\
-                     rolenames.ROLE_PANEL]
+        rolesList = [pyatspi.ROLE_TOGGLE_BUTTON, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_PANEL]
         if self._script.isDesiredFocusedItem(obj, rolesList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
             filler = obj.parent
-            allLabels = self._script.findByRole(filler, rolenames.ROLE_LABEL)
+            allLabels = self._script.findByRole(filler, pyatspi.ROLE_LABEL)
             text += allLabels[0].name
 
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
+            brailleindicatorindex = 1
+        else:
+            brailleindicatorindex = 0
+
         text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+            settings.brailleRadioButtonIndicators[brailleindicatorindex],
             text)
 
         text = self._script.appendString(text, self._getTextForRole(obj))
@@ -120,7 +123,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     # Also for each one of the grphics buttons in the main window
     #
     def _getSpeechForToggleButton(self, obj, already_focused):
-
         utterances = []
         tmp = []
 
@@ -129,15 +131,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # more options" when the focus is in one of these toggle
         # buttons.
         #
-        roleList = [rolenames.ROLE_TOGGLE_BUTTON,\
-                    rolenames.ROLE_TOOL_BAR]
+
+        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
+                    pyatspi.ROLE_TOOL_BAR]
 
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             if not already_focused:
                 tmp.append(_("Display more options"))
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
 
-                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                if obj.getState().contains(pyatspi.STATE_CHECKED):
                     tmp.append(_("pressed"))
                 else:
                     tmp.append(_("not pressed"))
@@ -145,7 +148,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 utterances.extend(tmp)
                 utterances.extend(self._getSpeechForObjectAvailability(obj))
             else:
-                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                if obj.getState().contains(pyatspi.STATE_CHECKED):
                     utterances.append(_("pressed"))
                 else:
                     utterances.append(_("not pressed"))
@@ -157,22 +160,22 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # append for each one the button the label that should be
         # associated and its state (checked or not)
         #
-        roleList = [rolenames.ROLE_TOGGLE_BUTTON,\
-                    rolenames.ROLE_FILLER,\
-                    rolenames.ROLE_FILLER,\
-                    rolenames.ROLE_PANEL,\
-                    rolenames.ROLE_PANEL]
+        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_PANEL]
+
         if self._script.isDesiredFocusedItem(obj, roleList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
             if not already_focused:
                 filler = obj.parent
-                allLabels = self._script.findByRole(filler, 
-                                                    rolenames.ROLE_LABEL)
+                allLabels = self._script.findByRole(filler, pyatspi.ROLE_LABEL)
                 tmp.append(allLabels[0].name)
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
-                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                if obj.getState().contains(pyatspi.STATE_CHECKED):
                     tmp.append(_("pressed"))
                 else:
                     tmp.append(_("not pressed"))
@@ -180,7 +183,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 utterances.extend(tmp)
                 utterances.extend(self._getSpeechForObjectAvailability(obj))
             else:
-                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                if obj.getState().contains(pyatspi.STATE_CHECKED):
                     utterances.append(_("pressed"))
                 else:
                     utterances.append(_("not pressed"))

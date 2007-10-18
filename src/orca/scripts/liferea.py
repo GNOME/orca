@@ -19,11 +19,11 @@
 
 import orca.debug as debug
 import orca.default as default
-import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.eventsynthesizer as eventsynthesizer
+import pyatspi
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -57,14 +57,14 @@ class Script(default.Script):
         # statusbar content which is the the information that sets the 
         # work online or work offline mode.
         #
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUSBAR:
             default.Script.onNameChanged(self, event)
             return
 
-        rolesList = [rolenames.ROLE_PUSH_BUTTON,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FRAME]
 
         # We only speak the statusbar's changes when the application is 
         # with the focus and is the "work online/offline button is focused.
@@ -97,10 +97,10 @@ class Script(default.Script):
         # associated with the button, which shows the online or offline 
         # work mode.
         #
-        rolesList = [rolenames.ROLE_PUSH_BUTTON,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FRAME]
 
         # We are checking if the button with the focus is the button to 
         # turn on/off the work mode in liferea. This push button is
@@ -119,7 +119,7 @@ class Script(default.Script):
             # Here we extend the utterances with the speech generator for 
             # the object with focus (the push button).
             #
-            utterances.extend(speechGen.getSpeech(event.source,False))
+            utterances.extend(speechGen.getSpeech(event.source, False))
 
             # Finally we speak/braille the utterances/regions.
             #
@@ -135,10 +135,11 @@ class Script(default.Script):
         # See comment #3 of bug #350233.
         # http://bugzilla.gnome.org/show_bug.cgi?id=350233
         #
-        if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_COLUMN_HEADER:
+        if orca_state.locusOfFocus.getRole() == \
+                                        pyatspi.ROLE_TABLE_COLUMN_HEADER:
             table = event.source.parent
-            cells = self.findByRole(table, rolenames.ROLE_TABLE_CELL)
+            cells = self.findByRole(table, pyatspi.ROLE_TABLE_CELL)
             eventsynthesizer.clickObject(cells[1], 1)
-        
+
         default.Script.locusOfFocusChanged(self, event, 
                                            oldLocusOfFocus, newLocusOfFocus)
