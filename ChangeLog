@@ -1,3 +1,13 @@
+2007-10-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #487960 - [pyatspi] default.py: findActiveWindow 
+          DEPRECATED: warning.
+
+        * src/orca/default.py:
+          Work on bug #487968 - [pyatspi] Numerous DEPRECATED: ... 
+          Instead of role, use getRole() warnings.
+
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/scripts/metacity.py:

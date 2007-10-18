@@ -1525,8 +1525,8 @@ class Script(script.Script):
         Arguments:
         - obj: an accessible
         """
-        return obj and obj.role and ((obj.role == rolenames.ROLE_TEXT) \
-                                     or (obj.role == rolenames.ROLE_PARAGRAPH))
+        return obj and obj.role and ((obj.getRole() == pyatspi.ROLE_TEXT) \
+                               or (obj.getRole() == pyatspi.ROLE_PARAGRAPH))
 
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
@@ -2125,9 +2125,9 @@ class Script(script.Script):
             #
             oldNodeLevel = -1
             newNodeLevel = -1
-            if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 if oldParent and oldParent.table and \
-                   oldLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                   oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                     table = oldParent.table
                     oldRow = table.getRowAtIndex(oldLocusOfFocus.index)
                     oldCol = table.getColumnAtIndex(oldLocusOfFocus.index)
@@ -2172,7 +2172,7 @@ class Script(script.Script):
             # in a context, with the label for the group being the
             # name of the context.
             #
-            if newLocusOfFocus.role == rolenames.ROLE_RADIO_BUTTON:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_RADIO_BUTTON:
                 radioGroupLabel = None
                 inSameGroup = False
                 relations = newLocusOfFocus.relations
@@ -2238,7 +2238,7 @@ class Script(script.Script):
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
 
-            if newLocusOfFocus.role == rolenames.ROLE_LINK:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -2249,7 +2249,7 @@ class Script(script.Script):
             # information in the table cell's table, so that we can use
             # it the next time.
             #
-            if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 if newParent and newParent.table:
                     table = newParent.table
                     column = table.getColumnAtIndex(newLocusOfFocus.index)
@@ -2274,7 +2274,7 @@ class Script(script.Script):
 
         # Check if this event is for a progress bar.
         #
-        if obj.role == rolenames.ROLE_PROGRESS_BAR:
+        if obj.getRole() == pyatspi.ROLE_PROGRESS_BAR:
             self.handleProgressBarUpdate(event, obj)
 
         if self.flatReviewContext:
@@ -2303,7 +2303,7 @@ class Script(script.Script):
         # ended up being very verbose and speaking lots of things it
         # should not have been speaking.]]]
         #
-        if False and (obj.role == rolenames.ROLE_PANEL) \
+        if False and (obj.getRole() == pyatspi.ROLE_PANEL) \
                and (event.detail1 == 1) \
                and self.isInActiveApp(obj):
 
@@ -2316,7 +2316,7 @@ class Script(script.Script):
             while reallyShowing \
                       and parent \
                       and (parent != parent.parent) \
-                      and (parent.role != rolenames.ROLE_APPLICATION):
+                      and (parent.getRole() != pyatspi.ROLE_APPLICATION):
                 debug.println(debug.LEVEL_FINEST,
                               "default.visualAppearanceChanged - " \
                               + "checking parent")
@@ -2354,7 +2354,7 @@ class Script(script.Script):
         # to the focused object, then we should speak/braille the
         # focused object, as if it had just got focus.
         #
-        if obj.role == rolenames.ROLE_LABEL:
+        if obj.getRole() == pyatspi.ROLE_LABEL:
             for relation in relations:
                 if relation.getRelationType() \
                        == atspi.Accessibility.RELATION_LABEL_FOR:
@@ -2450,11 +2450,11 @@ class Script(script.Script):
         # so, we really only care about the leaf menu or menu item
         # that it selected.]]]
         #
-        role = event.source.role
-        if (role == rolenames.ROLE_MENU) \
-           or (role == rolenames.ROLE_MENU_ITEM) \
-           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-           or (role == rolenames.ROLE_RADIO_MENU_ITEM):
+        role = event.source.getRole()
+        if (role == pyatspi.ROLE_MENU) \
+           or (role == pyatspi.ROLE_MENU_ITEM) \
+           or (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
+           or (role == pyatspi.ROLE_RADIO_MENU_ITEM):
             selection = event.source.selection
             if selection and selection.nSelectedChildren > 0:
                 return
@@ -2468,10 +2468,10 @@ class Script(script.Script):
         #
         newFocus = event.source
 
-        if (event.source.role == rolenames.ROLE_LAYERED_PANE) \
-            or (event.source.role == rolenames.ROLE_TABLE) \
-            or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-            or (event.source.role == rolenames.ROLE_TREE):
+        if (event.source.getRole() == pyatspi.ROLE_LAYERED_PANE) \
+            or (event.source.getRole() == pyatspi.ROLE_TABLE) \
+            or (event.source.getRole() == pyatspi.ROLE_TREE_TABLE) \
+            or (event.source.getRole() == pyatspi.ROLE_TREE):
             if event.source.childCount:
                 # Well...we'll first see if there is a selection.  If there
                 # is, we'll use it.
@@ -2503,7 +2503,7 @@ class Script(script.Script):
         # didn't change.  I'm guessing this is going to be a vagary in all
         # of GTK+.]]]
         #
-        if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
+        if event.source and (event.source.getRole() == pyatspi.ROLE_DIALOG) \
            and (event.source == orca_state.locusOfFocus):
             return
 
@@ -2713,7 +2713,7 @@ class Script(script.Script):
         # We'll also ignore sliders because we get their output via
         # their values changing.
         #
-        if event.source.role == rolenames.ROLE_SLIDER:
+        if event.source.getRole() == pyatspi.ROLE_SLIDER:
             return
 
         self.updateBraille(event.source)
@@ -2790,7 +2790,7 @@ class Script(script.Script):
         # We'll also ignore sliders because we get their output via
         # their values changing.
         #
-        if event.source.role == rolenames.ROLE_SLIDER:
+        if event.source.getRole() == pyatspi.ROLE_SLIDER:
             return
 
         self.updateBraille(event.source)
@@ -2799,7 +2799,7 @@ class Script(script.Script):
 
         # If this is a spin button, then speak the text and return.
         #
-        if event.source.role == rolenames.ROLE_SPIN_BUTTON:
+        if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
             speech.speak(text)
             return
 
@@ -2821,7 +2821,7 @@ class Script(script.Script):
         speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
-            wasAutoComplete = (event.source.role == rolenames.ROLE_TEXT and \
+            wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
                                event.source.text.getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
@@ -2834,7 +2834,7 @@ class Script(script.Script):
                 pass
             elif wasCommand or wasAutoComplete:
                 speakThis = True
-            elif (event.source.role == rolenames.ROLE_PASSWORD_TEXT) and \
+            elif (event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT) and \
                  settings.enableKeyEcho and settings.enablePrintableKeys:
                 # Echoing "star" is preferable to echoing the descriptive
                 # name of the bullet that has appeared (e.g. "black circle")
@@ -2946,7 +2946,7 @@ class Script(script.Script):
 
         # Handle tooltip popups.
         #
-        if event.source.role == rolenames.ROLE_TOOL_TIP:
+        if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
             obj = event.source
 
             if event.type.startswith("object:state-changed:showing"):
@@ -3008,7 +3008,7 @@ class Script(script.Script):
                  atspi.Accessibility.STATE_MANAGES_DESCENDANTS):
             return
 
-        if event.source.role == rolenames.ROLE_COMBO_BOX:
+        if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
 
         # We treat selected children as the locus of focus. When the
@@ -3039,7 +3039,7 @@ class Script(script.Script):
         # We'll let caret moved and text inserted events be used to
         # manage spin buttons, since they basically are text areas.
         #
-        if event.source.role == rolenames.ROLE_SPIN_BUTTON:
+        if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
             return
 
         # We'll also try to ignore those objects that keep telling
@@ -3156,12 +3156,12 @@ class Script(script.Script):
 
         layoutOnly = False
 
-        if obj and (obj.role == rolenames.ROLE_TABLE) and obj.attributes:
+        if obj and (obj.getRole() == pyatspi.ROLE_TABLE) and obj.attributes:
             for attribute in obj.attributes:
                 if attribute == "layout-guess:true":
                     layoutOnly = True
                     break
-        elif obj and (obj.role == rolenames.ROLE_PANEL):
+        elif obj and (obj.getRole() == pyatspi.ROLE_PANEL):
             text = self.getDisplayedText(obj)
             label = self.getDisplayedLabel(obj)
             if not ((label and len(label)) or (text and len(text))):
@@ -4332,7 +4332,7 @@ class Script(script.Script):
             return False
 
         try:
-            if (obj1.name != obj2.name) or (obj1.role != obj2.role):
+            if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
                 return False
             else:
                 # Gecko sometimes creates multiple accessibles to represent
@@ -4379,8 +4379,8 @@ class Script(script.Script):
             parent1 = obj1
             parent2 = obj2
             while parent1 and parent2 and \
-                    parent1.role == rolenames.ROLE_LABEL and \
-                    parent2.role == rolenames.ROLE_LABEL:
+                    parent1.getRole() == pyatspi.ROLE_LABEL and \
+                    parent2.getRole() == pyatspi.ROLE_LABEL:
                 if parent1.index != parent2.index:
                     return False
                 parent1 = parent1.parent
@@ -4412,7 +4412,7 @@ class Script(script.Script):
 
         Returns TRUE if label has a LABEL_FOR relation.
         """
-        if (not label) or (label.role != rolenames.ROLE_LABEL):
+        if (not label) or (label.getRole() != pyatspi.ROLE_LABEL):
             return False
 
         relations = label.relations
@@ -4436,7 +4436,7 @@ class Script(script.Script):
 
         if (not object) \
            or (not label) \
-           or (label.role != rolenames.ROLE_LABEL):
+           or (label.getRole() != pyatspi.ROLE_LABEL):
             return False
 
         relations = label.relations
@@ -4547,7 +4547,7 @@ class Script(script.Script):
         if not len(label):
             potentialLabels = []
             useLabel = False
-            if (object.role == rolenames.ROLE_EMBEDDED):
+            if (object.getRole() == pyatspi.ROLE_EMBEDDED):
                 candidate = object
                 while candidate.childCount:
                     candidate = candidate.child(0)
@@ -4557,7 +4557,7 @@ class Script(script.Script):
                 candidate = candidate.parent
                 for i in range(0, candidate.childCount):
                     child = candidate.child(i)
-                    if child.role == rolenames.ROLE_FILLER:
+                    if child.getRole() == pyatspi.ROLE_FILLER:
                         candidate = child
                         break
                 # If there are labels in this embedded component,
@@ -4565,31 +4565,31 @@ class Script(script.Script):
                 #
                 for j in range(0, candidate.childCount):
                     child = candidate.child(j)
-                    if child.role == rolenames.ROLE_LABEL:
+                    if child.getRole() == pyatspi.ROLE_LABEL:
                         useLabel = True
                         potentialLabels.append(child)
-            elif ((object.role == rolenames.ROLE_FILLER) \
-                    or (object.role == rolenames.ROLE_PANEL)) \
+            elif ((object.getRole() == pyatspi.ROLE_FILLER) \
+                    or (object.getRole() == pyatspi.ROLE_PANEL)) \
                 and (object.childCount == 2):
                 child0 = object.child(0)
                 child1 = object.child(1)
-                if child0.role == rolenames.ROLE_LABEL \
+                if child0.getRole() == pyatspi.ROLE_LABEL \
                     and not self.__hasLabelForRelation(child0) \
-                    and child1.role in [rolenames.ROLE_FILLER, \
-                                        rolenames.ROLE_PANEL]:
+                    and child1.getRole() in [pyatspi.ROLE_FILLER, \
+                                             pyatspi.ROLE_PANEL]:
                     useLabel = True
                     potentialLabels.append(child0)
-                elif child1.role == rolenames.ROLE_LABEL \
+                elif child1.getRole() == pyatspi.ROLE_LABEL \
                     and not self.__hasLabelForRelation(child1) \
-                    and child0.role in [rolenames.ROLE_FILLER, \
-                                        rolenames.ROLE_PANEL]:
+                    and child0.getRole() in [pyatspi.ROLE_FILLER, \
+                                             pyatspi.ROLE_PANEL]:
                     useLabel = True
                     potentialLabels.append(child1)
             else:
                 parent = object.parent
                 if parent and \
-                    ((parent.role == rolenames.ROLE_FILLER) \
-                            or (parent.role == rolenames.ROLE_PANEL)):
+                    ((parent.getRole() == pyatspi.ROLE_FILLER) \
+                            or (parent.getRole() == pyatspi.ROLE_PANEL)):
                     for i in range (0, parent.childCount):
                         try:
                             potentialLabel = parent.child(i)
@@ -4656,7 +4656,7 @@ class Script(script.Script):
         textObj = None
         for i in range(0, combo.childCount):
             child = combo.child(i)
-            if child and child.role == rolenames.ROLE_TEXT:
+            if child and child.getRole() == pyatspi.ROLE_TEXT:
                 textObj = child
 
         if textObj:
@@ -4702,7 +4702,7 @@ class Script(script.Script):
 
         displayedText = None
 
-        if obj.role == rolenames.ROLE_COMBO_BOX:
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             return self.__getDisplayedTextInComboBox(obj)
 
         # The accessible text of an object is used to represent what is
@@ -4746,10 +4746,10 @@ class Script(script.Script):
         # tab in the Editing Profile dialog in gnome-terminal.
         #
         if ((not displayedText) or (len(displayedText) == 0)) \
-           and obj.role == rolenames.ROLE_PUSH_BUTTON:
+           and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON:
             for i in range(0, obj.childCount):
                 child = obj.child(i)
-                if child.role == rolenames.ROLE_LABEL:
+                if child.getRole() == pyatspi.ROLE_LABEL:
                     childText = self.getDisplayedText(child)
                     if childText and len(childText):
                         displayedText = self.appendString(displayedText,
@@ -4802,10 +4802,10 @@ class Script(script.Script):
         # fall through and use the default approach below. See bug #376791
         # for more details.
         #
-        if obj.role == rolenames.ROLE_TABLE_CELL and obj.childCount:
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.childCount:
             nonTableCellFound = False
             for i in range (0, obj.childCount):
-                if obj.child(i).role != rolenames.ROLE_TABLE_CELL:
+                if obj.child(i).getRole() != pyatspi.ROLE_TABLE_CELL:
                     nonTableCellFound = True
             if not nonTableCellFound:
                 for i in range (0, obj.childCount):
@@ -5218,13 +5218,13 @@ class Script(script.Script):
 
         while obj \
               and (obj != obj.parent) \
-              and (obj.role != rolenames.ROLE_FRAME):
+              and (obj.getRole() != pyatspi.ROLE_FRAME):
             obj = obj.parent
             if obj:
                 debug.println(debug.LEVEL_FINEST, "--> obj.name="
                           + obj.accessibleNameToString())
 
-        if obj and (obj.role == rolenames.ROLE_FRAME):
+        if obj and (obj.getRole() == pyatspi.ROLE_FRAME):
             pass
         else:
             obj = None
@@ -5246,13 +5246,13 @@ class Script(script.Script):
         while obj \
               and obj.parent \
               and (obj != obj.parent) \
-              and (obj.parent.role != rolenames.ROLE_APPLICATION):
+              and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION):
             obj = obj.parent
             debug.println(debug.LEVEL_FINEST, "--> obj.name="
                           + obj.accessibleNameToString())
 
         if obj and obj.parent and \
-           (obj.parent.role == rolenames.ROLE_APPLICATION):
+           (obj.parent.getRole() == pyatspi.ROLE_APPLICATION):
             pass
         else:
             obj = None
@@ -5593,9 +5593,9 @@ class Script(script.Script):
             relations = label.relations
             if len(relations) == 0:
                 parent = label.parent
-                if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
+                if parent and (parent.getRole() == pyatspi.ROLE_PUSH_BUTTON):
                     pass
-                elif parent and (parent.role == rolenames.ROLE_PANEL) \
+                elif parent and (parent.getRole() == pyatspi.ROLE_PANEL) \
                    and (parent.name == label.name):
                     pass
                 elif label.state.count(atspi.Accessibility.STATE_SHOWING):
@@ -5756,11 +5756,11 @@ class Script(script.Script):
         window = None
         apps = self.getKnownApplications()
         for app in apps:
-            for i in range(0, app.childCount):
+            for child in app:
                 try:
-                    state = app.child(i).state
-                    if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
-                        window = app.child(i)
+                    state = child.getState()
+                    if state.contains(pyatspi.STATE_ACTIVE):
+                        window = child
                         break
                 except:
                     debug.printException(debug.LEVEL_FINEST)
