@@ -139,8 +139,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         parent = obj.parent
         if parent \
-            and (obj.role == rolenames.ROLE_TABLE_CELL) \
-            and (parent.role == rolenames.ROLE_TABLE_CELL):
+            and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+            and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
             parent = parent.parent
 
         while parent and (parent.parent != parent):
@@ -153,12 +153,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 if text and len(text.strip()):
                     # Push announcement of cell to the end
                     #
-                    if not parent.role in [rolenames.ROLE_TABLE_CELL,
-                                           rolenames.ROLE_FILLER]:
+                    if not parent.getRole() in [pyatspi.ROLE_TABLE_CELL,
+                                                pyatspi.ROLE_FILLER]:
                         utterances.append(\
                             rolenames.getSpeechForRoleName(parent))
                     utterances.append(text)
-                    if parent.role == rolenames.ROLE_TABLE_CELL:
+                    if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
                         utterances.append(\
                             rolenames.getSpeechForRoleName(parent))
             parent = parent.parent
@@ -212,10 +212,10 @@ class Script(default.Script):
         """
 
         self._debug("onFocus: %s '%s'" % \
-                    (event.source.role, event.source.name))
+                    (event.source.getRole(), event.source.name))
 
-        role = event.source.role
-        if role == rolenames.ROLE_LIST:
+        role = event.source.getRole()
+        if role == pyatspi.ROLE_LIST:
             selectedItem = None
             selection = event.source.selection
             if selection and selection.nSelectedChildren > 0:
@@ -229,14 +229,14 @@ class Script(default.Script):
                 # if impossible to get selection or list has 0 items,
                 # present list
                 orca.setLocusOfFocus(event, event.source)
-        elif role == rolenames.ROLE_LABEL:
+        elif role == pyatspi.ROLE_LABEL:
             # In FileChooserDemo, when enter in a new folder, a focus event for
             # the top combo box selected item (not SHOWING item) is received.
             # Should this check be more specific ?
             #
             if not event.source.state.count (Accessibility.STATE_SHOWING):
                 return
-        elif role == rolenames.ROLE_MENU:
+        elif role == pyatspi.ROLE_MENU:
             # A JMenu has always selection.nSelectedChildren > 0
             orca.setLocusOfFocus(event, event.source)
         else:
@@ -251,7 +251,7 @@ class Script(default.Script):
         """
 
         self._debug("onStateChanged: %s: %s '%s' (%d,%d)" % \
-                    (event.type, event.source.role, 
+                    (event.type, event.source.getRole(), 
                      event.source.name, event.detail1, event.detail2))
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)
@@ -261,20 +261,20 @@ class Script(default.Script):
         # If there is a popup menu, give locus of focus to the armed menu
         # item.
         #
-        if event.source.role == rolenames.ROLE_ROOT_PANE and \
+        if event.source.getRole() == pyatspi.ROLE_ROOT_PANE and \
                event.type.startswith("object:state-changed:focused") and \
                event.detail1 == 1:
 
             for i in range(0, event.source.childCount):
                 # search the layered pane for a popup menu
                 child = event.source.child(i)
-                if child.role == rolenames.ROLE_LAYERED_PANE:
+                if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
                     popup = self.findByRole(child, 
-                                             rolenames.ROLE_POPUP_MENU, False)
+                                            pyatspi.ROLE_POPUP_MENU, False)
                     if len(popup) > 0:
                         # set the locus of focus to the armed menu item
                         items = self.findByRole(popup[0], 
-                                              rolenames.ROLE_MENU_ITEM, False)
+                                                pyatspi.ROLE_MENU_ITEM, False)
                         for item in items:
                             if item.state.count(Accessibility.STATE_ARMED):
                                 orca.setLocusOfFocus(event, item)
@@ -290,7 +290,7 @@ class Script(default.Script):
         # Hand state changes when JTree labels become expanded
         # or collapsed.
         #
-        if (event.source.role == rolenames.ROLE_LABEL) and \
+        if (event.source.getRole() == pyatspi.ROLE_LABEL) and \
             event.type.startswith("object:state-changed:expanded"):
             orca.visualAppearanceChanged(event, event.source)
             return
@@ -299,7 +299,7 @@ class Script(default.Script):
         # Fix for Swing file chooser.
         #
         if event.type.startswith("object:state-changed:visible") and \
-                event.source.role == rolenames.ROLE_POPUP_MENU and \
+                event.source.getRole() == pyatspi.ROLE_POPUP_MENU and \
                 event.source.parent.state.count(Accessibility.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source.parent)
             return
@@ -314,18 +314,18 @@ class Script(default.Script):
         """
 
         self._debug("onSelectionChanged: %s '%s'" % \
-                    (event.source.role, event.source.name))
+                    (event.source.getRole(), event.source.name))
 
         if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
             return
 
-        if event.source.role == rolenames.ROLE_TABLE:
+        if event.source.getRole() == pyatspi.ROLE_TABLE:
             return
 
-        if event.source.role == rolenames.ROLE_TREE:
+        if event.source.getRole() == pyatspi.ROLE_TREE:
             return
 
-        if event.source.role == rolenames.ROLE_LIST:
+        if event.source.getRole() == pyatspi.ROLE_LIST:
             selection = event.source.selection
             if selection.nSelectedChildren <= 0:
                 if event.source.childCount > 0:
@@ -367,13 +367,13 @@ class Script(default.Script):
         """
 
         self._debug("onValueChanged: %s '%s' value=%d" % \
-                    (event.source.role, event.source.name,
+                    (event.source.getRole(), event.source.name,
                      event.source.value.currentValue))
 
         # We'll let state-changed:checked event to be used to
         # manage check boxes in java application
         #
-        if event.source.role == rolenames.ROLE_CHECK_BOX and \
+        if event.source.getRole() == pyatspi.ROLE_CHECK_BOX and \
                event.type.startswith("object:property-change:accessible-value"):
             return
 
@@ -394,7 +394,8 @@ class Script(default.Script):
         """
 
         self._debug("visualAppearanceChanged: %s '%s', locusOfFocus=%s" % \
-                    (obj.role, obj.name, orca_state.locusOfFocus.role))
+                    (obj.getRole(), obj.name, 
+                     orca_state.locusOfFocus.getRole()))
 
         # Present to Braille and Speech an object that is the same
         # with the last focused object, only if it is a label.
@@ -402,17 +403,17 @@ class Script(default.Script):
         # (see Open dialog lists).
         #
         if orca_state.activeScript.isSameObject(obj, orca_state.locusOfFocus):
-            if obj.role == rolenames.ROLE_LABEL:
+            if obj.getRole() == pyatspi.ROLE_LABEL:
                 self.updateBraille(orca_state.locusOfFocus)
                 speech.speakUtterances( \
                   self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
                 return
 
-        if obj.role == rolenames.ROLE_SPIN_BOX:
+        if obj.getRole() == pyatspi.ROLE_SPIN_BOX:
             # Check for the spinbox text object being null. There appears
             # to be a bug where the text object for some text fields
             # is null. 
-            if orca_state.locusOfFocus.role == rolenames.ROLE_TEXT and \
+            if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TEXT and \
                orca_state.locusOfFocus.text == None:
                 # Set the locusOfFocus to the spinbox itself.
                 orca.setLocusOfFocus(event, obj)
@@ -427,7 +428,7 @@ class Script(default.Script):
         """
 
         self._debug("onCaretMoved: %s '%s'" % \
-                    (event.source.role, event.source.name))
+                    (event.source.getRole(), event.source.name))
 
         # Check for bogus events containing null text objects.
         if event.source.text == None:
@@ -444,7 +445,7 @@ class Script(default.Script):
         """
 
         self._debug("onTextInserted: %s '%s'" % \
-                    (event.source.role, event.source.name))
+                    (event.source.getRole(), event.source.name))
 
         # Check for bogus events containing null text objects.
         if event.source.text == None:
@@ -466,8 +467,8 @@ class Script(default.Script):
         """
         label = default.Script.getDisplayedLabel(self, object)
         if not label and \
-           (object.role == rolenames.ROLE_TEXT or \
-            object.role == rolenames.ROLE_COMBO_BOX):
+           (object.getRole() == pyatspi.ROLE_TEXT or \
+            object.getRole() == pyatspi.ROLE_COMBO_BOX):
             # This is a workaround for a common Java accessibility
             # bug where a label next to a component is used to
             # label the component. This relation is only obvious to
@@ -481,7 +482,7 @@ class Script(default.Script):
             if object.index > 0:
                 prevSibling = object.parent.child(object.index-1)
                 if prevSibling and prevSibling.name and \
-                   prevSibling.role == rolenames.ROLE_LABEL:
+                   prevSibling.getRole() == pyatspi.ROLE_LABEL:
                     labelFor = prevSibling.name.rstrip(" ")
                     if (labelFor.endswith(":")):
                         return labelFor.rstrip(":")

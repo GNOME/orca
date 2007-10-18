@@ -1521,7 +1521,7 @@ class WhereAmI:
         while parent and (parent.parent != parent):
             #debug.println(self._debugLevel,
             #              "_getFrameAndDialog: parent=%s, %s" % \
-            #              (parent.role, self._getObjLabelAndName(parent)))
+            #              (parent.getRole(), self._getObjLabelAndName(parent)))
             if parent.getRole() == pyatspi.ROLE_FRAME:
                 results[0] = parent
             if parent.getRole() in [pyatspi.ROLE_DIALOG,
@@ -1538,7 +1538,7 @@ class WhereAmI:
             return
 
         # debug.println(self._debugLevel, "_findStatusBar: ROOT=%s, %s" % \
-        #               (obj.role, self._getObjLabelAndName(obj)))
+        #               (obj.getRole(), self._getObjLabelAndName(obj)))
         state = obj.getState()
         managesDescendants = state.contains(pyatspi.STATE_MANAGES_DESCENDANTS)
         if managesDescendants:
@@ -1548,7 +1548,7 @@ class WhereAmI:
             child = obj.child(i)
             # debug.println(self._debugLevel,
             #               "_findStatusBar: child=%s, %s" % \
-            #               (child.role, self._getObjLabelAndName(child)))
+            #               (child.getRole(), self._getObjLabelAndName(child)))
             if child.getRole() == pyatspi.ROLE_STATUS_BAR:
                 self._statusBar = child
                 return
@@ -1590,7 +1590,7 @@ class WhereAmI:
             child = obj.child(i)
             # debug.println(self._debugLevel,
             #               "_getDefaultButton: child=%s, %s" % \
-            #               (child.role, self._getObjLabelAndName(child)))
+            #               (child.getRole(), self._getObjLabelAndName(child)))
             state = child.getState()
             if child.getRole() == pyatspi.ROLE_PUSH_BUTTON \
                 and state.contains(pyatspi.STATE_IS_DEFAULT):

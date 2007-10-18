@@ -40,6 +40,12 @@
           More work on bug #487968 - [pyatspi] Numerous DEPRECATED: ...
           Instead of role, use getRole() warnings.
 
+        * src/orca/default.py:
+          src/orca/J2SE-access-bridge.py:
+          src/orca/where_am_I.py:
+          Convert various occurances of <obj>.role -> <obj>.getRole() 
+          and rolenames.<whatever> to pyatspi.<whatever>.
+
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/scripts/metacity.py:

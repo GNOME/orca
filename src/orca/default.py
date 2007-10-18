@@ -2092,7 +2092,7 @@ class Script(script.Script):
         # If the point of reference is a cell, we want to keep the 
         # table-related points of reference.
         if oldParent == newParent and \
-              getattr(newParent, 'role', None) == rolenames.ROLE_TABLE:
+              getattr(newParent, 'role', None) == pyatspi.ROLE_TABLE:
             for key in self.pointOfReference.keys():
                 if key not in ('lastRow', 'lastColumn'):
                     del self.pointOfReference[key]
@@ -2149,7 +2149,7 @@ class Script(script.Script):
                                    == settings.VERBOSITY_LEVEL_VERBOSE:
                                 text += " " \
                                         + rolenames.rolenames[\
-                                        rolenames.ROLE_ROW_HEADER].speech
+                                        pyatspi.ROLE_ROW_HEADER].speech
                             utterances.append(text)
                     if (newCol != oldCol) or (oldParent != newParent):
                         # Don't speak Thunderbird column headers, since
@@ -2163,7 +2163,7 @@ class Script(script.Script):
                                        == settings.VERBOSITY_LEVEL_VERBOSE:
                                     text += " " \
                                             + rolenames.rolenames[\
-                                            rolenames.ROLE_COLUMN_HEADER].speech
+                                            pyatspi.ROLE_COLUMN_HEADER].speech
                                 utterances.append(text)
 
             oldNodeLevel = self.getNodeLevel(oldLocusOfFocus)
@@ -2204,11 +2204,11 @@ class Script(script.Script):
             # pronunciation dictionary to replace the actual words in the 
             # first column of this table.
             #
-            rolesList = [rolenames.ROLE_TABLE_CELL, \
-                         rolenames.ROLE_TABLE, \
-                         rolenames.ROLE_SCROLL_PANE, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_PANEL]
+            rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                         pyatspi.ROLE_TABLE, \
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_PANEL]
             if self.isDesiredFocusedItem(newLocusOfFocus, rolesList) and \
                newLocusOfFocus.app.name == "orca":
                 orca_state.usePronunciationDictionary = False
@@ -2373,11 +2373,11 @@ class Script(script.Script):
         if event:
             debug.println(debug.LEVEL_FINE,
                           "VISUAL CHANGE: '%s' '%s' (event='%s')" \
-                          % (obj.name, obj.role, event.type))
+                          % (obj.name, obj.getRole(), event.type))
         else:
             debug.println(debug.LEVEL_FINE,
                           "VISUAL CHANGE: '%s' '%s' (event=None)" \
-                          % (obj.name, obj.role))
+                          % (obj.name, obj.getRole()))
 
         mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
@@ -2969,8 +2969,8 @@ class Script(script.Script):
             atspi.Accessible.deleteAccessible(obj._acc)
             return
 
-        if state_change_notifiers.has_key(event.source.role):
-            notifiers = state_change_notifiers[event.source.role]
+        if state_change_notifiers.has_key(event.source.getRole()):
+            notifiers = state_change_notifiers[event.source.getRole()]
             found = False
             for state in notifiers:
                 if state and event.type.endswith(state):
@@ -4036,7 +4036,8 @@ class Script(script.Script):
         for line in lines:
             string = ""
             for zone in line.zones:
-                string += " '%s' [%s]" % (zone.string, zone.accessible.role)
+                string += " '%s' [%s]" % \
+                          (zone.string, zone.accessible.role)
                 self.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
             debug.println(debug.LEVEL_OFF, string)
@@ -4289,7 +4290,7 @@ class Script(script.Script):
                         print " GARBAGE ACCESSIBLE", obj, sys.getrefcount(obj)
                         try:
                             print "  name:", obj.name
-                            print "  role:", obj.role
+                            print "  role:", obj.getRole()
                         except:
                             pass
                         #self._detectCycle(obj, [], "   referent:")
@@ -5574,7 +5575,7 @@ class Script(script.Script):
 
         # Find all the labels in the dialog
         #
-        allLabels = self.findByRole(root, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(root, pyatspi.ROLE_LABEL)
 
         # add the names of only those labels which are not associated with
         # other objects (i.e., empty relation sets).
@@ -6065,17 +6066,11 @@ class Script(script.Script):
 #
 state_change_notifiers = {}
 
-state_change_notifiers[rolenames.ROLE_CHECK_MENU_ITEM] = ("checked",
+state_change_notifiers[pyatspi.ROLE_CHECK_MENU_ITEM] = ("checked", None)
+state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", None)
+state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
+state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
+state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked", None)
+state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked", "expanded",
                                                         None)
-state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",
-                                                        None)
-state_change_notifiers[rolenames.ROLE_PANEL]         = ("showing",
-                                                        None)
-state_change_notifiers[rolenames.ROLE_LABEL]         = ("showing",
-                                                        None)
-state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",
-                                                        None)
-state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
-                                                        "expanded",
-                                                        None)
-state_change_notifiers[rolenames.ROLE_LIST_ITEM]    = ("expanded", None)
+state_change_notifiers[pyatspi.ROLE_LIST_ITEM]       = ("expanded", None)
