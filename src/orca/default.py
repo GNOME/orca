@@ -2327,8 +2327,8 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_FINEST,
                               "default.visualAppearanceChanged - " \
                               + "checking parent")
-                reallyShowing = parent.state.count(\
-                    atspi.Accessibility.STATE_SHOWING)
+                reallyShowing = parent.getState().contains( \
+                                                  pyatspi.STATE_SHOWING)
                 parent = parent.parent
 
             # Find all the unrelated labels in the dialog and speak them.
@@ -2409,8 +2409,8 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if obj.text and self.isTextArea(obj):
-            text = obj.text
+        if obj.queryText() and self.isTextArea(obj):
+            text = obj.queryText()
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -2674,7 +2674,7 @@ class Script(script.Script):
         #
         if event and event.source and \
            (event.source != orca_state.locusOfFocus) and \
-            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            event.source.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         # Ignore caret movements from non-focused objects, unless the
@@ -2706,7 +2706,7 @@ class Script(script.Script):
         #
         if event and event.source and \
            (event.source != orca_state.locusOfFocus) and \
-            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            event.source.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         # Ignore text deletions from non-focused objects, unless the
@@ -2783,7 +2783,7 @@ class Script(script.Script):
         #
         if event and event.source and \
            (event.source != orca_state.locusOfFocus) and \
-            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            event.source.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         # Ignore text insertions from non-focused objects, unless the
@@ -2872,7 +2872,7 @@ class Script(script.Script):
         - event: the Event
         """
 
-        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
         # There can be cases when the object that fires an
@@ -2934,8 +2934,7 @@ class Script(script.Script):
             iconified = False
             try:
                 window = self.getTopLevel(event.source)
-                iconified = window.state.count( \
-                                     atspi.Accessibility.STATE_ICONIFIED)
+                iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
             except:
                 debug.println(debug.LEVEL_FINEST,
                         "onStateChanged: could not get frame of focused item")
@@ -3011,8 +3010,7 @@ class Script(script.Script):
         # Avoid doing this with objects that manage their descendants
         # because they'll issue a descendant changed event.
         #
-        if event.source.state.count(
-                 atspi.Accessibility.STATE_MANAGES_DESCENDANTS):
+        if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
 
         if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
@@ -3024,7 +3022,7 @@ class Script(script.Script):
         # containing object.
         #
         elif (event.source != orca_state.locusOfFocus) and \
-            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
             if event.source.childCount:
                 selection = event.source.selection
@@ -4368,9 +4366,9 @@ class Script(script.Script):
             parent1 = obj1
             parent2 = obj2
             while (parent1 and parent2 and \
-                    parent1.state.count( \
-                        atspi.Accessibility.STATE_TRANSIENT) and \
-                    parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
+                    parent1.getState().contains( \
+                        pyatspi.STATE_TRANSIENT) and \
+                    parent2.getState().contains(pyatspi.STATE_TRANSIENT)):
                 if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent
@@ -4781,7 +4779,7 @@ class Script(script.Script):
         the FOCUSED state can be found.
         """
 
-        if root.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if root.getState().contains(pyatspi.STATE_FOCUSED):
             return root
 
         for i in range(0, root.childCount):
@@ -5393,7 +5391,7 @@ class Script(script.Script):
         """
 
         if not obj or not obj.parent \
-           or not obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+           or not obj.getState().contains(pyatspi.STATE_EXPANDED):
             return []
 
         nodes = []
@@ -5535,10 +5533,10 @@ class Script(script.Script):
             child = root.child(i)
             if child \
                and ((not onlyShowing) or (onlyShowing and \
-                    (child.state.count(atspi.Accessibility.STATE_SHOWING)))):
+                    (child.getState().contains(pyatspi.STATE_SHOWING)))):
                 objlist.append(child)
-                if (child.state.count( \
-                    atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0) \
+                if (child.getState().contains( \
+                    pyatspi.STATE_MANAGES_DESCENDANTS) == 0) \
                     and (child.childCount > 0):
                     objlist.extend(self.getObjects(child, onlyShowing))
 
@@ -5606,7 +5604,7 @@ class Script(script.Script):
                 elif parent and (parent.getRole() == pyatspi.ROLE_PANEL) \
                    and (parent.name == label.name):
                     pass
-                elif label.state.count(atspi.Accessibility.STATE_SHOWING):
+                elif label.getState().contains(pyatspi.STATE_SHOWING):
                     unrelatedLabels.append(label)
 
         # Now sort the labels based on their geographic position, top to
@@ -5681,8 +5679,8 @@ class Script(script.Script):
         else:
             print root.toString(indent + "+-", False)
 
-        rootManagesDescendants = root.state.count(\
-            atspi.Accessibility.STATE_MANAGES_DESCENDANTS)
+        rootManagesDescendants = root.getState().contains( \
+                                      pyatspi.STATE_MANAGES_DESCENDANTS)
 
         for i in range(0, root.childCount):
             child = root.child(i)
@@ -5694,7 +5692,7 @@ class Script(script.Script):
                 print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
             else:
                 paint = (not onlyShowing) or (onlyShowing and \
-                         child.state.count(atspi.Accessibility.STATE_SHOWING))
+                         child.getState().contains(pyatspi.STATE_SHOWING))
                 paint = paint \
                         and ((not omitManaged) \
                              or (omitManaged and not rootManagesDescendants))

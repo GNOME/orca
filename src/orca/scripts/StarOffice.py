@@ -321,8 +321,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     for i in range(startIndex, endIndex+1):
                         accRow = parent.table.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)
-                        showing = cell.state.count( \
-                                        atspi.Accessibility.STATE_SHOWING)
+                        showing = cell.getState().contains( \
+                                        pyatspi.STATE_SHOWING)
                         if showing:
                             [cellRegions, focusRegion] = \
                                 self._getBrailleRegionsForTableCell(cell)
@@ -575,8 +575,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         for i in range(startIndex, endIndex+1):
                             accRow = parent.table.getAccessibleAt(row, i)
                             cell = atspi.Accessible.makeAccessible(accRow)
-                            showing = cell.state.count( \
-                                          atspi.Accessibility.STATE_SHOWING)
+                            showing = cell.getState().contains( \
+                                          pyatspi.STATE_SHOWING)
                             if showing:
                                 utterances.extend(self._getSpeechForTableCell(\
                                                   cell, already_focused))
@@ -661,7 +661,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
         if obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
-            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            if obj.getState().contains(pyatspi.STATE_CHECKED):
                 # Translators: this represents the state of a check box
                 #
                 checkedState = _("on")
@@ -692,7 +692,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
         if obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
-            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            if obj.getState().contains(pyatspi.STATE_CHECKED):
                 # Translators: this represents the state of a check box
                 #
                 checkedState = _("on")
@@ -1983,7 +1983,7 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
            event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
-           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+           event.source.getState().contains(pyatspi.STATE_FOCUSED):
             if self.lastCell != event.source.parent:
                 default.Script.locusOfFocusChanged(self, event,
                                                    None, event.source.parent)
@@ -2004,7 +2004,7 @@ class Script(default.Script):
         #
         if event.type.startswith("object:state-changed:sensitive") and \
            event.source.getRole() == pyatspi.ROLE_PANEL and \
-           event.source.state.count(atspi.Accessibility.STATE_SENSITIVE):
+           event.source.getState().contains(pyatspi.STATE_SENSITIVE):
             current = event.source.parent
             while current.getRole() != pyatspi.ROLE_APPLICATION:
                 # Translators: this is the title of the window that
@@ -2097,7 +2097,7 @@ class Script(default.Script):
            event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
            event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
            event.detail1 == 0 and \
-           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+           event.source.getState().contains(pyatspi.STATE_FOCUSED):
 
             # Check to see if the last input event was "Up" or "Down".
             # If it was, and we are in the same table cell as last time,
@@ -2274,7 +2274,7 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
            event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
-           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+           event.source.getState().contains(pyatspi.STATE_FOCUSED):
             event_string = orca_state.lastNonModifierKeyEvent.event_string
 
             # If we are moving up and down, and we are speaking-by-cell

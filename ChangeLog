@@ -55,6 +55,10 @@
           src/orca/scripts/StarOffice.py:
           Convert various occurances of <obj>.index -> <obj>.getIndexInParent()
 
+        * src/orca/default.py:
+          src/orca/scripts/StarOffice.py:
+          Convert various occurances of <obj>.state -> <obj>.getState()
+
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/scripts/metacity.py:
