@@ -68,7 +68,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
 ########################################################################
 
 class Script(Gecko.Script):
-    "The script for Thunderbird."""
+    """The script for Thunderbird."""
 
     _containingPanelName = ""
 
