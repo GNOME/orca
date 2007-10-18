@@ -1,3 +1,13 @@
+2007-10-18  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/scripts/liferea.py:
+          src/orca/scripts/gnome-panel.py:
+          src/orca/scripts/gnome-search-tool.py:
+          src/orca/scripts/planner.py:
+          pyatspi migration of various application specific scripts
+          including changes in default.isDesiredFocusedItem() and
+          default.findByRole() to support the migration.
+
 2007-10-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
