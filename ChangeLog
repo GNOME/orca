@@ -1,3 +1,8 @@
+2007-10-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/Thunderbird.py:
+          pyatspi migration.
+
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/input_event.py:

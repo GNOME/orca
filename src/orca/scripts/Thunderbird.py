@@ -26,6 +26,8 @@ __date__      = "$Date: $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.orca as orca
 import orca.atspi as atspi
 import orca.debug as debug
@@ -66,6 +68,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
 ########################################################################
 
 class Script(Gecko.Script):
+    "The script for Thunderbird."""
 
     _containingPanelName = ""
 
@@ -103,8 +106,6 @@ class Script(Gecko.Script):
         top = self.getTopLevel(obj)
         consume = False
 
-        self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))
-
         # Don't speak chrome URLs.
         #
         if obj.name.startswith("chrome://"):
@@ -117,9 +118,9 @@ class Script(Gecko.Script):
         # cell at the beginning of the row. It consume the event
         # so Gecko.py doesn't reset the focus.
         #
-        if obj.role == rolenames.ROLE_TABLE_CELL:
-            table = parent.table
-            row = table.getRowAtIndex(obj.index)
+        if obj.getRoleName() == pyatspi.ROLE_TABLE_CELL:
+            table = parent.queryTable()
+            row = table.getRowAtIndex(obj.getIndexInParent())
             cell = table.getAccessibleAt(row, 0)
             acc = atspi.Accessible.makeAccessible(cell)
             orca.setLocusOfFocus(event, acc)
@@ -127,7 +128,7 @@ class Script(Gecko.Script):
 
         # Handle dialogs.
         #
-        if top.role == rolenames.ROLE_DIALOG:
+        if top.getRoleName() == pyatspi.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
         if not consume:
@@ -154,12 +155,9 @@ class Script(Gecko.Script):
         - event: the Event
         """
         obj = event.source
-        self._debug("onTextInserted: name='%s', role='%s', parent='%s'" \
-                    % (obj.name, obj.role, obj.parent.role))
-
         parent = obj.parent
 
-        if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+        if parent.getRoleName() == pyatspi.ROLE_AUTOCOMPLETE:
             # Thunderbird does not present all the text in an
             # autocompletion text entry. This is a workaround.
             #
@@ -201,7 +199,7 @@ class Script(Gecko.Script):
 
         if parent.name != "" \
             and (not parent.name.startswith("chrome://")) \
-            and (parent.role == rolenames.ROLE_PANEL):
+            and (parent.getRoleName() == pyatspi.ROLE_PANEL):
 
             # Speak the parent panel name, but only once.
             #
