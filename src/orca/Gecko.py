@@ -3275,10 +3275,9 @@ class Script(default.Script):
         # UNLESS focus was moved from a form field  to non-focusable
         # text in the document frame via mouse click.
         #
-        focusable = pyatspi.STATE_FOCUSABLE
-        if not event.source.getState().contains(focusable) and \
-           self.isFormField(orca_state.locusOfFocus) and \
-            not isinstance(orca_state.lastInputEvent,
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           and self.isFormField(orca_state.locusOfFocus) \
+           and not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
             return
 
@@ -5422,16 +5421,16 @@ class Script(default.Script):
         table = cell.parent.queryTable()
         rowspan = table.getRowExtentAt(row, col)
         colspan = table.getColumnExtentAt(row, col)
-        nRows = table.nRows
-        nCols = table.nColumns
         nextCell = None
         if direction == "left" and col > 0:
             nextCell = (row, col - 1)
-        elif direction == "right" and (col + colspan <= nCols - 1):
+        elif direction == "right" \
+             and (col + colspan <= table.nColumns - 1):
             nextCell = (row, col + colspan)
         elif direction == "up" and row > 0:
             nextCell = (row - 1, col)
-        elif direction == "down" and (row + rowspan <= nRows - 1):
+        elif direction == "down" \
+             and (row + rowspan <= table.nRows - 1):
             nextCell = (row + rowspan, col)
         if nextCell:
             accCell = table.getAccessibleAt(nextCell[0], nextCell[1])
@@ -5820,11 +5819,8 @@ class Script(default.Script):
         if not containingCell \
            or (containingCell.childCount > 1):
             return guess
-        else:
-            containingParagraph = \
-                         self.getContainingRole(obj, pyatspi.ROLE_PARAGRAPH)
-            if containingParagraph:
-                return guess
+        elif self.getContainingRole(obj, pyatspi.ROLE_PARAGRAPH):
+            return guess
 
         [cellLeft, leftText, leftExtents, leftIsField] = \
                    self.getNextCellInfo(containingCell, "left")
@@ -8386,15 +8382,15 @@ class Script(default.Script):
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
-            [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getColumnHeaders(obj)
-            parent = obj.parent
-            table = parent.queryTable()
-            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
+            table = obj.parent.queryTable()
+            if self.isSameCell(obj.parent,
+                               [row, col],
+                               self.lastTableCell):
                 # The stored row helps us maintain the correct position
                 # when traversing cells that span multiple rows.
                 #
-                row = storedRow
+                row = self.lastTableCell[0]
             found = False
             while not found and col > 0:
                 cell = table.getAccessibleAt(row, col - 1)
@@ -8436,15 +8432,15 @@ class Script(default.Script):
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
-            [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getColumnHeaders(obj)
-            parent = obj.parent
-            table = parent.queryTable()
-            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
+            table = obj.parent.queryTable()
+            if self.isSameCell(obj.parent,
+                               [row, col],
+                               self.lastTableCell):
                 # The stored row helps us maintain the correct position
                 # when traversing cells that span multiple rows.
                 #
-                row = storedRow
+                row = self.lastTableCell[0]
             colspan = table.getColumnExtentAt(row, col)
             nextCol = col + colspan
             found = False
@@ -8490,15 +8486,15 @@ class Script(default.Script):
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
-            [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getRowHeaders(obj)
-            parent = obj.parent
-            table = parent.queryTable()
-            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
+            table = obj.parent.queryTable()
+            if self.isSameCell(obj.parent,
+                               [row, col],
+                               self.lastTableCell):
                 # The stored column helps us maintain the correct position
                 # when traversing cells that span multiple columns.
                 #
-                col = storedCol
+                col = self.lastTableCell[1]
             found = False
             while not found and row > 0:
                 cell = table.getAccessibleAt(row - 1, col)
@@ -8540,15 +8536,15 @@ class Script(default.Script):
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
         if obj:
             [row, col] = self.getCellCoordinates(obj)
-            [storedRow, storedCol] = self.lastTableCell
             oldHeaders = self.getRowHeaders(obj)
-            parent = obj.parent
-            table = parent.queryTable()
-            if self.isSameCell(parent, [row, col], [storedRow, storedCol]):
+            table = obj.parent.queryTable()
+            if self.isSameCell(obj.parent,
+                               [row, col],
+                               self.lastTableCell):
                 # The stored column helps us maintain the correct position
                 # when traversing cells that span multiple columns.
                 #
-                col = storedCol
+                col = self.lastTableCell[1]
             rowspan = table.getRowExtentAt(row, col)
             nextRow = row + rowspan
             found = False
