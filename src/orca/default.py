@@ -2409,8 +2409,8 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if obj.queryText() and self.isTextArea(obj):
-            text = obj.queryText()
+        if obj.text and self.isTextArea(obj):
+            text = obj.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
