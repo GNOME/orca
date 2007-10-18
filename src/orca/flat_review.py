@@ -150,13 +150,15 @@ class Zone:
                  accessible,
                  string,
                  x, y,
-                 width, height):
+                 width, height,
+                 role=None):
         """Creates a new Zone, which is a horizontal region of text.
 
         Arguments:
         - accessible: the Accessible associated with this Zone
         - string: the string being displayed for this Zone
         - extents: x, y, width, height in screen coordinates
+        - role: Role to override accesible's role.
         """
 
         self.accessible = accessible
@@ -166,6 +168,7 @@ class Zone:
         self.y = y
         self.width = width
         self.height = height
+        self.role = role or accessible.getRole()
 
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.
@@ -284,8 +287,9 @@ class StateZone(Zone):
     def __init__(self,
                  accessible,
                  x, y,
-                 width, height):
-        Zone.__init__(self, accessible, "", x, y, width, height)
+                 width, height,
+                 role=None):
+        Zone.__init__(self, accessible, "", x, y, width, height, role)
 
         # Force the use of __getattr__ so we get the actual state
         # of the accessible each time we look at the 'string' field.
@@ -300,10 +304,10 @@ class StateZone(Zone):
                 stateCount = 1
             else:
                 stateCount = 0
-            if self.accessible.getRole() in [pyatspi.ROLE_CHECK_BOX,
-                                        pyatspi.ROLE_CHECK_MENU_ITEM,
-                                        pyatspi.ROLE_CHECK_MENU,
-                                        pyatspi.ROLE_TABLE_CELL]:
+            if self.role in [pyatspi.ROLE_CHECK_BOX,
+                             pyatspi.ROLE_CHECK_MENU_ITEM,
+                             pyatspi.ROLE_CHECK_MENU,
+                             pyatspi.ROLE_TABLE_CELL]:
                 if stateCount:
                     # Translators: this represents the state of a checkbox.
                     #
@@ -314,7 +318,7 @@ class StateZone(Zone):
                     speechState = _("not checked")
                 brailleState = \
                     settings.brailleCheckBoxIndicators[stateCount]
-            elif self.accessible.getRole() == pyatspi.ROLE_TOGGLE_BUTTON:
+            elif self.role == pyatspi.ROLE_TOGGLE_BUTTON:
                 if stateCount:
                     # Translators: the state of a toggle button.
                     #
@@ -359,8 +363,9 @@ class ValueZone(Zone):
     def __init__(self,
                  accessible,
                  x, y,
-                 width, height):
-        Zone.__init__(self, accessible, "", x, y, width, height)
+                 width, height,
+                 role=None):
+        Zone.__init__(self, accessible, "", x, y, width, height, role)
 
         # Force the use of __getattr__ so we get the actual state
         # of the accessible each time we look at the 'string' field.
@@ -370,8 +375,8 @@ class ValueZone(Zone):
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
             orientation = None
-            if self.accessible.getRole() in [pyatspi.ROLE_SLIDER,
-                                        pyatspi.ROLE_SCROLL_BAR]:
+            if self.role in [pyatspi.ROLE_SLIDER,
+                             pyatspi.ROLE_SCROLL_BAR]:
                 stateset = self.accessible.getState()
                 if stateset.contains(pyatspi.STATE_HORIZONTAL):
                     # Translators: The component orientation is horizontal.
@@ -924,7 +929,7 @@ class Context:
 
         return zones
 
-    def _insertStateZone(self, zones, accessible):
+    def _insertStateZone(self, zones, accessible, role=None):
         """If the accessible presents non-textual state, such as a
         checkbox or radio button, insert a StateZone representing
         that state."""
@@ -932,12 +937,13 @@ class Context:
         zone = None
         stateOnLeft = True
 
-        if accessible.getRole() in [pyatspi.ROLE_CHECK_BOX,
-                               pyatspi.ROLE_CHECK_MENU_ITEM,
-                               pyatspi.ROLE_CHECK_MENU,
-                               pyatspi.ROLE_RADIO_BUTTON,
-                               pyatspi.ROLE_RADIO_MENU_ITEM,
-                               pyatspi.ROLE_RADIO_MENU]:
+        role = role or accessible.getRole()
+        if role in [pyatspi.ROLE_CHECK_BOX,
+                    pyatspi.ROLE_CHECK_MENU_ITEM,
+                    pyatspi.ROLE_CHECK_MENU,
+                    pyatspi.ROLE_RADIO_BUTTON,
+                    pyatspi.ROLE_RADIO_MENU_ITEM,
+                    pyatspi.ROLE_RADIO_MENU]:
 
             # Attempt to infer if the indicator is to the left or
             # right of the text.
@@ -968,7 +974,7 @@ class Context:
             zone = StateZone(accessible,
                              stateX, stateY, stateWidth, stateHeight)
 
-        elif accessible.getRole() ==  pyatspi.ROLE_TOGGLE_BUTTON:
+        elif role ==  pyatspi.ROLE_TOGGLE_BUTTON:
             # [[[TODO: WDW - This is a major hack.  We make up an
             # indicator for a toggle button to let the user know
             # whether a toggle button is pressed or not.]]]
@@ -977,7 +983,7 @@ class Context:
             zone = StateZone(accessible,
                              extents.x, extents.y, 1, extents.height)
 
-        elif accessible.getRole() == pyatspi.ROLE_TABLE_CELL \
+        elif role == pyatspi.ROLE_TABLE_CELL \
             and accessible.queryAction():
             # Handle table cells that act like check boxes.
             #
@@ -988,11 +994,7 @@ class Context:
                     hasToggle = True
                     break
             if hasToggle:
-                #savedRole = accessible.getRole()
-                # TODO pyatspi integration. what to do with these two things?
-             #   accessible.role = pyatspi.ROLE_CHECK_BOX
-                self._insertStateZone(zones, accessible)
-             #   accessible.role = savedRole
+                self._insertStateZone(zones, accessible, pyatspi.ROLE_CHECK_BOX)
 
         if zone:
             if stateOnLeft:

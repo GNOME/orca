@@ -1131,11 +1131,9 @@ class WhereAmI:
         else:
             for i in range(0, action.nActions):
                 if action.getName(i) == "toggle":
-                    #obj.role = rolenames.ROLE_CHECK_BOX
                     state = obj.getState()
                     if not state.contains(pyatspi.STATE_CHECKED):
                         notChecked = True
-                    #obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
         if notChecked:

@@ -221,9 +221,9 @@ class SpeechGenerator:
         else:
             return []
 
-    def _getSpeechForObjectRole(self, obj):
+    def _getSpeechForObjectRole(self, obj, role=None):
         if (obj.getRole() != pyatspi.ROLE_UNKNOWN):
-            return [rolenames.getSpeechForRoleName(obj)]
+            return [rolenames.getSpeechForRoleName(obj, role)]
         else:
             return []
 
@@ -251,7 +251,7 @@ class SpeechGenerator:
             debug.println(debug.LEVEL_FINER,
                       "               (%s)" % text)
 
-    def _getDefaultSpeech(self, obj, already_focused):
+    def _getDefaultSpeech(self, obj, already_focused, role=None):
         """Gets a list of utterances to be spoken for the current
         object's name, role, and any accelerators.  This is usually the
         fallback speech generator should no other specialized speech
@@ -264,6 +264,8 @@ class SpeechGenerator:
         Arguments:
         - obj: an Accessible
         - already_focused: False if object just received focus
+        - role: A role that should be used instead of the Accessible's 
+          possible role.
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -276,7 +278,7 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self._getSpeechForObjectRole(obj, role))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -395,7 +397,9 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(
+                self._getSpeechForObjectRole(
+                   obj, pyatspi.ROLE_CHECK_BOX))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:
@@ -642,7 +646,9 @@ class SpeechGenerator:
                 utterances.append(description)
 
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.append(rolenames.getSpeechForRoleName(obj))
+            utterances.append(
+              rolenames.getSpeechForRoleName(
+                obj, pyatspi.ROLE_CHECK_BOX))
 
         self._debugGenerator("_getSpeechForIcon",
                              obj,
@@ -661,7 +667,8 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getDefaultSpeech(obj, already_focused)
+        utterances = self._getDefaultSpeech(
+            obj, already_focused, pyatspi.ROLE_IMAGE)
 
         self._debugGenerator("_getSpeechForImage",
                              obj,
@@ -1329,10 +1336,8 @@ class SpeechGenerator:
                     "speechgenerator.__getTableCellUtterances " \
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
-#                    obj.role = rolenames.ROLE_CHECK_BOX
                     utterances = self._getSpeechForCheckBox(obj,
                                                             already_focused)
-#                    obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
         displayedText = self._script.getDisplayedText( \
@@ -1347,12 +1352,10 @@ class SpeechGenerator:
         # See bug #465989 for more details.
         #
         # [[TODO: eitani - incorprate this in new rolenames ]]
-        # if (not displayedText or len(displayedText) == 0) and obj.image:
-        #     if obj.image.imageDescription:
-        #         utterances.append(obj.image.imageDescription)
-        #     obj.role = rolenames.ROLE_IMAGE
-        #     utterances.extend(self._getSpeechForImage(obj, already_focused))
-        #     obj.role = rolenames.ROLE_TABLE_CELL
+        if (not displayedText or len(displayedText) == 0) and obj.image:
+            if obj.image.imageDescription:
+                utterances.append(obj.image.imageDescription)
+            utterances.extend(self._getSpeechForImage(obj, already_focused))
 
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):

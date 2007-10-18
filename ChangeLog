@@ -1,3 +1,14 @@
+2007-10-18  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/braillegenerator.py: 
+	  src/orca/flat_review.py: 
+	  src/orca/rolenames.py: 
+	  src/orca/speechgenerator.py: 
+	  src/orca/where_am_I.py: 
+       	  Fixed bug #487230 - 
+	  get{Speech,ShortBraille,LongBraille,Braille}ForRoleName should
+	  allow role to be overridden.
+
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/scripts/gcalctool.py:

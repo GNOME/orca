@@ -1215,7 +1215,7 @@ for sym in dir(pyatspi):
                 pyatspi_role = getattr(pyatspi, sym)
                 rolenames[pyatspi_role] = rolenames[key]
 
-def getSpeechForRoleName(obj):
+def getSpeechForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
     will return the string as defined by the at-spi.
@@ -1226,18 +1226,7 @@ def getSpeechForRoleName(obj):
     Returns a string containing the localized name of the object suitable
     to be spoken.
     """
-    role = obj.getRole()
-    # Speak out a check box if the table cell is checkable.
-    if role == pyatspi.ROLE_TABLE_CELL:
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            supported_actions = []
-        else:
-            supported_actions = \
-                [action.getName(i) for i in xrange(action.nActions)]
-        if 'toggle' in supported_actions:
-            role = pyatspi.ROLE_CHECK_BOX
+    role = role or obj.getRole()
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
@@ -1261,7 +1250,7 @@ def getSpeechForRoleName(obj):
         else:
             return repr(role)
 
-def getShortBrailleForRoleName(obj):
+def getShortBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     a short string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
@@ -1272,8 +1261,7 @@ def getShortBrailleForRoleName(obj):
     Returns a short string containing the localized name of the object
     suitable for a Braille display.
     """
-
-    role = obj.getRoe()
+    role = role or obj.getRole()
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
@@ -1297,7 +1285,7 @@ def getShortBrailleForRoleName(obj):
         else:
             return repr(role)
 
-def getLongBrailleForRoleName(obj):
+def getLongBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     a long string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
@@ -1308,7 +1296,7 @@ def getLongBrailleForRoleName(obj):
     Returns a string containing the localized name of the object suitable for
     a Braille display.
     """
-    role = obj.getRole()
+    role = role or obj.getRole()
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
@@ -1335,7 +1323,7 @@ def getLongBrailleForRoleName(obj):
 
 
 
-def getBrailleForRoleName(obj):
+def getBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     a string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
@@ -1349,6 +1337,6 @@ def getBrailleForRoleName(obj):
     """
 
     if settings.brailleRolenameStyle == settings.BRAILLE_ROLENAME_STYLE_SHORT:
-        return getShortBrailleForRoleName(obj)
+        return getShortBrailleForRoleName(obj, role)
     else:
-        return getLongBrailleForRoleName(obj)
+        return getLongBrailleForRoleName(obj, role)

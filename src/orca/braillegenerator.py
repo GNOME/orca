@@ -261,11 +261,11 @@ class BrailleGenerator:
         #
         return valueString
 
-    def _getTextForRole(self, obj):
+    def _getTextForRole(self, obj, role=None):
         if (settings.brailleVerbosityLevel \
             == settings.VERBOSITY_LEVEL_VERBOSE)\
            and (obj.getRole() != pyatspi.ROLE_UNKNOWN):
-            return rolenames.getBrailleForRoleName(obj)
+            return rolenames.getBrailleForRoleName(obj, role)
         else:
             return None
 
@@ -285,7 +285,7 @@ class BrailleGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           role            = %s" % obj.getRoleName())
 
-    def _getDefaultBrailleRegions(self, obj):
+    def _getDefaultBrailleRegions(self, obj, role=None):
         """Gets text to be displayed for the current object's name,
         role, and any accelerators.  This is usually the fallback
         braille generator should no other specialized braille
@@ -293,6 +293,7 @@ class BrailleGenerator:
 
         Arguments:
         - obj: an Accessible
+        - role: Role to use as an override.
 
         Returns a list where the first element is a list of Regions to
         display and the second element is the Region which should get
@@ -309,7 +310,7 @@ class BrailleGenerator:
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
         text = self._script.appendString(text, self._getTextForValue(obj))
-        text = self._script.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj, role))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -401,7 +402,8 @@ class BrailleGenerator:
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
 
-        text = self._script.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(
+            text, self._getTextForRole(obj, pyatspi.ROLE_CHECK_BOX))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -639,7 +641,7 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForImage", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj, pyatspi.ROLE_IMAGE)
 
     def _getBrailleRegionsForLabel(self, obj):
         """Get the braille for a label.
@@ -1232,9 +1234,6 @@ class BrailleGenerator:
                     "braillegenerator._getBrailleRegionsForTableCell " \
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
-                    # I think this deserves a WTF. Why are we assignig a role 
-                    # to an accessible? Is there no better way of doing this?
-                    # obj.role = pyatspi.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
 
                     # If this table cell doesn't have any label associated
@@ -1252,8 +1251,6 @@ class BrailleGenerator:
                         regions[0].append(braille.Region(" "))
                         regions[0].append(braille.Region(accHeader.name))
 
-                    # See WTF above.
-                    # obj.role = pyatspi.ROLE_TABLE_CELL
                     break
 
         if len(regions) == 0:
@@ -1276,10 +1273,8 @@ class BrailleGenerator:
         if (not displayedText or len(displayedText) == 0) and obj.image:
             if obj.image.imageDescription:
                 regions[0].append(obj.image.imageDescription)
-            obj.role = rolenames.ROLE_IMAGE
             [cellRegions, focusRegion] = self._getBrailleRegionsForImage(obj)
             regions[0].extend(cellRegions)
-            obj.role = rolenames.ROLE_TABLE_CELL
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
