@@ -378,14 +378,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # menu item.
         #
         menu = None
-        for i in range(0, obj.childCount):
-            child = obj[i]
+        for child in obj:
             if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
-            for i in range(0, menu.childCount):
-                child = menu[i]
+            for child in menu:
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     regions.append(braille.Region(child.name))
 
@@ -488,9 +486,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 focusedRegionIndex = 1
 
             item = None
-            for i in range(0, obj.childCount):
+            for i, child in enumerate(obj):
                 if obj.querySelection().isChildSelected(i):
-                    item = obj[i]
+                    item = child
                     break
             if not item:
                 item = obj[0]
@@ -743,14 +741,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # menu item.
         #
         menu = None
-        for i in range(0, obj.childCount):
-            child = obj[i]
+        for child in obj:
             if child.getRole() == pyatspi.ROLE_MENU:
                 menu = child
                 break
         if menu:
-            for i in range(0, menu.childCount):
-                child = menu[i]
+            for child in menu:
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     utterances.append(child.name)
 
@@ -870,12 +866,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 utterances.append(label)
 
             item = None
-            for i in range(0, obj.childCount):
+            for i, child in enumerate(obj):
                 if obj.querySelection().isChildSelected(i):
-                    item = obj[i]
+                    item = child
                     break
-            if i == obj.childCount - 1:
-                item = obj[0]
+            item = item or obj[0]
             if item:
                 name = self._getSpeechForObjectName(item)
                 if name != label:
@@ -4471,6 +4466,24 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
+    def queryNonEmptyText(self, obj):
+        """Get the text interface associated with an object, if it is
+        non-empty.
+
+        Arguments:
+        - obj: an accessible object
+        """
+
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            pass
+        else:
+            if text.characterCount:
+                return text
+
+        return None
+
     def inDocumentContent(self, obj=None):
         """Returns True if the given object (defaults to the current
         locus of focus is in the document content).
@@ -4494,8 +4507,7 @@ class Script(default.Script):
         # this.]]]
         #
         documentFrame = None
-        for i in range(0, self.app.childCount):
-            child = self.app[i]
+        for child in self.app:
             if child.getRole() == pyatspi.ROLE_FRAME:
                 relationSet = child.getRelationSet()
                 for relation in relationSet:
@@ -4885,10 +4897,11 @@ class Script(default.Script):
         """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
         None if the entry cannot be found.
         """
-        for i in range(0, obj.childCount):
-            child = obj[i]
+
+        for child in obj:
             if child and (child.getRole() == pyatspi.ROLE_ENTRY):
                 return child
+
         return None
 
     def getCellCoordinates(self, obj):
@@ -4944,8 +4957,8 @@ class Script(default.Script):
         if text and text != u'\u00A0':
             return False
         else:
-            for i in range(0, obj.childCount):
-                if obj[i].getRole() == pyatspi.ROLE_LINK:
+            for child in obj:
+                if child.getRole() == pyatspi.ROLE_LINK:
                     return False
 
             return True
@@ -4963,7 +4976,7 @@ class Script(default.Script):
         except:
             pass
         else:
-            for i in range(0, obj.childCount):
+            for i in xrange(obj.childCount):
                 [isCell, row, col, rowExtents, colExtents, isSelected] = \
                                        table.getRowColumnExtentsAtIndex(i)
                 if (rowExtents > 1) or (colExtents > 1):
@@ -5160,10 +5173,11 @@ class Script(default.Script):
         """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
         if the caption cannot be found.
         """
-        for i in range(0, obj.childCount):
-            child = obj[i]
+
+        for child in obj:
             if child and (child.getRole() == pyatspi.ROLE_CAPTION):
                 return child
+
         return None
 
     def getLinkBasename(self, obj):
@@ -7636,8 +7650,8 @@ class Script(default.Script):
             speech.speak(_("Wrapping to bottom."))
         if obj and found:
             nItems = 0
-            for i in range(0, obj.childCount):
-                if obj[i].getRole() == pyatspi.ROLE_LIST_ITEM:
+            for child in obj:
+                if child.getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
@@ -7696,8 +7710,8 @@ class Script(default.Script):
             speech.speak(_("Wrapping to top."))
         if obj and found:
             nItems = 0
-            for i in range(0, obj.childCount):
-                if obj[i].getRole() == pyatspi.ROLE_LIST_ITEM:
+            for child in obj:
+                if child.getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
             # Translators: this represents a list in HTML.
             #
