@@ -1207,8 +1207,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # children if an object's text contains an
             # EMBEDDED_OBJECT_CHARACTER.
             #
-            if parent.text:
-                displayedText = parent.text.getText(0, -1)
+            parentText = self._script.queryNonEmptyText(parent)
+            if parentText:
+                displayedText = parentText.getText(0, -1)
                 unicodeText = displayedText.decode("UTF-8")
                 if unicodeText \
                     and (len(unicodeText) == 1) \
@@ -3072,14 +3073,15 @@ class Script(default.Script):
                       (settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE)
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj and obj.text:
+        text = self.queryNonEmptyText(obj)
+        if text:
             # Attempt to locate the start of the current sentence by
             # searching to the left for a sentence terminator.  If we don't
             # find one, or if the "say all by" mode is not sentence, we'll
             # just start the sayAll from at the beginning of this line/object.
             #
             [line, startOffset, endOffset] = \
-                obj.text.getTextAtOffset(
+                text.getTextAtOffset(
                                  characterOffset,
                                  atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
             beginAt = 0
@@ -3104,7 +3106,7 @@ class Script(default.Script):
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
             utterances = self.getUtterancesFromContents(contents)
             clumped = self.clumpUtterances(utterances)
-            for i in range(0, (len(clumped))):
+            for i in xrange(len(clumped)):
                 [obj, startOffset, endOffset] = \
                                              contents[min(i, len(contents)-1)]
                 if obj.getRole() == pyatspi.ROLE_LABEL \
@@ -3156,8 +3158,8 @@ class Script(default.Script):
             if not moreLines:
                 done = True
 
-    def __sayAllProgressCallback(self, context, type):
-        if type == speechserver.SayAllContext.PROGRESS:
+    def __sayAllProgressCallback(self, context, callbackType):
+        if callbackType == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
             #
             # Attempt to keep the content visible on the screen as
@@ -3168,23 +3170,23 @@ class Script(default.Script):
                context.obj.getRole() in [pyatspi.ROLE_HEADING,
                                          pyatspi.ROLE_SECTION,
                                          pyatspi.ROLE_PARAGRAPH]:
-                characterCount = context.obj.text.characterCount
+                characterCount = context.obj.queryText().characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
-        elif type == speechserver.SayAllContext.INTERRUPTED:
+        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
             try:
                 self.setCaretPosition(context.obj, context.currentOffset)
             except:
-                characterCount = context.obj.text.characterCount
+                characterCount = context.obj.queryText().characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
             self.updateBraille(context.obj)
-        elif type == speechserver.SayAllContext.COMPLETED:
+        elif callbackType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             orca.setLocusOfFocus(None, context.obj, False)
             try:
                 self.setCaretPosition(context.obj, context.currentOffset)
             except:
-                characterCount = context.obj.text.characterCount
+                characterCount = context.obj.queryText().characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
             self.updateBraille(context.obj)
 
@@ -3312,8 +3314,8 @@ class Script(default.Script):
             newExtents = self.getExtents(event.source,
                                          event.detail1 - 1,
                                          event.detail1)
-            if speakResultsDuringFind and event.source.text:
-                text = event.source.text
+            text = self.queryNonEmptyText(event.source)
+            if speakResultsDuringFind and text:
                 nSelections = text.getNSelections()
                 if nSelections:
                     [start, end] = text.getSelection(0)
@@ -3432,14 +3434,16 @@ class Script(default.Script):
             default.Script.onCaretMoved(self, event)
             return
 
+        text = self.queryNonEmptyText(event.source)
+
         #print "HERE: caretContext=", self.getCaretContext()
         #print "            source=", event.source
-        #print "       caretOffset=", event.source.text.caretOffset
-        #print "    characterCount=", event.source.text.characterCount
+        #print "       caretOffset=", text.caretOffset
+        #print "    characterCount=", text.characterCount
 
         [obj, characterOffset] = \
             self.findFirstCaretContext(event.source,
-                                       event.source.text.caretOffset)
+                                       text.caretOffset)
         self.setCaretContext(obj, characterOffset)
 
         #print "       ended up at=", self.getCaretContext()
@@ -3560,7 +3564,11 @@ class Script(default.Script):
         return
 
     def onFocus(self, event):
+        """Called whenever an object gets focus.
 
+        Arguments:
+        - event: the Event
+        """
         # If this event is the result of our calling grabFocus() on
         # this object in setCaretPosition(), we want to ignore it.
         # See bug #471537.
@@ -3683,23 +3691,25 @@ class Script(default.Script):
         default.Script.onFocus(self, event)
 
     def onLinkSelected(self, event):
-        # NOTE: In Firefox 3, link selected events are not issued when
-        # a link is selected.  Instead, they've decided to issue focus:
-        # events when a link is selected.  This is 'old' code leftover
-        # from Yelp and Firefox 2.
-        #
-        text = event.source.text
-        hypertext = event.source.hypertext
+        """Called when a link gets selected.  Note that in Firefox 3,
+        link selected events are not issued when a link is selected.
+        Instead, a focus: event is issued.  This is 'old' code left
+        over from Yelp and Firefox 2.
+
+        Arguments:
+        - event: the Event
+        """
+
+        text = self.queryNonEmptyText(event.source)
+        hypertext = event.source.queryHypertext()
         linkIndex = self.getLinkIndex(event.source, text.caretOffset)
 
         if linkIndex >= 0:
             link = hypertext.getLink(linkIndex)
-            linkText = self.getText(event.source,
-                                    link.startIndex,
-                                    link.endIndex)
-            [string, startOffset, endOffset] = text.getTextAtOffset(
-                text.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            linkText = text.getText(link.startIndex, link.endIndex)
+            #[string, startOffset, endOffset] = text.getTextAtOffset(
+            #    text.caretOffset,
+            #    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
             #print "onLinkSelected", event.source.getRole() , string,
             #print "  caretOffset:     ", text.caretOffset
             #print "  line startOffset:", startOffset
@@ -3711,7 +3721,7 @@ class Script(default.Script):
             # in yelp when we navigate the table of contents of something
             # like the Desktop Accessibility Guide.
             #
-            linkText = self.getText(event.source, 0, -1)
+            linkText = text.getText(0, -1)
             speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
             speech.speak(rolenames.getSpeechForRoleName(event.source),
@@ -3952,8 +3962,9 @@ class Script(default.Script):
         # at us.
         #
         if newLocusOfFocus and self.inDocumentContent(newLocusOfFocus):
-            if newLocusOfFocus.text:
-                caretOffset = newLocusOfFocus.text.caretOffset
+            text = self.queryNonEmptyText(newLocusOfFocus)
+            if text:
+                caretOffset = text.caretOffset
 
                 # If the old locusOfFocus was not in the document frame, and
                 # if the old locusOfFocus's frame is the same as the frame
@@ -4078,10 +4089,10 @@ class Script(default.Script):
         # on the display.]]]
         #
         lineContentsOffset = focusedCharacterOffset
-        if focusedObj and focusedObj.text and focusedObj.text.characterCount:
-            char = self.getText(focusedObj,
-                                focusedCharacterOffset,
-                                focusedCharacterOffset + 1)
+        focusedObjText = self.queryNonEmptyText(focusedObj)
+        if focusedObjText:
+            char = focusedObjText.getText(focusedCharacterOffset,
+                                          focusedCharacterOffset + 1)
             if char == "\n":
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
 
@@ -4119,6 +4130,7 @@ class Script(default.Script):
             else:
                 isFocusedObj = self.isSameObject(obj, focusedObj)
 
+            text = self.queryNonEmptyText(obj)
             if self.isAriaWidget(obj):
                 # Treat ARIA widgets like normal default.py widgets
                 #
@@ -4134,9 +4146,8 @@ class Script(default.Script):
                 regions = [braille.Text(obj, label, " $l")]
                 if isFocusedObj:
                     focusedRegion = regions[0]
-            elif obj.text and obj.text.characterCount \
-                 and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
-                string = self.getText(obj, startOffset, endOffset)
+            elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
+                string = text.getText(startOffset, endOffset)
                 regions = [braille.Region(
                     string,
                     focusedCharacterOffset - startOffset)]
@@ -4216,7 +4227,8 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj and obj.text:
+        text = self.queryNonEmptyText(obj)
+        if text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous character.  But...maybe we want to
@@ -4224,8 +4236,8 @@ class Script(default.Script):
             # caret context to the beginning of the next character via
             # a call to goNextWord.]]]
             #
-            foo = self.getText(obj, 0, -1)
-            if characterOffset >= len(foo):
+            string = text.getText(0, -1)
+            if characterOffset >= len(string):
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
 
@@ -4243,7 +4255,8 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj and obj.text:
+        text = self.queryNonEmptyText(obj)
+        if text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous word.  But...maybe we want to
@@ -4251,8 +4264,8 @@ class Script(default.Script):
             # caret context to the beginning of the next word via
             # a call to goNextWord.]]]
             #
-            foo = self.getText(obj, 0, -1)
-            if characterOffset >= len(foo):
+            string = text.getText(0, -1)
+            if characterOffset >= len(string):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
 
@@ -4266,7 +4279,7 @@ class Script(default.Script):
             self.speakContents(wordContents)
         else:
             [textObj, startOffset, endOffset] = wordContents[0]
-            word = textObj.text.getText(startOffset, endOffset)
+            word = textObj.queryText().getText(startOffset, endOffset)
             speech.speakUtterances([word], self.getACSS(textObj, word))
 
     def sayLine(self, obj):
@@ -4282,7 +4295,8 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        if obj and obj.text:
+        text = self.queryNonEmptyText(obj)
+        if text:
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the current line.  But...maybe we want to
@@ -4290,8 +4304,8 @@ class Script(default.Script):
             # caret context to the beginning of the next line via
             # a call to goNextLine.]]]
             #
-            foo = self.getText(obj, 0, -1)
-            if characterOffset >= len(foo):
+            string = text.getText(0, -1)
+            if characterOffset >= len(string):
                 print "YIKES in Gecko.sayLine!"
                 characterOffset -= 1
 
@@ -4322,8 +4336,9 @@ class Script(default.Script):
             self.dumpInfo(obj.parent)
 
         print "---"
-        if obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME and obj.text:
-            string = self.getText(obj, 0, -1)
+        text = self.queryNonEmptyText(obj)
+        if text and obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+            string = text.getText(0, -1)
         else:
             string = ""
         print obj, obj.name, obj.getRole(), \
@@ -4349,7 +4364,7 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             if True or obj.getState().contains(pyatspi.STATE_SHOWING):
-                if obj.text:
+                if self.queryNonEmptyText(obj):
                     # Check for text being on a different line.  Gecko
                     # gives us odd character extents sometimes, so we
                     # defensively ignore those.
@@ -4447,10 +4462,10 @@ class Script(default.Script):
                 extents = self.getBoundary(
                     self.getExtents(obj, startOffset, endOffset),
                     extents)
-                if obj.text:
+                text = self.queryNonEmptyText(obj)
+                if text:
                     string += "[%s] text='%s' " % (obj.getRole(),
-                                                   self.getText(obj,
-                                                                startOffset,
+                                                   text.getText(startOffset,
                                                                 endOffset))
                 else:
                     string += "[%s] name='%s' " % (obj.getRole(), obj.name)
@@ -4476,7 +4491,7 @@ class Script(default.Script):
 
         try:
             text = obj.queryText()
-        except NotImplementedError:
+        except:
             pass
         else:
             if text.characterCount:
@@ -4561,8 +4576,9 @@ class Script(default.Script):
         try:
             return obj.unicodeText
         except:
-            if obj.text:
-                obj.unicodeText = self.getText(obj, 0, -1).decode("UTF-8")
+            text = self.queryNonEmptyText(obj)
+            if text:
+                obj.unicodeText = text.getText(0, -1).decode("UTF-8")
             else:
                 obj.unicodeText = None
         return obj.unicodeText
@@ -4583,7 +4599,7 @@ class Script(default.Script):
         weHandleIt = True
         obj = orca_state.locusOfFocus
         if obj and (obj.getRole() == pyatspi.ROLE_ENTRY):
-            text        = obj.text
+            text        = obj.queryText()
             length      = text.characterCount
             caretOffset = text.caretOffset
             singleLine  = obj.getState().contains(
@@ -4684,6 +4700,13 @@ class Script(default.Script):
         return False
             
     def isAriaWidget(self, obj=None):
+        """Returns True if the object being examined is an ARIA widget.
+
+        Arguments:
+        - obj: The accessible object of interest.  If None, the
+        locusOfFocus is examined.
+        """
+        
         obj = obj or orca_state.locusOfFocus
         if obj:
             attrs = obj.getAttributes()
@@ -4717,7 +4740,8 @@ class Script(default.Script):
             return obj.characterOffsetInParent
         except:
             try:
-                # Check to see if the hypertext interface has been implemented.
+                # Check to see if the hyperlink interface is implemented.
+                #
                 obj.queryHyperlink()
             except NotImplementedError:
                 obj.characterOffsetInParent = -1
@@ -4728,7 +4752,8 @@ class Script(default.Script):
                 # Gecko is giving us a bogus characterCount of 0 characters.
                 # See bug #470853.]]]
                 #
-                if text and obj.parent.text.characterCount:
+                parentText = self.queryNonEmptyText(obj.parent)
+                if text and parentText:
                     for offset in range(0, len(text)):
                         if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
                             if index == obj.getIndexInParent():
@@ -4790,9 +4815,9 @@ class Script(default.Script):
         # item, get the object extents rather than the range extents for
         # the text.
         #
-        if obj.text and obj.text.characterCount \
-           and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
-            extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
+        text = self.queryNonEmptyText(obj)
+        if text and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
+            extents = text.getRangeExtents(startOffset, endOffset, 0)
         else:
             ext = obj.queryComponent().getExtents(0)
             extents = [ext.x, ext.y, ext.width, ext.height]
@@ -5081,8 +5106,9 @@ class Script(default.Script):
                     for c in range(0, col):
                         accCell = table.getAccessibleAt(r, c)
                         cell = atspi.Accessible.makeAccessible(accCell)
-                        if self.isHeader(cell) and cell.text and \
-                           not cell in rowHeaders:
+                        text = self.queryNonEmptyText(cell)
+                        if self.isHeader(cell) and text \
+                           and not cell in rowHeaders:
                             rowHeaders.append(cell)
 
         return rowHeaders
@@ -5128,8 +5154,9 @@ class Script(default.Script):
                     for r in range(0, row):
                         accCell = table.getAccessibleAt(r, c)
                         cell = atspi.Accessible.makeAccessible(accCell)
-                        if self.isHeader(cell) and cell.text and \
-                           not cell in columnHeaders:
+                        text = self.queryNonEmptyText(cell)
+                        if self.isHeader(cell) and text \
+                           and not cell in columnHeaders:
                             columnHeaders.append(cell)
 
         return columnHeaders
@@ -5267,10 +5294,9 @@ class Script(default.Script):
 
         useless = False
 
-        if obj and not obj.text and \
-           obj.getRole() == pyatspi.ROLE_PARAGRAPH:
+        textObj = self.queryNonEmptyText(obj)
+        if not textObj and obj.getRole() == pyatspi.ROLE_PARAGRAPH:
             useless = True
-
         elif obj.getRole() in [pyatspi.ROLE_IMAGE, \
                                pyatspi.ROLE_TABLE_CELL, \
                                pyatspi.ROLE_SECTION]:
@@ -5414,7 +5440,8 @@ class Script(default.Script):
                 [obj, offset] = self.findFirstCaretContext(newCell, 0)
                 extents = self.getExtents(newCell, 0, 1)
                 isField = self.isFormField(obj)
-                if newCell.text and not self.isBlankCell(newCell):
+                if self.queryNonEmptyText(newCell) \
+                   and not self.isBlankCell(newCell):
                     text = self.getDisplayedText(newCell)
 
         return [newCell, text, extents, isField]
@@ -5434,24 +5461,25 @@ class Script(default.Script):
         if not obj:
             return None
 
-        text = None
-        if obj.text:
-            text = obj.text.getText(startOffset, endOffset)
-            unicodeText = text.decode("UTF-8")
+        string = None
+        text = self.queryNonEmptyText(obj)
+        if text:
+            string = text.getText(startOffset, endOffset)
+            unicodeText = string.decode("UTF-8")
             if unicodeText \
                 and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
                 toBuild = list(unicodeText)
                 count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-                for i in range(0, count):
+                for i in xrange(count):
                     index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
                     child = obj[i]
                     childText = self.expandEOCs(child)
                     if not childText:
                         childText = ""
                     toBuild[index] = childText.decode("UTF-8")
-                text = "".join(toBuild)
+                string = "".join(toBuild)
 
-        return text
+        return string
 
     def guessLabelFromLine(self, obj):
         """Attempts to guess what the label of an unlabeled form control
@@ -5544,7 +5572,7 @@ class Script(default.Script):
             #
             startOffset = 0
             endOffset = -1
-            if self.isSameObject(obj.parent,onLeft):
+            if self.isSameObject(obj.parent, onLeft):
                 endOffset = self.getCharacterOffsetInParent(obj)
                 index = obj.getIndexInParent()
                 if index > 0:
@@ -5865,7 +5893,8 @@ class Script(default.Script):
                 cell = nextCell.parent.queryTable().getAccessibleAt(0, col)
                 topCol = atspi.Accessible.makeAccessible(cell)
                 [objTop, offset] = self.findFirstCaretContext(topCol, 0)
-                if topCol.text and not self.isFormField(topCol):
+                if self.queryNonEmptyText(topCol) \
+                   and not self.isFormField(topCol):
                     guess = self.expandEOCs(topCol)
 
         return guess
@@ -5951,17 +5980,17 @@ class Script(default.Script):
         Returns [obj, characterOffset] that points to real content.
         """
 
-        if obj and obj.text:
+        text = self.queryNonEmptyText(obj)
+        if text:
             unicodeText = self.getUnicodeText(obj)
             if characterOffset >= len(unicodeText):
                 return [obj, -1]
 
-            character = self.getText(obj,
-                                     characterOffset,
+            character = text.getText(characterOffset,
                                      characterOffset + 1).decode("UTF-8")
             if character == self.EMBEDDED_OBJECT_CHARACTER:
                 if obj.childCount <= 0:
-                    return self.findFirstCaretContext(obj,characterOffset + 1)
+                    return self.findFirstCaretContext(obj, characterOffset + 1)
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
                     return self.findFirstCaretContext(obj[childIndex], 0)
@@ -6010,8 +6039,8 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text and obj.text.characterCount \
-                    and not self.isAriaWidget(obj=obj):
+        text = self.queryNonEmptyText(obj)
+        if text and not self.isAriaWidget(obj):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             while nextOffset < len(unicodeText):
@@ -6100,8 +6129,8 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
-        if obj.text and obj.text.characterCount \
-                    and not self.isAriaWidget(obj=obj):
+        text = self.queryNonEmptyText(obj)
+        if text and not self.isAriaWidget(obj):
             unicodeText = self.getUnicodeText(obj)
             if (startOffset == -1) or (startOffset > len(unicodeText)):
                 startOffset = len(unicodeText)
@@ -6593,12 +6622,12 @@ class Script(default.Script):
         given object or None if the object does not implement the
         accessible text specialization.
         """
-        if obj and obj.text and obj.text.characterCount:
-            unicodeText = self.getUnicodeText(obj)
-            if characterOffset < len(unicodeText):
-                return unicodeText[characterOffset].encode("UTF-8")
 
-        return None
+        try:
+            unicodeText = self.getUnicodeText(obj)
+            return unicodeText[characterOffset].encode("UTF-8")
+        except:
+            return None
 
     def getWordContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -6627,7 +6656,7 @@ class Script(default.Script):
         encounteredText = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj == lastObj:
-            if not obj.text or not obj.text.characterCount:
+            if not self.queryNonEmptyText(obj):
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
@@ -6649,7 +6678,7 @@ class Script(default.Script):
         encounteredDelimiter = False
         [obj, characterOffset] = [lastObj, lastCharacterOffset]
         while obj and (obj == lastObj):
-            if not obj.text or not obj.text.characterCount:
+            if not self.queryNonEmptyText(obj):
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
@@ -6793,7 +6822,7 @@ class Script(default.Script):
         #if not obj.getState().contains(pyatspi.STATE_SHOWING):
         #    return [[None, -1, -1]]
 
-        if not obj.text or not obj.text.characterCount:
+        if not self.queryNonEmptyText(obj):
             return [[obj, -1, -1]]
 
         contents = []
@@ -6891,25 +6920,25 @@ class Script(default.Script):
                                           pyatspi.ROLE_TABLE_CELL,
                                           pyatspi.ROLE_ENTRY,
                                           pyatspi.ROLE_PASSWORD_TEXT]
-
+            text = self.queryNonEmptyText(obj)
             if self.isAriaWidget(obj):
                 # Treat ARIA widgets like normal default.py widgets
                 #
                 speakThisRole = False
                 strings = self.speechGenerator.getSpeech(obj, False)
-            elif obj.text and obj.text.characterCount \
+            elif text \
                and not obj.getRole() in [pyatspi.ROLE_ENTRY,
                                          pyatspi.ROLE_PASSWORD_TEXT,
                                          pyatspi.ROLE_RADIO_BUTTON,
                                          pyatspi.ROLE_MENU_ITEM]:
-                strings = [self.getText(obj, startOffset, endOffset)]
+                strings = [text.getText(startOffset, endOffset)]
             elif self.isLayoutOnly(obj):
                 continue
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 
             if speakRole and speakThisRole:
-                if obj.text and obj.text.characterCount:
+                if text:
                     strings.extend(\
                        self.speechGenerator._getSpeechForObjectRole(obj))
 
@@ -7072,7 +7101,7 @@ class Script(default.Script):
             if self.isAriaWidget() \
                  or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
                  and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                obj.text.setCaretOffset(characterOffset)
+                obj.queryText().setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
                                       obj,
                                       self.getExtents(obj,
@@ -7196,14 +7225,15 @@ class Script(default.Script):
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if obj.text and obj.text.characterCount:
+            text = self.queryNonEmptyText(obj)
+            if text:
                 if characterOffset > 0:
                     previousChar = \
-                        obj.text.getText(characterOffset - 1, characterOffset)
+                        text.getText(characterOffset - 1, characterOffset)
                 else:
                     previousChar = None
-                currentChar = obj.text.getText(characterOffset,
-                                               characterOffset + 1)
+                currentChar = text.getText(characterOffset,
+                                           characterOffset + 1)
             else:
                 previousChar = None
                 currentChar = None
@@ -7303,14 +7333,15 @@ class Script(default.Script):
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if obj.text and obj.text.characterCount:
+            text = self.queryNonEmptyText(obj)
+            if text:
                 if characterOffset > 0:
                     previousChar = \
-                        obj.text.getText(characterOffset - 1, characterOffset)
+                        text.getText(characterOffset - 1, characterOffset)
                 else:
                     previousChar = None
                 currentChar = \
-                        obj.text.getText(characterOffset, characterOffset + 1)
+                        text.getText(characterOffset, characterOffset + 1)
             else:
                 previousChar = None
                 currentChar = None
@@ -7418,6 +7449,7 @@ class Script(default.Script):
                         break
 
     def goPreviousHeading(self, inputEvent):
+        """Go to the previous heading regardless of level."""
         wrap = True
         [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_HEADING], wrap)
         if wrapped:
@@ -7441,6 +7473,7 @@ class Script(default.Script):
             speech.speak(_("No more headings."))
 
     def goNextHeading(self, inputEvent):
+        """Go to the next heading regardless of level."""
         wrap = True
         [obj, wrapped] = self.findNextRole([pyatspi.ROLE_HEADING], wrap)
         if wrapped:
@@ -7464,6 +7497,12 @@ class Script(default.Script):
             speech.speak(_("No more headings."))
 
     def goPreviousHeadingAtLevel(self, inputEvent, desiredLevel):
+        """Go to the previous heading at the specified level.
+
+        Arguments:
+        - desiredLevel: the level (1-6) of the heading to locate
+        """
+        
         found = False
         level = 0
         [obj, characterOffset] = self.getCaretContext()
@@ -7502,6 +7541,12 @@ class Script(default.Script):
             speech.speak(_("No more headings at level %d.") % desiredLevel)
 
     def goNextHeadingAtLevel(self, inputEvent, desiredLevel):
+        """Go to the next heading at the specified level.
+
+        Arguments:
+        - desiredLevel: the level (1-6) of the heading to locate
+        """
+
         found = False
         level = 0
         [obj, characterOffset] = self.getCaretContext()
@@ -7538,42 +7583,55 @@ class Script(default.Script):
             speech.speak(_("No more headings at level %d.") % desiredLevel)
 
     def goNextHeading1(self, inputEvent):
+        """Go to the next heading at the level 1."""
         self.goNextHeadingAtLevel(inputEvent, 1)
 
     def goPreviousHeading1(self, inputEvent):
+        """Go to the previous heading at the level 1."""
         self.goPreviousHeadingAtLevel(inputEvent, 1)
 
     def goNextHeading2(self, inputEvent):
+        """Go to the next heading at the level 2."""
         self.goNextHeadingAtLevel(inputEvent, 2)
 
     def goPreviousHeading2(self, inputEvent):
+        """Go to the previous heading at the level 2."""
         self.goPreviousHeadingAtLevel(inputEvent, 2)
 
     def goNextHeading3(self, inputEvent):
+        """Go to the next heading at the level 3."""
         self.goNextHeadingAtLevel(inputEvent, 3)
 
     def goPreviousHeading3(self, inputEvent):
+        """Go to the previous heading at the level 3."""
         self.goPreviousHeadingAtLevel(inputEvent, 3)
 
     def goNextHeading4(self, inputEvent):
+        """Go to the next heading at the level 4."""
         self.goNextHeadingAtLevel(inputEvent, 4)
 
     def goPreviousHeading4(self, inputEvent):
+        """Go to the previous heading at the level 4."""
         self.goPreviousHeadingAtLevel(inputEvent, 4)
 
     def goNextHeading5(self, inputEvent):
+        """Go to the next heading at the level 5."""
         self.goNextHeadingAtLevel(inputEvent, 5)
 
     def goPreviousHeading5(self, inputEvent):
+        """Go to the previous heading at the level 5."""
         self.goPreviousHeadingAtLevel(inputEvent, 5)
 
     def goNextHeading6(self, inputEvent):
+        """Go to the next heading at the level 6."""
         self.goNextHeadingAtLevel(inputEvent, 6)
 
     def goPreviousHeading6(self, inputEvent):
+        """Go to the previous heading at the level 6."""
         self.goPreviousHeadingAtLevel(inputEvent, 6)
 
     def goPreviousChunk(self, inputEvent):
+        """Go to the previous chunk/large object."""
         wrap = True
         [obj, wrapped] = self.findPrevByPredicate(self.__matchChunk, wrap)
         if wrapped:
@@ -7598,6 +7656,7 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
+        """Go to the next chunk/large object."""
         wrap = True
         [obj, wrapped] = self.findNextByPredicate(self.__matchChunk, wrap)
         if wrapped:
@@ -7622,6 +7681,7 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goPreviousList(self, inputEvent):
+        """Go to the previous (un)ordered list."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7683,6 +7743,7 @@ class Script(default.Script):
             speech.speak(_("No more lists."))
 
     def goNextList(self, inputEvent):
+        """Go to the next (un)ordered list."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7743,6 +7804,7 @@ class Script(default.Script):
             speech.speak(_("No more lists."))
 
     def goPreviousListItem(self, inputEvent):
+        """Go to the previous item in an (un)ordered list."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7784,6 +7846,7 @@ class Script(default.Script):
             speech.speak(_("No more list items."))
 
     def goNextListItem(self, inputEvent):
+        """Go to the next item in an (un)ordered list."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7825,6 +7888,8 @@ class Script(default.Script):
             speech.speak(_("No more list items."))
 
     def goPreviousUnvisitedLink(self, inputEvent):
+        """Go to the previous unvisited link."""
+
         # If the currentObject has a link in its ancestry, we've
         # already started out on a link and need to move off of
         # it else we'll get stuck.
@@ -7867,6 +7932,7 @@ class Script(default.Script):
             speech.speak(_("No more unvisited links."))
 
     def goNextUnvisitedLink(self, inputEvent):
+        """Go to the next unvisited link."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7901,6 +7967,8 @@ class Script(default.Script):
             speech.speak(_("No more unvisited links."))
 
     def goPreviousVisitedLink(self, inputEvent):
+        """Go to the previous visited link."""
+
         # If the currentObject has a link in its ancestry, we've
         # already started out on a link and need to move off of
         # it else we'll get stuck.
@@ -7943,6 +8011,7 @@ class Script(default.Script):
             speech.speak(_("No more visited links."))
 
     def goNextVisitedLink(self, inputEvent):
+        """Go to the next visited link."""
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
@@ -7978,6 +8047,8 @@ class Script(default.Script):
             speech.speak(_("No more visited links."))
 
     def goPreviousBlockquote(self, inputEvent):
+        """Go to the previous blockquote."""
+
         # If the current object has a blockquote in its ancestry, we
         # need to move out of it else we'll get stuck.
         #
@@ -8023,6 +8094,7 @@ class Script(default.Script):
             speech.speak(_("No more blockquotes."))
 
     def goNextBlockquote(self, inputEvent):
+        """Go to the next blockquote."""
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
         found = False
@@ -8058,6 +8130,8 @@ class Script(default.Script):
             speech.speak(_("No more blockquotes."))
 
     def goPreviousFormField(self, inputEvent):
+        """Go to the previous form field."""
+
         # If the current object is a list item in a form field, we
         # need to move up to the parent list before we search
         # for the previous list; otherwise we'll find the current
@@ -8116,6 +8190,7 @@ class Script(default.Script):
             speech.speak(_("No more form fields."))
 
     def goNextFormField(self, inputEvent):
+        """Go to the next form field."""
         [obj, characterOffset] = self.getCaretContext()
         currentObj = obj
         found = False
@@ -8174,6 +8249,11 @@ class Script(default.Script):
             speech.speak(_("No more form fields."))
 
     def moveToCell(self, obj):
+        """Move to the specified cell in an HTML table.
+
+        Arguments:
+        - obj: the table cell to move to.
+        """
         spanString = self.getCellSpanInfo (obj)
         blank = self.isBlankCell(obj)
         [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
@@ -8199,6 +8279,7 @@ class Script(default.Script):
             speech.speak(spanString)
 
     def goPreviousTable(self, inputEvent):
+        """Go to the previous table."""
         wrap = True
         [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_TABLE], wrap)
         if wrapped:
@@ -8212,7 +8293,7 @@ class Script(default.Script):
         if obj:
             table = obj.queryTable()
             caption = self.getTableCaption(obj)
-            if caption and caption.text:
+            if self.queryNonEmptyText(caption):
                 text = self.getDisplayedText(caption)
                 speech.speak(text)
             nonUniformString = ""
@@ -8249,6 +8330,7 @@ class Script(default.Script):
             speech.speak(_("No more tables."))
 
     def goNextTable(self, inputEvent):
+        """Go to the next table."""
         wrap = True
         [obj, wrapped] = self.findNextRole([pyatspi.ROLE_TABLE], wrap)
         if wrapped:
@@ -8262,7 +8344,7 @@ class Script(default.Script):
         if obj:
             table = obj.queryTable()
             caption = self.getTableCaption(obj)
-            if caption and caption.text:
+            if self.queryNonEmptyText(caption):
                 text = self.getDisplayedText(caption)
                 speech.speak(text)
             nonUniformString = ""
@@ -8298,6 +8380,7 @@ class Script(default.Script):
             speech.speak(_("No more tables."))
 
     def goCellLeft(self, inputEvent):
+        """Move to the cell on the left in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
@@ -8347,6 +8430,7 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goCellRight(self, inputEvent):
+        """Move to the cell on the right in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
@@ -8400,6 +8484,7 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goCellUp(self, inputEvent):
+        """Move one cell up in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
@@ -8449,6 +8534,7 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goCellDown(self, inputEvent):
+        """Move one cell down in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
@@ -8502,6 +8588,7 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goCellFirst(self, inputEvent):
+        """Move to the first cell in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
@@ -8517,6 +8604,7 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goCellLast(self, inputEvent):
+        """Move to the last cell in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
@@ -8609,14 +8697,14 @@ class Script(default.Script):
     # Match Predicates                                                 #
     #                                                                  #
     ####################################################################
+
     def __matchChunk(self, obj):
         if obj.getRole() in OBJECT_ROLES:
-            text = obj.text
-            if text and text.characterCount > largeObjectTextLength and \
-                    not self.isUselessObject(obj):
+            text = self.queryNonEmptyText(obj)
+            if text and text.characterCount > largeObjectTextLength \
+               and not self.isUselessObject(obj):
                 return True
             else:
                 return False
         else:
             return False
- 

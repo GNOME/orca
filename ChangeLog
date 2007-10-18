@@ -1,6 +1,12 @@
 2007-10-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          pyatspi migration: Stop using obj.text.  Also added a number of
+          docstrings to eliminate pylint warnings/errors.
+
+2007-10-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           pyatspi migration: added queryNonEmptyText().  Also cleaned up
           some for loops.
 
