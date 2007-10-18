@@ -1686,8 +1686,8 @@ class BrailleGenerator:
         if parent and table:
             row = table.getRowAtIndex(obj.getIndexInParent())
             if (row >= 0) \
-                and (not obj.role in [rolenames.ROLE_ROW_HEADER,
-                                      rolenames.ROLE_TABLE_ROW_HEADER]):
+                and (not obj.getRole() in [pyatspi.ROLE_ROW_HEADER,
+                                           pyatspi.ROLE_TABLE_ROW_HEADER]):
                 desc = table.getRowDescription(row)
             else:
                 desc = None
@@ -1707,8 +1707,8 @@ class BrailleGenerator:
 
             col = table.getColumnAtIndex(obj.getIndexInParent())
             if (col >= 0) \
-                and (not obj.role in [rolenames.ROLE_COLUMN_HEADER,
-                                      rolenames.ROLE_TABLE_COLUMN_HEADER]):
+                and (not obj.getRole() in [pyatspi.ROLE_COLUMN_HEADER,
+                                           pyatspi.ROLE_TABLE_COLUMN_HEADER]):
                 desc = table.getColumnDescription(col)
             else:
                 desc = None

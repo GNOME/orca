@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
+import pyatspi
 
 import orca.debug as debug
 import orca.atspi as atspi
@@ -156,9 +157,9 @@ class WhereAmI(where_am_I.WhereAmI):
             # debug.println(self._debugLevel,
             #               "_getCalcFrameAndSheet: parent=%s, %s" % \
             #               (parent.role, self._getObjLabelAndName(parent)))
-            if parent.role == rolenames.ROLE_FRAME:
+            if parent.getRole() == pyatspi.ROLE_FRAME:
                 mylist[0] = parent
-            if parent.role == rolenames.ROLE_TABLE:
+            if parent.getRole() == pyatspi.ROLE_TABLE:
                 mylist[1] = parent
             parent = parent.parent
 
@@ -659,7 +660,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """
 
         utterances = []
-        if obj.parent.role == rolenames.ROLE_TOOL_BAR:
+        if obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
                 # Translators: this represents the state of a check box
                 #
@@ -690,7 +691,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """
 
         utterances = []
-        if obj.parent.role == rolenames.ROLE_TOOL_BAR:
+        if obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
                 # Translators: this represents the state of a check box
                 #
@@ -965,8 +966,8 @@ class Script(default.Script):
         object.
         """
 
-        if obj.role == rolenames.ROLE_PARAGRAPH and \
-           obj.parent.role == rolenames.ROLE_TABLE_CELL:
+        if obj.getRole() == pyatspi.ROLE_PARAGRAPH and \
+           obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             return obj.parent
         else:
             return obj
@@ -983,7 +984,7 @@ class Script(default.Script):
 
         table = None
         obj = self.adjustForWriterTable(obj)
-        if obj.role == rolenames.ROLE_TABLE_CELL and obj.parent:
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.parent:
             table = obj.parent.table
 
         return table
@@ -1048,8 +1049,8 @@ class Script(default.Script):
 
         inputLine = None
         panel = obj.parent.parent.parent.parent
-        if panel and panel.role == rolenames.ROLE_PANEL:
-            allParagraphs = self.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+        if panel and panel.getRole() == pyatspi.ROLE_PANEL:
+            allParagraphs = self.findByRole(panel, pyatspi.ROLE_PARAGRAPH)
             if len(allParagraphs) == 1:
                 inputLine = allParagraphs[0]
             else:
@@ -1105,28 +1106,28 @@ class Script(default.Script):
         """
 
         found = False
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TABLE, \
+                     pyatspi.ROLE_UNKNOWN, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(obj, rolesList):
             # We've found a table cell with the correct hierarchy. Now check
             # that we are in a spreadsheet as opposed to the writer application.
             # See bug #382408.
             #
             current = obj.parent
-            while current.role != rolenames.ROLE_APPLICATION:
+            while current.getRole() != pyatspi.ROLE_APPLICATION:
                 # Translators: this represents a match on a window title.
                 # We're looking for frame that ends in "Calc", representing
                 # an OpenOffice or StarOffice spreadsheet window.  We
                 # really try to avoid doing this kind of thing, but sometimes
                 # it is necessary and we apologize.
                 #
-                if current.role == rolenames.ROLE_FRAME and \
+                if current.getRole() == pyatspi.ROLE_FRAME and \
                    (current.name and current.name.endswith(_("Calc"))):
                     found = True
                 current = current.parent
@@ -1147,15 +1148,15 @@ class Script(default.Script):
             return
 
         oldFocusIsTable = None
-        while oldFocus.role != rolenames.ROLE_APPLICATION:
-            if oldFocus.role == rolenames.ROLE_TABLE:
+        while oldFocus.getRole() != pyatspi.ROLE_APPLICATION:
+            if oldFocus.getRole() == pyatspi.ROLE_TABLE:
                 oldFocusIsTable = oldFocus
                 break
             oldFocus = oldFocus.parent
 
         newFocusIsTable = None
-        while newFocus.role != rolenames.ROLE_APPLICATION:
-            if newFocus.role == rolenames.ROLE_TABLE:
+        while newFocus.getRole() != pyatspi.ROLE_APPLICATION:
+            if newFocus.getRole() == pyatspi.ROLE_TABLE:
                 newFocusIsTable = newFocus
                 break
             newFocus = newFocus.parent
@@ -1212,7 +1213,7 @@ class Script(default.Script):
 
         row = None
         cell = self.adjustForWriterTable(cell)
-        if cell.role == rolenames.ROLE_TABLE_CELL:
+        if cell.getRole() == pyatspi.ROLE_TABLE_CELL:
             parent = cell.parent
             if parent and parent.table:
                 row = parent.table.getRowAtIndex(cell.index)
@@ -1231,7 +1232,7 @@ class Script(default.Script):
 
         column = None
         cell = self.adjustForWriterTable(cell)
-        if cell.role == rolenames.ROLE_TABLE_CELL:
+        if cell.getRole() == pyatspi.ROLE_TABLE_CELL:
             parent = cell.parent
             if parent and parent.table:
                 column = parent.table.getColumnAtIndex(cell.index)
@@ -1364,7 +1365,7 @@ class Script(default.Script):
         - pane: the option pane in the spell check dialog.
         """
 
-        paragraph = self.findByRole(pane, rolenames.ROLE_PARAGRAPH)
+        paragraph = self.findByRole(pane, pyatspi.ROLE_PARAGRAPH)
 
         # Determine which word is the misspelt word. This word will have
         # non-default text attributes associated with it.
@@ -1486,14 +1487,14 @@ class Script(default.Script):
         """
 
         found = False
-        while obj and obj.role != rolenames.ROLE_APPLICATION:
+        while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
             # Translators: this is the title of the window that
             # you get when starting StarOffice.  The translated
             # form has to match what StarOffice/OpenOffice is
             # using.  We hate keying off stuff like this, but
             # we're forced to do so in this case.
             #
-            if obj.role == rolenames.ROLE_DIALOG and \
+            if obj.getRole() == pyatspi.ROLE_DIALOG and \
                 (obj.name and obj.name.startswith(_("Welcome to StarOffice"))):
                 debug.println(self.debugLevel,
                               "StarOffice.isSetupDialog: True.")
@@ -1521,7 +1522,7 @@ class Script(default.Script):
         - panel: the Setup panel.
         """
 
-        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             self.speakSetupLabel(label)
 
@@ -1545,32 +1546,32 @@ class Script(default.Script):
 
         isPanel = False
         if event.type == "object:state-changed:focused":
-            rolesList = [rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_SCROLL_PANE, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_OPTION_PANE, \
-                         rolenames.ROLE_DIALOG, \
-                         rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_OPTION_PANE, \
+                         pyatspi.ROLE_DIALOG, \
+                         pyatspi.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 tmp = event.source.parent.parent
                 if tmp.name.startswith(panelName):
                     isPanel = True
 
             if not isPanel:
-                rolesList = [rolenames.ROLE_SCROLL_PANE, \
-                             rolenames.ROLE_PANEL, \
-                             rolenames.ROLE_OPTION_PANE, \
-                             rolenames.ROLE_DIALOG, \
-                             rolenames.ROLE_APPLICATION]
+                rolesList = [pyatspi.ROLE_SCROLL_PANE, \
+                             pyatspi.ROLE_PANEL, \
+                             pyatspi.ROLE_OPTION_PANE, \
+                             pyatspi.ROLE_DIALOG, \
+                             pyatspi.ROLE_APPLICATION]
                 if self.isDesiredFocusedItem(event.source, rolesList):
                     if event.source.parent.name.startswith(panelName):
                         isPanel = True
 
             if not isPanel:
-                rolesList = [rolenames.ROLE_PANEL, \
-                             rolenames.ROLE_OPTION_PANE, \
-                             rolenames.ROLE_DIALOG, \
-                             rolenames.ROLE_APPLICATION]
+                rolesList = [pyatspi.ROLE_PANEL, \
+                             pyatspi.ROLE_OPTION_PANE, \
+                             pyatspi.ROLE_DIALOG, \
+                             pyatspi.ROLE_APPLICATION]
                 if self.isDesiredFocusedItem(event.source, rolesList):
                     if event.source.name.startswith(panelName):
                         isPanel = True
@@ -1626,12 +1627,12 @@ class Script(default.Script):
         # the Writer, then just speak/braille the current line (rather than
         # speaking a bogus initial "paragraph" utterance as well).
 
-        rolesList = [rolenames.ROLE_PARAGRAPH, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_PARAGRAPH, \
+                     pyatspi.ROLE_UNKNOWN, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
@@ -1647,7 +1648,7 @@ class Script(default.Script):
             # this case.
             #
             if oldLocusOfFocus and \
-               oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \
+               oldLocusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM and \
                oldLocusOfFocus.name == _("Text Document") and \
                len(result[0]) == 0:
                 self.whereAmI(None)
@@ -1703,10 +1704,10 @@ class Script(default.Script):
         # their translation of this string matches what StarOffice uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
-                     rolenames.ROLE_OPTION_PANE, \
-                     rolenames.ROLE_DIALOG, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                     pyatspi.ROLE_OPTION_PANE, \
+                     pyatspi.ROLE_DIALOG, \
+                     pyatspi.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source.parent
             # Translators: this is what the name of spell checking
@@ -1733,11 +1734,11 @@ class Script(default.Script):
 
             # Check for 2. License Agreement: Scroll Down button.
             #
-            rolesList = [rolenames.ROLE_PUSH_BUTTON, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_OPTION_PANE, \
-                         rolenames.ROLE_DIALOG, \
-                         rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_OPTION_PANE, \
+                         pyatspi.ROLE_DIALOG, \
+                         pyatspi.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
@@ -1747,12 +1748,12 @@ class Script(default.Script):
 
             # Check for 2. License Agreement: Accept button.
             #
-            rolesList = [rolenames.ROLE_UNKNOWN, \
-                         rolenames.ROLE_SCROLL_PANE, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_OPTION_PANE, \
-                         rolenames.ROLE_DIALOG, \
-                         rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_UNKNOWN, \
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_OPTION_PANE, \
+                         pyatspi.ROLE_DIALOG, \
+                         pyatspi.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
@@ -1762,11 +1763,11 @@ class Script(default.Script):
 
             # Check for 3. Personal Data: Transfer Personal Data check box.
             #
-            rolesList = [rolenames.ROLE_CHECK_BOX, \
-                         rolenames.ROLE_PANEL, \
-                         rolenames.ROLE_OPTION_PANE, \
-                         rolenames.ROLE_DIALOG, \
-                         rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_CHECK_BOX, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_OPTION_PANE, \
+                         pyatspi.ROLE_DIALOG, \
+                         pyatspi.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
@@ -1775,11 +1776,11 @@ class Script(default.Script):
 
             # Check for 4. User name: First Name text field.
             #
-            rolesList = [rolenames.ROLE_TEXT, \
-                        rolenames.ROLE_PANEL, \
-                        rolenames.ROLE_OPTION_PANE, \
-                        rolenames.ROLE_DIALOG, \
-                        rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_TEXT, \
+                        pyatspi.ROLE_PANEL, \
+                        pyatspi.ROLE_OPTION_PANE, \
+                        pyatspi.ROLE_DIALOG, \
+                        pyatspi.ROLE_APPLICATION]
             # Translators: this is the name of the field in the StarOffice
             # setup dialog that is asking for the first name of the user.
             # The translated form has to match what StarOffice/OpenOffice
@@ -1796,7 +1797,7 @@ class Script(default.Script):
                 # (and not the ones that have LABEL_FOR relationships).
                 #
                 panel = event.source.parent
-                allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+                allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
                 for label in allLabels:
                     relations = label.relations
                     hasLabelFor = False
@@ -1809,11 +1810,11 @@ class Script(default.Script):
 
             # Check for 5. Registration: Register Now radio button.
             #
-            rolesList = [rolenames.ROLE_RADIO_BUTTON, \
-                        rolenames.ROLE_PANEL, \
-                        rolenames.ROLE_OPTION_PANE, \
-                        rolenames.ROLE_DIALOG, \
-                        rolenames.ROLE_APPLICATION]
+            rolesList = [pyatspi.ROLE_RADIO_BUTTON, \
+                        pyatspi.ROLE_PANEL, \
+                        pyatspi.ROLE_OPTION_PANE, \
+                        pyatspi.ROLE_DIALOG, \
+                        pyatspi.ROLE_APPLICATION]
             if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
@@ -1825,14 +1826,14 @@ class Script(default.Script):
         # Check to see if we are editing a spread sheet cell. If so, just
         # return to avoid uttering something like "Paragraph 0 paragraph".
         #
-        rolesList = [rolenames.ROLE_PARAGRAPH, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_PARAGRAPH, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_UNKNOWN, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: cell editor.")
@@ -1846,12 +1847,12 @@ class Script(default.Script):
         # locusOfFocusChanged method, which in turn will result in our
         # _getSpeechForComboBox() method being called.
         #
-        rolesList = [rolenames.ROLE_COMBO_BOX, \
-                     rolenames.ROLE_TOOL_BAR, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_COMBO_BOX, \
+                     pyatspi.ROLE_TOOL_BAR, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
 
         if self.isDesiredFocusedItem(event.source, rolesList) \
             and (not event.source.name or len(event.source.name) == 0):
@@ -1895,10 +1896,10 @@ class Script(default.Script):
                 "StarOffice.onWindowActivated - Setup dialog: Welcome screen.")
 
             allPanels = self.findByRole(event.source.parent,
-                                        rolenames.ROLE_PANEL)
+                                        pyatspi.ROLE_PANEL)
             for panel in allPanels:
                 if not panel.name:
-                    allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+                    allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
                     for label in allLabels:
                         self.speakSetupLabel(label)
         else:
@@ -1938,9 +1939,9 @@ class Script(default.Script):
         # their translation of this string matches what StarOffice uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_OPTION_PANE, \
-                     rolenames.ROLE_DIALOG, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_OPTION_PANE, \
+                     pyatspi.ROLE_DIALOG, \
+                     pyatspi.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source
             # Translators: this is what the name of spell checking
@@ -1973,15 +1974,15 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+        if event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then speak/braille that parent table cell (see bug #382415).
         #
-        if event.source.role == rolenames.ROLE_PARAGRAPH and \
-           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
+           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             if self.lastCell != event.source.parent:
                 default.Script.locusOfFocusChanged(self, event,
@@ -2002,10 +2003,10 @@ class Script(default.Script):
         # then speak the object that currently has focus.
         #
         if event.type.startswith("object:state-changed:sensitive") and \
-           event.source.role == rolenames.ROLE_PANEL and \
+           event.source.getRole() == pyatspi.ROLE_PANEL and \
            event.source.state.count(atspi.Accessibility.STATE_SENSITIVE):
             current = event.source.parent
-            while current.role != rolenames.ROLE_APPLICATION:
+            while current.getRole() != pyatspi.ROLE_APPLICATION:
                 # Translators: this is the title of the window that
                 # you get when using StarOffice Presentation Wizard. The
                 # translated form has to match what
@@ -2013,7 +2014,7 @@ class Script(default.Script):
                 # stuff like this, but we're forced to do so in this
                 # case.
                 #
-                if current.role == rolenames.ROLE_DIALOG and \
+                if current.getRole() == pyatspi.ROLE_DIALOG and \
                    (current.name and \
                     current.name.startswith(_("Presentation Wizard"))):
                     self.locusOfFocusChanged(event, None, 
@@ -2027,7 +2028,7 @@ class Script(default.Script):
         if event.type.startswith("object:state-changed:focused") and \
            event.detail1 == 1:
             current = event.source.parent
-            while current.role != rolenames.ROLE_APPLICATION:
+            while current.getRole() != pyatspi.ROLE_APPLICATION:
                 # Translators: this is the title of the window that
                 # you get when using StarOffice Writer.  The
                 # translated form has to match what
@@ -2035,7 +2036,7 @@ class Script(default.Script):
                 # stuff like this, but we're forced to do so in this
                 # case.
                 #
-                if current.role == rolenames.ROLE_FRAME and \
+                if current.getRole() == pyatspi.ROLE_FRAME and \
                    (current.name and current.name.endswith(_("Writer"))):
                     self.checkForTableBoundry(orca_state.locusOfFocus,
                                               event.source)
@@ -2064,8 +2065,8 @@ class Script(default.Script):
         # them; not if we navigated to some text.
         #
         if event.type.startswith("object:state-changed:checked") and \
-           (event.source.role == rolenames.ROLE_TOGGLE_BUTTON or \
-            event.source.role == rolenames.ROLE_PUSH_BUTTON):
+           (event.source.getRole() == pyatspi.ROLE_TOGGLE_BUTTON or \
+            event.source.getRole() == pyatspi.ROLE_PUSH_BUTTON):
             weToggledIt = False
             if isinstance(orca_state.lastInputEvent, \
                           input_event.MouseButtonEvent):
@@ -2093,8 +2094,8 @@ class Script(default.Script):
         # then speak/braille that parent table cell (see bug #382415).
         #
         if event.type.startswith("object:state-changed:focused") and \
-           event.source.role == rolenames.ROLE_PARAGRAPH and \
-           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+           event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
+           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
            event.detail1 == 0 and \
            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
 
@@ -2125,7 +2126,7 @@ class Script(default.Script):
         # event. Just set the locusOfFocus for the first event.
         #
         if event.type.startswith("object:state-changed:focused") and \
-           event.source.role == rolenames.ROLE_PARAGRAPH and \
+           event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
            event.source != self.currentParagraph:
             self.currentParagraph = event.source
             orca.setLocusOfFocus(event, event.source, False)
@@ -2144,7 +2145,7 @@ class Script(default.Script):
         # box (see bug #364407).
         #
         if event.source.parent and \
-           event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+           event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
@@ -2175,16 +2176,16 @@ class Script(default.Script):
         # different from what is displayed in that cell, then speak "has
         # formula" and append it to the braille line.
         #
-        rolesList = [rolenames.ROLE_LIST, \
-                     rolenames.ROLE_COMBO_BOX, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_TOOL_BAR, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_LIST, \
+                     pyatspi.ROLE_COMBO_BOX, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_TOOL_BAR, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 cell = orca_state.locusOfFocus
 
                 # We are getting two "object:selection-changed" events
@@ -2271,8 +2272,8 @@ class Script(default.Script):
         # brailling will have been done in the onStateChanged() routine
         # (see bug #382415).
         #
-        if event.source.role == rolenames.ROLE_PARAGRAPH and \
-           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
+           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             event_string = orca_state.lastNonModifierKeyEvent.event_string
 

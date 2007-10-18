@@ -1525,7 +1525,8 @@ class Script(script.Script):
         Arguments:
         - obj: an accessible
         """
-        return obj and obj.role and ((obj.getRole() == pyatspi.ROLE_TEXT) \
+        return obj and obj.getRole() and \
+                                      ((obj.getRole() == pyatspi.ROLE_TEXT) \
                                or (obj.getRole() == pyatspi.ROLE_PARAGRAPH))
 
     def getText(self, obj, startOffset, endOffset):
