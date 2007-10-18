@@ -27,8 +27,8 @@ __license__   = "LGPL"
 
 import orca.braille as braille
 import orca.default as default
-import orca.rolenames as rolenames
 import orca.speech as speech
+import pyatspi
 
 from orca.orca_i18n import _
 
@@ -66,7 +66,7 @@ class Script(default.Script):
         for app in self.getKnownApplications():
             i = 0
             while i < app.childCount:
-                win = app.child(i)
+                win = app.getChildAtIndex(i)
                 if win is None:
                     print "app error " + app.name
                 elif win.name == obj.name:
@@ -105,7 +105,7 @@ class Script(default.Script):
 
         # Ignore changes on the status bar.  We handle them in onTextInserted.
         #
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onNameChanged(self, event)
 
     def onStateChanged(self, event):
@@ -123,7 +123,7 @@ class Script(default.Script):
         # suddenly showing.  Then, we want to present it because we
         # typically do not get onTextInserted events at that time.
         #
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onStateChanged(self, event)
         elif (event.type.startswith("object:state-changed:showing")) \
             and event.detail1:
@@ -137,7 +137,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onTextInserted(self, event)
 
         self.presentStatusBar(event.source)
@@ -151,7 +151,7 @@ class Script(default.Script):
 
         # Ignore changes on the status bar.  We handle them in onTextInserted.
         #
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onTextDeleted(self, event)
 
     def onCaretMoved(self, event):
@@ -163,5 +163,5 @@ class Script(default.Script):
 
         # Ignore changes on the status bar.  We handle them in onTextInserted.
         #
-        if event.source.role != rolenames.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onCaretMoved(self, event)

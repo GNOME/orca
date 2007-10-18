@@ -1,5 +1,12 @@
 2007-10-18  Scott Haeger <scott@bashautomation.com>
         
+        * src/orca/scripts/metacity.py:
+          src/orca/scripts/liferea.py:
+          pyatspi migration including changes to liferea.py involving
+          switching ROLE_STATUSBAR to ROLE_STATUS_BAR.
+
+2007-10-18  Scott Haeger <scott@bashautomation.com>
+        
         * src/orca/keybindings.py:
           pyatspi migration.
 

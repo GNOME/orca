@@ -57,7 +57,7 @@ class Script(default.Script):
         # statusbar content which is the the information that sets the 
         # work online or work offline mode.
         #
-        if event.source.getRole() != pyatspi.ROLE_STATUSBAR:
+        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onNameChanged(self, event)
             return
 
