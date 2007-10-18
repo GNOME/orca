@@ -65,6 +65,7 @@ class SearchQuery:
         self.debugLevel = debug.LEVEL_FINEST
 
     def debugContext(self, context, string):
+        """Prints out the context and the string to find to debug.out"""
         debug.println(self.debugLevel, \
             "------------------------------------------------------------")
         debug.println(self.debugLevel, \
@@ -85,6 +86,7 @@ class SearchQuery:
             "==========================================================\n\n")
 
     def dumpContext(self, context):
+        """Debug utility which prints out the context."""
         print "DUMP"
         for i in range(0, len(context.lines)):
             print "  Line %d" % i
@@ -127,7 +129,7 @@ class SearchQuery:
             regexp = "\\b" + self.searchString + "\\b"
         else:
             regexp = self.searchString
-        pattern = re.compile(regexp,flags)
+        pattern = re.compile(regexp, flags)
 
         debug.println(self.debugLevel, \
             "findQuery: startAtTop: %d  regexp: `%s`" \
@@ -171,9 +173,11 @@ class SearchQuery:
                         startedInThisZone = \
                               (originalLineIndex == context.lineIndex) and \
                               (originalZoneIndex == context.zoneIndex)
-
-                        if theZone.accessible.text and \
-                           theZone.accessible.text.characterCount:
+                        try:
+                            characterCount = theZone.accessible.queryText()
+                        except:
+                            pass
+                        else:
                             # Make a list of the character offsets for the
                             # matches in this zone.
                             #
@@ -188,25 +192,28 @@ class SearchQuery:
                             while not found and (i < len(offsets)):
                                 [nextInstance, offset] = \
                                    theZone.getWordAtOffset(offsets[i])
-                                offsetDiff = \
-                                    nextInstance.index-context.wordIndex
-                                if self.searchBackwards and \
-                                              (offsetDiff < 0) or \
-                                   not self.searchBackwards and \
-                                              (offsetDiff > 0):
-                                    context.wordIndex = nextInstance.index
-                                    context.charIndex = 0
-                                    found = True
-                                elif not offsetDiff and \
-                                    (not startedInThisZone or \
-                                     justEnteredFlatReview):
-                                    # We landed on a match by happenstance.
-                                    # This can occur when the nextInstance is
-                                    # the first thing we come across.
-                                    #
-                                    found = True
+                                if nextInstance:
+                                    offsetDiff = \
+                                        nextInstance.index - context.wordIndex
+                                    if self.searchBackwards \
+                                       and (offsetDiff < 0) \
+                                       or (not self.searchBackwards \
+                                           and offsetDiff > 0):
+                                        context.wordIndex = nextInstance.index
+                                        context.charIndex = 0
+                                        found = True
+                                    elif not offsetDiff and \
+                                        (not startedInThisZone or \
+                                         justEnteredFlatReview):
+                                        # We landed on a match by happenstance.
+                                        # This can occur when the nextInstance
+                                        # is the first thing we come across.
+                                        #
+                                        found = True
+                                    else:
+                                        i += 1
                                 else:
-                                    i += 1
+                                    break
                     if not found:
                         # Locate the next zone to try again.
                         #
