@@ -1,3 +1,8 @@
+2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/eventsynthesizer.py:
+          pyatspi migration.  Minor change for flat review clicking.
+
 2007-10-18  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/braillegenerator.py: 

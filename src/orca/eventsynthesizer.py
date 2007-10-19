@@ -48,7 +48,7 @@ def generateMouseEvent(x, y, eventName):
                   "SYNTHESIZING MOUSE EVENT: (%d, %d) %s"\
                   % (x, y, eventName))
 
-    pyatapi.Registry.generateMouseEvent(x, y, eventName)
+    pyatspi.Registry.generateMouseEvent(x, y, eventName)
 
 def clickObject(obj, button):
     """Performs a button click on the given Accessible.
