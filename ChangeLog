@@ -30,6 +30,12 @@
         * src/orca/J2SE-access-bridge.py:
           pyatspi migration.
 
+        * src/orca/scripts/gnome_segv2.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/default.py:
+          src/orca/braillegenerator.py:
+          Fixup up various warnings from pychecker.
+
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/eventsynthesizer.py:

@@ -2675,7 +2675,7 @@ class Script(script.Script):
             charCount = texti.characterCount
             for i in range(0, texti.getNSelections()):
                 [startSelOffset, endSelOffset] = texti.getSelection(i)
-                if text.caretOffset == 0 and \
+                if texti.caretOffset == 0 and \
                    startSelOffset == 0 and endSelOffset == charCount:
                     # Translators: this means the user has selected
                     # all the text in a document (e.g., Ctrl+a in gedit).
@@ -5211,7 +5211,7 @@ class Script(script.Script):
             return -1
 
         try:
-            text = obj.queryText()
+            obj.queryText()
         except NotImplementedError:
             return -1
 

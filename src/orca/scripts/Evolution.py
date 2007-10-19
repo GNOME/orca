@@ -435,8 +435,8 @@ class Script(default.Script):
                                 if orca_state.locusOfFocus and \
                                    orca_state.locusOfFocus.getRole() == \
                                        pyatspi.ROLE_PUSH_BUTTON and \
-                                   (orca_state.locusOfFocus.getState().contains( \
-                                       pyatspi.STATE_SENSITIVE) == False):
+                                   (not orca_state.locusOfFocus.getState().contains( \
+                                       pyatspi.STATE_SENSITIVE)):
                                     self.updateBraille(orca_state.locusOfFocus)
                                     speech.speakUtterances(
                                         self.speechGenerator.getSpeech( \

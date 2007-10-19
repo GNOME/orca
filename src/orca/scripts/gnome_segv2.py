@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import orca.debug as debug
 import orca.default as default
 import orca.atspi as atspi
-import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
 import orca.speech as speech

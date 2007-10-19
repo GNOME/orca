@@ -1331,7 +1331,6 @@ class BrailleGenerator:
             settings.brailleVerbosityLevel = \
                                          settings.VERBOSITY_LEVEL_BRIEF
 
-            parent = obj.parent
             row = table.getRowAtIndex(obj.getIndexInParent())
             column = table.getColumnAtIndex(obj.getIndexInParent())
 
