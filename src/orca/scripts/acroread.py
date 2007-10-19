@@ -160,7 +160,7 @@ class Script(default.Script):
         nodeList = []
         document = self.getDocument(obj)
         while obj != document:
-            nodeList.append(obj.index)
+            nodeList.append(obj.getIndexInParent())
             obj = obj.parent
 
         return nodeList
@@ -233,8 +233,8 @@ class Script(default.Script):
         # HACK: Again, these things are not labeled or assigned roles,
         # so we're punting for now.
         #
-        column = cell.parent.index + 1
-        row = cell.parent.parent.index + 1
+        column = cell.parent.getIndexInParent() + 1
+        row = cell.parent.parent.getIndexInParent() + 1
 
         return [row, column]
 
