@@ -1,6 +1,14 @@
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/gedit.py:
+          pyatspi migration.
+
+        * src/orca/Gecko.py:
+          pyatspi migration.
+
+2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/gedit.py:
           pyatspi migration along with fix for bug 488391 -Orca doesn't
           announce finds in Gedit if combo box has focus.
 

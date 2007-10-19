@@ -275,7 +275,7 @@ class Script(default.Script):
 
         if self.textArea != None:
             allText = self.findByRole(self.textArea, pyatspi.ROLE_TEXT)
-            caretPosition = allText[0].text.caretOffset
+            caretPosition = allText[0].queryText().caretOffset
 
             debug.println(self.debugLevel, \
                 "gedit.readMisspeltWord: type=%s  word=%s caret position=%d" \

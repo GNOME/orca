@@ -1261,7 +1261,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             sg = speechgenerator.SpeechGenerator
             return sg._getSpeechForSlider(self, obj, already_focused)
 
-        value = obj.value
+        value = obj.queryValue()
 
         # OK, this craziness is all about trying to figure out the most
         # meaningful formatting string for the floating point values.
@@ -4548,18 +4548,20 @@ class Script(default.Script):
         # able to use getURI() directly on the link but instead must use
         # ihypertext.getLink(0) on parent then use getURI on returned 
         # ihyperlink.
-        ihyperlink = obj.parent.hypertext.getLink(0)
-        return ihyperlink.getURI(0)
+        try:
+            ihyperlink = obj.parent.queryHypertext().getLink(0)
+        except:
+            return None
+        else:
+            return ihyperlink.getURI(0)
     
     def getDocumentFrameURI(self):
-        '''
-        Returns the URI of the document frame that is active
-        '''
+        """Returns the URI of the document frame that is active."""
         try:
             documentFrame = self.getDocumentFrame()
         except AttributeError:
             return None
-        attrs = documentFrame.document.getAttributes()
+        attrs = documentFrame.queryDocument().getAttributes()
         for attr in attrs:
             if attr.startswith('DocURL'):
                 return attr[7:]
@@ -5213,8 +5215,12 @@ class Script(default.Script):
 
         basename = None
 
-        if obj and obj.hyperlink:
-            uri = obj.hyperlink.getURI(0)
+        try:
+            hyperlink = obj.queryHyperlink()
+        except:
+            pass
+        else:
+            uri = hyperlink.getURI(0)
             if uri and len(uri):
                 # Get the last thing after all the /'s, unless it ends
                 # in a /.  If it ends in a /, we'll look to the stuff
