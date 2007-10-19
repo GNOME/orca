@@ -1,3 +1,8 @@
+2007-10-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          pyatspi migration.
+
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/eventsynthesizer.py:

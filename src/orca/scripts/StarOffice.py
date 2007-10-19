@@ -89,20 +89,20 @@ class WhereAmI(where_am_I.WhereAmI):
         utterances = []
         utterances.append(_("cell"))
 
-        table = obj.parent.table
+        table = obj.parent.queryTable()
 
         # Translators: this represents the column we're
         # on in a table.
         #
-        text = _("column %d") % (table.getColumnAtIndex(obj.index) + 1)
+        text = _("column %d") % (table.getColumnAtIndex(obj.getIndexInParent()) + 1)
         utterances.append(text)
 
         # Translators: this represents the row number of a table.
         #
-        text = _("row %d") % (table.getRowAtIndex(obj.index) + 1)
+        text = _("row %d") % (table.getRowAtIndex(obj.getIndexInParent()) + 1)
         utterances.append(text)
 
-        text = obj.text.getText(0, -1)
+        text = obj.queryText().getText(0, -1)
         utterances.append(text)
 
         debug.println(self._debugLevel, "calc table cell utterances=%s" % \
@@ -155,8 +155,8 @@ class WhereAmI(where_am_I.WhereAmI):
         parent = obj.parent
         while parent and (parent.parent != parent):
             # debug.println(self._debugLevel,
-            #               "_getCalcFrameAndSheet: parent=%s, %s" % \
-            #               (parent.role, self._getObjLabelAndName(parent)))
+            #             "_getCalcFrameAndSheet: parent=%s, %s" % \
+            #             (parent.getRole(), self._getObjLabelAndName(parent)))
             if parent.getRole() == pyatspi.ROLE_FRAME:
                 mylist[0] = parent
             if parent.getRole() == pyatspi.ROLE_TABLE:
@@ -173,8 +173,7 @@ class WhereAmI(where_am_I.WhereAmI):
             return
 
         utterances = []
-        for i in range(0, self._statusBar.childCount):
-            child = self._statusBar.child(i)
+        for child in self._statusBar:
             text = self._getObjName(child)
             utterances.append(text)
 
@@ -250,37 +249,49 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         table = self._script.getTable(obj)
         parent = obj.parent
+        try:
+            parentTable = parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
 
         if self._script.pointOfReference.has_key("lastColumn") and \
               self._script.pointOfReference["lastColumn"] != \
-              parent.table.getColumnAtIndex(obj.getIndexInParent()):
+              parentTable.getColumnAtIndex(obj.getIndexInParent()):
             if self._script.dynamicColumnHeaders.has_key(table):
                 row = self._script.dynamicColumnHeaders[table]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
+                try:
+                    headerText = header.queryText()
+                except:
+                    headerText = None
+
                 if header.childCount > 0:
-                    for i in range(0, header.childCount):
-                        child = header.child(i)
+                    for child in header:
                         text = self._script.getText(child, 0, -1)
                         if text:
                             regions.append(braille.Region(" " + text + " "))
-                elif header.text:
+                elif headerText:
                     text = self._script.getText(header, 0, -1)
                     if text:
                         regions.append(braille.Region(" " + text + " "))
 
         if self._script.pointOfReference.has_key("lastRow") and \
               self._script.pointOfReference['lastRow'] != \
-              parent.table.getRowAtIndex(obj.getIndexInParent()):
+              parentTable.getRowAtIndex(obj.getIndexInParent()):
             if self._script.dynamicRowHeaders.has_key(table):
                 column = self._script.dynamicRowHeaders[table]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
+                try:
+                    headerText = header.queryText()
+                except:
+                    headerText = None
+
                 if header.childCount > 0:
-                    for i in range(0, header.childCount):
-                        child = header.child(i)
+                    for child in header:
                         text = self._script.getText(child, 0, -1)
                         if text:
                             regions.append(braille.Region(" " + text + " "))
-                elif header.text:
+                elif headerText:
                     text = self._script.getText(header, 0, -1)
                     if text:
                         regions.append(braille.Region(" " + text + " "))
@@ -291,15 +302,15 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # valid table. It's possible that the parent could be a
             # table cell too (see bug #351501).
             #
-            if settings.readTableCellRow and obj.parent.table:
+            if settings.readTableCellRow and parentTable:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \
                                              settings.VERBOSITY_LEVEL_BRIEF
 
                 parent = obj.parent
-                row = parent.table.getRowAtIndex(obj.index)
-                column = parent.table.getColumnAtIndex(obj.index)
+                row = parentTable.getRowAtIndex(obj.getIndexInParent())
+                column = parentTable.getColumnAtIndex(obj.getIndexInParent())
 
                 # This is an indication of whether we should speak all the
                 # table cells (the user has moved focus up or down a row),
@@ -312,14 +323,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     pointOfReference = self._script.pointOfReference
                     speakAll = \
                         (pointOfReference["lastRow"] != row) or \
-                           ((row == 0 or row == parent.table.nRows-1) and \
+                           ((row == 0 or row == parentTable.nRows-1) and \
                             pointOfReference["lastColumn"] == column)
 
                 if speakAll:
                     [startIndex, endIndex] = \
                         self._script.getSpreadSheetRowRange(obj)
                     for i in range(startIndex, endIndex+1):
-                        accRow = parent.table.getAccessibleAt(row, i)
+                        accRow = parentTable.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)
                         showing = cell.getState().contains( \
                                         pyatspi.STATE_SHOWING)
@@ -376,10 +387,13 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # Note that if the cell was empty, then
             # self._script.getDisplayedText will have already done this for us.
             #
-            if obj.text:
-                objectText = self._script.getText(obj, 0, -1)
-                if objectText and len(objectText) != 0:
-                    regions.append(braille.Region(" " + obj.name))
+            try:
+                if obj.queryText():
+                    objectText = self._script.getText(obj, 0, -1)
+                    if objectText and len(objectText) != 0:
+                        regions.append(braille.Region(" " + obj.name))
+            except NotImplementedError:
+                pass
 
             return [regions, componentRegion]
 
@@ -396,8 +410,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
             else:
                 regions = []
-                for i in range(0, obj.childCount):
-                    child = obj.child(i)
+                for child in obj:
                     [cellRegions, focusRegion] = \
                                 self._getBrailleRegionsForTableCell(child)
                     regions.extend(cellRegions)
@@ -513,38 +526,50 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             #
             table = self._script.getTable(obj)
             parent = obj.parent
+            try:
+                parentTable = parent.queryTable()
+            except NotImplementedError:
+                parentTable = None
 
             if self._script.pointOfReference.has_key("lastColumn") and \
                self._script.pointOfReference["lastColumn"] != \
-               parent.table.getColumnAtIndex(obj.index):
+               parentTable.getColumnAtIndex(obj.getIndexInParent()):
                 if self._script.dynamicColumnHeaders.has_key(table):
                     row = self._script.dynamicColumnHeaders[table]
                     header = self._script.getDynamicRowHeaderCell(obj, row)
+                    try:
+                        headerText = header.queryText()
+                    except:
+                        headerText = None
+
                     if header.childCount > 0:
-                        for i in range(0, header.childCount):
-                            child = header.child(i)
+                        for child in header:
                             text = self._script.getText(child, 0, -1)
                             if text:
                                 utterances.append(text)
-                    elif header.text:
+                    elif headerText:
                         text = self._script.getText(header, 0, -1)
                         if text:
                             utterances.append(text)
 
             if self._script.pointOfReference.has_key("lastRow") and \
                self._script.pointOfReference["lastRow"] != \
-               parent.table.getRowAtIndex(obj.index):
+               parentTable.getRowAtIndex(obj.getIndexInParent()):
                 if self._script.dynamicRowHeaders.has_key(table):
                     column = self._script.dynamicRowHeaders[table]
                     header = self._script.getDynamicColumnHeaderCell(obj,
                                                                      column)
+                    try:
+                        headerText = header.queryText()
+                    except:
+                        headerText = None
+
                     if header.childCount > 0:
-                        for i in range(0, header.childCount):
-                            child = header.child(i)
+                        for child in header:
                             text = self._script.getText(child, 0, -1)
                             if text:
                                 utterances.append(text)
-                    elif header.text:
+                    elif headerText:
                         text = self._script.getText(header, 0, -1)
                         if text:
                             utterances.append(text)
@@ -553,8 +578,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if not already_focused:
                 if settings.readTableCellRow:
                     parent = obj.parent
-                    row = parent.table.getRowAtIndex(obj.index)
-                    column = parent.table.getColumnAtIndex(obj.index)
+                    row = parentTable.getRowAtIndex(obj.getIndexInParent())
+                    column = \
+                        parentTable.getColumnAtIndex(obj.getIndexInParent())
 
                     # This is an indication of whether we should speak all the
                     # table cells (the user has moved focus up or down a row),
@@ -566,14 +592,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         self._script.pointOfReference.has_key("lastColumn"):
                         pointOfReference = self._script.pointOfReference
                         speakAll = (pointOfReference["lastRow"] != row) or \
-                               ((row == 0 or row == parent.table.nRows-1) and \
+                               ((row == 0 or row == parentTable.nRows-1) and \
                                 pointOfReference["lastColumn"] == column)
 
                     if speakAll:
                         [startIndex, endIndex] = \
                             self._script.getSpreadSheetRowRange(obj)
                         for i in range(startIndex, endIndex+1):
-                            accRow = parent.table.getAccessibleAt(row, i)
+                            accRow = parentTable.getAccessibleAt(row, i)
                             cell = atspi.Accessible.makeAccessible(accRow)
                             showing = cell.getState().contains( \
                                           pyatspi.STATE_SHOWING)
@@ -614,15 +640,18 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 self._script.inputLineForCell = \
                             self._script.locateInputLine(obj)
 
-            if obj.text:
-                objectText = self._script.getText(obj, 0, -1)
-                if not speakCellCoordinates and len(objectText) == 0:
-                    # Translators: this indicates an empty (blank) spread
-                    # sheet cell.
-                    #
-                    objectText = _("blank")
+            try:
+                if obj.queryText():
+                    objectText = self._script.getText(obj, 0, -1)
+                    if not speakCellCoordinates and len(objectText) == 0:
+                        # Translators: this indicates an empty (blank) spread
+                        # sheet cell.
+                        #
+                        objectText = _("blank")
 
-                utterances.append(objectText)
+                    utterances.append(objectText)
+            except NotImplementedError:
+                pass
 
             if speakCellCoordinates:
                 nameList = obj.name.split()
@@ -641,8 +670,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                                         already_focused)
             else:
                 utterances = []
-                for i in range(0, obj.childCount):
-                    child = obj.child(i)
+                for child in obj:
                     utterances.extend(self._getSpeechForTableCell(child,
                                                         already_focused))
 
@@ -982,10 +1010,12 @@ class Script(default.Script):
         isn't in a table.
         """
 
-        table = None
         obj = self.adjustForWriterTable(obj)
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.parent:
-            table = obj.parent.table
+            try:
+                table = obj.parent.queryTable()
+            except NotImplementedError:
+                table = None
 
         return table
 
@@ -1004,9 +1034,14 @@ class Script(default.Script):
         obj = self.adjustForWriterTable(obj)
         accCell = None
         parent = obj.parent
-        if parent and parent.table:
-            row = parent.table.getRowAtIndex(obj.index)
-            cell = parent.table.getAccessibleAt(row, column)
+        try:
+            parentTable = parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+
+        if parent and parentTable:
+            row = parentTable.getRowAtIndex(obj.getIndexInParent())
+            cell = parentTable.getAccessibleAt(row, column)
             accCell = atspi.Accessible.makeAccessible(cell)
 
         return accCell
@@ -1026,9 +1061,14 @@ class Script(default.Script):
         obj = self.adjustForWriterTable(obj)
         accCell = None
         parent = obj.parent
-        if parent and parent.table:
-            column = parent.table.getColumnAtIndex(obj.index)
-            cell = parent.table.getAccessibleAt(row, column)
+        try:
+            parentTable = parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+
+        if parent and parentTable:
+            column = parentTable.getColumnAtIndex(obj.getIndexInParent())
+            cell = parentTable.getAccessibleAt(row, column)
             accCell = atspi.Accessible.makeAccessible(cell)
 
         return accCell
@@ -1065,7 +1105,7 @@ class Script(default.Script):
     def getSpreadSheetRowRange(self, obj):
         """If this is spread sheet cell, return the start and end indices
         of the spread sheet cells for the table that obj is in. Otherwise
-        return the complete range (0, parent.table.nColumns).
+        return the complete range (0, parentTable.nColumns).
 
         Arguments:
         - obj: a spread sheet table cell.
@@ -1074,8 +1114,13 @@ class Script(default.Script):
         """
 
         parent = obj.parent
+        try:
+            parentTable = parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+
         startIndex = 0
-        endIndex = parent.table.nColumns
+        endIndex = parentTable.nColumns
 
         if self.isSpreadSheetCell(obj):
             y = parent.extents.y
@@ -1083,15 +1128,15 @@ class Script(default.Script):
             cell = parent.component.getAccessibleAtPoint(leftX, y, 0)
             if cell:
                 leftCell = atspi.Accessible.makeAccessible(cell)
-                table = leftCell.parent.table
-                startIndex = table.getColumnAtIndex(leftCell.index)
+                table = leftCell.parent.queryTable()
+                startIndex = table.getColumnAtIndex(leftCell.getIndexInParent())
 
             rightX = parent.extents.x + parent.extents.width - 1
             cell = parent.component.getAccessibleAtPoint(rightX, y, 0)
             if cell:
                 rightCell = atspi.Accessible.makeAccessible(cell)
-                table = rightCell.parent.table
-                endIndex = table.getColumnAtIndex(rightCell.index)
+                table = rightCell.parent.queryTable()
+                endIndex = table.getColumnAtIndex(rightCell.getIndexInParent())
 
         return [startIndex, endIndex]
 
@@ -1162,8 +1207,8 @@ class Script(default.Script):
             newFocus = newFocus.parent
 
         if oldFocusIsTable == None and newFocusIsTable != None:
-            rows = newFocusIsTable.table.nRows
-            columns = newFocusIsTable.table.nColumns
+            rows = newFocusIsTable.queryTable().nRows
+            columns = newFocusIsTable.queryTable().nColumns
             # We've entered a table.  Announce the dimensions.
             #
             line = _("table with %d rows and %d columns.") % (rows, columns)
@@ -1190,16 +1235,19 @@ class Script(default.Script):
         # Check to see if the current focus is a table cell.
         #
         if self.isSpreadSheetCell(orca_state.locusOfFocus):
-            if self.inputLineForCell and self.inputLineForCell.text:
-                inputLine = self.getText(self.inputLineForCell, 0, -1)
-                if not inputLine:
-                    # Translators: this is used to announce that the
-                    # current input line in a spreadsheet is blank/empty.
-                    #
-                    inputLine = _("empty")
-                debug.println(self.debugLevel,
+            try:
+                if self.inputLineForCell and self.inputLineForCell.queryText():
+                    inputLine = self.getText(self.inputLineForCell, 0, -1)
+                    if not inputLine:
+                        # Translators: this is used to announce that the
+                        # current input line in a spreadsheet is blank/empty.
+                        #
+                        inputLine = _("empty")
+                    debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
-                speech.speak(inputLine)
+                    speech.speak(inputLine)
+            except NotImplementedError:
+                pass
 
     def getTableRow(self, cell):
         """Get the row number in the table that this table cell is on.
@@ -1215,8 +1263,13 @@ class Script(default.Script):
         cell = self.adjustForWriterTable(cell)
         if cell.getRole() == pyatspi.ROLE_TABLE_CELL:
             parent = cell.parent
-            if parent and parent.table:
-                row = parent.table.getRowAtIndex(cell.index)
+            try:
+                parentTable = parent.queryTable()
+            except NotImplementedError:
+                parentTable = None
+
+            if parent and parentTable():
+                row = parentTable.getRowAtIndex(cell.getIndexInParent())
 
         return row
 
@@ -1234,8 +1287,13 @@ class Script(default.Script):
         cell = self.adjustForWriterTable(cell)
         if cell.getRole() == pyatspi.ROLE_TABLE_CELL:
             parent = cell.parent
-            if parent and parent.table:
-                column = parent.table.getColumnAtIndex(cell.index)
+            try:
+                parentTable = parent.queryTable()
+            except NotImplementedError:
+                parentTable = None
+
+            if parent and parentTable:
+                column = parentTable.getColumnAtIndex(cell.getIndexInParent())
 
         return column
 
@@ -1370,12 +1428,12 @@ class Script(default.Script):
         # Determine which word is the misspelt word. This word will have
         # non-default text attributes associated with it.
 
-        textLength = paragraph[0].text.characterCount
+        textLength = paragraph[0].queryText().characterCount
         startFound = False
         startOff = 0
         endOff = textLength
         for i in range(0, textLength):
-            attributes = paragraph[0].text.getAttributes(i)
+            attributes = paragraph[0].queryText().getAttributes(i)
             if len(attributes[0]) != 0:
                 if not startFound:
                     startOff = i
@@ -1433,10 +1491,10 @@ class Script(default.Script):
         Returns True if this word contains the end of a hypertext link.
         """
 
-        nLinks = obj.hypertext.getNLinks()
+        nLinks = obj.queryHypertext().getNLinks()
         links = []
         for i in range(0, nLinks):
-            links.append(obj.hypertext.getLink(i))
+            links.append(obj.queryHypertext().getLink(i))
 
         for link in links:
             if link.endIndex > startOffset and \
@@ -1658,7 +1716,11 @@ class Script(default.Script):
             # line into words and call sayWriterWord() to speak that token
             # in the appropriate voice.
             #
-            hypertext = event.source.hypertext
+            try:
+                hypertext = event.source.queryHypertext()
+            except NotImplementedError:
+                hypertext = None
+
             if not hypertext or (hypertext.getNLinks() == 0):
                 if settings.enableSpeechIndentation:
                     self.speakTextIndentation(event.source,
@@ -1799,7 +1861,7 @@ class Script(default.Script):
                 panel = event.source.parent
                 allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
                 for label in allLabels:
-                    relations = label.relations
+                    relations = label.getRelationSet()
                     hasLabelFor = False
                     for relation in relations:
                         if relation.getRelationType() \
@@ -2196,28 +2258,35 @@ class Script(default.Script):
                 if cell != self.lastCell:
                     self.lastCell = cell
 
-                    if cell.text:
-                        cellText = self.getText(cell, 0, -1)
-                        if cellText and len(cellText):
-                            if self.inputLineForCell and \
-                               self.inputLineForCell.text:
-                                inputLine = self.getText( \
+                    try:
+                        if cell.queryText():
+                            cellText = self.getText(cell, 0, -1)
+                            if cellText and len(cellText):
+                                try:
+                                    if self.inputLineForCell and \
+                                       self.inputLineForCell.queryText():
+                                        inputLine = self.getText( \
                                                  self.inputLineForCell, 0, -1)
-                                if inputLine and (len(inputLine) > 1) \
-                                    and (inputLine[0] == "="):
-                                    # Translators: this means a particular
-                                    # cell in a spreadsheet has a formula
-                                    # (e.g., "=sum(a1:d1)")
-                                    #
-                                    hf = " " + _("has formula")
-                                    speech.speak(hf, None, False)
+                                        if inputLine and (len(inputLine) > 1) \
+                                            and (inputLine[0] == "="):
+                                            # Translators: this means a 
+                                            # particular cell in a spreadsheet
+                                            # has a formula
+                                            # (e.g., "=sum(a1:d1)")
+                                            #
+                                            hf = " " + _("has formula")
+                                            speech.speak(hf, None, False)
 
-                                    line = braille.getShowingLine()
-                                    line.addRegion(braille.Region(hf))
-                                    braille.refresh()
-                                    #
-                                    # Fall-thru to process the event with
-                                    # the default handler.
+                                            line = braille.getShowingLine()
+                                            line.addRegion(braille.Region(hf))
+                                            braille.refresh()
+                                            #
+                                            # Fall-thru to process the event
+                                            # with the default handler.
+                                except NotImplementedError:
+                                    pass
+                    except NotImplementedError:
+                        pass
 
         default.Script.onSelectionChanged(self, event)
 
@@ -2237,7 +2306,7 @@ class Script(default.Script):
         - startOffset: the starting character position
         - endOffset: the ending character position
         """
-        text = obj.text.getText(0, -1).decode("UTF-8")
+        text = obj.queryText().getText(0, -1).decode("UTF-8")
         if startOffset >= len(text):
             startOffset = len(text) - 1
         if endOffset == -1:
@@ -2294,8 +2363,8 @@ class Script(default.Script):
                self.lastCell != event.source.parent:
                 return
 
-            caretOffset = event.source.text.caretOffset
-            charLen = event.source.text.characterCount
+            caretOffset = event.source.queryText().caretOffset
+            charLen = event.source.queryText().characterCount
 
             # If you are in a table cell and you arrow Right, the caret
             # will focus at the end of the current paragraph before moving
@@ -2346,9 +2415,10 @@ class Script(default.Script):
            Otherwise, returns False.
         """
 
-        # Get the the AccessibleText interrface.
-        text = obj.text
-        if not text:
+        # Get the the AccessibleText interface.
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return False
 
         # Was a left or right-arrow key pressed?
@@ -2403,9 +2473,10 @@ class Script(default.Script):
         Otherwise, returns False.
         """
 
-        # Get the the AccessibleText interrface.
-        text = obj.text
-        if not text:
+        # Get the the AccessibleText interface.
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return False
 
         # Get the line containing the caret
