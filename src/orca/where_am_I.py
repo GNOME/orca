@@ -563,7 +563,9 @@ class WhereAmI:
                               "??? parent=%s" % parent.getRoleName())
                 return
             else:
-                row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+                row = \
+                    table.getRowAtIndex(
+                       orca_state.locusOfFocus.getIndexInParent())
                 # Translators: this in reference to a row in a table.
                 #
                 text = _("row %d of %d") % ((row+1), table.nRows)
@@ -1107,7 +1109,7 @@ class WhereAmI:
             debug.println(self._debugLevel, "??? parent=%s" % parent.getRole())
             return []
         else:
-            row = table.getRowAtIndex(obj.index)
+            row = table.getRowAtIndex(obj.getIndexInParent())
 
             for i in range(0, table.nColumns):
                 cell = table.getAccessibleAt(row, i)
@@ -1544,8 +1546,7 @@ class WhereAmI:
         if managesDescendants:
             return
 
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
+        for child in obj:
             # debug.println(self._debugLevel,
             #               "_findStatusBar: child=%s, %s" % \
             #               (child.getRole(), self._getObjLabelAndName(child)))
@@ -1569,8 +1570,7 @@ class WhereAmI:
             text = self._getObjName(self._statusBar)
             utterances.append(text)
         else:
-            for i in range(0, self._statusBar.childCount):
-                child = self._statusBar.child(i)
+            for child in self._statusBar:
                 text = self._getObjName(child)
                 utterances.append(text)
 
@@ -1586,8 +1586,7 @@ class WhereAmI:
         """
 
         defaultButton = None
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
+        for child in obj:
             # debug.println(self._debugLevel,
             #               "_getDefaultButton: child=%s, %s" % \
             #               (child.getRole(), self._getObjLabelAndName(child)))

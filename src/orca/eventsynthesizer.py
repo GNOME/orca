@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
 import atspi
 import debug
 
@@ -47,8 +48,7 @@ def generateMouseEvent(x, y, eventName):
                   "SYNTHESIZING MOUSE EVENT: (%d, %d) %s"\
                   % (x, y, eventName))
 
-    d = atspi.Registry().registry.getDeviceEventController()
-    d.generateMouseEvent(x, y, eventName)
+    pyatapi.Registry.generateMouseEvent(x, y, eventName)
 
 def clickObject(obj, button):
     """Performs a button click on the given Accessible.
@@ -91,5 +91,4 @@ def generateKeyboardEvent(keycode, keystring, type):
               KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
     """
 
-    d = atspi.Registry().registry.getDeviceEventController()
-    d.generateKeyboardEvent(keycode, keystring, type)
+    pyatspi.Registry.generateKeyboardEvent(keycode, keystring, type)

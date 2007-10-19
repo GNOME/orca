@@ -1352,9 +1352,14 @@ class SpeechGenerator:
         # See bug #465989 for more details.
         #
         # [[TODO: eitani - incorprate this in new rolenames ]]
-        if (not displayedText or len(displayedText) == 0) and obj.image:
-            if obj.image.imageDescription:
-                utterances.append(obj.image.imageDescription)
+        try:
+            image = obj.queryImage()
+        except:
+            image = None
+
+        if (not displayedText or len(displayedText) == 0) and image:
+            if image.imageDescription:
+                utterances.append(image.imageDescription)
             utterances.extend(self._getSpeechForImage(obj, already_focused))
 
         state = obj.getState()

@@ -1040,9 +1040,10 @@ class BrailleGenerator:
 
         text = ""
 
+        state = obj.getState()
         text = self._script.appendString(
             settings.brailleRadioButtonIndicators[
-                obj.state.count(atspi.Accessibility.STATE_CHECKED)],
+                state.contains(pyatspi.STATE_CHECKED)],
             text)
 
         text = self._script.appendString(
@@ -1270,9 +1271,13 @@ class BrailleGenerator:
         #
         displayedText = self._script.getDisplayedText( \
                           self._script.getRealActiveDescendant(obj))
-        if (not displayedText or len(displayedText) == 0) and obj.image:
-            if obj.image.imageDescription:
-                regions[0].append(obj.image.imageDescription)
+        try:
+            image = obj.queryImage()
+        except:
+            image = None
+        if (not displayedText or len(displayedText) == 0) and image:
+            if image.imageDescription:
+                regions[0].append(image.imageDescription)
             [cellRegions, focusRegion] = self._getBrailleRegionsForImage(obj)
             regions[0].extend(cellRegions)
 
@@ -1340,7 +1345,7 @@ class BrailleGenerator:
                 self._script.pointOfReference.has_key("lastColumn"):
                 pointOfReference = self._script.pointOfReference
                 speakAll = (pointOfReference["lastRow"] != row) or \
-                       ((row == 0 or row == parent.table.nRows-1) and \
+                       ((row == 0 or row == table.nRows-1) and \
                         pointOfReference["lastColumn"] == column)
 
             if speakAll:

@@ -794,7 +794,7 @@ class Script(script.Script):
 
         orcaModMask      = 1 << settings.MODIFIER_ORCA
         orcaShiftModMask = (1 << settings.MODIFIER_ORCA |
-                            1 << atspi.Accessibility.MODIFIER_SHIFT)
+                            1 << pyatspi.MODIFIER_SHIFT)
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -1072,7 +1072,7 @@ class Script(script.Script):
 
         orcaModMask        = 1 << settings.MODIFIER_ORCA
         orcaControlModMask = (1 << settings.MODIFIER_ORCA |
-                              1 << atspi.Accessibility.MODIFIER_CONTROL)
+                              1 << pyatspi.MODIFIER_CONTROL)
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -1253,14 +1253,14 @@ class Script(script.Script):
 
         orcaModMask         = 1 << settings.MODIFIER_ORCA
         orcaControlModMask  = (1 << settings.MODIFIER_ORCA |
-                               1 << atspi.Accessibility.MODIFIER_CONTROL)
+                               1 << pyatspi.MODIFIER_CONTROL)
         orcaAltModMask      = (1 << settings.MODIFIER_ORCA |
-                               1 << atspi.Accessibility.MODIFIER_ALT)
+                               1 << pyatspi.MODIFIER_ALT)
         orcaShiftAltModMask = (1 << settings.MODIFIER_ORCA |
-                               1 << atspi.Accessibility.MODIFIER_ALT |
-                               1 << atspi.Accessibility.MODIFIER_SHIFT)
-        shiftAltModMask     = (1 << atspi.Accessibility.MODIFIER_SHIFT |
-                               1 << atspi.Accessibility.MODIFIER_ALT)
+                               1 << pyatspi.MODIFIER_ALT |
+                               1 << pyatspi.MODIFIER_SHIFT)
+        shiftAltModMask     = (1 << pyatspi.MODIFIER_SHIFT |
+                               1 << pyatspi.MODIFIER_ALT)
         keyBindings = script.Script.getKeyBindings(self)
 
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1480,7 +1480,7 @@ class Script(script.Script):
         - keyboardEvent: an instance of input_event.KeyboardEvent
         """
 
-        if (keyboardEvent.type == atspi.Accessibility.KEY_PRESSED_EVENT) and \
+        if (keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT) and \
            (keyboardEvent.event_string == "Escape"):
             settings.learnModeEnabled = False
 
@@ -1509,14 +1509,17 @@ class Script(script.Script):
             context.obj.text.setCaretOffset(context.currentOffset)
 
     def sayAll(self, inputEvent):
-        if not orca_state.locusOfFocus:
-            pass
-        elif orca_state.locusOfFocus.text:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                          self.__sayAllProgressCallback)
-        else:
+        try:
+            orca_state.locusOfFocus.queryText()
+        except NotImplementedError:
             speech.speakUtterances(
                 self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
+        except AttributeError:
+            pass
+        else:
+            speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                          self.__sayAllProgressCallback)
+
         return True
 
     def isTextArea(self, obj):
@@ -1525,9 +1528,8 @@ class Script(script.Script):
         Arguments:
         - obj: an accessible
         """
-        return obj and obj.getRole() and \
-                                      ((obj.getRole() == pyatspi.ROLE_TEXT) \
-                               or (obj.getRole() == pyatspi.ROLE_PARAGRAPH))
+        return obj and \
+            obj.getRole() in (pyatspi.ROLE_TEXT, pyatspi.ROLE_PARAGRAPH)
 
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
@@ -1537,7 +1539,7 @@ class Script(script.Script):
         - startOffset: the starting character position
         - endOffset: the ending character position
         """
-        return obj.text.getText(startOffset, endOffset)
+        return obj.queryText().getText(startOffset, endOffset)
 
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the start and
@@ -1606,8 +1608,9 @@ class Script(script.Script):
             # test whether the first character is a newline, because
             # StarOffice blank lines are empty, and so StarOffice.py
             # handles speaking blank lines.
-            char = obj.text.getTextAtOffset(caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+            text = obj.queryText()
+            char = text.getTextAtOffset(caretOffset,
+                pyatspi.TEXT_BOUNDARY_CHAR)
             debug.println(debug.LEVEL_FINEST,
                 "sayLine: character=<%s>, start=%d, end=%d" % \
                 (char[0], char[1], char[2]))
@@ -1635,7 +1638,7 @@ class Script(script.Script):
 
         [word, startOffset, endOffset] = \
             text.getTextAtOffset(offset,
-                                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                                 pyatspi.TEXT_BOUNDARY_WORD_START)
 
         # Speak a newline if a control-right-arrow or control-left-arrow
         # was used to cross a line boundary. Handling is different for
@@ -1740,7 +1743,7 @@ class Script(script.Script):
         [char, startOffset, endOffset] = \
             text.getTextAtOffset( \
                 offset,
-                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+                pyatspi.TEXT_BOUNDARY_CHAR)
         if not self.isWordDelimiter(char):
             return
 
@@ -1756,7 +1759,7 @@ class Script(script.Script):
             [char, startOffset, endOffset] = \
                 text.getTextAtOffset( \
                     wordStartOffset,
-                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+                    pyatspi.TEXT_BOUNDARY_CHAR)
             if self.isWordDelimiter(char):
                 break
             else:
@@ -1795,7 +1798,7 @@ class Script(script.Script):
                interface
         """
 
-        text = obj.text
+        text = obj.queryText()
         offset = text.caretOffset
 
         # If we have selected text and the last event was a move to the
@@ -1803,7 +1806,7 @@ class Script(script.Script):
         # caret is (i.e. the selected character).
         #
         mods = orca_state.lastInputEvent.modifiers
-        shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
+        shiftMask = 1 << pyatspi.MODIFIER_SHIFT
         if (mods & shiftMask) \
             and orca_state.lastNonModifierKeyEvent.event_string == "Right":
             startOffset = offset-1
@@ -1889,7 +1892,7 @@ class Script(script.Script):
 
         if inputEvent and orca_state.lastInputEvent \
            and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            string = atspi.KeystrokeListener.keyEventToString(inputEvent)
+            string = input_event.keyEventToString(inputEvent)
             debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
         else:
             return self.whereAmI.whereAmI(obj, False, False)
@@ -2091,8 +2094,8 @@ class Script(script.Script):
         # Clear the point of reference.
         # If the point of reference is a cell, we want to keep the 
         # table-related points of reference.
-        if oldParent == newParent and \
-              getattr(newParent, 'role', None) == pyatspi.ROLE_TABLE:
+        if oldParent is not None and oldParent == newParent and \
+              newParent.getRole() == pyatspi.ROLE_TABLE:
             for key in self.pointOfReference.keys():
                 if key not in ('lastRow', 'lastColumn'):
                     del self.pointOfReference[key]
@@ -2127,9 +2130,12 @@ class Script(script.Script):
             oldNodeLevel = -1
             newNodeLevel = -1
             if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-                if oldParent and oldParent.table and \
-                   oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-                    table = oldParent.table
+                try:
+                    table = oldParent.queryTable()
+                except:
+                    table = None
+                if table and \
+                      oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                     oldRow = table.getRowAtIndex( \
                                            oldLocusOfFocus.getIndexInParent())
                     oldCol = table.getColumnAtIndex( \
@@ -2138,15 +2144,18 @@ class Script(script.Script):
                     oldRow = -1
                     oldCol = -1
 
-                if newParent and newParent.table:
-                    table = newParent.table
+                try:
+                    table = newParent.queryTable()
+                except:
+                    pass
+                else:
                     newRow = table.getRowAtIndex( \
                                   newLocusOfFocus.getIndexInParent())
                     newCol = table.getColumnAtIndex( \
                                   newLocusOfFocus.getIndexInParent())
 
                     if (newRow != oldRow) or (oldParent != newParent):
-                        desc = newParent.table.getRowDescription(newRow)
+                        desc = table.getRowDescription(newRow)
                         if desc and len(desc):
                             text = desc
                             if settings.speechVerbosityLevel \
@@ -2160,7 +2169,7 @@ class Script(script.Script):
                         # it's not possible to navigate across a row.
                         topName = self.getTopLevelName(newLocusOfFocus)
                         if not topName.endswith(" - Thunderbird"):
-                            desc = newParent.table.getColumnDescription(newCol)
+                            desc = table.getColumnDescription(newCol)
                             if desc and len(desc):
                                 text = desc
                                 if settings.speechVerbosityLevel \
@@ -2180,16 +2189,16 @@ class Script(script.Script):
             if newLocusOfFocus.getRole() == pyatspi.ROLE_RADIO_BUTTON:
                 radioGroupLabel = None
                 inSameGroup = False
-                relations = newLocusOfFocus.relations
+                relations = newLocusOfFocus.getRelationSet()
                 for relation in relations:
                     if (not radioGroupLabel) \
                         and (relation.getRelationType() \
-                             == atspi.Accessibility.RELATION_LABELLED_BY):
+                             == pyatspi.RELATION_LABELLED_BY):
                         radioGroupLabel = atspi.Accessible.makeAccessible(
                             relation.getTarget(0))
                     if (not inSameGroup) \
                         and (relation.getRelationType() \
-                             == atspi.Accessibility.RELATION_MEMBER_OF):
+                             == pyatspi.RELATION_MEMBER_OF):
                         for i in range(0, relation.getNTargets()):
                             target = atspi.Accessible.makeAccessible(
                                 relation.getTarget(i))
@@ -2255,8 +2264,11 @@ class Script(script.Script):
             # it the next time.
             #
             if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-                if newParent and newParent.table:
-                    table = newParent.table
+                try:
+                    table = newParent.queryTable()
+                except:
+                    pass
+                else:
                     column = table.getColumnAtIndex( \
                                     newLocusOfFocus.getIndexInParent())
                     self.pointOfReference['lastColumn'] = column
@@ -2346,10 +2358,10 @@ class Script(script.Script):
         # If this object is CONTROLLED_BY the object that currently
         # has focus, speak/braille this object.
         #
-        relations = obj.relations
+        relations = obj.getRelationSet()
         for relation in relations:
             if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_CONTROLLED_BY:
+                   == pyatspi.RELATION_CONTROLLED_BY:
                 target = atspi.Accessible.makeAccessible(relation.getTarget(0))
                 if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
@@ -2364,7 +2376,7 @@ class Script(script.Script):
         if obj.getRole() == pyatspi.ROLE_LABEL:
             for relation in relations:
                 if relation.getRelationType() \
-                       == atspi.Accessibility.RELATION_LABEL_FOR:
+                       == pyatspi.RELATION_LABEL_FOR:
                     target = \
                         atspi.Accessible.makeAccessible(relation.getTarget(0))
                     if target == orca_state.locusOfFocus:
@@ -2409,11 +2421,14 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if obj.text and self.isTextArea(obj):
-            text = obj.text
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            text = None
+        if text and self.isTextArea(obj):
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                pyatspi.TEXT_BOUNDARY_LINE_START)
             if startOffset == 0:
                 line.addRegions(self.brailleGenerator.getBrailleContext(obj))
         else:
@@ -2458,13 +2473,15 @@ class Script(script.Script):
         # that it selected.]]]
         #
         role = event.source.getRole()
-        if (role == pyatspi.ROLE_MENU) \
-           or (role == pyatspi.ROLE_MENU_ITEM) \
-           or (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
-           or (role == pyatspi.ROLE_RADIO_MENU_ITEM):
-            selection = event.source.selection
-            if selection and selection.nSelectedChildren > 0:
-                return
+        if role in (pyatspi.ROLE_MENU, 
+                    pyatspi.ROLE_MENU_ITEM,
+                    pyatspi.ROLE_CHECK_MENU_ITEM,
+                    pyatspi.ROLE_RADIO_MENU_ITEM):
+            try:
+                if event.source.querySelection().nSelectedChildren > 0:
+                    return
+            except:
+                pass
 
         # [[[TODO: WDW - HACK to deal with the fact that active cells
         # may or may not get focus.  Their parents, however, do tend to
@@ -2475,15 +2492,18 @@ class Script(script.Script):
         #
         newFocus = event.source
 
-        if (event.source.getRole() == pyatspi.ROLE_LAYERED_PANE) \
-            or (event.source.getRole() == pyatspi.ROLE_TABLE) \
-            or (event.source.getRole() == pyatspi.ROLE_TREE_TABLE) \
-            or (event.source.getRole() == pyatspi.ROLE_TREE):
+        if role in (pyatspi.ROLE_LAYERED_PANE, 
+                    pyatspi.ROLE_TABLE,
+                    pyatspi.ROLE_TREE_TABLE,
+                    pyatspi.ROLE_TREE):
             if event.source.childCount:
                 # Well...we'll first see if there is a selection.  If there
                 # is, we'll use it.
                 #
-                selection = event.source.selection
+                try:
+                    selection = event.source.querySelection()
+                except NotImplementedError:
+                    selection = None
                 if selection and selection.nSelectedChildren > 0:
                     newFocus = atspi.Accessible.makeAccessible(
                         selection.getSelectedChild(0))
@@ -2529,6 +2549,8 @@ class Script(script.Script):
 
     def _presentTextAtNewCaretPosition(self, event):
 
+        texti = event.source.queryText()
+
         if event.source:
             mag.magnifyAccessible(event, event.source)
 
@@ -2568,8 +2590,8 @@ class Script(script.Script):
 
         string = orca_state.lastNonModifierKeyEvent.event_string
         mods = orca_state.lastInputEvent.modifiers
-        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
-        isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
+        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
+        isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
         hasLastPos = self.pointOfReference.has_key("lastCursorPosition")
 
         if (string == "Up") or (string == "Down"):
@@ -2581,7 +2603,7 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               event.source.text.caretOffset)
+                               texti.caretOffset)
             else:
                 self.sayLine(event.source)
 
@@ -2595,7 +2617,7 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               event.source.text.caretOffset)
+                               texti.caretOffset)
             elif isControlKey:
                 self.sayWord(event.source)
             else:
@@ -2611,7 +2633,7 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               event.source.text.caretOffset)
+                               texti.caretOffset)
             elif isControlKey:
                 self.sayCharacter(event.source)
             else:
@@ -2640,7 +2662,7 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               event.source.text.caretOffset)
+                               texti.caretOffset)
             elif isControlKey:
                 self.sayLine(event.source)
             else:
@@ -2650,10 +2672,9 @@ class Script(script.Script):
             # The user has typed Control-A. Check to see if the entire
             # document has been selected, and if so, let the user know.
             #
-            text = event.source.text
-            charCount = text.characterCount
-            for i in range(0, text.getNSelections()):
-                [startSelOffset, endSelOffset] = text.getSelection(i)
+            charCount = texti.characterCount
+            for i in range(0, texti.getNSelections()):
+                [startSelOffset, endSelOffset] = texti.getSelection(i)
                 if text.caretOffset == 0 and \
                    startSelOffset == 0 and endSelOffset == charCount:
                     # Translators: this means the user has selected
@@ -2738,7 +2759,7 @@ class Script(script.Script):
             return
 
         string = orca_state.lastNonModifierKeyEvent.event_string
-        text = event.source.text
+        text = event.source.queryText()
         if string == "BackSpace":
             # Speak the character that has just been deleted.
             #
@@ -2752,7 +2773,7 @@ class Script(script.Script):
             [character, startOffset, endOffset] = \
                 event.source.text.getTextAtOffset(
                     offset,
-                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+                    pyatspi.TEXT_BOUNDARY_CHAR)
 
         else:
             return
@@ -2826,16 +2847,17 @@ class Script(script.Script):
         # text event.
         #
         speakThis = False
+        texti = event.source.queryText()
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
-                               event.source.text.getNSelections())
+                               texti.getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
-                         & (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                            | 1 << atspi.Accessibility.MODIFIER_ALT \
-                            | 1 << atspi.Accessibility.MODIFIER_META \
-                            | 1 << atspi.Accessibility.MODIFIER_META2 \
-                            | 1 << atspi.Accessibility.MODIFIER_META3)
+                         & (1 << pyatspi.MODIFIER_CONTROL \
+                            | 1 << pyatspi.MODIFIER_ALT \
+                            | 1 << pyatspi.MODIFIER_META \
+                            | 1 << pyatspi.MODIFIER_META2 \
+                            | 1 << pyatspi.MODIFIER_META3)
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
@@ -3050,12 +3072,13 @@ class Script(script.Script):
         # We'll also try to ignore those objects that keep telling
         # us their value changed even though it hasn't.
         #
-        if event.source.value and event.source.__dict__.has_key("oldValue") \
+        value = event.source.queryValue()
+        if event.source.__dict__.has_key("oldValue") \
            and (event.source.value.currentValue == event.source.oldValue):
             return
 
         orca.visualAppearanceChanged(event, event.source)
-        event.source.oldValue = event.source.value.currentValue
+        event.source.oldValue = value.currentValue
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
@@ -3098,7 +3121,8 @@ class Script(script.Script):
         # commands running in gnome-terminal.
         #
         if orca_state.locusOfFocus and \
-          (orca_state.locusOfFocus.app == event.source.app):
+          (orca_state.locusOfFocus.getApplication() == \
+             event.source.getApplication()):
             speech.stop()
 
         # Because window activated and deactivated events may be
@@ -3161,8 +3185,13 @@ class Script(script.Script):
 
         layoutOnly = False
 
-        if obj and (obj.getRole() == pyatspi.ROLE_TABLE) and obj.attributes:
-            for attribute in obj.attributes:
+        if obj:
+            attributes = obj.getAttributes()
+        else:
+            attributes = None
+
+        if obj and (obj.getRole() == pyatspi.ROLE_TABLE) and attributes:
+            for attribute in attributes:
                 if attribute == "layout-guess:true":
                     layoutOnly = True
                     break
@@ -3559,7 +3588,7 @@ class Script(script.Script):
             text = orca_state.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                pyatspi.TEXT_BOUNDARY_LINE_START)
             if startOffset > 0:
                 text.setCaretOffset(startOffset - 1)
         else:
@@ -3617,7 +3646,7 @@ class Script(script.Script):
             text = orca_state.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                pyatspi.TEXT_BOUNDARY_LINE_START)
             if endOffset < text.characterCount:
                 text.setCaretOffset(endOffset)
         else:
@@ -4230,7 +4259,7 @@ class Script(script.Script):
         if inputEvent \
             and isinstance(inputEvent, input_event.KeyboardEvent) \
             and (inputEvent.modifiers \
-                 & (1 << atspi.Accessibility.MODIFIER_SHIFT)):
+                 & (1 << pyatspi.MODIFIER_SHIFT)):
             detailed = True
         else:
             detailed = False
@@ -4347,8 +4376,10 @@ class Script(script.Script):
                 # then the two objects are for all intents and purposes the
                 # same object.
                 #
-                extents1 = obj1.component.getExtents(0)
-                extents2 = obj2.component.getExtents(0)
+                extents1 = \
+                    obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+                extents2 = \
+                    obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
                 if (extents1.x == extents2.x) and \
                    (extents1.y == extents2.y) and \
                    (extents1.width == extents2.width) and \
@@ -4421,11 +4452,11 @@ class Script(script.Script):
         if (not label) or (label.getRole() != pyatspi.ROLE_LABEL):
             return False
 
-        relations = label.relations
+        relations = label.getRelationSet()
 
         for relation in relations:
             if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_LABEL_FOR:
+                   == pyatspi.RELATION_LABEL_FOR:
                 return True
 
         return False
@@ -4445,13 +4476,13 @@ class Script(script.Script):
            or (label.getRole() != pyatspi.ROLE_LABEL):
             return False
 
-        relations = label.relations
+        relations = label.getRelationSet()
         if not relations:
             return False
 
         for relation in relations:
             if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_LABEL_FOR:
+                   == pyatspi.RELATION_LABEL_FOR:
 
                 for i in range(0, relation.getNTargets()):
                     target = atspi.Accessible.makeAccessible(\
@@ -4511,12 +4542,12 @@ class Script(script.Script):
         # more than once.  Go figure, but we need to check for this.
         #
         label = []
-        relations = object.relations
+        relations = object.getRelationSet()
         allTargets = []
 
         for relation in relations:
             if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_LABELLED_BY:
+                   == pyatspi.RELATION_LABELLED_BY:
 
                 # The object can be labelled by more than one thing, so we just
                 # get all the labels (from unique objects) and append them
@@ -4577,17 +4608,18 @@ class Script(script.Script):
             elif ((object.getRole() == pyatspi.ROLE_FILLER) \
                     or (object.getRole() == pyatspi.ROLE_PANEL)) \
                 and (object.childCount == 2):
-                child0 = object.child(0)
-                child1 = object.child(1)
-                if child0.getRole() == pyatspi.ROLE_LABEL \
+                child0, child1 = object
+                child0_role = child0.getRole()
+                child1_role = child1.getRole()
+                if child0_role == pyatspi.ROLE_LABEL \
                     and not self.__hasLabelForRelation(child0) \
-                    and child1.getRole() in [pyatspi.ROLE_FILLER, \
+                    and child1_role in [pyatspi.ROLE_FILLER, \
                                              pyatspi.ROLE_PANEL]:
                     useLabel = True
                     potentialLabels.append(child0)
-                elif child1.getRole() == pyatspi.ROLE_LABEL \
+                elif child1_role == pyatspi.ROLE_LABEL \
                     and not self.__hasLabelForRelation(child1) \
-                    and child0.getRole() in [pyatspi.ROLE_FILLER, \
+                    and child0_role in [pyatspi.ROLE_FILLER, \
                                              pyatspi.ROLE_PANEL]:
                     useLabel = True
                     potentialLabels.append(child1)
@@ -4596,9 +4628,8 @@ class Script(script.Script):
                 if parent and \
                     ((parent.getRole() == pyatspi.ROLE_FILLER) \
                             or (parent.getRole() == pyatspi.ROLE_PANEL)):
-                    for i in range (0, parent.childCount):
+                    for potentialLabel in parent:
                         try:
-                            potentialLabel = parent.child(i)
                             useLabel = self.__isLabeling(potentialLabel, object)
                             if useLabel:
                                 potentialLabels.append(potentialLabel)
@@ -4660,8 +4691,7 @@ class Script(script.Script):
         # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
         textObj = None
-        for i in range(0, combo.childCount):
-            child = combo.child(i)
+        for child in combo:
             if child and child.getRole() == pyatspi.ROLE_TEXT:
                 textObj = child
 
@@ -4670,14 +4700,13 @@ class Script(script.Script):
                 self.getTextLineAtCaret(textObj)
             #print "TEXTOBJ", displayedText
         else:
-            selectedItem = None
-            comboSelection = combo.selection
-            if comboSelection and comboSelection.nSelectedChildren > 0:
-                try:
-                    selectedItem = atspi.Accessible.makeAccessible(
-                        comboSelection.getSelectedChild(0))
-                except:
-                    pass
+            try:
+                comboSelection = combo.querySelection()
+                selectedItem = atspi.Accessible.makeAccessible(
+                    comboSelection.getSelectedChild(0))
+            except:
+                selectedItem = None
+
             if selectedItem:
                 displayedText = self.getDisplayedText(selectedItem)
                 #print "SELECTEDITEM", displayedText
@@ -4708,14 +4737,19 @@ class Script(script.Script):
 
         displayedText = None
 
-        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_COMBO_BOX:
             return self.__getDisplayedTextInComboBox(obj)
 
         # The accessible text of an object is used to represent what is
         # drawn on the screen.
         #
-        if obj.text:
-            displayedText = obj.text.getText(0, -1)
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            pass
+        else:
+            displayedText = text.getText(0, -1)
 
             # [[[WDW - HACK to account for things such as Gecko that want
             # to use the EMBEDDED_OBJECT_CHARACTER on a label to hold the
@@ -4744,15 +4778,14 @@ class Script(script.Script):
                         displayedText = None
                         break
 
-        if (not displayedText) or (len(displayedText) == 0):
+        if not displayedText:
             displayedText = obj.name
 
         # [[[WDW - HACK because push buttons can have labels as their
         # children.  An example of this is the Font: button on the General
         # tab in the Editing Profile dialog in gnome-terminal.
         #
-        if ((not displayedText) or (len(displayedText) == 0)) \
-           and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON:
+        if not displayedText and role == pyatspi.ROLE_PUSH_BUTTON:
             for i in range(0, obj.childCount):
                 child = obj.child(i)
                 if child.getRole() == pyatspi.ROLE_LABEL:
@@ -4940,11 +4973,10 @@ class Script(script.Script):
         [SayAllContext, acss], where SayAllContext has the text to be
         spoken and acss is an ACSS instance for speaking the text.
         """
-        if not obj:
-            return
 
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except:
             return
 
         length = text.characterCount
@@ -4953,11 +4985,11 @@ class Script(script.Script):
         # Determine the correct "say all by" mode to use.
         #
         if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
+            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
         elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
         # Get the next line of text to read
         #
@@ -4973,7 +5005,7 @@ class Script(script.Script):
                 # will return nothing.
                 #
                 if not string:
-                    mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+                    mode = pyatspi.TEXT_BOUNDARY_LINE_START
                     [string, startOffset, endOffset] = text.getTextAtOffset(
                                                                offset, mode)
 
@@ -5013,10 +5045,10 @@ class Script(script.Script):
                        voice]
 
             moreLines = False
-            relations = obj.relations
+            relations = obj.getRelationSet()
             for relation in relations:
                 if relation.getRelationType()  \
-                       == atspi.Accessibility.RELATION_FLOWS_TO:
+                       == pyatspi.RELATION_FLOWS_TO:
                     obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
 
                     text = obj.text
@@ -5178,15 +5210,17 @@ class Script(script.Script):
         if not obj:
             return -1
 
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return -1
 
-        hypertext = obj.hypertext
-        if not hypertext:
+        try:
+            hypertext = obj.queryHypertext()
+        except NotImplementedError:
             return -1
 
-        for i in range(0, hypertext.getNLinks()):
+        for i in xrange(hypertext.getNLinks()):
             link = hypertext.getLink(i)
             if (characterIndex >= link.startIndex) \
                and (characterIndex <= link.endIndex):
@@ -5287,8 +5321,9 @@ class Script(script.Script):
 
         # Get the the AccessibleText interrface
         #
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return ["", 0, 0]
 
         # The caret might be positioned at the very end of the text area.
@@ -5328,7 +5363,7 @@ class Script(script.Script):
                 startOffset = caretOffset
             else:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
-                    caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                    caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
 
             # Sometimes we get the trailing line-feed-- remove it
             #
@@ -5354,11 +5389,11 @@ class Script(script.Script):
         node = obj
         done = False
         while not done:
-            relations = node.relations
+            relations = node.getRelationSet()
             node = None
             for relation in relations:
                 if relation.getRelationType() \
-                       == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                       == pyatspi.RELATION_NODE_CHILD_OF:
                     node = atspi.Accessible.makeAccessible( \
                                                     relation.getTarget(0))
                     break
@@ -5395,7 +5430,7 @@ class Script(script.Script):
             return []
 
         nodes = []
-        table = obj.parent.table
+        table = obj.parent.queryTable()
         row = table.getRowAtIndex(obj.getIndexInParent())
         col = table.getColumnAtIndex(obj.getIndexInParent())
         nodeLevel = self.getNodeLevel(obj)
@@ -5409,10 +5444,10 @@ class Script(script.Script):
         for i in range(row+1, table.nRows):
             acc = table.getAccessibleAt(i, col)
             cell = atspi.Accessible.makeAccessible(acc)
-            relations = cell.relations
+            relations = cell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
-                       == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                       == pyatspi.RELATION_NODE_CHILD_OF:
                     nodeOf = atspi.Accessible.makeAccessible( \
                                                    relation.getTarget(0))
                     if self.isSameObject(obj, nodeOf):
@@ -5439,9 +5474,9 @@ class Script(script.Script):
         the shortcut.
         """
 
-        action = obj.action
-
-        if not action:
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
             return ["", ""]
 
         # [[[TODO: WDW - assumes the first keybinding is all that we care about.
@@ -5527,10 +5562,9 @@ class Script(script.Script):
         if root.childCount <= 0:
             return objlist
 
-        for i in range(0, root.childCount):
+        for i, child in enumerate(root):
             debug.println(debug.LEVEL_FINEST,
                           "Script.getObjects looking at child %d" % i)
-            child = root.child(i)
             if child \
                and ((not onlyShowing) or (onlyShowing and \
                     (child.getState().contains(pyatspi.STATE_SHOWING)))):
@@ -5596,7 +5630,7 @@ class Script(script.Script):
         unrelatedLabels = []
 
         for label in allLabels:
-            relations = label.relations
+            relations = label.getRelationSet()
             if len(relations) == 0:
                 parent = label.parent
                 if parent and (parent.getRole() == pyatspi.ROLE_PUSH_BUTTON):
@@ -5614,11 +5648,16 @@ class Script(script.Script):
         #
         sortedLabels = []
         for label in unrelatedLabels:
+            label_extents = \
+                label.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
             index = 0
             for sortedLabel in sortedLabels:
-                if (label.extents.y > sortedLabel.extents.y) \
-                   or ((label.extents.y == sortedLabel.extents.y) \
-                       and (label.extents.x > sortedLabel.extents.x)):
+                sorted_extents = \
+                    sortedLabel.queryComponent().getExtents(
+                  pyatspi.DESKTOP_COORDS)
+                if (label_extents.y > sorted_extents.y) \
+                   or ((label_extents.y == sorted_extents.y) \
+                       and (label_extents.x > sorted_extents.x)):
                     index += 1
                 else:
                     break
@@ -5858,7 +5897,8 @@ class Script(script.Script):
         if accessible:
             component = accessible.component
             if component:
-                visibleRectangle = component.getExtents(0) # coord type = screen
+                visibleRectangle = \
+                    component.getExtents(pyatspi.DESKTOP_COORDS)
                 self.drawOutline(visibleRectangle.x, visibleRectangle.y,
                             visibleRectangle.width, visibleRectangle.height,
                             erasePrevious)
@@ -5878,11 +5918,12 @@ class Script(script.Script):
         Returns an indication of whether the text is selected.
         """
 
-        if not obj or not obj.text:
+        try:
+            text = obj.queryText()
+        except:
             return False
 
-        text = obj.text
-        for i in range(0, text.getNSelections()):
+        for i in xrange(text.getNSelections()):
             [startSelOffset, endSelOffset] = text.getSelection(i)
             if (startOffset >= startSelOffset) \
                and (endOffset <= endSelOffset):
@@ -5900,7 +5941,9 @@ class Script(script.Script):
         - endOffset: text end offset.
         """
 
-        if not obj or not obj.text:
+        try:
+            text = obj.queryText()
+        except:
             return
 
         # Handle special cases.
@@ -5921,8 +5964,8 @@ class Script(script.Script):
             eventStr = None
             mods = 0
 
-        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
-        isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
+        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
+        isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
 
         specialCaseFound = False
         if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
@@ -5983,8 +6026,8 @@ class Script(script.Script):
             # the startOffset and endOffset to exclude them.
             #
             try:
-                tmpStr = obj.text.getText(startOffset, 
-                                          endOffset).decode("UTF-8")
+                tmpStr = text.getText(startOffset, 
+                                      endOffset).decode("UTF-8")
             except:
                 tmpStr = u''
             n = len(tmpStr)
@@ -6037,11 +6080,11 @@ class Script(script.Script):
         # Save away the current text cursor position and list of text
         # selections for next time.
         #
-        self.pointOfReference["lastCursorPosition"] = obj.text.caretOffset
+        self.pointOfReference["lastCursorPosition"] = text.caretOffset
         self.pointOfReference["lastSelections"] = []
-        for i in range(0, obj.text.getNSelections()):
+        for i in xrange(text.getNSelections()):
             self.pointOfReference["lastSelections"].append(
-              obj.text.getSelection(i))
+              text.getSelection(i))
 
     def getURI(self, obj):
         """Return the URI for a given link object.
