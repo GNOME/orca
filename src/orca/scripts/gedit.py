@@ -332,7 +332,8 @@ class Script(default.Script):
                       pyatspi.ROLE_DIALOG,
                       pyatspi.ROLE_APPLICATION]
 
-        rolesList2 = [pyatspi.ROLE_COMBO_BOX,
+        rolesList2 = [pyatspi.ROLE_TEXT,
+                      pyatspi.ROLE_COMBO_BOX,
                       pyatspi.ROLE_PANEL,
                       pyatspi.ROLE_FILLER,
                       pyatspi.ROLE_FILLER,
@@ -348,7 +349,7 @@ class Script(default.Script):
         if (self.isDesiredFocusedItem(obj, rolesList1) \
             and obj.name == _("Find")) \
             or (self.isDesiredFocusedItem(obj, rolesList2) \
-                and tmp.parent.parent.name == _("Find")):
+                and tmp.parent.parent.parent.name == _("Find")):
             return True
         else:
             return False
@@ -559,9 +560,9 @@ class Script(default.Script):
         if self.isFocusOnFindDialog() \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
-
-            allComboBoxes = self.findByRole(orca_state.locusOfFocus.app,
-                                            pyatspi.ROLE_COMBO_BOX)
+            allComboBoxes = \
+                     self.findByRole(orca_state.locusOfFocus.getApplication(),
+                                     pyatspi.ROLE_COMBO_BOX)
             phrase = self.getDisplayedText(allComboBoxes[0])
             [text, caretOffset, startOffset] = \
                 self.getTextLineAtCaret(event.source)
