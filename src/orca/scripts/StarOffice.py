@@ -33,7 +33,6 @@ import orca.atspi as atspi
 import orca.chnames as chnames
 import orca.default as default
 import orca.input_event as input_event
-import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.braillegenerator as braillegenerator
 import orca.orca as orca

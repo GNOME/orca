@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import atspi
 import debug
 
 def generateMouseEvent(x, y, eventName):

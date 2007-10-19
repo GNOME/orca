@@ -44,6 +44,11 @@
           src/orca/braillegenerator.py:
           Fixup up various warnings from pychecker.
 
+        * src/orca/eventsynthesizer.py:
+          src/orca/scripts/gnome_segv2.py:
+          src/orca/scripts/StarOffice.py:
+          Fixup various warnings from pyflakes.
+
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/eventsynthesizer.py:
