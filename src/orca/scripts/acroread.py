@@ -25,6 +25,8 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2007 Sun Microsystems Inc. and Joanmarie Diggs"
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.atspi as atspi
 import orca.braille as braille
 import orca.chnames as chnames
@@ -79,7 +81,7 @@ class Script(default.Script):
 
         self.ROLE_LINK = "Link"
         rolenames.rolenames[self.ROLE_LINK] = \
-            rolenames.rolenames[rolenames.ROLE_LINK]
+            rolenames.rolenames[pyatspi.ROLE_LINK]
 
         # To handle the multiple, identical object:text-caret-moved events
         # and possible focus events that result from a single key press
@@ -123,7 +125,7 @@ class Script(default.Script):
 
         document = None
         obj = locusOfFocus
-        while obj.role != rolenames.ROLE_UNKNOWN:
+        while obj.getRole() != pyatspi.ROLE_UNKNOWN:
             obj = obj.parent
 
         # This is probably it, but the parent of a text object
@@ -131,14 +133,14 @@ class Script(default.Script):
         # has a parent with a role of 'unknown'.  The parent of
         # the Document object is a drawing area.
         #
-        if obj.parent.role == rolenames.ROLE_DRAWING_AREA:
+        if obj.parent.getRole() == pyatspi.ROLE_DRAWING_AREA:
             document = obj
         else:
-            while obj.role != rolenames.ROLE_TABLE:
+            while obj.getRole() != pyatspi.ROLE_TABLE:
                 obj = obj.parent
             # For now, let's assume no nested tables! :-)
             #
-            while obj.role != rolenames.ROLE_UNKNOWN:
+            while obj.getRole() != pyatspi.ROLE_UNKNOWN:
                 obj = obj.parent
             document = obj
 
@@ -182,7 +184,7 @@ class Script(default.Script):
             index = 0
 
         for i in range(index, obj.childCount):
-            child = obj.child(i)
+            child = obj[i]
             for nextObject in self.getNextTextObject(child, nodeList):
                 yield nextObject
             yield child
@@ -207,14 +209,14 @@ class Script(default.Script):
         # SEEM to be consistent. So let's punt until things get properly
         # labeled.
         #
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_TABLE]
+        rolesList = [pyatspi.ROLE_TEXT,
+                     pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_TABLE]
         if self.isDesiredFocusedItem(obj, rolesList):
             table = obj.parent.parent.parent
             rows = table.childCount
-            columns = table.child(0).childCount
+            columns = table[0].childCount
 
         return [table, rows, columns]
 
@@ -306,16 +308,16 @@ class Script(default.Script):
         """
 
         inFindToolbar = False
-        rolesList = [rolenames.ROLE_DRAWING_AREA, \
-                     rolenames.ROLE_DRAWING_AREA, \
-                     rolenames.ROLE_DRAWING_AREA, \
-                     rolenames.ROLE_TOOL_BAR, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_DRAWING_AREA,
+                     pyatspi.ROLE_DRAWING_AREA,
+                     pyatspi.ROLE_DRAWING_AREA,
+                     pyatspi.ROLE_TOOL_BAR,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_FRAME]
 
         try:
-            while obj.role != rolenames.ROLE_DRAWING_AREA:
+            while obj.getRole() != pyatspi.ROLE_DRAWING_AREA:
                 obj = obj.parent
             if self.isDesiredFocusedItem(obj, rolesList):
                 inFindToolbar = True
@@ -341,27 +343,27 @@ class Script(default.Script):
         # We sometimes get focus events for items that don't --
         # or don't yet) have focus.  Ignore these.
         #
-        if (event.source.role == rolenames.ROLE_CHECK_BOX or \
-            event.source.role == rolenames.ROLE_PUSH_BUTTON or \
-            event.source.role == rolenames.ROLE_RADIO_BUTTON) and \
-           not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+        if event.source.getRole() in [pyatspi.ROLE_CHECK_BOX,
+                                      pyatspi.ROLE_PUSH_BUTTON,
+                                      pyatspi.ROLE_RADIO_BUTTON] \
+           and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
-        if not event.source.state.count(atspi.Accessibility.STATE_SHOWING):
+        if not event.source.getState().contains(pyatspi.STATE_SHOWING):
             return
 
-        if not self.findToolbarActive and \
-           event.source.role == rolenames.ROLE_TEXT:
-            if event.source.parent and \
-               (event.source.parent.role == rolenames.ROLE_DRAWING_AREA or \
-                event.source.parent.role == rolenames.ROLE_UNKNOWN):
+        if not self.findToolbarActive \
+           and event.source.getRole() == pyatspi.ROLE_TEXT:
+            parent = event.source.parent
+            if parent and parent.getRole() in [pyatspi.ROLE_DRAWING_AREA,
+                                               pyatspi.ROLE_UNKNOWN]:
                 # We're going to get at least one (and likely several)
                 # caret-moved events which will cause this to get spoken, 
                 # so skip it for now.
                 #
                 return
 
-        if event.source.role == rolenames.ROLE_DRAWING_AREA:
+        if event.source.getRole() == pyatspi.ROLE_DRAWING_AREA:
             # A drawing area can claim focus when visually what has focus is
             # a text object that is a child of the drawing area.  When this
             # occurs, Orca doesn't see the text.  Therefore, try to figure out
@@ -375,7 +377,7 @@ class Script(default.Script):
                 lastKey = orca_state.lastNonModifierKeyEvent.event_string
             except:
                 pass
-            LOFIndex = orca_state.locusOfFocus.index
+            LOFIndex = orca_state.locusOfFocus.getIndexInParent()
             childIndex = None
 
             # [[[TODO: JD - These aren't all of the possibilities.  This is
@@ -391,7 +393,7 @@ class Script(default.Script):
                 childIndex = LOFIndex
 
             if (childIndex >= 0):
-                child = event.source.child(childIndex)
+                child = event.source[childIndex]
                 event.source = child
 
         default.Script.onFocus(self, event)
@@ -413,12 +415,12 @@ class Script(default.Script):
         # Eliminate unnecessary chattiness related to the Find toolbar.
         #
         if self.findToolbarActive:
-            if newLocusOfFocus.role == rolenames.ROLE_TEXT:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_TEXT:
                 newText = self.getTextLineAtCaret(newLocusOfFocus)
                 if newText == self.preFindLine:
                     orca.setLocusOfFocus(event, oldLocusOfFocus, False)
                     return
-            if newLocusOfFocus.role == rolenames.ROLE_DRAWING_AREA:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_DRAWING_AREA:
                 orca.setLocusOfFocus(event, oldLocusOfFocus, False)
                 return
 
@@ -433,19 +435,20 @@ class Script(default.Script):
 
         # Eliminate unnecessary chattiness in the Search panel.
         #
-        if newLocusOfFocus.role == rolenames.ROLE_PUSH_BUTTON and \
-           oldLocusOfFocus and oldLocusOfFocus.role == self.ROLE_LINK and \
-           newLocusOfFocus.name == oldLocusOfFocus.name:
+        if newLocusOfFocus.getRole() == pyatspi.ROLE_PUSH_BUTTON \
+           and oldLocusOfFocus \
+           and oldLocusOfFocus.getRole() == self.ROLE_LINK \
+           and newLocusOfFocus.name == oldLocusOfFocus.name:
             return
 
         # Eliminate general document chattiness.
         #
-        if newLocusOfFocus.role == self.ROLE_DOCUMENT or \
-           newLocusOfFocus.role == rolenames.ROLE_DRAWING_AREA:
+        if newLocusOfFocus.getRole() in [self.ROLE_DOCUMENT,
+                                         pyatspi.ROLE_DRAWING_AREA]:
             orca.setLocusOfFocus(event, newLocusOfFocus, False)
             return
 
-        elif newLocusOfFocus.role == self.ROLE_LINK:
+        elif newLocusOfFocus.getRole() == self.ROLE_LINK:
             # It seems that this will be the only event we will get.  But
             # the default script's onFocus will result in unnecessary
             # verboseness: reporting the drawing area(s) in which this link
@@ -490,7 +493,7 @@ class Script(default.Script):
         # text that may or may NOT have had focus recently.  Sometimes
         # we luck out and it's not showing.
         #
-        if not event.source.state.count(atspi.Accessibility.STATE_SHOWING):
+        if not event.source.getState().contains(pyatspi.STATE_SHOWING):
             return
 
         # Other times, it's showing, but happens to be the text we just
@@ -520,8 +523,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.type.startswith("object:state-changed:checked") and \
-           event.source.role == rolenames.ROLE_RADIO_BUTTON:
+        if event.type.startswith("object:state-changed:checked") \
+           and event.source.getRole() == pyatspi.ROLE_RADIO_BUTTON:
             # Radio buttons in the Search panel are not automatically
             # selected when you arrow to them.  You have to press Space
             # to select the current radio button.  Watch for this.
@@ -529,9 +532,9 @@ class Script(default.Script):
             orca.visualAppearanceChanged(event, event.source)
             return
 
-        elif event.type.startswith("object:state-changed:focused") and \
-             event.detail1 == 1:
-            if event.source.role == rolenames.ROLE_PUSH_BUTTON:
+        elif event.type.startswith("object:state-changed:focused") \
+             and event.detail1 == 1:
+            if event.source.getRole() == pyatspi.ROLE_PUSH_BUTTON:
                 # Try to minimize chattiness in the Search panel
                 #
                 utterances = \
@@ -543,7 +546,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
-            elif event.source.role == rolenames.ROLE_TEXT:
+            elif event.source.getRole() == pyatspi.ROLE_TEXT:
                 # There's an excellent chance that the Find toolbar just
                 # gained focus.  Check.
                 #
@@ -565,8 +568,13 @@ class Script(default.Script):
 
         if event.source.name == self.findToolbarName:
             self.findToolbarActive = False
-        elif locusOfFocus.text:
-            self.preFindLine = self.getTextLineAtCaret(locusOfFocus)
+        else:
+            try:
+                locusOfFocus.queryText()
+            except NotImplementedError:
+                pass
+            else:
+                self.preFindLine = self.getTextLineAtCaret(locusOfFocus)
 
         default.Script.onWindowDeactivated(self, event)
 
@@ -621,20 +629,20 @@ class Script(default.Script):
                interface
         """
 
-        if not (obj.parent.role == rolenames.ROLE_DRAWING_AREA or \
-                obj.parent.role == rolenames.ROLE_UNKNOWN):
+        if not (obj.parent.getRole() in [pyatspi.ROLE_DRAWING_AREA,
+                                         pyatspi.ROLE_UNKNOWN]):
             default.Script.sayWord(self, obj)
 
         else:
-            text = obj.text
+            text = obj.queryText()
             offset = text.caretOffset
             lastKey = orca_state.lastNonModifierKeyEvent.event_string
 
             if lastKey == "Right":
                 penultimateWord = orca_state.lastWord
                 [lastWord, startOffset, endOffset] = \
-                    text.getTextAtOffset(offset,
-                                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                    text.getTextAtOffset(offset, 
+                                         pyatspi.TEXT_BOUNDARY_WORD_START)
                 [word, startOffset, endOffset] = \
                     text.getTextAfterOffset(endOffset+1,
                                  atspi.Accessibility.TEXT_BOUNDARY_WORD_START)

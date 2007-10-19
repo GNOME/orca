@@ -1,5 +1,8 @@
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/acroread.py:
+          pyatspi migration.
+
         * src/orca/scripts/gedit.py:
           pyatspi migration.
 
