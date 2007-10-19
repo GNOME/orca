@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.debug as debug
 import orca.default as default
 import orca.atspi as atspi
@@ -57,14 +59,16 @@ class WhereAmI(where_am_I.WhereAmI):
 
         # Don't speak check box cells that area not checked.
         notChecked = False
-        action = obj.action
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            action = None
+
         if action:
             for i in range(0, action.nActions):
                 if action.getName(i) == "toggle":
-                    obj.role = rolenames.ROLE_CHECK_BOX
-                    if not obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    if not obj.getState().contains(pyatspi.STATE_CHECKED):
                         notChecked = True
-                    obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
         if notChecked:
@@ -100,42 +104,52 @@ class WhereAmI(where_am_I.WhereAmI):
 
         currentSelected = False
         otherSelected = False
-        nSelections = obj.text.getNSelections()
+        nSelections = obj.queryText().getNSelections()
         if nSelections:
             currentSelected = True
         else:
             otherSelected = False
-            displayedText = obj.text.getText(0, -1)
+            displayedText = obj.queryText().getText(0, -1)
             if len(displayedText) == 0:
                 container = obj.parent.parent
-                current = obj.parent.index
+                current = obj.parent.getIndexInParent()
                 morePossibleSelections = True
                 while morePossibleSelections:
                     morePossibleSelections = False
                     if (current-1) >= 0:
-                        prevPanel = container.child(current-1)
-                        prevObj = prevPanel.child(0)
-                        if prevObj and prevObj.text:
-                            if prevObj.text.getNSelections() > 0:
+                        prevPanel = container[current-1]
+                        prevObj = prevPanel[0]
+                        try:
+                            prevObjText = prevObj.queryText()
+                        except:
+                            prevObjText = None
+
+                        if prevObj and prevObjText:
+                            if prevObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = prevObj.text.getText(0, -1)
+                                displayedText = prevObjText.getText(0, -1)
                                 if len(displayedText) == 0:
                                     current -= 1
                                     morePossibleSelections = True
 
-                current = obj.parent.index
+                current = obj.parent.getIndexInParent()
                 morePossibleSelections = True
                 while morePossibleSelections:
                     morePossibleSelections = False
                     if (current+1) < container.childCount:
-                        nextPanel = container.child(current+1)
-                        nextObj = nextPanel.child(0)
-                        if nextObj and nextObj.text:
-                            if nextObj.text.getNSelections() > 0:
+                        nextPanel = container[current+1]
+                        nextObj = nextPanel[0]
+                        try:
+                            nextObjText = nextObj.queryText()
+                        except:
+                            nextObjText = None
+
+                        if nextObj and nextObjText:
+                            if nextObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = nextObj.text.getText(0, -1)
+                                displayedText = nextObjText.getText(0, -1)
                                 if len(displayedText) == 0:
                                     current += 1
                                     morePossibleSelections = True
@@ -159,7 +173,7 @@ class WhereAmI(where_am_I.WhereAmI):
         textContents = ""
         startOffset = 0
         endOffset = 0
-        if obj.text.getNSelections() > 0:
+        if obj.queryText().getNSelections() > 0:
             [textContents, startOffset, endOffset] = \
                                             self._getTextSelection(obj)
 
@@ -175,41 +189,47 @@ class WhereAmI(where_am_I.WhereAmI):
             # other side.
             #
             container = obj.parent.parent
-            current = obj.parent.index
+            current = obj.parent.getIndexInParent()
             morePossibleSelections = True
             while morePossibleSelections:
                 morePossibleSelections = False
                 if (current-1) >= 0:
-                    prevPanel = container.child(current-1)
-                    prevObj = prevPanel.child(0)
-                    displayedText = prevObj.text.getText(0, -1)
-                    if len(displayedText) == 0:
-                        current -= 1
-                        morePossibleSelections = True
-                    elif prevObj.text.getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                                     self._getTextSelection(prevObj)
-                        textContents = newTextContents + " " + textContents
-                        current -= 1
-                        morePossibleSelections = True
+                    prevPanel = container[current-1]
+                    try:
+                        prevObj = prevPanel[0]
+                        displayedText = prevObj.queryText().getText(0, -1)
+                        if len(displayedText) == 0:
+                            current -= 1
+                            morePossibleSelections = True
+                        elif prevObj.queryText().getNSelections() > 0:
+                            [newTextContents, start, end] = \
+                                         self._getTextSelection(prevObj)
+                            textContents = newTextContents + " " + textContents
+                            current -= 1
+                            morePossibleSelections = True
+                    except:
+                        pass
 
-            current = obj.parent.index
+            current = obj.parent.getIndexInParent()
             morePossibleSelections = True
             while morePossibleSelections:
                 morePossibleSelections = False
                 if (current+1) < container.childCount:
-                    nextPanel = container.child(current+1)
-                    nextObj = nextPanel.child(0)
-                    displayedText = nextObj.text.getText(0, -1)
-                    if len(displayedText) == 0:
-                        current += 1
-                        morePossibleSelections = True
-                    elif nextObj.text.getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                                     self._getTextSelection(nextObj)
-                        textContents += " " + newTextContents
-                        current += 1
-                        morePossibleSelections = True
+                    nextPanel = container[current+1]
+                    try:
+                        nextObj = nextPanel[0]
+                        displayedText = nextObj.queryText().getText(0, -1)
+                        if len(displayedText) == 0:
+                            current += 1
+                            morePossibleSelections = True
+                        elif nextObj.queryText().getNSelections() > 0:
+                            [newTextContents, start, end] = \
+                                         self._getTextSelection(nextObj)
+                            textContents += " " + newTextContents
+                            current += 1
+                            morePossibleSelections = True
+                    except:
+                        pass
 
         return [textContents, startOffset, endOffset]
 
@@ -367,18 +387,18 @@ class Script(default.Script):
         - label: the Setup Assistant Label.
         """
 
-        if label.state.count(atspi.Accessibility.STATE_SHOWING):
+        if label.getState().contains(pyatspi.STATE_SHOWING):
             # We are only interested in a label if all the panels in the
             # component hierarchy have states of ENABLED, SHOWING and VISIBLE.
             # If this is not the case, then just return.
             #
             obj = label.parent
-            while obj and obj.role != rolenames.ROLE_APPLICATION:
-                if obj.role == rolenames.ROLE_PANEL:
-                    state = obj.state
-                    if not state.count(atspi.Accessibility.STATE_ENABLED) or \
-                       not state.count(atspi.Accessibility.STATE_SHOWING) or \
-                       not state.count(atspi.Accessibility.STATE_VISIBLE):
+            while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
+                if obj.getRole() == pyatspi.ROLE_PANEL:
+                    state = obj.getState()
+                    if not state.contains(pyatspi.STATE_ENABLED) or \
+                       not state.contains(pyatspi.STATE_SHOWING) or \
+                       not state.contains(pyatspi.STATE_VISIBLE):
                         return
                 obj = obj.parent
 
@@ -387,38 +407,42 @@ class Script(default.Script):
             # weight attribute of 800. We always speak those labels with
             # " screen" appended.
             #
-            if label.text:
-                charAttributes = label.text.getAttributes(0)
-                if charAttributes[0]:
-                    [charKeys, charDict] = \
-                        self.textAttrsToDictionary(charAttributes[0])
-                    weight = charDict.get('weight')
-                    if weight and weight == '800':
-                        text = self.getDisplayedText(label)
+            try:
+                labelText = label.queryText()
+                if labelText:
+                    charAttributes = labelText.getAttributes(0)
+                    if charAttributes[0]:
+                        [charKeys, charDict] = \
+                            self.textAttrsToDictionary(charAttributes[0])
+                        weight = charDict.get('weight')
+                        if weight and weight == '800':
+                            text = self.getDisplayedText(label)
 
-                        # Only speak the screen label if we haven't already
-                        # done so.
-                        #
-                        if text and not self.setupLabels.has_key(label):
-                            # Translators: this is the name of a setup
-                            # assistant window/screen in Evolution.
+                            # Only speak the screen label if we haven't already
+                            # done so.
                             #
-                            speech.speak(_("%s screen") % text, None, False)
-                            self.setupLabels[label] = True
+                            if text and not self.setupLabels.has_key(label):
+                                # Translators: this is the name of a setup
+                                # assistant window/screen in Evolution.
+                                #
+                                speech.speak(_("%s screen") % text, None, False)
+                                self.setupLabels[label] = True
 
-                            # If the locus of focus is a push button that's
-                            # insensitive, speak/braille about it. (The
-                            # Identity screen has such a component).
-                            #
-                            if orca_state.locusOfFocus and \
-                               orca_state.locusOfFocus.role == \
-                                   rolenames.ROLE_PUSH_BUTTON and \
-                               (orca_state.locusOfFocus.state.count( \
-                                   atspi.Accessibility.STATE_SENSITIVE) == 0):
-                                self.updateBraille(orca_state.locusOfFocus)
-                                speech.speakUtterances(
-                                    self.speechGenerator.getSpeech( \
-                                        orca_state.locusOfFocus, False))
+                                # If the locus of focus is a push button that's
+                                # insensitive, speak/braille about it. (The
+                                # Identity screen has such a component).
+                                #
+                                if orca_state.locusOfFocus and \
+                                   orca_state.locusOfFocus.getRole() == \
+                                       pyatspi.ROLE_PUSH_BUTTON and \
+                                   (orca_state.locusOfFocus.getState().contains( \
+                                       pyatspi.STATE_SENSITIVE) == False):
+                                    self.updateBraille(orca_state.locusOfFocus)
+                                    speech.speakUtterances(
+                                        self.speechGenerator.getSpeech( \
+                                            orca_state.locusOfFocus, False))
+            except NotImplementedError:
+                pass
 
             # It's possible to get multiple "object:state-changed:showing"
             # events for the same label. If we've already handled this
@@ -450,7 +474,7 @@ class Script(default.Script):
         - panel: the Setup Assistant panel.
         """
 
-        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             self.speakSetupAssistantLabel(label)
 
@@ -521,18 +545,19 @@ class Script(default.Script):
         if not obj:
             return
 
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return
 
         panel = obj.parent
         htmlPanel = panel.parent
-        startIndex = panel.index
+        startIndex = panel.getIndexInParent()
         i = startIndex
         total = htmlPanel.childCount
         textObjs = []
-        startOffset = obj.text.caretOffset
-        offset = obj.text.caretOffset
+        startOffset = text.caretOffset
+        offset = text.caretOffset
         string = ""
         done = False
 
@@ -551,15 +576,15 @@ class Script(default.Script):
             if panel != None:
                 accTextObj = panel.accessible.getChildAtIndex(0)
                 textObj = atspi.Accessible.makeAccessible(accTextObj)
-                text = textObj.text
-                if not text:
+                try:
+                    text = textObj.queryText()
+                except NotImplementedError:
                     return
                 textObjs.append(textObj)
                 length = text.characterCount
 
                 while offset <= length:
-                    [mystr, start, end] = textObj.text.getTextAtOffset(offset,
-                                                                       mode)
+                    [mystr, start, end] = text.getTextAtOffset(offset, mode)
                     endOffset = end
 
                     if len(mystr) != 0:
@@ -618,16 +643,16 @@ class Script(default.Script):
             offset = context.currentOffset
             for i in range(0, len(context.obj)):
                 obj = context.obj[i]
-                charCount = obj.text.characterCount
+                charCount = obj.queryText().characterCount
                 if offset > charCount:
                     offset -= charCount
                 else:
-                    obj.text.setCaretOffset(offset)
+                    obj.queryText().setCaretOffset(offset)
                     break
         elif type == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
-            obj.text.setCaretOffset(context.currentOffset)
+            obj.queryText().setCaretOffset(context.currentOffset)
             orca.setLocusOfFocus(None, obj, False)
 
     def sayAll(self, inputEvent):
@@ -642,10 +667,11 @@ class Script(default.Script):
         """
 
         debug.println(self.debugLevel, "evolution.sayAll.")
-        if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                          self.__sayAllProgressCallback)
-        else:
+        try:
+            if orca_state.locusOfFocus and orca_state.locusOfFocus.queryText():
+                speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                              self.__sayAllProgressCallback)
+        except:
             default.Script.sayAll(self, inputEvent)
 
         return True
@@ -694,9 +720,9 @@ class Script(default.Script):
         # it's a line in the mail message and we get the utterances to
         # speak for that Text.
 
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_UNKNOWN]
+        rolesList = [pyatspi.ROLE_TEXT, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_UNKNOWN]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
@@ -744,9 +770,9 @@ class Script(default.Script):
         # component and that the final component (with no children) is of
         # role TEXT.
 
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_TABLE_CELL]
+        rolesList = [pyatspi.ROLE_TEXT, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_TABLE_CELL]
         if settings.readTableCellRow \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
@@ -756,18 +782,19 @@ class Script(default.Script):
 
             obj = event.source.parent.parent
             parent = obj.parent
-            if parent.role == rolenames.ROLE_TABLE:
-                row = parent.table.getRowAtIndex(obj.index)
+            if parent.getRole() == pyatspi.ROLE_TABLE:
+                parentTable = parent.queryTable()
+                row = parentTable.getRowAtIndex(obj.getIndexInParent())
                 utterances = []
                 regions = []
-                for i in range(0, parent.table.nColumns):
-                    obj = parent.table.getAccessibleAt(row, i)
+                for i in range(0, parentTable.nColumns):
+                    obj = parentTable.getAccessibleAt(row, i)
                     cell = atspi.Accessible.makeAccessible(obj)
 
                     while cell.childCount:
-                        cell = cell.child(0)
+                        cell = cell[0]
 
-                    if cell.role == rolenames.ROLE_TEXT:
+                    if cell.getRole() == pyatspi.ROLE_TEXT:
                         regions.append(braille.Text(cell))
                         [string, caretOffset, startOffset] = \
                             self.getTextLineAtCaret(cell)
@@ -796,8 +823,8 @@ class Script(default.Script):
         # the message list and the order in which they appear, so that
         # Orca will just speak the ones that they are interested in.
 
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_TREE_TABLE]
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TREE_TABLE]
         if settings.readTableCellRow \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
@@ -813,8 +840,10 @@ class Script(default.Script):
             settings.readTableCellRow = False
 
             parent = event.source.parent
-            row = parent.table.getRowAtIndex(event.source.index)
-            column = parent.table.getColumnAtIndex(event.source.index)
+            parentTable = parent.queryTable()
+            row = parentTable.getRowAtIndex(event.source.getIndexInParent())
+            column = \
+                parentTable.getColumnAtIndex(event.source.getIndexInParent())
 
             # This is an indication of whether we should speak all the table
             # cells (the user has moved focus up or down the list, or just
@@ -831,7 +860,7 @@ class Script(default.Script):
                     justDeleted = True
 
             speakAll = (self.lastMessageRow != row) or \
-                       ((row == 0 or row == parent.table.nRows-1) and \
+                       ((row == 0 or row == parentTable.nRows-1) and \
                         self.lastMessageColumn == column) or \
                        justDeleted
 
@@ -854,18 +883,18 @@ class Script(default.Script):
             # setting of the speakAll variable above, incorrect. We fix that
             # up here.
 
-            if orca_state.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
+            if orca_state.locusOfFocus.getRole() != pyatspi.ROLE_TABLE_CELL:
                 speakAll = True
-                message = "%d messages" % \
-                    parent.table.nRows
+                message = "%d messages" % parentTable.nRows
                 brailleRegions.append(braille.Region(message))
                 speech.speak(message)
 
-            for i in range(0, parent.table.nColumns):
-                obj = parent.table.getAccessibleAt(row, i)
+            for i in range(0, parentTable.nColumns):
+                obj = parentTable.getAccessibleAt(row, i)
                 if obj:
                     cell = atspi.Accessible.makeAccessible(obj)
-                    verbose = (cell.index == event.source.index)
+                    verbose = (cell.getIndexInParent() == \
+                               event.source.getIndexInParent())
 
                     # Check if the current table cell is a check box. If it
                     # is, then to reduce verbosity, only speak and braille it,
@@ -876,18 +905,22 @@ class Script(default.Script):
                     # Status checkbox, in which case we speake/braille it if
                     # the message is unread (not checked).
                     #
-                    header_obj = parent.table.getColumnHeader(i)
+                    header_obj = parentTable.getColumnHeader(i)
                     header = atspi.Accessible.makeAccessible(header_obj)
 
                     checkbox = False
                     toRead = True
-                    action = cell.action
+                    try:
+                        action = cell.queryAction()
+                    except NotImplementedError:
+                        action = None
+
                     if action:
                         for j in range(0, action.nActions):
                             if action.getName(j) == "toggle":
                                 checkbox = True
-                                checked = cell.state.count( \
-                                    atspi.Accessibility.STATE_CHECKED)
+                                checked = cell.getState().contains( \
+                                    pyatspi.STATE_CHECKED)
                                 if speakAll:
                                     # Translators: this is the name of the
                                     # status column header in the message
@@ -1021,17 +1054,17 @@ class Script(default.Script):
                     brailleGen.getBrailleRegions(parent)
             speech.speakUtterances(utterances)
 
-            apptExtents = event.source.component.getExtents(0)
+            apptExtents = event.source.queryComponent().getExtents(0)
 
-            for i in range(0, parent.childCount):
-                child = parent.child(i)
-                if (child.role == rolenames.ROLE_TABLE):
-                    noRows = child.table.nRows
+            for child in parent:
+                if (child.getRole() == pyatspi.ROLE_TABLE):
+                    childTable = child.queryTable()
+                    noRows = childTable.nRows
                     for j in range(0, noRows):
-                        row = child.table.getRowAtIndex(j)
-                        obj = child.table.getAccessibleAt(row, 0)
+                        row = childTable.getRowAtIndex(j)
+                        obj = childTable.getAccessibleAt(row, 0)
                         appt = atspi.Accessible.makeAccessible(obj)
-                        extents = appt.component.getExtents(0)
+                        extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
                             utterances = speechGen.getSpeech(event.source, \
                                                              False)
@@ -1074,8 +1107,8 @@ class Script(default.Script):
         # which is determined by the number of children in the parent Calendar
         # View's table.
 
-        rolesList = [rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_TABLE, \
+        rolesList = [pyatspi.ROLE_UNKNOWN, \
+                     pyatspi.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
@@ -1083,17 +1116,16 @@ class Script(default.Script):
                       + "day view: moving with arrow keys.")
 
             brailleRegions = []
-            index = event.source.index
+            index = event.source.getIndexInParent()
             parent = event.source.parent
             calendarView = event.source.parent.parent
-            extents = event.source.component.getExtents(0)
-            noRows = parent.table.nRows
+            extents = event.source.queryComponent().getExtents(0)
+            noRows = parent.queryTable().nRows
             found = False
 
-            for i in range(0, calendarView.childCount):
-                child = calendarView.child(i)
-                if (child.role == rolenames.ROLE_CALENDAR_EVENT):
-                    apptExtents = child.component.getExtents(0)
+            for child in calendarView:
+                if (child.getRole() == rolenames.ROLE_CALENDAR_EVENT):
+                    apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:
                         utterances = speechGen.getSpeech(child, False)
@@ -1153,25 +1185,24 @@ class Script(default.Script):
         # NOTE: assumes there is only one "page tab list" in the "filler"
         # component.
 
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE]
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TABLE, \
+                     pyatspi.ROLE_UNKNOWN, \
+                     pyatspi.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - preferences dialog: " \
                       + "table cell in options list.")
 
-            index = event.source.index
+            index = event.source.getIndexInParent()
             obj = event.source.parent.parent.parent
             parent = obj.parent
-            if parent.role == rolenames.ROLE_FILLER:
-                for i in range(0, parent.childCount):
-                    child = parent.child(i)
-                    if (child.role == rolenames.ROLE_PAGE_TAB_LIST):
+            if parent.getRole() == pyatspi.ROLE_FILLER:
+                for child in parent:
+                    if (child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST):
                         tabList = child
-                        tab = tabList.child(index-1)
-                        if (tab.role == rolenames.ROLE_PAGE_TAB):
+                        tab = tabList[index-1]
+                        if (tab.getRole() == pyatspi.ROLE_PAGE_TAB):
                             self.readPageTab(tab)
                             return
 
@@ -1182,16 +1213,16 @@ class Script(default.Script):
         # rather than just speak/braille "button", output something a
         # little more useful.
 
-        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_SPLIT_PANE, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_DIALOG]
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_SPLIT_PANE, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_DIALOG]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail insert " \
@@ -1220,10 +1251,10 @@ class Script(default.Script):
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
 
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_SCROLL_PANE]
+        rolesList = [pyatspi.ROLE_TEXT, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail " \
@@ -1252,13 +1283,13 @@ class Script(default.Script):
         # surrounding text, to give the user context for the current misspelt
         # word.
 
-        rolesList = [rolenames.ROLE_TABLE, \
-                    rolenames.ROLE_SCROLL_PANE, \
-                    rolenames.ROLE_PANEL, \
-                    rolenames.ROLE_PANEL, \
-                    rolenames.ROLE_PANEL, \
-                    rolenames.ROLE_FILLER, \
-                    rolenames.ROLE_DIALOG]
+        rolesList = [pyatspi.ROLE_TABLE, \
+                    pyatspi.ROLE_SCROLL_PANE, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_DIALOG]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - spell checking dialog.")
@@ -1272,7 +1303,7 @@ class Script(default.Script):
             # misspelt word.
             #
             panel = event.source.parent.parent
-            allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+            allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
             found = False
             for label in allLabels:
                 if not found:
@@ -1295,7 +1326,7 @@ class Script(default.Script):
             if self.message_panel != None:
                 allTokens = []
                 panel = self.message_panel
-                allText = self.findByRole(panel, rolenames.ROLE_TEXT)
+                allText = self.findByRole(panel, pyatspi.ROLE_TEXT)
                 for i in range(0, len(allText)):
                     text = self.getText(allText[i], 0, -1)
                     tokens = text.split()
@@ -1318,13 +1349,13 @@ class Script(default.Script):
         # NOTE: it is assumed that the last table cell in the table
         # contains this information.
 
-        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
-                    rolenames.ROLE_FILLER, \
-                    rolenames.ROLE_PANEL, \
-                    rolenames.ROLE_PANEL, \
-                    rolenames.ROLE_TABLE_CELL, \
-                    rolenames.ROLE_TABLE, \
-                    rolenames.ROLE_PANEL]
+        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                    pyatspi.ROLE_FILLER, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_PANEL, \
+                    pyatspi.ROLE_TABLE_CELL, \
+                    pyatspi.ROLE_TABLE, \
+                    pyatspi.ROLE_PANEL]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - " \
@@ -1337,8 +1368,8 @@ class Script(default.Script):
 
             tmp = event.source.parent.parent
             table = tmp.parent.parent.parent
-            cell = table.child(table.childCount-1)
-            allText = self.findByRole(cell, rolenames.ROLE_TEXT)
+            cell = table[table.childCount-1]
+            allText = self.findByRole(cell, pyatspi.ROLE_TEXT)
             utterance = "for " + self.getText(allText[0], 0, -1)
             speech.speak(utterance)
             return
@@ -1351,14 +1382,14 @@ class Script(default.Script):
         # seen.
 
         obj = event.source.parent
-        while obj and obj.role != rolenames.ROLE_APPLICATION:
+        while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
             # Translators: this is the ending of the name of the
             # Evolution Setup Assistant window.  The translated
             # form has to match what Evolution is using.  We hate
             # keying off stuff like this, but we're forced to do
             # so in this case.
             #
-            if obj.role == rolenames.ROLE_FRAME and \
+            if obj.getRole() == pyatspi.ROLE_FRAME and \
                 obj.name.endswith(_("Assistant")):
                 debug.println(self.debugLevel,
                               "evolution.locusOfFocusChanged - " \
@@ -1383,8 +1414,9 @@ class Script(default.Script):
         """
 
         # Get the the AccessibleText interrface.
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return False
 
         # Was a left or right-arrow key pressed?
@@ -1432,14 +1464,16 @@ class Script(default.Script):
                     return True
 
         return False
+
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.
         Otherwise, returns False.
         """
 
         # Get the the AccessibleText interrface.
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return False
 
         # Get the line containing the caret
@@ -1477,14 +1511,14 @@ class Script(default.Script):
             # and when we add new accounts.
             #
             obj = event.source.parent
-            while obj and obj.role != rolenames.ROLE_APPLICATION:
+            while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
                 # Translators: this is the ending of the name of the
                 # Evolution Setup Assistant window.  The translated
                 # form has to match what Evolution is using.  We hate
                 # keying off stuff like this, but we're forced to do
                 # so in this case.
                 #
-                if obj.role == rolenames.ROLE_FRAME and \
+                if obj.getRole() == pyatspi.ROLE_FRAME and \
                     obj.name.endswith(_("Assistant")):
                     debug.println(self.debugLevel,
                                   "evolution.onStateChanged - " \
@@ -1492,14 +1526,14 @@ class Script(default.Script):
 
                     # If the event is for a label see if we want to speak it.
                     #
-                    if event.source.role == rolenames.ROLE_LABEL:
+                    if event.source.getRole() == pyatspi.ROLE_LABEL:
                         self.speakSetupAssistantLabel(event.source)
                         break
 
                     # If the event is for a panel and we haven't already
                     # seen this panel, then handle it.
                     #
-                    elif event.source.role == rolenames.ROLE_PANEL and \
+                    elif event.source.getRole() == pyatspi.ROLE_PANEL and \
                         not self.setupPanels.has_key(event.source):
                         self.handleSetupAssistantPanel(event.source)
                         self.setupPanels[event.source] = True
@@ -1530,17 +1564,20 @@ class Script(default.Script):
                       input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string
             if string == "Delete":
-                rolesList = [rolenames.ROLE_TABLE_CELL, \
-                             rolenames.ROLE_TREE_TABLE, \
-                             rolenames.ROLE_UNKNOWN, \
-                             rolenames.ROLE_SCROLL_PANE]
+                rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                             pyatspi.ROLE_TREE_TABLE, \
+                             pyatspi.ROLE_UNKNOWN, \
+                             pyatspi.ROLE_SCROLL_PANE]
                 oldLocusOfFocus = orca_state.locusOfFocus
                 if self.isDesiredFocusedItem(event.source, rolesList) and \
                    self.isDesiredFocusedItem(oldLocusOfFocus, rolesList):
                     parent = event.source.parent
-                    newRow = parent.table.getRowAtIndex(event.source.index)
-                    oldRow = parent.table.getRowAtIndex(oldLocusOfFocus.index)
-                    nRows = parent.table.nRows
+                    parentTable = parent.queryTable()
+                    newRow = parentTable.getRowAtIndex( \
+                                  event.source.getIndexInParent())
+                    oldRow = parentTable.getRowAtIndex( \
+                                  oldLocusOfFocus.getIndexInParent())
+                    nRows = parentTable.nRows
                     if (newRow != oldRow) and (oldRow != nRows):
                         return
 
