@@ -21,6 +21,9 @@
 	* src/orca/braille.py: 
           pyatspi migration.
 
+        * src/orca/where_am_I.py
+          pyatspi migration.
+
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/gedit.py:
