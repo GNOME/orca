@@ -73,7 +73,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
         vbox = self.appScript.getAppPreferencesGUI()
         if vbox:
-            label = gtk.Label(orca_state.locusOfFocus.app.name)
+            label = gtk.Label(orca_state.locusOfFocus.getApplication().name)
             self.get_widget("notebook").append_page(vbox, label)
 
     def _createPronunciationTreeView(self, pronunciations=None):
