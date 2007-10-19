@@ -1,5 +1,12 @@
 2007-10-19  Willie Walker <william.walker@sun.com>
 
+        * pylintrc:
+          Add pylintrc file that matches our naming style and
+          also eliminates some nuisance warnings (see the
+          disable-msg=C0111,W0403,W0613,W0702,W0704 line).
+
+2007-10-19  Willie Walker <william.walker@sun.com>
+
         * src/orca/gnomespeech.py:
           pyatspi migration.
 
