@@ -37,8 +37,8 @@ import threading
 import time
 
 import bonobo
+import ORBit
 
-import atspi
 import chnames
 import debug
 import orca_state
@@ -51,7 +51,7 @@ from acss import ACSS
 
 from orca_i18n import _           # for gettext support
 
-atspi.ORBit.load_typelib('GNOME_Speech')
+ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
 class _SayAll:
@@ -265,6 +265,8 @@ class SpeechServer(speechserver.SpeechServer):
         self.__gidleId       = 0
         self.__gidleLock     = threading.Lock()
         self.__lastResetTime = 0
+        self.__lastText      = None
+        self.textCharIndices = []
 
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
@@ -577,7 +579,6 @@ class SpeechServer(speechserver.SpeechServer):
                 families.append(speechserver.VoiceFamily(props))
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            pass
 
         return families
 
@@ -1061,4 +1062,3 @@ class SpeechServer(speechserver.SpeechServer):
                 except:
                     debug.printException(debug.LEVEL_SEVERE)
                     self.__driver = None
-                    pass
