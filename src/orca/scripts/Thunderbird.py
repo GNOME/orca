@@ -32,7 +32,6 @@ import orca.orca as orca
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
-import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.Gecko as Gecko
 
@@ -118,7 +117,7 @@ class Script(Gecko.Script):
         # cell at the beginning of the row. It consume the event
         # so Gecko.py doesn't reset the focus.
         #
-        if obj.getRoleName() == pyatspi.ROLE_TABLE_CELL:
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = parent.queryTable()
             row = table.getRowAtIndex(obj.getIndexInParent())
             cell = table.getAccessibleAt(row, 0)
@@ -128,7 +127,7 @@ class Script(Gecko.Script):
 
         # Handle dialogs.
         #
-        if top.getRoleName() == pyatspi.ROLE_DIALOG:
+        if top.getRole() == pyatspi.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
         if not consume:
@@ -157,7 +156,7 @@ class Script(Gecko.Script):
         obj = event.source
         parent = obj.parent
 
-        if parent.getRoleName() == pyatspi.ROLE_AUTOCOMPLETE:
+        if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             # Thunderbird does not present all the text in an
             # autocompletion text entry. This is a workaround.
             #
@@ -199,7 +198,7 @@ class Script(Gecko.Script):
 
         if parent.name != "" \
             and (not parent.name.startswith("chrome://")) \
-            and (parent.getRoleName() == pyatspi.ROLE_PANEL):
+            and (parent.getRole() == pyatspi.ROLE_PANEL):
 
             # Speak the parent panel name, but only once.
             #
@@ -216,7 +215,7 @@ class Script(Gecko.Script):
             if grandparent \
                 and (grandparent.name != "") \
                 and (not grandparent.name.startswith("chrome://")) \
-                and (grandparent.role == rolenames.ROLE_PANEL):
+                and (grandparent.getRole() == pyatspi.ROLE_PANEL):
 
                 # Speak the grandparent panel name, but only once.
                 #

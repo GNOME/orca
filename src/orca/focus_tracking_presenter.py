@@ -538,9 +538,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         oldLocusOfFocus = orca_state.locusOfFocus
         try:
             # If we've received a mouse event, then don't try to get
-            # event.source.app because the top most parent is of role
-            # unknown, which will cause an ERROR message to be displayed.
-            # See Orca bug #409731 for more details.
+            # event.source.getApplication() because the top most parent
+            # is of role unknown, which will cause an ERROR message to be
+            # displayed. See Orca bug #409731 for more details.
             #
             if not event.type.startswith("mouse:"):
                 s = self._getScript(event.source.getApplication())

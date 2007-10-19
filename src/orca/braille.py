@@ -466,7 +466,8 @@ class Text(Region):
             # character that has that attribute]]]
             #
             adjustment = 0
-            if orca_state.locusOfFocus.app.name == "soffice.bin":
+            appName = orca_state.locusOfFocus.getApplication().name
+            if appName.startswith("soffice"):
                 adjustment += 1
 
             i = self.lineOffset

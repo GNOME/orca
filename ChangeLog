@@ -6,7 +6,16 @@
         * src/orca/scripts/gedit.py:
           pyatspi migration.
 
+        * src/orca/scripts/Thunderbird.py:
+          pyatspi migration.
+
+        * src/orca/scripts/gnome-mud.py:
+          pyatspi migration.
+
         * src/orca/Gecko.py:
+          pyatspi migration.
+
+	* src/orca/braille.py: 
           pyatspi migration.
 
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>

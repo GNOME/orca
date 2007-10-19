@@ -172,7 +172,8 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_FINEST, \
                     message + " inserted in ringlist:")
                 self.previousMessages.append(message)
-                if event.source.app == orca_state.locusOfFocus.app:
+                if event.source.getApplication() == \
+                   orca_state.locusOfFocus.getApplication():
                     speech.speak(message)
 
         else:
