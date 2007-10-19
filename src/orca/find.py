@@ -174,7 +174,7 @@ class SearchQuery:
                               (originalLineIndex == context.lineIndex) and \
                               (originalZoneIndex == context.zoneIndex)
                         try:
-                            characterCount = theZone.accessible.queryText()
+                            theZone.accessible.queryText()
                         except:
                             pass
                         else:

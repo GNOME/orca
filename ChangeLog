@@ -1,5 +1,12 @@
 2007-10-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/find.py:
+          src/orca/Gecko.py:
+          src/orca/scripts/gedit.py:
+          pyatspi migration.
+
+2007-10-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/scripts/gaim.py:
           pyatspi migration.
 

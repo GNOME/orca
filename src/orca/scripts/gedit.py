@@ -25,12 +25,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.debug as debug
 import orca.atspi as atspi
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
-import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
@@ -122,16 +123,17 @@ class Script(default.Script):
             offset = context.currentOffset
             for i in range(0, len(context.obj)):
                 obj = context.obj[i]
-                charCount = obj.text.characterCount
+                text = obj.queryText()
+                charCount = text.characterCount
                 if offset > charCount:
                     offset -= charCount
                 else:
-                    obj.text.setCaretOffset(offset)
+                    text.setCaretOffset(offset)
                     break
         elif type == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
-            obj.text.setCaretOffset(context.currentOffset)
+            obj.queryText().setCaretOffset(context.currentOffset)
             orca.setLocusOfFocus(None, obj, False)
 
     def textLines(self, obj):
@@ -145,11 +147,10 @@ class Script(default.Script):
         [SayAllContext, acss], where SayAllContext has the text to be
         spoken and acss is an ACSS instance for speaking the text.
         """
-        if not obj:
-            return
 
-        text = obj.text
-        if not text:
+        try:
+            text = obj.queryText()
+        except:
             return
 
         length = text.characterCount
@@ -157,16 +158,16 @@ class Script(default.Script):
         string = ""
         textObjs = []
         textObjs.append(obj)
-        startOffset = obj.text.caretOffset
+        startOffset = text.caretOffset
 
         # Determine the correct "say all by" mode to use.
         #        
         if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
+            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
         elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
         # Get the next line of text to read
         #
@@ -179,7 +180,7 @@ class Script(default.Script):
                 if len(mystr) != 0:
                     string += mystr
 
-                if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
+                if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
                    len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                     string = self.adjustForRepeats(string)
                     if string.isupper():
@@ -199,16 +200,15 @@ class Script(default.Script):
                     offset = end
 
             moreLines = False
-            relations = obj.relations
+            relations = obj.getRelationSet()
             for relation in relations:
                 if relation.getRelationType()  \
-                       == atspi.Accessibility.RELATION_FLOWS_TO:
+                       == pyatspi.RELATION_FLOWS_TO:
                     obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
-
-                    text = obj.text
-                    if not text:
+                    try:
+                        text = obj.queryText()
+                    except:
                         return
-
                     textObjs.append(obj)
                     length = text.characterCount
                     offset = 0
@@ -253,7 +253,7 @@ class Script(default.Script):
         # Spelling dialog. Look for the one that isn't a label to
         # another component.
         #
-        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             # Translators: these are labels from the gedit spell checking
             # dialog and must be the same strings gedit uses.  We hate
@@ -274,7 +274,7 @@ class Script(default.Script):
         # was called. If they are the same then we ignore it.
 
         if self.textArea != None:
-            allText = self.findByRole(self.textArea, rolenames.ROLE_TEXT)
+            allText = self.findByRole(self.textArea, pyatspi.ROLE_TEXT)
             caretPosition = allText[0].text.caretOffset
 
             debug.println(self.debugLevel, \
@@ -326,18 +326,18 @@ class Script(default.Script):
         """
 
         obj = orca_state.locusOfFocus
-        rolesList1 = [rolenames.ROLE_PUSH_BUTTON,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_DIALOG,
-                     rolenames.ROLE_APPLICATION]
+        rolesList1 = [pyatspi.ROLE_PUSH_BUTTON,
+                      pyatspi.ROLE_FILLER,
+                      pyatspi.ROLE_FILLER,
+                      pyatspi.ROLE_DIALOG,
+                      pyatspi.ROLE_APPLICATION]
 
-        rolesList2 = [rolenames.ROLE_COMBO_BOX,
-                     rolenames.ROLE_PANEL,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_DIALOG,
-                     rolenames.ROLE_APPLICATION]
+        rolesList2 = [pyatspi.ROLE_COMBO_BOX,
+                      pyatspi.ROLE_PANEL,
+                      pyatspi.ROLE_FILLER,
+                      pyatspi.ROLE_FILLER,
+                      pyatspi.ROLE_DIALOG,
+                      pyatspi.ROLE_APPLICATION]
 
         # Translators: this is used to tell us if the focus is on the
         # "Find" button in gedit's Find dialog.  It must match what
@@ -382,12 +382,12 @@ class Script(default.Script):
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
 
-        rolesList = [rolenames.ROLE_TEXT,
-                     rolenames.ROLE_SCROLL_PANE,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_PAGE_TAB,
-                     rolenames.ROLE_PAGE_TAB_LIST,
-                     rolenames.ROLE_SPLIT_PANE]
+        rolesList = [pyatspi.ROLE_TEXT,
+                     pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_PAGE_TAB,
+                     pyatspi.ROLE_PAGE_TAB_LIST,
+                     pyatspi.ROLE_SPLIT_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gedit.locusOfFocusChanged - text area.")
@@ -407,11 +407,11 @@ class Script(default.Script):
         # their translation of this string matches what gedit uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_TEXT,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_PANEL,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_TEXT,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             tmp = event.source.parent.parent
             frame = tmp.parent.parent
@@ -465,10 +465,10 @@ class Script(default.Script):
         # their translation of this string matches what gedit uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_LABEL,
-                     rolenames.ROLE_PANEL,
-                     rolenames.ROLE_FILLER,
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_LABEL,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent
             # Translators: this is the name of the "Check Spelling" window
@@ -500,7 +500,7 @@ class Script(default.Script):
         # keying off stuff like this, but we're forced to do so in this
         # case.
         #
-        if event.source.role == rolenames.ROLE_STATUSBAR \
+        if event.source.getRole() == pyatspi.ROLE_STATUS_BAR \
            and self.isFocusOnFindDialog() \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
            and event.source.name == _("Phrase not found"):
@@ -561,7 +561,7 @@ class Script(default.Script):
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
 
             allComboBoxes = self.findByRole(orca_state.locusOfFocus.app,
-                                            rolenames.ROLE_COMBO_BOX)
+                                            pyatspi.ROLE_COMBO_BOX)
             phrase = self.getDisplayedText(allComboBoxes[0])
             [text, caretOffset, startOffset] = \
                 self.getTextLineAtCaret(event.source)

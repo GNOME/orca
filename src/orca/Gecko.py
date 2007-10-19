@@ -229,7 +229,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if relationSet:
                 for relation in relationSet:
                     if relation.getRelationType() \
-                        == atspi.Accessibility.RELATION_LABELLED_BY:
+                        == pyatspi.RELATION_LABELLED_BY:
                         isLabelled = True
                         break
             if not isLabelled and obj.name and len(obj.name):
@@ -285,7 +285,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if relationSet:
                 for relation in relationSet:
                     if relation.getRelationType() \
-                        == atspi.Accessibility.RELATION_LABELLED_BY:
+                        == pyatspi.RELATION_LABELLED_BY:
                         isLabelled = True
                         break
 
@@ -616,7 +616,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         self.speechGenerators[pyatspi.ROLE_SLIDER]         = \
              self._getSpeechForSlider
 
-    def _getSpeechForObjectRole(self, obj):
+    def _getSpeechForObjectRole(self, obj, role=None):
         """Prevents some roles from being spoken."""
         if obj.getRole() in [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_SECTION,
@@ -626,7 +626,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                              pyatspi.ROLE_UNKNOWN]:
             return []
         else:
-            return [rolenames.getSpeechForRoleName(obj)]
+            return [rolenames.getSpeechForRoleName(obj, role)]
 
     def _getSpeechForDocumentFrame(self, obj, already_focused):
         """Gets the speech for a document frame.
@@ -2245,124 +2245,124 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                1 << pyatspi.MODIFIER_CONTROL,
                 self.inputEventHandlers["goNextWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                1 << pyatspi.MODIFIER_CONTROL,
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                1 << atspi.Accessibility.MODIFIER_ALT,
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                1 << pyatspi.MODIFIER_ALT,
                 self.inputEventHandlers["expandComboBoxHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellRightHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellLeftHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellUpHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellDownHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Home",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellFirstHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "End",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_CONTROL \
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT),
                 self.inputEventHandlers["goCellLastHandler"]))
 
         return keyBindings
@@ -2381,216 +2381,216 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "1",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading1Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "1",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading1Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "2",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading2Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "2",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading2Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "3",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading3Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "3",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading3Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "4",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading4Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "4",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading4Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "5",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading5Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "5",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading5Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "6",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeading6Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "6",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeading6Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousChunkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextChunkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousListHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextListHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "i",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousListItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "i",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextListItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousUnvisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextUnvisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "v",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousVisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "v",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextVisitedLinkHandler"]))
 
@@ -2598,56 +2598,56 @@ class Script(default.Script):
             keybindings.KeyBinding(
                 "Tab",
                 (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_SHIFT),
+                     1 << pyatspi.MODIFIER_SHIFT),
                 self.inputEventHandlers["goPreviousFormFieldHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Tab",
                 (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                 | 1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["goNextFormFieldHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousBlockquoteHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextBlockquoteHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "t",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousTableHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "t",
-                (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextTableHandler"]))
 
@@ -3083,7 +3083,7 @@ class Script(default.Script):
             [line, startOffset, endOffset] = \
                 text.getTextAtOffset(
                                  characterOffset,
-                                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+                                 pyatspi.TEXT_BOUNDARY_LINE_START)
             beginAt = 0
             if line and sayAllBySentence:
                 terminators = ['. ', '? ', '! ']
@@ -3708,7 +3708,7 @@ class Script(default.Script):
             linkText = text.getText(link.startIndex, link.endIndex)
             #[string, startOffset, endOffset] = text.getTextAtOffset(
             #    text.caretOffset,
-            #    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            #    pyatspi.TEXT_BOUNDARY_LINE_START)
             #print "onLinkSelected", event.source.getRole() , string,
             #print "  caretOffset:     ", text.caretOffset
             #print "  line startOffset:", startOffset
@@ -4526,7 +4526,7 @@ class Script(default.Script):
                 relationSet = child.getRelationSet()
                 for relation in relationSet:
                     if relation.getRelationType()  \
-                        == atspi.Accessibility.RELATION_EMBEDS:
+                        == pyatspi.RELATION_EMBEDS:
                         documentFrame = atspi.Accessible.makeAccessible( \
                             relation.getTarget(0))
                         if documentFrame.getState().contains( \
@@ -4620,7 +4620,7 @@ class Script(default.Script):
                and not self._autocompleteVisible:
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
 
-        elif keyboardEvent.modifiers & (1 << atspi.Accessibility.MODIFIER_ALT):
+        elif keyboardEvent.modifiers & (1 << pyatspi.MODIFIER_ALT):
             # Alt+Down Arrow is the Firefox command to expand/collapse the
             # *currently focused* combo box.  When Orca is controlling the
             # caret, it is possible to navigate into a combo box *without
@@ -4907,7 +4907,7 @@ class Script(default.Script):
 
         for relation in relationSet:
             if relation.getRelationType() \
-                == atspi.Accessibility.RELATION_LABEL_FOR:
+                == pyatspi.RELATION_LABEL_FOR:
                 for i in range(0, relation.getNTargets()):
                     target = atspi.Accessible.makeAccessible(\
                         relation.getTarget(i))
