@@ -764,8 +764,9 @@ class SpeechGenerator:
         utterances = self._getDefaultSpeech(obj, already_focused)
 
         # If already in focus then the tree probably collapsed or expanded
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -969,8 +970,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        percentValue = (obj.value.currentValue / \
-            (obj.value.maximumValue - obj.value.minimumValue)) * 100.0
+        value = obj.queryValue()
+        percentValue = (value.currentValue / \
+            (value.maximumValue - value.minimumValue)) * 100.0
 
         # Translators: this is the percentage value of a progress bar.
         #
@@ -1139,7 +1141,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        value = obj.value
+        value = obj.queryValue()
 
         # OK, this craziness is all about trying to figure out the most
         # meaningful formatting string for the floating point values.
@@ -1317,8 +1319,8 @@ class SpeechGenerator:
                         pass
                     else:
                         utterances.extend( \
-                            self._getSpeechForTableCell(obj.child(i),
-                                                              already_focused))
+                            self._getSpeechForTableCell(obj[i],
+                                                        already_focused))
                 return utterances
 
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
@@ -1431,7 +1433,7 @@ class SpeechGenerator:
                     self._script.pointOfReference.has_key("lastColumn"):
                     pointOfReference = self._script.pointOfReference
                     speakAll = (pointOfReference["lastRow"] != row) or \
-                        ((row == 0 or row == parent.table.nRows-1) and \
+                        ((row == 0 or row == parent_table.nRows-1) and \
                            pointOfReference["lastColumn"] == column)
 
                 if speakAll:
