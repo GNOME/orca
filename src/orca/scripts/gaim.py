@@ -34,15 +34,14 @@ __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
+import pyatspi
 
-import orca.atspi as atspi
 import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state
-import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
 
@@ -142,7 +141,7 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
     def getListeners(self):
-        """Add in an AT-SPI event listener ""object:children-changed:"
+        """Add in an AT-SPI event listener "object:children-changed:"
         events, for this script.
         """
 
@@ -345,9 +344,9 @@ class Script(default.Script):
         if obj:
             while True:
                 if obj:
-                    if obj.role == rolenames.ROLE_APPLICATION:
+                    if obj.getRole() == pyatspi.ROLE_APPLICATION:
                         break
-                    elif obj.role == rolenames.ROLE_PAGE_TAB:
+                    elif obj.getRole() == pyatspi.ROLE_PAGE_TAB:
                         return obj
                     else:
                         obj = obj.parent
@@ -367,12 +366,10 @@ class Script(default.Script):
         # has, then announce its name. See bug #469098 for more details.
         #
         if event.type.startswith("object:children-changed:add"):
-            rolesList = [rolenames.ROLE_PAGE_TAB_LIST, \
-                         rolenames.ROLE_FILLER, \
-                         rolenames.ROLE_FRAME]
+            rolesList = [pyatspi.ROLE_PAGE_TAB_LIST, \
+                         pyatspi.ROLE_FILLER, \
+                         pyatspi.ROLE_FRAME]
             if self.isDesiredFocusedItem(event.source, rolesList):
-                childCount = event.source.childCount
-
                 # As it's possible to get this component hierarchy in other
                 # places than the chat room (i.e. the Preferences dialog),
                 # we check to see if the name of the frame is the same as one
@@ -382,12 +379,11 @@ class Script(default.Script):
                 #
                 nameFound = False
                 frameName = event.source.parent.parent.name
-                for i in range(0, childCount):
-                    child = event.source.child(i)
+                for child in event.source:
                     if frameName and (frameName == child.name):
                         nameFound = True
                 if nameFound:
-                    child = event.source.child(childCount-1)
+                    child = event.source[-1]
                     if child.name:
                         line = _("New chat tab %s") % child.name
                         speech.speak(line)
@@ -431,7 +427,7 @@ class Script(default.Script):
             # as well, but is currently untested.
             #
             allTextFields = self.findByRole(chatRoomTab,
-                                            rolenames.ROLE_TEXT,
+                                            pyatspi.ROLE_TEXT,
                                             False)
             index = len(allTextFields) - 2
             if index >= 0:
@@ -458,7 +454,8 @@ class Script(default.Script):
             # If the new message came from the room with focus, we don't
             # want to speak its name even if prefixChatMessage is enabled.
             #
-            if event.source.state.count(atspi.Accessibility.STATE_SHOWING):
+            state = event.source.getState()
+            if state.contains(pyatspi.STATE_SHOWING):
                 chatRoomName = ""
             self.utterMessage(chatRoomName, message)
 
