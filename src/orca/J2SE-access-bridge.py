@@ -23,6 +23,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import atspi
 import default
 import debug
@@ -31,7 +33,6 @@ import orca_state
 import keybindings
 import speech
 import rolenames
-import Accessibility
 import speechgenerator
 
 from orca_i18n import _ # for gettext support
@@ -64,28 +65,29 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances = self._getDefaultSpeech(obj, already_focused)
 
         obj.was_selected = False
-        if obj.state.count(Accessibility.STATE_EXPANDED) != 0:
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDED):
             # Translators: this represents the state of a node in a tree.
             # 'expanded' means the children are showing.
             # 'collapsed' means the children are not showing.
             #
             utterances.append(_("expanded"))
-        elif obj.state.count(Accessibility.STATE_EXPANDED) == 0 and \
-                obj.state.count(Accessibility.STATE_EXPANDABLE) != 0:
+        elif not state.contains(pyatspi.STATE_EXPANDED) and \
+                 state.contains(pyatspi.STATE_EXPANDABLE):
             # Translators: this represents the state of a node in a tree.
             # 'expanded' means the children are showing.
             # 'collapsed' means the children are not showing.
             #
             utterances.append(_("collapsed"))
-        elif obj.state.count(Accessibility.STATE_SELECTED) != 0:
+        elif state.contains(pyatspi.STATE_SELECTED):
             # Translators: this represents the state of a node in a tree
             # or list.
             #
             # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
             utterances.append(Q_("listitem|selected"))
             obj.was_selected = True
-        elif obj.state.count(Accessibility.STATE_SELECTED) == 0 and \
-                obj.state.count(Accessibility.STATE_SELECTABLE) != 0:
+        elif not state.count(pyatspi.STATE_SELECTED) and \
+                 state.count(pyatspi.STATE_SELECTABLE):
             # Translators: this represents the state of a node in a tree
             # or list.
             #
@@ -217,12 +219,16 @@ class Script(default.Script):
         role = event.source.getRole()
         if role == pyatspi.ROLE_LIST:
             selectedItem = None
-            selection = event.source.selection
+            try:
+                selection = event.source.querySelection()
+            except:
+                selection = None
+
             if selection and selection.nSelectedChildren > 0:
                 selectedItem = atspi.Accessible.makeAccessible(
                                         selection.getSelectedChild(0))
             elif event.source.childCount > 0:
-                selectedItem = event.source.child(0)
+                selectedItem = event.getChildAtIndex(0)
             if selectedItem:
                 orca.setLocusOfFocus(event, selectedItem)
             else:
@@ -234,7 +240,7 @@ class Script(default.Script):
             # the top combo box selected item (not SHOWING item) is received.
             # Should this check be more specific ?
             #
-            if not event.source.state.count (Accessibility.STATE_SHOWING):
+            if not event.source.getState().contains(pyatspi.STATE_SHOWING):
                 return
         elif role == pyatspi.ROLE_MENU:
             # A JMenu has always selection.nSelectedChildren > 0
@@ -265,9 +271,8 @@ class Script(default.Script):
                event.type.startswith("object:state-changed:focused") and \
                event.detail1 == 1:
 
-            for i in range(0, event.source.childCount):
+            for child in event.source:
                 # search the layered pane for a popup menu
-                child = event.source.child(i)
                 if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
                     popup = self.findByRole(child, 
                                             pyatspi.ROLE_POPUP_MENU, False)
@@ -276,7 +281,7 @@ class Script(default.Script):
                         items = self.findByRole(popup[0], 
                                                 pyatspi.ROLE_MENU_ITEM, False)
                         for item in items:
-                            if item.state.count(Accessibility.STATE_ARMED):
+                            if item.getState().contains(pyatspi.STATE_ARMED):
                                 orca.setLocusOfFocus(event, item)
                                 return
 
@@ -300,7 +305,7 @@ class Script(default.Script):
         #
         if event.type.startswith("object:state-changed:visible") and \
                 event.source.getRole() == pyatspi.ROLE_POPUP_MENU and \
-                event.source.parent.state.count(Accessibility.STATE_FOCUSED):
+                event.source.parent.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source.parent)
             return
 
@@ -316,7 +321,7 @@ class Script(default.Script):
         self._debug("onSelectionChanged: %s '%s'" % \
                     (event.source.getRole(), event.source.name))
 
-        if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
         if event.source.getRole() == pyatspi.ROLE_TABLE:
@@ -326,11 +331,11 @@ class Script(default.Script):
             return
 
         if event.source.getRole() == pyatspi.ROLE_LIST:
-            selection = event.source.selection
+            selection = event.source.querySelection()
             if selection.nSelectedChildren <= 0:
                 if event.source.childCount > 0:
-                    child = event.source.child(0)
-                    if child.state.count (atspi.Accessibility.STATE_ACTIVE):
+                    child = event.source[0]
+                    if child.getState().contains(pyatspi.STATE_ACTIVE):
                         return
                 else:
                     orca.setLocusOfFocus(event, event.source)
@@ -347,11 +352,11 @@ class Script(default.Script):
                 if orca_state.activeScript and \
                    orca_state.activeScript.isSameObject(selectedItem,  \
                                                     orca_state.locusOfFocus):
-                    stateCount = orca_state.locusOfFocus.state.count
-                    if (stateCount(Accessibility.STATE_SELECTED) != 0 \
+                    state = orca_state.locusOfFocus.getState()
+                    if (state.contains(pyatspi.STATE_SELECTED) \
                               and not orca_state.locusOfFocus.was_selected)   \
-                        or (stateCount(Accessibility.STATE_SELECTED) == 0 \
-                          and stateCount(Accessibility.STATE_SELECTABLE) != 0 \
+                        or (not state.contains(pyatspi.STATE_SELECTED) \
+                          and state.contains(pyatspi.STATE_SELECTABLE) \
                                 and orca_state.locusOfFocus.was_selected):
                         orca.visualAppearanceChanged(event, selectedItem)
                     return
@@ -368,7 +373,7 @@ class Script(default.Script):
 
         self._debug("onValueChanged: %s '%s' value=%d" % \
                     (event.source.getRole(), event.source.name,
-                     event.source.value.currentValue))
+                     event.source.queryValue().currentValue))
 
         # We'll let state-changed:checked event to be used to
         # manage check boxes in java application
@@ -409,12 +414,16 @@ class Script(default.Script):
                   self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
                 return
 
-        if obj.getRole() == pyatspi.ROLE_SPIN_BOX:
+        if obj.getRole() == rolenames.ROLE_SPIN_BOX:
             # Check for the spinbox text object being null. There appears
             # to be a bug where the text object for some text fields
             # is null. 
+            try:
+                text = orca_state.locusOfFocus.queryText()
+            except:
+                text = None
             if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TEXT and \
-               orca_state.locusOfFocus.text == None:
+               text == None:
                 # Set the locusOfFocus to the spinbox itself.
                 orca.setLocusOfFocus(event, obj)
 
@@ -431,7 +440,12 @@ class Script(default.Script):
                     (event.source.getRole(), event.source.name))
 
         # Check for bogus events containing null text objects.
-        if event.source.text == None:
+        try:
+            text = event.source.queryText()
+        except:
+            text = None
+
+        if text == None:
             self._debug("bogus event: text object is null. Discarding event")
             return;
 
@@ -448,7 +462,11 @@ class Script(default.Script):
                     (event.source.getRole(), event.source.name))
 
         # Check for bogus events containing null text objects.
-        if event.source.text == None:
+        try:
+            text = event.source.queryText()
+        except:
+            text = None
+        if text == None:
             self._debug("bogus event: text object is null. Discarding event")
             return;
 
@@ -479,8 +497,8 @@ class Script(default.Script):
             # ends with a colon. We only do this for text and combo
             # boxes since they are the most common Java component with
             # this bug.
-            if object.index > 0:
-                prevSibling = object.parent.child(object.index-1)
+            if object.getIndexInParent() > 0:
+                prevSibling = object.parent[object.getIndexInParent()-1]
                 if prevSibling and prevSibling.name and \
                    prevSibling.getRole() == pyatspi.ROLE_LABEL:
                     labelFor = prevSibling.name.rstrip(" ")
