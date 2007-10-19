@@ -1283,10 +1283,11 @@ class WhereAmI:
                                pyatspi.RELATION_FLOWS_FROM:
                             prevObj = atspi.Accessible.makeAccessible( \
                                                       relation.getTarget(0))
-                            if prevObj.text.getNSelections() > 0:
+                            prevObjText = prevObj.queryText()
+                            if prevObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = prevObj.text.getText(0, -1)
+                                displayedText = prevObjText.getText(0, -1)
                                 if len(displayedText) == 0:
                                     current = prevObj
                                     morePossibleSelections = True
@@ -1301,10 +1302,11 @@ class WhereAmI:
                                pyatspi.RELATION_FLOWS_TO:
                             nextObj = atspi.Accessible.makeAccessible( \
                                                       relation.getTarget(0))
-                            if nextObj.text.getNSelections() > 0:
+                            nextObjText = nextObj.queryText()
+                            if nextObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = nextObj.text.getText(0, -1)
+                                displayedText = nextObjText.getText(0, -1)
                                 if len(displayedText) == 0:
                                     current = nextObj
                                     morePossibleSelections = True
