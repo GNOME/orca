@@ -12,6 +12,9 @@
         * src/orca/scripts/gnome-mud.py:
           pyatspi migration.
 
+        * src/orca/scripts/gnome-terminal.py
+          pyatspi migration.
+
         * src/orca/Gecko.py:
           pyatspi migration.
 

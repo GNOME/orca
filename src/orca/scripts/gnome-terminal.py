@@ -27,11 +27,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.atspi as atspi
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
-import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
 
@@ -88,7 +89,7 @@ class Script(default.Script):
         # We only do special things when people press backspace
         # in terminals.
         #
-        if (event.source.role != rolenames.ROLE_TERMINAL) \
+        if (event.source.getRole() != pyatspi.ROLE_TERMINAL) \
             or (event_string != "BackSpace"):
             default.Script.onTextDeleted(self, event)
             return
@@ -120,7 +121,7 @@ class Script(default.Script):
 
         # We only do special things for terminals.
         #
-        if event.source.role != rolenames.ROLE_TERMINAL:
+        if event.source.getRole() != pyatspi.ROLE_TERMINAL:
             default.Script.onTextInserted(self, event)
             return
 
