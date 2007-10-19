@@ -18,6 +18,9 @@
         * src/orca/scripts/Evolution.py:
           pyatspi migration.
 
+        * src/orca/app_gui_prefs.py:
+          pyatspi migration.
+
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/eventsynthesizer.py:

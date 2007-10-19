@@ -97,7 +97,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         # Adjust the title of the app-specific Orca Preferences dialog to
         # include the name of the application.
         #
-        self.app = orca_state.locusOfFocus.app
+        self.app = orca_state.locusOfFocus.getApplication()
         self.applicationName = self.app.name 
         title = _("Orca Preferences for %s") % self.applicationName
         self.get_widget("orcaSetupWindow").set_title(title)
@@ -219,7 +219,8 @@ def showPreferencesUI():
 
     # There must be an application with focus for this to work.
     #
-    if not orca_state.locusOfFocus or not orca_state.locusOfFocus.app:
+    if not orca_state.locusOfFocus or \
+       not orca_state.locusOfFocus.getApplication():
         message = _("No application has focus.")
         braille.displayMessage(message)
         speech.speak(message)
@@ -229,7 +230,7 @@ def showPreferencesUI():
 
     # The name of the application that currently has focus.
     #
-    applicationName = orca_state.locusOfFocus.app.name
+    applicationName = orca_state.locusOfFocus.getApplication().name
 
     # Translators: Orca Preferences in this case, is a configuration GUI 
     # for allowing users to set application specific settings from within
