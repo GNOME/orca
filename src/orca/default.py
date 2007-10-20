@@ -1492,6 +1492,7 @@ class Script(script.Script):
         # the visual progress of what is being spoken as well as
         # positioning the cursor when speech has stopped.]]]
         #
+        text = context.obj.queryText()
         if type == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
             #obj = context.obj
@@ -1502,11 +1503,11 @@ class Script(script.Script):
             pass
         elif type == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
-            context.obj.text.setCaretOffset(context.currentOffset);
+            text.setCaretOffset(context.currentOffset);
         elif type == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             orca.setLocusOfFocus(None, context.obj, False)
-            context.obj.text.setCaretOffset(context.currentOffset)
+            text.setCaretOffset(context.currentOffset)
 
     def sayAll(self, inputEvent):
         try:
@@ -2221,7 +2222,7 @@ class Script(script.Script):
                          pyatspi.ROLE_PANEL, \
                          pyatspi.ROLE_PANEL]
             if self.isDesiredFocusedItem(newLocusOfFocus, rolesList) and \
-               newLocusOfFocus.app.name == "orca":
+               newLocusOfFocus.getApplication().name == "orca":
                 orca_state.usePronunciationDictionary = False
             else:
                 orca_state.usePronunciationDictionary = True
@@ -2512,7 +2513,7 @@ class Script(script.Script):
                 elif self.pointOfReference.has_key("activeDescendantInfo"):
                     [parent, index] = \
                         self.pointOfReference['activeDescendantInfo']
-                    newFocus = parent.child(index)
+                    newFocus = parent[index]
 
         orca.setLocusOfFocus(event, newFocus)
 
@@ -2646,7 +2647,7 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               event.source.text.caretOffset)
+                               texti.caretOffset)
             else:
                 self.sayLine(event.source)
 
@@ -2769,7 +2770,7 @@ class Script(script.Script):
             #
             offset = text.caretOffset
             [character, startOffset, endOffset] = \
-                event.source.text.getTextAtOffset(
+                text.getTextAtOffset(
                     offset,
                     pyatspi.TEXT_BOUNDARY_CHAR)
 
@@ -3045,8 +3046,8 @@ class Script(script.Script):
             event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
             if event.source.childCount:
-                selection = event.source.selection
-                if selection and selection.nSelectedChildren > 0:
+                selection = event.source.querySelection()
+                if selection.nSelectedChildren > 0:
                     child = selection.getSelectedChild(0)
                     if child:
                         newFocus = atspi.Accessible.makeAccessible(child)
@@ -3072,7 +3073,7 @@ class Script(script.Script):
         #
         value = event.source.queryValue()
         if event.source.__dict__.has_key("oldValue") \
-           and (event.source.value.currentValue == event.source.oldValue):
+           and (value.currentValue == event.source.oldValue):
             return
 
         orca.visualAppearanceChanged(event, event.source)
@@ -3147,7 +3148,11 @@ class Script(script.Script):
         state = event.type[-1]
         if state == "r":
             obj = orca_state.locusOfFocus
-            if obj and obj.text:
+            try:
+                text = obj.queryText()
+            except:
+                pass
+            else:
                 [textContents, startOffset, endOffset] = \
                     self.whereAmI._getTextSelections(obj, True)
                 if textContents:
@@ -4071,7 +4076,7 @@ class Script(script.Script):
             string = ""
             for zone in line.zones:
                 string += " '%s' [%s]" % \
-                          (zone.string, zone.accessible.role)
+                          (zone.string, zone.accessible.getRoleName())
                 self.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
             debug.println(debug.LEVEL_OFF, string)
@@ -4717,9 +4722,11 @@ class Script(script.Script):
                 #
                 displayedText = combo.name
                 #print "NAME", displayedText
-            elif combo.text:
-                [displayedText, caretOffset, startOffset] = \
-                    self.getTextLineAtCaret(combo)
+            else:
+              [displayedText, caretOffset, startOffset] = \
+                  self.getTextLineAtCaret(combo)
+              # Set to None instead of empty string.
+              displayedText = displayedText or None
                 #print "TEXT", displayedText
 
         return displayedText
@@ -4763,7 +4770,7 @@ class Script(script.Script):
                and (unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER) \
                and obj.childCount > 0:
                 try:
-                    displayedText = self.getDisplayedText(obj.child(0))
+                    displayedText = self.getDisplayedText(obj[0])
                 except:
                     debug.printException(debug.LEVEL_WARNING)
             elif unicodeText:
@@ -4785,8 +4792,7 @@ class Script(script.Script):
         # tab in the Editing Profile dialog in gnome-terminal.
         #
         if not displayedText and role == pyatspi.ROLE_PUSH_BUTTON:
-            for i in range(0, obj.childCount):
-                child = obj.child(i)
+            for child in obj:
                 if child.getRole() == pyatspi.ROLE_LABEL:
                     childText = self.getDisplayedText(child)
                     if childText and len(childText):
@@ -4871,7 +4877,7 @@ class Script(script.Script):
         # and we need to eventually clean up our act.]]]
         #
         if obj and obj.childCount:
-            return obj.child(obj.childCount - 1)
+            return obj[-1]
         else:
             return obj
 
@@ -5053,8 +5059,9 @@ class Script(script.Script):
                        == pyatspi.RELATION_FLOWS_TO:
                     obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
 
-                    text = obj.text
-                    if not text:
+                    try:
+                        text = obj.queryText()
+                    except NotImplementedError:
                         return
 
                     length = text.characterCount
@@ -5527,10 +5534,9 @@ class Script(script.Script):
                       "Script.getKnownApplications...")
 
         apps = []
-        registry = atspi.Registry()
-        for i in range(0, registry.desktop.childCount):
+        desktop = pyatspi.Registry.getDesktop(0)
+        for acc in desktop:
             try:
-                acc = registry.desktop.getChildAtIndex(i)
                 app = atspi.Accessible.makeAccessible(acc)
                 if app:
                     apps.insert(0, app)
@@ -5788,7 +5794,8 @@ class Script(script.Script):
             return False
         else:
             return orca_state.locusOfFocus \
-                   and (orca_state.locusOfFocus.app == obj.app)
+                   and (orca_state.locusOfFocus.getApplication() \
+                          == obj.getApplication())
 
     def findActiveWindow(self):
         """Traverses the list of known apps looking for one who has an
