@@ -691,8 +691,9 @@ class BrailleGenerator:
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
 
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
@@ -1211,7 +1212,7 @@ class BrailleGenerator:
             if cellOrder:
                 for i in cellOrder:
                     [cellRegions, focusRegion] = \
-                            self._getBrailleRegionsForTableCell(obj.child(i))
+                            self._getBrailleRegionsForTableCell(obj[i])
                     if len(regions):
                         regions.append(braille.Region(" "))
                     else:
@@ -1579,7 +1580,10 @@ class BrailleGenerator:
 
         if reallyGroupChildren:
             regions.append(braille.Region(" "))
-            selection = obj.selection
+            try:
+                selection = obj.querySelection()
+            except NotImplementedError:
+                selection = None
             i = 0
             for child in obj:
                 debug.println(debug.LEVEL_FINEST,
@@ -1595,7 +1599,7 @@ class BrailleGenerator:
                 # the following line has been removed because insensitive
                 # menu items can get focus in StarOffice.
                 #
-                # and child.state.count(atspi.Accessibility.STATE_SENSITIVE):
+                # and child.getState().contains(pyatspi.STATE_SENSITIVE):
 
                     if (i > 0) and (i < (self, obj.childCount - 1)):
                         regions.append(braille.Region(" _ "))
@@ -1611,7 +1615,7 @@ class BrailleGenerator:
                     # workaround to the way OOo handles its menu items.
                     #
                     if (selection and selection.isChildSelected(i)) \
-                       or child.state.count(atspi.Accessibility.STATE_ARMED):
+                       or child.getState().contains(pyatspi.STATE_ARMED):
                         selectedRegion = result[1]
                 i += 1
 
