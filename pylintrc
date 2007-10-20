@@ -13,7 +13,12 @@
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().
-#init-hook=
+# [[[WDW - ensure Accessibility symbols are imported to avoid errors
+# such as E1101:  4: Module 'pyatspi' has no 'ROLE_TEXT' member.
+# I couldn't get this to work, but I did get the command line 
+# version to work: pylint --init-hook="import pyatspi" *.py.]]]
+#init-hook="import pyatspi"
+#init-hook=import pyatspi
 
 # Profiled execution.
 profile=no
@@ -53,7 +58,7 @@ load-plugins=
 #enable-msg=
 
 # Disable the message(s) with the given id(s).
-disable-msg=C0111,W0403,W0613,W0702,W0704
+disable-msg=C0111,W0403,W0603,W0613,W0702,W0704
 
 
 [REPORTS]

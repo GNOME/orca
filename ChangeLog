@@ -1,3 +1,14 @@
+2007-10-19  Willie Walker <william.walker@sun.com>
+
+        * pylintrc:
+          Add commented out attempt to set init-hook.  I discovered
+          that if I add --init-hook="import pyatspi" to the command
+          line, I can avoid all of those annoying warnings such as:
+            E1101:  4: Module 'pyatspi' has no 'XXX' member
+          BUT...I cannot figure out how to set this value in the
+          pylintrc file.  I also added W0603 (Using the global 
+          statement) to the list of messages to disable.
+
 2007-10-19  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/default.py:
