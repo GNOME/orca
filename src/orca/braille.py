@@ -325,15 +325,12 @@ class Component(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
-        actions = self.accessible.action
-        if actions:
-            actions.doAction(0)
-        else:
-
-            # [[[WDW - HACK to do a mouse button 1 click if we have
-            # to.  For example, page tabs don't have any actions but
-            # we want to be able to select them with the cursor
-            # routing key.]]]
+        try:
+            action = self.accessible.queryAction()
+        except:
+            # Do a mouse button 1 click if we have to.  For example, page tabs
+            # don't have any actions but we want to be able to select them with
+            # the cursor routing key.
             #
             debug.println(debug.LEVEL_FINEST,
                           "braille.Component.processRoutingKey: no action")
@@ -341,6 +338,8 @@ class Component(Region):
                 eventsynthesizer.clickObject(self.accessible, 1)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
+        else:
+            action.doAction(0)
 
 class Text(Region):
     """A subclass of Region backed by a Text object.  This Region will
@@ -373,7 +372,7 @@ class Text(Region):
             self.caretOffset = 0
             self.lineOffset = 0
             [string, startOffset, endOffset] = \
-                self.accessible.text.getTextAtOffset(
+                self.accessible.queryText().getTextAtOffset(
                     0,
                     pyatspi.TEXT_BOUNDARY_LINE_START)
 
@@ -425,7 +424,7 @@ class Text(Region):
                 return
 
         newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
-        self.accessible.text.setCaretOffset(newCaretOffset)
+        self.accessible.queryText().setCaretOffset(newCaretOffset)
 
     def getAttributeMask(self):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -575,7 +574,7 @@ class ReviewText(Region):
         been scrolled off the display."""
 
         newCaretOffset = self.lineOffset + offset
-        self.accessible.text.setCaretOffset(newCaretOffset)
+        self.accessible.queryText().setCaretOffset(newCaretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential
