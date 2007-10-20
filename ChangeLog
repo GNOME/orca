@@ -9,6 +9,7 @@
           src/orca/scripts/Thunderbird.py:
           src/orca/scripts/gnome-mud.py:
           src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/gnome-system-monitor.py:
           src/orca/scripts/StarOffice.py:
           pyatspi migration - finding the "little things" we missed.
 

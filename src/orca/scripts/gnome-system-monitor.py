@@ -26,15 +26,16 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.braille as braille
 import orca.default as default
 import orca.debug as debug
-import orca.rolenames as rolenames
 import orca.speech as speech
 
 ########################################################################
 #                                                                      #
-# The gnome-power-manager script class.                                #
+# The gnome-system-manager script class.                               #
 #                                                                      #
 ########################################################################
 
@@ -74,16 +75,16 @@ class Script(default.Script):
         # on that page. For all of the panels that have a name, find
         # all the unrelated labels and speak them.
         #
-        rolesList = [rolenames.ROLE_PAGE_TAB, \
-                     rolenames.ROLE_PAGE_TAB_LIST, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_FRAME]
+        rolesList = [pyatspi.ROLE_PAGE_TAB,
+                     pyatspi.ROLE_PAGE_TAB_LIST,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FRAME]
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                   "GNOME System Monitor.locusOfFocusChanged - page tab.")
             line = braille.getShowingLine()
             utterances = []
-            panels = self.findByRole(newLocusOfFocus, rolenames.ROLE_PANEL)
+            panels = self.findByRole(newLocusOfFocus, pyatspi.ROLE_PANEL)
             for panel in panels:
                 if panel.name and len(panel.name) > 0:
                     line.addRegion(braille.Region(" " + panel.name))
