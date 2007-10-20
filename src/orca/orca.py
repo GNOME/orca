@@ -363,49 +363,27 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
 ########################################################################
 
 def cycleDebugLevel(script=None, inputEvent=None):
-    global _debugLevel
+    levels = [debug.LEVEL_ALL, "all",
+              debug.LEVEL_FINEST, "finest",
+              debug.LEVEL_FINER, "finer",
+              debug.LEVEL_FINE, "fine",
+              debug.LEVEL_CONFIGURATION, "configuration",
+              debug.LEVEL_INFO, "info",
+              debug.LEVEL_WARNING, "warning",
+              debug.LEVEL_SEVERE, "severe",
+              debug.LEVEL_OFF, "off"]
 
-    level = debug.debugLevel
+    try:
+        levelIndex = levels.index(debug.debugLevel) + 2
+    except:
+        levelIndex = 0
+    else:
+        if levelIndex >= len(levels):
+            levelIndex = 0
 
-    if level == debug.LEVEL_ALL:
-        level = debug.LEVEL_FINEST
-    elif level == debug.LEVEL_FINEST:
-        level = debug.LEVEL_FINER
-    elif level == debug.LEVEL_FINER:
-        level = debug.LEVEL_FINE
-    elif level == debug.LEVEL_FINE:
-        level = debug.LEVEL_CONFIGURATION
-    elif level == debug.LEVEL_CONFIGURATION:
-        level = debug.LEVEL_INFO
-    elif level == debug.LEVEL_INFO:
-        level = debug.LEVEL_WARNING
-    elif level == debug.LEVEL_WARNING:
-        level = debug.LEVEL_SEVERE
-    elif level == debug.LEVEL_SEVERE:
-        level = debug.LEVEL_OFF
-    elif level == debug.LEVEL_OFF:
-        level = debug.LEVEL_ALL
+    debug.debugLevel = levels[levelIndex]
 
-    debug.debugLevel = level
-
-    if level == debug.LEVEL_ALL:
-        speech.speak("Debug level all.")
-    elif level == debug.LEVEL_FINEST:
-        speech.speak("Debug level finest.")
-    elif level == debug.LEVEL_FINER:
-        speech.speak("Debug level finer.")
-    elif level == debug.LEVEL_FINE:
-        speech.speak("Debug level fine.")
-    elif level == debug.LEVEL_CONFIGURATION:
-        speech.speak("Debug level configuration.")
-    elif level == debug.LEVEL_INFO:
-        speech.speak("Debug level info.")
-    elif level == debug.LEVEL_WARNING:
-        speech.speak("Debug level warning.")
-    elif level == debug.LEVEL_SEVERE:
-        speech.speak("Debug level severe.")
-    elif level == debug.LEVEL_OFF:
-        speech.speak("Debug level off.")
+    speech.speak("Debug level %s." % levels[levelIndex + 1])
 
     return True
 
@@ -457,9 +435,6 @@ def _isModifierKey(event_string):
 
     Returns True if this is a modifier key
     """
-
-    # [[[TODO:richb - the Fn key on my laptop doesn't seem to generate an
-    #    event.]]]
 
     modifierKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
                      'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
@@ -695,10 +670,10 @@ def _processKeyboardEvent(event):
 
     # See if this is one of our special Orca modifier keys.
     #
-    # [[[TODO: WDW - Note that just looking at the keycode should
-    # suffice, but there is a "feature" in the Java Access Bridge
-    # where it chooses to emit Java platform-independent keycodes
-    # instead of the keycodes for the base platform:
+    # Just looking at the keycode should suffice, but there is a 
+    # "feature" in the Java Access Bridge where it chooses to emit 
+    # Java platform-independent keycodes instead of the keycodes 
+    # for the base platform:
     #
     # http://bugzilla.gnome.org/show_bug.cgi?id=106004
     # http://bugzilla.gnome.org/show_bug.cgi?id=318615
@@ -716,7 +691,7 @@ def _processKeyboardEvent(event):
     # the following expression is False, only the \ will be viewed as
     # the Orca modifier (i.e., Shift+\ will still function as the |
     # character).  In general, I think we want to avoid sucking in all
-    # possible keysyms because it can have unexpected results.]]]
+    # possible keysyms because it can have unexpected results.
     #
     if False:
         allPossibleKeysyms = []
@@ -812,8 +787,6 @@ def _processBrailleEvent(command):
 
     Returns True if the event was consumed; otherwise False
     """
-
-    # [[[TODO: WDW - probably should add braille bindings to this module.]]]
 
     consumed = False
 
@@ -995,7 +968,6 @@ def _showAppPreferencesGUI(script=None, inputEvent=None):
         module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        pass
 
     return True
 
@@ -1014,7 +986,6 @@ def _showPreferencesGUI(script=None, inputEvent=None):
         module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        pass
 
     return True
 
@@ -1035,7 +1006,6 @@ def _showMainWindowGUI(script=None, inputEvent=None):
             module.hideMainUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        pass
 
     return True
 
@@ -1054,7 +1024,6 @@ def _showPreferencesConsole(script=None, inputEvent=None):
         module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        pass
 
     return True
 
@@ -1089,7 +1058,6 @@ def quitOrca(script=None, inputEvent=None):
             module.showQuitUI()
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            pass
 
     return True
 
@@ -1107,7 +1075,6 @@ def _showFindGUI(script=None, inputEvent=None):
         module.showFindUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        pass
 
 # If True, this module has been initialized.
 #
@@ -1243,9 +1210,9 @@ def shutdown(script=None, inputEvent=None):
     if settings.enableSpeech:
         speech.shutdown()
     if settings.enableBraille:
-        braille.shutdown();
+        braille.shutdown()
     if settings.enableMagnifier:
-        mag.shutdown();
+        mag.shutdown()
 
     pyatspi.Registry.stop()
 
@@ -1318,7 +1285,9 @@ def usage():
     print " Use alternate directory for user preferences"
     print "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window]",
     print " Force use of option"
-    print "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
+    print "-d, --disable=" \
+          "[speech|braille|braille-monitor|magnifier|main-window]" \
+          " Prevent use of option"
     print "-q, --quit                   Quits Orca (if shell script used)"
     print
     print "If Orca has not been previously set up by the user, Orca"
@@ -1326,7 +1295,6 @@ def usage():
     print "the -n or --no-setup option is used."
     print
     print "Report bugs to orca-list@gnome.org."
-    pass
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
@@ -1334,8 +1302,6 @@ def main():
     signal used to terminate Orca (if a signal was used).  Otherwise,
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
-
-    global _commandLineSettings
 
     # Method to call when we think something might be hung.
     #
@@ -1404,7 +1370,7 @@ def main():
              "version"])
         for opt, val in opts:
             if opt in ("-u", "--user-prefs-dir"):
-                userPrefsDir = val.strip();
+                userPrefsDir = val.strip()
                 try:
                     os.chdir(userPrefsDir)
                     settings.userPrefsDir = userPrefsDir
