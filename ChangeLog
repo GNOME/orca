@@ -1,36 +1,16 @@
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * src/orca/braillegenerator.py
-          pyatspi migration.
-
-2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
-
-        * src/orca/scripts/acroread.py:
-          pyatspi migration.
-
-        * src/orca/scripts/gedit.py:
-          pyatspi migration.
-
-        * src/orca/scripts/Thunderbird.py:
-          pyatspi migration.
-
-        * src/orca/scripts/gnome-mud.py:
-          pyatspi migration.
-
-        * src/orca/scripts/gnome-terminal.py
-          pyatspi migration.
-
-        * src/orca/Gecko.py:
-          pyatspi migration.
-
-	* src/orca/braille.py: 
-          pyatspi migration.
-
-        * src/orca/where_am_I.py
-          pyatspi migration.
-
-        * src/orca/speechgenerator.py
-          pyatspi migration.
+        * src/orca/braillegenerator.py:
+          src/orca/speechgenerator.py:
+          src/orca/Gecko.py:
+          src/orca/where_am_I.py:
+          src/orca/scripts/acroread.py:
+          src/orca/scripts/gedit.py:
+          src/orca/scripts/Thunderbird.py:
+          src/orca/scripts/gnome-mud.py:
+          src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/StarOffice.py:
+          pyatspi migration - finding the "little things" we missed.
 
 2007-10-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -53,15 +33,9 @@
 2007-10-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
-          pyatspi migration.
-
-        * src/orca/scripts/Evolution.py:
-          pyatspi migration.
-
-        * src/orca/app_gui_prefs.py:
-          pyatspi migration.
-
-        * src/orca/J2SE-access-bridge.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/app_gui_prefs.py:
+          src/orca/J2SE-access-bridge.py:
           pyatspi migration.
 
         * src/orca/scripts/gnome_segv2.py:

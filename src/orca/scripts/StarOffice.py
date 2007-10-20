@@ -93,7 +93,8 @@ class WhereAmI(where_am_I.WhereAmI):
         # Translators: this represents the column we're
         # on in a table.
         #
-        text = _("column %d") % (table.getColumnAtIndex(obj.getIndexInParent()) + 1)
+        text = _("column %d") % \
+               (table.getColumnAtIndex(obj.getIndexInParent()) + 1)
         utterances.append(text)
 
         # Translators: this represents the row number of a table.
@@ -1124,14 +1125,14 @@ class Script(default.Script):
         if self.isSpreadSheetCell(obj):
             y = parent.extents.y
             leftX = parent.extents.x + 1
-            cell = parent.component.getAccessibleAtPoint(leftX, y, 0)
+            cell = parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
             if cell:
                 leftCell = atspi.Accessible.makeAccessible(cell)
                 table = leftCell.parent.queryTable()
                 startIndex = table.getColumnAtIndex(leftCell.getIndexInParent())
 
             rightX = parent.extents.x + parent.extents.width - 1
-            cell = parent.component.getAccessibleAtPoint(rightX, y, 0)
+            cell = parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
             if cell:
                 rightCell = atspi.Accessible.makeAccessible(cell)
                 table = rightCell.parent.queryTable()
@@ -2133,7 +2134,7 @@ class Script(default.Script):
                           input_event.MouseButtonEvent):
                 x = orca_state.lastInputEvent.x
                 y = orca_state.lastInputEvent.y
-                weToggledIt = event.source.component.contains(x, y, 0)
+                weToggledIt = event.source.queryComponent().contains(x, y, 0)
 
             elif isinstance(orca_state.lastInputEvent, \
                             input_event.KeyboardEvent):
