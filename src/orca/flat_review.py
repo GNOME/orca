@@ -955,9 +955,9 @@ class Context:
             stateHeight = extents.height
 
             try:
-              text = accessible.queryText()
+                text = accessible.queryText()
             except NotImplementedError:
-              pass
+                pass
             else:
                 [x, y, width, height] = \
                     text.getRangeExtents( \

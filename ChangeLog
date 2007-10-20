@@ -1,6 +1,7 @@
 2007-10-20  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca.py:
+          src/orca/flat_review.py:
           Fix several messages supplied by pylint.  Can't let Rich
           have all the fun.  :-)
 
