@@ -1631,7 +1631,7 @@ class Script(script.Script):
                interface
         """
 
-        text = obj.text
+        text = obj.queryText()
         offset = text.caretOffset
         lastKey = orca_state.lastNonModifierKeyEvent.event_string
         lastWord = orca_state.lastWord
@@ -1729,11 +1729,9 @@ class Script(script.Script):
                interface.
         """
 
-        text = obj.text
-
-        # Check for a bunch of preconditions we care about
-        #
-        if not text:
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
             return
 
         offset = text.caretOffset - 1
@@ -1984,7 +1982,7 @@ class Script(script.Script):
 
         if settings.enableProgressBarUpdates:
             if orca_state.locusOfFocus and \
-               orca_state.locusOfFocus.app == obj.app:
+               orca_state.locusOfFocus.getApplication() == obj.getApplication():
                 currentTime = time.time()
 
                 # If this progress bar is not already known, create initial
@@ -1997,7 +1995,7 @@ class Script(script.Script):
 
                 lastProgressBarTime = self.lastProgressBarTime[obj]
                 lastProgressBarValue = self.lastProgressBarValue[obj]
-                value = obj.value
+                value = obj.getValue()
                 percentValue = int((value.currentValue / \
                     (value.maximumValue - value.minimumValue)) * 100.0)
 
@@ -3308,9 +3306,12 @@ class Script(script.Script):
         only speak the subset required.
         """
 
-        if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
-            caretOffset = orca_state.locusOfFocus.text.caretOffset
-            text = orca_state.locusOfFocus.text
+        try:
+            text = orca_state.locusOfFocus.queryText()
+        except:
+            pass
+        else:
+            caretOffset = text.caretOffset
 
             # Creates dictionaries of the default attributes, plus the set
             # of attributes specific to the character at the caret offset.
@@ -3367,20 +3368,20 @@ class Script(script.Script):
         """
 
         string = "SCRIPT INFO: Script name='%s'" % self.name
-        if orca_state.locusOfFocus and orca_state.locusOfFocus.app:
-
+        app = orca_state.locusOfFocus.getApplication()
+        if orca_state.locusOfFocus and app:
             string += " Application name='%s'" \
-                      % orca_state.locusOfFocus.app.name
+                      % app.name
 
             try:
                 string += " Toolkit name='%s'" \
-                          % orca_state.locusOfFocus.app.toolkitName
+                          % app.toolkitName
             except:
                 string += " Toolkit unknown"
 
             try:
                 string += " Version='%s'" \
-                          % orca_state.locusOfFocus.app.version
+                          % app.version
             except:
                 string += " Version unknown"
 
@@ -3585,7 +3586,7 @@ class Script(script.Script):
             # caret position, we will get a caret event, which will
             # then update the braille.
             #
-            text = orca_state.locusOfFocus.text
+            text = orca_state.locusOfFocus.queryText()
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
@@ -3643,7 +3644,7 @@ class Script(script.Script):
             # tacking mode.  When we set the caret position, we will get a
             # caret event, which will then update the braille.
             #
-            text = orca_state.locusOfFocus.text
+            text = orca_state.locusOfFocus.queryText()
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
@@ -4352,7 +4353,7 @@ class Script(script.Script):
     def printHierarchyHandler(self, inputEvent=None):
         """Prints the application for the current locusOfFocus"""
         if orca_state.locusOfFocus:
-            self.printHierarchy(orca_state.locusOfFocus.app,
+            self.printHierarchy(orca_state.locusOfFocus.getApplication(),
                                 orca_state.locusOfFocus)
         return True
 
@@ -4587,21 +4588,19 @@ class Script(script.Script):
             if (object.getRole() == pyatspi.ROLE_EMBEDDED):
                 candidate = object
                 while candidate.childCount:
-                    candidate = candidate.child(0)
+                    candidate = candidate[0]
                 # The parent of this object may contain labels
                 # or it may contain filler that contains labels.
                 #
                 candidate = candidate.parent
-                for i in range(0, candidate.childCount):
-                    child = candidate.child(i)
+                for child in candidate:
                     if child.getRole() == pyatspi.ROLE_FILLER:
                         candidate = child
                         break
                 # If there are labels in this embedded component,
                 # they should be here.
                 #
-                for j in range(0, candidate.childCount):
-                    child = candidate.child(j)
+                for child in candidate:
                     if child.getRole() == pyatspi.ROLE_LABEL:
                         useLabel = True
                         potentialLabels.append(child)
@@ -4815,9 +4814,9 @@ class Script(script.Script):
         if root.getState().contains(pyatspi.STATE_FOCUSED):
             return root
 
-        for i in range(0, root.childCount):
+        for child in root:
             try:
-                candidate = self.findFocusedObject(root.child(i))
+                candidate = self.findFocusedObject(child)
                 if candidate:
                     return candidate
             except:
@@ -4843,15 +4842,18 @@ class Script(script.Script):
         #
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.childCount:
             nonTableCellFound = False
-            for i in range (0, obj.childCount):
-                if obj.child(i).getRole() != pyatspi.ROLE_TABLE_CELL:
+            for child in obj:
+                if child.getRole() != pyatspi.ROLE_TABLE_CELL:
                     nonTableCellFound = True
             if not nonTableCellFound:
-                for i in range (0, obj.childCount):
-                    if obj.child(i).text:
-                        text = obj.child(i).text.getText(0, -1)
-                        if len(text) != 0:
-                            return obj.child(i)
+                for child in obj:
+                    try:
+                        texti = child.queryText()
+                    except NotImplementedError:
+                        continue
+                    else:
+                        if texti.getText(0, -1):
+                            return child
 
         # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
         # from Gnopernicus.  The notion here is that we get an active
@@ -5721,8 +5723,7 @@ class Script(script.Script):
         rootManagesDescendants = root.getState().contains( \
                                       pyatspi.STATE_MANAGES_DESCENDANTS)
 
-        for i in range(0, root.childCount):
-            child = root.child(i)
+        for child in root:
             if child == root:
                 print indent + "  " + "WARNING CHILD == PARENT!!!"
             elif not child:
@@ -5752,8 +5753,7 @@ class Script(script.Script):
         debug.println(level, "There are %d Accessible applications" % len(apps))
         for app in apps:
             debug.printDetails(level, "  App: ", app, False)
-            for i in range(0, app.childCount):
-                child = app.child(i)
+            for child in app:
                 debug.printDetails(level, "    Window: ", child, False)
                 if child.parent != app:
                     debug.println(level,
@@ -5770,7 +5770,7 @@ class Script(script.Script):
         if not window:
             debug.println(level, "Active application: None")
         else:
-            app = window.app
+            app = window.getApplication()
             if not app:
                 debug.println(level, "Active application: None")
             else:
@@ -5894,16 +5894,18 @@ class Script(script.Script):
         """Draws a rectangular outline around the accessible, erasing the
         last drawn rectangle in the process."""
 
-        if accessible:
-            component = accessible.component
-            if component:
-                visibleRectangle = \
-                    component.getExtents(pyatspi.DESKTOP_COORDS)
-                self.drawOutline(visibleRectangle.x, visibleRectangle.y,
-                            visibleRectangle.width, visibleRectangle.height,
-                            erasePrevious)
-        else:
+        try:
+            component = accessible.queryComponent()
+        except AttributeError:
             self.drawOutline(-1, 0, 0, 0, erasePrevious)
+        except NotImplementedError:
+            pass
+        else:
+            visibleRectangle = \
+                component.getExtents(pyatspi.DESKTOP_COORDS)
+            self.drawOutline(visibleRectangle.x, visibleRectangle.y,
+                             visibleRectangle.width, visibleRectangle.height,
+                             erasePrevious)
 
     def isTextSelected(self, obj, startOffset, endOffset):
         """Returns an indication of whether the text is selected by
@@ -6092,7 +6094,7 @@ class Script(script.Script):
         Arguments:
         - obj: the Accessible object.
         """
-        return obj.ihyperlink.getURI(0)
+        return obj.queryHyperlink().getURI(0)
 
     def getDocumentFrame(self):
         """Dummy method used as a reminder to refactor whereamI for links,

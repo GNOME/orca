@@ -648,7 +648,7 @@ class SpeechGenerator:
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.append(
               rolenames.getSpeechForRoleName(
-                obj, pyatspi.ROLE_CHECK_BOX))
+                obj, pyatspi.ROLE_ICON))
 
         self._debugGenerator("_getSpeechForIcon",
                              obj,

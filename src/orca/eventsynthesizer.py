@@ -56,8 +56,7 @@ def clickObject(obj, button):
     - obj: the Accessible
     - button: an integer representing the mouse button number
     """
-
-    extents = obj.extents
+    extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
     x = extents.x + extents.width/2
     y = extents.y + extents.height/2
     generateMouseEvent(x, y, "b%dc" % button)
