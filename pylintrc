@@ -58,7 +58,16 @@ load-plugins=
 #enable-msg=
 
 # Disable the message(s) with the given id(s).
-disable-msg=C0111,W0403,W0603,W0613,W0702,W0704
+#
+# C0111: Missing docstring
+# R0201: could be a function
+# W0403: Relative import
+# W0603: Using the global statement
+# W0613: Unused argument
+# W0702: No exception's type specified
+# W0704: Except doesn't do anything
+#
+disable-msg=C0111,R0201,W0403,W0603,W0613,W0702,W0704
 
 
 [REPORTS]
