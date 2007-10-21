@@ -161,7 +161,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["whereAmIHandler"] = \
             input_event.InputEventHandler(
-                Script.whereAmI,
+                Script.doWhereAmI,
                 # Translators: the "Where am I" feature of Orca allows
                 # a user to press a key and then have information
                 # about their current context spoken and brailled to
@@ -720,7 +720,7 @@ class Script(script.Script):
         passed as argument
         """
 
-        for keyName,handler in self.inputEventHandlers.iteritems():
+        for keyName, handler in self.inputEventHandlers.iteritems():
             if handler == inputEventHandler:
                 return keyName
 
@@ -1418,7 +1418,7 @@ class Script(script.Script):
                 self.inputEventHandlers["goToNextBookmark"]))    
                 
         # key bindings for '1' through '6' for relevant commands            
-        for key in xrange(1,7):  
+        for key in xrange(1, 7):  
             # 'Add bookmark' key bindings
             keyBindings.add(
                 keybindings.KeyBinding(
@@ -1486,14 +1486,14 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
-    def __sayAllProgressCallback(self, context, type):
+    def __sayAllProgressCallback(self, context, progressType):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
         # the visual progress of what is being spoken as well as
         # positioning the cursor when speech has stopped.]]]
         #
         text = context.obj.queryText()
-        if type == speechserver.SayAllContext.PROGRESS:
+        if progressType == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
             #obj = context.obj
             #[x, y, width, height] = obj.text.getCharacterExtents(
@@ -1501,10 +1501,10 @@ class Script(script.Script):
             #print context.currentOffset, x, y, width, height
             #self.drawOutline(x, y, width, height)
             pass
-        elif type == speechserver.SayAllContext.INTERRUPTED:
+        elif progressType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
-            text.setCaretOffset(context.currentOffset);
-        elif type == speechserver.SayAllContext.COMPLETED:
+            text.setCaretOffset(context.currentOffset)
+        elif progressType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             orca.setLocusOfFocus(None, context.obj, False)
             text.setCaretOffset(context.currentOffset)
@@ -1882,7 +1882,7 @@ class Script(script.Script):
             braille.displayMessage(text)
             speech.speak(text)
 
-    def whereAmI(self, inputEvent):
+    def doWhereAmI(self, inputEvent):
         """
         Speaks information about the current object of interest.
         """
@@ -1891,8 +1891,9 @@ class Script(script.Script):
 
         if inputEvent and orca_state.lastInputEvent \
            and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            string = input_event.keyEventToString(inputEvent)
-            debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
+            keyString = input_event.keyEventToString(inputEvent)
+            debug.println(debug.LEVEL_FINEST, "default.doWhereAmI: %s" \
+                          % keyString)
         else:
             return self.whereAmI.whereAmI(obj, False, False)
 
@@ -1935,7 +1936,6 @@ class Script(script.Script):
             aParents.reverse()
         except:
             debug.printException(debug.LEVEL_FINEST)
-            pass
 
         bParents = [b]
         try:
@@ -1946,7 +1946,6 @@ class Script(script.Script):
             bParents.reverse()
         except:
             debug.printException(debug.LEVEL_FINEST)
-            pass
 
         commonAncestor = None
 
@@ -2425,7 +2424,7 @@ class Script(script.Script):
         except NotImplementedError:
             text = None
         if text and self.isTextArea(obj):
-            [string, startOffset, endOffset] = text.getTextAtOffset(
+            [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if startOffset == 0:
@@ -2548,7 +2547,7 @@ class Script(script.Script):
 
     def _presentTextAtNewCaretPosition(self, event):
 
-        texti = event.source.queryText()
+        text = event.source.queryText()
 
         if event.source:
             mag.magnifyAccessible(event, event.source)
@@ -2587,13 +2586,13 @@ class Script(script.Script):
                           input_event.KeyboardEvent):
             return
 
-        string = orca_state.lastNonModifierKeyEvent.event_string
+        keyString = orca_state.lastNonModifierKeyEvent.event_string
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
         hasLastPos = self.pointOfReference.has_key("lastCursorPosition")
 
-        if (string == "Up") or (string == "Down"):
+        if (keyString == "Up") or (keyString == "Down"):
             # If the user has typed Shift-Up or Shift-Down, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise we speak the new line where the text cursor is
@@ -2602,11 +2601,11 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               texti.caretOffset)
+                               text.caretOffset)
             else:
                 self.sayLine(event.source)
 
-        elif (string == "Left") or (string == "Right"):
+        elif (keyString == "Left") or (keyString == "Right"):
             # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
             # then we want to speak the text that has just been selected
             # or unselected, otherwise if the user has typed Control-Left
@@ -2616,13 +2615,13 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               texti.caretOffset)
+                               text.caretOffset)
             elif isControlKey:
                 self.sayWord(event.source)
             else:
                 self.sayCharacter(event.source)
 
-        elif string == "Page_Up":
+        elif keyString == "Page_Up":
             # If the user has typed Control-Shift-Page_Up, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise if the user has typed Control-Page_Up, then we
@@ -2632,13 +2631,13 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               texti.caretOffset)
+                               text.caretOffset)
             elif isControlKey:
                 self.sayCharacter(event.source)
             else:
                 self.sayLine(event.source)
 
-        elif string == "Page_Down":
+        elif keyString == "Page_Down":
             # If the user has typed Control-Shift-Page_Down, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise if the user has just typed Page_Down, then we speak
@@ -2647,11 +2646,11 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               texti.caretOffset)
+                               text.caretOffset)
             else:
                 self.sayLine(event.source)
 
-        elif (string == "Home") or (string == "End"):
+        elif (keyString == "Home") or (keyString == "End"):
             # If the user has typed Shift-Home or Shift-End, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise if the user has typed Control-Home or Control-End,
@@ -2661,20 +2660,20 @@ class Script(script.Script):
             if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, 
                                self.pointOfReference["lastCursorPosition"],
-                               texti.caretOffset)
+                               text.caretOffset)
             elif isControlKey:
                 self.sayLine(event.source)
             else:
                 self.sayCharacter(event.source)
 
-        elif (string == "A") and isControlKey:
+        elif (keyString == "A") and isControlKey:
             # The user has typed Control-A. Check to see if the entire
             # document has been selected, and if so, let the user know.
             #
-            charCount = texti.characterCount
-            for i in range(0, texti.getNSelections()):
-                [startSelOffset, endSelOffset] = texti.getSelection(i)
-                if texti.caretOffset == 0 and \
+            charCount = text.characterCount
+            for i in range(0, text.getNSelections()):
+                [startSelOffset, endSelOffset] = text.getSelection(i)
+                if text.caretOffset == 0 and \
                    startSelOffset == 0 and endSelOffset == charCount:
                     # Translators: this means the user has selected
                     # all the text in a document (e.g., Ctrl+a in gedit).
@@ -2757,14 +2756,14 @@ class Script(script.Script):
                             input_event.KeyboardEvent)):
             return
 
-        string = orca_state.lastNonModifierKeyEvent.event_string
+        keyString = orca_state.lastNonModifierKeyEvent.event_string
         text = event.source.queryText()
-        if string == "BackSpace":
+        if keyString == "BackSpace":
             # Speak the character that has just been deleted.
             #
             character = event.any_data
 
-        elif string == "Delete":
+        elif keyString == "Delete":
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #
@@ -2846,11 +2845,11 @@ class Script(script.Script):
         # text event.
         #
         speakThis = False
-        texti = event.source.queryText()
+        text = event.source.queryText()
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
-                               texti.getNSelections())
+                               text.getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << pyatspi.MODIFIER_CONTROL \
                             | 1 << pyatspi.MODIFIER_ALT \
@@ -3233,14 +3232,14 @@ class Script(script.Script):
 
         return True
 
-    def textAttrsToDictionary(self, str):
+    def textAttrsToDictionary(self, tokenString):
         """Converts a string of text attribute tokens of the form
         <key>:<value>; into a dictionary of keys and values.
         Text before the colon is the key and text afterwards is the
         value. If there is a final semi-colon, then it's ignored.
 
         Arguments:
-        - str: the string of tokens containing <key>:<value>; pairs.
+        - tokenString: the string of tokens containing <key>:<value>; pairs.
 
         Returns a list containing two items:
         A list of the keys in the order they were extracted from the
@@ -3249,7 +3248,7 @@ class Script(script.Script):
 
         keyList = []
         dictionary = {}
-        allTokens = str.split(";")
+        allTokens = tokenString.split(";")
         for token in allTokens:
             item = token.split(":")
             if len(item) == 2:
@@ -3372,27 +3371,27 @@ class Script(script.Script):
         and braille.  This information will be helpful to script writers.
         """
 
-        string = "SCRIPT INFO: Script name='%s'" % self.name
+        infoString = "SCRIPT INFO: Script name='%s'" % self.name
         app = orca_state.locusOfFocus.getApplication()
         if orca_state.locusOfFocus and app:
-            string += " Application name='%s'" \
-                      % app.name
+            infoString += " Application name='%s'" \
+                          % app.name
 
             try:
-                string += " Toolkit name='%s'" \
-                          % app.toolkitName
+                infoString += " Toolkit name='%s'" \
+                              % app.toolkitName
             except:
-                string += " Toolkit unknown"
+                infoString += " Toolkit unknown"
 
             try:
-                string += " Version='%s'" \
-                          % app.version
+                infoString += " Version='%s'" \
+                              % app.version
             except:
-                string += " Version unknown"
+                infoString += " Version unknown"
 
-            debug.println(debug.LEVEL_INFO, string)
-            speech.speak(string)
-            braille.displayMessage(string)
+            debug.println(debug.LEVEL_INFO, infoString)
+            speech.speak(infoString)
+            braille.displayMessage(infoString)
 
         return True
 
@@ -3489,7 +3488,7 @@ class Script(script.Script):
             self.updateBraille(orca_state.locusOfFocus)
         else:
             context = self.getFlatReviewContext()
-            [string, x, y, width, height] = \
+            [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             self.drawOutline(x, y, width, height)
             self._reviewCurrentItem(inputEvent, self.targetCursorCell)
@@ -3575,7 +3574,7 @@ class Script(script.Script):
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
 
-            [string, x, y, width, height] = \
+            [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
             self.drawOutline(x, y, width, height)
 
@@ -3592,7 +3591,7 @@ class Script(script.Script):
             # then update the braille.
             #
             text = orca_state.locusOfFocus.queryText()
-            [string, startOffset, endOffset] = text.getTextAtOffset(
+            [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if startOffset > 0:
@@ -3633,7 +3632,7 @@ class Script(script.Script):
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
 
-            [string, x, y, width, height] = \
+            [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
             self.drawOutline(x, y, width, height)
@@ -3650,7 +3649,7 @@ class Script(script.Script):
             # caret event, which will then update the braille.
             #
             text = orca_state.locusOfFocus.queryText()
-            [string, startOffset, endOffset] = text.getTextAtOffset(
+            [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if endOffset < text.characterCount:
@@ -3710,7 +3709,7 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
 
-        [string, x, y, width, height] = \
+        [lineString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
         self.drawOutline(x, y, width, height)
 
@@ -3718,25 +3717,27 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (not len(string)) or (string == "\n"):
+            if (not lineString) \
+               or (not len(lineString)) \
+               or (lineString == "\n"):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
                 speech.speak(_("blank"))
-            elif string.isspace():
+            elif lineString.isspace():
                 # Translators: "white space" is a short phrase to mean the
                 # user has navigated to a line with only whitespace on it.
                 #
                 speech.speak(_("white space"))
-            elif string.isupper() and (clickCount < 2 or clickCount > 3):
-                speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
+            elif lineString.isupper() and (clickCount < 2 or clickCount > 3):
+                speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
             elif clickCount == 2:
-                self.spellCurrentItem(string)
+                self.spellCurrentItem(lineString)
             elif clickCount == 3:
-                self.phoneticSpellCurrentItem(string)
+                self.phoneticSpellCurrentItem(lineString)
             else:
-                string = self.adjustForRepeats(string)
-                speech.speak(string)
+                lineString = self.adjustForRepeats(lineString)
+                speech.speak(lineString)
 
         self.updateBrailleReview()
 
@@ -3826,14 +3827,14 @@ class Script(script.Script):
 
         return True
 
-    def spellCurrentItem(self, string):
+    def spellCurrentItem(self, itemString):
         """Spell the current flat review word or line.
 
         Arguments:
-        - string: the string to spell.
+        - itemString: the string to spell.
         """
 
-        for (index, character) in enumerate(string.decode("UTF-8")):
+        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
             if character.isupper():
                 speech.speak(character.encode("UTF-8"),
                              self.voices[settings.UPPERCASE_VOICE])
@@ -3851,7 +3852,7 @@ class Script(script.Script):
         """
 
         context = self.getFlatReviewContext()
-        [string, x, y, width, height] = \
+        [wordString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
         self.drawOutline(x, y, width, height)
 
@@ -3859,7 +3860,9 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (not len(string)) or (string == "\n"):
+            if (not wordString) \
+               or (not len(wordString)) \
+               or (wordString == "\n"):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
@@ -3872,20 +3875,22 @@ class Script(script.Script):
                     # user has navigated to an empty line.
                     #
                     speech.speak(_("blank"))
-                elif string.isspace():
+                elif wordString.isspace():
                     # Translators: "white space" is a short phrase to mean the
                     # user has navigated to a line with only whitespace on it.
                     #
                     speech.speak(_("white space"))
-                elif string.isupper() and (clickCount < 2 or clickCount > 3):
-                    speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
+                elif wordString.isupper() \
+                     and (clickCount < 2 or clickCount > 3):
+                    speech.speak(wordString,
+                                 self.voices[settings.UPPERCASE_VOICE])
                 elif clickCount == 2:
-                    self.spellCurrentItem(string)
+                    self.spellCurrentItem(wordString)
                 elif clickCount == 3:
-                    self.phoneticSpellCurrentItem(string)
+                    self.phoneticSpellCurrentItem(wordString)
                 else:
-                    string = self.adjustForRepeats(string)
-                    speech.speak(string)
+                    wordString = self.adjustForRepeats(wordString)
+                    speech.speak(wordString)
 
         self.updateBrailleReview(targetCursorCell)
 
@@ -3893,7 +3898,7 @@ class Script(script.Script):
 
     def reviewCurrentAccessible(self, inputEvent):
         context = self.getFlatReviewContext()
-        [string, x, y, width, height] = \
+        [zoneString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
         self.drawOutline(x, y, width, height)
 
@@ -3958,7 +3963,7 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
 
-        [string, x, y, width, height] = \
+        [charString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.CHAR)
         self.drawOutline(x, y, width, height)
 
@@ -3966,7 +3971,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (not len(string)):
+            if (not charString) or (not len(charString)):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
@@ -3980,13 +3985,14 @@ class Script(script.Script):
                     #
                     speech.speak(_("blank"))
                 elif clickCount == 2:
-                    self.spellCurrentItem(string)
+                    self.spellCurrentItem(charString)
                 elif clickCount == 3:
-                    self.phoneticSpellCurrentItem(string)
-                elif string.isupper():
-                    speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
+                    self.phoneticSpellCurrentItem(charString)
+                elif charString.isupper():
+                    speech.speak(charString,
+                                 self.voices[settings.UPPERCASE_VOICE])
                 else:
-                    speech.speak(string)
+                    speech.speak(charString)
 
         self.updateBrailleReview()
 
@@ -4073,13 +4079,13 @@ class Script(script.Script):
         flatReviewContext = self.getFlatReviewContext()
         lines = flatReviewContext.lines
         for line in lines:
-            string = ""
+            lineString = ""
             for zone in line.zones:
-                string += " '%s' [%s]" % \
+                lineString += " '%s' [%s]" % \
                           (zone.string, zone.accessible.getRoleName())
                 self.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
-            debug.println(debug.LEVEL_OFF, string)
+            debug.println(debug.LEVEL_OFF, lineString)
         self.flatReviewContext = None
 
     def find(self, query=None):
@@ -4275,9 +4281,10 @@ class Script(script.Script):
 
         try:
             print "NUM SCRIPTS=%d" % len(focusTracker._knownScripts)
-            for script in focusTracker._knownScripts:
+            for knownScript in focusTracker._knownScripts:
                 try:
-                    self._printObjInfo(" script(%s):" % script.name, script)
+                    self._printObjInfo(" script(%s):" \
+                                       % knownScript.name, knownScript)
                 except:
                     pass
         except:
@@ -4308,16 +4315,16 @@ class Script(script.Script):
             self._oldAccessibleCache = []
             self._oldAccessibleCache.extend(atspi.Accessible._cache.values())
 
-        objects = gc.get_objects()
-        print "NUM OBJECTS=%d" % len(objects)
+        objs = gc.get_objects()
+        print "NUM OBJECTS=%d" % len(objs)
         if detailed:
-            for obj in objects:
+            for obj in objs:
                 self._printObjInfo(" ", obj)
             try:
                 del obj
             except:
                 pass
-        del objects
+        del objs
 
         gc.collect()
         print "LEN GARBAGE=%d" % len(gc.garbage)
@@ -4467,17 +4474,17 @@ class Script(script.Script):
 
         return False
 
-    def __isLabeling(self, label, object):
+    def __isLabeling(self, label, obj):
         """Check if label is connected via  LABEL_FOR relation with object
 
         Arguments:
-        - object: the object in question
+        - obj: the object in question
         - labeled: the label in question
 
         Returns TRUE if label has a relation LABEL_FOR for object.
         """
 
-        if (not object) \
+        if (not obj) \
            or (not label) \
            or (label.getRole() != pyatspi.ROLE_LABEL):
             return False
@@ -4493,7 +4500,7 @@ class Script(script.Script):
                 for i in range(0, relation.getNTargets()):
                     target = atspi.Accessible.makeAccessible(\
                                                     relation.getTarget(i))
-                    if target == object:
+                    if target == obj:
                         return True
 
         return False
@@ -4535,11 +4542,11 @@ class Script(script.Script):
 
         return self._unicodeCurrencySymbols
 
-    def findDisplayedLabel(self, object):
+    def findDisplayedLabel(self, obj):
         """Return a list of the objects that are labelling this object.
 
         Argument:
-        - object: the object in question
+        - obj: the object in question
 
         Returns a list of the objects that are labelling this object.
         """
@@ -4548,7 +4555,7 @@ class Script(script.Script):
         # more than once.  Go figure, but we need to check for this.
         #
         label = []
-        relations = object.getRelationSet()
+        relations = obj.getRelationSet()
         allTargets = []
 
         for relation in relations:
@@ -4590,8 +4597,8 @@ class Script(script.Script):
         if not len(label):
             potentialLabels = []
             useLabel = False
-            if (object.getRole() == pyatspi.ROLE_EMBEDDED):
-                candidate = object
+            if (obj.getRole() == pyatspi.ROLE_EMBEDDED):
+                candidate = obj
                 while candidate.childCount:
                     candidate = candidate[0]
                 # The parent of this object may contain labels
@@ -4609,10 +4616,10 @@ class Script(script.Script):
                     if child.getRole() == pyatspi.ROLE_LABEL:
                         useLabel = True
                         potentialLabels.append(child)
-            elif ((object.getRole() == pyatspi.ROLE_FILLER) \
-                    or (object.getRole() == pyatspi.ROLE_PANEL)) \
-                and (object.childCount == 2):
-                child0, child1 = object
+            elif ((obj.getRole() == pyatspi.ROLE_FILLER) \
+                    or (obj.getRole() == pyatspi.ROLE_PANEL)) \
+                and (obj.childCount == 2):
+                child0, child1 = obj
                 child0_role = child0.getRole()
                 child1_role = child1.getRole()
                 if child0_role == pyatspi.ROLE_LABEL \
@@ -4628,13 +4635,13 @@ class Script(script.Script):
                     useLabel = True
                     potentialLabels.append(child1)
             else:
-                parent = object.parent
+                parent = obj.parent
                 if parent and \
                     ((parent.getRole() == pyatspi.ROLE_FILLER) \
                             or (parent.getRole() == pyatspi.ROLE_PANEL)):
                     for potentialLabel in parent:
                         try:
-                            useLabel = self.__isLabeling(potentialLabel, object)
+                            useLabel = self.__isLabeling(potentialLabel, obj)
                             if useLabel:
                                 potentialLabels.append(potentialLabel)
                                 break
@@ -4646,24 +4653,25 @@ class Script(script.Script):
 
         return label
 
-    def getDisplayedLabel(self, object):
+    def getDisplayedLabel(self, obj):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
         Otherwise, return None.
 
         Argument:
-        - object: the object in question
+        - obj: the object in question
 
         Returns the string of the object labelling this object, or None
         if there is nothing of interest here.
         """
 
-        string = None
-        labels = self.findDisplayedLabel(object)
+        labelString = None
+        labels = self.findDisplayedLabel(obj)
         for label in labels:
-            string = self.appendString(string, self.getDisplayedText(label))
+            labelString = self.appendString(labelString, 
+                                            self.getDisplayedText(label))
 
-        return string
+        return labelString
 
     def __getDisplayedTextInComboBox(self, combo):
 
@@ -4723,10 +4731,10 @@ class Script(script.Script):
                 displayedText = combo.name
                 #print "NAME", displayedText
             else:
-              [displayedText, caretOffset, startOffset] = \
-                  self.getTextLineAtCaret(combo)
-              # Set to None instead of empty string.
-              displayedText = displayedText or None
+                [displayedText, caretOffset, startOffset] = \
+                    self.getTextLineAtCaret(combo)
+                # Set to None instead of empty string.
+                displayedText = displayedText or None
                 #print "TEXT", displayedText
 
         return displayedText
@@ -4854,11 +4862,11 @@ class Script(script.Script):
             if not nonTableCellFound:
                 for child in obj:
                     try:
-                        texti = child.queryText()
+                        text = child.queryText()
                     except NotImplementedError:
                         continue
                     else:
-                        if texti.getText(0, -1):
+                        if text.getText(0, -1):
                             return child
 
         # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
@@ -5005,17 +5013,17 @@ class Script(script.Script):
         while not done:
             lastEndOffset = -1
             while offset < length:
-                [string, startOffset, endOffset] = text.getTextAtOffset(
+                [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     offset, mode)
 
                 # Some applications that don't support sentence boundaries
                 # will provide the line boundary results instead; others
                 # will return nothing.
                 #
-                if not string:
+                if not lineString:
                     mode = pyatspi.TEXT_BOUNDARY_LINE_START
-                    [string, startOffset, endOffset] = text.getTextAtOffset(
-                                                               offset, mode)
+                    [lineString, startOffset, endOffset] = \
+                        text.getTextAtOffset(offset, mode)
 
                 # [[[WDW - HACK: well...gnome-terminal sometimes wants to
                 # give us outrageous values back from getTextAtOffset
@@ -5042,13 +5050,13 @@ class Script(script.Script):
                 lastEndOffset = endOffset
                 offset = endOffset
 
-                string = self.adjustForRepeats(string)
-                if string.isupper():
+                lineString = self.adjustForRepeats(lineString)
+                if lineString.isupper():
                     voice = settings.voices[settings.UPPERCASE_VOICE]
                 else:
                     voice = settings.voices[settings.DEFAULT_VOICE]
 
-                yield [speechserver.SayAllContext(obj, string,
+                yield [speechserver.SayAllContext(obj, lineString,
                                                   startOffset, endOffset),
                        voice]
 
@@ -5368,15 +5376,15 @@ class Script(script.Script):
             # is broken if there is just one character in the string.]]]
             #
             if (text.characterCount == 1):
-                string = text.getText(caretOffset, caretOffset + 1)
+                lineString = text.getText(caretOffset, caretOffset + 1)
                 startOffset = caretOffset
             else:
-                [string, startOffset, endOffset] = text.getTextAtOffset(
+                [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
 
             # Sometimes we get the trailing line-feed-- remove it
             #
-            content = string.decode("UTF-8")
+            content = lineString.decode("UTF-8")
             if content[-1:] == "\n":
                 content = content[:-1]
 
@@ -5673,21 +5681,21 @@ class Script(script.Script):
 
         return sortedLabels
 
-    def phoneticSpellCurrentItem(self, string):
+    def phoneticSpellCurrentItem(self, itemString):
         """Phonetically spell the current flat review word or line.
 
         Arguments:
-        - string: the string to phonetically spell.
+        - itemString: the string to phonetically spell.
         """
 
-        for (index, character) in enumerate(string.decode("UTF-8")):
+        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
             if character.isupper():
                 voice = settings.voices[settings.UPPERCASE_VOICE]
                 character = character.lower()
             else:
                 voice =  settings.voices[settings.DEFAULT_VOICE]
-            string = phonnames.getPhoneticName(character)
-            speech.speak(string, voice)
+            phoneticString = phonnames.getPhoneticName(character)
+            speech.speak(phoneticString, voice)
 
     def printAncestry(self, child):
         """Prints a hierarchical view of a child's ancestry."""
