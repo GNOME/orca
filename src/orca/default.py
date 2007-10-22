@@ -42,7 +42,6 @@ import locale
 import time
 
 import pyatspi
-import atspi
 import braille
 import chnames
 import debug
@@ -2192,14 +2191,12 @@ class Script(script.Script):
                     if (not radioGroupLabel) \
                         and (relation.getRelationType() \
                              == pyatspi.RELATION_LABELLED_BY):
-                        radioGroupLabel = atspi.Accessible.makeAccessible(
-                            relation.getTarget(0))
+                        radioGroupLabel = relation.getTarget(0)
                     if (not inSameGroup) \
                         and (relation.getRelationType() \
                              == pyatspi.RELATION_MEMBER_OF):
                         for i in range(0, relation.getNTargets()):
-                            target = atspi.Accessible.makeAccessible(
-                                relation.getTarget(i))
+                            target = relation.getTarget(i)
                             if target == oldLocusOfFocus:
                                 inSameGroup = True
                                 break
@@ -2360,7 +2357,7 @@ class Script(script.Script):
         for relation in relations:
             if relation.getRelationType() \
                    == pyatspi.RELATION_CONTROLLED_BY:
-                target = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                target = relation.getTarget(0)
                 if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
                     speech.speakUtterances(
@@ -2375,8 +2372,7 @@ class Script(script.Script):
             for relation in relations:
                 if relation.getRelationType() \
                        == pyatspi.RELATION_LABEL_FOR:
-                    target = \
-                        atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    target = relation.getTarget(0)
                     if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
                         speech.speakUtterances(
@@ -2503,8 +2499,7 @@ class Script(script.Script):
                 except NotImplementedError:
                     selection = None
                 if selection and selection.nSelectedChildren > 0:
-                    newFocus = atspi.Accessible.makeAccessible(
-                        selection.getSelectedChild(0))
+                    newFocus = selection.getSelectedChild(0)
 
                 # Otherwise, we might have tucked away some information
                 # for this thing in the onActiveDescendantChanged method.
@@ -2536,13 +2531,10 @@ class Script(script.Script):
         # name doesn't change.  [[[TODO: WDW - I'm hesitant to rip the
         # above TODO out, though, because it's been in here for so long.]]]
         #
-        try:
-            if event.source.oldName == event.source.name:
-                return
-        except:
-            pass
+        if self.pointOfReference.get('oldName', None) == event.source.name:
+            return
 
-        event.source.oldName = event.source.name
+        self.pointOfReference['oldName'] = event.source.name
         orca.visualAppearanceChanged(event, event.source)
 
     def _presentTextAtNewCaretPosition(self, event):
@@ -2987,10 +2979,6 @@ class Script(script.Script):
                         orca_state.locusOfFocus,
                         False))
 
-            # Delete the cached accessible to force the AT-SPI to update
-            # the accessible cache. Otherwise, the event references the
-            # previous popup object.
-            atspi.Accessible.deleteAccessible(obj._acc)
             return
 
         if state_change_notifiers.has_key(event.source.getRole()):
@@ -3046,9 +3034,7 @@ class Script(script.Script):
             if event.source.childCount:
                 selection = event.source.querySelection()
                 if selection.nSelectedChildren > 0:
-                    child = selection.getSelectedChild(0)
-                    if child:
-                        newFocus = atspi.Accessible.makeAccessible(child)
+                    newFocus = selection.getSelectedChild(0)
 
             orca.setLocusOfFocus(event, newFocus)
 
@@ -3204,8 +3190,8 @@ class Script(script.Script):
 
         if layoutOnly:
             debug.println(debug.LEVEL_FINEST,
-                          "Object deemed to be for layout purposes only: " \
-                          + obj.toString("", True))
+                          "Object deemed to be for layout purposes only: %s" \
+                          % obj)
 
         return layoutOnly
 
@@ -4262,89 +4248,7 @@ class Script(script.Script):
 
     def printMemoryUsageHandler(self, inputEvent):
         """Prints memory usage information."""
-
-        import sys
-        import gc
-        gc.collect()
-
-        if inputEvent \
-            and isinstance(inputEvent, input_event.KeyboardEvent) \
-            and (inputEvent.modifiers \
-                 & (1 << pyatspi.MODIFIER_SHIFT)):
-            detailed = True
-        else:
-            detailed = False
-
-        focusTracker = \
-            orca._PRESENTATION_MANAGERS[orca._currentPresentationManager]
-
-        try:
-            print "NUM SCRIPTS=%d" % len(focusTracker._knownScripts)
-            for knownScript in focusTracker._knownScripts:
-                try:
-                    self._printObjInfo(" script(%s):" \
-                                       % knownScript.name, knownScript)
-                except:
-                    pass
-        except:
-            pass
-
-        try:
-            focusTracker._cleanupCache()
-            print "NUM ACCESSIBLES=%d" % len(atspi.Accessible._cache)
-            if detailed:
-                for obj in atspi.Accessible._cache.values():
-                    try:
-                        if not (obj in self._oldAccessibleCache):
-                            self._printObjInfo(" NEW %s:" % obj.toString(),
-                                               obj)
-                        else:
-                            self._printObjInfo(" %s:" % obj.toString(),
-                                               obj)
-                    except:
-                        try:
-                            self._printObjInfo(" %s:" % obj.toString(),
-                                               obj)
-                        except:
-                            debug.printException(debug.LEVEL_OFF)
-        except:
-            pass
-
-        if detailed:
-            self._oldAccessibleCache = []
-            self._oldAccessibleCache.extend(atspi.Accessible._cache.values())
-
-        objs = gc.get_objects()
-        print "NUM OBJECTS=%d" % len(objs)
-        if detailed:
-            for obj in objs:
-                self._printObjInfo(" ", obj)
-            try:
-                del obj
-            except:
-                pass
-        del objs
-
-        gc.collect()
-        print "LEN GARBAGE=%d" % len(gc.garbage)
-
-        if detailed:
-            for obj in gc.garbage:
-                try:
-                    if isinstance(obj, atspi.Accessible):
-                        print " GARBAGE ACCESSIBLE", obj, sys.getrefcount(obj)
-                        try:
-                            print "  name:", obj.name
-                            print "  role:", obj.getRole()
-                        except:
-                            pass
-                        #self._detectCycle(obj, [], "   referent:")
-                    elif isinstance(obj, script.Script):
-                        print " GARBAGE SCRIPT", obj, sys.getrefcount(obj)
-                        print "  name:", obj.name
-                        #self._detectCycle(obj, [], "   referent:")
-                except:
-                    debug.printException(debug.LEVEL_OFF)
+        print 'TODO: print something useful for memory debugging'
 
     def printAppsHandler(self, inputEvent=None):
         """Prints a list of all applications to stdout."""
@@ -4497,8 +4401,7 @@ class Script(script.Script):
                    == pyatspi.RELATION_LABEL_FOR:
 
                 for i in range(0, relation.getNTargets()):
-                    target = atspi.Accessible.makeAccessible(\
-                                                    relation.getTarget(i))
+                    target = relation.getTarget(i)
                     if target == obj:
                         return True
 
@@ -4569,8 +4472,7 @@ class Script(script.Script):
                 # their names and units.
                 #
                 for i in range(0, relation.getNTargets()):
-                    target = atspi.Accessible.makeAccessible(\
-                                                       relation.getTarget(i))
+                    target = relation.getTarget(i)
                     if not target in allTargets:
                         allTargets.append(target)
                         label.append(target)
@@ -4713,8 +4615,7 @@ class Script(script.Script):
         else:
             try:
                 comboSelection = combo.querySelection()
-                selectedItem = atspi.Accessible.makeAccessible(
-                    comboSelection.getSelectedChild(0))
+                selectedItem = comboSelection.getSelectedChild(0)
             except:
                 selectedItem = None
 
@@ -5064,7 +4965,7 @@ class Script(script.Script):
             for relation in relations:
                 if relation.getRelationType()  \
                        == pyatspi.RELATION_FLOWS_TO:
-                    obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    obj = relation.getTarget(0)
 
                     try:
                         text = obj.queryText()
@@ -5270,7 +5171,7 @@ class Script(script.Script):
 
         debug.println(debug.LEVEL_FINEST,
                       "Finding frame for source.name="
-                      + obj.accessibleNameToString())
+                      + obj.name or "None")
 
         while obj \
               and (obj != obj.parent) \
@@ -5278,7 +5179,7 @@ class Script(script.Script):
             obj = obj.parent
             if obj:
                 debug.println(debug.LEVEL_FINEST, "--> obj.name="
-                          + obj.accessibleNameToString())
+                          + obj.name or "None")
 
         if obj and (obj.getRole() == pyatspi.ROLE_FRAME):
             pass
@@ -5297,7 +5198,7 @@ class Script(script.Script):
 
         debug.println(debug.LEVEL_FINEST,
                       "Finding top-level object for source.name="
-                      + obj.accessibleNameToString())
+                      + obj.name or "None")
 
         while obj \
               and obj.parent \
@@ -5305,7 +5206,7 @@ class Script(script.Script):
               and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION):
             obj = obj.parent
             debug.println(debug.LEVEL_FINEST, "--> obj.name="
-                          + obj.accessibleNameToString())
+                          + obj.name or "None")
 
         if obj and obj.parent and \
            (obj.parent.getRole() == pyatspi.ROLE_APPLICATION):
@@ -5410,8 +5311,7 @@ class Script(script.Script):
             for relation in relations:
                 if relation.getRelationType() \
                        == pyatspi.RELATION_NODE_CHILD_OF:
-                    node = atspi.Accessible.makeAccessible( \
-                                                    relation.getTarget(0))
+                    node = relation.getTarget(0)
                     break
 
             # We want to avoid situations where something gives us an
@@ -5458,14 +5358,12 @@ class Script(script.Script):
         # than our current level.
         #
         for i in range(row+1, table.nRows):
-            acc = table.getAccessibleAt(i, col)
-            cell = atspi.Accessible.makeAccessible(acc)
+            cell = table.getAccessibleAt(i, col)
             relations = cell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
                        == pyatspi.RELATION_NODE_CHILD_OF:
-                    nodeOf = atspi.Accessible.makeAccessible( \
-                                                   relation.getTarget(0))
+                    nodeOf = relation.getTarget(0)
                     if self.isSameObject(obj, nodeOf):
                         nodes.append(cell)
                     else:
@@ -5540,15 +5438,8 @@ class Script(script.Script):
         debug.println(debug.LEVEL_FINEST,
                       "Script.getKnownApplications...")
 
-        apps = []
-        desktop = pyatspi.Registry.getDesktop(0)
-        for acc in desktop:
-            try:
-                app = atspi.Accessible.makeAccessible(acc)
-                if app:
-                    apps.insert(0, app)
-            except:
-                debug.printException(debug.LEVEL_FINEST)
+        apps = filter(lambda x: x is not None,
+                      pyatspi.Registry.getDesktop(0))
 
         debug.println(debug.LEVEL_FINEST,
                       "...Script.getKnownApplications")
@@ -5710,7 +5601,7 @@ class Script(script.Script):
 
         indent = ""
         for ancestor in ancestorList:
-            print ancestor.toString(indent + "+-", False)
+            print indent + "+-", ancestor
             indent += "  "
 
     def printHierarchy(self, root, ooi, indent="",
@@ -5729,9 +5620,9 @@ class Script(script.Script):
             return
 
         if root == ooi:
-            print root.toString(indent + "(*)", False)
+            print indent + "(*)", root
         else:
-            print root.toString(indent + "+-", False)
+            print indent + "+-", root
 
         rootManagesDescendants = root.getState().contains( \
                                       pyatspi.STATE_MANAGES_DESCENDANTS)

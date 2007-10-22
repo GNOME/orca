@@ -101,7 +101,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 

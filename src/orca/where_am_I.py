@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import atspi
 import debug
 import orca_state
 import rolenames
@@ -112,9 +111,7 @@ class WhereAmI:
 
         elif role in [pyatspi.ROLE_MENU,
                       pyatspi.ROLE_MENU_ITEM,
-                      pyatspi.ROLE_CHECK_MENU,
                       pyatspi.ROLE_CHECK_MENU_ITEM,
-                      pyatspi.ROLE_RADIO_MENU,
                       pyatspi.ROLE_RADIO_MENU_ITEM]:
             self._speakMenuItem(obj, doubleClick)
 
@@ -624,8 +621,7 @@ class WhereAmI:
         relationset = obj.getRelationSet()
         for relation in relationset:
             if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
-                parent = atspi.Accessible.makeAccessible( \
-                                                      relation.getTarget(0))
+                parent = relation.getTarget(0)
                 break
 
         name = self._getObjName(obj)
@@ -685,8 +681,7 @@ class WhereAmI:
         relationset = obj.getRelationSet()
         for relation in relationset:
             if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
-                parent = atspi.Accessible.makeAccessible( \
-                                                     relation.getTarget(0))
+                parent = relation.getTarget(0)
                 break
 
         name = self._getObjName(obj)
@@ -944,8 +939,7 @@ class WhereAmI:
         relations = obj.getRelationSet()
         for relation in relations:
             if relation.getRelationType() ==  pyatspi.RELATION_LABELLED_BY:
-                labelledBy = atspi.Accessible.makeAccessible( \
-                                                      relation.getTarget(0))
+                labelledBy = relation.getTarget(0)
                 break
 
         if labelledBy:
@@ -976,8 +970,7 @@ class WhereAmI:
             if relation.getRelationType() == pyatspi.RELATION_MEMBER_OF:
                 total = relation.getNTargets()
                 for i in range(0, total):
-                    target = atspi.Accessible.makeAccessible( \
-                                                     relation.getTarget(i))
+                    target = relation.getTarget(i)
                     if target == obj:
                         position = total - i
                         break
@@ -1112,8 +1105,7 @@ class WhereAmI:
             row = table.getRowAtIndex(obj.getIndexInParent())
 
             for i in range(0, table.nColumns):
-                cell = table.getAccessibleAt(row, i)
-                acc = atspi.Accessible.makeAccessible(cell)
+                acc = table.getAccessibleAt(row, i)
                 utterances.append(self._getTableCell(acc))
 
             debug.println(self._debugLevel, "row=<%s>" % utterances)
@@ -1208,8 +1200,7 @@ class WhereAmI:
                 for relation in current.getRelationSet():
                     if relation.getRelationType() == \
                            pyatspi.RELATION_FLOWS_FROM:
-                        prevObj = atspi.Accessible.makeAccessible( \
-                                                  relation.getTarget(0))
+                        prevObj = relation.getTarget(0)
                         prevObjText = prevObj.queryText()
                         if prevObjText.getNSelections() > 0:
                             [newTextContents, start, end] = \
@@ -1231,8 +1222,7 @@ class WhereAmI:
                 for relation in current.getRelationSet():
                     if relation.getRelationType() == \
                            pyatspi.RELATION_FLOWS_TO:
-                        nextObj = atspi.Accessible.makeAccessible( \
-                                                  relation.getTarget(0))
+                        nextObj = relation.getTarget(0)
                         nextObjText = nextObj.queryText()
                         if nextObjText.getNSelections() > 0:
                             [newTextContents, start, end] = \
@@ -1281,8 +1271,7 @@ class WhereAmI:
                     for relation in current.getRelationSet():
                         if relation.getRelationType() == \
                                pyatspi.RELATION_FLOWS_FROM:
-                            prevObj = atspi.Accessible.makeAccessible( \
-                                                      relation.getTarget(0))
+                            prevObj = relation.getTarget(0)
                             prevObjText = prevObj.queryText()
                             if prevObjText.getNSelections() > 0:
                                 otherSelected = True
@@ -1300,8 +1289,7 @@ class WhereAmI:
                     for relation in current.getRelationSet():
                         if relation.getRelationType() == \
                                pyatspi.RELATION_FLOWS_TO:
-                            nextObj = atspi.Accessible.makeAccessible( \
-                                                      relation.getTarget(0))
+                            nextObj = relation.getTarget(0)
                             nextObjText = nextObj.queryText()
                             if nextObjText.getNSelections() > 0:
                                 otherSelected = True

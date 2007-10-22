@@ -32,7 +32,6 @@ __license__   = "LGPL"
 import math
 
 import pyatspi
-import atspi
 import debug
 import orca_state
 import rolenames
@@ -67,8 +66,6 @@ class SpeechGenerator:
              self._getSpeechForArrow
         self.speechGenerators[pyatspi.ROLE_CHECK_BOX]           = \
              self._getSpeechForCheckBox
-        self.speechGenerators[pyatspi.ROLE_CHECK_MENU]          = \
-             self._getSpeechForCheckMenuItem
         self.speechGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
              self._getSpeechForCheckMenuItem
         self.speechGenerators[pyatspi.ROLE_COLUMN_HEADER]       = \
@@ -119,8 +116,6 @@ class SpeechGenerator:
              self._getSpeechForPushButton
         self.speechGenerators[pyatspi.ROLE_RADIO_BUTTON]        = \
              self._getSpeechForRadioButton
-        self.speechGenerators[pyatspi.ROLE_RADIO_MENU]          = \
-             self._getSpeechForRadioMenuItem
         self.speechGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
              self._getSpeechForRadioMenuItem
         self.speechGenerators[pyatspi.ROLE_ROW_HEADER]          = \
@@ -1438,8 +1433,7 @@ class SpeechGenerator:
 
                 if speakAll:
                     for i in range(0, parent_table.nColumns):
-                        accRow = parent_table.getAccessibleAt(row, i)
-                        cell = atspi.Accessible.makeAccessible(accRow)
+                        cell = parent_table.getAccessibleAt(row, i)
                         state = cell.getState()
                         showing = state.contains(pyatspi.STATE_SHOWING)
                         if showing:
@@ -1457,9 +1451,8 @@ class SpeechGenerator:
                             if action and (label == None or len(label) == 0):
                                 for j in range(0, action.nActions):
                                     if action.getName(j) == "toggle":
-                                        header = parent_table.getColumnHeader(i)
                                         accHeader = \
-                                         atspi.Accessible.makeAccessible(header)
+                                            parent_table.getColumnHeader(i)
                                         utterances.append(accHeader.name)
 
                             utterances.extend(self._getSpeechForTableCell(cell,

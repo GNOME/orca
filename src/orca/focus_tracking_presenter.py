@@ -31,7 +31,6 @@ import threading
 import time
 
 import pyatspi
-import atspi
 import braille
 import default
 import debug
@@ -191,9 +190,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                       "While attempting to import %s" % name)
             if module:
                 try:
-                    # [[[TODO: eitani - Remove this wrappage when scripts are
-                    # pyatspi compliant.]]]
-                    script = module.Script(atspi.Accessible.makeAccessible(app))
+                    script = module.Script(app)
                 except:
                     # We do not want the getScript method to fail.  If it does,
                     # we want to let the script developer know what went wrong,
@@ -588,10 +585,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         #
                         braille.setupKeyRanges(\
                             orca_state.activeScript.brailleBindings.keys())
-                    # [[[TODO: eitani - Remove this wrappage when scripts are
-                    # pyatspi compliant.]]]
-                    back_compat_event = atspi.Event(event)
-                    s.processObjectEvent(back_compat_event)
+                    s.processObjectEvent(event)
                     if retryCount:
                         debug.println(debug.LEVEL_WARNING,
                                       "  SUCCEEDED AFTER %d TRIES" % retryCount)
@@ -616,7 +610,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     debug.println(debug.LEVEL_WARNING,
                                   "  GIVING UP AFTER %d TRIES" \
                                   % (retryCount - 1))
-                    atspi.Accessible.deleteAccessible(event.source)
             except:
                 debug.printException(debug.LEVEL_WARNING)
                 break
@@ -652,8 +645,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                           "----------> QUEUEING BRAILLE COMMAND %d" % e.event)
             event = e
         else:
-            # We ignore defunct objects and let the atspi module take
-            # care of them for us.
+            # We ignore defunct objects.
             #
             if e.type.startswith("object:state-changed:defunct"):
                 if settings.debugEventQueue:
@@ -663,8 +655,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # We also generally do not like
             # object:property-change:accessible-parent events because
             # they indicate something is now whacked with the
-            # hierarchy, so we just ignore them and let the atspi
-            # module take care of it for us.
+            # hierarchy.
             #
             if e.type.startswith("object:property-change:accessible-parent"):
                 if settings.debugEventQueue:

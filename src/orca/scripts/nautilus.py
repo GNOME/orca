@@ -117,7 +117,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         if event.source.getRole() == pyatspi.ROLE_FRAME:
 

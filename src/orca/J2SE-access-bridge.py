@@ -25,7 +25,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import atspi
 import default
 import debug
 import orca
@@ -225,8 +224,7 @@ class Script(default.Script):
                 selection = None
 
             if selection and selection.nSelectedChildren > 0:
-                selectedItem = atspi.Accessible.makeAccessible(
-                                        selection.getSelectedChild(0))
+                selectedItem = selection.getSelectedChild(0)
             elif event.source.childCount > 0:
                 selectedItem = event.getChildAtIndex(0)
             if selectedItem:
@@ -341,8 +339,7 @@ class Script(default.Script):
                     orca.setLocusOfFocus(event, event.source)
                     return
             else:
-                selectedItem = atspi.Accessible.makeAccessible(
-                                        selection.getSelectedChild(0))
+                selectedItem = selection.getSelectedChild(0)
 
                 # If the selected list item is the same with the last 
                 # focused object, present it only if the item was not 

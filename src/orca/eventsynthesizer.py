@@ -85,7 +85,7 @@ def generateKeyboardEvent(keycode, keystring, type):
               as though a composing input method (such as XIM) were used.
     - type:   an AccessibleKeySynthType flag indicating whether keyval
               is to be interpreted as a keysym rather than a keycode
-              (atspi.Accessibility.KEY_SYM), or whether to synthesize
+              (pyatspi.KEY_SYM), or whether to synthesize
               KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
     """
 

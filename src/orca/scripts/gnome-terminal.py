@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.atspi as atspi
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
@@ -155,7 +154,7 @@ class Script(default.Script):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
 
             controlPressed = orca_state.lastInputEvent.modifiers \
-                             & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+                             & (1 << pyatspi.MODIFIER_CONTROL)
 
             if (keyString == "Delete") or (keyString == "BackSpace"):
                 return
@@ -186,11 +185,11 @@ class Script(default.Script):
             # compressed string is (we choose 5 here), then output that.
             #
             wasCommand = orca_state.lastInputEvent.modifiers \
-                         & (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                            | 1 << atspi.Accessibility.MODIFIER_ALT \
-                            | 1 << atspi.Accessibility.MODIFIER_META \
-                            | 1 << atspi.Accessibility.MODIFIER_META2 \
-                            | 1 << atspi.Accessibility.MODIFIER_META3)
+                         & (1 << pyatspi.MODIFIER_CONTROL \
+                            | 1 << pyatspi.MODIFIER_ALT \
+                            | 1 << pyatspi.MODIFIER_META \
+                            | 1 << pyatspi.MODIFIER_META2 \
+                            | 1 << pyatspi.MODIFIER_META3)
             wasCommand = wasCommand \
                          or (keyString == "Return") \
                          or (keyString == "Tab")

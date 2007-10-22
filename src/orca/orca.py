@@ -160,11 +160,11 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         return
 
     oldLocusOfFocus = orca_state.locusOfFocus
-    if oldLocusOfFocus and not oldLocusOfFocus.valid:
+    if oldLocusOfFocus and oldLocusOfFocus._non_existent():
         oldLocusOfFocus = None
 
     orca_state.locusOfFocus = obj
-    if orca_state.locusOfFocus and not orca_state.locusOfFocus.valid:
+    if orca_state.locusOfFocus and orca_state.locusOfFocus._non_existent():
         orca_state.locusOfFocus = None
 
     if orca_state.locusOfFocus:
@@ -571,7 +571,7 @@ def _keyEcho(event):
             modifiers = event.modifiers
 
             if event_string == "Caps_Lock":
-                if modifiers & (1 << pyatspi.Accessibility.MODIFIER_SHIFTLOCK):
+                if modifiers & (1 << pyatspi.MODIFIER_SHIFTLOCK):
                     eventType = KeyEventType.LOCKING_UNLOCKED
                 else:
                     eventType = KeyEventType.LOCKING_LOCKED
@@ -582,7 +582,7 @@ def _keyEcho(event):
                 # Commenting out the speaking of the bogus on/off state
                 # until this can be fixed.]]]
                 #
-                #if modifiers & (1 << pyatspi.Accessibility.MODIFIER_NUMLOCK):
+                #if modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
                 #    eventType = KeyEventType.LOCKING_UNLOCKED
                 #else:
                 #    eventType = KeyEventType.LOCKING_LOCKED

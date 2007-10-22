@@ -32,7 +32,6 @@ __license__   = "LGPL"
 import math
 
 import pyatspi
-import atspi
 import braille
 import debug
 import orca_state
@@ -68,8 +67,6 @@ class BrailleGenerator:
              self._getBrailleRegionsForArrow
         self.brailleGenerators[pyatspi.ROLE_CHECK_BOX]           = \
              self._getBrailleRegionsForCheckBox
-        self.brailleGenerators[pyatspi.ROLE_CHECK_MENU]          = \
-             self._getBrailleRegionsForCheckMenuItem
         self.brailleGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
              self._getBrailleRegionsForCheckMenuItem
         self.brailleGenerators[pyatspi.ROLE_COLUMN_HEADER]       = \
@@ -120,8 +117,6 @@ class BrailleGenerator:
              self._getBrailleRegionsForPushButton
         self.brailleGenerators[pyatspi.ROLE_RADIO_BUTTON]        = \
              self._getBrailleRegionsForRadioButton
-        self.brailleGenerators[pyatspi.ROLE_RADIO_MENU]          = \
-             self._getBrailleRegionsForRadioMenuItem
         self.brailleGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
              self._getBrailleRegionsForRadioMenuItem
         self.brailleGenerators[pyatspi.ROLE_ROW_HEADER]          = \
@@ -1248,8 +1243,7 @@ class BrailleGenerator:
                     if label == None or len(label) == 0:
                         table = obj.parent.queryTable()
                         n = table.getColumnAtIndex(obj.getIndexInParent())
-                        header = table.getColumnHeader(n)
-                        accHeader = atspi.Accessible.makeAccessible(header)
+                        accheader = table.getColumnHeader(n)
                         regions[0].append(braille.Region(" "))
                         regions[0].append(braille.Region(accHeader.name))
 
@@ -1351,8 +1345,7 @@ class BrailleGenerator:
             if speakAll:
                 focusRowRegion = None
                 for i in range(0, table.nColumns):
-                    accRow = table.getAccessibleAt(row, i)
-                    cell = atspi.Accessible.makeAccessible(accRow)
+                    cell = table.getAccessibleAt(row, i)
                     state = cell.getState()
                     showing = state.contains(pyatspi.STATE_SHOWING)
                     if showing:

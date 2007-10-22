@@ -29,7 +29,6 @@ import gtk
 import pyatspi
 
 import orca.debug as debug
-import orca.atspi as atspi
 import orca.chnames as chnames
 import orca.default as default
 import orca.input_event as input_event
@@ -330,8 +329,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     [startIndex, endIndex] = \
                         self._script.getSpreadSheetRowRange(obj)
                     for i in range(startIndex, endIndex+1):
-                        accRow = parentTable.getAccessibleAt(row, i)
-                        cell = atspi.Accessible.makeAccessible(accRow)
+                        cell = parentTable.getAccessibleAt(row, i)
                         showing = cell.getState().contains( \
                                         pyatspi.STATE_SHOWING)
                         if showing:
@@ -599,8 +597,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         [startIndex, endIndex] = \
                             self._script.getSpreadSheetRowRange(obj)
                         for i in range(startIndex, endIndex+1):
-                            accRow = parentTable.getAccessibleAt(row, i)
-                            cell = atspi.Accessible.makeAccessible(accRow)
+                            cell = parentTable.getAccessibleAt(row, i)
                             showing = cell.getState().contains( \
                                           pyatspi.STATE_SHOWING)
                             if showing:
@@ -1041,8 +1038,7 @@ class Script(default.Script):
 
         if parent and parentTable:
             row = parentTable.getRowAtIndex(obj.getIndexInParent())
-            cell = parentTable.getAccessibleAt(row, column)
-            accCell = atspi.Accessible.makeAccessible(cell)
+            accCell = parentTable.getAccessibleAt(row, column)
 
         return accCell
 
@@ -1068,8 +1064,7 @@ class Script(default.Script):
 
         if parent and parentTable:
             column = parentTable.getColumnAtIndex(obj.getIndexInParent())
-            cell = parentTable.getAccessibleAt(row, column)
-            accCell = atspi.Accessible.makeAccessible(cell)
+            accCell = parentTable.getAccessibleAt(row, column)
 
         return accCell
 
@@ -1125,16 +1120,16 @@ class Script(default.Script):
         if self.isSpreadSheetCell(obj):
             y = parent.extents.y
             leftX = parent.extents.x + 1
-            cell = parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
-            if cell:
-                leftCell = atspi.Accessible.makeAccessible(cell)
+            leftCell = \
+                parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
+            if leftCell:
                 table = leftCell.parent.queryTable()
                 startIndex = table.getColumnAtIndex(leftCell.getIndexInParent())
 
             rightX = parent.extents.x + parent.extents.width - 1
-            cell = parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
-            if cell:
-                rightCell = atspi.Accessible.makeAccessible(cell)
+            rightCell = \
+                parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
+            if rightCell:
                 table = rightCell.parent.queryTable()
                 endIndex = table.getColumnAtIndex(rightCell.getIndexInParent())
 
@@ -1657,7 +1652,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -1865,7 +1860,7 @@ class Script(default.Script):
                     hasLabelFor = False
                     for relation in relations:
                         if relation.getRelationType() \
-                               == atspi.Accessibility.RELATION_LABEL_FOR:
+                               == pyatspi.RELATION_LABEL_FOR:
                             hasLabelFor = True
                     if not hasLabelFor:
                         self.speakSetupLabel(label)
@@ -1943,7 +1938,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -1983,7 +1978,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -2141,11 +2136,11 @@ class Script(default.Script):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
                 navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
-                             & (1 << atspi.Accessibility.MODIFIER_CONTROL \
-                              | 1 << atspi.Accessibility.MODIFIER_ALT \
-                              | 1 << atspi.Accessibility.MODIFIER_META \
-                              | 1 << atspi.Accessibility.MODIFIER_META2 \
-                              | 1 << atspi.Accessibility.MODIFIER_META3)
+                             & (1 << pyatspi.MODIFIER_CONTROL \
+                              | 1 << pyatspi.MODIFIER_ALT \
+                              | 1 << pyatspi.MODIFIER_META \
+                              | 1 << pyatspi.MODIFIER_META2 \
+                              | 1 << pyatspi.MODIFIER_META3)
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
@@ -2226,7 +2221,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -2432,12 +2427,12 @@ class Script(default.Script):
 
         # Was a control key pressed?
         mods = orca_state.lastInputEvent.modifiers
-        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
 
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            pyatspi.TEXT_BOUNDARY_LINE_START)
         lineStart = line[1]
         lineEnd = line[2]
 
@@ -2445,7 +2440,7 @@ class Script(default.Script):
 
             # Get the word containing the caret.
             word = text.getTextAtOffset(caretOffset, \
-                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                pyatspi.TEXT_BOUNDARY_WORD_START)
             wordStart = word[1]
             wordEnd = word[2]
 
@@ -2482,7 +2477,7 @@ class Script(default.Script):
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            pyatspi.TEXT_BOUNDARY_LINE_START)
 
         # If this is a blank line, announce it if the user requested
         # that blank lines be spoken.

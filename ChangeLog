@@ -1,3 +1,31 @@
+2007-10-22  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py: 
+	  src/orca/J2SE-access-bridge.py: 
+	  src/orca/Makefile.am: 
+	  src/orca/atspi.py: 
+	  src/orca/braillegenerator.py: 
+	  src/orca/debug.py: 
+	  src/orca/default.py: 
+	  src/orca/eventsynthesizer.py: 
+	  src/orca/flat_review.py: 
+	  src/orca/focus_tracking_presenter.py: 
+	  src/orca/orca.py: 
+	  src/orca/rolenames.py: 
+	  src/orca/scripts/Evolution.py: 
+	  src/orca/scripts/StarOffice.py: 
+	  src/orca/scripts/Thunderbird.py: 
+	  src/orca/scripts/acroread.py: 
+	  src/orca/scripts/gedit.py: 
+	  src/orca/scripts/gnome-mud.py: 
+	  src/orca/scripts/gnome-search-tool.py: 
+	  src/orca/scripts/gnome-terminal.py: 
+	  src/orca/scripts/liferea.py: 
+	  src/orca/scripts/nautilus.py: 
+	  src/orca/speechgenerator.py
+	  src/orca/where_am_I.py: 
+	  Finally taking out all usage of atspi.py. Removed atspi.py.
+
 2007-10-22  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/bookmarks.py:

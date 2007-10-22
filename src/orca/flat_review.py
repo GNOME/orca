@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import re
 import sys
 
-import atspi  # TODO remove me
 import pyatspi
 import braille
 import debug
@@ -306,7 +305,6 @@ class StateZone(Zone):
                 stateCount = 0
             if self.role in [pyatspi.ROLE_CHECK_BOX,
                              pyatspi.ROLE_CHECK_MENU_ITEM,
-                             pyatspi.ROLE_CHECK_MENU,
                              pyatspi.ROLE_TABLE_CELL]:
                 if stateCount:
                     # Translators: this represents the state of a checkbox.
@@ -787,8 +785,8 @@ class Context:
                     #    clipping[2],
                     #    clipping[3],
                     #    0,
-                    #    atspi.Accessibility.TEXT_CLIP_BOTH,
-                    #    atspi.Accessibility.TEXT_CLIP_BOTH)
+                    #    pyatspi.TEXT_CLIP_BOTH,
+                    #    pyatspi.TEXT_CLIP_BOTH)
                     #
                     #print
                     #print "HERE!"
@@ -940,10 +938,8 @@ class Context:
         role = role or accessible.getRole()
         if role in [pyatspi.ROLE_CHECK_BOX,
                     pyatspi.ROLE_CHECK_MENU_ITEM,
-                    pyatspi.ROLE_CHECK_MENU,
                     pyatspi.ROLE_RADIO_BUTTON,
-                    pyatspi.ROLE_RADIO_MENU_ITEM,
-                    pyatspi.ROLE_RADIO_MENU]:
+                    pyatspi.ROLE_RADIO_MENU_ITEM]:
 
             # Attempt to infer if the indicator is to the left or
             # right of the text.
@@ -1182,10 +1178,8 @@ class Context:
             
         if table:
             for i in range(0, table.nColumns):
-                obj = table.getColumnHeader(i)
-                if obj:
-                    # TODO: remove as part of pyatspi integration
-                    header = atspi.Accessible.makeAccessible(obj)
+                header = table.getColumnHeader(i)
+                if header:
                     extents = header.queryComponent().getExtents(0)
                     stateset = header.getState()
                     if stateset.contains(pyatspi.STATE_SHOWING) \
@@ -1207,12 +1201,10 @@ class Context:
             currentX = parentExtents.x
             minHeight = sys.maxint
             while currentX < (parentExtents.x + parentExtents.width):
-                obj = icomponent.getAccessibleAtPoint(currentX,
+                child = icomponent.getAccessibleAtPoint(currentX,
                                                             currentY,
                                                             0)
-                if obj:
-                    # TODO remove as part of pyatspi integration
-                    child = atspi.Accessible.makeAccessible(obj)
+                if child:
                     extents = child.queryComponent().getExtents(0)
                     if extents.x >= 0 and extents.y >= 0:
                         newX = extents.x + extents.width

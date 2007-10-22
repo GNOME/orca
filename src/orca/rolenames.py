@@ -54,7 +54,6 @@ ROLE_CAPTION             = "caption"
 ROLE_CANVAS              = "canvas"
 ROLE_CHECK_BOX           = "check box"
 ROLE_CHECK_MENU_ITEM     = "check menu item"
-ROLE_CHECK_MENU          = "check menu" # invented for items that are submenus
 ROLE_COLOR_CHOOSER       = "color chooser"
 ROLE_COLUMN_HEADER       = "column header"
 ROLE_COMBO_BOX           = "combo box"
@@ -97,7 +96,6 @@ ROLE_PROGRESS_BAR        = "progress bar"
 ROLE_PUSH_BUTTON         = "push button"
 ROLE_RADIO_BUTTON        = "radio button"
 ROLE_RADIO_MENU_ITEM     = "radio menu item"
-ROLE_RADIO_MENU          = "radio menu" # invented for items that are submenus
 ROLE_ROOT_PANE           = "root pane"
 ROLE_ROW_HEADER          = "row header"
 ROLE_SCROLL_BAR          = "scroll bar"
@@ -294,21 +292,6 @@ rolenames[ROLE_CHECK_MENU_ITEM] = Rolename(
     # Translators: spoken words for the rolename of a check menu item.
     #
     _("check item"))
-
-rolenames[ROLE_CHECK_MENU] = Rolename(
-    ROLE_CHECK_MENU,
-    # Translators: short braille for the rolename of a check menu (i.e.,
-    # a bizarre construct where the menu item is also a menu).
-    #
-    _("ckm"),
-    # Translators: long braille for the rolename of a check menu (i.e.,
-    # a bizarre construct where the menu item is also a menu).
-    #
-    _("CheckMenu"),
-    # Translators: spoken words for the rolename of a check menu (i.e.,
-    # a bizarre construct where the menu item is also a menu).
-    #
-    _("check menu"))
 
 rolenames[ROLE_COLOR_CHOOSER] = Rolename(
     ROLE_COLOR_CHOOSER,
@@ -800,21 +783,6 @@ rolenames[ROLE_RADIO_MENU_ITEM] = Rolename(
     #
     _("radio menu item"))
 
-rolenames[ROLE_RADIO_MENU] = Rolename(
-    ROLE_RADIO_MENU,
-    # Translators: short braille for the rolename of a radio menu, which
-    # is a bizarre construct where the menu item is also a menu.
-    #
-    _("rdmnu"),
-    # Translators: long braille for the rolename of a radio_menu, which
-    # is a bizarre construct where the menu item is also a menu.
-    #
-    _("RadioMenu"),
-    # Translators: spoken words for the rolename of a radio_menu, which
-    # is a bizarre construct where the menu item is also a menu.
-    #
-    _("radio menu"))
-
 rolenames[ROLE_ROOT_PANE] = Rolename(
     ROLE_ROOT_PANE,
     # Translators: short braille for the rolename of a root pane.
@@ -1230,13 +1198,7 @@ def getSpeechForRoleName(obj, role=None):
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_CHECK_MENU
-    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_RADIO_MENU
-    elif (role == pyatspi.ROLE_MENU_ITEM) \
+    if (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
         role = ROLE_MENU
 
@@ -1265,13 +1227,7 @@ def getShortBrailleForRoleName(obj, role=None):
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_CHECK_MENU
-    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_RADIO_MENU
-    elif (role == pyatspi.ROLE_MENU_ITEM) \
+    if (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
         role = ROLE_MENU
 
@@ -1300,13 +1256,7 @@ def getLongBrailleForRoleName(obj, role=None):
 
     # Return fake "menu" role names.
     #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_CHECK_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_CHECK_MENU
-    elif (role == pyatspi.ROLE_RADIO_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_RADIO_MENU
-    elif (role == pyatspi.ROLE_MENU_ITEM) \
+    if (role == pyatspi.ROLE_MENU_ITEM) \
           and (obj.childCount > 0):
         role = ROLE_MENU
 

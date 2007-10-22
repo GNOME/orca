@@ -35,7 +35,6 @@ import math
 import pyatspi
 import urlparse
 
-import atspi
 import braille
 import braillegenerator
 import debug
@@ -4528,8 +4527,7 @@ class Script(default.Script):
                 for relation in relationSet:
                     if relation.getRelationType()  \
                         == pyatspi.RELATION_EMBEDS:
-                        documentFrame = atspi.Accessible.makeAccessible( \
-                            relation.getTarget(0))
+                        documentFrame = relation.getTarget(0)
                         if documentFrame.getState().contains( \
                             pyatspi.STATE_SHOWING):
                             break
@@ -4858,8 +4856,7 @@ class Script(default.Script):
             if relation.getRelationType() \
                 == pyatspi.RELATION_LABEL_FOR:
                 for i in range(0, relation.getNTargets()):
-                    target = atspi.Accessible.makeAccessible(\
-                        relation.getTarget(i))
+                    target = relation.getTarget(i)
                     for content in contents:
                         if content[0] == target:
                             return target
@@ -4985,8 +4982,7 @@ class Script(default.Script):
             row = table.getRowAtIndex(obj.getIndexInParent())
             nCols = table.nColumns
             for col in range(0, nCols):
-                accCell = table.getAccessibleAt(row, col)
-                cell = atspi.Accessible.makeAccessible(accCell)
+                cell = table.getAccessibleAt(row, col)
                 if not self.isHeader(cell):
                     break
             if col == nCols - 1:
@@ -5008,8 +5004,7 @@ class Script(default.Script):
             col = table.getColumnAtIndex(obj.getIndexInParent())
             nRows = table.nRows
             for row in range(0, nRows):
-                accCell = table.getAccessibleAt(row, col)
-                cell = atspi.Accessible.makeAccessible(accCell)
+                cell = table.getAccessibleAt(row, col)
                 if not self.isHeader(cell):
                     break
             if row == nRows - 1:
@@ -5037,9 +5032,8 @@ class Script(default.Script):
             # Mozilla doesn't expose the information that way, however.
             # get{Row, Column}Header seems to work sometimes.
             #
-            accHeader = table.getRowHeader(row)
-            if accHeader:
-                header = atspi.Accessible.makeAccessible(accHeader)
+            header = table.getRowHeader(row)
+            if header:
                 rowHeaders.append(header)
 
             # Headers that are strictly marked up with <th> do not seem
@@ -5056,8 +5050,7 @@ class Script(default.Script):
                     # prior to our present location.
                     #
                     for c in range(0, col):
-                        accCell = table.getAccessibleAt(r, c)
-                        cell = atspi.Accessible.makeAccessible(accCell)
+                        cell = table.getAccessibleAt(r, c)
                         text = self.queryNonEmptyText(cell)
                         if self.isHeader(cell) and text \
                            and not cell in rowHeaders:
@@ -5085,9 +5078,8 @@ class Script(default.Script):
             # Mozilla doesn't expose the information that way, however.
             # get{Row, Column}Header seems to work sometimes.
             #
-            accHeader = table.getColumnHeader(col)
-            if accHeader:
-                header = atspi.Accessible.makeAccessible(accHeader)
+            header = table.getColumnHeader(col)
+            if header:
                 columnHeaders.append(header)
 
             # Headers that are strictly marked up with <th> do not seem
@@ -5104,8 +5096,7 @@ class Script(default.Script):
                     # prior to our present location.
                     #
                     for r in range(0, row):
-                        accCell = table.getAccessibleAt(r, c)
-                        cell = atspi.Accessible.makeAccessible(accCell)
+                        cell = table.getAccessibleAt(r, c)
                         text = self.queryNonEmptyText(cell)
                         if self.isHeader(cell) and text \
                            and not cell in columnHeaders:
@@ -5278,8 +5269,7 @@ class Script(default.Script):
 
         if self.isUselessObject(obj):
             debug.println(debug.LEVEL_FINEST,
-                          "Object deemed to be useless: " \
-                          + obj.toString("", True))
+                          "Object deemed to be useless: %s" % obj)
             return True
 
         else:
@@ -5394,8 +5384,7 @@ class Script(default.Script):
              and (row + rowspan <= table.nRows - 1):
             nextCell = (row + rowspan, col)
         if nextCell:
-            accCell = table.getAccessibleAt(nextCell[0], nextCell[1])
-            newCell = atspi.Accessible.makeAccessible(accCell)
+            newCell = table.getAccessibleAt(nextCell[0], nextCell[1])
             if newCell:
                 [obj, offset] = self.findFirstCaretContext(newCell, 0)
                 extents = self.getExtents(newCell, 0, 1)
@@ -5847,8 +5836,7 @@ class Script(default.Script):
                         done = True
 
             if grid:
-                cell = nextCell.parent.queryTable().getAccessibleAt(0, col)
-                topCol = atspi.Accessible.makeAccessible(cell)
+                tobCol = nextCell.parent.queryTable().getAccessibleAt(0, col)
                 [objTop, offset] = self.findFirstCaretContext(topCol, 0)
                 if self.queryNonEmptyText(topCol) \
                    and not self.isFormField(topCol):
@@ -6190,7 +6178,8 @@ class Script(default.Script):
             # we go to get them.  So...we'll just keep going backwards
             # until we find a real child that we can work with.]]]
             #
-            while not isinstance(previousObj, atspi.Accessible) \
+            while not isinstance(previousObj, 
+                                 pyatspi.Accessibility.Accessible) \
                 and index >= 0:
                 previousObj = obj.parent[index]
                 index -= 1
@@ -6216,7 +6205,7 @@ class Script(default.Script):
                 while index >= 0:
                     child = previousObj[index]
                     childOffset = self.getCharacterOffsetInParent(child)
-                    if isinstance(child, atspi.Accessible) \
+                    if isinstance(child, pyatspi.Accessibility.Accessible) \
                        and not (self.isSameObject(previousObj, documentFrame) \
                         and childOffset > characterOffset):
                         previousObj = child
@@ -6263,7 +6252,7 @@ class Script(default.Script):
                 index += 1
                 continue
             childOffset = self.getCharacterOffsetInParent(child)
-            if isinstance(child, atspi.Accessible) \
+            if isinstance(child, pyatspi.Accessibility.Accessible) \
                and not (self.isSameObject(obj, documentFrame) \
                         and childOffset < characterOffset):
                 nextObj = child
@@ -6280,7 +6269,7 @@ class Script(default.Script):
             index = obj.getIndexInParent() + 1
             while index < obj.parent.childCount:
                 child = obj.parent[index]
-                if isinstance(child, atspi.Accessible):
+                if isinstance(child, pyatspi.Accessibility.Accessible):
                     nextObj = child
                     break
                 else:
@@ -6307,7 +6296,7 @@ class Script(default.Script):
                 index = candidate.getIndexInParent() + 1
                 while index < candidate.parent.childCount:
                     child = candidate.parent[index]
-                    if isinstance(child, atspi.Accessible):
+                    if isinstance(child, pyatspi.Accessibility.Accessible):
                         nextObj = child
                         break
                     else:
@@ -8276,8 +8265,7 @@ class Script(default.Script):
                                   nColumns) % nColumns
             speech.speak(nonUniformString + " " + rowString + " " + colString)
 
-            cell = table.getAccessibleAt(0, 0)
-            obj = atspi.Accessible.makeAccessible(cell)
+            obj = table.getAccessibleAt(0, 0)
             self.moveToCell(obj)
 
         else:
@@ -8326,8 +8314,7 @@ class Script(default.Script):
                                  "%d columns",
                                   nColumns) % nColumns
             speech.speak(nonUniformString + " " + rowString + " " + colString)
-            cell = table.getAccessibleAt(0, 0)
-            obj = atspi.Accessible.makeAccessible(cell)
+            obj = table.getAccessibleAt(0, 0)
             self.moveToCell(obj)
 
         else:
@@ -8354,9 +8341,8 @@ class Script(default.Script):
                 row = self.lastTableCell[0]
             found = False
             while not found and col > 0:
-                cell = table.getAccessibleAt(row, col - 1)
+                obj = table.getAccessibleAt(row, col - 1)
                 self.lastTableCell = [row, col - 1]
-                obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
                    not skipBlankCells:
                     found = True
@@ -8406,9 +8392,8 @@ class Script(default.Script):
             nextCol = col + colspan
             found = False
             while not found and (nextCol <= table.nColumns - 1):
-                cell = table.getAccessibleAt(row, nextCol)
+                obj = table.getAccessibleAt(row, nextCol)
                 self.lastTableCell = [row, nextCol]
-                obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
                    not skipBlankCells:
                     found = True
@@ -8458,9 +8443,8 @@ class Script(default.Script):
                 col = self.lastTableCell[1]
             found = False
             while not found and row > 0:
-                cell = table.getAccessibleAt(row - 1, col)
+                obj = table.getAccessibleAt(row - 1, col)
                 self.lastTableCell = [row - 1, col]
-                obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
                    not skipBlankCells:
                     found = True
@@ -8510,9 +8494,8 @@ class Script(default.Script):
             nextRow = row + rowspan
             found = False
             while not found and (nextRow <= table.nRows - 1):
-                cell = table.getAccessibleAt(nextRow, col)
+                obj = table.getAccessibleAt(nextRow, col)
                 self.lastTableCell = [nextRow, col]
-                obj = atspi.Accessible.makeAccessible(cell)
                 if not self.isBlankCell(obj) or \
                    not skipBlankCells:
                     found = True
@@ -8550,9 +8533,8 @@ class Script(default.Script):
         if obj.getRole() != pyatspi.ROLE_TABLE:
             obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
         if obj:
-            cell = obj.queryTable().getAccessibleAt(0, 0)
+            obj = obj.queryTable().getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
-            obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
         else:
             # Translators: this is for navigating HTML content by
@@ -8569,9 +8551,8 @@ class Script(default.Script):
             table = obj.queryTable()
             lastRow = table.nRows - 1
             lastCol = table.nColumns - 1
-            cell = table.getAccessibleAt(lastRow, lastCol)
+            obj = table.getAccessibleAt(lastRow, lastCol)
             self.lastTableCell = [lastRow, lastCol]
-            obj = atspi.Accessible.makeAccessible(cell)
             self.moveToCell(obj)
         else:
             # Translators: this is for navigating HTML content by

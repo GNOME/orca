@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.default as default
-import orca.atspi as atspi
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.rolenames as rolenames
@@ -130,8 +129,8 @@ class Script(default.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     messageKeys[i],
-                    1 << atspi.Accessibility.MODIFIER_ALT,
-                    1 << atspi.Accessibility.MODIFIER_ALT,
+                    1 << pyatspi.MODIFIER_ALT,
+                    1 << pyatspi.MODIFIER_ALT,
                     self.inputEventHandlers["readPreviousMessageHandler"]))
 
         return keyBindings

@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.atspi as atspi
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -204,7 +203,7 @@ class Script(default.Script):
             for relation in relations:
                 if relation.getRelationType()  \
                        == pyatspi.RELATION_FLOWS_TO:
-                    obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    obj = relation.getTarget(0)
                     try:
                         text = obj.queryText()
                     except:
@@ -369,7 +368,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               str(event.source))
 
         # self.printAncestry(event.source)
 
@@ -447,7 +446,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -546,7 +545,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 

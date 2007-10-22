@@ -29,7 +29,6 @@ import pyatspi
 
 import orca.debug as debug
 import orca.default as default
-import orca.atspi as atspi
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.rolenames as rolenames
@@ -564,18 +563,16 @@ class Script(default.Script):
         # Determine the correct "say all by" mode to use.
         #
         if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_SENTENCE_END
+            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
         elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
-            mode = atspi.Accessibility.TEXT_BOUNDARY_LINE_START
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
         while not done:
-            accPanel = htmlPanel.accessible.getChildAtIndex(i)
-            panel = atspi.Accessible.makeAccessible(accPanel)
+            panel = htmlPanel.accessible.getChildAtIndex(i)
             if panel != None:
-                accTextObj = panel.accessible.getChildAtIndex(0)
-                textObj = atspi.Accessible.makeAccessible(accTextObj)
+                textObj = panel.accessible.getChildAtIndex(0)
                 try:
                     text = textObj.queryText()
                 except NotImplementedError:
@@ -590,7 +587,7 @@ class Script(default.Script):
                     if len(mystr) != 0:
                         string += " " + mystr
 
-                    if mode == atspi.Accessibility.TEXT_BOUNDARY_LINE_START or \
+                    if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
                        len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                         string = self.adjustForRepeats(string)
                         if string.isupper():
@@ -703,7 +700,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source.toString())
+                               event.source)
 
         # self.printAncestry(event.source)
 
@@ -788,8 +785,7 @@ class Script(default.Script):
                 utterances = []
                 regions = []
                 for i in range(0, parentTable.nColumns):
-                    obj = parentTable.getAccessibleAt(row, i)
-                    cell = atspi.Accessible.makeAccessible(obj)
+                    cell = parentTable.getAccessibleAt(row, i)
 
                     while cell.childCount:
                         cell = cell[0]
@@ -890,9 +886,8 @@ class Script(default.Script):
                 speech.speak(message)
 
             for i in range(0, parentTable.nColumns):
-                obj = parentTable.getAccessibleAt(row, i)
-                if obj:
-                    cell = atspi.Accessible.makeAccessible(obj)
+                cell = parentTable.getAccessibleAt(row, i)
+                if cell:
                     verbose = (cell.getIndexInParent() == \
                                event.source.getIndexInParent())
 
@@ -905,8 +900,7 @@ class Script(default.Script):
                     # Status checkbox, in which case we speake/braille it if
                     # the message is unread (not checked).
                     #
-                    header_obj = parentTable.getColumnHeader(i)
-                    header = atspi.Accessible.makeAccessible(header_obj)
+                    header = parentTable.getColumnHeader(i)
 
                     checkbox = False
                     toRead = True
@@ -1062,8 +1056,7 @@ class Script(default.Script):
                     noRows = childTable.nRows
                     for j in range(0, noRows):
                         row = childTable.getRowAtIndex(j)
-                        obj = childTable.getAccessibleAt(row, 0)
-                        appt = atspi.Accessible.makeAccessible(obj)
+                        appt = childTable.getAccessibleAt(row, 0)
                         extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
                             utterances = speechGen.getSpeech(event.source, \
@@ -1430,12 +1423,12 @@ class Script(default.Script):
 
         # Was a control key pressed?
         mods = orca_state.lastInputEvent.modifiers
-        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
 
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            pyatspi.TEXT_BOUNDARY_LINE_START)
         lineStart = line[1]
         lineEnd = line[2]
 
@@ -1443,7 +1436,7 @@ class Script(default.Script):
 
             # Get the word containing the caret.
             word = text.getTextAtOffset(caretOffset, \
-                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                pyatspi.TEXT_BOUNDARY_WORD_START)
             wordStart = word[1]
             wordEnd = word[2]
 
@@ -1479,7 +1472,7 @@ class Script(default.Script):
         # Get the line containing the caret
         caretOffset = text.caretOffset
         line = text.getTextAtOffset(caretOffset, \
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            pyatspi.TEXT_BOUNDARY_LINE_START)
 
         debug.println(debug.LEVEL_FINEST, 
             "speakBlankLine: start=%d, end=%d, line=<%s>" % \

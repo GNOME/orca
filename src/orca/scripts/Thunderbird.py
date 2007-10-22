@@ -29,7 +29,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.orca as orca
-import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
 import orca.speech as speech
@@ -120,8 +119,7 @@ class Script(Gecko.Script):
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = parent.queryTable()
             row = table.getRowAtIndex(obj.getIndexInParent())
-            cell = table.getAccessibleAt(row, 0)
-            acc = atspi.Accessible.makeAccessible(cell)
+            acc = table.getAccessibleAt(row, 0)
             orca.setLocusOfFocus(event, acc)
             consume = True
 

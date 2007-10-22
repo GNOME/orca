@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.atspi as atspi
 import orca.braille as braille
 import orca.chnames as chnames
 import orca.debug as debug
@@ -645,7 +644,7 @@ class Script(default.Script):
                                          pyatspi.TEXT_BOUNDARY_WORD_START)
                 [word, startOffset, endOffset] = \
                     text.getTextAfterOffset(endOffset+1,
-                                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                                 pyatspi.TEXT_BOUNDARY_WORD_START)
                 if len(penultimateWord) > 0:
                     lastCharPW = penultimateWord[len(penultimateWord) - 1]
                     if lastCharPW == "\n":
@@ -660,7 +659,7 @@ class Script(default.Script):
                 lastWord = orca_state.lastWord
                 [word, startOffset, endOffset] = \
                     text.getTextAtOffset(offset,
-                                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+                                 pyatspi.TEXT_BOUNDARY_WORD_START)
                 if len(word) > 0:
                     lastChar = word[len(word) - 1]
                     if lastChar == "\n" and lastWord != word:

@@ -181,7 +181,7 @@ def printObjectEvent(level, event, sourceInfo=None):
     println(level, text)
 
     if sourceInfo:
-        println(level, "             " + sourceInfo)
+        println(level, "             %s" % sourceInfo)
 
 def printInputEvent(level, string):
     """Prints out an input event.  The given level may be overridden
