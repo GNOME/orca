@@ -1,3 +1,8 @@
+2007-10-22  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/Gecko.py:
+          pyatspi migration:  Gecko.bookmarks getRole() change.
+
 2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

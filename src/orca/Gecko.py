@@ -1630,14 +1630,15 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         if not start_obj:
             [start_obj, characterOffset] = self._script.getCaretContext()    
             
-        if start_obj is None or start_obj.getRole() == 'document frame':
+        if start_obj is None \
+                     or start_obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             return []
         else:
             path = []
             path.append(start_obj.getIndexInParent())
             p = start_obj.parent
             while p:
-                if p.getRole() == 'document frame':
+                if p.getRole()  == pyatspi.ROLE_DOCUMENT_FRAME:
                     path.reverse()
                     return path
                 path.append(p.getIndexInParent())
