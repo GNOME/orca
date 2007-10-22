@@ -4572,17 +4572,12 @@ class Script(default.Script):
         doesn't implement the accessible text specialization.
         """
 
-        # We cache the text once we get it.
-        #
-        try:
-            return obj.unicodeText
-        except:
-            text = self.queryNonEmptyText(obj)
-            if text:
-                obj.unicodeText = text.getText(0, -1).decode("UTF-8")
-            else:
-                obj.unicodeText = None
-        return obj.unicodeText
+        text = self.queryNonEmptyText(obj)
+        if text:
+            unicodeText = text.getText(0, -1).decode("UTF-8")
+        else:
+            unicodeText = None
+        return unicodeText
 
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation.

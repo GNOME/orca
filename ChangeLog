@@ -1,3 +1,8 @@
+2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          pyatspi migration:  stop using obj.unicodeText.
+
 2007-10-21  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:
