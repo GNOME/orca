@@ -4725,49 +4725,14 @@ class Script(default.Script):
         accessible text, or -1 something was amuck.
         """
 
-        # [[[TODO: WDW - HACK to handle the fact that
-        # hyperlink.startIndex and hyperlink.endIndex is broken in the
-        # Gecko a11y implementation.  This will hopefully be fixed.
-        # If it is, one should be able to use hyperlink.startIndex.]]]
-        #
-        # We also cache the offset so we don't need to do this each time
-        # we come to this object.
-        #
         try:
-            return obj.characterOffsetInParent
-        except:
-            try:
-                # Check to see if the hyperlink interface is implemented.
-                #
-                obj.queryHyperlink()
-            except NotImplementedError:
-                obj.characterOffsetInParent = -1
-            else:
-                index = 0
-                text = self.getUnicodeText(obj.parent)
-                # [[[TODO: JD - HACK and defensive measure.  Sometimes
-                # Gecko is giving us a bogus characterCount of 0 characters.
-                # See bug #470853.]]]
-                #
-                parentText = self.queryNonEmptyText(obj.parent)
-                if text and parentText:
-                    for offset in range(0, len(text)):
-                        if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
-                            if index == obj.getIndexInParent():
-                                obj.characterOffsetInParent = offset
-                                break
-                            else:
-                                index += 1
-                else:
-                    obj.characterOffsetInParent = -1
-        try:
-            return obj.characterOffsetInParent
-        except:
-            # If this is issued, something is broken in the AT-SPI
-            # implementation.
-            #
-            debug.printException(debug.LEVEL_SEVERE)
-            return -1
+            hyperlink = obj.queryHyperlink()
+        except NotImplementedError:
+            offset = -1
+        else:
+            offset = hyperlink.startIndex
+
+        return offset
 
     def getChildIndex(self, obj, characterOffset):
         """Given an object that implements accessible text, determine

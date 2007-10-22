@@ -1,3 +1,9 @@
+2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Work on bug 489028 - Remove annotations of accessible objects
+          in Gecko.py.
+
 2007-10-22  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/Gecko.py:
