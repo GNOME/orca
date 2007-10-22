@@ -1,5 +1,11 @@
 2007-10-22  Eitan Isaacson  <eitan@ascender.com>
 
+        * src/tools/*:
+          remove since these have been obsoleted due to our migration
+          to Macaroon and pyatspi.
+
+2007-10-22  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Gecko.py: 
 	  src/orca/J2SE-access-bridge.py: 
 	  src/orca/Makefile.am: 
