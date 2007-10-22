@@ -4960,8 +4960,12 @@ class Script(default.Script):
     def isHeader(self, obj):
         """Returns True if the table cell is a header"""
 
-        if obj and obj.attributes:
-            for attribute in obj.attributes:
+        if not obj:
+            return False
+
+        attributes = obj.getAttributes()
+        if attributes:
+            for attribute in attributes:
                 if attribute == "tag:TH":
                     return True
 
@@ -5229,8 +5233,12 @@ class Script(default.Script):
     def isBlockquote(self, obj):
         """Returns True if the object is a blockquote"""
 
-        if obj and obj.attributes:
-            for attribute in obj.attributes:
+        if not obj:
+            return False
+
+        attributes = obj.getAttributes()
+        if attributes:
+            for attribute in attributes:
                 if attribute == "tag:BLOCKQUOTE":
                     return True
 

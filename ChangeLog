@@ -1,6 +1,11 @@
 2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          pyatspi migration:  found a couple of obj.attributes.
+
+2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Work on bug 489028 - Remove annotations of accessible objects
           in Gecko.py.
 
