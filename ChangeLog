@@ -4,10 +4,10 @@
           pylint motivated fix in bookmarks.py. Change _reviewCurrentItem() to 
           reviewCurrentItem().
 
-2007-10-19  Willie Walker <william.walker@sun.com>
+2007-10-22  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:
-          pyatspi migration.
+          pyatspi migration - several checkins for this.
 
 2007-10-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

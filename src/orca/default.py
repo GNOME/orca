@@ -3070,12 +3070,12 @@ class Script(script.Script):
         # us their value changed even though it hasn't.
         #
         value = event.source.queryValue()
-        if event.source.__dict__.has_key("oldValue") \
-           and (value.currentValue == event.source.oldValue):
+        if self.pointOfReference.has_key("oldValue") \
+           and (value.currentValue == self.pointOfReference["oldValue"]):
             return
 
         orca.visualAppearanceChanged(event, event.source)
-        event.source.oldValue = value.currentValue
+        self.pointOfReference["oldValue"] = value.currentValue
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
