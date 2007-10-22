@@ -4740,28 +4740,14 @@ class Script(default.Script):
         EMBEDDED_OBJECT_CHARACTER at characterOffset in the object's
         accessible text."""
 
-        # We cache these offsets so we don't need to keep finding them
-        # over and over again.
-        #
-        if not hasattr(obj, "childrenIndices"):
-            obj.childrenIndices = {}
-
         try:
-            return obj.childrenIndices[characterOffset]
-        except:
-            obj.childrenIndices[characterOffset] = -1
-            unicodeText = self.getUnicodeText(obj)
-            if unicodeText \
-               and (unicodeText[characterOffset] \
-                    == self.EMBEDDED_OBJECT_CHARACTER):
-                index = -1
-                for character in range(0, characterOffset + 1):
-                    if unicodeText[character] \
-                        == self.EMBEDDED_OBJECT_CHARACTER:
-                        index += 1
-                obj.childrenIndices[characterOffset] = index
+            hypertext = obj.queryHypertext()
+        except NotImplementedError:
+            index = -1
+        else:
+            index = hypertext.getLinkIndex(characterOffset)
 
-        return obj.childrenIndices[characterOffset]
+        return index
 
     def getExtents(self, obj, startOffset, endOffset):
         """Returns [x, y, width, height] of the text at the given offsets
