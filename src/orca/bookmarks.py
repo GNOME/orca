@@ -52,7 +52,7 @@ class Bookmarks:
             return
             
         self._script.flatReviewContext = context
-        self._script._reviewCurrentItem(inputEvent)
+        self._script.reviewCurrentItem(inputEvent)
         
         # update the currentbookmark
         self._currentbookmarkindex = index
