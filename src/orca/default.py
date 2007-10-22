@@ -2849,7 +2849,7 @@ class Script(script.Script):
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
-                               text.getNSelections())
+                               event.source.queryText().getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << pyatspi.MODIFIER_CONTROL \
                             | 1 << pyatspi.MODIFIER_ALT \
