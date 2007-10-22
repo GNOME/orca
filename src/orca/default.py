@@ -2845,7 +2845,6 @@ class Script(script.Script):
         # text event.
         #
         speakThis = False
-        text = event.source.queryText()
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
