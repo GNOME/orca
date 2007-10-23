@@ -1263,7 +1263,7 @@ class Script(default.Script):
             except NotImplementedError:
                 parentTable = None
 
-            if parent and parentTable():
+            if parent and parentTable:
                 row = parentTable.getRowAtIndex(cell.getIndexInParent())
 
         return row
