@@ -1243,7 +1243,7 @@ class BrailleGenerator:
                     if label == None or len(label) == 0:
                         table = obj.parent.queryTable()
                         n = table.getColumnAtIndex(obj.getIndexInParent())
-                        accheader = table.getColumnHeader(n)
+                        accHeader = table.getColumnHeader(n)
                         regions[0].append(braille.Region(" "))
                         regions[0].append(braille.Region(accHeader.name))
 

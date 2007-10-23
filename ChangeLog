@@ -1,3 +1,9 @@
+2007-10-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/braillegenerator.py:
+          pyatspi migration related, fixed a traceback resulting from a
+          variable name change in _getBrailleRegionsForTableCell().
+
 2007-10-23  Eitan Isaacson  <eitan@ascender.com>
 
 	* test/harness/runall.sh:
