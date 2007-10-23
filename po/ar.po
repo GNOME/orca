@@ -26,7 +26,7 @@ msgstr "قارئ الشاشة و المكبّر أوركا"
 
 #: ../orca.desktop.in.h:2
 msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "اظهر معلومات الشاشة ككلاو أو برايل, أو كبّر الشاشة"
+msgstr "اظهر معلومات الشاشة ككلام أو برايل, أو كبّر الشاشة"
 
 #: ../src/orca/app_gui_prefs.py:89
 #, python-format
