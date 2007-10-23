@@ -6497,16 +6497,9 @@ class Script(default.Script):
         """Deletes all knowledge of a character context for the current
         document frame."""
 
-        # [[[TODO: WDW - for some very odd reason, we end up with
-        # different Python Accessible objects for the same CORBA
-        # object.  atspi.py:makeAccessible attempts to prevent
-        # this from happening, so something strange is happening.
-        # For now, we'll look at the CORBA object, which is the
-        # _acc field of a Python accessible.]]]
-        #
         documentFrame = self.getDocumentFrame()
         try:
-            del self._documentFrameCaretContext[documentFrame._acc]
+            del self._documentFrameCaretContext[hash(documentFrame)]
         except:
             pass
 
@@ -6517,19 +6510,12 @@ class Script(default.Script):
         # [[[TODO: WDW - probably should figure out how to destroy
         # these contexts when a tab is killed.]]]
         #
-        # [[[TODO: WDW - for some very odd reason, we end up with
-        # different Python Accessible objects for the same CORBA
-        # object.  atspi.py:makeAccessible attempts to prevent
-        # this from happening, so something strange is happening.
-        # For now, we'll look at the CORBA object, which is the
-        # _acc field of a Python accessible.]]]
-        #
         documentFrame = self.getDocumentFrame()
 
         if not documentFrame:
             return
 
-        self._documentFrameCaretContext[documentFrame._acc] = \
+        self._documentFrameCaretContext[hash(documentFrame)] = \
             [obj, characterOffset]
 
     def getCaretContext(self, includeNonText=True):
@@ -6541,27 +6527,20 @@ class Script(default.Script):
         # [[[TODO: WDW - probably should figure out how to destroy
         # these contexts when a tab is killed.]]]
         #
-        # [[[TODO: WDW - for some very odd reason, we end up with
-        # different Python Accessible objects for the same CORBA
-        # object.  atspi.py:makeAccessible attempts to prevent
-        # this from happening, so something strange is happening.
-        # For now, we'll look at the CORBA object, which is the
-        # _acc field of a Python accessible.]]]
-        #
         documentFrame = self.getDocumentFrame()
 
         if not documentFrame:
             return [None, -1]
 
         try:
-            return self._documentFrameCaretContext[documentFrame._acc]
+            return self._documentFrameCaretContext[hash(documentFrame)]
         except:
-            self._documentFrameCaretContext[documentFrame._acc] = \
+            self._documentFrameCaretContext[hash(documentFrame)] = \
                 self.findNextCaretInOrder(None,
                                           -1,
                                           includeNonText)
 
-        return self._documentFrameCaretContext[documentFrame._acc]
+        return self._documentFrameCaretContext[hash(documentFrame)]
 
     def getCharacterAtOffset(self, obj, characterOffset):
         """Returns the character at the given characterOffset in the

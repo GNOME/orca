@@ -1,3 +1,9 @@
+2007-10-22  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/Gecko.py:
+          pyatspi migration related, fixed bug #489405, Address _acc issue 
+          in Gecko.
+
 2007-10-22  Eitan Isaacson  <eitan@ascender.com>
 
         * src/tools/*:
