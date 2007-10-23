@@ -1,5 +1,11 @@
 2007-10-23  Scott Haeger <scott@bashautomation.com>
         
+        * src/orca/scripts/gnome-mud.py:
+          pyatspi migration related, fixed split string at line 116 in 
+          gnome-mud.py.
+
+2007-10-23  Scott Haeger <scott@bashautomation.com>
+        
         * src/orca/braillegenerator.py:
           pyatspi migration related, added additional exception handling
           (AttributeError) to braillegenerator.getBrailleContext().  

@@ -113,8 +113,8 @@ class Script(default.Script):
         self.inputEventHandlers["readPreviousMessageHandler"] = \
             input_event.InputEventHandler(
                 Script.readPreviousMessage,
-                _("Read the latest n messages in the incoming messages text \
-                    area."))
+                _('Read the latest n messages in the incoming messages text '
+                  'area.'))
 
     def getKeyBindings(self):
 
