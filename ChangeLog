@@ -1,4 +1,10 @@
-2007-10-22  Scott Haeger <scott@bashautomation.com>
+2007-10-23  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/braillegenerator.py:
+          pyatspi migration related, added additional exception handling
+          (AttributeError) to braillegenerator.getBrailleContext().  
+
+2007-10-23  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/Gecko.py:
           pyatspi migration related, fixed bug #489405, Address _acc issue 

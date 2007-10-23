@@ -1677,7 +1677,7 @@ class BrailleGenerator:
         parent = obj.parent
         try:
             table = parent.queryTable()
-        except NotImplementedError:
+        except (NotImplementedError, AttributeError):
             table = None
         if parent and table:
             row = table.getRowAtIndex(obj.getIndexInParent())
