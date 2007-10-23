@@ -1,3 +1,12 @@
+2007-10-23  Eitan Isaacson  <eitan@ascender.com>
+
+	* test/harness/runall.sh:
+	  test/harness/utils.py:
+	  Add environment variable HARNESS_ASSERT. When set to zero, don't
+	  waste time on assertions. HARNESS_ASSERT is zero in profile and
+	  coverage mode.
+
+
 2007-10-23  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/scripts/gnome-mud.py:

@@ -17,6 +17,7 @@ htmlURLPrefix = "file://" + htmlDir + "/"
 
 from macaroon.playback import *
 
+enable_assert = environ.get('HARNESS_ASSERT', 1)
 errFilename = environ.get('HARNESS_ERR', None)
 outFilename = environ.get('HARNESS_OUT', None)
 
@@ -38,7 +39,10 @@ class StartRecordingAction(AtomicAction):
     can later obtain and use in an assertion (see AssertPresentationAction)'''
 
     def __init__(self):
-        AtomicAction.__init__(self, 1000, self._startRecording)
+        if enable_assert:
+            AtomicAction.__init__(self, 1000, self._startRecording)
+        else:
+            AtomicAction.__init__(self, 0, lambda x: None)
 
     def _startRecording(self):
         import sys, urllib
@@ -76,12 +80,15 @@ class AssertPresentationAction(AtomicAction):
         # [[[WDW: the pause is to wait for Orca to process an event.
         # Probably should think of a better way to do this.]]]
         #
-        AtomicAction.__init__(self, 1000, self._stopRecording)
-        self._name = sys.argv[0] + ":" + name
-        self._expectedResults = expectedResults
-        self._assertionPredicate = assertionPredicate
-        AssertPresentationAction.totalCount += 1
-        self._num = AssertPresentationAction.totalCount
+        if enable_assert:
+            AtomicAction.__init__(self, 1000, self._stopRecording)
+            self._name = sys.argv[0] + ":" + name
+            self._expectedResults = expectedResults
+            self._assertionPredicate = assertionPredicate
+            AssertPresentationAction.totalCount += 1
+            self._num = AssertPresentationAction.totalCount
+        else:
+            AtomicAction.__init__(self, 0, lambda x: None)
 
     def _stopRecording(self):
         import sys, urllib

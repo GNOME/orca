@@ -90,6 +90,7 @@ process_cl "${@}"
 if [ "$coverageMode" -eq 1 ]
 then
     runOrcaOnce=1
+    export HARNESS_ASSERT=0
     echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
     mkdir -p $coverageDir
@@ -103,9 +104,10 @@ fi
 if [ "$profileMode" -eq 1 ]
 then
     runOrcaOnce=1
+    export HARNESS_ASSERT=0
     echo generating profile information...
-    cp user-settings.py.in user-settings.py
-    python runprofiler.py&
+    cp $harnessDir/user-settings.py.in user-settings.py
+    python $harnessDir/runprofiler.py&
     profiler_pid=$!
     sleep 10
 fi
