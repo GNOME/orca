@@ -446,7 +446,7 @@ class Text(Region):
         indicateAttr = (attrIndicator != settings.TEXT_ATTR_BRAILLE_NONE)
         indicateSel = (selIndicator != settings.BRAILLE_SEL_NONE)
 
-        if indicateAttr:
+        if indicateAttr and settings.enabledBrailledTextAttributes:
             # Identify what attributes the user cares about.  Also get the
             # default attributes for the text object because those attributes
             # may not be included as attributes for the character.
