@@ -392,9 +392,12 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
-            utterances.extend(
-                self._getSpeechForObjectRole(
-                   obj, pyatspi.ROLE_CHECK_BOX))
+            if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+                utterances.extend(
+                  self._getSpeechForObjectRole(
+                    obj, pyatspi.ROLE_CHECK_BOX))
+            else:
+                utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:

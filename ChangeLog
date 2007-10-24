@@ -1,5 +1,8 @@
 2007-10-24  Eitan Isaacson  <eitan@ascender.com>
 
+	* src/orca/speechgenerator.py
+	  Check menu items now get spoken as items and not as boxes.
+
 	* src/orca/default.py: 
 	  In isDesiredFocusedItem() allow the list of roles to be a hybrid
 	  of role names and role enums.
