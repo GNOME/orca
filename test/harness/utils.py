@@ -17,7 +17,8 @@ htmlURLPrefix = "file://" + htmlDir + "/"
 
 from macaroon.playback import *
 
-enable_assert = environ.get('HARNESS_ASSERT', 1)
+enable_assert = \
+    environ.get('HARNESS_ASSERT', 'yes') in ('yes', 'true', 'y', '1', 1)
 errFilename = environ.get('HARNESS_ERR', None)
 outFilename = environ.get('HARNESS_OUT', None)
 

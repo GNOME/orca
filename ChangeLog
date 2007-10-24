@@ -1,3 +1,8 @@
+2007-10-23  Eitan Isaacson  <eitan@ascender.com>
+
+	* test/harness/utils.py:
+	  Fixed boolean evaluation of HARNESS_ASSERT
+	
 2007-10-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/braille.py:
@@ -22,7 +27,6 @@
 	  Add environment variable HARNESS_ASSERT. When set to zero, don't
 	  waste time on assertions. HARNESS_ASSERT is zero in profile and
 	  coverage mode.
-
 
 2007-10-23  Scott Haeger <scott@bashautomation.com>
         
