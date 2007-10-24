@@ -1117,7 +1117,7 @@ class Script(default.Script):
             found = False
 
             for child in calendarView:
-                if (child.getRole() == rolenames.ROLE_CALENDAR_EVENT):
+                if (child.getRoleName() == rolenames.ROLE_CALENDAR_EVENT):
                     apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:

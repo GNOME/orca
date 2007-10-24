@@ -1,3 +1,14 @@
+2007-10-24  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/default.py: 
+	  In isDesiredFocusedItem() allow the list of roles to be a hybrid
+	  of role names and role enums.
+	* src/orca/rolenames.py: 
+	  In the different getSpeech/getBraille look for a string role as
+	  a fallback.
+	* src/orca/scripts/Evolution.py: 
+	  On Evolution specific roles use getRoleName()
+
 2007-10-24  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/flat_review.py:

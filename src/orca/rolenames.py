@@ -1202,8 +1202,11 @@ def getSpeechForRoleName(obj, role=None):
           and (obj.childCount > 0):
         role = ROLE_MENU
 
-    if rolenames.has_key(role):
-        return rolenames[role].speech
+    # If the enum is not in the dictionary, check by name.
+    role_entry = \
+        rolenames.get(role) or rolenames.get(obj.getRoleName())
+    if role_entry:
+        return role_entry.speech
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
         localizedRoleName = obj.getLocalizedRoleName()
@@ -1231,8 +1234,11 @@ def getShortBrailleForRoleName(obj, role=None):
           and (obj.childCount > 0):
         role = ROLE_MENU
 
-    if rolenames.has_key(role):
-        return rolenames[role].brailleShort
+    # If the enum is not in the dictionary, check by name.
+    role_entry = \
+        rolenames.get(role) or rolenames.get(obj.getRoleName())
+    if role_entry:
+        return role_entry.brailleShort
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
         localizedRoleName = obj.getLocalizedRoleName()
@@ -1260,8 +1266,11 @@ def getLongBrailleForRoleName(obj, role=None):
           and (obj.childCount > 0):
         role = ROLE_MENU
 
-    if rolenames.has_key(role):
-        return rolenames[role].brailleLong
+    # If the enum is not in the dictionary, check by name.
+    role_entry = \
+        rolenames.get(role) or rolenames.get(obj.getRoleName())
+    if role_entry:
+        return role_entry.brailleLong
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
         localizedRoleName = obj.getLocalizedRoleName()

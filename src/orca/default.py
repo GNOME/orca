@@ -4822,7 +4822,13 @@ class Script(script.Script):
         """
         current = obj
         for role in rolesList:
-            if (current == None) or (current.getRole() != role):
+
+            if isinstance(role, str):
+                current_role = current.getRoleName()
+            else:
+                current_role = current.getRole()
+
+            if current is None or current_role != role:
                 return False
             current = current.parent
 
