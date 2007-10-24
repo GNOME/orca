@@ -25,11 +25,12 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
-import orca.rolenames as rolenames
 import orca.orca_state as orca_state
 import orca.speech as speech
 
@@ -157,12 +158,12 @@ class Script(default.Script):
 
     def onTextInserted(self, event):
 
-        rolesList = [rolenames.ROLE_TERMINAL,
-                     rolenames.ROLE_FILLER]
         #Whenever a new text is inserted in the incoming message text area,
         #We want to speak and add it to the ringList structure only those lines
         #that contain some text and if the application is the current
         #locusOfFocus. 
+        rolesList = [pyatspi.ROLE_TERMINAL,
+                     pyatspi.ROLE_FILLER]
         if self.isDesiredFocusedItem(event.source, rolesList):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
@@ -174,6 +175,5 @@ class Script(default.Script):
                 if event.source.getApplication() == \
                    orca_state.locusOfFocus.getApplication():
                     speech.speak(message)
-
         else:
             default.Script.onTextInserted(self, event)
