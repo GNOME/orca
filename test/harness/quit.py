@@ -2,7 +2,7 @@
 
 """Plays Insert+q and then Alt+q to quit Orca."""
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
 
 sequence = MacroSequence()
 

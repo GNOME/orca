@@ -1,5 +1,10 @@
 2007-10-24  Willie Walker <william.walker@sun.com>
 
+        * test/harness/quit.py:
+          Eliminate deprecation warnings.
+
+2007-10-24  Willie Walker <william.walker@sun.com>
+
         * src/orca/orca.py:
           src/orca/default.py:
           Fix for bug #489801 - Remove record keystrokes option.
