@@ -979,18 +979,23 @@ class Context:
             zone = StateZone(accessible,
                              extents.x, extents.y, 1, extents.height)
 
-        elif role == pyatspi.ROLE_TABLE_CELL \
-            and accessible.queryAction():
+        elif role == pyatspi.ROLE_TABLE_CELL:
             # Handle table cells that act like check boxes.
             #
-            action = accessible.queryAction()
-            hasToggle = False
-            for i in range(0, action.nActions):
-                if action.getName(i) == "toggle":
-                    hasToggle = True
-                    break
-            if hasToggle:
-                self._insertStateZone(zones, accessible, pyatspi.ROLE_CHECK_BOX)
+            try:
+                action = accessible.queryAction()
+            except NotImplementedError:
+                action = None
+                
+            if action:
+                hasToggle = False
+                for i in range(0, action.nActions):
+                    if action.getName(i) == "toggle":
+                        hasToggle = True
+                        break
+                if hasToggle:
+                    self._insertStateZone(zones, accessible, 
+                                          pyatspi.ROLE_CHECK_BOX)
 
         if zone:
             if stateOnLeft:

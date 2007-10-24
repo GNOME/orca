@@ -1,3 +1,8 @@
+2007-10-24  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/flat_review.py:
+          pyatspi migration related, wrapped queryAction() in try/except.
+
 2007-10-24  Willie Walker <william.walker@sun.com>
 
         * test/harness/quit.py:
