@@ -603,11 +603,6 @@ class Script(script.Script):
                 orca.quitOrca,
                 _("Quits Orca"))
 
-        self.inputEventHandlers["keystrokeRecordingHandler"] = \
-            input_event.InputEventHandler(
-                orca.toggleKeystrokeRecording,
-                "Toggles keystroke recording on and off.")
-
         self.inputEventHandlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 orca._showPreferencesGUI,
@@ -1317,13 +1312,6 @@ class Script(script.Script):
                 orcaModMask,
                 orcaModMask,
                 self.inputEventHandlers["shutdownHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Pause",
-                0,
-                0,
-                self.inputEventHandlers["keystrokeRecordingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2749,13 +2737,16 @@ class Script(script.Script):
             return
 
         keyString = orca_state.lastNonModifierKeyEvent.event_string
+        controlPressed = orca_state.lastInputEvent.modifiers \
+                         & (1 << pyatspi.MODIFIER_CONTROL)
         text = event.source.queryText()
         if keyString == "BackSpace":
             # Speak the character that has just been deleted.
             #
             character = event.any_data
 
-        elif keyString == "Delete":
+        elif (keyString == "Delete") \
+             or (keyString == "D" and controlPressed):
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #

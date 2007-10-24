@@ -262,102 +262,6 @@ def _onMouseButton(e):
 
 ########################################################################
 #                                                                      #
-# Keyboard Event Recording Support                                     #
-#                                                                      #
-########################################################################
-
-_recordingKeystrokes = False
-_keystrokesFile = None
-
-def _closeKeystrokeWindowAndRecord(entry, window):
-    global _keystrokesFile
-    window.destroy()
-    entry_text = entry.get_text()
-    _keystrokesFile = open(entry_text, 'w')
-
-def _closeKeystrokeWindowAndCancel(window):
-    global _recordingKeystrokes
-    window.destroy()
-    _recordingKeystrokes = False
-
-def toggleKeystrokeRecording(script=None, inputEvent=None):
-    """Toggles the recording of keystrokes on and off.  When the
-    user presses the magic key (Pause), Orca will pop up a window
-    requesting a filename.  When the user presses the close button,
-    Orca will start recording keystrokes to the file and will continue
-    recording them until the user presses the magic key again.
-
-    This functionality is used primarily to help gather keystroke
-    information for regression testing purposes.  The keystrokes are
-    recorded in such a way that they can be played back via the
-    src/tools/play_keystrokes.py utility.
-
-    Arguments:
-    - inputEvent: the key event (if any) which caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-    global _recordingKeystrokes
-    global _keystrokesFile
-
-    if _recordingKeystrokes:
-        # If the filename entry window is still up, we don't have a file
-        # yet.
-        #
-        if _keystrokesFile:
-            _keystrokesFile.close()
-            _keystrokesFile = None
-            _recordingKeystrokes = False
-    else:
-        _recordingKeystrokes = True
-        window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        window.set_title("Keystroke Filename")
-
-        vbox = gtk.VBox(False, 0)
-        window.add(vbox)
-        vbox.show()
-
-        entry = gtk.Entry()
-        entry.set_max_length(50)
-        entry.set_editable(True)
-        entry.set_text("keystrokes.txt")
-        entry.select_region(0, len(entry.get_text()))
-        # For now, do not allow "Return" to close the window - the reason
-        # for this is that the key press closes the window, and the key
-        # release will end up getting recorded.
-        #
-        #entry.connect("activate", _closeKeystrokeWindow, window)
-        vbox.pack_start(entry, True, True, 0)
-        entry.show()
-
-        hbox = gtk.HBox(False, 0)
-        vbox.add(hbox)
-        hbox.show()
-
-        ok = gtk.Button(stock=gtk.STOCK_OK)
-        ok.connect("clicked", lambda w: _closeKeystrokeWindowAndRecord(\
-            entry, \
-            window))
-
-        cancel = gtk.Button(stock=gtk.STOCK_CANCEL)
-        cancel.connect("clicked", lambda w: _closeKeystrokeWindowAndCancel(\
-            window))
-
-        vbox.pack_start(cancel, True, True, 0)
-        vbox.pack_start(ok, True, True, 0)
-
-        ok.set_flags(gtk.CAN_DEFAULT)
-        ok.grab_default()
-        ok.show()
-        cancel.show()
-
-        window.set_modal(True)
-        window.show()
-    return True
-
-########################################################################
-#                                                                      #
 # DEBUG support.                                                       #
 #                                                                      #
 ########################################################################
@@ -660,10 +564,6 @@ def _processKeyboardEvent(event):
     # characters to their upper case ASCII equivalent.
     #
     string = keyEventToString(event)
-    if _recordingKeystrokes and _keystrokesFile \
-       and (event.event_string != "Pause") \
-       and (event.event_string != "F21"):
-        _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
     keyboardEvent = KeyboardEvent(event)
