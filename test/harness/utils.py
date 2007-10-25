@@ -43,7 +43,7 @@ class StartRecordingAction(AtomicAction):
         if enable_assert:
             AtomicAction.__init__(self, 1000, self._startRecording)
         else:
-            AtomicAction.__init__(self, 0, lambda x: None)
+            AtomicAction.__init__(self, 0, lambda: None)
 
     def _startRecording(self):
         import sys, urllib
@@ -91,7 +91,7 @@ class AssertPresentationAction(AtomicAction):
             AssertPresentationAction.totalCount += 1
             self._num = AssertPresentationAction.totalCount
         else:
-            AtomicAction.__init__(self, 0, lambda x: None)
+            AtomicAction.__init__(self, 0, lambda: None)
 
     def _stopRecording(self):
         import sys, urllib
