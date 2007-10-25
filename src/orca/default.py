@@ -2722,6 +2722,17 @@ class Script(script.Script):
         if event.source.getRole() == pyatspi.ROLE_SLIDER:
             return
 
+        # [[[NOTE: WDW - if we handle events synchronously, we'll
+        # be looking at the text object *before* the text was
+        # actually removed from the object.  If we handle events
+        # asynchronously, we'll be looking at the text object
+        # *after* the text was removed.  The importance of knowing
+        # this is that the output will differ depending upon how
+        # orca.settings.asyncMode has been set.  For example, the
+        # regression tests run in synchronous mode, so the output
+        # they see will not be the same as what the user normally
+        # experiences.]]]
+
         self.updateBraille(event.source)
 
         # The any_data member of the event object has the deleted text in

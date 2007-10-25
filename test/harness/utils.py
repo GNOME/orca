@@ -70,6 +70,8 @@ class AssertPresentationAction(AtomicAction):
     of StartRecordingAction and apply an assertion predicate.'''
 
     totalCount = 0
+    totalSucceed = 0
+    totalFail = 0
 
     def __init__(self, name, expectedResults, 
                  assertionPredicate=assertListEquality):
@@ -105,11 +107,13 @@ class AssertPresentationAction(AtomicAction):
 
         results = self._assertionPredicate(result, self._expectedResults)
         if not results:
+            AssertPresentationAction.totalSucceed += 1
             print >> myOut, "Test %d of %d SUCCEEDED: %s" \
                             % (self._num, 
                                AssertPresentationAction.totalCount, 
                                self._name)
         else:
+            AssertPresentationAction.totalFail += 1
             print >> myErr, "Test %d of %d FAILED: %s" \
                             % (self._num, 
                                AssertPresentationAction.totalCount, 
@@ -129,3 +133,21 @@ class AssertPresentationAction(AtomicAction):
    
     def __str__(self):
         return 'Assert Presentation Action: %s' % self._name
+
+class AssertionSummaryAction(AtomicAction):
+    '''Output the summary of successes and failures of 
+    AssertPresentationAction assertions.'''
+
+    def __init__(self):
+        AtomicAction.__init__(self, 0, self._printSummary)
+
+    def _printSummary(self):
+        print >> myOut, \
+            "SUMMARY: %d SUCCEEDED and %d FAILED of %d" \
+            % (AssertPresentationAction.totalSucceed,
+               AssertPresentationAction.totalFail,
+               AssertPresentationAction.totalCount)
+
+    def __str__(self):
+        return 'Start Recording Action'
+

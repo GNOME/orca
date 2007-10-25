@@ -1,4 +1,18 @@
-2007-10-24  Scott Haeger <scott@bashautomation.com>
+2007-10-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          Add comment to onTextDeleted regarding async vs. sync mode
+          behavior that we really cannot avoid.
+
+        * test/harness/utils.py:
+          Add AssertionSummaryAction to provide us with a summary of
+          assertion results at the end of test.
+
+        * test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
+          New test for navigating text via caret navigation and flat
+          review.
+
+2007-10-25  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/default.py:
           pyatspi migration related, changed getValue() to queryValue() in
