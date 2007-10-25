@@ -630,66 +630,6 @@ class WhereAmI:
 
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contain(pyatspi.STATE_EXPANDED):
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                text = _("expanded")
-            else:
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                text = _("collapsed")
-            utterances.append(text)
-
-        level = self._script.getNodeLevel(orca_state.locusOfFocus)
-        if level >= 0:
-            # Translators: this represents the depth of a node in a tree
-            # view (i.e., how many ancestors a node has).
-            #
-            utterances.append(_("tree level %d") % (level + 1))
-
-        debug.println(self._debugLevel, "list item utterances=%s" % \
-                      utterances)
-        speech.speakUtterances(utterances)
-
-    def _speakListItem(self, obj, doubleClick):
-        """List items should be treated like tree cells:
-
-        1. label, if any
-        2. role
-        3. name
-        4. relative position
-        5. if expandable/collapsible: expanded/collapsed
-        6. if applicable, the level
-        """
-
-        utterances = []
-
-        text = self._getObjLabel(obj)
-        utterances.append(text)
-
-        text = rolenames.getSpeechForRoleName(obj)
-        utterances.append(text)
-
-        text = self._getObjName(obj)
-        utterances.append(text)
-
-        parent = obj.parent
-        relationset = obj.getRelationSet()
-        for relation in relationset:
-            if relation.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF:
-                parent = relation.getTarget(0)
-                break
-
-        name = self._getObjName(obj)
-        text = self._getPositionInList(parent, name)
-        utterances.append(text)
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.

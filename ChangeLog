@@ -1,3 +1,9 @@
+2007-10-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py:
+          Fix for bug #489797 - _speakListItem defined twice in 
+          where_am_i.py
+
 2007-10-24  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/gnome-mud.py:
