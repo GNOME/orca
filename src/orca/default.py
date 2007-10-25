@@ -1982,7 +1982,7 @@ class Script(script.Script):
 
                 lastProgressBarTime = self.lastProgressBarTime[obj]
                 lastProgressBarValue = self.lastProgressBarValue[obj]
-                value = obj.getValue()
+                value = obj.queryValue()
                 percentValue = int((value.currentValue / \
                     (value.maximumValue - value.minimumValue)) * 100.0)
 

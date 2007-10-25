@@ -1,3 +1,9 @@
+2007-10-24  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/default.py:
+          pyatspi migration related, changed getValue() to queryValue() in
+          default.handleProgressBarUpdate().
+
 2007-10-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py:
