@@ -1,3 +1,9 @@
+2007-10-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          Moved null check in isDesiredFocusItem() to the top of the
+          loop.
+
 2007-10-25  Eitan Isaacson  <eitan@ascender.com>
 
 	* test/harness/utils.py: 
