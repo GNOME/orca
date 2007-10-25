@@ -36,7 +36,9 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("This is only a test."))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(TypeAction("Please do not panic."))
+sequence.append(TypeAction("PLEASE DO NOT PANIC."))
+sequence.append(KeyComboAction("Return"))
+sequence.append(TypeAction(" "))
 sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("I'm just going to keep on typing."))
 sequence.append(KeyComboAction("Return"))
@@ -341,11 +343,133 @@ sequence.append(WaitAction("object:text-caret-moved",
                            pyatspi.ROLE_TEXT,
                            5000))
 sequence.append(utils.AssertPresentationAction(
-    "Right to beginning of 'Please'",
-    ["BRAILLE LINE:  'Please do not panic. $l'",
-     "     VISIBLE:  'Please do not panic. $l', cursor=1",
+    "Right to beginning of 'PLEASE'",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'P'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Subtract"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_Subtract to enter flat review",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_8"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_8 to flat review 'PLEASE DO NOT PANIC.'",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_5 to flat review 'PLEASE'",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_2"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_2 to flat review 'P'",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'P'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Down to line with one space",
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: ' '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_8"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_8 to flat review ' '",
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: 'white space'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_5 to flat review ' '",
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: 'white space'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_2"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_2 to flat review ' '",
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: ' '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Back up to 'PLEASE DO NOT PANIC.'",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Right"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Ctrl+Right over PLEASE",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=7",
+     "SPEECH OUTPUT: 'PLEASE '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Left"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Ctrl+Left over PLEASE",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(TypeAction("f"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+f for text attributes",
+    ["SPEECH OUTPUT: 'size 10'",
+     "SPEECH OUTPUT: 'family-name Sans'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -369,9 +493,9 @@ sequence.append(WaitAction("object:text-caret-moved",
                            pyatspi.ROLE_TEXT,
                            5000))
 sequence.append(utils.AssertPresentationAction(
-    "Right to beginning of 'Please' again",
-    ["BRAILLE LINE:  'Please do not panic. $l'",
-     "     VISIBLE:  'Please do not panic. $l', cursor=1",
+    "Right to beginning of 'PLEASE' again",
+    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'P'"]))
 
@@ -891,6 +1015,72 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Preferences'"]))
 
 sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_5 to flat review 'Preferences' accessible",
+    ["SPEECH OUTPUT: 'Preferences menu'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_9"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_9 to flat review end",
+    ["BRAILLE LINE:  'Cursor at row 1 column 5 - 243 chars in document Cursor at row 1 column 5 - 243 chars in document $l'",
+     "     VISIBLE:  't $l', cursor=1",
+     "SPEECH OUTPUT: 'Cursor at row 1 column 5 - 243 chars in document Cursor at row 1 column 5 - 243 chars in document'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_7"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_7 to flat review home",
+    ["BRAILLE LINE:  'File Preferences Help $l'",
+     "     VISIBLE:  'File Preferences Help $l', cursor=1",
+     "SPEECH OUTPUT: 'File Preferences Help'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_6"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_6 to flat review below",
+    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
+     "SPEECH OUTPUT: 'Open'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_4"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_4 to flat review above",
+    ["BRAILLE LINE:  'File Preferences Help $l'",
+     "     VISIBLE:  'File Preferences Help $l', cursor=1",
+     "SPEECH OUTPUT: 'File'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_9"))
+sequence.append(utils.AssertPresentationAction(
+    "KP_9 to flat review next line",
+    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
+     "SPEECH OUTPUT: 'Open not pressed toggle button Quit panel GTK!'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("KP_1"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(utils.AssertPresentationAction(
+    "Insert+KP_1 to flat review end of line",
+    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
+     "     VISIBLE:  'l GTK! $l', cursor=6",
+     "SPEECH OUTPUT: '!'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to exit flat review",
@@ -943,6 +1133,157 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=11"]))
 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift><Control>Page_Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Ctrl+Page_Up to select text to beginning of line",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=1",
+     "SPEECH OUTPUT: 'This '",
+     "SPEECH OUTPUT: 'selected'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift><Control>Page_Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Ctrl+Page_Down to select text to end of line",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=4",
+     "SPEECH OUTPUT: 'Thi'",
+     "SPEECH OUTPUT: 'unselected'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Up to select text",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  a test.  $l'",
+     "     VISIBLE:  ' a test.  $l', cursor=5",
+     "SPEECH OUTPUT: 'est. ",
+     "Thi'",
+     "SPEECH OUTPUT: 'selected'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Down to deselect text",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=4",
+     "SPEECH OUTPUT: 'est. ",
+     "Thi'",
+     "SPEECH OUTPUT: 'unselected'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Page_Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Ctrl+Page_Up to beginning of line",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=1",
+     "SPEECH OUTPUT: 'T'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Page_Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Ctrl+Page_Down to end of line",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=4",
+     "SPEECH OUTPUT: 'This is only '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Page_Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Page up",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  a test.  $l'",
+     "     VISIBLE:  ' a test.  $l', cursor=1",
+     "SPEECH OUTPUT: ' a test. '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Page_Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Page down",
+    ["BRAILLE LINE:  'I'm just going to keep on typing. $l'",
+     "     VISIBLE:  'I'm just going to keep on typing', cursor=1",
+     "SPEECH OUTPUT: 'I'm just going to keep on typing.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Page_Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Page_Up to select text",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  a test.  $l'",
+     "     VISIBLE:  ' a test.  $l', cursor=1",
+     "SPEECH OUTPUT: ' a test. '",
+     "SPEECH OUTPUT: 'page selected to cursor position'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Page_Down"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Page_Down to deselect text",
+    ["BRAILLE LINE:  'I'm just going to keep on typing. $l'",
+     "     VISIBLE:  'I'm just going to keep on typing', cursor=1",
+     "SPEECH OUTPUT: 'I'm just going to keep on typing.'",
+     "SPEECH OUTPUT: 'page selected from cursor position'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Page_Up"))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Page_Up",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  a test.  $l'",
+     "     VISIBLE:  ' a test.  $l', cursor=1",
+     "SPEECH OUTPUT: ' a test. '"]))
+
 ########################################################################
 # Do a SayAll
 #
@@ -955,12 +1296,14 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
-    ["SPEECH OUTPUT: ' ",
+    ["SPEECH OUTPUT: ' a test.'",
+     "SPEECH OUTPUT: ' ",
      "This is only '",
      "SPEECH OUTPUT: '",
      "",
-     "Please do not panic.'",
+     "PLEASE DO NOT PANIC.'",
      "SPEECH OUTPUT: '",
+     " ",
      "I'm just going to keep on typing.'",
      "SPEECH OUTPUT: '",
      "Then, I'm going to type some'",
