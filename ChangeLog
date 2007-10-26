@@ -1,3 +1,8 @@
+2007-10-26  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gnome-appearance-properties/font-preferences.py:
+          New test script based upon work from Tim Miao (Thanks Tim!)
+
 2007-10-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/Evolution.py:
