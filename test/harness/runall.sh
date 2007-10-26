@@ -20,7 +20,7 @@ resultsDir=$harnessDir/../results
 # OpenOffice 2.2 executables are installed in
 # /usr/lib/openoffice/program
 #
-export PATH=$PATH:/usr/lib/openoffice/program
+export PATH=$harnessDir/bin:$PATH:/usr/lib/openoffice/program
 
 coverageMode=0
 profileMode=0
