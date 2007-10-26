@@ -5351,12 +5351,15 @@ class Script(script.Script):
         Returns: a list of all the child nodes
         """
 
-        if not obj or not obj.parent \
-           or not obj.getState().contains(pyatspi.STATE_EXPANDED):
+        try:
+            table = obj.parent.queryTable()
+        except:
             return []
+        else:
+            if not obj.getState().contains(pyatspi.STATE_EXPANDED):
+                return []
 
-        nodes = []
-        table = obj.parent.queryTable()
+        nodes = []        
         row = table.getRowAtIndex(obj.getIndexInParent())
         col = table.getColumnAtIndex(obj.getIndexInParent())
         nodeLevel = self.getNodeLevel(obj)
