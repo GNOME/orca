@@ -1,3 +1,10 @@
+2007-10-26  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/focus_tracking_presenter.py:
+	  src/orca/orca.py:
+	  Got rid of _non_existent() calls, they were a bad idea.
+	  Put try/except handlers instead.
+
 2007-10-26  Scott Haeger <scott@bashautomation.com>
         
         * test/keystrokes/firefox/uiuc_button.py:

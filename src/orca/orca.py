@@ -160,21 +160,29 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         return
 
     oldLocusOfFocus = orca_state.locusOfFocus
-    if oldLocusOfFocus and oldLocusOfFocus._non_existent():
+    try:
+        # Just to see if we have a valid object.
+        oldLocusOfFocus.getRole()
+    except:
+        # Either it's None or it's an invalid remote object.
         oldLocusOfFocus = None
 
     orca_state.locusOfFocus = obj
-    if orca_state.locusOfFocus and orca_state.locusOfFocus._non_existent():
-        orca_state.locusOfFocus = None
-
-    if orca_state.locusOfFocus:
-        appname = ""
+    try:
         app = orca_state.locusOfFocus.getApplication()
+    except:
+        orca_state.locusOfFocus = None
+        if event:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS: None event='%s'" % event.type)
+        else:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS: None event=None")
+    else:
         if not app:
             appname = "None"
         else:
             appname = "'" + app.name + "'"
-
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
                       % (appname,
@@ -187,13 +195,6 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         else:
             debug.println(debug.LEVEL_FINE,
                           "                event=None")
-    else:
-        if event:
-            debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS: None event='%s'" % event.type)
-        else:
-            debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS: None event=None")
 
     if notifyPresentationManager and _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\

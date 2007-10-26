@@ -676,7 +676,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             #
             
             event = e
-            if not event.source or event.source._non_existent():
+            if not event.source:
                 debug.println(debug.LEVEL_FINEST,
                       "---------> IGNORING INVALID EVENT %s" % e.type)
                 if settings.debugEventQueue:
