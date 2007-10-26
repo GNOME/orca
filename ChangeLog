@@ -1,3 +1,9 @@
+2007-10-26  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/flat_review.py:
+          Fix for bug #490623, work around for flat_review __cmp__ issue for 
+          OpenOffice.
+
 2007-10-26  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py: src/orca/debug.py:

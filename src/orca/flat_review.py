@@ -1312,15 +1312,18 @@ class Context:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
                                   "WARNING CHILD == PARENT!!!")
+                    continue
                 elif not child:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
                                   "WARNING CHILD IS NONE!!!")
+                    continue
                 elif child.parent != root:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
                                   "WARNING CHILD.PARENT != PARENT!!!")
-                elif self.script.pursueForFlatReview(child):
+                                  
+                if self.script.pursueForFlatReview(child):
                     zones.extend(self.getShowingZones(child))
 
         return zones
