@@ -1,5 +1,12 @@
 2007-10-26  Scott Haeger <scott@bashautomation.com>
         
+        * test/keystrokes/firefox/uiuc_button.py:
+          test/keystrokes/firefox/uiuc_radiobutton.py:
+          removed uiuc_button.py due to obsolete example.  Updated 
+          uiuc_radiobutton.py.
+
+2007-10-26  Scott Haeger <scott@bashautomation.com>
+        
         * src/orca/flat_review.py:
           Fix for bug #490623, work around for flat_review __cmp__ issue for 
           OpenOffice.

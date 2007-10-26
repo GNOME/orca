@@ -32,18 +32,18 @@ sequence.append(WaitForFocus("application/xhtml+xml: Radio Example 1", acc_role=
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'Lunch Options panel'
 #
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Lunch Options", acc_role=pyatspi.ROLE_PANEL))
+#sequence.append(KeyComboAction("Tab"))
+#sequence.append(WaitForFocus("Lunch Options", acc_role=pyatspi.ROLE_PANEL))
 
 ########################################################################
 # Move to the first radio button.
 #
-# BRAILLE LINE:  '&=y Thai RadioButton'
-#      VISIBLE:  '&=y Thai RadioButton', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Thai selected radio button'
+# BRAILLE LINE:  '& y Thai RadioButton'
+#     VISIBLE:  '& y Thai RadioButton', cursor=1
+# SPEECH OUTPUT: 'Lunch Options panel'
+# SPEECH OUTPUT: 'Thai not selected radio button'
 #
-sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Thai", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 
 ########################################################################
