@@ -5614,7 +5614,7 @@ class Script(script.Script):
 
         indent = ""
         for ancestor in ancestorList:
-            print indent + "+-", ancestor
+            print indent + "+-", debug.getAccessibleDetails(ancestor)
             indent += "  "
 
     def printHierarchy(self, root, ooi, indent="",
@@ -5633,9 +5633,9 @@ class Script(script.Script):
             return
 
         if root == ooi:
-            print indent + "(*)", root
+            print indent + "(*)", debug.getAccessibleDetails(root)
         else:
-            print indent + "+-", root
+            print indent + "+-", debug.getAccessibleDetails(root)
 
         rootManagesDescendants = root.getState().contains( \
                                       pyatspi.STATE_MANAGES_DESCENDANTS)

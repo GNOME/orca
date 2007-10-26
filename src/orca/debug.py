@@ -206,9 +206,9 @@ def printDetails(level, indent, accessible, includeApp=True):
     """
 
     if level >= debugLevel and accessible:
-        println(level, _accToString(accessible, indent, includeApp))
+        println(level, getAccessibleDetails(accessible, indent, includeApp))
 
-def _accToString(acc, indent="", includeApp=True):
+def getAccessibleDetails(acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
 
@@ -221,8 +221,7 @@ def _accToString(acc, indent="", includeApp=True):
     if includeApp:
         app = acc.getApplication()
         if app:
-            string = indent + "app.name='%s' %s" \
-                     % (app.name, ' '*(18-len(app.name)))
+            string = indent + "app.name='%s' " % app.name
         else:
             string = indent + "app=None "
     else:

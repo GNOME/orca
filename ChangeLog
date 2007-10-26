@@ -1,5 +1,13 @@
 2007-10-26  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py: src/orca/debug.py:
+          Fix for bug #489986 - printAncestry() and printHierarchy() 
+          don't provide all the useful information that they used to.
+          Renamed debug._accToString to getAccessibleDetails and
+          used it in the two given methods.
+
+2007-10-26  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/gnome-appearance-properties/font-preferences.py:
           New test script based upon work from Tim Miao (Thanks Tim!)
 
