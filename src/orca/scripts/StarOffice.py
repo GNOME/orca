@@ -1172,7 +1172,106 @@ class Script(default.Script):
                     found = True
                 current = current.parent
 
-        return found
+        return found     
+
+    def isDesiredFocusedItem(self, obj, rolesList):
+        """Called to determine if the given object and it's hierarchy of
+           parent objects, each have the desired roles.
+
+           This is an override because of bugs in OOo's child/parent symmetry.
+           See Script._getParent().
+
+        Arguments:
+        - obj: the accessible object to check.
+        - rolesList: the list of desired roles for the components and the
+          hierarchy of its parents.
+
+        Returns True if all roles match.
+        """
+        current = obj
+        for role in rolesList:
+            if current is None:
+                return False
+
+            if isinstance(role, str):
+                current_role = current.getRoleName()
+            else:
+                current_role = current.getRole()
+
+            if current_role != role:
+                return False
+            
+            current = self._getParent(current)
+
+        return True   
+
+    def printHierarchy(self, root, ooi, indent="",
+                       onlyShowing=True, omitManaged=True):
+        """Prints the accessible hierarchy of all children
+
+        This is an override because of bugs in OOo's child/parent symmetry.
+        See Script._getParent().
+
+        Arguments:
+        -indent:      Indentation string
+        -root:        Accessible where to start
+        -ooi:         Accessible object of interest
+        -onlyShowing: If True, only show children painted on the screen
+        -omitManaged: If True, omit children that are managed descendants
+        """
+
+        if not root:
+            return
+
+        if root == ooi:
+            print indent + "(*)", debug.getAccessibleDetails(root)
+        else:
+            print indent + "+-", debug.getAccessibleDetails(root)
+
+        rootManagesDescendants = root.getState().contains( \
+                                      pyatspi.STATE_MANAGES_DESCENDANTS)
+
+        for child in root:
+            if child == root:
+                print indent + "  " + "WARNING CHILD == PARENT!!!"
+            elif not child:
+                print indent + "  " + "WARNING CHILD IS NONE!!!"
+            elif self._getParent(child) != root:
+                print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+            else:
+                paint = (not onlyShowing) or (onlyShowing and \
+                         child.getState().contains(pyatspi.STATE_SHOWING))
+                paint = paint \
+                        and ((not omitManaged) \
+                             or (omitManaged and not rootManagesDescendants))
+
+                if paint:
+                    self.printHierarchy(child,
+                                        ooi,
+                                        indent + "  ",
+                                        onlyShowing,
+                                        omitManaged)
+
+    def _getParent(self, obj):
+        """This method gets a node's parent will be doubly linked.
+        See bugs:
+        http://www.openoffice.org/issues/show_bug.cgi?id=78117
+        http://bugzilla.gnome.org/show_bug.cgi?id=489490
+        """
+        parent = obj.parent 
+        if -1 in pyatspi.getPath(obj):
+            # If we can't get a path back to the root node, we ran into
+            # the bug.
+            app = obj.getApplication()
+            if app:
+                # Find the proper parent from top-down.
+                parent = \
+                    pyatspi.findDescendant(app, lambda acc: obj in acc)
+            else:
+                debug.println(debug.LEVEL_WARNING,
+                              'Could not find proper parent for %s' % obj)
+        return parent
+
 
     def checkForTableBoundry(self, oldFocus, newFocus):
         """Check to see if we've entered or left a table.

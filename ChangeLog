@@ -1,3 +1,9 @@
+2007-10-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #489490 - Test for OOo Writer bug #413909 not 
+          producing the correct output (fix from Eitan - thanks).
+
 2007-10-26  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/focus_tracking_presenter.py:
