@@ -958,9 +958,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 def value(self):
                     return None
             fe = _FakeEvent()
-            # [[[TODO: eitani - This just unwraps the accessible object, remove
-            # this when it becomes redundant, and make a direct assignment.]]]
-            fe.source   = getattr(win, '_acc', win)
+            fe.source   = win
             fe.type     = "window:activate"
             fe.detail1  = 0
             fe.detail2  = 0

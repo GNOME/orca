@@ -1,3 +1,11 @@
+2007-10-25  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/focus_tracking_presenter.py: 
+	  Removed unwrapping of accessible in _restoreAppStates.
+
+	* src/orca/scripts/notification-daemon.py: 
+	  Ported to pyatspi.
+
 2007-10-25  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/learn_mode.py:

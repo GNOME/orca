@@ -28,7 +28,7 @@ __license__   = "LGPL"
 
 import orca.default as default
 import orca.speech as speech
-import orca.rolenames as rolenames
+import pyatspi
 
 from orca.orca_i18n import _
 
@@ -56,7 +56,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event.
         """
-        a = self.findByRole(event.source, rolenames.ROLE_LABEL)
+        a = self.findByRole(event.source, pyatspi.ROLE_LABEL)
+        print a
         texts = [self.getDisplayedText(acc) for acc in a]
         # Translators: This denotes a notification to the user of some sort.
         #
