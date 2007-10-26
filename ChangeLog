@@ -1,3 +1,9 @@
+2007-10-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/Evolution.py:
+          pyatspi migration: removed two instances of .accessible in
+          textlines().
+
 2007-10-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py:

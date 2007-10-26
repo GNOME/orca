@@ -570,9 +570,9 @@ class Script(default.Script):
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
         while not done:
-            panel = htmlPanel.accessible.getChildAtIndex(i)
+            panel = htmlPanel.getChildAtIndex(i)
             if panel != None:
-                textObj = panel.accessible.getChildAtIndex(0)
+                textObj = panel.getChildAtIndex(0)
                 try:
                     text = textObj.queryText()
                 except NotImplementedError:
