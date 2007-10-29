@@ -1,6 +1,12 @@
 2007-10-28  Willie Walker <william.walker@sun.com>
 
         * configure.in:
+          README:
+          mark as GNOME 2.21.2pre
+
+2007-10-28  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
           docs/pydoc/Makefile.am:
           README:
           NEWS:
