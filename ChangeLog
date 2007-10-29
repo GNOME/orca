@@ -1,3 +1,38 @@
+2007-10-28  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runone.sh:
+          test/harness/runall.sh:
+          test/harness/utils.py:
+          Be a little less verbose in output.
+
+        * test/keystrokes/gtk-demo/role_window.py:
+          test/keystrokes/gtk-demo/role_status_bar.py:
+          test/keystrokes/gtk-demo/role_alert.py:
+          test/keystrokes/gtk-demo/role_combo_box.py:
+          test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_check_menu_item.py:
+          test/keystrokes/gtk-demo/role_label.py:
+          test/keystrokes/gtk-demo/role_check_box.py:
+          test/keystrokes/gtk-demo/role_tear_off_menu_item.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_icon.py:
+          test/keystrokes/gtk-demo/role_radio_button.py:
+          test/keystrokes/gtk-demo/role_combo_box2.py:
+          test/keystrokes/gtk-demo/role_tooltip.py:
+          test/keystrokes/gtk-demo/role_split_pane.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_radio_menu_item.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_spin_button.py:
+          test/keystrokes/gtk-demo/role_menu.py:
+          test/keystrokes/gtk-demo/role_column_header.py:
+          test/keystrokes/gtk-demo/role_accel_label.py:
+          test/keystrokes/gtk-demo/role_text_multiline.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          Add utils.AssertionSummaryAction() calls to end of test.
+
 2007-10-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

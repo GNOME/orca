@@ -43,4 +43,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

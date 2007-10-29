@@ -115,4 +115,6 @@ sequence.append(WaitAction("object:active-descendant-changed",
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

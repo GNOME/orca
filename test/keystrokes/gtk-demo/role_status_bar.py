@@ -62,4 +62,6 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

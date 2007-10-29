@@ -95,7 +95,7 @@ then
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
     mkdir -p $coverageDir
     cp $harnessDir/user-settings.py.in user-settings.py
-    echo $harnessDir/user-settings.py.in
+    #echo $harnessDir/user-settings.py.in
     trace2html.py -o $coverageDir -w orca -r $harnessDir/runorca.py &
     trace_pid=$!
     sleep 10

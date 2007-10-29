@@ -21,7 +21,7 @@ foo=`dirname $0`
 harnessDir=`cd $foo; pwd`
 export PYTHONPATH=$harnessDir:$PYTHONPATH
 
-echo runone.sh: $*
+#echo runone.sh: $*
 
 debugFile=`basename $1 .py`
 
@@ -44,7 +44,7 @@ if [ ! -f $SETTINGS_FILE ]
 then
     SETTINGS_FILE=`dirname $0`/user-settings.py.in
 fi
-echo "Using settings file:" $SETTINGS_FILE
+#echo "Using settings file:" $SETTINGS_FILE
 
 # Set up the logging stuff so we can record what Orca is doing.
 #
@@ -120,7 +120,7 @@ fi
 if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
-    echo starting Orca...
+    #echo starting Orca...
     orca &
     sleep $WAIT_TIME
 fi
@@ -141,7 +141,7 @@ $APP_NAME $ARGS $PARAMS &
 #sleep $WAIT_TIME
 APP_PID=$!
 
-echo $APP_NAME pid $APP_PID
+#echo $APP_NAME pid $APP_PID
 
 # Play the keystrokes.
 #
@@ -154,7 +154,7 @@ python $1
 if [ $orcaRunning -eq 0 ]
 then
     # Terminate Orca
-    echo terminating Orca
+    #echo terminating Orca
     orca --quit > /dev/null 2>&1
 fi
 
@@ -166,11 +166,11 @@ fi
 
 if [ "$APP_NAME" == "firefox" ]
 then
-    echo killing firefox
-    pkill firefox
+    #echo killing firefox
+    pkill firefox > /dev/null 2>&1
     rm -rf $FF_PROFILE_DIR
 else
-    echo killing app $APP_NAME $APP_PID
+    #echo killing app $APP_NAME $APP_PID
     kill -9 $APP_PID > /dev/null 2>&1
 fi
 

@@ -143,10 +143,11 @@ class AssertionSummaryAction(AtomicAction):
 
     def _printSummary(self):
         print >> myOut, \
-            "SUMMARY: %d SUCCEEDED and %d FAILED of %d" \
+            "SUMMARY: %d SUCCEEDED and %d FAILED of %d for %s" \
             % (AssertPresentationAction.totalSucceed,
                AssertPresentationAction.totalFail,
-               AssertPresentationAction.totalCount)
+               AssertPresentationAction.totalCount,
+               sys.argv[0])
 
     def __str__(self):
         return 'Start Recording Action'
