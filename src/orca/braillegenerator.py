@@ -869,6 +869,7 @@ class BrailleGenerator:
             text, self._script.getDisplayedLabel(obj))
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         if obj == orca_state.locusOfFocus:
             text = self._script.appendString(

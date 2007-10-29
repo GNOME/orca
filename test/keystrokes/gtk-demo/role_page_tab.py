@@ -27,21 +27,20 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "General page tab",
-    ["BUG? - should the page tab role be presented in braille?",
-     "BRAILLE LINE:  'Window Printing $l'",
+    ["BRAILLE LINE:  'Window Printing $l'",
      "     VISIBLE:  'Window Printing $l', cursor=16",
      "BRAILLE LINE:  'Window  $l'",
      "     VISIBLE:  'Window  $l', cursor=8",
      "BRAILLE LINE:  'Window  $l'",
      "     VISIBLE:  'Window  $l', cursor=8",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
      "     VISIBLE:  'Printing TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
      "     VISIBLE:  'Print Dialog', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList'",
      "     VISIBLE:  'TabList', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog General'",
-     "     VISIBLE:  'General', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
+     "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Printing'",
      "SPEECH OUTPUT: 'tree level 1'",
@@ -59,9 +58,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "General page tab Where Am I",
-    ["BUG? - should the page tab role be presented in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog General'",
-     "     VISIBLE:  'General', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
+     "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'General page'",
      "SPEECH OUTPUT: 'item 1 of 2'",
@@ -75,9 +73,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab",
-    ["BUG? - should the page tab role be presented in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'",
-     "     VISIBLE:  'Page Setup', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
+     "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Setup page'"]))
 
@@ -89,9 +86,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab Where Am I",
-    ["BUG? - should the page tab role be presented in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup'",
-     "     VISIBLE:  'Page Setup', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
+     "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Page Setup page'",
      "SPEECH OUTPUT: 'item 2 of 2'",
