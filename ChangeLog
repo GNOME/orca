@@ -1,3 +1,8 @@
+2007-10-29  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/orca.py:
+	  Fixed event name "object:children-changed"
+
 2007-10-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braillegenerator.py:

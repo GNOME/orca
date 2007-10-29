@@ -1011,7 +1011,7 @@ def init(registry):
     # Create and load an app's script when it is added to the desktop
     #
     registry.registerEventListener(_onChildrenChanged,
-                                   "object:children-changed:")
+                                   "object:children-changed")
 
     # We also want to stop speech when a mouse button is pressed.
     #
@@ -1099,7 +1099,7 @@ def shutdown(script=None, inputEvent=None):
     # Deregister our event listeners
     #
     pyatspi.Registry.deregisterEventListener(_onChildrenChanged,
-                                             "object:children-changed:")
+                                             "object:children-changed")
     pyatspi.Registry.deregisterEventListener(_onMouseButton,
                                              "mouse:button")
 
