@@ -1,3 +1,91 @@
+2.21.1 - 28-Oct-2007
+
+Things marked with a '+' indicate stuff that is not planned for a Orca
+2.20.x release.  Everything else should appear in a Orca 2.20.x
+release.
+
+General:
+
+* Fix for bug #462984 - Orca failed to detect the resolution of second screen.
+
+* Fix for bug #473699 - Adjust Orca Preferences dialog to
+  speak/braille three components that are multiply labelled.
+
+* Fix for bug #474958 - Orca has no onboard help.
+
+* Fix for bug #483018 - We should remove (or redefine) the orca speech
+  change hotkeys.  Hot keys removed per discussion on Orca user's list.
+
+* Fix for bug #484428 - Orca should not speak role for list items when
+  navigating.
+
+* Fix for bug #484499 - Orca should not braille the node level for
+  every cell in row.
+
+* Fix for bug #489604 - Enabling the attribute indicator but disabling
+  all attributes results in traceback.
+
++ Much work on bug #448848 - Port Orca to pyatspi.  The first major phase
+  is done, which was to remove Orca's atspi.py module in favor of pyatspi.py.
+  Much testing has been done, and we think we've caught all functional
+  regressions.  Much performance work remains, however.
+
++ Fix for bug #467664 - unmagnified area becomes too small to use.
+
++ Work on bug #486726 - Eliminate pychecker warnings/errors.  This was used
+  mainly as a means to help with bug #448848, but we plan to do more work
+  since it helped catch issues that have been in the code for a while.
+
++ Fix for bug #487230 - get{Speech,ShortBraille,LongBraille,Braille}ForRoleName 
+  should allow role to be overridden.
+
++ Fix for bug #488391 - Orca doesn't announce finds in Gedit if combo
+  box has focus.
+
++ Fix for bug #489797 - _speakListItem defined twice in where_am_i.py.
+
++ Increased coverage of the code in the regression/assertion tests.
+
+Firefox:
+
+* Work on bug #472345 - Cannot arrow out of entries in FF3 if text is
+  inserted via javascript.
+
+* Fix for bug #480501 - readPageSummary() prevents access to FF status
+  bar contents.
+
++ Additional work for bug #478204, Orca should handle navigation around
+  HTML focusable lists better.
+
++ Fix for bug #480264 - ARIA sliders not outputting
+  Braille/childCount:embed defense.
+
+OpenOffice:
+
+* Fix for bug #376517 - Orca does not report indentation in OOo Writer
+  documents correctly.
+
+* Fix for bug #435852 - Orca and OpenOffice Calc have a memory lovefest.
+
+* Fix for bug #480278 - where-am-I ("double click") for StarOffice.py 
+  smushs the output.
+
++ Fix for bug #489490 - Test for OOo Writer bug #413909 not producing the 
+  correct output.
+
++ Fix for bug #490623, work around for flat_review __cmp__ issue for
+  OpenOffice.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    sl      Slovenian            Matej Urbančič
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.21.0 - 03-Oct-2007
 
 Things marked with a '+' indicate stuff that is not planned for a Orca
