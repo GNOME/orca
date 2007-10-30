@@ -45,8 +45,7 @@ sequence.append(KeyComboAction("Tab", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPIN_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BUG? - Text is selected, but selection not presented.",
+    ["BUG? - Text is selected, but selection not presented.",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
@@ -62,8 +61,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BUG? - Text is selected, but selection not presented.",
+    ["BUG? - Text is selected, but selection not presented.",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "SPEECH OUTPUT: 'Hue:'",
@@ -80,8 +78,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BUG? - Text is selected, but selection not presented.",
+    ["BUG? - Text is selected, but selection not presented.",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
@@ -108,8 +105,7 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button decrement value",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BUG? - Value should be 239",
+    ["BUG? - Value should be 239",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
@@ -132,8 +128,7 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button increment value",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
      "     VISIBLE:  'Hue: 239 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
@@ -151,8 +146,7 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button caret navigation",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=7",
      "SPEECH OUTPUT: '4'"]))
 
@@ -164,8 +158,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button caret navigation",
-    ["BUG? - ColorChooser is repeated in braille?",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=7",
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
