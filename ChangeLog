@@ -4,6 +4,10 @@
           Removed several "BUG?" lines from test as bug #486919 - 
           "ColorChooser repeated twice in braille", is not a bug.
 
+        * test/keystrokes/oocalc/bug_363804.py:
+          Fixed bug #489928 - Orca oocalc macaroon test for bug #363804 
+          doesn't completely restore initial state.
+
 2007-10-29  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/orca.py:
