@@ -204,58 +204,6 @@ class BrailleGenerator:
         else:
             return None
 
-    def _getTextForValue(self, obj):
-        """Returns the text to be displayed for the object's current value.
-
-        Arguments:
-        - obj: the Accessible object that may or may not have a value.
-
-        Returns a string representing the value.
-        """
-
-        try:
-            value = obj.queryValue()
-        except NotImplementedError:
-            return ""
-
-        # OK, this craziness is all about trying to figure out the most
-        # meaningful formatting string for the floating point values.
-        # The number of places to the right of the decimal point should
-        # be set by the minimumIncrement, but the minimumIncrement isn't
-        # always set.  So...we'll default the minimumIncrement to 1/100
-        # of the range.  But, if max == min, then we'll just go for showing
-        # them off to two meaningful digits.
-        #
-        try:
-            minimumIncrement = value.minimumIncrement
-        except:
-            minimumIncrement = 0.0
-
-        if minimumIncrement == 0.0:
-            minimumIncrement = (value.maximumValue - value.minimumValue) \
-                               / 100.0
-
-        try:
-            decimalPlaces = max(0, -math.log10(minimumIncrement))
-        except:
-            try:
-                decimalPlaces = max(0, -math.log10(value.minimumValue))
-            except:
-                try:
-                    decimalPlaces = max(0, -math.log10(value.maximumValue))
-                except:
-                    decimalPlaces = 0
-
-        formatter = "%%.%df" % decimalPlaces
-        valueString = formatter % value.currentValue
-        #minString   = formatter % value.minimumValue
-        #maxString   = formatter % value.maximumValue
-
-        # [[[TODO: WDW - probably want to do this as a percentage at some
-        # point?  Logged as bugzilla bug 319743.]]]
-        #
-        return valueString
-
     def _getTextForRole(self, obj, role=None):
         if (settings.brailleVerbosityLevel \
             == settings.VERBOSITY_LEVEL_VERBOSE)\
@@ -304,7 +252,8 @@ class BrailleGenerator:
             text, self._script.getDisplayedLabel(obj))
         text = self._script.appendString(
             text, self._script.getDisplayedText(obj))
-        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text, 
+                                         self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj, role))
 
         regions = []
@@ -1114,7 +1063,8 @@ class BrailleGenerator:
         # Ignore the text on the slider.
         #text = self._script.appendString(
         #    text, self._script.getDisplayedText(obj))
-        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text,
+                                         self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []

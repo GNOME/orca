@@ -8,6 +8,12 @@
           Fixed bug #489928 - Orca oocalc macaroon test for bug #363804 
           doesn't completely restore initial state.
 
+        * src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/Gecko.py:
+          src/orca/braillegenerator.py:
+          Fixed bug #486926 - Changes to splitpane value not being spoken.
+
 2007-10-29  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/orca.py:

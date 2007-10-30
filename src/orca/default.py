@@ -3063,7 +3063,8 @@ class Script(script.Script):
             return
 
         orca.visualAppearanceChanged(event, event.source)
-        self.pointOfReference["oldValue"] = value.currentValue
+        if event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            self.pointOfReference["oldValue"] = value.currentValue
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
@@ -4710,6 +4711,58 @@ class Script(script.Script):
                                                           childText)
 
         return displayedText
+
+    def getTextForValue(self, obj):
+        """Returns the text to be displayed for the object's current value.
+
+        Arguments:
+        - obj: the Accessible object that may or may not have a value.
+
+        Returns a string representing the value.
+        """
+
+        try:
+            value = obj.queryValue()
+        except NotImplementedError:
+            return ""
+
+        # OK, this craziness is all about trying to figure out the most
+        # meaningful formatting string for the floating point values.
+        # The number of places to the right of the decimal point should
+        # be set by the minimumIncrement, but the minimumIncrement isn't
+        # always set.  So...we'll default the minimumIncrement to 1/100
+        # of the range.  But, if max == min, then we'll just go for showing
+        # them off to two meaningful digits.
+        #
+        try:
+            minimumIncrement = value.minimumIncrement
+        except:
+            minimumIncrement = 0.0
+
+        if minimumIncrement == 0.0:
+            minimumIncrement = (value.maximumValue - value.minimumValue) \
+                               / 100.0
+
+        try:
+            decimalPlaces = max(0, -math.log10(minimumIncrement))
+        except:
+            try:
+                decimalPlaces = max(0, -math.log10(value.minimumValue))
+            except:
+                try:
+                    decimalPlaces = max(0, -math.log10(value.maximumValue))
+                except:
+                    decimalPlaces = 0
+
+        formatter = "%%.%df" % decimalPlaces
+        valueString = formatter % value.currentValue
+        #minString   = formatter % value.minimumValue
+        #maxString   = formatter % value.maximumValue
+
+        # [[[TODO: WDW - probably want to do this as a percentage at some
+        # point?  Logged as bugzilla bug 319743.]]]
+        #
+        return valueString
 
     def findFocusedObject(self, root):
         """Returns the accessible that has focus under or including the

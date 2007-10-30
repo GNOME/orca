@@ -539,7 +539,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         elif link:
             text = self._script.appendString(text, self._getTextForRole(link))
 
-        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text,
+                                         self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
@@ -583,7 +584,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if basename:
                 text = basename
 
-        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text,
+                                         self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
