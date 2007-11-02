@@ -69,6 +69,7 @@ from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
 from orca_i18n import _           # for gettext support
+from orca_i18n import Q_          # to provide qualified translatable strings
 
 if settings.debugMemoryUsage:
     import gc
@@ -1175,27 +1176,92 @@ def abortOnSignal(signum, frame):
 
 def usage():
     """Prints out usage information."""
-    print "Usage: orca [OPTION...]"
+    print _("Usage: orca [OPTION...]")
     print
-    print "-?, --help                   Show this help message"
+
+    # Translators: this is the description of the command line option 
+    # '-?, --help' that is used to display usage information.
+    #
+    print "-?, --help                   " + _("Show this help message")
+
     print "-v, --version                %s" % platform.version
-    print "-s, --setup, --gui-setup     Set up user preferences"
-    print "-t, --text-setup             Set up user preferences (text version)"
-    print "-n, --no-setup               Skip set up of user preferences"
-    print "-u, --user-prefs-dir=dirname",
-    print " Use alternate directory for user preferences"
-    print "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window]",
-    print " Force use of option"
-    print "-d, --disable=" \
-          "[speech|braille|braille-monitor|magnifier|main-window]" \
-          " Prevent use of option"
-    print "-q, --quit                   Quits Orca (if shell script used)"
+
+    # Translators: this is the description of the command line option
+    # '-s, --setup, --gui-setup' that will initially display a GUI dialog 
+    # that would allow the user to set their Orca preferences.
+    #
+    print "-s, --setup, --gui-setup     " + _("Set up user preferences")
+
+    # Translators: this is the description of the command line option 
+    # '-t, --text-setup' that will initially display a list of questions 
+    # in text form, that the user will need to answer, before Orca will 
+    # startup. For this to happen properly, Orca will need to be run 
+    # from a terminal window.
+    #
+    print "-t, --text-setup             " + \
+          _("Set up user preferences (text version)")
+
+    # Translators: this is the description of the command line option 
+    # '-n, --no-setup' that means that Orca will startup without setting 
+    # up any user preferences.
+    #
+    print "-n, --no-setup               " +  \
+          _("Skip set up of user preferences")
+
+    # Translators: by default, Orca expects to find its user preferences
+    # in a directory called .orca under the user's home directory. This
+    # is the description of the command line option 
+    # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
+    # location for those user preferences.
+    #
+    print "-u, --user-prefs-dir=dirname" + \
+          _(" Use alternate directory for user preferences")
+
+    print "-e, --enable=[" \
+        + Q_("option|speech") + "|" \
+        + Q_("option|braille") + "|" \
+        + Q_("option|braille-monitor") + "|" \
+        + Q_("option|magnifier") + "|" \
+        + Q_("option|main-window") + "] ",
+
+    # Translators: if the user supplies an option via the '-e, --enable'
+    # command line option, it will be automatically enabled as Orca is
+    # started.
+    #
+    print _("Force use of option")
+
+    print "-d, --disable=[" \
+        + Q_("option|speech") + "|" \
+        + Q_("option|braille") + "|" \
+        + Q_("option|braille-monitor") + "|" \
+        + Q_("option|magnifier") + "|" \
+        + Q_("option|main-window") + "] ",
+
+    # Translators: if the user supplies an option via the '-d, --disable'
+    # command line option, it will be automatically disabled as Orca is
+    # started.
+    #
+    print _("Prevent use of option") 
+
+    # Translators: this is the Orca command line option that will quit Orca.
+    # The user would run the Orca shell script again from a terminal window.
+    # If this command line option is specified, the script will quit any
+    # instances of Orca that are already running.
+    #
+    print "-q, --quit                   " + \
+          _("Quits Orca (if shell script used)")
+
     print
-    print "If Orca has not been previously set up by the user, Orca"
-    print "will automatically launch the preferences set up unless"
-    print "the -n or --no-setup option is used."
+
+    # Translators: this is text being sent to a terminal and we want to 
+    # keep the text lines within terminal boundaries.
+    #
+    print _("If Orca has not been previously set up by the user, Orca\n" \
+            "will automatically launch the preferences set up unless\n" \
+            "the -n or --no-setup option is used.")
+
     print
-    print "Report bugs to orca-list@gnome.org."
+    print _("Report bugs to orca-list@gnome.org.")
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
@@ -1280,31 +1346,62 @@ def main():
 
             if opt in ("-e", "--enable"):
                 feature = val.strip()
-                if feature == "speech":
+
+                # Translators: this option is for enabling speech synthesis
+                # output.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                if feature == Q_("option|speech"):
                     _commandLineSettings["enableSpeech"] = True
-                elif feature == "braille":
+
+                # Translators: this option is for enabling braille output on
+                # a physical refreshable braille display.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                elif feature == Q_("option|braille"):
                     _commandLineSettings["enableBraille"] = True
-                elif feature == "braille-monitor":
+
+                # Translators: this option is for enabling a GUI to monitor 
+                # what is being sent to the physical braille display.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                elif feature == Q_("option|braille-monitor"):
                     _commandLineSettings["enableBrailleMonitor"] = True
-                elif feature == "magnifier":
+
+                # Translators: this option is for enabling screen 
+                # magnification.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                elif feature == Q_("option|magnifier"):
                     _commandLineSettings["enableMagnifier"] = True
-                elif feature == "main-window":
+
+                # Translators: this option is for enabling the display
+                # of the Orca main window.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                elif feature == Q_("option|main-window"):
                     _commandLineSettings["showMainWindow"] = True
+
                 else:
                     usage()
                     os._exit(2)
 
             if opt in ("-d", "--disable"):
                 feature = val.strip()
-                if feature == "speech":
+                if feature == Q_("option|speech"):
                     _commandLineSettings["enableSpeech"] = False
-                elif feature == "braille":
+                elif feature == Q_("option|braille"):
                     _commandLineSettings["enableBraille"] = False
-                elif feature == "braille-monitor":
+                elif feature == Q_("option|braille-monitor"):
                     _commandLineSettings["enableBrailleMonitor"] = False
-                elif feature == "magnifier":
+                elif feature == Q_("option|magnifier"):
                     _commandLineSettings["enableMagnifier"] = False
-                elif feature == "main-window":
+                elif feature == Q_("option|main-window"):
                     _commandLineSettings["showMainWindow"] = False
                 else:
                     usage()

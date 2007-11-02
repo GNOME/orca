@@ -1,3 +1,8 @@
+2007-11-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Fixed bug #487585 - Orca Usage message should be localized.
+
 2007-11-02  David Csercsics  <via william.walker@sun.com>
 
 	* src/orca/orca.in: 
