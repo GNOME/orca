@@ -1214,15 +1214,15 @@ def usage():
     # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
     # location for those user preferences.
     #
-    print "-u, --user-prefs-dir=dirname" + \
-          _(" Use alternate directory for user preferences")
+    print "-u, --user-prefs-dir=dirname " + \
+          _("Use alternate directory for user preferences")
 
     print "-e, --enable=[" \
         + Q_("option|speech") + "|" \
         + Q_("option|braille") + "|" \
         + Q_("option|braille-monitor") + "|" \
         + Q_("option|magnifier") + "|" \
-        + Q_("option|main-window") + "] ",
+        + Q_("option|main-window") + "]",
 
     # Translators: if the user supplies an option via the '-e, --enable'
     # command line option, it will be automatically enabled as Orca is
@@ -1235,7 +1235,7 @@ def usage():
         + Q_("option|braille") + "|" \
         + Q_("option|braille-monitor") + "|" \
         + Q_("option|magnifier") + "|" \
-        + Q_("option|main-window") + "] ",
+        + Q_("option|main-window") + "]",
 
     # Translators: if the user supplies an option via the '-d, --disable'
     # command line option, it will be automatically disabled as Orca is
