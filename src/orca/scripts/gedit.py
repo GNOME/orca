@@ -334,13 +334,15 @@ class Script(default.Script):
                      rolenames.ROLE_DIALOG,
                      rolenames.ROLE_APPLICATION]
 
-        rolesList2 = [rolenames.ROLE_COMBO_BOX,
+        rolesList2 = [rolenames.ROLE_TEXT,
+                     rolenames.ROLE_COMBO_BOX,
                      rolenames.ROLE_PANEL,
                      rolenames.ROLE_FILLER,
                      rolenames.ROLE_FILLER,
                      rolenames.ROLE_DIALOG,
                      rolenames.ROLE_APPLICATION]
 
+        tmp = obj.parent.parent
         # Translators: this is used to tell us if the focus is on the
         # "Find" button in gedit's Find dialog.  It must match what
         # gedit is using.  We hate keying off stuff like this, but
@@ -349,7 +351,7 @@ class Script(default.Script):
         if (self.isDesiredFocusedItem(obj, rolesList1) \
             and obj.name == _("Find")) \
             or (self.isDesiredFocusedItem(obj, rolesList2) \
-                and obj.parent.parent.parent.parent.name == _("Find")):
+                and tmp.parent.parent.parent.name == _("Find")):
             return True
         else:
             return False
