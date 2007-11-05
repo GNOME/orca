@@ -2768,13 +2768,17 @@ class Script(script.Script):
             return
 
         string = orca_state.lastNonModifierKeyEvent.event_string
+        controlPressed = orca_state.lastInputEvent.modifiers \
+                         & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+
         text = event.source.text
         if string == "BackSpace":
             # Speak the character that has just been deleted.
             #
             character = event.any_data
 
-        elif string == "Delete":
+        elif (string == "Delete") \
+             or (string == "D" and controlPressed):
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #
