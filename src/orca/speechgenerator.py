@@ -1320,7 +1320,8 @@ class SpeechGenerator:
 
         displayedText = self._script.getDisplayedText( \
                           self._script.getRealActiveDescendant(obj))
-        utterances.append(displayedText)
+        if not already_focused:
+            utterances.append(displayedText)
 
         # If there is no displayed text, check to see if this table cell 
         # contains an icon (image). If yes:
@@ -1336,9 +1337,10 @@ class SpeechGenerator:
             image = None
 
         if (not displayedText or len(displayedText) == 0) and image:
-            if image.imageDescription:
-                utterances.append(image.imageDescription)
-            utterances.extend(self._getSpeechForImage(obj, already_focused))
+            if not already_focused:
+                if image.imageDescription:
+                    utterances.append(image.imageDescription)
+                utterances.extend(self._getSpeechForImage(obj, already_focused))
 
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):

@@ -8,6 +8,10 @@
           spreadsheet.
           Insert-F8 for outputing the component hierarchy is also much faster.
 
+        * src/orca/speechgenerator.py:
+          Fixed bug #486972 - Expanding/collapsing tree nodes in a table 
+          should not speak nodename again.
+
 2007-11-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
