@@ -5827,15 +5827,18 @@ class Script(default.Script):
             while not done:
                 [nextCell, text, extents, isField] = \
                         self.getNextCellInfo(nextCell, "up")
-                dWidth = abs(objExtents[2] - extents[2])
-                dHeight = abs(objExtents[3] - extents[3])
-                if dWidth > 1 or dHeight > 1:
-                    done = True
-                if not isField:
-                    [row, col] = self.getCellCoordinates(nextCell)
-                    if row == 0:
-                        grid = True
+                if nextCell:
+                    dWidth = abs(objExtents[2] - extents[2])
+                    dHeight = abs(objExtents[3] - extents[3])
+                    if dWidth > 1 or dHeight > 1:
                         done = True
+                    if not isField:
+                        [row, col] = self.getCellCoordinates(nextCell)
+                        if row == 0:
+                            grid = True
+                            done = True
+                else:
+                    done = True
 
             if grid:
                 tobCol = nextCell.parent.queryTable().getAccessibleAt(0, col)
