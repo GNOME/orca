@@ -236,6 +236,8 @@
           src/orca/default.py:
           Fix for bug #489801 - Remove record keystrokes option.
           It's been obsolete by macaroon.
+          This also accidentally included a fix for bug #489781 - 
+	  Ctrl+D in terminal to delete text doesn't echo character.
 
 2007-10-23  Eitan Isaacson  <eitan@ascender.com>
 
