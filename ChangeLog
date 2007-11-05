@@ -1,3 +1,13 @@
+2007-11-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          From Eitan Isaacson  <eitan@ascender.com>
+          Fix for 489490 - Test for OOo Writer bug #413909 not producing 
+          the correct output.
+          Fix for 491885 - Orca "goes funky" when opening this oocalc 
+          spreadsheet.
+          Insert-F8 for outputing the component hierarchy is also much faster.
+
 2007-11-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

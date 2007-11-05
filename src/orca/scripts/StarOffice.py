@@ -1118,15 +1118,16 @@ class Script(default.Script):
         endIndex = parentTable.nColumns
 
         if self.isSpreadSheetCell(obj):
-            y = parent.extents.y
-            leftX = parent.extents.x + 1
+            extents = parent.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            y = extents.y
+            leftX = extents.x + 1
             leftCell = \
                 parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
             if leftCell:
                 table = leftCell.parent.queryTable()
                 startIndex = table.getColumnAtIndex(leftCell.getIndexInParent())
 
-            rightX = parent.extents.x + parent.extents.width - 1
+            rightX = extents.x + extents.width - 1
             rightCell = \
                 parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
             if rightCell:
@@ -1258,18 +1259,18 @@ class Script(default.Script):
         http://www.openoffice.org/issues/show_bug.cgi?id=78117
         http://bugzilla.gnome.org/show_bug.cgi?id=489490
         """
-        parent = obj.parent 
-        if -1 in pyatspi.getPath(obj):
-            # If we can't get a path back to the root node, we ran into
-            # the bug.
+        parent = obj.parent
+        if parent and parent.getRole() in (pyatspi.ROLE_ROOT_PANE,
+                                           pyatspi.ROLE_DIALOG):
             app = obj.getApplication()
-            if app:
-                # Find the proper parent from top-down.
-                parent = \
-                    pyatspi.findDescendant(app, lambda acc: obj in acc)
-            else:
-                debug.println(debug.LEVEL_WARNING,
-                              'Could not find proper parent for %s' % obj)
+            for frame in app:
+                if frame.childCount < 1 or \
+                      frame[0].getRole() not in (pyatspi.ROLE_ROOT_PANE,
+                                                 pyatspi.ROLE_OPTION_PANE): 
+                    continue
+                root_pane = frame[0]
+                if obj in root_pane:
+                    return root_pane
         return parent
 
 
