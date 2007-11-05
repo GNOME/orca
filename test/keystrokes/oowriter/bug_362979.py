@@ -31,12 +31,13 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 3. Enter Alt-o to bring up the Format menu.
 #
 sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(WaitForFocus("Selection", acc_role=pyatspi.ROLE_LIST))
+sequence.append(WaitForFocus("Default Formatting", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 ######################################################################
 # 4. Enter "b" to select "Bullets and Numbering..."
 #
 sequence.append(TypeAction("b"))
+sequence.append(WaitForFocus("Selection", acc_role=pyatspi.ROLE_LIST))
 
 ######################################################################
 # 5. Enter Tab and Return to select small dot bullets.

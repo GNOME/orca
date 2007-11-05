@@ -50,7 +50,6 @@ sequence.append(TypeAction(" normal"))
 # SPEECH OUTPUT: 'bold italic normal'
 #
 sequence.append(KeyComboAction("<Control>Home"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
 # 5. Type Insert-f to get the text information for the bold word.

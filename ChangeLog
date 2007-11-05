@@ -1,3 +1,10 @@
+2007-11-05  Rich Burridge <rich.burridge@sun.com>
+
+        * test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_362979.py:
+          Fixed bug #489875 - Some Orca macaroon oowriter and oocalc 
+          tests have timeout problems.
+
 2007-11-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
