@@ -99,6 +99,7 @@ userCustomizableSettings = [
     "enableLockingKeys",
     "enableFunctionKeys",
     "enableActionKeys",
+    "enableNavigationKeys",
     "enableBraille",
     "enableBrailleGrouping",
     "brailleVerbosityLevel",
@@ -391,6 +392,10 @@ enableFunctionKeys      = True
 # If True and key echo is enabled, echo Action keys.
 #
 enableActionKeys        = True
+
+# If True and key echo is enabled, echo Navigation keys.
+#
+enableNavigationKeys    = False
 
 # If True, show the main Orca window.
 #

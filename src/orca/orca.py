@@ -330,7 +330,7 @@ def _isPrintableKey(event_string):
                 and (unicodeString.isalnum() or unicodeString.isspace()
                 or unicodedata.category(unicodeString)[0] in ('P', 'S'))
     debug.println(debug.LEVEL_FINEST,
-                  "orca._echoPrintableKey: returning: %s" % reply)
+                  "orca._isPrintableKey: returning: %s" % reply)
     return reply
 
 def _isModifierKey(event_string):
@@ -348,7 +348,7 @@ def _isModifierKey(event_string):
 
     reply = event_string in modifierKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._echoModifierKey: returning: %s" % reply)
+                  "orca._isModifierKey: returning: %s" % reply)
     return reply
 
 def _isLockingKey(event_string):
@@ -365,7 +365,7 @@ def _isLockingKey(event_string):
     reply = event_string in lockingKeys \
             and not event_string in settings.orcaModifierKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._echoLockingKey: returning: %s" % reply)
+                  "orca._isLockingKey: returning: %s" % reply)
     return reply
 
 def _isFunctionKey(event_string):
@@ -386,7 +386,7 @@ def _isFunctionKey(event_string):
 
     reply = event_string in functionKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._echoFunctionKey: returning: %s" % reply)
+                  "orca._isFunctionKey: returning: %s" % reply)
     return reply
 
 def _isActionKey(event_string):
@@ -403,7 +403,28 @@ def _isActionKey(event_string):
 
     reply = event_string in actionKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._echoActionKey: returning: %s" % reply)
+                  "orca._isActionKey: returning: %s" % reply)
+    return reply
+
+def _isNavigationKey(event_string):
+    """Return an indication of whether this is a navigation (arrow) key
+    or if the user has the Orca modifier key held done.
+
+    Arguments:
+    - event: the event string
+    - modifiers: key modifiers state
+
+    Returns True if this is a navigation key.
+    """
+
+    global _orcaModifierPressed
+
+    navigationKeys = [ "Left", "Right", "Up", "Down" ]
+
+    reply = (event_string in navigationKeys) or _orcaModifierPressed
+
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._isNavigationKey: returning: %s" % reply)
     return reply
 
 class KeyEventType:
@@ -429,6 +450,9 @@ class KeyEventType:
 
     """An action key event."""
     ACTION = 'ACTION'
+
+    """A navigation key event."""
+    NAVIGATION = 'NAVIGATION'
 
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
@@ -459,15 +483,20 @@ def _keyEcho(event):
     #
     if settings.enableKeyEcho:
 
-        if _isPrintableKey(event_string):
-            if not settings.enablePrintableKeys:
-                return
-            eventType = KeyEventType.PRINTABLE
-
-        elif _isModifierKey(event_string):
+        if _isModifierKey(event_string):
             if not settings.enableModifierKeys:
                 return
             eventType = KeyEventType.MODIFIER
+
+        elif _isNavigationKey(event_string):
+            if not settings.enableNavigationKeys:
+                return
+            eventType = KeyEventType.NAVIGATION
+
+        elif _isPrintableKey(event_string):
+            if not settings.enablePrintableKeys:
+                return
+            eventType = KeyEventType.PRINTABLE
 
         elif _isLockingKey(event_string):
             if not settings.enableLockingKeys:
@@ -625,16 +654,16 @@ def _processKeyboardEvent(event):
         #
         speech.stop()
 
-        # If learn mode is enabled, it will echo the keys.
-        #
-        if not settings.learnModeEnabled:
-            _keyEcho(keyboardEvent)
-
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
         if isOrcaModifier:
             _orcaModifierPressed = True
+
+        # If learn mode is enabled, it will echo the keys.
+        #
+        if not settings.learnModeEnabled:
+            _keyEcho(keyboardEvent)
 
     elif isOrcaModifier \
         and (keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT):

@@ -1354,6 +1354,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                         prefs["enableFunctionKeys"])
         self.get_widget("actionCheckbutton").set_active( \
                         prefs["enableActionKeys"])
+        self.get_widget("navigationCheckbutton").set_active( \
+                        prefs["enableNavigationKeys"])
         self.get_widget("echoByWordCheckbutton").set_active( \
                         prefs["enableEchoByWord"])
 
@@ -1639,6 +1641,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("lockingCheckbutton").set_sensitive(enable)
         self.get_widget("functionCheckbutton").set_sensitive(enable)
         self.get_widget("actionCheckbutton").set_sensitive(enable)
+        self.get_widget("navigationCheckbutton").set_sensitive(enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally
@@ -2172,6 +2175,17 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
         self.prefsDict["enableActionKeys"] = widget.get_active()
+
+    def navigationKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           navigationCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable navigation keys" checkbox. Set the
+           'enableNavigationKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+        self.prefsDict["enableNavigationKeys"] = widget.get_active()
 
     def echoByWordChecked(self, widget):
         """Signal handler for the "toggled" signal for the

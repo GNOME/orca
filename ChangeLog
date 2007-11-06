@@ -5,6 +5,13 @@
           src/orca/default.py:
           Need to add/remove "import math" because of a recent refactor.
 
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #487514 - Keys for navigation purposes should not be 
+          echoed.
+
 2007-11-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         *src/orca/orca_prefs.py:
