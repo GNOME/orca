@@ -51,7 +51,6 @@ import speechgenerator
 import speechserver
 import where_am_I
 import bookmarks
-import time
 
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
@@ -2300,129 +2299,106 @@ class Script(default.Script):
         arrow keys for navigating HTML content.
         """
 
+        altModMask       =  1 << pyatspi.MODIFIER_ALT
+        controlModMask   =  1 << pyatspi.MODIFIER_CONTROL
+        shiftAltModMask  = (1 << pyatspi.MODIFIER_SHIFT |
+                            1 << pyatspi.MODIFIER_ALT)
+        fullModMask      = (1 << pyatspi.MODIFIER_SHIFT |
+                            1 << pyatspi.MODIFIER_ALT |
+                            1 << pyatspi.MODIFIER_CONTROL |
+                            1 << settings.MODIFIER_ORCA)
+
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                1 << pyatspi.MODIFIER_CONTROL,
+                fullModMask,
+                controlModMask,
                 self.inputEventHandlers["goNextWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                1 << pyatspi.MODIFIER_CONTROL,
+                fullModMask,
+                controlModMask,
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                1 << pyatspi.MODIFIER_ALT,
+                fullModMask,
+                altModMask,
                 self.inputEventHandlers["expandComboBoxHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellRightHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellLeftHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellUpHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellDownHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Home",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellFirstHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "End",
-                (1 << pyatspi.MODIFIER_CONTROL \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT),
+                fullModMask,
+                shiftAltModMask,
                 self.inputEventHandlers["goCellLastHandler"]))
 
         return keyBindings
@@ -2433,6 +2409,15 @@ class Script(default.Script):
         Returns an instance of keybindings.KeyBindings.
         """
 
+        orcaModMask      =  1 << settings.MODIFIER_ORCA
+        shiftModMask     =  1 << pyatspi.MODIFIER_SHIFT
+        orcaShiftModMask = (1 << settings.MODIFIER_ORCA |
+                            1 << pyatspi.MODIFIER_SHIFT)
+        fullModMask      = (1 << pyatspi.MODIFIER_SHIFT |
+                            1 << pyatspi.MODIFIER_ALT |
+                            1 << pyatspi.MODIFIER_CONTROL |
+                            1 << settings.MODIFIER_ORCA)
+
         keyBindings = default.Script.getKeyBindings(self)
 
         # NOTE: We include ALT and CONTROL in all the bindings below so as
@@ -2441,295 +2426,232 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "1",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading1Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "1",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading1Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "2",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading2Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "2",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading2Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "3",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading3Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "3",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading3Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "4",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading4Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "4",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading4Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "5",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading5Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "5",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading5Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "6",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousHeading6Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "6",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextHeading6Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousChunkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextChunkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousListHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextListHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "i",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousListItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "i",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextListItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousUnvisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextUnvisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "v",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousVisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "v",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextVisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Tab",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << pyatspi.MODIFIER_SHIFT),
+                fullModMask,
+                orcaShiftModMask,
                 self.inputEventHandlers["goPreviousFormFieldHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Tab",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                fullModMask,
+                orcaModMask,
                 self.inputEventHandlers["goNextFormFieldHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousBlockquoteHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextBlockquoteHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "t",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
-                1 << pyatspi.MODIFIER_SHIFT,
+                fullModMask,
+                shiftModMask,
                 self.inputEventHandlers["goPreviousTableHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "t",
-                (1 << pyatspi.MODIFIER_SHIFT \
-                 | 1 << pyatspi.MODIFIER_ALT \
-                 | 1 << pyatspi.MODIFIER_CONTROL),
+                fullModMask,
                 0,
                 self.inputEventHandlers["goNextTableHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F12",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                fullModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleCaretNavigationHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "SunF37",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                fullModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleCaretNavigationHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "z",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                fullModMask,
+                orcaModMask,
                 self.inputEventHandlers["toggleStructuralNavigationHandler"]))
 
         if controlCaretNavigation:
