@@ -5899,7 +5899,7 @@ class Script(default.Script):
                     done = True
 
             if grid:
-                tobCol = nextCell.parent.queryTable().getAccessibleAt(0, col)
+                topCol = nextCell.parent.queryTable().getAccessibleAt(0, col)
                 [objTop, offset] = self.findFirstCaretContext(topCol, 0)
                 if self.queryNonEmptyText(topCol) \
                    and not self.isFormField(topCol):
