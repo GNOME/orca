@@ -1,3 +1,8 @@
+2007-11-06  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/Gecko.py:
+          Bug #490568, Implement Firefox page summary using Collections.
+
 2007-11-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

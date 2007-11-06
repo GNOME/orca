@@ -51,6 +51,7 @@ import speechgenerator
 import speechserver
 import where_am_I
 import bookmarks
+import time
 
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
@@ -1336,7 +1337,10 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
            or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, orcaKey)
         else:
-            self.readPageSummary(obj)
+            try:
+                self._collectionPageSummary()
+            except NotImplementedError:
+                self._iterativePageSummary(obj)
 
     def _speakDefaultButton(self, obj):
         """Speaks the default button in a dialog.
@@ -1348,10 +1352,53 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         if not (self._script.inDocumentContent(orca_state.locusOfFocus) \
                 and not self._script.isAriaWidget(orca_state.locusOfFocus)):
             where_am_I.WhereAmI._speakDefaultButton(self, obj)
+
+    def _collectionPageSummary(self):
+        """Uses the Collection interface to get the quantity of headings, 
+        forms, tables, visited and unvisited links.
+        """
+        docframe = self._script.getDocumentFrame()
+        col = docframe.queryCollection()
+
+        # We will initialize these after the queryCollection() call in case
+        # Collection is not supported
+        headings = 0 
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+
+        stateset = pyatspi.StateSet()
+        roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
+                 pyatspi.ROLE_FORM]
+        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                                   "", col.MATCH_NONE,
+                                   roles, col.MATCH_ANY,
+                                   "", col.MATCH_NONE,
+                                   False)
+
+        matches = col.getMatches (rule, col.SORT_ORDER_CANONICAL, 0)
+        col.freeMatchRule(rule)
+        for obj in matches:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self._script.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+        self._outputPageSummary(headings, forms, tables, vlinks, uvlinks, None)
             
-    def readPageSummary(self, obj):
+    def _iterativePageSummary(self, obj):
         """Reads the quantity of headings, forms, tables, visited and 
-        unvisited links, plus the locale.
+        unvisited links.
         """
         headings = 0 
         forms = 0
@@ -1361,7 +1408,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         nodetotal = 0
         obj_index = None
         currentobj = obj
-        
+
         # start at the first object after document frame
         obj = self._script.getDocumentFrame()[0]
         while obj:
@@ -1381,9 +1428,21 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                     vlinks += 1
                 else:
                     uvlinks += 1
-                    
+
             obj = self._script.findNextObject(obj)
-            
+
+        # Calculate the percentage of the document that has been read.
+        if obj_index:
+            percentread = int(obj_index*100/nodetotal)
+        else:
+            percentread = None
+
+        self._outputPageSummary(headings, forms, tables, 
+                               vlinks, uvlinks, percentread)
+
+    def _outputPageSummary(self, headings, forms, tables, 
+                                 vlinks, uvlinks, percent):
+
         utterances = []
         if headings:
             # Translators: Announces the number of headings in the
@@ -1415,18 +1474,17 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             #
             utterances.append(ngettext \
                  ('%d unvisited link', '%d unvisited links', uvlinks) %uvlinks)
-        if obj_index:
+        if percent is not None:
             # Translators: Announces the percentage of the document that has
             # been read.  This is calculated by knowing the index of the 
             # current position divided by the total number of objects on the 
             # page.
-            #
-            utterances.append(_('%d percent of document read') \
-                                     %int(obj_index*100/nodetotal))
-            
-        speech.speakUtterances(utterances)    
-        
-        
+            # 
+            utterances.append(_('%d percent of document read') %percent)
+
+        speech.speakUtterances(utterances)  
+
+
 ####################################################################
 #                                                                  #
 # Custom bookmarks class                                           #
