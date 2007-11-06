@@ -152,6 +152,9 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         - clearModel: if True, initially clear out the key bindings model. 
         """
 
+        if clearModel:
+            self.keyBindingsModel.clear()
+
         global applicationName, appScript
 
         # Get the key bindings for the application script.
@@ -165,24 +168,36 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         defScript = default.Script(None)
         self.defKeyBindings = defScript.getKeyBindings()
 
-        nodeCreated = False
+        iterApp = self._createNode(applicationName)
+        iterOrca = self._createNode(_("Orca"))
+
+        # Translators: this refers to commands that do not currently have
+        # an associated key binding.
+        #
+        iterUnbound = self._createNode(_("Unbound"))
 
         # Find the key bindings that are in the application script but 
         # not in the default script.
         #
         for kb in self.appKeyBindings.keyBindings:
-            if not self.defKeyBindings.hasKeyBinding(kb, "strict"):
-                if not self._addAlternateKeyBinding(kb):
-                    handl = appScript.getInputEventHandlerKey(kb.handler)
-                    if not nodeCreated:
-                        iterOrca = self._createNode(applicationName)
-                        nodeCreated = True
-                    self._insertRow(handl, kb, iterOrca)
+            if not self.defKeyBindings.hasKeyBinding(kb, "description"):
+                node = iterApp
+            elif kb.keysymstring:
+                node = iterOrca
+            else:
+                node = iterUnbound
+            if not self._addAlternateKeyBinding(kb):
+                handl = appScript.getInputEventHandlerKey(kb.handler)
+                self._insertRow(handl, kb, node)
 
-        # Call the parent class to add in the default key bindings.
+        if not self.keyBindingsModel.iter_has_child(iterApp):
+            self.keyBindingsModel.remove(iterApp)
+
+        # Call the parent class to add braille bindings and finish
+        # setting up the tree view.
         #
+        self.kbindings = self.appKeyBindings
         orca_gui_prefs.orcaSetupGUI._populateKeyBindings(self, False)
-
 
     def okButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the okButton

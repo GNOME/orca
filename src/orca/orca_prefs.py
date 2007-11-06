@@ -31,7 +31,8 @@ import pprint
 import settings
 
 # The same fields than in orca_gui_prefs.py:
-(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
+(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, OLDTEXT1, TEXT1, \
+ MOD_MASK2, MOD_USED2, KEY2, OLDTEXT2, TEXT2, MODIF, EDITABLE) = range(14)
 
 (ACTUAL, REPLACEMENT) = range(2)
 
@@ -388,6 +389,13 @@ class OrcaPrefs:
 
         prefs.writelines("   keyB.removeByHandler(script.inputEventHandlers['" \
                          + str(tupl[HANDLER])+"'])\n")
+        if not (tupl[TEXT1] or tupl[TEXT2]):
+            prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
+            prefs.writelines("      None,\n")
+            prefs.writelines("      0,\n")
+            prefs.writelines("      0,\n")
+            prefs.writelines('      script.inputEventHandlers["' + \
+                             str(tupl[HANDLER]) +'"]))\n\n')
 
         if (tupl[TEXT1]):
             prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
@@ -431,7 +439,8 @@ class OrcaPrefs:
         while thisIter != None:
             iterChild = treeModel.iter_children(thisIter)
             while iterChild != None:
-                values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9,10,11)
+                values = treeModel.get(iterChild,
+                                       0,1,2,3,4,5,6,7,8,9,10,11,12,13)
                 if values[MODIF]:
                     self._writeKeyBinding(prefs, values)
                 iterChild = treeModel.iter_next(iterChild)

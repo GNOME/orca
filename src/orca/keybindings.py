@@ -114,6 +114,10 @@ def getKeycode(keysym):
     Returns an integer representing a key code that should match the
     event.hw_code for key events.
     """
+
+    if not keysym:
+        return 0
+
     if not _keycodeCache.has_key(keysym):
         keymap = gtk.gdk.keymap_get_default()
 
@@ -281,7 +285,8 @@ class KeyBindings:
            The typeOfSearch can be:
               "strict":      matches description, modifiers, key
               "description": matches only description.
-              "keys":        matches only modifiers and key.
+              "keys":        matches the modifiers, key, and modifier mask
+              "keysNoMask":  matches the modifiers and key only
         """
 
         hasIt = False
@@ -309,6 +314,12 @@ class KeyBindings:
                     and (keyBinding.modifiers \
                          == newKeyBinding.modifiers):
                     hasIt = True
+            elif typeOfSearch == "keysNoMask":
+                if (keyBinding.keysymstring \
+                    == newKeyBinding.keysymstring) \
+                    and (keyBinding.modifiers \
+                         == newKeyBinding.modifiers):
+                    hasIt = True
 
         return hasIt
 
@@ -321,7 +332,9 @@ class KeyBindings:
             if keyBinding.matches(keyboardEvent.hw_code, \
                                   keyboardEvent.modifiers):
                 handler = keyBinding.handler
-                break
+                if keyBinding.modifier_mask == keyboardEvent.modifiers:
+                    break
+
         return handler
 
     def consumeKeyboardEvent(self, script, keyboardEvent):

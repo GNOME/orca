@@ -1,5 +1,16 @@
 2007-11-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        *src/orca/orca_prefs.py:
+         src/orca/app_gui_prefs.py:
+         src/orca/orca.py:
+         src/orca/default.py:
+         src/orca/keybindings.py:
+         src/orca/orca_gui_prefs.py:
+         Fix for bug #481488 - Implement increased support for user-
+         customized keybindings
+
+2007-11-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/Gecko.py:
           pyatspi migration typo caught by pyflakes.
 

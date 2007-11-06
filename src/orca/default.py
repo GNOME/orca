@@ -1246,6 +1246,8 @@ class Script(script.Script):
         """
 
         orcaModMask         = 1 << settings.MODIFIER_ORCA
+        orcaShiftModMask = (1 << settings.MODIFIER_ORCA |
+                            1 << pyatspi.MODIFIER_SHIFT)
         orcaControlModMask  = (1 << settings.MODIFIER_ORCA |
                                1 << pyatspi.MODIFIER_CONTROL)
         orcaAltModMask      = (1 << settings.MODIFIER_ORCA |
@@ -1394,7 +1396,7 @@ class Script(script.Script):
             keybindings.KeyBinding(
                 "b",
                 orcaShiftAltModMask,
-                orcaAltModMask,
+                orcaShiftModMask,
                 self.inputEventHandlers["goToPrevBookmark"])) 
         # key binding to move to the next bookmark             
         keyBindings.add(
@@ -1429,7 +1431,41 @@ class Script(script.Script):
                     orcaShiftAltModMask,
                     shiftAltModMask,
                     self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
-                    
+
+        #####################################################################
+        #                                                                   #
+        #  Unbound handlers                                                 #
+        #                                                                   #
+        #####################################################################
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["decreaseSpeechRateHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["increaseSpeechRateHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["decreaseSpeechPitchHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["increaseSpeechPitchHandler"]))
+
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
         return keyBindings

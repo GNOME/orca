@@ -526,20 +526,36 @@ def _processKeyCaptured(event):
 
     if event.type == 0:
         if _isModifierKey(event.event_string) \
-               or event.event_string == "Return":
-            pass
-        elif event.event_string == "Escape":
-            orca_state.capturingKeys = False
+           or _isLockingKey(event.event_string):
+            return True
         else:
-            # Translators: this is a spoken prompt letting the user know
-            # Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
-            # based upon their input.
+            # We want to capture this event, after first doing a little
+            # clean up.  Eliminate modifiers we're not interested in.
             #
-            speech.speak(_("Key captured: %s. Press enter to confirm.") \
-                         % str(event.event_string))
+            mask = (1 << settings.MODIFIER_ORCA |
+                    1 << pyatspi.MODIFIER_ALT |
+                    1 << pyatspi.MODIFIER_SHIFT |
+                    1 << pyatspi.MODIFIER_CONTROL |
+                    1 << pyatspi.MODIFIER_META2 |
+                    1 << pyatspi.MODIFIER_META3)
+            event.modifiers = event.modifiers & mask
+
+            # We want the keyname rather than the printable character.
+            # If it's not on the keypad, get the name of the unshifted
+            # character. (i.e. "1" instead of "!")
+            #
+            keymap = gtk.gdk.keymap_get_default()
+            entries = keymap.get_entries_for_keycode(event.hw_code)
+            event.event_string = gtk.gdk.keyval_name(entries[0][0])
+            if event.event_string.startswith("KP"):
+                name = gtk.gdk.keyval_name(entries[1][0])
+                if name.startswith("KP"):
+                    event.event_string = name
+
             orca_state.lastCapturedKey = event
     else:
         pass
+
     return False
 
 def _processKeyboardEvent(event):
@@ -636,7 +652,7 @@ def _processKeyboardEvent(event):
     consumed = False
     try:
         if orca_state.capturingKeys:
-            _processKeyCaptured(keyboardEvent)
+            consumed = _processKeyCaptured(keyboardEvent)
         else:
             consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
             if (not consumed) and (_currentPresentationManager >= 0):
