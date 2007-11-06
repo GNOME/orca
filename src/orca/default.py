@@ -39,6 +39,7 @@ except:
     pass
 
 import locale
+import math
 import time
 
 import pyatspi
