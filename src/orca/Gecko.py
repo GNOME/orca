@@ -5970,7 +5970,8 @@ class Script(default.Script):
             return [None, -1]
 
         text = self.queryNonEmptyText(obj)
-        if text and not self.isAriaWidget(obj):
+        if text and not (self.isAriaWidget(obj) 
+                         and obj.getRole() == pyatspi.ROLE_LIST):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             while nextOffset < len(unicodeText):
@@ -6060,7 +6061,8 @@ class Script(default.Script):
             return [None, -1]
 
         text = self.queryNonEmptyText(obj)
-        if text and not self.isAriaWidget(obj):
+        if text and not (self.isAriaWidget(obj) \
+                         and obj.getRole() == pyatspi.ROLE_LIST):
             unicodeText = self.getUnicodeText(obj)
             if (startOffset == -1) or (startOffset > len(unicodeText)):
                 startOffset = len(unicodeText)

@@ -1,3 +1,8 @@
+2007-11-08  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/Gecko.py:
+        Fixed bug #490266, Endless loop in navigating ARIA trees.
+
 2007-11-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
