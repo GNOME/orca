@@ -38,7 +38,7 @@ sequence.append(KeyComboAction         ("Tab"))
 sequence.append(WaitForFocus("All sheets", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
      "     VISIBLE:  'All sheets Combo', cursor=1",
      "SPEECH OUTPUT: 'Layout'",
      "SPEECH OUTPUT: 'Only print: All sheets combo box'"]))
@@ -51,7 +51,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: All sheets Combo'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
      "     VISIBLE:  'All sheets Combo', cursor=1",
      "SPEECH OUTPUT: 'Only print:'",
      "SPEECH OUTPUT: 'combo box'",
@@ -71,7 +71,7 @@ sequence.append(WaitAction("object:selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Event sheets combo box item",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
      "     VISIBLE:  'Even sheets Combo', cursor=1",
      "SPEECH OUTPUT: 'Even sheets'"]))
 
@@ -83,7 +83,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Even sheets combo box item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Layout Filler Only print: Even sheets Combo'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
      "     VISIBLE:  'Even sheets Combo', cursor=1",
      "SPEECH OUTPUT: 'Only print:'",
      "SPEECH OUTPUT: 'combo box'",

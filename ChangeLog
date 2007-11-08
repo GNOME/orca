@@ -1,3 +1,17 @@
+2007-11-08  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_window.py:
+          test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_radio_button.py:
+          test/keystrokes/gtk-demo/role_combo_box2.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          More fixes for bug #486918 - Page tab role should be presented
+	  in braille.  The fix had an impact on these tests as well.
+
 2007-11-08  Scott Haeger <scott@bashautomation.com>
         
         * src/orca/Gecko.py:
