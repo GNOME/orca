@@ -105,7 +105,7 @@ class OrcaPrefs:
         prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
         prefs.writelines("\n")
         prefs.writelines("#orca.debug.eventDebugLevel = orca.debug.LEVEL_OFF\n")
-        prefs.writelines("#orca.debug.eventDebugFilter =  None\n")
+        prefs.writelines("#orca.debug.eventDebugFilter = None\n")
         prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*focus|[\S]*activ')\n")
         prefs.writelines( \
             "#orca.debug.eventDebugFilter = re.compile('nomatch')\n")
@@ -133,10 +133,15 @@ class OrcaPrefs:
     def _writePreferencesPostamble(self, prefs):
         """Writes the postamble to the user-settings.py file."""
 
+        prefs.writelines("\nimport orca.orca_state\n")
         prefs.writelines("\ntry:\n")
-        prefs.writelines("    __import__(\"orca-customizations\")\n")
-        prefs.writelines("except ImportError:\n")
-        prefs.writelines("    pass\n")
+        prefs.writelines("    reload(orca.orca_state.orcaCustomizations)\n")
+        prefs.writelines("except AttributeError:\n")
+        prefs.writelines("    try:\n")
+        prefs.writelines("        orca.orca_state.orcaCustomizations = "
+                         "__import__(\"orca-customizations\")\n")
+        prefs.writelines("    except ImportError:\n")
+        prefs.writelines("        pass\n")
 
     def _enableAccessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and

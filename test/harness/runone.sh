@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# See http://live.gnome.org/Orca/RegressionTesting for more info.
+#
 # runone.sh takes the following parameters:
 #
 #    keystroke_file.py [application_name] [0|1]
@@ -29,12 +31,32 @@ debugFile=`basename $1 .py`
 #
 WAIT_TIME=5
 
+# Set up the stuff we want to always be set for every test, regardless
+# if there is a *.params file for the test or not.
+#
+currentDir=`pwd`
+cp `dirname $0`/orca-customizations.py.in orca-customizations.py
+cat >> orca-customizations.py <<EOF
+
+orca.settings.userPrefsDir = '$currentDir'
+
+if not orca.debug.debugFile:
+    orca.debug.debugFile = open('$debugFile.debug', 'w', 0)
+
+    import logging
+    for logger in ['braille', 'speech']:
+        log = logging.getLogger(logger)
+        formatter = logging.Formatter('%(name)s.%(message)s')
+        handler = logging.FileHandler('$debugFile.%s' % logger, 'w')
+        handler.setFormatter(formatter)
+        log.addHandler(handler)
+        log.setLevel(logging.INFO)
+EOF
+
 # Set up our local user settings file for the output format we want.
 #
 # If a <testfilename>.settings file exists, should use that instead of
 # the default user-settings.py.in.
-# We still need to run sed on it, to adjust the debug filename and
-# create a user-settings.py file in the tmp directory.
 #
 # (Orca will look in our local directory first for user-settings.py
 # before looking in ~/.orca)
@@ -45,26 +67,7 @@ then
     SETTINGS_FILE=`dirname $0`/user-settings.py.in
 fi
 #echo "Using settings file:" $SETTINGS_FILE
-
-# Set up the logging stuff so we can record what Orca is doing.
-#
 cp $SETTINGS_FILE user-settings.py
-cat >> user-settings.py <<EOF
-
-orca.settings.asyncMode = False
-
-orca.debug.debugLevel = orca.debug.LEVEL_ALL
-orca.debug.debugFile = open('$debugFile.debug', 'w', 0)
-
-import logging
-for logger in ['braille', 'speech']:
-    log = logging.getLogger(logger)
-    formatter = logging.Formatter('%(name)s.%(message)s')
-    handler = logging.FileHandler('$debugFile.%s' % logger, 'w')
-    handler.setFormatter(formatter)
-    log.addHandler(handler)
-    log.setLevel(logging.INFO)
-EOF
 
 # Allow us to pass parameters to the command line of the application.
 #
@@ -121,7 +124,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
     #echo starting Orca...
-    orca &
+    orca --user-prefs-dir `pwd`&
     sleep $WAIT_TIME
 fi
 

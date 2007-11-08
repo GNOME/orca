@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# See http://live.gnome.org/Orca/RegressionTesting for more info.
+#
 # runall.sh can take the following optional parameters:
 #
 # -a <appDir>        - absolute path to directory with tests for a single app 

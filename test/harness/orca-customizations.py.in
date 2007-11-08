@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+
+# Contains settings that should apply to all runs of the Orca 
+# test harness.
+
+import orca.debug
+orca.debug.debugLevel = orca.debug.LEVEL_ALL
+
+import orca.settings
+orca.settings.enableSpeech = True
+orca.settings.speechFactoryModules = []
+orca.settings.speechServerFactory = None
+orca.settings.asyncMode = False
+orca.settings.enableProgressBarUpdates = True
+orca.settings.progressBarUpdateInterval = 0
+orca.settings.commFailureAttemptLimit = 0
+
+import orca.Gecko
+orca.Gecko.sayAllOnLoad = False

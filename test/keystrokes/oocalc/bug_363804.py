@@ -5,45 +5,93 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
-######################################################################
-# 1. Start oocalc. There is a bug_361167.params file that will
-#    automatically load fruit.ods.
-#
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
 
 ######################################################################
-# 2. Type Control-Home to position the text caret in cell A1.
+# Redefine this if you're working with a nightly build of OOo.  It is
+# the string that appears in the window title.  For example, instead of
+#"OpenOffice.org" you might have "OOo-dev".  
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '
-# VISIBLE:  'Cell A1 ', cursor=1
-# SPEECH OUTPUT: ' A1'
+OO_NAME="OpenOffice.org"
+
+######################################################################
+# Start oocalc. There is a bug_361167.params file that will
+# automatically load fruit.ods.
+#
+#sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
+sequence.append(WaitAction("focus:",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           30000))
+
+######################################################################
+# Type Control-Home to position the text caret in cell A1.
 #
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
 
 ######################################################################
-# 3. Press the down arrow to move to cell A2.
+# Press the down arrow to move to cell A2.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '
-# VISIBLE:  'Good in Pies Cell A2 ', cursor=1
-# SPEECH OUTPUT: 'Good in Pies A2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Down to A2 - speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
+     "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Good in Pies A2'"]))
 
 ######################################################################
-# 4. Press the right arrow to move to cell B2.
+# Press the right arrow to move to cell B2.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '
-# VISIBLE:  'Yes Cell B2 ', cursor=1
-# SPEECH OUTPUT: 'Yes B2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Right to B2 - speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+     "     VISIBLE:  'Yes Cell B2 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Yes B2'"]))
 
 ######################################################################
-# 5. Type Insert-Control-space to bring up the application specific
-#    Preferences dialog for soffice.
+# Type Control-Home to position the text caret in cell A1.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Control Home to A1 - speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' A1'"]))
+
+######################################################################
+# Type Insert-Control-space to bring up the application specific
+# Preferences dialog for soffice.
 #
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("<control>space"))
@@ -52,60 +100,94 @@ sequence.append(WaitForWindowActivate("Orca Preferences for soffice",None))
 sequence.append(WaitForFocus("Speech", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ######################################################################
-# 6. Press End to move focus to the soffice application specific tab in
-#    the Preferences dialog.
+# Press End to move focus to the soffice application specific tab in
+# the Preferences dialog.
 #
 sequence.append(KeyComboAction("End"))
 sequence.append(WaitForFocus("soffice", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ######################################################################
-# 7. Press Tab to move to the "Speak spread sheet cell coordinates"
-#    checkbox.
+# Press Tab to move to the "Speak spread sheet cell coordinates"
+# checkbox.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Speak spread sheet cell coordinates", acc_role=pyatspi.ROLE_CHECK_BOX))
 
 ######################################################################
-# 8. Press Space to toggle the state to unchecked.
+# Press Space to toggle the state to unchecked.
 #
 sequence.append(TypeAction(" "))
+sequence.append(WaitAction("object:state-changed:checked",
+                           None,
+                           None,
+                           pyatspi.ROLE_CHECK_BOX,
+                           5000))
 
 ######################################################################
-# 9. Type Alt-o to press the OK button and reload the Orca user settings.
+# Type Alt-o to press the OK button and reload the Orca user settings.
 #
 sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
 
 ######################################################################
-# 10. Type Control-Home to position the text caret in cell A1.
-#
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '
-# VISIBLE:  'Cell A1 ', cursor=1
-# SPEECH OUTPUT: 'blank'
+# Type Control-Home to position the text caret in cell A1.
 #
 sequence.append(KeyComboAction("<Control>Home"))
 
 ######################################################################
-# 11. Press the down arrow to move to cell A2.
+# Press the down arrow to move to cell A2.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '
-# VISIBLE:  'Good in Pies Cell A2 ', cursor=1
-# SPEECH OUTPUT: 'Good in Pies'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Down to A2 - don't speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
+     "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Good in Pies'"]))
 
 ######################################################################
-# 12. Press the right arrow to move to cell B2.
+# Press the right arrow to move to cell B2.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '
-# VISIBLE:  'Yes Cell B2 ', cursor=1
-# SPEECH OUTPUT: 'Yes'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Right to B2 - don't speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+     "     VISIBLE:  'Yes Cell B2 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Yes'"]))
 
 ######################################################################
-# 13. Type Insert-Control-space to bring up the application specific
-#     Preferences dialog for soffice again.
+# Type Control-Home to position the text caret in cell A1.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
+    "Control+Home to A1 - don't speak cell coordinates",
+    ["BRAILLE LINE:  'soffice Application fruit - " + OO_NAME + " Calc Frame fruit - " + OO_NAME + " Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'blank'"]))
+
+######################################################################
+# Type Insert-Control-space to bring up the application specific
+# Preferences dialog for soffice again.
 #
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("<control>space"))
@@ -114,32 +196,37 @@ sequence.append(WaitForWindowActivate("Orca Preferences for soffice",None))
 sequence.append(WaitForFocus("Speech", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ######################################################################
-# 14. Press End to move focus to the soffice application specific tab in
-#     the Preferences dialog.
+# Press End to move focus to the soffice application specific tab in
+# the Preferences dialog.
 #
 sequence.append(KeyComboAction("End"))
 sequence.append(WaitForFocus("soffice", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ######################################################################
-# 15. Press Tab to move to the "Speak spread sheet cell coordinates"
-#     checkbox.
+# Press Tab to move to the "Speak spread sheet cell coordinates"
+# checkbox.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Speak spread sheet cell coordinates", acc_role=pyatspi.ROLE_CHECK_BOX))
 
 ######################################################################
-# 16. Press Space to toggle the state back to checked.
+# Press Space to toggle the state back to checked.
 #
 sequence.append(TypeAction(" "))
+sequence.append(WaitAction("object:state-changed:checked",
+                           None,
+                           None,
+                           pyatspi.ROLE_CHECK_BOX,
+                           5000))
 
 ######################################################################
-# 17. Type Alt-o to press the OK button and reload the Orca user settings.
+# Type Alt-o to press the OK button and reload the Orca user settings.
 #
 sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
 
 ######################################################################
-# 18. Enter Alt-f, Alt-c to close the Calc spreadsheet window.
+# Enter Alt-f, Alt-c to close the Calc spreadsheet window.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
@@ -153,9 +240,9 @@ sequence.append(WaitAction("object:property-change:accessible-name",
 #sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PANEL))
 
 ######################################################################
-# 19. Enter Alt-f, right arrow, down arrow and Return,
-#     (File->New->Spreadsheet), to get the application back
-#     to the state it was in when the test started.
+# Enter Alt-f, right arrow, down arrow and Return,
+# (File->New->Spreadsheet), to get the application back
+# to the state it was in when the test started.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
@@ -174,8 +261,10 @@ sequence.append(WaitAction("object:property-change:accessible-name",
                            30000))
 
 ######################################################################
-# 20. Wait for things to get back to normal.
+# Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

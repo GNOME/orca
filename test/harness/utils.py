@@ -72,6 +72,7 @@ class AssertPresentationAction(AtomicAction):
     totalCount = 0
     totalSucceed = 0
     totalFail = 0
+    totalExpectedToFail = 0
 
     def __init__(self, name, expectedResults, 
                  assertionPredicate=assertListEquality):
@@ -119,10 +120,15 @@ class AssertPresentationAction(AtomicAction):
                                AssertPresentationAction.totalCount, 
                                self._name)
             print >> myErr, "EXPECTED:"
+            expectedToFail = False
             if isinstance(self._expectedResults, [].__class__):
                 for result in self._expectedResults:
+                    if result.startswith("BUG?"):
+                        expectedToFail = True
                     print >> myErr, '     "%s",' % result
             else:
+                if self._expectedResults.startswith("BUG?"):
+                    expectedToFail = True
                 print >> myErr, '     "%s"' % self._expectedResults
             print >> myErr, "ACTUAL:"
             if isinstance(results, [].__class__):
@@ -130,7 +136,10 @@ class AssertPresentationAction(AtomicAction):
                     print >> myErr, '     "%s",' % result
             else:
                 print >> myErr, '     "%s"' % results
-   
+            if expectedToFail:
+                AssertPresentationAction.totalExpectedToFail += 1
+                print >> myErr, '[FAILURE WAS EXPECTED - ' \
+                                'LOOK FOR BUG? IN EXPECTED RESULTS]'
     def __str__(self):
         return 'Assert Presentation Action: %s' % self._name
 
@@ -147,6 +156,13 @@ class AssertionSummaryAction(AtomicAction):
             % (AssertPresentationAction.totalSucceed,
                AssertPresentationAction.totalFail,
                AssertPresentationAction.totalCount,
+               sys.argv[0])
+        if AssertPresentationAction.totalExpectedToFail \
+           != AssertPresentationAction.totalFail:
+            print >> myOut, \
+            "******** %d FAILURES NOT EXPECTED FOR %s" \
+            % (AssertPresentationAction.totalFail \
+               - AssertPresentationAction.totalExpectedToFail,
                sys.argv[0])
 
     def __str__(self):

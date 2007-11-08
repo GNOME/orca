@@ -570,9 +570,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
     def _setupFamilies(self):
         """Gets the list of voice families for the current speech server.
-        If there aren't any families, set the 'enableSpeech' to False and
-        return, otherwise get the information associated with each voice
-        family and add an entry for it to the families GtkComboBox list.
+        If there are families, get the information associated with
+        each voice family and add an entry for it to the families
+        GtkComboBox list.
         """
 
         self.speechFamiliesModel.clear()
@@ -581,7 +581,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         if len(families) == 0:
             debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
             self.speechFamiliesChoice = None
             return
 
@@ -641,10 +640,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
     def _setupSpeechServers(self):
         """Gets the list of speech servers for the current speech factory.
-        If there aren't any servers, set the 'enableSpeech' to False and
-        return, otherwise get the information associated with each speech
-        server and add an entry for it to the speechServers GtkComboBox list.
-        Set the current choice to be the first item.
+        If there are servers, get the information associated with each
+        speech server and add an entry for it to the speechServers
+        GtkComboBox list.  Set the current choice to be the first item.
         """
 
         self.speechServersModel.clear()
@@ -653,7 +651,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         if len(self.speechServersChoices) == 0:
             debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
             self.speechServersChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
@@ -728,7 +725,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         if len(self.workingFactories) == 0:
             debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
             self.speechSystemsChoice = None
             self.speechServersChoices = []
             self.speechServersChoice = None
@@ -773,7 +769,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         factories = speech.getSpeechServerFactories()
         if len(factories) == 0:
-            self.prefsDict["enableSpeech"] = False
+            self.workingFactories = []
+            self.speechSystemsChoice = None
+            self.speechServersChoices = []
+            self.speechServersChoice = None
+            self.speechFamiliesChoices = []
+            self.speechFamiliesChoice = None
             return
 
         speech.init()
@@ -3135,14 +3136,21 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = self.get_widget("speechSupportCheckbutton").get_active()
         self.prefsDict["enableSpeech"] = enable
-        self.prefsDict["speechServerFactory"] = \
-            self.speechSystemsChoice.__name__
-        self.prefsDict["speechServerInfo"] = self.speechServersChoice.getInfo()
-        self.prefsDict["voices"] = {
-            settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
-            settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),
-            settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice)
-        }
+
+        if self.speechSystemsChoice:
+            self.prefsDict["speechServerFactory"] = \
+                self.speechSystemsChoice.__name__
+
+        if self.speechServersChoice:
+            self.prefsDict["speechServerInfo"] = \
+                self.speechServersChoice.getInfo()
+
+        if self.defaultVoice:
+            self.prefsDict["voices"] = {
+                settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
+                settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),
+                settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice)
+            }
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
 
