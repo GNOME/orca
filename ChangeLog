@@ -1,3 +1,16 @@
+2007-11-08  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runone.sh:
+          test/harness/runall.sh:
+          test/harness/utils.py:
+          test/harness/user-settings.py.in:
+          test/harness/orca-customizations.py.in:
+          test/keystrokes/oocalc/bug_363804.py:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+	  Fix for bug #489913 - Changing preferences from a test causes 
+	  tracebacks and spontaneous speech.
+
 2007-11-08  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/orca.py: 
