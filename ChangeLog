@@ -1,3 +1,8 @@
+2007-11-08  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/orca.py: 
+	Added pyatspi.setCacheLevel() if settings.cacheValues is True.
+
 2007-11-08  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/role_window.py:

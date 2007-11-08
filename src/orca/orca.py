@@ -1106,6 +1106,9 @@ def start(registry):
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
+    
+    if settings.cacheValues:
+        pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
     registry.start()
 
