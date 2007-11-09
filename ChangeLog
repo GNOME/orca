@@ -10,6 +10,12 @@
           outputting all information for "object:selection-changed" 
           menu bar event.
 
+        * test/keystrokes/oocalc/bug_364407.py:
+          test/keystrokes/oowriter/bug_353268.py:
+          Slight adjustments to the TypeAction commands to allow a
+          one second interval between each character. See comment #13 of
+          bug #489883 for more details.
+
 2007-11-08  Willie Walker <william.walker@sun.com>
 
         * test/harness/runone.sh:

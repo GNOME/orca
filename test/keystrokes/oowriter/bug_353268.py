@@ -31,10 +31,10 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 #    "Line 1"
 #    "Line 2"
 #
-sequence.append(TypeAction("Line 1"))
+sequence.append(TypeAction("Line 1", 0, 1000))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
-sequence.append(TypeAction("Line 2"))
+sequence.append(TypeAction("Line 2", 0, 1000))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 

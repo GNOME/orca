@@ -60,7 +60,7 @@ sequence.append(KeyComboAction("BackSpace"))
 # VISIBLE:  'Cell C3 ', cursor=1
 # SPEECH OUTPUT: ' C3'
 #
-sequence.append(TypeAction("c3"))
+sequence.append(TypeAction("c3", 0, 1000))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 
