@@ -88,7 +88,7 @@ class Script(default.Script):
 
         debug.printObjectEvent(self.debugLevel,
                                event,
-                               event.source)
+                               debug.getAccessibleDetails(event.source))
 
         # Here we handle the case when focus is in the "Work online/offline" 
         # button near the status bar that has an image without a description.
