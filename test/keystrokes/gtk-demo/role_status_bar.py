@@ -38,13 +38,12 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Status bar Where Am I",
-    ["BUG? - status bar is not presented.",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
      "SPEECH OUTPUT: 'Application Window'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

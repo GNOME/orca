@@ -1492,10 +1492,10 @@ class WhereAmI:
 
         utterances = []
 
-        if self._statusBar.childCount == 0:
-            text = self._getObjName(self._statusBar)
+        text = self._getObjName(self._statusBar)
+        if text:
             utterances.append(text)
-        else:
+        elif self._statusBar.childCount:
             for child in self._statusBar:
                 text = self._getObjName(child)
                 utterances.append(text)
