@@ -1,4 +1,4 @@
-Orca v2.21.2pre
+Orca v2.21.2
 
 Introduction
 ========================================================================
@@ -27,10 +27,9 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca is supported on GNOME 2.18 or better, but works best on the
-latest releases of GNOME.  We highly suggest you use the latest
-releases of GNOME because they contain accessibility infrastructure
-and application bug fixes that help Orca work better.
+Orca v2.21.x is supported on GNOME 2.21.x only.  We highly suggest you
+use the latest releases of GNOME because they contain accessibility
+infrastructure and application bug fixes that help Orca work better.
 
 Building Orca also requires the development modules for the following
 to be installed:
@@ -39,11 +38,13 @@ to be installed:
 * pyorbit >= 2.14.0          - Python bindings for ORBit2
 * pygtk >= 2.8.4             - GTK+ Python bindings
 * gnome-python >= 2.6.2      - Python bindings for various GNOME libraries
-* libspi-1.0 >= 1.7.6        - Python bindings for AT-SPI
 * gnome-speech-1.0 >= 0.3.10 - Python bindings for gnome-speech
 * gnome-mag-1.0 >= 0.12.5    - Python bindings for gnome-mag (optional) 
 * BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
 * BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
+
+YOU ALSO NEED THE LATEST AT-SPI AND PYATSPI FOR THE GNOME 2.21.x
+DEVELOPMENT RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 

@@ -1,3 +1,11 @@
+2007-11-11  Willie Walker <william.walker@sun.com>
+
+        * README:
+          NEWS:
+          Initial prep for Orca v2.21.2.  Will wait until tomorrow
+	  to do the release since I think another bug or two will
+	  be fixed by then.
+
 2007-11-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/gtk-demo/role_status_bar.py:

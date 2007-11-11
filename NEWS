@@ -1,3 +1,64 @@
+2.21.2 - 12-Nov-2007
+
+General:
+
+* Fix for bug #481488 - Implement increased support for
+  user-customized keybindings
+
+* Fix for bug #486918 - Page tab role should be presented in braille
+
+* Fix for bug #486969 - Status bar not being read with Where Am I
+
+* Fix for bug #486972 - Expanding/collapsing tree nodes in a table 
+  should not speak nodename again
+
+* Fix for bug #487226 - "/" and the OrcaKey should not be hardcoded in
+  default.py:whereAmI.  There are now two handlers instead of one,
+  helping reduce a lot of confusion and complexity.  There is the
+  "Performs the where am I operation" handler (same as we used to
+  have) and the new "Speaks the title bar or status bar" handler.
+  All keybindings are still the same.
+
+* Fix for bug #487514 - Keys for navigation purposes should not be 
+  echoed
+
+* Fix for bug #489875 - Some Orca macaroon oowriter and oocalc tests
+  have timeout problems
+
+* Fix for bug #489913 - Changing preferences from a test causes 
+  tracebacks and spontaneous speech
+
+* Fix for bug #489928 - Orca oocalc macaroon test for bug #363804 
+  doesn't completely restore initial state
+
+* Fix for bug #491417 - Orca script should inherit PATH and PYTHONPATH
+  from environment.  (Thanks David Csercsics!!!)
+
+* Fix for bug #494651 - Orca's OBJECT EVENT debug routine not 
+  outputting all information for "object:selection-changed" 
+  menu bar event
+
+* Additional work related to pyatspi migration (bug #489490, 
+  bug #491885).  We will be looking at improving performance for the
+  next release.
+
+Firefox:
+
+* Fix for bug #485903 - Orca doesn't read message list in gmail
+
+* Fix for bug #490266 - Endless loop in navigating ARIA trees
+
+* Fix for bug #490568 - Implement Firefox page summary using
+  Collections
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    pt_BR   Brazilian Portuguese Leonardo Ferreira Fontenelle
+                                 and Tiago Melo Casal
+    nb      Norwegian Bokmã¥L    Espes Stefansen and Kjartan Maraas
+
+==========
+
 2.21.1 - 28-Oct-2007
 
 Things marked with a '+' indicate stuff that is not planned for a Orca
@@ -36,7 +97,7 @@ General:
   mainly as a means to help with bug #448848, but we plan to do more work
   since it helped catch issues that have been in the code for a while.
 
-+ Fix for bug #487230 - get{Speech,ShortBraille,LongBraille,Braille}ForRoleName 
++ Fix for bug #487230 - get{Speech,ShortBraille,LongBraille,Braille}ForRoleName
   should allow role to be overridden.
 
 + Fix for bug #488391 - Orca doesn't announce finds in Gedit if combo
