@@ -58,17 +58,6 @@ class WhereAmI(where_am_I.WhereAmI):
 
         where_am_I.WhereAmI.__init__(self, script)
 
-    def _processOrcaKey(self, obj, doubleClick):
-        """Test to see if the Orca modifier key has been pressed.
-        """
-
-        # Handle the Orca modifier key being pressed.
-        top = self._script.getTopLevel(obj)
-        if top and top.name.endswith(" Calc"):
-            self._handleOrcaKey(obj, doubleClick)
-        else:
-            where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
-
     def _speakTableCell(self, obj, doubleClick):
         """Given the nature of OpenOffice Calc, Orca should override the
         default KP_Enter behavior when the item with focus is a cell
@@ -180,12 +169,12 @@ class WhereAmI(where_am_I.WhereAmI):
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _handleOrcaKey(self, obj, doubleClick):
-        """Handle the Orca modifier key being pressed.
+    def _speakTitleOrStatus(self, obj, doubleClick):
+        """Speak the title or status bar contents.
 
-        Calc-Specific Handling: If Insert+KP_Enter is pressed a single time
-        while focus is on a cell within OpenOffice Calc, Orca will speak the
-        following information:
+        Calc-Specific Handling: If pressed a single time while focus is
+        on a cell within OpenOffice Calc, Orca will speak the following
+        information:
 
         1. The contents of the title bar of the application main window
         2. The title of the current worksheet
@@ -194,6 +183,11 @@ class WhereAmI(where_am_I.WhereAmI):
         have focus, the default behavior should be used.
         """
 
+        top = self._script.getTopLevel(obj)
+        if top and not top.name.endswith(" Calc"):
+            return where_am_I.WhereAmI._speakTitleOrStatus(self,
+                                                           obj,
+                                                           doubleClick)
         utterances = []
 
         mylist = self._getCalcFrameAndSheet(obj)
