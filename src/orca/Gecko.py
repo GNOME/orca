@@ -1328,13 +1328,13 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         where_am_I.WhereAmI.__init__(self, script)
         self._script = script
         
-    def whereAmI(self, obj, doubleClick, orcaKey):
+    def whereAmI(self, obj, doubleClick, statusOrTitle):
         """Calls the base class method for single clicks and Gecko specific
         information presentation methods for double clicks
         """
-        if not doubleClick or orcaKey \
+        if not doubleClick or statusOrTitle \
            or not self._script.inDocumentContent(obj):
-            where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, orcaKey)
+            where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, statusOrTitle)
         else:
             try:
                 self._collectionPageSummary()

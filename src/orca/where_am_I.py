@@ -50,7 +50,7 @@ class WhereAmI:
         self._defaultButton = None
         self._lastAttributeString = ""
 
-    def whereAmI(self, obj, doubleClick, orcaKey):
+    def whereAmI(self, obj, doubleClick, titleOrStatus):
         """Speaks information about the current object of interest, including
         the object itself, which window it is in, which application, which
         workspace, etc.
@@ -75,7 +75,7 @@ class WhereAmI:
            \n  parent name=%s \
            \n  parent role=%s \
            \n  double-click=%s \
-           \n  orca-key=%s" % \
+           \n  titleOrStatus=%s" % \
             (self._getObjLabel(obj),
              self._getObjName(obj),
              obj.getRoleName(),
@@ -84,12 +84,12 @@ class WhereAmI:
              self._getObjName(obj.parent),
              obj.parent.getRoleName(),
              doubleClick,
-             orcaKey))
+             titleOrStatus))
 
         role = obj.getRole()
 
-        if orcaKey:
-            self._processOrcaKey(obj, doubleClick)
+        if titleOrStatus:
+            self._speakTitleOrStatus(obj, doubleClick)
 
         elif role == pyatspi.ROLE_CHECK_BOX:
             self._speakCheckBox(obj, doubleClick)
@@ -141,12 +141,6 @@ class WhereAmI:
             self._speakGenericObject(obj, doubleClick)
 
         return True
-
-    def _processOrcaKey(self, obj, doubleClick):
-        """Test to see if the Orca modifier key has been pressed.
-        """
-
-        self._handleOrcaKey(obj, doubleClick)
 
     def _speakCheckBox(self, obj, doubleClick):
         """Checkboxes present the following information
@@ -1406,17 +1400,17 @@ class WhereAmI:
 
         return newStr
 
-    def _handleOrcaKey(self, obj, doubleClick):
-        """Handle the Orca modifier key being pressed.
-
-        When Insert + KP_Enter is pressed a single time, Orca will speak
-        and display the following information:
+    def _speakTitleOrStatus(self, obj, doubleClick):
+        """When pressed a single time, Orca will speak the following
+        information:
 
         1. The contents of the title bar of the application main window
         2. If in a dialog box within an application, the contents of the
         title bar of the dialog box.
         3. Orca will pause briefly between these two pieces of information
         so that the speech user can distinguish each.
+
+        If pressed twice, Orca will speak the status bar.
         """
 
         utterances = []

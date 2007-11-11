@@ -1,3 +1,11 @@
+2007-11-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          src/orca/Gecko.py:
+          src/orca/where_am_I.py:
+          Fixed bug #487226 - "/" and the OrcaKey should not be hardcoded
+          in default.py:whereAmI.
+
 2007-11-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gedit.py:

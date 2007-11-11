@@ -161,7 +161,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["whereAmIHandler"] = \
             input_event.InputEventHandler(
-                Script.doWhereAmI,
+                Script.getWhereAmIInfo,
                 # Translators: the "Where am I" feature of Orca allows
                 # a user to press a key and then have information
                 # about their current context spoken and brailled to
@@ -170,6 +170,16 @@ class Script(script.Script):
                 # its mnemonic.
                 #
                 _("Performs the where am I operation."))
+
+        self.inputEventHandlers["getTitleOrStatusHandler"] = \
+            input_event.InputEventHandler(
+                Script.getTitleOrStatus,
+                # Translators: Orca has a command that will speak
+                # a window's title if pressed once.  If pressed
+                # two times quickly the contents of the status bar
+                # will be spoken instead.
+                #
+                _("Speaks the title bar or status bar."))
 
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
@@ -823,9 +833,16 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
-                0,
+                orcaModMask,
                 0,
                 self.inputEventHandlers["whereAmIHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Enter",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["getTitleOrStatusHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1110,7 +1127,7 @@ class Script(script.Script):
                 "slash",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["whereAmIHandler"]))
+                self.inputEventHandlers["getTitleOrStatusHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1906,33 +1923,35 @@ class Script(script.Script):
             braille.displayMessage(text)
             speech.speak(text)
 
-    def doWhereAmI(self, inputEvent):
+    def doWhereAmI(self, inputEvent, statusOrTitle):
+        """Peforms the whereAmI operation.
+
+        Arguments:
+        - inputEvent:     The original inputEvent
+        - titleOrStatus:  If true, the user is interested in the window's
+                          title or status bar.
         """
-        Speaks information about the current object of interest.
-        """
+
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
-
-        if inputEvent and orca_state.lastInputEvent \
-           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString = input_event.keyEventToString(inputEvent)
-            debug.println(debug.LEVEL_FINEST, "default.doWhereAmI: %s" \
-                          % keyString)
-        else:
-            return self.whereAmI.whereAmI(obj, False, False)
-
-        orcaKey = False
-        if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            orcaKey = (inputEvent.modifiers & (1 << settings.MODIFIER_ORCA)) \
-                        == (1 << settings.MODIFIER_ORCA)
-        else:
-            orcaKey = (inputEvent.event_string == "/")
 
         clickCount = self.getClickCount(self.lastWhereAmIEvent, inputEvent)
         doubleClick = clickCount == 2
         self.lastWhereAmIEvent = inputEvent
 
-        return self.whereAmI.whereAmI(obj, doubleClick, orcaKey)
+        return self.whereAmI.whereAmI(obj, doubleClick, statusOrTitle)
+
+    def getWhereAmIInfo(self, inputEvent):
+        """Speaks information about the current object of interest."""
+
+        self.doWhereAmI(inputEvent, False)
+
+    def getTitleOrStatus(self, inputEvent):
+        """Speaks the window title for a single click; speaks the contents
+        of the status bar for a double click.
+        """
+
+        self.doWhereAmI(inputEvent, True)
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
