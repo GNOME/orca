@@ -2,6 +2,9 @@
 
 General:
 
+* Fix for bug #469083 - Refactor Gecko.py's getContainingRole() to
+  take a list
+
 * Fix for bug #481488 - Implement increased support for
   user-customized keybindings
 
