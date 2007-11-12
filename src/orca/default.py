@@ -5839,6 +5839,40 @@ class Script(script.Script):
 
         return window
 
+    def getAncestor(self, obj, ancestorRoles, stopRoles):
+        """Returns the object of the specified roles which contains the
+        given object, or None if the given object is not contained within
+        an object the specified roles.
+
+        Arguments:
+        - obj: the Accessible object
+        - ancestorRoles: the list of roles to look for
+        - stopRoles: the list of roles to stop the search at
+        """
+
+        if not obj:
+            return None
+
+        if not isinstance(ancestorRoles, [].__class__):
+            ancestorRoles = [ancestorRoles]
+
+        if not isinstance(stopRoles, [].__class__):
+            stopRoles = [stopRoles]
+
+        ancestor = None
+
+        obj = obj.parent
+        while obj and (obj != obj.parent):
+            if obj.getRole() in ancestorRoles:
+                ancestor = obj
+                break
+            elif obj.getRole() in stopRoles:
+                break
+            else:
+                obj = obj.parent
+
+        return ancestor
+
     def saveOldAppSettings(self):
         """Save a copy of all the existing application specific settings
         (as specified by the settings.userCustomizableSettings dictionary)."""

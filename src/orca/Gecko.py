@@ -439,7 +439,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions.append(braille.Region(obj.name))
 
         comboBox = \
-                 self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
+                 self._script.getAncestor(obj,
+                                          [pyatspi.ROLE_COMBO_BOX],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
         if comboBox \
            and not obj.getState().contains(pyatspi.STATE_FOCUSED) \
            and (settings.brailleVerbosityLevel == \
@@ -529,7 +531,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
         #
-        link = self._script.getContainingRole(obj, pyatspi.ROLE_LINK)
+        link = self._script.getAncestor(obj, 
+                                        [pyatspi.ROLE_LINK], 
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
         if len(text) == 0:
             if link:
                 [linkRegions, focusedRegion] = \
@@ -792,7 +796,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         #
         if not obj.getState().contains(pyatspi.STATE_FOCUSED):
             comboBox = \
-                 self._script.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
+                 self._script.getAncestor(obj,
+                                          [pyatspi.ROLE_COMBO_BOX],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
             if comboBox:
                 utterances.extend(self._getSpeechForObjectRole(comboBox))
 
@@ -930,7 +936,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # If there's no text for the image, expose the link to
             # the user if the image is in a link.
             #
-            link = self._script.getContainingRole(obj, pyatspi.ROLE_LINK)
+            link = self._script.getAncestor(obj,
+                                            [pyatspi.ROLE_LINK],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
             if not len(utterances):
                 if link:
                     utterances.extend(self._getSpeechForLink(link,
@@ -1195,7 +1203,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # the entry give us the name -- unless we're in a toolbar.
             #
             containingToolbar = \
-                  self._script.getContainingRole(obj, pyatspi.ROLE_TOOL_BAR)
+                  self._script.getAncestor(obj,
+                                           [pyatspi.ROLE_TOOL_BAR],
+                                           [pyatspi.ROLE_DOCUMENT_FRAME])
             if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE and \
                not containingToolbar:
                 parent = parent.parent
@@ -3483,8 +3493,9 @@ class Script(default.Script):
         #
         if event.source and orca_state.locusOfFocus \
            and not self.isSameObject(event.source, orca_state.locusOfFocus):
-            toolbar = self.getContainingRole(event.source,
-                                             pyatspi.ROLE_TOOL_BAR)
+            toolbar = self.getAncestor(event.source,
+                                       [pyatspi.ROLE_TOOL_BAR],
+                                       [pyatspi.ROLE_DOCUMENT_FRAME])
             if toolbar:
                 if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                     orca.setLocusOfFocus(event, event.source, False)
@@ -3600,8 +3611,9 @@ class Script(default.Script):
                 # of the panel.
                 #
                 containingPanel = \
-                            self.getContainingRole(orca_state.locusOfFocus,
-                                                   pyatspi.ROLE_PANEL)
+                            self.getAncestor(orca_state.locusOfFocus,
+                                             [pyatspi.ROLE_PANEL],
+                                             [pyatspi.ROLE_DOCUMENT_FRAME])
                 if self.isSameObject(containingPanel, event.source):
                     return
 
@@ -3660,8 +3672,9 @@ class Script(default.Script):
         # the image focus and announce it.
         #
         if event.source.getRole() == pyatspi.ROLE_LINK:
-            containingLink = self.getContainingRole(orca_state.locusOfFocus,
-                                                    pyatspi.ROLE_LINK)
+            containingLink = self.getAncestor(orca_state.locusOfFocus,
+                                              [pyatspi.ROLE_LINK],
+                                              [pyatspi.ROLE_DOCUMENT_FRAME])
             if containingLink == event.source:
                 return
             elif event.source.childCount == 1:
@@ -3985,11 +3998,13 @@ class Script(default.Script):
         # loading.
         #
         if event:
-            inDialog = self.getContainingRole(event.source,
-                                              pyatspi.ROLE_DIALOG)
+            inDialog = self.getAncestor(event.source,
+                                        [pyatspi.ROLE_DIALOG],
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
             if not inDialog:
-                inDialog = self.getContainingRole(event.source,
-                                                  pyatspi.ROLE_ALERT)
+                inDialog = self.getAncestor(event.source,
+                                            [pyatspi.ROLE_ALERT],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
 
         if self._loadingDocumentContent \
            and event and event.source \
@@ -4105,8 +4120,9 @@ class Script(default.Script):
             #
             if focusedObj.getRole() == pyatspi.ROLE_COMBO_BOX \
                and obj.getRole() == pyatspi.ROLE_MENU_ITEM:
-                comboBox = self.getContainingRole(obj,
-                                                  pyatspi.ROLE_COMBO_BOX)
+                comboBox = self.getAncestor(obj,
+                                            [pyatspi.ROLE_COMBO_BOX],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
                 isFocusedObj = self.isSameObject(comboBox, focusedObj)
             else:
                 isFocusedObj = self.isSameObject(obj, focusedObj)
@@ -4135,7 +4151,9 @@ class Script(default.Script):
                 if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
                 else:
-                    link = self.getContainingRole(obj, pyatspi.ROLE_LINK)
+                    link = self.getAncestor(obj,
+                                            [pyatspi.ROLE_LINK],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
@@ -4158,7 +4176,9 @@ class Script(default.Script):
             # heading contains no children.
             #
             containingHeading = \
-                self.getContainingRole(obj, pyatspi.ROLE_HEADING)
+                self.getAncestor(obj,
+                                 [pyatspi.ROLE_HEADING],
+                                 [pyatspi.ROLE_DOCUMENT_FRAME])
             isLastObject = contents.index(content) == (len(contents) - 1)
             if obj.getRole() == pyatspi.ROLE_HEADING:
                 appendRole = isLastObject or not obj.childCount
@@ -4862,7 +4882,9 @@ class Script(default.Script):
         """
 
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE_CELL],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
 
         parent = obj.parent
         try:
@@ -5166,33 +5188,12 @@ class Script(default.Script):
 
         return basename
 
-    def getContainingRole(self, obj, role):
-        """Returns the object of the specified role which contains the
-        given object, or None if the given object is not contained within
-        an object the specified role.
-        """
-
-        if not obj:
-            return None
-
-        containingObj = None
-
-        obj = obj.parent
-        while obj and (obj != obj.parent):
-            if obj.getRole() == role:
-                containingObj = obj
-                break
-            elif obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-                break
-            else:
-                obj = obj.parent
-
-        return containingObj
-
     def isFormField(self, obj):
         """Returns True if the given object is a field inside of a form."""
 
-        containingForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
+        containingForm = self.getAncestor(obj,
+                                          [pyatspi.ROLE_FORM],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
         isField = containingForm \
                   and not obj.getRole() in [pyatspi.ROLE_LINK,
                                             pyatspi.ROLE_MENU_ITEM,
@@ -5240,7 +5241,9 @@ class Script(default.Script):
                     useless = True
 
         if useless:
-            link = self.getContainingRole(obj, pyatspi.ROLE_LINK)
+            link = self.getAncestor(obj,
+                                    [pyatspi.ROLE_LINK],
+                                    [pyatspi.ROLE_DOCUMENT_FRAME])
             if link:
                 useless = False
 
@@ -5479,8 +5482,12 @@ class Script(default.Script):
         # to be ignored.  Let's try that for now and adjust based on feedback
         # and testing.]]]
         #
-        leftIsInForm = self.getContainingRole(onLeft, pyatspi.ROLE_FORM)
-        rightIsInForm = self.getContainingRole(onRight, pyatspi.ROLE_FORM)
+        leftIsInForm = self.getAncestor(onLeft,
+                                        [pyatspi.ROLE_FORM],
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
+        rightIsInForm = self.getAncestor(onRight,
+                                         [pyatspi.ROLE_FORM],
+                                         [pyatspi.ROLE_DOCUMENT_FRAME])
 
         # [[[TODO: Grayed out buttons don't pass the isFormField() test
         # because they are neither focusable nor showing -- and thus
@@ -5615,8 +5622,12 @@ class Script(default.Script):
             # above the form field or the text above is contained in the
             # form's parent and adjust based on feedback, testing.]]]
             #
-            theForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
-            aboveForm = self.getContainingRole(obj, pyatspi.ROLE_FORM)
+            theForm = self.getAncestor(obj,
+                                       [pyatspi.ROLE_FORM],
+                                       [pyatspi.ROLE_DOCUMENT_FRAME])
+            aboveForm = self.getAncestor(obj,
+                                         [pyatspi.ROLE_FORM],
+                                         [pyatspi.ROLE_DOCUMENT_FRAME])
             aboveIsInForm = self.isSameObject(theForm, aboveForm)
             formIsInAbove = theForm \
                             and self.isSameObject(theForm.parent, content[0])
@@ -5669,8 +5680,9 @@ class Script(default.Script):
             # may need to be ignored.  Let's try that for now and adjust
             # based on feedback and testing.]]]
             #
-            belowIsInForm = self.getContainingRole(content[0],
-                                                   pyatspi.ROLE_FORM)
+            belowIsInForm = self.getAncestor(content[0],
+                                             [pyatspi.ROLE_FORM],
+                                             [pyatspi.ROLE_DOCUMENT_FRAME])
 
             # If the horizontal starting point of the object is the
             # same as the horizontal starting point of the text
@@ -5741,7 +5753,9 @@ class Script(default.Script):
         extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
         containingCell = \
-                       self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+                       self.getAncestor(obj,
+                                        [pyatspi.ROLE_TABLE_CELL],
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
 
         # If we're not in a table cell, pursuing this further is silly. If
         # we're in a table cell but are not the sole occupant of that cell,
@@ -5751,7 +5765,9 @@ class Script(default.Script):
         if not containingCell \
            or (containingCell.childCount > 1):
             return guess
-        elif self.getContainingRole(obj, pyatspi.ROLE_PARAGRAPH):
+        elif self.getAncestor(obj,
+                              [pyatspi.ROLE_PARAGRAPH],
+                              [pyatspi.ROLE_DOCUMENT_FRAME]):
             return guess
 
         [cellLeft, leftText, leftExtents, leftIsField] = \
@@ -6816,7 +6832,9 @@ class Script(default.Script):
             # heading contains no children.
             #
             containingHeading = \
-                self.getContainingRole(obj, pyatspi.ROLE_HEADING)
+                self.getAncestor(obj,
+                                 [pyatspi.ROLE_HEADING],
+                                 [pyatspi.ROLE_DOCUMENT_FRAME])
             isLastObject = contents.index(content) == (len(contents) - 1)
             if obj.getRole() == pyatspi.ROLE_HEADING:
                 speakThisRole = isLastObject or not obj.childCount
@@ -6956,7 +6974,9 @@ class Script(default.Script):
         # If we're not in a table cell, reset self.lastTableCell.
         #
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            cell = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            cell = self.getAncestor(obj,
+                                    [pyatspi.ROLE_TABLE_CELL],
+                                    [pyatspi.ROLE_DOCUMENT_FRAME])
             if not cell:
                 self.lastTableCell = [-1, -1]
 
@@ -7346,7 +7366,9 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
-            comboBox = self.getContainingRole(obj, pyatspi.ROLE_COMBO_BOX)
+            comboBox = self.getAncestor(obj,
+                                        [pyatspi.ROLE_COMBO_BOX],
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
             try:
                 action = comboBox.queryAction()
             except:
@@ -7807,7 +7829,9 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingRole(obj, pyatspi.ROLE_LINK)
+        containingLink = self.getAncestor(obj,
+                                          [pyatspi.ROLE_LINK],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
         if containingLink:
             obj = containingLink
 
@@ -7886,7 +7910,9 @@ class Script(default.Script):
         # it else we'll get stuck.
         #
         [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getContainingRole(obj, pyatspi.ROLE_LINK)
+        containingLink = self.getAncestor(obj,
+                                          [pyatspi.ROLE_LINK],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
         if containingLink:
             obj = containingLink
 
@@ -8293,7 +8319,9 @@ class Script(default.Script):
         """Move to the cell on the left in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE_CELL],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             oldHeaders = self.getColumnHeaders(obj)
@@ -8342,7 +8370,9 @@ class Script(default.Script):
         """Move to the cell on the right in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE_CELL],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             oldHeaders = self.getColumnHeaders(obj)
@@ -8395,7 +8425,9 @@ class Script(default.Script):
         """Move one cell up in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE_CELL],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             oldHeaders = self.getRowHeaders(obj)
@@ -8444,7 +8476,9 @@ class Script(default.Script):
         """Move one cell down in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE_CELL)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE_CELL],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             [row, col] = self.getCellCoordinates(obj)
             oldHeaders = self.getRowHeaders(obj)
@@ -8497,7 +8531,9 @@ class Script(default.Script):
         """Move to the first cell in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             obj = obj.queryTable().getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
@@ -8512,7 +8548,9 @@ class Script(default.Script):
         """Move to the last cell in an HTML table."""
         [obj, characterOffset] = self.getCaretContext()
         if obj.getRole() != pyatspi.ROLE_TABLE:
-            obj = self.getContainingRole(obj, pyatspi.ROLE_TABLE)
+            obj = self.getAncestor(obj,
+                                   [pyatspi.ROLE_TABLE],
+                                   [pyatspi.ROLE_DOCUMENT_FRAME])
         if obj:
             table = obj.queryTable()
             lastRow = table.nRows - 1
