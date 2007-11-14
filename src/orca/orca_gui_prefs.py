@@ -50,8 +50,6 @@ import speechserver
 
 from orca_i18n import _  # for gettext support
 
-OS = None
-
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, OLDTEXT1, TEXT1, \
  MOD_MASK2, MOD_USED2, KEY2, OLDTEXT2, TEXT2, MODIF, EDITABLE) = range(14)
 
@@ -3193,37 +3191,78 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
-           GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
-           from the Glade file the next time the user wants to display the
-           configuration GUI.
+           GtkWindow widget. Reset orca_state.orcaOS to None, so that the 
+           GUI can be rebuilt from the Glade file the next time the user 
+           wants to display the configuration GUI.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        global OS
+        orca_state.orcaOS = None
 
-        OS = None
+class warningDialogGUI(orca_glade.GladeWrapper):
+
+    def getPrefsWarningDialog(self):
+        """Return a handle to the Orca Preferences warning dialog.
+        """
+
+        return self.orcaPrefsWarningDialog
+
+    def orcaPrefsWarningDialogDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the 
+        orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
+        to None, so that the GUI can be rebuilt from the Glade file the 
+        next time that this warning dialog has to be displayed.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        orca_state.orcaWD = None
+
+    def orcaPrefsWarningDialogOKButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        orcaPrefsWarningDialogOKButton GtkButton widget. The user has clicked
+        the OK button in the Orca Application Preferences warning dialog.
+        This dialog informs the user that they already have an instance
+        of an Orca preferences dialog open, and that they will need to 
+        close it before opening a new one.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.orcaPrefsWarningDialog.destroy()
+
 
 def showPreferencesUI():
-    global OS
+    if not orca_state.appOS and not orca_state.orcaOS:
+        # Translators: Orca Preferences is the configuration GUI for Orca.
+        #
+        line = _("Starting Orca Preferences. This may take a while.")
+        braille.displayMessage(line)
+        speech.speak(line)
 
-    # Translators: Orca Preferences is the configuration GUI for Orca.
-    #
-    line = _("Starting Orca Preferences. This may take a while.")
-    braille.displayMessage(line)
-    speech.speak(line)
+        orca_state.prefsGladeFile = os.path.join(platform.prefix,
+                                                 platform.datadirname,
+                                                 platform.package,
+                                                 "glade",
+                                                 "orca-setup.glade")
+        orca_state.orcaOS = orcaSetupGUI(orca_state.prefsGladeFile,
+                                         "orcaSetupWindow")
+        orca_state.orcaOS._init()
+    else:
+        if not orca_state.orcaWD:
+            orca_state.orcaWD = \
+                warningDialogGUI(orca_state.prefsGladeFile,
+                                 "orcaPrefsWarningDialog")
+            warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
+            warningDialog.realize()
+            warningDialog.show()
+        return
 
-    if not OS:
-        gladeFile = os.path.join(platform.prefix,
-                                 platform.datadirname,
-                                 platform.package,
-                                 "glade",
-                                 "orca-setup.glade")
-        OS = orcaSetupGUI(gladeFile, "orcaSetupWindow")
-        OS._init()
-
-    OS._showGUI()
+    orca_state.orcaOS._showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

@@ -37,6 +37,7 @@ import default
 import focus_tracking_presenter
 import input_event
 import keybindings
+import orca_glade
 import orca_gui_prefs
 import orca_state
 import platform
@@ -47,7 +48,6 @@ from orca_i18n import _  # for gettext support
 
 applicationName = None
 appScript = None
-OS = None
 
 class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
@@ -217,20 +217,52 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
-           GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
-           from the Glade file the next time the user wants to display the
-           configuration GUI.
+           GtkWindow widget. Reset orca_state.appOS to None, so that the 
+           GUI can be rebuilt from the Glade file the next time the user 
+           wants to display the configuration GUI.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        global OS
+        orca_state.appOS = None
 
-        OS = None
+class warningDialogGUI(orca_glade.GladeWrapper):
+
+    def getPrefsWarningDialog(self):
+        """Return a handle to the Orca Preferences warning dialog.
+        """
+
+        return self.orcaPrefsWarningDialog
+
+    def orcaPrefsWarningDialogDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the 
+        orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
+        to None, so that the GUI can be rebuilt from the Glade file the 
+        next time that this warning dialog has to be displayed.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        orca_state.orcaWD = None
+
+    def orcaPrefsWarningDialogOKButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+        orcaPrefsWarningDialogOKButton GtkButton widget. The user has clicked
+        the OK button in the Orca Preferences warning dialog.
+        This dialog informs the user that they already have an instance 
+        of an Orca preferences dialog open, and that they will need to 
+        close it before opening a new one.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.orcaPrefsWarningDialog.destroy()
 
 def showPreferencesUI():
-    global applicationName, appScript, OS
+    global applicationName, appScript
 
     # There must be an application with focus for this to work.
     #
@@ -247,29 +279,39 @@ def showPreferencesUI():
     #
     applicationName = orca_state.locusOfFocus.getApplication().name
 
-    # Translators: Orca Preferences in this case, is a configuration GUI 
-    # for allowing users to set application specific settings from within
-    # Orca for the application that currently has focus.
-    #
-    line = _("Starting Orca Preferences for %s. This may take a while.") % \
-           applicationName
-    braille.displayMessage(line)
-    speech.speak(line)
-
     removeGeneralPane = False
-    if not OS:
-        gladeFile = os.path.join(platform.prefix,
-                                 platform.datadirname,
-                                 platform.package,
-                                 "glade",
-                                 "orca-setup.glade")
-        OS = orcaSetupGUI(gladeFile, "orcaSetupWindow")
-        removeGeneralPane = True
+    if not orca_state.appOS and not orca_state.orcaOS:
+        # Translators: Orca Preferences in this case, is a configuration GUI
+        # for allowing users to set application specific settings from within
+        # Orca for the application that currently has focus.
+        #
+        line = _("Starting Orca Preferences for %s. This may take a while.") % \
+               applicationName
+        braille.displayMessage(line)
+        speech.speak(line)
 
-    OS._init()
+        orca_state.prefsGladeFile = os.path.join(platform.prefix,
+                                                 platform.datadirname,
+                                                 platform.package,
+                                                 "glade",
+                                                 "orca-setup.glade")
+        orca_state.appOS = orcaSetupGUI(orca_state.prefsGladeFile,
+                                        "orcaSetupWindow")
+        removeGeneralPane = True
+        orca_state.appOS._init()
+    else:
+        if not orca_state.orcaWD:
+            orca_state.orcaWD = \
+                warningDialogGUI(orca_state.prefsGladeFile,
+                                 "orcaPrefsWarningDialog")
+            warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
+            warningDialog.realize()
+            warningDialog.show()
+        return
+
     if removeGeneralPane:
-        OS._initAppGUIState(appScript)
-    OS._showGUI()
+        orca_state.appOS._initAppGUIState(appScript)
+    orca_state.appOS._showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
