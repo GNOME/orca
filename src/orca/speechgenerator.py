@@ -232,7 +232,6 @@ class SpeechGenerator:
         try:
             textObj = obj.queryText()
         except:
-            debug.println("Caught exception.");
             pass
         else:
             noOfSelections = textObj.getNSelections()
@@ -508,6 +507,10 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        for child in obj:
+            if child.getRole() == pyatspi.ROLE_TEXT:
+                utterances.extend(self._getSpeechForAllTextSelection(child))
 
         self._debugGenerator("_getSpeechForComboBox",
                              obj,

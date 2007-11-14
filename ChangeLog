@@ -8,6 +8,11 @@
           Fix the bug in comment #36 of bug #472665 - Speech Pane 
           combo boxes mis-populating in Orca Preferences dialog.
 
+        * src/orca/speechgenerator.py:
+          Fix the bug in comment #21 of bug #486901 - When tabbing 
+          to a text area for a spinbox or editable combobox, text 
+          selection should be presented.
+
 2007-11-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
