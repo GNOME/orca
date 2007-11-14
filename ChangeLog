@@ -7,6 +7,10 @@
           Fix bug #472665 – Speech Pane combo boxes mis-populating in
           Orca Preferences dialog.
 
+        * src/orca/speechgenerator.py:
+          Partial fix for bug #486901 - When tabbing to a text area for 
+          a spinbox or editable combobox, text selection should be presented.
+
 2007-11-12  Willie Walker <william.walker@sun.com>
 
         * configure.in:

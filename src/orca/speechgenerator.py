@@ -220,6 +220,35 @@ class SpeechGenerator:
         else:
             return []
 
+    def _getSpeechForAllTextSelection(self, obj):
+        """Check if this object has text associated with it and it's 
+        completely selected.
+
+        Arguments:
+        - obj: the object being presented
+        """
+
+        utterance = []
+        try:
+            textObj = obj.queryText()
+        except:
+            debug.println("Caught exception.");
+            pass
+        else:
+            noOfSelections = textObj.getNSelections()
+            if noOfSelections == 1:
+                [string, startOffset, endOffset] = \
+                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+                if startOffset == 0 and endOffset == len(string):
+                    # Translators: when the user selects (highlights) text in
+                    # a document, Orca lets them know this.
+                    #
+                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                    #
+                    utterance = [Q_("text|selected")]
+
+        return utterance
+
     def _debugGenerator(self, generatorName, obj, already_focused, utterances):
         """Prints debug.LEVEL_FINER information regarding the speech generator.
 
@@ -271,6 +300,7 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
+            utterances.extend(self._getSpeechForAllTextSelection(obj))
             utterances.extend(self._getSpeechForObjectRole(obj, role))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
@@ -885,6 +915,8 @@ class SpeechGenerator:
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         utterances.append(text)
+
+        utterances.extend(self._getSpeechForAllTextSelection(obj))
 
         self._debugGenerator("_getSpeechForText",
                              obj,
