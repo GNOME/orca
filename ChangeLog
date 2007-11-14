@@ -4,6 +4,10 @@
           Fixed bug #489804 - Problem running test for bug #363801 - 
           clearing row/column dynamic headers in oocalc.
 
+        * src/orca/orca_gui_prefs.py:
+          Fix the bug in comment #36 of bug #472665 - Speech Pane 
+          combo boxes mis-populating in Orca Preferences dialog.
+
 2007-11-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

@@ -3187,7 +3187,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.applyButtonClicked(widget)
         self._cleanupSpeechServers()
-        self.get_widget("orcaSetupWindow").hide()
+        self.get_widget("orcaSetupWindow").destroy()
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
