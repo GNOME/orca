@@ -1414,6 +1414,7 @@ class Script(default.Script):
                     # row of a spreadsheet or table counts as column headers.
                     #
                     line = _("Dynamic column header cleared.")
+                    speech.stop()
                     speech.speak(line)
                     braille.displayMessage(line)
                 except:
@@ -1481,6 +1482,7 @@ class Script(default.Script):
                     # column of a spreadsheet or table counts as row headers.
                     #
                     line = _("Dynamic row header cleared.")
+                    speech.stop()
                     speech.speak(line)
                     braille.displayMessage(line)
                 except:

@@ -1,3 +1,9 @@
+2007-11-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #489804 - Problem running test for bug #363801 - 
+          clearing row/column dynamic headers in oocalc.
+
 2007-11-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
