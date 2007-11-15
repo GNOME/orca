@@ -1068,7 +1068,8 @@ def init(registry):
 
     masks = []
     mask = 0
-    while mask <= (1 << pyatspi.MODIFIER_NUMLOCK):
+    # Cover all masks in 8 bits.
+    while mask <= 255:
         masks.append(mask)
         mask += 1
     pyatspi.Registry.registerKeystrokeListener(
