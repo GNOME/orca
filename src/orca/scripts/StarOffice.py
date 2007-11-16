@@ -2487,6 +2487,11 @@ class Script(default.Script):
                     speech.speak(_("blank"), None, False)
                 return
 
+        # Remove possible extra utterances of the current paragraph by
+        # stopping any pending speech. See bug #435201 for more details.
+        #
+        speech.stop()
+
         # Speak a newline, if appropriate.
         if self.speakNewLine(event.source):
             speech.speak(chnames.getCharacterName("\n"), None, False)

@@ -1,3 +1,9 @@
+2007-11-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #435201 - Orca is too chatty when navigating by 
+          paragraph in OOo Writer.
+
 2007-11-15  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/orca.py: 
