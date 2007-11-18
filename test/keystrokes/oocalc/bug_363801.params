@@ -1,1 +1,1 @@
-../../../keystrokes/oocalc/fruit.ods
+PARAMS=$TEST_DIR/fruit.ods

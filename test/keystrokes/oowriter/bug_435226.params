@@ -1,1 +1,1 @@
-../../../keystrokes/oowriter/spanish.odt
+PARAMS=$TEST_DIR/spanish.odt

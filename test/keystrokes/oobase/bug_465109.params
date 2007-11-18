@@ -1,1 +1,1 @@
-../../../keystrokes/oobase/bug_465109.odb
+PARAMS=$TEST_DIR/bug_465109.odb

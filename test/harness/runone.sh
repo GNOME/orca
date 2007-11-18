@@ -77,7 +77,12 @@ cp $SETTINGS_FILE user-settings.py
 PARAMS_FILE=`dirname $1`/$debugFile.params
 if [ -f $PARAMS_FILE ]
 then
-    PARAMS=`cat $PARAMS_FILE`
+    if [ "x$JDK_DEMO_DIR" == "x" ]
+    then
+        JDK_DEMO_DIR="/usr/share/doc/sun-java6-jdk/demo"
+    fi
+    TEST_DIR=`dirname $1`
+    source $PARAMS_FILE
 fi
 
 # Run the app (or gnome-terminal if no app was given) and let it settle in.

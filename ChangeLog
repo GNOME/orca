@@ -1,3 +1,49 @@
+2007-11-18  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runone.sh:
+          test/keystrokes/ooimpress/bug_462239.params:
+          test/keystrokes/ooimpress/bug_465449.params:
+          test/keystrokes/java/role_check_menu_item.params:
+          test/keystrokes/java/role_check_box.params:
+          test/keystrokes/java/role_table.params:
+          test/keystrokes/java/role_radio_button.params:
+          test/keystrokes/java/role_dialog.params:
+          test/keystrokes/java/role_tree.params:
+          test/keystrokes/java/role_radio_menu_item.params:
+          test/keystrokes/java/role_page_tab.params:
+          test/keystrokes/java/role_menu.params:
+          test/keystrokes/java/role_accel_label.params:
+          test/keystrokes/java/role_combo_box.params:
+          test/keystrokes/java/role_push_button.params:
+          test/keystrokes/gedit/say-all.params:
+          test/keystrokes/gedit/say-all-cursor-pos.params:
+          test/keystrokes/swriter/say-all.params:
+          test/keystrokes/oocalc/bug_363801.params:
+          test/keystrokes/oocalc/bug_363802.params:
+          test/keystrokes/oocalc/bug_435307.params:
+          test/keystrokes/oocalc/bug_356334.params:
+          test/keystrokes/oocalc/bug_361167.params:
+          test/keystrokes/oocalc/bug_363804.params:
+          test/keystrokes/oocalc/bug_433398.params:
+          test/keystrokes/oobase/bug_465109.params:
+          test/keystrokes/oowriter/bug_435226.params:
+          test/keystrokes/oowriter/bug_382415.params:
+          test/keystrokes/oowriter/bug_435201.params:
+          test/keystrokes/oowriter/bug_361624.params:
+          test/keystrokes/oowriter/bug_382408.params:
+          test/keystrokes/oowriter/bug_382880.params:
+          test/keystrokes/oowriter/bug_382888.params:
+          test/keystrokes/soffice/say-all.params:
+          Modify params files to define a PARAMS environment
+	  variable.  Also modify runone.sh to use the PARAMS
+	  environment variable accordingly and to also provide
+	  some helper environment variables for use in the
+	  *.params files: TEST_DIR is the directory holding the 
+	  *.py macaroon script and JDK_DEMO_DIR is the directory
+	  holding the demos that come with the Java development
+	  kit.  This change should hopefully allow the tests to
+	  be run from any directory.
+	
 2007-11-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

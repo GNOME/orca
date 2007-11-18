@@ -1,1 +1,1 @@
-../../../keystrokes/oowriter/column-example.odt
+PARAMS=$TEST_DIR/column-example.odt

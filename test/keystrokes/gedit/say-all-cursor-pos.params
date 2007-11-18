@@ -1,1 +1,1 @@
-../../../text/SayAllText.txt
+PARAMS=$TEST_DIR/../../text/SayAllText.txt
