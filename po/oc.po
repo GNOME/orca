@@ -1,29 +1,31 @@
+# translation of oc.po to Occitan
 # Occitan translation of orca.
 # Copyright (C) 2004-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 #
 # Yannig MARCHEGAY (yannig@marchegay.org) - 2006-2007
 #
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: orca 0.9.0\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-13 17:50+0200\n"
-"PO-Revision-Date: 2007-10-14 17:03+0200\n"
-"Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 14:32+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
 msgstr ""
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 
 #: ../src/orca/app_gui_prefs.py:103
@@ -342,7 +344,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:130
 msgid "question"
-msgstr ""
+msgstr "question"
 
 #. Translators: this is the spoken word for the character '@' (U+0040)
 #.
@@ -1755,7 +1757,7 @@ msgstr "void"
 msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d espaci"
-msgstr[1] "%d espacis"
+msgstr[1] "%d espaci"
 
 #. Translators: this is the number of tab characters on a line
 #. of text.
@@ -1765,7 +1767,7 @@ msgstr[1] "%d espacis"
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d onglet"
-msgstr[1] "%d onglets"
+msgstr[1] "%d onglet"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -1850,7 +1852,7 @@ msgstr "gras"
 msgid "%s %s pixel"
 msgid_plural "%s %s pixels"
 msgstr[0] "%s %s pixel"
-msgstr[1] "%s %s pixels"
+msgstr[1] "%s %s pixel"
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2125,7 +2127,7 @@ msgstr ""
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d encap"
-msgstr[1] "%d encaps"
+msgstr[1] "%d encap"
 
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
@@ -3355,7 +3357,7 @@ msgstr "Tampar"
 #: ../src/orca/scripts/gedit.py:352
 #: ../src/orca/scripts/gnome-search-tool.py:160
 msgid "Find"
-msgstr "Recèrcar"
+msgstr "Recercar"
 
 #: ../src/orca/orca-find.glade.h:5
 msgid "Match _entire word only"
@@ -3472,7 +3474,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:957
 msgid "Speak"
-msgstr ""
+msgstr "Prononciar"
 
 #. Attribute Mark in Braille column (IS_BRAILLED).
 #.
@@ -5000,7 +5002,7 @@ msgstr "Panèl"
 #.
 #: ../src/orca/rolenames.py:724
 msgid "panel"
-msgstr ""
+msgstr "panèl"
 
 #. Translators: short braille for the rolename of a password field.
 #.
@@ -5872,8 +5874,7 @@ msgid "Assistant"
 msgstr ""
 
 #: ../src/orca/scripts/gaim.py:162
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 
 #: ../src/orca/scripts/gaim.py:170
@@ -5991,7 +5992,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/gnome-search-tool.py:132
 msgid "Stop"
-msgstr "Arrèst"
+msgstr "Arrestar"
 
 #: ../src/orca/scripts/gnome-search-tool.py:166
 msgid "Search complete."
@@ -6002,7 +6003,7 @@ msgstr ""
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d fichièr trobat"
-msgstr[1] "%d fichièrs trobats"
+msgstr[1] "%d fichièr trobat"
 
 #: ../src/orca/scripts/gnome-search-tool.py:176
 msgid "No files found."
@@ -6109,8 +6110,7 @@ msgstr ""
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:854
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 
 #. Checkbox for "Speak spread sheet cell coordinates".
@@ -6497,7 +6497,7 @@ msgstr ""
 msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d octet"
-msgstr[1] "%d octets"
+msgstr[1] "%d octet"
 
 #. Translators: This is the size of a file in kilobytes
 #.
@@ -6529,26 +6529,3 @@ msgstr ""
 msgid "Default button is %s"
 msgstr ""
 
-#~ msgid "Question"
-#~ msgstr "Question"
-
-#~ msgid "alpha"
-#~ msgstr "alfa"
-
-#~ msgid "delta"
-#~ msgstr "delta"
-
-#~ msgid "IMAP"
-#~ msgstr "IMAP"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%s %s"
-#~ msgstr "%s %s"
-
-#~ msgid "%s text %s %s"
-#~ msgstr "%s texte %s %s"
-
-#~ msgid ":"
-#~ msgstr " :"
