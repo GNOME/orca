@@ -1,3 +1,29 @@
+2.20.2 - 28-Nov-2007
+
+General:
+
+* Fix for bug #486918 - Page tab role should be presented in braille
+
+* Fix for bug #488391 - Orca doesn't announce finds in Gedit if combo
+  box has focus
+
+* Fix for bug #489604 - Enabling the attribute indicator but disabling
+  all attributes results in traceback
+
+* Fix for bug #489781 - Ctrl+D in terminal to delete text doesn't echo
+  character
+	
+Firefox:
+
+* Fix for bug #485903 - Orca doesn't read message list in gmail
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    gl      Galician             Ignacio Casal Quinteiro
+    hu      Hungarian            Kálmán Kéménczy and Gabor Kelemen
+
+==========
+
 2.20.1 - 14-Oct-2007
 
 General:
