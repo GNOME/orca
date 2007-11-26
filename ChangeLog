@@ -1,6 +1,12 @@
 2007-11-26  Willie Walker <william.walker@sun.com>
 
         * configure.in:
+	  README: 
+	  Mark as v2.20.3pre
+	
+2007-11-26  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
           README:
           NEWS:
           Prep for v2.20.2
