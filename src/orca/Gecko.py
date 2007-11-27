@@ -4508,7 +4508,9 @@ class Script(default.Script):
             obj = orca_state.locusOfFocus
 
         while obj:
-            if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_DOCUMENT_FRAME \
+                    or role == pyatspi.ROLE_EMBEDDED:
                 return True
             else:
                 obj = obj.parent

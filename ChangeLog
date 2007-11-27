@@ -1,3 +1,9 @@
+2007-11-27  Scott Haeger <scott@bashautomation.com>
+        
+        * src/orca/Gecko.py:
+          Fixed bug #469718, Gecko.inDocumentContent() needs to account 
+          for 'embedded component'
+
 2007-11-18  Willie Walker <william.walker@sun.com>
 
         * test/harness/runone.sh:
