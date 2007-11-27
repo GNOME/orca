@@ -59,8 +59,10 @@ class ACSS(dict):
         PUNCTUATIONS :  'all'
     }
 
-    def __init__(self,props={}):
+    def __init__(self, props=None):
         """Create and initialize ACSS structure."""
+        dict.__init__(self)
+        props = props or {}
         for k in props:
             if k in ACSS.settings:
                 # Do a 'deep copy' of the family.  Otherwise,
@@ -81,7 +83,7 @@ class ACSS(dict):
 
     def __delitem__(self, key):
         """Update name if we delete a key."""
-        dict.__delitem__(self,key)
+        dict.__delitem__(self, key)
 
     def updateName(self):
         """Update name based on settings."""
@@ -93,5 +95,5 @@ class ACSS(dict):
             names.sort()
             for  k in names:
                 _name += "%s-%s:" % (k, self[k])
-        self._name = _name[:-1]
-        return self._name
+        _name = _name[:-1]
+        return _name
