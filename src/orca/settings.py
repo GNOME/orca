@@ -436,7 +436,16 @@ progressBarUpdateInterval = 10
 
 # The complete list of possible text attributes.
 #
-allTextAttributes = "bg-color:; bg-full-height:; bg-stipple:; direction:; editable:; family-name:; fg-color:; fg-stipple:; font-effect:none; indent:0; invisible:; justification:left; language:; left-margin:; line-height:100%; paragraph-style:Default; pixels-above-lines:; pixels-below-lines:; pixels-inside-wrap:; right-margin:; rise:; scale:; size:; stretch:; strikethrough:false; style:normal; text-decoration:none; text-rotation:0; text-shadow:none; underline:none; variant:; vertical-align:baseline; weight:400; wrap-mode:; writing-mode:lr-tb;"
+allTextAttributes = \
+    "bg-color:; bg-full-height:; bg-stipple:; direction:; editable:; " \
+    "family-name:; fg-color:; fg-stipple:; font-effect:none; indent:0; " \
+    "invisible:; justification:left; language:; left-margin:; " \
+    "line-height:100%; paragraph-style:Default; pixels-above-lines:; " \
+    "pixels-below-lines:; pixels-inside-wrap:; right-margin:; rise:; " \
+    "scale:; size:; stretch:; strikethrough:false; style:normal; " \
+    "text-decoration:none; text-rotation:0; text-shadow:none; " \
+    "underline:none; variant:; vertical-align:baseline; weight:400; " \
+    "wrap-mode:; writing-mode:lr-tb;"
 
 # The default set of text attributes to speak to the user. Specific
 # application scripts (or individual users can override these values if
@@ -446,7 +455,9 @@ allTextAttributes = "bg-color:; bg-full-height:; bg-stipple:; direction:; editab
 # it won't be spoken. If no value part is given, then that attribute will
 # always be spoken.
 
-enabledSpokenTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+enabledSpokenTextAttributes = \
+    "size:; family-name:; weight:400; indent:0; underline:none; " \
+    "strikethrough:false; justification:left; style:normal;"
 
 # The default set of text attributes to be brailled for the user. Specific
 # application scripts (or individual users can override these values if
@@ -456,7 +467,9 @@ enabledSpokenTextAttributes = "size:; family-name:; weight:400; indent:0; underl
 # it won't be spoken. If no value part is given, then that attribute will
 # always be brailled.
 
-enabledBrailledTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+enabledBrailledTextAttributes = \
+    "size:; family-name:; weight:400; indent:0; underline:none; " \
+    "strikethrough:false; justification:left; style:normal;"
 
 # Text Attributes Braille Indicator (see textAttributesBrailleIndicator).
 # The values represent the character to be used in the attrOr
