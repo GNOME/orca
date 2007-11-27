@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-13 12:52+0100\n"
-"PO-Revision-Date: 2007-11-23 16:30+0100\n"
+"PO-Revision-Date: 2007-11-27 14:58+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
-msgstr "Povečevalo in bralnik zaslona Orca"
+msgstr "Povečevalo in bralnik zaslona Orka"
 
 #: ../orca.desktop.in.h:2
 msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Vsebino zaslona prikaže v Braillovi pisavi ali jo prebere in povečuje zaslon"
+msgstr "Vsebino zaslona prikaže v Braillovi pisavi, jo prebere ali pa poveča zaslon"
 
 #: ../src/orca/app_gui_prefs.py:102
 #, python-format
@@ -45,9 +45,8 @@ msgstr "Orka"
 #.
 #: ../src/orca/app_gui_prefs.py:177
 #: ../src/orca/orca_gui_prefs.py:1847
-#, fuzzy
 msgid "Unbound"
-msgstr "funt"
+msgstr "nedoločena tipkovna bližnjica"
 
 #: ../src/orca/app_gui_prefs.py:271
 msgid "No application has focus."
@@ -60,7 +59,7 @@ msgstr "Noben program nima fokusa"
 #: ../src/orca/app_gui_prefs.py:288
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
-msgstr "Zagon Orka lastnosti za %s. Dejanje lahko traja dalj časa."
+msgstr "Zagon Orka lastnosti za %s. Dejanje je lahko dolgotrajno."
 
 #. Translators: this announces that a bookmark has been entered.
 #. Orca allows users to tell it to remember a particular spot in an
@@ -260,7 +259,7 @@ msgstr "klicaj"
 #.
 #: ../src/orca/chnames.py:54
 msgid "quote"
-msgstr "navednice"
+msgstr "navednica"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
@@ -352,7 +351,7 @@ msgstr "dvopičje"
 msgid "semicolon"
 msgstr "podpičje"
 
-#. Translators: this is the spoken word for the character '<Â ' (U+003c)
+#. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:118
 msgid "less"
@@ -364,7 +363,7 @@ msgstr "manjše kot"
 msgid "equals"
 msgstr "enačaj"
 
-#. Translators: this is the spoken word for the character '>Â ' (U+003e)
+#. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:126
 msgid "greater"
@@ -404,7 +403,7 @@ msgstr "desni oglati oklepaj"
 #.
 #: ../src/orca/chnames.py:150
 msgid "caret"
-msgstr "kazalka"
+msgstr "strešica"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
@@ -442,43 +441,43 @@ msgstr "desni zaviti oklepaj"
 msgid "tilde"
 msgstr "tilda"
 
-#. Translators: this is the spoken word for the character 'Â¡' (U+00a1)
+#. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
 #: ../src/orca/chnames.py:178
 msgid "inverted exclamation point"
 msgstr "obrnjeni klicaj"
 
-#. Translators: this is the spoken word for the character 'Â¢' (U+00a2)
+#. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
 #: ../src/orca/chnames.py:182
 msgid "cents"
 msgstr "cent"
 
-#. Translators: this is the spoken word for the character 'Â£' (U+00a3)
+#. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: ../src/orca/chnames.py:186
 msgid "pounds"
 msgstr "funt"
 
-#. Translators: this is the spoken word for the character 'Â¤' (U+00a4)
+#. Translators: this is the spoken word for the character '¤' (U+00a4)
 #.
 #: ../src/orca/chnames.py:190
 msgid "currency sign"
 msgstr "znak valute"
 
-#. Translators: this is the spoken word for the character 'Â¥' (U+00a5)
+#. Translators: this is the spoken word for the character '¥' (U+00a5)
 #.
 #: ../src/orca/chnames.py:194
 msgid "yen"
 msgstr "jen"
 
-#. Translators: this is the spoken word for the character 'Â¦' (U+00a6)
+#. Translators: this is the spoken word for the character '¦' (U+00a6)
 #.
 #: ../src/orca/chnames.py:198
 msgid "broken bar"
 msgstr "presledna navpičnica"
 
-#. Translators: this is the spoken word for the character 'Â§' (U+00a7)
+#. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
 #. Translators: spoken words for the rolename of a section (e.g., in html).
 #.
@@ -487,766 +486,744 @@ msgstr "presledna navpičnica"
 msgid "section"
 msgstr "znak za člen"
 
-#. Translators: this is the spoken word for the character 'Â¨' (U+00a8)
+#. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
 #: ../src/orca/chnames.py:206
 msgid "umlaut"
 msgstr "preglas"
 
-#. Translators: this is the spoken word for the character 'Â©' (U+00a9)
+#. Translators: this is the spoken word for the character '©' (U+00a9)
 #.
 #: ../src/orca/chnames.py:210
 msgid "copyright"
 msgstr "znak za avtorske pravice"
 
-#. Translators: this is the spoken word for the character 'Âª' (U+00aa)
+#. Translators: this is the spoken word for the character 'ª' (U+00aa)
 #.
 #: ../src/orca/chnames.py:214
 msgid "superscript a"
 msgstr "nadpisani a"
 
-#. Translators: this is the spoken word for the character 'Â«' (U+00ab)
+#. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
 #: ../src/orca/chnames.py:218
 msgid "left double angle bracket"
 msgstr "levi francoski narekovaj"
 
-#. Translators: this is the spoken word for the character 'Â¬' (U+00ac)
+#. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
 #: ../src/orca/chnames.py:222
 msgid "logical not"
-msgstr ""
+msgstr "logični ne"
 
-#. Translators: this is the spoken word for the character 'Â­' (U+00ad)
+#. Translators: this is the spoken word for the character '­' (U+00ad)
 #.
 #: ../src/orca/chnames.py:226
 msgid "soft hyphen"
-msgstr ""
+msgstr "vezaj"
 
-#. Translators: this is the spoken word for the character 'Â®' (U+00ae)
+#. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
 #: ../src/orca/chnames.py:230
-#, fuzzy
 msgid "registered"
-msgstr "Prijavljen %s"
+msgstr "znak za registrirano"
 
-#. Translators: this is the spoken word for the character 'Â¯' (U+00af)
+#. Translators: this is the spoken word for the character '¯' (U+00af)
 #.
 #: ../src/orca/chnames.py:234
 msgid "macron"
-msgstr ""
+msgstr "makron"
 
-#. Translators: this is the spoken word for the character 'Â°' (U+00b0)
+#. Translators: this is the spoken word for the character '°' (U+00b0)
 #.
 #: ../src/orca/chnames.py:238
 msgid "degrees"
 msgstr "stopinje"
 
-#. Translators: this is the spoken word for the character 'Â±' (U+00b1)
+#. Translators: this is the spoken word for the character '±' (U+00b1)
 #.
 #: ../src/orca/chnames.py:242
 msgid "plus or minus"
 msgstr "znak plus-minus"
 
-#. Translators: this is the spoken word for the character 'Â²' (U+00b2)
+#. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
 #: ../src/orca/chnames.py:246
 msgid "superscript 2"
 msgstr "nadpisana številka 2"
 
-#. Translators: this is the spoken word for the character 'Â³' (U+00b3)
+#. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: ../src/orca/chnames.py:250
 msgid "superscript 3"
 msgstr "nadpisana številka 3"
 
-#. Translators: this is the spoken word for the character 'Â´' (U+00b4)
+#. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
 #: ../src/orca/chnames.py:254
 msgid "acute accent"
 msgstr "ostrivec"
 
-#. Translators: this is the spoken word for the character 'Âµ' (U+00b5)
+#. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
 #: ../src/orca/chnames.py:258
 msgid "mu"
 msgstr "grška črka mi"
 
-#. Translators: this is the spoken word for the character 'Â¶' (U+00b6)
+#. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
 #: ../src/orca/chnames.py:262
 msgid "paragraph marker"
 msgstr "znak za odstavek"
 
-#. Translators: this is the spoken word for the character 'Â·' (U+00b7)
+#. Translators: this is the spoken word for the character '·' (U+00b7)
 #.
 #: ../src/orca/chnames.py:266
 msgid "middle dot"
 msgstr "sredinska pika"
 
-#. Translators: this is the spoken word for the character 'Â¸' (U+00b8)
+#. Translators: this is the spoken word for the character '¸' (U+00b8)
 #.
 #: ../src/orca/chnames.py:270
 msgid "cedilla"
 msgstr "sedij"
 
-#. Translators: this is the spoken word for the character 'Â¹' (U+00b9)
+#. Translators: this is the spoken word for the character '¹' (U+00b9)
 #.
 #: ../src/orca/chnames.py:274
 msgid "superscript 1"
 msgstr "nadpisana številka 1"
 
-#. Translators: this is the spoken word for the character 'Âº' (U+00ba)
+#. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
 #: ../src/orca/chnames.py:278
 msgid "ordinal"
-msgstr ""
+msgstr "ordinal"
 
-#. Translators: this is the spoken word for the character 'Â»' (U+00bb)
+#. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
 #: ../src/orca/chnames.py:282
 msgid "right double angle bracket"
 msgstr "desni francoski narekovaj"
 
-#. Translators: this is the spoken word for the character 'Â¼' (U+00bc)
+#. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
 #: ../src/orca/chnames.py:286
 msgid "one fourth"
 msgstr "četrtina"
 
-#. Translators: this is the spoken word for the character 'Â½' (U+00bd)
+#. Translators: this is the spoken word for the character '½' (U+00bd)
 #.
 #: ../src/orca/chnames.py:290
 msgid "one half"
 msgstr "polovica"
 
-#. Translators: this is the spoken word for the character 'Â¾' (U+00be)
+#. Translators: this is the spoken word for the character '¾' (U+00be)
 #.
 #: ../src/orca/chnames.py:294
 msgid "three fourths"
 msgstr "tri četrtine"
 
-#. Translators: this is the spoken word for the character 'Â¿' (U+00bf)
+#. Translators: this is the spoken word for the character '¿' (U+00bf)
 #.
 #: ../src/orca/chnames.py:298
 msgid "inverted question mark"
 msgstr "obrnjeni vprašaj"
 
-#. Translators: this is the spoken word for the character 'Ã¡' (U+00e1)
+#. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
 #: ../src/orca/chnames.py:302
 msgid "a acute"
 msgstr "mala črka a z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c0)
+#. Translators: this is the spoken word for the character 'À' (U+00c0)
 #.
 #: ../src/orca/chnames.py:306
 msgid "A GRAVE"
 msgstr "velika črka A s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c1)
+#. Translators: this is the spoken word for the character 'Á' (U+00c1)
 #.
 #: ../src/orca/chnames.py:310
 msgid "A ACUTE"
 msgstr "velika črka A z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c2)
+#. Translators: this is the spoken word for the character 'Â' (U+00c2)
 #.
 #: ../src/orca/chnames.py:314
 msgid "A CIRCUMFLEX"
 msgstr "velika črka A s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c3)
+#. Translators: this is the spoken word for the character 'Ã' (U+00c3)
 #.
 #: ../src/orca/chnames.py:318
-#, fuzzy
 msgid "A TILDE"
-msgstr "tilda"
+msgstr "velika črka A s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c4)
+#. Translators: this is the spoken word for the character 'Ä' (U+00c4)
 #.
 #: ../src/orca/chnames.py:322
 msgid "A UMLAUT"
 msgstr "velika črka A s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c5)
+#. Translators: this is the spoken word for the character 'Å' (U+00c5)
 #.
 #: ../src/orca/chnames.py:326
 msgid "A RING"
 msgstr "velika črka A s krožcem zgoraj"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c6)
+#. Translators: this is the spoken word for the character 'Æ' (U+00c6)
 #.
 #: ../src/orca/chnames.py:330
 msgid "A E"
-msgstr ""
+msgstr "ligatura velikih črk A in E"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c7)
+#. Translators: this is the spoken word for the character 'Ç' (U+00c7)
 #.
 #: ../src/orca/chnames.py:334
-#, fuzzy
 msgid "C CEDILLA"
-msgstr "Sedij"
+msgstr "Velika črka C s sedijem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c8)
+#. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
 #: ../src/orca/chnames.py:338
 msgid "E GRAVE"
 msgstr "velika črka E s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00c9)
+#. Translators: this is the spoken word for the character 'É' (U+00c9)
 #.
 #: ../src/orca/chnames.py:342
 msgid "E ACUTE"
 msgstr "velika črka E z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00ca)
+#. Translators: this is the spoken word for the character 'Ê' (U+00ca)
 #.
 #: ../src/orca/chnames.py:346
 msgid "E CIRCUMFLEX"
 msgstr "velika črka E s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00cb)
+#. Translators: this is the spoken word for the character 'Ë' (U+00cb)
 #.
 #: ../src/orca/chnames.py:350
 msgid "E UMLAUT"
 msgstr "velika črka E s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00cc)
+#. Translators: this is the spoken word for the character 'Ì' (U+00cc)
 #.
 #: ../src/orca/chnames.py:354
-#, fuzzy
 msgid "I GRAVE"
-msgstr "krativec"
+msgstr "velika črka I s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00cd)
+#. Translators: this is the spoken word for the character 'Í' (U+00cd)
 #.
 #: ../src/orca/chnames.py:358
 msgid "I ACUTE"
 msgstr "velika črka I z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00ce)
+#. Translators: this is the spoken word for the character 'Î' (U+00ce)
 #.
 #: ../src/orca/chnames.py:362
 msgid "I CIRCUMFLEX"
 msgstr "velika črka I s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00cf)
+#. Translators: this is the spoken word for the character 'Ï' (U+00cf)
 #.
 #: ../src/orca/chnames.py:366
 msgid "I UMLAUT"
 msgstr "velika črka I s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d0)
+#. Translators: this is the spoken word for the character 'Ð' (U+00d0)
 #.
 #: ../src/orca/chnames.py:370
 msgid "ETH"
-msgstr ""
+msgstr "velika črka ETH"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d1)
+#. Translators: this is the spoken word for the character 'Ñ' (U+00d1)
 #.
 #: ../src/orca/chnames.py:374
-#, fuzzy
 msgid "N TILDE"
-msgstr "tilda"
+msgstr "velika črka N s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d2)
+#. Translators: this is the spoken word for the character 'Ò' (U+00d2)
 #.
 #: ../src/orca/chnames.py:378
 msgid "O GRAVE"
 msgstr "velika črka O s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d3)
+#. Translators: this is the spoken word for the character 'Ó' (U+00d3)
 #.
 #: ../src/orca/chnames.py:382
 msgid "O ACUTE"
 msgstr "velika črka O z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d4)
+#. Translators: this is the spoken word for the character 'Ô' (U+00d4)
 #.
 #: ../src/orca/chnames.py:386
 msgid "O CIRCUMFLEX"
 msgstr "velika črka O s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d5)
+#. Translators: this is the spoken word for the character 'Õ' (U+00d5)
 #.
 #: ../src/orca/chnames.py:390
-#, fuzzy
 msgid "O TILDE"
-msgstr "tilda"
+msgstr "velika črka o s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d6)
+#. Translators: this is the spoken word for the character 'Ö' (U+00d6)
 #.
 #: ../src/orca/chnames.py:394
 msgid "O UMLAUT"
 msgstr "velika črka O s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d7)
+#. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
 #: ../src/orca/chnames.py:398
 msgid "times"
-msgstr ""
+msgstr "krat"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d8)
+#. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
 #: ../src/orca/chnames.py:402
 msgid "O STROKE"
-msgstr ""
+msgstr "prečrtana velika črka O"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00d9)
+#. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
 #: ../src/orca/chnames.py:406
 msgid "U GRAVE"
 msgstr "velika črka U s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00da)
+#. Translators: this is the spoken word for the character 'Ú' (U+00da)
 #.
 #: ../src/orca/chnames.py:410
 msgid "U ACUTE"
 msgstr "velika črka U z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00db)
+#. Translators: this is the spoken word for the character 'Û' (U+00db)
 #.
 #: ../src/orca/chnames.py:414
 msgid "U CIRCUMFLEX"
 msgstr "velika črka U s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00dc)
+#. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
 #: ../src/orca/chnames.py:418
 msgid "U UMLAUT"
 msgstr "velika črka U s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00dd)
+#. Translators: this is the spoken word for the character 'Ý' (U+00dd)
 #.
 #: ../src/orca/chnames.py:422
 msgid "Y ACUTE"
 msgstr "velika črka Y z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00de)
+#. Translators: this is the spoken word for the character 'Þ' (U+00de)
 #.
 #: ../src/orca/chnames.py:426
 msgid "THORN"
-msgstr ""
+msgstr "velika črka thorn"
 
-#. Translators: this is the spoken word for the character 'Ã' (U+00df)
+#. Translators: this is the spoken word for the character 'ß' (U+00df)
 #.
 #: ../src/orca/chnames.py:430
 msgid "s sharp"
-msgstr ""
+msgstr "ostri s"
 
-#. Translators: this is the spoken word for the character 'Ã ' (U+00e0)
+#. Translators: this is the spoken word for the character 'à' (U+00e0)
 #.
 #: ../src/orca/chnames.py:434
 msgid "a grave"
 msgstr "mala črka a s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã¢' (U+00e2)
+#. Translators: this is the spoken word for the character 'â' (U+00e2)
 #.
 #: ../src/orca/chnames.py:438
 msgid "a circumflex"
 msgstr "mala črka a s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã£' (U+00e3)
+#. Translators: this is the spoken word for the character 'ã' (U+00e3)
 #.
 #: ../src/orca/chnames.py:442
-#, fuzzy
 msgid "a tilde"
-msgstr "tilda"
+msgstr "mala črka a s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã¤' (U+00e4)
+#. Translators: this is the spoken word for the character 'ä' (U+00e4)
 #.
 #: ../src/orca/chnames.py:446
 msgid "a umlaut"
 msgstr "mala črka a s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã¥' (U+00e5)
+#. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
 #: ../src/orca/chnames.py:450
-#, fuzzy
 msgid "a ring"
-msgstr "Glava"
+msgstr "mala črka a s krožcem"
 
-#. Translators: this is the spoken word for the character 'Ã¦' (U+00e6)
+#. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
 #: ../src/orca/chnames.py:454
 msgid "a e"
-msgstr ""
+msgstr "ligatura malih črk a in e"
 
-#. Translators: this is the spoken word for the character 'Ã§' (U+00e7)
+#. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
 #: ../src/orca/chnames.py:458
-#, fuzzy
 msgid "c cedilla"
-msgstr "Sedij"
+msgstr "mala črka c s sedijem"
 
-#. Translators: this is the spoken word for the character 'Ã¨' (U+00e8)
+#. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
 #: ../src/orca/chnames.py:462
 msgid "e grave"
 msgstr "mala črka e s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã©' (U+00e9)
+#. Translators: this is the spoken word for the character 'é' (U+00e9)
 #.
 #: ../src/orca/chnames.py:466
 msgid "e acute"
 msgstr "mala črka e z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ãª' (U+00ea)
+#. Translators: this is the spoken word for the character 'ê' (U+00ea)
 #.
 #: ../src/orca/chnames.py:470
 msgid "e circumflex"
 msgstr "mala črka e s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã«' (U+00eb)
+#. Translators: this is the spoken word for the character 'ë' (U+00eb)
 #.
 #: ../src/orca/chnames.py:474
 msgid "e umlaut"
 msgstr "mala črka e s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã¬' (U+00ec)
+#. Translators: this is the spoken word for the character 'ì' (U+00ec)
 #.
 #: ../src/orca/chnames.py:478
 msgid "i grave"
 msgstr "mala črka i s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã­' (U+00ed)
+#. Translators: this is the spoken word for the character 'í' (U+00ed)
 #.
 #: ../src/orca/chnames.py:482
 msgid "i acute"
 msgstr "mala črka i z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã®' (U+00ee)
+#. Translators: this is the spoken word for the character 'î' (U+00ee)
 #.
 #: ../src/orca/chnames.py:486
 msgid "i circumflex"
 msgstr "mala črka i s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã¯' (U+00ef)
+#. Translators: this is the spoken word for the character 'ï' (U+00ef)
 #.
 #: ../src/orca/chnames.py:490
 msgid "i umlaut"
 msgstr "mala črka i s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã°' (U+00f0)
+#. Translators: this is the spoken word for the character 'ð' (U+00f0)
 #.
 #: ../src/orca/chnames.py:494
 msgid "eth"
-msgstr ""
+msgstr "mala črka eth"
 
-#. Translators: this is the spoken word for the character 'Ã±' (U+00f1)
+#. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
 #: ../src/orca/chnames.py:498
-#, fuzzy
 msgid "n tilde"
-msgstr "tilda"
+msgstr "mala črka n s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã²' (U+00f2)
+#. Translators: this is the spoken word for the character 'ò' (U+00f2)
 #.
 #: ../src/orca/chnames.py:502
 msgid "o grave"
 msgstr "mala črka o s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã³' (U+00f3)
+#. Translators: this is the spoken word for the character 'ó' (U+00f3)
 #.
 #: ../src/orca/chnames.py:506
 msgid "o acute"
 msgstr "mala črka o z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã´' (U+00f4)
+#. Translators: this is the spoken word for the character 'ô' (U+00f4)
 #.
 #: ../src/orca/chnames.py:510
 msgid "o circumflex"
 msgstr "mala črka o s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ãµ' (U+00f5)
+#. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
 #: ../src/orca/chnames.py:514
-#, fuzzy
 msgid "o tilde"
-msgstr "tilda"
+msgstr "mala črka o s tildo"
 
-#. Translators: this is the spoken word for the character 'Ã¶' (U+00f6)
+#. Translators: this is the spoken word for the character 'ö' (U+00f6)
 #.
 #: ../src/orca/chnames.py:518
 msgid "o umlaut"
 msgstr "mala črka o s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã·' (U+00f7)
+#. Translators: this is the spoken word for the character '÷' (U+00f7)
 #.
 #: ../src/orca/chnames.py:522
-#, fuzzy
 msgid "divided by"
-msgstr "neveljavno"
+msgstr "deljeno z"
 
-#. Translators: this is the spoken word for the character 'Ã¸' (U+00f8)
+#. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
 #: ../src/orca/chnames.py:526
-#, fuzzy
 msgid "o stroke"
-msgstr "opuščaj"
+msgstr "mala prečrtana črka o"
 
-#. Translators: this is the spoken word for the character 'Ã¾' (U+00fe)
+#. Translators: this is the spoken word for the character 'þ' (U+00fe)
 #.
 #: ../src/orca/chnames.py:530
 msgid "thorn"
-msgstr ""
+msgstr "mala črka thorn"
 
-#. Translators: this is the spoken word for the character 'Ãº' (U+00fa)
+#. Translators: this is the spoken word for the character 'ú' (U+00fa)
 #.
 #: ../src/orca/chnames.py:534
 msgid "u acute"
 msgstr "mala črka u z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã¹' (U+00f9)
+#. Translators: this is the spoken word for the character 'ù' (U+00f9)
 #.
 #: ../src/orca/chnames.py:538
 msgid "u grave"
 msgstr "mala črka u s krativcem"
 
-#. Translators: this is the spoken word for the character 'Ã»' (U+00fb)
+#. Translators: this is the spoken word for the character 'û' (U+00fb)
 #.
 #: ../src/orca/chnames.py:542
 msgid "u circumflex"
 msgstr "mala črka u s cirkumfleksom"
 
-#. Translators: this is the spoken word for the character 'Ã¼' (U+00fc)
+#. Translators: this is the spoken word for the character 'ü' (U+00fc)
 #.
 #: ../src/orca/chnames.py:546
 msgid "u umlaut"
 msgstr "mala črka u s preglasom"
 
-#. Translators: this is the spoken word for the character 'Ã½' (U+00fd)
+#. Translators: this is the spoken word for the character 'ý' (U+00fd)
 #.
 #: ../src/orca/chnames.py:550
 msgid "y acute"
 msgstr "mala črka y z ostrivcem"
 
-#. Translators: this is the spoken word for the character 'Ã¿' (U+00ff)
+#. Translators: this is the spoken word for the character 'ÿ' (U+00ff)
 #.
 #: ../src/orca/chnames.py:554
 msgid "y umlaut"
 msgstr "mala črka y s preglasom"
 
-#. Translators: this is the spoken word for the character 'Å¸' (U+0178)
+#. Translators: this is the spoken word for the character 'Ÿ' (U+0178)
 #.
 #: ../src/orca/chnames.py:558
 msgid "Y UMLAUT"
 msgstr "velika črka Y s preglasom"
 
-#. Translators: this is the spoken word for the character 'Æ' (U+0192)
+#. Translators: this is the spoken word for the character 'ƒ' (U+0192)
 #.
 #: ../src/orca/chnames.py:562
-#, fuzzy
 msgid "florin"
-msgstr "flr"
+msgstr "florin"
 
-#. Translators: this is the spoken word for the character 'â' (U+2013)
+#. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:566
-#, fuzzy
 msgid "en dash"
 msgstr "pomišljaj"
 
-#. Translators: this is the spoken word for the left single quote: â
+#. Translators: this is the spoken word for the left single quote: ‘
 #. (U+2018)
 #.
 #: ../src/orca/chnames.py:571
 msgid "left single quote"
-msgstr ""
+msgstr "levi enojni narekovaj"
 
-#. Translators: this is the spoken word for the right single quote: â
+#. Translators: this is the spoken word for the right single quote: ’
 #. (U+2019)
 #.
 #: ../src/orca/chnames.py:576
-#, fuzzy
 msgid "right single quote"
-msgstr "desni Ctrl"
+msgstr "desni enojni narekovaj"
 
-#. Translators: this is the spoken word for the character 'â' (U+201c)
+#. Translators: this is the spoken word for the character '“' (U+201c)
 #.
 #: ../src/orca/chnames.py:580
 msgid "left double quote"
-msgstr ""
+msgstr "levi dvojni narekovaj"
 
-#. Translators: this is the spoken word for the character 'â' (U+201d)
+#. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:584
 msgid "right double quote"
-msgstr ""
+msgstr "desni dvojni narekovaj"
 
-#. Translators: this is the spoken word for the character 'â ' (U+2020)
+#. Translators: this is the spoken word for the character '†' (U+2020)
 #.
 #: ../src/orca/chnames.py:588
 msgid "dagger"
 msgstr "križec"
 
-#. Translators: this is the spoken word for the character 'â¡' (U+2021)
+#. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: ../src/orca/chnames.py:592
 msgid "double dagger"
-msgstr "dvojni križec"
+msgstr "obelisk"
 
-#. Translators: this is the spoken word for the character 'â¢' (U+2022)
+#. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: ../src/orca/chnames.py:596
-#, fuzzy
 msgid "bullet"
-msgstr "seznam"
+msgstr "vrstična oznaka"
 
-#. Translators: this is the spoken word for the character 'â£' (U+2023)
+#. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
 #: ../src/orca/chnames.py:600
 msgid "triangular bullet"
-msgstr ""
+msgstr "trikotna vrstična oznaka"
 
-#. Translators: this is the spoken word for the character 'â°' (U+2030)
+#. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:604
-#, fuzzy
 msgid "per mille"
-msgstr "Braillova pisava"
+msgstr "promil"
 
-#. Translators: this is the spoken word for the character 'â²' (U+2032)
+#. Translators: this is the spoken word for the character '′' (U+2032)
 #.
 #: ../src/orca/chnames.py:608
 msgid "prime"
-msgstr ""
+msgstr "znak za minuto, odvod"
 
-#. Translators: this is the spoken word for the character 'â³' (U+2033)
+#. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:612
 msgid "double prime"
-msgstr ""
+msgstr "znak za sekundo, drugi odvod"
 
-#. Translators: this is the spoken word for the character 'â' (U+2043)
+#. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:616
 msgid "hyphen bullet"
-msgstr ""
+msgstr "pomišljaj vrstična oznaka"
 
-#. Translators: this is the spoken word for the character 'â¬' (U+20ac)
+#. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
 #: ../src/orca/chnames.py:620
 msgid "euro"
 msgstr "evro"
 
-#. Translators: this is the spoken word for the character 'â¢' (U+2122)
+#. Translators: this is the spoken word for the character '™' (U+2122)
 #.
 #: ../src/orca/chnames.py:624
 msgid "trademark"
-msgstr ""
+msgstr "zaščitni znak"
 
-#. Translators: this is the spoken word for the character 'â' (U+2248)
+#. Translators: this is the spoken word for the character '≈' (U+2248)
 #.
 #: ../src/orca/chnames.py:628
 msgid "almost equal to"
 msgstr "skoraj enako kot"
 
-#. Translators: this is the spoken word for the character 'â ' (U+2260)
+#. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
 #: ../src/orca/chnames.py:632
 msgid "not equal to"
 msgstr "ni enako kot"
 
-#. Translators: this is the spoken word for the character 'â¤' (U+2264)
+#. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
 #: ../src/orca/chnames.py:636
 msgid "less than or equal to"
 msgstr "manj ali enako kot"
 
-#. Translators: this is the spoken word for the character 'â¥' (U+2265)
+#. Translators: this is the spoken word for the character '≥' (U+2265)
 #.
 #: ../src/orca/chnames.py:640
 msgid "greater than or equal to"
 msgstr "večje ali enako kot"
 
-#. Translators: this is the spoken word for the character 'â' (U+221a)
+#. Translators: this is the spoken word for the character '√' (U+221a)
 #.
 #: ../src/orca/chnames.py:644
 msgid "square root"
 msgstr "kvadratni koren"
 
-#. Translators: this is the spoken word for the character 'â' (U+221b)
+#. Translators: this is the spoken word for the character '∛' (U+221b)
 #.
 #: ../src/orca/chnames.py:648
 msgid "cube root"
 msgstr "tretji koren"
 
-#. Translators: this is the spoken word for the character 'â' (U+221e)
+#. Translators: this is the spoken word for the character '∞' (U+221e)
 #.
 #: ../src/orca/chnames.py:652
 msgid "infinity"
 msgstr "neskončno"
 
-#. Translators: this is the spoken word for the character 'â ' (U+25a0)
+#. Translators: this is the spoken word for the character '■' (U+25a0)
 #. It can be used as a bullet in a list.
 #.
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
-#. as a bullet which looks like the black square: â  (U+25A0).  Therefore,
+#. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
 #: ../src/orca/chnames.py:657
 #: ../src/orca/chnames.py:720
 msgid "black square"
-msgstr ""
+msgstr "črni kvadrat"
 
-#. Translators: this is the spoken word for the character 'â¡' (U+25a1)
+#. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:662
-#, fuzzy
 msgid "white square"
-msgstr "prazen prostor"
+msgstr "beli kvadrat"
 
-#. Translators: this is the spoken word for the character 'â' (U+25c6)
+#. Translators: this is the spoken word for the character '◆' (U+25c6)
 #. It can be used as a bullet in a list.
 #.
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
-#. as a bullet which looks like the black diamond: â (U+25C6).  Therefore,
+#. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
 #: ../src/orca/chnames.py:667
 #: ../src/orca/chnames.py:726
 msgid "black diamond"
-msgstr ""
+msgstr "črni karo"
 
-#. Translators: this is the spoken word for the character 'â' (U+25cb)
+#. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:672
-#, fuzzy
 msgid "white circle"
-msgstr "prazen prostor"
+msgstr "beli krožec"
 
-#. Translators: this is the spoken word for the character 'â' (U+25cf)
+#. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:677
 msgid "black circle"
-msgstr ""
+msgstr "črni krožec"
 
-#. Translators: this is the spoken word for the character 'â¦' (U+25e6)
+#. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:681
-#, fuzzy
 msgid "white bullet"
-msgstr "prazen prostor"
+msgstr "bela vrstična oznaka"
 
-#. Translators: this is the spoken word for the character 'â' (U+2713)
+#. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:686
-#, fuzzy
 msgid "check mark"
-msgstr "potrditveni predmet"
+msgstr "kljukica"
 
-#. Translators: this is the spoken word for the character 'â' (U+2714)
+#. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:691
 msgid "heavy check mark"
-msgstr ""
+msgstr "odebeljena kljukica"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1257,26 +1234,25 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:700
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "vrstična oznaka v obliki črke x"
 
-#. Translators: this is the spoken word for the character 'â' (U+2794)
+#. Translators: this is the spoken word for the character '➔' (U+2794)
 #. This symbol is included here because it can be used as a bullet in
 #. an OOo list. The goal is to inform the user of the appearance of
 #. the bullet without too much verbiage, hence simply "right-pointing arrow".
 #.
 #: ../src/orca/chnames.py:707
-#, fuzzy
 msgid "right-pointing arrow"
-msgstr "levi Alt"
+msgstr "desno usmerjena puščica"
 
-#. Translators: this is the spoken word for the character 'â¢' (U+27a2)
+#. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
 #. OOo list. The goal is to inform the user of the appearance of the bullet
 #. without too much verbiage, hence simply "right-pointing arrowhead".
 #.
 #: ../src/orca/chnames.py:714
 msgid "right-pointing arrowhead"
-msgstr ""
+msgstr "desno usmerjena puščica"
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1339,7 +1315,7 @@ msgstr "Izvede operacijo kje sem."
 #.
 #: ../src/orca/default.py:182
 msgid "Speaks the title bar or status bar."
-msgstr ""
+msgstr "Izgovori ime naslovne vrstice ali vrstice stanja."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1348,7 +1324,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:192
 msgid "Opens the Orca Find dialog."
-msgstr ""
+msgstr "Odpre pogovorno okno iskanja."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1368,7 +1344,7 @@ msgstr "Poišče naslednji zadetek niza."
 #.
 #: ../src/orca/default.py:214
 msgid "Searches for the previous instance of a string."
-msgstr ""
+msgstr "Iskanje predhodne pojavitve niza."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1743,9 +1719,8 @@ msgstr "Prikaže nastavitveno okno."
 #. preferences for a specific application within Orca.
 #.
 #: ../src/orca/default.py:633
-#, fuzzy
 msgid "Displays the application preferences configuration dialog."
-msgstr "Prikaže nastavitveno okno."
+msgstr "Prikaže nastavitveno okno programa."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -1760,7 +1735,7 @@ msgstr "Preklopi utišanje zvoka."
 #.
 #: ../src/orca/default.py:680
 msgid "Bookmark where am I with respect to current position."
-msgstr ""
+msgstr "Ustvari zaznamek z upoštevanjem trenutnega mesta."
 
 #. Translators: this command moves the current position to the
 #. location stored at the bookmark.
@@ -1788,7 +1763,7 @@ msgstr "Shrani zaznamke"
 #.
 #: ../src/orca/default.py:712
 msgid "Go to next bookmark location."
-msgstr ""
+msgstr "Skok na naslednje mesto zaznamka."
 
 #. Translators: this event handler cycles through the
 #. registered bookmarks and takes the user to the previous
@@ -1796,7 +1771,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:721
 msgid "Go to previous bookmark location."
-msgstr ""
+msgstr "Skok na predhodno mesto zaznamka."
 
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
@@ -1952,9 +1927,8 @@ msgstr[3] "%s %s točke"
 #. This text here is what is spoken to the user.
 #.
 #: ../src/orca/default.py:3468
-#, fuzzy
 msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
-msgstr "Vstop v učni način. Za poslušanje funkcije pritisnite poljubno tipko."
+msgstr "Vstop v način učenja. Za poslušanje funkcije pritisnite poljubno tipko. Za izhod iz načina učenja pritisnite tipko Esc."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -1967,7 +1941,7 @@ msgstr "Vstop v učni način. Za poslušanje funkcije pritisnite poljubno tipko.
 #.
 #: ../src/orca/default.py:3479
 msgid "Learn mode.  Press escape to exit."
-msgstr "Učni način. Pritisnite tipko esc za izhod."
+msgstr "Učni način. Pritisnite tipko Esc za izhod."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2021,13 +1995,13 @@ msgstr "Vsebina je %s"
 #. is the spoken word for the character.
 #.
 #: ../src/orca/default.py:5131
-#, fuzzy, python-format
+#, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
-msgstr[0] "Znak"
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d pojavitev znaka %s"
+msgstr[1] "%d pojavitev znaka %s"
+msgstr[2] "%d pojavitvi znaka %s"
+msgstr[3] "%d pojavitve znaka %s"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -2355,7 +2329,7 @@ msgstr "Skoči na predhodno vrstico"
 #.
 #: ../src/orca/Gecko.py:1965
 msgid "Causes the current combo box to be expanded."
-msgstr ""
+msgstr "Povzroči razširjanje pojavnega menija."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
@@ -2578,14 +2552,14 @@ msgstr "Skoči na naslednje polje obrazca."
 #.
 #: ../src/orca/Gecko.py:2221
 msgid "Goes to previous blockquote."
-msgstr ""
+msgstr "Skoči na predhodno bločno besedilo."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 #: ../src/orca/Gecko.py:2229
 msgid "Goes to next blockquote."
-msgstr ""
+msgstr "Skoči na naslednje bločno besedilo."
 
 #. Translators: this is for navigating between tables in HTML
 #.
@@ -2608,7 +2582,7 @@ msgstr "Skoči na naslednjo razpredelnico."
 #.
 #: ../src/orca/Gecko.py:2255
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr ""
+msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -2619,7 +2593,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2267
 msgid "Toggles structural navigation keys."
-msgstr ""
+msgstr "Preklopi strukturne krmilne tipke"
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -2630,7 +2604,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2711
 msgid "Use _Orca Caret Navigation"
-msgstr ""
+msgstr "Uporabi _orka kazalno premikanje"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
@@ -2638,7 +2612,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2724
 msgid "Use Orca _Structural Navigation"
-msgstr ""
+msgstr "Uporabi _orka strukturno premikanje"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -2648,7 +2622,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2739
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
+msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -2656,7 +2630,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2752
 msgid "Automatically start speaking a page when it is first _loaded"
-msgstr ""
+msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -2664,7 +2638,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2764
 msgid "Page Navigation"
-msgstr ""
+msgstr "Premikanje po strani"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
@@ -2679,14 +2653,14 @@ msgstr "Izgovori koordinate _celic"
 #.
 #: ../src/orca/Gecko.py:2799
 msgid "Speak _multiple cell spans"
-msgstr ""
+msgstr "Izgovori _širino več celic"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
 #: ../src/orca/Gecko.py:2810
 msgid "Announce cell _header"
-msgstr ""
+msgstr "Najavi _glavo celice"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
@@ -2700,7 +2674,7 @@ msgstr "Preskoči _prazne celice"
 #.
 #: ../src/orca/Gecko.py:2832
 msgid "Table Navigation"
-msgstr ""
+msgstr "Premikanje po razpredelnici"
 
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
@@ -2708,7 +2682,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2856
 msgid "Speak results during _find"
-msgstr ""
+msgstr "Izgovori zadetke med iskanjem"
 
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
@@ -2717,7 +2691,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2869
 msgid "Onl_y speak changed lines during find"
-msgstr ""
+msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
@@ -2725,7 +2699,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2886
 msgid "Minimum length of matched text:"
-msgstr ""
+msgstr "Najmanjša dolžina primerljivega besedila:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
@@ -2772,7 +2746,7 @@ msgstr "h%d"
 #: ../src/orca/Gecko.py:5129
 #, python-format
 msgid "Cell spans %d rows and %d columns"
-msgstr ""
+msgstr "Celica je razširjena preko %d vrstic in %d stolpcev."
 
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2781,7 +2755,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:5136
 #, python-format
 msgid "Cell spans %d columns"
-msgstr "Celica pokriva %d stolpce"
+msgstr "Celica je razširjena preko %d stolpcev"
 
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -2790,7 +2764,7 @@ msgstr "Celica pokriva %d stolpce"
 #: ../src/orca/Gecko.py:5142
 #, python-format
 msgid "Cell spans %d rows"
-msgstr "Celica pokriva %d vrstice"
+msgstr "Celica je razširjena preko %d vrstic"
 
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
@@ -2817,7 +2791,7 @@ msgstr "raven %d"
 #: ../src/orca/Gecko.py:8109
 #: ../src/orca/Gecko.py:8230
 msgid "Wrapping to bottom."
-msgstr ""
+msgstr "Prelom na dnu."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -2844,7 +2818,7 @@ msgstr "Ni več naslovov."
 #: ../src/orca/Gecko.py:8167
 #: ../src/orca/Gecko.py:8280
 msgid "Wrapping to top."
-msgstr ""
+msgstr "Prelom na vrhu."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -2853,7 +2827,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:7517
 #, python-format
 msgid "No more headings at level %d."
-msgstr ""
+msgstr "Ni več naslovov na %d ravni."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
@@ -2862,7 +2836,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:7590
 #: ../src/orca/Gecko.py:7615
 msgid "No more large objects."
-msgstr ""
+msgstr "Ni več velikih predmetov."
 
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
@@ -2913,9 +2887,8 @@ msgstr "Ni več obiskanih povezav."
 #.
 #: ../src/orca/Gecko.py:8032
 #: ../src/orca/Gecko.py:8068
-#, fuzzy
 msgid "No more blockquotes."
-msgstr "Brez fokusa"
+msgstr "Ni več bločnega besedila."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
@@ -2940,9 +2913,8 @@ msgstr "Vrstica %d, stolpec %d."
 #.
 #: ../src/orca/Gecko.py:8245
 #: ../src/orca/Gecko.py:8295
-#, fuzzy
 msgid "Non-uniform"
-msgstr "okv"
+msgstr "enotna razpredelnica"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
@@ -2951,10 +2923,10 @@ msgstr "okv"
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Razpredelnica z %d vrsticami"
+msgstr[1] "Razpredelnica z %d vrstico"
+msgstr[2] "Razpredelnica z %d vrsticama"
+msgstr[3] "Razpredelnica z %d vrsticami"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -2981,7 +2953,7 @@ msgstr "Ni več razpredelnic."
 #.
 #: ../src/orca/Gecko.py:8362
 msgid "Beginning of row."
-msgstr ""
+msgstr "Začetek vrstice."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
@@ -3000,21 +2972,21 @@ msgstr "Ni v razpredelnici."
 #.
 #: ../src/orca/Gecko.py:8417
 msgid "End of row."
-msgstr ""
+msgstr "Konec vrstice."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 #: ../src/orca/Gecko.py:8468
 msgid "Top of column."
-msgstr ""
+msgstr "Vrh stolpca."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 #: ../src/orca/Gecko.py:8523
 msgid "Bottom of column."
-msgstr ""
+msgstr "Dno stolpca"
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3025,7 +2997,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8583
 msgid "Gecko is controlling the caret."
-msgstr ""
+msgstr "Gecko nadzira kazalnik"
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3036,7 +3008,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8595
 msgid "Orca is controlling the caret."
-msgstr ""
+msgstr "Orka nadzira kazalnik"
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3050,7 +3022,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8619
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "Strukturne krmilne tipke vključene."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3064,7 +3036,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8631
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "Strukturne krmilne tipke izključene."
 
 #: ../src/orca/gnomespeechfactory.py:165
 msgid "GNOME Speech Services"
@@ -3385,7 +3357,7 @@ msgstr "Izberite priljubljen glas:"
 #.
 #: ../src/orca/orca_console_prefs.py:295
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "Ali želite omogočiti odmev besed? Vnesite y ali n:"
+msgstr "Ali želite omogočiti odmev besed? Vnesite y za da ali n za ne:"
 
 #. Translators: if key echo is enabled, Orca will speak the name of a key
 #. as the user types on the keyboard.  If the user wants key echo, they
@@ -3393,35 +3365,35 @@ msgstr "Ali želite omogočiti odmev besed? Vnesite y ali n:"
 #.
 #: ../src/orca/orca_console_prefs.py:306
 msgid "Enable key echo?  Enter y or n: "
-msgstr "Ali želite omogočiti odmev? Vnesite y ali n:"
+msgstr "Ali želite omogočiti odmev? Vnesite y za da ali n za ne:"
 
 #. Translators: this is in reference to key echo for
 #. normal text entry keys.
 #.
 #: ../src/orca/orca_console_prefs.py:318
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr "Ali želite omogočiti alfanumerične tipke in ločila? Vnesite y ali n:"
+msgstr "Ali želite omogočiti alfanumerične tipke in ločila? Vnesite y za da ali n za ne:"
 
 #. Translators: this is in reference to key echo for
 #. CTRL, ALT, Shift, Insert, and "Fn" on laptops.
 #.
 #: ../src/orca/orca_console_prefs.py:328
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Ali želite omogočiti spremenilne tipke? Vnesite y ali n:"
+msgstr "Ali želite omogočiti spremenilne tipke? Vnesite y za da ali n za ne:"
 
 #. Translators: this is in reference to key echo for
 #. Caps Lock, Num Lock, Scroll Lock, etc.
 #.
 #: ../src/orca/orca_console_prefs.py:338
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Ali želite omogočiti tipke za zaklep? Vnesite y ali n:"
+msgstr "Ali želite omogočiti tipke za zaklep? Vnesite y za da ali n za ne:"
 
 #. Translators: this is in reference to key echo for
 #. the keys at the top of the keyboard.
 #.
 #: ../src/orca/orca_console_prefs.py:348
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Ali želite omogočiti funkcijske tipke? Vnesite y ali n:"
+msgstr "Ali želite omogočiti funkcijske tipke? Vnesite y za da ali n za ne:"
 
 #. Translators: this is in reference to key echo for
 #. space, enter, escape, tab, backspace, delete, arrow
@@ -3429,7 +3401,7 @@ msgstr "Ali želite omogočiti funkcijske tipke? Vnesite y ali n:"
 #.
 #: ../src/orca/orca_console_prefs.py:359
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Ali želite omogočiti tipke dejanj? Vnesite y ali n:"
+msgstr "Ali želite omogočiti tipke dejanj? Vnesite y za da ali n za ne:"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3457,14 +3429,14 @@ msgstr "2. Laptop"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr ""
+msgstr "Neveljavna izbira. Izbiranje razporeditve namizne tipkovnice.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
 #.
 #: ../src/orca/orca_console_prefs.py:442
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Ali želite omogočiti Braillovo pisavo? Vnesite y ali n:"
+msgstr "Ali želite omogočiti Braillovo pisavo? Vnesite y za da ali n za ne:"
 
 #. Translators: the braille monitor is a graphical display on the screen
 #. that is used for debugging and demoing purposes.  It presents what
@@ -3473,7 +3445,7 @@ msgstr "Ali želite omogočiti Braillovo pisavo? Vnesite y ali n:"
 #.
 #: ../src/orca/orca_console_prefs.py:454
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Ali želite omogočiti Braillov monitor? Vnesite y ali n:"
+msgstr "Ali želite omogočiti Braillov monitor? Vnesite y za da ali n za ne:"
 
 #: ../src/orca/orca_console_prefs.py:463
 #: ../src/orca/orca_gui_prefs.py:350
@@ -3487,11 +3459,11 @@ msgstr "Za uveljavitev sprememb se morate odjaviti in ponovno prijaviti."
 
 #: ../src/orca/orca_console_prefs.py:477
 msgid "Do you want to logout now?  Enter y or n: "
-msgstr ""
+msgstr "Ali se želite odjaviti? Vnesite y za da ali n za ne:"
 
 #: ../src/orca/orca_console_prefs.py:483
 msgid "Setup complete. Logging out now."
-msgstr ""
+msgstr "Nastavitev končana. Sistem se odjavlja."
 
 #: ../src/orca/orca_console_prefs.py:497
 msgid "Setup complete.  Press Return to continue."
@@ -3533,7 +3505,7 @@ msgstr "Išči le _cele besede"
 
 #: ../src/orca/orca-find.glade.h:6
 msgid "Orca Find Dialog"
-msgstr "Orkino okno iskanja"
+msgstr "Orka okno iskanja"
 
 #: ../src/orca/orca-find.glade.h:7
 msgid "Search _backwards"
@@ -3656,7 +3628,7 @@ msgstr "Izgovori"
 #.
 #: ../src/orca/orca_gui_prefs.py:1005
 msgid "Mark in braille"
-msgstr ""
+msgstr "Označi v braillovi pisavi"
 
 #. Attribute Value column (VALUE)
 #.
@@ -3675,7 +3647,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1031
 msgid "Present Unless"
-msgstr ""
+msgstr "Izgovori razen"
 
 #. Pronunciation Dictionary actual string (word) column (ACTUAL).
 #.
@@ -3686,7 +3658,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1146
 msgid "Actual String"
-msgstr ""
+msgstr "Dejanski niz"
 
 #. Pronunciation Dictionary replacement string column (REPLACEMENT)
 #.
@@ -3826,7 +3798,7 @@ msgstr "N_ajveč"
 #.
 #: ../src/orca/orca_gui_prefs.py:2334
 msgid "Line"
-msgstr "Črta"
+msgstr "vrstici"
 
 #. Translators: If this setting is chosen and the user is reading
 #. over an entire document, Orca will pause at the end of each
@@ -3834,7 +3806,7 @@ msgstr "Črta"
 #.
 #: ../src/orca/orca_gui_prefs.py:2340
 msgid "Sentence"
-msgstr "stavek"
+msgstr "stavku"
 
 #. Translators: This refers to the amount of information
 #. Orca provides about a particular object that receives
@@ -3878,7 +3850,7 @@ msgstr "Tipkovna bližnjica je izbrisana. Za potrditev pritisnite Enter."
 #: ../src/orca/orca_gui_prefs.py:2776
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr ""
+msgstr "Vnesena tipka je že določena za %s"
 
 #. Translators: this is a spoken prompt letting the user know Orca
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -3904,7 +3876,7 @@ msgstr "Nov ključ je: %s"
 #.
 #: ../src/orca/orca_gui_prefs.py:2827
 msgid "The keybinding has been removed."
-msgstr ""
+msgstr "TIpkovna bližnjica je odstranjena."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
@@ -3918,11 +3890,11 @@ msgstr "_Namizje"
 #.
 #: ../src/orca/orca_gui_prefs.py:3243
 msgid "Starting Orca Preferences. This may take a while."
-msgstr ""
+msgstr "Zagon nastavitev Orka. Dejanje je lahko dolgotrajnejše."
 
 #: ../src/orca/orca-mainwin.glade.h:1
 msgid "Orca Screen Reader / Magnifier"
-msgstr "Povečevalo in bralnik zaslona Orca"
+msgstr "Povečevalo in bralnik zaslona Orka"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
@@ -3930,7 +3902,7 @@ msgstr "Povečevalo in bralnik zaslona Orca"
 #: ../src/orca/orca.py:1146
 #: ../src/orca/orca.py:1147
 msgid "Goodbye."
-msgstr "Se vidimo prihodnjič."
+msgstr "Do prihodnjega snidenja."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
@@ -3952,7 +3924,7 @@ msgstr "Govor onemogočen."
 #.
 #: ../src/orca/orca.py:836
 msgid "Orca user settings reloaded."
-msgstr "Uporabniške nastavitve Orce ponovno naložene."
+msgstr "Uporabniške nastavitve Orke ponovno naložene."
 
 #: ../src/orca/orca.py:1228
 msgid "Usage: orca [OPTION...]"
@@ -3963,7 +3935,7 @@ msgstr "Uporaba: orca [MOŽNOST...]"
 #.
 #: ../src/orca/orca.py:1234
 msgid "Show this help message"
-msgstr ""
+msgstr "Prikaži sporočilo pomoči"
 
 #. Translators: this is the description of the command line option
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
@@ -3981,7 +3953,7 @@ msgstr "Nastavitve lastnosti uporabnika"
 #.
 #: ../src/orca/orca.py:1251
 msgid "Set up user preferences (text version)"
-msgstr ""
+msgstr "Nastavitve lastnosti uporabnika (besedilna različica)"
 
 #. Translators: this is the description of the command line option
 #. '-n, --no-setup' that means that Orca will startup without setting
@@ -3989,7 +3961,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1258
 msgid "Skip set up of user preferences"
-msgstr ""
+msgstr "Preskoči nastavitev uporabniških lastnosti"
 
 #. Translators: by default, Orca expects to find its user preferences
 #. in a directory called .orca under the user's home directory. This
@@ -4059,7 +4031,7 @@ msgstr "option|povečevalo"
 #: ../src/orca/orca.py:1436
 #: ../src/orca/orca.py:1453
 msgid "option|main-window"
-msgstr ""
+msgstr "option|glavno okno"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
 #. command line option, it will be automatically enabled as Orca is
@@ -4084,7 +4056,7 @@ msgstr "Prepreči uporabo možnosti"
 #.
 #: ../src/orca/orca.py:1301
 msgid "Quits Orca (if shell script used)"
-msgstr ""
+msgstr "Zapusti program Orka (v primeru uporabe ukazne vrstice)"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
@@ -4095,14 +4067,17 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
+"V primeru, da program Orka ni nastavljen, se bodo\n"
+"nastavitve samodejno zagnale razen v primeru, kadar\n"
+"sta uporabljeni zastavici možnosti -n ali --no-setup."
 
 #: ../src/orca/orca.py:1313
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "Pošiljanje poročil o napakah na orca-list@gnome.org."
 
 #: ../src/orca/orca.py:1506
 msgid "Welcome to Orca."
-msgstr "Pozdravljeni v Orci."
+msgstr "Pozdravljeni v Orki."
 
 #: ../src/orca/orca-quit.glade.h:1
 msgid ""
@@ -4111,12 +4086,18 @@ msgid ""
 "This will stop all speech output and screen magnification.\n"
 "\n"
 msgstr ""
+"<b><big>Zapustim program Orka?</big></b>\n"
+"\n"
+"S tem zaustavite vse izgovorjave in povečave na zaslonu.\n"
+"\n"
 
 #: ../src/orca/orca-setup.glade.h:1
 msgid ""
 "<b>Adjust selected\n"
 "attributes</b>"
 msgstr ""
+"<b>Prilagodi izbrane\n"
+"atribute</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
 msgid "<b>Braille Indicator</b>"
@@ -4233,9 +4214,8 @@ msgid "Enable _modifier keys"
 msgstr "Omogoči _modifikatorske tipke"
 
 #: ../src/orca/orca-setup.glade.h:37
-#, fuzzy
 msgid "Enable _navigation keys"
-msgstr "Omogoči _funkcijske tipke"
+msgstr "Omogoči _krmilne tipke"
 
 #: ../src/orca/orca-setup.glade.h:38
 msgid "Enable ac_tion keys"
@@ -4331,7 +4311,7 @@ msgstr "Spremenilne tipke Orka"
 
 #: ../src/orca/orca-setup.glade.h:65
 msgid "Orca Preferences"
-msgstr "Nastavitve Orce"
+msgstr "Nastavitve Orke"
 
 #: ../src/orca/orca-setup.glade.h:66
 msgid "Orca _Modifier Key(s):"
@@ -4356,7 +4336,7 @@ msgstr "Prikaz vira:"
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:72
 msgid "Say All B_y:"
-msgstr ""
+msgstr "Izgovori vse v:"
 
 #: ../src/orca/orca-setup.glade.h:73
 msgid "Scale _factor:"
@@ -4432,6 +4412,9 @@ msgid ""
 "\n"
 "Please close it before opening a new one."
 msgstr ""
+"Okno nastavitev programa Orka je že odprto.\n"
+"\n"
+"Prosim, zaprite prvo okno pred odpiranjem novega."
 
 #: ../src/orca/orca-setup.glade.h:95
 msgid "_Abbreviated role names"
@@ -4538,7 +4521,7 @@ msgstr "sekund"
 #.
 #: ../src/orca/phonnames.py:53
 msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr ""
+msgstr "a : alfa, b : bravo, c : cesta, č : čas d : delta, e : eho, f : fokstrot, g : golf, h : hotel, i : india, j : julija, k : kilo, l : lima, m : mati, n : november, o : oslo, p : pero, q : quebec, r : romeo, s : sestra, š : šivanka t : trava u : usta, v : viktor, w : whiskey, x : xray, y : yankee, z : zulu ž : žival"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4866,7 +4849,7 @@ msgstr "okvir namizja"
 #.
 #: ../src/orca/rolenames.py:377
 msgid "shortbraille|dial"
-msgstr ""
+msgstr "shortbraille|klic"
 
 #. Translators: long braille for the rolename of a dial.
 #.
@@ -5018,7 +5001,7 @@ msgstr "izbirnik pisav"
 #.
 #: ../src/orca/rolenames.py:478
 msgid "shortbraille|form"
-msgstr ""
+msgstr "shortbraille|obrazec"
 
 #. Translators: long braille for the rolename of a form.
 #.
@@ -5066,7 +5049,7 @@ msgstr "steklen pano"
 #.
 #: ../src/orca/rolenames.py:514
 msgid "hdng"
-msgstr ""
+msgstr "naslov"
 
 #. Translators: long braille for the rolename of a heading.
 #.
@@ -5307,7 +5290,7 @@ msgstr "izbirni pani"
 #.
 #: ../src/orca/rolenames.py:682
 msgid "pgt"
-msgstr ""
+msgstr "zavstran"
 
 #. Translators: long braille for the rolename of a page tab.
 #.
@@ -6120,7 +6103,7 @@ msgstr "Preklopi med možnostjo obveščanja o prispeli pošti tudi, če okno ni
 #.
 #: ../src/orca/scripts/Evolution.py:368
 msgid "present new mail if this script is not active."
-msgstr ""
+msgstr "Predstavi nova sporočila, kadar skript ni aktiven."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -6128,7 +6111,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/Evolution.py:375
 msgid "do not present new mail if this script is not active."
-msgstr ""
+msgstr "Ne predstavi novih sporočil, kadar skript ni aktiven."
 
 #. Translators: this is the name of a setup
 #. assistant window/screen in Evolution.
@@ -6319,7 +6302,7 @@ msgstr "Najdena fraza."
 
 #: ../src/orca/scripts/gnome-mud.py:117
 msgid "Read the latest n messages in the incoming messages text area."
-msgstr ""
+msgstr "Preberi najnovejših n sporočil v besedilnem polju prihajajočih sporočil."
 
 #: ../src/orca/scripts/gnome-search-tool.py:90
 msgid "Searching."
@@ -6462,14 +6445,14 @@ msgstr "Izgovori besede vpisane v vhodni vrstici."
 #.
 #: ../src/orca/scripts/StarOffice.py:867
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr ""
+msgstr "Določitev vrstice za dinamično glavo stolpca med izgovarjanjem celic."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:875
 msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr ""
+msgstr "Določitev stolpca za dinamično glavo vrstice med izgovarjanjem celic."
 
 #. Checkbox for "Speak spread sheet cell coordinates".
 #.
@@ -6479,7 +6462,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/StarOffice.py:926
 msgid "Speak spread sheet cell coordinates"
-msgstr ""
+msgstr "Izgovori koordinate celic razpredelnice"
 
 #. Translators: this represents a match on a window title.
 #. We're looking for frame that ends in "Calc", representing
@@ -6510,14 +6493,14 @@ msgstr "Glava stolpca počiščena."
 #.
 #: ../src/orca/scripts/StarOffice.py:1427
 msgid "Dynamic column header set for row "
-msgstr ""
+msgstr "Dinamična določitev glave vrstice"
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:1484
 msgid "Dynamic row header cleared."
-msgstr ""
+msgstr "Počiščena dinamična določitev glave vrstice"
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
@@ -6525,7 +6508,7 @@ msgstr ""
 #: ../src/orca/scripts/StarOffice.py:1495
 #, python-format
 msgid "Dynamic row header set for column %s"
-msgstr ""
+msgstr "Dinamično določena glave vrstice za stolpec %s"
 
 #. Translators: this is the title of the window that
 #. you get when starting StarOffice.  The translated
@@ -6705,14 +6688,14 @@ msgstr "Bon Echo"
 #.
 #: ../src/orca/settings.py:733
 msgid "Minefield"
-msgstr ""
+msgstr "Minsko polje"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
 #: ../src/orca/settings.py:738
 msgid "Mail/News"
-msgstr ""
+msgstr "Pošta/novice"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
@@ -6750,7 +6733,7 @@ msgstr "Privzeto orodje govora"
 #.
 #: ../src/orca/speechdispatcherfactory.py:82
 msgid "Speech Dispatcher"
-msgstr ""
+msgstr "Sestavljalnik govora"
 
 #. Translators: This string will appear in the list of
 #. available voices for the current speech engine.  %s will be
