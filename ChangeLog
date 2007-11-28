@@ -1,3 +1,9 @@
+2007-11-28  Rich Burridge <rich.burridge@sun.com>
+
+        * pylintrc:
+          Disabled several other pylint message types so we can concentrate
+          on the real problems.
+
 2007-11-28  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/settings.py: 
