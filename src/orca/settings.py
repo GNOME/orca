@@ -767,4 +767,10 @@ setScriptMapping(re.compile(_('pidgin')), "gaim")
 
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems
+#
 deprecatedMessages = False
+
+# Focus history length. We keep a reference to past focused accessibles to 
+# maximize on caching.
+#
+focusHistoryLength = 5

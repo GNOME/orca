@@ -30,6 +30,10 @@ __license__   = "LGPL"
 # easily cause circular imports.
 #
 
+# History of focused accessibles, helps caching.
+#
+focusHistory = []
+
 # The Accessible that has visual focus.
 #
 locusOfFocus = None

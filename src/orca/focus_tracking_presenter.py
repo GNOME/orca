@@ -540,7 +540,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # displayed. See Orca bug #409731 for more details.
             #
             if not event.type.startswith("mouse:"):
-                s = self._getScript(event.source.getApplication())
+                s = self._getScript(event.host_application or \
+                                      event.source.getApplication())
             else:
                 s = orca_state.activeScript
             if not s:
@@ -574,7 +575,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                       + orca_state.activeScript.name)
 
                         self.setActiveScript(
-                            self._getScript(event.source.getApplication()))
+                            self._getScript(event.host_application or \
+                                              event.source.getApplication()))
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
