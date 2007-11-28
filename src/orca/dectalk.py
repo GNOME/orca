@@ -104,9 +104,9 @@ _man_ap = [
     (9, 140, 95)
     ]
 
-_update_map(_table,('man', 'average-pitch'),
+_update_map(_table, ('man', 'average-pitch'),
             " ap %s hs %s ",_man_ap)
-_update_map(_table,('harry', 'average-pitch'),
+_update_map(_table, ('harry', 'average-pitch'),
             " ap %s hs %s ",_man_ap)
 
 _female_ap = [
@@ -494,11 +494,14 @@ _update_map(_table, ('child', 'richness'),
             " ri %s sm %s ", _female_richness)
 
 
-def getrate(r):    return int(180 + 4*r)
+def getrate(r):
+    return int(180 + 4*r)
 
-def getvolume(v):  return int(10*v)
+def getvolume(v):
+    return int(10*v)
 
-def getvoicelist(): return _table['family'].keys()
+def getvoicelist(): 
+    return _table['family'].keys()
 
 def getvoice(acss):
     """Memoized function that returns  synthesizer code for
@@ -506,7 +509,8 @@ def getvoice(acss):
     Synthesizer code is a tupple of the form (open,close)
     where open sets the voice, and close resets it."""
     name = acss.name()
-    if name in _defined_voices: return _defined_voices[name]
+    if name in _defined_voices:
+        return _defined_voices[name]
     _defined_voices[name] = acss2voice(acss)
     return _defined_voices[name]
 
@@ -518,9 +522,12 @@ def acss2voice(acss):
         familyName = acss['family']['name']
         if familyName in _table['family']:
             code += _table['family'][familyName]
-    if 'rate' in acss: code += " :ra %s" % getrate(acss['rate'])
-    if 'punctuations' in acss: code += " :punc %s" % acss['punctuations']
-    if 'gain' in acss: code += " :volume set %s" % getvolume(acss['gain'])
+    if 'rate' in acss:
+        code += " :ra %s" % getrate(acss['rate'])
+    if 'punctuations' in acss:
+        code += " :punc %s" % acss['punctuations']
+    if 'gain' in acss:
+        code += " :volume set %s" % getvolume(acss['gain'])
     voice = ""
     dv = ""
     for d in ['average-pitch', 'pitch-range',
@@ -528,6 +535,8 @@ def acss2voice(acss):
         if d in acss:
             if _table.has_key((familyName, d)):
                 voice += _table[(familyName, d)][int(acss[d])]
-    if voice: dv = " :dv %s" % voice
-    if code or voice: code = "[%s  %s]" % (code, dv)
+    if voice:
+        dv = " :dv %s" % voice
+    if code or voice:
+        code = "[%s  %s]" % (code, dv)
     return (code, " [:np] ")
