@@ -95,7 +95,7 @@ def init():
                               [''])
     except:
         try:
-            moduleName = moduleName.replace("orca.","",1)
+            moduleName = moduleName.replace("orca.", "", 1)
             factory =  __import__(moduleName,
                                   globals(),
                                   locals(),
@@ -160,32 +160,32 @@ def speak(text, acss=None, interrupt=True):
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
 
-def speakKeyEvent(event_string, type):
+def speakKeyEvent(event_string, eventType):
     """Speaks a key event immediately.
 
     Arguments:
     - event_string: string representing the key event as defined by
                     input_event.KeyboardEvent.
-    - type:         key event type as one of orca.KeyEventType constants.
+    - eventType:    key event type as one of orca.KeyEventType constants.
 
     """
     if settings.silenceSpeech:
         return
 
     if _speechserver:
-        _speechserver.speakKeyEvent(event_string, type)
+        _speechserver.speakKeyEvent(event_string, eventType)
     else:
         # Check to see if there are localized words to be spoken for
         # this key event.
         #
         event_string = keynames.getKeyName(event_string)
 
-        if type == orca.KeyEventType.LOCKING_LOCKED:
+        if eventType == orca.KeyEventType.LOCKING_LOCKED:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
             event_string += " " + _("on")
-        elif type == orca.KeyEventType.LOCKING_UNLOCKED:
+        elif eventType == orca.KeyEventType.LOCKING_UNLOCKED:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
@@ -292,7 +292,6 @@ def shutdown():
         _speechserver = None
 
 def reset(text=None, acss=None):
-    global _speechserver
     if _speechserver:
         _speechserver.reset(text, acss)
 
@@ -324,4 +323,3 @@ def test():
                 server.shutdown()
             except:
                 debug.printException(debug.LEVEL_OFF)
-                pass

@@ -21,7 +21,7 @@
           src/orca/keybindings.py:
           src/orca/speech.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
-          Pylint now gives us a 10.00/10 for app_gui_prefs.py,
+          Pylint now gives us a 10.00/10 for app_gui_prefs.py, speech.py,
           orca_gui_prefs.py, input_event.py and keybindings.py.
 
 2007-11-29  Willie Walker <william.walker@sun.com>
