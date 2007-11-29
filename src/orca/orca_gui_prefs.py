@@ -57,7 +57,50 @@ from orca_i18n import _  # for gettext support
 
 (ACTUAL, REPLACEMENT) = range(2)
 
-class orcaSetupGUI(orca_glade.GladeWrapper):
+class OrcaSetupGUI(orca_glade.GladeWrapper):
+
+    def __init__(self, fileName, windowName):
+        """Initialize the Orca configuration GUI.
+
+        Arguments:
+        - fileName: name of the Glade file.
+        - windowName: name of the component to get from the Glade file.
+        """
+
+        # Initialize variables to None to keep pylint happy.
+        #
+        self.bbindings = None
+        self.defaultVoice = None
+        self.defKeyBindings = None
+        self.disableKeyGrabPref = None
+        self.getTextAttributesView = None
+        self.hyperlinkVoice = None
+        self.initializingSpeech = None
+        self.kbindings = None
+        self.keyBindingsModel = None
+        self.keyBindView = None
+        self.newBinding = None
+        self.orcaModKeyEntry = None
+        self.pendingKeyBindings = None
+        self.prefsDict = None
+        self.pronunciationModel = None
+        self.pronunciationView = None
+        self.screenHeight = None
+        self.screenWidth = None
+        self.speechFamiliesChoice = None
+        self.speechFamiliesChoices = None
+        self.speechFamiliesModel = None
+        self.speechServersChoice = None
+        self.speechServersChoices = None
+        self.speechServersModel = None
+        self.speechSystemsChoice = None
+        self.speechSystemsChoices = None
+        self.speechSystemsModel = None
+        self.uppercaseVoice = None
+        self.window = None
+        self.workingFactories = None
+
+        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current
@@ -348,7 +391,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                                        self.pronunciationModel):
             self._say( \
                 _("Accessibility support for GNOME has just been enabled."))
-            self._say(_("You need to log out and log back in for the change to take effect."))
+            self._say( \
+                _("You need to log out and log back in for the change to " \
+                  "take effect."))
 
     def _getKeyValueForVoiceType(self, voiceType, key, useDefault=True):
         """Look for the value of the given key in the voice dictionary
@@ -615,7 +660,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # that this preference has never been set.
         #
         if not serverInfo:
-            serverInfo = speech._speechserver.getInfo()
+            print "CALLING GETINFO."
+            serverInfo = speech.getInfo()
 
         valueSet = False
         i = 0
@@ -717,7 +763,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                     self.workingFactories.append(factory)
             except:
                 debug.printException(debug.LEVEL_FINEST)
-                pass
 
         self.speechSystemsChoices = []
         if len(self.workingFactories) == 0:
@@ -1556,15 +1601,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         else:
             self.get_widget("generalLaptopButton").set_active(True)
 
-    def _getComboBoxIndex(self, combobox, str):
-        """ For each of the entries in the given combo box, look for str.
-            Return the index of the entry if str is found.
+    def _getComboBoxIndex(self, combobox, searchStr):
+        """ For each of the entries in the given combo box, look for searchStr.
+            Return the index of the entry if searchStr is found.
 
         Arguments:
         - combobox: the GtkComboBox to search.
-        - str: the string to search for.
+        - searchStr: the string to search for.
 
-        Returns the index of the first entry in combobox with str, or
+        Returns the index of the first entry in combobox with searchStr, or
         0 if not found.
         """
 
@@ -1572,7 +1617,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         myiter = model.get_iter_first()
         for i in range(0, len(model)):
             name = model.get_value(myiter, 0)
-            if name == str:
+            if name == searchStr:
                 return i
             myiter = model.iter_next(myiter)
 
@@ -1707,7 +1752,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         while myiter != None:
             iterChild = model.iter_children(myiter)
             while iterChild != None:
-                if model.get(iterChild,DESCRIP)[0] == kb.handler._description:
+                if model.get(iterChild, DESCRIP)[0] == kb.handler.description:
                     exist = True
                     if not kb.keysymstring:
                         text = None
@@ -1751,7 +1796,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
                        + kb.keysymstring
             model.set (myiter,
                        HANDLER,   handl,
-                       DESCRIP,   kb.handler._description,
+                       DESCRIP,   kb.handler.description,
                        MOD_MASK1, kb.modifier_mask,
                        MOD_USED1, kb.modifiers,
                        KEY1,      kb.keysymstring,
@@ -1791,7 +1836,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             myiter = model.append(parent)
             model.set (myiter,
                        HANDLER,  handl,
-                       DESCRIP,  inputEvHand._description,
+                       DESCRIP,  inputEvHand.description,
                        KEY1,     com,
                        TEXT1,    braille.command_name[com],
                        MODIF,    modif,
@@ -1808,7 +1853,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             defScript = default.Script(None)
             defScript.setupInputEventHandlers()
             keyBinds = keybindings.KeyBindings()
-            keyBinds = settings.overrideKeyBindings(defScript,keyBinds)
+            keyBinds = settings.overrideKeyBindings(defScript, keyBinds)
             keyBind = keybindings.KeyBinding(None, None, None, None)
             treeModel = self.keyBindingsModel
 
@@ -1991,7 +2036,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            pass
 
     def voiceTypesChanged(self, widget):
         """Signal handler for the "changed" signal for the voiceTypes
@@ -2766,7 +2810,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
            and self.kbindings.hasKeyBinding(self.newBinding, "keysNoMask"):
             handler = self.kbindings.getInputHandler(captured)
             if handler:
-                description = handler._description
+                description = handler.description
 
         if description:
             # Translators: this is a spoken prompt letting the user know
@@ -3201,7 +3245,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         orca_state.orcaOS = None
 
-class warningDialogGUI(orca_glade.GladeWrapper):
+class WarningDialogGUI(orca_glade.GladeWrapper):
 
     def getPrefsWarningDialog(self):
         """Return a handle to the Orca Preferences warning dialog.
@@ -3249,13 +3293,13 @@ def showPreferencesUI():
                                                  platform.package,
                                                  "glade",
                                                  "orca-setup.glade")
-        orca_state.orcaOS = orcaSetupGUI(orca_state.prefsGladeFile,
+        orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsGladeFile,
                                          "orcaSetupWindow")
         orca_state.orcaOS.init()
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWD = \
-                warningDialogGUI(orca_state.prefsGladeFile,
+                WarningDialogGUI(orca_state.prefsGladeFile,
                                  "orcaPrefsWarningDialog")
             warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
             warningDialog.realize()

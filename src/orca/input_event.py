@@ -143,7 +143,7 @@ class InputEventHandler:
         """
 
         self._function = function
-        self._description = description
+        self.description = description
         self._learnModeEnabled = learnModeEnabled
 
     def __eq__(self, other):
@@ -169,13 +169,13 @@ class InputEventHandler:
         consumed = False
 
         if settings.learnModeEnabled and self._learnModeEnabled:
-            if self._description:
+            if self.description:
                 # These imports are here to eliminate circular imports.
                 #
                 import braille
                 import speech
-                braille.displayMessage(self._description)
-                speech.speak(self._description)
+                braille.displayMessage(self.description)
+                speech.speak(self.description)
                 consumed = True
         else:
             try:

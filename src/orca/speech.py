@@ -234,6 +234,13 @@ def speakUtterances(utterances, acss=None, interrupt=True):
                                        __resolveACSS(acss),
                                        interrupt)
 
+def getInfo():
+    info = None
+    if _speechserver:
+        info = _speechserver.getInfo()
+
+    return info
+
 def stop():
     if _speechserver:
         _speechserver.stop()

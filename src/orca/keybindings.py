@@ -252,7 +252,7 @@ class KeyBindings:
             result += "  [%x %x %s %s]\n" % (keyBinding.modifier_mask,
                                              keyBinding.modifiers,
                                              keyBinding.keysymstring,
-                                             keyBinding.handler._description)
+                                             keyBinding.handler.description)
         result += "]"
         return result
     
@@ -293,8 +293,8 @@ class KeyBindings:
 
         for keyBinding in self.keyBindings:
             if typeOfSearch == "strict":
-                if (keyBinding.handler._description \
-                    == newKeyBinding.handler._description) \
+                if (keyBinding.handler.description \
+                    == newKeyBinding.handler.description) \
                     and (keyBinding.keysymstring \
                          == newKeyBinding.keysymstring) \
                     and (keyBinding.modifier_mask \
@@ -303,8 +303,8 @@ class KeyBindings:
                          == newKeyBinding.modifiers):
                     hasIt = True
             elif typeOfSearch == "description":
-                if keyBinding.handler._description \
-                    == newKeyBinding.handler._description:
+                if keyBinding.handler.description \
+                    == newKeyBinding.handler.description:
                     hasIt = True
             elif typeOfSearch == "keys":
                 if (keyBinding.keysymstring \

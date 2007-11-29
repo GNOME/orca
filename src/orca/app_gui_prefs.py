@@ -49,7 +49,7 @@ from orca_i18n import _  # for gettext support
 applicationName = None
 appScript = None
 
-class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
+class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
     def __init__(self, fileName, windowName):
         """Initialize the application specific Orca configuration GUI.
@@ -59,7 +59,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         - windowName: name of the component to get from the Glade file.
         """
 
-        # Initialize variable to None to keep pylint happy.
+        # Initialize variables to None to keep pylint happy.
         #
         self.applicationName = None
         self.appScript = None
@@ -68,7 +68,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         self.appKeyBindings = None
         self.defKeyBindings = None
 
-        orca_gui_prefs.orcaSetupGUI.__init__(self, fileName, windowName)
+        orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, windowName)
 
     def initAppGUIState(self, thisAppScript):
         """Before we show the GUI to the user we want to remove the
@@ -105,7 +105,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
           pronunciation from.
         """
 
-        orca_gui_prefs.orcaSetupGUI._createPronunciationTreeView( \
+        orca_gui_prefs.OrcaSetupGUI._createPronunciationTreeView( \
                               self, appScript.app_pronunciation_dict)
 
     def showGUI(self):
@@ -121,7 +121,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         title = _("Orca Preferences for %s") % self.applicationName
         self.get_widget("orcaSetupWindow").set_title(title)
 
-        orca_gui_prefs.orcaSetupGUI.showGUI(self)
+        orca_gui_prefs.OrcaSetupGUI.showGUI(self)
 
     def writeUserPreferences(self):
         """Write out the user's application-specific Orca preferences.
@@ -212,7 +212,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         # setting up the tree view.
         #
         self.kbindings = self.appKeyBindings
-        orca_gui_prefs.orcaSetupGUI._populateKeyBindings(self, False)
+        orca_gui_prefs.OrcaSetupGUI._populateKeyBindings(self, False)
 
     def okButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the okButton
@@ -242,7 +242,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
         orca_state.appOS = None
 
-class warningDialogGUI(orca_glade.GladeWrapper):
+class WarningDialogGUI(orca_glade.GladeWrapper):
 
     def getPrefsWarningDialog(self):
         """Return a handle to the Orca Preferences warning dialog.
@@ -310,14 +310,14 @@ def showPreferencesUI():
                                                  platform.package,
                                                  "glade",
                                                  "orca-setup.glade")
-        orca_state.appOS = orcaSetupGUI(orca_state.prefsGladeFile,
+        orca_state.appOS = OrcaSetupGUI(orca_state.prefsGladeFile,
                                         "orcaSetupWindow")
         removeGeneralPane = True
         orca_state.appOS.init()
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWD = \
-                warningDialogGUI(orca_state.prefsGladeFile,
+                WarningDialogGUI(orca_state.prefsGladeFile,
                                  "orcaPrefsWarningDialog")
             warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
             warningDialog.realize()
