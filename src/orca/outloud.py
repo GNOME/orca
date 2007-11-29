@@ -105,11 +105,11 @@ _man_ap = [
     (9, 90, 20)
     ]
 
-_update_map(_table,('man', 'average-pitch'),
-            " `vb%s `vh% s",_man_ap)
+_update_map(_table, ('man', 'average-pitch'),
+            " `vb%s `vh% s", _man_ap)
 # same for Harry and dennis
-_update_map(_table,('harry', 'average-pitch'),
-            " `vb%s `vh% s",_man_ap)
+_update_map(_table, ('harry', 'average-pitch'),
+            " `vb%s `vh% s", _man_ap)
 _update_map(_table, ('dennis', 'average-pitch'),
             " `vb%s `vh%s ",  _male_ap)
 
@@ -355,9 +355,11 @@ _update_map(_table, ('child', 'richness'),
 # getrate is here for symmetry with other engines:
 # In the case of outloud, we dont need to normalize
 
-def getrate(r): return r
+def getrate(r):
+    return r
 
-def getvoicelist(): return _table['family'].keys()
+def getvoicelist():
+    return _table['family'].keys()
 
 def getvoice(acss):
     """Memoized function that returns  synthesizer code for
@@ -366,7 +368,8 @@ def getvoice(acss):
     where open sets the voice, and close resets it."""
 
     name = acss.name()
-    if name in _defined_voices: return _defined_voices[name]
+    if name in _defined_voices:
+        return _defined_voices[name]
     _defined_voices[name] = acss2voice(acss)
     return _defined_voices[name]
 
@@ -377,10 +380,13 @@ def acss2voice(acss):
     if 'family' in acss:
         familyName = acss['family']['name']
         code += _table['family'][familyName]
-    if 'rate' in acss: code += " `vs%s" % int(acss['rate'])
+    if 'rate' in acss:
+        code += " `vs%s" % int(acss['rate'])
     voice = ""
     for d in ['average-pitch', 'pitch-range',
               'richness', 'stress']:
-        if d in acss:voice += _table[(familyName, d)][int(acss[d])]
-    if code or voice: code = "%s %s" % (code, voice)
+        if d in acss:
+            voice += _table[(familyName, d)][int(acss[d])]
+    if code or voice:
+        code = "%s %s" % (code, voice)
     return (code, " `v1 ")

@@ -16,6 +16,8 @@
           src/orca/scripts/gaim.py:
 	  src/orca/scripts/liferea.py:
 	  src/orca/J2SE-access-bridge.py:
+	  src/orca/presentation_manager.py:
+	  src/orca/outloud.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
           Pylint now gives us a 10.00/10 for these files.
 

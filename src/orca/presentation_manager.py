@@ -29,6 +29,9 @@ class PresentationManager:
     """High level manager for reacting to user input events and
     presenting information to the user."""
 
+    def __init__(self):
+        pass
+
     def processKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
 
