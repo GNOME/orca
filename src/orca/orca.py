@@ -421,8 +421,6 @@ def _isNavigationKey(event_string):
     Returns True if this is a navigation key.
     """
 
-    global _orcaModifierPressed
-
     navigationKeys = [ "Left", "Right", "Up", "Down" ]
 
     reply = (event_string in navigationKeys) or _orcaModifierPressed
@@ -457,6 +455,9 @@ class KeyEventType:
 
     """A navigation key event."""
     NAVIGATION = 'NAVIGATION'
+
+    def __init__(self):
+        pass
 
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key

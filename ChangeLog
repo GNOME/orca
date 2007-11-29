@@ -35,7 +35,8 @@
 
 2007-11-29  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/debug.py:
+        * src/orca/orca.py:
+          src/orca/debug.py:
           src/orca/speechserver.py:
           src/orca/default.py:
           src/orca/speechdispatchfactory.py:
