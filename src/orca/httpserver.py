@@ -146,7 +146,6 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         stringIO.close()
                     except:
                         debug.printException(debug.LEVEL_OFF)
-                        pass
                     stringIO = StringIO.StringIO()
                 self.send_response(200, 'OK')
                 self.send_header("Content-type", "text/html")
@@ -187,7 +186,8 @@ class _HTTPRequestThread(threading.Thread):
                 if portNo == settings.httpServerPort:
                     debug.printException(debug.LEVEL_WARNING)
                 debug.println(debug.LEVEL_WARNING,
-                    "httpserver._HTTPRequestThread unable to start server on port %d" % portNo)
+                    "httpserver._HTTPRequestThread unable to start server " \
+                    "on port %d" % portNo)
                 portNo += 1
 
         if not connected:

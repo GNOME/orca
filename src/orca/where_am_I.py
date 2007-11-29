@@ -1365,7 +1365,7 @@ class WhereAmI:
         else:
             return ""
 
-    def _stringToDictionary(self, str):
+    def _stringToDictionary(self, tokenString):
         """Converts a string of text attribute tokens of the form
         <key>:<value>; into a dictionary of keys and values.
         Text before the colon is the key and text afterwards is the
@@ -1373,32 +1373,15 @@ class WhereAmI:
         """
 
         dictionary = {}
-        allTokens = str.split(";")
+        allTokens = tokenString.split(";")
         for token in allTokens:
             item = token.split(":")
             if len(item) == 2:
-                item[0] = self._removeLeadingSpaces(item[0])
-                item[1] = self._removeLeadingSpaces(item[1])
+                item[0] = item[0].lstrip()
+                item[1] = item[1].lstrip()
                 dictionary[item[0]] = item[1]
 
         return dictionary
-
-    def _removeLeadingSpaces(self, str):
-        """Returns a string with the leading space characters removed.
-        """
-
-        newStr = ""
-        leadingSpaces = True
-        for i in range(0, len(str)):
-            if str[i] == " ":
-                if leadingSpaces:
-                    continue
-            else:
-                leadingSpaces = False
-
-            newStr += str[i]
-
-        return newStr
 
     def _speakTitleOrStatus(self, obj, doubleClick):
         """When pressed a single time, Orca will speak the following
