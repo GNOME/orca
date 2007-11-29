@@ -36,9 +36,9 @@ import platform
 
 OS = None
 
-class orcaMainGUI(orca_glade.GladeWrapper):
+class OrcaMainGUI(orca_glade.GladeWrapper):
 
-    def _init(self):
+    def init(self):
         pass
 
     def _setMainWindowIcon(self):
@@ -52,7 +52,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
 
         self.get_widget("mainWindow").set_icon(icon)
 
-    def _showGUI(self):
+    def showGUI(self):
         """Show the Orca main window GUI. This assumes that the GUI has 
         already been created.
         """
@@ -60,7 +60,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         self._setMainWindowIcon()
         self.get_widget("mainWindow").show()
 
-    def _hideGUI(self):
+    def hideGUI(self):
         """Hide the Orca main window GUI. This assumes that the GUI has
         already been created.
         """
@@ -98,7 +98,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        orca._showPreferencesGUI()
+        orca.showPreferencesGUI()
 
     def mainWindowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the mainWindow
@@ -123,16 +123,14 @@ def showMainUI():
                                  platform.package,
                                  "glade",
                                  "orca-mainwin.glade")
-        OS = orcaMainGUI(gladeFile, "mainWindow")
-        OS._init()
+        OS = OrcaMainGUI(gladeFile, "mainWindow")
+        OS.init()
 
-    OS._showGUI()
+    OS.showGUI()
 
 def hideMainUI():
-    global OS
-
     if OS:
-        OS._hideGUI()
+        OS.hideGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

@@ -616,7 +616,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                orca._showPreferencesGUI,
+                orca.showPreferencesGUI,
                 # Translators: the preferences configuration dialog is
                 # the dialog that allows users to set their preferences
                 # for Orca.

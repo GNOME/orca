@@ -922,7 +922,7 @@ def _showAppPreferencesGUI(script=None, inputEvent=None):
 
     return True
 
-def _showPreferencesGUI(script=None, inputEvent=None):
+def showPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
     user preferences using a GUI.
 
@@ -1520,10 +1520,10 @@ def main():
     # user has bypassed any setup via the --no-setup switch.
     #
     if setupRequested and (not bypassSetup) and showGUI:
-        _showPreferencesGUI()
+        showPreferencesGUI()
     elif (not _userSettings) and (not bypassSetup):
         if desktopRunning:
-            _showPreferencesGUI()
+            showPreferencesGUI()
         else:
             _showPreferencesConsole()
 
