@@ -72,7 +72,7 @@ def clickPoint(x, y, button):
 
     generateMouseEvent(x, y, "b%dc" % button)
 
-def generateKeyboardEvent(keycode, keystring, type):
+def generateKeyboardEvent(keycode, keystring, eventType):
     """Generates a keyboard event.
 
     Arguments:
@@ -83,10 +83,10 @@ def generateKeyboardEvent(keycode, keystring, type):
               being synthesized; this type of keyboard event synthesis does
               not emulate hardware keypresses but injects the string
               as though a composing input method (such as XIM) were used.
-    - type:   an AccessibleKeySynthType flag indicating whether keyval
+    - eventType: an AccessibleKeySynthType flag indicating whether keyval
               is to be interpreted as a keysym rather than a keycode
               (pyatspi.KEY_SYM), or whether to synthesize
               KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
     """
 
-    pyatspi.Registry.generateKeyboardEvent(keycode, keystring, type)
+    pyatspi.Registry.generateKeyboardEvent(keycode, keystring, eventType)
