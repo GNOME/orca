@@ -39,7 +39,9 @@
           src/orca/debug.py:
           src/orca/speechserver.py:
           src/orca/default.py:
+          src/orca/flat_review.py:
           src/orca/speechdispatchfactory.py:
+          src/orca/presentation_manager.py:
           src/orca/eventsynthesizer.py:
           src/orca/espeechfactory.py:
           src/orca/Gecko.py:
@@ -55,13 +57,15 @@
           src/orca/speech.py:
           src/orca/punctuation_settings.py:
           src/orca/focus_tracking_presenter.py:
+          src/orca/scripts/Evolution.py:
           src/orca/scripts/StarOffice.py:
+          src/orca/scripts/gnome-terminal.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
           Pylint now gives us a 10.00/10 for app_gui_prefs.py, speech.py,
           eventsynthesizer.py, focus_tracking_presenter.py, orca_gui_prefs.py,
           orca_gui_find.py, orca_quit.py, orca_gui_main.py, 
-          punctuation_settings.py, orca_glade.py, input_event.py and 
-          keybindings.py.
+          presentation_manager.py, punctuation_settings.py, orca_glade.py,
+          input_event.py and keybindings.py.
 
 2007-11-29  Willie Walker <william.walker@sun.com>
 

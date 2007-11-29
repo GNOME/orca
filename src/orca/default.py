@@ -472,7 +472,8 @@ class Script(script.Script):
                 # sometimes want the entire row of a table read, or
                 # they just want the current cell to be presented to them.
                 #
-                _("Toggles whether to read just the current table cell or the whole row."))
+                _("Toggles whether to read just the current table cell " \
+                  "or the whole row."))
 
         self.inputEventHandlers["readCharAttributesHandler"] = \
             input_event.InputEventHandler(
@@ -481,7 +482,8 @@ class Script(script.Script):
                 # text attributes, such as bold, italic, font name,
                 # font size, etc.
                 #
-                _("Reads the attributes associated with the current text character."))
+                _("Reads the attributes associated with the current text " \
+                  character."))
 
         self.inputEventHandlers["reportScriptInfoHandler"] = \
             input_event.InputEventHandler(
@@ -643,7 +645,8 @@ class Script(script.Script):
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
                 Script.printAppsHandler,
-                "Prints a debug listing of all known applications to the console where Orca is running.")
+                "Prints a debug listing of all known applications to the " \
+                "console where Orca is running.")
 
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
@@ -653,12 +656,14 @@ class Script(script.Script):
         self.inputEventHandlers["printActiveAppHandler"] = \
             input_event.InputEventHandler(
                 Script.printActiveAppHandler,
-                "Prints debug information about the currently active application to the console where Orca is running.")
+                "Prints debug information about the currently active " \
+                "application to the console where Orca is running.")
 
         self.inputEventHandlers["printAncestryHandler"] = \
             input_event.InputEventHandler(
                 Script.printAncestryHandler,
-                "Prints debug information about the ancestry of the object with focus.")
+                "Prints debug information about the ancestry of the object " \
+                "with focus.")
 
         self.inputEventHandlers["printHierarchyHandler"] = \
             input_event.InputEventHandler(
@@ -3465,7 +3470,8 @@ class Script(script.Script):
             # echo the name of the key if Orca doesn't have a handler.
             # This text here is what is spoken to the user.
             #
-            _("Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."))
+            _("Entering learn mode.  Press any key to hear its function.  " \
+              "To exit learn mode, press the escape key."))
 
         # Translators: Orca has a "Learn Mode" that will allow
         # the user to type any key on the keyboard and hear what

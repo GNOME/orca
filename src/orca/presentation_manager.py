@@ -19,7 +19,7 @@
 
 """Provides the PresentationManager class for Orca."""
 
-__id__        = "$Id$"
+__id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."

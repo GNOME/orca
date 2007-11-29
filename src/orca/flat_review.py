@@ -1505,12 +1505,12 @@ class Context:
 
         return zone.accessible
 
-    def getCurrent(self, type=ZONE):
+    def getCurrent(self, flatReviewType=ZONE):
         """Gets the string, offset, and extent information for the
         current locus of interest.
 
         Arguments:
-        - type: one of ZONE, CHAR, WORD, LINE
+        - flatReviewType: one of ZONE, CHAR, WORD, LINE
 
         Returns: [string, x, y, width, height]
         """
@@ -1521,13 +1521,13 @@ class Context:
 
         zone = self.lines[self.lineIndex].zones[self.zoneIndex]
 
-        if type == Context.ZONE:
+        if flatReviewType == Context.ZONE:
             return [zone.string,
                     zone.x,
                     zone.y,
                     zone.width,
                     zone.height]
-        elif type == Context.CHAR:
+        elif flatReviewType == Context.CHAR:
             if isinstance(zone, TextZone):
                 words = zone.words
                 if words:
@@ -1547,7 +1547,7 @@ class Context:
                                 word.width,
                                 word.height]
             return self.getCurrent(Context.ZONE)
-        elif type == Context.WORD:
+        elif flatReviewType == Context.WORD:
             if isinstance(zone, TextZone):
                 words = zone.words
                 if words:
@@ -1558,7 +1558,7 @@ class Context:
                             word.width,
                             word.height]
             return self.getCurrent(Context.ZONE)
-        elif type == Context.LINE:
+        elif flatReviewType == Context.LINE:
             line = self.lines[self.lineIndex]
             return [line.string,
                     line.x,
@@ -1566,7 +1566,7 @@ class Context:
                     line.width,
                     line.height]
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatReviewType)
 
     def getCurrentBrailleRegions(self):
         """Gets the braille for the entire current line.
@@ -1598,24 +1598,24 @@ class Context:
 
         return [regions, regionWithFocus]
 
-    def goBegin(self, type=WINDOW):
+    def goBegin(self, flatReviewType=WINDOW):
         """Moves this context's locus of interest to the first char
         of the first relevant zone.
 
         Arguments:
-        - type: one of ZONE, LINE or WINDOW
+        - flatReviewType: one of ZONE, LINE or WINDOW
 
         Returns True if the locus of interest actually changed.
         """
 
-        if (type == Context.LINE) or (type == Context.ZONE):
+        if (flatReviewType == Context.LINE) or (flatReviewType == Context.ZONE):
             lineIndex = self.lineIndex
-        elif type == Context.WINDOW:
+        elif flatReviewType == Context.WINDOW:
             lineIndex = 0
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatReviewType)
 
-        if type == Context.ZONE:
+        if flatReviewType == Context.ZONE:
             zoneIndex = self.zoneIndex
         else:
             zoneIndex = 0
@@ -1637,24 +1637,24 @@ class Context:
 
         return moved
 
-    def goEnd(self, type=WINDOW):
+    def goEnd(self, flatReviewType=WINDOW):
         """Moves this context's locus of interest to the last char
         of the last relevant zone.
 
         Arguments:
-        - type: one of ZONE, LINE, or WINDOW
+        - flatReviewType: one of ZONE, LINE, or WINDOW
 
         Returns True if the locus of interest actually changed.
         """
 
-        if (type == Context.LINE) or (type == Context.ZONE):
+        if (flatReviewType == Context.LINE) or (flatReviewType == Context.ZONE):
             lineIndex = self.lineIndex
-        elif type == Context.WINDOW:
+        elif flatReviewType == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatReviewType)
 
-        if type == Context.ZONE:
+        if flatReviewType == Context.ZONE:
             zoneIndex = self.zoneIndex
         else:
             zoneIndex = len(self.lines[lineIndex].zones) - 1
@@ -1685,12 +1685,13 @@ class Context:
 
         return moved
 
-    def goPrevious(self, type=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
+    def goPrevious(self, flatReviewType=ZONE, 
+                   wrap=WRAP_ALL, omitWhitespace=True):
         """Moves this context's locus of interest to the first char
         of the previous type.
 
         Arguments:
-        - type: one of ZONE, CHAR, WORD, LINE
+        - flatReviewType: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross boundaries, including top and
                 bottom; if False, will stop on boundaries.
 
@@ -1699,7 +1700,7 @@ class Context:
 
         moved = False
 
-        if type == Context.ZONE:
+        if flatReviewType == Context.ZONE:
             if self.zoneIndex > 0:
                 self.zoneIndex -= 1
                 self.wordIndex = 0
@@ -1718,7 +1719,7 @@ class Context:
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
-        elif type == Context.CHAR:
+        elif flatReviewType == Context.CHAR:
             if self.charIndex > 0:
                 self.charIndex -= 1
                 moved = True
@@ -1730,7 +1731,7 @@ class Context:
                         chars = zone.words[self.wordIndex].chars
                         if chars:
                             self.charIndex = len(chars) - 1
-        elif type == Context.WORD:
+        elif flatReviewType == Context.WORD:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             accessible = zone.accessible
             lineIndex = self.lineIndex
@@ -1787,7 +1788,7 @@ class Context:
                 self.wordIndex = wordIndex
                 self.charIndex = charIndex
 
-        elif type == Context.LINE:
+        elif flatReviewType == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex > 0:
                     self.lineIndex -= 1
@@ -1803,26 +1804,26 @@ class Context:
                     self.charIndex = 0
                     moved = True
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatReviewType)
 
-        if moved and (type != Context.LINE):
+        if moved and (flatReviewType != Context.LINE):
             self.targetCharInfo = self.getCurrent(Context.CHAR)
 
         return moved
 
-    def goNext(self, type=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
+    def goNext(self, flatreviewType=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
         """Moves this context's locus of interest to first char of
         the next type.
 
         Arguments:
-        - type: one of ZONE, CHAR, WORD, LINE
+        - flatreviewType: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross boundaries, including top and
                 bottom; if False, will stop on boundaries.
         """
 
         moved = False
 
-        if type == Context.ZONE:
+        if flatreviewType == Context.ZONE:
             if self.zoneIndex < (len(self.lines[self.lineIndex].zones) - 1):
                 self.zoneIndex += 1
                 self.wordIndex = 0
@@ -1841,7 +1842,7 @@ class Context:
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
-        elif type == Context.CHAR:
+        elif flatreviewType == Context.CHAR:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             if zone.words:
                 chars = zone.words[self.wordIndex].chars
@@ -1855,7 +1856,7 @@ class Context:
                     moved = self.goNext(Context.WORD, wrap)
             else:
                 moved = self.goNext(Context.ZONE, wrap)
-        elif type == Context.WORD:
+        elif flatreviewType == Context.WORD:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             accessible = zone.accessible
             lineIndex = self.lineIndex
@@ -1911,7 +1912,7 @@ class Context:
                 self.wordIndex = wordIndex
                 self.charIndex = charIndex
 
-        elif type == Context.LINE:
+        elif flatreviewType == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex < (len(self.lines) - 1):
                     self.lineIndex += 1
@@ -1927,20 +1928,20 @@ class Context:
                     self.charIndex = 0
                     moved = True
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatreviewType)
 
-        if moved and (type != Context.LINE):
+        if moved and (flatreviewType != Context.LINE):
             self.targetCharInfo = self.getCurrent(Context.CHAR)
 
         return moved
 
-    def goAbove(self, type=LINE, wrap=WRAP_ALL):
+    def goAbove(self, flatreviewType=LINE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to first char
         of the type that's closest to and above the current locus of
         interest.
 
         Arguments:
-        - type: LINE
+        - flatreviewType: LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
@@ -1948,7 +1949,7 @@ class Context:
         """
 
         moved = False
-        if type == Context.CHAR:
+        if flatreviewType == Context.CHAR:
             # We want to shoot for the closest character, which we've
             # saved away as self.targetCharInfo, which is the list
             # [string, x, y, width, height].
@@ -1974,20 +1975,20 @@ class Context:
             # so we reset it to our saved value.
             #
             self.targetCharInfo = target
-        elif type == Context.LINE:
-            return self.goPrevious(type, wrap)
+        elif flatreviewType == Context.LINE:
+            return self.goPrevious(flatreviewType, wrap)
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatreviewType)
 
         return moved
 
-    def goBelow(self, type=LINE, wrap=WRAP_ALL):
+    def goBelow(self, flatreviewType=LINE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to the first
         char of the type that's closest to and below the current
         locus of interest.
 
         Arguments:
-        - type: one of WORD, LINE
+        - flatreviewType: one of WORD, LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
@@ -1995,7 +1996,7 @@ class Context:
         """
 
         moved = False
-        if type == Context.CHAR:
+        if flatreviewType == Context.CHAR:
             # We want to shoot for the closest character, which we've
             # saved away as self.targetCharInfo, which is the list
             # [string, x, y, width, height].
@@ -2021,9 +2022,9 @@ class Context:
             # so we reset it to our saved value.
             #
             self.targetCharInfo = target
-        elif type == Context.LINE:
-            moved = self.goNext(type, wrap)
+        elif flatreviewType == Context.LINE:
+            moved = self.goNext(flatreviewType, wrap)
         else:
-            raise Exception("Invalid type: %d" % type)
+            raise Exception("Invalid type: %d" % flatreviewType)
 
         return moved

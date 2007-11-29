@@ -196,7 +196,6 @@ class Script(default.Script):
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 matchFound = True
-                pass
             elif wasCommand or (len(text) > 5):
                 speakThis = True
 

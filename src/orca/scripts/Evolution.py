@@ -331,7 +331,8 @@ class Script(default.Script):
                 # the user know when new mail has arrived, even if Evolution
                 # doesn't have focus.
                 #
-                _("Toggle whether we present new mail if we are not the active script."))
+                _("Toggle whether we present new mail " \
+                  "if we are not the active script."))
 
     def getKeyBindings(self):
         """Defines the new key binding for this script. Setup the default
