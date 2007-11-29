@@ -73,6 +73,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         self.setActiveScript(None)
 
+        # Initialize variable to make pylint happy.
+        #
+        self._defaultScript = None
+        self._appStateInfo = None
+        self._listenerCounts = None
+
         if settings.debugEventQueue:
             self._enqueueEventCount = 0
             self._dequeueEventCount = 0
@@ -955,8 +961,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # can tell the user about itself.
             #
             class _FakeEvent:
-                pass
+                def __init__(self):
+                    pass
             class _FakeData:
+                def __init__(self):
+                    pass
                 def value(self):
                     return None
             fe = _FakeEvent()
