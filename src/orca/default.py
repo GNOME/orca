@@ -483,7 +483,7 @@ class Script(script.Script):
                 # font size, etc.
                 #
                 _("Reads the attributes associated with the current text " \
-                  character."))
+                  "character."))
 
         self.inputEventHandlers["reportScriptInfoHandler"] = \
             input_event.InputEventHandler(
