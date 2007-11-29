@@ -59,7 +59,7 @@ from orca_i18n import _  # for gettext support
 
 class orcaSetupGUI(orca_glade.GladeWrapper):
 
-    def _init(self):
+    def init(self):
         """Initialize the Orca configuration GUI. Read the users current
         set of preferences and set the GUI state to match. Setup speech
         support and populate the combo box lists on the Speech Tab pane
@@ -1578,7 +1578,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         return 0
 
-    def _showGUI(self):
+    def showGUI(self):
         """Show the Orca configuration GUI window. This assumes that
         the GUI has already been created.
         """
@@ -3251,7 +3251,7 @@ def showPreferencesUI():
                                                  "orca-setup.glade")
         orca_state.orcaOS = orcaSetupGUI(orca_state.prefsGladeFile,
                                          "orcaSetupWindow")
-        orca_state.orcaOS._init()
+        orca_state.orcaOS.init()
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWD = \
@@ -3262,7 +3262,7 @@ def showPreferencesUI():
             warningDialog.show()
         return
 
-    orca_state.orcaOS._showGUI()
+    orca_state.orcaOS.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

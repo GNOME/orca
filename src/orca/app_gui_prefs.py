@@ -51,7 +51,26 @@ appScript = None
 
 class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
-    def _initAppGUIState(self, thisAppScript):
+    def __init__(self, fileName, windowName):
+        """Initialize the application specific Orca configuration GUI.
+
+        Arguments:
+        - fileName: name of the Glade file.
+        - windowName: name of the component to get from the Glade file.
+        """
+
+        # Initialize variable to None to keep pylint happy.
+        #
+        self.applicationName = None
+        self.appScript = None
+        self.app = None
+        self.kbindings = None
+        self.appKeyBindings = None
+        self.defKeyBindings = None
+
+        orca_gui_prefs.orcaSetupGUI.__init__(self, fileName, windowName)
+
+    def initAppGUIState(self, thisAppScript):
         """Before we show the GUI to the user we want to remove the
         General tab and gray out the Speech systems and servers 
         controls on the speech tab.
@@ -89,7 +108,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         orca_gui_prefs.orcaSetupGUI._createPronunciationTreeView( \
                               self, appScript.app_pronunciation_dict)
 
-    def _showGUI(self):
+    def showGUI(self):
         """Show the app-specific Orca configuration GUI window. This 
         assumes that the GUI has already been created.
         """
@@ -102,7 +121,7 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
         title = _("Orca Preferences for %s") % self.applicationName
         self.get_widget("orcaSetupWindow").set_title(title)
 
-        orca_gui_prefs.orcaSetupGUI._showGUI(self)
+        orca_gui_prefs.orcaSetupGUI.showGUI(self)
 
     def writeUserPreferences(self):
         """Write out the user's application-specific Orca preferences.
@@ -117,8 +136,6 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
     def _markModified(self):
         """ Mark as modified the user application specific custom key bindings:
         """
-
-        global appScript
 
         try:
             appScript.setupInputEventHandlers()
@@ -154,8 +171,6 @@ class orcaSetupGUI(orca_gui_prefs.orcaSetupGUI):
 
         if clearModel:
             self.keyBindingsModel.clear()
-
-        global applicationName, appScript
 
         # Get the key bindings for the application script.
         #
@@ -298,7 +313,7 @@ def showPreferencesUI():
         orca_state.appOS = orcaSetupGUI(orca_state.prefsGladeFile,
                                         "orcaSetupWindow")
         removeGeneralPane = True
-        orca_state.appOS._init()
+        orca_state.appOS.init()
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWD = \
@@ -310,8 +325,8 @@ def showPreferencesUI():
         return
 
     if removeGeneralPane:
-        orca_state.appOS._initAppGUIState(appScript)
-    orca_state.appOS._showGUI()
+        orca_state.appOS.initAppGUIState(appScript)
+    orca_state.appOS.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
