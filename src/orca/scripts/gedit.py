@@ -110,14 +110,14 @@ class Script(default.Script):
         """
         return SpeechGenerator(self)
 
-    def __sayAllProgressCallback(self, context, type):
+    def __sayAllProgressCallback(self, context, progressType):
         """Provide feedback during the sayAll operation.
         """
 
-        if type == speechserver.SayAllContext.PROGRESS:
+        if progressType == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
             pass
-        elif type == speechserver.SayAllContext.INTERRUPTED:
+        elif progressType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
             offset = context.currentOffset
             for i in range(0, len(context.obj)):
@@ -129,7 +129,7 @@ class Script(default.Script):
                 else:
                     text.setCaretOffset(offset)
                     break
-        elif type == speechserver.SayAllContext.COMPLETED:
+        elif progressType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)

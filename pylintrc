@@ -59,28 +59,31 @@ load-plugins=
 
 # Disable the message(s) with the given id(s).
 #
-# C0111: Missing docstring
-# R0201: could be a function
+# E0611: No name in module -- pylint gives too many false positives
+#        from orca/scripts/*.py files.
+#
 # W0403: Relative import
+# W0511: Warning note (FIXME or XXX) detected.
 # W0603: Using the global statement
 # W0612: Unused variable
 # W0613: Unused argument
 # W0702: No exception's type specified
 # W0704: Except doesn't do anything
-# W0511  Warning note (FIXME or XXX) detected.
-# R0801  Similar lines detected among multiple files
-# R0912  Function or method has too many branches
-# R0915  Function or method has too many statements
-# R0914  Function or method has too many local variables
-# R0904  Class has too many public methods
-# R0903  Class has too few public methods
-# R0401  Cyclic import between two or more modules detected
-# R0911  Function or method has too many return statements
-# R0913  Function or method takes too many arguments
-# C0302  Module has too much lines
-# R0902  Class has too many instance attributes
+# C0111: Missing docstring
+# C0302: Module has too much lines
+# R0201: could be a function
+# R0401: Cyclic import between two or more modules detected
+# R0801: Similar lines detected among multiple files
+# R0902: Class has too many instance attributes
+# R0903: Class has too few public methods
+# R0904: Class has too many public methods
+# R0911: Function or method has too many return statements
+# R0912: Function or method has too many branches
+# R0913: Function or method takes too many arguments
+# R0914: Function or method has too many local variables
+# R0915: Function or method has too many statements
 #
-disable-msg=C0111,R0201,W0403,W0603,W0612,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
+disable-msg=E0611,C0111,R0201,W0403,W0603,W0612,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
 
 
 [REPORTS]

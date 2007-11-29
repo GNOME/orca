@@ -101,6 +101,8 @@ class RingList:
 
 class Script(default.Script):
 
+    MESSAGE_LIST_LENGTH = 9
+
     def __init__(self, app):
         """Creates a new script for the given application.
 
@@ -116,9 +118,8 @@ class Script(default.Script):
         # chat room messages and the other that will contain the names
         # of the associated chat rooms.
         #
-        self.MESSAGE_LIST_LENGTH = 9
-        self.previousMessages = RingList(self.MESSAGE_LIST_LENGTH)
-        self.previousChatRoomNames = RingList(self.MESSAGE_LIST_LENGTH)
+        self.previousMessages = RingList(Script.MESSAGE_LIST_LENGTH)
+        self.previousChatRoomNames = RingList(Script.MESSAGE_LIST_LENGTH)
 
         # Initially populate the cyclic lists with empty strings.
         #
@@ -137,6 +138,11 @@ class Script(default.Script):
         # the chat occurs.
         #
         self.chatAreas = {}
+
+        # Button to handle preferences setting saying whether we want to 
+        # prefix the chat room name for our messages.
+        #
+        self.speakNameCheckButton = None
 
         default.Script.__init__(self, app)
 
@@ -163,7 +169,8 @@ class Script(default.Script):
         self.inputEventHandlers["togglePrefixHandler"] = \
             input_event.InputEventHandler(
                 Script.togglePrefix,
-                _("Toggle whether we prefix chat room messages with the name of the chat room."))
+                _("Toggle whether we prefix chat room messages with " \
+                  "the name of the chat room."))
 
         # In gaim/pidgin, we are overriding the default script's bookmark
         # feature and keybindings to provide chat room message history.
@@ -209,8 +216,6 @@ class Script(default.Script):
         """Return a GtkVBox contain the application unique configuration
         GUI items for the current application.
         """
-
-        global prefixChatMessage
 
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
@@ -265,7 +270,6 @@ class Script(default.Script):
             default.Script.setAppState(self, defaultAppState)
         except:
             debug.printException(debug.LEVEL_WARNING)
-            pass
 
     def togglePrefix(self, inputEvent):
         """ Toggle whether we prefix chat room messages with the name of
@@ -297,8 +301,6 @@ class Script(default.Script):
         - message: the chat room message.
         """
 
-        global prefixChatMessage
-
         text = ""
         if prefixChatMessage:
             if chatRoomName and chatRoomName != "":
@@ -321,7 +323,7 @@ class Script(default.Script):
         debug.println(self.debugLevel, "gaim.readPreviousMessage.")
 
         i = int(inputEvent.event_string)
-        messageNo = self.MESSAGE_LIST_LENGTH-i
+        messageNo = Script.MESSAGE_LIST_LENGTH - i
 
         chatRoomNames = self.previousChatRoomNames.get()
         chatRoomName = chatRoomNames[messageNo]

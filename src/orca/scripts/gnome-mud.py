@@ -81,6 +81,8 @@ class RingList:
 
 class Script(default.Script):
 
+    MESSAGE_LIST_LENGTH = 10
+
     def __init__(self, app):
         """Creates a new script for the given application.
            This script tries to fix some accessibility problems found in
@@ -95,8 +97,7 @@ class Script(default.Script):
         #
         self.debugLevel = debug.LEVEL_FINEST
 
-        self.MESSAGE_LIST_LENGTH = 10
-        self.previousMessages = RingList(self.MESSAGE_LIST_LENGTH)
+        self.previousMessages = RingList(Script.MESSAGE_LIST_LENGTH)
 
         # Initially populate the cyclic list with empty strings
         i = 0
@@ -145,11 +146,11 @@ class Script(default.Script):
         if inputEvent.event_string == "0":
             inputEvent.event_string = "10"
         i = int(inputEvent.event_string)
-        messageNo = self.MESSAGE_LIST_LENGTH-i
+        messageNo = Script.MESSAGE_LIST_LENGTH - i
      
         text = ""
         messages = self.previousMessages.get()
-        for i in range (messageNo, self.MESSAGE_LIST_LENGTH):
+        for i in range (messageNo, Script.MESSAGE_LIST_LENGTH):
             message = messages[i]
             text += message
 
