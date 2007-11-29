@@ -1778,6 +1778,23 @@ class Script(default.Script):
     def __init__(self, app):
         default.Script.__init__(self, app)
 
+        # Initialize variables to make pylint happy.
+        #
+        self.arrowToLineBeginningCheckButton = None
+        self.changedLinesOnlyCheckButton = None
+        self.controlCaretNavigationCheckButton = None
+        self.minimumFindLengthAdjustment = None
+        self.minimumFindLengthLabel = None
+        self.minimumFindLengthSpinButton = None
+        self.sayAllOnLoadCheckButton = None
+        self.skipBlankCellsCheckButton = None
+        self.speakCellCoordinatesCheckButton = None
+        self.speakCellHeadersCheckButton = None
+        self.speakCellSpanCheckButton = None
+        self.speakResultsDuringFindCheckButton = None
+        self.structuralNavigationCheckButton = None
+        self.targetCharacterExtents = None
+
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
         #
@@ -2687,13 +2704,6 @@ class Script(default.Script):
         GUI items for the current application.
         """
 
-        global controlCaretNavigation, arrowToLineBeginning, sayAllOnLoad
-        global structuralNavigationEnabled
-        global speakCellCoordinates, speakCellSpan
-        global speakCellHeaders, skipBlankCells
-        global speakResultsDuringFind, minimumFindLength
-        global onlySpeakChangedLinesDuringFind
-
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
@@ -3011,7 +3021,6 @@ class Script(default.Script):
             default.Script.setAppState(self, defaultAppState)
         except:
             debug.printException(debug.LEVEL_WARNING)
-            pass
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
