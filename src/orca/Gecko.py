@@ -234,7 +234,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
-        indicatorIndex = 0 + obj.getState().contains(pyatspi.STATE_CHECKED)
+        # get the Braille indicator
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            indicatorindex = 2
+        elif state.contains(pyatspi.STATE_CHECKED):
+            indicatorindex = 1
+        else:
+            indicatorindex = 0
         text = self._script.appendString(
             settings.brailleCheckBoxIndicators[indicatorIndex],
             text)
@@ -1118,7 +1125,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return sg._getSpeechForCheckBox(self, obj, already_focused)
 
         utterances = []
-        if obj.getState().contains(pyatspi.STATE_CHECKED):
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            # Translators: this represents the state of a checkbox.
+            #
+            checkedState = _("partially checked")
+        elif state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             checkedState = _("checked")

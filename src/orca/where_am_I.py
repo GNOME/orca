@@ -157,7 +157,11 @@ class WhereAmI:
         utterances.append(text)
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            # Translators: this represents the state of a checkbox.
+            #
+            text = _("partially checked")
+        elif state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             text = _("checked")
@@ -362,7 +366,11 @@ class WhereAmI:
             utterances.append(text)
 
         if obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
-            if state.contains(pyatspi.STATE_CHECKED):
+            if state.contains(pyatspi.STATE_INDETERMINATE):
+                # Translators: this represents the state of a checkbox.
+                #
+                text = _("partially checked")
+            elif state.contains(pyatspi.STATE_CHECKED):
                 # Translators: this represents the state of a checkbox.
                 #
                 text = _("checked")

@@ -299,14 +299,20 @@ class StateZone(Zone):
         if attr in ["string", "length", "brailleString"]:
             # stateCount is used as a boolean and as an index
             stateset = self.accessible.getState()
-            if stateset.contains(pyatspi.STATE_CHECKED):
+            if stateset.contains(pyatspi.STATE_INDETERMINATE):
+                stateCount = 2
+            elif stateset.contains(pyatspi.STATE_CHECKED):
                 stateCount = 1
             else:
                 stateCount = 0
             if self.role in [pyatspi.ROLE_CHECK_BOX,
                              pyatspi.ROLE_CHECK_MENU_ITEM,
                              pyatspi.ROLE_TABLE_CELL]:
-                if stateCount:
+                if stateCount == 2:
+                    # Translators: this represents the state of a checkbox.
+                    #
+                    speechState = _("partially checked")
+                elif stateCount == 1:
                     # Translators: this represents the state of a checkbox.
                     #
                     speechState = _("checked")

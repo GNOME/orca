@@ -332,12 +332,19 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            indicatorindex = 2
+        elif state.contains(pyatspi.STATE_CHECKED):
+            indicatorindex = 1
+        else:
+            indicatorindex = 0
+
         text = ""
         state = obj.getState()
         text = self._script.appendString(
             text,
-            settings.brailleCheckBoxIndicators[
-                int(state.contains(pyatspi.STATE_CHECKED))])
+            settings.brailleCheckBoxIndicators[indicatorindex])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -366,12 +373,19 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
 
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            indicatorindex = 2
+        elif state.contains(pyatspi.STATE_CHECKED):
+            indicatorindex = 1
+        else:
+            indicatorindex = 0
+
         text = ""
         state = obj.getState()
         text = self._script.appendString(
             text,
-            settings.brailleCheckBoxIndicators[
-                int(state.contains(pyatspi.STATE_CHECKED))])
+            settings.brailleCheckBoxIndicators[indicatorindex])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))

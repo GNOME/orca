@@ -402,7 +402,11 @@ class SpeechGenerator:
 
         utterances = []
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            # Translators: this represents the state of a checkbox.
+            #
+            checkedState = _("partially checked")
+        elif state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
             checkedState = _("checked")
