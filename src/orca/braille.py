@@ -631,10 +631,11 @@ class Line:
         # for a region, and then pass the event off to the region for
         # handling.
         #
-        region = None
+        foundRegion = None
         string = ""
         pos = 0
         for region in self.regions:
+            foundRegion = region
             string = string + region.string
             if len(string.decode("UTF-8")) > offset:
                 break
@@ -644,7 +645,7 @@ class Line:
         if offset >= len(string.decode("UTF-8")):
             return [None, -1]
         else:
-            return [region, offset - pos]
+            return [foundRegion, offset - pos]
 
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
@@ -696,8 +697,6 @@ def addLine(line):
     Arguments:
     - line: an instance of Line to add.
     """
-
-    global _lines
 
     _lines.append(line)
     line._index = len(_lines)
@@ -843,14 +842,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     substring = string[startPos:endPos].encode("UTF-8")
     if useBrlAPIBindings:
         if brlAPIRunning:
-            try:
-                # The name after (and including) BrlTTY v3.8 revision 2810
-                #
-                writeStruct = brlapi.WriteStruct()
-            except:
-                # The name before BrlTTY v3.8 revision 2810
-                #
-                writeStruct = brlapi.Write()
+            writeStruct = brlapi.WriteStruct()
             writeStruct.regionBegin = 1
             writeStruct.regionSize = len(substring.decode("UTF-8"))
             while writeStruct.regionSize < _displaySize[0]:
@@ -1070,9 +1062,9 @@ def _brlAPIKeyReader(source, condition):
     """
     key = brlAPI.readKey(False)
     if key:
-        flags = key >> 32
+        #flags = key >> 32
         lower = key & 0xFFFFFFFF
-        keyType = lower >> 29
+        #keyType = lower >> 29
         keyCode = lower & 0x1FFFFFFF
 
         # [[TODO: WDW - HACK If we have a cursor routing key, map

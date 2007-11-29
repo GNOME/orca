@@ -63,6 +63,7 @@ load-plugins=
 # R0201: could be a function
 # W0403: Relative import
 # W0603: Using the global statement
+# W0612: Unused variable
 # W0613: Unused argument
 # W0702: No exception's type specified
 # W0704: Except doesn't do anything
@@ -79,7 +80,7 @@ load-plugins=
 # C0302  Module has too much lines
 # R0902  Class has too many instance attributes
 #
-disable-msg=C0111,R0201,W0403,W0603,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
+disable-msg=C0111,R0201,W0403,W0603,W0612,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
 
 
 [REPORTS]
