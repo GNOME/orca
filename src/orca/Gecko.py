@@ -3029,19 +3029,19 @@ class Script(default.Script):
         consumes = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
-            if handler and handler._function in self._caretNavigationFunctions:
+            if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                and handler._function in self._structuralNavigationFunctions:
+                and handler.function in self._structuralNavigationFunctions:
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
-            if handler and handler._function in self._caretNavigationFunctions:
+            if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                and handler._function in self._structuralNavigationFunctions:
+                and handler.function in self._structuralNavigationFunctions:
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None

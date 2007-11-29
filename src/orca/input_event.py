@@ -42,15 +42,15 @@ SPEECH_EVENT       = "speech"
 
 class InputEvent:
 
-    def __init__(self, type):
+    def __init__(self, eventType):
         """Creates a new input event of the given type.
 
         Arguments:
-        - type: the input event type (one of KEYBOARD_EVENT, BRAILLE_EVENT,
+        - eventType: the input event type (one of KEYBOARD_EVENT, BRAILLE_EVENT,
                 MOUSE_BUTTON_EVENT, MOUSE_MOTION_EVENT, SPEECH_EVENT).
         """
 
-        self.type = type
+        self.type = eventType
 
 class KeyboardEvent(InputEvent):
 
@@ -142,13 +142,13 @@ class InputEventHandler:
                             the function will be called no matter what.
         """
 
-        self._function = function
+        self.function = function
         self.description = description
         self._learnModeEnabled = learnModeEnabled
 
     def __eq__(self, other):
         """Compares one input handler to another."""
-        return (self._function == other._function)
+        return (self.function == other.function)
 
     def processInputEvent(self, script, inputEvent):
         """Processes an input event.  If settings.learnModeEnabled is True,
@@ -179,7 +179,7 @@ class InputEventHandler:
                 consumed = True
         else:
             try:
-                consumed = self._function(script, inputEvent)
+                consumed = self.function(script, inputEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 
