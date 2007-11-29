@@ -82,7 +82,7 @@ def sayAndPrint(text,
                 stop=False,
                 getInput=False,
                 speechServer=None,
-                acss=None):
+                voice=None):
     """Prints the given text.  In addition, if the text field
     is not None, speaks the given text, optionally interrupting
     anything currently being spoken.
@@ -92,7 +92,7 @@ def sayAndPrint(text,
     - stop: if True, interrupt any speech currently being spoken
     - getInput: if True, elicits raw input from the user and returns it
     - speechServer: the speech server to use
-    - acss: the ACSS to use for speaking
+    - voice: the ACSS to use for speaking
 
     Returns raw input from the user if getInput is True.
     """
@@ -103,9 +103,9 @@ def sayAndPrint(text,
             speechServer.stop()
 
     if speechServer:
-        speechServer.speak(text, acss)
+        speechServer.speak(text, voice)
     else:
-        speech.speak(text, acss)
+        speech.speak(text, voice)
 
     if getInput:
         return raw_input(text)
@@ -416,6 +416,7 @@ def logoutUser():
     """Automatically log the user out of the GNOME desktop."""
 
     import gnome
+    import gnome.ui
 
     gnome.init(platform.package, platform.version)
     client = gnome.ui.master_client()

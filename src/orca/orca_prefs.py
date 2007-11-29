@@ -82,16 +82,6 @@ class OrcaPrefs:
         prefs.writelines("import orca.settings\n")
         prefs.writelines("import orca.acss\n")
         prefs.writelines("\n")
-        prefs.writelines("# Set the logging level to INFO if you want to log\n")
-        prefs.writelines("# Orca's output of speech and braille using the\n")
-        prefs.writelines("# Python logging API.  Note that setting the\n")
-        prefs.writelines("# orca.debug.debugLevel to orca.debug.LEVEL_INFO\n")
-        prefs.writelines("# will output the same information using Orca's\n")
-        prefs.writelines("# debug facility.\n")
-        prefs.writelines("#\n")
-        prefs.writelines("# import logging\n")
-        prefs.writelines("# orca.debug.log.setLevel(logging.INFO)\n")
-        prefs.writelines("\n")
 
         prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_OFF\n")
         prefs.writelines("orca.debug.debugLevel = orca.debug.LEVEL_SEVERE\n")
@@ -104,17 +94,23 @@ class OrcaPrefs:
         prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINEST\n")
         prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
         prefs.writelines("\n")
-        prefs.writelines("#orca.debug.eventDebugLevel = orca.debug.LEVEL_OFF\n")
+        prefs.writelines("#orca.debug.eventDebugLevel = " \
+                         "orca.debug.LEVEL_OFF\n")
         prefs.writelines("#orca.debug.eventDebugFilter = None\n")
-        prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*focus|[\S]*activ')\n")
+        prefs.writelines("#orca.debug.eventDebugFilter = " \
+                         "re.compile('[\S]*focus|[\S]*activ')\n")
         prefs.writelines( \
             "#orca.debug.eventDebugFilter = re.compile('nomatch')\n")
-        prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:accessible-name')\n")
-        prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:(?!bounds-changed)')\n")
+        prefs.writelines("#orca.debug.eventDebugFilter = " \
+                         "re.compile('[\S]*:accessible-name')\n")
+        prefs.writelines("#orca.debug.eventDebugFilter = " \
+                         "re.compile('[\S]*:(?!bounds-changed)')\n")
 
         prefs.writelines("\n")
 
-        prefs.writelines("#orca.debug.debugFile = open(time.strftime('debug-%Y-%m-%d-%H:%M:%S.out'), 'w', 0)\n")
+        prefs.writelines("#orca.debug.debugFile = " \
+                         "open(time.strftime('debug-%Y-%m-%d-%H:%M:%S.out'), "\
+                         "'w', 0)\n")
         prefs.writelines("#orca.debug.debugFile = open('debug.out', 'w', 0)\n")
         prefs.writelines("\n")
 
@@ -591,13 +587,14 @@ class OrcaPrefs:
 
         return value
 
-    def _writePreferences(self):
+    def writePreferences(self):
         """Creates the directory and files to hold user preferences.  Note
         that callers of this method may want to consider using an ordered
         dictionary so that the keys are output in a deterministic order.
 
         Returns True if accessibility was enabled as a result of this
-        call."""
+        call.
+        """
 
         self._setupPreferencesDirs()
 
@@ -654,7 +651,12 @@ def writePreferences(prefsDict, keyBindingsTreeModel=None,
     writing out console preferences.
     - pronunciationTreeModel - pronunciation dictionary tree model, or
     None if we are writing out console preferences.
+
+    Returns True if the user needs to log out for accessibility settings
+    to take effect.
     """
 
-    OP = OrcaPrefs(prefsDict, keyBindingsTreeModel, pronunciationTreeModel)
-    OP._writePreferences()
+    orcaPrefs = OrcaPrefs(prefsDict, 
+                          keyBindingsTreeModel, 
+                          pronunciationTreeModel)
+    return orcaPrefs.writePreferences()

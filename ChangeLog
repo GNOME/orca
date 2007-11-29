@@ -1,5 +1,13 @@
 2007-11-29  Willie Walker <william.walker@sun.com>
 
+        * src/orca/orca_console_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/app_prefs.py:
+          More work on bug #486726 - Eliminate pychecker warnings/errors.
+          Pylint now gives us a 10.00/10 for the files above.
+
+2007-11-29  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca/py:
 	  Fix locusOfFocusHistory typo that was causing orca to fail.
 

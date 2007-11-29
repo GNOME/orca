@@ -176,12 +176,15 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines("except ImportError:\n")
         prefs.writelines("    pass\n")
 
-    def _writePreferences(self):
+    def writePreferences(self):
         """Creates the directory and files to hold application specific
         user preferences.  Write out any preferences that are different
         from the generic Orca preferences for this user. Note that callers
         of this method may want to consider using an ordered dictionary so
         that the keys are output in a deterministic order.
+
+        Returns True if the user needs to log out for accessibility
+        settings to take effect.
         """
 
         self._setupPreferencesDirs()
@@ -216,6 +219,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
 
         self._writeAppPreferencesPostamble(prefs, self.appName)
         prefs.close()
+        return False # no logout is needed
 
 def writePreferences(prefsDict, appName=None, appScript=None,
                      keyBindingsTreeModel=None,
@@ -235,8 +239,11 @@ def writePreferences(prefsDict, appName=None, appScript=None,
     writing out console preferences.
     - pronunciationTreeModel - pronunciation dictionary tree model, or
     None if we are writing out console preferences.
+
+    Returns True if the user needs to log out for accessibility settings
+    to take effect.
     """
 
-    OP = OrcaPrefs(prefsDict, appName, appScript, 
-                   keyBindingsTreeModel, pronunciationTreeModel)
-    OP._writePreferences()
+    orcaPrefs = OrcaPrefs(prefsDict, appName, appScript, 
+                          keyBindingsTreeModel, pronunciationTreeModel)
+    return orcaPrefs.writePreferences()
