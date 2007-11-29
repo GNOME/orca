@@ -35,7 +35,9 @@
 
 2007-11-29  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/default.py:
+        * src/orca/debug.py:
+          src/orca/default.py:
+          src/orca/espeechfactory.py:
           src/orca/Gecko.py:
           src/orca/orca.py:
           src/orca/app_gui_prefs.py:

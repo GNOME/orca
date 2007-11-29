@@ -115,7 +115,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         f = open(os.path.join(SpeechServer.location, '.servers'))
         for line in f:
-            if line[0] == '#' or line.strip() == '': continue
+            if line[0] == '#' or line.strip() == '':
+                continue
             name = line.strip()
             if not SpeechServer.__activeServers.has_key(name):
                 try:
@@ -128,7 +129,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     getSpeechServers = staticmethod(getSpeechServers)
 
-    def getSpeechServer(info=['outloud','outloud']):
+    def getSpeechServer(info=['outloud', 'outloud']):
         """Gets a given SpeechServer based upon the info.
         See SpeechServer.getInfo() for more info.
         """
@@ -182,13 +183,14 @@ class SpeechServer(speechserver.SpeechServer):
             self._settings.update(initial)
             self.configure(self._settings)
 
-    def configure(self, settings):
+    def configure(self, engineSettings):
         """Configure engine with settings."""
-        for k in settings.keys():
-            if hasattr(self, k) and callable(getattr(self,k)):
-                getattr(self,k)(settings[k])
+        for k in engineSettings.keys():
+            if hasattr(self, k) and callable(getattr(self, k)):
+                getattr(self, k)(engineSettings[k])
 
-    def settings(self): return self._settings
+    def settings(self):
+        return self._settings
 
     def getInfo(self):
         """Returns [driverName, serverId]
@@ -209,7 +211,6 @@ class SpeechServer(speechserver.SpeechServer):
                 families.append(speechserver.VoiceFamily(props))
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            pass
 
         return families
 
@@ -235,15 +236,15 @@ class SpeechServer(speechserver.SpeechServer):
         """Speak single character."""
         self._output.write("l {%s}\n" % character)
 
-    def speakUtterances(self, list, acss=None, interrupt=True):
+    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         """Speak list of utterances."""
         if acss:
             code = self.getvoice(acss)
-            for t in list:
+            for t in utteranceList:
                 self._output.write("q { %s %s %s }\n" % \
                                    (code[0], str(t), code[1]))
         else:
-            for t in list:
+            for t in utteranceList:
                 self._output.write("q { %s }\n" % str(t))
         self._output.write("d\n")
 
@@ -355,11 +356,11 @@ def _test():
     s = SpeechServer()
     a = acss.ACSS()
     s.punctuations('some')
-    s.queueText("This is an initial test.");
+    s.queueText("This is an initial test.")
     s.queueText("Next, we'll test audio formatted output.")
     for d in ['average-pitch', 'pitch-range',
               'richness', 'stress']:
-        for i in range(0,10,2):
+        for i in range(0, 10, 2):
             a[d] = i
             s.queueText("Set %s to %i. " % (d, i), a)
         del a[d]
@@ -370,4 +371,5 @@ def _test():
     s.shutdown()
 
 
-if __name__ == "__main__": _test()
+if __name__ == "__main__":
+    _test()

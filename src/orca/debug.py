@@ -155,7 +155,7 @@ def println(level, text = ""):
 
     if level >= debugLevel:
         if debugFile:
-            debugFile.writelines([text,"\n"])
+            debugFile.writelines([text, "\n"])
         else:
             print text
 
