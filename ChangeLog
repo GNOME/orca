@@ -45,6 +45,7 @@
           src/orca/orca_gui_prefs.py:
           src/orca/orca_gui_find.py:
           src/orca/orca_gui_main.py:
+          src/orca_glade.py:
           src/orca/input_event.py:
           src/orca/keybindings.py:
           src/orca/speech.py:
@@ -54,7 +55,7 @@
           Pylint now gives us a 10.00/10 for app_gui_prefs.py, speech.py,
           focus_tracking_presenter.py, orca_gui_prefs.py, orca_gui_find.py,
           orca_quit.py, orca_gui_main.py, punctuation_settings.py, 
-          input_event.py and keybindings.py.
+          orca_glade.py, input_event.py and keybindings.py.
 
 2007-11-29  Willie Walker <william.walker@sun.com>
 

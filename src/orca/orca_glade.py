@@ -40,10 +40,10 @@ class GladeWrapper:
         subclass_instance.widget_name...
     """
 
-    def __init__(self, Filename, WindowName):
+    def __init__(self, fileName, windowName):
         # Load glade file.
-        self.widgets = gtk.glade.XML(Filename, WindowName, gettext.textdomain())
-        self.GtkWindow = getattr(self, WindowName)
+        self.widgets = gtk.glade.XML(fileName, windowName, gettext.textdomain())
+        self.gtkWindow = getattr(self, windowName)
 
         instance_attributes = {}
         for attribute in dir(self.__class__):
