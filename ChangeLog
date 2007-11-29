@@ -37,6 +37,7 @@
 
         * src/orca/debug.py:
           src/orca/default.py:
+          src/orca/speechdispatchfactory.py:
           src/orca/espeechfactory.py:
           src/orca/Gecko.py:
           src/orca/orca.py:

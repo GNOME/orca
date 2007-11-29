@@ -90,18 +90,18 @@ class SpeechServer(speechserver.SpeechServer):
         return servers
     getSpeechServers = staticmethod(getSpeechServers)
 
-    def _getSpeechServer(cls, id):
+    def _getSpeechServer(cls, serverId):
         """Return an active server for given id.
 
         Attempt to create the server if it doesn't exist yet.  Returns None
         when it is not possible to create the server.
         
         """
-        if not cls._active_servers.has_key(id):
-            cls(id)
+        if not cls._active_servers.has_key(serverId):
+            cls(serverId)
         # Don't return the instance, unless it is succesfully added
         # to `_active_Servers'.
-        return cls._active_servers.get(id)
+        return cls._active_servers.get(serverId)
     _getSpeechServer = classmethod(_getSpeechServer)
 
     def getSpeechServer(info=None):
@@ -119,8 +119,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     # *** Instance methods ***
 
-    def __init__(self, id):
-        self._id = id
+    def __init__(self, serverId):
+        self._id = serverId
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
@@ -149,6 +149,12 @@ class SpeechServer(speechserver.SpeechServer):
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
            #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
+
+        # Initialize variables to None to make pylint happy.
+        #
+        self._current_voice_properties = None
+        self._client = None
+
         # Translators: This string will appear in the list of
         # available voices for the current speech engine.  %s will be
         # replaced by the name of the current speech engine, such as
@@ -158,7 +164,7 @@ class SpeechServer(speechserver.SpeechServer):
         # the list will contain the names of all available "real"
         # voices provided by the speech engine.
         #
-        self._default_voice_name = _("%s default voice") % id
+        self._default_voice_name = _("%s default voice") % serverId
         
         try:
             self._init()
@@ -166,7 +172,7 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_WARNING,
                           "Speech Dispatcher service failed to connect: %s" % e)
         else:
-            self.__class__._active_servers[id] = self
+            self.__class__._active_servers[serverId] = self
 
     def _init(self):
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
@@ -242,11 +248,11 @@ class SpeechServer(speechserver.SpeechServer):
         except StopIteration:
             pass
         else:
-            def callback(type, index_mark=None):
+            def callback(callbackType, index_mark=None):
                 # This callback is called in Speech Dispatcher listener thread.
                 # No subsequent Speech Dispatcher interaction is allowed here,
                 # so we pass the calls to the gidle thread.
-                t = self._CALLBACK_TYPE_MAP[type]
+                t = self._CALLBACK_TYPE_MAP[callbackType]
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
                         context.currentOffset = int(index_mark)
@@ -321,10 +327,10 @@ class SpeechServer(speechserver.SpeechServer):
         if text:
             self._speak(text, acss)
 
-    def speakUtterances(self, list, acss=None, interrupt=True):
+    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         #if interrupt:
         #    self._cancel()
-        for utterance in list:
+        for utterance in utteranceList:
             if utterance:
                 self._speak(utterance, acss)
 
@@ -334,8 +340,8 @@ class SpeechServer(speechserver.SpeechServer):
     def speakCharacter(self, character, acss=None):
         self._send_command(self._client.char, character)
 
-    def speakKeyEvent(self, event_string, type):
-        if type == orca.KeyEventType.PRINTABLE:
+    def speakKeyEvent(self, event_string, eventType):
+        if eventType == orca.KeyEventType.PRINTABLE:
             # We currently only handle printable characters by Speech
             # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
             # etc. we prefer Orca's verbalization.
@@ -348,7 +354,8 @@ class SpeechServer(speechserver.SpeechServer):
                 self._apply_acss(voice)
             self._send_command(self._client.key, key)
         else:
-            return super(SpeechServer, self).speakKeyEvent(event_string, type)
+            return super(SpeechServer, self).speakKeyEvent(event_string, 
+                                                           eventType)
 
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate()
