@@ -622,8 +622,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        global speakCellCoordinates
-
         if self._script.isSpreadSheetCell(obj):
             utterances = []
 
@@ -746,6 +744,13 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # Initialize variable to None to make pylint happy.
+        #
+        self.savedEnabledBrailledTextAttributes = None
+        self.savedEnabledSpokenTextAttributes = None
+        self.speakCellCoordinatesCheckButton = None
+        self.savedreadTableCellRow = None
+
         # Set the debug level for all the methods in this script.
         #
         self.debugLevel = debug.LEVEL_FINEST
@@ -791,8 +796,14 @@ class Script(default.Script):
         # only difference over the default set in settings.py is to add
         # in "left-margin:" and "right-margin:".
 
-        self.enabledBrailledTextAttributes = "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; right-margin:0mm; underline:none; strikethrough:none; justification:left; style:normal;"
-        self.enabledSpokenTextAttributes = "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; right-margin:0mm; underline:none; strikethrough:none; justification:left; style:normal;"
+        self.enabledBrailledTextAttributes = \
+          "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; " \
+          "right-margin:0mm; underline:none; strikethrough:none; " \
+          "justification:left; style:normal;"
+        self.enabledSpokenTextAttributes = \
+          "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; " \
+          "right-margin:0mm; underline:none; strikethrough:none; " \
+          "justification:left; style:normal;"
 
         # [[[TODO: JD - HACK because we won't get events from toggle
         # buttons on the Formatting toolbar until we "tickle/poke"
@@ -864,7 +875,8 @@ class Script(default.Script):
                 # Translators: Orca allows you to dynamically define which
                 # row of a spreadsheet or table counts as column headers.
                 #
-                _("Set the row to use as dynamic column headers when speaking calc cells."))
+                _("Set the row to use as dynamic column headers " \
+                  "when speaking calc cells."))
 
         self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
@@ -872,7 +884,8 @@ class Script(default.Script):
                 # Translators: Orca allows you to dynamically define which
                 # column of a spreadsheet or table counts as row headers.
                 #
-                _("Set the column to use as dynamic row headers to use when speaking calc cells."))
+                _("Set the column to use as dynamic row headers " \
+                  "to use when speaking calc cells."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -910,8 +923,6 @@ class Script(default.Script):
         """Return a GtkVBox contain the application unique configuration
         GUI items for the current application.
         """
-
-        global speakCellCoordinates
 
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
@@ -971,7 +982,6 @@ class Script(default.Script):
             default.Script.setAppState(self, defaultAppState)
         except:
             debug.printException(debug.LEVEL_WARNING)
-            pass
 
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
@@ -1440,16 +1450,16 @@ class Script(default.Script):
         Returns a string representing the spread sheet column.
         """
 
-        BASE26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-        if column <= len(BASE26):
-            return BASE26[column-1]
+        if column <= len(base26):
+            return base26[column-1]
 
         res = ""
         while column > 0:
-            digit = column % len(BASE26)
-            res = " " + BASE26[digit-1] + res
-            column /= len(BASE26)
+            digit = column % len(base26)
+            res = " " + base26[digit-1] + res
+            column /= len(base26)
 
         return res
 
@@ -1897,7 +1907,8 @@ class Script(default.Script):
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: Scroll Down button.")
                 self.handleSetupPanel(event.source.parent)
-                speech.speak(_("Note that the Scroll Down button has to be pressed numerous times."))
+                speech.speak(_("Note that the Scroll Down button has " \
+                               "to be pressed numerous times."))
 
             # Check for 2. License Agreement: Accept button.
             #
@@ -2397,6 +2408,7 @@ class Script(default.Script):
         - startOffset: the starting character position
         - endOffset: the ending character position
         """
+
         text = obj.queryText().getText(0, -1).decode("UTF-8")
         if startOffset >= len(text):
             startOffset = len(text) - 1
@@ -2404,7 +2416,7 @@ class Script(default.Script):
             endOffset = len(text)
         elif startOffset >= endOffset:
             endOffset = startOffset + 1
-        string = text[max(0,startOffset):min(len(text),endOffset)]
+        string = text[max(0, startOffset):min(len(text), endOffset)]
         string = string.encode("UTF-8")
         return string
 
