@@ -169,7 +169,7 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         oldLocusOfFocus = None
 
     orca_state.focusHistory = \
-        orca_state.locusOfFocusHistory[:settings.focusHistoryLength - 1]
+        orca_state.focusHistory[:settings.focusHistoryLength - 1]
     orca_state.focusHistory.insert(0, oldLocusOfFocus)
 
     orca_state.locusOfFocus = obj

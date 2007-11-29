@@ -1,4 +1,9 @@
-2007-11-28  Willie Walker <william.walker@sun.com>
+2007-11-29  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca/py:
+	  Fix locusOfFocusHistory typo that was causing orca to fail.
+
+2007-11-29  Willie Walker <william.walker@sun.com>
 
         * pylintrc:
           Disabled W0612 (Unused variable) warning since eliminating them
