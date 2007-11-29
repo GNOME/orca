@@ -444,7 +444,7 @@ class Script(default.Script):
 
         if text == None:
             self._debug("bogus event: text object is null. Discarding event")
-            return;
+            return
 
         default.Script.onCaretMoved(self, event)
 
@@ -465,25 +465,25 @@ class Script(default.Script):
             text = None
         if text == None:
             self._debug("bogus event: text object is null. Discarding event")
-            return;
+            return
 
         default.Script.onTextInserted(self, event)        
 
-    def getDisplayedLabel(self, object):
+    def getDisplayedLabel(self, obj):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
         Otherwise, return None.
 
         Argument:
-        - object: the object in question
+        - obj: the object in question
 
         Returns the string of the object labelling this object, or None
         if there is nothing of interest here.
         """
-        label = default.Script.getDisplayedLabel(self, object)
+        label = default.Script.getDisplayedLabel(self, obj)
         if not label and \
-           (object.getRole() == pyatspi.ROLE_TEXT or \
-            object.getRole() == pyatspi.ROLE_COMBO_BOX):
+           (obj.getRole() == pyatspi.ROLE_TEXT or \
+            obj.getRole() == pyatspi.ROLE_COMBO_BOX):
             # This is a workaround for a common Java accessibility
             # bug where a label next to a component is used to
             # label the component. This relation is only obvious to
@@ -494,8 +494,8 @@ class Script(default.Script):
             # ends with a colon. We only do this for text and combo
             # boxes since they are the most common Java component with
             # this bug.
-            if object.getIndexInParent() > 0:
-                prevSibling = object.parent[object.getIndexInParent()-1]
+            if obj.getIndexInParent() > 0:
+                prevSibling = obj.parent[obj.getIndexInParent()-1]
                 if prevSibling and prevSibling.name and \
                    prevSibling.getRole() == pyatspi.ROLE_LABEL:
                     labelFor = prevSibling.name.rstrip(" ")

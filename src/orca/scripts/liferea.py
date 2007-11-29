@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+"""Custom script for liferea."""
+
 import orca.debug as debug
 import orca.default as default
 import orca.braille as braille
@@ -26,8 +28,6 @@ import orca.eventsynthesizer as eventsynthesizer
 import pyatspi
 
 from orca.orca_i18n import _ # for gettext support
-
-"""Custom script for liferea."""
 
 __id__        = "$Id:$"
 __version__   = "$Revision:$"
