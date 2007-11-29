@@ -179,16 +179,16 @@ class SpeechServer(object):
         """
         pass
 
-    def speakKeyEvent(self, event_string, type):
+    def speakKeyEvent(self, event_string, eventType):
         """Speaks a key event immediately.
 
         Arguments:
         - event_string: string representing the key event as defined by
                         input_event.KeyboardEvent.
-        - type:         key event type as one of orca.KeyEventType constants.
+        - eventType:    key event type as one of orca.KeyEventType constants.
 
         """
-        if type == orca.KeyEventType.PRINTABLE and \
+        if eventType == orca.KeyEventType.PRINTABLE and \
                event_string.decode("UTF-8").isupper():
             voice = settings.voices[settings.UPPERCASE_VOICE]
         else:
@@ -199,12 +199,12 @@ class SpeechServer(object):
         #
         event_string = keynames.getKeyName(event_string)
 
-        if type == orca.KeyEventType.LOCKING_LOCKED:
+        if eventType == orca.KeyEventType.LOCKING_LOCKED:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
             event_string += " " + _("on")
-        elif type == orca.KeyEventType.LOCKING_UNLOCKED:
+        elif eventType == orca.KeyEventType.LOCKING_UNLOCKED:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
@@ -216,11 +216,11 @@ class SpeechServer(object):
 
         self.speak(event_string, acss=voice)
 
-    def speakUtterances(self, list, acss=None, interrupt=True):
+    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list:      list of strings to be spoken
+        - utteranceList: list of strings to be spoken
         - acss:      acss.ACSS instance; if None,
                      the default voice settings will be used.
                      Otherwise, the acss settings will be
