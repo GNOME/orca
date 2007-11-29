@@ -660,7 +660,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # that this preference has never been set.
         #
         if not serverInfo:
-            print "CALLING GETINFO."
             serverInfo = speech.getInfo()
 
         valueSet = False
