@@ -897,7 +897,7 @@ def loadUserSettings(script=None, inputEvent=None):
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
-    _showMainWindowGUI()
+    showMainWindowGUI()
 
     httpserver.init()
 
@@ -940,7 +940,7 @@ def showPreferencesGUI(script=None, inputEvent=None):
 
     return True
 
-def _showMainWindowGUI(script=None, inputEvent=None):
+def showMainWindowGUI(script=None, inputEvent=None):
     """Displays the Orca main window.
 
     Returns True to indicate the input event has been consumed.

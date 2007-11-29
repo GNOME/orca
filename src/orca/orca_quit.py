@@ -39,12 +39,12 @@ import settings
 
 OS = None
 
-class orcaQuitGUI(orca_glade.GladeWrapper):
+class OrcaQuitGUI(orca_glade.GladeWrapper):
 
-    def _init(self):
+    def init(self):
         pass
 
-    def _showGUI(self):
+    def showGUI(self):
         """Show the Orca quit GUI dialog. This assumes that the GUI has 
         already been created.
         """
@@ -76,7 +76,7 @@ class orcaQuitGUI(orca_glade.GladeWrapper):
 
         self.get_widget("quitDialog").hide()
         if settings.showMainWindow:
-            orca._showMainWindowGUI()
+            orca.showMainWindowGUI()
 
     def quitYesButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the quitYesButton
@@ -112,10 +112,10 @@ def showQuitUI():
                                  platform.package,
                                  "glade",
                                  "orca-quit.glade")
-        OS = orcaQuitGUI(gladeFile, "quitDialog")
-        OS._init()
+        OS = OrcaQuitGUI(gladeFile, "quitDialog")
+        OS.init()
 
-    OS._showGUI()
+    OS.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
