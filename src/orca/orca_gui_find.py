@@ -40,9 +40,29 @@ from orca_i18n import _  # for gettext support
 
 OS = None
 
-class orcaFindGUI(orca_glade.GladeWrapper):
+class OrcaFindGUI(orca_glade.GladeWrapper):
 
-    def _init(self):
+    def __init__(self, fileName, windowName):
+        """Initialize the Orca configuration GUI.
+
+        Arguments:
+        - fileName: name of the Glade file.
+        - windowName: name of the component to get from the Glade file.
+        """
+
+        # Initialize variables to None to keep pylint happy.
+        #
+        self.activeScript = None
+        self.caseSensitive = None
+        self.matchEntireWord = None
+        self.searchBackwards = None
+        self.searchString = None
+        self.startAtTop = None
+        self.windowWrap = None
+
+        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+
+    def init(self):
         # Initialize the dialog box controls.
         self.searchString = ""
         self.searchBackwards = False
@@ -53,7 +73,7 @@ class orcaFindGUI(orca_glade.GladeWrapper):
 
         self.activeScript = orca_state.activeScript
 
-    def _showGUI(self):
+    def showGUI(self):
         """Show the Orca Find dialog. This assumes that the GUI has
         already been created.
         """
@@ -95,7 +115,7 @@ class orcaFindGUI(orca_glade.GladeWrapper):
         except:
             pass
 
-    def searchForEntryChanged(self,widget):
+    def searchForEntryChanged(self, widget):
         """Signal handler for the "changed" signal for the
            searchForEntry GtkEntry widget. The user has changed
            the string to be searched for.
@@ -228,10 +248,10 @@ def showFindUI():
                                  platform.package,
                                  "glade",
                                  "orca-find.glade")
-        OS = orcaFindGUI(gladeFile, "findDialog")
-        OS._init()
+        OS = OrcaFindGUI(gladeFile, "findDialog")
+        OS.init()
 
-    OS._showGUI()
+    OS.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

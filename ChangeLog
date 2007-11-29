@@ -38,6 +38,7 @@
         * src/orca/Gecko.py:
           src/orca/app_gui_prefs.py:
           src/orca/orca_gui_prefs.py:
+          src/orca/orca_gui_find.py:
           src/orca/input_event.py:
           src/orca/keybindings.py:
           src/orca/speech.py:
@@ -45,7 +46,7 @@
           src/orca/focus_tracking_presenter.py:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
           Pylint now gives us a 10.00/10 for app_gui_prefs.py, speech.py,
-          focus_tracking_presenter.py, orca_gui_prefs.py, 
+          focus_tracking_presenter.py, orca_gui_prefs.py, orca_gui_find.py,
           punctuation_settings.py, input_event.py and keybindings.py.
 
 2007-11-29  Willie Walker <william.walker@sun.com>
