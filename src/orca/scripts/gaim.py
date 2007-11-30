@@ -42,10 +42,14 @@ import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state
+import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
+import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _
+from orca.orca_i18n import ngettext  # for ngettext support
 
 # Whether we prefix chat room messages with the name of the chat room.
 #
@@ -92,6 +96,200 @@ class RingList:
 
     def __str__(self):
         return ''.join(self.__data__)
+
+########################################################################
+#                                                                      #
+# Custom SpeechGenerator                                               #
+#                                                                      #
+########################################################################
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell() so that we can provide access
+    to the expanded/collapsed state and node count for the buddy list.
+    """
+
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech utterances for a single table cell
+
+        Arguments:
+        - obj: the table cell
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        sg = speechgenerator.SpeechGenerator
+        utterances = sg._getSpeechForTableCell(self, obj, already_focused)
+
+        if not self._script.isInBuddyList(obj):
+            return utterances
+
+        # The Pidgin buddy list consists of two columns. The column which
+        # is set as the expander column and which also contains the node
+        # relationship is hidden.  Hidden columns are not included among
+        # a table's columns.  The hidden object of interest seems to always
+        # immediately precede the visible object.
+        #
+        expanderCell = obj.parent[obj.getIndexInParent() - 1]
+        if not expanderCell:
+            return utterances
+
+        state = expanderCell.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("expanded"))
+                childNodes = self._script.getChildNodes(expanderCell)
+                children = len(childNodes)
+
+                if not children \
+                   or (settings.speechVerbosityLevel == \
+                       settings.VERBOSITY_LEVEL_VERBOSE):
+                    # Translators: this is the number of items in a layered
+                    # pane or table.
+                    #
+                    itemString = ngettext("%d item",
+                                          "%d items",
+                                          children) % children
+                    utterances.append(itemString)
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("collapsed"))
+
+        self._debugGenerator("gaim._getSpeechForTableCell",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+########################################################################
+#                                                                      #
+# Custom WhereAmI                                                      #
+#                                                                      #
+######################################################################## 
+
+class WhereAmI(where_am_I.WhereAmI):
+    """Overrides _speakTableCell() so that we can provide access
+    to the expanded/collapsed state for items in the buddy list.
+    """
+
+    def __init__(self, script):
+        where_am_I.WhereAmI.__init__(self, script)
+        self._script = script
+        
+    def _speakTableCell(self, obj, doubleClick):
+        """Tree Tables present the following information (an example is
+        'Tree table, Mike Pedersen, row 8 of 10, tree level 2'):
+
+        1. label, if any
+        2. role
+        3. current row (regardless of speak cell/row setting)
+        4. relative position
+        5. if expandable/collapsible: expanded/collapsed
+        6. if applicable, the level
+
+        """
+
+        if not self._script.isInBuddyList(obj):
+            return where_am_I.WhereAmI._speakTableCell(self, obj, doubleClick)
+
+        # Speak the first two items (and possibly the position)
+        #
+        utterances = []
+        if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+            obj = obj.parent
+        parent = obj.parent
+
+        text = self._getObjLabel(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+        debug.println(self._debugLevel, "first table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+        utterances = []
+        if doubleClick:
+            table = parent.queryTable()
+            row = table.getRowAtIndex(
+              orca_state.locusOfFocus.getIndexInParent())
+            # Translators: this in reference to a row in a table.
+            #
+            text = _("row %d of %d") % ((row+1), table.nRows)
+            utterances.append(text)
+            speech.speakUtterances(utterances)
+
+        # Speak the current row
+        #
+        utterances = self._getTableRow(obj)
+        debug.println(self._debugLevel, "second table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+        # Speak the remaining items.
+        #
+        utterances = []
+
+        if not doubleClick:
+            try:
+                table = parent.queryTable()
+            except NotImplementedError:
+                debug.println(self._debugLevel, 
+                              "??? parent=%s" % parent.getRoleName())
+                return
+            else:
+                row = \
+                    table.getRowAtIndex(
+                       orca_state.locusOfFocus.getIndexInParent())
+                # Translators: this in reference to a row in a table.
+                #
+                text = _("row %d of %d") % ((row+1), table.nRows)
+                utterances.append(text)
+
+        # The difference/reason for overriding:  We obtain the expanded
+        # state from the hidden object that immediately precedes obj.
+        #
+        try:
+            state = obj.parent[obj.getIndexInParent() - 1].getState()
+        except:
+            state = obj.getState()
+
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("expanded")
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                text = _("collapsed")
+            utterances.append(text)
+
+        level = self._script.getNodeLevel(orca_state.locusOfFocus)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            utterances.append(_("tree level %d") % (level + 1))
+
+        debug.println(self._debugLevel, "third table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
 
 ########################################################################
 #                                                                      #
@@ -211,6 +409,18 @@ class Script(default.Script):
                     self.inputEventHandlers["goToBookmark"]))
 
         return keyBindings
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+
+        return SpeechGenerator(self)
+
+    def getWhereAmI(self):
+        """Returns the 'where am I' class for this script.
+        """
+        
+        return WhereAmI(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration
@@ -486,3 +696,146 @@ class Script(default.Script):
             # default way.
             #
             default.Script.onTextInserted(self, event)
+
+    def isInBuddyList(self, obj):
+        """Determines whether or not this object is in the buddy list.
+
+        Arguments:
+        -obj: the Accessible object
+        """
+
+        rolesList = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_PAGE_TAB]
+
+        return self.isDesiredFocusedItem(obj, rolesList)
+        
+    def getNodeLevel(self, obj):
+        """Determines the node level of this object if it is in a tree
+        relation, with 0 being the top level node.  If this object is
+        not in a tree relation, then -1 will be returned. Overridden
+        here because the accessible we need is in a hidden column.
+
+        Arguments:
+        -obj: the Accessible object
+        """
+
+        if not obj:
+            return -1
+
+        if not self.isInBuddyList(obj):
+            return default.Script.getNodeLevel(self, obj)
+
+        obj = obj.parent[obj.getIndexInParent() - 1]
+
+        try:
+            table = obj.parent.queryTable()
+        except:
+            return -1
+
+        nodes = []
+        node = obj
+        done = False
+        while not done:
+            relations = node.getRelationSet()
+            node = None
+            for relation in relations:
+                if relation.getRelationType() \
+                       == pyatspi.RELATION_NODE_CHILD_OF:
+                    node = relation.getTarget(0)
+                    break
+
+            # We want to avoid situations where something gives us an
+            # infinite cycle of nodes.  Bon Echo has been seen to do
+            # this (see bug 351847).
+            #
+            if (len(nodes) > 100) or nodes.count(node):
+                debug.println(debug.LEVEL_WARNING,
+                              "gaim.getNodeLevel detected a cycle!!!")
+                done = True
+            elif node:
+                nodes.append(node)
+                debug.println(debug.LEVEL_FINEST,
+                              "gaim.getNodeLevel %d" % len(nodes))
+            else:
+                done = True
+
+        return len(nodes) - 1
+
+    def getChildNodes(self, obj):
+        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
+        to this expanded table cell. Overridden here because the object
+        which contains the relation is in a hidden column and thus doesn't
+        have a column number (necessary for using getAccessibleAt()).
+
+        Arguments:
+        -obj: the Accessible Object
+
+        Returns: a list of all the child nodes
+        """
+
+        if not self.isInBuddyList(obj):
+            return default.Script.getChildNodes(self, obj)
+
+        try:
+            table = obj.parent.queryTable()
+        except:
+            return []
+        else:
+            if not obj.getState().contains(pyatspi.STATE_EXPANDED):
+                return []
+
+        nodes = []        
+        row = table.getRowAtIndex(obj.getIndexInParent())
+        col = table.getColumnAtIndex(obj.getIndexInParent() + 1)
+        nodeLevel = self.getNodeLevel(obj)
+        done = False
+
+        # Candidates will be in the rows beneath the current row.
+        # Only check in the current column and stop checking as
+        # soon as the node level of a candidate is equal or less
+        # than our current level.
+        #
+        for i in range(row+1, table.nRows):
+            cell = table.getAccessibleAt(i, col)
+            nodeCell = cell.parent[cell.getIndexInParent() - 1]
+            relations = nodeCell.getRelationSet()
+            for relation in relations:
+                if relation.getRelationType() \
+                       == pyatspi.RELATION_NODE_CHILD_OF:
+                    nodeOf = relation.getTarget(0)
+                    if self.isSameObject(obj, nodeOf):
+                        nodes.append(cell)
+                    else:
+                        currentLevel = self.getNodeLevel(nodeOf)
+                        if currentLevel <= nodeLevel:
+                            done = True
+                    break
+            if done:
+                break
+
+        return nodes
+
+    def visualAppearanceChanged(self, event, obj):
+        """Called when the visual appearance of an object changes.
+        Overridden here because we get object:state-changed:expanded
+        events for the buddy list, but the obj is in a hidden column.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj: the Accessible whose visual appearance changed.
+        """
+
+        if self.isInBuddyList(obj) \
+           and event.type.startswith("object:state-changed:expanded"):
+
+            # The event is associated with the invisible cell. Set it
+            # to the visible cell and then let the default script do
+            # its thing.
+            #
+            obj = obj.parent[obj.getIndexInParent() + 1]
+            
+        default.Script.visualAppearanceChanged(self, event, obj)
+

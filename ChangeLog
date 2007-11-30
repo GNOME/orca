@@ -1,3 +1,9 @@
+2007-11-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/gaim.py:
+          Fix for bug #407647 - Indicate the tree level, expanded state,
+          and child nodes in the Pidgin buddy list.
+
 2007-11-29  Scott Haeger <scott@bashautomation.com>
         * src/orca/settings.py:
           src/orca/flat_review.py:
