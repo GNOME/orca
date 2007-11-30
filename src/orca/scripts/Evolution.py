@@ -435,7 +435,8 @@ class Script(default.Script):
                                 if orca_state.locusOfFocus and \
                                    orca_state.locusOfFocus.getRole() == \
                                        pyatspi.ROLE_PUSH_BUTTON and \
-                                   (not orca_state.locusOfFocus.getState().contains( \
+                                   (not orca_state.locusOfFocus.\
+                                                   getState().contains( \
                                        pyatspi.STATE_SENSITIVE)):
                                     self.updateBraille(orca_state.locusOfFocus)
                                     speech.speakUtterances(
@@ -629,14 +630,14 @@ class Script(default.Script):
                                               startOffset, endOffset),
                    voice]
 
-    def __sayAllProgressCallback(self, context, type):
+    def __sayAllProgressCallback(self, context, callbackType):
         """Provide feedback during the sayAll operation.
         """
 
-        if type == speechserver.SayAllContext.PROGRESS:
+        if callbackType == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
             pass
-        elif type == speechserver.SayAllContext.INTERRUPTED:
+        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
             offset = context.currentOffset
             for i in range(0, len(context.obj)):
@@ -647,7 +648,7 @@ class Script(default.Script):
                 else:
                     obj.queryText().setCaretOffset(offset)
                     break
-        elif type == speechserver.SayAllContext.COMPLETED:
+        elif callbackType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)

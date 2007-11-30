@@ -11,9 +11,11 @@
           src/orca/flat_review.py:
           src/orca/debug.py:
           src/orca/speechserver.py:
+          src/orca/speechdispatcher.py:
           src/orca/focus_tracking_presenter.py:
           src/orca/scripts/acroread.py:
           src/orca/scripts/StarOffice.py:
+          src/orca/scripts/Evolution.py:
           src/orca/scripts/nautilus.py:
           src/orca/app_gui_prefs.py:
           src/orca/orca_gui_find.py:

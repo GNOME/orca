@@ -120,6 +120,8 @@ class SpeechServer(speechserver.SpeechServer):
     # *** Instance methods ***
 
     def __init__(self, serverId):
+        speechserver.SpeechServer.__init__(self)
+
         self._id = serverId
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
