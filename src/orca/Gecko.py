@@ -1793,7 +1793,7 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
         self.speakResultsDuringFindCheckButton = None
         self.structuralNavigationCheckButton = None
-        self.targetCharacterExtents = None
+        self.targetCharacterExtents = (0, 0, 0, 0)
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
