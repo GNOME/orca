@@ -67,6 +67,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - windowName: name of the component to get from the Glade file.
         """
 
+        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+
         # Initialize variables to None to keep pylint happy.
         #
         self.bbindings = None
@@ -99,8 +101,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.uppercaseVoice = None
         self.window = None
         self.workingFactories = None
-
-        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current

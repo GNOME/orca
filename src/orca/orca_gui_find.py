@@ -50,6 +50,8 @@ class OrcaFindGUI(orca_glade.GladeWrapper):
         - windowName: name of the component to get from the Glade file.
         """
 
+        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+
         # Initialize variables to None to keep pylint happy.
         #
         self.activeScript = None
@@ -59,8 +61,6 @@ class OrcaFindGUI(orca_glade.GladeWrapper):
         self.searchString = None
         self.startAtTop = None
         self.windowWrap = None
-
-        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
 
     def init(self):
         # Initialize the dialog box controls.

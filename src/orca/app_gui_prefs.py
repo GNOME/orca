@@ -59,6 +59,8 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         - windowName: name of the component to get from the Glade file.
         """
 
+        orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, windowName)
+
         # Initialize variables to None to keep pylint happy.
         #
         self.applicationName = None
@@ -67,8 +69,6 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         self.kbindings = None
         self.appKeyBindings = None
         self.defKeyBindings = None
-
-        orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, windowName)
 
     def initAppGUIState(self, thisAppScript):
         """Before we show the GUI to the user we want to remove the

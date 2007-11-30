@@ -344,9 +344,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 regions.extend(cellRegions)
             regions = [regions, focusRegion]
         else:
-            brailleGen = braillegenerator.BrailleGenerator
             [cellRegions, focusRegion] = \
-                brailleGen._getBrailleRegionsForTableCellRow(self, obj)
+                braillegenerator.BrailleGenerator.\
+                    _getBrailleRegionsForTableCellRow(self, obj)
             regions.extend(cellRegions)
             regions = [regions, focusRegion]
 
@@ -398,8 +398,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # child, and call this method again.
             #
             if obj.childCount <= 1:
-                brailleGen = braillegenerator.BrailleGenerator
-                regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
+                regions = braillegenerator.BrailleGenerator.\
+                              _getBrailleRegionsForTableCell(self, obj)
             else:
                 regions = []
                 for child in obj:
@@ -604,9 +604,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.extend(self._getSpeechForTableCell(obj,
                                                              already_focused))
         else:
-            speechGen = speechgenerator.SpeechGenerator
-            utterances.extend(speechGen._getSpeechForTableCellRow(self, obj,
-                                                             already_focused))
+            utterances.extend(speechgenerator.SpeechGenerator.\
+                _getSpeechForTableCellRow(self, obj, already_focused))
 
         return utterances
 
@@ -654,9 +653,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # and call this method again.
             #
             if obj.childCount <= 1:
-                speechGen = speechgenerator.SpeechGenerator
-                utterances = speechGen._getSpeechForTableCell(self, obj,
-                                                        already_focused)
+                utterances = speechgenerator.SpeechGenerator.\
+                    _getSpeechForTableCell(self, obj, already_focused)
             else:
                 utterances = []
                 for child in obj:
@@ -690,9 +688,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(obj.name)
             utterances.append(checkedState)
         else:
-            speechGen = speechgenerator.SpeechGenerator
-            utterances.extend(speechGen._getSpeechForToggleButton(self, obj,
-                                                             already_focused))
+            utterances.extend(speechgenerator.SpeechGenerator.\
+                _getSpeechForToggleButton(self, obj, already_focused))
 
         return utterances
 
@@ -721,9 +718,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(obj.name)
             utterances.append(checkedState)
         else:
-            speechGen = speechgenerator.SpeechGenerator
-            utterances.extend(speechGen._getSpeechForPushButton(self, obj,
-                                                             already_focused))
+            utterances.extend(speechgenerator.SpeechGenerator.\
+                _getSpeechForPushButton(self, obj, already_focused))
 
         return utterances
 
@@ -1810,7 +1806,7 @@ class Script(default.Script):
                oldLocusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM and \
                oldLocusOfFocus.name == _("Text Document") and \
                len(result[0]) == 0:
-                self.whereAmI(None)
+                self.whereAmI.whereAmI(None)
 
             # Check to see if there are any hypertext links in this paragraph.
             # If no, then just speak the whole line. Otherwise, split the
