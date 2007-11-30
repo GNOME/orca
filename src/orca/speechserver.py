@@ -58,6 +58,8 @@ class VoiceFamily(dict):
 
     def __init__(self, props):
         """Create and initialize VoiceFamily."""
+        dict.__init__(self)
+
         self.update(VoiceFamily.settings)
         if props:
             self.update(props)
