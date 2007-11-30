@@ -103,7 +103,6 @@ class Word:
         self.y = y
         self.width = width
         self.height = height
-        self.chars = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the chars of a word.  We do
@@ -169,7 +168,6 @@ class Zone:
         self.width = width
         self.height = height
         self.role = role or accessible.getRole()
-        self.words = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.
@@ -240,7 +238,6 @@ class TextZone(Zone):
 
         Zone.__init__(self, accessible, string, x, y, width, height)
         self.startOffset = startOffset
-        self.words = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.  The words
