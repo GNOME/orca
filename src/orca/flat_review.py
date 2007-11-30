@@ -103,6 +103,7 @@ class Word:
         self.y = y
         self.width = width
         self.height = height
+        self.chars = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the chars of a word.  We do
@@ -168,6 +169,7 @@ class Zone:
         self.width = width
         self.height = height
         self.role = role or accessible.getRole()
+        self.words = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.
@@ -204,16 +206,17 @@ class Zone:
             return False
 
     def getWordAtOffset(self, charOffset):
-        word = None
+        wordAtOffset = None
         offset = 0
         for word in self.words:
             nextOffset = offset + len(word.string.decode("UTF-8"))
+            wordAtOffset = word
             if nextOffset > charOffset:
-                return [word, charOffset - offset]
+                return [wordAtOffset, charOffset - offset]
             else:
                 offset = nextOffset
 
-        return [word, offset]
+        return [wordAtOffset, offset]
 
 class TextZone(Zone):
     """Represents Accessibility_Text that is a portion of a single
@@ -237,6 +240,7 @@ class TextZone(Zone):
 
         Zone.__init__(self, accessible, string, x, y, width, height)
         self.startOffset = startOffset
+        self.words = None
 
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.  The words
@@ -552,6 +556,11 @@ class Context:
     WRAP_LINE       = 1 << 0
     WRAP_TOP_BOTTOM = 1 << 1
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
+
+    # A minimal chunk to jump around should we not really know where we
+    # are going.
+    #
+    GRID_SIZE = 7
 
     def __init__(self, script):
         """Create a new Context that will be used for handling flat
@@ -1163,11 +1172,6 @@ class Context:
         except NotImplementedError:
             return []
 
-        # A minimal chunk to jump around should we not really know where we
-        # are going.
-        #
-        GRID_SIZE = 7
-
         descendants = []
 
         parentExtents = icomponent.getExtents(0)
@@ -1223,15 +1227,15 @@ class Context:
                         if not descendants.count(child):
                             descendants.append(child)
                     else:
-                        newX = currentX + GRID_SIZE
+                        newX = currentX + self.GRID_SIZE
                 else:
-                    newX = currentX + GRID_SIZE
+                    newX = currentX + self.GRID_SIZE
                 if newX <= currentX:
-                    currentX += GRID_SIZE
+                    currentX += self.GRID_SIZE
                 else:
                     currentX = newX
             if minHeight == sys.maxint:
-                minHeight = GRID_SIZE
+                minHeight = self.GRID_SIZE
             currentY += minHeight
 
         return descendants
