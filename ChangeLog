@@ -6,6 +6,7 @@
 2007-11-30  Rich Burridge <rich.burridge@sun.com>
 
         * pylintrc:
+          src/orca/Gecko.py:
           src/orca/orca.py:
           src/orca/debug.py:
           src/orca/speechserver.py:
