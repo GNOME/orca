@@ -48,6 +48,9 @@ from orca.orca_i18n import _ # for gettext support
 
 class Script(default.Script):
 
+    ROLE_DOCUMENT = "Document"
+    ROLE_LINK = "Link"
+
     def __init__(self, app):
         """Creates a new script for the given application.
 
@@ -62,7 +65,6 @@ class Script(default.Script):
         # is "Document".  "Link" is also capitalized in acroread.  We
         # need to make these known to Orca for speech and braille output.
         #
-        self.ROLE_DOCUMENT = "Document"
         rolenames.rolenames[self.ROLE_DOCUMENT] = \
             rolenames.Rolename(self.ROLE_DOCUMENT,
                                # Translators: short braille for the
@@ -78,7 +80,6 @@ class Script(default.Script):
                                #
                                _("document"))
 
-        self.ROLE_LINK = "Link"
         rolenames.rolenames[self.ROLE_LINK] = \
             rolenames.rolenames[pyatspi.ROLE_LINK]
 
@@ -376,20 +377,20 @@ class Script(default.Script):
                 lastKey = orca_state.lastNonModifierKeyEvent.event_string
             except:
                 pass
-            LOFIndex = orca_state.locusOfFocus.getIndexInParent()
+            locusOfFocusIndex = orca_state.locusOfFocus.getIndexInParent()
             childIndex = None
 
             # [[[TODO: JD - These aren't all of the possibilities.  This is
             # very much a work in progress and of testing.]]]
             #
             if lastKey == "Up":
-                childIndex = LOFIndex - 1
+                childIndex = locusOfFocusIndex - 1
             elif lastKey == "Down":
-                childIndex = LOFIndex + 1
+                childIndex = locusOfFocusIndex + 1
             elif lastKey == "Right" or lastKey == "End":
-                childIndex = LOFIndex
+                childIndex = locusOfFocusIndex
             elif lastKey == "Left" or lastKey == "Home":
-                childIndex = LOFIndex
+                childIndex = locusOfFocusIndex
 
             if (childIndex >= 0):
                 child = event.source[childIndex]
