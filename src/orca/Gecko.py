@@ -577,7 +577,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         if self._script.isAriaWidget(obj):
             return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForLink(self, obj)
+                       _getDefaultBrailleRegions(self, obj)
         
         regions = []
 
@@ -628,7 +628,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         self.speechGenerators[pyatspi.ROLE_SLIDER]         = \
              self._getSpeechForSlider
 
-    def _getSpeechForObjectRole(self, obj, role=None):
+    def getSpeechForObjectRole(self, obj, role=None):
         """Prevents some roles from being spoken."""
         if obj.getRole() in [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_SECTION,
@@ -655,7 +655,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         name = obj.name
         if name and len(name):
             utterances.append(name)
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        utterances.extend(self.getSpeechForObjectRole(obj))
 
         self._debugGenerator("Gecko._getSpeechForDocumentFrame",
                              obj,
@@ -707,7 +707,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
 
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        utterances.extend(self.getSpeechForObjectRole(obj))
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         utterances.append(text)
@@ -765,7 +765,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         self._debugGenerator("Gecko._getSpeechForComboBox",
                              obj,
@@ -807,7 +807,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                           [pyatspi.ROLE_COMBO_BOX],
                                           [pyatspi.ROLE_DOCUMENT_FRAME])
             if comboBox:
-                utterances.extend(self._getSpeechForObjectRole(comboBox))
+                utterances.extend(self.getSpeechForObjectRole(comboBox))
 
         self._debugGenerator("Gecko._getSpeechForMenuItem",
                              obj,
@@ -951,9 +951,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.extend(self._getSpeechForLink(link,
                                                              already_focused))
             elif link:
-                utterances.extend(self._getSpeechForObjectRole(link))
+                utterances.extend(self.getSpeechForObjectRole(link))
 
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -977,8 +977,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # Treat ARIA widgets like default.py widgets
         #
         if self._script.isAriaWidget(obj):
-            return speechgenerator.SpeechGenerator.\
-                       _getSpeechForLink(self, obj, already_focused)
+            return speechgenerator.SpeechGenerator.getSpeech(obj,
+                                                             already_focused)
         
         utterances = []
 
@@ -1002,7 +1002,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 if basename:
                     utterances.append(basename)
 
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -1092,7 +1092,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.append(label)
 
             utterances.append(selectionState)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:
             utterances.append(selectionState)
@@ -1147,7 +1147,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 label = self._script.guessTheLabel(obj)
             if label:
                 utterances.append(label)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:
@@ -1324,7 +1324,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         else:
             utterances = []
             utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -4901,12 +4901,12 @@ class Script(default.Script):
         # If we do overlap, lets see how much.  We'll require a 25% overlap
         # for now...
         #
-        if lowestTop < highestBottom:
-            overlapAmount = highestBottom - lowestTop
-            shortestHeight = min(a[3], b[3])
-            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
-        else:
-            return False
+        #if lowestTop < highestBottom:
+        #    overlapAmount = highestBottom - lowestTop
+        #    shortestHeight = min(a[3], b[3])
+        #    return ((1.0 * overlapAmount) / shortestHeight) > 0.25
+        #else:
+        #    return False
 
     def isLabellingContents(self, obj, contents):
         """Given and obj and a list of [obj, startOffset, endOffset] tuples,
@@ -5048,19 +5048,15 @@ class Script(default.Script):
         - obj: the table cell whose row is to be examined
         """
 
-        allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = obj.parent.queryTable()
             row = table.getRowAtIndex(obj.getIndexInParent())
-            nCols = table.nColumns
-            for col in range(0, nCols):
+            for col in xrange(table.nColumns):
                 cell = table.getAccessibleAt(row, col)
                 if not self.isHeader(cell):
-                    break
-            if col == nCols - 1:
-                allHeaders = True
+                    return False
 
-        return allHeaders
+        return True
 
     def isInHeaderColumn(self, obj):
         """Returns True if all of the cells in the same column as this cell
@@ -5070,19 +5066,15 @@ class Script(default.Script):
         - obj: the table cell whose column is to be examined
         """
 
-        allHeaders = False
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = obj.parent.queryTable()
             col = table.getColumnAtIndex(obj.getIndexInParent())
-            nRows = table.nRows
-            for row in range(0, nRows):
+            for row in xrange(table.nRows):
                 cell = table.getAccessibleAt(row, col)
                 if not self.isHeader(cell):
-                    break
-            if row == nRows - 1:
-                allHeaders = True
+                    return False
 
-        return allHeaders
+        return True
 
     def getRowHeaders(self, obj):
         """Returns a list of table cells that serve as a row header for
@@ -5529,12 +5521,9 @@ class Script(default.Script):
         onRight = None
         if ourIndex > 0:
             onLeft = objectsOnLine[ourIndex - 1]
-            extents = content[0].queryComponent().getExtents(0)
-            # onLeftExtents = \
-            #          [extents.x, extents.y, extents.width, extents.height]
         if 0 <= ourIndex < len(objectsOnLine) - 1:
             onRight = objectsOnLine[ourIndex + 1]
-            extents = content[0].queryComponent().getExtents(0)
+            extents = onRight.queryComponent().getExtents(0)
             onRightExtents = \
                      [extents.x, extents.y, extents.width, extents.height]
 
@@ -6938,12 +6927,12 @@ class Script(default.Script):
             if speakRole and speakThisRole:
                 if text:
                     strings.extend(\
-                       self.speechGenerator._getSpeechForObjectRole(obj))
+                       self.speechGenerator.getSpeechForObjectRole(obj))
 
                 if containingHeading and isLastObject:
                     obj = containingHeading
                     strings.extend(\
-                        self.speechGenerator._getSpeechForObjectRole(obj))
+                        self.speechGenerator.getSpeechForObjectRole(obj))
 
             for string in strings:
                 utterances.append([string, self.getACSS(obj, string)])
