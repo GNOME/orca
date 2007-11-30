@@ -3549,7 +3549,6 @@ class Script(default.Script):
         such example would be the programmatic insertion of a tooltip or alert  
         dialog."""
 
-        print event.type, event.source, event.detail1, event.detail2, event.any_data, event.any_data.getAttributes()
         # We will just look at object addition events for now
         if event.type.startswith('object:children-changed:add:system'):
             newacc = event.any_data
