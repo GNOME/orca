@@ -52,6 +52,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
     def __init__(self):
 
+        presentation_manager.PresentationManager.__init__(self)
+
         # Dictionary that keeps count of event listeners by type.
         # This is a bit convoluted for now, but what happens is that
         # scripts tell the FocusTrackingPresenter to listen for

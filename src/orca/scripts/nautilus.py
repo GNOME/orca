@@ -152,12 +152,13 @@ class Script(default.Script):
             for panel in allPanels:
                 if self.isDesiredFocusedItem(panel, rolesList):
                     locationBarFound = True
+                    desiredPanel = panel
                     break
 
             shouldAnnounce = False
             if locationBarFound:
-                for i in range(0, panel.childCount):
-                    child = panel.getChildAtIndex(i)
+                for i in range(0, desiredPanel.childCount):
+                    child = desiredPanel.getChildAtIndex(i)
                     if child.getRole() == pyatspi.ROLE_TOGGLE_BUTTON and \
                        child.getState().contains(pyatspi.STATE_CHECKED):
                         if not self.isSameObject(child, self.pathChild):
