@@ -121,8 +121,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        sg = speechgenerator.SpeechGenerator
-        utterances = sg._getSpeechForTableCell(self, obj, already_focused)
+        utterances = speechgenerator.SpeechGenerator._getSpeechForTableCell( \
+            self, obj, already_focused)
 
         if not self._script.isInBuddyList(obj):
             return utterances
