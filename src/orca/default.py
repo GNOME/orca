@@ -758,7 +758,7 @@ class Script(script.Script):
             self.noOp
         listeners["object:active-descendant-changed"]       = \
             self.onActiveDescendantChanged
-        listeners["object:children-changed:"]               = \
+        listeners["object:children-changed"]               = \
             self.noOp
         listeners["object:link-selected"]                   = \
             self.onLinkSelected

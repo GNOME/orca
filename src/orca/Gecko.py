@@ -2323,6 +2323,8 @@ class Script(default.Script):
             self.onDocumentLoadStopped
         listeners["object:visible-data-changed"]            = \
             self.onVisibleDataChanged
+        listeners["object:children-changed"]                = \
+            self.onChildrenChanged
 
         # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
         # use of underscores instead of dashes until they fix their bug.
@@ -3541,6 +3543,36 @@ class Script(default.Script):
 
         default.Script.onTextInserted(self, event)
 
+    def onChildrenChanged(self, event):
+        """Called when a child node has changed.  In particular, we are looking
+        for addition events often associated with Javascipt insertion.  One such
+        such example would be the programmatic insertion of a tooltip or alert  
+        dialog."""
+
+        print event.type, event.source, event.detail1, event.detail2, event.any_data, event.any_data.getAttributes()
+        # We will just look at object addition events for now
+        if event.type.startswith('object:children-changed:add:system'):
+            newacc = event.any_data
+            output = None
+            # The addition could be an alert/tooltip, but the xml-role:alert
+            # or xml-role:tooltip object may be a child.  For performance
+            # reasons first look at the object then just look through the 
+            # objects immediate descendents, not recursively.  May need to 
+            # check xml-roles to make sure it is not a list or other 
+            # roles with potentially many children.
+            #
+            if self.isAriaAlert(newacc):
+                output = self.expandEOCs(newacc)
+            elif newacc.getRole() != pyatspi.ROLE_LIST:
+                for child in newacc:
+                    if self.isAriaAlert(child):
+                        output = self.expandEOCs(child)
+                        break
+
+            if output:
+                speech.speak(output)
+                braille.displayMessage(output)
+
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
         # We care about the main document and we'll ignore document
@@ -4733,6 +4765,20 @@ class Script(default.Script):
             for attr in attrs:
                 if attr.startswith('xml-roles'):
                     return True
+        return False
+
+    def isAriaAlert(self, obj):
+        """Returns True if the given object is an ARIA wairole:alert or 
+           wairole:tooltip.
+        """
+        if obj is None:
+            return False
+        attrs = obj.getAttributes()
+        if attrs is None:
+            return False
+        for attr in attrs:
+            if attr == 'xml-roles:alert' or attr == 'xml-roles:tooltip':
+                return True
         return False
 
     def getCharacterOffsetInParent(self, obj):
