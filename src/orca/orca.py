@@ -432,28 +432,28 @@ def _isNavigationKey(event_string):
 class KeyEventType:
     """Definition of available key event types."""
 
-    """An alphanumeric or punctuation key event."""
+    # An alphanumeric or punctuation key event.
     PRINTABLE = 'PRINTABLE'
 
-    """A modifier key event."""
+    # A modifier key event.
     MODIFIER = 'MODIFIER'
 
-    """A locking key event."""
+    # A locking key event.
     LOCKING = 'LOCKING'
 
-    """A locking key lock event."""
+    # A locking key lock event.
     LOCKING_LOCKED = 'LOCKING_LOCKED'
 
-    """A locking key unlock event."""
+    # A locking key unlock event.
     LOCKING_UNLOCKED = 'LOCKING_UNLOCKED'
 
-    """A function key event."""
+    # A function key event.
     FUNCTION = 'FUNCTION'
 
-    """An action key event."""
+    # An action key event.
     ACTION = 'ACTION'
 
-    """A navigation key event."""
+    # A navigation key event.
     NAVIGATION = 'NAVIGATION'
 
     def __init__(self):
