@@ -140,6 +140,9 @@ class WhereAmI:
         else:
             self._speakGenericObject(obj, doubleClick)
 
+        if not (doubleClick or titleOrStatus):
+            self._speakObjDescription(obj)
+
         return True
 
     def _speakCheckBox(self, obj, doubleClick):
@@ -1548,3 +1551,15 @@ class WhereAmI:
         debug.println(self._debugLevel, "default button utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
+
+    def _speakObjDescription(self, obj):
+        """Speaks the object's description if it is not the same as
+        the object's name or label.
+        """
+
+        description = obj.description
+        name = self._getObjName(obj)
+        label = self._getObjLabel(obj)
+
+        if description and not description in [name, label]:
+            speech.speak(description)
