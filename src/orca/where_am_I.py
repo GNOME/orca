@@ -137,6 +137,9 @@ class WhereAmI:
         elif role == pyatspi.ROLE_LINK:
             self._speakLink(obj, doubleClick)
 
+        elif role == pyatspi.ROLE_TOGGLE_BUTTON:
+            self._speakToggleButton(obj, doubleClick)
+
         else:
             self._speakGenericObject(obj, doubleClick)
 
@@ -772,11 +775,37 @@ class WhereAmI:
                     domainoutput = _('different site')
 
         speech.speakUtterances([linkoutput, domainoutput, sizeoutput])
+
+    def _speakToggleButton(self, obj, doubleClick):
+        """Speak toggle button information:
+           1. Name/Label
+           2. Role
+           3. State (pressed/not pressed)
+        """
+
+        utterances = []
+        text = self._getObjLabelAndName(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
+            # Translators: the state of a toggle button.
+            #
+            checkedState = _("pressed")
+        else:
+            # Translators: the state of a toggle button.
+            #
+            checkedState = _("not pressed")
+        utterances.append(checkedState)
+
+        speech.speakUtterances(utterances)
       
     def __extractSize(self, uri):
-        '''
-        Get the http header for a given uri and try to extract the size (Content-length).
-        '''
+        """Get the http header for a given uri and try to extract the size
+        (Content-length).
+        """
         try:
             x = urllib2.urlopen(uri)
             try:
@@ -787,9 +816,9 @@ class WhereAmI:
             return None
   
     def __formatSizeOutput(self, sizestr):
-        '''
-        Format the size output announcement.  Changes wording based on size.
-        '''
+        """Format the size output announcement.  Changes wording based on
+        size.
+        """
         # sanity check
         if sizestr is None or sizestr == '':
             return ''

@@ -58,8 +58,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Details'",
-     "BUG? - pressed state not spoken?",
-     "SPEECH OUTPUT: 'toggle button'"]))
+     "SPEECH OUTPUT: 'toggle button'",
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
 # Toggle the state of the "Details" button.
@@ -88,8 +88,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'",
      "     VISIBLE:  '&=y Details ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Details'",
-     "BUG? - pressed state not spoken?",
-     "SPEECH OUTPUT: 'toggle button'"]))
+     "SPEECH OUTPUT: 'toggle button'",
+     "SPEECH OUTPUT: 'pressed'"]))
 
 ########################################################################
 # Toggle the state of the "Details" button.

@@ -1,8 +1,19 @@
 2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          Fix for bug #486971 - Where Am I doesn't present toggle button
+          state.
+
+2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py:
           Fix for bug #486976 - Basic Where Am I in multiline text areas
           should only present info for current line.
+
+        * test/keystrokes/gtk-demo/role_toggle_button.py
+          Fix for bug #486971 - Where Am I doesn't present toggle button
+          state.
 
 2007-12-02  Willie Walker <william.walker@sun.com>
 
