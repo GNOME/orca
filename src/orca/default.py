@@ -5185,6 +5185,16 @@ class Script(script.Script):
 
         newLine = self._addRepeatSegment(segment, newLine, multipleChars)
 
+        # Pylint is confused and flags this with the following error:
+        #
+        # E1103:5188:Script.adjustForRepeats: Instance of 'True' has
+        # no 'encode' member (but some types could not be inferred)
+        #
+        # We know newLine is a unicode string, so we'll just tell pylint
+        # that we know what we are doing.
+        #
+        # pylint: disable-msg=E1103
+
         return newLine.encode("UTF-8")
 
     def _getPronunciationForSegment(self, segment):
