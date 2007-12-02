@@ -101,7 +101,7 @@ class BrlMon(gtk.Window):
         """
 
         # We know what we are doing here, so tell pylint not to flag
-        # the self.window method calls as error (e.g., Class 'window' 
+        # the self.window method calls as errors (e.g., Class 'window' 
         # has no 'get_size' member).  The disable-msg is localized to
         # just this method.
         #
