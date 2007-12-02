@@ -17,6 +17,17 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# [[[TODO: WDW - Pylint is giving us a bunch of errors along these
+# lines throughout this file:
+#
+# E1103:4241:Script.updateBraille: Instance of 'list' has no 'getRole'
+# member (but some types could not be inferred)
+# 
+# I don't know what is going on, so I'm going to tell pylint to
+# disable those messages for Gecko.py.]]]
+# 
+# pylint: disable-msg=E1103
+
 """Custom script for Gecko toolkit.  NOT WORKING WELL AT THE MOMENT.
 Please refer to the following URL for more information on the AT-SPI
 implementation in Gecko:
