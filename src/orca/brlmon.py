@@ -95,10 +95,17 @@ class BrlMon(gtk.Window):
         self.set_property("accept-focus", False)
         self.connect_after("check-resize", self.onResize)
 
-    def onResize(self, object):
+    def onResize(self, obj):
         """Tell the window to be a dock and set its struts, which I
         thinks means to attempt to glue it somewhere on the display.
         """
+
+        # We know what we are doing here, so tell pylint not to flag
+        # the self.window method calls as error (e.g., Class 'window' 
+        # has no 'get_size' member).  The disable-msg is localized to
+        # just this method.
+        #
+        # pylint: disable-msg=E1101
 
         screen_width = gtk.gdk.screen_width()
         [window_width, window_height] = self.window.get_size()
