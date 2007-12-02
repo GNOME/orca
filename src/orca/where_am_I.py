@@ -1182,6 +1182,18 @@ class WhereAmI:
                                 morePossibleSelections = True
                         break
 
+        else:
+            # We're only interested in the text selected on this line.
+            #
+            [line, lineStart, lineEnd] = \
+                   text.getTextAtOffset(text.caretOffset,
+                                        pyatspi.TEXT_BOUNDARY_LINE_START)
+            if lineStart != endOffset:
+                startOffset = max(startOffset, lineStart)
+                endOffset = min(endOffset, lineEnd)
+                textContents = line[startOffset - lineStart:
+                                    endOffset - lineStart]
+
         return [textContents, startOffset, endOffset]
 
     def _hasTextSelections(self, obj):
