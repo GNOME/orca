@@ -28,11 +28,8 @@ __license__   = "LGPL"
 import logging
 log = logging.getLogger("speech")
 
-import os
-
 import gobject
 import Queue
-import string
 import threading
 import time
 
@@ -41,6 +38,7 @@ import ORBit
 
 import chnames
 import debug
+import orca
 import orca_state
 import punctuation_settings
 import settings
@@ -55,10 +53,10 @@ ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
 class _SayAll:
-    def __init__(self, iterator, context, id, progressCallback):
+    def __init__(self, iterator, context, utteranceId, progressCallback):
         self.utteranceIterator   = iterator
         self.currentContext      = context
-        self.idForCurrentContext = id
+        self.idForCurrentContext = utteranceId
         self.progressCallback    = progressCallback
 
 class _Speaker(GNOME__POA.Speech.SpeechCallback):
@@ -70,6 +68,13 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
     """
 
     def __init__(self, gnome_speaker):
+
+        # We know what we are doing here, so tell pylint not to flag
+        # the self._this() method call as an error.  The disable-msg is
+        # localized to just this method.
+        #
+        # pylint: disable-msg=E1101
+
         self.gnome_speaker = gnome_speaker
         if settings.enableSpeechCallbacks:
             gnome_speaker.registerSpeechCallback(self._this())
@@ -81,19 +86,19 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
     def deregisterCallback(self, callback):
         self.__callbacks.remove(callback)
 
-    def notify(self, type, id, offset):
+    def notify(self, progressType, utteranceId, offset):
         """Called by GNOME Speech when the GNOME Speech driver generates
         a callback.
 
         Arguments:
-        - type:   one of GNOME.Speech.speech_callback_speech_started,
+        - progressType:  one of GNOME.Speech.speech_callback_speech_started,
                          GNOME.Speech.speech_callback_speech_progress,
                          GNOME.Speech.speech_callback_speech_ended
-        - id:     the id of the utterance (returned by say)
-        - offset: the character offset into the utterance (for progress)
+        - utteranceId:   the id of the utterance (returned by say)
+        - offset:        the character offset into the utterance (for progress)
         """
         for callback in self.__callbacks:
-            callback.notify(type, id, offset)
+            callback.notify(progressType, utteranceId, offset)
 
     def say(self, text):
         if isinstance(text, unicode):
@@ -128,6 +133,13 @@ class SpeechServer(speechserver.SpeechServer):
     __activeServers = {}
 
     def __activateDriver(iid):
+
+        # We know what we are doing here, so tell pylint not to flag
+        # the _narrow method call as a warning.  The disable-msg is
+        # localized to just this method.
+        #
+        # pylint: disable-msg=W0212
+
         driver = bonobo.activation.activate_from_id(iid,
                                                     0,
                                                     False)
@@ -432,6 +444,13 @@ class SpeechServer(speechserver.SpeechServer):
                 voice = voices[0]
 
         s = self.__driver.createSpeaker(voice)
+
+        # We know what we are doing here, so tell pylint not to flag
+        # the _narrow method call as a warning.  The disable-msg is
+        # localized to just this method.
+        #
+        # pylint: disable-msg=W0212
+
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
 
         # Turn off punctuation if the speaker allows us to do so.  We
@@ -477,9 +496,9 @@ class SpeechServer(speechserver.SpeechServer):
 
         # Added in the notify method below.
         #
-        # thisId = the id of the utterance we sent to gnome-speech
-        # type   = the type of progress we're getting
-        # offset = character offset into the utterance
+        # thisId   = the id of the utterance we sent to gnome-speech
+        # thisType = the type of progress we're getting
+        # offset   = character offset into the utterance
         #
         (thisId, thisType, offset) = self.__eventQueue.get()
 
@@ -530,29 +549,29 @@ class SpeechServer(speechserver.SpeechServer):
 
         return rerun
 
-    def notify(self, type, id, offset):
+    def notify(self, progressType, utteranceId, offset):
         """Called by GNOME Speech when the GNOME Speech driver generates
         a callback.  This is for internal use only.
 
         Arguments:
-        - type:   one of GNOME.Speech.speech_callback_speech_started,
+        - progressType:  one of GNOME.Speech.speech_callback_speech_started,
                          GNOME.Speech.speech_callback_speech_progress,
                          GNOME.Speech.speech_callback_speech_ended
-        - id:     the id of the utterance (returned by say)
-        - offset: the character offset into the utterance (for progress)
+        - utteranceId:   the id of the utterance (returned by say)
+        - offset:        the character offset into the utterance (for progress)
         """
 
-        if type == GNOME.Speech.speech_callback_speech_started:
+        if progressType == GNOME.Speech.speech_callback_speech_started:
             self.__isSpeaking = True
-        elif type == GNOME.Speech.speech_callback_speech_progress:
+        elif progressType == GNOME.Speech.speech_callback_speech_progress:
             self.__isSpeaking = True
-        elif (type == GNOME.Speech.speech_callback_speech_ended) \
+        elif (progressType == GNOME.Speech.speech_callback_speech_ended) \
             and (not self.__sayAll):
             self.__isSpeaking = False
 
         if self.__sayAll:
             self.__gidleLock.acquire()
-            self.__eventQueue.put((id, type, offset))
+            self.__eventQueue.put((utteranceId, progressType, offset))
             if not self.__gidleId:
                 if settings.gilSleepTime:
                     time.sleep(settings.gilSleepTime)
@@ -624,20 +643,20 @@ class SpeechServer(speechserver.SpeechServer):
         """
         self.speak(character, acss)
 
-    def speakUtterances(self, list, acss=None, interrupt=True):
+    def speakUtterances(self, utterances, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list:      list of strings to be spoken
-        - acss:      acss.ACSS instance; if None,
-                     the default voice settings will be used.
-                     Otherwise, the acss settings will be
-                     used to augment/override the default
-                     voice settings.
+        - utterances: list of strings to be spoken
+        - acss:       acss.ACSS instance; if None,
+                      the default voice settings will be used.
+                      Otherwise, the acss settings will be
+                      used to augment/override the default
+                      voice settings.
         - interrupt: if True, stop any speech currently in progress.
         """
         i = 0
-        for text in list:
+        for text in utterances:
             if len(text):
                 self.speak(text, acss, interrupt and (i == 0))
             i += 1
@@ -652,11 +671,13 @@ class SpeechServer(speechserver.SpeechServer):
         Returns the equivalent character index into the original text string.
         """
 
+        equivalentIndex = 0
         for i in range(0, len(self.textCharIndices)):
+            equivalentIndex = i
             if self.textCharIndices[i] >= offset:
                 break
 
-        return i
+        return equivalentIndex
 
     def __addVerbalizedPunctuation(self, oldText):
         """Depending upon the users verbalized punctuation setting,
@@ -715,9 +736,9 @@ class SpeechServer(speechserver.SpeechServer):
                 #
                 isPrev = isNext = isSpecial = False
                 if i > 0:
-                    isPrev = not (oldText[i - 1] in string.whitespace)
+                    isPrev = not oldText[i - 1].isspace()
                 if i < (len(oldText) - 1):
-                    isNext = not (oldText[i + 1] in string.whitespace)
+                    isNext = not oldText[i + 1].isspace()
 
                 # If this is a period and there is a non-space character
                 # on either side of it, then always speak it.
@@ -736,9 +757,9 @@ class SpeechServer(speechserver.SpeechServer):
                 if i == 0:
                     prevCharMatches = True
                 if i > 0:
-                    prevCharMatches = (oldText[i - 1] in string.whitespace)
+                    prevCharMatches = oldText[i - 1].isspace()
                 if i < (len(oldText) - 1):
-                    nextCharMatches = (oldText[i + 1] in string.digits or \
+                    nextCharMatches = (oldText[i + 1].isdigit() or \
                                        oldText[i + 1] in currencySymbols)
 
                 if oldText[i] == "-" and \
@@ -1039,7 +1060,7 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_SEVERE,
                           "Something looks wrong with speech.  Aborting.")
             debug.printStack(debug.LEVEL_ALL)
-            os._exit(50)
+            orca.abort(50)
         else:
             self.__lastResetTime = time.time()
 

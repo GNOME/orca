@@ -1119,6 +1119,13 @@ def start(registry):
     registry.start()
 
 def abort(exitCode=1):
+
+    # We know what we are doing here, so tell pylint not to flag
+    # the _exit method call as a warning.  The disable-msg is
+    # localized to just this method.
+    #
+    # pylint: disable-msg=W0212
+
     os._exit(exitCode)
 
 def timeout(signum=None, frame=None):
@@ -1443,7 +1450,7 @@ def main():
 
                 else:
                     usage()
-                    os._exit(2)
+                    abort(2)
 
             if opt in ("-d", "--disable"):
                 feature = val.strip()
@@ -1459,7 +1466,7 @@ def main():
                     _commandLineSettings["showMainWindow"] = False
                 else:
                     usage()
-                    os._exit(2)
+                    abort(2)
 
             if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
@@ -1471,14 +1478,14 @@ def main():
                 bypassSetup = True
             if opt in ("-?", "--help"):
                 usage()
-                os._exit(0)
+                abort(0)
             if opt in ("-v", "--version"):
                 print "Orca %s" % platform.version
-                os._exit(0)
+                abort(0)
     except:
         debug.printException(debug.LEVEL_OFF)
         usage()
-        os._exit(2)
+        abort(2)
 
     # Do not run Orca if accessibility has not been enabled.
     # We do allow, however, one to force Orca to run via the
