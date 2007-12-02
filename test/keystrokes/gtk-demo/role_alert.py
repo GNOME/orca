@@ -83,7 +83,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
      "SPEECH OUTPUT: 'Interactive Dialog'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Entry 1 text Testing'"]))
+     "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))
 
 ########################################################################
 # Now, do a "Where Am I" in the Interactive Dialog to get the title

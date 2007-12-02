@@ -1,3 +1,24 @@
+2007-12-02  Willie Walker <william.walker@sun.com>
+
+	Work on gtk-demo regression tests, getting them back to no
+	unexpected failures.
+
+	* test/keystrokes/gtk-demo/role_dialog.py:
+	  test/keystrokes/gtk-demo/role_page_tab.py:
+	  test/keystrokes/gtk-demo/role_push_button.py:
+	  test/keystrokes/gtk-demo/role_table.py:
+	  test/keystrokes/gtk-demo/role_toggle_button.py:
+	  Fix test assertion to accommodate new correct behavior where
+	  the application name is part of the context.  I suspect this
+	  might have been the result of something in pyatspi doing the
+	  right thing.
+	
+	* test/keystrokes/gtk-demo/role_alert.py:
+	  Fix test assertion as a result of new correct behavior from
+	  what was probably the fix for bug #486901 - When tabbing 
+          to a text area for a spinbox or editable combobox, text 
+          selection should be presented.
+	
 2007-11-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py:
