@@ -963,19 +963,21 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # can tell the user about itself.
             #
             class _FakeEvent:
-                def __init__(self):
-                    pass
+                def __init__(self, source, eventType,
+                             detail1, detail2, any_data):
+                    self.source = source
+                    self.type = eventType
+                    self.detail1 = detail1
+                    self.detail2 = detail2
+                    self.any_data = any_data
+
             class _FakeData:
                 def __init__(self):
                     pass
                 def value(self):
                     return None
-            fe = _FakeEvent()
-            fe.source   = win
-            fe.type     = "window:activate"
-            fe.detail1  = 0
-            fe.detail2  = 0
-            fe.any_data = _FakeData()
+
+            fe = _FakeEvent(win, "window:activate", 0, 0, _FakeData())
             e = pyatspi.event.Event(fe)
             self._enqueueEvent(e)
 
