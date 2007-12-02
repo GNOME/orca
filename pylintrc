@@ -151,7 +151,7 @@ const-rgx=(([a-zA-Z_][a-zA-Z1-9_]*)|(__.*__))$
 class-rgx=[A-Z_][a-zA-Z0-9]+$
 
 # Regular expression which should only match correct function names
-function-rgx=[a-zQ_][a-zA-Z0-9_]*$
+function-rgx=[a-z_][a-zA-Z0-9_]*$
 
 # Regular expression which should only match correct method names
 method-rgx=[a-z_][a-zA-Z0-9_]*$
@@ -170,7 +170,7 @@ variable-rgx=[a-z_][a-zA-Z0-9_]*$
 inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=i,j,k,ex,Run,_
+good-names=i,j,k,ex,Run,_,Q_
 
 # Bad variable names which should always be refused, separated by a comma
 bad-names=foo,bar,baz,toto,tutu,tata
