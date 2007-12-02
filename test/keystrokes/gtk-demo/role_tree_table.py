@@ -184,14 +184,13 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
      "     VISIBLE:  '<x> Alex', cursor=1",
      "SPEECH OUTPUT: ''",
-     "BUG? - checkbox state should be presented",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'New Years Day'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'check box checked'",
+     "SPEECH OUTPUT: 'check box checked'",
+     "SPEECH OUTPUT: 'check box checked'",
+     "SPEECH OUTPUT: 'check box checked'",
+     "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: 'row 2 of 53'"]))
 
 ########################################################################

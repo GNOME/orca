@@ -160,21 +160,7 @@ class WhereAmI:
         utterances = []
         text = self._getObjLabelAndName(obj) + " " + \
                rolenames.getSpeechForRoleName(obj)
-        utterances.append(text)
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_INDETERMINATE):
-            # Translators: this represents the state of a checkbox.
-            #
-            text = _("partially checked")
-        elif state.contains(pyatspi.STATE_CHECKED):
-            # Translators: this represents the state of a checkbox.
-            #
-            text = _("checked")
-        else:
-            # Translators: this represents the state of a checkbox.
-            #
-            text = _("not checked")
+        text = text + " " + self._getCheckBoxState(obj)
         utterances.append(text)
 
         text = self._getObjMnemonic(obj)
@@ -1090,8 +1076,7 @@ class WhereAmI:
         """Get the speech utterances for a single table cell.
         """
 
-        # Don't speak check box cells that area not checked.
-        notChecked = False
+        isToggle = False
         try:
             action = obj.queryAction()
         except NotImplementedError:
@@ -1099,18 +1084,51 @@ class WhereAmI:
         else:
             for i in range(0, action.nActions):
                 if action.getName(i) == "toggle":
-                    state = obj.getState()
-                    if not state.contains(pyatspi.STATE_CHECKED):
-                        notChecked = True
+                    isToggle = True
                     break
 
-        if notChecked:
-            return ""
-
-        descendant = self._script.getRealActiveDescendant(obj)
-        text = self._script.getDisplayedText(descendant)
+        if isToggle:
+            text = rolenames.getSpeechForRoleName(obj, pyatspi.ROLE_CHECK_BOX)
+            text = text + " " + self._getCheckBoxState(obj)
+        else:
+            descendant = self._script.getRealActiveDescendant(obj)
+            text = self._script.getDisplayedText(descendant)
 
         debug.println(self._debugLevel, "cell=<%s>" % text)
+
+        return text
+
+    def _getCheckBoxState(self, obj):
+        """Get the state of a checkbox/toggle-able table cell.
+        """
+
+        isToggle = (obj.getRole() == pyatspi.ROLE_CHECK_BOX)
+        if not isToggle:
+            try:
+                action = obj.queryAction()
+            except NotImplementedError:
+                pass
+            else:
+                for i in range(0, action.nActions):
+                    if action.getName(i) == "toggle":
+                        isToggle = True
+                        break
+        if not isToggle:
+            return ""
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            # Translators: this represents the state of a checkbox.
+            #
+            text = _("partially checked")
+        elif state.contains(pyatspi.STATE_CHECKED):
+            # Translators: this represents the state of a checkbox.
+            #
+            text = _("checked")
+        else:
+            # Translators: this represents the state of a checkbox.
+            #
+            text = _("not checked")
 
         return text
 
