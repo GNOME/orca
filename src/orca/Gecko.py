@@ -3562,6 +3562,10 @@ class Script(default.Script):
 
         # We will just look at object addition events for now
         if event.type.startswith('object:children-changed:add:system'):
+            # no use moving forward if we don't have our target.
+            if event.any_data is None:
+                return
+            
             newacc = event.any_data
             output = None
             # The addition could be an alert/tooltip, but the xml-role:alert
