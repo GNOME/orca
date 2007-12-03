@@ -670,15 +670,17 @@ class WhereAmI:
 
         utterances.append(_("Icon panel"))
         utterances.append(self._getObjLabelAndName(obj))
-        utterances.append(rolenames.getSpeechForRoleName(obj))
 
         selectedItems = []
         totalSelectedItems = 0
+        currentItem = 0
         for child in panel:
             state = child.getState()
             if state.contains(pyatspi.STATE_SELECTED):
                 totalSelectedItems += 1
                 selectedItems.append(child)
+            if state.contains(pyatspi.STATE_FOCUSED):
+                currentItem = child.getIndexInParent() + 1
 
         # Translators: this is a count of the number of selected icons 
         # and the count of the total number of icons within an icon panel. 
@@ -688,6 +690,13 @@ class WhereAmI:
                               "%d of %d items selected",
                               childCount) % \
                               (totalSelectedItems, childCount)
+        utterances.append(itemString)
+
+        # Translators: this is a indication of the focused icon and the
+        # count of the total number of icons within an icon panel. An
+        # example of an icon panel is the Nautilus folder view.
+        #
+        itemString = _("on item %d of %d") % (currentItem, childCount)
         utterances.append(itemString)
 
         if doubleClick:

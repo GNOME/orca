@@ -1,6 +1,12 @@
 2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py:
+          Fix for bug #486909 - Where Am I should say "n of m items selected"
+          and "on item x of y" in layered pane.
+
+2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py:
           test/keystrokes/gtk-demo/role_check_box.py:
           test/keystrokes/gtk-demo/role_tree_table.py:
           Fix for bug #486899 - Where Am I doesn't present checkbox state
