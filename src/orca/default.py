@@ -1268,18 +1268,21 @@ class Script(script.Script):
         Returns an instance of keybindings.KeyBindings.
         """
 
-        orcaModMask         = 1 << settings.MODIFIER_ORCA
-        orcaShiftModMask = (1 << settings.MODIFIER_ORCA |
-                            1 << pyatspi.MODIFIER_SHIFT)
-        orcaControlModMask  = (1 << settings.MODIFIER_ORCA |
-                               1 << pyatspi.MODIFIER_CONTROL)
-        orcaAltModMask      = (1 << settings.MODIFIER_ORCA |
-                               1 << pyatspi.MODIFIER_ALT)
-        orcaShiftAltModMask = (1 << settings.MODIFIER_ORCA |
-                               1 << pyatspi.MODIFIER_ALT |
-                               1 << pyatspi.MODIFIER_SHIFT)
-        shiftAltModMask     = (1 << pyatspi.MODIFIER_SHIFT |
-                               1 << pyatspi.MODIFIER_ALT)
+        orcaModMask           = 1 << settings.MODIFIER_ORCA
+        orcaShiftModMask      = (1 << settings.MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_SHIFT)
+        orcaControlModMask    = (1 << settings.MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL)
+        orcaAltModMask        = (1 << settings.MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_ALT)
+        orcaShiftAltModMask   = (1 << settings.MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_SHIFT)
+        orcaControlAltModMask = (1 << settings.MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT)
+        shiftAltModMask       = (1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_ALT)
         keyBindings = script.Script.getKeyBindings(self)
 
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1319,14 +1322,7 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F3",
-                orcaModMask,
-                orcaModMask,
-                self.inputEventHandlers["reportScriptInfoHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "F1",
+                "h",
                 orcaModMask,
                 orcaModMask,
                 self.inputEventHandlers["enterLearnModeHandler"]))
@@ -1361,47 +1357,32 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F5",
-                orcaControlModMask,
-                orcaModMask,
+                "End",
+                orcaControlAltModMask,
+                orcaControlAltModMask,
                 self.inputEventHandlers["listAppsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F4",
-                orcaModMask,
-                orcaModMask,
-                self.inputEventHandlers["cycleDebugLevelHandler"]))
+                "Home",
+                orcaControlAltModMask,
+                orcaControlAltModMask,
+                self.inputEventHandlers["reportScriptInfoHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F6",
-                orcaModMask,
-                orcaModMask,
-                self.inputEventHandlers["printActiveAppHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "F7",
-                orcaControlModMask,
-                orcaModMask,
+                "Page_Up",
+                orcaControlAltModMask,
+                orcaControlAltModMask,
                 self.inputEventHandlers["printAncestryHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F8",
-                orcaControlModMask,
-                orcaModMask,
+                "Page_Down",
+                orcaControlAltModMask,
+                orcaControlAltModMask,
                 self.inputEventHandlers["printHierarchyHandler"]))
 
-        if settings.debugMemoryUsage:
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    "F8",
-                    orcaControlModMask,
-                    orcaControlModMask,
-                    self.inputEventHandlers["printMemoryUsageHandler"]))
-                    
         #####################################################################
         #                                                                   #
         #  Bookmark key bindings                                            #
@@ -1460,6 +1441,28 @@ class Script(script.Script):
         #  Unbound handlers                                                 #
         #                                                                   #
         #####################################################################
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["reportScriptInfoHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["cycleDebugLevelHandler"]))
+
+        if settings.debugMemoryUsage:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    None,
+                    0,
+                    0,
+                    self.inputEventHandlers["printMemoryUsageHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(

@@ -1,8 +1,30 @@
+2007-12-03  Scott Haeger <via william.walker@sun.com>
+
+	* src/orca/scripts/gnome-mud.py:
+          src/orca/scripts/gaim.py:
+          src/orca/default.py:
+          Fix for bug #500193 - Update keybindings for reviewing previous
+	  messages.  The keybindings have been moved from the number keys
+	  to the F1-F9 keys.  Bookmarks are still on the number keys.
+	
+	  NOTE: this effects the review of previous messages in gaim and
+	  gnome-mud.  Instead of Orca+{1,2,3,...} to read the last nth
+	  message, you now use Orca+{F1,F2,F3,...}.
+
+	  NOTE: this also effects the debugging tools.  The new bindings
+	  are Orca+Ctrl+Alt+{the following}, where {the_following} is one
+	  of:
+
+          reportScriptInfoHandler - End
+          printActiveAppHandler   - Home
+          printAncestryHandler    - Page_Up (think "look upward in hierarchy")
+          printHierarchyHandler   - Page_Down (think "look down from the top")
+
 2007-12-03  Scott Haeger <scott@bashautomation.com>
 
-        * src/orca/Gecko.py:
-          Added sanity check in code done for Bug #462883, ARIA tooltips/alerts 
-          are not being output.
+        * src/orca/Gecko.py: 
+	  Added sanity check in code done for Bug #462883 - ARIA
+	  tooltips/alerts are not being output.
 
 2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

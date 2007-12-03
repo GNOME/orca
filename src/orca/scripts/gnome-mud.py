@@ -32,6 +32,7 @@ import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state
+import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _ # for gettext support
@@ -124,28 +125,26 @@ class Script(default.Script):
 
         keyBindings = default.Script.getKeyBindings(self)
 
-        #Here we define keybindings alt+1 to alt+0. We chosen the alt modifier
-        #to don't interfere with the laptop keybindings 7, 8 and 9.
-        messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-        for i in range(0, len(messageKeys)):
+        # Here we define keybindings Orca+F1 to Orca+F9 for reading a previous
+        # message.
+        messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
+        for messagekey in messageKeys:
             keyBindings.add(
                 keybindings.KeyBinding(
-                    messageKeys[i],
-                    1 << pyatspi.MODIFIER_ALT,
-                    1 << pyatspi.MODIFIER_ALT,
+                    messagekey,
+                    1 << settings.MODIFIER_ORCA,
+                    1 << settings.MODIFIER_ORCA,
                     self.inputEventHandlers["readPreviousMessageHandler"]))
 
         return keyBindings
 
     def readPreviousMessage(self, inputEvent):
-        #This function speaks the latest n messages. Alt+1 the latest one, 
-        #alt+2 the latest two and so.
+        #This function speaks the latest n messages. Orca+F1 the latest one, 
+        #Orca+F2 the latest two and so.
 
         debug.println(self.debugLevel, "gnome-mud.readPreviousMessage.")
 
-        if inputEvent.event_string == "0":
-            inputEvent.event_string = "10"
-        i = int(inputEvent.event_string)
+        i = int(inputEvent.event_string[1:])
         messageNo = Script.MESSAGE_LIST_LENGTH - i
      
         text = ""
