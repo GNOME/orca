@@ -1,3 +1,10 @@
+2007-12-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/gtk-demo/role_text_multiline.py:
+          More work on bug #486976 - Basic Where Am I in multiline text
+          area should only present info for current line. (Updated the
+          test assertions)
+
 2007-12-02  Willie Walker <william.walker@sun.com>
 
        * test/keystrokes/gtk-demo/role_dialog.py:

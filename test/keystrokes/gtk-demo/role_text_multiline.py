@@ -237,9 +237,17 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Arrow down to "I'm typing away..." and Select to the end of the line.
+# Press Home to move to the beginning of the line. Arrow down to 
+# "I'm typing away..." and use Shift End to select to the end of the 
+# line.
 #
 sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Home", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:text-caret-moved",
                            None,
@@ -260,33 +268,77 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Select to end of line",
-    ["BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=1",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
-     "     VISIBLE:  'I'm just typing away like a mad ', cursor=12",
+     "     VISIBLE:  'I'm just typing away like a mad ', cursor=1",
      "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
      "     VISIBLE:  'y life than eat fruit and type. ', cursor=32",
+     "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
-     "SPEECH OUTPUT: 'ping away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
+     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
      "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
-# Right arrow to the beginning of the next line.
+# Shift Control Right arrow to select the first two words on the next
+# line.
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right", 500))
+sequence.append(KeyComboAction("<Shift><Control>Right", 500))
 sequence.append(WaitAction("object:text-caret-moved",
                            None,
                            None,
                            pyatspi.ROLE_TEXT,
                            5000))
+sequence.append(KeyComboAction("<Shift><Control>Right", 500))
+sequence.append(WaitAction("object:text-caret-moved",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Move to beginning of next line",
+    "Basic Where Am I multiline selection",
     ["BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
-     "     VISIBLE:  'The keyboard sure can get sticky', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
-     "SPEECH OUTPUT: 'T'"]))
+     "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'The keyboard'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''"]))
+
+########################################################################
+# Do a detailed "Where Am I" via KP_Enter 2x.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Detailed Where Am I multiline selection",
+    ["BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
+     "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
+     "BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
+     "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'The keyboard'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
+     "The keyboard'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Try a "SayAll".
