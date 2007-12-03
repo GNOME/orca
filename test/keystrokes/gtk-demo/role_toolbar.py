@@ -28,18 +28,19 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Open button initial focus",
-    ["BRAILLE LINE:  'Window Application main window $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Window Application main window $l'",
      "     VISIBLE:  'Application main window $l', cursor=24",
-     "BRAILLE LINE:  'Window  $l'",
-     "     VISIBLE:  'Window  $l', cursor=8",
-     "BRAILLE LINE:  'Window  $l'",
-     "     VISIBLE:  'Window  $l', cursor=8",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window TREE LEVEL 1'",
      "     VISIBLE:  'Application main window TREE LEV', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
      "     VISIBLE:  'Application Window Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page'",
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Application main window'",
      "SPEECH OUTPUT: 'tree level 1'",
@@ -85,8 +86,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar & y ToggleButton'",
      "     VISIBLE:  '& y ToggleButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "BUG? - Pressed state not presented",
-     "SPEECH OUTPUT: 'toggle button'"]))
+     "SPEECH OUTPUT: 'toggle button',
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
 # Arrow Right to the the "Quit" button.

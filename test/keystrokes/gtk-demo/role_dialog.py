@@ -62,7 +62,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Details'",
-     "SPEECH OUTPUT: 'toggle button'"]))
+     "SPEECH OUTPUT: 'toggle button',
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
 # Now close the demo and leave.
