@@ -6,7 +6,10 @@
           Fix for bug #500193 - Update keybindings for reviewing previous
 	  messages.  The keybindings have been moved from the number keys
 	  to the F1-F9 keys.  Bookmarks are still on the number keys.
-	
+
+	  NOTE: this effects the Orca learn mode key.  Instead of Orca+F1,
+	  it is now Orca+h.
+
 	  NOTE: this effects the review of previous messages in gaim and
 	  gnome-mud.  Instead of Orca+{1,2,3,...} to read the last nth
 	  message, you now use Orca+{F1,F2,F3,...}.
