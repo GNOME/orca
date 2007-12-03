@@ -29,11 +29,7 @@ BUILD THE RELEASE:
 
 ./autogen.sh && make && make install &&  make distcheck
 
-For sanity, you can run pychecker -- we still have a lot of work to do
-to eliminate the lint-ish warnings, but pychecker can help flag some
-bad problems we might not have caught during testing:
-
-pychecker -T -# 1000 /usr/lib/python2.4/site-packages/orca/*.py
+For sanity, you should run pylint (http://live.gnome.org/Orca/Pylint).
 
 You should also make the pydoc:
 

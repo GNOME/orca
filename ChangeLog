@@ -1,3 +1,11 @@
+2007-12-03  Willie Walker <william.walker@sun.com>
+
+        * ChangeLog:
+	  configure.in:
+          NEWS:
+	  RELEASE-HOWTO:
+          Prep for Orca v2.21.2.
+	
 2007-12-03  Scott Haeger <via william.walker@sun.com>
 
 	* src/orca/scripts/gnome-mud.py:
