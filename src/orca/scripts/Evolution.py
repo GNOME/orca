@@ -278,6 +278,15 @@ class Script(default.Script):
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
 
+        # Pylint is confused and flags several errors of the type:
+        #
+        # E1101:282:Script.__init__: Module 'orca.rolenames' has no 
+        # 'ROLE_CALENDAR_VIEW' member
+        #
+        # So for now, we just disable these errors in this method.
+        #
+        # pylint: disable-msg=E1101
+
         rolenames.ROLE_CALENDAR_VIEW = "Calendar View"
         rolenames.rolenames[rolenames.ROLE_CALENDAR_VIEW] = rolenames.Rolename(
             rolenames.ROLE_CALENDAR_VIEW,
@@ -696,6 +705,15 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+
+        # Pylint is confused and flags several errors of the type:
+        #
+        # E1101:1040:Script.locusOfFocusChanged: Module 'orca.rolenames'
+        # has no 'ROLE_CALENDAR_EVENT' member
+        #
+        # So for now, we just disable these errors in this method.
+        #
+        # pylint: disable-msg=E1101
 
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
