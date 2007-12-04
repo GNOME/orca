@@ -6939,6 +6939,18 @@ class Script(default.Script):
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 
+
+        # Pylint is confused and flags these errors:
+        #
+        # E1101:6957:Script.getUtterancesFromContents: Instance of 
+        # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
+        # E1101:6962:Script.getUtterancesFromContents: Instance of 
+        # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
+        #
+        # So for now, we just disable these errors in this method.
+        #
+        # pylint: disable-msg=E1101
+
             if speakRole and speakThisRole:
                 if text:
                     strings.extend(\
