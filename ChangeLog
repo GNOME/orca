@@ -1,13 +1,15 @@
 2007-12-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
+          src/orca/flat_review.py:
           src/orca/Gecko.py:
           src/orca/orca.py:
           src/orca/where_am_I.py:
           src/orca/braille.py:
           pylintrc:
           More work on bug #486726 - Eliminate pychecker warnings/errors.
-          Pylint now gives us a 10.00/10 for default.py and Gecko.py.
+          Pylint now gives us a 10.00/10 for default.py, flat_review.py
+          and Gecko.py.
 
 2007-10-28  Willie Walker <william.walker@sun.com>
 

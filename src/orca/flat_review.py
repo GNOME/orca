@@ -119,7 +119,18 @@ class Word:
         if attr == "chars":
             if isinstance(self.zone, TextZone):
                 text = self.zone.accessible.queryText()
+
+                # Pylint is confused and flags this warning:
+                #
+                # W0201:132:Word.__getattr__: Attribute 'chars' defined 
+                # outside __init__
+                #
+                # So for now, we just disable this error in this method.
+                #
+                # pylint: disable-msg=W0201
+
                 self.chars = []
+
                 i = 0
                 while i < self.length:
                     [char, startOffset, endOffset] = text.getTextAtOffset(
@@ -179,7 +190,18 @@ class Zone:
         """
 
         if attr == "words":
+
+            # Pylint is confused and flags this warning:
+            #
+            # W0201:203:Zone.__getattr__: Attribute 'words' defined 
+            # outside __init__
+            #
+            # So for now, we just disable this error in this method.
+            #
+            # pylint: disable-msg=W0201
+
             self.words = []
+
             return self.words
         elif attr.startswith('__') and attr.endswith('__'):
             raise AttributeError, attr
@@ -253,7 +275,18 @@ class TextZone(Zone):
 
         if attr == "words":
             text = self.accessible.queryText()
+
+            # Pylint is confused and flags this warning:
+            #
+            # W0201:288:TextZone.__getattr__: Attribute 'words' defined
+            # outside __init__
+            #
+            # So for now, we just disable this error in this method.
+            #
+            # pylint: disable-msg=W0201
+
             self.words = []
+
             wordIndex = 0
             offset = self.startOffset
             for string in whitespace_re.split(self.string):
