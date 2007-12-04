@@ -62,7 +62,6 @@ import script
 import settings
 import speech
 import speechserver
-import string
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -90,6 +89,13 @@ class Script(script.Script):
         self.flatReviewContext  = None
         self.windowActivateTime = None
         self.lastReviewCurrentEvent = None
+        self.exitLearnModeKeyBinding = None
+        self.targetCursorCell = None
+
+        self.justEnteredFlatReviewMode = False
+
+        self.digits = '0123456789'
+        self.whitespace = ' \t\n\r\v\f'
 
         # Used to determine whether the used double clicked on the
         # "where am I" key.
@@ -183,7 +189,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
-                orca._showFindGUI,
+                orca.showFindGUI,
                 # Translators: the Orca "Find" dialog allows a user to
                 # search for text in a window and then move focus to
                 # that text.  For example, they may want to find the
@@ -627,7 +633,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                orca._showAppPreferencesGUI,
+                orca.showAppPreferencesGUI,
                 # Translators: the application preferences configuration
                 # dialog is the dialog that allows users to set their
                 # preferences for a specific application within Orca.
@@ -636,7 +642,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
             input_event.InputEventHandler(
-                orca._toggleSilenceSpeech,
+                orca.toggleSilenceSpeech,
                 # Translators: Orca allows the user to turn speech synthesis
                 # on or off.  We call it 'silencing'.
                 #
@@ -1924,7 +1930,7 @@ class Script(script.Script):
             text = obj.description
         else:
             # Reuse the "where am I" algorithm.
-            text = self.whereAmI._getObjLabelAndName(obj)
+            text = self.whereAmI.getObjLabelAndName(obj)
 
         debug.println(debug.LEVEL_FINEST, "presentTooltip: text='%s'" % text)
         if text != "":
@@ -3205,7 +3211,7 @@ class Script(script.Script):
                 pass
             else:
                 [textContents, startOffset, endOffset] = \
-                    self.whereAmI._getTextSelections(obj, True)
+                    self.whereAmI.getTextSelections(obj, True)
                 if textContents:
                     utterances = []
                     utterances.append(textContents)
@@ -3337,7 +3343,7 @@ class Script(script.Script):
                         numericPoint = locale.localeconv()["decimal_point"]
                         lastChar = attribute[len(attribute) - 1]
                         if lastChar == numericPoint or \
-                           lastChar in string.digits:
+                           lastChar in self.digits:
                             # Translators: these represent the number of pixels
                             # for the left or right margins in a document.  We
                             # are hesitant to interpret the values -- they are
@@ -3584,13 +3590,13 @@ class Script(script.Script):
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
         for region in regions:
             if ((region.brailleOffset + len(region.string.decode("UTF-8"))) \
-                   > braille._viewport[0]) \
+                   > braille.viewport[0]) \
                 and (isinstance(region, braille.ReviewText) \
                      or isinstance(region, braille.ReviewComponent)):
-                position = max(region.brailleOffset, braille._viewport[0])
+                position = max(region.brailleOffset, braille.viewport[0])
                 offset = position - region.brailleOffset
                 self.targetCursorCell = region.brailleOffset \
-                                        - braille._viewport[0]
+                                        - braille.viewport[0]
                 [word, charOffset] = region.zone.getWordAtOffset(offset)
                 if word:
                     self.flatReviewContext.setCurrent(
@@ -4184,7 +4190,7 @@ class Script(script.Script):
             lastQuery.startAtTop = False
             self.find(lastQuery)
         else:
-            orca._showFindGUI()
+            orca.showFindGUI()
 
     def findPrevious(self, inputEvent):
         """Searches backwards for the next instance of the string
@@ -4200,7 +4206,7 @@ class Script(script.Script):
             lastQuery.startAtTop = False
             self.find(lastQuery)
         else:
-            orca._showFindGUI()
+            orca.showFindGUI()
             
     def goToBookmark(self, inputEvent): 
         """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to 
@@ -5128,7 +5134,7 @@ class Script(script.Script):
             isPunctChar = False
         count = len(segment)
         if (count >= settings.repeatCharacterLimit) \
-           and (not segment[0] in string.whitespace):
+           and (not segment[0] in self.whitespace):
             if (not respectPunctuation) \
                or (isPunctChar and (style <= level)):
                 repeatChar = chnames.getCharacterName(segment[0])
@@ -5295,7 +5301,7 @@ class Script(script.Script):
         if not isinstance(character, unicode):
             character = character.decode("UTF-8")
 
-        return (character in string.whitespace) \
+        return (character in self.whitespace) \
                or (character in '!*+,-./:;<=>?@[\]^_{|}') \
                or (character == self.NO_BREAK_SPACE_CHARACTER)
 

@@ -176,7 +176,8 @@ good-names=i,j,k,ex,Run,_,Q_
 bad-names=foo,bar,baz,toto,tutu,tata
 
 # List of builtins function names that should not be used, separated by a comma
-bad-functions=map,filter,apply,input
+# [[[richb - removed "filter" from this list as it's used in defauly.py.]]]
+bad-functions=map,apply,input
 
 
 # try to find bugs in the code using type inference

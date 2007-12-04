@@ -228,7 +228,7 @@ _regionWithFocus = None
 # corner is defined by the point (x, line number).  As such, the viewport is
 # identified solely by its upper left point.
 #
-_viewport = [0, 0]
+viewport = [0, 0]
 
 # The callback to call on a BrlTTY input event.  This is passed to
 # the init method.
@@ -665,8 +665,8 @@ def getRegionAtCell(cell):
     in the region, where 0 represents the beginning of the region, """
 
     if len(_lines) > 0:
-        offset = (cell - 1) + _viewport[0]
-        lineNum = _viewport[1]
+        offset = (cell - 1) + viewport[0]
+        lineNum = viewport[1]
         return _lines[lineNum].getRegionAtOffset(offset)
     else:
         return [None, -1]
@@ -678,11 +678,11 @@ def clear():
 
     global _lines
     global _regionWithFocus
-    global _viewport
+    global viewport
 
     _lines = []
     _regionWithFocus = None
-    _viewport = [0, 0]
+    viewport = [0, 0]
 
 def setLines(lines):
     global _lines
@@ -704,7 +704,7 @@ def addLine(line):
 def getShowingLine():
     """Returns the Line that is currently being painted on the display.
     """
-    return _lines[_viewport[1]]
+    return _lines[viewport[1]]
 
 def setFocus(region, panToFocus=True):
     """Specififes the region with focus.  This region will be positioned
@@ -734,7 +734,7 @@ def setFocus(region, panToFocus=True):
     for line in _lines:
         for reg in line.regions:
             if reg == _regionWithFocus:
-                _viewport[1] = lineNum
+                viewport[1] = lineNum
                 done = True
                 break
         if done:
@@ -742,7 +742,7 @@ def setFocus(region, panToFocus=True):
         else:
             lineNum += 1
 
-    line = _lines[_viewport[1]]
+    line = _lines[viewport[1]]
     [string, offset, attributeMask] = line.getLineInfo()
 
     # If the cursor is too far right, we scroll the viewport
@@ -751,7 +751,7 @@ def setFocus(region, panToFocus=True):
     if _regionWithFocus.cursorOffset >= _displaySize[0]:
         offset += _regionWithFocus.cursorOffset - _displaySize[0] + 1
 
-    _viewport[0] = max(0, offset)
+    viewport[0] = max(0, offset)
 
 def refresh(panToCursor=True, targetCursorCell=0):
     """Repaints the Braille on the physical display.  This clips the entire
@@ -797,7 +797,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     # Now, we figure out the 0-based offset for where the cursor
     # actually is in the string.
     #
-    line = _lines[_viewport[1]]
+    line = _lines[viewport[1]]
     [string, focusOffset, attributeMask] = line.getLineInfo()
     cursorOffset = -1
     if focusOffset >= 0:
@@ -810,15 +810,15 @@ def refresh(panToCursor=True, targetCursorCell=0):
     #
     if panToCursor and (cursorOffset >= 0):
         if len(string.decode("UTF-8")) <= _displaySize[0]:
-            _viewport[0] = 0
+            viewport[0] = 0
         elif targetCursorCell:
-            _viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
-        elif cursorOffset < _viewport[0]:
-            _viewport[0] = max(0, cursorOffset)
-        elif cursorOffset >= (_viewport[0] + _displaySize[0]):
-            _viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
+            viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
+        elif cursorOffset < viewport[0]:
+            viewport[0] = max(0, cursorOffset)
+        elif cursorOffset >= (viewport[0] + _displaySize[0]):
+            viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
 
-    startPos = _viewport[0]
+    startPos = viewport[0]
     endPos = startPos + _displaySize[0]
 
     # Now normalize the cursor position to BrlTTY, which uses 1 as
@@ -939,15 +939,15 @@ def panLeft(panAmount=0):
     Returns True if a pan actually happened.
     """
 
-    oldX = _viewport[0]
+    oldX = viewport[0]
 
     if panAmount == 0:
         panAmount = _displaySize[0]
 
-    if _viewport[0] > 0:
-        _viewport[0] = max(0, _viewport[0] - panAmount)
+    if viewport[0] > 0:
+        viewport[0] = max(0, viewport[0] - panAmount)
 
-    return oldX != _viewport[0]
+    return oldX != viewport[0]
 
 def panRight(panAmount=0):
     """Pans the display to the right, limiting the pan to the length
@@ -960,31 +960,31 @@ def panRight(panAmount=0):
     Returns True if a pan actually happened.
     """
 
-    oldX = _viewport[0]
+    oldX = viewport[0]
 
     if panAmount == 0:
         panAmount = _displaySize[0]
 
     if len(_lines) > 0:
-        lineNum = _viewport[1]
-        newX = _viewport[0] + panAmount
+        lineNum = viewport[1]
+        newX = viewport[0] + panAmount
         [string, focusOffset, attributeMask] = _lines[lineNum].getLineInfo()
         if newX < len(string.decode("UTF-8")):
-            _viewport[0] = newX
+            viewport[0] = newX
 
-    return oldX != _viewport[0]
+    return oldX != viewport[0]
 
 def panToOffset(offset):
     """Automatically pan left or right to make sure the current offset is
     showing."""
 
-    while offset < _viewport[0]:
+    while offset < viewport[0]:
         debug.println(debug.LEVEL_FINEST,
                       "braille.panToOffset (left) %d" % offset)
         if not panLeft():
             break
 
-    while offset >= (_viewport[0] + _displaySize[0]):
+    while offset >= (viewport[0] + _displaySize[0]):
         debug.println(debug.LEVEL_FINEST,
                       "braille.panToOffset (right) %d" % offset)
         if not panRight():
@@ -1046,8 +1046,8 @@ def _processBrailleEvent(command):
 
     if (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:
-            cursor = (command - 0x100) + _viewport[0]
-            lineNum = _viewport[1]
+            cursor = (command - 0x100) + viewport[0]
+            lineNum = viewport[1]
             _lines[lineNum].processRoutingKey(cursor)
             consumed = True
 

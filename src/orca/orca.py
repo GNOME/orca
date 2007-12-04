@@ -766,7 +766,7 @@ def _processBrailleEvent(command):
 #                                                                      #
 ########################################################################
 
-def _toggleSilenceSpeech(script=None, inputEvent=None):
+def toggleSilenceSpeech(script=None, inputEvent=None):
     """Toggle the silencing of speech.
 
     Returns True to indicate the input event has been consumed.
@@ -904,7 +904,7 @@ def loadUserSettings(script=None, inputEvent=None):
 
     return True
 
-def _showAppPreferencesGUI(script=None, inputEvent=None):
+def showAppPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure the settings for a
     specific applications within Orca and set up those app-specific
     user preferences using a GUI.
@@ -1013,7 +1013,7 @@ def quitOrca(script=None, inputEvent=None):
 
     return True
 
-def _showFindGUI(script=None, inputEvent=None):
+def showFindGUI(script=None, inputEvent=None):
     """Displays the user interace to perform an Orca Find.
 
     Returns True to indicate the input event has been consumed.

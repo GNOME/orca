@@ -158,7 +158,7 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj) + " " + \
+        text = self.getObjLabelAndName(obj) + " " + \
                rolenames.getSpeechForRoleName(obj)
         text = text + " " + self._getCheckBoxState(obj)
         utterances.append(text)
@@ -186,7 +186,7 @@ class WhereAmI:
         text = self._getGroupLabel(obj)
         utterances.append(text)
 
-        text = self._getObjLabelAndName(obj) + " " + \
+        text = self.getObjLabelAndName(obj) + " " + \
                rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
@@ -287,7 +287,7 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj)
+        text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
@@ -344,11 +344,11 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj.parent) + " " + \
+        text = self.getObjLabelAndName(obj.parent) + " " + \
                rolenames.getSpeechForRoleName(obj.parent)
         utterances.append(text)
 
-        text = self._getObjLabelAndName(obj)
+        text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
         state = obj.getState()
@@ -423,7 +423,7 @@ class WhereAmI:
 
         # Translators: "page" is the word for a page tab in a tab list.
         #
-        text = _("%s page") % self._getObjLabelAndName(obj)
+        text = _("%s page") % self.getObjLabelAndName(obj)
         utterances.append(text)
 
         name = self._getObjName(obj)
@@ -669,7 +669,7 @@ class WhereAmI:
         childCount = panel.childCount
 
         utterances.append(_("Icon panel"))
-        utterances.append(self._getObjLabelAndName(obj))
+        utterances.append(self.getObjLabelAndName(obj))
 
         selectedItems = []
         totalSelectedItems = 0
@@ -701,7 +701,7 @@ class WhereAmI:
 
         if doubleClick:
             for i in range(0, len(selectedItems)):
-                utterances.append(self._getObjLabelAndName(selectedItems[i]))
+                utterances.append(self.getObjLabelAndName(selectedItems[i]))
 
         speech.speakUtterances(utterances)
         
@@ -779,7 +779,7 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj)
+        text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
@@ -837,7 +837,7 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabelAndName(obj)
+        text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
@@ -873,7 +873,7 @@ class WhereAmI:
 
         return text
 
-    def _getObjLabelAndName(self, obj):
+    def getObjLabelAndName(self, obj):
         """Returns the object label plus the object name.
         """
 
@@ -912,13 +912,13 @@ class WhereAmI:
                 break
 
         if labelledBy:
-            text = self._getObjLabelAndName(labelledBy)
+            text = self.getObjLabelAndName(labelledBy)
         else:
             parent = obj.parent
             while parent and (parent.parent != parent):
                 if parent.getRole() in [pyatspi.ROLE_PANEL,
                                         pyatspi.ROLE_FILLER]:
-                    label = self._getObjLabelAndName(parent)
+                    label = self.getObjLabelAndName(parent)
                     if label and label != "":
                         text = label
                         break
@@ -1171,7 +1171,7 @@ class WhereAmI:
 
         return [textContents, startOffset, endOffset]
 
-    def _getTextSelections(self, obj, doubleClick):
+    def getTextSelections(self, obj, doubleClick):
         """Get all the text applicable text selections for the given object.
         If the user doubleclicked, look to see if there are any previous 
         or next text objects that also have selected text and add in their 
@@ -1339,7 +1339,7 @@ class WhereAmI:
            (not doubleClick and current):
             selected = True
             [textContents, startOffset, endOffset] = \
-                                  self._getTextSelections(obj, doubleClick)
+                                  self.getTextSelections(obj, doubleClick)
         else:
             # Get the line containing the caret
             #
@@ -1490,10 +1490,10 @@ class WhereAmI:
                 self._speakDefaultButton(window)
         else:
             if results[0]:
-                text = self._getObjLabelAndName(results[0])
+                text = self.getObjLabelAndName(results[0])
                 utterances.append(text)
             if results[1]:
-                text = self._getObjLabelAndName(results[1])
+                text = self.getObjLabelAndName(results[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel, "titlebar utterances=%s" % \
@@ -1511,7 +1511,7 @@ class WhereAmI:
         while parent and (parent.parent != parent):
             #debug.println(self._debugLevel,
             #              "_getFrameAndDialog: parent=%s, %s" % \
-            #              (parent.getRole(), self._getObjLabelAndName(parent)))
+            #              (parent.getRole(), self.getObjLabelAndName(parent)))
             if parent.getRole() == pyatspi.ROLE_FRAME:
                 results[0] = parent
             if parent.getRole() in [pyatspi.ROLE_DIALOG,
@@ -1528,7 +1528,7 @@ class WhereAmI:
             return
 
         # debug.println(self._debugLevel, "_findStatusBar: ROOT=%s, %s" % \
-        #               (obj.getRole(), self._getObjLabelAndName(obj)))
+        #               (obj.getRole(), self.getObjLabelAndName(obj)))
         state = obj.getState()
         managesDescendants = state.contains(pyatspi.STATE_MANAGES_DESCENDANTS)
         if managesDescendants:
@@ -1537,7 +1537,7 @@ class WhereAmI:
         for child in obj:
             # debug.println(self._debugLevel,
             #               "_findStatusBar: child=%s, %s" % \
-            #               (child.getRole(), self._getObjLabelAndName(child)))
+            #               (child.getRole(), self.getObjLabelAndName(child)))
             if child.getRole() == pyatspi.ROLE_STATUS_BAR:
                 self._statusBar = child
                 return
@@ -1577,7 +1577,7 @@ class WhereAmI:
         for child in obj:
             # debug.println(self._debugLevel,
             #               "_getDefaultButton: child=%s, %s" % \
-            #               (child.getRole(), self._getObjLabelAndName(child)))
+            #               (child.getRole(), self.getObjLabelAndName(child)))
             state = child.getState()
             if child.getRole() == pyatspi.ROLE_PUSH_BUTTON \
                 and state.contains(pyatspi.STATE_IS_DEFAULT):
