@@ -50,7 +50,7 @@ class WhereAmI(where_am_I.WhereAmI):
             return
 
         utterances = []
-        text = self._getObjLabelAndName(self._statusBar)
+        text = self.getObjLabelAndName(self._statusBar)
         utterances.append(text)
         speech.speakUtterances(utterances)
 

@@ -199,10 +199,10 @@ class WhereAmI(where_am_I.WhereAmI):
                     self._speakCalcStatusBar()
         else:
             if mylist[0]:
-                text = self._getObjLabelAndName(mylist[0])
+                text = self.getObjLabelAndName(mylist[0])
                 utterances.append(text)
             if mylist[1]:
-                text = self._getObjLabelAndName(mylist[1])
+                text = self.getObjLabelAndName(mylist[1])
                 utterances.append(text)
 
             debug.println(self._debugLevel,
