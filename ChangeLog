@@ -1,5 +1,8 @@
 2007-12-04  Rich Burridge <rich.burridge@sun.com>
 
+        * run_pylint.sh:        (new)
+          Added script to run pylint on the Orca source code.
+
         * src/orca/default.py:
           src/orca/flat_review.py:
           src/orca/Gecko.py:
