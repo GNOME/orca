@@ -1,5 +1,8 @@
 2007-12-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/braillegenerator.py:
+          Fixed bug #486912 - Labels do not support accessible text very well.
+
         * run_pylint.sh:        (new)
           Added script to run pylint on the Orca source code.
 

@@ -611,7 +611,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForLabel", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        regions = []
+
+        textRegion = braille.Text(obj,
+                                  self._script.getDisplayedLabel(obj),
+                                  " $l")
+        regions.append(textRegion)
+
+        # We do not want the role at the end of text areas.
+
+        return [regions, textRegion]
 
     def _getBrailleRegionsForList(self, obj):
         """Get the braille for a list.
