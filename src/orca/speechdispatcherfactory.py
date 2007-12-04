@@ -17,6 +17,15 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# # [[[TODO: richb - Pylint is giving us a bunch of warnings along these
+# lines throughout this file:
+#
+#  W0142:202:SpeechServer._send_command: Used * or ** magic
+#
+# So for now, we just disable these warnings in this module.]]]
+#
+# pylint: disable-msg=W0142
+
 """Provides an Orca speech server for Speech Dispatcher backend.
 
 NOTE: THIS IS EXPERIMENTAL ONLY AND IS NOT A SUPPORTED COMPONENT OF ORCA.
@@ -46,8 +55,8 @@ else:
     _speechd_available = True
     try:
         # Done this way to prevent a pychecker warning.
-        key = "CallbackType"
-        setattr(speechd, key, getattr(speechd, key))
+        callbackKey = "CallbackType"
+        setattr(speechd, callbackKey, getattr(speechd, callbackKey))
     except ImportError:
         _speechd_version_ok = False
     else:
@@ -170,11 +179,12 @@ class SpeechServer(speechserver.SpeechServer):
         
         try:
             self._init()
-        except Exception, e:
+        except:
             debug.println(debug.LEVEL_WARNING,
-                          "Speech Dispatcher service failed to connect: %s" % e)
+                          "Speech Dispatcher service failed to connect:")
+            debug.printException(debug.LEVEL_WARNING)
         else:
-            self.__class__._active_servers[serverId] = self
+            SpeechServer._active_servers[serverId] = self
 
     def _init(self):
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
@@ -376,7 +386,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         self._client.close()
-        del self.__class__._active_servers[self._id]
+        del SpeechServer._active_servers[self._id]
 
     def reset(self, text=None, acss=None):
         self._client.close()
