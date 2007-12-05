@@ -1,3 +1,8 @@
+2007-12-05  Rich Burridge <rich.burridge@sun.com>
+
+        * keystrokes/gtk-demo/role_label.py:
+          Updated the gtk-demo test cases specific to bug #486912.
+
 2007-12-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braillegenerator.py:

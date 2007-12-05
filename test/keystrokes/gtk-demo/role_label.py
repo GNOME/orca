@@ -45,8 +45,7 @@ sequence.append(WaitAction("object:state-changed:focused",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
@@ -107,8 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "This message box label caret movement to 'h'",
     ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
      "number of times: Label'",
-     "BUG? - the cursor should be at 2 in the following braille output",
-     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'h'"]))
 
 ########################################################################
@@ -181,8 +179,7 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select 'T' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: 'T'", "SPEECH OUTPUT: 'selected'"]))
 
@@ -198,11 +195,8 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select rest of 'This'",
-    ["BUG? - new text selection not presented in speech or braille",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
-     "BUG? - the cursor is wrong in the following braille output",
-     "     VISIBLE:  'This message box has been popped', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'unselected'"]))
 
