@@ -90,8 +90,14 @@ class WhereAmI:
 
         if titleOrStatus:
             self._speakTitleOrStatus(obj, doubleClick)
+            return True
 
-        elif role == pyatspi.ROLE_CHECK_BOX:
+        else:
+            toolbar = self._getToolbar(obj)
+            if toolbar:
+                self._speakToolbar(toolbar)
+
+        if role == pyatspi.ROLE_CHECK_BOX:
             self._speakCheckBox(obj, doubleClick)
 
         elif role == pyatspi.ROLE_RADIO_BUTTON:
@@ -143,7 +149,7 @@ class WhereAmI:
         else:
             self._speakGenericObject(obj, doubleClick)
 
-        if not (doubleClick or titleOrStatus):
+        if not doubleClick:
             self._speakObjDescription(obj)
 
         return True
@@ -1631,3 +1637,29 @@ class WhereAmI:
 
         if description and not description in [name, label]:
             speech.speak(description)
+
+    def _getToolbar(self, obj):
+        """Returns the toolbar containing the object or None if the object
+        is not contained in a toolbar.
+        """
+
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+                return parent
+            parent = parent.parent
+
+        return None
+
+    def _speakToolbar(self, obj):
+        """Speaks the label and/or name of a toolbar, followed by its role.
+        """
+
+        utterances = []
+        text = self.getObjLabelAndName(obj) + " " + \
+               rolenames.getSpeechForRoleName(obj)
+        utterances.append(text.strip())
+
+        debug.println(self._debugLevel, "toolbar utterances=%s" \
+                      % utterances)
+        speech.speakUtterances(utterances)

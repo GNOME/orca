@@ -1,3 +1,10 @@
+2007-12-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          Fix for bug #486970 - Where Am I should let you know you are in
+          a toolbar.
+
 2007-12-05  Rich Burridge <rich.burridge@sun.com>
 
         * keystrokes/gtk-demo/role_label.py:

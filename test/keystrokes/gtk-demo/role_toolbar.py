@@ -58,6 +58,7 @@ sequence.append(utils.AssertPresentationAction(
     "Open button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Open'",
      "SPEECH OUTPUT: 'button'",
      "SPEECH OUTPUT: ''"]))
@@ -85,8 +86,9 @@ sequence.append(utils.AssertPresentationAction(
     "Open triangle toggle button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar & y ToggleButton'",
      "     VISIBLE:  '& y ToggleButton', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'toggle button',
+     "SPEECH OUTPUT: 'toggle button'",
      "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
@@ -112,6 +114,7 @@ sequence.append(utils.AssertPresentationAction(
     "Quit button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Quit'",
      "SPEECH OUTPUT: 'button'",
      "SPEECH OUTPUT: ''"]))
