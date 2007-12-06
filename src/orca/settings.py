@@ -114,6 +114,7 @@ userCustomizableSettings = [
     "enableMagCrossHair",
     "enableMagCrossHairClip",
     "magCrossHairSize",
+    "magZoomerType",
     "magZoomerLeft",
     "magZoomerRight",
     "magZoomerTop",
@@ -323,6 +324,16 @@ enableMagCrossHairClip           = False
 # Size of the magnification cross-hairs (in pixels).
 #
 magCrossHairSize                 = 16
+
+# Magnification Zoomer type.
+#
+MAG_ZOOMER_TYPE_FULL_SCREEN      = 0
+MAG_ZOOMER_TYPE_TOP_HALF         = 1
+MAG_ZOOMER_TYPE_BOTTOM_HALF      = 2
+MAG_ZOOMER_TYPE_LEFT_HALF        = 3
+MAG_ZOOMER_TYPE_RIGHT_HALF       = 4
+MAG_ZOOMER_TYPE_CUSTOM           = 5
+magZoomerType                    = MAG_ZOOMER_TYPE_FULL_SCREEN
 
 # Magnification zoomer region placement.
 #

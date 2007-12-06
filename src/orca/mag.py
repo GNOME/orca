@@ -326,14 +326,6 @@ def applySettings():
     except:
         pass
 
-    # Find out where the user wants to place the target display.
-    #
-    prefLeft   = settings.magZoomerLeft
-    prefTop    = settings.magZoomerTop
-    prefRight  = settings.magZoomerRight
-    prefBottom = settings.magZoomerBottom
-    updateTarget = True
-
     # Find out if we're using composite.
     #
     try:
@@ -342,7 +334,43 @@ def applySettings():
         debug.printException(debug.LEVEL_WARNING)
 
     magnifierPBag = _magnifier.getProperties()
-    
+    sdb = magnifierPBag.getValue("source-display-bounds").value()
+
+    # Find out where the user wants to place the target display.
+    #
+    if _fullScreenCapable and \
+       settings.magZoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+        prefLeft = 0
+        prefTop = 0
+        prefRight = sdb.x2
+        prefBottom = sdb.y2
+    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+        prefLeft = 0
+        prefTop = 0
+        prefRight = sdb.x2
+        prefBottom = sdb.y2 / 2
+    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+        prefLeft = 0
+        prefTop = sdb.y2 / 2
+        prefRight = sdb.x2
+        prefBottom = sdb.y2
+    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+        prefLeft = 0
+        prefTop = 0
+        prefRight = sdb.x2 / 2
+        prefBottom = sdb.y2
+    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+        prefLeft = sdb.x2 / 2
+        prefTop = 0
+        prefRight = sdb.x2
+        prefBottom = sdb.y2
+    else:
+        prefLeft   = settings.magZoomerLeft
+        prefTop    = settings.magZoomerTop
+        prefRight  = settings.magZoomerRight
+        prefBottom = settings.magZoomerBottom
+    updateTarget = True
+
     # If we're not using composite, bad things will happen if we allow the
     # target display to occupy more than 50% of the full screen.  Also, if
     # it occupies the same space as something that should be magnified (e.g.
@@ -369,7 +397,6 @@ def applySettings():
         # of the source and target display bounds lets us know if gnome-mag
         # has been started in "full screen" mode.
         #
-        sdb = magnifierPBag.getValue("source-display-bounds").value()
         magFullScreen = magAlreadyRunning \
                         and (tdb.x1 == sdb.x1) and (tdb.x2 == sdb.x2) \
                         and (tdb.y1 == sdb.y1) and (tdb.y2 == sdb.y2)

@@ -1485,6 +1485,51 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.screenWidth = sourceScreen.get_width()
         self.screenHeight = sourceScreen.get_height()
 
+        # Get the zoomer position type and set the active value for the
+        # zoomer position combobox accordingly.
+        #
+        zoomerPref = prefs["magZoomerType"]
+        if zoomerPref == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+            # Translators: magnification will use the full screen.
+            #
+            zoomerType = _("Full Screen")
+        elif zoomerPref == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+            # Translators: magnification will use the top half of the screen.
+            #
+            zoomerType = _("Top Half")
+        elif zoomerPref == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+            # Translators: magnification will use the bottom half of the screen.
+            #
+            zoomerType = _("Bottom Half")
+        elif zoomerPref == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+            # Translators: magnification will use the left half of the screen.
+            #
+            zoomerType = _("Left Half")
+        elif zoomerPref == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+            # Translators: magnification will use the right half of the screen.
+            #
+            zoomerType = _("Right Half")
+        elif zoomerPref == settings.MAG_ZOOMER_TYPE_CUSTOM:
+            # Translators: the user has selected a custom area of the screen
+            # to use for magnification.
+            #
+            zoomerType = _("Custom")
+        else:
+            # Translators: this is an algorithm for magnifying pixels
+            # on the screen.
+            #
+            zoomerType = _("Full Screen")
+
+        magZoomerPositionComboBox = self.get_widget("magZoomerPositionComboBox")
+        index = self._getComboBoxIndex(magZoomerPositionComboBox, zoomerType)
+        magZoomerPositionComboBox.set_active(index)
+
+        # Set the magnifier zoomer position items [in]sensensitive,
+        # depending upon the zoomer position type.
+        #
+        self.get_widget("magZoomerCustomPositionTable").\
+                set_sensitive(zoomerPref == settings.MAG_ZOOMER_TYPE_CUSTOM)
+
         # Populate the zoomer spin buttons based on the size of the target
         # display.
         #
@@ -2608,6 +2653,24 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["magCrossHairSize"] = widget.get_value_as_int()
+
+    def magZoomerPositionChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magZoomerPositionComboBox GtkComboBox widget.
+           The user has changed the zoomer position type. Set the 
+           'magZoomerType' preference to the new value. 
+           Set the magnifier zoomer position items [in]sensensitive, 
+           depending upon the new zoomer position type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        zoomerType = widget.get_active()
+        self.prefsDict["magZoomerType"] = zoomerType
+
+        self.get_widget("magZoomerCustomPositionTable").\
+                set_sensitive(zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM)
 
     def magZoomerTopValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the

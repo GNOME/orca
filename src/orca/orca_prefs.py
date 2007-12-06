@@ -370,6 +370,31 @@ class OrcaPrefs:
         else:
             return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
 
+    def _getMagZoomerTypeString(self, magZoomerType):
+        """Returns a string that represents the magnification zoomer position
+        type passed in.
+
+        Arguments:
+        - magZoomerType: magnification zoomer position type.
+
+        Returns a string suitable for the preferences file.
+        """
+
+        if magZoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+            return "orca.settings.MAG_ZOOMER_TYPE_FULL_SCREEN"
+        elif magZoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+            return "orca.settings.MAG_ZOOMER_TYPE_TOP_HALF"
+        elif magZoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+            return "orca.settings.MAG_ZOOMER_TYPE_BOTTOM_HALF"
+        elif magZoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+            return "orca.settings.MAG_ZOOMER_TYPE_LEFT_HALF"
+        elif magZoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+            return "orca.settings.MAG_ZOOMER_TYPE_RIGHT_HALF"
+        elif magZoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
+            return "orca.settings.MAG_ZOOMER_TYPE_CUSTOM"
+        else:
+            return "orca.settings.MAG_ZOOMER_TYPE_FULL_SCREEN"
+
     def _writeKeyBindingsPreamble(self, prefs):
         """Writes the preamble to the user-settings.py keyBindings section."""
 
@@ -569,6 +594,8 @@ class OrcaPrefs:
                 value = self._getMagSmoothingModeString(prefsDict[key])
             elif key == "magMouseTrackingMode":
                 value = self._getMagMouseTrackingModeString(prefsDict[key])
+            elif key == "magZoomerType":
+                value = self._getMagZoomerTypeString(prefsDict[key])
             elif key == "magSourceDisplay" or key == "magTargetDisplay":
                 value = self._getDisplayString(prefsDict[key])
             elif key == "keyboardLayout":

@@ -2121,1006 +2121,10 @@ Sentence</property>
 		      <property name="border_width">12</property>
 		      <property name="visible">True</property>
 		      <property name="n_rows">7</property>
-		      <property name="n_columns">2</property>
+		      <property name="n_columns">3</property>
 		      <property name="homogeneous">False</property>
 		      <property name="row_spacing">3</property>
 		      <property name="column_spacing">24</property>
-
-		      <child>
-			<widget class="GtkAlignment" id="alignment31">
-			  <property name="visible">True</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xscale">1</property>
-			  <property name="yscale">1</property>
-			  <property name="top_padding">12</property>
-			  <property name="bottom_padding">0</property>
-			  <property name="left_padding">0</property>
-			  <property name="right_padding">0</property>
-
-			  <child>
-			    <widget class="GtkLabel" id="magSmoothingLabel">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">_Smoothing:</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_RIGHT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">1</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			      <accessibility>
-				<atkrelation target="magSmoothingComboBox" type="label-for"/>
-			      </accessibility>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">3</property>
-			  <property name="bottom_attach">4</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkLabel" id="magMouseTrackingLabel">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Mouse trac_king mode:</property>
-			  <property name="use_underline">True</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_RIGHT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">1</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			  <property name="width_chars">-1</property>
-			  <property name="single_line_mode">False</property>
-			  <property name="angle">0</property>
-			  <accessibility>
-			    <atkrelation target="magMouseTrackingComboBox" type="label-for"/>
-			  </accessibility>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">4</property>
-			  <property name="bottom_attach">5</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkComboBox" id="magMouseTrackingComboBox">
-			  <property name="visible">True</property>
-			  <property name="items" translatable="yes">Centered
-None
-Proportional
-Push</property>
-			  <property name="add_tearoffs">False</property>
-			  <property name="focus_on_click">True</property>
-			  <accessibility>
-			    <atkrelation target="magMouseTrackingLabel" type="labelled-by"/>
-			  </accessibility>
-			  <signal name="changed" handler="magMouseTrackingChanged" last_modification_time="Wed, 03 May 2006 15:55:53 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">4</property>
-			  <property name="bottom_attach">5</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkLabel" id="magSourceDisplayLabel">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">S_ource display:</property>
-			  <property name="use_underline">True</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">1</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			  <property name="mnemonic_widget">magSourceDisplayEntry</property>
-			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			  <property name="width_chars">-1</property>
-			  <property name="single_line_mode">False</property>
-			  <property name="angle">0</property>
-			  <accessibility>
-			    <atkrelation target="magSourceDisplayEntry" type="label-for"/>
-			  </accessibility>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">5</property>
-			  <property name="bottom_attach">6</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkEntry" id="magSourceDisplayEntry">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="editable">True</property>
-			  <property name="visibility">True</property>
-			  <property name="max_length">0</property>
-			  <property name="text"></property>
-			  <property name="has_frame">True</property>
-			  <property name="invisible_char">*</property>
-			  <property name="activates_default">False</property>
-			  <accessibility>
-			    <atkrelation target="magSourceDisplayLabel" type="labelled-by"/>
-			  </accessibility>
-			  <signal name="changed" handler="magSourceDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:53:43 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">5</property>
-			  <property name="bottom_attach">6</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkLabel" id="magTargetDisplayLabel">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Tar_get display:</property>
-			  <property name="use_underline">True</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">1</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			  <property name="mnemonic_widget">magTargetDisplayEntry</property>
-			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			  <property name="width_chars">-1</property>
-			  <property name="single_line_mode">False</property>
-			  <property name="angle">0</property>
-			  <accessibility>
-			    <atkrelation target="magTargetDisplayEntry" type="label-for"/>
-			  </accessibility>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">6</property>
-			  <property name="bottom_attach">7</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkEntry" id="magTargetDisplayEntry">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="editable">True</property>
-			  <property name="visibility">True</property>
-			  <property name="max_length">0</property>
-			  <property name="text"></property>
-			  <property name="has_frame">True</property>
-			  <property name="invisible_char">*</property>
-			  <property name="activates_default">False</property>
-			  <accessibility>
-			    <atkrelation target="magTargetDisplayLabel" type="labelled-by"/>
-			  </accessibility>
-			  <signal name="changed" handler="magTargetDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:54:09 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">6</property>
-			  <property name="bottom_attach">7</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkAlignment" id="magCrossHairLabelAlignment">
-			  <property name="visible">True</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xscale">1</property>
-			  <property name="yscale">1</property>
-			  <property name="top_padding">12</property>
-			  <property name="bottom_padding">0</property>
-			  <property name="left_padding">0</property>
-			  <property name="right_padding">0</property>
-
-			  <child>
-			    <widget class="GtkFrame" id="magCrossHairSettingsFrame">
-			      <property name="visible">True</property>
-			      <property name="label_xalign">0</property>
-			      <property name="label_yalign">0.5</property>
-			      <property name="shadow_type">GTK_SHADOW_NONE</property>
-
-			      <child>
-				<widget class="GtkAlignment" id="alignment40">
-				  <property name="visible">True</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xscale">1</property>
-				  <property name="yscale">1</property>
-				  <property name="top_padding">0</property>
-				  <property name="bottom_padding">0</property>
-				  <property name="left_padding">12</property>
-				  <property name="right_padding">0</property>
-
-				  <child>
-				    <widget class="GtkTable" id="table8">
-				      <property name="border_width">3</property>
-				      <property name="visible">True</property>
-				      <property name="n_rows">2</property>
-				      <property name="n_columns">2</property>
-				      <property name="homogeneous">False</property>
-				      <property name="row_spacing">0</property>
-				      <property name="column_spacing">0</property>
-
-				      <child>
-					<widget class="GtkCheckButton" id="magCrossHairOnOffCheckButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="label" translatable="yes">Enable cross-h_air</property>
-					  <property name="use_underline">True</property>
-					  <property name="relief">GTK_RELIEF_NORMAL</property>
-					  <property name="focus_on_click">True</property>
-					  <property name="active">False</property>
-					  <property name="inconsistent">False</property>
-					  <property name="draw_indicator">True</property>
-					  <signal name="toggled" handler="magCrossHairOnOffChecked" last_modification_time="Wed, 03 May 2006 15:36:39 GMT"/>
-					</widget>
-					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">1</property>
-					  <property name="top_attach">0</property>
-					  <property name="bottom_attach">1</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options"></property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkCheckButton" id="magCrossHairClipCheckButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="label" translatable="yes">Enable cross-hair cli_p</property>
-					  <property name="use_underline">True</property>
-					  <property name="relief">GTK_RELIEF_NORMAL</property>
-					  <property name="focus_on_click">True</property>
-					  <property name="active">False</property>
-					  <property name="inconsistent">False</property>
-					  <property name="draw_indicator">True</property>
-					  <signal name="toggled" handler="magCrossHairClipOnOffChecked" last_modification_time="Wed, 03 May 2006 15:37:49 GMT"/>
-					</widget>
-					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">2</property>
-					  <property name="top_attach">1</property>
-					  <property name="bottom_attach">2</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options"></property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkAlignment" id="alignment52">
-					  <property name="visible">True</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xscale">1</property>
-					  <property name="yscale">1</property>
-					  <property name="top_padding">0</property>
-					  <property name="bottom_padding">0</property>
-					  <property name="left_padding">48</property>
-					  <property name="right_padding">0</property>
-
-					  <child>
-					    <widget class="GtkHBox" id="hbox33">
-					      <property name="visible">True</property>
-					      <property name="homogeneous">False</property>
-					      <property name="spacing">3</property>
-
-					      <child>
-						<widget class="GtkLabel" id="magCrossHairSizeLabel">
-						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">Si_ze:</property>
-						  <property name="use_underline">True</property>
-						  <property name="use_markup">False</property>
-						  <property name="justify">GTK_JUSTIFY_LEFT</property>
-						  <property name="wrap">False</property>
-						  <property name="selectable">False</property>
-						  <property name="xalign">0</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xpad">0</property>
-						  <property name="ypad">0</property>
-						  <property name="mnemonic_widget">magCrossHairSizeSpinButton</property>
-						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-						  <property name="width_chars">-1</property>
-						  <property name="single_line_mode">False</property>
-						  <property name="angle">0</property>
-						  <accessibility>
-						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
-						  </accessibility>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkSpinButton" id="magCrossHairSizeSpinButton">
-						  <property name="visible">True</property>
-						  <property name="can_focus">True</property>
-						  <property name="climb_rate">1</property>
-						  <property name="digits">0</property>
-						  <property name="numeric">False</property>
-						  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-						  <property name="snap_to_ticks">False</property>
-						  <property name="wrap">False</property>
-						  <property name="adjustment">1 1 256 1 10 10</property>
-						  <accessibility>
-						    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
-						  </accessibility>
-						  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">True</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkLabel" id="magCrossHairSizeUnitsLabel">
-						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">pixels</property>
-						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
-						  <property name="justify">GTK_JUSTIFY_LEFT</property>
-						  <property name="wrap">False</property>
-						  <property name="selectable">False</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xpad">0</property>
-						  <property name="ypad">0</property>
-						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-						  <property name="width_chars">-1</property>
-						  <property name="single_line_mode">False</property>
-						  <property name="angle">0</property>
-						  <accessibility>
-						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
-						  </accessibility>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-					    </widget>
-					  </child>
-					</widget>
-					<packing>
-					  <property name="left_attach">1</property>
-					  <property name="right_attach">2</property>
-					  <property name="top_attach">0</property>
-					  <property name="bottom_attach">1</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options">fill</property>
-					</packing>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkLabel" id="label20">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Cross-hair Settings&lt;/b&gt;</property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">True</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-				  <property name="width_chars">-1</property>
-				  <property name="single_line_mode">False</property>
-				  <property name="angle">0</property>
-				</widget>
-				<packing>
-				  <property name="type">label_item</property>
-				</packing>
-			      </child>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkAlignment" id="alignment23">
-			  <property name="visible">True</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xscale">1</property>
-			  <property name="yscale">1</property>
-			  <property name="top_padding">12</property>
-			  <property name="bottom_padding">0</property>
-			  <property name="left_padding">0</property>
-			  <property name="right_padding">0</property>
-
-			  <child>
-			    <widget class="GtkFrame" id="magZoomerSettingsFrame">
-			      <property name="visible">True</property>
-			      <property name="label_xalign">0</property>
-			      <property name="label_yalign">0.5</property>
-			      <property name="shadow_type">GTK_SHADOW_NONE</property>
-
-			      <child>
-				<widget class="GtkAlignment" id="alignment41">
-				  <property name="visible">True</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xscale">1</property>
-				  <property name="yscale">1</property>
-				  <property name="top_padding">0</property>
-				  <property name="bottom_padding">0</property>
-				  <property name="left_padding">12</property>
-				  <property name="right_padding">0</property>
-
-				  <child>
-				    <widget class="GtkTable" id="table5">
-				      <property name="border_width">6</property>
-				      <property name="visible">True</property>
-				      <property name="n_rows">2</property>
-				      <property name="n_columns">2</property>
-				      <property name="homogeneous">False</property>
-				      <property name="row_spacing">3</property>
-				      <property name="column_spacing">3</property>
-
-				      <child>
-					<widget class="GtkLabel" id="magZoomFactorLabel">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Scale _factor:</property>
-					  <property name="use_underline">True</property>
-					  <property name="use_markup">False</property>
-					  <property name="justify">GTK_JUSTIFY_LEFT</property>
-					  <property name="wrap">False</property>
-					  <property name="selectable">False</property>
-					  <property name="xalign">0</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					  <property name="mnemonic_widget">magZoomFactorSpinButton</property>
-					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					  <property name="width_chars">-1</property>
-					  <property name="single_line_mode">False</property>
-					  <property name="angle">0</property>
-					</widget>
-					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">1</property>
-					  <property name="top_attach">0</property>
-					  <property name="bottom_attach">1</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options"></property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkSpinButton" id="magZoomFactorSpinButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="climb_rate">1</property>
-					  <property name="digits">2</property>
-					  <property name="numeric">False</property>
-					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					  <property name="snap_to_ticks">False</property>
-					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 32 0.25 10 10</property>
-					  <signal name="value_changed" handler="magZoomFactorValueChanged" last_modification_time="Wed, 03 May 2006 15:49:39 GMT"/>
-					</widget>
-					<packing>
-					  <property name="left_attach">1</property>
-					  <property name="right_attach">2</property>
-					  <property name="top_attach">0</property>
-					  <property name="bottom_attach">1</property>
-					  <property name="y_options"></property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkCheckButton" id="magInvertColorsCheckBox">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="label" translatable="yes">In_vert colors</property>
-					  <property name="use_underline">True</property>
-					  <property name="relief">GTK_RELIEF_NORMAL</property>
-					  <property name="focus_on_click">True</property>
-					  <property name="active">False</property>
-					  <property name="inconsistent">False</property>
-					  <property name="draw_indicator">True</property>
-					  <signal name="toggled" handler="magInvertColorsChecked" last_modification_time="Wed, 03 May 2006 15:59:57 GMT"/>
-					</widget>
-					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">2</property>
-					  <property name="top_attach">1</property>
-					  <property name="bottom_attach">2</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options"></property>
-					</packing>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkLabel" id="label21">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Zoomer Settings&lt;/b&gt;</property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">True</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-				  <property name="width_chars">-1</property>
-				  <property name="single_line_mode">False</property>
-				  <property name="angle">0</property>
-				</widget>
-				<packing>
-				  <property name="type">label_item</property>
-				</packing>
-			      </child>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">2</property>
-			  <property name="bottom_attach">3</property>
-			  <property name="x_options"></property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkAlignment" id="alignment24">
-			  <property name="visible">True</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xscale">1</property>
-			  <property name="yscale">1</property>
-			  <property name="top_padding">12</property>
-			  <property name="bottom_padding">0</property>
-			  <property name="left_padding">0</property>
-			  <property name="right_padding">0</property>
-
-			  <child>
-			    <widget class="GtkFrame" id="magZoomerPositionFrame">
-			      <property name="visible">True</property>
-			      <property name="label_xalign">0</property>
-			      <property name="label_yalign">0.5</property>
-			      <property name="shadow_type">GTK_SHADOW_NONE</property>
-
-			      <child>
-				<widget class="GtkTable" id="table3">
-				  <property name="border_width">3</property>
-				  <property name="visible">True</property>
-				  <property name="n_rows">3</property>
-				  <property name="n_columns">2</property>
-				  <property name="homogeneous">False</property>
-				  <property name="row_spacing">3</property>
-				  <property name="column_spacing">3</property>
-
-				  <child>
-				    <widget class="GtkHBox" id="hbox23">
-				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
-
-				      <child>
-					<widget class="GtkLabel" id="magZoomerTopLabel">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">_Top:</property>
-					  <property name="use_underline">True</property>
-					  <property name="use_markup">False</property>
-					  <property name="justify">GTK_JUSTIFY_LEFT</property>
-					  <property name="wrap">False</property>
-					  <property name="selectable">False</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					  <property name="width_chars">-1</property>
-					  <property name="single_line_mode">False</property>
-					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerTopSpinButton" type="label-for"/>
-					  </accessibility>
-					</widget>
-					<packing>
-					  <property name="padding">3</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkSpinButton" id="magZoomerTopSpinButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="climb_rate">1</property>
-					  <property name="digits">0</property>
-					  <property name="numeric">False</property>
-					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					  <property name="snap_to_ticks">False</property>
-					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 9999 1 10 10</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerTopLabel" type="labelled-by"/>
-					  </accessibility>
-					  <signal name="value_changed" handler="magZoomerTopValueChanged" last_modification_time="Wed, 03 May 2006 15:41:20 GMT"/>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					  <property name="pack_type">GTK_PACK_END</property>
-					</packing>
-				      </child>
-				    </widget>
-				    <packing>
-				      <property name="left_attach">0</property>
-				      <property name="right_attach">2</property>
-				      <property name="top_attach">0</property>
-				      <property name="bottom_attach">1</property>
-				      <property name="x_options"></property>
-				    </packing>
-				  </child>
-
-				  <child>
-				    <widget class="GtkHBox" id="hbox24">
-				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
-
-				      <child>
-					<widget class="GtkLabel" id="magZoomerBottomLabel">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">_Bottom:</property>
-					  <property name="use_underline">True</property>
-					  <property name="use_markup">False</property>
-					  <property name="justify">GTK_JUSTIFY_LEFT</property>
-					  <property name="wrap">False</property>
-					  <property name="selectable">False</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					  <property name="mnemonic_widget">magZoomerBottomSpinButton</property>
-					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					  <property name="width_chars">-1</property>
-					  <property name="single_line_mode">False</property>
-					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerBottomSpinButton" type="label-for"/>
-					  </accessibility>
-					</widget>
-					<packing>
-					  <property name="padding">3</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkSpinButton" id="magZoomerBottomSpinButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="climb_rate">1</property>
-					  <property name="digits">0</property>
-					  <property name="numeric">False</property>
-					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					  <property name="snap_to_ticks">False</property>
-					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 9999 1 10 10</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerBottomLabel" type="labelled-by"/>
-					  </accessibility>
-					  <signal name="value_changed" handler="magZoomerBottomValueChanged" last_modification_time="Wed, 03 May 2006 15:42:28 GMT"/>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-				    </widget>
-				    <packing>
-				      <property name="left_attach">0</property>
-				      <property name="right_attach">2</property>
-				      <property name="top_attach">2</property>
-				      <property name="bottom_attach">3</property>
-				      <property name="x_options"></property>
-				    </packing>
-				  </child>
-
-				  <child>
-				    <widget class="GtkHBox" id="hbox25">
-				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
-
-				      <child>
-					<widget class="GtkLabel" id="magZoomerRightLabel">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">_Right:</property>
-					  <property name="use_underline">True</property>
-					  <property name="use_markup">False</property>
-					  <property name="justify">GTK_JUSTIFY_LEFT</property>
-					  <property name="wrap">False</property>
-					  <property name="selectable">False</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					  <property name="mnemonic_widget">magZoomerRightSpinButton</property>
-					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					  <property name="width_chars">-1</property>
-					  <property name="single_line_mode">False</property>
-					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerRightSpinButton" type="label-for"/>
-					  </accessibility>
-					</widget>
-					<packing>
-					  <property name="padding">4</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkSpinButton" id="magZoomerRightSpinButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="climb_rate">1</property>
-					  <property name="digits">0</property>
-					  <property name="numeric">False</property>
-					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					  <property name="snap_to_ticks">False</property>
-					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 9999 1 10 10</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerRightLabel" type="labelled-by"/>
-					  </accessibility>
-					  <signal name="value_changed" handler="magZoomerRightValueChanged" last_modification_time="Wed, 03 May 2006 15:44:33 GMT"/>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkFixed" id="fixed2">
-					  <property name="visible">True</property>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
-					  <property name="pack_type">GTK_PACK_END</property>
-					</packing>
-				      </child>
-				    </widget>
-				    <packing>
-				      <property name="left_attach">1</property>
-				      <property name="right_attach">2</property>
-				      <property name="top_attach">1</property>
-				      <property name="bottom_attach">2</property>
-				      <property name="x_options"></property>
-				      <property name="y_options">fill</property>
-				    </packing>
-				  </child>
-
-				  <child>
-				    <widget class="GtkHBox" id="hbox22">
-				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
-
-				      <child>
-					<widget class="GtkFixed" id="fixed1">
-					  <property name="visible">True</property>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkLabel" id="magZoomerLeftLabel">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">_Left:</property>
-					  <property name="use_underline">True</property>
-					  <property name="use_markup">False</property>
-					  <property name="justify">GTK_JUSTIFY_RIGHT</property>
-					  <property name="wrap">False</property>
-					  <property name="selectable">False</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xpad">0</property>
-					  <property name="ypad">0</property>
-					  <property name="mnemonic_widget">magZoomerLeftSpinButton</property>
-					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					  <property name="width_chars">-1</property>
-					  <property name="single_line_mode">False</property>
-					  <property name="angle">0</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerLeftSpinButton" type="label-for"/>
-					  </accessibility>
-					</widget>
-					<packing>
-					  <property name="padding">3</property>
-					  <property name="expand">False</property>
-					  <property name="fill">True</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkSpinButton" id="magZoomerLeftSpinButton">
-					  <property name="visible">True</property>
-					  <property name="can_focus">True</property>
-					  <property name="climb_rate">1</property>
-					  <property name="digits">0</property>
-					  <property name="numeric">False</property>
-					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					  <property name="snap_to_ticks">False</property>
-					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 9999 1 10 10</property>
-					  <accessibility>
-					    <atkrelation target="magZoomerLeftLabel" type="labelled-by"/>
-					  </accessibility>
-					  <signal name="value_changed" handler="magZoomerLeftValueChanged" last_modification_time="Wed, 03 May 2006 15:43:41 GMT"/>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-				    </widget>
-				    <packing>
-				      <property name="left_attach">0</property>
-				      <property name="right_attach">1</property>
-				      <property name="top_attach">1</property>
-				      <property name="bottom_attach">2</property>
-				      <property name="x_options"></property>
-				    </packing>
-				  </child>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkLabel" id="label22">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Zoomer Position&lt;/b&gt;</property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">True</property>
-				  <property name="justify">GTK_JUSTIFY_CENTER</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-				  <property name="width_chars">-1</property>
-				  <property name="single_line_mode">False</property>
-				  <property name="angle">0</property>
-				</widget>
-				<packing>
-				  <property name="type">label_item</property>
-				</packing>
-			      </child>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">2</property>
-			  <property name="bottom_attach">3</property>
-			  <property name="x_options"></property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkAlignment" id="alignment30">
-			  <property name="visible">True</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xscale">1</property>
-			  <property name="yscale">1</property>
-			  <property name="top_padding">12</property>
-			  <property name="bottom_padding">0</property>
-			  <property name="left_padding">0</property>
-			  <property name="right_padding">0</property>
-
-			  <child>
-			    <widget class="GtkComboBox" id="magSmoothingComboBox">
-			      <property name="visible">True</property>
-			      <property name="items" translatable="yes">None
-Bilinear</property>
-			      <property name="add_tearoffs">False</property>
-			      <property name="focus_on_click">True</property>
-			      <accessibility>
-				<atkrelation target="magSmoothingLabel" type="labelled-by"/>
-			      </accessibility>
-			      <signal name="changed" handler="magSmoothingChanged" last_modification_time="Wed, 03 May 2006 15:54:49 GMT"/>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">3</property>
-			  <property name="bottom_attach">4</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
 
 		      <child>
 			<widget class="GtkAlignment" id="magCursorLabelAlignment">
@@ -3429,6 +2433,1020 @@ Bilinear</property>
 			  <property name="top_attach">0</property>
 			  <property name="bottom_attach">1</property>
 			  <property name="x_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkAlignment" id="magCrossHairLabelAlignment">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xscale">1</property>
+			  <property name="yscale">1</property>
+			  <property name="top_padding">12</property>
+			  <property name="bottom_padding">0</property>
+			  <property name="left_padding">0</property>
+			  <property name="right_padding">0</property>
+
+			  <child>
+			    <widget class="GtkFrame" id="magCrossHairSettingsFrame">
+			      <property name="visible">True</property>
+			      <property name="label_xalign">0</property>
+			      <property name="label_yalign">0.5</property>
+			      <property name="shadow_type">GTK_SHADOW_NONE</property>
+
+			      <child>
+				<widget class="GtkAlignment" id="alignment40">
+				  <property name="visible">True</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xscale">1</property>
+				  <property name="yscale">1</property>
+				  <property name="top_padding">0</property>
+				  <property name="bottom_padding">0</property>
+				  <property name="left_padding">12</property>
+				  <property name="right_padding">0</property>
+
+				  <child>
+				    <widget class="GtkTable" id="table8">
+				      <property name="border_width">3</property>
+				      <property name="visible">True</property>
+				      <property name="n_rows">2</property>
+				      <property name="n_columns">2</property>
+				      <property name="homogeneous">False</property>
+				      <property name="row_spacing">0</property>
+				      <property name="column_spacing">0</property>
+
+				      <child>
+					<widget class="GtkCheckButton" id="magCrossHairOnOffCheckButton">
+					  <property name="visible">True</property>
+					  <property name="can_focus">True</property>
+					  <property name="label" translatable="yes">Enable cross-h_air</property>
+					  <property name="use_underline">True</property>
+					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
+					  <property name="active">False</property>
+					  <property name="inconsistent">False</property>
+					  <property name="draw_indicator">True</property>
+					  <signal name="toggled" handler="magCrossHairOnOffChecked" last_modification_time="Wed, 03 May 2006 15:36:39 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">1</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkCheckButton" id="magCrossHairClipCheckButton">
+					  <property name="visible">True</property>
+					  <property name="can_focus">True</property>
+					  <property name="label" translatable="yes">Enable cross-hair cli_p</property>
+					  <property name="use_underline">True</property>
+					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
+					  <property name="active">False</property>
+					  <property name="inconsistent">False</property>
+					  <property name="draw_indicator">True</property>
+					  <signal name="toggled" handler="magCrossHairClipOnOffChecked" last_modification_time="Wed, 03 May 2006 15:37:49 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">1</property>
+					  <property name="bottom_attach">2</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment52">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">48</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkHBox" id="hbox33">
+					      <property name="visible">True</property>
+					      <property name="homogeneous">False</property>
+					      <property name="spacing">3</property>
+
+					      <child>
+						<widget class="GtkLabel" id="magCrossHairSizeLabel">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">Si_ze:</property>
+						  <property name="use_underline">True</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <property name="mnemonic_widget">magCrossHairSizeSpinButton</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+						  </accessibility>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkSpinButton" id="magCrossHairSizeSpinButton">
+						  <property name="visible">True</property>
+						  <property name="can_focus">True</property>
+						  <property name="climb_rate">1</property>
+						  <property name="digits">0</property>
+						  <property name="numeric">False</property>
+						  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						  <property name="snap_to_ticks">False</property>
+						  <property name="wrap">False</property>
+						  <property name="adjustment">1 1 256 1 10 10</property>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
+						  </accessibility>
+						  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">True</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkLabel" id="magCrossHairSizeUnitsLabel">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">pixels</property>
+						  <property name="use_underline">False</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
+						  <accessibility>
+						    <atkrelation target="magCrossHairSizeSpinButton" type="label-for"/>
+						  </accessibility>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">1</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
+				    </widget>
+				  </child>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label20">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Cross-hair Settings&lt;/b&gt;</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">True</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
+				</widget>
+				<packing>
+				  <property name="type">label_item</property>
+				</packing>
+			      </child>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">1</property>
+			  <property name="bottom_attach">2</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkAlignment" id="alignment31">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xscale">1</property>
+			  <property name="yscale">1</property>
+			  <property name="top_padding">12</property>
+			  <property name="bottom_padding">0</property>
+			  <property name="left_padding">0</property>
+			  <property name="right_padding">0</property>
+
+			  <child>
+			    <widget class="GtkLabel" id="magSmoothingLabel">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">_Smoothing:</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_RIGHT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">1</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
+			      <accessibility>
+				<atkrelation target="magSmoothingComboBox" type="label-for"/>
+			      </accessibility>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">3</property>
+			  <property name="bottom_attach">4</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkAlignment" id="alignment30">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xscale">1</property>
+			  <property name="yscale">1</property>
+			  <property name="top_padding">12</property>
+			  <property name="bottom_padding">0</property>
+			  <property name="left_padding">0</property>
+			  <property name="right_padding">0</property>
+
+			  <child>
+			    <widget class="GtkComboBox" id="magSmoothingComboBox">
+			      <property name="visible">True</property>
+			      <property name="items" translatable="yes">None
+Bilinear</property>
+			      <property name="add_tearoffs">False</property>
+			      <property name="focus_on_click">True</property>
+			      <accessibility>
+				<atkrelation target="magSmoothingLabel" type="labelled-by"/>
+			      </accessibility>
+			      <signal name="changed" handler="magSmoothingChanged" last_modification_time="Wed, 03 May 2006 15:54:49 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">3</property>
+			  <property name="bottom_attach">4</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="magMouseTrackingLabel">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Mouse trac_king mode:</property>
+			  <property name="use_underline">True</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_RIGHT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">1</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="magMouseTrackingComboBox" type="label-for"/>
+			  </accessibility>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">4</property>
+			  <property name="bottom_attach">5</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkComboBox" id="magMouseTrackingComboBox">
+			  <property name="visible">True</property>
+			  <property name="items" translatable="yes">Centered
+None
+Proportional
+Push</property>
+			  <property name="add_tearoffs">False</property>
+			  <property name="focus_on_click">True</property>
+			  <accessibility>
+			    <atkrelation target="magMouseTrackingLabel" type="labelled-by"/>
+			  </accessibility>
+			  <signal name="changed" handler="magMouseTrackingChanged" last_modification_time="Wed, 03 May 2006 15:55:53 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">4</property>
+			  <property name="bottom_attach">5</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="magSourceDisplayLabel">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">S_ource display:</property>
+			  <property name="use_underline">True</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">1</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">magSourceDisplayEntry</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="magSourceDisplayEntry" type="label-for"/>
+			  </accessibility>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">5</property>
+			  <property name="bottom_attach">6</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="magSourceDisplayEntry">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text"></property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char">*</property>
+			  <property name="activates_default">False</property>
+			  <accessibility>
+			    <atkrelation target="magSourceDisplayLabel" type="labelled-by"/>
+			  </accessibility>
+			  <signal name="changed" handler="magSourceDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:53:43 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">5</property>
+			  <property name="bottom_attach">6</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="magTargetDisplayLabel">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Tar_get display:</property>
+			  <property name="use_underline">True</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">1</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">magTargetDisplayEntry</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="magTargetDisplayEntry" type="label-for"/>
+			  </accessibility>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">6</property>
+			  <property name="bottom_attach">7</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="magTargetDisplayEntry">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text"></property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char">*</property>
+			  <property name="activates_default">False</property>
+			  <accessibility>
+			    <atkrelation target="magTargetDisplayLabel" type="labelled-by"/>
+			  </accessibility>
+			  <signal name="changed" handler="magTargetDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:54:09 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">1</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">6</property>
+			  <property name="bottom_attach">7</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkAlignment" id="alignment23">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xscale">1</property>
+			  <property name="yscale">1</property>
+			  <property name="top_padding">12</property>
+			  <property name="bottom_padding">0</property>
+			  <property name="left_padding">0</property>
+			  <property name="right_padding">0</property>
+
+			  <child>
+			    <widget class="GtkFrame" id="magZoomerSettingsFrame">
+			      <property name="visible">True</property>
+			      <property name="label_xalign">0</property>
+			      <property name="label_yalign">0.5</property>
+			      <property name="shadow_type">GTK_SHADOW_NONE</property>
+
+			      <child>
+				<widget class="GtkAlignment" id="alignment41">
+				  <property name="visible">True</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xscale">1</property>
+				  <property name="yscale">1</property>
+				  <property name="top_padding">0</property>
+				  <property name="bottom_padding">0</property>
+				  <property name="left_padding">12</property>
+				  <property name="right_padding">0</property>
+
+				  <child>
+				    <widget class="GtkTable" id="table5">
+				      <property name="border_width">6</property>
+				      <property name="visible">True</property>
+				      <property name="n_rows">3</property>
+				      <property name="n_columns">4</property>
+				      <property name="homogeneous">False</property>
+				      <property name="row_spacing">3</property>
+				      <property name="column_spacing">3</property>
+
+				      <child>
+					<widget class="GtkLabel" id="magZoomFactorLabel">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">Scale _factor:</property>
+					  <property name="use_underline">True</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_LEFT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">0</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
+					  <property name="mnemonic_widget">magZoomFactorSpinButton</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">1</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkSpinButton" id="magZoomFactorSpinButton">
+					  <property name="visible">True</property>
+					  <property name="can_focus">True</property>
+					  <property name="climb_rate">1</property>
+					  <property name="digits">2</property>
+					  <property name="numeric">False</property>
+					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+					  <property name="snap_to_ticks">False</property>
+					  <property name="wrap">False</property>
+					  <property name="adjustment">1 1 32 0.25 10 10</property>
+					  <signal name="value_changed" handler="magZoomFactorValueChanged" last_modification_time="Wed, 03 May 2006 15:49:39 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">1</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkCheckButton" id="magInvertColorsCheckBox">
+					  <property name="visible">True</property>
+					  <property name="can_focus">True</property>
+					  <property name="label" translatable="yes">In_vert colors</property>
+					  <property name="use_underline">True</property>
+					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
+					  <property name="active">False</property>
+					  <property name="inconsistent">False</property>
+					  <property name="draw_indicator">True</property>
+					  <signal name="toggled" handler="magInvertColorsChecked" last_modification_time="Wed, 03 May 2006 15:59:57 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">1</property>
+					  <property name="bottom_attach">2</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment60">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">25</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkHBox" id="hbox46">
+					      <property name="visible">True</property>
+					      <property name="homogeneous">False</property>
+					      <property name="spacing">3</property>
+
+					      <child>
+						<widget class="GtkLabel" id="magZoomerPositionLabel">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">Pos_ition:</property>
+						  <property name="use_underline">True</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <property name="mnemonic_widget">magZoomerPositionComboBox</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkComboBox" id="magZoomerPositionComboBox">
+						  <property name="visible">True</property>
+						  <property name="items" translatable="yes">Full Screen
+Top Half
+Bottom Half
+Left Half
+Right Half
+Custom</property>
+						  <property name="add_tearoffs">False</property>
+						  <property name="focus_on_click">True</property>
+						  <signal name="changed" handler="magZoomerPositionChanged" last_modification_time="Thu, 06 Dec 2007 03:25:44 GMT"/>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">True</property>
+						  <property name="fill">True</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">2</property>
+					  <property name="right_attach">3</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment61">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">10</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkTable" id="magZoomerCustomPositionTable">
+					      <property name="border_width">3</property>
+					      <property name="visible">True</property>
+					      <property name="n_rows">3</property>
+					      <property name="n_columns">2</property>
+					      <property name="homogeneous">False</property>
+					      <property name="row_spacing">3</property>
+					      <property name="column_spacing">3</property>
+
+					      <child>
+						<widget class="GtkHBox" id="hbox23">
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">0</property>
+
+						  <child>
+						    <widget class="GtkLabel" id="magZoomerTopLabel">
+						      <property name="visible">True</property>
+						      <property name="label" translatable="yes">_Top:</property>
+						      <property name="use_underline">True</property>
+						      <property name="use_markup">False</property>
+						      <property name="justify">GTK_JUSTIFY_LEFT</property>
+						      <property name="wrap">False</property>
+						      <property name="selectable">False</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xpad">0</property>
+						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">3</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkSpinButton" id="magZoomerTopSpinButton">
+						      <property name="visible">True</property>
+						      <property name="can_focus">True</property>
+						      <property name="climb_rate">1</property>
+						      <property name="digits">0</property>
+						      <property name="numeric">False</property>
+						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						      <property name="snap_to_ticks">False</property>
+						      <property name="wrap">False</property>
+						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <signal name="value_changed" handler="magZoomerTopValueChanged" last_modification_time="Wed, 03 May 2006 15:41:20 GMT"/>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						      <property name="pack_type">GTK_PACK_END</property>
+						    </packing>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="left_attach">0</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">0</property>
+						  <property name="bottom_attach">1</property>
+						  <property name="x_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkHBox" id="hbox24">
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">0</property>
+
+						  <child>
+						    <widget class="GtkLabel" id="magZoomerBottomLabel">
+						      <property name="visible">True</property>
+						      <property name="label" translatable="yes">_Bottom:</property>
+						      <property name="use_underline">True</property>
+						      <property name="use_markup">False</property>
+						      <property name="justify">GTK_JUSTIFY_LEFT</property>
+						      <property name="wrap">False</property>
+						      <property name="selectable">False</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xpad">0</property>
+						      <property name="ypad">0</property>
+						      <property name="mnemonic_widget">magZoomerBottomSpinButton</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">3</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkSpinButton" id="magZoomerBottomSpinButton">
+						      <property name="visible">True</property>
+						      <property name="can_focus">True</property>
+						      <property name="climb_rate">1</property>
+						      <property name="digits">0</property>
+						      <property name="numeric">False</property>
+						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						      <property name="snap_to_ticks">False</property>
+						      <property name="wrap">False</property>
+						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <signal name="value_changed" handler="magZoomerBottomValueChanged" last_modification_time="Wed, 03 May 2006 15:42:28 GMT"/>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="left_attach">0</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">2</property>
+						  <property name="bottom_attach">3</property>
+						  <property name="x_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkHBox" id="hbox25">
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">0</property>
+
+						  <child>
+						    <widget class="GtkLabel" id="magZoomerRightLabel">
+						      <property name="visible">True</property>
+						      <property name="label" translatable="yes">_Right:</property>
+						      <property name="use_underline">True</property>
+						      <property name="use_markup">False</property>
+						      <property name="justify">GTK_JUSTIFY_LEFT</property>
+						      <property name="wrap">False</property>
+						      <property name="selectable">False</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xpad">0</property>
+						      <property name="ypad">0</property>
+						      <property name="mnemonic_widget">magZoomerRightSpinButton</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">4</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkSpinButton" id="magZoomerRightSpinButton">
+						      <property name="visible">True</property>
+						      <property name="can_focus">True</property>
+						      <property name="climb_rate">1</property>
+						      <property name="digits">0</property>
+						      <property name="numeric">False</property>
+						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						      <property name="snap_to_ticks">False</property>
+						      <property name="wrap">False</property>
+						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <signal name="value_changed" handler="magZoomerRightValueChanged" last_modification_time="Wed, 03 May 2006 15:44:33 GMT"/>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkFixed" id="fixed2">
+						      <property name="visible">True</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						      <property name="pack_type">GTK_PACK_END</property>
+						    </packing>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
+						  <property name="x_options"></property>
+						  <property name="y_options">fill</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkHBox" id="hbox22">
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">0</property>
+
+						  <child>
+						    <widget class="GtkFixed" id="fixed1">
+						      <property name="visible">True</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkLabel" id="magZoomerLeftLabel">
+						      <property name="visible">True</property>
+						      <property name="label" translatable="yes">_Left:</property>
+						      <property name="use_underline">True</property>
+						      <property name="use_markup">False</property>
+						      <property name="justify">GTK_JUSTIFY_RIGHT</property>
+						      <property name="wrap">False</property>
+						      <property name="selectable">False</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xpad">0</property>
+						      <property name="ypad">0</property>
+						      <property name="mnemonic_widget">magZoomerLeftSpinButton</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">3</property>
+						      <property name="expand">False</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkSpinButton" id="magZoomerLeftSpinButton">
+						      <property name="visible">True</property>
+						      <property name="can_focus">True</property>
+						      <property name="climb_rate">1</property>
+						      <property name="digits">0</property>
+						      <property name="numeric">False</property>
+						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						      <property name="snap_to_ticks">False</property>
+						      <property name="wrap">False</property>
+						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <signal name="value_changed" handler="magZoomerLeftValueChanged" last_modification_time="Wed, 03 May 2006 15:43:41 GMT"/>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="left_attach">0</property>
+						  <property name="right_attach">1</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
+						  <property name="x_options"></property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">3</property>
+					  <property name="right_attach">4</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">3</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
+				    </widget>
+				  </child>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label21">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Zoomer Settings&lt;/b&gt;</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">True</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
+				</widget>
+				<packing>
+				  <property name="type">label_item</property>
+				</packing>
+			      </child>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">2</property>
+			  <property name="top_attach">2</property>
+			  <property name="bottom_attach">3</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options">fill</property>
 			</packing>
 		      </child>
 		    </widget>

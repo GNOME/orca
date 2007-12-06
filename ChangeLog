@@ -1,3 +1,12 @@
+2007-12-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/mag.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #452316 - should have a "fullscreen" checkbox.
+
 2007-12-05  Willie Walker <william.walker@sun.com>
 
         * run_pylint.sh.in (added):
