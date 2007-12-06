@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Script to run pylint on the Orca sources you've modified or added.
+# See http://live.gnome.org/Orca/Pylint for more info.
+#
+exec_prefix=@prefix@
+INSTALL_DIR=@pyexecdir@
+if [ "x$*" == "x" ]
+then
+    FILES=`svn stat src/orca | egrep "^M|^A" | grep "[.]py$" | awk '{ print $2 }'`
+else
+    FILES="$*"
+fi
+FILES=`echo $FILES | sed 's^src/orca/^^'`
+echo Thank you for your attention to quality
+for foo in $FILES
+do
+    echo
+    OUTPUT_FILE=`basename $foo .py`.pylint
+    echo Checking $foo, sending output to $OUTPUT_FILE
+    pylint --init-hook="import pyatspi" $INSTALL_DIR/orca/$foo > $OUTPUT_FILE 2>&1
+    grep "code has been rated" $OUTPUT_FILE | cut -f1 -d\( \
+    | sed "s/.pylint:Your code has been rated at / /" \
+    | sed "s^/10^^" | sort -n -k 2,2
+done

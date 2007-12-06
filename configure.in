@@ -136,6 +136,7 @@ AC_SUBST(orca_CFLAGS)
 PYDOC_CHECK()
 
 AC_OUTPUT([ 
+run_pylint.sh
 Makefile
 orca.spec
 docs/Makefile
@@ -150,7 +151,7 @@ src/orca/scripts/Makefile
 src/orca/orca
 src/orca/orca_i18n.py
 src/orca/platform.py
-])
+],[chmod +x run_pylint.sh])
 
 if test "x$brlapi_available" = "xno" ; then
 echo

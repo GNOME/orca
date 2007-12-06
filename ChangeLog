@@ -1,3 +1,20 @@
+2007-12-05  Willie Walker <william.walker@sun.com>
+
+        * run_pylint.sh.in (added):
+	  run_pylint.sh (deleted):
+	  configure.in:
+
+          Add run_pylint.sh.in, which will turn into run_pylint.sh when
+	  you run configure.in.  This will pay attention to the --prefix
+	  you use (or don't use) so you're more likely to pylint the
+	  correct files.  By default, it will pylint just the files you've
+	  added or modified in your svn sandbox.  If you pass filenames to
+	  it, however, it will pylint them.  It only expects Orca Python
+	  modules, however, and only wants filenames of the form "foo.py"
+	  or "src/orca/foo.py".  In addition, it converts these filenames
+	  into paths that point to the installation directory.  If this
+	  doesn't make sense, well, look at script.  :-)
+		
 2007-12-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/where_am_I.py:
