@@ -11,7 +11,7 @@ then
 else
     FILES="$*"
 fi
-FILES=`echo $FILES | sed 's^src/orca/^^'`
+FILES=`echo $FILES | sed 's^src/orca/^^g'`
 echo Thank you for your attention to quality
 for foo in $FILES
 do
