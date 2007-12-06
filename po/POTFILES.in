@@ -17,6 +17,7 @@ src/orca/gnomespeechfactory.py
 src/orca/J2SE-access-bridge.py
 src/orca/keybindings.py
 src/orca/keynames.py
+src/orca/liveregions.py
 src/orca/orca_console_prefs.py
 src/orca/orca-find.glade
 src/orca/orca_glade.py

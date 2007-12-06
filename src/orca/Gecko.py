@@ -52,6 +52,7 @@ import debug
 import default
 import input_event
 import keybindings
+import liveregions
 import mag
 import orca
 import orca_state
@@ -136,6 +137,9 @@ onlySpeakChangedLinesDuringFind = False
 # The minimum number of characters of text that an accessible object must 
 # contain to be considered a match in go to next/prev large object
 largeObjectTextLength = 75
+
+# Whether or not Orca should speak live region changes.
+liveRegionsOn = True
 
 # Roles that imply their text starts on a new line.
 #
@@ -839,6 +843,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         # Treat ARIA widgets like default.py widgets
         #
+
         if self._script.isAriaWidget(obj) \
            or not self._script.inDocumentContent(obj):
             return speechgenerator.SpeechGenerator.\
@@ -1365,9 +1370,12 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """Calls the base class method for single clicks and Gecko specific
         information presentation methods for double clicks
         """
+
         if not doubleClick or statusOrTitle \
            or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, statusOrTitle)
+            if self._script.isLiveRegion(obj):
+                self._script.liveMngr.outputLiveRegionDescription(obj)
         else:
             try:
                 self._collectionPageSummary()
@@ -1532,7 +1540,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         """ Add an in-page accessible object bookmark for this key and
         webpage URI. """ 
         # form bookmark dictionary key
-        index = (inputEvent.hw_code, self._getURIKey())
+        index = (inputEvent.hw_code, self.getURIKey())
         # convert the current object to a path and bookmark it
         obj, characterOffset = self._script.getCaretContext()
         path = self._objToPath()
@@ -1546,7 +1554,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         
     def goToBookmark(self, inputEvent, index=None):
         """ Go to the bookmark indexed at this key and this page's URI """
-        index = index or (inputEvent.hw_code, self._getURIKey())
+        index = index or (inputEvent.hw_code, self.getURIKey())
         
         try:
             path, characterOffset = self._bookmarks[index]
@@ -1570,7 +1578,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 
         current pointer location."""
-        index = (inputEvent.hw_code, self._getURIKey())
+        index = (inputEvent.hw_code, self.getURIKey())
         try:
             path, characterOffset = self._bookmarks[index]
             obj = self._pathToObj(path)
@@ -1627,7 +1635,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             saved[index] = bookmark[0], bookmark[1]
             
         try:
-            self._saveBookmarksToDisk(saved)
+            self.saveBookmarksToDisk(saved)
             # Translators: this announces that a bookmark has been saved to 
             # disk
             #
@@ -1637,6 +1645,10 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             # disk
             #
             speech.speak(_('bookmarks could not be saved'))
+
+        # Notify the observers
+        for o in self._saveObservers:
+            o()
             
     def goToNextBookmark(self, inputEvent):
         """ Go to the next bookmark location.  If no bookmark has yet to be
@@ -1646,7 +1658,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # need to sort our keys to determine the next bookmark on a page by 
         # page basis.
         bm_keys = self._bookmarks.keys()
-        current_uri = self._getURIKey()
+        current_uri = self.getURIKey()
         
         # mine out the hardware keys for this page and sort them
         thispage_hwkeys = []
@@ -1679,7 +1691,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         """ Go to the previous bookmark location.  If no bookmark has yet to be
         selected, the first bookmark will be used.  """
         bm_keys = self._bookmarks.keys()
-        current_uri = self._getURIKey()
+        current_uri = self.getURIKey()
         
         # mine out the hardware keys for this page and sort them
         thispage_hwkeys = []
@@ -1759,7 +1771,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             
         return returnobj
             
-    def _getURIKey(self):
+    def getURIKey(self):
         """Returns the URI key for a given page as a URI stripped of 
         parameters?query#fragment as seen in urlparse."""
         uri = self._script.getDocumentFrameURI()
@@ -1853,6 +1865,12 @@ class Script(default.Script):
              Script.goPreviousBlockquote,
              Script.goNextTable,
              Script.goPreviousTable,
+             Script.goNextLiveRegion,
+             Script.goPreviousLiveRegion,
+             Script.goLastLiveRegion,
+             Script.advanceLivePoliteness,
+             Script.monitorLiveRegions,
+             Script.reviewLiveAnnouncement,
              Script.goCellLeft,
              Script.goCellRight,
              Script.goCellUp,
@@ -1909,7 +1927,10 @@ class Script(default.Script):
         # keep track if one has appeared or disappeared.
         #
         self._autocompleteVisible = False
-        
+
+        # Create the live region manager and start the message manager
+        self.liveMngr = liveregions.LiveRegionManager(self)
+
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
@@ -2282,6 +2303,52 @@ class Script(default.Script):
                 #
                 _("Goes to next table."))
 
+        self.inputEventHandlers["goPreviousLiveRegion"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousLiveRegion,
+                # Translators: this is for navigating between live regions
+                #
+                _("Goes to previous live region."))
+
+        self.inputEventHandlers["goNextLiveRegion"] = \
+            input_event.InputEventHandler(
+                Script.goNextLiveRegion,
+                # Translators: this is for navigating between live regions
+                #
+                _("Goes to next live region."))
+
+        self.inputEventHandlers["goLastLiveRegion"] = \
+            input_event.InputEventHandler(
+                Script.goLastLiveRegion,
+                # Translators: this is for navigating to the last live region
+                # to make an announcement.
+                #
+                _("Goes to last live region."))
+
+        self.inputEventHandlers["advanceLivePoliteness"] = \
+            input_event.InputEventHandler(
+                Script.advanceLivePoliteness,
+                # Translators: this is for advancing the live regions 
+                # politeness setting
+                #
+                _("Advance live region politeness setting."))
+
+        self.inputEventHandlers["monitorLiveRegions"] = \
+            input_event.InputEventHandler(
+                Script.monitorLiveRegions,
+                # Translators: this is a toggle to monitor live regions 
+                # or not.
+                #
+                _("Monitor live regions."))
+
+        self.inputEventHandlers["reviewLiveAnnouncement"] = \
+            input_event.InputEventHandler(
+                Script.reviewLiveAnnouncement,
+                # Translators: this is for reviewing up to nine stored
+                # previous live messages.
+                #
+                _("Review live region announcement."))
+
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
@@ -2336,6 +2403,8 @@ class Script(default.Script):
             self.onVisibleDataChanged
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
+        listeners["object:text-changed:insert"]             = \
+            self.onTextInserted
 
         # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
         # use of underscores instead of dashes until they fix their bug.
@@ -2684,6 +2753,61 @@ class Script(default.Script):
                 fullModMask,
                 0,
                 self.inputEventHandlers["goNextTableHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousLiveRegion"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextLiveRegion"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "y",
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goLastLiveRegion"]))
+                
+        # keybindings to provide chat room message history.
+        messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" ]
+        for messageKey in messageKeys:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    messageKey,
+                    1 << settings.MODIFIER_ORCA,
+                    1 << settings.MODIFIER_ORCA,
+                    self.inputEventHandlers["reviewLiveAnnouncement"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                1 << pyatspi.MODIFIER_SHIFT,
+                self.inputEventHandlers["monitorLiveRegions"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                (1 << pyatspi.MODIFIER_SHIFT \
+                 | 1 << pyatspi.MODIFIER_ALT \
+                 | 1 << pyatspi.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["advanceLivePoliteness"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -3544,6 +3668,7 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+        
         # If text is inserted into an object, we want to trash our
         # cache of the unicode text.
         #
@@ -3551,6 +3676,10 @@ class Script(default.Script):
             del event.source.unicodeText
         except:
             pass
+
+        if liveRegionsOn and self.isLiveRegion(event.source):
+            self.liveMngr.handleEvent(event)
+            return
 
         default.Script.onTextInserted(self, event)
 
@@ -3565,7 +3694,11 @@ class Script(default.Script):
             # no use moving forward if we don't have our target.
             if event.any_data is None:
                 return
-            
+
+            if liveRegionsOn and self.isLiveRegion(event.source):
+                self.liveMngr.handleEvent(event)
+                return
+
             newacc = event.any_data
             output = None
             # The addition could be an alert/tooltip, but the xml-role:alert
@@ -4737,7 +4870,8 @@ class Script(default.Script):
         if not structuralNavigationEnabled:
             return False
         
-        if self.isAriaWidget():
+        if self.isAriaWidget() \
+                and not self.isLiveRegion(orca_state.locusOfFocus):
             return False
 
         # If the Orca_Modifier key was pressed, we're handling it.
@@ -4764,7 +4898,16 @@ class Script(default.Script):
                 obj = obj.parent
 
         return False
-            
+
+    def isLiveRegion(self, obj):
+        attrs = obj.getAttributes()
+        if attrs is None:
+            return False
+        for attr in attrs:
+            if attr.startswith('container-live:'):
+                return True
+        return False
+
     def isAriaWidget(self, obj=None):
         """Returns True if the object being examined is an ARIA widget.
 
@@ -4772,14 +4915,12 @@ class Script(default.Script):
         - obj: The accessible object of interest.  If None, the
         locusOfFocus is examined.
         """
-        
         obj = obj or orca_state.locusOfFocus
-        if obj:
-            attrs = obj.getAttributes()
-            for attr in attrs:
-                if attr.startswith('xml-roles'):
-                    return True
-        return False
+        attrs = self._getAttrDictionary(obj)
+        return (attrs.has_key('xml-roles') and not attrs.has_key('live'))
+
+    def _getAttrDictionary(self, obj):
+        return dict([attr.split(':', 1) for attr in obj.getAttributes()])
 
     def isAriaAlert(self, obj):
         """Returns True if the given object is an ARIA wairole:alert or 
@@ -8648,6 +8789,106 @@ class Script(default.Script):
             #
             speech.speak(_("Not in a table."))
 
+    def goNextLiveRegion(self, inputEvent):
+        wrap = True
+        [obj, wrapped] = self.findNextByPredicate(self.__matchLiveRegion, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj:
+            # TODO:   We don't want to move to a list item.  
+            # Is this the best place to handle this?
+            if obj.getRole() == pyatspi.ROLE_LIST:
+                characterOffset = 0
+                obj = obj[0]
+            else:
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            # For debugging
+            self.outlineAccessible(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            # Translators: this is for navigating HTML in a structural
+            # manner, where a 'live region' is a location in a web page
+            # that are updated without having to refresh the entire page.
+            #
+            speech.speak(_("No more live regions."))
+
+    def goPreviousLiveRegion(self, inputEvent):
+        wrap = True
+        [obj, wrapped] = self.findPrevByPredicate(self.__matchLiveRegion, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj:
+            # TODO:   We don't want to move to a list item.  
+            # Is this the best place to handle this?
+            if obj.getRole() == pyatspi.ROLE_LIST:
+                characterOffset = 0
+            else:
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.outlineAccessible(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            # Translators: this is for navigating HTML in a structural
+            # manner, where a 'live region' is a location in a web page
+            # that are updated without having to refresh the entire page.
+            #
+            speech.speak(_("No more live regions."))
+            
+    def goLastLiveRegion(self, inputEvent):
+        if liveRegionsOn:
+            self.liveMngr.goLastLiveRegion()
+        else:
+            # Translators: this announces to the user that live region
+            # support has been turned off.
+            #
+            speech.speak(_("Live region support is off"))
+
+    def advanceLivePoliteness(self, inputEvent):
+        """Advances live region politeness level."""
+        if liveRegionsOn:
+            self.liveMngr.advancePoliteness(orca_state.locusOfFocus)
+        else:
+            # Translators: this announces to the user that live region
+            # support has been turned off.
+            #
+            speech.speak(_("Live region support is off"))
+            
+    def monitorLiveRegions(self, inputEvent):
+        if liveRegionsOn:
+            self.liveMngr.monitorLiveRegions()
+        else:
+            # Translators: this announces to the user that live region
+            # support has been turned off.
+            #
+            speech.speak(_("Live region support is off"))
+
+    def reviewLiveAnnouncement(self, inputEvent):
+        if liveRegionsOn:
+            self.liveMngr.reviewLiveAnnouncement( \
+                                    int(inputEvent.event_string[1:]))
+        else:
+            # Translators: this announces to the user that live region
+            # support has been turned off.
+            #
+            speech.speak(_("Live region support is off"))
+
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""
 
@@ -8734,3 +8975,13 @@ class Script(default.Script):
                 return False
         else:
             return False
+
+    def __matchLiveRegion(self, obj):
+        attrs = obj.getAttributes()
+        if attrs is None:
+            return False
+        for attr in attrs:
+            if attr.startswith('live:'):
+                return True
+        return False
+

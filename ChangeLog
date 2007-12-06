@@ -1,3 +1,13 @@
+2007-12-06  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/bookmarks.py:
+          src/orca/Gecko.py: 
+          src/orca/liveregions.py:
+          src/orca/Makefile.am:
+          docs/pydoc/Makefile.am:
+          po/POTFILES.in:
+          Bug #466251, Support ARIA live regions in Firefox/Gecko.
+
 2007-12-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:

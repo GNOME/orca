@@ -27,6 +27,7 @@ DOC_FILES = \
 	orca.J2SE-access-bridge \
 	orca.keybindings \
 	orca.keynames \
+        orca.liveregions \
 	orca.mag \
 	orca.orca \
 	orca.orca_console_prefs \

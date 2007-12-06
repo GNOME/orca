@@ -31,6 +31,7 @@ orca_python_PYTHON = \
 	J2SE-access-bridge.py \
 	keybindings.py \
 	keynames.py \
+	liveregions.py \
 	mag.py \
 	orca.py \
 	orca_console_prefs.py \
