@@ -359,16 +359,55 @@ class OrcaPrefs:
         Returns a string suitable for the preferences file.
         """
 
-        if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
-            return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_NONE:
-            return "orca.settings.MAG_MOUSE_TRACKING_MODE_NONE"
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
-            return "orca.settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL"
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
-            return "orca.settings.MAG_MOUSE_TRACKING_MODE_PUSH"
+        if mouseTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            return "orca.settings.MAG_TRACKING_MODE_NONE"
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PROPORTIONAL:
+            return "orca.settings.MAG_TRACKING_MODE_PROPORTIONAL"
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            return "orca.settings.MAG_TRACKING_MODE_PUSH"
         else:
-            return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
+            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
+
+    def _getMagControlTrackingModeString(self, controlTrackingMode):
+        """Returns a string that represents the magnification control
+        and menu item tracking mode passed in.
+
+        Arguments:
+        - controlTrackingMode: magnification control and menu item tracking 
+                               mode.
+
+        Returns a string suitable for the preferences file.
+        """
+
+        if controlTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
+        elif controlTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            return "orca.settings.MAG_TRACKING_MODE_NONE"
+        elif controlTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            return "orca.settings.MAG_TRACKING_MODE_PUSH"
+        else:
+            return "orca.settings.MAG_TRACKING_MODE_PUSH"
+
+    def _getMagTextTrackingModeString(self, textTrackingMode):
+        """Returns a string that represents the magnification text cursor
+        tracking mode passed in.
+
+        Arguments:
+        - textTrackingMode: magnification text cursor tracking mode.
+
+        Returns a string suitable for the preferences file.
+        """
+
+        if textTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
+        elif textTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            return "orca.settings.MAG_TRACKING_MODE_NONE"
+        elif textTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            return "orca.settings.MAG_TRACKING_MODE_PUSH"
+        else:
+            return "orca.settings.MAG_TRACKING_MODE_PUSH"
 
     def _getMagZoomerTypeString(self, magZoomerType):
         """Returns a string that represents the magnification zoomer position
@@ -594,6 +633,10 @@ class OrcaPrefs:
                 value = self._getMagSmoothingModeString(prefsDict[key])
             elif key == "magMouseTrackingMode":
                 value = self._getMagMouseTrackingModeString(prefsDict[key])
+            elif key == "magControlTrackingMode":
+                value = self._getMagControlTrackingModeString(prefsDict[key])
+            elif key == "magTextTrackingMode":
+                value = self._getMagTextTrackingModeString(prefsDict[key])
             elif key == "magZoomerType":
                 value = self._getMagZoomerTypeString(prefsDict[key])
             elif key == "magSourceDisplay" or key == "magTargetDisplay":

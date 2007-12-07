@@ -199,6 +199,81 @@ def __setROIPush(x, y):
     if True:
         __setROI(newROI)
 
+def __setROICursorPush(x, y, width, height, edgeMargin = 0):
+    """Nudges the ROI if the caret or control is not visible.
+
+    Arguments:
+    - x: integer in unzoomed system coordinates representing x component
+    - y: integer in unzoomed system coordinates representing y component
+    - width: integer in unzoomed system coordinates representing the width
+    - height: integer in unzoomed system coordinates representing the height
+    - edgeMargin: a percentage representing how close to the edge we can get
+                  before we need to push
+    """
+
+    # The edge margin should not exceed 50%. (50% is a centered alignment).
+    #
+    edgeMargin = min(edgeMargin, 50)/100.00
+    edgeMarginX = edgeMargin * _sourceDisplayBounds.x2/settings.magZoomFactor
+    edgeMarginY = edgeMargin * _sourceDisplayBounds.y2/settings.magZoomFactor
+
+    # Determine if the accessible is partially to the left, right,
+    # above, or below the current region of interest (ROI).
+    #
+    leftOfROI = (x - edgeMarginX) <= _roi.x1
+    rightOfROI = (x + width + edgeMarginX) >= _roi.x2
+    aboveROI = (y - edgeMarginY)  <= _roi.y1
+    belowROI = (y + height + edgeMarginY) >= _roi.y2
+
+    # If it is already completely showing, do nothing.
+    #
+    visibleX = not(leftOfROI or rightOfROI)
+    visibleY = not(aboveROI or belowROI)
+    if visibleX and visibleY:
+        _zoomer.markDirty(_roi)
+
+    # The algorithm is devised to move the ROI as little as possible, yet
+    # favor the top left side of the object [[[TODO: WDW - the left/right
+    # top/bottom favoring should probably depend upon the locale.  Also,
+    # I had the notion of including a floating point snap factor between
+    # 0.0 and 1.0 that would determine how to position the object in the
+    # window relative to the ROI edges.  A snap factor of -1 would mean to
+    # snap to the closest edge.  A snap factor of 0.0 would snap to the
+    # left most or top most edge, a snap factor of 1.0 would snap to the
+    # right most or bottom most edge.  Any number in between would divide
+    # the two.]]]
+    #
+    x1 = _roi.x1
+    x2 = _roi.x2
+    y1 = _roi.y1
+    y2 = _roi.y2
+
+    if leftOfROI:
+        x1 = max(_sourceDisplayBounds.x1, x - edgeMarginX)
+        x2 = x1 + _roiWidth
+    elif rightOfROI:
+        x = min(_sourceDisplayBounds.x2, x + edgeMarginX)
+        if width > _roiWidth:
+            x1 = x
+            x2 = x1 + _roiWidth
+        else:
+            x2 = x + width
+            x1 = x2 - _roiWidth
+
+    if aboveROI:
+        y1 = max(_sourceDisplayBounds.y1, y - edgeMarginY)
+        y2 = y1 + _roiHeight
+    elif belowROI:
+        y = min(_sourceDisplayBounds.y2, y + edgeMarginY)
+        if height > _roiHeight:
+            y1 = y
+            y2 = y1 + _roiHeight
+        else:
+            y2 = y + height
+            y1 = y2 - _roiHeight
+
+    __setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
+
 def __setROIProportional(x, y):
     """Positions the ROI proportionally to where the pointer is on the screen.
 
@@ -246,13 +321,13 @@ def __onMouseEvent(e):
     if _pollMouseDisabled:
         _zoomer.setPointerPos(x, y)
 
-    if settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
+    if settings.magMouseTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
         __setROIPush(x, y)
     elif settings.magMouseTrackingMode == \
-                                settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
+                                settings.MAG_TRACKING_MODE_PROPORTIONAL:
         __setROIProportional(x, y)
     elif settings.magMouseTrackingMode == \
-                                    settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+                                    settings.MAG_TRACKING_MODE_CENTERED:
         __setROICenter(x, y)
 
 def __getValueText(slot, value):
@@ -667,6 +742,15 @@ def magnifyAccessible(event, obj, extents=None):
     if not _initialized:
         return
 
+    # Avoid jerking the display around if the mouse is what ended up causing
+    # this event.  We guess this by seeing if this request has come in within
+    # a close period of time.  [[[TODO: WDW - this is a hack and really
+    # doesn't belong here.  Plus, the delta probably should be adjustable.]]]
+    #
+    currentTime = time.time()
+    if (currentTime - _lastMouseEventTime) < 0.2: # 200 milliseconds
+        return
+
     haveSomethingToMagnify = False
 
     if extents:
@@ -682,6 +766,16 @@ def magnifyAccessible(event, obj, extents=None):
         except:
             haveSomethingToMagnify = False
 
+        if haveSomethingToMagnify:
+            if settings.magTextTrackingMode == \
+                   settings.MAG_TRACKING_MODE_CENTERED:
+                __setROICenter(x, y)
+            elif settings.magTextTrackingMode == \
+                     settings.MAG_TRACKING_MODE_PUSH:
+                __setROICursorPush(x, y, width, height,
+                                   settings.magEdgeMargin)
+            return
+
     if not haveSomethingToMagnify:
         try:
             extents = obj.queryComponent().getExtents(0)
@@ -691,73 +785,24 @@ def magnifyAccessible(event, obj, extents=None):
         except:
             haveSomethingToMagnify = False
 
-    if not haveSomethingToMagnify:
-        return
+    if haveSomethingToMagnify:
+        if settings.magControlTrackingMode == \
+               settings.MAG_TRACKING_MODE_CENTERED:
+            centerX = x + width/2
+            centerY = y + height/2
 
-    # Avoid jerking the display around if the mouse is what ended up causing
-    # this event.  We guess this by seeing if this request has come in within
-    # a close period of time.  [[[TODO: WDW - this is a hack and really
-    # doesn't belong here.  Plus, the delta probably should be adjustable.]]]
-    #
-    currentTime = time.time()
-    if (currentTime - _lastMouseEventTime) < 0.2: # 200 milliseconds
-        return
+            # Be sure that the upper-left corner of the object will still
+            # be visible on the screen.
+            #
+            if width > _roiWidth:
+                centerX = x
+            if height > _roiHeight:
+                centerY = y
 
-    # Determine if the accessible is partially to the left, right,
-    # above, or below the current region of interest (ROI).
-    #
-    leftOfROI = x < _roi.x1
-    rightOfROI = (x + width) > _roi.x2
-    aboveROI = y < _roi.y1
-    belowROI = (y + height) > _roi.y2
-
-    # If it is already completely showing, do nothing.
-    #
-    visibleX = not(leftOfROI or rightOfROI)
-    visibleY = not(aboveROI or belowROI)
-
-    if visibleX and visibleY:
-        _zoomer.markDirty(_roi)
-
-    # The algorithm is devised to move the ROI as little as possible, yet
-    # favor the top left side of the object [[[TODO: WDW - the left/right
-    # top/bottom favoring should probably depend upon the locale.  Also,
-    # I had the notion of including a floating point snap factor between
-    # 0.0 and 1.0 that would determine how to position the object in the
-    # window relative to the ROI edges.  A snap factor of -1 would mean to
-    # snap to the closest edge.  A snap factor of 0.0 would snap to the
-    # left most or top most edge, a snap factor of 1.0 would snap to the
-    # right most or bottom most edge.  Any number in between would divide
-    # the two.]]]
-    #
-    x1 = _roi.x1
-    x2 = _roi.x2
-    y1 = _roi.y1
-    y2 = _roi.y2
-
-    if leftOfROI:
-        x1 = x
-        x2 = x1 + _roiWidth
-    elif rightOfROI:
-        if width > _roiWidth:
-            x1 = x
-            x2 = x1 + _roiWidth
-        else:
-            x2 = x + width
-            x1 = x2 - _roiWidth
-
-    if aboveROI:
-        y1 = y
-        y2 = y1 + _roiHeight
-    elif belowROI:
-        if height > _roiHeight:
-            y1 = y
-            y2 = y1 + _roiHeight
-        else:
-            y2 = y + height
-            y1 = y2 - _roiHeight
-
-    __setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
+            __setROICenter(centerX, centerY)
+        elif settings.magControlTrackingMode == \
+                 settings.MAG_TRACKING_MODE_PUSH:
+            __setROICursorPush(x, y, width, height)
 
 def init():
     """Initializes the magnifier, bringing the magnifier up on the

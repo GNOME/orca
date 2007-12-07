@@ -123,6 +123,9 @@ userCustomizableSettings = [
     "enableMagZoomerColorInversion",
     "magSmoothingMode",
     "magMouseTrackingMode",
+    "magControlTrackingMode",
+    "magTextTrackingMode",
+    "magEdgeMargin",
     "magSourceDisplay",
     "magTargetDisplay",
     "verbalizePunctuationStyle",
@@ -356,13 +359,36 @@ MAG_SMOOTHING_MODE_BILINEAR      = 0
 MAG_SMOOTHING_MODE_NONE          = 1
 magSmoothingMode                 = MAG_SMOOTHING_MODE_BILINEAR
 
-# Magnification mouse tracking mode (see magMouseTrackingMode).
+# Magnification tracking mode styles (see magMouseTrackingMode,
+# magControlTrackingMode and magTextTrackingMode).
 #
-MAG_MOUSE_TRACKING_MODE_CENTERED     = 0
-MAG_MOUSE_TRACKING_MODE_NONE         = 1
-MAG_MOUSE_TRACKING_MODE_PROPORTIONAL = 2
-MAG_MOUSE_TRACKING_MODE_PUSH         = 3
-magMouseTrackingMode                 = MAG_MOUSE_TRACKING_MODE_CENTERED
+MAG_TRACKING_MODE_CENTERED     = 0
+MAG_TRACKING_MODE_PROPORTIONAL = 1
+MAG_TRACKING_MODE_PUSH         = 2
+MAG_TRACKING_MODE_NONE         = 3
+
+# To retain backward compatibility with previous versions of Orca.
+#
+MAG_MOUSE_TRACKING_MODE_CENTERED = MAG_TRACKING_MODE_CENTERED
+MAG_MOUSE_TRACKING_MODE_PROPORTIONAL = MAG_TRACKING_MODE_PROPORTIONAL
+MAG_MOUSE_TRACKING_MODE_PUSH = MAG_TRACKING_MODE_PUSH
+MAG_MOUSE_TRACKING_MODE_NONE = MAG_TRACKING_MODE_NONE
+
+# Magnification mouse tracking mode.
+#
+magMouseTrackingMode           = MAG_TRACKING_MODE_CENTERED
+
+# Magnification control and menu item tracking mode.
+#
+magControlTrackingMode         = MAG_TRACKING_MODE_PUSH
+
+# Magnification text cursor tracking mode.
+#
+magTextTrackingMode            = MAG_TRACKING_MODE_PUSH
+
+# Magnification edge margin (percentage of screen).
+#
+magEdgeMargin                  = 0
 
 # Magnification source display
 #

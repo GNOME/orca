@@ -59,6 +59,36 @@ from orca_i18n import _  # for gettext support
 
 class OrcaSetupGUI(orca_glade.GladeWrapper):
 
+    # Translators: this is an algorithm for tracking an object
+    # of interest (mouse pointer, caret, or widget) with the
+    # magnifier.  Centered means that Orca attempts to keep
+    # the object of interest in the center of the magnified window.
+    #
+    magTrackingCenteredStr = _("Centered")
+
+    # Translators: there is no special algorithm used for tracking an
+    # object of interest (mouse pointer, caret, or widget) with the
+    # magnifier.
+    #
+    magTrackingNoneStr = _("None")
+
+    # Translators: this is an algorithm for tracking the mouse
+    # with the magnifier.  Proportional means that Orca attempts
+    # to position the mouse in the magnifier window in a way
+    # such that it helps represent where on the desktop the mouse
+    # is.  For example, if the mouse is 25% from the left edge of
+    # the desktop, Orca positions the mouse 25% from the left edge
+    # of the magnified region.
+    #
+    magTrackingProportionalStr = _("Proportional")
+
+    # Translators: this is an algorithm for tracking an object
+    # of interest (mouse pointer, caret, or widget) with the
+    # magnifier.  Push means that Orca will move the magnified
+    # region just enough to display the object of interest.
+    #
+    magTrackingPushStr = _("Push")
+
     def __init__(self, fileName, windowName):
         """Initialize the Orca configuration GUI.
 
@@ -1574,40 +1604,65 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # the mouse tracking combobox accordingly.
         #
         mouseTrackingMode = prefs["magMouseTrackingMode"]
-        if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
-            # Translators: this is an algorithm for tracking the mouse
-            # with the magnifier.  Centered means that Orca attempts to
-            # keep the mouse in the center of the magnified window.
-            #
-            mode = _("Centered")
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_NONE:
-            mode = _("None")
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
-            # Translators: this is an algorithm for tracking the mouse
-            # with the magnifier.  Proportional means that Orca attempts
-            # to position the mouse in the magnifier window in a way
-            # such that it helps represent where on the desktop the mouse
-            # is.  For example, if the mouse is 25% from the left edge of
-            # the desktop, Orca positions the mouse 25% from the left edge
-            # of the magnified region.
-            #
-            mode = _("Proportional")
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
-            # Translators: this is an algorithm for tracking the mouse
-            # with the magnifier.  Push means that Orca will not move
-            # the magnified region until the mouse hits an edge of the
-            # magnified region.
-            #
-            mode = _("Push")
+        if mouseTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            mode = self.magTrackingCenteredStr
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            mode = self.magTrackingNoneStr
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PROPORTIONAL:
+            mode = self.magTrackingProportionalStr
+        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            mode = self.magTrackingPushStr
         else:
-            # Translators: this is an algorithm for tracking the mouse
-            # with the magnifier.  Centered means that Orca attempts to
-            # keep the mouse in the center of the magnified window.
-            #
-            mode = _("Centered")
+            mode = self.magTrackingCenteredStr
         magMouseTrackingComboBox = self.get_widget("magMouseTrackingComboBox")
         index = self._getComboBoxIndex(magMouseTrackingComboBox, mode)
         magMouseTrackingComboBox.set_active(index)
+
+        # Get the control and menu item tracking preference and set the 
+        # active value for the control and menu item tracking combobox 
+        # accordingly.
+        #
+        controlTrackingMode = prefs["magControlTrackingMode"]
+        if controlTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            mode = self.magTrackingCenteredStr
+        elif controlTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            mode = self.magTrackingNoneStr
+        elif controlTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            mode = self.magTrackingPushStr
+        else:
+            mode = self.magTrackingPushStr
+        magControlTrackingComboBox = \
+                         self.get_widget("magControlTrackingComboBox")
+        index = self._getComboBoxIndex(magControlTrackingComboBox, mode)
+        magControlTrackingComboBox.set_active(index)
+
+        # Get the text cursor tracking preference and set the active value
+        # for the text cursor tracking combobox accordingly.
+        #
+        textCursorTrackingMode = prefs["magTextTrackingMode"]
+        if textCursorTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
+            mode = self.magTrackingCenteredStr
+        elif textCursorTrackingMode == settings.MAG_TRACKING_MODE_NONE:
+            mode = self.magTrackingNoneStr
+        elif textCursorTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+            mode = self.magTrackingPushStr
+        else:
+            mode = self.magTrackingPushStr
+        magTextCursorTrackingComboBox = \
+                         self.get_widget("magTextCursorTrackingComboBox")
+        index = self._getComboBoxIndex(magTextCursorTrackingComboBox, mode)
+        magTextCursorTrackingComboBox.set_active(index)
+        self.get_widget("magEdgeMarginHBox").\
+            set_sensitive(textCursorTrackingMode == \
+                                       settings.MAG_TRACKING_MODE_PUSH)
+
+        # Get the edge margin preference for cursor tracking and set the
+        # value of the edge margin spin button accordingly.
+        #
+        edgeMargin = prefs["magEdgeMargin"]
+        magEdgeMarginSpinButton = self.get_widget("magEdgeMarginSpinButton")
+        adjustment = gtk.Adjustment(edgeMargin, 0, 50, 1, 5, 50)
+        self.get_widget("magEdgeMarginSpinButton").set_adjustment(adjustment)
 
         # Text attributes pane.
         #
@@ -2770,39 +2825,89 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         mouseTrackingMode = widget.get_active_text()
-        # Translators: this is an algorithm for tracking the mouse
-        # with the magnifier.  Centered means that Orca attempts to
-        # keep the mouse in the center of the magnified window.
-        #
-        if mouseTrackingMode ==  _("Centered"):
-            mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+        if mouseTrackingMode == self.magTrackingCenteredStr:
+            mode = settings.MAG_TRACKING_MODE_CENTERED
 
-        # Translators: this is an algorithm for tracking the mouse
-        # with the magnifier.  Push means that Orca will not move
-        # the magnified region until the mouse hits an edge of the
-        # magnified region.
-        #
-        elif mouseTrackingMode == _("Push"):
-            mode = settings.MAG_MOUSE_TRACKING_MODE_PUSH
+        elif mouseTrackingMode == self.magTrackingPushStr:
+            mode = settings.MAG_TRACKING_MODE_PUSH
 
-        # Translators: this is an algorithm for tracking the mouse
-        # with the magnifier.  Proportional means that Orca attempts
-        # to position the mouse in the magnifier window in a way
-        # such that it helps represent where on the desktop the mouse
-        # is.  For example, if the mouse is 25% from the left edge of
-        # the desktop, Orca positions the mouse 25% from the left edge
-        # of the magnified region.
-        #
-        elif mouseTrackingMode == _("Proportional"):
-            mode = settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL
+        elif mouseTrackingMode == self.magTrackingProportionalStr:
+            mode = settings.MAG_TRACKING_MODE_PROPORTIONAL
 
-        elif mouseTrackingMode == _("None"):
-            mode = settings.MAG_MOUSE_TRACKING_MODE_NONE
+        elif mouseTrackingMode == self.magTrackingNoneStr:
+            mode = settings.MAG_TRACKING_MODE_NONE
 
         else:
-            mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+            mode = settings.MAG_TRACKING_MODE_CENTERED
 
         self.prefsDict["magMouseTrackingMode"] = mode
+
+    def magControlTrackingChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magControlTrackingComboBox GtkComboBox widget. The user has
+           selected a different magnification control and menu item
+           tracking style. Set the 'magControlTrackingMode' preference 
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        controlTrackingMode = widget.get_active_text()
+        if controlTrackingMode == self.magTrackingCenteredStr:
+            mode = settings.MAG_TRACKING_MODE_CENTERED
+
+        elif controlTrackingMode == self.magTrackingPushStr:
+            mode = settings.MAG_TRACKING_MODE_PUSH
+
+        elif controlTrackingMode == self.magTrackingNoneStr:
+            mode = settings.MAG_TRACKING_MODE_NONE
+
+        else:
+            mode = settings.MAG_TRACKING_MODE_PUSH
+
+        self.prefsDict["magControlTrackingMode"] = mode
+
+    def magTextTrackingChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magTextCursorTrackingComboBox GtkComboBox widget. The user has
+           selected a different magnification text cursor tracking style.
+           Set the 'magTextCursorTrackingMode' preference to the new value
+           and grey out the edge margin widget unless the mode is "Push".
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        textCursorTrackingMode = widget.get_active_text()
+        if textCursorTrackingMode == self.magTrackingCenteredStr:
+            mode = settings.MAG_TRACKING_MODE_CENTERED
+
+        elif textCursorTrackingMode == self.magTrackingPushStr:
+            mode = settings.MAG_TRACKING_MODE_PUSH
+
+        elif textCursorTrackingMode == self.magTrackingNoneStr:
+            mode = settings.MAG_TRACKING_MODE_NONE
+
+        else:
+            mode = settings.MAG_TRACKING_MODE_PUSH
+
+        self.prefsDict["magTextTrackingMode"] = mode
+        self.get_widget("magEdgeMarginHBox").\
+                set_sensitive(mode == settings.MAG_TRACKING_MODE_PUSH)
+
+    def magEdgeMarginValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magEdgeMarginSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           edge margin spin button. Set the 'magEdgeMargin' preference 
+           to the new integer value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["magEdgeMargin"] = widget.get_value_as_int()
 
     def magInvertColorsChecked(self, widget):
         """Signal handler for the "toggled" signal for the

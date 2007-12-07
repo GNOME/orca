@@ -1,3 +1,13 @@
+2007-12-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/mag.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #464705 - Provide option to keep caret in center of 
+          magnifier region of interest.
+
 2007-12-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
