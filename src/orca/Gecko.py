@@ -3495,9 +3495,11 @@ class Script(default.Script):
 
         # Possibility #4: We called grabFocus() on this item because it has
         # the overflow:auto; style associated with it.  We need to ignore
-        # this event.  See bug #471537.
+        # this event.  See bug #471537.  But we don't want to do this for
+        # entries.  See bug #501447.
         #
-        if self.isSameObject(event.source, self._objectForFocusGrab):
+        if self.isSameObject(event.source, self._objectForFocusGrab) \
+           and event.source.getRole() != pyatspi.ROLE_ENTRY:
             self._objectForFocusGrab = None
             return
 
@@ -3763,9 +3765,11 @@ class Script(default.Script):
         """
         # If this event is the result of our calling grabFocus() on
         # this object in setCaretPosition(), we want to ignore it.
-        # See bug #471537.
+        # See bug #471537.  But we don't want to do this for entries.
+        # See bug #501447.
         #
-        if self.isSameObject(event.source, self._objectForFocusGrab):
+        if self.isSameObject(event.source, self._objectForFocusGrab) \
+           and event.source.getRole() != pyatspi.ROLE_ENTRY:
             orca.setLocusOfFocus(event, event.source, False)
             return
             

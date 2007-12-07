@@ -1,3 +1,9 @@
+2007-12-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #501447 - Orca sometimes fails to speak our 
+          location when entering FF3 entries.
+
 2007-12-06  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/bookmarks.py:
