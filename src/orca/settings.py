@@ -811,3 +811,12 @@ deprecatedMessages = False
 # maximize on caching.
 #
 focusHistoryLength = 5
+
+# Listen to all AT-SPI events, regardless to if we are using them or not.
+# This is useful for development and debugging.
+#
+listenAllEvents = False
+
+# This is a list of events that Orca should immidiately drop and never look at.
+#
+ignoredEventsList = ['object:bounds-changed']

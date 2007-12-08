@@ -110,6 +110,16 @@ class Script(default.Script):
         """
         return SpeechGenerator(self)
 
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["object:state-changed:focused"]           = \
+            self.onStateChanged
+
+        return listeners
+
     def __sayAllProgressCallback(self, context, progressType):
         """Provide feedback during the sayAll operation.
         """

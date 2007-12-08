@@ -1,3 +1,20 @@
+2007-12-07  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py: 
+	* src/orca/default.py: 
+	* src/orca/focus_tracking_presenter.py: 
+	* src/orca/scripts/Evolution.py: 
+	* src/orca/scripts/StarOffice.py: 
+	* src/orca/scripts/acroread.py: 
+	* src/orca/scripts/gedit.py: 
+	* src/orca/scripts/gnome-panel.py: 
+	* src/orca/scripts/gnome-search-tool.py: 
+	* src/orca/scripts/metacity.py: 
+	* src/orca/settings.py: 
+	  Selectively register for events, specifically state-changed
+	events. This speeds up Orca since event listening is heavier
+	because of ref/unrefs (bug #491756).
+	
 2007-12-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:

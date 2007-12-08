@@ -59,6 +59,18 @@ class Script(default.Script):
         """
         debug.println(self.debugLevel, "gnome-panel.py: "+msg)
 
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+        
+        listeners["object:state-changed:focused"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:showing"]           = \
+            self.onStateChanged
+        
+        return listeners
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 

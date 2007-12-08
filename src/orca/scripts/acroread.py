@@ -114,6 +114,18 @@ class Script(default.Script):
                 Script.sayAll,
                 _("Speaks entire document."))
 
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["object:state-changed:checked"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:focused"]           = \
+            self.onStateChanged
+      
+        return listeners
+
     def getDocument(self, locusOfFocus):
         """ Obtains the Document object that contains the locusOfFocus.
 

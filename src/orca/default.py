@@ -760,46 +760,28 @@ class Script(script.Script):
             self.onTextDeleted
         listeners["object:text-changed:insert"]             = \
             self.onTextInserted
-        listeners["object:text-selection-changed"]          = \
-            self.noOp
         listeners["object:active-descendant-changed"]       = \
             self.onActiveDescendantChanged
-        listeners["object:children-changed"]               = \
-            self.noOp
         listeners["object:link-selected"]                   = \
             self.onLinkSelected
-        listeners["object:state-changed:"]                  = \
+        listeners["object:state-changed:active"]            = \
+            self.onStateChanged
+        listeners["object:state-changed:focused"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:showing"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:checked"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:expanded"]           = \
             self.onStateChanged
         listeners["object:selection-changed"]               = \
             self.onSelectionChanged
         listeners["object:property-change:accessible-value"] = \
             self.onValueChanged
-        listeners["object:property-change"]                 = \
-            self.noOp
-        listeners["object:value-changed:"]                  = \
+        listeners["object:value-changed"]                  = \
             self.onValueChanged
-        listeners["object:visible-changed"]                 = \
-            self.noOp
         listeners["window:activate"]                        = \
             self.onWindowActivated
-        listeners["window:create"]                          = \
-            self.noOp
-        listeners["window:deactivate"]                      = \
-            self.onWindowDeactivated
-        listeners["window:destroy"]                         = \
-            self.noOp
-        listeners["window:maximize"]                        = \
-            self.noOp
-        listeners["window:minimize"]                        = \
-            self.noOp
-        listeners["window:rename"]                          = \
-            self.noOp
-        listeners["window:restore"]                         = \
-            self.noOp
-        listeners["window:switch"]                          = \
-            self.noOp
-        listeners["window:titlelize"]                       = \
-            self.noOp
 
         return listeners
 

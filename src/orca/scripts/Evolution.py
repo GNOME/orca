@@ -363,6 +363,16 @@ class Script(default.Script):
                 self.inputEventHandlers["toggleReadMailHandler"]))
         return keyBindings
 
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["object:state-changed:showing"]           = \
+            self.onStateChanged
+
+        return listeners
+
     def toggleReadMail(self, inputEvent):
         """ Toggle whether we present new mail if we not not the active script.+
         Arguments:

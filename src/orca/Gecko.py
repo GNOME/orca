@@ -2401,6 +2401,12 @@ class Script(default.Script):
             self.onDocumentLoadStopped
         listeners["object:visible-data-changed"]            = \
             self.onVisibleDataChanged
+        listeners["object:state-changed:showing"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:checked"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:busy"]              = \
+            self.onStateChanged
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
         listeners["object:text-changed:insert"]             = \

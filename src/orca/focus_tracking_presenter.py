@@ -81,6 +81,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._appStateInfo = None
         self._listenerCounts = None
 
+        if settings.listenAllEvents:
+            # Just listen to everything, always.
+            self._registerAllEvents()
+
         if settings.debugEventQueue:
             self._enqueueEventCount = 0
             self._dequeueEventCount = 0
@@ -118,6 +122,22 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                                   eventType)
             del self._listenerCounts[eventType]
 
+    def _registerAllEvents(self):
+        """Register all top-level event types except for "mouse".
+        """
+        topLevelEvents = filter(lambda et: ':' not in et and 'mouse' not in et,
+                                pyatspi.EVENT_TREE)
+        for event_type in topLevelEvents:
+            self.registry.registerEventListener(
+                self._enqueueEvent, event_type)
+
+    def _deregisterAllEvents(self):
+        topLevelEvents = filter(lambda et: ':' not in et and 'mouse' not in et,
+                                pyatspi.EVENT_TREE)
+        for event_type in topLevelEvents:
+            self.registry.deregisterEventListener(
+                self._enqueueEvent, event_type)
+
     def _registerEventListeners(self, script):
         """Tells the FocusTrackingPresenter to listen for all
         the event types of interest to the script.
@@ -125,6 +145,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - script: the script.
         """
+
+        if settings.listenAllEvents: 
+            # We are always listening to everything.
+            return
 
         for eventType in script.listeners.keys():
             self._registerEventListener(eventType)
@@ -136,6 +160,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - script: the script.
         """
+        if settings.listenAllEvents: 
+            # We are always listening to everything.
+            return
 
         for eventType in script.listeners.keys():
             self._deregisterEventListener(eventType)
@@ -655,6 +682,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                           "----------> QUEUEING BRAILLE COMMAND %d" % e.event)
             event = e
         else:
+            if e.type in settings.ignoredEventsList:
+                if settings.debugEventQueue:
+                    self._enqueueEventCount -= 1
+                return
             # We ignore defunct objects.
             #
             if e.type.startswith("object:state-changed:defunct"):

@@ -830,6 +830,22 @@ class Script(default.Script):
         settings.enabledSpokenTextAttributes = \
             self.savedEnabledSpokenTextAttributes
 
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["object:state-changed:focused"]           = \
+            self.onStateChanged
+        listeners["object:state-changed:sensitive"]         = \
+            self.onStateChanged
+        listeners["object:state-changed:active"]            = \
+            self.onStateChanged
+        listeners["object:state-changed:checked"]           = \
+            self.onStateChanged
+
+        return listeners
+
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
