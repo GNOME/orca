@@ -1,3 +1,8 @@
+2007-12-10  ahmad riza h nst  <rizahnst@gnome.org>
+
+	* id.po: Added Indonesian translation.
+	* LINGUAS: Added id.
+
 2007-04-05  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* nb.po: Updated Norwegian bokmål translation from
