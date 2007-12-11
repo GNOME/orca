@@ -4440,15 +4440,13 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         text = self.queryNonEmptyText(obj)
         if text:
-            # [[[TODO: WDW - the caret might be at the end of the text.
-            # Not quite sure what to do in this case.  What we'll do here
-            # is just speak the previous character.  But...maybe we want to
-            # make sure we say something like "end of line" or move the
-            # caret context to the beginning of the next character via
-            # a call to goNextWord.]]]
+            # If the caret is at the end of text and we're not in an
+            # entry, something bad is going on, so decrement the offset
+            # before speaking the character.
             #
             string = text.getText(0, -1)
-            if characterOffset >= len(string):
+            if characterOffset >= len(string) and \
+               obj.getRole() != pyatspi.ROLE_ENTRY:
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
 
@@ -4813,13 +4811,24 @@ class Script(default.Script):
             caretOffset = text.caretOffset
             singleLine  = obj.getState().contains(
                 pyatspi.STATE_SINGLE_LINE)
+
+            # Single line entries have an additional newline character
+            # at the end.
+            #
+            newLineAdjustment = int(not singleLine)
+
+            # We want to use our caret navigation model in an entry if
+            # there's nothing in the entry, we're at the beginning of
+            # the entry and press Left or Up, or we're at the end of the
+            # entry and press Right or Down.
+            #
             if length == 0 \
                or ((length == 1) and (text.getText(0, -1) == "\n")):
                 weHandleIt = True
             elif caretOffset <= 0:
                 weHandleIt = keyboardEvent.event_string \
                              in ["Up", "Left"]
-            elif caretOffset >= length - 1 \
+            elif caretOffset >= length - newLineAdjustment \
                  and not self._autocompleteVisible:
                 weHandleIt = keyboardEvent.event_string \
                              in ["Down", "Right"]
@@ -6153,7 +6162,15 @@ class Script(default.Script):
         if text:
             unicodeText = self.getUnicodeText(obj)
             if characterOffset >= len(unicodeText):
-                return [obj, -1]
+                if obj.getRole() != pyatspi.ROLE_ENTRY:
+                    return [obj, -1]
+                else:
+                    # We're at the end of an entry.  If we return -1,
+                    # and then set the caretContext accordingly,
+                    # findNextCaretInOrder() will think we're at the
+                    # beginning and we'll never escape this entry.
+                    #
+                    return [obj, characterOffset]
 
             character = text.getText(characterOffset,
                                      characterOffset + 1).decode("UTF-8")
@@ -7170,11 +7187,13 @@ class Script(default.Script):
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
                 speech.speak(character, self.getACSS(obj, character), False)
-            else:
-                # We'll run into this when we hit a component with no
-                # text, such as a checkbox or when we reset the caret to the
-                # parent's characterOffset (lists).  In these cases, we'll
-                # just speak the entire component.
+            elif obj.getRole() != pyatspi.ROLE_ENTRY:
+                # We won't have a character if we move to the end of an
+                # entry (in which case we're not on a character and therefore
+                # have nothing to say), or when we hit a component with no
+                # text (e.g. checkboxes) or reset the caret to the parent's
+                # characterOffset (lists).  In these latter cases, we'll just
+                # speak the entire component.
                 #
                 utterances = self.speechGenerator.getSpeech(obj, False)
                 speech.speakUtterances(utterances)
