@@ -109,7 +109,7 @@ class LiveRegionManager:
         livetype = self._getLiveType(event.source)
         # Purge our queue of messages based on priority of incoming event and
         # age of queued message.
-        if livetype == LIVE_NONE:
+        if livetype == LIVE_NONE or livetype == LIVE_OFF:
             # 1) we won't do anything for bad markup right now.
             # 2) we won't waste processing power if live type is lower
             #    than user define.

@@ -1,3 +1,9 @@
+2007-12-11  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/liveregions.py:
+          Additional work for Bug #466251, Support ARIA live regions in 
+          Firefox/Gecko.  Added test for LIVE_OFF in handleEvent().
+
 2007-12-07  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/Gecko.py: 
