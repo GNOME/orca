@@ -18,7 +18,7 @@ do
     echo
     OUTPUT_FILE=`basename $foo .py`.pylint
     echo Checking $foo, sending output to $OUTPUT_FILE
-    pylint --init-hook="import pyatspi" $INSTALL_DIR/orca/$foo > $OUTPUT_FILE 2>&1
+    PYTHONPATH=$INSTALL_DIR:$PYTHONPATH pylint --init-hook="import pyatspi" $INSTALL_DIR/orca/$foo > $OUTPUT_FILE 2>&1
     grep "code has been rated" $OUTPUT_FILE | cut -f1 -d\( \
     | sed "s/.pylint:Your code has been rated at / /" \
     | sed "s^/10^^" | sort -n -k 2,2
