@@ -3924,291 +3924,286 @@ Custom</property>
 				  <property name="right_padding">0</property>
 
 				  <child>
-				    <widget class="GtkTable" id="table12">
+				    <widget class="GtkTable" id="table13">
 				      <property name="visible">True</property>
 				      <property name="n_rows">3</property>
-				      <property name="n_columns">2</property>
+				      <property name="n_columns">3</property>
 				      <property name="homogeneous">False</property>
-				      <property name="row_spacing">0</property>
-				      <property name="column_spacing">0</property>
+				      <property name="row_spacing">3</property>
+				      <property name="column_spacing">3</property>
 
 				      <child>
-					<widget class="GtkHBox" id="magEdgeMarginHBox">
+					<widget class="GtkLabel" id="magMouseTrackingLabel">
 					  <property name="visible">True</property>
-					  <property name="homogeneous">False</property>
-					  <property name="spacing">3</property>
+					  <property name="label" translatable="yes">Mouse poi_nter:</property>
+					  <property name="use_underline">True</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_RIGHT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">1</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
+					  <property name="mnemonic_widget">magMouseTrackingComboBox</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
+					  <accessibility>
+					    <atkrelation target="magMouseTrackingComboBox" type="label-for"/>
+					  </accessibility>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">1</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
 
-					  <child>
-					    <widget class="GtkLabel" id="magEdgeMarginLabel">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes" comments="Translators: When a user chooses a tracking alignment of &quot;push&quot;, Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The &quot;edge margin&quot; allows the user to specify a margin so that objects are not displayed too close to the edge.">Edge mar_gin:</property>
-					      <property name="use_underline">True</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_RIGHT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					      <property name="mnemonic_widget">magEdgeMarginSpinButton</property>
-					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					      <property name="width_chars">-1</property>
-					      <property name="single_line_mode">False</property>
-					      <property name="angle">0</property>
-					      <accessibility>
-						<atkrelation target="magEdgeMarginSpinButton" type="label-for"/>
-					      </accessibility>
-					    </widget>
-					    <packing>
-					      <property name="padding">17</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
+				      <child>
+					<widget class="GtkLabel" id="magControlTrackingLabel">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">_Control and menu item:</property>
+					  <property name="use_underline">True</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_RIGHT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">1</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
+					  <property name="mnemonic_widget">magControlTrackingComboBox</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
+					  <accessibility>
+					    <atkrelation target="magControlTrackingComboBox" type="label-for"/>
+					  </accessibility>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">1</property>
+					  <property name="top_attach">1</property>
+					  <property name="bottom_attach">2</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
 
-					  <child>
-					    <widget class="GtkSpinButton" id="magEdgeMarginSpinButton">
-					      <property name="visible">True</property>
-					      <property name="can_focus">True</property>
-					      <property name="climb_rate">1</property>
-					      <property name="digits">0</property>
-					      <property name="numeric">True</property>
-					      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-					      <property name="snap_to_ticks">False</property>
-					      <property name="wrap">False</property>
-					      <property name="adjustment">1 0 100 1 10 10</property>
-					      <accessibility>
-						<atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
-						<atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
-					      </accessibility>
-					      <signal name="value_changed" handler="magEdgeMarginValueChanged" last_modification_time="Thu, 06 Dec 2007 22:57:50 GMT"/>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
+				      <child>
+					<widget class="GtkComboBox" id="magControlTrackingComboBox">
+					  <property name="visible">True</property>
+					  <property name="items" translatable="yes">Centered
+Push
+None</property>
+					  <property name="add_tearoffs">False</property>
+					  <property name="focus_on_click">True</property>
+					  <accessibility>
+					    <atkrelation target="magControlTrackingLabel" type="labelled-by"/>
+					  </accessibility>
+					  <signal name="changed" handler="magControlTrackingChanged" last_modification_time="Thu, 06 Dec 2007 22:56:53 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">1</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">1</property>
+					  <property name="bottom_attach">2</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
 
-					  <child>
-					    <widget class="GtkLabel" id="magEdgeMarginUnitsLabel">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">%</property>
-					      <property name="use_underline">False</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_LEFT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					      <property name="width_chars">-1</property>
-					      <property name="single_line_mode">False</property>
-					      <property name="angle">0</property>
-					      <accessibility>
-						<atkrelation target="magEdgeMarginSpinButton" type="label-for"/>
-					      </accessibility>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
+				      <child>
+					<widget class="GtkLabel" id="magTextCursorTrackingLabel">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">Te_xt cursor:</property>
+					  <property name="use_underline">True</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_RIGHT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">1</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
+					  <property name="mnemonic_widget">magTextCursorTrackingComboBox</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
+					  <accessibility>
+					    <atkrelation target="magTextCursorTrackingComboBox" type="label-for"/>
+					  </accessibility>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">1</property>
+					  <property name="top_attach">2</property>
+					  <property name="bottom_attach">3</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkComboBox" id="magTextCursorTrackingComboBox">
+					  <property name="visible">True</property>
+					  <property name="items" translatable="yes">Centered
+Push
+None</property>
+					  <property name="add_tearoffs">False</property>
+					  <property name="focus_on_click">True</property>
+					  <accessibility>
+					    <atkrelation target="magTextCursorTrackingLabel" type="labelled-by"/>
+					  </accessibility>
+					  <signal name="changed" handler="magTextTrackingChanged" last_modification_time="Thu, 06 Dec 2007 22:57:13 GMT"/>
 					</widget>
 					<packing>
 					  <property name="left_attach">1</property>
 					  <property name="right_attach">2</property>
 					  <property name="top_attach">2</property>
 					  <property name="bottom_attach">3</property>
+					  <property name="x_options">fill</property>
 					  <property name="y_options">fill</property>
 					</packing>
 				      </child>
 
 				      <child>
-					<widget class="GtkTable" id="table13">
+					<widget class="GtkComboBox" id="magMouseTrackingComboBox">
 					  <property name="visible">True</property>
-					  <property name="n_rows">3</property>
-					  <property name="n_columns">2</property>
-					  <property name="homogeneous">False</property>
-					  <property name="row_spacing">3</property>
-					  <property name="column_spacing">3</property>
-
-					  <child>
-					    <widget class="GtkLabel" id="magMouseTrackingLabel">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Mouse poi_nter:</property>
-					      <property name="use_underline">True</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_RIGHT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">1</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					      <property name="mnemonic_widget">magMouseTrackingComboBox</property>
-					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					      <property name="width_chars">-1</property>
-					      <property name="single_line_mode">False</property>
-					      <property name="angle">0</property>
-					      <accessibility>
-						<atkrelation target="magMouseTrackingComboBox" type="label-for"/>
-					      </accessibility>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">0</property>
-					      <property name="right_attach">1</property>
-					      <property name="top_attach">0</property>
-					      <property name="bottom_attach">1</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options"></property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkLabel" id="magControlTrackingLabel">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">_Control and menu item:</property>
-					      <property name="use_underline">True</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_RIGHT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">1</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					      <property name="mnemonic_widget">magControlTrackingComboBox</property>
-					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					      <property name="width_chars">-1</property>
-					      <property name="single_line_mode">False</property>
-					      <property name="angle">0</property>
-					      <accessibility>
-						<atkrelation target="magControlTrackingComboBox" type="label-for"/>
-					      </accessibility>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">0</property>
-					      <property name="right_attach">1</property>
-					      <property name="top_attach">1</property>
-					      <property name="bottom_attach">2</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options"></property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkComboBox" id="magControlTrackingComboBox">
-					      <property name="visible">True</property>
-					      <property name="items" translatable="yes">Centered
-Push
-None</property>
-					      <property name="add_tearoffs">False</property>
-					      <property name="focus_on_click">True</property>
-					      <accessibility>
-						<atkrelation target="magControlTrackingLabel" type="labelled-by"/>
-					      </accessibility>
-					      <signal name="changed" handler="magControlTrackingChanged" last_modification_time="Thu, 06 Dec 2007 22:56:53 GMT"/>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">1</property>
-					      <property name="right_attach">2</property>
-					      <property name="top_attach">1</property>
-					      <property name="bottom_attach">2</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options">fill</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkLabel" id="magTextCursorTrackingLabel">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Te_xt cursor:</property>
-					      <property name="use_underline">True</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_RIGHT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">1</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					      <property name="mnemonic_widget">magTextCursorTrackingComboBox</property>
-					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-					      <property name="width_chars">-1</property>
-					      <property name="single_line_mode">False</property>
-					      <property name="angle">0</property>
-					      <accessibility>
-						<atkrelation target="magTextCursorTrackingComboBox" type="label-for"/>
-					      </accessibility>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">0</property>
-					      <property name="right_attach">1</property>
-					      <property name="top_attach">2</property>
-					      <property name="bottom_attach">3</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options"></property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkComboBox" id="magTextCursorTrackingComboBox">
-					      <property name="visible">True</property>
-					      <property name="items" translatable="yes">Centered
-Push
-None</property>
-					      <property name="add_tearoffs">False</property>
-					      <property name="focus_on_click">True</property>
-					      <accessibility>
-						<atkrelation target="magTextCursorTrackingLabel" type="labelled-by"/>
-					      </accessibility>
-					      <signal name="changed" handler="magTextTrackingChanged" last_modification_time="Thu, 06 Dec 2007 22:57:13 GMT"/>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">1</property>
-					      <property name="right_attach">2</property>
-					      <property name="top_attach">2</property>
-					      <property name="bottom_attach">3</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options">fill</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkComboBox" id="magMouseTrackingComboBox">
-					      <property name="visible">True</property>
-					      <property name="items" translatable="yes">Centered
+					  <property name="items" translatable="yes">Centered
 Proportional
 Push
 None</property>
-					      <property name="add_tearoffs">False</property>
-					      <property name="focus_on_click">True</property>
-					      <accessibility>
-						<atkrelation target="magMouseTrackingLabel" type="labelled-by"/>
-					      </accessibility>
-					      <signal name="changed" handler="magMouseTrackingChanged" last_modification_time="Wed, 03 May 2006 15:55:53 GMT"/>
+					  <property name="add_tearoffs">False</property>
+					  <property name="focus_on_click">True</property>
+					  <accessibility>
+					    <atkrelation target="magMouseTrackingLabel" type="labelled-by"/>
+					  </accessibility>
+					  <signal name="changed" handler="magMouseTrackingChanged" last_modification_time="Wed, 03 May 2006 15:55:53 GMT"/>
+					</widget>
+					<packing>
+					  <property name="left_attach">1</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment84">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">0</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkHBox" id="magEdgeMarginHBox">
+					      <property name="visible">True</property>
+					      <property name="homogeneous">False</property>
+					      <property name="spacing">3</property>
+
+					      <child>
+						<widget class="GtkLabel" id="magEdgeMarginLabel">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes" comments="Translators: When a user chooses a tracking alignment of &quot;push&quot;, Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The &quot;edge margin&quot; allows the user to specify a margin so that objects are not displayed too close to the edge.">Edge mar_gin:</property>
+						  <property name="use_underline">True</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_RIGHT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <property name="mnemonic_widget">magEdgeMarginSpinButton</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
+						  <accessibility>
+						    <atkrelation target="magEdgeMarginSpinButton" type="label-for"/>
+						  </accessibility>
+						</widget>
+						<packing>
+						  <property name="padding">17</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkSpinButton" id="magEdgeMarginSpinButton">
+						  <property name="visible">True</property>
+						  <property name="can_focus">True</property>
+						  <property name="climb_rate">1</property>
+						  <property name="digits">0</property>
+						  <property name="numeric">True</property>
+						  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+						  <property name="snap_to_ticks">False</property>
+						  <property name="wrap">False</property>
+						  <property name="adjustment">0 0 100 1 10 10</property>
+						  <accessibility>
+						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
+						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
+						  </accessibility>
+						  <signal name="value_changed" handler="magEdgeMarginValueChanged" last_modification_time="Thu, 06 Dec 2007 22:57:50 GMT"/>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkLabel" id="magEdgeMarginUnitsLabel">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">%</property>
+						  <property name="use_underline">False</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
+						  <accessibility>
+						    <atkrelation target="magEdgeMarginSpinButton" type="label-for"/>
+						  </accessibility>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
 					    </widget>
-					    <packing>
-					      <property name="left_attach">1</property>
-					      <property name="right_attach">2</property>
-					      <property name="top_attach">0</property>
-					      <property name="bottom_attach">1</property>
-					      <property name="x_options">fill</property>
-					      <property name="y_options">fill</property>
-					    </packing>
 					  </child>
 					</widget>
 					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">1</property>
-					  <property name="top_attach">0</property>
+					  <property name="left_attach">2</property>
+					  <property name="right_attach">3</property>
+					  <property name="top_attach">2</property>
 					  <property name="bottom_attach">3</property>
-					  <property name="x_options">fill</property>
 					  <property name="y_options">fill</property>
 					</packing>
 				      </child>

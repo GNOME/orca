@@ -1,3 +1,10 @@
+2007-12-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Adjusted the Orca Preferences magnifier pane so that the Edge
+          Margin controls are vertically aligned with the Text cursor
+          controls.
+
 2007-12-12  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_alert.py:
@@ -16,6 +23,7 @@
 	  NOTE: many of these (but not all) are due to empty
 	  strings being sent to speech.  We'll fix those later.
 
+>>>>>>> .r3369
 2007-12-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/orca-setup.glade:
