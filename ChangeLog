@@ -1,3 +1,12 @@
+2007-12-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Slight adjustments to the magnifier pane in the Orca Preferences
+          dialog.
+          1/ Minmum value for the cursor sizes now 24.
+          2/ The scale factor, border size, top, bottom, left, and right
+             spin buttons all now numeric only.
+
 2007-12-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/settings.py:
