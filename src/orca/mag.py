@@ -940,6 +940,9 @@ def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     - restore:  a dictionary of all of the settings that should be restored
     """
 
+    if not _initialized:
+        return
+
     global _liveUpdatingMagnifier
 
     _liveUpdatingMagnifier = True
