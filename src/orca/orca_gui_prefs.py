@@ -34,6 +34,7 @@ import pango   # for ellipsize property constants of CellRendererText
 import locale
 
 import acss
+import mag
 import orca
 import orca_glade
 import orca_prefs
@@ -56,6 +57,11 @@ from orca_i18n import _  # for gettext support
 (NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
 
 (ACTUAL, REPLACEMENT) = range(2)
+
+# Handles to the magnification Advanced Settings Glade GUI object and dialog.
+#
+advancedMag = None
+advancedMagDialog = None
 
 class OrcaSetupGUI(orca_glade.GladeWrapper):
 
@@ -89,7 +95,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
     #
     magTrackingPushStr = _("Push")
 
-    def __init__(self, fileName, windowName):
+    def __init__(self, fileName, windowName, prefsDict = None):
         """Initialize the Orca configuration GUI.
 
         Arguments:
@@ -98,6 +104,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+
+        self.prefsDict = prefsDict
 
         # Initialize variables to None to keep pylint happy.
         #
@@ -114,7 +122,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.newBinding = None
         self.orcaModKeyEntry = None
         self.pendingKeyBindings = None
-        self.prefsDict = None
         self.pronunciationModel = None
         self.pronunciationView = None
         self.screenHeight = None
@@ -138,8 +145,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         support and populate the combo box lists on the Speech Tab pane
         accordingly.
         """
-
-        self.prefsDict = orca_prefs.readPreferences()
 
         # ***** Key Bindings treeview initialization *****
 
@@ -1261,7 +1266,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         display = gtk.gdk.display_get_default()
         nScreens = display.get_n_screens()
         targetScreen = display.get_default_screen()
-        targetDisplay = self.get_widget("magTargetDisplayEntry").get_text()
+        targetDisplay = \
+                     advancedMag.get_widget("magTargetDisplayEntry").get_text()
         if targetDisplay:
             t = targetDisplay.split(".")
             try:
@@ -1442,9 +1448,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("magnifierTable").set_sensitive(enable)
 
         # Get the 'Cursor on/off' preference and set the checkbox accordingly.
+        # Set the sensitivity of the other cursor items depending upon this
+        # value.
         #
         value = prefs["enableMagCursor"]
         self.get_widget("magCursorOnOffCheckButton").set_active(value)
+        self.get_widget("magCursorTable").set_sensitive(value)
 
         # Get the 'Explicit cursor size' preference and set the checkbox
         # accordingly. If the value is not checked, then the cursor size
@@ -1472,10 +1481,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("magCursorColorButton").set_color(color)
 
         # Get the 'Cross-hair on/off' preference and set the checkbox
-        # accordingly.
+        # accordingly. Set the sensitivity of the other cross-hair items
+        # depending upon this value.
         #
         value = prefs["enableMagCrossHair"]
         self.get_widget("magCrossHairOnOffCheckButton").set_active(value)
+        self.get_widget("magCrossHairTable").set_sensitive(value)
 
         # Get the 'Cross-hair clip on/off' preference and set the checkbox
         # accordingly.
@@ -1489,13 +1500,45 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         crosshairSize = prefs["magCrossHairSize"]
         self.get_widget("magCrossHairSizeSpinButton").set_value(crosshairSize)
 
-        # Get the magnification source and target displays.
+        # Get the cross-hair color preference and set the cross-hair color
+        # button accordingly.
         #
-        sourceDisplay = prefs["magSourceDisplay"]
-        self.get_widget("magSourceDisplayEntry").set_text(sourceDisplay)
+        crosshairColor = prefs["magCrossHairColor"]
+        color = gtk.gdk.color_parse(crosshairColor)
+        self.get_widget("magCrossHairColorButton").set_color(color)
 
-        targetDisplay = prefs["magTargetDisplay"]
-        self.get_widget("magTargetDisplayEntry").set_text(targetDisplay)
+        # Get the "Enable border" preference and set the checkbox
+        # accordingly. Set the sensitivity of the other items in the 
+        # border settings frame, depending upon whether this checkbox
+        # is checked.
+        #
+        value = prefs["enableMagZoomerBorder"]
+        self.get_widget("magBorderCheckButton").set_active(value)
+        self.get_widget("magBorderTable").set_sensitive(value)
+
+        # Get the border size preference and set the border size spin
+        # button value accordingly.
+        #
+        borderSize = prefs["magZoomerBorderSize"]
+        self.get_widget("magBorderSizeSpinButton").set_value(borderSize)
+
+        # Get the border color preference and set the border color button
+        # accordingly.
+        #
+        borderColor = prefs["magZoomerBorderColor"]
+        color = gtk.gdk.color_parse(borderColor)
+        self.get_widget("magBorderColorButton").set_color(color)
+
+        # Get the Brightness level and set its spin button value
+        # accordingly.
+        #
+        level = prefs["magBrightnessLevel"]
+        self.get_widget("magColorBrightnessSpinButton").set_value(level)
+
+        # Get the Contrast level and set its spin button value accordingly.
+        #
+        level = prefs["magContrastLevel"]
+        self.get_widget("magColorContrastSpinButton").set_value(level)
 
         # Get the width and the height of the source screen. If there is
         # no source screen set, use the default.
@@ -1503,6 +1546,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         display = gtk.gdk.display_get_default()
         nScreens = display.get_n_screens()
         sourceScreen = display.get_default_screen()
+        sourceDisplay = \
+                     advancedMag.get_widget("magSourceDisplayEntry").get_text()
         if sourceDisplay:
             s = sourceDisplay.split(".")
             try:
@@ -1551,7 +1596,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             zoomerType = _("Full Screen")
 
         magZoomerPositionComboBox = self.get_widget("magZoomerPositionComboBox")
-        index = self._getComboBoxIndex(magZoomerPositionComboBox, zoomerType)
+        index = self.getComboBoxIndex(magZoomerPositionComboBox, zoomerType)
         magZoomerPositionComboBox.set_active(index)
 
         # Set the magnifier zoomer position items [in]sensensitive,
@@ -1576,30 +1621,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         value = prefs["enableMagZoomerColorInversion"]
         self.get_widget("magInvertColorsCheckBox").set_active(value)
 
-        # Get the smoothing preference and set the active value for the
-        # smoothing combobox accordingly.
-        #
-        smoothingMode = prefs["magSmoothingMode"]
-        if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
-            # Translators: this is an algorithm for magnifying pixels
-            # on the screen.
-            #
-            mode = _("Bilinear")
-        elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
-            # Translators: this is an algorithm for tracking the mouse
-            # with the magnifier.  None means that Orca does nothing to
-            # track the mouse.
-            #
-            mode = _("None")
-        else:
-            # Translators: this is an algorithm for magnifying pixels
-            # on the screen.
-            #
-            mode = _("Bilinear")
-        magSmoothingComboBox = self.get_widget("magSmoothingComboBox")
-        index = self._getComboBoxIndex(magSmoothingComboBox, mode)
-        magSmoothingComboBox.set_active(index)
-
         # Get the mouse tracking preference and set the active value for
         # the mouse tracking combobox accordingly.
         #
@@ -1615,7 +1636,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             mode = self.magTrackingCenteredStr
         magMouseTrackingComboBox = self.get_widget("magMouseTrackingComboBox")
-        index = self._getComboBoxIndex(magMouseTrackingComboBox, mode)
+        index = self.getComboBoxIndex(magMouseTrackingComboBox, mode)
         magMouseTrackingComboBox.set_active(index)
 
         # Get the control and menu item tracking preference and set the 
@@ -1633,7 +1654,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = self.magTrackingPushStr
         magControlTrackingComboBox = \
                          self.get_widget("magControlTrackingComboBox")
-        index = self._getComboBoxIndex(magControlTrackingComboBox, mode)
+        index = self.getComboBoxIndex(magControlTrackingComboBox, mode)
         magControlTrackingComboBox.set_active(index)
 
         # Get the text cursor tracking preference and set the active value
@@ -1650,7 +1671,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = self.magTrackingPushStr
         magTextCursorTrackingComboBox = \
                          self.get_widget("magTextCursorTrackingComboBox")
-        index = self._getComboBoxIndex(magTextCursorTrackingComboBox, mode)
+        index = self.getComboBoxIndex(magTextCursorTrackingComboBox, mode)
         magTextCursorTrackingComboBox.set_active(index)
         self.get_widget("magEdgeMarginHBox").\
             set_sensitive(textCursorTrackingMode == \
@@ -1700,7 +1721,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             self.get_widget("generalLaptopButton").set_active(True)
 
-    def _getComboBoxIndex(self, combobox, searchStr):
+    def getComboBoxIndex(self, combobox, searchStr):
         """ For each of the entries in the given combo box, look for searchStr.
             Return the index of the entry if searchStr is found.
 
@@ -2321,7 +2342,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
     def navigationKeysChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            navigationCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable navigation keys" checkbox. Set the
+           [un]checked the 'Enable navigation keys' checkbox. Set the
            'enableNavigationKeys' preference to the new value.
 
         Arguments:
@@ -2608,6 +2629,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         enable = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            if enable:
+                mag.init()
+            else:
+                mag.shutdown()
         self.prefsDict["enableMagnifier"] = enable
         self.get_widget("magnifierTable").set_sensitive(enable)
 
@@ -2616,13 +2642,21 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
            magCursorOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cursor settings
            'Cursor on/off' checkbox. Set the 'enableMagCursor' preference
-           to the new value.
+           to the new value. Set the sensitivity of the other cursor items
+           depending upon this new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableMagCursor"] = widget.get_active()
+        enableCursor = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            custom = self.get_widget("magCursorSizeCheckButton").get_active()
+            size = \
+                 self.get_widget("magCursorSizeSpinButton").get_value_as_int()
+            mag.setMagnifierCursor(enableCursor, custom, size)
+        self.prefsDict["enableMagCursor"] = enableCursor
+        self.get_widget("magCursorTable").set_sensitive(enableCursor)
 
     def magCursorExplicitSizeChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2638,6 +2672,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         enable = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            size = \
+                 self.get_widget("magCursorSizeSpinButton").get_value_as_int()
+            mag.setMagnifierCursor(True, enable, size)
         self.prefsDict["enableMagCursorExplicitSize"] = enable
         self.get_widget("magCursorSizeSpinButton").set_sensitive(enable)
         self.get_widget("magCursorSizeLabel").set_sensitive(enable)
@@ -2653,7 +2691,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magCursorSize"] = widget.get_value_as_int()
+        size = widget.get_value_as_int()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierCursor(True, True, size)
+        self.prefsDict["magCursorSize"] = size
 
     def magCursorColorSet(self, widget):
         """Signal handler for the "color_set" signal for the
@@ -2668,6 +2709,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         color = widget.get_color()
         cursorColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierObjectColor("cursor-color", cursorColor)
+
+            # For some reason, live updating of the cursor color is not
+            # working. Toggling the visibility with setMagnifierCursor()
+            # seems to force the updating we want.
+            #
+            size = \
+                 self.get_widget("magCursorSizeSpinButton").get_value_as_int()
+            mag.setMagnifierCursor(False, False, 0)
+            mag.setMagnifierCursor(True, True, size)
+
         self.prefsDict["magCursorColor"] = cursorColor
 
     def magCrossHairOnOffChecked(self, widget):
@@ -2675,13 +2728,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cross-hair settings
            'Cross-hair on/off' checkbox. Set the 'enableMagCrossHair'
-           preference to the new value.
+           preference to the new value. Set the sensitivity of the other
+           cross-hair items depending upon this new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableMagCrossHair"] = widget.get_active()
+        value = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierCrossHair(value)
+        self.prefsDict["enableMagCrossHair"] = value
+        self.get_widget("magCrossHairTable").set_sensitive(value)
 
     def magCrossHairClipOnOffChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2694,7 +2752,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableMagCrossHairClip"] = widget.get_active()
+        value = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierCrossHairClip(value)
+        self.prefsDict["enableMagCrossHairClip"] = value
 
     def magCrossHairSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2707,7 +2768,27 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magCrossHairSize"] = widget.get_value_as_int()
+        value = widget.get_value_as_int()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierObjectSize("crosswire-size", value)
+        self.prefsDict["magCrossHairSize"] = value
+
+    def magCrossHairColorSet(self, widget):
+        """Signal handler for the "color_set" signal for the
+           magCrossHairColorButton GtkColorButton widget.
+           The user has changed the value of the magnification
+           cross-hair settings cross-hair color button. Set the 
+           'magCrossHairColor' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        color = widget.get_color()
+        crossHairColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setMagnifierObjectColor("crosswire-color", crossHairColor)
+        self.prefsDict["magCrossHairColor"] = crossHairColor
 
     def magZoomerPositionChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -2727,6 +2808,36 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("magZoomerCustomPositionTable").\
                 set_sensitive(zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM)
 
+        enableBorder = (zoomerType != settings.MAG_ZOOMER_TYPE_FULL_SCREEN)
+        checkButton = self.get_widget("magBorderCheckButton")
+        checkButton.set_sensitive(enableBorder)
+
+        checked = checkButton.get_active()
+        size = 0
+        if checked and enableBorder:
+            self.get_widget("magBorderTable").set_sensitive(enableBorder)
+            size = \
+                 self.get_widget("magBorderSizeSpinButton").get_value_as_int()
+
+        if not settings.enableMagLiveUpdating:
+            return
+
+        if zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
+            top = \
+                self.get_widget("magZoomerTopSpinButton").get_value_as_int()
+            left = \
+                 self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
+            right = \
+                  self.get_widget("magZoomerRightSpinButton").get_value_as_int()
+            bottom = \
+               self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
+            if not (top == bottom == left == right):
+                mag.setupMagnifier(zoomerType, left, top, right, bottom,
+                                   self.prefsDict)
+        else:
+            mag.setupMagnifier(zoomerType, restore=self.prefsDict)
+        mag.setZoomerObjectSize("border-size", size)
+
     def magZoomerTopValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomerTopSpinButton GtkSpinButton widget.
@@ -2738,7 +2849,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magZoomerTop"] = widget.get_value_as_int()
+        top = widget.get_value_as_int()
+        self.prefsDict["magZoomerTop"] = top
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
+        right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
+        bottom = \
+               self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
+        mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
+                           left, top, right, bottom, self.prefsDict)
 
     def magZoomerBottomValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2751,7 +2872,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magZoomerBottom"] = widget.get_value_as_int()
+        bottom = widget.get_value_as_int()
+        self.prefsDict["magZoomerBottom"] = bottom
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
+        top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
+        right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
+        mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
+                           left, top, right, bottom, self.prefsDict)
 
     def magZoomerLeftValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2764,7 +2894,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magZoomerLeft"] = widget.get_value_as_int()
+        left = widget.get_value_as_int()
+        self.prefsDict["magZoomerLeft"] = left
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
+        right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
+        bottom = \
+               self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
+        mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
+                           left, top, right, bottom, self.prefsDict)
 
     def magZoomerRightValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2777,7 +2917,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magZoomerRight"] = widget.get_value_as_int()
+        right = widget.get_value_as_int()
+        self.prefsDict["magZoomerRight"] = right
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
+        top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
+        bottom = \
+               self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
+        mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
+                           left, top, right, bottom, self.prefsDict)
 
     def magZoomFactorValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -2790,29 +2940,121 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magZoomFactor"] = widget.get_value_as_int()
+        value = widget.get_value()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setZoomerMagFactor(value, value)
+        self.prefsDict["magZoomFactor"] = value
 
-    def magSmoothingChanged(self, widget):
-        """Signal handler for the "changed" signal for the
-           magSmoothingComboBox GtkComboBox widget. The user has
-           selected a different magnification smoothing style.
-           Set the 'magSmoothingMode' preference to the new value.
+    def magBorderChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magBorderCheckButton GtkCheckButton widget.
+           The user has [un]checked the magnification border settings
+           'Enable border' checkbox. Set the 'enableMagZoomerBorder'
+           preference to the new value and set the sensitivity of the
+           other magnification border items depending upon this new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        smoothingMode = widget.get_active_text()
-        # Translators: this is an algorithm for magnifying pixels
-        # on the screen.
-        #
-        if smoothingMode ==  _("Bilinear"):
-            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
-        elif smoothingMode == _("None"):
-            mode = settings.MAG_SMOOTHING_MODE_NONE
-        else:
-            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
-        self.prefsDict["magSmoothingMode"] = mode
+        value = widget.get_active()
+        self.prefsDict["enableMagZoomerBorder"] = value
+        self.get_widget("magBorderTable").set_sensitive(value)
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        size = self.get_widget("magBorderSizeSpinButton").get_value_as_int()
+        if not value:
+            size = 0
+        mag.setZoomerObjectSize("border-size", size)
+
+    def magBorderSizeValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magBorderSizeSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           border settings border size spin button. Set the
+           'magZoomerBorderSize' preference to the new integer value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        value = widget.get_value_as_int()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setZoomerObjectSize("border-size", value)
+        self.prefsDict["magZoomerBorderSize"] = value
+
+    def magBorderColorSet(self, widget):
+        """Signal handler for the "color_set" signal for the
+           magBorderColorButton GtkColorButton widget.
+           The user has changed the value of the magnification
+           cursor settings cursor color button. Set the 'magZoomerBorderColor'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        color = widget.get_color()
+        borderColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setZoomerObjectColor("border-color", borderColor)
+        self.prefsDict["magZoomerBorderColor"] = borderColor
+
+    def magColorBrightnessValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magColorBrightnessSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           color settings brightness spin button. Set the 'magBrightnessLevel'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevel"] = value
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        r = self.prefsDict["magBrightnessLevelRed"] + value
+        g = self.prefsDict["magBrightnessLevelGreen"] + value
+        b = self.prefsDict["magBrightnessLevelBlue"] + value
+        mag.setZoomerBrightness(r, g, b)
+
+    def magColorContrastValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magColorContrastSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           color settings contrast spin button. Set the 'magContrastLevel'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevel"] = value
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        r = self.prefsDict["magContrastLevelRed"] + value
+        g = self.prefsDict["magContrastLevelGreen"] + value
+        b = self.prefsDict["magContrastLevelBlue"] + value
+        mag.setZoomerContrast(r, g, b)
+
+    def magAdvancedButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the magAdvancedButton
+           GtkButton widget. The user has clicked the Advanced Settings
+           button.  Save the current state of the preferences for the settings
+           on the dialog, and show it.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        advancedMag.saveAdvancedSettings(self.prefsDict)
+        advancedMagDialog.show()
 
     def magMouseTrackingChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -2841,6 +3083,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = settings.MAG_TRACKING_MODE_CENTERED
 
         self.prefsDict["magMouseTrackingMode"] = mode
+        mag.updateMouseTracking(mode)
 
     def magControlTrackingChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -2867,6 +3110,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = settings.MAG_TRACKING_MODE_PUSH
 
         self.prefsDict["magControlTrackingMode"] = mode
+        mag.updateControlTracking(mode)
 
     def magTextTrackingChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -2896,6 +3140,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("magEdgeMarginHBox").\
                 set_sensitive(mode == settings.MAG_TRACKING_MODE_PUSH)
 
+        mag.updateTextTracking(mode)
+
     def magEdgeMarginValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magEdgeMarginSpinButton GtkSpinButton widget.
@@ -2907,7 +3153,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magEdgeMargin"] = widget.get_value_as_int()
+        value = widget.get_value_as_int()
+        self.prefsDict["magEdgeMargin"] = value
+        mag.updateEdgeMargin(value)
 
     def magInvertColorsChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2920,7 +3168,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableMagZoomerColorInversion"] = widget.get_active()
+        value = widget.get_active()
+        if settings.enableMagLiveUpdating and widget.is_focus():
+            mag.setZoomerColorInversion(value)
+        self.prefsDict["enableMagZoomerColorInversion"] = value
 
     def keyModifiedToggle(self, cell, path, model, col):
         """When the user changes a checkbox field (boolean field)"""
@@ -3042,33 +3293,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             self.pendingKeyBindings[originalBinding] = ""
 
         return
-
-    def magSourceDisplayChanged(self, widget):
-        """Signal handler for the "changed" signal for the
-           magSourceDisplayDisplayEntry GtkEntry widget.
-           The user has changed the value of the magnification source
-           display. Set the 'magSourceDisplay' preference
-           to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["magSourceDisplay"] = widget.get_text()
-
-    def magTargetDisplayChanged(self, widget):
-        """Signal handler for the "changed" signal for the
-           magTargetDisplayEntry GtkEntry widget.
-           The user has changed the value of the magnification target
-           display. Set the 'magTargetDisplay' preference
-           to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["magTargetDisplay"] = widget.get_text()
-        self._setZoomerSpinButtons()
 
     def showMainWindowChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -3380,6 +3604,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
+        mag.finishLiveUpdating()
         self._cleanupSpeechServers()
         self.get_widget("orcaSetupWindow").destroy()
 
@@ -3410,7 +3635,571 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
+        mag.finishLiveUpdating()
         orca_state.orcaOS = None
+
+    def getAdvancedMagDialog(self):
+        """Return a handle to the Orca Preferences advanced magnification
+        settings dialog.
+        """
+
+        return self.orcaMagAdvancedDialog
+
+class OrcaAdvancedMagGUI(OrcaSetupGUI):
+
+    def __init__(self, fileName, windowName, prefsDict = None):
+        """Initialize the Orca configuration GUI.
+
+        Arguments:
+        - fileName: name of the Glade file.
+        - windowName: name of the component to get from the Glade file.
+        """
+
+        OrcaSetupGUI.__init__(self, fileName, windowName)
+
+        self.prefsDict = prefsDict
+
+        # To make pylint happy.
+        #
+        self.savedSettings = None
+
+    def init(self):
+        """Initialize the magnification Advanced Settings dialog GUI.
+        Read the users current set of preferences and set the GUI state 
+        to match. 
+        """
+
+        self._initGUIState()
+
+    def _initGUIState(self):
+        """Adjust the settings of the various components on the
+        configuration GUI depending upon the users preferences.
+        """
+
+        prefs = self.prefsDict
+
+        # Get the smoothing preference and set the active value for the
+        # smoothing combobox accordingly.
+        #
+        self.setSmoothingMode(prefs["magSmoothingMode"])
+
+        # Get the Brightness RGB levels and set their spin button values
+        # accordingly.
+        #
+        self.setRGBBrightnessValues(prefs["magBrightnessLevelRed"],
+                                           prefs["magBrightnessLevelGreen"],
+                                           prefs["magBrightnessLevelBlue"])
+
+        # Get the Contrast RGB levels and set their spin button values
+        # accordingly.
+        #
+        self.setRGBContrastValues(prefs["magContrastLevelRed"],
+                                         prefs["magContrastLevelGreen"],
+                                         prefs["magContrastLevelBlue"])
+
+        # Get the color filtering mode preference and set the active value
+        # for the color filtering combobox accordingly.
+        #
+        self.setColorFilteringMode(prefs["magColorFilteringMode"])
+
+        # Get the magnification source and target displays.
+        #
+        sourceDisplay = prefs["magSourceDisplay"]
+        self.get_widget("magSourceDisplayEntry").set_text(sourceDisplay)
+
+        targetDisplay = prefs["magTargetDisplay"]
+        self.get_widget("magTargetDisplayEntry").set_text(targetDisplay)
+
+    def setSmoothingMode(self, smoothingMode):
+        """Get the smoothing preference and set the active value for the
+           smoothing combobox accordingly.
+
+        Arguments:
+        - smoothingMode: the smoothing mode.
+        """
+
+        if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
+            # Translators: this is an algorithm for magnifying pixels
+            # on the screen.
+            #
+            mode = _("Bilinear")
+        elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
+            # Translators: this is an algorithm for tracking the mouse
+            # with the magnifier.  None means that Orca does nothing to
+            # track the mouse.
+            #
+            mode = _("None")
+        else:
+            # Translators: this is an algorithm for magnifying pixels
+            # on the screen.
+            #
+            mode = _("Bilinear")
+        magSmoothingComboBox = self.get_widget("magSmoothingComboBox")
+        index = self.getComboBoxIndex(magSmoothingComboBox, mode)
+        magSmoothingComboBox.set_active(index)
+
+    def magSmoothingChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magSmoothingComboBox GtkComboBox widget. The user has
+           selected a different magnification smoothing style.
+           Set the 'magSmoothingMode' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        smoothingMode = widget.get_active_text()
+        # Translators: this is an algorithm for magnifying pixels
+        # on the screen.
+        #
+        if smoothingMode ==  _("Bilinear"):
+            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
+        elif smoothingMode == _("None"):
+            mode = settings.MAG_SMOOTHING_MODE_NONE
+        else:
+            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
+
+        if settings.enableMagLiveUpdating:
+            mag.setZoomerSmoothingType(mode)
+
+        self.prefsDict["magSmoothingMode"] = mode
+
+    def setRGBBrightnessValues(self, red, green, blue):
+        """Set the spin button values for the Brightness RGB levels.
+
+        Arguments:
+        - red:   the red brightness value.
+        - green: the green brightness value.
+        - blue:  the blue brightness value.
+        """
+
+        self.get_widget("magBrightnessRedSpinButton").set_value(red)
+        self.get_widget("magBrightnessGreenSpinButton").set_value(green)
+        self.get_widget("magBrightnessBlueSpinButton").set_value(blue)
+
+    def magBrightnessRedValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magBrightnessRedSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           brightness Red spin button. Set the 'magBrightnessLevelRed'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        r = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelRed"] = r
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        g = self.get_widget("magBrightnessGreenSpinButton").get_value()
+        b = self.get_widget("magBrightnessBlueSpinButton").get_value()
+
+        brightness = self.prefsDict["magBrightnessLevel"]
+        r += brightness
+        g = round(g + brightness, 2)
+        b = round(b + brightness, 2)
+
+        mag.setZoomerBrightness(r, g, b)
+
+    def magBrightnessGreenValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magBrightnessGreenSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           brightness Green spin button. Set the 'magBrightnessLevelGreen'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        g = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelGreen"] = g
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        r = self.get_widget("magBrightnessRedSpinButton").get_value()
+        b = self.get_widget("magBrightnessBlueSpinButton").get_value()
+
+        brightness = self.prefsDict["magBrightnessLevel"]
+        g += brightness
+        r = round(r + brightness, 2)
+        b = round(b + brightness, 2)
+
+        mag.setZoomerBrightness(r, g, b)
+
+    def magBrightnessBlueValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magBrightnessBlueSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           brightness Blue spin button. Set the 'magBrightnessLevelBlue'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        b = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelBlue"] = b
+        if not settings.enableMagLiveUpdating:
+            return
+
+        r = self.get_widget("magBrightnessRedSpinButton").get_value()
+        g = self.get_widget("magBrightnessGreenSpinButton").get_value()
+
+        brightness = self.prefsDict["magBrightnessLevel"]
+        b += brightness
+        r = round(r + brightness, 2)
+        g = round(g + brightness, 2)
+
+        mag.setZoomerBrightness(r, g, b)
+
+    def setRGBContrastValues(self, red, green, blue):
+        """Set the spin button values for the Contrast RGB levels.
+
+        Arguments:
+        - red:   the red contrast value.
+        - green: the green contrast value.
+        - blue:  the blue contrast value.
+        """
+
+        self.get_widget("magContrastRedSpinButton").set_value(red)
+        self.get_widget("magContrastGreenSpinButton").set_value(green)
+        self.get_widget("magContrastBlueSpinButton").set_value(blue)
+
+    def magContrastRedValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magContrastRedSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           contrast Red spin button. Set the 'magContrastLevelRed'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        r = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelRed"] = r
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        g = self.get_widget("magContrastGreenSpinButton").get_value()
+        b = self.get_widget("magContrastBlueSpinButton").get_value()
+
+        contrast = self.prefsDict["magContrastLevel"]
+        r += contrast
+        g = round(g + contrast, 2)
+        b = round(b + contrast, 2)
+
+        mag.setZoomerContrast(r, g, b)
+
+    def magContrastGreenValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magContrastGreenSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           contrast Green spin button. Set the 'magContrastLevelGreen'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        g = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelGreen"] = g
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        r = self.get_widget("magContrastRedSpinButton").get_value()
+        b = self.get_widget("magContrastBlueSpinButton").get_value()
+
+        contrast = self.prefsDict["magContrastLevel"]
+        g += contrast
+        r = round(r + contrast, 2)
+        b = round(b + contrast, 2)
+
+        mag.setZoomerContrast(r, g, b)
+
+    def magContrastBlueValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magContrastBlueSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           contrast Blue spin button. Set the 'magContrastLevelBlue'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        b = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelBlue"] = b
+        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+            return
+
+        r = self.get_widget("magContrastRedSpinButton").get_value()
+        g = self.get_widget("magContrastGreenSpinButton").get_value()
+
+        contrast = self.prefsDict["magContrastLevel"]
+        b += contrast
+        r = round(r + contrast, 2)
+        g = round(g + contrast, 2)
+
+        mag.setZoomerContrast(r, g, b)
+
+    def setColorFilteringMode(self, mode):
+        """Set the active value for the color filtering mode combobox
+           preference.
+
+        Arguments:
+        - mode: the color filtering mode.
+        """
+
+        if mode == settings.MAG_COLOR_FILTERING_MODE_NONE:
+            filteringMode = _("None")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will maximize the red value for all
+            # pixels on the screen. For example, an RGB value of
+            # (75, 100, 125) would be become (255, 100, 125).
+            #
+            filteringMode = _("Saturate red")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will maximize the green value for all
+            # pixels on the screen.  For example, an RGB value of
+            # (75, 100, 125) would become (75, 255, 125).
+            #
+            filteringMode = _("Saturate green")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will maximize the blue value for all
+            # pixels on the screen. For example, an RGB value of
+            # (75, 100, 125) would become (75, 100, 255).
+            #
+            filteringMode = _("Saturate blue")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will eliminate the red value for all
+            # pixels on the screen. For example, an RGB value of
+            # (75, 100, 125) would be become (0, 100, 125).
+            #
+            filteringMode = _("Desaturate red")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will eliminate the green value for all
+            # pixels on the screen. For example, an RGB value of
+            # (75, 100, 125) would become (75, 0, 125).
+            #
+            filteringMode = _("Desaturate green")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It will eliminate the blue value for all
+            # pixels on the screen. For example, an RGB value of
+            # (75, 100, 125) would become (75, 100, 0).
+            #
+            filteringMode = _("Desaturate blue")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It shifts RGB values to the right. For
+            # example, an RGB value of (75, 100, 125) would become
+            # (125, 75, 100).
+            #
+            filteringMode = _("Positive hue shift")
+
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT:
+            # Translators: this refers to a color filter for people with
+            # color blindness. It shifts RGB values to the left. For
+            # example, an RGB value of (75, 100, 125) would become
+            # (100, 125, 75).
+            #
+            filteringMode = _("Negative hue shift")
+
+        else:
+            filteringMode = _("None")
+
+        comboBox = self.get_widget("magColorFilteringComboBox")
+        index = self.getComboBoxIndex(comboBox, filteringMode)
+        comboBox.set_active(index)
+
+    def magColorFilteringChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magColorFilteringComboBox GtkComboBox widget. The user has
+           selected a different magnification color filtering mode.
+           Set the 'magColorFilteringMode' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        filteringMode = widget.get_active_text()
+        if filteringMode ==  _("None"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_NONE
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will maximize the red value for all
+        # pixels on the screen. For example, an RGB value of
+        # (75, 100, 125) would be become (255, 100, 125).
+        #
+        elif filteringMode == _("Saturate red"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will maximize the green value for all
+        # pixels on the screen.  For example, an RGB value of
+        # (75, 100, 125) would become (75, 255, 125).
+        #
+        elif filteringMode == _("Saturate green"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will maximize the blue value for all
+        # pixels on the screen. For example, an RGB value of
+        # (75, 100, 125) would become (75, 100, 255).
+        #
+        elif filteringMode == _("Saturate blue"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will eliminate the red value for all
+        # pixels on the screen. For example, an RGB value of
+        # (75, 100, 125) would be become (0, 100, 125).
+        #
+        elif filteringMode == _("Desaturate red"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will eliminate the green value for all
+        # pixels on the screen. For example, an RGB value of
+        # (75, 100, 125) would become (75, 0, 125).
+        #
+        elif filteringMode == _("Desaturate green"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It will eliminate the blue value for all
+        # pixels on the screen. For example, an RGB value of
+        # (75, 100, 125) would become (75, 100, 0).
+        #
+        elif filteringMode == _("Desaturate blue"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It shifts RGB values to the right. For
+        # example, an RGB value of (75, 100, 125) would become
+        # (125, 75, 100).
+        #
+        elif filteringMode == _("Positive hue shift"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT
+
+        # Translators: this refers to a color filter for people with
+        # color blindness. It shifts RGB values to the left. For
+        # example, an RGB value of (75, 100, 125) would become
+        # (100, 125, 75).
+        #
+        elif filteringMode == _("Negative hue shift"):
+            mode = settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT
+
+        else:
+            mode = settings.MAG_COLOR_FILTERING_MODE_NONE
+
+        if settings.enableMagLiveUpdating:
+            mag.setZoomerColorFilter(mode)
+
+        self.prefsDict["magColorFilteringMode"] = mode
+
+    def magSourceDisplayChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magSourceDisplayDisplayEntry GtkEntry widget.
+           The user has changed the value of the magnification source
+           display. Set the 'magSourceDisplay' preference
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["magSourceDisplay"] = widget.get_text()
+
+    def magTargetDisplayChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magTargetDisplayEntry GtkEntry widget.
+           The user has changed the value of the magnification target
+           display. Set the 'magTargetDisplay' preference
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["magTargetDisplay"] = widget.get_text()
+        self._setZoomerSpinButtons()
+
+    def restoreAdvancedSettings(self):
+        """Returns the saved values of the settings on the magnification
+        advanced settings dialog.
+        """
+
+        return self.savedSettings
+
+    def saveAdvancedSettings(self, prefsDict):
+        """Save the current values of the settings on the magnification
+        advanced settings dialog.
+
+        Arguments:
+        - prefsDict: the preferences dictionary containing the current state.
+        """
+
+        self.savedSettings = prefsDict.copy()
+
+    def magAdvancedCancelButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the
+           magAdvancedCancelButton GtkButton widget. The user has clicked
+           the Cancel button. We restore the preferences for the settings
+           on the Advanced Settings dialog, back to what they we when it
+           was initially displayed and hide it.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict = self.restoreAdvancedSettings()
+        self.init()
+        advancedMagDialog.hide()
+
+    def magAdvancedOkButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the magAdvancedOKButton
+           GtkButton widget. The user has clicked the OK button.  We don't
+           want to write out any preferences until the main window's apply
+           or OK button has been clicked. Just hide the advanced window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        advancedMagDialog.hide()
+
+    def magAdvancedDialogDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the
+        orcaMagAdvancedDialog GtkWindow widget. Instead of destroying
+        the dialog, rebuild it, reinitialize it and hide it.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        global advancedMag, advancedMagDialog
+
+        advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+                                   "orcaMagAdvancedDialog", self.prefsDict)
+        advancedMag.init()
+        advancedMagDialog = advancedMag.getAdvancedMagDialog()
 
 class WarningDialogGUI(orca_glade.GladeWrapper):
 
@@ -3446,8 +4235,9 @@ class WarningDialogGUI(orca_glade.GladeWrapper):
 
         self.orcaPrefsWarningDialog.destroy()
 
-
 def showPreferencesUI():
+    global advancedMag, advancedMagDialog
+
     if not orca_state.appOS and not orca_state.orcaOS:
         # Translators: Orca Preferences is the configuration GUI for Orca.
         #
@@ -3455,13 +4245,19 @@ def showPreferencesUI():
         braille.displayMessage(line)
         speech.speak(line)
 
+        prefsDict = orca_prefs.readPreferences()
         orca_state.prefsGladeFile = os.path.join(platform.prefix,
                                                  platform.datadirname,
                                                  platform.package,
                                                  "glade",
                                                  "orca-setup.glade")
+        advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+                                   "orcaMagAdvancedDialog", prefsDict)
+        advancedMag.init()
+        advancedMagDialog = advancedMag.getAdvancedMagDialog()
+
         orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsGladeFile,
-                                         "orcaSetupWindow")
+                                         "orcaSetupWindow", prefsDict)
         orca_state.orcaOS.init()
     else:
         if not orca_state.orcaWD:

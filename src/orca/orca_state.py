@@ -105,6 +105,6 @@ appOS = None
 #
 orcaWD = None
 
-# Handle to the Orca Preferenvces Glade file.
+# Handle to the Orca Preferences Glade file.
 #
 prefsGladeFile = None

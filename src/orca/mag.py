@@ -41,6 +41,7 @@ import time
 import pyatspi
 import debug
 import settings
+import orca_state
 
 _magnifierAvailable = False
 
@@ -56,9 +57,10 @@ except:
 #
 _initialized = False
 
-# The Magnifier
+# The Magnifier and its property bag
 #
 _magnifier = None
+_magnifierPBag = None
 
 # The width and height, in unzoomed system coordinates of the rectangle that,
 # when magnified, will fill the viewport of the magnifier - this needs to be
@@ -100,10 +102,11 @@ _sourceDisplayBounds = None
 #
 _targetDisplayBounds = None
 
-# The ZoomRegion we care about.  We only use one ZoomRegion and we
-# make it occupy the whole magnifier.
+# The ZoomRegion we care about and its property bag.  We only use one
+# ZoomRegion and we make it occupy the whole magnifier.
 #
 _zoomer = None
+_zoomerPBag = None
 
 # The time of the last mouse event.
 #
@@ -117,6 +120,22 @@ _pollMouseDisabled = False
 # Whether or not composite is being used.
 #
 _fullScreenCapable = True
+
+# Whether or not we're in the process of making "live update" changes
+# to the location of the magnifier.
+#
+_liveUpdatingMagnifier = False
+
+# The original source display bounds.
+#
+_originalSourceDisplayBounds = None
+
+# The current modes of tracking, for use with "live update" changes.
+#
+_mouseTracking = settings.magMouseTrackingMode
+_controlTracking = settings.magControlTrackingMode
+_textTracking = settings.magTextTrackingMode
+_edgeMargin = settings.magEdgeMargin
 
 def __setROI(rect):
     """Sets the region of interest.
@@ -321,13 +340,11 @@ def __onMouseEvent(e):
     if _pollMouseDisabled:
         _zoomer.setPointerPos(x, y)
 
-    if settings.magMouseTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
+    if _mouseTracking == settings.MAG_TRACKING_MODE_PUSH:
         __setROIPush(x, y)
-    elif settings.magMouseTrackingMode == \
-                                settings.MAG_TRACKING_MODE_PROPORTIONAL:
+    elif _mouseTracking == settings.MAG_TRACKING_MODE_PROPORTIONAL:
         __setROIProportional(x, y)
-    elif settings.magMouseTrackingMode == \
-                                    settings.MAG_TRACKING_MODE_CENTERED:
+    elif _mouseTracking == settings.MAG_TRACKING_MODE_CENTERED:
         __setROICenter(x, y)
 
 def __getValueText(slot, value):
@@ -364,28 +381,27 @@ def __dumpPropertyBag(obj):
         print "    Current value:", value, __getValueText(slot, value)
         print
 
-def applySettings():
-    """Looks at the user settings and applies them to the magnifier."""
+def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
+                     restore=None):
+    """Creates the magnifier in the position specified.
 
-    global _sourceDisplayBounds
-    global _targetDisplayBounds
-    global _zoomer
-    global _roiWidth
-    global _roiHeight
-    global _minROIX
-    global _minROIY
-    global _maxROIX
-    global _maxROIY
-    global _pollMouseDisabled
+    Arguments:
+    - position: the position/type of zoomer (full, left half, etc.)
+    - left:     the left edge of the zoomer (only applicable for custom)
+    - top:      the top edge of the zoomer (only applicable for custom)
+    - right:    the right edge of the zoomer (only applicable for custom)
+    - bottom:   the top edge of the zoomer (only applicable for custom)
+    - restore:  a dictionary of all of the settings which should be restored
+    """
+
     global _fullScreenCapable
-
-    ########################################################################
-    #                                                                      #
-    # First set up the magnifier properties.                               #
-    #                                                                      #
-    ########################################################################
+    global _magnifierPBag
+    global _originalSourceDisplayBounds
 
     _magnifier.clearAllZoomRegions()
+
+    if not restore:
+        restore = {}
 
     # Define where the magnifier will live.
     #
@@ -408,42 +424,46 @@ def applySettings():
     except:
         debug.printException(debug.LEVEL_WARNING)
 
-    magnifierPBag = _magnifier.getProperties()
-    sdb = magnifierPBag.getValue("source-display-bounds").value()
+    _magnifierPBag = _magnifier.getProperties()
+    sdb = _magnifierPBag.getValue("source-display-bounds").value()
+    if not _originalSourceDisplayBounds:
+        _originalSourceDisplayBounds = sdb
+    elif _liveUpdatingMagnifier:
+        sdb = _originalSourceDisplayBounds
 
     # Find out where the user wants to place the target display.
     #
     if _fullScreenCapable and \
-       settings.magZoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+       position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
         prefLeft = 0
         prefTop = 0
         prefRight = sdb.x2
         prefBottom = sdb.y2
-    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+    elif position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
         prefLeft = 0
         prefTop = 0
         prefRight = sdb.x2
         prefBottom = sdb.y2 / 2
-    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+    elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
         prefLeft = 0
         prefTop = sdb.y2 / 2
         prefRight = sdb.x2
         prefBottom = sdb.y2
-    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+    elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
         prefLeft = 0
         prefTop = 0
         prefRight = sdb.x2 / 2
         prefBottom = sdb.y2
-    elif settings.magZoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+    elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
         prefLeft = sdb.x2 / 2
         prefTop = 0
         prefRight = sdb.x2
         prefBottom = sdb.y2
     else:
-        prefLeft   = settings.magZoomerLeft
-        prefTop    = settings.magZoomerTop
-        prefRight  = settings.magZoomerRight
-        prefBottom = settings.magZoomerBottom
+        prefLeft   = left or settings.magZoomerLeft
+        prefTop    = top or settings.magZoomerTop
+        prefRight  = right or settings.magZoomerRight
+        prefBottom = bottom or settings.magZoomerBottom
     updateTarget = True
 
     # If we're not using composite, bad things will happen if we allow the
@@ -460,7 +480,7 @@ def applySettings():
         # are all 0, then we know that gnome-mag isn't already running.
         #
         magAlreadyRunning = False
-        tdb = magnifierPBag.getValue("target-display-bounds").value()
+        tdb = _magnifierPBag.getValue("target-display-bounds").value()
         if tdb.x1 or tdb.x2 or tdb.y1 or tdb.y2:
             magAlreadyRunning = True
 
@@ -504,8 +524,8 @@ def applySettings():
     # as source-display-bouinds.
     #
     if updateTarget:
-        tdb = magnifierPBag.getValue("target-display-bounds").value()
-        magnifierPBag.setValue(
+        tdb = _magnifierPBag.getValue("target-display-bounds").value()
+        _magnifierPBag.setValue(
             "target-display-bounds",
             ORBit.CORBA.Any(
                 ORBit.CORBA.TypeCode(
@@ -515,72 +535,45 @@ def applySettings():
                                            prefRight,
                                            prefBottom)))
 
-    # Set a bunch of other magnifier properties...
-    #
-    if settings.enableMagCursor:
-        bonobo.pbclient_set_float(
-            magnifierPBag, "cursor-scale-factor", 1.0 * settings.magZoomFactor)
-    else:
-        bonobo.pbclient_set_float(
-            magnifierPBag, "cursor-scale-factor", 0.0)
+    bonobo.pbclient_set_string(_magnifierPBag, "cursor-set", "default")
 
-    if settings.enableMagCursorExplicitSize:
-        bonobo.pbclient_set_long(
-            magnifierPBag, "cursor-size", settings.magCursorSize)
-    else:
-        bonobo.pbclient_set_long(
-            magnifierPBag, "cursor-size", 0)
+    enableCursor = restore.get('enableMagCursor', settings.enableMagCursor)
+    explicitSize = restore.get('enableMagCursorExplicitSize',
+                               settings.enableMagCursorExplicitSize)
+    size = restore.get('magCursorSize', settings.magCursorSize)
+    setMagnifierCursor(enableCursor, explicitSize, size, False)
 
-    bonobo.pbclient_set_string(magnifierPBag, "cursor-set", "default")
+    value = restore.get('magCursorColor', settings.magCursorColor)
+    setMagnifierObjectColor("cursor-color", value, False)
 
-    # Convert the colorPreference string to something we can use.
-    # The main issue here is that the color preferences are saved
-    # as 4 byte values per color.  We only need 2 bytes, so we
-    # get rid of the bottom 8 bits.
-    #
-    colorPreference = gtk.gdk.color_parse(settings.magCursorColor)
-    colorPreference.red   = colorPreference.red   >> 8
-    colorPreference.blue  = colorPreference.blue  >> 8
-    colorPreference.green = colorPreference.green >> 8
-    colorString = "0x%02X%02X%02X" \
-                  % (colorPreference.red,
-                     colorPreference.green,
-                     colorPreference.blue)
+    value = restore.get('magCrossHairColor', settings.magCrossHairColor)
+    setMagnifierObjectColor("crosswire-color", value, False)
 
-    color = magnifierPBag.getValue("cursor-color")
-    magnifierPBag.setValue(
-        "cursor-color",
-        ORBit.CORBA.Any(
-            color.typecode(),
-            long(colorString, 0)))
+    value = restore.get('enableMagCrossHair', settings.enableMagCrossHair)
+    setMagnifierCrossHair(value, False)
 
-    color = magnifierPBag.getValue("crosswire-color")
-    magnifierPBag.setValue(
-        "crosswire-color",
-        ORBit.CORBA.Any(
-            color.typecode(),
-            long(colorString, 0)))
+    value = restore.get('enableMagCrossHairClip',
+                        settings.enableMagCrossHairClip)
+    setMagnifierCrossHairClip(value, False)
 
-    if settings.enableMagCrossHair:
-        bonobo.pbclient_set_long(
-            magnifierPBag, "crosswire-size", settings.magCrossHairSize)
-    else:
-        bonobo.pbclient_set_long(
-            magnifierPBag, "crosswire-size", 0)
+def __setupZoomer(restore=None):
+    """Creates a zoomer in the magnifier
+    Arguments:
+    - restore:  a dictionary of all of the settings which should be restored
+    """
 
-    bonobo.pbclient_set_boolean(
-        magnifierPBag, "crosswire-clip", settings.enableMagCrossHairClip)
+    global _sourceDisplayBounds
+    global _targetDisplayBounds
+    global _zoomer
+    global _roiWidth
+    global _roiHeight
+    global _pollMouseDisabled
+    global _zoomerPBag
 
-    ########################################################################
-    #                                                                      #
-    # Now set up the zoomer properties.                                    #
-    #                                                                      #
-    ########################################################################
+    if not restore:
+        restore = {}
 
-    # We set the target-display-bounds above, but let's ask gnome-mag for
-    # what it really set it to.  Hopefully, it was the same thing.
-    #
-    _targetDisplayBounds = magnifierPBag.getValue(
+    _targetDisplayBounds = _magnifierPBag.getValue(
         "target-display-bounds").value()
 
     debug.println(debug.LEVEL_ALL,
@@ -599,7 +592,7 @@ def applySettings():
     # one display).  Otherwise, the source-display-bounds will be the
     # entire source screen.
     #
-    _sourceDisplayBounds = magnifierPBag.getValue(
+    _sourceDisplayBounds = _magnifierPBag.getValue(
         "source-display-bounds").value()
 
     debug.println(debug.LEVEL_ALL,
@@ -663,45 +656,102 @@ def applySettings():
 
     # Create the zoomer with a magnification factor, an initial ROI, and
     # where in magnifier we want it to be (we want it to be in the whole
-    # magnifier).
+    # magnifier). Initially set the viewport so that it does not appear.
+    # After we set all of the color properties, reset the viewport to
+    # the correct position.  This will prevent the user from seeing the
+    # individual property changes (e.g. brightness, contrast) upon load.
     #
     _zoomer = _magnifier.createZoomRegion(
         settings.magZoomFactor, settings.magZoomFactor,
         GNOME.Magnifier.RectBounds(0, 0, _roiWidth, _roiHeight),
-        GNOME.Magnifier.RectBounds(0, 0, viewportWidth, viewportHeight))
+        GNOME.Magnifier.RectBounds(0, 0, 1, 1))
 
-    zoomerPBag = _zoomer.getProperties()
-    bonobo.pbclient_set_boolean(zoomerPBag, "is-managed", True)
+    _zoomerPBag = _zoomer.getProperties()
+    bonobo.pbclient_set_boolean(_zoomerPBag, "is-managed", True)
+
+    value = restore.get('magZoomFactor', settings.magZoomFactor)
+    setZoomerMagFactor(value, value, False)
+
+    value = restore.get('enableMagZoomerColorInversion',
+                        settings.enableMagZoomerColorInversion)
+    setZoomerColorInversion(value, False)
+
+    brightness = restore.get('magBrightnessLevel', settings.magBrightnessLevel)
+    r = brightness + \
+        restore.get('magBrightnessLevelRed',
+                    settings.magBrightnessLevelRed)
+    g = brightness + \
+        restore.get('magBrightnessLevelGreen',
+                    settings.magBrightnessLevelGreen)
+    b = brightness + \
+        restore.get('magBrightnessLevelBlue',
+                    settings.magBrightnessLevelBlue)
+    setZoomerBrightness(r, g, b, False)
+
+    contrast = restore.get('magContrastLevel', settings.magContrastLevel)
+    r = contrast + \
+        restore.get('magContrastLevelRed',
+                    settings.magContrastLevelRed)
+    g = contrast + \
+        restore.get('magContrastLevelGreen',
+                    settings.magContrastLevelGreen)
+    b = contrast + \
+        restore.get('magContrastLevelBlue',
+                    settings.magContrastLevelBlue)
+    setZoomerContrast(r, g, b, False)
+
+    value = restore.get('magColorFilteringMode',
+                        settings.magColorFilteringMode)
+    setZoomerColorFilter(value, False)
+
+    value = restore.get('magZoomerType', settings.magZoomerType)
+    if value == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+        size = 0
+    else:
+        size = restore.get('magZoomerBorderSize', settings.magZoomerBorderSize)
+    color = restore.get('magZoomerBorderColor', settings.magZoomerBorderColor)
+    setZoomerObjectSize("border-size", size, False)
+    setZoomerObjectColor("border-color", color, False)
+
+    value = restore.get('magSmoothingMode', settings.magSmoothingMode)
+    setZoomerSmoothingType(value, False)
+
+    # Now it's safe to display the viewport.
+    #
+    bounds = GNOME.Magnifier.RectBounds(0, 0, viewportWidth, viewportHeight)
+    _zoomer.moveResize(bounds)
 
     # Try to use gnome-mag >= 0.13.1 to allow us to control where to
     # draw the cursor and crosswires.
     #
     try:
-        bonobo.pbclient_set_boolean(zoomerPBag, "poll-mouse", False)
+        bonobo.pbclient_set_boolean(_zoomerPBag, "poll-mouse", False)
         _pollMouseDisabled = True
     except:
         _pollMouseDisabled = False
 
-    _zoomer.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
+    __updateROIDimensions()
+    _magnifier.addZoomRegion(_zoomer)
 
-    bonobo.pbclient_set_boolean(
-        zoomerPBag, "inverse-video", settings.enableMagZoomerColorInversion)
+def __updateROIDimensions():
+    """Updates the ROI width, height, and maximum and minimum values.
+    """
 
-    if settings.magSmoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
-        try:
-            bonobo.pbclient_set_string(
-                zoomerPBag, "smoothing-type", "bilinear")
-        except:
-            pass
+    global _roiWidth
+    global _roiHeight
+    global _minROIX
+    global _minROIY
+    global _maxROIX
+    global _maxROIY
 
-    viewport = zoomerPBag.getValue("viewport").value()
+    viewport = _zoomerPBag.getValue("viewport").value()
 
     debug.println(debug.LEVEL_ALL,
                   "Magnifier viewport actual: (%d, %d), (%d, %d)" \
                   % (viewport.x1, viewport.y1, viewport.x2, viewport.y2))
 
-    magx = zoomerPBag.getValue("mag-factor-x").value()
-    magy = zoomerPBag.getValue("mag-factor-y").value()
+    magx = _zoomerPBag.getValue("mag-factor-x").value()
+    magy = _zoomerPBag.getValue("mag-factor-y").value()
 
     _roiWidth  = min(_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
                      (viewport.x2 - viewport.x1) / magx)
@@ -722,7 +772,11 @@ def applySettings():
                   "Magnifier ROI min/max center: (%d, %d), (%d, %d)" \
                   % (_minROIX, _minROIY, _maxROIX, _maxROIY))
 
-    _magnifier.addZoomRegion(_zoomer)
+def applySettings():
+    """Looks at the user settings and applies them to the magnifier."""
+
+    __setupMagnifier(settings.magZoomerType)
+    __setupZoomer()
 
     #print "MAGNIFIER PROPERTIES:", _magnifier
     #__dumpPropertyBag(_magnifier)
@@ -767,13 +821,10 @@ def magnifyAccessible(event, obj, extents=None):
             haveSomethingToMagnify = False
 
         if haveSomethingToMagnify:
-            if settings.magTextTrackingMode == \
-                   settings.MAG_TRACKING_MODE_CENTERED:
+            if _textTracking == settings.MAG_TRACKING_MODE_CENTERED:
                 __setROICenter(x, y)
-            elif settings.magTextTrackingMode == \
-                     settings.MAG_TRACKING_MODE_PUSH:
-                __setROICursorPush(x, y, width, height,
-                                   settings.magEdgeMargin)
+            elif _textTracking == settings.MAG_TRACKING_MODE_PUSH:
+                __setROICursorPush(x, y, width, height, _edgeMargin)
             return
 
     if not haveSomethingToMagnify:
@@ -786,8 +837,7 @@ def magnifyAccessible(event, obj, extents=None):
             haveSomethingToMagnify = False
 
     if haveSomethingToMagnify:
-        if settings.magControlTrackingMode == \
-               settings.MAG_TRACKING_MODE_CENTERED:
+        if _controlTracking == settings.MAG_TRACKING_MODE_CENTERED:
             centerX = x + width/2
             centerY = y + height/2
 
@@ -800,8 +850,7 @@ def magnifyAccessible(event, obj, extents=None):
                 centerY = y
 
             __setROICenter(centerX, centerY)
-        elif settings.magControlTrackingMode == \
-                 settings.MAG_TRACKING_MODE_PUSH:
+        elif _controlTracking == settings.MAG_TRACKING_MODE_PUSH:
             __setROICursorPush(x, y, width, height)
 
 def init():
@@ -825,10 +874,9 @@ def init():
                                    "GNOME/Magnifier/Magnifier")
 
     try:
+        _initialized = True
         applySettings()
         pyatspi.Registry.registerEventListener(__onMouseEvent, "mouse:abs")
-
-        _initialized = True
 
         # Zoom to the upper left corner of the display for now.
         #
@@ -836,6 +884,7 @@ def init():
 
         return True
     except:
+        _initialized = False
         _magnifier.dispose()
         raise
 
@@ -871,3 +920,407 @@ def shutdown():
     _initialized = False
 
     return True
+
+######################################################################
+#                                                                    #
+#              Convenience functions for "live" changes              #
+#                                                                    #
+######################################################################
+
+def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
+                   restore=None):
+    """Creates the magnifier in the position specified.
+
+    Arguments:
+    - position: the position/type of zoomer (full, left half, etc.)
+    - left:     the left edge of the zoomer (only applicable for custom)
+    - top:      the top edge of the zoomer (only applicable for custom)
+    - right:    the right edge of the zoomer (only applicable for custom)
+    - bottom:   the top edge of the zoomer (only applicable for custom)
+    - restore:  a dictionary of all of the settings that should be restored
+    """
+
+    global _liveUpdatingMagnifier
+
+    _liveUpdatingMagnifier = True
+    __setupMagnifier(position, left, top, right, bottom, restore)
+    __setupZoomer(restore)
+
+def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
+    """Sets the cursor.
+
+    Arguments:
+    - enabled:        Whether or not the cursor should be enabled
+    - customEnabled:  Whether or not a custom size has been enabled
+    - size:           The size it should be set to
+    - updateScreen:   Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+    try:
+        mag = _zoomerPBag.getValue("mag-factor-x").value()
+    except:
+        mag = settings.magZoomFactor
+
+    if enabled:
+        scale = 1.0 * mag
+    else:
+        scale = 0.0
+
+    if not (enabled and customEnabled):
+        size = 0
+
+    bonobo.pbclient_set_float(_magnifierPBag, "cursor-scale-factor", scale)
+    bonobo.pbclient_set_long(_magnifierPBag, "cursor-size", size)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setMagnifierCrossHair(enabled, updateScreen=True):
+    """Sets the cross-hair.
+
+    Arguments:
+    - enabled: Whether or not the cross-hair should be enabled
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    size = 0
+    if enabled:
+        size = settings.magCrossHairSize
+
+    bonobo.pbclient_set_long(_magnifierPBag, "crosswire-size", size)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setMagnifierCrossHairClip(enabled, updateScreen=True):
+    """Sets the cross-hair clip.
+
+    Arguments:
+    - enabled: Whether or not the cross-hair clip should be enabled
+    - updateScreen:   Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    bonobo.pbclient_set_boolean(_magnifierPBag, "crosswire-clip", enabled)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerColorInversion(enabled, updateScreen=True):
+    """Sets the color inversion.
+
+    Arguments:
+    - enabled: Whether or not color inversion should be enabled
+    - updateScreen:   Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    bonobo.pbclient_set_boolean(_zoomerPBag, "inverse-video", enabled)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerBrightness(red=0, green=0, blue=0, updateScreen=True):
+    """Increases/Decreases the brightness level by the specified
+    increments.  Increments are floats ranging from -1 (black/no
+    brightenss) to 1 (white/100% brightness).  0 means no change.
+
+    Arguments:
+    - red:    The amount to alter the red brightness level
+    - green:  The amount to alter the green brightness level
+    - blue:   The amount to alter the blue brightness level
+    - updateScreen:   Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    _zoomer.setBrightness(red, green, blue)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerContrast(red=0, green=0, blue=0, updateScreen=True):
+    """Increases/Decreases the contrast level by the specified
+    increments.  Increments are floats ranging from -1 (grey/no
+    contrast) to 1 (white/back/100% contrast).  0 means no change.
+
+    Arguments:
+    - red:    The amount to alter the red contrast level
+    - green:  The amount to alter the green contrast level
+    - blue:   The amount to alter the blue contrast level
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    _zoomer.setContrast(red, green, blue)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setMagnifierObjectSize(magProperty, size, updateScreen=True):
+    """Sets the specified magnifier property to the specified size.
+
+    Arguments:
+    - magProperty:   The property to set (as a string)
+    - size:          The size to apply
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    bonobo.pbclient_set_long(_magnifierPBag, magProperty, size)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerObjectSize(magProperty, size, updateScreen=True):
+    """Sets the specified zoomer property to the specified size.
+
+    Arguments:
+    - magProperty:   The property to set (as a string)
+    - size:          The size to apply
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    bonobo.pbclient_set_long(_zoomerPBag, magProperty, size)
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerObjectColor(magProperty, colorSetting, updateScreen=True):
+    """Sets the specified zoomer property to the specified color.
+
+    Arguments:
+    - magProperty:  The property to set (as a string)
+    - colorSetting: The Orca color setting to apply
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    colorPreference = gtk.gdk.color_parse(colorSetting)
+
+    # Convert the colorPreference string to something we can use.
+    # The main issue here is that the color preferences are saved
+    # as 4 byte values per color.  We only need 2 bytes, so we
+    # get rid of the bottom 8 bits.
+    #
+    colorPreference.red   = colorPreference.red   >> 8
+    colorPreference.blue  = colorPreference.blue  >> 8
+    colorPreference.green = colorPreference.green >> 8
+    colorString = "0x%02X%02X%02X" \
+                  % (colorPreference.red,
+                     colorPreference.green,
+                     colorPreference.blue)
+
+    toChange = _zoomerPBag.getValue(magProperty)
+    _zoomerPBag.setValue(magProperty,
+                         ORBit.CORBA.Any(toChange.typecode(),
+                                         long(colorString, 0)))
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setMagnifierObjectColor(magProperty, colorSetting, updateScreen=True):
+    """Sets the specified magnifier property to the specified color.
+
+    Arguments:
+    - magProperty:  The property to set (as a string)
+    - colorSetting: The Orca color setting to apply
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    colorPreference = gtk.gdk.color_parse(colorSetting)
+
+    # Convert the colorPreference string to something we can use.
+    # The main issue here is that the color preferences are saved
+    # as 4 byte values per color.  We only need 2 bytes, so we
+    # get rid of the bottom 8 bits.
+    #
+    colorPreference.red   = colorPreference.red   >> 8
+    colorPreference.blue  = colorPreference.blue  >> 8
+    colorPreference.green = colorPreference.green >> 8
+    colorString = "0x%02X%02X%02X" \
+                  % (colorPreference.red,
+                     colorPreference.green,
+                     colorPreference.blue)
+
+    toChange = _magnifierPBag.getValue(magProperty)
+    _magnifierPBag.setValue(magProperty,
+                            ORBit.CORBA.Any(toChange.typecode(),
+                                            long(colorString, 0)))
+    if updateScreen:
+        _zoomer.updatePointer()
+        _zoomer.markDirty(_roi)
+
+def setZoomerMagFactor(x, y, updateScreen=True):
+    """Sets the magnification level.
+
+    Arguments:
+    - x: The horizontal magnification level
+    - y: The vertical magnification level
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    _zoomer.setMagFactor(x, y)
+
+    # [[[TODO: JD - I think the screen is blanking out due to how gnome-mag
+    # does its thing.  See bug 503075. There's a bit of "jumpiness" with
+    # each increase in magnification.  At least we're keeping things on
+    # screen now, but we need to eliminate this issue.]]]
+    #
+    if updateScreen:
+        __updateROIDimensions()
+        newROI = GNOME.Magnifier.RectBounds(_minROIX,
+                                            _minROIY,
+                                            _minROIX + _roiWidth,
+                                            _minROIY + _roiHeight)
+        __setROI(newROI)
+        magnifyAccessible(None, orca_state.locusOfFocus)
+
+def setZoomerSmoothingType(smoothingType, updateScreen=True):
+    """Sets the zoomer's smoothing type.
+
+    Arguments:
+    - smoothingType: The type of smoothing to use
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    if smoothingType == settings.MAG_SMOOTHING_MODE_BILINEAR:
+        string = "bilinear"
+    else:
+        string = "None"
+
+    try:
+        bonobo.pbclient_set_string(_zoomerPBag, "smoothing-type", string)
+    except:
+        pass
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def setZoomerColorFilter(colorFilter, updateScreen=True):
+    """Sets the zoomer's color filter.
+
+    Arguments:
+    - colorFilter: The color filter to apply
+    - updateScreen:  Whether or not to update the screen
+    """
+
+    if not _initialized:
+        return
+
+    if colorFilter == settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_SATURATE_RED
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_SATURATE_GREEN
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_SATURATE_BLUE
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_DESSATURATE_RED
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_DESSATURATE_GREEN
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE:
+        toApply = _zoomer.COLORBLIND_FILTER_T_SELECTIVE_DESSATURATE_BLUE
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT:
+        toApply = _zoomer.COLORBLIND_FILTER_T_HUE_SHIFT_NEGATIVE
+    elif colorFilter == settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT:
+        toApply = _zoomer.COLORBLIND_FILTER_T_HUE_SHIFT_POSITIVE
+    else:
+        toApply = _zoomer.COLORBLIND_FILTER_T_NO_FILTER
+
+    colorFilter = _zoomerPBag.getValue("color-blind-filter")
+    _zoomerPBag.setValue(
+         "color-blind-filter",
+         ORBit.CORBA.Any(
+             colorFilter.typecode(),
+             toApply))
+
+    if updateScreen:
+        _zoomer.markDirty(_roi)
+
+def updateMouseTracking(newMode):
+    """Updates the mouse tracking mode.
+
+    Arguments:
+    -newMode: The new mode to use.
+    """
+
+    global _mouseTracking
+    _mouseTracking = newMode
+
+def updateControlTracking(newMode):
+    """Updates the control tracking mode.
+
+    Arguments:
+    -newMode: The new mode to use.
+    """
+
+    global _controlTracking
+    _controlTracking = newMode
+
+def updateTextTracking(newMode):
+    """Updates the text tracking mode.
+
+    Arguments:
+    -newMode: The new mode to use.
+    """
+
+    global _textTracking
+    _textTracking = newMode
+
+def updateEdgeMargin(amount):
+    """Updates the edge margin
+
+    Arguments:
+    -newMode: The new margin to use, in pixels.
+    """
+
+    global _edgeMargin
+    _edgeMargin = amount
+
+def finishLiveUpdating():
+    """Restores things that were altered via a live update."""
+
+    global _liveUpdatingMagnifier
+    global _mouseTracking
+    global _controlTracking
+    global _textTracking
+    global _edgeMargin
+
+    _liveUpdatingMagnifier = False
+    _mouseTracking = settings.magMouseTrackingMode
+    _controlTracking = settings.magControlTrackingMode
+    _textTracking = settings.magTextTrackingMode
+    _edgeMargin = settings.magEdgeMargin
+
+    if settings.enableMagnifier:
+        setupMagnifier(settings.magZoomerType)
+        init()
+    else:
+        shutdown()

@@ -107,6 +107,7 @@ userCustomizableSettings = [
     "brailleSelectorIndicator",
     "enableBrailleMonitor",
     "enableMagnifier",
+    "enableMagLiveUpdating",
     "enableMagCursor",
     "enableMagCursorExplicitSize",
     "magCursorSize",
@@ -114,18 +115,31 @@ userCustomizableSettings = [
     "enableMagCrossHair",
     "enableMagCrossHairClip",
     "magCrossHairSize",
+    "magCrossHairColor",
     "magZoomerType",
     "magZoomerLeft",
     "magZoomerRight",
     "magZoomerTop",
     "magZoomerBottom",
     "magZoomFactor",
+    "enableMagZoomerBorder",
+    "magZoomerBorderSize",
+    "magZoomerBorderColor",
     "enableMagZoomerColorInversion",
+    "magBrightnessLevel",
+    "magBrightnessLevelRed",
+    "magBrightnessLevelBlue",
+    "magBrightnessLevelGreen",
+    "magContrastLevel",
+    "magContrastLevelRed",
+    "magContrastLevelGreen",
+    "magContrastLevelBlue",
     "magSmoothingMode",
     "magMouseTrackingMode",
     "magControlTrackingMode",
     "magTextTrackingMode",
     "magEdgeMargin",
+    "magColorFilteringMode",
     "magSourceDisplay",
     "magTargetDisplay",
     "verbalizePunctuationStyle",
@@ -300,6 +314,12 @@ brailleRadioButtonIndicators = ["& y", "&=y"]
 #
 enableMagnifier                  = False
 
+# If True, changes made in the Magnifier pane will take place
+# immediately (i.e. without pressing the apply button).  Making
+# them permanent still requires pressing Apply or OK.
+#
+enableMagLiveUpdating            = True
+
 # If True, show the magnification cursor.
 #
 enableMagCursor                  = True
@@ -328,6 +348,10 @@ enableMagCrossHairClip           = False
 #
 magCrossHairSize                 = 16
 
+# Magnification cross-hair color value (hex color spec).
+#
+magCrossHairColor                   = '#000000'
+
 # Magnification Zoomer type.
 #
 MAG_ZOOMER_TYPE_FULL_SCREEN      = 0
@@ -349,9 +373,48 @@ magZoomerBottom                  = screenHeight
 #
 magZoomFactor                    = 4.0
 
+# If True, display a border around the magnification zoomer region.
+#
+enableMagZoomerBorder           = False
+
+# The color and size of the border which separates the target
+# display from the source display.
+#
+magZoomerBorderSize              = 1
+magZoomerBorderColor             = '#000000'
+
 # If True, invert the magnification zoomer colors.
 #
 enableMagZoomerColorInversion    = False
+
+# The brightness levels.  The range is from -1 to 1, with 0
+# being "normal"/no change.
+#
+magBrightnessLevel               = 0
+magBrightnessLevelRed            = 0
+magBrightnessLevelGreen          = 0
+magBrightnessLevelBlue           = 0
+
+# The contrast levels.  The range is from -1 to 1, with 0
+# being "normal"/no change.
+#
+magContrastLevel                 = 0
+magContrastLevelRed              = 0
+magContrastLevelGreen            = 0
+magContrastLevelBlue             = 0
+
+# Magnification libcolorblind color filtering mode (see magColorFilteringMode).
+#
+MAG_COLOR_FILTERING_MODE_NONE                 = 0
+MAG_COLOR_FILTERING_MODE_SATURATE_RED         = 1
+MAG_COLOR_FILTERING_MODE_SATURATE_GREEN       = 2
+MAG_COLOR_FILTERING_MODE_SATURATE_BLUE        = 3
+MAG_COLOR_FILTERING_MODE_DESATURATE_RED       = 4
+MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN     = 5
+MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE      = 6
+MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT   = 7
+MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT   = 8
+magColorFilteringMode = MAG_COLOR_FILTERING_MODE_NONE
 
 # Magnification smoothing mode (see magSmoothingMode).
 #

@@ -318,12 +318,12 @@ class OrcaPrefs:
         elif sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             return "orca.settings.SAYALL_STYLE_SENTENCE"
 
-    def _getMagCursorColorString(self, cursorColor):
-        """Returns a string that represents the magnification cursor color
+    def _getMagColorString(self, cursorColor):
+        """Returns a string that represents the magnification object's color
         passed in.
 
         Arguments:
-        - cursorColor: magnification cursor color
+        - cursorColor: magnification object's color
 
         Returns a string suitable for the preferences file.
         """
@@ -408,6 +408,37 @@ class OrcaPrefs:
             return "orca.settings.MAG_TRACKING_MODE_PUSH"
         else:
             return "orca.settings.MAG_TRACKING_MODE_PUSH"
+
+    def _getMagColorFilteringModeString(self, mode):
+        """Returns a string that represents the magnification color filtering
+        mode passed in.
+
+        Arguments:
+        - mode: magnification color filtering mode.
+
+        Returns a string suitable for the preferences file.
+        """
+
+        if mode == settings.MAG_COLOR_FILTERING_MODE_NONE:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_NONE"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT"
+        elif mode == settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT"
+        else:
+            return "orca.settings.MAG_COLOR_FILTERING_MODE_NONE"
 
     def _getMagZoomerTypeString(self, magZoomerType):
         """Returns a string that represents the magnification zoomer position
@@ -627,8 +658,10 @@ class OrcaPrefs:
                 value = self._getVerbalizePunctuationStyleString(prefsDict[key])
             elif key == "sayAllStyle":
                 value = self._getSayAllStyleString(prefsDict[key])
-            elif key == "magCursorColor":
-                value = self._getMagCursorColorString(prefsDict[key])
+            elif key in ["magCursorColor",
+                         "magCrossHairColor",
+                         "magZoomerBorderColor"]:
+                value = self._getMagColorString(prefsDict[key])
             elif key == "magSmoothingMode":
                 value = self._getMagSmoothingModeString(prefsDict[key])
             elif key == "magMouseTrackingMode":
@@ -639,6 +672,8 @@ class OrcaPrefs:
                 value = self._getMagTextTrackingModeString(prefsDict[key])
             elif key == "magZoomerType":
                 value = self._getMagZoomerTypeString(prefsDict[key])
+            elif key == "magColorFilteringMode":
+                value = self._getMagColorFilteringModeString(prefsDict[key])
             elif key == "magSourceDisplay" or key == "magTargetDisplay":
                 value = self._getDisplayString(prefsDict[key])
             elif key == "keyboardLayout":
