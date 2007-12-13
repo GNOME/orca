@@ -47,6 +47,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Expander'",
      "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
@@ -62,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Details'",
-     "SPEECH OUTPUT: 'toggle button',
+     "SPEECH OUTPUT: 'toggle button'",
      "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################

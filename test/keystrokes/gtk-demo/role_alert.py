@@ -40,6 +40,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Information Alert', cursor=1", 
      "BRAILLE LINE:  'gtk-demo Application Information Alert OK Button'", 
      "     VISIBLE:  'OK Button', cursor=1", 
+     "SPEECH OUTPUT: ''", 
      "SPEECH OUTPUT: 'Information This message box has been popped up the following", 
      "number of times: 1'", 
      "SPEECH OUTPUT: ''", 
@@ -81,6 +82,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Interactive Dialog Dialog', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Interactive Dialog'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))

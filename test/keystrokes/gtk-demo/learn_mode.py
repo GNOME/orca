@@ -19,7 +19,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
-sequence.append(KeyComboAction("F1"))
+sequence.append(KeyComboAction("h"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Enter learn mode",

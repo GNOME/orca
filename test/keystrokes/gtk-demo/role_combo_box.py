@@ -37,6 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
      "     VISIBLE:  'Warning', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'window'",
      "SPEECH OUTPUT: 'Some stock icons panel'",
      "SPEECH OUTPUT: 'Warning'"]))
@@ -99,6 +100,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
      "     VISIBLE:  'New Combo', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Some stock icons panel'",
      "SPEECH OUTPUT: 'New combo box'"]))
@@ -238,6 +240,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
      "     VISIBLE:  'One', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'window'",
      "SPEECH OUTPUT: 'Editable panel'", "SPEECH OUTPUT: 'One'"]))
 
@@ -265,6 +268,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two Combo'",
      "     VISIBLE:  'Two Combo', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Editable panel'",
      "SPEECH OUTPUT: 'Two combo box'"]))

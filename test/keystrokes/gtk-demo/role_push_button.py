@@ -43,6 +43,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Button Boxes'",
      "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Button Boxes frame'",
      "SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel'",
      "SPEECH OUTPUT: 'OK button'"]))

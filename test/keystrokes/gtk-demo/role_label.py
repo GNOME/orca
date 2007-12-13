@@ -47,6 +47,8 @@ sequence.append(utils.AssertPresentationAction(
     "This message box label",
     ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times: label'"]))
@@ -104,9 +106,11 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret movement to 'h'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=2",
+     "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'h'"]))
 
 ########################################################################
@@ -180,8 +184,12 @@ sequence.append(WaitAction("object:text-selection-changed",
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select 'T' in 'This'",
     ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
-     "SPEECH OUTPUT: 'T'", "SPEECH OUTPUT: 'selected'"]))
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
 # Reselect the rest of the word "This".

@@ -1,4 +1,23 @@
+2007-12-12  Willie Walker <william.walker@sun.com>
+
+	* test/keystrokes/gtk-demo/role_alert.py:
+          test/keystrokes/gtk-demo/role_combo_box.py:
+          test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_label.py:
+          test/keystrokes/gtk-demo/learn_mode.py:
+          test/keystrokes/gtk-demo/debug_commands.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+	  Fix regressions introduced by various bug fixes.
+	  NOTE: many of these (but not all) are due to empty
+	  strings being sent to speech.  We'll fix those later.
+
 2007-12-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/orca-setup.glade:
           Converted the glade file back to version 2.  (Sorry Rich!)
 
