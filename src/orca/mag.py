@@ -1172,7 +1172,6 @@ def setMagnifierObjectColor(magProperty, colorSetting, updateScreen=True):
                             ORBit.CORBA.Any(toChange.typecode(),
                                             long(colorString, 0)))
     if updateScreen:
-        _zoomer.updatePointer()
         _zoomer.markDirty(_roi)
 
 def setZoomerMagFactor(x, y, updateScreen=True):
