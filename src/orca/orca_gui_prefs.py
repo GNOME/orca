@@ -4201,6 +4201,22 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         advancedMag.init()
         advancedMagDialog = advancedMag.getAdvancedMagDialog()
 
+    def magAdvancedDialogKeyPressed(self, widget, event):
+        """Signal handler for the "key_press" signal for the
+        orcaMagAdvancedDialog GtkWindow widget. If the user has pressed the
+        Escape key, then just hide the window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        - event: the event for the key that the user pressed.
+        """
+
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            if orca_state.lastInputEvent.event_string == "Escape":
+                advancedMagDialog.hide()
+
+        return False
+
 class WarningDialogGUI(orca_glade.GladeWrapper):
 
     def getPrefsWarningDialog(self):

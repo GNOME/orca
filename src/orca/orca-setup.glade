@@ -5222,6 +5222,7 @@ Please close it before opening a new one.</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <signal name="destroy" handler="magAdvancedDialogDestroyed" last_modification_time="Wed, 12 Dec 2007 17:58:20 GMT"/>
+  <signal name="key_press_event" handler="magAdvancedDialogKeyPressed" last_modification_time="Thu, 13 Dec 2007 21:21:16 GMT"/>
 
   <child>
     <widget class="GtkVBox" id="vbox30">
