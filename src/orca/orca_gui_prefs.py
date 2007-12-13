@@ -4213,6 +4213,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             if orca_state.lastInputEvent.event_string == "Escape":
+                self.prefsDict = self.restoreAdvancedSettings()
+                self.init()
                 advancedMagDialog.hide()
 
         return False
