@@ -4125,11 +4125,28 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         self._setZoomerSpinButtons()
 
     def restoreAdvancedSettings(self):
-        """Returns the saved values of the settings on the magnification
-        advanced settings dialog.
+        """Restores the previously saved values of the settings on the 
+        magnification advanced settings dialog.
         """
 
-        return self.savedSettings
+        self.prefsDict["magSmoothingMode"] = \
+                             self.prefs["magSmoothingMode"]
+        self.prefsDict["magBrightnessLevelRed"] = \
+                             self.prefs["magBrightnessLevelRed"]
+        self.prefsDict["magBrightnessLevelGreen"] = \
+                             self.prefs["magBrightnessLevelGreen"]
+        self.prefsDict["magBrightnessLevelBlue"] = \
+                             self.prefs["magBrightnessLevelBlue"]
+        self.prefsDict["magContrastLevelRed"] = \
+                             self.prefs["magContrastLevelRed"]
+        self.prefsDict["magContrastLevelGreen"] = \
+                             self.prefs["magContrastLevelGreen"]
+        self.prefsDict["magContrastLevelBlue"] = \
+                             self.prefs["magContrastLevelBlue"]
+        self.prefsDict["magColorFilteringMode"] = \
+                             self.prefs["magColorFilteringMode"]
+        self.prefsDict["magSourceDisplay"] = self.prefs["magSourceDisplay"]
+        self.prefsDict["magTargetDisplay"] = self.prefs["magTargetDisplay"]
 
     def saveAdvancedSettings(self, prefsDict):
         """Save the current values of the settings on the magnification
@@ -4139,7 +4156,20 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - prefsDict: the preferences dictionary containing the current state.
         """
 
-        self.savedSettings = prefsDict.copy()
+        self.prefs = {}
+        self.prefs["magSmoothingMode"] = prefsDict["magSmoothingMode"]
+        self.prefs["magBrightnessLevelRed"] = \
+                                         prefsDict["magBrightnessLevelRed"]
+        self.prefs["magBrightnessLevelGreen"] = \
+                                         prefsDict["magBrightnessLevelGreen"]
+        self.prefs["magBrightnessLevelBlue"] = \
+                                         prefsDict["magBrightnessLevelBlue"]
+        self.prefs["magContrastLevelRed"] = prefsDict["magContrastLevelRed"]
+        self.prefs["magContrastLevelGreen"] = prefsDict["magContrastLevelGreen"]
+        self.prefs["magContrastLevelBlue"] = prefsDict["magContrastLevelBlue"]
+        self.prefs["magColorFilteringMode"] = prefsDict["magColorFilteringMode"]
+        self.prefs["magSourceDisplay"] = prefsDict["magSourceDisplay"]
+        self.prefs["magTargetDisplay"] = prefsDict["magTargetDisplay"]
 
     def magAdvancedCancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
@@ -4152,7 +4182,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict = self.restoreAdvancedSettings()
+        self.restoreAdvancedSettings()
         self.init()
         liveUpdating = self.enableLiveUpdating
         self.enableLiveUpdating = False
@@ -4182,6 +4212,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
+        self.restoreAdvancedSettings()
         orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
                                    "orcaMagAdvancedDialog", self.prefsDict)
         orca_state.advancedMag.init()
@@ -4200,7 +4231,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             if orca_state.lastInputEvent.event_string == "Escape":
-                self.prefsDict = self.restoreAdvancedSettings()
+                self.restoreAdvancedSettings()
                 self.init()
                 liveUpdating = self.enableLiveUpdating
                 self.enableLiveUpdating = False

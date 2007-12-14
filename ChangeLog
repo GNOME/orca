@@ -1,5 +1,13 @@
 2007-12-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/orca_gui_prefs.py:
+          More work on bug #463881 - Evaluate other gnome-mag features
+          for inclusion in Orca prefs. Fix to restore settings if the
+          user enters and escapes out of the Advanced Settings dialog
+          multiple times.  Thanks Rich!
+
+2007-12-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/mag.py:
           More work on bug #463881 - Evaluate other gnome-mag features
           for inclusion in Orca prefs. Minimize the "jumpiness" when
