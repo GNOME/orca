@@ -106,6 +106,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         orca_glade.GladeWrapper.__init__(self, fileName, windowName)
 
         self.prefsDict = prefsDict
+        self.enableLiveUpdating = settings.enableMagLiveUpdating
 
         # Initialize variables to None to keep pylint happy.
         #
@@ -1440,6 +1441,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         # Magnifier pane.
         #
+        # Turn live updating off temporarily.
+        #
+        liveUpdating = self.enableLiveUpdating
+        self.enableLiveUpdating = False
+        
         # Set the sensitivity of the items on the magnifier pane, depending
         # upon whether the "Enable Magnifier" checkbox is checked.
         #
@@ -1720,6 +1726,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             self.get_widget("generalDesktopButton").set_active(True)
         else:
             self.get_widget("generalLaptopButton").set_active(True)
+
+        self.enableLiveUpdating = liveUpdating
 
     def getComboBoxIndex(self, combobox, searchStr):
         """ For each of the entries in the given combo box, look for searchStr.
@@ -2629,7 +2637,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         enable = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             if enable:
                 mag.init()
             else:
@@ -2650,7 +2658,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         enableCursor = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             custom = self.get_widget("magCursorSizeCheckButton").get_active()
             size = \
                  self.get_widget("magCursorSizeSpinButton").get_value_as_int()
@@ -2672,7 +2680,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         enable = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             size = \
                  self.get_widget("magCursorSizeSpinButton").get_value_as_int()
             mag.setMagnifierCursor(True, enable, size)
@@ -2692,7 +2700,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         size = widget.get_value_as_int()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierCursor(True, True, size)
         self.prefsDict["magCursorSize"] = size
 
@@ -2709,7 +2717,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         color = widget.get_color()
         cursorColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierObjectColor("cursor-color", cursorColor)
 
             # For some reason, live updating of the cursor color is not
@@ -2736,7 +2744,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierCrossHair(value)
         self.prefsDict["enableMagCrossHair"] = value
         self.get_widget("magCrossHairTable").set_sensitive(value)
@@ -2753,7 +2761,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierCrossHairClip(value)
         self.prefsDict["enableMagCrossHairClip"] = value
 
@@ -2769,7 +2777,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_value_as_int()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierObjectSize("crosswire-size", value)
         self.prefsDict["magCrossHairSize"] = value
 
@@ -2786,7 +2794,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         color = widget.get_color()
         crossHairColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setMagnifierObjectColor("crosswire-color", crossHairColor)
         self.prefsDict["magCrossHairColor"] = crossHairColor
 
@@ -2819,7 +2827,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             size = \
                  self.get_widget("magBorderSizeSpinButton").get_value_as_int()
 
-        if not settings.enableMagLiveUpdating:
+        if not self.enableLiveUpdating:
             return
 
         if zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
@@ -2851,7 +2859,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         top = widget.get_value_as_int()
         self.prefsDict["magZoomerTop"] = top
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
@@ -2874,7 +2882,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         bottom = widget.get_value_as_int()
         self.prefsDict["magZoomerBottom"] = bottom
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
@@ -2896,7 +2904,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         left = widget.get_value_as_int()
         self.prefsDict["magZoomerLeft"] = left
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
@@ -2919,7 +2927,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         right = widget.get_value_as_int()
         self.prefsDict["magZoomerRight"] = right
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
@@ -2941,7 +2949,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_value()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setZoomerMagFactor(value, value)
         self.prefsDict["magZoomFactor"] = value
 
@@ -2960,7 +2968,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         value = widget.get_active()
         self.prefsDict["enableMagZoomerBorder"] = value
         self.get_widget("magBorderTable").set_sensitive(value)
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         size = self.get_widget("magBorderSizeSpinButton").get_value_as_int()
@@ -2980,7 +2988,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_value_as_int()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setZoomerObjectSize("border-size", value)
         self.prefsDict["magZoomerBorderSize"] = value
 
@@ -2997,7 +3005,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         color = widget.get_color()
         borderColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setZoomerObjectColor("border-color", borderColor)
         self.prefsDict["magZoomerBorderColor"] = borderColor
 
@@ -3014,7 +3022,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         value = round(widget.get_value(), 2)
         self.prefsDict["magBrightnessLevel"] = value
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         r = self.prefsDict["magBrightnessLevelRed"] + value
@@ -3035,7 +3043,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         value = round(widget.get_value(), 2)
         self.prefsDict["magContrastLevel"] = value
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
+        if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
         r = self.prefsDict["magContrastLevelRed"] + value
@@ -3169,7 +3177,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         value = widget.get_active()
-        if settings.enableMagLiveUpdating and widget.is_focus():
+        if self.enableLiveUpdating and widget.is_focus():
             mag.setZoomerColorInversion(value)
         self.prefsDict["enableMagZoomerColorInversion"] = value
 
@@ -3658,6 +3666,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         OrcaSetupGUI.__init__(self, fileName, windowName)
 
         self.prefsDict = prefsDict
+        self.enableLiveUpdating = settings.enableMagLiveUpdating
 
         # To make pylint happy.
         #
@@ -3675,6 +3684,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         """Adjust the settings of the various components on the
         configuration GUI depending upon the users preferences.
         """
+
+        liveUpdating = self.enableLiveUpdating
+        self.enableLiveUpdating = False
 
         prefs = self.prefsDict
 
@@ -3709,6 +3721,10 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         targetDisplay = prefs["magTargetDisplay"]
         self.get_widget("magTargetDisplayEntry").set_text(targetDisplay)
+
+        self.enableLiveUpdating = liveUpdating
+        self.updateRGBBrightness()
+        self.updateRGBContrast()
 
     def setSmoothingMode(self, smoothingMode):
         """Get the smoothing preference and set the active value for the
@@ -3759,7 +3775,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         else:
             mode = settings.MAG_SMOOTHING_MODE_BILINEAR
 
-        if settings.enableMagLiveUpdating:
+        if self.enableLiveUpdating:
             mag.setZoomerSmoothingType(mode)
 
         self.prefsDict["magSmoothingMode"] = mode
@@ -3777,6 +3793,25 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         self.get_widget("magBrightnessGreenSpinButton").set_value(green)
         self.get_widget("magBrightnessBlueSpinButton").set_value(blue)
 
+    def updateRGBBrightness(self):
+        """Gets the RGB brightness spin button values and live-updates
+        the brightness level in gnome-mag.
+        """
+
+        if not self.enableLiveUpdating:
+            return
+
+        r = self.get_widget("magBrightnessRedSpinButton").get_value()
+        g = self.get_widget("magBrightnessGreenSpinButton").get_value()
+        b = self.get_widget("magBrightnessBlueSpinButton").get_value()
+
+        brightness = self.prefsDict["magBrightnessLevel"]
+        r = round(r + brightness, 2)
+        g = round(g + brightness, 2)
+        b = round(b + brightness, 2)
+
+        mag.setZoomerBrightness(r, g, b)
+
     def magBrightnessRedValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magBrightnessRedSpinButton GtkSpinButton widget.
@@ -3788,20 +3823,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        r = round(widget.get_value(), 2)
-        self.prefsDict["magBrightnessLevelRed"] = r
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
-            return
-
-        g = self.get_widget("magBrightnessGreenSpinButton").get_value()
-        b = self.get_widget("magBrightnessBlueSpinButton").get_value()
-
-        brightness = self.prefsDict["magBrightnessLevel"]
-        r += brightness
-        g = round(g + brightness, 2)
-        b = round(b + brightness, 2)
-
-        mag.setZoomerBrightness(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelRed"] = value
+        self.updateRGBBrightness()
 
     def magBrightnessGreenValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -3814,20 +3838,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        g = round(widget.get_value(), 2)
-        self.prefsDict["magBrightnessLevelGreen"] = g
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
-            return
-
-        r = self.get_widget("magBrightnessRedSpinButton").get_value()
-        b = self.get_widget("magBrightnessBlueSpinButton").get_value()
-
-        brightness = self.prefsDict["magBrightnessLevel"]
-        g += brightness
-        r = round(r + brightness, 2)
-        b = round(b + brightness, 2)
-
-        mag.setZoomerBrightness(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelGreen"] = value
+        self.updateRGBBrightness()
 
     def magBrightnessBlueValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -3840,20 +3853,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        b = round(widget.get_value(), 2)
-        self.prefsDict["magBrightnessLevelBlue"] = b
-        if not settings.enableMagLiveUpdating:
-            return
-
-        r = self.get_widget("magBrightnessRedSpinButton").get_value()
-        g = self.get_widget("magBrightnessGreenSpinButton").get_value()
-
-        brightness = self.prefsDict["magBrightnessLevel"]
-        b += brightness
-        r = round(r + brightness, 2)
-        g = round(g + brightness, 2)
-
-        mag.setZoomerBrightness(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magBrightnessLevelBlue"] = value
+        self.updateRGBBrightness()
 
     def setRGBContrastValues(self, red, green, blue):
         """Set the spin button values for the Contrast RGB levels.
@@ -3868,6 +3870,25 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         self.get_widget("magContrastGreenSpinButton").set_value(green)
         self.get_widget("magContrastBlueSpinButton").set_value(blue)
 
+    def updateRGBContrast(self):
+        """Gets the RGB Contrast spin button values and live-updates
+        the contrast level in gnome-mag.
+        """
+
+        if not self.enableLiveUpdating:
+            return
+
+        r = self.get_widget("magContrastRedSpinButton").get_value()
+        g = self.get_widget("magContrastGreenSpinButton").get_value()
+        b = self.get_widget("magContrastBlueSpinButton").get_value()
+        contrast = self.prefsDict["magContrastLevel"]
+
+        r = round(r + contrast, 2)
+        g = round(g + contrast, 2)
+        b = round(b + contrast, 2)
+
+        mag.setZoomerContrast(r, g, b)
+
     def magContrastRedValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magContrastRedSpinButton GtkSpinButton widget.
@@ -3879,20 +3900,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        r = round(widget.get_value(), 2)
-        self.prefsDict["magContrastLevelRed"] = r
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
-            return
-
-        g = self.get_widget("magContrastGreenSpinButton").get_value()
-        b = self.get_widget("magContrastBlueSpinButton").get_value()
-
-        contrast = self.prefsDict["magContrastLevel"]
-        r += contrast
-        g = round(g + contrast, 2)
-        b = round(b + contrast, 2)
-
-        mag.setZoomerContrast(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelRed"] = value
+        self.updateRGBContrast()
 
     def magContrastGreenValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -3905,20 +3915,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        g = round(widget.get_value(), 2)
-        self.prefsDict["magContrastLevelGreen"] = g
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
-            return
-
-        r = self.get_widget("magContrastRedSpinButton").get_value()
-        b = self.get_widget("magContrastBlueSpinButton").get_value()
-
-        contrast = self.prefsDict["magContrastLevel"]
-        g += contrast
-        r = round(r + contrast, 2)
-        b = round(b + contrast, 2)
-
-        mag.setZoomerContrast(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelGreen"] = value
+        self.updateRGBContrast()
 
     def magContrastBlueValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -3931,20 +3930,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        b = round(widget.get_value(), 2)
-        self.prefsDict["magContrastLevelBlue"] = b
-        if not (settings.enableMagLiveUpdating and widget.is_focus()):
-            return
-
-        r = self.get_widget("magContrastRedSpinButton").get_value()
-        g = self.get_widget("magContrastGreenSpinButton").get_value()
-
-        contrast = self.prefsDict["magContrastLevel"]
-        b += contrast
-        r = round(r + contrast, 2)
-        g = round(g + contrast, 2)
-
-        mag.setZoomerContrast(r, g, b)
+        value = round(widget.get_value(), 2)
+        self.prefsDict["magContrastLevelBlue"] = value
+        self.updateRGBContrast()
 
     def setColorFilteringMode(self, mode):
         """Set the active value for the color filtering mode combobox
@@ -4109,7 +4097,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         else:
             mode = settings.MAG_COLOR_FILTERING_MODE_NONE
 
-        if settings.enableMagLiveUpdating:
+        if self.enableLiveUpdating:
             mag.setZoomerColorFilter(mode)
 
         self.prefsDict["magColorFilteringMode"] = mode
@@ -4171,6 +4159,11 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         self.prefsDict = self.restoreAdvancedSettings()
         self.init()
+        liveUpdating = self.enableLiveUpdating
+        self.enableLiveUpdating = False
+        self.updateRGBBrightness()
+        self.updateRGBContrast()
+        self.enableLiveUpdating = liveUpdating
         advancedMagDialog.hide()
 
     def magAdvancedOkButtonClicked(self, widget):
@@ -4215,6 +4208,11 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
             if orca_state.lastInputEvent.event_string == "Escape":
                 self.prefsDict = self.restoreAdvancedSettings()
                 self.init()
+                liveUpdating = self.enableLiveUpdating
+                self.enableLiveUpdating = False
+                self.updateRGBBrightness()
+                self.updateRGBContrast()
+                self.enableLiveUpdating = liveUpdating
                 advancedMagDialog.hide()
 
         return False
