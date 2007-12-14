@@ -430,9 +430,21 @@ class BrailleGenerator:
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        displayedText = self._script.getDisplayedText(obj)
-        if displayedText:
-            regions.append(braille.Region(displayedText))
+        # Check to see if the text is editable. If so, then we want
+        # to show the text attributes (such as selection -- see bug
+        # 496846 for more details).
+        #
+        textObj = None
+        for child in obj:
+            if child and child.getRole() == pyatspi.ROLE_TEXT:
+                textObj = child
+        if textObj and textObj.getState().contains(pyatspi.STATE_EDITABLE):
+            textRegion = braille.Text(textObj)
+            regions.append(textRegion)
+        else:
+            displayedText = self._script.getDisplayedText(obj)
+            if displayedText:
+                regions.append(braille.Region(displayedText))
 
         regions.append(braille.Region(
             " " + rolenames.getBrailleForRoleName(obj)))

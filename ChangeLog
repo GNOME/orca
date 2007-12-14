@@ -1,3 +1,9 @@
+2007-12-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braillegenerator.py:
+          Fixed bug #496846 - When tabbing to an editable combobox, text 
+          selection should be displayed in braille.
+
 2007-12-14  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_combo_box.py:
