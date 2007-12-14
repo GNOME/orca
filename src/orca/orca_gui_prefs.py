@@ -58,11 +58,6 @@ from orca_i18n import _  # for gettext support
 
 (ACTUAL, REPLACEMENT) = range(2)
 
-# Handles to the magnification Advanced Settings Glade GUI object and dialog.
-#
-advancedMag = None
-advancedMagDialog = None
-
 class OrcaSetupGUI(orca_glade.GladeWrapper):
 
     # Translators: this is an algorithm for tracking an object
@@ -1268,7 +1263,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         nScreens = display.get_n_screens()
         targetScreen = display.get_default_screen()
         targetDisplay = \
-                     advancedMag.get_widget("magTargetDisplayEntry").get_text()
+          orca_state.advancedMag.get_widget("magTargetDisplayEntry").get_text()
         if targetDisplay:
             t = targetDisplay.split(".")
             try:
@@ -1553,7 +1548,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         nScreens = display.get_n_screens()
         sourceScreen = display.get_default_screen()
         sourceDisplay = \
-                     advancedMag.get_widget("magSourceDisplayEntry").get_text()
+          orca_state.advancedMag.get_widget("magSourceDisplayEntry").get_text()
         if sourceDisplay:
             s = sourceDisplay.split(".")
             try:
@@ -3061,8 +3056,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        advancedMag.saveAdvancedSettings(self.prefsDict)
-        advancedMagDialog.show()
+        orca_state.advancedMag.saveAdvancedSettings(self.prefsDict)
+        orca_state.advancedMagDialog.show()
 
     def magMouseTrackingChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -4164,7 +4159,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         self.updateRGBBrightness()
         self.updateRGBContrast()
         self.enableLiveUpdating = liveUpdating
-        advancedMagDialog.hide()
+        orca_state.advancedMagDialog.hide()
 
     def magAdvancedOkButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the magAdvancedOKButton
@@ -4176,7 +4171,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        advancedMagDialog.hide()
+        orca_state.advancedMagDialog.hide()
 
     def magAdvancedDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the
@@ -4187,12 +4182,11 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        global advancedMag, advancedMagDialog
-
-        advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+        orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
                                    "orcaMagAdvancedDialog", self.prefsDict)
-        advancedMag.init()
-        advancedMagDialog = advancedMag.getAdvancedMagDialog()
+        orca_state.advancedMag.init()
+        orca_state.advancedMagDialog = \
+                                orca_state.advancedMag.getAdvancedMagDialog()
 
     def magAdvancedDialogKeyPressed(self, widget, event):
         """Signal handler for the "key_press" signal for the
@@ -4213,7 +4207,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
                 self.updateRGBBrightness()
                 self.updateRGBContrast()
                 self.enableLiveUpdating = liveUpdating
-                advancedMagDialog.hide()
+                orca_state.advancedMagDialog.hide()
 
         return False
 
@@ -4252,8 +4246,6 @@ class WarningDialogGUI(orca_glade.GladeWrapper):
         self.orcaPrefsWarningDialog.destroy()
 
 def showPreferencesUI():
-    global advancedMag, advancedMagDialog
-
     if not orca_state.appOS and not orca_state.orcaOS:
         # Translators: Orca Preferences is the configuration GUI for Orca.
         #
@@ -4267,10 +4259,11 @@ def showPreferencesUI():
                                                  platform.package,
                                                  "glade",
                                                  "orca-setup.glade")
-        advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+        orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
                                    "orcaMagAdvancedDialog", prefsDict)
-        advancedMag.init()
-        advancedMagDialog = advancedMag.getAdvancedMagDialog()
+        orca_state.advancedMag.init()
+        orca_state.advancedMagDialog = \
+                              orca_state.advancedMag.getAdvancedMagDialog()
 
         orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsGladeFile,
                                          "orcaSetupWindow", prefsDict)

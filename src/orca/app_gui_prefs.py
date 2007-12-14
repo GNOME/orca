@@ -39,6 +39,7 @@ import input_event
 import keybindings
 import orca_glade
 import orca_gui_prefs
+import orca_prefs
 import orca_state
 import platform
 import settings
@@ -51,7 +52,7 @@ appScript = None
 
 class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
-    def __init__(self, fileName, windowName):
+    def __init__(self, fileName, windowName, prefsDict = None):
         """Initialize the application specific Orca configuration GUI.
 
         Arguments:
@@ -59,7 +60,8 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         - windowName: name of the component to get from the Glade file.
         """
 
-        orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, windowName)
+        orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, 
+                                             windowName, prefsDict)
 
         # Initialize variables to None to keep pylint happy.
         #
@@ -305,13 +307,21 @@ def showPreferencesUI():
         braille.displayMessage(line)
         speech.speak(line)
 
+        prefsDict = orca_prefs.readPreferences()
         orca_state.prefsGladeFile = os.path.join(platform.prefix,
                                                  platform.datadirname,
                                                  platform.package,
                                                  "glade",
                                                  "orca-setup.glade")
+        orca_state.advancedMag = \
+          orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+                                   "orcaMagAdvancedDialog", prefsDict)
+        orca_state.advancedMag.init()
+        orca_state.advancedMagDialog = \
+                           orca_state.advancedMag.getAdvancedMagDialog()
+
         orca_state.appOS = OrcaSetupGUI(orca_state.prefsGladeFile,
-                                        "orcaSetupWindow")
+                                        "orcaSetupWindow", prefsDict)
         removeGeneralPane = True
         orca_state.appOS.init()
     else:

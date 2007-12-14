@@ -108,3 +108,9 @@ orcaWD = None
 # Handle to the Orca Preferences Glade file.
 #
 prefsGladeFile = None
+
+# Handles to the magnification Advanced Settings Glade GUI object and dialog.
+#
+advancedMag = None
+advancedMagDialog = None
+
