@@ -49,12 +49,12 @@ sequence.append(utils.AssertPresentationAction(
     "File menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: ' menu bar'",
+     "SPEECH OUTPUT: 'menu bar'",
      "SPEECH OUTPUT: 'File'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: 'Alt f'"]))
+     "SPEECH OUTPUT: 'f'"]))
 
 ########################################################################
 # Right arrow to the "Preferences" menu.
@@ -80,12 +80,12 @@ sequence.append(utils.AssertPresentationAction(
     "Preferences menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
      "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: ' menu bar'",
+     "SPEECH OUTPUT: 'menu bar'",
      "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: 'Alt p'"]))
+     "SPEECH OUTPUT: 'p'"]))
 
 ########################################################################
 # Go down to the "Color" menu.

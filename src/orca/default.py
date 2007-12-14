@@ -5505,59 +5505,73 @@ class Script(script.Script):
 
         return nodes
 
-    def getAcceleratorAndShortcut(self, obj):
-        """Gets the accelerator string (and possibly shortcut) for the given
-        object.
+    def getKeyBinding(self, obj):
+        """Gets the mnemonic, accelerator string and possibly shortcut
+        for the given object.  These are based upon the first accessible
+        action for the object.
 
         Arguments:
         - obj: the Accessible object
 
-        A list containing the accelerator and shortcut for the given object,
-        where the first element is the accelerator and the second element is
-        the shortcut.
+      
+        Returns: list containing strings: [mnemonic, accelerator, shortcut]
         """
 
         try:
             action = obj.queryAction()
         except NotImplementedError:
-            return ["", ""]
+            return ["", "", ""]
 
-        # [[[TODO: WDW - assumes the first keybinding is all that we care about.
-        # Logged as bugzilla bug 319741.]]]
+        # Action is a string in the format, where the mnemonic and/or
+        # accelerator can be missing.
+        #
+        # <mnemonic>;<full-path>;<accelerator>
+        #
+        # The keybindings in <full-path> should be separated by ":"
         #
         bindingStrings = action.getKeyBinding(0).split(';')
 
-        # [[[TODO: WDW - assumes menu items have three bindings.  Logged as
-        # bugzilla bug 319741.]]]
-        #
         if len(bindingStrings) == 3:
-            #mnemonic       = bindingStrings[0]
+            mnemonic       = bindingStrings[0]
             fullShortcut   = bindingStrings[1]
             accelerator    = bindingStrings[2]
         elif len(bindingStrings) > 0:
+            mnemonic       = ""
             fullShortcut   = bindingStrings[0]
             try:
                 accelerator = bindingStrings[1]
             except:
                 accelerator = ""
         else:
+            mnemonic       = ""
             fullShortcut   = ""
             accelerator    = ""
 
         fullShortcut = fullShortcut.replace("<","")
         fullShortcut = fullShortcut.replace(">"," ")
-        fullShortcut = fullShortcut.replace(":"," ")
+        fullShortcut = fullShortcut.replace(":"," ").strip()
 
-        # If the accelerator string includes a Space, make sure we speak it.
+        # If the accelerator or mnemonic strings includes a Space,
+        # make sure we speak it.
         #
+        if mnemonic.endswith(" "):
+            # Translators: this is the spoken word for the space character
+            #
+            mnemonic += _("space")
+        mnemonic = mnemonic.replace("<","")
+        mnemonic = mnemonic.replace(">"," ").strip()
+
         if accelerator.endswith(" "):
             # Translators: this is the spoken word for the space character
             #
             accelerator += _("space")
-        accelerator  = accelerator.replace("<","")
-        accelerator  = accelerator.replace(">"," ")
+        accelerator = accelerator.replace("<","")
+        accelerator = accelerator.replace(">"," ").strip()
 
-        return [accelerator, fullShortcut]
+        debug.println(debug.LEVEL_FINEST, "default.getKeyBinding: " \
+                      + repr([mnemonic, fullShortcut, accelerator]))
+
+        return [mnemonic, fullShortcut, accelerator]
 
     def getKnownApplications(self):
         """Retrieves the list of currently running apps for the desktop

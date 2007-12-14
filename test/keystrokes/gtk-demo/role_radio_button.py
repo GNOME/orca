@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'All radio button'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: ' Alt a'"]))
+     "SPEECH OUTPUT: 'Alt a'"]))
 
 ########################################################################
 # Down arrow to the "Range" radio button.
@@ -90,7 +90,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Range radio button'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'item 3 of 3'",
-     "SPEECH OUTPUT: ' Alt n'"]))
+     "SPEECH OUTPUT: 'Alt n'"]))
 
 ########################################################################
 # Put everything back and close the demo.

@@ -67,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: ' Alt h'"]))
+     "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
 # Do an extended "Where Am I" via double KP_Enter.
@@ -86,11 +86,11 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: ' Alt h'",
+     "SPEECH OUTPUT: 'Alt h'",
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: ' Alt h'"]))
+     "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
 # Change the value by arrowing down.
@@ -163,7 +163,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: ' Alt h'"]))
+     "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
 # Close the Color Chooser dialog

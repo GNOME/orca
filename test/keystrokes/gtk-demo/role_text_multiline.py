@@ -32,7 +32,7 @@ sequence.append(KeyComboAction("Tab"))
 
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.StartRecordingAction())
-sequence.append(TypeAction("This is a test.", 500))
+sequence.append(TypeAction("This is a test.", 500, 500))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(utils.AssertPresentationAction(
     "Typing",

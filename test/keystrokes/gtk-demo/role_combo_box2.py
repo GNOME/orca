@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'All sheets'",
      "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: ' Alt o'"]))
+     "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################
 # Down arrow to select the "Even sheets" item in the combo box.
@@ -89,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Even sheets'",
      "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: ' Alt o'"]))
+     "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################
 # Put things back the way they were and close the demo.

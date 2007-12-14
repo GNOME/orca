@@ -164,21 +164,10 @@ class BrailleGenerator:
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             text = ""
-
-            result = self._script.getAcceleratorAndShortcut(obj)
-
-            accelerator = result[0]
-            #shortcut = result[1]
-
+            result = self._script.getKeyBinding(obj)
+            accelerator = result[2]
             if len(accelerator) > 0:
                 text += "(" + accelerator + ")"
-
-            # [[[TODO: WDW - various stuff preserved while we work out the
-            # desired verbosity here.]]]
-            #
-            #if len(shortcut) > 0:
-            #    text += "(" + shortcut + ")"
-
             return text
         else:
             return None

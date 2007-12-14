@@ -70,7 +70,7 @@ class WhereAmI:
            \n  label=%s \
            \n  name=%s \
            \n  role=%s \
-           \n  mnemonics=%s \
+           \n  keybinding=%s \
            \n  parent label= %s \
            \n  parent name=%s \
            \n  parent role=%s \
@@ -79,7 +79,7 @@ class WhereAmI:
             (self._getObjLabel(obj),
              self._getObjName(obj),
              obj.getRoleName(),
-             self._script.getAcceleratorAndShortcut(obj),
+             self._script.getKeyBinding(obj),
              self._getObjLabel(obj.parent),
              self._getObjName(obj.parent),
              obj.parent.getRoleName(),
@@ -160,7 +160,7 @@ class WhereAmI:
         1. label
         2. role
         3. state
-        4. mnemonic (i.e. Alt plus the underlined letter), if any
+        4. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -169,8 +169,8 @@ class WhereAmI:
         text = text + " " + self._getCheckBoxState(obj)
         utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
-        utterances.append(text)
+        accelerator = self._getObjAccelerator(obj)
+        utterances.append(accelerator)
 
         debug.println(self._debugLevel, "check box utterances=%s" \
                       % utterances)
@@ -185,7 +185,7 @@ class WhereAmI:
         3. role
         4. state
         5. relative position
-        6. mnemonic (i.e. Alt plus the underlined letter), if any
+        6. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -217,7 +217,7 @@ class WhereAmI:
         text = self._getPositionInGroup(obj)
         utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "radio button utterances=%s" % \
@@ -232,7 +232,7 @@ class WhereAmI:
         2. role
         3. current value
         4. relative position
-        5. mnemonic (i.e. Alt plus the underlined letter), if any
+        5. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -249,8 +249,8 @@ class WhereAmI:
         text = self._getPositionInList(obj[0], name)
         utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
-        utterances.append(text)
+        accelerator = self._getObjAccelerator(obj)
+        utterances.append(accelerator)
 
         debug.println(self._debugLevel, "combo box utterances=%s" % \
                       utterances)
@@ -263,7 +263,7 @@ class WhereAmI:
         1. label
         2. role
         3. current value
-        4. mnemonic (i.e. Alt plus the underlined letter), if any
+        4. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -276,7 +276,7 @@ class WhereAmI:
         name = self._getObjName(obj)
         utterances.append(name)
         
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "spin button utterances=%s" % \
@@ -289,7 +289,7 @@ class WhereAmI:
 
         1. label
         2. role
-        3. mnemonic (i.e. Alt plus the underlined letter), if any
+        3. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -299,7 +299,7 @@ class WhereAmI:
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "push button utterances=%s" % \
@@ -314,7 +314,7 @@ class WhereAmI:
         2. role
         3. value
         4. percentage (if possible)
-        5. mnemonic (i.e. Alt plus the underlined letter), if any
+        5. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -330,7 +330,7 @@ class WhereAmI:
         #
         utterances.append(_("%s percent") % values[1])
 
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "slider utterances=%s" % \
@@ -344,15 +344,15 @@ class WhereAmI:
 
         1. Name of the menu containing the item, followed by its role
         2. item name, followed by its role (if a menu) followed by its
-        accelerator key, if any
+        accelerator key binding, if any
         3. relative position
-        4. mnemonic (i.e. Alt plus the underlined letter), if any
+        4. mnemonic (i.e. the underlined letter), if any
         """
 
         utterances = []
         text = self.getObjLabelAndName(obj.parent) + " " + \
                rolenames.getSpeechForRoleName(obj.parent)
-        utterances.append(text)
+        utterances.append(text.strip())
 
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
@@ -391,23 +391,18 @@ class WhereAmI:
                 text = _("not selected")
             utterances.append(text)
 
-        text = self._getObjAccelerator(obj)
+        text = self._getObjAccelerator(obj, False, False)
         utterances.append(text)
 
         name = self._getObjName(obj)
         text = self._getPositionInList(obj.parent, name)
         utterances.append(text)
 
-        text = self._getObjShortcut(obj)
-
-        # The object's shortcut will be the full list of keys (e.g.
-        # Alt FO for the open menu item in the File menu). We only
-        # want to speak the shortcut associated with the menu item.
-        #
-        if text and obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU:
-            text = text[-1]
-        
-        utterances.append(text)
+        if obj.parent \
+           and obj.parent.getRole() in [pyatspi.ROLE_MENU, 
+                                        pyatspi.ROLE_MENU_BAR]:
+            text = self._getObjMnemonic(obj)
+            utterances.append(text)
 
         debug.println(self._debugLevel, "menu item utterances=%s" % \
                       utterances)
@@ -420,7 +415,7 @@ class WhereAmI:
         1. role
         2. label + 'page'
         3. relative position
-        4. mnemonic (i.e. Alt plus the underlined letter), if any
+        4. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -436,7 +431,7 @@ class WhereAmI:
         text = self._getPositionInList(obj.parent, name)
         utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "page utterances=%s" % \
@@ -455,7 +450,7 @@ class WhereAmI:
             attibute information before  (bold "text")
             by 'selected' (single press)
             C. if the current line is blank/empty, 'blank'
-        4. mnemonic (i.e. Alt plus the underlined letter), if any
+        4. accelerator (i.e. Alt plus the underlined letter), if any
 
         Gaim, gedit, OpenOffice Writer and Terminal
         """
@@ -496,7 +491,7 @@ class WhereAmI:
             text = Q_("text|selected")
             utterances.append(text)
 
-        text = self._getObjMnemonic(obj)
+        text = self._getObjAccelerator(obj)
         utterances.append(text)
 
         debug.println(self._debugLevel, "text utterances=%s" % \
@@ -609,7 +604,8 @@ class WhereAmI:
         utterances = []
 
         text = self._getObjLabel(obj)
-        utterances.append(text)
+        if text:
+            utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
@@ -658,7 +654,6 @@ class WhereAmI:
     def _speakParagraph(self, obj, doubleClick):
         """Speak a paragraph object.
         """
-
         self._speakText(obj, doubleClick)
 
     def _speakIconPanel(self, obj, doubleClick):
@@ -1001,44 +996,36 @@ class WhereAmI:
 
         return text
 
-    def _getObjMnemonic(self, obj):
-        """Returns the accellerator and/or shortcut for the object,
-        if either exists.
-        """
-
-        results = self._script.getAcceleratorAndShortcut(obj)
-
-        text = ""
-        if not results[1]:
-            text = results[0]
-        else:
-            text = results[0] + " " +  results[1]
-
-        return text
-
-    def _getObjAccelerator(self, obj):
+    def _getObjAccelerator(self,
+                           obj, 
+                           fallbackToMnemonic=True,
+                           fallbackToFullPath=True):
         """Returns the accelerator for the object, if it exists.
         """
 
-        results = self._script.getAcceleratorAndShortcut(obj)
+        # We'll try the real accelerator first, but fallback to the
+        # mnemonic if there is no accelerator.  This is done because
+        # some implementations, such as the Java platform, will
+        # only give us the mnemonic sometimes.
+        #
+        results = self._script.getKeyBinding(obj)
+        if results[2]:
+            return results[2]
 
-        text = ""
-        if results[0]:
-            text = results[0]
+        mnemonic = results[0]
+        if mnemonic and fallbackToMnemonic:
+            return mnemonic
 
-        return text
+        if fallbackToFullPath:
+            return results[1]
 
-    def _getObjShortcut(self, obj):
-        """Returns the shortcut for the object, if it exists.
+        return ""
+
+    def _getObjMnemonic(self, obj):
+        """Returns the mnemonic (a letter) for the object, if it exists.
         """
-
-        results = self._script.getAcceleratorAndShortcut(obj)
-
-        text = ""
-        if results[1]:
-            text = results[1]
-
-        return text
+        results = self._script.getKeyBinding(obj)
+        return results[0][-1:]
 
     def _getSliderValues(self, obj):
         """Returns the slider's current value and percentage.

@@ -161,21 +161,12 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken.
         """
 
-        result = self._script.getAcceleratorAndShortcut(obj)
-
-        accelerator = result[0]
-        #shortcut = result[1]
-
         utterances = []
 
-        # [[[TODO: WDW - various stuff preserved while we work out the
-        # desired verbosity here.]]]
-        #
-        #if len(shortcut) > 0:
-        #    utterances.append(_("shortcut") + " " + shortcut)
-        #    utterances.append(accelerator)
+        result = self._script.getKeyBinding(obj)
+        accelerator = result[2]
+
         if len(accelerator) > 0:
-            #utterances += (_("accelerator") + " " + accelerator)
             utterances.append(accelerator)
 
         return utterances

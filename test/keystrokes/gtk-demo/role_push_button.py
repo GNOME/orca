@@ -60,7 +60,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: 'OK'",
      "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ' Alt o'"]))
+     "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################
 # Tab to the Cancel button.
