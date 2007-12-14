@@ -1174,7 +1174,7 @@ def shutdown(script=None, inputEvent=None):
         speech.shutdown()
     if settings.enableBraille:
         braille.shutdown()
-    if settings.enableMagnifier:
+    if settings.enableMagnifier or settings.enableMagLiveUpdating:
         mag.shutdown()
 
     pyatspi.Registry.stop()

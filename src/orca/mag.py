@@ -512,7 +512,7 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
                 prefLeft   = sdb.x2/2
                 prefTop    = sdb.y1
                 prefBottom = sdb.y2
-            else:
+            elif sdb.y2 > 0:
                 updateTarget = False
                 debug.println(
                     debug.LEVEL_WARNING,
@@ -569,6 +569,7 @@ def __setupZoomer(restore=None):
     global _roiHeight
     global _pollMouseDisabled
     global _zoomerPBag
+    global _fullScreenCapable
 
     if not restore:
         restore = {}
@@ -600,7 +601,7 @@ def __setupZoomer(restore=None):
                   % (_sourceDisplayBounds.x1, _sourceDisplayBounds.y1, \
                      _sourceDisplayBounds.x2, _sourceDisplayBounds.y2))
 
-    # If there is nothing we can possibly magnify, then abort our mission.
+    # If there is nothing we can possibly magnify, switch to the right half.
     #
     if ((_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1) == 0) \
         or ((_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1) == 0):
@@ -612,9 +613,18 @@ def __setupZoomer(restore=None):
             "system does not support full screen magnification.\n"
             "The causes of that are generally that COMPOSITE\n" \
             "support has not been enabled in gnome-mag or the\n" \
-            "X Window System Server.  As a result of this issue\n" \
-            "Magnification will not be used.\n")
-        raise RuntimeError, "Nothing can be magnified"
+            "X Window System Server.  As a result of this issue,\n" \
+            "defaulting to the right half of the screen.\n")
+        _fullScreenCapable = False
+        __setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
+                         _targetDisplayBounds.x1/2,
+                         _targetDisplayBounds.y1,
+                         _targetDisplayBounds.x2,
+                         _targetDisplayBounds.y2)
+        _sourceDisplayBounds = _magnifierPBag.getValue(
+            "source-display-bounds").value()
+        _targetDisplayBounds = _magnifierPBag.getValue(
+            "target-display-bounds").value()
 
     # Now, we create a zoom region to occupy the whole magnifier (i.e.,
     # the viewport is in target region coordinates and we make the
