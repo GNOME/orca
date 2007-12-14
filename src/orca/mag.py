@@ -1196,21 +1196,22 @@ def setZoomerMagFactor(x, y, updateScreen=True):
     if not _initialized:
         return
 
+    [oldX, oldY] = _zoomer.getMagFactor()
+
     _zoomer.setMagFactor(x, y)
 
     # [[[TODO: JD - I think the screen is blanking out due to how gnome-mag
-    # does its thing.  See bug 503075. There's a bit of "jumpiness" with
-    # each increase in magnification.  At least we're keeping things on
-    # screen now, but we need to eliminate this issue.]]]
+    # does its thing.  See bug 503075. 
     #
     if updateScreen:
         __updateROIDimensions()
-        newROI = GNOME.Magnifier.RectBounds(_minROIX,
-                                            _minROIY,
-                                            _minROIX + _roiWidth,
-                                            _minROIY + _roiHeight)
-        __setROI(newROI)
-        magnifyAccessible(None, orca_state.locusOfFocus)
+        if (oldX > x) and (x < 2):
+            _minROIX = _sourceDisplayBounds.x1
+            _minROIY = _sourceDisplayBounds.y1
+            _maxROIX = _sourceDisplayBounds.x2
+            _maxROIY = _sourceDisplayBounds.y2
+        extents = orca_state.locusOfFocus.queryComponent().getExtents(0)
+        __setROICenter(extents.x, extents.y)
 
 def setZoomerSmoothingType(smoothingType, updateScreen=True):
     """Sets the zoomer's smoothing type.

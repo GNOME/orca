@@ -1,6 +1,17 @@
 2007-12-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/mag.py:
+          More work on bug #463881 - Evaluate other gnome-mag features
+          for inclusion in Orca prefs. Minimize the "jumpiness" when
+          "live updating" magnification levels.
+
+        * src/orca/orca-setup.glade:
+          Adjusted the zoom factor page increment to be 1 instead of
+          10.
+
+2007-12-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/mag.py:
           Fix for bug #503522 - Enabling full screen magnification
           fails miserably in Solaris
 
