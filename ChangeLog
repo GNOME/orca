@@ -1,3 +1,8 @@
+2007-12-15  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          Fixed Bug #451988, Firefox: navigation by landmark.
+
 2007-12-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braillegenerator.py:

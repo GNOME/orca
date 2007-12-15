@@ -159,6 +159,9 @@ OBJECT_ROLES = [pyatspi.ROLE_HEADING,
                 pyatspi.ROLE_DOCUMENT_FRAME,
                 pyatspi.ROLE_AUTOCOMPLETE]
 
+ARIA_LANDMARKS = ["banner", "contentinfo", "definition", "main", "navigation",
+                  "note", "search", "secondary", "seealso"]
+
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -1851,6 +1854,8 @@ class Script(default.Script):
              Script.goPreviousHeading6,
              Script.goNextChunk,
              Script.goPreviousChunk,
+             Script.goNextLandmark,
+             Script.goPreviousLandmark,
              Script.goNextList,
              Script.goPreviousList,
              Script.goNextListItem,
@@ -2196,6 +2201,24 @@ class Script(default.Script):
                 # text, such as a paragraph, a list, a table, etc.
                 #
                 _("Goes to next large object."))
+
+        self.inputEventHandlers["goPreviousLandmark"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousLandmark,
+                # Translators: this is for navigating to the previous ARIA
+                # role landmark.  ARIA role landmarks are the W3C defined HTML 
+                # tag attribute 'role' used to identify important part of 
+                # webpage like banners, main context, search etc.
+                #
+                _("Goes to previous landmark."))
+
+        self.inputEventHandlers["goNextLandmark"] = \
+            input_event.InputEventHandler(
+                Script.goNextLandmark,
+                # Translators: this is for navigating to the next ARIA
+                # role landmark.
+                #
+                _("Goes to next landmark."))
 
         self.inputEventHandlers["goPreviousListHandler"] = \
             input_event.InputEventHandler(
@@ -2839,6 +2862,25 @@ class Script(default.Script):
         if controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
+
+        #####################################################################
+        #                                                                   #
+        #  Unbound handlers                                                 #
+        #                                                                   #
+        #####################################################################
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["goPreviousLandmark"]))
+
+        keyBindings.add(
+             keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["goNextLandmark"]))
 
         return keyBindings
 
@@ -4338,8 +4380,8 @@ class Script(default.Script):
                 isFocusedObj = self.isSameObject(obj, focusedObj)
 
             text = self.queryNonEmptyText(obj)
-            if self.isAriaWidget(obj):
-                # Treat ARIA widgets like normal default.py widgets
+            if not self.isNavigableAria(obj):
+                # Treat unnavigable ARIA widgets like normal default.py widgets
                 #
                 [regions, fRegion] = \
                           self.brailleGenerator.getBrailleRegions(obj)
@@ -4799,8 +4841,8 @@ class Script(default.Script):
 
         if not self.inDocumentContent():
             return False
-        
-        if self.isAriaWidget():
+
+        if not self.isNavigableAria(orca_state.locusOfFocus):
             return False
 
         weHandleIt = True
@@ -4888,14 +4930,13 @@ class Script(default.Script):
 
         if not structuralNavigationEnabled:
             return False
-        
-        if self.isAriaWidget() \
-                and not self.isLiveRegion(orca_state.locusOfFocus):
+
+        if not self.isNavigableAria(orca_state.locusOfFocus):
             return False
 
         # If the Orca_Modifier key was pressed, we're handling it.
         #
-        elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             mods = orca_state.lastInputEvent.modifiers
             isOrcaKey = mods & (1 << settings.MODIFIER_ORCA)
             if isOrcaKey:
@@ -4917,6 +4958,25 @@ class Script(default.Script):
                 obj = obj.parent
 
         return False
+
+    def isNavigableAria(self, obj):
+        """Returns True if the object being examined is an ARIA widget where
+           we want to provide Orca keyboard navigation.  Returning False
+           indicates that we want Firefox to handle key commands.
+        """
+        attrs = self._getAttrDictionary(orca_state.locusOfFocus)
+        try:
+            # ARIA landmark widgets
+            if attrs['xml-roles'] in ARIA_LANDMARKS:
+                return True
+            # ARIA live region
+            elif attrs.has_key('container-live'):
+                return True
+            # All other ARIA widgets
+            else:
+                return False
+        except (KeyError, TypeError):
+            return True
 
     def isLiveRegion(self, obj):
         attrs = obj.getAttributes()
@@ -7868,6 +7928,55 @@ class Script(default.Script):
             #
             speech.speak(_("No more large objects."))
 
+    def goPreviousLandmark(self, inputEvent):
+        wrap = True
+        [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            # Translators: this is for navigating to the previous ARIA
+            # role landmark.  ARIA role landmarks are the W3C defined HTML 
+            # tag attribute 'role' used to identify important part of 
+            # webpage like banners, main context, search etc.  This is an 
+            # that one was not found.
+            #
+            speech.speak(_("No landmark found."))
+
+    def goNextLandmark(self, inputEvent):
+        wrap = True
+        [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark, wrap)
+        if wrapped:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            # Translators: this is for navigating to the next ARIA
+            # role landmark. This is an that one was not found.
+            #
+            speech.speak(_("No landmark found."))
+
     def goPreviousList(self, inputEvent):
         """Go to the previous (un)ordered list."""
         [obj, characterOffset] = self.getCaretContext()
@@ -9014,3 +9123,14 @@ class Script(default.Script):
                 return True
         return False
 
+    def __matchLandmark(self, obj):
+        if obj is None:
+            return False
+        attrs = self._getAttrDictionary(obj)
+        try:
+            if attrs['xml-roles'] in ARIA_LANDMARKS:
+                return True
+            else:
+                return False
+        except KeyError:
+            return False
