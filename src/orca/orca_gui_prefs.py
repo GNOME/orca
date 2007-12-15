@@ -3749,6 +3749,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         index = self.getComboBoxIndex(magSmoothingComboBox, mode)
         magSmoothingComboBox.set_active(index)
 
+        if self.enableLiveUpdating:
+            mag.setZoomerSmoothingType(smoothingMode)
+
     def magSmoothingChanged(self, widget):
         """Signal handler for the "changed" signal for the
            magSmoothingComboBox GtkComboBox widget. The user has
@@ -4011,6 +4014,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         index = self.getComboBoxIndex(comboBox, filteringMode)
         comboBox.set_active(index)
 
+        if self.enableLiveUpdating:
+            mag.setZoomerColorFilter(mode)
+
     def magColorFilteringChanged(self, widget):
         """Signal handler for the "changed" signal for the
            magColorFilteringComboBox GtkComboBox widget. The user has
@@ -4130,23 +4136,25 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         """
 
         self.prefsDict["magSmoothingMode"] = \
-                             self.prefs["magSmoothingMode"]
+                             self.savedSettings["magSmoothingMode"]
         self.prefsDict["magBrightnessLevelRed"] = \
-                             self.prefs["magBrightnessLevelRed"]
+                             self.savedSettings["magBrightnessLevelRed"]
         self.prefsDict["magBrightnessLevelGreen"] = \
-                             self.prefs["magBrightnessLevelGreen"]
+                             self.savedSettings["magBrightnessLevelGreen"]
         self.prefsDict["magBrightnessLevelBlue"] = \
-                             self.prefs["magBrightnessLevelBlue"]
+                             self.savedSettings["magBrightnessLevelBlue"]
         self.prefsDict["magContrastLevelRed"] = \
-                             self.prefs["magContrastLevelRed"]
+                             self.savedSettings["magContrastLevelRed"]
         self.prefsDict["magContrastLevelGreen"] = \
-                             self.prefs["magContrastLevelGreen"]
+                             self.savedSettings["magContrastLevelGreen"]
         self.prefsDict["magContrastLevelBlue"] = \
-                             self.prefs["magContrastLevelBlue"]
+                             self.savedSettings["magContrastLevelBlue"]
         self.prefsDict["magColorFilteringMode"] = \
-                             self.prefs["magColorFilteringMode"]
-        self.prefsDict["magSourceDisplay"] = self.prefs["magSourceDisplay"]
-        self.prefsDict["magTargetDisplay"] = self.prefs["magTargetDisplay"]
+                             self.savedSettings["magColorFilteringMode"]
+        self.prefsDict["magSourceDisplay"] = \
+                             self.savedSettings["magSourceDisplay"]
+        self.prefsDict["magTargetDisplay"] = \
+                             self.savedSettings["magTargetDisplay"]
 
     def saveAdvancedSettings(self, prefsDict):
         """Save the current values of the settings on the magnification
@@ -4156,20 +4164,27 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - prefsDict: the preferences dictionary containing the current state.
         """
 
-        self.prefs = {}
-        self.prefs["magSmoothingMode"] = prefsDict["magSmoothingMode"]
-        self.prefs["magBrightnessLevelRed"] = \
+        self.savedSettings = {}
+        self.savedSettings["magSmoothingMode"] = \
+                                         prefsDict["magSmoothingMode"]
+        self.savedSettings["magBrightnessLevelRed"] = \
                                          prefsDict["magBrightnessLevelRed"]
-        self.prefs["magBrightnessLevelGreen"] = \
+        self.savedSettings["magBrightnessLevelGreen"] = \
                                          prefsDict["magBrightnessLevelGreen"]
-        self.prefs["magBrightnessLevelBlue"] = \
+        self.savedSettings["magBrightnessLevelBlue"] = \
                                          prefsDict["magBrightnessLevelBlue"]
-        self.prefs["magContrastLevelRed"] = prefsDict["magContrastLevelRed"]
-        self.prefs["magContrastLevelGreen"] = prefsDict["magContrastLevelGreen"]
-        self.prefs["magContrastLevelBlue"] = prefsDict["magContrastLevelBlue"]
-        self.prefs["magColorFilteringMode"] = prefsDict["magColorFilteringMode"]
-        self.prefs["magSourceDisplay"] = prefsDict["magSourceDisplay"]
-        self.prefs["magTargetDisplay"] = prefsDict["magTargetDisplay"]
+        self.savedSettings["magContrastLevelRed"] = \
+                                         prefsDict["magContrastLevelRed"]
+        self.savedSettings["magContrastLevelGreen"] = \
+                                         prefsDict["magContrastLevelGreen"]
+        self.savedSettings["magContrastLevelBlue"] = \
+                                         prefsDict["magContrastLevelBlue"]
+        self.savedSettings["magColorFilteringMode"] = \
+                                         prefsDict["magColorFilteringMode"]
+        self.savedSettings["magSourceDisplay"] = \
+                                         prefsDict["magSourceDisplay"]
+        self.savedSettings["magTargetDisplay"] = \
+                                         prefsDict["magTargetDisplay"]
 
     def magAdvancedCancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
@@ -4184,6 +4199,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         self.restoreAdvancedSettings()
         self.init()
+        self.setSmoothingMode(self.prefsDict["magSmoothingMode"])
+        self.setColorFilteringMode(self.prefsDict["magColorFilteringMode"])
         liveUpdating = self.enableLiveUpdating
         self.enableLiveUpdating = False
         self.updateRGBBrightness()
@@ -4233,6 +4250,9 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
             if orca_state.lastInputEvent.event_string == "Escape":
                 self.restoreAdvancedSettings()
                 self.init()
+                self.setSmoothingMode(self.prefsDict["magSmoothingMode"])
+                self.setColorFilteringMode(\
+                    self.prefsDict["magColorFilteringMode"])
                 liveUpdating = self.enableLiveUpdating
                 self.enableLiveUpdating = False
                 self.updateRGBBrightness()
