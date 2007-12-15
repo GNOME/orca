@@ -1193,6 +1193,11 @@ def setZoomerMagFactor(x, y, updateScreen=True):
     - updateScreen:  Whether or not to update the screen
     """
 
+    global _minROIX
+    global _minROIY
+    global _maxROIX
+    global _maxROIY
+
     if not _initialized:
         return
 
@@ -1205,13 +1210,18 @@ def setZoomerMagFactor(x, y, updateScreen=True):
     #
     if updateScreen:
         __updateROIDimensions()
-        if (oldX > x) and (x < 2):
+        if (oldX > x) and (x < 1.5):
             _minROIX = _sourceDisplayBounds.x1
             _minROIY = _sourceDisplayBounds.y1
             _maxROIX = _sourceDisplayBounds.x2
             _maxROIY = _sourceDisplayBounds.y2
-        extents = orca_state.locusOfFocus.queryComponent().getExtents(0)
-        __setROICenter(extents.x, extents.y)
+            __setROI(GNOME.Magnifier.RectBounds(_minROIX,
+                                                _minROIY,
+                                                _maxROIX,
+                                                _maxROIY))
+        else:
+            extents = orca_state.locusOfFocus.queryComponent().getExtents(0)
+            __setROICenter(extents.x, extents.y)
 
 def setZoomerSmoothingType(smoothingType, updateScreen=True):
     """Sets the zoomer's smoothing type.

@@ -1,3 +1,10 @@
+2007-12-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/mag.py:
+          More work on bug #463881 - Evaluate other gnome-mag features
+          for inclusion in Orca prefs. Minimize the "jumpiness" when
+          "live updating" magnification levels.
+
 2007-12-15  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py:
