@@ -731,6 +731,63 @@ class Script(script.Script):
                 #
                 _("Go to previous bookmark location."))
 
+        self.inputEventHandlers["toggleColorEnhancementsHandler"] = \
+            input_event.InputEventHandler(
+                mag.toggleColorEnhancements,
+                # Translators: "color enhancements" are changes users can
+                # make to the appearance of the screen to make things easier
+                # to see, such as inverting the colors or applying a tint.
+                # This command toggles these enhancements on/off.
+                #
+                _("Toggles color enhancements."))
+
+        self.inputEventHandlers["toggleMouseEnhancementsHandler"] = \
+            input_event.InputEventHandler(
+                mag.toggleMouseEnhancements,
+                # Translators: "mouse enhancements" are changes users can
+                # make to the appearance of the mouse pointer to make it
+                # easier to see, such as increasing its size, changing its
+                # color, and surrounding it with crosshairs.  This command
+                # toggles these enhancements on/off.
+                #
+                _("Toggles mouse enhancements."))
+
+        self.inputEventHandlers["increaseMagnificationHandler"] = \
+            input_event.InputEventHandler(
+                mag.increaseMagnification,
+                # Translators: this command increases the magnification
+                # level.
+                #
+                _("Increases the magnification level."))
+
+        self.inputEventHandlers["decreaseMagnificationHandler"] = \
+            input_event.InputEventHandler(
+                mag.decreaseMagnification,
+                # Translators: this command decreases the magnification
+                # level.
+                #
+                _("Decreases the magnification level."))
+
+        self.inputEventHandlers["toggleMagnifierHandler"] = \
+            input_event.InputEventHandler(
+                mag.toggleMagnifier,
+                # Translators: Orca allows the user to turn the magnifier
+                # on or off. This command not only toggles magnification,
+                # but also all of the color and pointer customizations
+                # made through the magnifier.
+                #
+                _("Toggles the magnifier."))
+
+        self.inputEventHandlers["cycleZoomerTypeHandler"] = \
+            input_event.InputEventHandler(
+                mag.cycleZoomerType,
+                # Translators: the user can choose between several different
+                # types of magnification, including full screen and split
+                # screen.  The "position" here refers to location of the
+                # magnifier.
+                #
+                _("Cycles to the next magnifier position."))
+
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
         passed as argument
@@ -1479,6 +1536,48 @@ class Script(script.Script):
                 0,
                 0,
                 self.inputEventHandlers["increaseSpeechPitchHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["toggleColorEnhancementsHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["toggleMouseEnhancementsHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["increaseMagnificationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["decreaseMagnificationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["toggleMagnifierHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["cycleZoomerTypeHandler"]))
 
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 

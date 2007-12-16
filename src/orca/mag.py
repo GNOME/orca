@@ -41,7 +41,10 @@ import time
 import pyatspi
 import debug
 import settings
+import speech
 import orca_state
+
+from orca_i18n import _  # for gettext support
 
 _magnifierAvailable = False
 
@@ -788,6 +791,10 @@ def applySettings():
     __setupMagnifier(settings.magZoomerType)
     __setupZoomer()
 
+    orca_state.zoomerType = settings.magZoomerType
+    orca_state.mouseEnhancementsEnabled = settings.enableMagCursor \
+                                          or settings.enableMagCrossHair
+
     #print "MAGNIFIER PROPERTIES:", _magnifier
     #__dumpPropertyBag(_magnifier)
     #print "ZOOMER PROPERTIES:", _zoomer
@@ -1347,3 +1354,267 @@ def finishLiveUpdating():
         init()
     else:
         shutdown()
+
+######################################################################
+#                                                                    #
+#                        Input Event Handlers                        #
+#                                                                    #
+######################################################################
+
+def toggleColorEnhancements(script=None, inputEvent=None):
+    """Toggles the color enhancements on/off."""
+
+    if not _initialized:
+        return
+
+    # We don't want to stomp on a command-altered magnification level.
+    #
+    [levelX, levelY] = _zoomer.getMagFactor()
+    
+    normal = {'enableMagZoomerColorInversion': False,
+              'magBrightnessLevelRed': 0,
+              'magBrightnessLevelGreen': 0,
+              'magBrightnessLevelBlue': 0,
+              'magContrastLevelRed': 0,
+              'magContrastLevelGreen': 0,
+              'magContrastLevelBlue': 0,
+              'magColorFilteringMode': settings.MAG_COLOR_FILTERING_MODE_NONE,
+              'magSmoothingMode': settings.MAG_SMOOTHING_MODE_BILINEAR,
+              'magZoomerBorderColor': '#000000',
+              'magZoomFactor': levelX}
+
+    if orca_state.colorEnhancementsEnabled:
+        __setupZoomer(restore = normal)
+        # Translators: "color enhancements" are changes users can
+        # make to the appearance of the screen to make things easier
+        # to see, such as inverting the colors or applying a tint.
+        #
+        speech.speak(_("Color enhancements disabled."))
+    else:
+        toRestore = {'magZoomFactor': levelX}
+        __setupZoomer(restore = toRestore)
+        # Translators: "color enhancements" are changes users can
+        # make to the appearance of the screen to make things easier
+        # to see, such as inverting the colors or applying a tint.
+        #
+        speech.speak(_("Color enhancements enabled."))
+
+    orca_state.colorEnhancementsEnabled = \
+                                    not orca_state.colorEnhancementsEnabled
+
+    return True
+
+def toggleMouseEnhancements(script=None, inputEvent=None):
+    """Toggles the mouse enhancements on/off."""
+
+    if not _initialized:
+        return
+
+    if orca_state.mouseEnhancementsEnabled:
+        setMagnifierCrossHair(False, False)
+        setMagnifierObjectColor("cursor-color", "#000000", False)
+        setMagnifierCursor(True, False, 0)
+        # Translators: "mouse enhancements" are changes users can
+        # make to the appearance of the mouse pointer to make it
+        # easier to see, such as increasing its size, changing its
+        # color, and surrounding it with crosshairs.
+        #
+        speech.speak(_("Mouse enhancements disabled."))
+    else:
+        # We normally toggle "on" what the user has enabled by default.
+        # However, if the user's default settings are to disable all mouse
+        # enhancements "on" and "off" are the same thing.  If that is the
+        # case and this command is being used, the user probably expects
+        # to see *something* change. We don't know what, so enable both
+        # the cursor and the cross-hairs.
+        #
+        cursorEnable = settings.enableMagCursor
+        crossHairEnable = settings.enableMagCrossHair
+        if not (cursorEnable or crossHairEnable):
+            cursorEnable = True
+            crossHairEnable = True
+
+        setMagnifierCursor(cursorEnable,
+                           settings.enableMagCursorExplicitSize,
+                           settings.magCursorSize,
+                           False)
+        setMagnifierObjectColor("cursor-color",
+                                settings.magCursorColor,
+                                False)
+        setMagnifierObjectColor("crosswire-color",
+                                settings.magCrossHairColor,
+                                False)
+        setMagnifierCrossHairClip(settings.enableMagCrossHairClip,
+                                  False)
+        setMagnifierCrossHair(crossHairEnable)
+        # Translators: "mouse enhancements" are changes users can
+        # make to the appearance of the mouse pointer to make it
+        # easier to see, such as increasing its size, changing its
+        # color, and surrounding it with crosshairs.
+        #
+        speech.speak(_("Mouse enhancements enabled."))
+
+    orca_state.mouseEnhancementsEnabled = \
+                                    not orca_state.mouseEnhancementsEnabled
+    return True
+
+def increaseMagnification(script=None, inputEvent=None):
+    """Increases the magnification level."""
+
+    if not _initialized:
+        return
+
+    [levelX, levelY] = _zoomer.getMagFactor()
+
+    # Move in increments that are sensible based on the current level of
+    # magnification.
+    #
+    if 1 <= levelX < 4:
+        increment = 0.25
+    elif 4 <= levelX < 7:
+        increment = 0.5
+    else:
+        increment = 1
+
+    newLevel = levelX + increment
+    if newLevel <= 16:
+        setZoomerMagFactor(newLevel, newLevel)
+        speech.speak(str(newLevel))
+
+    return True
+
+def decreaseMagnification(script=None, inputEvent=None):
+    """Decreases the magnification level."""
+
+    if not _initialized:
+        return
+
+    [levelX, levelY] = _zoomer.getMagFactor()
+
+    # Move in increments that are sensible based on the current level of
+    # magnification.
+    #
+    if 1 <= levelX < 4:
+        increment = 0.25
+    elif 4 <= levelX < 7:
+        increment = 0.5
+    else:
+        increment = 1
+
+    newLevel = levelX - increment
+    if newLevel >= 1:
+        setZoomerMagFactor(newLevel, newLevel)
+        speech.speak(str(newLevel))
+
+    return True
+
+def toggleMagnifier(script=None, inputEvent=None):
+    """Toggles the magnifier."""
+
+    if not _initialized:
+        init()
+        # Translators: this is the message spoken when a user enables the
+        # magnifier.  In addition to screen magnification, the user's
+        # preferred colors and mouse customizations are loaded.
+        #
+        speech.speak(_("Magnifier enabled."))
+    else:
+        shutdown()
+        # Translators: this is the message spoken when a user disables the
+        # magnifier, restoring the screen contents to their normal colors
+        # and sizes.
+        #
+        speech.speak(_("Magnifier disabled."))
+
+    return True
+
+def cycleZoomerType(script=None, inputEvent=None):
+    """Allows the user to cycle through the available zoomer types."""
+
+    if not _initialized:
+        return
+
+    # There are 6 possible zoomer types
+    #
+    orca_state.zoomerType += 1
+
+    if orca_state.zoomerType >= 6:
+        orca_state.zoomerType = 0
+
+    if orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN \
+       and not _fullScreenCapable:
+        orca_state.zoomerType += 1
+
+    # We don't want to stomp on any command-altered settings
+    #
+    toRestore = {}
+    [levelX, levelY] = _zoomer.getMagFactor()
+    if levelX != settings.magZoomFactor:
+        toRestore['magZoomFactor'] = levelX
+
+    if not orca_state.colorEnhancementsEnabled:
+        toRestore.update(\
+            {'enableMagZoomerColorInversion': False,
+             'magBrightnessLevelRed': 0,
+             'magBrightnessLevelGreen': 0,
+             'magBrightnessLevelBlue': 0,
+             'magContrastLevelRed': 0,
+             'magContrastLevelGreen': 0,
+             'magContrastLevelBlue': 0,
+             'magColorFilteringMode': settings.MAG_COLOR_FILTERING_MODE_NONE,
+             'magSmoothingMode': settings.MAG_SMOOTHING_MODE_BILINEAR,
+             'magZoomerBorderColor': '#000000'})
+
+    setupMagnifier(orca_state.zoomerType)
+
+    # Now that we have our Magnifier set up, restore anything that needs
+    # restoring.
+    #
+    if not orca_state.mouseEnhancementsEnabled:
+        setMagnifierCrossHair(False)
+        setMagnifierObjectColor("cursor-color",
+                                settings.magCursorColor,
+                                False)
+        setMagnifierCursor(False, False, 0)
+
+    if toRestore:
+        __setupZoomer(restore = toRestore)
+
+    if orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+        if _fullScreenCapable:
+            # Translators: magnification will use the full screen.
+            #
+            zoomerType = _("Full Screen")
+        else:
+            # Translators: the user attempted to switch to full screen
+            # magnification, but his/her system doesn't support it.
+            #
+            zoomerType = _("Full Screen mode unavailable")
+    elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+        # Translators: magnification will use the top half of the screen.
+        #
+        zoomerType = _("Top Half")
+    elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+        # Translators: magnification will use the bottom half of the screen.
+        #
+        zoomerType = _("Bottom Half")
+    elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+        # Translators: magnification will use the left half of the screen.
+        #
+        zoomerType = _("Left Half")
+    elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+        # Translators: magnification will use the right half of the screen.
+        #
+        zoomerType = _("Right Half")
+    elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
+        # Translators: the user has selected a custom area of the screen
+        # to use for magnification.
+        #
+        zoomerType = _("Custom")
+    else:
+        # This shouldn't happen, but just in case....
+        zoomerType = ""
+
+    speech.speak(zoomerType)
+
+    return True
