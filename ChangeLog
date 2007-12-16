@@ -1,6 +1,14 @@
 2007-12-16  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/mag.py:
+          Tweak to the fix for bug #464705 - Provide option to keep caret 
+          in center of magnifier region of interest.  We need to wait 
+          until the user's settings have been loaded before assigning 
+          settings.* values in mag.py.  My bad.
+
+2007-12-16  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/mag.py:
           src/orca/default.py:
           src/orca/orca_state.py:
           Fix for bug #501414 - Orca should have (unbound) keybindings

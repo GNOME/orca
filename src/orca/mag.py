@@ -135,10 +135,10 @@ _originalSourceDisplayBounds = None
 
 # The current modes of tracking, for use with "live update" changes.
 #
-_mouseTracking = settings.magMouseTrackingMode
-_controlTracking = settings.magControlTrackingMode
-_textTracking = settings.magTextTrackingMode
-_edgeMargin = settings.magEdgeMargin
+_mouseTracking = None
+_controlTracking = None
+_textTracking = None
+_edgeMargin = None
 
 def __setROI(rect):
     """Sets the region of interest.
@@ -788,8 +788,18 @@ def __updateROIDimensions():
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
 
+    global _mouseTracking
+    global _controlTracking
+    global _textTracking
+    global _edgeMargin
+
     __setupMagnifier(settings.magZoomerType)
     __setupZoomer()
+  
+    _mouseTracking = settings.magMouseTrackingMode
+    _controlTracking = settings.magControlTrackingMode
+    _textTracking = settings.magTextTrackingMode
+    _edgeMargin = settings.magEdgeMargin
 
     orca_state.zoomerType = settings.magZoomerType
     orca_state.mouseEnhancementsEnabled = settings.enableMagCursor \
