@@ -40,6 +40,7 @@ import time
 
 import pyatspi
 import debug
+import eventsynthesizer
 import settings
 import speech
 import orca_state
@@ -115,6 +116,11 @@ _zoomerPBag = None
 #
 _lastMouseEventTime = time.time()
 
+# Whether or not the last mouse event was the result of our routing the
+# pointer.
+#
+_lastMouseEventWasRoute = False
+
 # If True, we're using gnome-mag >= 0.13.1 that allows us to control
 # where to draw the cursor and crosswires.
 #
@@ -139,6 +145,8 @@ _mouseTracking = None
 _controlTracking = None
 _textTracking = None
 _edgeMargin = None
+_pointerFollowsZoomer = None
+_pointerFollowsFocus = None
 
 def __setROI(rect):
     """Sets the region of interest.
@@ -332,16 +340,46 @@ def __onMouseEvent(e):
     """
 
     global _lastMouseEventTime
+    global _lastMouseEventWasRoute
 
+    isNewMouseMovement = (time.time() - _lastMouseEventTime > 1)
     _lastMouseEventTime = time.time()
 
     [x, y] = [e.detail1, e.detail2]
+
+    if _pointerFollowsZoomer and isNewMouseMovement \
+       and not _lastMouseEventWasRoute:
+        mouseIsVisible = (_roi.x1 < x < _roi.x2) and (_roi.y1 < y < _roi.y2)
+        if not mouseIsVisible and orca_state.locusOfFocus:
+            if _mouseTracking == settings.MAG_TRACKING_MODE_CENTERED:
+                x = (_roi.x1 + _roi.x2) / 2
+                y = (_roi.y1 + _roi.y2) / 2
+            elif _mouseTracking != settings.MAG_TRACKING_MODE_NONE:
+                try:
+                    extents = \
+                        orca_state.locusOfFocus.queryComponent().getExtents(0)
+                except:
+                    extents = None
+                if extents:
+                    x = extents.x
+                    y = extents.y + extents.height - 1
+
+            eventsynthesizer.generateMouseEvent(x, y, "abs")
+            _lastMouseEventWasRoute = True
 
     # If True, we're using gnome-mag >= 0.13.1 that allows us to
     # control where to draw the cursor and crosswires.
     #
     if _pollMouseDisabled:
         _zoomer.setPointerPos(x, y)
+
+    if _lastMouseEventWasRoute:
+        # If we just moved the mouse pointer to the menu item or control
+        # with focus, we don't want to do anything.
+        #
+        _lastMouseEventWasRoute = False
+        _zoomer.markDirty(_roi)
+        return
 
     if _mouseTracking == settings.MAG_TRACKING_MODE_PUSH:
         __setROIPush(x, y)
@@ -792,6 +830,8 @@ def applySettings():
     global _controlTracking
     global _textTracking
     global _edgeMargin
+    global _pointerFollowsZoomer
+    global _pointerFollowsFocus
 
     __setupMagnifier(settings.magZoomerType)
     __setupZoomer()
@@ -800,6 +840,8 @@ def applySettings():
     _controlTracking = settings.magControlTrackingMode
     _textTracking = settings.magTextTrackingMode
     _edgeMargin = settings.magEdgeMargin
+    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
+    _pointerFollowsFocus = settings.magPointerFollowsFocus
 
     orca_state.zoomerType = settings.magZoomerType
     orca_state.mouseEnhancementsEnabled = settings.enableMagCursor \
@@ -819,6 +861,8 @@ def magnifyAccessible(event, obj, extents=None):
     - event: the Event that caused this to be called
     - obj: the accessible
     """
+
+    global _lastMouseEventWasRoute
 
     if not _initialized:
         return
@@ -864,6 +908,10 @@ def magnifyAccessible(event, obj, extents=None):
             haveSomethingToMagnify = False
 
     if haveSomethingToMagnify:
+        if _pointerFollowsFocus:
+            _lastMouseEventWasRoute = True
+            eventsynthesizer.generateMouseEvent(x, y + height - 1, "abs")
+
         if _controlTracking == settings.MAG_TRACKING_MODE_CENTERED:
             centerX = x + width/2
             centerY = y + height/2
@@ -1338,11 +1386,31 @@ def updateEdgeMargin(amount):
     """Updates the edge margin
 
     Arguments:
-    -newMode: The new margin to use, in pixels.
+    -amount: The new margin to use, in pixels.
     """
 
     global _edgeMargin
     _edgeMargin = amount
+
+def updatePointerFollowsFocus(enabled):
+    """Updates the pointer follows focus setting.
+
+    Arguments:
+    -enabled: whether or not pointer follows focus should be enabled.
+    """
+
+    global _pointerFollowsFocus
+    _pointerFollowsFocus = enabled
+
+def updatePointerFollowsZoomer(enabled):
+    """Updates the pointer follows zoomer setting.
+
+    Arguments:
+    -enabled: whether or not pointer follows zoomer should be enabled.
+    """
+
+    global _pointerFollowsZoomer
+    _pointerFollowsZoomer = enabled
 
 def finishLiveUpdating():
     """Restores things that were altered via a live update."""
@@ -1352,12 +1420,16 @@ def finishLiveUpdating():
     global _controlTracking
     global _textTracking
     global _edgeMargin
+    global _pointerFollowsFocus
+    global _pointerFollowsZoomer
 
     _liveUpdatingMagnifier = False
     _mouseTracking = settings.magMouseTrackingMode
     _controlTracking = settings.magControlTrackingMode
     _textTracking = settings.magTextTrackingMode
     _edgeMargin = settings.magEdgeMargin
+    _pointerFollowsFocus = settings.magPointerFollowsFocus
+    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
 
     if settings.enableMagnifier:
         setupMagnifier(settings.magZoomerType)

@@ -139,6 +139,8 @@ userCustomizableSettings = [
     "magControlTrackingMode",
     "magTextTrackingMode",
     "magEdgeMargin",
+    "magPointerFollowsFocus",
+    "magPointerFollowsZoomer",
     "magColorFilteringMode",
     "magSourceDisplay",
     "magTargetDisplay",
@@ -452,6 +454,16 @@ magTextTrackingMode            = MAG_TRACKING_MODE_PUSH
 # Magnification edge margin (percentage of screen).
 #
 magEdgeMargin                  = 0
+
+# If enabled, automatically repositions the mouse pointer to the
+# menu item or control with focus.
+#
+magPointerFollowsFocus         = False
+
+# If enabled, automatically repositions the mouse pointer into the
+# zoomer if it's not visible when initially moved.
+#
+magPointerFollowsZoomer        = True
 
 # Magnification source display
 #

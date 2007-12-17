@@ -1686,6 +1686,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         adjustment = gtk.Adjustment(edgeMargin, 0, 50, 1, 5, 50)
         self.get_widget("magEdgeMarginSpinButton").set_adjustment(adjustment)
 
+        # Get the preferences for what the pointer "follows" and set the
+        # values of the pointer follows focus and pointer follows zoomer
+        # checkboxes accordingly.
+        #
+        value = prefs["magPointerFollowsFocus"]
+        self.get_widget("magPointerFocusCheckButton").set_active(value)
+        value = prefs["magPointerFollowsZoomer"]
+        self.get_widget("magPointerZoomerCheckButton").set_active(value)
+
         # Text attributes pane.
         #
         self._createTextAttributesTreeView()
@@ -3159,6 +3168,36 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         value = widget.get_value_as_int()
         self.prefsDict["magEdgeMargin"] = value
         mag.updateEdgeMargin(value)
+
+    def magPointerFocusChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magPointerFocusCheckButton GtkCheckButton widget. The user
+           has [un]checked the pointer follows focus checkbox. Set the
+           'magPointerFollowsFocus' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enabled = widget.get_active()
+        self.prefsDict["magPointerFollowsFocus"] = enabled
+        if self.enableLiveUpdating and widget.is_focus():
+            mag.updatePointerFollowsFocus(enabled)
+
+    def magPointerZoomerChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magPointerZoomerCheckButton GtkCheckButton widget. The user
+           has [un]checked the pointer follows zoomer checkbox. Set the
+           'magPointerFollowsZoomer' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enabled = widget.get_active()
+        self.prefsDict["magPointerFollowsZoomer"] = enabled
+        if self.enableLiveUpdating and widget.is_focus():
+            mag.updatePointerFollowsZoomer(enabled)
 
     def magInvertColorsChecked(self, widget):
         """Signal handler for the "toggled" signal for the

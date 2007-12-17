@@ -4207,6 +4207,80 @@ None</property>
 					  <property name="y_options">fill</property>
 					</packing>
 				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment85">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">15</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkCheckButton" id="magPointerFocusCheckButton">
+					      <property name="visible">True</property>
+					      <property name="can_focus">True</property>
+					      <property name="label" translatable="yes" comments="Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.">Pointer follows focus</property>
+					      <property name="use_underline">True</property>
+					      <property name="relief">GTK_RELIEF_NORMAL</property>
+					      <property name="focus_on_click">True</property>
+					      <property name="active">False</property>
+					      <property name="inconsistent">False</property>
+					      <property name="draw_indicator">True</property>
+					      <signal name="toggled" handler="magPointerFocusChecked" last_modification_time="Mon, 17 Dec 2007 00:58:21 GMT"/>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">2</property>
+					  <property name="right_attach">3</property>
+					  <property name="top_attach">1</property>
+					  <property name="bottom_attach">2</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment86">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">15</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkCheckButton" id="magPointerZoomerCheckButton">
+					      <property name="visible">True</property>
+					      <property name="can_focus">True</property>
+					      <property name="label" translatable="yes" comments="Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the &quot;zoomer,&quot; which is the magnified view of the screen.  If the &quot;pointer follows zoomer&quot; setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.">Pointer follows zoomer</property>
+					      <property name="use_underline">True</property>
+					      <property name="relief">GTK_RELIEF_NORMAL</property>
+					      <property name="focus_on_click">True</property>
+					      <property name="active">False</property>
+					      <property name="inconsistent">False</property>
+					      <property name="draw_indicator">True</property>
+					      <signal name="toggled" handler="magPointerZoomerChecked" last_modification_time="Mon, 17 Dec 2007 01:00:04 GMT"/>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">2</property>
+					  <property name="right_attach">3</property>
+					  <property name="top_attach">0</property>
+					  <property name="bottom_attach">1</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
+					</packing>
+				      </child>
 				    </widget>
 				  </child>
 				</widget>

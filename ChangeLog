@@ -1,3 +1,12 @@
+2007-12-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/mag.py:
+          src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #503965 - Orca should provide support for the 
+          pointer following focus and the zoomer.
+
 2007-12-16  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/mag.py:
