@@ -55,6 +55,16 @@ from orca.orca_i18n import ngettext  # for ngettext support
 #
 prefixChatMessage = False
 
+# Possible ways of how Orca should speak pidgin chat messages.
+#
+SPEAK_ALL_MESSAGES              = 0
+SPEAK_CHANNEL_WITH_FOCUS        = 1
+SPEAK_ALL_CHANNELS_WHEN_FOCUSED = 2
+
+# Indicates how pidgin chat messages should be spoken.
+#
+speakMessages = SPEAK_ALL_MESSAGES
+
 ########################################################################
 #                                                                      #
 # Ring List. A fixed size circular list by Flavio Catalani             #
@@ -342,6 +352,12 @@ class Script(default.Script):
         #
         self.speakNameCheckButton = None
 
+        # To make pylint happy.
+        #
+        self.focusedChannelRadioButton = None
+        self.allChannelsRadioButton = None
+        self.allMessagesRadioButton = None
+
         default.Script.__init__(self, app)
 
     def getListeners(self):
@@ -428,6 +444,7 @@ class Script(default.Script):
         vbox = gtk.VBox(False, 0)
         vbox.set_border_width(12)
         gtk.Widget.show(vbox)
+
         # Translators: If this checkbox is checked, then Orca will speak
         # the name of the chat room.
         #
@@ -437,6 +454,66 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
         gtk.ToggleButton.set_active(self.speakNameCheckButton,
                                     prefixChatMessage)
+
+        # "Speak Messages" frame.
+        #
+        messagesFrame = gtk.Frame()
+        gtk.Widget.show(messagesFrame)
+        gtk.Box.pack_start(vbox, messagesFrame, False, False, 5)
+
+        messagesAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(messagesAlignment)
+        gtk.Container.add(messagesFrame, messagesAlignment)
+        gtk.Alignment.set_padding(messagesAlignment, 0, 0, 12, 0)
+
+        messagesVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(messagesVBox)
+        gtk.Container.add(messagesAlignment, messagesVBox)
+
+        # Translators: Orca will speak all new chat messages as they appear
+        # irrespective of whether the pidgin application currently has focus.
+        # This is the default behaviour.
+        #
+        self.allMessagesRadioButton = gtk.RadioButton(None, 
+                                              _("Speak all _new messages"))
+        gtk.Widget.show(self.allMessagesRadioButton)
+        gtk.Box.pack_start(messagesVBox, self.allMessagesRadioButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.allMessagesRadioButton,
+                                    (speakMessages == SPEAK_ALL_MESSAGES))
+
+
+        # Translators: Orca will speak only new chat messages for the channel
+        # that currently has focus, irrespective of whether the pidgin
+        # application has focus.
+        #
+        self.focusedChannelRadioButton = gtk.RadioButton( \
+            self.allMessagesRadioButton, _("Speak only _channel with focus"))
+        gtk.Widget.show(self.focusedChannelRadioButton)
+        gtk.Box.pack_start(messagesVBox, self.focusedChannelRadioButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.focusedChannelRadioButton,
+                              (speakMessages == SPEAK_CHANNEL_WITH_FOCUS))
+
+        # Translators: Orca will speak new chat messages for all channels 
+        # only when the pidgin application has focus.
+        #
+        self.allChannelsRadioButton = gtk.RadioButton( \
+                        self.allMessagesRadioButton,
+                       _("Speak all channels when application has _focus"))
+        gtk.Widget.show(self.allChannelsRadioButton)
+        gtk.Box.pack_start(messagesVBox, self.allChannelsRadioButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.allChannelsRadioButton,
+                       (speakMessages == SPEAK_ALL_CHANNELS_WHEN_FOCUSED))
+
+        # Translators: this is the title of a panel holding options for
+        # how messages in the pidgin chat rooms should be spoken.
+        #
+        messagesLabel = gtk.Label("<b>%s</b>" % _("Messages"))
+        gtk.Widget.show(messagesLabel)
+        gtk.Frame.set_label_widget(messagesFrame, messagesLabel)
+        gtk.Label.set_use_markup(messagesLabel, True)
 
         return vbox
 
@@ -448,12 +525,24 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global prefixChatMessage
+        global prefixChatMessage, speakMessages
 
         prefixChatMessage = self.speakNameCheckButton.get_active()
         prefs.writelines("\n")
         prefs.writelines("orca.scripts.gaim.prefixChatMessage = %s\n" % \
                          prefixChatMessage)
+
+        if self.allMessagesRadioButton.get_active():
+            speakMessages = SPEAK_ALL_MESSAGES
+            option = "orca.scripts.gaim.SPEAK_ALL_MESSAGES"
+        elif self.focusedChannelRadioButton.get_active():
+            speakMessages = SPEAK_CHANNEL_WITH_FOCUS
+            option = "orca.scripts.gaim.SPEAK_CHANNEL_WITH_FOCUS"
+        elif self.allChannelsRadioButton.get_active():
+            speakMessages = SPEAK_ALL_CHANNELS_WHEN_FOCUSED
+            option = "orca.scripts.gaim.SPEAK_ALL_CHANNELS_WHEN_FOCUSED"
+        prefs.writelines("\n")
+        prefs.writelines("orca.scripts.gaim.speakMessages = %s\n" % option)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -500,14 +589,22 @@ class Script(default.Script):
 
         return True
 
-    def utterMessage(self, chatRoomName, message):
+    def utterMessage(self, chatRoomName, message, hasFocus=True):
         """ Speak/braille a chat room message.
-        messages are kept.
 
         Arguments:
         - chatRoomName: name of the chat room this message came from.
         - message: the chat room message.
         """
+
+        # Only speak/braille the new message if it matches how the user 
+        # wants chat messages spoken.
+        #
+        if speakMessages == SPEAK_ALL_CHANNELS_WHEN_FOCUSED and \
+           orca_state.activeScript != self:
+            return
+        elif speakMessages == SPEAK_CHANNEL_WITH_FOCUS and not hasFocus:
+            return
 
         text = ""
         if prefixChatMessage:
@@ -665,9 +762,10 @@ class Script(default.Script):
             # want to speak its name even if prefixChatMessage is enabled.
             #
             state = event.source.getState()
-            if state.contains(pyatspi.STATE_SHOWING):
+            hasFocus = state.contains(pyatspi.STATE_SHOWING)
+            if hasFocus:
                 chatRoomName = ""
-            self.utterMessage(chatRoomName, message)
+            self.utterMessage(chatRoomName, message, hasFocus)
 
             # Add the latest message to the list of saved ones. For each
             # one added, the oldest one automatically gets dropped off.

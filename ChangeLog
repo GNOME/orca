@@ -1,3 +1,9 @@
+2007-12-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          Fix for bug #485522 - Orca should allow the user to specify the 
+          chat messages that get spoken/brailled.
+
 2007-12-17  Willie Walker <william.walker@sun.com>
 
         * configure.in:
