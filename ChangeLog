@@ -1,3 +1,13 @@
+2007-12-17  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py:
+	  test/keystrokes/firefox/page_summary.py:
+	  Relax exception checking so that whereAmI will fall back to the
+	  _iterativePageSummary method if there are any failures in the
+	  _collectionPageSummary method.  Without this, some failures in
+	  collection method signature mismatching would cause page summary
+	  to never work.
+
 2007-12-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/mag.py:
@@ -281,11 +291,11 @@
           Pylint now gives us a 10.00/10 for default.py, flat_review.py
           speechdispatcherfactory.py, Evolution.py and Gecko.py.
 
-2007-10-28  Willie Walker <william.walker@sun.com>
+2007-12-03  Willie Walker <william.walker@sun.com>
 
         * configure.in:
           README:
-          Mark as Orca 2.21.3pre
+          Mark as Orca 2.21.4pre
 
 2007-12-03  Willie Walker <william.walker@sun.com>
 

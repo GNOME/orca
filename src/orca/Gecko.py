@@ -1382,7 +1382,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         else:
             try:
                 self._collectionPageSummary()
-            except NotImplementedError:
+            except:
                 self._iterativePageSummary(obj)
 
     def _speakDefaultButton(self, obj):

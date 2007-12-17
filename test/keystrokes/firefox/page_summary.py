@@ -22,31 +22,42 @@ sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction(utils.htmlURLPrefix + "htmlpage.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("HTML test page", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("HTML test page",
+                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Move to the heading level 6 so 'percent of document read' is not zero percent.
+# Move to the heading level 6
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("6"))
-sequence.append(WaitForFocus("This is a Heading 6.", acc_role=pyatspi.ROLE_HEADING))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Navigate to 'This is a Heading 6.'",
+    ["BRAILLE LINE:  'This is a Heading 6. h6'",
+     "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
+     "SPEECH OUTPUT: 'This is a Heading 6. heading  '",
+     "SPEECH OUTPUT: 'level 6'"]))
 
 ########################################################################
-# Do double-click modified "Where Am I" via Orca_Modifier + KP_Enter. 
-# The following should be presented in speech 
-# [[[BUG? depending on the timing, the first click command still gets spoken.
-# This output has been omitted here. ]]].
+# Do double-click "Where Am I" via KP_Enter. 
 #
-# SPEECH OUTPUT: '14 headings'
-# SPEECH OUTPUT: '3 forms'
-# SPEECH OUTPUT: '47 tables'
-# SPEECH OUTPUT: '19 unvisited links'
-# SPEECH OUTPUT: '1 percent of document read'
-#
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(30000))
+sequence.append(utils.AssertPresentationAction(
+    "Where Am I for page summary info",
+    [     "BRAILLE LINE:  'This is a Heading 6. h6'",
+     "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
+     "BRAILLE LINE:  'This is a Heading 6. h6'",
+     "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
+     "SPEECH OUTPUT: 'This is a Heading 6.'",
+     "SPEECH OUTPUT: 'heading'",
+     "SPEECH OUTPUT: '14 headings'",
+     "SPEECH OUTPUT: '3 forms'",
+     "SPEECH OUTPUT: '47 tables'",
+     "SPEECH OUTPUT: '19 unvisited links'",
+     "SPEECH OUTPUT: '1 percent of document read'"]))
 
 ########################################################################
 # Close the demo
