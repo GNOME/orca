@@ -1,5 +1,12 @@
 2007-12-17  Willie Walker <william.walker@sun.com>
 
+        * configure.in:
+          NEWS:
+	  RELEASE-HOWTO:
+          Prep for Orca v2.21.4.
+	
+2007-12-17  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Gecko.py:
 	  test/keystrokes/firefox/page_summary.py:
 	  Relax exception checking so that whereAmI will fall back to the

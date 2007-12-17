@@ -1,3 +1,220 @@
+2.21.4 - 17-Dec-2007
+
+NOTE: There have been keybindings changes for this release.
+
+* Instead of Orca+F1 to enter learn mode, the binding is now
+  Orca+h.
+
+* Instead of Orca+{1,2,3,4,5,6,7,8,9} to read the last nth message
+  that was presented in an application such as gaim or gnome-mud, the
+  binding is now Orca+{F1,F2,F3,F4,F5,F6,F7,F8,F9}.
+
+* The debugging keys have been rebound as well.  The new bindings
+  are Orca+Ctrl+Alt+{the following}, where {the_following} is one
+  of:
+
+   End       - report active script info
+   Home      - print list of known apps and their windows
+   Page_Up   - print locus of focus ancestry
+   Page_Down - print accessible hierarchy of active application
+
+Magnification:
+
+* Support "live updating" when setting various magnification features
+
+  Changes made to the zoomer in the Orca Preferences now update in
+  real time: it is no longer necessary to press the Apply button to
+  see if the option you've chosen works for you and then undo it or
+  adjust it if it doesn't.  Note that you must still press the Apply
+  or the OK button to make your changes permanent.
+
+* Bug #452316 - should have a "fullscreen" checkbox
+
+  We've added a Position combo box so that it's easy to select the
+  position of the zoomer.  The options are full screen, left half,
+  right half, top half, bottom half, and custom.  Choosing custom
+  allows you to specify the location of each edge of the zoomer.
+  The new default zoomer position is full screen if full screen
+  magnification is possible.  Otherwise, the right half of the 
+  screen will be used by default.
+
+* Bug #463881 - Evaluate other gnome-mag features for inclusion in
+  Orca prefs
+
+  You can now adjust the brightness and contrast levels and use the
+  colorblind filters from libcolorblind.  Basic brightness and
+  contrast levels can be adjusted through the spin buttons on the
+  Magnifier pane of the Orca Preferences dialog.  If you press the
+  Advanced Settings button at the bottom of that pane, you'll be
+  placed in a dialog box where you can customize the red, green, and
+  blue brightness levels and contrast levels individually.  The
+  Advanced Settings dialog is also where you can choose a color
+  filter.  These options should enable you to create the color
+  scheme that works best for you.  Note that in order for colorblind
+  filtering to work, you must install libcolorblind and then
+  re-build gnome-mag.
+
+  You can also add a border to your zoomer to help separate it from
+  the non-magnified area.  The border size and color are
+  customizable.  We've also separated the cursor color from the
+  cross-hair color so you no longer have to find the one color that
+  works best for both.
+
+* Bug #464705 - Provide option to keep caret in center of magnifier
+  region of interest
+ 
+  We've added individual tracking and alignment settings for
+  controls and the text cursor: each can have an alignment of
+  centered or push (move the magnifier window the least).  In
+  addition, you can now specify an edge margin for the text cursor.
+  This margin is how close the caret should be allowed to get to the
+  edge of the screen before it's time to "push."  The margin can
+  range from 0 to 50%, with 50% being the equivalent of choosing
+  centering.  These options should make it easier to keep track of
+  your location on the screen and ensure that you can always see the
+  area around your point of focus.
+
+* Bug #501414 - Orca should have (unbound) keybindings for quickly
+  changing magnification settings
+
+  We've added the following new commands:
+
+  - Toggle color enhancements
+  - Toggle mouse enhancements
+  - Increase magnification level
+  - Decrease magnification level
+  - Cycle to the next magnifier position
+  - Toggle magnifier on/off
+
+   These should help you quickly change the zoomer to best access
+   what you're working on.  These commands are "unbound," meaning
+   they do not have a keystroke assigned to them.  You can define the
+   keystrokes you would like to use on the Key Bindings pane of the
+   Orca Preferences dialog: locate each command you wish to define a
+   keystroke for, move to the Key Binding column, and press Return.
+   You'll be prompted for the new key.  Press it (rather than type it
+   out) and then press Return.  Note that these commands do not
+   permanently change the settings; they merely alter them "on the
+   fly."
+
+* Bug #503965 - Orca should provide support for the pointer
+  following focus and the zoomer
+
+  If you're using the keyboard to perform a task and then move the
+  mouse pointer, the zoomer would move away from your task and to
+  the location of the mouse pointer.  We've added two options for
+  dealing with this:
+
+  - Pointer follows zoomer (enabled by default): If the mouse
+    pointer is not on the screen when you initially move the mouse,
+    it will be moved into the zoomer so that you can continue to see
+    what you were working on.  If your preferred mouse tracking mode
+    is centered, the pointer will be moved to the center; otherwise
+    it will be moved to the item with focus.
+
+ - Pointer follows focus (disabled by default): If this option is
+   enabled, the mouse pointer will follow you as you arrow through
+   menu items and move among controls in dialog boxes.
+
+We also know we have more work to do and are tracking the work with
+these bugs: 
+
+http://bugzilla.gnome.org/show_bug.cgi?id=464734
+Provide some kind of visual feedback for the item with focus
+
+http://bugzilla.gnome.org/show_bug.cgi?id=504075
+Orca should provide support for smooth/linear panning of the zoomer
+
+http://bugzilla.gnome.org/show_bug.cgi?id=504077
+Orca should support mouse bindings
+
+Firefox: 
+
+* Fix for bug #451988 - Firefox: navigation by landmark
+
+  The XHTML role attribute module defines the following roles: banner,
+  contentinfo, definition, main, navigation, note, search, secondary,
+  seealso.  New functionality in Orca allows you to navigate to the
+  next and previous landmark on a page via the unbound keybindings:
+  
+  - Goes to previous landmark
+  - Goes to next landmark
+
+  These commands are "unbound," meaning they do not have a keystroke
+  assigned to them.  You can define the keystrokes you would like to
+  use on the Key Bindings pane of the Orca Preferences dialog: locate
+  each command you wish to define a keystroke for, move to the Key
+  Binding column, and press Return.  You'll be prompted for the new
+  key.  Press it (rather than type it out) and then press Return.
+
+* Fix for bug #466251 - Support ARIA live regions in Firefox/Gecko.
+  http://developer.mozilla.org/en/docs/AJAX:WAI_ARIA_Live_Regions
+
+  Asynchronous JavaScript and XML (AJAX) has recently received a great
+  amount of attention, and the number of websites using or planning to
+  use the technique is increasing. AJAX enables web developers to
+  easily create sites that change areas of their content in response
+  to user actions (such as in webmail applications) or real world
+  changes (such as updates of stock prices).
+
+  http://www.w3.org/TR/aria-state/ is designed to address these
+  issues. Live region markup allows web page authors to specify when
+  and how live changes to specific areas of a web page should be
+  spoken or shown on a Braille display by a screen reader.
+
+  The support for live regions in Orca is exposed via these
+  keybindings:
+
+  r and Shift+r: go to the next and previous live region relative to
+  the current caret position
+
+  y: go to the last (or current) live region that spoke
+
+  \: cycle through the different levels of politeness
+
+  Shift+\: turn monitoring of live regions on and off
+
+  Orca+F1, Orca+F2, ..., Orca+F9: review the last nth live region
+  announcement, where n is the number of the function key (i.e., the
+  last announcement is obtained via Orca+F1, the 9th last announcement
+  is obtained via Orca+F9).
+  
+* Fix for bug #473009 - Cannot arrow to the end of an HTML entry if
+  Orca is controlling the caret
+
+* Fix for bug #501447 - Orca sometimes fails to speak our location
+  when entering FF3 entries
+
+Performance and Quality:
+
+* Much work on performance (bug #491756).  If you have specific areas
+  that you think are slow, please let us know the exact details.  These
+  performance fixes also rely upon fixes being made in other modules
+  (pyorbit, pyatspi) for the GNOME 2.21.4 release.
+
+* Completed major pylinting work (bug #486726).  This helped us
+  greatly and found a few latent bugs.
+
+General:
+
+* Fix for bug #486970 - Where Am I should let you know you are in a
+  toolbar
+
+* Fix for bug #496846 - When tabbing to an editable combobox, text
+  selection should be displayed in braille
+ 
+* Fix for bug #503527 - Mnemonics are not supported well
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    ko      Korean               Changwoo Ryu
+    nb      Norwegian Bokm�L    Espes Stefansen and Kjartan Maraas
+    sl      Slovenian            Matej Urbančič
+
+==========
+
 2.21.3 - 03-Dec-2007
 
 General:
