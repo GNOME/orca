@@ -1,3 +1,8 @@
+2007-12-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Fixed bug #504384 - The Orca Preferences dialog is a bit too "tall".
+
 2007-12-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
