@@ -1349,7 +1349,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         enable = prefs["enableSpeech"]
         self.get_widget("speechSupportCheckbutton").set_active(enable)
-        self.get_widget("speechTable").set_sensitive(enable)
+        self.get_widget("speechVbox").set_sensitive(enable)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
@@ -2096,7 +2096,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableSpeech"] = enable
-        self.get_widget("speechTable").set_sensitive(enable)
+        self.get_widget("speechVbox").set_sensitive(enable)
 
     def speechSystemsChanged(self, widget):
         """Signal handler for the "changed" signal for the speechSystems

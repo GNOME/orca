@@ -1,3 +1,10 @@
+2007-12-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #504356 - Unchecking "Enable speech" doesn't grey out 
+          all speech items in the Preferences dialog
+
 2007-12-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:
