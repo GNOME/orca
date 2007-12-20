@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-13 12:52+0100\n"
-"PO-Revision-Date: 2007-12-13 17:41+0100\n"
+"PO-Revision-Date: 2007-12-20 14:15+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,35 +28,35 @@ msgstr "Povečevalo in bralnik zaslona Orka"
 msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr "Vsebino zaslona prikaže v Braillovi pisavi, jo prebere ali pa poveča zaslon"
 
-#: ../src/orca/app_gui_prefs.py:121
+#: ../src/orca/app_gui_prefs.py:123
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Nastavitve Orke za %s"
 
-#: ../src/orca/app_gui_prefs.py:187
+#: ../src/orca/app_gui_prefs.py:189
 #: ../src/orca/keybindings.py:156
-#: ../src/orca/orca_gui_prefs.py:1908
-#: ../src/orca/orca_gui_prefs.py:2006
+#: ../src/orca/orca_gui_prefs.py:1920
+#: ../src/orca/orca_gui_prefs.py:2018
 msgid "Orca"
 msgstr "Orka"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:192
-#: ../src/orca/orca_gui_prefs.py:2012
+#: ../src/orca/app_gui_prefs.py:194
+#: ../src/orca/orca_gui_prefs.py:2024
 msgid "Unbound"
 msgstr "nedoločena tipkovna bližnjica"
 
-#: ../src/orca/app_gui_prefs.py:286
+#: ../src/orca/app_gui_prefs.py:288
 msgid "No application has focus."
-msgstr "Noben program nima fokusa"
+msgstr "Noben program nima oken v žarišču."
 
 #. Translators: Orca Preferences in this case, is a configuration GUI
 #. for allowing users to set application specific settings from within
 #. Orca for the application that currently has focus.
 #.
-#: ../src/orca/app_gui_prefs.py:303
+#: ../src/orca/app_gui_prefs.py:305
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
 msgstr "Zagon Orka lastnosti za %s. Dejanje je lahko dolgotrajno."
@@ -74,7 +74,7 @@ msgstr "zaznamek vnesen"
 #. object pointed to by the bookmark.
 #.
 #: ../src/orca/bookmarks.py:102
-#: ../src/orca/Gecko.py:1596
+#: ../src/orca/Gecko.py:1599
 msgid "bookmark is current object"
 msgstr "zaznamek je enak trenutnemu predmetu"
 
@@ -82,7 +82,7 @@ msgstr "zaznamek je enak trenutnemu predmetu"
 #. the parent of the object pointed to by the bookmark are the same.
 #.
 #: ../src/orca/bookmarks.py:109
-#: ../src/orca/Gecko.py:1603
+#: ../src/orca/Gecko.py:1606
 msgid "bookmark and current object have same parent"
 msgstr "zaznamek in trenutni predmet imata skupni nadrejeni predmet"
 
@@ -90,7 +90,7 @@ msgstr "zaznamek in trenutni predmet imata skupni nadrejeni predmet"
 #. object share a common ancestor
 #.
 #: ../src/orca/bookmarks.py:126
-#: ../src/orca/Gecko.py:1620
+#: ../src/orca/Gecko.py:1623
 #, python-format
 msgid "shared ancestor %s"
 msgstr "skupni nadrejeni predmet %s"
@@ -99,7 +99,7 @@ msgstr "skupni nadrejeni predmet %s"
 #. and the current object can not be determined.
 #.
 #: ../src/orca/bookmarks.py:133
-#: ../src/orca/Gecko.py:1627
+#: ../src/orca/Gecko.py:1630
 msgid "comparison unknown"
 msgstr "primerjava ni mogoča"
 
@@ -107,7 +107,7 @@ msgstr "primerjava ni mogoča"
 #. disk
 #.
 #: ../src/orca/bookmarks.py:142
-#: ../src/orca/Gecko.py:1642
+#: ../src/orca/Gecko.py:1645
 msgid "bookmarks saved"
 msgstr "zaznamek shranjen"
 
@@ -115,15 +115,15 @@ msgstr "zaznamek shranjen"
 #. disk
 #.
 #: ../src/orca/bookmarks.py:147
-#: ../src/orca/Gecko.py:1647
+#: ../src/orca/Gecko.py:1650
 msgid "bookmarks could not be saved"
 msgstr "zaznamkov ni mogoče shraniti"
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:201
-#: ../src/orca/speechgenerator.py:197
+#: ../src/orca/braillegenerator.py:190
+#: ../src/orca/speechgenerator.py:188
 msgid "grayed"
 msgstr "sivo"
 
@@ -131,15 +131,15 @@ msgstr "sivo"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:666
-#: ../src/orca/braillegenerator.py:1261
+#: ../src/orca/braillegenerator.py:667
+#: ../src/orca/braillegenerator.py:1262
 #: ../src/orca/J2SE-access-bridge.py:73
-#: ../src/orca/scripts/gaim.py:147
-#: ../src/orca/scripts/gaim.py:274
-#: ../src/orca/speechgenerator.py:807
-#: ../src/orca/speechgenerator.py:1389
-#: ../src/orca/where_am_I.py:578
-#: ../src/orca/where_am_I.py:638
+#: ../src/orca/scripts/gaim.py:157
+#: ../src/orca/scripts/gaim.py:284
+#: ../src/orca/speechgenerator.py:798
+#: ../src/orca/speechgenerator.py:1380
+#: ../src/orca/where_am_I.py:573
+#: ../src/orca/where_am_I.py:634
 msgid "expanded"
 msgstr "razširjeno"
 
@@ -147,22 +147,22 @@ msgstr "razširjeno"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:672
-#: ../src/orca/braillegenerator.py:1267
+#: ../src/orca/braillegenerator.py:673
+#: ../src/orca/braillegenerator.py:1268
 #: ../src/orca/J2SE-access-bridge.py:80
-#: ../src/orca/scripts/gaim.py:166
-#: ../src/orca/scripts/gaim.py:280
-#: ../src/orca/speechgenerator.py:813
-#: ../src/orca/speechgenerator.py:1408
-#: ../src/orca/where_am_I.py:584
-#: ../src/orca/where_am_I.py:644
+#: ../src/orca/scripts/gaim.py:176
+#: ../src/orca/scripts/gaim.py:290
+#: ../src/orca/speechgenerator.py:804
+#: ../src/orca/speechgenerator.py:1399
+#: ../src/orca/where_am_I.py:579
+#: ../src/orca/where_am_I.py:640
 msgid "collapsed"
 msgstr "združeno"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:687
+#: ../src/orca/braillegenerator.py:688
 #, python-format
 msgid "LEVEL %d"
 msgstr "Raven %d"
@@ -170,7 +170,7 @@ msgstr "Raven %d"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:1343
+#: ../src/orca/braillegenerator.py:1344
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "drevesna raven %d"
@@ -237,7 +237,8 @@ msgstr "Položaj kazalca"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39
-#: ../src/orca/default.py:5556
+#: ../src/orca/default.py:5659
+#: ../src/orca/default.py:5666
 msgid "space"
 msgstr "presledek"
 
@@ -1295,7 +1296,7 @@ msgstr "Izvede desni klik na trenutnem predmetu ploske ocene."
 #. interrupted.
 #.
 #: ../src/orca/default.py:166
-#: ../src/orca/Gecko.py:2387
+#: ../src/orca/Gecko.py:2410
 #: ../src/orca/scripts/acroread.py:115
 #: ../src/orca/scripts/Evolution.py:334
 msgid "Speaks entire document."
@@ -1652,7 +1653,7 @@ msgstr "Plosko oceno premakne v spodnji levi kot."
 #.
 #: ../src/orca/default.py:560
 msgid "Returns to object with keyboard focus."
-msgstr "Vrne se na predmet s fokusom tipkovnice."
+msgstr "Vrne se na predmet s tipkovnico."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -1777,6 +1778,57 @@ msgstr "Skok na naslednje mesto zaznamka."
 msgid "Go to previous bookmark location."
 msgstr "Skok na predhodno mesto zaznamka."
 
+#. Translators: "color enhancements" are changes users can
+#. make to the appearance of the screen to make things easier
+#. to see, such as inverting the colors or applying a tint.
+#. This command toggles these enhancements on/off.
+#.
+#: ../src/orca/default.py:742
+msgid "Toggles color enhancements."
+msgstr "Preklopi barvno poudarjanje."
+
+#. Translators: "mouse enhancements" are changes users can
+#. make to the appearance of the mouse pointer to make it
+#. easier to see, such as increasing its size, changing its
+#. color, and surrounding it with crosshairs.  This command
+#. toggles these enhancements on/off.
+#.
+#: ../src/orca/default.py:753
+msgid "Toggles mouse enhancements."
+msgstr "Preklopi poudarjanje miške."
+
+#. Translators: this command increases the magnification
+#. level.
+#.
+#: ../src/orca/default.py:761
+msgid "Increases the magnification level."
+msgstr "Poveča povečavo."
+
+#. Translators: this command decreases the magnification
+#. level.
+#.
+#: ../src/orca/default.py:769
+msgid "Decreases the magnification level."
+msgstr "Zmanjša povečavo."
+
+#. Translators: Orca allows the user to turn the magnifier
+#. on or off. This command not only toggles magnification,
+#. but also all of the color and pointer customizations
+#. made through the magnifier.
+#.
+#: ../src/orca/default.py:779
+msgid "Toggles the magnifier."
+msgstr "Preklopi povečevalo."
+
+#. Translators: the user can choose between several different
+#. types of magnification, including full screen and split
+#. screen.  The "position" here refers to location of the
+#. magnifier.
+#.
+#: ../src/orca/default.py:789
+msgid "Cycles to the next magnifier position."
+msgstr "Poišče naslednjo lego povečevala."
+
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
@@ -1786,28 +1838,28 @@ msgstr "Skok na predhodno mesto zaznamka."
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:1661
-#: ../src/orca/default.py:1895
-#: ../src/orca/default.py:3767
-#: ../src/orca/default.py:3910
-#: ../src/orca/default.py:3918
-#: ../src/orca/default.py:4019
-#: ../src/orca/default.py:4027
-#: ../src/orca/Gecko.py:7171
-#: ../src/orca/Gecko.py:8461
+#: ../src/orca/default.py:1760
+#: ../src/orca/default.py:1994
+#: ../src/orca/default.py:3866
+#: ../src/orca/default.py:4009
+#: ../src/orca/default.py:4017
+#: ../src/orca/default.py:4118
+#: ../src/orca/default.py:4126
+#: ../src/orca/Gecko.py:7231
+#: ../src/orca/Gecko.py:8570
 #: ../src/orca/scripts/Evolution.py:773
 #: ../src/orca/scripts/Evolution.py:1296
 #: ../src/orca/scripts/StarOffice.py:638
 #: ../src/orca/scripts/StarOffice.py:2511
 #: ../src/orca/scripts/StarOffice.py:2528
-#: ../src/orca/where_am_I.py:1374
+#: ../src/orca/where_am_I.py:1361
 msgid "blank"
 msgstr "prazno"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1742
+#: ../src/orca/default.py:1841
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -1819,7 +1871,7 @@ msgstr[3] "%d presledki"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:1749
+#: ../src/orca/default.py:1848
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -1832,7 +1884,7 @@ msgstr[3] "%d tabulatorji"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:2061
+#: ../src/orca/default.py:2160
 #, python-format
 msgid "Progress bar %d."
 msgstr "Kazalec napredka %d."
@@ -1846,9 +1898,9 @@ msgstr "Kazalec napredka %d."
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2069
+#: ../src/orca/default.py:2168
 #: ../src/orca/flat_review.py:444
-#: ../src/orca/speechgenerator.py:1014
+#: ../src/orca/speechgenerator.py:1005
 #, python-format
 msgid "%d percent."
 msgstr "%d odstotkov"
@@ -1856,10 +1908,10 @@ msgstr "%d odstotkov"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2278
-#: ../src/orca/scripts/gaim.py:288
-#: ../src/orca/where_am_I.py:592
-#: ../src/orca/where_am_I.py:652
+#: ../src/orca/default.py:2377
+#: ../src/orca/scripts/gaim.py:298
+#: ../src/orca/where_am_I.py:587
+#: ../src/orca/where_am_I.py:648
 #, python-format
 msgid "tree level %d"
 msgstr "raven drevesa %d"
@@ -1867,7 +1919,7 @@ msgstr "raven drevesa %d"
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:2713
+#: ../src/orca/default.py:2812
 msgid "entire document selected"
 msgstr "izbran celoten dokument"
 
@@ -1876,11 +1928,11 @@ msgstr "izbran celoten dokument"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3206
-#: ../src/orca/default.py:6131
+#: ../src/orca/default.py:3305
+#: ../src/orca/default.py:6244
 #: ../src/orca/scripts/StarOffice.py:130
-#: ../src/orca/speechgenerator.py:247
-#: ../src/orca/where_am_I.py:496
+#: ../src/orca/speechgenerator.py:238
+#: ../src/orca/where_am_I.py:491
 msgid "text|selected"
 msgstr "text|izbrano"
 
@@ -1888,7 +1940,7 @@ msgstr "text|izbrano"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3263
+#: ../src/orca/default.py:3362
 msgid "Speak row"
 msgstr "Izgovori vrstico"
 
@@ -1896,14 +1948,14 @@ msgstr "Izgovori vrstico"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3269
+#: ../src/orca/default.py:3368
 msgid "Speak cell"
 msgstr "Izgovori celico"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:3319
-#: ../src/orca/where_am_I.py:1428
+#: ../src/orca/default.py:3418
+#: ../src/orca/where_am_I.py:1415
 msgid "bold"
 msgstr "krepko"
 
@@ -1914,7 +1966,7 @@ msgstr "krepko"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:3336
+#: ../src/orca/default.py:3435
 #, python-format
 msgid "%s %s pixel"
 msgid_plural "%s %s pixels"
@@ -1931,7 +1983,7 @@ msgstr[3] "%s %s točke"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:3464
+#: ../src/orca/default.py:3563
 msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
 msgstr "Vstop v način učenja. Za poslušanje funkcije pritisnite poljubno tipko. Za izhod iz načina učenja pritisnite tipko Esc."
 
@@ -1944,7 +1996,7 @@ msgstr "Vstop v način učenja. Za poslušanje funkcije pritisnite poljubno tipk
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:3476
+#: ../src/orca/default.py:3575
 msgid "Learn mode.  Press escape to exit."
 msgstr "Učni način. Pritisnite tipko Esc za izhod."
 
@@ -1957,15 +2009,15 @@ msgstr "Učni način. Pritisnite tipko Esc za izhod."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/default.py:3497
+#: ../src/orca/default.py:3596
 msgid "Exiting learn mode."
 msgstr "Izhod iz učnega načina."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:3772
-#: ../src/orca/default.py:3923
+#: ../src/orca/default.py:3871
+#: ../src/orca/default.py:4022
 msgid "white space"
 msgstr "prazen prostor"
 
@@ -1975,7 +2027,7 @@ msgstr "prazen prostor"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:4152
+#: ../src/orca/default.py:4251
 msgid "string not found"
 msgstr "niti ni mogoče najti"
 
@@ -1984,12 +2036,12 @@ msgstr "niti ni mogoče najti"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4983
+#: ../src/orca/default.py:5082
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Napačno črkovana beseda: %s"
 
-#: ../src/orca/default.py:4991
+#: ../src/orca/default.py:5090
 #, python-format
 msgid "Context is %s"
 msgstr "Vsebina je %s"
@@ -1999,7 +2051,7 @@ msgstr "Vsebina je %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:5128
+#: ../src/orca/default.py:5227
 #, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
@@ -2012,7 +2064,7 @@ msgstr[3] "%d pojavitve znaka %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6047
+#: ../src/orca/default.py:6160
 msgid "page selected from cursor position"
 msgstr "stran izbrana iz položaja kazalca"
 
@@ -2020,7 +2072,7 @@ msgstr "stran izbrana iz položaja kazalca"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6055
+#: ../src/orca/default.py:6168
 msgid "page selected to cursor position"
 msgstr "stran izbrana na položaj kazalca"
 
@@ -2028,7 +2080,7 @@ msgstr "stran izbrana na položaj kazalca"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6063
+#: ../src/orca/default.py:6176
 msgid "line selected down from cursor position"
 msgstr "vrstica izbrana pod položajem kazalca"
 
@@ -2036,7 +2088,7 @@ msgstr "vrstica izbrana pod položajem kazalca"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6071
+#: ../src/orca/default.py:6184
 msgid "line selected up from cursor position"
 msgstr "vrstica izbrana nad položajem kazalca"
 
@@ -2044,7 +2096,7 @@ msgstr "vrstica izbrana nad položajem kazalca"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6079
+#: ../src/orca/default.py:6192
 msgid "document selected to cursor position"
 msgstr "dokument izbran na položaj kazalca"
 
@@ -2052,7 +2104,7 @@ msgstr "dokument izbran na položaj kazalca"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6087
+#: ../src/orca/default.py:6200
 msgid "document selected from cursor position"
 msgstr "dokument izbran pod položajem kazalca"
 
@@ -2062,7 +2114,7 @@ msgstr "dokument izbran pod položajem kazalca"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:6147
+#: ../src/orca/default.py:6260
 msgid "text|unselected"
 msgstr "text|neizbrano"
 
@@ -2103,10 +2155,10 @@ msgstr "Prelom na vrhu"
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:348
-#: ../src/orca/Gecko.py:1148
-#: ../src/orca/speechgenerator.py:408
+#: ../src/orca/Gecko.py:1151
+#: ../src/orca/speechgenerator.py:399
 #: ../src/orca/where_am_I.py:370
-#: ../src/orca/where_am_I.py:1138
+#: ../src/orca/where_am_I.py:1125
 msgid "partially checked"
 msgstr "delno označeno"
 
@@ -2117,21 +2169,21 @@ msgstr "delno označeno"
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:352
-#: ../src/orca/Gecko.py:1152
-#: ../src/orca/speechgenerator.py:412
-#: ../src/orca/speechgenerator.py:892
+#: ../src/orca/Gecko.py:1155
+#: ../src/orca/speechgenerator.py:403
+#: ../src/orca/speechgenerator.py:883
 #: ../src/orca/where_am_I.py:374
-#: ../src/orca/where_am_I.py:1142
+#: ../src/orca/where_am_I.py:1129
 msgid "checked"
 msgstr "označeno"
 
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:356
-#: ../src/orca/Gecko.py:1156
-#: ../src/orca/speechgenerator.py:416
+#: ../src/orca/Gecko.py:1159
+#: ../src/orca/speechgenerator.py:407
 #: ../src/orca/where_am_I.py:378
-#: ../src/orca/where_am_I.py:1146
+#: ../src/orca/where_am_I.py:1133
 msgid "not checked"
 msgstr "ni označeno"
 
@@ -2142,8 +2194,8 @@ msgstr "ni označeno"
 #: ../src/orca/scripts/planner.py:152
 #: ../src/orca/scripts/planner.py:179
 #: ../src/orca/scripts/planner.py:187
-#: ../src/orca/speechgenerator.py:1600
-#: ../src/orca/where_am_I.py:797
+#: ../src/orca/speechgenerator.py:1591
+#: ../src/orca/where_am_I.py:792
 msgid "pressed"
 msgstr "pritisnjeno"
 
@@ -2154,8 +2206,8 @@ msgstr "pritisnjeno"
 #: ../src/orca/scripts/planner.py:154
 #: ../src/orca/scripts/planner.py:181
 #: ../src/orca/scripts/planner.py:189
-#: ../src/orca/speechgenerator.py:1604
-#: ../src/orca/where_am_I.py:801
+#: ../src/orca/speechgenerator.py:1595
+#: ../src/orca/where_am_I.py:796
 msgid "not pressed"
 msgstr "ni pritisnjeno"
 
@@ -2165,8 +2217,8 @@ msgstr "ni pritisnjeno"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/flat_review.py:377
-#: ../src/orca/Gecko.py:1090
-#: ../src/orca/speechgenerator.py:1073
+#: ../src/orca/Gecko.py:1093
+#: ../src/orca/speechgenerator.py:1064
 #: ../src/orca/where_am_I.py:206
 msgid "radiobutton|selected"
 msgstr "radiobutton|izbrano"
@@ -2177,8 +2229,8 @@ msgstr "radiobutton|izbrano"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/flat_review.py:384
-#: ../src/orca/Gecko.py:1097
-#: ../src/orca/speechgenerator.py:1080
+#: ../src/orca/Gecko.py:1100
+#: ../src/orca/speechgenerator.py:1071
 #: ../src/orca/where_am_I.py:213
 msgid "radiobutton|not selected"
 msgstr "radiobutton|ni izbrano"
@@ -2201,20 +2253,20 @@ msgstr "navpično"
 #.
 #: ../src/orca/focus_tracking_presenter.py:861
 msgid "No focus"
-msgstr "Brez fokusa"
+msgstr "Brez okna v žarišču"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/Gecko.py:914
+#: ../src/orca/Gecko.py:917
 msgid "multi-select"
 msgstr "več izbir"
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/Gecko.py:918
-#: ../src/orca/Gecko.py:7906
-#: ../src/orca/Gecko.py:7967
+#: ../src/orca/Gecko.py:921
+#: ../src/orca/Gecko.py:8015
+#: ../src/orca/Gecko.py:8076
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -2226,7 +2278,7 @@ msgstr[3] "Seznam s %d predmeti"
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1492
+#: ../src/orca/Gecko.py:1495
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -2238,7 +2290,7 @@ msgstr[3] "%d naslovi"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1498
+#: ../src/orca/Gecko.py:1501
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -2250,7 +2302,7 @@ msgstr[3] "%d obrazci"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1504
+#: ../src/orca/Gecko.py:1507
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -2262,7 +2314,7 @@ msgstr[3] "%d razpredelnice"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1510
+#: ../src/orca/Gecko.py:1513
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -2274,7 +2326,7 @@ msgstr[3] "%d obiskane povezave"
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/Gecko.py:1516
+#: ../src/orca/Gecko.py:1519
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -2288,197 +2340,197 @@ msgstr[3] "%d neobiskane povezave"
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/Gecko.py:1523
+#: ../src/orca/Gecko.py:1526
 #, python-format
 msgid "%d percent of document read"
 msgstr "%d odstotkov prebranega dokumenta"
 
 #. Translators: this announces that a bookmark has been entered
 #.
-#: ../src/orca/Gecko.py:1550
+#: ../src/orca/Gecko.py:1553
 msgid "entered bookmark"
 msgstr "vnesen zaznamek"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1978
+#: ../src/orca/Gecko.py:1983
 msgid "Goes to next character."
 msgstr "Skoči na naslednji znak."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/Gecko.py:1986
+#: ../src/orca/Gecko.py:1991
 msgid "Goes to previous character."
 msgstr "Skoči na predhodni znak."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:1994
+#: ../src/orca/Gecko.py:1999
 msgid "Goes to next word."
 msgstr "Skoči na naslednjo besedo"
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/Gecko.py:2002
+#: ../src/orca/Gecko.py:2007
 msgid "Goes to previous word."
 msgstr "Skoči na predhodno besedo."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:2010
+#: ../src/orca/Gecko.py:2015
 msgid "Goes to next line."
 msgstr "Skoči na naslednjo vrstico"
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/Gecko.py:2018
+#: ../src/orca/Gecko.py:2023
 msgid "Goes to previous line."
 msgstr "Skoči na predhodno vrstico"
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/Gecko.py:2026
+#: ../src/orca/Gecko.py:2031
 msgid "Causes the current combo box to be expanded."
 msgstr "Povzroči razširjanje pojavnega menija."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2033
+#: ../src/orca/Gecko.py:2038
 msgid "Goes left one cell."
 msgstr "Skoči levo eno celico."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2040
+#: ../src/orca/Gecko.py:2045
 msgid "Goes right one cell."
 msgstr "Skoči desno eno celico."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2047
+#: ../src/orca/Gecko.py:2052
 msgid "Goes down one cell."
 msgstr "Skoči navzdol eno celico."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2054
+#: ../src/orca/Gecko.py:2059
 msgid "Goes up one cell."
 msgstr "Skoči navzgor eno celico."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2061
+#: ../src/orca/Gecko.py:2066
 msgid "Goes to the first cell in a table."
 msgstr "Skoči na prvo celico v razpredelnici."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/Gecko.py:2068
+#: ../src/orca/Gecko.py:2073
 msgid "Goes to the last cell in a table."
 msgstr "Skoči na zadnjo celico v razpredelnici."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:2076
+#: ../src/orca/Gecko.py:2081
 msgid "Goes to previous heading."
 msgstr "Skoči na predhodni naslov."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:2084
+#: ../src/orca/Gecko.py:2089
 msgid "Goes to next heading."
 msgstr "Skoči na naslednji naslov."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:2092
+#: ../src/orca/Gecko.py:2097
 msgid "Goes to previous heading at level 1."
 msgstr "Skoči na predhodni naslov prve ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:2100
+#: ../src/orca/Gecko.py:2105
 msgid "Goes to next heading at level 1."
 msgstr "Skoči na naslednji naslov prve ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:2108
+#: ../src/orca/Gecko.py:2113
 msgid "Goes to previous heading at level 2."
 msgstr "Skoči na predhodni naslov druge ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/Gecko.py:2116
+#: ../src/orca/Gecko.py:2121
 msgid "Goes to next heading at level 2."
 msgstr "Skoči na naslednji naslov druge ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:2124
+#: ../src/orca/Gecko.py:2129
 msgid "Goes to previous heading at level 3."
 msgstr "Skoči na predhodni naslov tretje ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/Gecko.py:2132
+#: ../src/orca/Gecko.py:2137
 msgid "Goes to next heading at level 3."
 msgstr "Skoči na naslednji naslov tretje ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:2140
+#: ../src/orca/Gecko.py:2145
 msgid "Goes to previous heading at level 4."
 msgstr "Skoči na predhodni naslov četrte ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/Gecko.py:2148
+#: ../src/orca/Gecko.py:2153
 msgid "Goes to next heading at level 4."
 msgstr "Skoči na naslednji naslov četrte ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:2156
+#: ../src/orca/Gecko.py:2161
 msgid "Goes to previous heading at level 5."
 msgstr "Skoči na predhodni naslov pete ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/Gecko.py:2164
+#: ../src/orca/Gecko.py:2169
 msgid "Goes to next heading at level 5."
 msgstr "Skoči na naslednji naslov pete ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:2172
+#: ../src/orca/Gecko.py:2177
 msgid "Goes to previous heading at level 6."
 msgstr "Skoči na predhodni naslov šeste ravni."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/Gecko.py:2180
+#: ../src/orca/Gecko.py:2185
 msgid "Goes to next heading at level 6."
 msgstr "Skoči na naslednji naslov šeste ravni."
 
@@ -2486,7 +2538,7 @@ msgstr "Skoči na naslednji naslov šeste ravni."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:2189
+#: ../src/orca/Gecko.py:2194
 msgid "Goes to previous large object."
 msgstr "Skoči na predhodni večji predmet."
 
@@ -2494,139 +2546,155 @@ msgstr "Skoči na predhodni večji predmet."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:2198
+#: ../src/orca/Gecko.py:2203
 msgid "Goes to next large object."
 msgstr "Skoči na naslednji večji predmet spletne strani."
+
+#. Translators: this is for navigating to the previous ARIA
+#. role landmark.  ARIA role landmarks are the W3C defined HTML
+#. tag attribute 'role' used to identify important part of
+#. webpage like banners, main context, search etc.
+#.
+#: ../src/orca/Gecko.py:2213
+msgid "Goes to previous landmark."
+msgstr "Skoči na predhodno mestno oznako."
+
+#. Translators: this is for navigating to the next ARIA
+#. role landmark.
+#.
+#: ../src/orca/Gecko.py:2221
+msgid "Goes to next landmark."
+msgstr "Skoči na naslednjo mestno oznako."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:2206
+#: ../src/orca/Gecko.py:2229
 msgid "Goes to previous list."
 msgstr "Skoči na predhodni seznam."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/Gecko.py:2214
+#: ../src/orca/Gecko.py:2237
 msgid "Goes to next list."
 msgstr "Skoči na naslednji seznam."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:2222
+#: ../src/orca/Gecko.py:2245
 msgid "Goes to previous list item."
 msgstr "Skoči na predhodni predmet seznama."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/Gecko.py:2230
+#: ../src/orca/Gecko.py:2253
 msgid "Goes to next list item."
 msgstr "Skoči na naslednji predmet seznama."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:2237
+#: ../src/orca/Gecko.py:2260
 msgid "Goes to previous unvisited link."
 msgstr "Skoči na predhodno neobiskano povezavo."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:2244
+#: ../src/orca/Gecko.py:2267
 msgid "Goes to next unvisited link."
 msgstr "Skoči na naslednjo neobiskano povezavo."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:2251
+#: ../src/orca/Gecko.py:2274
 msgid "Goes to previous visited link."
 msgstr "Skoči na predhodno obiskano povezavo."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/Gecko.py:2258
+#: ../src/orca/Gecko.py:2281
 msgid "Goes to next visited link."
 msgstr "Skoči na naslednjo obiskano povezavo."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:2266
+#: ../src/orca/Gecko.py:2289
 msgid "Goes to previous form field."
 msgstr "Skoči na predhodno polje obrazca."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:2274
+#: ../src/orca/Gecko.py:2297
 msgid "Goes to next form field."
 msgstr "Skoči na naslednje polje obrazca."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:2282
+#: ../src/orca/Gecko.py:2305
 msgid "Goes to previous blockquote."
 msgstr "Skoči na predhodno bločno besedilo."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/Gecko.py:2290
+#: ../src/orca/Gecko.py:2313
 msgid "Goes to next blockquote."
 msgstr "Skoči na naslednje bločno besedilo."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:2297
+#: ../src/orca/Gecko.py:2320
 msgid "Goes to previous table."
 msgstr "Skoči na predhodno razpredelnico."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/Gecko.py:2304
+#: ../src/orca/Gecko.py:2327
 msgid "Goes to next table."
 msgstr "Skoči na naslednjo razpredelnico."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/Gecko.py:2311
+#: ../src/orca/Gecko.py:2334
 msgid "Goes to previous live region."
 msgstr "Skoči na predhodni samodejno posodobljeni predel"
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/Gecko.py:2318
+#: ../src/orca/Gecko.py:2341
 msgid "Goes to next live region."
 msgstr "Skoči na naslednji samodejno posodobljeni predel"
 
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
-#: ../src/orca/Gecko.py:2326
+#: ../src/orca/Gecko.py:2349
 msgid "Goes to last live region."
 msgstr "Skoči na zadnji samodejno posodobljeni predel"
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/Gecko.py:2334
+#: ../src/orca/Gecko.py:2357
 msgid "Advance live region politeness setting."
 msgstr "Napredna nastavitev samodejno posodobljenih predelov"
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/Gecko.py:2342
+#: ../src/orca/Gecko.py:2365
 msgid "Monitor live regions."
 msgstr "Nadzor samodejno posodobljenih predelov"
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/Gecko.py:2350
+#: ../src/orca/Gecko.py:2373
 msgid "Review live region announcement."
 msgstr "Pregled objav samodejno posodobljenih predelov."
 
@@ -2637,7 +2705,7 @@ msgstr "Pregled objav samodejno posodobljenih predelov."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2362
+#: ../src/orca/Gecko.py:2385
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 
@@ -2648,7 +2716,7 @@ msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/Gecko.py:2374
+#: ../src/orca/Gecko.py:2397
 msgid "Toggles structural navigation keys."
 msgstr "Preklopi strukturne krmilne tipke"
 
@@ -2659,7 +2727,7 @@ msgstr "Preklopi strukturne krmilne tipke"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:2876
+#: ../src/orca/Gecko.py:2918
 msgid "Use _Orca Caret Navigation"
 msgstr "Uporabi _orka kazalno premikanje"
 
@@ -2667,7 +2735,7 @@ msgstr "Uporabi _orka kazalno premikanje"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/Gecko.py:2889
+#: ../src/orca/Gecko.py:2931
 msgid "Use Orca _Structural Navigation"
 msgstr "Uporabi _orka strukturno premikanje"
 
@@ -2677,7 +2745,7 @@ msgstr "Uporabi _orka strukturno premikanje"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/Gecko.py:2904
+#: ../src/orca/Gecko.py:2946
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 
@@ -2685,7 +2753,7 @@ msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/Gecko.py:2917
+#: ../src/orca/Gecko.py:2959
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 
@@ -2693,14 +2761,14 @@ msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/Gecko.py:2929
+#: ../src/orca/Gecko.py:2971
 msgid "Page Navigation"
 msgstr "Premikanje po strani"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
-#: ../src/orca/Gecko.py:2952
+#: ../src/orca/Gecko.py:2994
 msgid "Speak _cell coordinates"
 msgstr "Izgovori koordinate _celic"
 
@@ -2708,28 +2776,28 @@ msgstr "Izgovori koordinate _celic"
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/Gecko.py:2964
+#: ../src/orca/Gecko.py:3006
 msgid "Speak _multiple cell spans"
 msgstr "Izgovori _širino več celic"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
-#: ../src/orca/Gecko.py:2975
+#: ../src/orca/Gecko.py:3017
 msgid "Announce cell _header"
 msgstr "Najavi _glavo celice"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2986
+#: ../src/orca/Gecko.py:3028
 msgid "Skip _blank cells"
 msgstr "Preskoči _prazne celice"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
-#: ../src/orca/Gecko.py:2997
+#: ../src/orca/Gecko.py:3039
 msgid "Table Navigation"
 msgstr "Premikanje po razpredelnici"
 
@@ -2737,7 +2805,7 @@ msgstr "Premikanje po razpredelnici"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:3021
+#: ../src/orca/Gecko.py:3063
 msgid "Speak results during _find"
 msgstr "Izgovori zadetke med iskanjem"
 
@@ -2746,7 +2814,7 @@ msgstr "Izgovori zadetke med iskanjem"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/Gecko.py:3034
+#: ../src/orca/Gecko.py:3076
 msgid "Onl_y speak changed lines during find"
 msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 
@@ -2754,33 +2822,33 @@ msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/Gecko.py:3051
+#: ../src/orca/Gecko.py:3093
 msgid "Minimum length of matched text:"
 msgstr "Najmanjša dolžina primerljivega besedila:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/Gecko.py:3076
+#: ../src/orca/Gecko.py:3118
 msgid "Find Options"
 msgstr "Možnosti iskanja"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:3995
+#: ../src/orca/Gecko.py:4037
 msgid "Loading.  Please wait."
 msgstr "Nalaganje. Prosim, počakajte."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:4000
+#: ../src/orca/Gecko.py:4042
 #, python-format
 msgid "Finished loading %s."
 msgstr "Končano nalaganje %s."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/Gecko.py:4006
+#: ../src/orca/Gecko.py:4048
 msgid "Finished loading."
 msgstr "Končano nalaganje."
 
@@ -2791,7 +2859,7 @@ msgstr "Končano nalaganje."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/Gecko.py:4408
+#: ../src/orca/Gecko.py:4450
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -2800,7 +2868,7 @@ msgstr "h%d"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:5364
+#: ../src/orca/Gecko.py:5424
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "Celica je razširjena preko %d vrstic in %d stolpcev."
@@ -2809,7 +2877,7 @@ msgstr "Celica je razširjena preko %d vrstic in %d stolpcev."
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:5371
+#: ../src/orca/Gecko.py:5431
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Celica je razširjena preko %d stolpcev"
@@ -2818,7 +2886,7 @@ msgstr "Celica je razširjena preko %d stolpcev"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/Gecko.py:5377
+#: ../src/orca/Gecko.py:5437
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Celica je razširjena preko %d vrstic"
@@ -2826,7 +2894,7 @@ msgstr "Celica je razširjena preko %d vrstic"
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
-#: ../src/orca/Gecko.py:7144
+#: ../src/orca/Gecko.py:7204
 #, python-format
 msgid "level %d"
 msgstr "raven %d"
@@ -2837,24 +2905,25 @@ msgstr "raven %d"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7650
-#: ../src/orca/Gecko.py:7718
-#: ../src/orca/Gecko.py:7832
-#: ../src/orca/Gecko.py:7898
-#: ../src/orca/Gecko.py:8022
-#: ../src/orca/Gecko.py:8111
-#: ../src/orca/Gecko.py:8192
-#: ../src/orca/Gecko.py:8275
-#: ../src/orca/Gecko.py:8363
-#: ../src/orca/Gecko.py:8484
+#: ../src/orca/Gecko.py:7710
+#: ../src/orca/Gecko.py:7778
+#: ../src/orca/Gecko.py:7892
+#: ../src/orca/Gecko.py:7941
+#: ../src/orca/Gecko.py:8007
+#: ../src/orca/Gecko.py:8131
+#: ../src/orca/Gecko.py:8220
+#: ../src/orca/Gecko.py:8301
+#: ../src/orca/Gecko.py:8384
+#: ../src/orca/Gecko.py:8472
+#: ../src/orca/Gecko.py:8593
 msgid "Wrapping to bottom."
 msgstr "Prelom na dnu."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7661
-#: ../src/orca/Gecko.py:7685
+#: ../src/orca/Gecko.py:7721
+#: ../src/orca/Gecko.py:7745
 msgid "No more headings."
 msgstr "Ni več naslovov."
 
@@ -2864,26 +2933,27 @@ msgstr "Ni več naslovov."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/Gecko.py:7674
-#: ../src/orca/Gecko.py:7760
-#: ../src/orca/Gecko.py:7857
-#: ../src/orca/Gecko.py:7959
-#: ../src/orca/Gecko.py:8064
-#: ../src/orca/Gecko.py:8146
-#: ../src/orca/Gecko.py:8228
-#: ../src/orca/Gecko.py:8311
-#: ../src/orca/Gecko.py:8421
-#: ../src/orca/Gecko.py:8534
-#: ../src/orca/Gecko.py:8831
-#: ../src/orca/Gecko.py:8863
+#: ../src/orca/Gecko.py:7734
+#: ../src/orca/Gecko.py:7820
+#: ../src/orca/Gecko.py:7917
+#: ../src/orca/Gecko.py:7967
+#: ../src/orca/Gecko.py:8068
+#: ../src/orca/Gecko.py:8173
+#: ../src/orca/Gecko.py:8255
+#: ../src/orca/Gecko.py:8337
+#: ../src/orca/Gecko.py:8420
+#: ../src/orca/Gecko.py:8530
+#: ../src/orca/Gecko.py:8643
+#: ../src/orca/Gecko.py:8940
+#: ../src/orca/Gecko.py:8972
 msgid "Wrapping to top."
 msgstr "Prelom na vrhu."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/Gecko.py:7729
-#: ../src/orca/Gecko.py:7771
+#: ../src/orca/Gecko.py:7789
+#: ../src/orca/Gecko.py:7831
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Ni več naslovov na %d ravni."
@@ -2892,18 +2962,32 @@ msgstr "Ni več naslovov na %d ravni."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/Gecko.py:7844
-#: ../src/orca/Gecko.py:7869
+#: ../src/orca/Gecko.py:7904
+#: ../src/orca/Gecko.py:7929
 msgid "No more large objects."
 msgstr "Ni več velikih predmetov."
+
+#. Translators: this is for navigating to the previous ARIA
+#. role landmark.  ARIA role landmarks are the W3C defined HTML
+#. tag attribute 'role' used to identify important part of
+#. webpage like banners, main context, search etc.  This is an
+#. that one was not found.
+#.
+#. Translators: this is for navigating to the next ARIA
+#. role landmark. This is an that one was not found.
+#.
+#: ../src/orca/Gecko.py:7955
+#: ../src/orca/Gecko.py:7978
+msgid "No landmark found."
+msgstr "Ni najdenih mestnih oznak."
 
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/Gecko.py:7921
-#: ../src/orca/Gecko.py:7982
+#: ../src/orca/Gecko.py:8030
+#: ../src/orca/Gecko.py:8091
 #, python-format
 msgid "Nesting level %d"
 msgstr "Raven drevesa %d"
@@ -2911,8 +2995,8 @@ msgstr "Raven drevesa %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/Gecko.py:7931
-#: ../src/orca/Gecko.py:7992
+#: ../src/orca/Gecko.py:8040
+#: ../src/orca/Gecko.py:8101
 msgid "No more lists."
 msgstr "Ni več seznamov"
 
@@ -2920,47 +3004,47 @@ msgstr "Ni več seznamov"
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/Gecko.py:8034
-#: ../src/orca/Gecko.py:8076
+#: ../src/orca/Gecko.py:8143
+#: ../src/orca/Gecko.py:8185
 msgid "No more list items."
 msgstr "Ni več predmetov seznama"
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:8122
-#: ../src/orca/Gecko.py:8157
+#: ../src/orca/Gecko.py:8231
+#: ../src/orca/Gecko.py:8266
 msgid "No more unvisited links."
 msgstr "Ni več neobiskanih povezav"
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/Gecko.py:8203
-#: ../src/orca/Gecko.py:8239
+#: ../src/orca/Gecko.py:8312
+#: ../src/orca/Gecko.py:8348
 msgid "No more visited links."
 msgstr "Ni več obiskanih povezav."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
-#: ../src/orca/Gecko.py:8286
-#: ../src/orca/Gecko.py:8322
+#: ../src/orca/Gecko.py:8395
+#: ../src/orca/Gecko.py:8431
 msgid "No more blockquotes."
 msgstr "Ni več bločnega besedila."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
-#: ../src/orca/Gecko.py:8382
-#: ../src/orca/Gecko.py:8441
+#: ../src/orca/Gecko.py:8491
+#: ../src/orca/Gecko.py:8550
 msgid "No more form fields."
 msgstr "Ni več polj obrazca."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/Gecko.py:8468
+#: ../src/orca/Gecko.py:8577
 #, python-format
 msgid "Row %d, column %d."
 msgstr "Vrstica %d, stolpec %d."
@@ -2970,15 +3054,15 @@ msgstr "Vrstica %d, stolpec %d."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/Gecko.py:8499
-#: ../src/orca/Gecko.py:8549
+#: ../src/orca/Gecko.py:8608
+#: ../src/orca/Gecko.py:8658
 msgid "Non-uniform"
 msgstr "enotna razpredelnica"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/Gecko.py:8504
-#: ../src/orca/Gecko.py:8554
+#: ../src/orca/Gecko.py:8613
+#: ../src/orca/Gecko.py:8663
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -2989,8 +3073,8 @@ msgstr[3] "Razpredelnica z %d vrsticami"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/Gecko.py:8509
-#: ../src/orca/Gecko.py:8559
+#: ../src/orca/Gecko.py:8618
+#: ../src/orca/Gecko.py:8668
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -3002,48 +3086,48 @@ msgstr[3] "%d stolpci"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/Gecko.py:8521
-#: ../src/orca/Gecko.py:8570
+#: ../src/orca/Gecko.py:8630
+#: ../src/orca/Gecko.py:8679
 msgid "No more tables."
 msgstr "Ni več razpredelnic."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8616
+#: ../src/orca/Gecko.py:8725
 msgid "Beginning of row."
 msgstr "Začetek vrstice."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8621
-#: ../src/orca/Gecko.py:8676
-#: ../src/orca/Gecko.py:8727
-#: ../src/orca/Gecko.py:8782
-#: ../src/orca/Gecko.py:8799
-#: ../src/orca/Gecko.py:8819
+#: ../src/orca/Gecko.py:8730
+#: ../src/orca/Gecko.py:8785
+#: ../src/orca/Gecko.py:8836
+#: ../src/orca/Gecko.py:8891
+#: ../src/orca/Gecko.py:8908
+#: ../src/orca/Gecko.py:8928
 msgid "Not in a table."
 msgstr "Ni v razpredelnici."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8671
+#: ../src/orca/Gecko.py:8780
 msgid "End of row."
 msgstr "Konec vrstice."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8722
+#: ../src/orca/Gecko.py:8831
 msgid "Top of column."
 msgstr "Vrh stolpca."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/Gecko.py:8777
+#: ../src/orca/Gecko.py:8886
 msgid "Bottom of column."
 msgstr "Dno stolpca"
 
@@ -3051,18 +3135,18 @@ msgstr "Dno stolpca"
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/Gecko.py:8851
-#: ../src/orca/Gecko.py:8881
+#: ../src/orca/Gecko.py:8960
+#: ../src/orca/Gecko.py:8990
 msgid "No more live regions."
 msgstr "Ni več samodejno posodobljenih predelov"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/Gecko.py:8890
-#: ../src/orca/Gecko.py:8900
-#: ../src/orca/Gecko.py:8909
-#: ../src/orca/Gecko.py:8919
+#: ../src/orca/Gecko.py:8999
+#: ../src/orca/Gecko.py:9009
+#: ../src/orca/Gecko.py:9018
+#: ../src/orca/Gecko.py:9028
 msgid "Live region support is off"
 msgstr "Podpora samodejno posodobljenim predelom"
 
@@ -3073,7 +3157,7 @@ msgstr "Podpora samodejno posodobljenim predelom"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8937
+#: ../src/orca/Gecko.py:9046
 msgid "Gecko is controlling the caret."
 msgstr "Gecko nadzira kazalnik"
 
@@ -3084,7 +3168,7 @@ msgstr "Gecko nadzira kazalnik"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/Gecko.py:8949
+#: ../src/orca/Gecko.py:9058
 msgid "Orca is controlling the caret."
 msgstr "Orka nadzira kazalnik"
 
@@ -3098,7 +3182,7 @@ msgstr "Orka nadzira kazalnik"
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8973
+#: ../src/orca/Gecko.py:9082
 msgid "Structural navigation keys on."
 msgstr "Strukturne krmilne tipke vključene."
 
@@ -3112,7 +3196,7 @@ msgstr "Strukturne krmilne tipke vključene."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/Gecko.py:8985
+#: ../src/orca/Gecko.py:9094
 msgid "Structural navigation keys off."
 msgstr "Strukturne krmilne tipke izključene."
 
@@ -3401,6 +3485,110 @@ msgstr "Shranjena raven samodejno posodobljenih predelov"
 msgid "politeness level %s"
 msgstr "raven prijaznosti %s"
 
+#. Translators: "color enhancements" are changes users can
+#. make to the appearance of the screen to make things easier
+#. to see, such as inverting the colors or applying a tint.
+#.
+#: ../src/orca/mag.py:1474
+msgid "Color enhancements disabled."
+msgstr "Onemogočeno barvno poudarjanje."
+
+#. Translators: "color enhancements" are changes users can
+#. make to the appearance of the screen to make things easier
+#. to see, such as inverting the colors or applying a tint.
+#.
+#: ../src/orca/mag.py:1482
+msgid "Color enhancements enabled."
+msgstr "Omogočeno barvno poudarjanje."
+
+#. Translators: "mouse enhancements" are changes users can
+#. make to the appearance of the mouse pointer to make it
+#. easier to see, such as increasing its size, changing its
+#. color, and surrounding it with crosshairs.
+#.
+#: ../src/orca/mag.py:1504
+msgid "Mouse enhancements disabled."
+msgstr "Onemogočeno poudarjanje miške."
+
+#. Translators: "mouse enhancements" are changes users can
+#. make to the appearance of the mouse pointer to make it
+#. easier to see, such as increasing its size, changing its
+#. color, and surrounding it with crosshairs.
+#.
+#: ../src/orca/mag.py:1537
+msgid "Mouse enhancements enabled."
+msgstr "Omogočeno poudarjanje miške."
+
+#. Translators: this is the message spoken when a user enables the
+#. magnifier.  In addition to screen magnification, the user's
+#. preferred colors and mouse customizations are loaded.
+#.
+#: ../src/orca/mag.py:1602
+msgid "Magnifier enabled."
+msgstr "Povečevalo omogočeno."
+
+#. Translators: this is the message spoken when a user disables the
+#. magnifier, restoring the screen contents to their normal colors
+#. and sizes.
+#.
+#: ../src/orca/mag.py:1609
+msgid "Magnifier disabled."
+msgstr "Povečevalo onemogočeno."
+
+#. Translators: magnification will use the full screen.
+#.
+#. Translators: this is an algorithm for magnifying pixels
+#. on the screen.
+#.
+#: ../src/orca/mag.py:1669
+#: ../src/orca/orca_gui_prefs.py:1571
+#: ../src/orca/orca_gui_prefs.py:1597
+msgid "Full Screen"
+msgstr "Celoten zaslon"
+
+#. Translators: the user attempted to switch to full screen
+#. magnification, but his/her system doesn't support it.
+#.
+#: ../src/orca/mag.py:1674
+msgid "Full Screen mode unavailable"
+msgstr "Celozaslonski način ni na voljo."
+
+#. Translators: magnification will use the top half of the screen.
+#.
+#: ../src/orca/mag.py:1678
+#: ../src/orca/orca_gui_prefs.py:1575
+msgid "Top Half"
+msgstr "Zgornja polovica"
+
+#. Translators: magnification will use the bottom half of the screen.
+#.
+#: ../src/orca/mag.py:1682
+#: ../src/orca/orca_gui_prefs.py:1579
+msgid "Bottom Half"
+msgstr "Spodnja polovica"
+
+#. Translators: magnification will use the left half of the screen.
+#.
+#: ../src/orca/mag.py:1686
+#: ../src/orca/orca_gui_prefs.py:1583
+msgid "Left Half"
+msgstr "Leva polovica"
+
+#. Translators: magnification will use the right half of the screen.
+#.
+#: ../src/orca/mag.py:1690
+#: ../src/orca/orca_gui_prefs.py:1587
+msgid "Right Half"
+msgstr "Desna polovica"
+
+#. Translators: the user has selected a custom area of the screen
+#. to use for magnification.
+#.
+#: ../src/orca/mag.py:1695
+#: ../src/orca/orca_gui_prefs.py:1592
+msgid "Custom"
+msgstr "Po meri"
+
 #. Translators: this is a regular expression that is intended to match
 #. a positive 'yes' response from a user at the command line.  The expression
 #. as given means - does it begin with (that's the '^' character) any of
@@ -3588,12 +3776,12 @@ msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "Ali želite omogočiti Braillov monitor? Vnesite y za da ali n za ne:"
 
 #: ../src/orca/orca_console_prefs.py:464
-#: ../src/orca/orca_gui_prefs.py:428
+#: ../src/orca/orca_gui_prefs.py:424
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "Podpora dostopnosti za GNOME je bila pravkar omogočena."
 
 #: ../src/orca/orca_console_prefs.py:470
-#: ../src/orca/orca_gui_prefs.py:430
+#: ../src/orca/orca_gui_prefs.py:426
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "Za uveljavitev sprememb se morate odjaviti in ponovno prijaviti."
 
@@ -3684,7 +3872,7 @@ msgstr "_Prelomi besedilo"
 #. magnifier.  Centered means that Orca attempts to keep
 #. the object of interest in the center of the magnified window.
 #.
-#: ../src/orca/orca_gui_prefs.py:73
+#: ../src/orca/orca_gui_prefs.py:68
 msgid "Centered"
 msgstr "V sredini"
 
@@ -3696,12 +3884,12 @@ msgstr "V sredini"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:79
-#: ../src/orca/orca_gui_prefs.py:3731
-#: ../src/orca/orca_gui_prefs.py:3757
-#: ../src/orca/orca_gui_prefs.py:3958
-#: ../src/orca/orca_gui_prefs.py:4025
-#: ../src/orca/orca_gui_prefs.py:4042
+#: ../src/orca/orca_gui_prefs.py:74
+#: ../src/orca/orca_gui_prefs.py:3781
+#: ../src/orca/orca_gui_prefs.py:3810
+#: ../src/orca/orca_gui_prefs.py:3983
+#: ../src/orca/orca_gui_prefs.py:4050
+#: ../src/orca/orca_gui_prefs.py:4070
 msgid "None"
 msgstr "Brez"
 
@@ -3713,7 +3901,7 @@ msgstr "Brez"
 #. the desktop, Orca positions the mouse 25% from the left edge
 #. of the magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:89
+#: ../src/orca/orca_gui_prefs.py:84
 msgid "Proportional"
 msgstr "Proporcionalno"
 
@@ -3722,7 +3910,7 @@ msgstr "Proporcionalno"
 #. magnifier.  Push means that Orca will move the magnified
 #. region just enough to display the object of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:96
+#: ../src/orca/orca_gui_prefs.py:91
 msgid "Push"
 msgstr "Potisni"
 
@@ -3731,7 +3919,7 @@ msgstr "Potisni"
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:190
+#: ../src/orca/orca_gui_prefs.py:186
 msgid "Function"
 msgstr "Funkcija"
 
@@ -3739,7 +3927,7 @@ msgstr "Funkcija"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:256
+#: ../src/orca/orca_gui_prefs.py:252
 msgid "Key Binding"
 msgstr "Tipkovna bližnjica"
 
@@ -3750,7 +3938,7 @@ msgstr "Tipkovna bližnjica"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:325
+#: ../src/orca/orca_gui_prefs.py:321
 msgid "Alternate"
 msgstr "Druga izbira"
 
@@ -3758,31 +3946,31 @@ msgstr "Druga izbira"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:359
+#: ../src/orca/orca_gui_prefs.py:355
 msgid "Modified"
 msgstr "Spremenjeno"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:401
-#: ../src/orca/orca_gui_prefs.py:450
+#: ../src/orca/orca_gui_prefs.py:397
+#: ../src/orca/orca_gui_prefs.py:446
 msgid "Default"
 msgstr "Privzeto"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:407
-#: ../src/orca/orca_gui_prefs.py:456
+#: ../src/orca/orca_gui_prefs.py:403
+#: ../src/orca/orca_gui_prefs.py:452
 msgid "Uppercase"
 msgstr "Velike črke"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:413
-#: ../src/orca/orca_gui_prefs.py:466
+#: ../src/orca/orca_gui_prefs.py:409
+#: ../src/orca/orca_gui_prefs.py:462
 msgid "Hyperlink"
 msgstr "Hiperpovezava"
 
@@ -3791,7 +3979,7 @@ msgstr "Hiperpovezava"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1051
+#: ../src/orca/orca_gui_prefs.py:1047
 msgid "Attribute Name"
 msgstr "Ime atributa"
 
@@ -3802,7 +3990,7 @@ msgstr "Ime atributa"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1066
+#: ../src/orca/orca_gui_prefs.py:1062
 msgid "Speak"
 msgstr "Izgovori"
 
@@ -3813,7 +4001,7 @@ msgstr "Izgovori"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1084
+#: ../src/orca/orca_gui_prefs.py:1080
 msgid "Mark in braille"
 msgstr "Označi v braillovi pisavi"
 
@@ -3832,7 +4020,7 @@ msgstr "Označi v braillovi pisavi"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1110
+#: ../src/orca/orca_gui_prefs.py:1106
 msgid "Present Unless"
 msgstr "Izgovori razen"
 
@@ -3843,7 +4031,7 @@ msgstr "Izgovori razen"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1225
+#: ../src/orca/orca_gui_prefs.py:1221
 msgid "Actual String"
 msgstr "Dejanski niz"
 
@@ -3854,58 +4042,17 @@ msgstr "Dejanski niz"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1242
+#: ../src/orca/orca_gui_prefs.py:1238
 msgid "Replacement String"
 msgstr "Niz zamenjave"
-
-#. Translators: magnification will use the full screen.
-#.
-#. Translators: this is an algorithm for magnifying pixels
-#. on the screen.
-#.
-#: ../src/orca/orca_gui_prefs.py:1570
-#: ../src/orca/orca_gui_prefs.py:1596
-msgid "Full Screen"
-msgstr "Celoten zaslon"
-
-#. Translators: magnification will use the top half of the screen.
-#.
-#: ../src/orca/orca_gui_prefs.py:1574
-msgid "Top Half"
-msgstr "Zgornja polovica"
-
-#. Translators: magnification will use the bottom half of the screen.
-#.
-#: ../src/orca/orca_gui_prefs.py:1578
-msgid "Bottom Half"
-msgstr "Spodnja polovica"
-
-#. Translators: magnification will use the left half of the screen.
-#.
-#: ../src/orca/orca_gui_prefs.py:1582
-msgid "Left Half"
-msgstr "Leva polovica"
-
-#. Translators: magnification will use the right half of the screen.
-#.
-#: ../src/orca/orca_gui_prefs.py:1586
-msgid "Right Half"
-msgstr "Desna polovica"
-
-#. Translators: the user has selected a custom area of the screen
-#. to use for magnification.
-#.
-#: ../src/orca/orca_gui_prefs.py:1591
-msgid "Custom"
-msgstr "Po meri"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:1953
-#: ../src/orca/orca_gui_prefs.py:2047
+#: ../src/orca/orca_gui_prefs.py:1965
+#: ../src/orca/orca_gui_prefs.py:2059
 msgid "Braille Bindings"
 msgstr "Braillove tipke"
 
@@ -3914,8 +4061,8 @@ msgstr "Braillove tipke"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2385
-#: ../src/orca/orca_gui_prefs.py:2425
+#: ../src/orca/orca_gui_prefs.py:2397
+#: ../src/orca/orca_gui_prefs.py:2437
 #: ../src/orca/orca-setup.glade.h:48
 msgid "Dot _7"
 msgstr "Pika _7"
@@ -3924,8 +4071,8 @@ msgstr "Pika _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2392
-#: ../src/orca/orca_gui_prefs.py:2432
+#: ../src/orca/orca_gui_prefs.py:2404
+#: ../src/orca/orca_gui_prefs.py:2444
 #: ../src/orca/orca-setup.glade.h:49
 msgid "Dot _8"
 msgstr "Pika _8"
@@ -3934,8 +4081,8 @@ msgstr "Pika _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2399
-#: ../src/orca/orca_gui_prefs.py:2439
+#: ../src/orca/orca_gui_prefs.py:2411
+#: ../src/orca/orca_gui_prefs.py:2451
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Dots 7 an_d 8"
 msgstr "Piki 7 _in 8"
@@ -3943,8 +4090,8 @@ msgstr "Piki 7 _in 8"
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2462
-#: ../src/orca/orca-setup.glade.h:148
+#: ../src/orca/orca_gui_prefs.py:2474
+#: ../src/orca/orca-setup.glade.h:153
 msgid "_None"
 msgstr "_Brez"
 
@@ -3953,8 +4100,8 @@ msgstr "_Brez"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2470
-#: ../src/orca/orca-setup.glade.h:115
+#: ../src/orca/orca_gui_prefs.py:2482
+#: ../src/orca/orca-setup.glade.h:120
 msgid "So_me"
 msgstr "_Nekaj"
 
@@ -3962,8 +4109,8 @@ msgstr "_Nekaj"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2477
-#: ../src/orca/orca-setup.glade.h:81
+#: ../src/orca/orca_gui_prefs.py:2489
+#: ../src/orca/orca-setup.glade.h:82
 msgid "M_ost"
 msgstr "N_ajveč"
 
@@ -3971,7 +4118,7 @@ msgstr "N_ajveč"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2498
+#: ../src/orca/orca_gui_prefs.py:2510
 msgid "Line"
 msgstr "vrstici"
 
@@ -3979,7 +4126,7 @@ msgstr "vrstici"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2504
+#: ../src/orca/orca_gui_prefs.py:2516
 msgid "Sentence"
 msgstr "stavku"
 
@@ -3987,8 +4134,8 @@ msgstr "stavku"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2524
-#: ../src/orca/orca_gui_prefs.py:2612
+#: ../src/orca/orca_gui_prefs.py:2536
+#: ../src/orca/orca_gui_prefs.py:2624
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Brie_f"
 msgstr "_Kratko"
@@ -3997,8 +4144,8 @@ msgstr "_Kratko"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2548
-#: ../src/orca/orca-setup.glade.h:119
+#: ../src/orca/orca_gui_prefs.py:2560
+#: ../src/orca/orca-setup.glade.h:124
 msgid "Speak current _cell"
 msgstr "Izgovarjanje _celic"
 
@@ -4006,7 +4153,7 @@ msgstr "Izgovarjanje _celic"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3189
+#: ../src/orca/orca_gui_prefs.py:3231
 msgid "enter new key"
 msgstr "vnos novega ključa"
 
@@ -4014,7 +4161,7 @@ msgstr "vnos novega ključa"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3217
+#: ../src/orca/orca_gui_prefs.py:3259
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Tipkovna bližnjica je izbrisana. Za potrditev pritisnite Enter."
 
@@ -4022,7 +4169,7 @@ msgstr "Tipkovna bližnjica je izbrisana. Za potrditev pritisnite Enter."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3238
+#: ../src/orca/orca_gui_prefs.py:3280
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Vnesena tipka je že določena za %s"
@@ -4031,7 +4178,7 @@ msgstr "Vnesena tipka je že določena za %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3245
+#: ../src/orca/orca_gui_prefs.py:3287
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Zajeta tipka: %s. Za potrditev pritisnite Enter."
@@ -4040,7 +4187,7 @@ msgstr "Zajeta tipka: %s. Za potrditev pritisnite Enter."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3281
+#: ../src/orca/orca_gui_prefs.py:3323
 #, python-format
 msgid "The new key is: %s"
 msgstr "Nov ključ je: %s"
@@ -4049,24 +4196,24 @@ msgstr "Nov ključ je: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3289
+#: ../src/orca/orca_gui_prefs.py:3331
 msgid "The keybinding has been removed."
 msgstr "TIpkovna bližnjica je odstranjena."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3367
-#: ../src/orca/orca-setup.glade.h:142
+#: ../src/orca/orca_gui_prefs.py:3409
+#: ../src/orca/orca-setup.glade.h:147
 msgid "_Desktop"
 msgstr "_Namizje"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:3725
-#: ../src/orca/orca_gui_prefs.py:3736
-#: ../src/orca/orca_gui_prefs.py:3755
+#: ../src/orca/orca_gui_prefs.py:3775
+#: ../src/orca/orca_gui_prefs.py:3786
+#: ../src/orca/orca_gui_prefs.py:3808
 msgid "Bilinear"
 msgstr "Bilinearno"
 
@@ -4075,8 +4222,8 @@ msgstr "Bilinearno"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:3966
-#: ../src/orca/orca_gui_prefs.py:4050
+#: ../src/orca/orca_gui_prefs.py:3991
+#: ../src/orca/orca_gui_prefs.py:4078
 msgid "Saturate red"
 msgstr "Nasičenost rdeče"
 
@@ -4085,8 +4232,8 @@ msgstr "Nasičenost rdeče"
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:3974
-#: ../src/orca/orca_gui_prefs.py:4058
+#: ../src/orca/orca_gui_prefs.py:3999
+#: ../src/orca/orca_gui_prefs.py:4086
 msgid "Saturate green"
 msgstr "Nasičenost zelene"
 
@@ -4095,8 +4242,8 @@ msgstr "Nasičenost zelene"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:3982
-#: ../src/orca/orca_gui_prefs.py:4066
+#: ../src/orca/orca_gui_prefs.py:4007
+#: ../src/orca/orca_gui_prefs.py:4094
 msgid "Saturate blue"
 msgstr "Nasičenost modre"
 
@@ -4105,8 +4252,8 @@ msgstr "Nasičenost modre"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:3990
-#: ../src/orca/orca_gui_prefs.py:4074
+#: ../src/orca/orca_gui_prefs.py:4015
+#: ../src/orca/orca_gui_prefs.py:4102
 msgid "Desaturate red"
 msgstr "Odstrani nasičenost rdeče"
 
@@ -4115,8 +4262,8 @@ msgstr "Odstrani nasičenost rdeče"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:3998
-#: ../src/orca/orca_gui_prefs.py:4082
+#: ../src/orca/orca_gui_prefs.py:4023
+#: ../src/orca/orca_gui_prefs.py:4110
 msgid "Desaturate green"
 msgstr "Odstrani nasičenost zelene"
 
@@ -4125,8 +4272,8 @@ msgstr "Odstrani nasičenost zelene"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4006
-#: ../src/orca/orca_gui_prefs.py:4090
+#: ../src/orca/orca_gui_prefs.py:4031
+#: ../src/orca/orca_gui_prefs.py:4118
 msgid "Desaturate blue"
 msgstr "Odstrani nasičenost modre"
 
@@ -4135,8 +4282,8 @@ msgstr "Odstrani nasičenost modre"
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4014
-#: ../src/orca/orca_gui_prefs.py:4098
+#: ../src/orca/orca_gui_prefs.py:4039
+#: ../src/orca/orca_gui_prefs.py:4126
 msgid "Positive hue shift"
 msgstr "Pozitivni odmik odtenka"
 
@@ -4145,14 +4292,14 @@ msgstr "Pozitivni odmik odtenka"
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4022
-#: ../src/orca/orca_gui_prefs.py:4106
+#: ../src/orca/orca_gui_prefs.py:4047
+#: ../src/orca/orca_gui_prefs.py:4134
 msgid "Negative hue shift"
 msgstr "Negativni odmik odtenka"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4244
+#: ../src/orca/orca_gui_prefs.py:4342
 msgid "Starting Orca Preferences. This may take a while."
 msgstr "Zagon nastavitev Orka. Dejanje je lahko dolgotrajnejše."
 
@@ -4575,12 +4722,12 @@ msgid "Enable c_ursor"
 msgstr "Omogoči k_azalec"
 
 #: ../src/orca/orca-setup.glade.h:64
-msgid "Enable cr_oss-hair clip"
-msgstr "Omogoči klip merka"
-
-#: ../src/orca/orca-setup.glade.h:65
 msgid "Enable cross-h_air"
 msgstr "Omogoči t_arčo"
+
+#: ../src/orca/orca-setup.glade.h:65
+msgid "Enable cross-hair cl_ip"
+msgstr "Omogoči klip merka"
 
 #: ../src/orca/orca-setup.glade.h:66
 msgid "Enable echo by _word"
@@ -4619,14 +4766,18 @@ msgid "In_vert colors"
 msgstr "_Obrni barve"
 
 #: ../src/orca/orca-setup.glade.h:77
+msgid "Key Binding List"
+msgstr "Seznam tipkovnih bližnjic"
+
+#: ../src/orca/orca-setup.glade.h:78
 msgid "Key Bindings"
 msgstr "Tipkovne povezave"
 
-#: ../src/orca/orca-setup.glade.h:78
+#: ../src/orca/orca-setup.glade.h:79
 msgid "Key Echo"
 msgstr "Odmev tipk"
 
-#: ../src/orca/orca-setup.glade.h:79
+#: ../src/orca/orca-setup.glade.h:80
 msgid ""
 "Line\n"
 "Sentence"
@@ -4634,35 +4785,35 @@ msgstr ""
 "Vrstica\n"
 "Stavek"
 
-#: ../src/orca/orca-setup.glade.h:82
+#: ../src/orca/orca-setup.glade.h:83
 msgid "Magnifier"
 msgstr "Povečevalo"
 
-#: ../src/orca/orca-setup.glade.h:83
+#: ../src/orca/orca-setup.glade.h:84
 msgid "Mouse poi_nter:"
 msgstr "Kazalnik _miške:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.glade.h:85
+#: ../src/orca/orca-setup.glade.h:86
 msgid "Move _down one"
 msgstr "Premakni eno navz_dol"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.glade.h:87
+#: ../src/orca/orca-setup.glade.h:88
 msgid "Move _up one"
 msgstr "Premakni eno navz_gor"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.glade.h:89
+#: ../src/orca/orca-setup.glade.h:90
 msgid "Move to _bottom"
 msgstr "Premakni na dn_o"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.glade.h:91
+#: ../src/orca/orca-setup.glade.h:92
 msgid "Move to _top"
 msgstr "Premakni na vr_h"
 
-#: ../src/orca/orca-setup.glade.h:92
+#: ../src/orca/orca-setup.glade.h:93
 msgid ""
 "None\n"
 "Bilinear"
@@ -4670,7 +4821,7 @@ msgstr ""
 "Brez\n"
 "Bilinearno"
 
-#: ../src/orca/orca-setup.glade.h:94
+#: ../src/orca/orca-setup.glade.h:95
 msgid ""
 "None\n"
 "Saturate red\n"
@@ -4692,112 +4843,122 @@ msgstr ""
 "Pozitivni odmik odtenka\n"
 "Negativni odmik odtenka"
 
-#: ../src/orca/orca-setup.glade.h:103
+#: ../src/orca/orca-setup.glade.h:104
 msgid "Orca Modifier Keys"
 msgstr "Spremenilne tipke Orka"
 
-#: ../src/orca/orca-setup.glade.h:104
+#: ../src/orca/orca-setup.glade.h:105
 msgid "Orca Preferences"
 msgstr "Nastavitve Orke"
 
-#: ../src/orca/orca-setup.glade.h:105
+#: ../src/orca/orca-setup.glade.h:106
 msgid "Orca _Modifier Key(s):"
 msgstr "_Spremenilne tipke Orka:"
 
-#: ../src/orca/orca-setup.glade.h:106
+#: ../src/orca/orca-setup.glade.h:107
 msgid "Pi_tch:"
 msgstr "_Višina:"
 
-#: ../src/orca/orca-setup.glade.h:107
+#. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
+#: ../src/orca/orca-setup.glade.h:109
+msgid "Pointer follows focus"
+msgstr "Kazalnik sledi oknu v žarišču"
+
+#. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
+#: ../src/orca/orca-setup.glade.h:111
+msgid "Pointer follows zoomer"
+msgstr "Kazalnik sledi povečevalu"
+
+#: ../src/orca/orca-setup.glade.h:112
 msgid "Pronunciation"
 msgstr "Izgovorjava"
 
-#: ../src/orca/orca-setup.glade.h:108
+#: ../src/orca/orca-setup.glade.h:113
 msgid "Quit Orca _without confirmation"
 msgstr "Zapusti program Orka _brez potrditve"
 
-#: ../src/orca/orca-setup.glade.h:109
+#: ../src/orca/orca-setup.glade.h:114
 msgid "R_ed:"
 msgstr "Rd_eča:"
 
-#: ../src/orca/orca-setup.glade.h:110
+#: ../src/orca/orca-setup.glade.h:115
 msgid "S_ource display:"
 msgstr "Prikaz vira:"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
-#: ../src/orca/orca-setup.glade.h:112
+#: ../src/orca/orca-setup.glade.h:117
 msgid "Say All B_y:"
 msgstr "Izgovori vse v:"
 
-#: ../src/orca/orca-setup.glade.h:113
+#: ../src/orca/orca-setup.glade.h:118
 msgid "Scale _factor:"
 msgstr "_Faktor merila:"
 
-#: ../src/orca/orca-setup.glade.h:114
+#: ../src/orca/orca-setup.glade.h:119
 msgid "Show Orca _main window"
 msgstr "Pokaži _glavno okno programa"
 
-#: ../src/orca/orca-setup.glade.h:116
+#: ../src/orca/orca-setup.glade.h:121
 msgid "Speak _indentation and justification"
 msgstr "_Izgovarjanje zamikov in poravnav"
 
-#: ../src/orca/orca-setup.glade.h:117
+#: ../src/orca/orca-setup.glade.h:122
 msgid "Speak _none"
 msgstr "_Ne izgovarjaj"
 
-#: ../src/orca/orca-setup.glade.h:118
+#: ../src/orca/orca-setup.glade.h:123
 msgid "Speak blank lines"
 msgstr "Izgovori prazne vrstice"
 
-#: ../src/orca/orca-setup.glade.h:120
+#: ../src/orca/orca-setup.glade.h:125
 msgid "Speak current ro_w"
 msgstr "Izgovarjanje trenutne _vrstice"
 
-#: ../src/orca/orca-setup.glade.h:121
+#: ../src/orca/orca-setup.glade.h:126
 msgid "Speak progress bar _updates"
 msgstr "kazalnik napredka posodobitve govora"
 
-#: ../src/orca/orca-setup.glade.h:122
+#: ../src/orca/orca-setup.glade.h:127
 msgid "Speech"
 msgstr "Govor"
 
-#: ../src/orca/orca-setup.glade.h:123
+#: ../src/orca/orca-setup.glade.h:128
 msgid "Speech _system:"
 msgstr "Govorni _sistem:"
 
-#: ../src/orca/orca-setup.glade.h:124
+#: ../src/orca/orca-setup.glade.h:129
 msgid "Speech synthesi_zer:"
 msgstr "Sinte_za govora:"
 
-#: ../src/orca/orca-setup.glade.h:125
+#: ../src/orca/orca-setup.glade.h:130
 msgid "Target displa_y:"
 msgstr "_Ciljni zaslon:"
 
-#: ../src/orca/orca-setup.glade.h:126
+#: ../src/orca/orca-setup.glade.h:131
 msgid "Te_xt cursor:"
 msgstr "Kazalnik _besedila:"
 
-#: ../src/orca/orca-setup.glade.h:127
+#: ../src/orca/orca-setup.glade.h:132
 msgid "Text Attributes"
 msgstr "Atributi besedila"
 
-#: ../src/orca/orca-setup.glade.h:128
+#: ../src/orca/orca-setup.glade.h:133
 msgid "Update interval:"
 msgstr "Časovni zamik posodabljanja:"
 
-#: ../src/orca/orca-setup.glade.h:129
+#: ../src/orca/orca-setup.glade.h:134
 msgid "Ver_bose"
 msgstr "_Razločno"
 
-#: ../src/orca/orca-setup.glade.h:130
+#: ../src/orca/orca-setup.glade.h:135
 msgid "Vo_lume:"
 msgstr "G_lasnost:"
 
-#: ../src/orca/orca-setup.glade.h:131
+#: ../src/orca/orca-setup.glade.h:136
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: ../src/orca/orca-setup.glade.h:132
+#: ../src/orca/orca-setup.glade.h:137
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "\n"
@@ -4807,103 +4968,103 @@ msgstr ""
 "\n"
 "Prosim, zaprite prvo okno pred odpiranjem novega."
 
-#: ../src/orca/orca-setup.glade.h:135
+#: ../src/orca/orca-setup.glade.h:140
 msgid "_Abbreviated role names"
 msgstr "Okr_ajšana imena vlog"
 
-#: ../src/orca/orca-setup.glade.h:136
+#: ../src/orca/orca-setup.glade.h:141
 msgid "_All"
 msgstr "_Vse"
 
-#: ../src/orca/orca-setup.glade.h:137
+#: ../src/orca/orca-setup.glade.h:142
 msgid "_Blue:"
 msgstr "_Modra:"
 
-#: ../src/orca/orca-setup.glade.h:138
+#: ../src/orca/orca-setup.glade.h:143
 msgid "_Bottom:"
 msgstr "_Spodaj:"
 
-#: ../src/orca/orca-setup.glade.h:139
+#: ../src/orca/orca-setup.glade.h:144
 msgid "_Color Filtering:"
 msgstr "Filtriranje _barve:"
 
-#: ../src/orca/orca-setup.glade.h:140
+#: ../src/orca/orca-setup.glade.h:145
 msgid "_Control and menu item:"
 msgstr "_Predmet menija"
 
-#: ../src/orca/orca-setup.glade.h:141
+#: ../src/orca/orca-setup.glade.h:146
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: ../src/orca/orca-setup.glade.h:143
+#: ../src/orca/orca-setup.glade.h:148
 msgid "_Enable speech"
 msgstr "_Omogoči govor"
 
-#: ../src/orca/orca-setup.glade.h:144
+#: ../src/orca/orca-setup.glade.h:149
 msgid "_Green:"
 msgstr "_Zelena:"
 
-#: ../src/orca/orca-setup.glade.h:145
+#: ../src/orca/orca-setup.glade.h:150
 msgid "_Laptop"
 msgstr "_Laptopprog"
 
-#: ../src/orca/orca-setup.glade.h:146
+#: ../src/orca/orca-setup.glade.h:151
 msgid "_Left:"
 msgstr "_Levo:"
 
-#: ../src/orca/orca-setup.glade.h:147
+#: ../src/orca/orca-setup.glade.h:152
 msgid "_New entry"
 msgstr "_Nov vnos"
 
-#: ../src/orca/orca-setup.glade.h:149
+#: ../src/orca/orca-setup.glade.h:154
 msgid "_Person:"
 msgstr "_Oseba:"
 
-#: ../src/orca/orca-setup.glade.h:150
+#: ../src/orca/orca-setup.glade.h:155
 msgid "_Position:"
 msgstr "_Lega:"
 
-#: ../src/orca/orca-setup.glade.h:151
+#: ../src/orca/orca-setup.glade.h:156
 msgid "_Present tooltips"
 msgstr "_Uporabi namige"
 
-#: ../src/orca/orca-setup.glade.h:152
+#: ../src/orca/orca-setup.glade.h:157
 msgid "_Rate:"
 msgstr "Hit_rost:"
 
-#: ../src/orca/orca-setup.glade.h:153
+#: ../src/orca/orca-setup.glade.h:158
 msgid "_Red:"
 msgstr "_Rdeča:"
 
-#: ../src/orca/orca-setup.glade.h:154
+#: ../src/orca/orca-setup.glade.h:159
 msgid "_Reset"
 msgstr "_Počisti"
 
-#: ../src/orca/orca-setup.glade.h:155
+#: ../src/orca/orca-setup.glade.h:160
 msgid "_Right:"
 msgstr "_Desno:"
 
-#: ../src/orca/orca-setup.glade.h:156
+#: ../src/orca/orca-setup.glade.h:161
 msgid "_Smoothing:"
 msgstr "_Glajenje:"
 
-#: ../src/orca/orca-setup.glade.h:157
+#: ../src/orca/orca-setup.glade.h:162
 msgid "_Speak all"
 msgstr "_Izgovori vse"
 
-#: ../src/orca/orca-setup.glade.h:158
+#: ../src/orca/orca-setup.glade.h:163
 msgid "_Top:"
 msgstr "_Zgoraj:"
 
-#: ../src/orca/orca-setup.glade.h:159
+#: ../src/orca/orca-setup.glade.h:164
 msgid "_Voice settings:"
 msgstr "Nasta_vitve glasu:"
 
-#: ../src/orca/orca-setup.glade.h:160
+#: ../src/orca/orca-setup.glade.h:165
 msgid "pixels"
 msgstr "pik"
 
-#: ../src/orca/orca-setup.glade.h:161
+#: ../src/orca/orca-setup.glade.h:166
 msgid "seconds"
 msgstr "sekund"
 
@@ -6610,9 +6771,9 @@ msgstr "Pomočnik"
 #. Translators: this is the number of items in a layered
 #. pane or table.
 #.
-#: ../src/orca/scripts/gaim.py:157
+#: ../src/orca/scripts/gaim.py:167
 #: ../src/orca/scripts/nautilus.py:104
-#: ../src/orca/speechgenerator.py:1399
+#: ../src/orca/speechgenerator.py:1390
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -6623,43 +6784,66 @@ msgstr[3] "%d predmeti"
 
 #. Translators: this in reference to a row in a table.
 #.
-#: ../src/orca/scripts/gaim.py:229
-#: ../src/orca/scripts/gaim.py:257
-#: ../src/orca/where_am_I.py:542
-#: ../src/orca/where_am_I.py:568
+#: ../src/orca/scripts/gaim.py:239
+#: ../src/orca/scripts/gaim.py:267
+#: ../src/orca/where_am_I.py:537
+#: ../src/orca/where_am_I.py:563
 #, python-format
 msgid "row %d of %d"
 msgstr "vrstica %d od %d"
 
-#: ../src/orca/scripts/gaim.py:370
+#: ../src/orca/scripts/gaim.py:386
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "Preklopi predpone sporočil pogovorov z imenom pogovorne sobe."
 
-#: ../src/orca/scripts/gaim.py:378
+#: ../src/orca/scripts/gaim.py:394
 msgid "Speak and braille a previous chat room message."
 msgstr "Izgovori in z Braillovo pisavo izpiši sporočilo pogovorne sobe."
 
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room.
 #.
-#: ../src/orca/scripts/gaim.py:434
+#: ../src/orca/scripts/gaim.py:451
 msgid "Speak Chat Room name"
 msgstr "izgovori ime sobe klepetalnice."
 
-#: ../src/orca/scripts/gaim.py:494
+#: ../src/orca/scripts/gaim.py:478
+msgid "Speak all _new messages"
+msgstr "Izgovori vsa _nova sporočila"
+
+#. Translators: Orca will speak only new chat messages for the channel
+#. that currently has focus, irrespective of whether the pidgin
+#. application has focus.
+#.
+#: ../src/orca/scripts/gaim.py:491
+msgid "Speak only _channel with focus"
+msgstr "Izgovori _le kanale oken v žarišču"
+
+#: ../src/orca/scripts/gaim.py:503
+msgid "Speak all channels when application has _focus"
+msgstr "Izgovori vse kanale, kadar ima program okna v _žarišču"
+
+#. Translators: this is the title of a panel holding options for
+#. how messages in the pidgin chat rooms should be spoken.
+#.
+#: ../src/orca/scripts/gaim.py:513
+msgid "Messages"
+msgstr "Sporočila"
+
+#: ../src/orca/scripts/gaim.py:583
 msgid "speak chat room name."
 msgstr "izgovori ime pogovorne sobe."
 
-#: ../src/orca/scripts/gaim.py:497
+#: ../src/orca/scripts/gaim.py:586
 msgid "Do not speak chat room name."
 msgstr "Ne izgovori imena pogovorne sobe."
 
-#: ../src/orca/scripts/gaim.py:515
+#: ../src/orca/scripts/gaim.py:612
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Sporočilo klepetalnice %s"
 
-#: ../src/orca/scripts/gaim.py:598
+#: ../src/orca/scripts/gaim.py:695
 #, python-format
 msgid "New chat tab %s"
 msgstr "Nov zavihek klepeta %s"
@@ -6826,8 +7010,8 @@ msgstr "vrstica %d"
 #. or table.
 #.
 #: ../src/orca/scripts/StarOffice.py:493
-#: ../src/orca/speechgenerator.py:761
-#: ../src/orca/speechgenerator.py:1285
+#: ../src/orca/speechgenerator.py:752
+#: ../src/orca/speechgenerator.py:1276
 msgid "0 items"
 msgstr "0 predmetov"
 
@@ -6981,7 +7165,7 @@ msgstr "Gumb za drsenje navzdol je treba pritisniti večkrat."
 
 #: ../src/orca/scripts/StarOffice.py:1938
 msgid "License Agreement Accept button now has focus."
-msgstr "Gumb za sprejem dovoljenja ima zdaj fokus."
+msgstr "Gumb za sprejem dovoljenja ima zdaj okna v žarišču."
 
 #. Translators: this is the name of the field in the StarOffice
 #. setup dialog that is asking for the first name of the user.
@@ -7056,35 +7240,35 @@ msgstr "pult %s"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:808
+#: ../src/orca/settings.py:820
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:813
+#: ../src/orca/settings.py:825
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:818
+#: ../src/orca/settings.py:830
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:823
+#: ../src/orca/settings.py:835
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
-#: ../src/orca/settings.py:828
+#: ../src/orca/settings.py:840
 msgid "yelp"
 msgstr "yelp"
 
@@ -7092,7 +7276,7 @@ msgstr "yelp"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:834
+#: ../src/orca/settings.py:846
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7100,7 +7284,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:840
+#: ../src/orca/settings.py:852
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -7108,35 +7292,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:846
+#: ../src/orca/settings.py:858
 msgid "Minefield"
 msgstr "Minsko polje"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:851
+#: ../src/orca/settings.py:863
 msgid "Mail/News"
 msgstr "Pošta/novice"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:856
+#: ../src/orca/settings.py:868
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:861
+#: ../src/orca/settings.py:873
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting pidgin, which is the new name for gaim.
 #.
-#: ../src/orca/settings.py:866
+#: ../src/orca/settings.py:878
 msgid "pidgin"
 msgstr "pidgin"
 
@@ -7174,7 +7358,7 @@ msgstr "%s privzeti glas"
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
 #.
-#: ../src/orca/speechgenerator.py:1549
+#: ../src/orca/speechgenerator.py:1540
 msgid "tear off"
 msgstr "odtrgaj"
 
@@ -7201,12 +7385,12 @@ msgstr "ni izbrano"
 
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
-#: ../src/orca/where_am_I.py:432
+#: ../src/orca/where_am_I.py:427
 #, python-format
 msgid "%s page"
 msgstr "%s stran"
 
-#: ../src/orca/where_am_I.py:677
+#: ../src/orca/where_am_I.py:672
 msgid "Icon panel"
 msgstr "pult ikon"
 
@@ -7214,7 +7398,7 @@ msgstr "pult ikon"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:695
+#: ../src/orca/where_am_I.py:690
 #, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
@@ -7227,7 +7411,7 @@ msgstr[3] "%d od %d izbranih predmetov"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:705
+#: ../src/orca/where_am_I.py:700
 #, python-format
 msgid "on item %d of %d"
 msgstr "na predmetu %d od %d"
@@ -7236,34 +7420,34 @@ msgstr "na predmetu %d od %d"
 #. protocols.
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/where_am_I.py:744
+#: ../src/orca/where_am_I.py:739
 #, python-format
 msgid "%s link"
 msgstr "%s povezava"
 
-#: ../src/orca/where_am_I.py:754
+#: ../src/orca/where_am_I.py:749
 #, python-format
 msgid "%s link to %s"
 msgstr "%s povezan z %s"
 
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
-#: ../src/orca/where_am_I.py:764
+#: ../src/orca/where_am_I.py:759
 msgid "same page"
 msgstr "ista spletna stran"
 
-#: ../src/orca/where_am_I.py:766
-#: ../src/orca/where_am_I.py:774
+#: ../src/orca/where_am_I.py:761
+#: ../src/orca/where_am_I.py:769
 msgid "same site"
 msgstr "isto spletno mesto"
 
-#: ../src/orca/where_am_I.py:776
+#: ../src/orca/where_am_I.py:771
 msgid "different site"
 msgstr "druga stran"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/where_am_I.py:830
+#: ../src/orca/where_am_I.py:825
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -7274,22 +7458,22 @@ msgstr[3] "%d bajti"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/where_am_I.py:834
+#: ../src/orca/where_am_I.py:829
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobajtov"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/where_am_I.py:838
+#: ../src/orca/where_am_I.py:833
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabajtov"
 
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:956
-#: ../src/orca/where_am_I.py:1000
+#: ../src/orca/where_am_I.py:951
+#: ../src/orca/where_am_I.py:995
 #, python-format
 msgid "item %d of %d"
 msgstr "predmet %d od %d"
@@ -7298,7 +7482,7 @@ msgstr "predmet %d od %d"
 #. that gets activated when Enter is pressed anywhere within that
 #. dialog box.
 #.
-#: ../src/orca/where_am_I.py:1621
+#: ../src/orca/where_am_I.py:1608
 #, python-format
 msgid "Default button is %s"
 msgstr "Privzeti gumb je %s"
