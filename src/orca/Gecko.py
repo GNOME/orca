@@ -7076,8 +7076,15 @@ class Script(default.Script):
              and objects[-1][0].getRole() == pyatspi.ROLE_TABLE_CELL:
             cell = objects[-1][0]
 
+        containingTable = self.getAncestor(cell,
+                                           [pyatspi.ROLE_TABLE],
+                                           [pyatspi.ROLE_DOCUMENT_FRAME])
+        if containingTable:
+            table = containingTable.queryTable()
+        else:
+            cell = None
+
         if cell:
-            table = cell.parent.queryTable()
             row = table.getRowAtIndex(obj.getIndexInParent())
             col = table.getColumnExtentAt(row, 0)
             validCell = (table.nColumns > 0)
