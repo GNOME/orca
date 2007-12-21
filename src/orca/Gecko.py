@@ -7081,12 +7081,15 @@ class Script(default.Script):
                                            [pyatspi.ROLE_DOCUMENT_FRAME])
         if containingTable:
             table = containingTable.queryTable()
+            if cell.parent == containingTable:
+                row = table.getRowAtIndex(cell.getIndexInParent())
+            else:
+                row = table.getRowAtIndex(cell.parent.getIndexInParent())
+            col = table.getColumnExtentAt(row, 0)
         else:
             cell = None
 
         if cell:
-            row = table.getRowAtIndex(obj.getIndexInParent())
-            col = table.getColumnExtentAt(row, 0)
             validCell = (table.nColumns > 0)
             if not validCell:
                 # Maybe there's a useful sibling on this same line.
@@ -7146,7 +7149,8 @@ class Script(default.Script):
                     objExtents = self.getExtents(toAdd[0][0],
                                                  toAdd[0][1],
                                                  toAdd[0][2])
-                    if self.onSameLine(extents, objExtents):
+                    if self.onSameLine(extents, objExtents) \
+                       and extents != objExtents:
                         objects.extend(toAdd)
 
         # [[[TODO - JD: Check to see that the last object that claimed
