@@ -7084,9 +7084,9 @@ class Script(default.Script):
             if not validCell:
                 # Maybe there's a useful sibling on this same line.
                 #
-                index = obj.getIndexInParent()
-                sibling = obj.parent[index + 1]
-                if sibling:
+                index = cell.getIndexInParent()
+                try:
+                    sibling = cell.parent[index + 1]
                     siblingExtents = sibling.queryComponent().getExtents(0)
                     siblingExtents = (siblingExtents.x,
                                       siblingExtents.y,
@@ -7097,6 +7097,8 @@ class Script(default.Script):
                         objects.extend(self.getObjectsFromEOCs(obj,
                                                                0,
                                                                boundary))
+                except:
+                    pass
 
             while col < table.nColumns:
                 cell = table.getAccessibleAt(row, col)
