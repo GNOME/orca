@@ -7083,9 +7083,11 @@ class Script(default.Script):
             table = containingTable.queryTable()
             if cell.parent == containingTable:
                 row = table.getRowAtIndex(cell.getIndexInParent())
+                col = table.getColumnAtIndex(cell.getIndexInParent())
             else:
                 row = table.getRowAtIndex(cell.parent.getIndexInParent())
-            col = table.getColumnExtentAt(row, 0)
+                col = table.getColumnAtIndex(cell.parent.getIndexInParent())
+            col += table.getColumnExtentAt(row, col)
         else:
             cell = None
 
