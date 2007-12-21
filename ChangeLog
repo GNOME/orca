@@ -1,6 +1,12 @@
 2007-12-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Fix for bug #500016 – Reading web pages by line in Firefox 3
+          is slow.
+
+2007-12-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           Fix for bug #504742 - Gecko.py should not call 
           getLineContentsAtOffset() twice unnecessarily.
 

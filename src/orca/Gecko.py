@@ -44,6 +44,7 @@ import atk
 import gtk
 import math
 import pyatspi
+import re
 import urlparse
 
 import braille
@@ -67,6 +68,11 @@ import bookmarks
 from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import Q_        # to provide qualified translatable strings
+
+# Temporary debugging/testing setting.  If True, use the experimental
+# performance enhancements.
+#
+performanceEnhancements = True
 
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
@@ -5727,6 +5733,73 @@ class Script(default.Script):
 
         return string
 
+    def getObjectsFromEOCs(self, obj, offset, boundary):
+        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
+        with [obj, startOffset, endOffset] tuples.
+
+        Arguments
+        - obj: the object whose EOCs we need to expand into tuples
+        - offset: the character offset after which 
+        - boundary: the pyatspi text boundary type
+
+        Returns a list of object tuples.
+        """
+
+        if not obj:
+            return []
+
+        elif obj.getRole() == pyatspi.ROLE_TABLE:
+            # If this is a table, move to the first cell.
+            # [[[TODOS - JD:
+            #    1) It might be nice to announce the fact that we've just
+            #       found a table, what its dimensions are, etc.
+            #    2) It seems that down arrow moves us to the table, but up
+            #       arrow moves us to the last row.  Possible side effect
+            #       of our existing caret browsing implementation??]]]
+            #
+            obj = obj.queryTable().getAccessibleAt(0, 0)
+
+        objects = []
+        text = self.queryNonEmptyText(obj)
+        if text:
+            [textAfterOffset, start, end] = text.getTextAfterOffset(offset,
+                                                                    boundary)
+        else:
+            textAfterOffset = ""
+            start = 0
+            end = 1
+        objects.append([obj, start, end])
+
+        pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
+        matches = re.finditer(pattern, textAfterOffset.decode("UTF-8"))
+        for m in matches:
+            # Adjust the last object's endOffset to the last character
+            # before the EOC.
+            #
+            childOffset = m.start(0) + start
+            objects[-1][2] = childOffset
+            if objects[-1][1] == objects[-1][2]:
+                # A zero-length object is an indication of something
+                # whose sole contents was an EOC.  Delete it from the
+                # list.
+                #
+                objects.pop()
+
+            # Recursively tack on the child's objects.
+            #
+            childIndex = self.getChildIndex(obj, childOffset)
+            child = obj[childIndex]
+            objects.extend(self.getObjectsFromEOCs(child,
+                                                   0,
+                                                   boundary))
+
+            # Tack on the remainder of the original object, if any.
+            #
+            if end > childOffset + 1:
+                objects.append([obj, childOffset + 1, end])
+                
+        return objects
+
     def guessLabelFromLine(self, obj):
         """Attempts to guess what the label of an unlabeled form control
         might be by looking at surrounding contents from the same line.
@@ -6941,6 +7014,164 @@ class Script(default.Script):
 
         return contents
 
+    def altGetLineContents(self, obj, offset):
+        """Returns an ordered list where each element is composed of
+        an [obj, startOffset, endOffset] tuple.  The list is created
+        via an in-order traversal of the document contents starting at
+        the given object and characterOffset.  The first element in
+        the list represents the beginning of the line.  The last
+        element in the list represents the character just before the
+        beginning of the next line.
+
+        Arguments:
+        -obj: the object to start at
+        -offset: the character offset in the object
+        """
+
+        if not obj:
+            return []
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        # Work up the hierarchy to locate the ancestor that begins on
+        # this line.
+        #
+        extents = self.getExtents(obj, offset, offset + 1)
+        while not self.isUselessObject(obj) \
+              and not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                        pyatspi.ROLE_TABLE_CELL]:
+            offsetInParent = self.getCharacterOffsetInParent(obj)
+            parentExtents = self.getExtents(obj.parent,
+                                            offsetInParent,
+                                            offsetInParent + 1)
+            if not self.onSameLine(extents, parentExtents):
+                break
+            offset = offsetInParent
+            obj = obj.parent
+
+        # Get the objects on this line.
+        #
+        objects = self.getObjectsFromEOCs(obj, offset, boundary)
+
+        # Get rid of any that are zero-sized as for all intents and
+        # purposes, they're not on the line.  We see this with empty
+        # links: <a href="someurl"></a>
+        #
+        for o in objects:
+            if o[2] - o[1] <= 1:
+                objExtents = self.getExtents(o[0], o[1], o[2])
+                if (objExtents[0] and objExtents[1]) \
+                    and not (objExtents[2] and objExtents[3]):
+                    objects.pop(objects.index(o))
+
+        # If we're in a table cell, get the remainder of the cells
+        # in the row.  But first we'll check to be sure that the
+        # column doesn't span the entire row.  We also need to be
+        # sure it's a cell inside a table.  (See Mozilla bug #409009).
+        #
+        cell = None
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            cell = obj
+        elif len(objects) \
+             and objects[-1][0].getRole() == pyatspi.ROLE_TABLE_CELL:
+            cell = objects[-1][0]
+
+        if cell:
+            table = cell.parent.queryTable()
+            row = table.getRowAtIndex(obj.getIndexInParent())
+            col = table.getColumnExtentAt(row, 0)
+            validCell = (table.nColumns > 0)
+            if not validCell:
+                # Maybe there's a useful sibling on this same line.
+                #
+                index = obj.getIndexInParent()
+                sibling = obj.parent[index + 1]
+                if sibling:
+                    siblingExtents = sibling.queryComponent().getExtents(0)
+                    siblingExtents = (siblingExtents.x,
+                                      siblingExtents.y,
+                                      siblingExtents.width,
+                                      siblingExtents.height)
+                    if self.onSameLine(extents, siblingExtents):
+                        obj = sibling
+                        objects.extend(self.getObjectsFromEOCs(obj,
+                                                               0,
+                                                               boundary))
+
+            while col < table.nColumns:
+                cell = table.getAccessibleAt(row, col)
+                if not cell:
+                    break
+                colspan = table.getColumnExtentAt(row, col)
+                col += colspan
+                objects.extend(self.getObjectsFromEOCs(cell,
+                                                       0,
+                                                       boundary))
+
+        # We need to find out if we've started from an embedded object.
+        # If we have, we'll want to include whatever follows this object
+        # on the same line.
+        #
+        if obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+            text = self.queryNonEmptyText(obj.parent)
+            if text:
+                offset = self.getCharacterOffsetInParent(obj) + 1
+                atOffset = text.getTextAtOffset(offset, boundary)
+                afterOffset = text.getTextAfterOffset(offset, boundary)
+                if atOffset[1] < afterOffset[1] < afterOffset[2]:
+                    # We're on an EOC with more text on this line.
+                    #
+                    objects.extend(self.getObjectsFromEOCs(obj.parent,
+                                                           offset,
+                                                           boundary))
+
+        # There may be objects that are not *quite* on this line, but are
+        # more or less on this line.  This can be seen with the search form
+        # currently at live.gnome.org.
+        #
+        if objects:
+            nextObject = self.findNextObject(objects[-1][0])
+            if nextObject and not nextObject.parent in [obj, objects[-1][0]]:
+                toAdd = self.getObjectsFromEOCs(nextObject, 0, boundary)
+                if toAdd:
+                    objExtents = self.getExtents(toAdd[0][0],
+                                                 toAdd[0][1],
+                                                 toAdd[0][2])
+                    if self.onSameLine(extents, objExtents):
+                        objects.extend(toAdd)
+
+        # [[[TODO - JD: Check to see that the last object that claimed
+        # to be on this line really is on the line.  See Mozilla bug
+        # 405258.]]]
+        #
+        if len(objects):
+            first = objects[0]
+            firstExtents = self.getExtents(first[0], first[1], first[2])
+            done = False
+            while not done:
+                last = objects[-1]
+                lastExtents = self.getExtents(last[0], last[1], last[2])
+                if not self.onSameLine(firstExtents, lastExtents):
+                    objects.pop()
+                else:
+                    done = True
+
+        # [[[TODO - JD: We're getting the newline character at the end
+        # of links and other objects.  Ultimately, we might want to keep
+        # it  around for the purpose of placing the caret on the next
+        # line. Or we might not. :-) For now the goal is to make this
+        # alternative method return the very same contents as our current
+        # getLineContentsAtOffset(), which does not include these newline
+        # chars.]]]
+        #
+        [obj, start, end] = objects[-1]
+        text = self.queryNonEmptyText(obj)
+        if text and (end - start > 1) and \
+           text.getText(end - 1, end) == "\n":
+            objects[-1][2] -= 1
+
+        return objects
+
     def getLineContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
@@ -6958,6 +7189,11 @@ class Script(default.Script):
         if not obj:
             return []
 
+        if performanceEnhancements:
+            myContents = self.altGetLineContents(obj,
+                                                 characterOffset)
+            return myContents
+        
         # If we're looking for the current word, we'll search
         # backwards to the beginning the current line and then
         # forwards to the beginning of the next line.
