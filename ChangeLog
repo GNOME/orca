@@ -1,3 +1,9 @@
+2007-12-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          Fix for bug #504742 - Gecko.py should not call 
+          getLineContentsAtOffset() twice unnecessarily.
+
 2007-12-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

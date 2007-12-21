@@ -1936,6 +1936,12 @@ class Script(default.Script):
         # Create the live region manager and start the message manager
         self.liveMngr = liveregions.LiveRegionManager(self)
 
+        # We want to keep track of the line contents we just got so that
+        # we can speak and braille this information without having to call
+        # getLineContentsAtOffset() twice.
+        #
+        self._currentLineContents = None
+
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
@@ -4150,9 +4156,7 @@ class Script(default.Script):
             # When a document tab is tabbed to, we will just present the
             # line where the caret currently is.
             #
-            self.updateBraille(obj)
-            self.speakContents(
-                self.getLineContentsAtOffset(obj, characterOffset))
+            self.presentLine(obj, characterOffset)
 
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
@@ -4226,9 +4230,7 @@ class Script(default.Script):
                     if self.isSameObject(oldFrame, newFrame) or \
                            newLocusOfFocus.getRole() == pyatspi.ROLE_DIALOG:
                         self.setCaretPosition(newLocusOfFocus, caretOffset)
-                        self.updateBraille(newLocusOfFocus)
-                        self.speakContents(self.getLineContentsAtOffset(
-                                                newLocusOfFocus, caretOffset))
+                        self.presentLine(newLocusOfFocus, caretOffset)
                         return
 
             else:
@@ -4303,6 +4305,18 @@ class Script(default.Script):
                                            event,
                                            oldLocusOfFocus,
                                            newLocusOfFocus)
+    def presentLine(self, obj, offset):
+        """Presents the current line in speech and in braille.
+
+        Arguments:
+        - obj: the Accessible at the caret
+        - offset: the offset within obj
+        """
+
+        self._currentLineContents = self.getLineContentsAtOffset(obj, offset)
+        self.speakContents(self._currentLineContents)
+        self.updateBraille(obj)
+        self._currentLineContents = None
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the given object.
@@ -4336,6 +4350,7 @@ class Script(default.Script):
         # we adjust for this because we want to keep meaningful text
         # on the display.]]]
         #
+        needToRefresh = False
         lineContentsOffset = focusedCharacterOffset
         focusedObjText = self.queryNonEmptyText(focusedObj)
         if focusedObjText:
@@ -4343,10 +4358,12 @@ class Script(default.Script):
                                           focusedCharacterOffset + 1)
             if char == "\n":
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
+                needToRefresh = True
 
-        contents = self.getLineContentsAtOffset(focusedObj,
-                                                max(0, lineContentsOffset))
-
+        contents = self._currentLineContents
+        if not contents or needToRefresh:
+            contents = self.getLineContentsAtOffset(focusedObj,
+                                                    max(0, lineContentsOffset))
         if not len(contents):
             return
 
@@ -7646,9 +7663,8 @@ class Script(default.Script):
         [previousObj, previousCharOffset] = \
                                    self.findPreviousLine(obj, characterOffset)
         self.setCaretPosition(previousObj, previousCharOffset)
-        self.updateBraille(previousObj)
-        self.speakContents(self.getLineContentsAtOffset(previousObj,
-                                                        previousCharOffset))
+        self.presentLine(previousObj, previousCharOffset)
+
         # Debug...
         #
         #contents = self.getLineContentsAtOffset(previousObj,
@@ -7662,9 +7678,8 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
         self.setCaretPosition(nextObj, nextCharOffset)
-        self.updateBraille(nextObj)
-        self.speakContents(self.getLineContentsAtOffset(nextObj,
-                                                        nextCharOffset))
+        self.presentLine(nextObj, nextCharOffset)
+
         # Debug...
         #
         #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
@@ -7711,9 +7726,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -7735,9 +7748,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -7779,9 +7790,7 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -7821,9 +7830,7 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -7893,9 +7900,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML in a structural
             # manner, where a 'large object' is a logical chunk of
@@ -7918,9 +7923,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML in a structural
             # manner, where a 'large object' is a logical chunk of
@@ -8030,9 +8033,8 @@ class Script(default.Script):
                 speech.speak(_("Nesting level %d") % nestingLevel)
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
+
         else:
             # Translators: this is for navigating HTML content by moving
             # from bulleted/numbered list to bulleted/numbered list.
@@ -8091,9 +8093,8 @@ class Script(default.Script):
                 speech.speak(_("Nesting level %d") % nestingLevel)
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
+
         else:
             # Translators: this is for navigating HTML content by moving
             # from bulleted/numbered list to bulleted/numbered list.
@@ -8132,9 +8133,7 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML content by
             # moving from bulleted/numbered list item to
@@ -8174,9 +8173,7 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML content by
             # moving from bulleted/numbered list item to
@@ -8385,9 +8382,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML content by
             # moving from blockquote to blockquote.
@@ -8421,9 +8416,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getLineContentsAtOffset(obj,
-                                                            characterOffset))
+            self.presentLine(obj, characterOffset)
         else:
             # Translators: this is for navigating HTML content by
             # moving from blockquote to blockquote.
