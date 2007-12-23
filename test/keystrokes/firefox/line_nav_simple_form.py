@@ -166,14 +166,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Ain't he handsome (please say ye', cursor=1",
      "SPEECH OUTPUT: 'Ain't he handsome (please say yes)? not selected radio button Yes not selected radio button No'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "16. line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: ''"]))
-
 ########################################################################
 # Up Arrow to the Top.
 #
