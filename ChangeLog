@@ -2,11 +2,13 @@
 
         * test/keystrokes/firefox/line_nav_simple_form.py:
           test/keystrokes/firefox/line_nav_nested_tables.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
           test/html/nested-tables.html:
+          test/html/orca-wiki.html:
           I'm writing a series of regression tests that are specific to
           the "performance enhancements" I'm working on and to a recent
           build of Firefox 3 in which whitespace is now added (where it
-          belongs, but where we weren't expecting it).
+          belongs, but where we weren't expecting it).  See bug 505102.
 
 2007-12-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
