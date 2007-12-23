@@ -3,7 +3,9 @@
         * test/keystrokes/firefox/line_nav_simple_form.py:
           test/keystrokes/firefox/line_nav_nested_tables.py:
           test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
           test/html/nested-tables.html:
+          test/html/enter-bug-form.html:
           test/html/orca-wiki.html:
           I'm writing a series of regression tests that are specific to
           the "performance enhancements" I'm working on and to a recent
