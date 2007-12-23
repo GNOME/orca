@@ -5762,22 +5762,32 @@ class Script(default.Script):
         objects = []
         text = self.queryNonEmptyText(obj)
         if text:
-            [textAfterOffset, start, end] = text.getTextAfterOffset(offset,
-                                                                    boundary)
+            [textAtOffset, start, end] = text.getTextAtOffset(offset,
+                                                              boundary)
+            unicodeText = textAtOffset.decode("UTF-8")
+            if unicodeText.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+                [textAtOffset, start, end] = text.getTextAfterOffset(offset,
+                                                                     boundary)
+            if textAtOffset and textAtOffset[-1] == " ":
+                textAtOffset = textAtOffset[0:len(textAtOffset)-1]
+                end -= 1
         else:
-            textAfterOffset = ""
+            textAtOffset = ""
             start = 0
             end = 1
         objects.append([obj, start, end])
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
-        matches = re.finditer(pattern, textAfterOffset.decode("UTF-8"))
+        unicodeText = textAtOffset.decode("UTF-8")
+        matches = re.finditer(pattern, unicodeText)
         for m in matches:
             # Adjust the last object's endOffset to the last character
-            # before the EOC.
+            # before the EOC. Also check to see if we have a space to
+            # strip out.
             #
             childOffset = m.start(0) + start
-            objects[-1][2] = childOffset
+            adjustment = int(unicodeText[m.start(0) - 1] == " ")
+            objects[-1][2] = childOffset - adjustment
             if objects[-1][1] == objects[-1][2]:
                 # A zero-length object is an indication of something
                 # whose sole contents was an EOC.  Delete it from the
@@ -5797,7 +5807,7 @@ class Script(default.Script):
             #
             if end > childOffset + 1:
                 objects.append([obj, childOffset + 1, end])
-                
+
         return objects
 
     def guessLabelFromLine(self, obj):
