@@ -1,7 +1,14 @@
 2007-12-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/mag.py:
+          Another tweak for bug #463881 - Evaluate other gnome-mag
+          feature for inclusion in Orca prefs. Minimize the "jumpiness"
+          when "live updating" magnification levels.
+
+2007-12-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/Gecko.py: 
-          More work on bug #500016 – Reading web pages by line in Firefox
+          More work on bug #500016 - Reading web pages by line in Firefox
           3 is slow.
 
 2007-12-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -21,13 +28,13 @@
 2007-12-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
-          More work on bug #500016 – Reading web pages by line in Firefox
+          More work on bug #500016 - Reading web pages by line in Firefox
           3 is slow.
 
 2007-12-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
-          Fix for bug #500016 – Reading web pages by line in Firefox 3
+          Fix for bug #500016 - Reading web pages by line in Firefox 3
           is slow.
 
 2007-12-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>

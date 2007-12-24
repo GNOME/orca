@@ -1260,8 +1260,6 @@ def setZoomerMagFactor(x, y, updateScreen=True):
 
     global _minROIX
     global _minROIY
-    global _maxROIX
-    global _maxROIY
 
     if not _initialized:
         return
@@ -1270,20 +1268,15 @@ def setZoomerMagFactor(x, y, updateScreen=True):
 
     _zoomer.setMagFactor(x, y)
 
-    # [[[TODO: JD - I think the screen is blanking out due to how gnome-mag
-    # does its thing.  See bug 503075. 
-    #
     if updateScreen:
         __updateROIDimensions()
         if (oldX > x) and (x < 1.5):
             _minROIX = _sourceDisplayBounds.x1
             _minROIY = _sourceDisplayBounds.y1
-            _maxROIX = _sourceDisplayBounds.x2
-            _maxROIY = _sourceDisplayBounds.y2
             __setROI(GNOME.Magnifier.RectBounds(_minROIX,
                                                 _minROIY,
-                                                _maxROIX,
-                                                _maxROIY))
+                                                _minROIX + _roiWidth,
+                                                _minROIY + _roiHeight))
         else:
             extents = orca_state.locusOfFocus.queryComponent().getExtents(0)
             __setROICenter(extents.x, extents.y)
