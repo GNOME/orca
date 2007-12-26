@@ -6389,6 +6389,14 @@ class Script(default.Script):
         if text and not (self.isAriaWidget(obj) 
                          and obj.getRole() == pyatspi.ROLE_LIST):
             unicodeText = self.getUnicodeText(obj)
+
+            # Delete the final space character if we find it.  Otherwise,
+            # we'll arrow to it.  (We can't just strip the string otherwise
+            # we skip over blank lines that one could otherwise arrow to.)
+            #
+            if unicodeText[-1] == " " and len(unicodeText) > 1:
+                unicodeText = unicodeText[0:len(unicodeText) - 1]
+
             nextOffset = startOffset + 1
             while nextOffset < len(unicodeText):
                 if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
@@ -6480,6 +6488,14 @@ class Script(default.Script):
         if text and not (self.isAriaWidget(obj) \
                          and obj.getRole() == pyatspi.ROLE_LIST):
             unicodeText = self.getUnicodeText(obj)
+
+            # Delete the final space character if we find it.  Otherwise,
+            # we'll arrow to it.  (We can't just strip the string otherwise
+            # we skip over blank lines that one could otherwise arrow to.)
+            #
+            if unicodeText[-1] == " " and len(unicodeText) > 1:
+                unicodeText = unicodeText[0:len(unicodeText) - 1]
+
             if (startOffset == -1) or (startOffset > len(unicodeText)):
                 startOffset = len(unicodeText)
             previousOffset = startOffset - 1
