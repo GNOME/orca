@@ -3589,6 +3589,18 @@ class Script(default.Script):
                 and orca_state.locusOfFocus.getRole() != pyatspi.ROLE_ENTRY:
             return
 
+        # If Orca is controlling the caret and we just moved to a line that
+        # begins with a link, and that link begins on the previous line,
+        # we need to ignore this event. Otherwise our caret context will
+        # become the beginning of the link on the previous line.
+        #
+        if orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LINK \
+           and self.isSameObject(orca_state.locusOfFocus.parent, event.source):
+            offset = self.getCharacterOffsetInParent(orca_state.locusOfFocus)
+            if offset == event.detail1:
+                return
+
         # If Orca is controlling the caret, it is possible to arrow into
         # a menu item inside of a combo box.  This is something that is
         # not possible in Firefox caret browsing mode and seems to confuse
