@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of HTML blockquote output of Firefox, in particular structural
@@ -15,7 +16,7 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Load the local combo box test case.
+# Load the local blockquote test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
@@ -30,88 +31,106 @@ sequence.append(WaitForFocus("Blockquote Regression Test",
 sequence.append(PauseAction(3000))
 
 ########################################################################
+# Press Control+Home to move to the top.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "Top of file", 
+    ["BRAILLE LINE:  'On weaponry:'",
+     "     VISIBLE:  'On weaponry:', cursor=1",
+     "SPEECH OUTPUT: 'On weaponry:'"]))
+
+########################################################################
 # Press Q to move to the first blockquote which begins with: "NOBODY
 # expects the Spanish Inquisition!" 
 #
-# BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. '
-#      VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1
-# SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "q to first quote", 
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'",
+     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'"]))
 
 ########################################################################
 # Press Q to move to the second blockquote which begins with: "Now
 # old lady".
 #
-# BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#      VISIBLE:  'Now old lady, you have one last ', cursor=1
-# SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "q to second quote", 
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'"]))
 
 ########################################################################
 # Press Q to move to the third and final blockquote which begins with:
 # "Hm! She is made of harder stuff!"
 #
-# BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! '
-#      VISIBLE:  'Hm! She is made of harder stuff!', cursor=1
-# SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "q to third quote", 
+    ["BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'",
+     "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
+     "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'"]))
 
 ########################################################################
 # Press Q again.  There are no more blockquotes on this page so we
 # should wrap to the top (announce that we've done so) and then move
 # to the first blockquote.
 #
-# SPEECH OUTPUT: 'Wrapping to top.'
-# BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. '
-#      VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1
-# SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "q wrap to top", 
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'",
+     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
+     "SPEECH OUTPUT: 'Wrapping to top.'",
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'"]))
 
 ########################################################################
 # Press Shift+Q.  There are no more blockquotes above us on the page
 #  so we should wrap to the bottom (announce that we've done so) and 
 # then move to the third and final blockquote.
 #
-# SPEECH OUTPUT: 'Wrapping to bottom.'
-# BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! '
-#      VISIBLE:  'Hm! She is made of harder stuff!', cursor=1
-# SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+q wrap to bottom", 
+    ["BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'",
+     "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
+     "SPEECH OUTPUT: 'Wrapping to bottom.'",
+     "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'"]))
 
 ########################################################################
 # Press Shift+Q to move to the second blockquote.
 #
-# BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#      VISIBLE:  'Now old lady, you have one last ', cursor=1
-# SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>q"))
-sequence.append(PauseAction(1000))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+q wrap to second quote", 
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  [[[Mike: This is a paragraph
-# inside of a blockquote, so the where am I is accurate.  However,
-# I'm wondering if we should be doing anything w.r.t. the blockquote
-# role.]]]
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#      VISIBLE:  'Now old lady, you have one last ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'paragraph'
-# SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I",
+    ["BUG? - Technically, this is correct.  But should we indicate we're in a blockquote?",
+     "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'paragraph'",
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the '",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

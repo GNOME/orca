@@ -1,6 +1,26 @@
 2007-12-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Tweak for bug #504742 - Gecko.py should not call 
+          getLineContentsAtOffset() twice unnecessarily.
+
+        * test/keystrokes/firefox/line_nav_simple_form.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/html_struct_nav_large_obj.py:
+          test/keystrokes/firefox/html_struct_nav_list_item.py:
+          test/keystrokes/firefox/html_struct_nav_lists.py:
+          test/keystrokes/firefox/html_role_lists.py:
+          test/keystrokes/firefox/html_struct_nav_blockquote.py:
+          test/keystrokes/firefox/html_struct_nav_links.py:
+          test/keystrokes/firefox/html_role_links.py:
+          Updating the Firefox regression tests to use assertions.
+
+2007-12-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           Fix for bug #504785 - Orca repeats certain lines twice in
           Firefox 3.
 

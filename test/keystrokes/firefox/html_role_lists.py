@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of HTML list output of Firefox, in particular basic navigation
@@ -15,7 +16,7 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Load the local combo box test case.
+# Load the local lists test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
@@ -28,160 +29,162 @@ sequence.append(WaitForFocus("Lists Test Page",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Press Down Arrow until the first list is reached.  Note:  Because
-# these are HTML (un)ordered lists, we are not going to be getting any 
-# focus events.  Therefore we have to use pause actions instead.  Note
-# if I choose a small pause action value, the list items seem to get
-# messed up, EOC's appear, and all the list items are numbered (0).
-# Things seem more likely to be okay at 3000, however I'm still
-# not getting 100% reliable results.  This problem does not occur when
-# I access lists using Orca manually.
+# Press Control+Home to move to the top.
 #
-# BRAILLE LINE:  'Lists are not only fun to make, they are fun to use. They help us: '
-#      VISIBLE:  'Lists are not only fun to make, ', cursor=1
-# SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us: '
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "Top of file", 
+    ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
+     "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
+     "SPEECH OUTPUT: 'Welcome to a List of Lists heading  '",
+     "SPEECH OUTPUT: 'level 1'"]))
 
 ########################################################################
-# Start of first list.  Keep going down.
+# Press Down Arrow to move through the lists.
 #
-# BRAILLE LINE:  '1. remember what the heck we are doing each day'
-#      VISIBLE:  '1. remember what the heck we are', cursor=1
-# SPEECH OUTPUT: '1. remember what the heck we are doing each day'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  'Lists are not only fun to make, they are fun to use. They help us:'",
+     "     VISIBLE:  'Lists are not only fun to make, ', cursor=1",
+     "SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us:'"]))
 
-# BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of '
-#      VISIBLE:  '2. arrange long and arbitrary li', cursor=1
-# SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BUG? - For some reason in the harness, list numbers are all '0'. They are correct in actual use. I'm only marking this issue once.",
+     "BRAILLE LINE:  '0. remember what the heck we are doing each day'",
+     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
 
-# BRAILLE LINE:  '3. look really cool when we carry them around on yellow Post-Itstm.'
-#      VISIBLE:  '3. look really cool when we carr', cursor=1
-# SPEECH OUTPUT: '3. look really cool when we carry them around on yellow Post-Itstm.'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'",
+     "     VISIBLE:  '0. arrange long and arbitrary li', cursor=1",
+     "SPEECH OUTPUT: '0. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'"]))
 
-# BRAILLE LINE:  '4. and that other thing I keep forgetting.'
-#      VISIBLE:  '4. and that other thing I keep f', cursor=1
-# SPEECH OUTPUT: '4. and that other thing I keep forgetting.'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  'sense of priority, even if it is artificial'",
+     "     VISIBLE:  'sense of priority, even if it is', cursor=1",
+     "SPEECH OUTPUT: 'sense of priority, even if it is artificial'"]))
 
-########################################################################
-# Start of second list.  Keep going down.
-#
-# BRAILLE LINE:  'VI. And use roman numerals,'
-#      VISIBLE:  'VI. And use roman numerals,', cursor=1
-# SPEECH OUTPUT: 'VI. And use roman numerals,'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. look really cool when we carry them around on yellow Post-Itstm.'",
+     "     VISIBLE:  '0. look really cool when we carr', cursor=1",
+     "SPEECH OUTPUT: '0. look really cool when we carry them around on yellow Post-Itstm.'"]))
 
-# BRAILLE LINE:  'g. You might try using letters as well,'
-#      VISIBLE:  'g. You might try using letters a', cursor=1
-# SPEECH OUTPUT: 'g. You might try using letters as well,'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. and that other thing I keep forgetting.'",
+     "     VISIBLE:  '0. and that other thing I keep f', cursor=1",
+     "SPEECH OUTPUT: '0. and that other thing I keep forgetting.'"]))
 
-# BRAILLE LINE:  'H. Maybe you prefer Big Letters,'
-#      VISIBLE:  'H. Maybe you prefer Big Letters,', cursor=1
-# SPEECH OUTPUT: 'H. Maybe you prefer Big Letters,'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  'Your ordered lists can start at a strange number, like:'",
+     "     VISIBLE:  'Your ordered lists can start at ', cursor=1",
+     "SPEECH OUTPUT: 'Your ordered lists can start at a strange number, like:'"]))
 
-# BRAILLE LINE:  'ix. or small roman numerals'
-#      VISIBLE:  'ix. or small roman numerals', cursor=1
-# SPEECH OUTPUT: 'ix. or small roman numerals'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. And use roman numerals,'",
+     "     VISIBLE:  '0. And use roman numerals,', cursor=1",
+     "SPEECH OUTPUT: '0. And use roman numerals,'"]))
 
-# BRAILLE LINE:  '* But discs belong to unordered lists'
-#      VISIBLE:  '* But discs belong to unordere', cursor=1
-# SPEECH OUTPUT: '* But discs belong to unordered lists'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. You might try using letters as well,'",
+     "     VISIBLE:  '0. You might try using letters a', cursor=1",
+     "SPEECH OUTPUT: '0. You might try using letters as well,'"]))
 
-# BRAILLE LINE:  '50. Though you can set the value in a list item!'
-#      VISIBLE:  '50. Though you can set the value', cursor=1
-# SPEECH OUTPUT: '50. Though you can set the value in a list item!'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. Maybe you prefer Big Letters,'",
+     "     VISIBLE:  '0. Maybe you prefer Big Letters,', cursor=1",
+     "SPEECH OUTPUT: '0. Maybe you prefer Big Letters,'"]))
 
-########################################################################
-# Start of third list.  Keep going down -- at least far enough to get
-# into a nested list or two.
-#
-# BRAILLE LINE:  '* listing item'
-#      VISIBLE:  '* listing item', cursor=1
-# SPEECH OUTPUT: '* listing item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. or small roman numerals'",
+     "     VISIBLE:  '0. or small roman numerals', cursor=1",
+     "SPEECH OUTPUT: '0. or small roman numerals'"]))
 
-########################################################################
-# Start of the first sub-list in the third list. [[[Mike:  When we
-# arrow through list items -- as opposed to use structural navigation
-# within them -- we don't speak level information.  Should we be
-# doing this?]]]
-#
-# BRAILLE LINE:  '* first sublevel'
-#      VISIBLE:  '* first sublevel', cursor=1
-# SPEECH OUTPUT: '* first sublevel'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '• But discs belong to unordered lists'",
+     "     VISIBLE:  '• But discs belong to unordere', cursor=1",
+     "SPEECH OUTPUT: '• But discs belong to unordered lists'"]))
 
-########################################################################
-# Start of the first sub-sub-list in the third list. 
-#
-# BRAILLE LINE:  '* look for the bullet on'
-#      VISIBLE:  '* look for the bullet on', cursor=1
-# SPEECH OUTPUT: '* look for the bullet on'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '0. Though you can set the value in a list item!'",
+     "     VISIBLE:  '0. Though you can set the value ', cursor=1",
+     "SPEECH OUTPUT: '0. Though you can set the value in a list item!'"]))
 
-########################################################################
-# Press Up Arrow a couple of times just to be sure we read correctly 
-# in both directions.
-#
-# BRAILLE LINE:  '* first sublevel'
-#      VISIBLE:  '* first sublevel', cursor=1
-# SPEECH OUTPUT: '* first sublevel'
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  'Unordered list:'",
+     "     VISIBLE:  'Unordered list:', cursor=1",
+     "SPEECH OUTPUT: 'Unordered list:'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up", 
+    ["BRAILLE LINE:  '0. Though you can set the value in a list item!'",
+     "     VISIBLE:  '0. Though you can set the value ', cursor=1",
+     "SPEECH OUTPUT: '0. Though you can set the value in a list item!'"]))
 
-# BRAILLE LINE:  '* listing item'
-#      VISIBLE:  '* listing item', cursor=1
-# SPEECH OUTPUT: '* listing item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up", 
+    ["BRAILLE LINE:  '• But discs belong to unordered lists'",
+     "     VISIBLE:  '• But discs belong to unordere', cursor=1",
+     "SPEECH OUTPUT: '• But discs belong to unordered lists'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  '* listing item'
-#      VISIBLE:  '* listing item', cursor=1
-# SPEECH OUTPUT: '* listing item''
-# SPEECH OUTPUT: 'list item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  '• But discs belong to unordered lists'",
+     "     VISIBLE:  '• But discs belong to unordere', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: '• But discs belong to unordered lists'",
+     "SPEECH OUTPUT: 'item 5 of 6'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

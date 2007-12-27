@@ -2,11 +2,7 @@
 #!/usr/bin/python
 
 """Test of line navigation output of Firefox on a page with nested
-layout tables.  Note that this is based on the following Firefox 3
-build: Gecko/2007122122 Minefield/3.0b3pre.  In addition, it is 
-using the current patch to bug 505102 to handle a significant change
-made in the current Firefox.  The assertions in the test will fail 
-if your configuration is different.
+layout tables. 
 """
 
 from macaroon.playback import *

@@ -2,11 +2,7 @@
 #!/usr/bin/python
 
 """Test of line navigation output of Firefox on GNOME bugzilla's form
-for entering bugs. Note that this is based on the following Firefox 3
-build: Gecko/2007122122 Minefield/3.0b3pre.  In addition, it is using
-the current patch to bug 505102 to handle a significant change
-made in the current Firefox.  The assertions in the test will
-fail if your configuration is different.
+for entering bugs. 
 """
 
 from macaroon.playback import *
@@ -55,14 +51,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines Link , please look at the list of most frequently Link'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
      "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  'reported bugs Link , and please search Link  or browse Link  for the bug.'",
-     "     VISIBLE:  'reported bugs Link , and please ', cursor=1",
-     "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -128,6 +116,16 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab", 
     ["BRAILLE LINE:  'OS Link : Linux Combo'",
+     "     VISIBLE:  'OS Link : Linux Combo', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'OS link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BUG? - Down Arrow should move us to the next line.",
+     "BRAILLE LINE:  'OS Link : Linux Combo'",
      "     VISIBLE:  'OS Link : Linux Combo', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'OS link'"]))

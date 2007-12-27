@@ -255,25 +255,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BUG? - we're repeating this line because the link grabbed focus",
-     "BRAILLE LINE:  'Program Office of Sun Microsystems, Inc. Link  with contributions Link'",
-     "     VISIBLE:  'Program Office of Sun Microsyste', cursor=1",
-     "SPEECH OUTPUT: 'Program Office of Sun Microsystems, Inc. link  with contributions link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
     ["BRAILLE LINE:  'from many community members Link .'",
-     "     VISIBLE:  'from many community members Link', cursor=1",
-     "SPEECH OUTPUT: 'from many community members link .'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
-    ["BUG? - we're repeating this line because the link grabbed focus",
-     "BRAILLE LINE:  'from many community members Link .'",
      "     VISIBLE:  'from many community members Link', cursor=1",
      "SPEECH OUTPUT: 'from many community members link .'"]))
 
@@ -468,15 +450,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BUG? - we're repeating this line because the link grabbed focus",
-     "BRAILLE LINE:  'mechanisms of GNOME Link . These navigation mechanisms are consistent across most'",
-     "     VISIBLE:  'mechanisms of GNOME Link . These', cursor=1",
-     "SPEECH OUTPUT: 'mechanisms of GNOME link . These navigation mechanisms are consistent across most'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
     ["BRAILLE LINE:  'desktop applications.'",
      "     VISIBLE:  'desktop applications.', cursor=1",
      "SPEECH OUTPUT: 'desktop applications.'"]))
@@ -494,15 +467,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  'GUI Link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
-     "     VISIBLE:  'GUI Link  (accessed by pressing ', cursor=1",
-     "SPEECH OUTPUT: 'GUI link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
-    ["BUG? - we're repeating this line because the link grabbed focus",
-     "BRAILLE LINE:  'GUI Link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
      "     VISIBLE:  'GUI Link  (accessed by pressing ', cursor=1",
      "SPEECH OUTPUT: 'GUI link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
 
@@ -796,14 +760,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Orca (last edited 2007-12-07 22:09:22 by WillieWalker Link )'",
      "     VISIBLE:  'Orca (last edited 2007-12-07 22:', cursor=1",
      "SPEECH OUTPUT: 'Orca (last edited 2007-12-07 22:09:22 by WillieWalker link )'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  'Copyright © 2005, 2006, 2007 The GNOME Project Link .'",
-     "     VISIBLE:  'Copyright © 2005, 2006, 2007 Th', cursor=1",
-     "SPEECH OUTPUT: 'Copyright © 2005, 2006, 2007 The GNOME Project link .'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

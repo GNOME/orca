@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of HTML links output of Firefox, including basic navigation and
@@ -15,7 +16,7 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Load the local combo box test case.
+# Load the local anchors test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
@@ -28,139 +29,125 @@ sequence.append(WaitForFocus("Links to test files",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Press Tab to move to the anchors.html link.  Note that for the braille
-# I have replaced the bullet character with an asterisk as the bullets
-# are causing "Non-ASCII character" syntax errors.
+# Press Control+Home to move to the top.
 #
-# BRAILLE LINE:  '*  anchors.html Link'
-#      VISIBLE:  '*  anchors.html Link', cursor=4
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'anchors.html link'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "Top of file", 
+    ["BRAILLE LINE:  'Here are some of our local test files:'",
+     "     VISIBLE:  'Here are some of our local test ', cursor=1",
+     "SPEECH OUTPUT: 'Here are some of our local test files:'"]))
+
+########################################################################
+# Press Tab to move to the anchors.html link.  
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("anchors.html", acc_role=pyatspi.ROLE_LINK))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to anchors.html link", 
+    ["BRAILLE LINE:  '• anchors.html Link'",
+     "     VISIBLE:  '• anchors.html Link', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
 # Press Tab to move to the blockquotes.html link.
 #
-# BRAILLE LINE:  '*  blockquotes.html Link'
-#      VISIBLE:  '*  blockquotes.html Link', cursor=4
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'blockquotes.html link'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("blockquotes.html", acc_role=pyatspi.ROLE_LINK))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to blockquotes.html link", 
+    ["BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
 # Press Tab to move to the bugzilla_top.html link.
 #
-# BRAILLE LINE:  '*  bugzilla_top.html Link'
-#      VISIBLE:  '*  bugzilla_top.html Link', cursor=4
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'bugzilla_top.html link'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("bugzilla_top.html", acc_role=pyatspi.ROLE_LINK))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to bugzilla_top.html link", 
+    ["BRAILLE LINE:  '• bugzilla_top.html Link'",
+     "     VISIBLE:  '• bugzilla_top.html Link', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'bugzilla_top.html link'"]))
 
 ########################################################################
 # Press Shift+Tab to move to the blockquotes.html link.
 #
-# BRAILLE LINE:  '*  blockquotes.html Link'
-#      VISIBLE:  '*  blockquotes.html Link', cursor=4
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'blockquotes.html link'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
-sequence.append(WaitForFocus("blockquotes.html", acc_role=pyatspi.ROLE_LINK))
+sequence.append(utils.AssertPresentationAction(
+    "Shift Tab to blockquotes.html link", 
+    ["BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  Because we're on a link, we
 # get special link-related information.
 #
-# BRAILLE LINE:  '*  blockquotes.html Link'
-#      VISIBLE:  '*  blockquotes.html Link', cursor=4
-# SPEECH OUTPUT: 'file link to blockquotes.html'
-# SPEECH OUTPUT: 'same site'
-# SPEECH OUTPUT: '1188 bytes'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "SPEECH OUTPUT: 'file link to blockquotes.html'",
+     "SPEECH OUTPUT: 'same site'",
+     "SPEECH OUTPUT: '1188 bytes'"]))
 
 ########################################################################
 # Press Return to follow the blockquotes.html link.
 #
-# BRAILLE LINE:  'Loading.  Please wait.'
-#      VISIBLE:  'Loading.  Please wait.', cursor=0
-# SPEECH OUTPUT: 'Loading.  Please wait.'
-# BRAILLE LINE:  'On weaponry:'
-#      VISIBLE:  'On weaponry:', cursor=1
-# SPEECH OUTPUT: 'Blockquote Regression Test html content'
-# SPEECH OUTPUT: 'On weaponry:'
-#
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("Blockquote Regression Test",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-sequence.append(PauseAction(3000))
+sequence.append(WaitForDocLoad())
 
 ########################################################################
 # Press Alt+Left Arrow to return to the anchors2.html page.
-#
-# BRAILLE LINE:  'Loading.  Please wait.'
-#      VISIBLE:  'Loading.  Please wait.', cursor=0
-# SPEECH OUTPUT: 'Loading.  Please wait.'
-# BRAILLE LINE:  '*  blockquotes.html Link'
-#      VISIBLE:  '*  blockquotes.html Link', cursor=4
-# SPEECH OUTPUT: 'Links to test files html content'
-# SPEECH OUTPUT: 'blockquotes.html link'
 #
 sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  It seems we're back at the
-# top of the document. [[[TODO: Figure out if this is Firefox's doing
-# or Orca's.  I'd guess it's Orcas.... It would be much nicer to just
-# keep on going from where we left off....]]]
+# Press Down Arrow to move to the anchors.html link.  
 #
-# BRAILLE LINE:  'Here are some of our local test files:'
-#      VISIBLE:  'Here are some of our local test ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'paragraph'
-# SPEECH OUTPUT: 'Here are some of our local test files:'
-# SPEECH OUTPUT: ''
-#
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-
-########################################################################
-# Press Down Arrow to move to the anchors.html link.  We probably
-# won't get a focus event, so we'll just pause in the next step.
-#
-# BRAILLE LINE:  '*  anchors.html Link'
-#      VISIBLE:  '*  anchors.html Link', cursor=1
-# SPEECH OUTPUT: '*  anchors.html link'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down to anchors.html", 
+    ["BRAILLE LINE:  '• anchors.html Link'",
+     "     VISIBLE:  '• anchors.html Link', cursor=1",
+     "SPEECH OUTPUT: '• anchors.html link'"]))
 
 ########################################################################
 # Press Down Arrow to move to the blockquotes.html link.  We probably
 # won't get a focus event, so we'll just pause in the next step.
 #
-# BRAILLE LINE:  '*  blockquotes.html Link'
-#      VISIBLE:  '*  blockquotes.html Link', cursor=1
-# SPEECH OUTPUT: '*  blockquotes.html link'
-#
-sequence.append(KeyComboAction("Down", 1000))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down to blockquotes.html", 
+    ["BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=1",
+     "SPEECH OUTPUT: '• blockquotes.html link'"]))
 
 ########################################################################
 # Press Up Arrow to move to the anchors.html link.  We probably won't
 # get a focus event, so we'll just pause in the next step.
 #
-# BRAILLE LINE:  '*  anchors.html Link'
-#      VISIBLE:  '*  anchors.html Link', cursor=1
-# SPEECH OUTPUT: '*  anchors.html link'
-#
-sequence.append(KeyComboAction("Up", 1000))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up to anchors.html", 
+    ["BRAILLE LINE:  '• anchors.html Link'",
+     "     VISIBLE:  '• anchors.html Link', cursor=1",
+     "SPEECH OUTPUT: '• anchors.html link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

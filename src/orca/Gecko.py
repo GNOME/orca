@@ -8189,7 +8189,9 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
         else:
             # Translators: this is for navigating HTML in a structural
             # manner, where a 'large object' is a logical chunk of
@@ -8212,7 +8214,9 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
         else:
             # Translators: this is for navigating HTML in a structural
             # manner, where a 'large object' is a logical chunk of
