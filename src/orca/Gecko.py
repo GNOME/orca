@@ -7468,6 +7468,8 @@ class Script(default.Script):
                                          pyatspi.ROLE_RADIO_BUTTON,
                                          pyatspi.ROLE_MENU_ITEM]:
                 strings = [text.getText(startOffset, endOffset)]
+                if strings == [' '] and len(contents) > 1:
+                    strings = []
             elif self.isLayoutOnly(obj):
                 continue
             else:
