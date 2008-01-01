@@ -1,17 +1,17 @@
 # Orca eesti keele tõlge.
 # Estonian translation of Orca.
 #
-# Copyright (C) 2006, 2007, The Gnome Project.
+# Copyright (C) 2006-2008, The Gnome Project.
 # This file is distributed under the same license as the orca package.
 #
-# Ivar Smolin <okul@linux.ee>, 2006, 2007.
+# Ivar Smolin <okul@linux.ee>, 2006-2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-17 22:49+0000\n"
-"PO-Revision-Date: 2007-12-30 14:29+0200\n"
+"PO-Revision-Date: 2008-01-01 19:59+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -101,14 +101,14 @@ msgstr ""
 #.
 #: ../src/orca/bookmarks.py:142 ../src/orca/Gecko.py:1645
 msgid "bookmarks saved"
-msgstr ""
+msgstr "järjehoidja on salvestatud"
 
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
 #: ../src/orca/bookmarks.py:147 ../src/orca/Gecko.py:1650
 msgid "bookmarks could not be saved"
-msgstr ""
+msgstr "järjehoidjaid pole võimalik salvestada"
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
@@ -147,7 +147,7 @@ msgstr "ahendatud"
 #: ../src/orca/braillegenerator.py:688
 #, python-format
 msgid "LEVEL %d"
-msgstr ""
+msgstr "TASE %d"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -1793,9 +1793,8 @@ msgstr ""
 #. made through the magnifier.
 #.
 #: ../src/orca/default.py:779
-#, fuzzy
 msgid "Toggles the magnifier."
-msgstr "_Luup on lubatud"
+msgstr ""
 
 #. Translators: the user can choose between several different
 #. types of magnification, including full screen and split
@@ -1830,30 +1829,30 @@ msgstr "tühi"
 #. of text.
 #.
 #: ../src/orca/default.py:1841
-#, fuzzy, python-format
+#, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
-msgstr[0] "tühik"
-msgstr[1] "tühik"
+msgstr[0] "%d tühik"
+msgstr[1] "%d tühikut"
 
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
 #: ../src/orca/default.py:1848
-#, fuzzy, python-format
+#, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] "tabulaator"
-msgstr[1] "tabulaator"
+msgstr[0] "%d tabulaator"
+msgstr[1] "%d tabulaatorit"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
 #: ../src/orca/default.py:2160
-#, fuzzy, python-format
+#, python-format
 msgid "Progress bar %d."
-msgstr "edenemisriba"
+msgstr "Edenemisriba %d."
 
 #. Translators: this is the percentage value of a
 #. progress bar.
@@ -1866,9 +1865,9 @@ msgstr "edenemisriba"
 #.
 #: ../src/orca/default.py:2168 ../src/orca/flat_review.py:444
 #: ../src/orca/speechgenerator.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent."
-msgstr "%d protsent"
+msgstr "%d protsenti."
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -1996,9 +1995,9 @@ msgstr ""
 #. is.
 #.
 #: ../src/orca/default.py:5082
-#, fuzzy, python-format
+#, python-format
 msgid "Misspelled word: %s"
-msgstr "Probleemne sõna: "
+msgstr "Probleemne sõna: %s"
 
 #: ../src/orca/default.py:5090
 #, python-format
@@ -2114,9 +2113,8 @@ msgstr ""
 #: ../src/orca/flat_review.py:348 ../src/orca/Gecko.py:1151
 #: ../src/orca/speechgenerator.py:399 ../src/orca/where_am_I.py:370
 #: ../src/orca/where_am_I.py:1125
-#, fuzzy
 msgid "partially checked"
-msgstr "märkimata"
+msgstr "osaliselt märgitud"
 
 #. Translators: this represents the state of a checkbox.
 #.
@@ -2210,8 +2208,8 @@ msgstr ""
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d kirjega nimekiri"
+msgstr[1] "%d kirjega nimekiri"
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
@@ -2250,8 +2248,8 @@ msgstr[1] "%d tabelit"
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d külastatud viit"
+msgstr[1] "%d külastatud viita"
 
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
@@ -2260,8 +2258,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d külastamata viit"
+msgstr[1] "%d külastamata viita"
 
 #. Translators: Announces the percentage of the document that has
 #. been read.  This is calculated by knowing the index of the
@@ -2953,7 +2951,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:8577
 #, python-format
 msgid "Row %d, column %d."
-msgstr ""
+msgstr "Rida %d, veerg %d."
 
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
@@ -2979,16 +2977,15 @@ msgstr[1] ""
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d veerg"
+msgstr[1] "%d veergu"
 
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
 #: ../src/orca/Gecko.py:8630 ../src/orca/Gecko.py:8679
-#, fuzzy
 msgid "No more tables."
-msgstr "Hääli pole saadaval.\n"
+msgstr "Rohkem tabeleid ei ole."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
@@ -3003,9 +3000,8 @@ msgstr ""
 #: ../src/orca/Gecko.py:8730 ../src/orca/Gecko.py:8785
 #: ../src/orca/Gecko.py:8836 ../src/orca/Gecko.py:8891
 #: ../src/orca/Gecko.py:8908 ../src/orca/Gecko.py:8928
-#, fuzzy
 msgid "Not in a table."
-msgstr "Hääli pole saadaval.\n"
+msgstr ""
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
@@ -3116,9 +3112,8 @@ msgstr " punkt punkt punkt"
 #. build up the utterance in this manner.
 #.
 #: ../src/orca/gnomespeechfactory.py:777
-#, fuzzy
 msgid "minus"
-msgstr "menüü"
+msgstr "miinus"
 
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a higher pitch.
@@ -3418,18 +3413,16 @@ msgstr ""
 #. preferred colors and mouse customizations are loaded.
 #.
 #: ../src/orca/mag.py:1602
-#, fuzzy
 msgid "Magnifier enabled."
-msgstr "Luup"
+msgstr "Luup on lubatud."
 
 #. Translators: this is the message spoken when a user disables the
 #. magnifier, restoring the screen contents to their normal colors
 #. and sizes.
 #.
 #: ../src/orca/mag.py:1609
-#, fuzzy
 msgid "Magnifier disabled."
-msgstr "Luup"
+msgstr "Luup on keelatud."
 
 #. Translators: magnification will use the full screen.
 #.
@@ -3497,7 +3490,7 @@ msgstr "Kohandatud"
 #.
 #: ../src/orca/orca_console_prefs.py:69
 msgid "^[Yy1]"
-msgstr ""
+msgstr "^[YyJj1]"
 
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
@@ -3518,14 +3511,14 @@ msgstr "Tere tulemast Orca sätetesse."
 #.
 #: ../src/orca/orca_console_prefs.py:164
 msgid "Select desired speech system:"
-msgstr ""
+msgstr "Eelistatava kõnesüsteemi valimine:"
 
 #. Translators: this is prompting for a numerical choice.
 #.
 #: ../src/orca/orca_console_prefs.py:175 ../src/orca/orca_console_prefs.py:207
 #: ../src/orca/orca_console_prefs.py:254 ../src/orca/orca_console_prefs.py:401
 msgid "Enter choice: "
-msgstr ""
+msgstr "Sisesta valik:"
 
 #. Translators: this means speech synthesis will not be used.
 #.
@@ -3563,7 +3556,7 @@ msgstr "Hääli pole saadaval.\n"
 #.
 #: ../src/orca/orca_console_prefs.py:234
 msgid "Select desired voice:"
-msgstr ""
+msgstr "Eelistatava hääle valimine:"
 
 #. Translators: the word echo feature of Orca will speak the word
 #. prior to the caret when the user types a word delimiter.
@@ -3629,9 +3622,8 @@ msgstr ""
 #. layouts for how they might control Orca.
 #.
 #: ../src/orca/orca_console_prefs.py:390
-#, fuzzy
 msgid "1. Desktop"
-msgstr "TöölauaIkoon"
+msgstr "1. Töölauaarvuti"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3639,7 +3631,7 @@ msgstr "TöölauaIkoon"
 #.
 #: ../src/orca/orca_console_prefs.py:396
 msgid "2. Laptop"
-msgstr ""
+msgstr "2. Sülearvuti"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
@@ -3675,11 +3667,11 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:484
 msgid "Setup complete. Logging out now."
-msgstr ""
+msgstr "Seadistamine on lõppenud.  Nüüd logitakse välja."
 
 #: ../src/orca/orca_console_prefs.py:498
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr "Seadistamine on lõppenud.  Jätkamiseks vajuta Return."
 
 #: ../src/orca/orca-find.glade.h:1
 msgid "<b>Start from:</b>"
@@ -3706,9 +3698,8 @@ msgstr ""
 #: ../src/orca/orca-find.glade.h:4 ../src/orca/scripts/gedit.py:359
 #: ../src/orca/scripts/gedit.py:361
 #: ../src/orca/scripts/gnome-search-tool.py:165
-#, fuzzy
 msgid "Find"
-msgstr "Aken"
+msgstr ""
 
 #: ../src/orca/orca-find.glade.h:5
 msgid "Match _entire word only"
@@ -3732,9 +3723,8 @@ msgid "Start from:"
 msgstr ""
 
 #: ../src/orca/orca-find.glade.h:10
-#, fuzzy
 msgid "Top of window"
-msgstr "aken"
+msgstr ""
 
 #: ../src/orca/orca-find.glade.h:11
 msgid "_Match case"
@@ -3745,9 +3735,8 @@ msgid "_Search for:"
 msgstr ""
 
 #: ../src/orca/orca-find.glade.h:13
-#, fuzzy
 msgid "_Top of window"
-msgstr "aken"
+msgstr ""
 
 #: ../src/orca/orca-find.glade.h:14
 msgid "_Wrap around"
@@ -4166,7 +4155,6 @@ msgid "Starting Orca Preferences. This may take a while."
 msgstr ""
 
 #: ../src/orca/orca-mainwin.glade.h:1
-#, fuzzy
 msgid "Orca Screen Reader / Magnifier"
 msgstr "Orca ekraanilugeja ja luup"
 
@@ -4362,9 +4350,8 @@ msgid ""
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:5
-#, fuzzy
 msgid "<b>Border Settings</b>"
-msgstr "<b>Suurendusala sätted</b>"
+msgstr "<b>Äärise sätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Braille Indicator</b>"
@@ -4395,9 +4382,8 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Klaviatuuripaigutus</b>"
 
 #: ../src/orca/orca-setup.glade.h:13
-#, fuzzy
 msgid "<b>Multi-monitor Settings</b>"
-msgstr "<b>Kursorisätted</b>"
+msgstr "<b>Mitme monitori sätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:14
 msgid "<b>Pronunciation Dictionary</b>"
@@ -4421,9 +4407,8 @@ msgstr ""
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
 #: ../src/orca/orca-setup.glade.h:20
-#, fuzzy
 msgid "<b>Tracking and Alignment Settings</b>"
-msgstr "<b>Suurendusala sätted</b>"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "<b>Verbosity</b>"
@@ -4434,9 +4419,8 @@ msgid "<b>Zoomer Settings</b>"
 msgstr "<b>Suurendusala sätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:23
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "_Hääle sätted:"
+msgstr "Laiendatud sätted"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Advanced _Settings..."
@@ -4546,9 +4530,8 @@ msgid "Enable _modifier keys"
 msgstr "_Muuteklahvid on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:60
-#, fuzzy
 msgid "Enable _navigation keys"
-msgstr "_Funktsiooniklahvid on lubatud"
+msgstr "_Navigatsiooniklahvid on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "Enable ac_tion keys"
@@ -4567,9 +4550,8 @@ msgid "Enable cross-h_air"
 msgstr "Si_hik on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:65
-#, fuzzy
 msgid "Enable cross-hair cl_ip"
-msgstr "Si_hik on lubatud"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:66
 msgid "Enable echo by _word"
@@ -4772,7 +4754,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:133
 msgid "Update interval:"
-msgstr ""
+msgstr "Uuendatakse iga"
 
 #: ../src/orca/orca-setup.glade.h:134
 msgid "Ver_bose"
@@ -4891,9 +4873,8 @@ msgid "pixels"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:166
-#, fuzzy
 msgid "seconds"
-msgstr "semikoolon"
+msgstr "sekundi järel"
 
 #. for gettext support
 #. Translators: this is a structure to assist in the generation of
@@ -5410,16 +5391,14 @@ msgstr ""
 #. Translators: long braille for the rolename of a form.
 #.
 #: ../src/orca/rolenames.py:481
-#, fuzzy
 msgid "Form"
-msgstr "Jalus"
+msgstr ""
 
 #. Translators: spoken words for the rolename of a form.
 #.
 #: ../src/orca/rolenames.py:484
-#, fuzzy
 msgid "form"
-msgstr "jalus"
+msgstr ""
 
 #. Translators: long braille for the rolename of a frame.
 #.
@@ -5570,16 +5549,14 @@ msgstr "kihiline paan"
 #. Translators: short braille for the rolename of a link.
 #.
 #: ../src/orca/rolenames.py:598
-#, fuzzy
 msgid "lnk"
-msgstr "viit"
+msgstr ""
 
 #. Translators: long braille for the rolename of a link.
 #.
 #: ../src/orca/rolenames.py:601
-#, fuzzy
 msgid "Link"
-msgstr "viit"
+msgstr ""
 
 #. Translators: spoken words for the rolename of a link.
 #.
@@ -6556,9 +6533,8 @@ msgstr "Õnnitlused"
 #. match what Evolution is using.
 #.
 #: ../src/orca/scripts/Evolution.py:954 ../src/orca/scripts/Evolution.py:1006
-#, fuzzy
 msgid "Status"
-msgstr "OlekuRiba"
+msgstr ""
 
 #. Translators: we present this to the user to
 #. indicate that an email message has not been
@@ -6771,20 +6747,19 @@ msgid "Stop"
 msgstr ""
 
 #: ../src/orca/scripts/gnome-search-tool.py:171
-#, fuzzy
 msgid "Search complete."
-msgstr "automaatlõpetamine"
+msgstr ""
 
 #: ../src/orca/scripts/gnome-search-tool.py:179
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "leiti %d fail"
+msgstr[1] "leiti %d faili"
 
 #: ../src/orca/scripts/gnome-search-tool.py:184
 msgid "No files found."
-msgstr ""
+msgstr "Ühtki faili ei leitud."
 
 #: ../src/orca/scripts/liferea.py:117
 msgid "Work online / offline"
@@ -6798,7 +6773,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/metacity.py:94
 msgid "Workspace "
-msgstr "Tööala"
+msgstr "Tööala "
 
 #: ../src/orca/scripts/metacity.py:94
 msgid "Desk "
@@ -6826,9 +6801,9 @@ msgstr "Kuva rohkem valikuid"
 #. Translators: this represents the row number of a table.
 #.
 #: ../src/orca/scripts/StarOffice.py:90
-#, fuzzy, python-format
+#, python-format
 msgid "row %d"
-msgstr "rida"
+msgstr "rida %d"
 
 #. Translators: this indicates that there are zero items in
 #. a layered pane or table.
@@ -6838,9 +6813,8 @@ msgstr "rida"
 #.
 #: ../src/orca/scripts/StarOffice.py:493 ../src/orca/speechgenerator.py:752
 #: ../src/orca/speechgenerator.py:1276
-#, fuzzy
 msgid "0 items"
-msgstr "MenüüKirje"
+msgstr "0 kirjet"
 
 #. Translators: this represents the state of a check box
 #.
@@ -6849,9 +6823,8 @@ msgstr "MenüüKirje"
 #.
 #: ../src/orca/scripts/StarOffice.py:682 ../src/orca/scripts/StarOffice.py:712
 #: ../src/orca/speechserver.py:208 ../src/orca/speech.py:187
-#, fuzzy
 msgid "on"
-msgstr "Puudub"
+msgstr ""
 
 #. Translators: this represents the state of a check box
 #.
@@ -6916,9 +6889,8 @@ msgstr "tühi"
 #. row of a spreadsheet or table counts as column headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:1438
-#, fuzzy
 msgid "Dynamic column header cleared."
-msgstr "veeru päis"
+msgstr ""
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -7082,9 +7054,8 @@ msgstr "soffice.bin"
 #. OpenOffice and StarOffice.
 #.
 #: ../src/orca/settings.py:830
-#, fuzzy
 msgid "soffice"
-msgstr "soffice.bin"
+msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
@@ -7150,7 +7121,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:878
 msgid "pidgin"
-msgstr ""
+msgstr "pidgin"
 
 #. Translators: "Default Synthesizer" will appear in the list of available
 #. speech engines as a special item.  It refers to the default engine
@@ -7159,17 +7130,15 @@ msgstr ""
 #. name, such as Festival, IBMTTS, etc.
 #.
 #: ../src/orca/speechdispatcherfactory.py:78
-#, fuzzy
 msgid "Default Synthesizer"
-msgstr "Kõnesün_tesaator:"
+msgstr "Vaikimisi süntesaator"
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
 #.
 #: ../src/orca/speechdispatcherfactory.py:91
-#, fuzzy
 msgid "Speech Dispatcher"
-msgstr "Kõne keelatud."
+msgstr ""
 
 #. Translators: This string will appear in the list of
 #. available voices for the current speech engine.  %s will be
@@ -7216,25 +7185,24 @@ msgstr "valimata"
 #. Translators: "page" is the word for a page tab in a tab list.
 #.
 #: ../src/orca/where_am_I.py:427
-#, fuzzy, python-format
+#, python-format
 msgid "%s page"
-msgstr "tühik"
+msgstr ""
 
 #: ../src/orca/where_am_I.py:672
-#, fuzzy
 msgid "Icon panel"
-msgstr "paneel"
+msgstr "Ikoonipaneel"
 
 #. Translators: this is a count of the number of selected icons
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
 #: ../src/orca/where_am_I.py:690
-#, fuzzy, python-format
+#, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
-msgstr[0] "valimata"
-msgstr[1] "valimata"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: this is a indication of the focused icon and the
 #. count of the total number of icons within an icon panel. An
