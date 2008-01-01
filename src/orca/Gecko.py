@@ -5781,8 +5781,10 @@ class Script(default.Script):
                 [textAtOffset, start, end] = text.getTextAfterOffset(offset,
                                                                      boundary)
             if textAtOffset and textAtOffset[-1] == " ":
-                textAtOffset = textAtOffset[0:len(textAtOffset)-1]
-                end -= 1
+                newEnd = len(textAtOffset) - 1
+                if newEnd:
+                    textAtOffset = textAtOffset[0:newEnd]
+                    end -= 1
         else:
             textAtOffset = ""
             start = 0
@@ -7159,7 +7161,6 @@ class Script(default.Script):
                 objects.extend(self.getObjectsFromEOCs(cell,
                                                        0,
                                                        boundary))
-
         # We need to find out if we've started from an embedded object.
         # If we have, we'll want to include whatever follows this object
         # on the same line.
