@@ -416,6 +416,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             for child in menu:
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     regions.append(braille.Region(child.name))
+                    break
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -518,9 +519,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 focusedRegionIndex = 1
 
             item = None
-            for i, child in enumerate(obj):
-                if obj.querySelection().isChildSelected(i):
-                    item = child
+            selection = obj.querySelection()
+            for i in xrange(obj.childCount):
+                if selection.isChildSelected(i):
+                    item = obj[i]
                     break
             if not item:
                 item = obj[0]
@@ -785,6 +787,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             for child in menu:
                 if child.getState().contains(pyatspi.STATE_SELECTED):
                     utterances.append(child.name)
+                    break
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -905,9 +908,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 utterances.append(label)
 
             item = None
-            for i, child in enumerate(obj):
-                if obj.querySelection().isChildSelected(i):
-                    item = child
+            selection = obj.querySelection()
+            for i in xrange(obj.childCount):
+                if selection.isChildSelected(i):
+                    item = obj[i]
                     break
             item = item or obj[0]
             if item:
@@ -1248,6 +1252,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
+            # Labels with children should be ignored.  (This is the
+            # bugzilla form bogusity bug.)
+            #
+            if parent.getRole() == pyatspi.ROLE_LABEL:
+                parent = parent.parent
+                continue
+                
             # Well...now we skip the parent if it's accessible text is
             # a single EMBEDDED_OBJECT_CHARACTER.  The reason for this
             # is that it Script.getDisplayedText will end up coming
@@ -4936,13 +4947,14 @@ class Script(default.Script):
             #
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
-        elif obj and (obj.getRole() == pyatspi.ROLE_MENU_ITEM):
-            # We'll let Firefox handle the navigation of combo boxes.
+        elif obj and (obj.getRole() in [pyatspi.ROLE_MENU_ITEM,
+                                        pyatspi.ROLE_LIST_ITEM]):
+            # We'll let Firefox handle the navigation of combo boxes and
+            # lists in forms.
             #
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSED)
 
-        elif obj and obj.getRole() in [pyatspi.ROLE_LIST,
-                                       pyatspi.ROLE_LIST_ITEM]:
+        elif obj and (obj.getRole() == pyatspi.ROLE_LIST):
             # We'll let Firefox handle the navigation of lists in forms.
             #
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
@@ -5702,11 +5714,11 @@ class Script(default.Script):
             newCell = table.getAccessibleAt(nextCell[0], nextCell[1])
             if newCell:
                 [obj, offset] = self.findFirstCaretContext(newCell, 0)
-                extents = self.getExtents(newCell, 0, 1)
+                extents = self.getExtents(obj, offset, offset + 1)
                 isField = self.isFormField(obj)
-                if self.queryNonEmptyText(newCell) \
+                if self.queryNonEmptyText(obj) \
                    and not self.isBlankCell(newCell):
-                    text = self.getDisplayedText(newCell)
+                    text = self.getDisplayedText(obj)
 
         return [newCell, text, extents, isField]
 
@@ -5926,6 +5938,8 @@ class Script(default.Script):
                                   self.getCharacterOffsetInParent(prevSibling)
 
             guess = self.expandEOCs(onLeft, startOffset, endOffset)
+            if guess:
+                guess = guess.decode("UTF-8").strip()
             if not guess and onLeft.getRole() == pyatspi.ROLE_IMAGE:
                 guess = onLeft.name
 
@@ -5959,6 +5973,8 @@ class Script(default.Script):
                                 return None
 
                 guess = self.expandEOCs(onRight, startOffset, endOffset)
+                if guess:
+                    guess = guess.decode("UTF-8").strip()
                 if not guess and onRight.getRole() == pyatspi.ROLE_IMAGE:
                     guess = onRight.name
 
@@ -6399,8 +6415,14 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
+        # We do not want to descend objects of certain role types.
+        #
+        doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+                       and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                             pyatspi.ROLE_LIST]
+
         text = self.queryNonEmptyText(obj)
-        if text and not (self.isAriaWidget(obj) 
+        if text and not (self.isAriaWidget(obj) \
                          and obj.getRole() == pyatspi.ROLE_LIST):
             unicodeText = self.getUnicodeText(obj)
 
@@ -6426,14 +6448,11 @@ class Script(default.Script):
                 else:
                     nextOffset += 1
 
-
-        # If this is a list in an HTML form, we don't want to place the
-        # caret inside the list, but rather treat the list as a single
-        # object.  Otherwise, if it has children, look there.
+        # If this is a list or combo box in an HTML form, we don't want
+        # to place the caret inside the list, but rather treat the list
+        # as a single object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj[0] \
-             and not ((obj.getRole() == pyatspi.ROLE_LIST) \
-                 and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+        elif obj.childCount and obj[0] and not doNotDescend:
             try:
                 return self.findNextCaretInOrder(obj[0],
                                                  -1,
@@ -6498,6 +6517,12 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
+        # We do not want to descend objects of certain role types.
+        #
+        doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+                       and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                             pyatspi.ROLE_LIST]
+
         text = self.queryNonEmptyText(obj)
         if text and not (self.isAriaWidget(obj) \
                          and obj.getRole() == pyatspi.ROLE_LIST):
@@ -6528,14 +6553,11 @@ class Script(default.Script):
                 else:
                     previousOffset -= 1
 
-        # If this is a list in an HTML form, we don't want to place the
-        # caret inside the list, but rather treat the list as a single
-        # object.  Otherwise, if it has children, look there.
+        # If this is a list or combo box in an HTML form, we don't want
+        # to place the caret inside the list, but rather treat the list
+        # as a single object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj[obj.childCount - 1] \
-             and not ((obj.getRole() == pyatspi.ROLE_LIST) \
-                 and obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-
+        elif obj.childCount and obj[obj.childCount - 1] and not doNotDescend:
             try:
                 return self.findPreviousCaretInOrder(
                     obj[obj.childCount - 1],
@@ -6633,7 +6655,25 @@ class Script(default.Script):
                 else:
                     previousObj = obj
 
+            role = previousObj.getRole()
+            if role == pyatspi.ROLE_MENU_ITEM:
+                return previousObj.parent.parent
+            elif role == pyatspi.ROLE_LIST_ITEM:
+                parent = previousObj.parent
+                if parent.getState().contains(pyatspi.STATE_FOCUSABLE) \
+                   and not self.isAriaWidget(parent):
+                    return parent
+
             while previousObj.childCount:
+                role = previousObj.getRole()
+                state = previousObj.getState()
+                if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
+                    break
+                elif role == pyatspi.ROLE_LIST \
+                     and state.contains(pyatspi.STATE_FOCUSABLE) \
+                     and not self.isAriaWidget(previousObj):
+                    break
+
                 index = previousObj.childCount - 1
                 while index >= 0:
                     child = previousObj[index]
@@ -6672,13 +6712,24 @@ class Script(default.Script):
         if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
 
-        # If the object has children, we'll choose the first one.
+        # If the object has children, we'll choose the first one,
+        # unless it's a combo box or a focusable HTML list.
         #
         # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
         # a bit of a challenge.]]]
         #
+        role = obj.getRole()
+        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
+            descend = False
+        elif role == pyatspi.ROLE_LIST \
+            and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+            and not self.isAriaWidget(obj):
+            descend = False
+        else:
+            descend = True
+
         index = 0
-        while index < obj.childCount:
+        while descend and index < obj.childCount:
             child = obj[index]
             # bandaid for Gecko broken hierarchy
             if child is None:

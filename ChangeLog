@@ -1,6 +1,14 @@
 2007-12-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Fix for bug #480881 - Firefox is very slow on pages with forms.
+          Note that we are still working on some related performance
+          issues that impact navigation on pages with forms.  This fix
+          just brings us closer to where we want to be.
+
+2007-12-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           More work on bug #500016 - Reading web pages by line in Firefox
           3 is slow.
 
