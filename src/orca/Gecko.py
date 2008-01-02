@@ -6430,7 +6430,7 @@ class Script(default.Script):
             # we'll arrow to it.  (We can't just strip the string otherwise
             # we skip over blank lines that one could otherwise arrow to.)
             #
-            if unicodeText[-1] == " " and len(unicodeText) > 1:
+            if len(unicodeText) > 1 and unicodeText[-1] == " ":
                 unicodeText = unicodeText[0:len(unicodeText) - 1]
 
             nextOffset = startOffset + 1
@@ -6532,7 +6532,7 @@ class Script(default.Script):
             # we'll arrow to it.  (We can't just strip the string otherwise
             # we skip over blank lines that one could otherwise arrow to.)
             #
-            if unicodeText[-1] == " " and len(unicodeText) > 1:
+            if len(unicodeText) > 1 and unicodeText[-1] == " ":
                 unicodeText = unicodeText[0:len(unicodeText) - 1]
 
             if (startOffset == -1) or (startOffset > len(unicodeText)):

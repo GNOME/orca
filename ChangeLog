@@ -1,3 +1,9 @@
+2008-01-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          More work on bug #505102 - Pressing Up/Down in FF3 is moving to
+          spaces at the end of the current line.
+
 2008-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
