@@ -505,6 +505,7 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
         prefTop    = top or settings.magZoomerTop
         prefRight  = right or settings.magZoomerRight
         prefBottom = bottom or settings.magZoomerBottom
+    orca_state.zoomerType = position
     updateTarget = True
 
     # If we're not using composite, bad things will happen if we allow the
@@ -590,12 +591,15 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     value = restore.get('magCrossHairColor', settings.magCrossHairColor)
     setMagnifierObjectColor("crosswire-color", value, False)
 
-    value = restore.get('enableMagCrossHair', settings.enableMagCrossHair)
-    setMagnifierCrossHair(value, False)
+    enableCrossHair = restore.get('enableMagCrossHair',
+                                  settings.enableMagCrossHair)
+    setMagnifierCrossHair(enableCrossHair, False)
 
     value = restore.get('enableMagCrossHairClip',
                         settings.enableMagCrossHairClip)
     setMagnifierCrossHairClip(value, False)
+
+    orca_state.mouseEnhancementsEnabled = enableCursor or enableCrossHair
 
 def __setupZoomer(restore=None):
     """Creates a zoomer in the magnifier
@@ -842,10 +846,6 @@ def applySettings():
     _edgeMargin = settings.magEdgeMargin
     _pointerFollowsZoomer = settings.magPointerFollowsZoomer
     _pointerFollowsFocus = settings.magPointerFollowsFocus
-
-    orca_state.zoomerType = settings.magZoomerType
-    orca_state.mouseEnhancementsEnabled = settings.enableMagCursor \
-                                          or settings.enableMagCrossHair
 
     #print "MAGNIFIER PROPERTIES:", _magnifier
     #__dumpPropertyBag(_magnifier)
@@ -1176,7 +1176,35 @@ def setZoomerObjectSize(magProperty, size, updateScreen=True):
     if not _initialized:
         return
 
-    bonobo.pbclient_set_long(_zoomerPBag, magProperty, size)
+    if magProperty == "border-size":
+        try:
+            left = right = top = bottom = 0
+            if orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+                left = size
+            elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+                right = size
+            elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+                bottom = size
+            elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+                top = size
+            elif orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
+                if _targetDisplayBounds.x1 > _sourceDisplayBounds.x1:
+                    left = size
+                if _targetDisplayBounds.x2 < _sourceDisplayBounds.x2:
+                    right = size
+                if _targetDisplayBounds.y1 > _sourceDisplayBounds.y1:
+                    top = size
+                if _targetDisplayBounds.y2 < _sourceDisplayBounds.y2:
+                    bottom = size
+                
+            bonobo.pbclient_set_long(_zoomerPBag, "border-size-left", left)
+            bonobo.pbclient_set_long(_zoomerPBag, "border-size-top", top)
+            bonobo.pbclient_set_long(_zoomerPBag, "border-size-right", right)
+            bonobo.pbclient_set_long(_zoomerPBag, "border-size-bottom", bottom)
+        except:
+            bonobo.pbclient_set_long(_zoomerPBag, "border-size", size)
+    else:
+        bonobo.pbclient_set_long(_zoomerPBag, magProperty, size)
 
     if updateScreen:
         _zoomer.markDirty(_roi)
@@ -1623,6 +1651,7 @@ def cycleZoomerType(script=None, inputEvent=None):
     # We don't want to stomp on any command-altered settings
     #
     toRestore = {}
+
     [levelX, levelY] = _zoomer.getMagFactor()
     if levelX != settings.magZoomFactor:
         toRestore['magZoomFactor'] = levelX
@@ -1640,20 +1669,14 @@ def cycleZoomerType(script=None, inputEvent=None):
              'magSmoothingMode': settings.MAG_SMOOTHING_MODE_BILINEAR,
              'magZoomerBorderColor': '#000000'})
 
-    setupMagnifier(orca_state.zoomerType)
+    setupMagnifier(orca_state.zoomerType, restore = toRestore)
 
-    # Now that we have our Magnifier set up, restore anything that needs
-    # restoring.
-    #
     if not orca_state.mouseEnhancementsEnabled:
         setMagnifierCrossHair(False)
         setMagnifierObjectColor("cursor-color",
                                 settings.magCursorColor,
                                 False)
         setMagnifierCursor(False, False, 0)
-
-    if toRestore:
-        __setupZoomer(restore = toRestore)
 
     if orca_state.zoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
         if _fullScreenCapable:

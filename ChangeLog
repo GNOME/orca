@@ -4,6 +4,10 @@
           More work on bug #505102 - Pressing Up/Down in FF3 is moving to
           spaces at the end of the current line.
 
+        * src/orca/mag.py:
+          Fix for bug # 505293 - Zoomer borders should only be displayed
+          at source display intersection.
+
 2008-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
