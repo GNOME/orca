@@ -4053,7 +4053,10 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         index = self.getComboBoxIndex(comboBox, filteringMode)
         comboBox.set_active(index)
 
-        if self.enableLiveUpdating:
+        enable = mag.isFilteringCapable()
+        self.get_widget("magColorFilteringHbox").set_sensitive(enable)
+
+        if enable and self.enableLiveUpdating:
             mag.setZoomerColorFilter(mode)
 
     def magColorFilteringChanged(self, widget):

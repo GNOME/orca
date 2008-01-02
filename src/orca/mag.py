@@ -1341,7 +1341,7 @@ def setZoomerColorFilter(colorFilter, updateScreen=True):
     - updateScreen:  Whether or not to update the screen
     """
 
-    if not _initialized:
+    if not _initialized or not isFilteringCapable():
         return
 
     if colorFilter == settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED:
@@ -1372,6 +1372,18 @@ def setZoomerColorFilter(colorFilter, updateScreen=True):
 
     if updateScreen:
         _zoomer.markDirty(_roi)
+
+def isFilteringCapable():
+    """Returns True if we're able to take advantage of libcolorblind's color
+    filtering.
+    """
+
+    try:
+        capable = _magnifier.supportColorblindFilters()
+    except:
+        capable = False
+
+    return capable
 
 def updateMouseTracking(newMode):
     """Updates the mouse tracking mode.

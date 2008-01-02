@@ -1252,8 +1252,8 @@ Hyperlink</property>
 				  <property name="wrap">False</property>
 				  <property name="adjustment">10 1 9999 1 10 10</property>
 				  <accessibility>
-				    <atkrelation target="speakProgressBarUnitsLabel" type="labelled-by"/>
 				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
+				    <atkrelation target="speakProgressBarUnitsLabel" type="labelled-by"/>
 				  </accessibility>
 				  <signal name="value_changed" handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT"/>
 				</widget>
@@ -3366,8 +3366,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 24 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
 							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
+							    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCursorSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:31:48 GMT"/>
 							</widget>
@@ -3719,8 +3719,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 1 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
 							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
+							    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
 							</widget>
@@ -4157,8 +4157,8 @@ None</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">0 0 100 1 10 10</property>
 						  <accessibility>
-						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
 						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
+						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
 						  </accessibility>
 						  <signal name="value_changed" handler="magEdgeMarginValueChanged" last_modification_time="Thu, 06 Dec 2007 22:57:50 GMT"/>
 						</widget>
@@ -5954,7 +5954,7 @@ Bilinear</property>
 	  <property name="right_padding">0</property>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox62">
+	    <widget class="GtkHBox" id="magColorFilteringHbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">5</property>

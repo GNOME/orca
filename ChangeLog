@@ -5,8 +5,14 @@
           spaces at the end of the current line.
 
         * src/orca/mag.py:
-          Fix for bug # 505293 - Zoomer borders should only be displayed
+          Fix for bug #505293 - Zoomer borders should only be displayed
           at source display intersection.
+
+        * src/orca/mag.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #505306 - Orca's color filtering combo box should
+          be greyed out if the filters are not available.
 
 2008-01-02  Rich Burridge <rich.burridge@sun.com>
 
