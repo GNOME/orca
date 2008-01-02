@@ -1646,16 +1646,43 @@ class Script(script.Script):
             text.setCaretOffset(context.currentOffset)
 
     def sayAll(self, inputEvent):
-        try:
-            orca_state.locusOfFocus.queryText()
-        except NotImplementedError:
-            speech.speakUtterances(
-                self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
-        except AttributeError:
-            pass
+        if self.isTextArea(orca_state.locusOfFocus):
+            try:
+                orca_state.locusOfFocus.queryText()
+            except NotImplementedError:
+                speech.speakUtterances(
+                    self.speechGenerator.getSpeech(orca_state.locusOfFocus,
+                                                   False))
+            except AttributeError:
+                pass
+            else:
+                speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                              self.__sayAllProgressCallback)
         else:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                          self.__sayAllProgressCallback)
+            # Try to "say all" for the current dialog/window by flat 
+            # reviewing everything. See bug #354462 for more details.
+            #
+            context = self.getFlatReviewContext()
+
+            regions = []
+            utterances = []
+            context.goBegin()
+            while True:
+                [wordString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.ZONE)
+
+                regions.append(braille.Region(wordString))
+                regions.append(braille.Region(" "))
+                utterances.append(wordString)
+
+                moved = context.goNext(flat_review.Context.ZONE,
+                                       flat_review.Context.WRAP_LINE)
+
+                if not moved:
+                    break
+
+            braille.displayRegions([regions, regions[0]])
+            speech.speakUtterances(utterances)
 
         return True
 

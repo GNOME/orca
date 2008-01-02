@@ -1,3 +1,9 @@
+2008-01-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fix for bug #354462 - SayAll of dialogs (versus just a single 
+          text area)
+
 2007-12-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
