@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-17 13:11+0000\n"
-"PO-Revision-Date: 2007-12-18 20:45+0100\n"
+"POT-Creation-Date: 2007-12-18 19:48+0000\n"
+"PO-Revision-Date: 2008-01-02 04:45+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,8 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Lector de pantalla y magnificador Orca"
 
 #: ../orca.desktop.in.h:2
-msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Presenta información sobre lo que hay en la pantalla por medio de voz, "
 "braille o magnificando ésta"
@@ -58,7 +59,8 @@ msgstr "Ninguna aplicación tiene el foco."
 #: ../src/orca/app_gui_prefs.py:305
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
-msgstr "Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
+msgstr ""
+"Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
 
 #. Translators: this announces that a bookmark has been entered.
 #. Orca allows users to tell it to remember a particular spot in an
@@ -1706,7 +1708,8 @@ msgstr "Muestra el diálogo de configuración de preferencias."
 #.
 #: ../src/orca/default.py:641
 msgid "Displays the application preferences configuration dialog."
-msgstr "Muestra el diálogo de configuración de preferencias para la aplicación."
+msgstr ""
+"Muestra el diálogo de configuración de preferencias para la aplicación."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2680,7 +2683,8 @@ msgstr "Usar la navegación _estructural de Orca"
 #.
 #: ../src/orca/Gecko.py:2946
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr "_Posicionar el cursor al principio de línea cuando se navega verticalmente"
+msgstr ""
+"_Posicionar el cursor al principio de línea cuando se navega verticalmente"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -3644,7 +3648,8 @@ msgstr "2. Portátil"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr "Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
+msgstr ""
+"Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
@@ -4708,12 +4713,12 @@ msgstr "_Tono:"
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
 #: ../src/orca/orca-setup.glade.h:109
 msgid "Pointer follows focus"
-msgstr ""
+msgstr "El puntero sigue al foco"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
 #: ../src/orca/orca-setup.glade.h:111
 msgid "Pointer follows zoomer"
-msgstr ""
+msgstr "El puntero sigue al ampliador"
 
 #: ../src/orca/orca-setup.glade.h:112
 msgid "Pronunciation"
@@ -6506,7 +6511,8 @@ msgstr "evento del calendario"
 #.
 #: ../src/orca/scripts/Evolution.py:343
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "Conmutar si se presenta el correo nuevo si no se tiene el script activo."
+msgstr ""
+"Conmutar si se presenta el correo nuevo si no se tiene el script activo."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -6625,7 +6631,8 @@ msgid "row %d of %d"
 msgstr "fila %d de %d"
 
 #: ../src/orca/scripts/gaim.py:386
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 "conmutar si se prefijan los mensajes de la sala de charla con el nombre de "
 "la sala de charla."
@@ -6643,7 +6650,7 @@ msgstr "Leer el nombre de la sala de chat"
 
 #: ../src/orca/scripts/gaim.py:478
 msgid "Speak all _new messages"
-msgstr ""
+msgstr "Hablar todos los mensajes _nuevos"
 
 #. Translators: Orca will speak only new chat messages for the channel
 #. that currently has focus, irrespective of whether the pidgin
@@ -6651,12 +6658,11 @@ msgstr ""
 #.
 #: ../src/orca/scripts/gaim.py:491
 msgid "Speak only _channel with focus"
-msgstr ""
+msgstr "Hablar solamente el _canal con el foco"
 
 #: ../src/orca/scripts/gaim.py:503
-#, fuzzy
 msgid "Speak all channels when application has _focus"
-msgstr "Ninguna aplicación tiene el foco."
+msgstr "Hablar todos los canales cuando la aplicación tiene el _foco"
 
 #. Translators: this is the title of a panel holding options for
 #. how messages in the pidgin chat rooms should be spoken.
@@ -6885,7 +6891,8 @@ msgstr ""
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:899
-msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid ""
+"Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Establece la columna que usar como cabeceras dinámicas de fila para usar al "
 "decir las celdas de cálculo."
@@ -7312,4 +7319,3 @@ msgstr "elemento %d de %d"
 #, python-format
 msgid "Default button is %s"
 msgstr "El botón predeterminado es %s"
-
