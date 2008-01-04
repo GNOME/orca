@@ -102,6 +102,11 @@ class Script(script.Script):
         #
         self.lastWhereAmIEvent = None
 
+        # Used to determine whether the used double clicked on the
+        # "say all" key.
+        #
+        self.lastSayAllEvent = None
+
         # Unicode currency symbols (populated by the
         # getUnicodeCurrencySymbols() routine).
         #
@@ -1646,7 +1651,33 @@ class Script(script.Script):
             text.setCaretOffset(context.currentOffset)
 
     def sayAll(self, inputEvent):
-        if self.isTextArea(orca_state.locusOfFocus):
+        clickCount = self.getClickCount(self.lastSayAllEvent, inputEvent)
+        doubleClick = clickCount == 2
+        self.lastSayAllEvent = inputEvent
+
+        if doubleClick:
+            # Try to "say all" for the current dialog/window by flat
+            # reviewing everything. See bug #354462 for more details.
+            #
+            context = self.getFlatReviewContext()
+
+            utterances = []
+            context.goBegin()
+            while True:
+                [wordString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.ZONE)
+
+                utterances.append(wordString)
+
+                moved = context.goNext(flat_review.Context.ZONE,
+                                       flat_review.Context.WRAP_LINE)
+
+                if not moved:
+                    break
+
+            speech.speakUtterances(utterances)
+
+        elif self.isTextArea(orca_state.locusOfFocus):
             try:
                 orca_state.locusOfFocus.queryText()
             except NotImplementedError:
@@ -1658,31 +1689,6 @@ class Script(script.Script):
             else:
                 speech.sayAll(self.textLines(orca_state.locusOfFocus),
                               self.__sayAllProgressCallback)
-        else:
-            # Try to "say all" for the current dialog/window by flat 
-            # reviewing everything. See bug #354462 for more details.
-            #
-            context = self.getFlatReviewContext()
-
-            regions = []
-            utterances = []
-            context.goBegin()
-            while True:
-                [wordString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.ZONE)
-
-                regions.append(braille.Region(wordString))
-                regions.append(braille.Region(" "))
-                utterances.append(wordString)
-
-                moved = context.goNext(flat_review.Context.ZONE,
-                                       flat_review.Context.WRAP_LINE)
-
-                if not moved:
-                    break
-
-            braille.displayRegions([regions, regions[0]])
-            speech.speakUtterances(utterances)
 
         return True
 
