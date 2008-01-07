@@ -201,7 +201,20 @@ class Script(default.Script):
 
         Returns True if the event is of interest.
         """
+
+        # The Java platform chooses to give us keycodes different from
+        # the native platform keycodes.  So, we hack here by converting
+        # the keysym we get from Java into a keycode.
+
         keysym = keyboardEvent.event_string
+
+        # We need to make sure we have a keysym-like thing.  The space
+        # character is not a keysym, so we convert it into the string,
+        # 'space', which is.
+        #
+        if keysym == " ":
+            keysym = "space"
+
         keyboardEvent.hw_code = keybindings.getKeycode(keysym)
         return default.Script.consumesKeyboardEvent(self, keyboardEvent)
 
