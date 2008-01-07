@@ -125,7 +125,7 @@ class Script(Gecko.Script):
 
         # Handle dialogs.
         #
-        if top.getRole() == pyatspi.ROLE_DIALOG:
+        if top and top.getRole() == pyatspi.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
         if not consume:

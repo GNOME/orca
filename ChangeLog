@@ -1,3 +1,9 @@
+2008-01-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Thunderbird.py:
+          Fix for bug #502084 – Running Orca with Thunderbird v2.0.X with 
+          compose window open generates a stack trace.
+
 2008-01-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
