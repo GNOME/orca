@@ -1,5 +1,12 @@
 2008-01-07  Willie Walker <william.walker@sun.com>
 
+        * test/keystrokes/java/role_check_menu_item.py:
+	  test/keystrokes/java/role_check_box.py:
+	  Add test assertions to tests, also verifying that potential
+	  bugs have been resolved.
+
+2008-01-07  Willie Walker <william.walker@sun.com>
+
 	* src/orca/J2SE-access-bridge.py: Fix for bug #507886 - Orca+Space
 	  when in Java application presents script summary debug
 
