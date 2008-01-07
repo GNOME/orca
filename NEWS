@@ -1,3 +1,14 @@
+2.20.3 - 07-Dec-2008
+
+* Added "# -*- coding: utf-8 -*-" to the top of chnames.py to eliminate 
+  Python error message: "SyntaxError: Non-ASCII character '\xc2' in file"
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    et      Estonian             Ivar Smolin and Priit Laes
+
+==========
+
 2.20.2 - 28-Nov-2007
 
 General:
