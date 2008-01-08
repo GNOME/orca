@@ -448,7 +448,7 @@ class Script(default.Script):
         # Translators: If this checkbox is checked, then Orca will speak
         # the name of the chat room.
         #
-        label = _("Speak Chat Room name")
+        label = _("_Speak Chat Room name")
         self.speakNameCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakNameCheckButton)
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
@@ -474,8 +474,7 @@ class Script(default.Script):
         # irrespective of whether the pidgin application currently has focus.
         # This is the default behaviour.
         #
-        self.allMessagesRadioButton = gtk.RadioButton(None, 
-                                              _("Speak all _new messages"))
+        self.allMessagesRadioButton = gtk.RadioButton(None, _("All cha_nnels"))
         gtk.Widget.show(self.allMessagesRadioButton)
         gtk.Box.pack_start(messagesVBox, self.allMessagesRadioButton,
                            False, False, 0)
@@ -488,7 +487,8 @@ class Script(default.Script):
         # application has focus.
         #
         self.focusedChannelRadioButton = gtk.RadioButton( \
-            self.allMessagesRadioButton, _("Speak only _channel with focus"))
+                             self.allMessagesRadioButton, \
+                             _("A channel only if its _window is active"))
         gtk.Widget.show(self.focusedChannelRadioButton)
         gtk.Box.pack_start(messagesVBox, self.focusedChannelRadioButton,
                            False, False, 0)
@@ -500,7 +500,7 @@ class Script(default.Script):
         #
         self.allChannelsRadioButton = gtk.RadioButton( \
                         self.allMessagesRadioButton,
-                       _("Speak all channels when application has _focus"))
+                       _("All channels when an_y Pidgin window is active"))
         gtk.Widget.show(self.allChannelsRadioButton)
         gtk.Box.pack_start(messagesVBox, self.allChannelsRadioButton,
                            False, False, 0)
@@ -510,9 +510,10 @@ class Script(default.Script):
         # Translators: this is the title of a panel holding options for
         # how messages in the pidgin chat rooms should be spoken.
         #
-        messagesLabel = gtk.Label("<b>%s</b>" % _("Messages"))
+        messagesLabel = gtk.Label("<b>%s</b>" % _("Speak messages from"))
         gtk.Widget.show(messagesLabel)
         gtk.Frame.set_label_widget(messagesFrame, messagesLabel)
+        messagesFrame.set_shadow_type(gtk.SHADOW_NONE)
         gtk.Label.set_use_markup(messagesLabel, True)
 
         return vbox
