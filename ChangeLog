@@ -1,5 +1,11 @@
 2008-01-08  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #463867 - Source display and Target display should 
+          self-populate in Orca Prefs dialog.
+          (Tag-team effort with Joanie - thanks!)
+
         * src/orca/scripts/gaim.py:
           Refixed for bug #485522 - Orca should allow the user to specify 
           the chat messages that get spoken/brailled.

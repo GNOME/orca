@@ -1252,8 +1252,8 @@ Hyperlink</property>
 				  <property name="wrap">False</property>
 				  <property name="adjustment">10 1 9999 1 10 10</property>
 				  <accessibility>
-				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
 				    <atkrelation target="speakProgressBarUnitsLabel" type="labelled-by"/>
+				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
 				  </accessibility>
 				  <signal name="value_changed" handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT"/>
 				</widget>
@@ -3366,8 +3366,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 24 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
 							    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
+							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCursorSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:31:48 GMT"/>
 							</widget>
@@ -3719,8 +3719,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 1 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
 							    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
+							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
 							</widget>
@@ -4157,8 +4157,8 @@ None</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">0 0 100 1 10 10</property>
 						  <accessibility>
-						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
 						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
+						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
 						  </accessibility>
 						  <signal name="value_changed" handler="magEdgeMarginValueChanged" last_modification_time="Thu, 06 Dec 2007 22:57:50 GMT"/>
 						</widget>
@@ -6065,72 +6065,6 @@ Negative hue shift</property>
 		      <property name="column_spacing">20</property>
 
 		      <child>
-			<widget class="GtkHBox" id="hbox51">
-			  <property name="visible">True</property>
-			  <property name="homogeneous">False</property>
-			  <property name="spacing">3</property>
-
-			  <child>
-			    <widget class="GtkLabel" id="magSourceDisplayLabel">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">S_ource display:</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">1</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			      <property name="mnemonic_widget">magSourceDisplayEntry</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			      <accessibility>
-				<atkrelation target="magSourceDisplayEntry" type="label-for"/>
-			      </accessibility>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">False</property>
-			      <property name="fill">False</property>
-			    </packing>
-			  </child>
-
-			  <child>
-			    <widget class="GtkEntry" id="magSourceDisplayEntry">
-			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="editable">True</property>
-			      <property name="visibility">True</property>
-			      <property name="max_length">0</property>
-			      <property name="text"></property>
-			      <property name="has_frame">True</property>
-			      <property name="invisible_char">*</property>
-			      <property name="activates_default">False</property>
-			      <accessibility>
-				<atkrelation target="magSourceDisplayLabel" type="labelled-by"/>
-			      </accessibility>
-			      <signal name="changed" handler="magSourceDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:53:43 GMT"/>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">True</property>
-			      <property name="fill">True</property>
-			    </packing>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			</packing>
-		      </child>
-
-		      <child>
 			<widget class="GtkHBox" id="hbox52">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
@@ -6166,25 +6100,22 @@ Negative hue shift</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkEntry" id="magTargetDisplayEntry">
+			    <widget class="GtkComboBoxEntry" id="magTargetDisplayEntry">
+			      <property name="width_request">89</property>
 			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="editable">True</property>
-			      <property name="visibility">True</property>
-			      <property name="max_length">0</property>
-			      <property name="text"></property>
+			      <property name="add_tearoffs">False</property>
 			      <property name="has_frame">True</property>
-			      <property name="invisible_char">*</property>
-			      <property name="activates_default">False</property>
+			      <property name="focus_on_click">True</property>
 			      <accessibility>
 				<atkrelation target="magTargetDisplayLabel" type="labelled-by"/>
 			      </accessibility>
-			      <signal name="changed" handler="magTargetDisplayChanged" last_modification_time="Tue, 19 Sep 2006 19:54:09 GMT"/>
+			      <signal name="changed" handler="magTargetDisplayChanged" last_modification_time="Wed, 02 Jan 2008 21:16:20 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
-			      <property name="expand">True</property>
-			      <property name="fill">True</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			      <property name="pack_type">GTK_PACK_END</property>
 			    </packing>
 			  </child>
 			</widget>
@@ -6193,6 +6124,72 @@ Negative hue shift</property>
 			  <property name="right_attach">2</property>
 			  <property name="top_attach">0</property>
 			  <property name="bottom_attach">1</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options">fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkHBox" id="hbox51">
+			  <property name="visible">True</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">3</property>
+
+			  <child>
+			    <widget class="GtkLabel" id="magSourceDisplayLabel">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">S_ource display:</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">1</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">magSourceDisplayEntry</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
+			      <accessibility>
+				<atkrelation target="magSourceDisplayEntry" type="label-for"/>
+			      </accessibility>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkComboBoxEntry" id="magSourceDisplayEntry">
+			      <property name="width_request">89</property>
+			      <property name="visible">True</property>
+			      <property name="add_tearoffs">False</property>
+			      <property name="has_frame">True</property>
+			      <property name="focus_on_click">True</property>
+			      <accessibility>
+				<atkrelation target="magSourceDisplayLabel" type="labelled-by"/>
+			      </accessibility>
+			      <signal name="changed" handler="magSourceDisplayChanged" last_modification_time="Wed, 02 Jan 2008 21:16:33 GMT"/>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			      <property name="pack_type">GTK_PACK_END</property>
+			    </packing>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
+			  <property name="x_options">fill</property>
 			  <property name="y_options">fill</property>
 			</packing>
 		      </child>

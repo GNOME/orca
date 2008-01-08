@@ -1262,8 +1262,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         display = gtk.gdk.display_get_default()
         nScreens = display.get_n_screens()
         targetScreen = display.get_default_screen()
-        targetDisplay = \
-          orca_state.advancedMag.get_widget("magTargetDisplayEntry").get_text()
+        targetDisplay = orca_state.advancedMag.get_widget(\
+                             "magTargetDisplayEntry").get_active_text()
         if targetDisplay:
             t = targetDisplay.split(".")
             try:
@@ -1289,9 +1289,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             0, targetHeight, 
             1,
             targetHeight / 16, targetHeight)
-        self.get_widget("magZoomerTopSpinButton").set_adjustment(adjustment)
+
+        spinButton = orca_state.orcaOS.get_widget("magZoomerTopSpinButton")
+        spinButton.set_adjustment(adjustment)
         if topPosition > targetHeight:
-            self.get_widget("magZoomerTopSpinButton").update()
+            spinButton.update()
 
         # Get the zoomer placement left preference and set the left spin
         # button value accordingly. Set the left spin button "max size" to
@@ -1304,9 +1306,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             0, targetWidth, 
             1,
             targetWidth / 16, targetWidth)
-        self.get_widget("magZoomerLeftSpinButton").set_adjustment(adjustment)
+
+        spinButton = orca_state.orcaOS.get_widget("magZoomerLeftSpinButton")
+        spinButton.set_adjustment(adjustment)
         if leftPosition > targetWidth:
-            self.get_widget("magZoomerLeftSpinButton").update()
+            spinButton.update()
 
         # Get the zoomer placement right preference and set the right spin
         # button value accordingly. Set the right spin button "max size" to
@@ -1319,9 +1323,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             0, targetWidth, 
             1,
             targetWidth / 16, targetWidth)
-        self.get_widget("magZoomerRightSpinButton").set_adjustment(adjustment)
+
+        spinButton = orca_state.orcaOS.get_widget("magZoomerRightSpinButton")
+        spinButton.set_adjustment(adjustment)
         if rightPosition > targetWidth:
-            self.get_widget("magZoomerRightSpinButton").update()
+            spinButton.update()
 
         # Get the zoomer placement bottom preference and set the bottom
         # spin button value accordingly. Set the bottom spin button "max size"
@@ -1334,9 +1340,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             0, targetHeight, 
             1,
             targetHeight / 16, targetHeight)
-        self.get_widget("magZoomerBottomSpinButton").set_adjustment(adjustment)
+
+        spinButton = orca_state.orcaOS.get_widget("magZoomerBottomSpinButton")
+        spinButton.set_adjustment(adjustment)
         if bottomPosition > targetHeight:
-            self.get_widget("magZoomerBottomSpinButton").update()
+            spinButton.update()
 
     def _initGUIState(self):
         """Adjust the settings of the various components on the
@@ -1547,8 +1555,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         display = gtk.gdk.display_get_default()
         nScreens = display.get_n_screens()
         sourceScreen = display.get_default_screen()
-        sourceDisplay = \
-          orca_state.advancedMag.get_widget("magSourceDisplayEntry").get_text()
+        sourceDisplay = orca_state.advancedMag.get_widget(\
+                              "magSourceDisplayEntry").get_active_text()
         if sourceDisplay:
             s = sourceDisplay.split(".")
             try:
@@ -1733,7 +1741,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         self.enableLiveUpdating = liveUpdating
 
-    def getComboBoxIndex(self, combobox, searchStr):
+    def getComboBoxIndex(self, combobox, searchStr, col=0):
         """ For each of the entries in the given combo box, look for searchStr.
             Return the index of the entry if searchStr is found.
 
@@ -1748,7 +1756,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         model = combobox.get_model()
         myiter = model.get_iter_first()
         for i in range(0, len(model)):
-            name = model.get_value(myiter, 0)
+            name = model.get_value(myiter, col)
             if name == searchStr:
                 return i
             myiter = model.iter_next(myiter)
@@ -1803,6 +1811,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         combobox.add_attribute(cell, 'text', 1)
         model = gtk.ListStore(int, str)
         combobox.set_model(model)
+
+        # Force the display comboboxes to be left aligned.
+        #
+        if isinstance(combobox, gtk.ComboBoxEntry):
+            size = combobox.size_request()
+            cell.set_fixed_size(size[0] - 29, -1)
 
         return model
 
@@ -3705,6 +3719,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         # To make pylint happy.
         #
         self.savedSettings = None
+        self.sourceDisplayModel = None
+        self.targetDisplayModel = None
 
     def init(self):
         """Initialize the magnification Advanced Settings dialog GUI.
@@ -3712,6 +3728,12 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         to match. 
         """
 
+        if not self.sourceDisplayModel:
+            self.sourceDisplayModel = \
+                self._initComboBox(self.get_widget("magSourceDisplayEntry"))
+        if not self.targetDisplayModel:
+            self.targetDisplayModel = \
+                self._initComboBox(self.get_widget("magTargetDisplayEntry"))
         self._initGUIState()
 
     def _initGUIState(self):
@@ -3750,11 +3772,34 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         # Get the magnification source and target displays.
         #
+        display = gtk.gdk.display_get_default()
+        nScreens = display.get_n_screens()
+        sourceScreen = display.get_default_screen()
+
+        self.sourceDisplayModel.clear()
+        self.targetDisplayModel.clear()
+        for screenNo in range(0, nScreens):
+            screenName = ":0." + str(screenNo)
+            self.sourceDisplayModel.append((screenNo, screenName))
+            self.targetDisplayModel.append((screenNo, screenName))
+
         sourceDisplay = prefs["magSourceDisplay"]
-        self.get_widget("magSourceDisplayEntry").set_text(sourceDisplay)
+        sourceComboBox = self.get_widget("magSourceDisplayEntry")
+        index = self.getComboBoxIndex(sourceComboBox, sourceDisplay, 1)
+        model = sourceComboBox.get_model()
+        displayIter = model.get_iter(index)
+        if displayIter:
+            value = model.get_value(displayIter, 1)
+            sourceComboBox.get_child().set_text(value)
 
         targetDisplay = prefs["magTargetDisplay"]
-        self.get_widget("magTargetDisplayEntry").set_text(targetDisplay)
+        targetComboBox = self.get_widget("magTargetDisplayEntry")
+        index = self.getComboBoxIndex(targetComboBox, targetDisplay, 1)
+        model = targetComboBox.get_model()
+        displayIter = model.get_iter(index)
+        if displayIter:
+            value = model.get_value(displayIter, 1)
+            targetComboBox.get_child().set_text(value)
 
         self.enableLiveUpdating = liveUpdating
         self.updateRGBBrightness()
@@ -4156,7 +4201,21 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magSourceDisplay"] = widget.get_text()
+        model = widget.get_model()
+        displayIter = widget.get_active_iter()
+        if displayIter:
+            value = model.get_value(displayIter, 1)
+            widget.get_child().set_text(value)
+        else:
+            value = widget.get_child().get_text()
+            index = self.getComboBoxIndex(widget, value, 1)
+            firstIter = model.get_iter_first()
+            if firstIter:
+                firstValue = model.get_value(firstIter, 1)
+                if index or (value == firstValue):
+                    widget.set_active(index)
+
+        self.prefsDict["magSourceDisplay"] = value
 
     def magTargetDisplayChanged(self, widget):
         """Signal handler for the "changed" signal for the
@@ -4169,8 +4228,23 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["magTargetDisplay"] = widget.get_text()
-        self._setZoomerSpinButtons()
+        model = widget.get_model()
+        displayIter = widget.get_active_iter()
+        if displayIter:
+            value = model.get_value(displayIter, 1)
+            widget.get_child().set_text(value)
+        else:
+            value = widget.get_child().get_text()
+            index = self.getComboBoxIndex(widget, value, 1)
+            firstIter = model.get_iter_first()
+            if firstIter:
+                firstValue = model.get_value(firstIter, 1)
+                if index or (value == firstValue):
+                    widget.set_active(index)
+
+        self.prefsDict["magTargetDisplay"] = value
+        if orca_state.orcaOS:
+            self._setZoomerSpinButtons()
 
     def restoreAdvancedSettings(self):
         """Restores the previously saved values of the settings on the 
