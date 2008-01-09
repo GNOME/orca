@@ -7128,9 +7128,10 @@ class Script(default.Script):
         # this line.
         #
         extents = self.getExtents(obj, offset, offset + 1)
-        while not self.isUselessObject(obj) \
-              and not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                        pyatspi.ROLE_TABLE_CELL]:
+        while not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                    pyatspi.ROLE_TABLE_CELL,
+                                    pyatspi.ROLE_SECTION,
+                                    pyatspi.ROLE_PANEL]:
             offsetInParent = self.getCharacterOffsetInParent(obj)
             parentExtents = self.getExtents(obj.parent,
                                             offsetInParent,
@@ -7139,6 +7140,51 @@ class Script(default.Script):
                 break
             offset = offsetInParent
             obj = obj.parent
+
+        # Find the beginning of the line.
+        #
+        text = self.queryNonEmptyText(obj)
+        singleLine = False
+        if text:
+            line = text.getTextAtOffset(offset, boundary)
+            characterCount = text.characterCount
+            singleLine = (line[1] == 0) and (line[2] == characterCount)
+            if line[2] < offset:
+                index = self.getChildIndex(obj, line[1])
+                if index >= 0:
+                    # The start of the line is a link that started on the
+                    # previous line.  We'll set obj to it and get the
+                    # rest of the line later.
+                    #
+                    child = obj[index]
+                    text = self.queryNonEmptyText(child)
+                    if text:
+                        line = text.getTextAtOffset(characterCount, boundary)
+                        obj = child
+                        offset = line[1]
+            else:
+                offset = line[1]
+
+        if singleLine and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            containingTable = self.getAncestor(obj,
+                                               [pyatspi.ROLE_TABLE],
+                                               [pyatspi.ROLE_DOCUMENT_FRAME])
+            if containingTable:
+                table = containingTable.queryTable()
+                if obj.parent == containingTable:
+                    index = obj.getIndexInParent()
+                else:
+                    index = obj.parent.getIndexInParent()
+                row = table.getRowAtIndex(index)
+                col = table.getColumnAtIndex(index)
+                if col > 0:
+                    cell = table.getAccessibleAt(row, 0)
+                    cellExtents = cell.queryComponent().getExtents(0)
+                    cellExtents = [cellExtents.x, cellExtents.y,
+                                   cellExtents.width, cellExtents.height]
+                    if self.onSameLine(extents, cellExtents):
+                        obj = cell
+                        offset = 0
 
         # Get the objects on this line.
         #
@@ -7172,51 +7218,43 @@ class Script(default.Script):
                                            [pyatspi.ROLE_DOCUMENT_FRAME])
         if containingTable:
             table = containingTable.queryTable()
-            if cell.parent == containingTable:
-                row = table.getRowAtIndex(cell.getIndexInParent())
-                col = table.getColumnAtIndex(cell.getIndexInParent())
-            else:
-                row = table.getRowAtIndex(cell.parent.getIndexInParent())
-                col = table.getColumnAtIndex(cell.parent.getIndexInParent())
-            col += table.getColumnExtentAt(row, col)
-        else:
-            cell = None
-
-        if cell:
-            validCell = (table.nColumns > 0)
-            if not validCell:
-                # Maybe there's a useful sibling on this same line.
-                #
+            if table.nColumns <= 0:
+                cell = None
+            elif cell.parent == containingTable:
                 index = cell.getIndexInParent()
-                try:
-                    sibling = cell.parent[index + 1]
-                    siblingExtents = sibling.queryComponent().getExtents(0)
-                    siblingExtents = (siblingExtents.x,
-                                      siblingExtents.y,
-                                      siblingExtents.width,
-                                      siblingExtents.height)
-                    if self.onSameLine(extents, siblingExtents):
-                        obj = sibling
-                        objects.extend(self.getObjectsFromEOCs(obj,
-                                                               0,
-                                                               boundary))
-                except:
-                    pass
+            else:
+                index = cell.parent.getIndexInParent()
+            row = table.getRowAtIndex(index)
+            col = table.getColumnAtIndex(index)
+            col += table.getColumnExtentAt(row, col)
 
-            while col < table.nColumns:
-                cell = table.getAccessibleAt(row, col)
-                if not cell:
-                    break
-                colspan = table.getColumnExtentAt(row, col)
-                col += colspan
-                objects.extend(self.getObjectsFromEOCs(cell,
-                                                       0,
-                                                       boundary))
+            if cell:
+                cellContents = []
+                while singleLine and col < table.nColumns:
+                    cell = table.getAccessibleAt(row, col)
+                    if not cell:
+                        break
+
+                    text = self.queryNonEmptyText(cell)
+                    if text:
+                        line = text.getTextAtOffset(offset, boundary)
+                        singleLine = line[1] == 0 \
+                                     and line[2] == text.characterCount
+
+                    colspan = table.getColumnExtentAt(row, col)
+                    col += colspan
+                    cellContents.extend(self.getObjectsFromEOCs(cell,
+                                                                0,
+                                                                boundary))
+                if singleLine:
+                    objects.extend(cellContents)
+
         # We need to find out if we've started from an embedded object.
         # If we have, we'll want to include whatever follows this object
         # on the same line.
         #
-        if obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+        if not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                 pyatspi.ROLE_SECTION]:
             text = self.queryNonEmptyText(obj.parent)
             if text:
                 offset = self.getCharacterOffsetInParent(obj) + 1
@@ -7233,7 +7271,7 @@ class Script(default.Script):
         # more or less on this line.  This can be seen with the search form
         # currently at live.gnome.org.
         #
-        if objects:
+        if objects and singleLine:
             nextObject = self.findNextObject(objects[-1][0])
             if nextObject and not nextObject.parent in [obj, objects[-1][0]]:
                 toAdd = self.getObjectsFromEOCs(nextObject, 0, boundary)
