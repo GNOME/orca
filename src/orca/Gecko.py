@@ -7147,8 +7147,7 @@ class Script(default.Script):
         singleLine = False
         if text:
             line = text.getTextAtOffset(offset, boundary)
-            characterCount = text.characterCount
-            singleLine = (line[1] == 0) and (line[2] == characterCount)
+            singleLine = (line[1] == 0) and (line[2] == text.characterCount)
             if line[2] < offset:
                 index = self.getChildIndex(obj, line[1])
                 if index >= 0:
@@ -7159,7 +7158,8 @@ class Script(default.Script):
                     child = obj[index]
                     text = self.queryNonEmptyText(child)
                     if text:
-                        line = text.getTextAtOffset(characterCount, boundary)
+                        line = text.getTextAtOffset(text.characterCount, 
+                                                    boundary)
                         obj = child
                         offset = line[1]
             else:
