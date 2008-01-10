@@ -30,139 +30,189 @@ sequence.append(WaitForFocus("Dojo Spinner Widget Test", acc_role=pyatspi.ROLE_D
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Tab to the first spinner.  The following will be presented.  Note: ^ is an
-# ascii substitute for the unicode up arrow to force the script to be syntactically
-# correct. 
+# Tab to the first spinner.  
 #
-# BRAILLE LINE:  'Spinbox #1:  900 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  900 $l ^ Section', cursor=17
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Spinbox #1:  900 spin button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Spinbox #1:", acc_role=pyatspi.ROLE_SPIN_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to the first spinner", 
+    ["BRAILLE LINE:  'Spinbox #1:  900 $l'",
+     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  900 $l'",
+     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Spinbox #1:  900 spin button'"]))
 
 ########################################################################
-# Use down arrow to decrement spinner value.  The following will be presented.
+# Use down arrow to decrement spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  899 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  899 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '899'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner decrement 1", 
+    ["BRAILLE LINE:  'Spinbox #1:  900 $l'",
+     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  899 $l'",
+     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+     "SPEECH OUTPUT: '899'"]))
 
 ########################################################################
-# Use down arrow to decrement spinner value.  The following will be presented.
+# Use down arrow to decrement spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  898 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  898 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '898'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner decrement 2", 
+    [ "BRAILLE LINE:  'Spinbox #1:  899 $l'",
+     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  898 $l'",
+     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+     "SPEECH OUTPUT: '898'"]))
 
 ########################################################################
-# Use down arrow to decrement spinner value.  The following will be presented.
+# Use down arrow to decrement spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  897 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  897 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '897'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner decrement 3", 
+    ["BRAILLE LINE:  'Spinbox #1:  898 $l'",
+     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  897 $l'",
+     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+     "SPEECH OUTPUT: '897'"]))
 
 ########################################################################
-# Use down arrow to decrement spinner value.  The following will be presented.
+# Use down arrow to decrement spinner value. 
 #
-# BRAILLE LINE:  'Spinbox #1:  896 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  896 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '896'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner decrement 4", 
+    ["BRAILLE LINE:  'Spinbox #1:  897 $l'",
+     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  896 $l'",
+     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+     "SPEECH OUTPUT: '896'"]))
 
 ########################################################################
-# Use down arrow to decrement spinner value.  The following will be presented.
+# Use down arrow to decrement spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  895 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  895 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '895'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner decrement 5", 
+    ["BRAILLE LINE:  'Spinbox #1:  896 $l'",
+     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  895 $l'",
+     "     VISIBLE:  'Spinbox #1:  895 $l', cursor=17",
+     "SPEECH OUTPUT: '895'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value. 
 #
-# BRAILLE LINE:  'Spinbox #1:  896 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  896 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '896'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 1", 
+    ["BRAILLE LINE:  'Spinbox #1:  895 $l'",
+     "     VISIBLE:  'Spinbox #1:  895 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  896 $l'",
+     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+     "SPEECH OUTPUT: '896'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  897 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  897 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '897'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 2", 
+    ["BRAILLE LINE:  'Spinbox #1:  896 $l'",
+     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  897 $l'",
+     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+     "SPEECH OUTPUT: '897'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  898 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  898 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '898'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 3", 
+    ["BRAILLE LINE:  'Spinbox #1:  897 $l'",
+     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  898 $l'",
+     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+     "SPEECH OUTPUT: '898'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  899 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  899 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '899'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 4", 
+    ["BRAILLE LINE:  'Spinbox #1:  898 $l'",
+     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  899 $l'",
+     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+     "SPEECH OUTPUT: '899'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  900 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  900 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '900'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 5", 
+    ["BRAILLE LINE:  'Spinbox #1:  899 $l'",
+     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  900 $l'",
+     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+     "SPEECH OUTPUT: '900'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  901 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  901 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '901'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 6", 
+    ["BRAILLE LINE:  'Spinbox #1:  900 $l'",
+     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  901 $l'",
+     "     VISIBLE:  'Spinbox #1:  901 $l', cursor=17",
+     "SPEECH OUTPUT: '901'"]))
 
 ########################################################################
-# Use up arrow to increment spinner value.  The following will be presented.
+# Use up arrow to increment spinner value.  
 #
-# BRAILLE LINE:  'Spinbox #1:  902 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  902 $l ^ Section', cursor=17
-# SPEECH OUTPUT: '902'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "first spinner increment 7", 
+    ["BRAILLE LINE:  'Spinbox #1:  901 $l'",
+     "     VISIBLE:  'Spinbox #1:  901 $l', cursor=17",
+     "BRAILLE LINE:  'Spinbox #1:  902 $l'",
+     "     VISIBLE:  'Spinbox #1:  902 $l', cursor=17",
+     "SPEECH OUTPUT: '902'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'Spinbox #1:  902 $l ^ Section'
-#      VISIBLE:  'Spinbox #1:  902 $l ^ Section', cursor=17
-# SPEECH OUTPUT: 'Spinbox #1: '
-# SPEECH OUTPUT: 'spin button'
-# SPEECH OUTPUT: '902'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    [ "BRAILLE LINE:  'Spinbox #1:  902 $l'",
+     "     VISIBLE:  'Spinbox #1:  902 $l', cursor=17",
+     "SPEECH OUTPUT: 'Spinbox #1: '",
+     "SPEECH OUTPUT: 'spin button'",
+     "SPEECH OUTPUT: '902'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Close the demo

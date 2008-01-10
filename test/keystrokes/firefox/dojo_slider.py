@@ -37,8 +37,14 @@ sequence.append(PauseAction(3000))
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'slider 10'
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SLIDER))
+sequence.append(utils.AssertPresentationAction(
+    "tab to first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'slider 10'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -54,226 +60,296 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SLIDER))
 # sequence.append(PauseAction(3000))
 
 ########################################################################
-# Move the first slider.  The following will be presented for each.
+# Move the first slider several times.  
 #
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: '10'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: '10'                           
+sequence.append(utils.AssertPresentationAction(
+    "1 move first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
+                            
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-# BRAILLE LINE:  '11 Slider'
-#      VISIBLE:  '11 Slider', cursor=1
-# SPEECH OUTPUT: '11'                           
+sequence.append(utils.AssertPresentationAction(
+    "2 move first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
+                               
+sequence.append(utils.StartRecordingAction())                      
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "3 move first slider", 
+    ["BRAILLE LINE:  '11 Slider Section'",
+     "     VISIBLE:  '11 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '11'"]))
                            
-# BRAILLE LINE:  '11 Slider'
-#      VISIBLE:  '11 Slider', cursor=1
-# SPEECH OUTPUT: '11' 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-# BRAILLE LINE:  '11 Slider'
-#      VISIBLE:  '11 Slider', cursor=1
-# SPEECH OUTPUT: '11'                           
+sequence.append(utils.AssertPresentationAction(
+    "4 move first slider", 
+    ["BRAILLE LINE:  '11 Slider Section'",
+     "     VISIBLE:  '11 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '11'"]))
+                               
+sequence.append(utils.StartRecordingAction())                  
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-# BRAILLE LINE:  '11 Slider'
-#      VISIBLE:  '11 Slider', cursor=1
-# SPEECH OUTPUT: '11'                             
+sequence.append(utils.AssertPresentationAction(
+    "5 move first slider", 
+    ["BRAILLE LINE:  '11 Slider Section'",
+     "     VISIBLE:  '11 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '11'"]))
+                                  
+sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-# BRAILLE LINE:  '11 Slider'
-#      VISIBLE:  '11 Slider', cursor=1
-# SPEECH OUTPUT: '11'                             
+sequence.append(utils.AssertPresentationAction(
+    "6 move first slider", 
+    ["BRAILLE LINE:  '11 Slider Section'",
+     "     VISIBLE:  '11 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '11'"]))
+                                 
+sequence.append(utils.StartRecordingAction())                     
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: '10'                            
+sequence.append(utils.AssertPresentationAction(
+    "7 move first slider", 
+    ["BRAILLE LINE:  '11 Slider Section'",
+     "     VISIBLE:  '11 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '11'"]))
+                                  
+sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: '10'                            
+sequence.append(utils.AssertPresentationAction(
+    "8 move first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
+                             
+sequence.append(utils.StartRecordingAction())                     
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: '10'                           
+sequence.append(utils.AssertPresentationAction(
+    "9 move first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
+                            
+sequence.append(utils.StartRecordingAction())                       
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "10 move first slider", 
+    ["BRAILLE LINE:  '10 Slider Section'",
+     "     VISIBLE:  '10 Slider Section', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
 
 ########################################################################
-# Tab to the next entry between the sliders.  The following will be presented.
-# [[[Bug?: entry should be labelled for speech]]]
+# Tab to the next entry between the sliders. 
 #
-#  BRAILLE LINE:  'Slider1 Value: 10 $l '
-#       VISIBLE:  'Slider1 Value: 10 $l ', cursor=18
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text 10'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
+sequence.append(utils.AssertPresentationAction(
+    "move to entry", 
+    ["BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
+     "     VISIBLE:  '10.0% $l  ', cursor=6",
+     "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
+     "     VISIBLE:  '10.0% $l  ', cursor=6",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'text 10.0%'"]))
+     
 ########################################################################
-# Tab to the next slider.  The following will be presented.
+# Tab to the button between the sliders.  
 #
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'slider 10'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SLIDER))
+sequence.append(utils.AssertPresentationAction(
+    "move to button", 
+    ["BRAILLE LINE:  'Disable previous slider    Button'",
+     "     VISIBLE:  'Disable previous slider    Butto', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Disable previous slider    button'"]))
+     
+########################################################################
+# Tab to the next slider.  
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "tab to second slider", 
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'slider 10'"]))
 
 ########################################################################
-# Move the slider.  The following will be presented for each.
+# Move the slider several times
 #
-#  BRAILLE LINE:  '20 Slider 20 '
-#       VISIBLE:  '20 Slider 20 ', cursor=1
-# SPEECH OUTPUT: '20'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '30 Slider'
-#       VISIBLE:  '30 Slider', cursor=1
-# SPEECH OUTPUT: '30'                          
+sequence.append(utils.AssertPresentationAction(
+    "1 move second slider", 
+    ["BRAILLE LINE:  '20 Slider'",
+     "     VISIBLE:  '20 Slider', cursor=1",
+     "SPEECH OUTPUT: '20'"]))
+                             
+sequence.append(utils.StartRecordingAction())                       
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
+sequence.append(utils.AssertPresentationAction(
+    "2 move second slider", 
+    ["BRAILLE LINE:  '30 Slider'",
+     "     VISIBLE:  '30 Slider', cursor=1",
+     "SPEECH OUTPUT: '30'"]))
                        
-#  BRAILLE LINE:  '40 Slider'
-#       VISIBLE:  '40 Slider', cursor=1
-# SPEECH OUTPUT: '40' 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '50 Slider'
-#       VISIBLE:  '50 Slider', cursor=1
-# SPEECH OUTPUT: '50'                            
+sequence.append(utils.AssertPresentationAction(
+    "3 move second slider", 
+    ["BRAILLE LINE:  '40 Slider'",
+     "     VISIBLE:  '40 Slider', cursor=1",
+     "SPEECH OUTPUT: '40'"]))
+                               
+sequence.append(utils.StartRecordingAction())                        
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '60 Slider'
-#       VISIBLE:  '60 Slider', cursor=1
-# SPEECH OUTPUT: '60'                            
+sequence.append(utils.AssertPresentationAction(
+    "4 move second slider", 
+    ["BRAILLE LINE:  '50 Slider'",
+     "     VISIBLE:  '50 Slider', cursor=1",
+     "SPEECH OUTPUT: '50'"]))
+                                  
+sequence.append(utils.StartRecordingAction())                        
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '50 Slider'
-#       VISIBLE:  '50 Slider', cursor=1
-# SPEECH OUTPUT: '50'                            
+sequence.append(utils.AssertPresentationAction(
+    "5 move second slider", 
+    ["BRAILLE LINE:  '60 Slider'",
+     "     VISIBLE:  '60 Slider', cursor=1",
+     "SPEECH OUTPUT: '60'"]))
+                               
+sequence.append(utils.StartRecordingAction())                       
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '40 Slider'
-#       VISIBLE:  '40 Slider', cursor=1
-# SPEECH OUTPUT: '40'                            
+sequence.append(utils.AssertPresentationAction(
+    "6 move second slider", 
+    ["BRAILLE LINE:  '50 Slider'",
+     "     VISIBLE:  '50 Slider', cursor=1",
+     "SPEECH OUTPUT: '50'"]))
+                                  
+sequence.append(utils.StartRecordingAction())                        
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '30 Slider'
-#       VISIBLE:  '30 Slider', cursor=1
-# SPEECH OUTPUT: '30'                            
+sequence.append(utils.AssertPresentationAction(
+    "7 move second slider", 
+    ["BRAILLE LINE:  '40 Slider'",
+     "     VISIBLE:  '40 Slider', cursor=1",
+     "SPEECH OUTPUT: '40'"]))
+                               
+sequence.append(utils.StartRecordingAction())                        
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '20 Slider'
-#       VISIBLE:  '20 Slider', cursor=1
-# SPEECH OUTPUT: '20'                            
+sequence.append(utils.AssertPresentationAction(
+    "8 move second slider", 
+    ["BRAILLE LINE:  '30 Slider'",
+     "     VISIBLE:  '30 Slider', cursor=1",
+     "SPEECH OUTPUT: '30'"]))
+                                 
+sequence.append(utils.StartRecordingAction())                         
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "9 move second slider", 
+    ["BRAILLE LINE:  '20 Slider'",
+     "     VISIBLE:  '20 Slider', cursor=1",
+     "SPEECH OUTPUT: '20'"]))
+    
 ########################################################################
 # Close the demo
 #

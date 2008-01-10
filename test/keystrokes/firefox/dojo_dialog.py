@@ -39,81 +39,89 @@ sequence.append(WaitForFocus("Dialog Widget Dojo Tests", acc_role=pyatspi.ROLE_D
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Tab to the show dialog button.  The following will be presented.
+# Tab to the show dialog button.  
 #
-# BRAILLE LINE:  'Show Dialog Button'
-#     VISIBLE:  'Show Dialog Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show Dialog button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Show Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to show dialog", 
+    ["BRAILLE LINE:  'Show Dialog    Button'",
+     "     VISIBLE:  'Show Dialog    Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show Dialog    button'"]))
 
 ########################################################################
-# Launch the dialog  The following will be presented.
+# Launch the dialog  
 #
-# BRAILLE LINE:  'First Dialog Dialog  $l'
-#     VISIBLE:  'First Dialog Dialog  $l', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'First Dialog'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("First Dialog", acc_role=pyatspi.ROLE_DIALOG))
+sequence.append(utils.AssertPresentationAction(
+    "Launch first dialog", 
+    ["BRAILLE LINE:  'First Dialog Dialog  $l'",
+     "     VISIBLE:  'First Dialog Dialog  $l', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'First Dialog'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'First Dialog Dialog  $l'
-#      VISIBLE:  'First Dialog Dialog  $l', cursor=1
-# SPEECH OUTPUT: 'First Dialog'
-# SPEECH OUTPUT: 'dialog'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic whereAmI", 
+    ["BRAILLE LINE:  'First Dialog Dialog  $l'",
+     "     VISIBLE:  'First Dialog Dialog  $l', cursor=1",
+     "SPEECH OUTPUT: 'First Dialog'",
+     "SPEECH OUTPUT: 'dialog'"]))
 
 ########################################################################
-# Close the dialog, focus goes back to button.  The following will be presented.
+# Close the dialog, focus goes back to button.  
 #
-# BRAILLE LINE:  'Show Dialog Button'
-#      VISIBLE:  'Show Dialog Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show Dialog button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Show Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "close first dialog", 
+    ["BRAILLE LINE:  'Show Dialog    Button'",
+     "     VISIBLE:  'Show Dialog    Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show Dialog    button'"]))
 
 ########################################################################
-# Tab to the second button.  The following will be presented.
+# Tab to the second button.  
 #
-# BRAILLE LINE:  'Show Tooltip Dialog Button'
-#      VISIBLE:  'Show Tooltip Dialog Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show Tooltip Dialog button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Show Tooltip Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "tab to second button", 
+    ["BRAILLE LINE:  'Show Tooltip Dialog Button'",
+     "     VISIBLE:  'Show Tooltip Dialog Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show Tooltip Dialog button'"]))
 
 ########################################################################
-# Launch the dialog  The following will be presented.
+# Launch the dialog  
 #
-# BRAILLE LINE:  'User:  $l'
-#      VISIBLE:  'User:  $l', cursor=0
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Enter Login information User: Password:'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("Enter Login information", acc_role=pyatspi.ROLE_DIALOG))
-
+sequence.append(utils.AssertPresentationAction(
+    "launch second dialog", 
+    ["BRAILLE LINE:  'User:  $l'",
+     "     VISIBLE:  'User:  $l', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Enter Login information User: Password:'"]))
+    
 ########################################################################
-# Close the dialog, focus goes back to button.  The following will be presented.
+# Close the dialog, focus goes back to button.  
 #
-# BRAILLE LINE:  'Show Tooltip Dialog Button'
-#      VISIBLE:  'Show Tooltip Dialog Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show Tooltip Dialog button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
+sequence.append(utils.AssertPresentationAction(
+    "close second dialog", 
+    ["BRAILLE LINE:  'Show Tooltip Dialog Button'",
+     "     VISIBLE:  'Show Tooltip Dialog Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show Tooltip Dialog button'"]))
 
 ########################################################################
 # Close the demo

@@ -30,73 +30,89 @@ sequence.append(WaitForFocus("TabContainer Demo", acc_role=pyatspi.ROLE_DOCUMENT
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Tab to 'Tab 2'.  The following will be presented.
+# Tab to 'Tab 2'.  
 #
-# BRAILLE LINE:  'Tab 1 Tab 2 Tab 3 Another Tab Sub TabContainer'
-#      VISIBLE:  'Tab 2 Tab 3 Another Tab Sub TabC', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab 2 page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Tab 2", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "tab to tab 2", 
+    [ "BRAILLE LINE:  'Tab 2 Page Tab 3 Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab 2 page'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'Tab 1 Tab 2 Tab 3 Another Tab Sub TabContainer'
-#      VISIBLE:  'Tab 2 Tab 3 Another Tab Sub TabC', cursor=1
-# SPEECH OUTPUT: 'section'
-# SPEECH OUTPUT: 'Tab 2 page'
-# SPEECH OUTPUT: 'item 1 of 1'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  'Tab 2 Page Tab 3 Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page', cursor=1",
+     "SPEECH OUTPUT: 'section'",
+     "SPEECH OUTPUT: 'Tab 2 page'",
+     "SPEECH OUTPUT: 'item 1 of 1'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'Tab 3'.  The following will be presented.
 #
-# BRAILLE LINE:  'Tab 1 Tab 2 Tab 3 Another Tab Sub TabContainer'
-#      VISIBLE:  'Tab 3 Another Tab Sub TabContain', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab 3 page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tab 3", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 3", 
+    ["BRAILLE LINE:  'Tab 3 Page Programmatically created tab Page'",
+     "     VISIBLE:  'Tab 3 Page Programmatically crea', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab 3 page'"]))
 ########################################################################
 # Use arrows to move between tabs: 'Another Tab'.  The following will be presented.
 #
-# BRAILLE LINE:  'Tab 1 Tab 2 Tab 3 Another Tab Sub TabContainer'
-#      VISIBLE:  'Another Tab Sub TabContainer', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Another Tab page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Another Tab", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to programmatically created tab", 
+    ["BRAILLE LINE:  'Programmatically created tab Page Inlined Sub TabContainer Page'",
+     "     VISIBLE:  'Programmatically created tab Pag', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Programmatically created tab page'"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'Sub TabContainer'.  The following will be presented.
 #
-# BRAILLE LINE:  'Tab 1 Tab 2 Tab 3 Another Tab Sub TabContainer'
-#      VISIBLE:  'Sub TabContainer', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Sub TabContainer page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Sub TabContainer", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to sub tab container", 
+    ["BRAILLE LINE:  'Inlined Sub TabContainer Page Sub TabContainer from href Page'",
+     "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
 ########################################################################
 # Tab to 'SubTab2'.  The following will be presented.
 #
-# BRAILLE LINE:  'SubTab 1 SubTab 2'
-#      VISIBLE:  'SubTab 1 SubTab 2', cursor=10
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'SubTab 2 page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("SubTab 2", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "tab to tab 2 contents", 
+    ["BRAILLE LINE:  'SubTab 2 Page'",
+     "     VISIBLE:  'SubTab 2 Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'SubTab 2 page'"]))
+    
+########################################################################
+# Tab to next tab container
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "tab to next tab container", 
+    ["BRAILLE LINE:  'Tab 1 Page  $l Tab 2 Page'",
+     "     VISIBLE:  'Tab 1 Page  $l Tab 2 Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab 1 page'"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'SubTab1'.  The following will be presented
@@ -106,8 +122,14 @@ sequence.append(WaitForFocus("SubTab 2", acc_role=pyatspi.ROLE_PAGE_TAB))
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'SubTab 1 page'
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("SubTab 1", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 3", 
+    ["BRAILLE LINE:  'Tab 3 Page  $l'",
+     "     VISIBLE:  'Tab 3 Page  $l', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab 3 page'"]))
 
 ########################################################################
 # Close the demo
