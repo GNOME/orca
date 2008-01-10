@@ -2663,23 +2663,24 @@ class Script(script.Script):
                     pyatspi.ROLE_TREE_TABLE,
                     pyatspi.ROLE_TREE):
             if event.source.childCount:
-                # Well...we'll first see if there is a selection.  If there
-                # is, we'll use it.
+                # We might have tucked away some information for this 
+                # thing in the onActiveDescendantChanged method.
                 #
-                try:
-                    selection = event.source.querySelection()
-                except NotImplementedError:
-                    selection = None
-                if selection and selection.nSelectedChildren > 0:
-                    newFocus = selection.getSelectedChild(0)
-
-                # Otherwise, we might have tucked away some information
-                # for this thing in the onActiveDescendantChanged method.
-                #
-                elif self.pointOfReference.has_key("activeDescendantInfo"):
+                if self.pointOfReference.has_key("activeDescendantInfo"):
                     [parent, index] = \
                         self.pointOfReference['activeDescendantInfo']
                     newFocus = parent[index]
+
+                else:
+                    # Well...we'll first see if there is a selection.  If there
+                    # is, we'll use it.
+                    #
+                    try:
+                        selection = event.source.querySelection()
+                    except NotImplementedError:
+                        selection = None
+                    if selection and selection.nSelectedChildren > 0:
+                        newFocus = selection.getSelectedChild(0)
 
         orca.setLocusOfFocus(event, newFocus)
 
@@ -3078,6 +3079,7 @@ class Script(script.Script):
         #
         child = event.any_data
         if child:
+            speech.stop()
             orca.setLocusOfFocus(event, child)
         else:
             orca.setLocusOfFocus(event, event.source)
