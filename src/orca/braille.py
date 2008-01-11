@@ -887,6 +887,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
         monitor.writeText(cursorCell, substring, subMask)
     elif monitor:
         monitor.destroy()
+        monitor = None
 
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)

@@ -1,3 +1,9 @@
+2008-01-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: 
+	  Fix for bug #508679 - The second time to enable the Braille
+	  Monitor, it can not be lauched.
+	
 2008-01-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
