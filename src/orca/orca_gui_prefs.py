@@ -1294,7 +1294,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             1,
             targetHeight / 16, targetHeight)
 
-        spinButton = orca_state.orcaOS.get_widget("magZoomerTopSpinButton")
+        if orca_state.appOS:
+            spinButton = orca_state.appOS.get_widget("magZoomerTopSpinButton")
+        else:
+            spinButton = orca_state.orcaOS.get_widget("magZoomerTopSpinButton")
+
         spinButton.set_adjustment(adjustment)
         if topPosition > targetHeight:
             spinButton.update()
@@ -1311,7 +1315,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             1,
             targetWidth / 16, targetWidth)
 
-        spinButton = orca_state.orcaOS.get_widget("magZoomerLeftSpinButton")
+        if orca_state.appOS:
+            spinButton = orca_state.appOS.get_widget("magZoomerLeftSpinButton")
+        else:
+            spinButton = orca_state.orcaOS.get_widget("magZoomerLeftSpinButton")
+
         spinButton.set_adjustment(adjustment)
         if leftPosition > targetWidth:
             spinButton.update()
@@ -1328,7 +1336,13 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             1,
             targetWidth / 16, targetWidth)
 
-        spinButton = orca_state.orcaOS.get_widget("magZoomerRightSpinButton")
+        if orca_state.appOS:
+            spinButton = \
+                orca_state.appOS.get_widget("magZoomerRightSpinButton")
+        else:
+            spinButton = \
+                orca_state.orcaOS.get_widget("magZoomerRightSpinButton")
+
         spinButton.set_adjustment(adjustment)
         if rightPosition > targetWidth:
             spinButton.update()
@@ -1345,7 +1359,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             1,
             targetHeight / 16, targetHeight)
 
-        spinButton = orca_state.orcaOS.get_widget("magZoomerBottomSpinButton")
+        if orca_state.appOS:
+            spinButton = \
+                orca_state.appOS.get_widget("magZoomerBottomSpinButton")
+        else:
+            spinButton = \
+                orca_state.orcaOS.get_widget("magZoomerBottomSpinButton")
         spinButton.set_adjustment(adjustment)
         if bottomPosition > targetHeight:
             spinButton.update()

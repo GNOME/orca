@@ -14,6 +14,10 @@
           Fix for bug #490317 - Orca echoes the first letter of each new 
           line when composing a message in Evolution.
 
+        * src/orca/orca_gui_prefs.py:
+          Fixup a traceback in _setZoomerSpinButtons, if the user was
+          trying to startup an application specific Orca preferences.
+
 2008-01-11  Eitan Isaacson  <eitan@ascender.com>
 
 	* configure.in: 
