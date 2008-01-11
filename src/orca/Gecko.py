@@ -2451,6 +2451,8 @@ class Script(default.Script):
             self.onStateChanged
         listeners["object:state-changed:checked"]           = \
             self.onStateChanged
+        listeners["object:state-changed:indeterminate"]     = \
+            self.onStateChanged
         listeners["object:state-changed:busy"]              = \
             self.onStateChanged
         listeners["object:children-changed"]                = \

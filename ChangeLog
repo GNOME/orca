@@ -1,3 +1,9 @@
+2008-01-11  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          src/orca/default.py:
+          Fixed bug #508624, Checkbox tristate not announcing state changes.
+
 2008-01-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: 

@@ -834,7 +834,9 @@ class Script(script.Script):
             self.onStateChanged
         listeners["object:state-changed:checked"]           = \
             self.onStateChanged
-        listeners["object:state-changed:expanded"]           = \
+        listeners["object:state-changed:indeterminate"]     = \
+            self.onStateChanged
+        listeners["object:state-changed:expanded"]          = \
             self.onStateChanged
         listeners["object:selection-changed"]               = \
             self.onSelectionChanged
@@ -6332,7 +6334,8 @@ class Script(script.Script):
 state_change_notifiers = {}
 
 state_change_notifiers[pyatspi.ROLE_CHECK_MENU_ITEM] = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", None)
+state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", "indeterminate", 
+                                                         None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked", None)
