@@ -32,92 +32,94 @@ sequence.append(PauseAction(1000))
 ########################################################################
 # Tab to the tabpanel.
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab One Tab Two Tab Three Tab Fo', cursor=1
-# SPEECH OUTPUT: 'Tab One page Tab Two page Tab Three page Tab Four page Tab Five page'
-#
+# File bug for no output
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Tab One", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "tab to tabpanel", 
+    [""]))
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab One Tab Two Tab Three Tab Fo', cursor=1
-# SPEECH OUTPUT: 'section'
-# SPEECH OUTPUT: 'Tab One page'
-# SPEECH OUTPUT: 'item 1 of 1'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  'Tab One Page Tab Two Page'",
+     "     VISIBLE:  'Tab One Page Tab Two Page', cursor=1",
+     "SPEECH OUTPUT: 'section'",
+     "SPEECH OUTPUT: 'Tab One page'",
+     "SPEECH OUTPUT: 'item 1 of 1'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Move to tab 2.
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab Two Tab Three Tab Four Tab F', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab Two page'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tab Two", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 2", 
+    ["BRAILLE LINE:  'Tab Two Page Tab Three Page'",
+     "     VISIBLE:  'Tab Two Page Tab Three Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab Two page'"]))
 ########################################################################
 # Move to tab 3
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab Three Tab Four Tab Five', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab Three page'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tab Three", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 3", 
+    ["BRAILLE LINE:  'Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Three Page Tab Four Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab Three page'"]))
 ########################################################################
 # Move to tab 3 contents
 #
-# BRAILLE LINE:  '&=y RadioButton Internal Portal Bookmark & y RadioButton External URL '
-#      VISIBLE:  '&=y RadioButton Internal Portal ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Internal Portal Bookmark'
-# SPEECH OUTPUT: 'selected radio button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Internal Portal Bookmark", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-
+sequence.append(utils.AssertPresentationAction(
+    "tab to tab 3 contents", 
+    ["BRAILLE LINE:  '&=y RadioButton Internal Portal Bookmark & y RadioButton External URL  '",
+     "     VISIBLE:  '&=y RadioButton Internal Portal ', cursor=1",
+     "SPEECH OUTPUT: 'Tab Three  Tab Three scroll pane'",
+     "SPEECH OUTPUT: 'Internal Portal Bookmark'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 ########################################################################
 # Move back to tab 3
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab Three Tab Four Tab Five', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab Three page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
-sequence.append(WaitForFocus("Tab Three", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "move back to tab 3", 
+    ["BRAILLE LINE:  'Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Three Page Tab Four Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab Three page'"]))
 ########################################################################
 # Move to tab 4
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab Four Tab Five', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab Four page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tab Four", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 4", 
+    ["BRAILLE LINE:  'Tab Four Page Tab Five Page'",
+     "     VISIBLE:  'Tab Four Page Tab Five Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab Four page'"]))
 ########################################################################
 # Move to tab 5
 #
-# BRAILLE LINE:  'Tab One Tab Two Tab Three Tab Four Tab Five'
-#      VISIBLE:  'Tab Five', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tab Five page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tab Five", acc_role=pyatspi.ROLE_PAGE_TAB))
-
+sequence.append(utils.AssertPresentationAction(
+    "arrow to tab 5", 
+    ["BRAILLE LINE:  'Tab Five Page'",
+     "     VISIBLE:  'Tab Five Page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tab Five page'"]))
 ########################################################################
 # Close the demo
 #

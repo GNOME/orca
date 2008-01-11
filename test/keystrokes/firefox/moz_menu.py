@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """Test of Mozilla ARIA menu presentation using Firefox.
 """
@@ -22,140 +23,176 @@ sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://www.mozilla.org/access/dhtml/spreadsheet"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("Accessible DHTML", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("ARIA Spreadsheet and Menubar", 
+                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Move to the menu.  The following will be presented.
+# Move to the menu.  
 #
-# BRAILLE LINE:  'Edit'
-#      VISIBLE:  'Edit', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Edit'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Alt>m"))
-sequence.append(WaitForFocus("Edit", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to the menu", 
+    ["BRAILLE LINE:  'Edit'",
+     "     VISIBLE:  'Edit', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Edit'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'Edit'
-#      VISIBLE:  'Edit', cursor=1
-# SPEECH OUTPUT: 'Edit section'
-# SPEECH OUTPUT: 'Edit'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 1 of 1'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  'Edit'",
+     "     VISIBLE:  'Edit', cursor=1",
+     "SPEECH OUTPUT: 'Edit section'",
+     "SPEECH OUTPUT: 'Edit'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 1'"]))
 
 ########################################################################
-########################################################################
-# Use arrows to navigate menu structure.  The following will be presented
-# for each move.
+# Use arrows to navigate menu structure.
 #
-# BRAILLE LINE:  'Edit View'
-#      VISIBLE:  'Edit View', cursor=6
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'View'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("View", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-# Note:  accessible name needed to be removed because of unicode characters
-# BRAILLE LINE:  'Themes          >'
-#      VISIBLE:  'Themes          >', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Themes          >'
+sequence.append(utils.AssertPresentationAction(
+    "Move to View", 
+    ["BRAILLE LINE:  'View'",
+     "     VISIBLE:  'View', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'View'"]))
+    
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to Themes", 
+    ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=0",
+     "BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Themes          >'"]))
 
-# BRAILLE LINE:  'Themes          > Basic Grey '
-#      VISIBLE:  'Themes          > Basic Gr', cursor=19
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Basic Grey '
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Basic Grey", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to basic grey", 
+    ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=0",
+     "BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Basic Grey '"]))
 
-# BRAILLE LINE:  'The Blues'
-#      VISIBLE:  'The Blues', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'The Blues'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("The Blues", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to the blues", 
+    ["BRAILLE LINE:  'The Blues'",
+     "     VISIBLE:  'The Blues', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'The Blues'"]))
 
-# BRAILLE LINE:  'Garden'
-#      VISIBLE:  'Garden', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Garden'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Garden", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to garden", 
+    ["BRAILLE LINE:  'Garden'",
+     "     VISIBLE:  'Garden', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Garden'"]))
 
-# BRAILLE LINE:  'In the Pink grayed'
-#      VISIBLE:  'In the Pink grayed', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'In the Pink grayed'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("In the Pink", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to in the pink", 
+    ["BRAILLE LINE:  'In the Pink grayed'",
+     "     VISIBLE:  'In the Pink grayed', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'In the Pink grayed'"]))
 
-# BRAILLE LINE:  'Rose '
-#      VISIBLE:  'Rose ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Rose '
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Rose", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to rose", 
+    ["BRAILLE LINE:  'Rose '",
+     "     VISIBLE:  'Rose ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Rose '"]))
 
-# Note:  accessible name needed to be removed because of unicode characters
-# BRAILLE LINE:  'Themes          >'
-#      VISIBLE:  'Themes          >', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Themes          >'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move back to Themes", 
+    ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Themes          >'"]))
 
-# BRAILLE LINE:  'Hide'
-#      VISIBLE:  'Hide', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Hide'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Hide", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to hide", 
+    ["BRAILLE LINE:  'Hide'",
+     "     VISIBLE:  'Hide', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Hide'"]))
 
-# BRAILLE LINE:  'Show'
-#      VISIBLE:  'Show', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Show", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to show", 
+    ["BRAILLE LINE:  'Show'",
+     "     VISIBLE:  'Show', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show'"]))
 
-# Note:  accessible name needed to be removed because of unicode characters
-# BRAILLE LINE:  'More                >'
-#      VISIBLE:  'More                >', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'More                >'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to more", 
+    ["BRAILLE LINE:  'More                >'",
+     "     VISIBLE:  'More                >', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'More                >'"]))
 
-# BRAILLE LINE:  'More                > one '
-#      VISIBLE:  'More                > o', cursor=23
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'one '
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("one", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to one", 
+    ["BRAILLE LINE:  'one '",
+     "     VISIBLE:  'one ', cursor=0",
+     "BRAILLE LINE:  'one '",
+     "     VISIBLE:  'one ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'one '"]))
 
-# BRAILLE LINE:  'two'
-#      VISIBLE:  'two', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'two'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("two", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Move to two", 
+    ["BRAILLE LINE:  'two'",
+     "     VISIBLE:  'two', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'two'"]))
 
-# Leave the menu.  Focus moves to the first cell of the table.
-# BRAILLE LINE:  'Entry # Date Expense Amount Merchant Type ColumnHeader'
-#      VISIBLE:  'Entry # Date Expense Amount Merc', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Entry # column header'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
+sequence.append(utils.AssertPresentationAction(
+    "leave menu", 
+    ["BRAILLE LINE:  'Entry # $l Date $l'",
+     "     VISIBLE:  'Entry # $l Date $l', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'"]))
 
 ########################################################################
 # End menu navigation

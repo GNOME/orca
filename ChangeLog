@@ -1,3 +1,13 @@
+2008-01-11  Scott Haeger <scott@bashautomation.com>
+
+        * test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/moz_progressbar.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/moz_checkbox.py:
+          Updates to ARIA regression tests.
+
 2008-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:

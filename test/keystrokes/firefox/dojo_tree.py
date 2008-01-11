@@ -73,13 +73,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-########################################################################
-# Use arrows to expand/collapse/navigate tree.  The following will be presented after
-# each step.
+# Use arrows to expand/collapse/navigate tree.  
 #
-# BRAILLE LINE:  'Africa expanded ListItem LEVEL 1'
-#      VISIBLE:  'Africa expanded ListItem LEVEL 1', cursor=1
-# SPEECH OUTPUT: 'expanded'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
@@ -88,11 +83,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Africa ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
-# BRAILLE LINE:  'Egypt ListItem LEVEL 2'
-#      VISIBLE:  'Egypt ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Egypt list item level 2'
-# SPEECH OUTPUT: 'tree level 2'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Egypt", acc_role=pyatspi.ROLE_LIST_ITEM))
@@ -104,10 +94,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Egypt list item'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
-# BRAILLE LINE:  'Kenya ListItem LEVEL 2'
-#      VISIBLE:  'Kenya ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Kenya list item level 2'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Kenya", acc_role=pyatspi.ROLE_LIST_ITEM))
@@ -118,9 +104,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Kenya list item collapsed'"]))
 
-# BRAILLE LINE:  'Kenya expanded ListItem LEVEL 2'
-#      VISIBLE:  'Kenya expanded ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: 'expanded'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
@@ -129,9 +112,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Kenya ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
-# BRAILLE LINE:  'Kenya collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Kenya collapsed ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: 'collapsed'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
@@ -140,10 +120,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Kenya ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
-# BRAILLE LINE:  'Sudan ListItem LEVEL 2'
-#      VISIBLE:  'Sudan ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Sudan list item level 2'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -153,11 +129,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sudan list item collapsed'"]))
 
-# BRAILLE LINE:  'Asia ListItem LEVEL 1'
-#      VISIBLE:  'Asia ListItem LEVEL 1', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Asia list item level 1'
-# SPEECH OUTPUT: 'tree level 1'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -168,9 +139,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Asia list item collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
-# BRAILLE LINE:  'Asia expanded ListItem LEVEL 1'
-#      VISIBLE:  'Asia expanded ListItem LEVEL 1', cursor=1
-# SPEECH OUTPUT: 'expanded'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
@@ -179,11 +147,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Asia ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
-# BRAILLE LINE:  'China ListItem LEVEL 2'
-#      VISIBLE:  'China ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'China list item level 2'
-# SPEECH OUTPUT: 'tree level 2'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -194,10 +157,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'China list item'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
-# BRAILLE LINE:  'India ListItem LEVEL 2'
-#      VISIBLE:  'India ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'India list item level 2'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -206,10 +165,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'India ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'India list item'"]))
-# BRAILLE LINE:  'Russia ListItem LEVEL 2'
-#      VISIBLE:  'Russia ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Russia list item level 2'
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -218,10 +174,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Russia ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Russia list item'"]))
-# BRAILLE LINE:  'Mongolia ListItem LEVEL 2'
-#      VISIBLE:  'Mongolia ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mongolia list item level 2'
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(

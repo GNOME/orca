@@ -19,158 +19,194 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tree/xhtml.php?title=Tree%20Example%201&ginc=includes/tree1a.inc&gcss=css/tree1a.css&gjs=../js/globals.js,../js/enable_app.js,js/tree1a.js"))
+sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tree/view_html.php?title=Tree%20Example%201&ginc=includes/tree1_inline.inc&gcss=css/tree1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/tree1_inline.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("application/xhtml+xml: Tree Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("text/html: Tree Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Tab to the tree.  The following is presented.
+# Tab to the tree.  
 #
-# BRAILLE LINE:  'Fruits expanded ListItem LEVEL 1'
-#      VISIBLE:  'Fruits expanded ListItem LEVEL 1', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Fruits expanded list item level 1'
-# SPEECH OUTPUT: 'tree level 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Fruits", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "tab to tree", 
+    ["BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Foods tree'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Fruits list item expanded'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  'Fruits expanded ListItem LEVEL 1'
-#      VISIBLE:  'Fruits expanded ListItem LEVEL 1', cursor=1
-# SPEECH OUTPUT: 'Fruits'
-# SPEECH OUTPUT: 'list item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: 'Fruits'",
+     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: 'expanded'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Navigate the tree using the arrows.  
 #
-# BRAILLE LINE:  'Oranges ListItem LEVEL 2'
-#      VISIBLE:  'Oranges ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Oranges list item level 2'
-# SPEECH OUTPUT: 'tree level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Oranges", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to oranges", 
+    ["BRAILLE LINE:  'Oranges ListItem'",
+     "     VISIBLE:  'Oranges ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Oranges list item'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
-# BRAILLE LINE:  'Pineapples ListItem LEVEL 2'
-#      VISIBLE:  'Pineapples ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Pineapples list item level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Pineapples", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to pineapples", 
+    ["BRAILLE LINE:  'Pineapples ListItem'",
+     "     VISIBLE:  'Pineapples ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Pineapples list item'"]))
 
-# BRAILLE LINE:  'Apples collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Apples collapsed ListItem LEVEL ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Apples collapsed list item level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Apples", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to apples", 
+    ["BRAILLE LINE:  'Apples ListItem'",
+     "     VISIBLE:  'Apples ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Apples list item collapsed'"]))
 
-# BRAILLE LINE:  'Apples expanded ListItem LEVEL 2'
-#      VISIBLE:  'Apples expanded ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: 'expanded'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "expand apples", 
+    ["BRAILLE LINE:  'Apples ListItem'",
+     "     VISIBLE:  'Apples ListItem', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
 
-# BRAILLE LINE:  'Macintosh ListItem LEVEL 3'
-#      VISIBLE:  'Macintosh ListItem LEVEL 3', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Macintosh list item level 3'
-# SPEECH OUTPUT: 'tree level 3'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Macintosh", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to macintosh", 
+    ["BRAILLE LINE:  'Macintosh ListItem'",
+     "     VISIBLE:  'Macintosh ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Macintosh list item'",
+     "SPEECH OUTPUT: 'tree level 3'"]))
 
-# BRAILLE LINE:  'Granny Smith collapsed ListItem LEVEL 3'
-#      VISIBLE:  'Granny Smith collapsed ListItem ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Granny Smith collapsed list item level 3'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Granny Smith", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to granny smith", 
+    ["BRAILLE LINE:  'Granny Smith ListItem'",
+     "     VISIBLE:  'Granny Smith ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Granny Smith list item collapsed'"]))
 
-# BRAILLE LINE:  'Granny Smith expanded ListItem LEVEL 3'
-#      VISIBLE:  'Granny Smith expanded ListItem L', cursor=1
-# SPEECH OUTPUT: 'expanded'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "expand granny smith", 
+    ["BRAILLE LINE:  'Granny Smith ListItem'",
+     "     VISIBLE:  'Granny Smith ListItem', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
 
-# BRAILLE LINE:  'Washington State ListItem LEVEL 4'
-#      VISIBLE:  'Washington State ListItem LEVEL ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Washington State list item level 4'
-# SPEECH OUTPUT: 'tree level 4'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Washington State", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to washington state", 
+    ["BRAILLE LINE:  'Washington State ListItem'",
+     "     VISIBLE:  'Washington State ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Washington State list item'",
+     "SPEECH OUTPUT: 'tree level 4'"]))
 
-# BRAILLE LINE:  'Michigan ListItem LEVEL 4'
-#      VISIBLE:  'Michigan ListItem LEVEL 4', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Michigan list item level 4'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Michigan", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to michigan", 
+    ["BRAILLE LINE:  'Michigan ListItem'",
+     "     VISIBLE:  'Michigan ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Michigan list item'"]))
 
-# BRAILLE LINE:  'New York ListItem LEVEL 4'
-#      VISIBLE:  'New York ListItem LEVEL 4', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'New York list item level 4'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("New York", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to new york", 
+    ["BRAILLE LINE:  'New York ListItem'",
+     "     VISIBLE:  'New York ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'New York list item'"]))
 
-# BRAILLE LINE:  'Fuji ListItem LEVEL 3'
-#      VISIBLE:  'Fuji ListItem LEVEL 3', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Fuji list item level 3'
-# SPEECH OUTPUT: 'tree level 3'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Fuji", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to fuji", 
+    ["BRAILLE LINE:  'Fuji ListItem'",
+     "     VISIBLE:  'Fuji ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Fuji list item'",
+     "SPEECH OUTPUT: 'tree level 3'"]))
 
-# BRAILLE LINE:  'Bananas ListItem LEVEL 2'
-#      VISIBLE:  'Bananas ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Bananas list item level 2'
-# SPEECH OUTPUT: 'tree level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Bananas", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to bananas", 
+    ["BRAILLE LINE:  'Bananas ListItem'",
+     "     VISIBLE:  'Bananas ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bananas list item'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
-# BRAILLE LINE:  'Pears ListItem LEVEL 2'
-#      VISIBLE:  'Pears ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Pears list item level 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Pears", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to pears", 
+    ["BRAILLE LINE:  'Pears ListItem'",
+     "     VISIBLE:  'Pears ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Pears list item'"]))
 
-# BRAILLE LINE:  'Vegetables expanded ListItem LEVEL 1'
-#      VISIBLE:  'Vegetables expanded ListItem LEV', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Vegetables expanded list item level 1'
-# SPEECH OUTPUT: 'tree level 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Vegetables", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "arrow to vegetables", 
+    ["BRAILLE LINE:  'Vegetables ListItem'",
+     "     VISIBLE:  'Vegetables ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Vegetables list item expanded'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
-# BRAILLE LINE:  'Vegetables collapsed ListItem LEVEL 1'
-#      VISIBLE:  'Vegetables collapsed ListItem LE', cursor=1
-#SPEECH OUTPUT: 'collapsed'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "collapse vegetables", 
+    ["BRAILLE LINE:  'Vegetables ListItem'",
+     "     VISIBLE:  'Vegetables ListItem', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
 
+########################################################################
+# Close the demo
+#
+sequence.append(KeyComboAction("<Control>l"))
+sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(TypeAction("about:blank"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(WaitForDocLoad())
 # Just a little extra wait to let some events get through.
 #
 sequence.append(PauseAction(3000))
