@@ -1,3 +1,9 @@
+2008-01-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Fix for bug #490317 - Orca echoes the first letter of each new 
+          line when composing a message in Evolution.
+
 2008-01-11  Eitan Isaacson  <eitan@ascender.com>
 
 	* configure.in: 

@@ -271,6 +271,11 @@ class Script(default.Script):
         self.lastMessageColumn = -1
         self.lastMessageRow = -1
 
+        # The last locusOfFocusChanged roles hierarchy.
+        #
+        self.lastRolesList = []
+        self.rolesList = []
+
         # By default, don't present if Evolution is not the active application.
         #
         self.presentIfInactive = False
@@ -673,6 +678,27 @@ class Script(default.Script):
             obj.queryText().setCaretOffset(context.currentOffset)
             orca.setLocusOfFocus(None, obj, False)
 
+    def presentMessageLine(self, obj, newLocusOfFocus):
+        """Speak/braille the line at the current text caret offset.
+        """
+
+        [string, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
+        self.updateBraille(newLocusOfFocus)
+        if settings.enableSpeechIndentation:
+            self.speakTextIndentation(obj, string)
+        line = self.adjustForRepeats(string)
+
+        if self.speakNewLine(obj):
+            speech.speak(chnames.getCharacterName("\n"), None, False)
+
+        if self.speakBlankLine(obj):
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            speech.speak(_("blank"), None, False)
+        else:
+            speech.speak(line, None, False)
+
     def sayAll(self, inputEvent):
         """Speak all the text associated with the text object that has
            focus. We have to define our own method here because Evolution
@@ -728,6 +754,11 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
+        # Save the previous role hierarchy list for possible comparison 
+        # in section 8).
+        #
+        self.lastRolesList = self.rolesList
+
         debug.printObjectEvent(self.debugLevel,
                                event,
                                debug.getAccessibleDetails(event.source))
@@ -747,33 +778,20 @@ class Script(default.Script):
         # it's a line in the mail message and we get the utterances to
         # speak for that Text.
 
-        rolesList = [pyatspi.ROLE_TEXT, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_UNKNOWN]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_TEXT, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_UNKNOWN, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_SCROLL_PANE, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_SPLIT_PANE]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
                           + "individual lines of text.")
 
-            [string, caretOffset, startOffset] = \
-                self.getTextLineAtCaret(event.source)
-            self.updateBraille(newLocusOfFocus)
-            if settings.enableSpeechIndentation:
-                self.speakTextIndentation(event.source, string)
-            line = self.adjustForRepeats(string)
-
-            if self.speakNewLine(event.source):
-                speech.speak(chnames.getCharacterName("\n"), None, False)
-
-            if self.speakBlankLine(event.source):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"), None, False)
-            else:
-                speech.speak(line, None, False)
-
+            self.presentMessageLine(event.source, newLocusOfFocus)
             return
 
 
@@ -797,11 +815,11 @@ class Script(default.Script):
         # component and that the final component (with no children) is of
         # role TEXT.
 
-        rolesList = [pyatspi.ROLE_TEXT, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_TABLE_CELL]
+        self.rolesList = [pyatspi.ROLE_TEXT, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_TABLE_CELL]
         if settings.readTableCellRow \
-            and (self.isDesiredFocusedItem(event.source, rolesList)):
+            and (self.isDesiredFocusedItem(event.source, self.rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
@@ -849,10 +867,10 @@ class Script(default.Script):
         # the message list and the order in which they appear, so that
         # Orca will just speak the ones that they are interested in.
 
-        rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                     pyatspi.ROLE_TREE_TABLE]
+        self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                          pyatspi.ROLE_TREE_TABLE]
         if settings.readTableCellRow \
-            and (self.isDesiredFocusedItem(event.source, rolesList)):
+            and (self.isDesiredFocusedItem(event.source, self.rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "message header list.")
@@ -1065,9 +1083,9 @@ class Script(default.Script):
         # which is determined by the number of children in the parent Calendar
         # View's table.
 
-        rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
-                     rolenames.ROLE_CALENDAR_VIEW]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
+                          rolenames.ROLE_CALENDAR_VIEW]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - calendar view: " \
                           + "day view: tabbing to day with appts.")
@@ -1130,10 +1148,10 @@ class Script(default.Script):
         # which is determined by the number of children in the parent Calendar
         # View's table.
 
-        rolesList = [pyatspi.ROLE_UNKNOWN, \
-                     pyatspi.ROLE_TABLE, \
-                     rolenames.ROLE_CALENDAR_VIEW]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_UNKNOWN, \
+                          pyatspi.ROLE_TABLE, \
+                          rolenames.ROLE_CALENDAR_VIEW]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - calendar view: " \
                       + "day view: moving with arrow keys.")
@@ -1208,11 +1226,11 @@ class Script(default.Script):
         # NOTE: assumes there is only one "page tab list" in the "filler"
         # component.
 
-        rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                     pyatspi.ROLE_TABLE, \
-                     pyatspi.ROLE_UNKNOWN, \
-                     pyatspi.ROLE_SCROLL_PANE]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                          pyatspi.ROLE_TABLE, \
+                          pyatspi.ROLE_UNKNOWN, \
+                          pyatspi.ROLE_SCROLL_PANE]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - preferences dialog: " \
                       + "table cell in options list.")
@@ -1236,17 +1254,17 @@ class Script(default.Script):
         # rather than just speak/braille "button", output something a
         # little more useful.
 
-        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_SPLIT_PANE, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_DIALOG]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_SPLIT_PANE, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_DIALOG]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail insert " \
                           + "attachment dialog: unlabelled button.")
@@ -1274,27 +1292,39 @@ class Script(default.Script):
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
 
-        rolesList = [pyatspi.ROLE_TEXT, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_SCROLL_PANE]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_TEXT, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_UNKNOWN, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_SCROLL_PANE, \
+                          pyatspi.ROLE_FILLER, \
+                          pyatspi.ROLE_PANEL]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail " \
                           + "compose window: message area.")
 
+            # We are getting extra (bogus?) "focus:" events from Evolution
+            # when we type the first character at the beginning of a line.
+            # If the last input event was a keyboard event and the parent
+            # of the locusOfFocus and the event.source are the same, and 
+            # the last roles hierarchy is the same as this one and
+            # the last key pressed wasn't a navigation key, then just 
+            # ignore it. See bug #490317 for more details.
+            #
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                if self.isSameObject(event.source.parent,
+                                     orca_state.locusOfFocus.parent):
+                    lastKey = orca_state.lastNonModifierKeyEvent.event_string
+                    if self.lastRolesList == self.rolesList and \
+                       lastKey not in ["Left", "Right", "Up", "Down", \
+                                       "Home", "End", "Return"]:
+                        return
+
             self.message_panel = event.source.parent.parent
 
-            if self.speakNewLine(event.source):
-                speech.speak(chnames.getCharacterName("\n"), None, False)
-
-
-            if self.speakBlankLine(event.source):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"), None, False)
-
+            self.presentMessageLine(event.source, newLocusOfFocus)
+            return
 
         # 9) Spell Checking Dialog
         #
@@ -1306,14 +1336,14 @@ class Script(default.Script):
         # surrounding text, to give the user context for the current misspelt
         # word.
 
-        rolesList = [pyatspi.ROLE_TABLE, \
-                    pyatspi.ROLE_SCROLL_PANE, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_DIALOG]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_TABLE, \
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_FILLER, \
+                         pyatspi.ROLE_DIALOG]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - spell checking dialog.")
 
@@ -1372,14 +1402,14 @@ class Script(default.Script):
         # NOTE: it is assumed that the last table cell in the table
         # contains this information.
 
-        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_TABLE_CELL, \
-                    pyatspi.ROLE_TABLE, \
-                    pyatspi.ROLE_PANEL]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        self.rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
+                         pyatspi.ROLE_FILLER, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_TABLE_CELL, \
+                         pyatspi.ROLE_TABLE, \
+                         pyatspi.ROLE_PANEL]
+        if self.isDesiredFocusedItem(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - " \
                           + "mail message area attachments.")
