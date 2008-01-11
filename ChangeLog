@@ -1,3 +1,14 @@
+2008-01-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          Work on bug #508784 - Orca needs to handle FF hierarchies
+          that don't match reality.  Part of the solution is making
+          sure the user can navigate to the areas.  That is what has
+          been done.  We still need to present the elements and allow
+          the user to navigate among them according to their spatial
+          layout (e.g. reverse the list whose elements are ordered
+          right-to-left).
+
 2008-01-11  Scott Haeger <scott@bashautomation.com>
 
         * test/keystrokes/firefox/moz_menu.py:

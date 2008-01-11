@@ -7285,22 +7285,17 @@ class Script(default.Script):
                        and extents != objExtents:
                         objects.extend(toAdd)
 
-        # [[[TODO - JD: Check to see that the last object that claimed
-        # to be on this line really is on the line.  See Mozilla bug
-        # 405258.]]]
+        # Check to see that the objects that claimed to be on this line
+        # really are on the same line as what we started with.
         #
-        if len(objects):
-            first = objects[0]
-            firstExtents = self.getExtents(first[0], first[1], first[2])
-            done = False
-            while not done:
-                last = objects[-1]
-                lastExtents = self.getExtents(last[0], last[1], last[2])
-                if not self.onSameLine(firstExtents, lastExtents) \
-                   and obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-                    objects.pop()
-                else:
-                    done = True
+        while len(objects) > 1:
+            last = objects[-1]
+            lastExtents = self.getExtents(last[0], last[1], last[2])
+            if not self.onSameLine(extents, lastExtents) \
+               and obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+                objects.pop()
+            else:
+                break
 
         # [[[TODO - JD: We're getting the newline character at the end
         # of links and other objects.  Ultimately, we might want to keep
