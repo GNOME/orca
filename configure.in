@@ -130,6 +130,16 @@ if test "x$brlapi_available" = "xno" ; then
     AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
 fi
 
+AC_ARG_WITH(liblouis,
+        AC_HELP_STRING([--with-liblouis],[enable the use of liblouis]),
+	[case "${withval}" in
+	yes) WITH_LOUIS=yes ;;
+	no) WITH_LOUIS=no ;;
+	*) AC_MSG_ERROR(bad value ${withval} for --with-liblouis) ;;
+	esac],
+	[WITH_LOUIS=no]) dnl Default value
+AM_CONDITIONAL(WITH_LOUIS, test x$WITH_LOUIS = "xyes")
+
 AC_SUBST(orca_LIBS)
 AC_SUBST(orca_CFLAGS)
 
@@ -146,6 +156,7 @@ po/Makefile.in
 icons/Makefile
 src/Makefile
 src/brl/Makefile
+src/louis/Makefile
 src/orca/Makefile
 src/orca/scripts/Makefile
 src/orca/orca

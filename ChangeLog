@@ -1,3 +1,27 @@
+2008-01-11  Eitan Isaacson  <eitan@ascender.com>
+
+	* configure.in: 
+	  Added --with-liblouis option.
+	
+	* po/POTFILES.in:
+	  Added src/louis/constants.py.
+	
+	* src/Makefile.am: 
+	  Conditionally include louis sub-directory.
+	
+	* src/louis: 
+	* src/louis/Makefile.am: 
+	* src/louis/__init__.py: 
+	* src/louis/_louis.c: 
+	* src/louis/constants.py: 
+	  New liblouis bindings.
+	
+	* src/orca/orca-setup.glade: 
+	  Added contracted braille frame, not showing by default.
+	
+	* src/orca/orca_gui_prefs.py: 
+	  Added a callback for toggling contracted braille.
+
 2008-01-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/httpserver.py:

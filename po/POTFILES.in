@@ -56,3 +56,4 @@ src/orca/speechgenerator.py
 src/orca/speechserver.py
 src/orca/speech.py
 src/orca/where_am_I.py
+src/orca/louis/constants.py

@@ -944,6 +944,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.prefsDict["enabledSpokenTextAttributes"] = spokenAttrStr
         self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
 
+    def contractedBrailleToggled(self, checkbox):
+        hbox = self.widgets.get_widget('contractionTablesHBox')
+        hbox.set_sensitive(checkbox.get_active())
+
     def textAttributeSpokenToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
         checkboxes to be spoken. Update our model to reflect this, then
