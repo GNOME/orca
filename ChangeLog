@@ -1,3 +1,11 @@
+2008-01-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/httpserver.py:
+	  src/orca/settings.py:
+	  test/harness/orca-customizations.py.in:
+	  Fix for bug #508777 - HTTP-based Recording ability should 
+	  not be enabled by default
+	
 2008-01-11  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py:

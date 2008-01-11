@@ -259,7 +259,11 @@ httpServerPort          = 20433
 # The number of attempts to retry setting up an HTTP server
 # connection (each time incrementing the port number by 1).
 #
-maxHttpServerRetries   = 20
+maxHttpServerRetries    = 20
+
+# Whether or not recording is enabled via the HTTP server. 
+#
+enableRemoteLogging     = False
 
 # If True, enable speech.
 #

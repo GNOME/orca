@@ -7,6 +7,7 @@ import orca.debug
 orca.debug.debugLevel = orca.debug.LEVEL_ALL
 
 import orca.settings
+orca.settings.enableRemoteLogging = True
 orca.settings.enableSpeech = True
 orca.settings.speechFactoryModules = []
 orca.settings.speechServerFactory = None

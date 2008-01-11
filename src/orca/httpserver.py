@@ -92,7 +92,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
                 self.wfile.write("%s" % speech.isSpeaking())
-            elif inputBody.startswith("log:"):
+            elif settings.enableRemoteLogging and inputBody.startswith("log:"):
                 import logging
                 logFile = inputBody[4:]
                 for logger in ['braille', 'speech']:
@@ -111,7 +111,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         log.addHandler(loggingFileHandlers[logger])
                     log.setLevel(logging.INFO)
                 self.send_response(200, 'OK')
-            elif inputBody == "recordStart":
+            elif settings.enableRemoteLogging and inputBody == "recordStart":
                 import logging
                 import StringIO
                 for logger in ['braille', 'speech']:
@@ -131,7 +131,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     loggingStreamHandlers[logger] = [stringIO, handler]
                     log.setLevel(logging.INFO)
                 self.send_response(200, 'OK')
-            elif inputBody == "recordStop":
+            elif settings.enableRemoteLogging and inputBody == "recordStop":
                 import logging
                 import StringIO
                 result = ''
