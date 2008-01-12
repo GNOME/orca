@@ -170,7 +170,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box open button",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four Combo'",
-     "     VISIBLE:  'Four Combo', cursor=1",
+     "     VISIBLE:  'Four Combo', cursor=5",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Four combo box'"]))
 
