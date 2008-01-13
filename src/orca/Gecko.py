@@ -74,6 +74,11 @@ from orca_i18n import Q_        # to provide qualified translatable strings
 #
 performanceEnhancements = True
 
+# Temporary debugging/testing setting.  If True, use the experimental
+# methods to find the next/previous line.
+#
+useNewLineNav = True
+
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
 #
@@ -1957,7 +1962,9 @@ class Script(default.Script):
         # we can speak and braille this information without having to call
         # getLineContentsAtOffset() twice.
         #
+        self._previousLineContents = None
         self._currentLineContents = None
+        self._nextLineContents = None
 
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
@@ -3718,13 +3725,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-        # If text is deleted from an object, we want to trash our
-        # cache of the unicode text.
-        #
-        try:
-            del event.source.unicodeText
-        except:
-            pass
+
+        self._destroyLineCache()
 
         # The search entries in Firefox's and Thunderbird's top toolbars
         # contain text which functions as the label (Yahoo, Entire Message)
@@ -3756,13 +3758,7 @@ class Script(default.Script):
         - event: the Event
         """
         
-        # If text is inserted into an object, we want to trash our
-        # cache of the unicode text.
-        #
-        try:
-            del event.source.unicodeText
-        except:
-            pass
+        self._destroyLineCache()
 
         if liveRegionsOn and self.isLiveRegion(event.source):
             self.liveMngr.handleEvent(event)
@@ -4336,6 +4332,67 @@ class Script(default.Script):
                                            event,
                                            oldLocusOfFocus,
                                            newLocusOfFocus)
+
+    def findObjectOnLine(self, obj, offset, contents):
+        """Determines if the item described by the object and offset is
+        in the line contents.
+
+        Arguments:
+        - obj: the Accessible
+        - offset: the character offset within obj
+        - contents: a list of (obj, startOffset, endOffset) tuples
+
+        Returns the index of the item if found; -1 if not found.
+        """
+
+        if not obj or not contents:
+            return -1
+
+        index = -1
+        for content in contents:
+            if self.isSameObject(obj, content[0]) \
+               and content[1] <= offset <= content[2]:
+                index = contents.index(content)
+                break
+
+        return index
+
+    def _updateLineCache(self, obj, offset):
+        """Tries to intelligently update our stored lines. Destroying them if
+        need be.
+
+        Arguments:
+        - obj: the Accessible
+        - offset: the character offset within obj
+        """
+
+        index = self.findObjectOnLine(obj, offset, self._currentLineContents)
+        if index < 0:
+            index = self.findObjectOnLine(obj, 
+                                          offset, 
+                                          self._previousLineContents)
+            if index >= 0:
+                self._nextLineContents = self._currentLineContents
+                self._currentLineContents = self._previousLineContents
+                self._previousLineContents = None
+            else:
+                index = self.findObjectOnLine(obj, 
+                                              offset, 
+                                              self._nextLineContents)
+                if index >= 0:
+                    self._previousLineContents = self._currentLineContents
+                    self._currentLineContents = self._nextLineContents
+                    self._nextLineContents = None
+                else:
+                    self._destroyLineCache()
+
+    def _destroyLineCache(self):
+        """Removes all of the stored lines."""
+
+        self._previousLineContents = None
+        self._currentLineContents = None
+        self._nextLineContents = None
+
     def presentLine(self, obj, offset):
         """Presents the current line in speech and in braille.
 
@@ -4344,10 +4401,13 @@ class Script(default.Script):
         - offset: the offset within obj
         """
 
-        self._currentLineContents = self.getLineContentsAtOffset(obj, offset)
+        contents = self._currentLineContents
+        index = self.findObjectOnLine(obj, offset, contents)
+        if index < 0:
+            self._currentLineContents = self.getLineContentsAtOffset(obj,
+                                                                     offset)
         self.speakContents(self._currentLineContents)
         self.updateBraille(obj)
-        self._currentLineContents = None
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the given object.
@@ -4392,9 +4452,14 @@ class Script(default.Script):
                 needToRefresh = True
 
         contents = self._currentLineContents
-        if not contents or needToRefresh:
+        index = self.findObjectOnLine(focusedObj, 
+                                      max(0, lineContentsOffset),
+                                      contents)
+        if index < 0 or needToRefresh:
             contents = self.getLineContentsAtOffset(focusedObj,
                                                     max(0, lineContentsOffset))
+            self._currentLineContents = contents
+
         if not len(contents):
             return
 
@@ -5862,20 +5927,16 @@ class Script(default.Script):
         guess = None
         extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
-        lineContents = self.getLineContentsAtOffset(obj, 0)
 
-        # Let's figure out where we are with respect to the other objects
-        # on this line.
-        #
-        ourIndex = -1
+        lineContents = self._currentLineContents
+        ourIndex = self.findObjectOnLine(obj, 0, lineContents)
+        if ourIndex < 0:
+            lineContents = self.getLineContentsAtOffset(obj, 0)
+            ourIndex = self.findObjectOnLine(obj, 0, lineContents)
+
         objectsOnLine = []
         for content in lineContents:
             objectsOnLine.append(content[0])
-            extents = content[0].queryComponent().getExtents(0)
-            contentExtents = \
-                     [extents.x, extents.y, extents.width, extents.height]
-            if objExtents == contentExtents:
-                ourIndex = lineContents.index(content)
 
         # Now that we know where we are, let's see who are neighbors are
         # and where they are.
@@ -5886,9 +5947,6 @@ class Script(default.Script):
             onLeft = objectsOnLine[ourIndex - 1]
         if 0 <= ourIndex < len(objectsOnLine) - 1:
             onRight = objectsOnLine[ourIndex + 1]
-            extents = onRight.queryComponent().getExtents(0)
-            onRightExtents = \
-                     [extents.x, extents.y, extents.width, extents.height]
 
         # Normally we prefer what's on the left given a choice.  Reasons
         # to prefer what's on the right include looking at a radio button
@@ -5952,6 +6010,10 @@ class Script(default.Script):
             # "immediately after" as  within 50 pixels.
             #
             canStartAt = objExtents[0] + objExtents[2]
+            onRightExtents = onRight.queryComponent().getExtents(0)
+            onRightExtents = [onRightExtents.x, onRightExtents.y,
+                              onRightExtents.width, onRightExtents.height]
+
             if (onRightExtents[0] - canStartAt) <= 50:
                 # We want to get the text on the right including embedded
                 # objects that are NOT form fields.  If we find a form field
@@ -6002,22 +6064,35 @@ class Script(default.Script):
         objExtents = \
                [extents.x, extents.y, extents.width, extents.height]
 
-        [prevObj, prevOffset] = self.findPreviousLine(obj, 0)
-        prevLineContents = self.getLineContentsAtOffset(prevObj,
-                                                        prevOffset)
+        index = self.findObjectOnLine(obj, 0, self._currentLineContents)
+        if index > 0 and self._previousLineContents:
+            prevLineContents = self._previousLineContents
+            prevObj = prevLineContents[0]
+            prevOffset = prevLineContents[1]
+        else:
+            [prevObj, prevOffset] = self.findPreviousLine(obj, 0)
+            prevLineContents = self.getLineContentsAtOffset(prevObj,
+                                                            prevOffset)
+            self._previousLineContents = prevLineContents
+
+        nextLineContents = self._nextLineContents
+        if index > 0 and nextLineContents:
+            nextObj = nextLineContents[0]
+            nextOffset = nextLineContents[1]
 
         # The labels for combo boxes won't be found below the combo box
         # because expanding the combo box will cover up the label. Labels
         # for lists probably won't be below the list either.
         #
-        if not obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
-                                 pyatspi.ROLE_MENU,
-                                 pyatspi.ROLE_MENU_ITEM,
-                                 pyatspi.ROLE_LIST,
-                                 pyatspi.ROLE_LIST_ITEM]:
+        if not nextLineContents and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                                      pyatspi.ROLE_MENU,
+                                                      pyatspi.ROLE_MENU_ITEM,
+                                                      pyatspi.ROLE_LIST,
+                                                      pyatspi.ROLE_LIST_ITEM]:
             [nextObj, nextOffset] = self.findNextLine(obj, 0)
-            nextLineContents = self.getLineContentsAtOffset(nextObj,
+            nextLineContents = self.getLineContentsAtOffset(nextObj, 
                                                             nextOffset)
+            self._nextLineContents = nextLineContents
         else:
             [nextObj, nextOffset] = [None, 0]
             nextLineContents = []
@@ -6984,6 +7059,7 @@ class Script(default.Script):
         document frame."""
 
         documentFrame = self.getDocumentFrame()
+        self._destroyLineCache()
         try:
             del self._documentFrameCaretContext[hash(documentFrame)]
         except:
@@ -7003,6 +7079,8 @@ class Script(default.Script):
 
         self._documentFrameCaretContext[hash(documentFrame)] = \
             [obj, characterOffset]
+
+        self._updateLineCache(obj, characterOffset)
 
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
@@ -7133,7 +7211,8 @@ class Script(default.Script):
         while not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
                                     pyatspi.ROLE_TABLE_CELL,
                                     pyatspi.ROLE_SECTION,
-                                    pyatspi.ROLE_PANEL]:
+                                    pyatspi.ROLE_PANEL,
+                                    pyatspi.ROLE_TEXT]:
             offsetInParent = self.getCharacterOffsetInParent(obj)
             parentExtents = self.getExtents(obj.parent,
                                             offsetInParent,
@@ -7167,26 +7246,30 @@ class Script(default.Script):
             else:
                 offset = line[1]
 
-        if singleLine and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            containingTable = self.getAncestor(obj,
-                                               [pyatspi.ROLE_TABLE],
-                                               [pyatspi.ROLE_DOCUMENT_FRAME])
-            if containingTable:
-                table = containingTable.queryTable()
-                if obj.parent == containingTable:
-                    index = obj.getIndexInParent()
-                else:
-                    index = obj.parent.getIndexInParent()
-                row = table.getRowAtIndex(index)
-                col = table.getColumnAtIndex(index)
-                if col > 0:
-                    cell = table.getAccessibleAt(row, 0)
-                    cellExtents = cell.queryComponent().getExtents(0)
-                    cellExtents = [cellExtents.x, cellExtents.y,
-                                   cellExtents.width, cellExtents.height]
-                    if self.onSameLine(extents, cellExtents):
-                        obj = cell
-                        offset = 0
+        # Move to the left to see if there's a sibling on this line which
+        # we should include.
+        #
+        index = obj.getIndexInParent()
+        sibling = obj
+        role = obj.getRole()
+        while sibling and index > 0:
+            sibling = obj.parent[index - 1]
+            siblingExtents = self.getExtents(sibling, 0, 1)
+
+            if not self.onSameLine(extents, siblingExtents) or not singleLine:
+                break
+            else:
+                text = self.queryNonEmptyText(sibling)
+                if text:
+                    line = text.getTextAtOffset(offset, boundary)
+                    singleLine = (line[1] == 0) \
+                             and (line[2] == text.characterCount)
+                    if not singleLine:
+                        break
+
+            obj = sibling
+            offset = 0
+            index -= 1
 
         # Get the objects on this line.
         #
@@ -7214,7 +7297,6 @@ class Script(default.Script):
         elif len(objects) \
              and objects[-1][0].getRole() == pyatspi.ROLE_TABLE_CELL:
             cell = objects[-1][0]
-
         containingTable = self.getAncestor(cell,
                                            [pyatspi.ROLE_TABLE],
                                            [pyatspi.ROLE_DOCUMENT_FRAME])
@@ -7275,7 +7357,8 @@ class Script(default.Script):
         #
         if objects and singleLine:
             nextObject = self.findNextObject(objects[-1][0])
-            if nextObject and not nextObject.parent in [obj, objects[-1][0]]:
+            if nextObject \
+              and not nextObject.parent in [obj, objects[-1][0]]:
                 toAdd = self.getObjectsFromEOCs(nextObject, 0, boundary)
                 if toAdd:
                     objExtents = self.getExtents(toAdd[0][0],
@@ -7741,8 +7824,9 @@ class Script(default.Script):
         character = self.getCharacterAtOffset(obj, characterOffset)
         if character:
             if self.isAriaWidget() \
-                 or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
-                 and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+               or useNewLineNav \
+               or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
+                     and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 obj.queryText().setCaretOffset(characterOffset)
                 mag.magnifyAccessible(None,
                                       obj,
@@ -7841,6 +7925,108 @@ class Script(default.Script):
         self.updateBraille(obj)
         self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
 
+    def altFindPreviousLine(self, obj, characterOffset):
+        """Locates the caret offset at the previous line in the document
+        window.
+
+        Arguments:
+        -obj:             the object from which the search should begin
+        -characterOffset: the offset within obj from which the search should
+                          begin
+
+        Returns the [obj, characterOffset] at the beginning of the line.
+        """
+
+        if not obj:
+            [obj, characterOffset] = self.getCaretContext()
+
+        if not obj:
+            obj = self.getLastObject()
+            [obj, characterOffset] = self.findPreviousCaretInOrder(obj, 0)
+
+        if not obj:
+            return [None, -1]
+
+        currentLine = self._currentLineContents
+        index = self.findObjectOnLine(obj, characterOffset, currentLine)
+        if index < 0:
+            currentLine = self.getLineContentsAtOffset(obj, characterOffset)
+
+        [prevObj, prevOffset] = \
+            self.findPreviousCaretInOrder(currentLine[0][0], currentLine[0][1])
+
+        # We need to be sure that we've actually found a new line rather than
+        # a space at the end of the current line.
+        #
+        text = self.queryNonEmptyText(prevObj)
+        if text:
+            line = text.getTextAfterOffset(prevOffset,
+                                           pyatspi.TEXT_BOUNDARY_LINE_START)
+            if not len(line[0].strip()) \
+                   and prevObj.getRole() != pyatspi.ROLE_ENTRY:
+                [prevObj, prevOffset] = \
+                          self.findPreviousCaretInOrder(prevObj, prevOffset)
+            else:
+                prevOffset = line[1]
+
+        # If the user did some back-to-back arrowing, we might already have
+        # the line contents.
+        #
+        prevLine = self._previousLineContents
+        index = self.findObjectOnLine(prevObj, prevOffset, prevLine)
+        if index < 0:
+            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
+    
+        if not prevLine:
+            return [None, -1]
+
+        prevObj = prevLine[0][0]
+        prevOffset = prevLine[0][1]
+
+        # Dealing with things like nested tables from the right side is hard.
+        # For now, I'm going to look at the previous caret in order.  If it's
+        # on the same line, we'll give it another go.  In testing, we usually
+        # get it right the first time so this shouldn't be too much of a hit.
+        #
+        [testObj, testOffset] = self.findPreviousCaretInOrder(prevObj,
+                                                              prevOffset)
+        extents1 = self.getExtents(prevObj, prevOffset, prevOffset + 1)
+        extents2 = self.getExtents(testObj, testOffset, testOffset + 1)
+        if self.onSameLine(extents1, extents2):
+            #print "previous line failed"
+            prevLine = self.getLineContentsAtOffset(testObj, testOffset)
+            if not prevLine:
+                return [None, -1]
+
+            prevObj = prevLine[0][0]
+            prevOffset = prevLine[0][1]
+
+        [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj, 
+                                                          prevOffset - 1)
+
+        if not arrowToLineBeginning:
+            extents = self.getExtents(obj, 
+                                      characterOffset, 
+                                      characterOffset + 1)
+            oldX = extents[0]
+            for item in prevLine:
+                extents = self.getExtents(item[0], item[1], item[2])
+                newX1 = extents[0]
+                newX2 = newX1 + extents[2]
+                if newX1 <= oldX <= newX2:
+                    prevObj = item[0]
+                    prevOffset = 0
+                    text = self.queryNonEmptyText(prevObj)
+                    if text:
+                        newY = extents[1] + extents[3] / 2
+                        prevOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                    break
+
+        self._nextLineContents = self._currentLineContents
+        self._currentLineContents = prevLine
+
+        return [prevObj, prevOffset]
+
     def findPreviousLine(self, obj, characterOffset):
         """Locates the caret offset at the previous line in the document
         window, attempting to preserve horizontal caret position.
@@ -7852,6 +8038,11 @@ class Script(default.Script):
 
         Returns the [obj, characterOffset] at which to position the caret.
         """
+
+        if useNewLineNav:
+            [prevObj, prevOffset] = self.altFindPreviousLine(obj,
+                                                             characterOffset)
+            return [prevObj, prevOffset]
 
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
@@ -7949,6 +8140,92 @@ class Script(default.Script):
 
         return [lastObj, lastCharacterOffset]
 
+    def altFindNextLine(self, obj, characterOffset):
+        """Locates the caret offset at the next line in the document
+        window.
+
+        Arguments:
+        -obj:             the object from which the search should begin
+        -characterOffset: the offset within obj from which the search should
+                          begin
+
+        Returns the [obj, characterOffset] at the beginning of the line.
+        """
+
+        if not obj:
+            [obj, characterOffset] = self.getCaretContext()
+
+        if not obj:
+            obj = self.getDocumentFrame()
+            [obj, characterOffset] = self.findFirstCaretContext(obj, -1)
+
+        if not obj:
+            return [None, -1]
+
+        currentLine = self._currentLineContents
+        index = self.findObjectOnLine(obj, characterOffset, currentLine)
+        if index < 0:
+            currentLine = self.getLineContentsAtOffset(obj, characterOffset)
+
+        [nextObj, nextOffset] = self.findNextCaretInOrder(currentLine[-1][0],
+                                                          currentLine[-1][2])
+
+        # We need to be sure that we've actually found a new line rather than
+        # a space at the end of the current line.
+        #
+        text = self.queryNonEmptyText(nextObj)
+        if text:
+            line = text.getTextAfterOffset(nextOffset,
+                                           pyatspi.TEXT_BOUNDARY_LINE_START)
+            if not len(line[0].strip()) \
+               and nextObj.getRole() != pyatspi.ROLE_ENTRY:
+                [nextObj, nextOffset] = \
+                          self.findNextCaretInOrder(nextObj, nextOffset)
+            else:
+                nextOffset = line[1]
+
+        # If the user did some back-to-back arrowing, we might already have
+        # the line contents.
+        #
+        nextLine = self._nextLineContents
+        index = self.findObjectOnLine(nextObj, nextOffset, nextLine)
+        if index < 0:
+            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+
+        if not nextLine:
+            return [None, -1]
+
+        elif currentLine == nextLine:
+            # For some reason we're stuck.
+            #
+            # print "find next line failed"
+            nextObj = self.findNextObject(nextObj)
+            nextOffset = 0
+            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+
+        if not arrowToLineBeginning:
+            extents = self.getExtents(obj,
+                                      characterOffset, 
+                                      characterOffset + 1)
+            oldX = extents[0]
+            for item in nextLine:
+                extents = self.getExtents(item[0], item[1], item[2])
+                newX1 = extents[0]
+                newX2 = newX1 + extents[2]
+                if newX1 <= oldX <= newX2:
+                    nextObj = item[0]
+                    nextOffset = 0
+                    text = self.queryNonEmptyText(nextObj)
+                    if text:
+                        newY = extents[1] + extents[3] / 2
+                        nextOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                    break
+
+        self._previousLineContents = self._currentLineContents
+        self._currentLineContents = nextLine
+
+        return [nextObj, nextOffset]
+
     def findNextLine(self, obj, characterOffset):
         """Locates the caret offset at the next line in the document
         window, attempting to preserve horizontal caret position.
@@ -7960,6 +8237,10 @@ class Script(default.Script):
 
         Returns the [obj, characterOffset] at which to position the caret.
         """
+
+        if useNewLineNav:
+            [nextObj, nextOffset] = self.altFindNextLine(obj, characterOffset)
+            return nextObj, nextOffset
 
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
