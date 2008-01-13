@@ -2052,6 +2052,22 @@ class Script(default.Script):
                 #
                 _("Goes to previous line."))
 
+        self.inputEventHandlers["goTopOfFileHandler"] = \
+            input_event.InputEventHandler(
+                Script.goTopOfFile,
+                # Translators: this command will move the user to the
+                # beginning of an HTML document.
+                #
+                _("Goes to the top of the file."))
+
+        self.inputEventHandlers["goBottomOfFileHandler"] = \
+            input_event.InputEventHandler(
+                Script.goBottomOfFile,
+                # Translators: this command will move the user to the
+                # end of an HTML document.
+                #
+                _("Goes to the bottom of the file."))
+
         self.inputEventHandlers["expandComboBoxHandler"] = \
             input_event.InputEventHandler(
                 Script.expandComboBox,
@@ -2582,6 +2598,20 @@ class Script(default.Script):
                 fullModMask,
                 shiftAltModMask,
                 self.inputEventHandlers["goCellLastHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Home",
+                fullModMask,
+                controlModMask,
+                self.inputEventHandlers["goTopOfFileHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "End",
+                fullModMask,
+                controlModMask,
+                self.inputEventHandlers["goBottomOfFileHandler"]))
 
         return keyBindings
 
@@ -5727,6 +5757,42 @@ class Script(default.Script):
                 return int(attr[6:]) - 1
         return -1
 
+    def getTopOfFile(self):
+        """Returns the object and first caret offset at the top of the
+         document frame."""
+
+        documentFrame = self.getDocumentFrame()
+        [obj, offset] = self.findFirstCaretContext(documentFrame, 0)
+
+        return [obj, offset]
+
+    def getBottomOfFile(self):
+        """Returns the object and last caret offset at the bottom of the
+         document frame."""
+
+        obj = self.getLastObject()
+        offset = 0
+
+        # obj should now be the very last item in the entire document frame
+        # and not have children of its own.  Therefore, it should have text.
+        # If it doesn't, we don't want to be here.
+        #
+        text = self.queryNonEmptyText(obj)
+        if text:
+            offset = text.characterCount - 1
+        else:
+            obj = self.findPreviousObject(obj)
+
+        while obj:
+            [lastObj, lastOffset] = self.findNextCaretInOrder(obj, offset)
+            if not lastObj \
+               or self.isSameObject(lastObj, obj) and (lastOffset == offset):
+                break
+
+            [obj, offset] = [lastObj, lastOffset]
+
+        return [obj, offset]
+
     def getLastObject(self):
         """Returns the last object in the document frame"""
 
@@ -8356,6 +8422,20 @@ class Script(default.Script):
         #
         #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
         #self.dumpContents(inputEvent, contents)
+
+    def goTopOfFile(self, inputEvent):
+        """Positions the caret offset at the beginning of the document."""
+
+        [obj, characterOffset] = self.getTopOfFile()
+        self.setCaretPosition(obj, characterOffset)
+        self.presentLine(obj, characterOffset)
+
+    def goBottomOfFile(self, inputEvent):
+        """Positions the caret offset at the end of the document."""
+
+        [obj, characterOffset] = self.getBottomOfFile()
+        self.setCaretPosition(obj, characterOffset)
+        self.presentLine(obj, characterOffset)
 
     def expandComboBox(self, inputEvent):
         """If focus is on a menu item, but the containing combo box does not

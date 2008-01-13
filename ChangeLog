@@ -4,6 +4,17 @@
           Fix for bug #506360 - find{Next,Previous}Line() should be
           more efficient.
 
+          Work on bug #414762 - Control Home/End, Up/Down Arrow don't
+          always work in Firefox.  Firefox still has some navigation
+          issues which prevent things like Control Home and Control
+          End from doing what we would want/expect.  Therefore, we've
+          taken over these keystrokes by default. :-)  They should
+          always move you to the top and bottom of the document now
+          if Orca is controlling the caret.  If you would prefer to
+          have Control Home and Control End exhibit the default FF
+          behavior, toggle to a Gecko-controlled caret or change the
+          keybindings in the Orca Preferences dialog for Minefield.
+
 2008-01-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
