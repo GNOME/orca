@@ -1,3 +1,7 @@
+2008-01-13  Andre Klapper  <a9016009@gmx.de>
+
+	* POTFILES.in: Fix src/louis/constants.py entry.
+
 2008-01-10  Luca Ferretti  <elle.uca@libero.it>
 
 	* it.po: Updated Italian translation.
