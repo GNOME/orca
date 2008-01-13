@@ -8001,6 +8001,18 @@ class Script(default.Script):
             prevObj = prevLine[0][0]
             prevOffset = prevLine[0][1]
 
+        if currentLine == prevLine:
+            # For some reason we're stuck.
+            #
+            #print "find prev line failed"
+            prevObj = self.findPreviousObject(prevObj)
+            prevOffset = 0
+            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
+            if currentLine == prevLine:
+                # print "find prev line still stuck"
+                prevObj = self.findPreviousObject(prevObj)
+                prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
+
         [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj, 
                                                           prevOffset - 1)
 
