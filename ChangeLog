@@ -1,3 +1,10 @@
+2007-01-14  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
+          NEWS:
+	  README:
+          Prep for Orca v2.21.5.
+
 2008-01-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

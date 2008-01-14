@@ -1,3 +1,125 @@
+2.21.5 - 14-Jan-2008
+
+General:
+
+* Fix for bug #354462 - SayAll of dialogs (versus just a single text
+  area)
+
+* Fix for bug #463867 - Source display and Target display should
+  self-populate in Orca Prefs dialog
+
+* Fix for bug #463881 - Evaluate other gnome-mag features for inclusion
+  in Orca prefs
+
+* Fix for bug #485522 - Orca should allow the user to specify the
+  chat messages that get spoken/brailled
+
+* Fix for bug #486895 - Arrowing down from column header to table
+  presents wrong column header
+
+* Fix for bug #489504 - Invoking a Say All should result in any text
+  selection being cleared
+
+* Fix for bug #504356 - Unchecking "Enable speech" doesn't grey out
+  all speech items in the Preferences dialog
+
+* Fix for bug #504384 - The Orca Preferences dialog is a bit too "tall"
+
+* Fix for bug #505293 - Zoomer borders should only be displayed at
+  source display intersection
+
+* Fix for bug #505306 - Orca's color filtering combo box should be
+  greyed out if the filters are not available
+
+* Fix for bug #508679 - The second time to enable the Braille Monitor,
+  it can not be lauched
+
+* Fix for bug #508777 - HTTP-based Recording ability should not be
+  enabled by default
+
+Evolution:
+
+* Fix for bug #490317 - Orca echoes the first letter of each new line
+  when composing a message in Evolution
+
+Java platform: 
+
+* Fix for bug #507886 - Orca+Space when in Java application presents
+  script summary debug
+
+Firefox/Thunderbird:
+
+* Work on bug #414762 - Control Home/End, Up/Down Arrow don't always
+  work in Firefox.  Firefox still has some navigation issues which
+  prevent things like Control Home and Control End from doing what we
+  would want/expect.  Therefore, we've taken over these keystrokes by
+  default. :-) They should always move you to the top and bottom of
+  the document now if Orca is controlling the caret.  If you would
+  prefer to have Control Home and Control End exhibit the default FF
+  behavior, toggle to a Gecko-controlled caret or change the
+  keybindings in the Orca Preferences dialog for Minefield.
+
+* Fix for bug #480881 - Firefox is very slow on pages with forms
+
+* Fix for bug #500016 - Reading web pages by line in Firefox 3 is
+  slow
+
+* Fix for bug #502084 - Running Orca with Thunderbird v2.0.X with 
+  compose window open generates a stack trace
+
+* Fix for bug #504742 - Gecko.py should not call
+  getLineContentsAtOffset() twice unnecessarily
+
+* Fix for bug #504785 - Orca repeats certain lines twice in Firefox 3
+
+* Fix for bug #505102 - Pressing Up/Down in FF3 is moving to spaces at
+  the end of the current line
+
+* Fix for bug #506360 - find{Next,Previous}Line() should be more
+  efficient.  Note that this is one of the new "performance
+  enhancements" that has been well-tested, but may contain side
+  effects.  Please give us your feedback.  If you're unsure as to
+  whether this change is responsible for a problem you are seeing, you
+  can place the following two lines in your
+  ~/.orca/orca-customizations.py file:
+
+  import orca.Gecko
+  orca.Gecko.useNewLineNav = False
+
+  If True (the default), the new enhancements are used; if False, they
+  are not.  If this change is responsible, let us know.
+
+* Fix for bug #508624 - Checkbox tristate not announcing state changes
+
+* Work on bug #508784 - Orca needs to handle FF hierarchies that don't
+  match reality.  Part of the solution is making sure the user can
+  navigate to the areas.  That is what has been done.  We still need
+  to present the elements and allow the user to navigate among them
+  according to their spatial layout (e.g. reverse the list whose
+  elements are ordered right-to-left).
+
+* Fix for bug #509068 - We should prevent the user from arrowing into
+  combo boxes in FF.  Now you can arrow "up to" a combo box, but
+  should not be able to arrow into it accidentally.  If you arrow to a
+  combo box and want to it give focus, you can do several things:
+  Press Tab (as it's the next focusable item), press Orca+Tab (as it's
+  the next form field, assuming your combo box is contained in a
+  form), or press Alt+Down Arrow (which is the Firefox command to
+  expand the current combo box).
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    et      Estonian             Ivar Smolin and Priit Laes
+    it      Italian              Luca Ferretti
+    nb      Norwegian Bokmã¥L    Kjartan Maraas
+    oc      Occitan              Yannig Marchegay
+    sv      Swedish              Daniel Nylander
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.21.4 - 17-Dec-2007
 
 NOTE: There have been keybindings changes for this release.
