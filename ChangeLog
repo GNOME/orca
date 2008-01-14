@@ -1,3 +1,9 @@
+2008-01-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/flat_review.py:
+          Fix for bug #506874 - Flat review should support status bars 
+          that have accessible text and children (thanks Will!)
+
 2008-01-14  Willie Walker <william.walker@sun.com>
 
         * configure.in:

@@ -1323,6 +1323,15 @@ class Context:
            or (rootrole == pyatspi.ROLE_SCROLL_BAR):
             return self.getZonesFromAccessible(root, rootexts)
 
+        # If this is a status bar, only pursue its children if we cannot
+        # get non-empty text information from the status bar.
+        # See bug #506874 for more details.
+        #
+        if rootrole == pyatspi.ROLE_STATUS_BAR:
+            zones = self.getZonesFromText(root, rootexts)
+            if len(zones):
+                return zones
+
         # Otherwise, dig deeper.
         #
         # We'll include page tabs: while they are parents, their extents do
