@@ -1,8 +1,32 @@
+2008-01-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          Fix for bug #509068 - We should prevent the user from arrowing
+          into combo boxes in FF.  Now you can arrow "up to" a combo box,
+          but should not be able to arrow into it accidentally.  If you
+          arrow to a combo box and want to it give focus, you can do
+          several things:  Press Tab (as it's the next focusable item),
+          press Orca+Tab (as it's the next form field, assuming your
+          combo box is contained in a form), or press Alt+Down Arrow
+          (which is the Firefox command to expand the current combo box).
+
 2008-01-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
           Fix for bug #506360 - find{Next,Previous}Line() should be
-          more efficient.
+          more efficient.  Note that this is one of the new "performance
+          enhancements" that has been well-tested, but may contain side
+          effects.  Please give us your feedback.  If you're unsure as
+          to whether this change is responsible for a problem you are
+          seeing, you can place the following two lines in your
+          ~/.orca/orca-customizations.py file:
+
+             import orca.Gecko
+             orca.Gecko.useNewLineNav = False
+
+          If True (the default), the new enhancements are used; if False,
+          they are not.  If this change is responsible, let us know.
+          Thanks!!
 
           Work on bug #414762 - Control Home/End, Up/Down Arrow don't
           always work in Firefox.  Firefox still has some navigation

@@ -5034,10 +5034,18 @@ class Script(default.Script):
             # Arrow to expand the combo box.  Therefore, if a menu item has
             # focus and Alt+Down Arrow is pressed, we will handle it by
             # giving the combo box focus and expanding it as the user
-            # expects.
+            # expects.  We also want to avoid grabbing focus on a combo box.
+            # Therefore, if the caret is immediately before a combo box,
+            # we'll hand it the same way.
             #
-            weHandleIt = (keyboardEvent.event_string == "Down") \
-                         and obj.getRole() == pyatspi.ROLE_MENU_ITEM
+            if keyboardEvent.event_string == "Down":
+                [obj, offset] = self.getCaretContext()
+                index = self.getChildIndex(obj, offset)
+                if index >= 0:
+                    weHandleIt = \
+                        obj[index].getRole() == pyatspi.ROLE_COMBO_BOX
+                if not weHandleIt:
+                    weHandleIt = obj.getRole() == pyatspi.ROLE_MENU_ITEM
 
         elif obj and (obj.getRole() == pyatspi.ROLE_COMBO_BOX):
             # We'll let Firefox handle the navigation of combo boxes.
@@ -7841,9 +7849,10 @@ class Script(default.Script):
 
         # If the item is a focusable list in an HTML form, we're here
         # because we've arrowed to it.  We don't want to grab focus on
-        # it and trap the user in the list.
+        # it and trap the user in the list. The same is true for combo
+        # boxes.
         #
-        if obj.getRole() == pyatspi.ROLE_LIST \
+        if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
            and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             characterOffset = self.getCharacterOffsetInParent(obj)
             obj = obj.parent
@@ -8446,22 +8455,31 @@ class Script(default.Script):
         """
 
         [obj, characterOffset] = self.getCaretContext()
+        comboBox = None
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
             comboBox = self.getAncestor(obj,
                                         [pyatspi.ROLE_COMBO_BOX],
                                         [pyatspi.ROLE_DOCUMENT_FRAME])
-            try:
-                action = comboBox.queryAction()
-            except:
-                pass
-            else:
-                orca.setLocusOfFocus(None, comboBox)
-                comboBox.queryComponent().grabFocus()
-                for i in range(0, action.nActions):
-                    name = action.getName(i)
-                    if name == "open":
-                        action.doAction(i)
-                        break
+        else:
+            index = self.getChildIndex(obj, characterOffset)
+            if index >= 0:
+                comboBox = obj[index]
+
+        if not comboBox:
+            return
+
+        try:
+            action = comboBox.queryAction()
+        except:
+            pass
+        else:
+            orca.setLocusOfFocus(None, comboBox)
+            comboBox.queryComponent().grabFocus()
+            for i in range(0, action.nActions):
+                name = action.getName(i)
+                if name == "open":
+                    action.doAction(i)
+                    break
 
     def goPreviousHeading(self, inputEvent):
         """Go to the previous heading regardless of level."""
@@ -9224,9 +9242,9 @@ class Script(default.Script):
             # We actively avoid grabbing focus on lists in HTML forms
             # in setCaretPosition() so that a user doesn't accidentally
             # arrow into one and change its value.  Here we actually
-            # do want to grab focus should we be on a list.
+            # do want to grab focus should we be on a list or combo box.
             #
-            if obj.getRole() == pyatspi.ROLE_LIST:
+            if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX]:
                 obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
@@ -9283,9 +9301,9 @@ class Script(default.Script):
             # We actively avoid grabbing focus on lists in HTML forms
             # in setCaretPosition() so that a user doesn't accidentally
             # arrow into one and change its value.  Here we actually
-            # do want to grab focus should we be on a list.
+            # do want to grab focus should we be on a list or combo box.
             #
-            if obj.getRole() == pyatspi.ROLE_LIST:
+            if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX]:
                 obj.queryComponent().grabFocus()
             else:
                 self.setCaretPosition(obj, characterOffset)
