@@ -1,3 +1,10 @@
+2008-01-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/Evolution.py:
+          Fix for bug #489504 - Invoking a Say All should result in any 
+          text selection being cleared.
+
 2008-01-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 

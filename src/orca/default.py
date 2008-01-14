@@ -1643,7 +1643,7 @@ class Script(script.Script):
             #    context.currentOffset, 0)
             #print context.currentOffset, x, y, width, height
             #self.drawOutline(x, y, width, height)
-            pass
+            return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
             text.setCaretOffset(context.currentOffset)
@@ -1651,6 +1651,12 @@ class Script(script.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             orca.setLocusOfFocus(None, context.obj, False)
             text.setCaretOffset(context.currentOffset)
+
+        # If there is a selection, clear it. See bug #489504 for more details.
+        #
+        if text.getNSelections():
+            text.setSelection(0, context.currentOffset, context.currentOffset)
+
 
     def sayAll(self, inputEvent):
         clickCount = self.getClickCount(self.lastSayAllEvent, inputEvent)

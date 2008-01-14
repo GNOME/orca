@@ -660,7 +660,7 @@ class Script(default.Script):
 
         if callbackType == speechserver.SayAllContext.PROGRESS:
             #print "PROGRESS", context.utterance, context.currentOffset
-            pass
+            return
         elif callbackType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
             offset = context.currentOffset
@@ -677,6 +677,25 @@ class Script(default.Script):
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
             orca.setLocusOfFocus(None, obj, False)
+
+        # If there is a selection, clear it. See bug #489504 for more details.
+        # This is not straight forward with Evolution. all the text is in
+        # an HTML panel which contains multiple panels, each containing a
+        # single text object.
+        #
+        panel = obj.parent
+        htmlPanel = panel.parent
+        for i in range(0, htmlPanel.childCount):
+            panel = htmlPanel.getChildAtIndex(i)
+            if panel != None:
+                textObj = panel.getChildAtIndex(0)
+                try:
+                    text = textObj.queryText()
+                except:
+                    pass
+                else:
+                    if text.getNSelections():
+                        text.removeSelection(0)
 
     def presentMessageLine(self, obj, newLocusOfFocus):
         """Speak/braille the line at the current text caret offset.
