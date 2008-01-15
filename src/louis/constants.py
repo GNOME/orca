@@ -17,6 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+
+from orca.orca_i18n import _           # for gettext support
+from orca.orca_i18n import Q_          # to provide qualified translatable strings
+
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
 # http://en.wikipedia.org/wiki/Braille
