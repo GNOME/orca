@@ -6141,8 +6141,8 @@ class Script(default.Script):
         index = self.findObjectOnLine(obj, 0, self._currentLineContents)
         if index > 0 and self._previousLineContents:
             prevLineContents = self._previousLineContents
-            prevObj = prevLineContents[0]
-            prevOffset = prevLineContents[1]
+            prevObj = prevLineContents[0][0]
+            prevOffset = prevLineContents[0][1]
         else:
             [prevObj, prevOffset] = self.findPreviousLine(obj, 0)
             prevLineContents = self.getLineContentsAtOffset(prevObj,
@@ -6151,8 +6151,8 @@ class Script(default.Script):
 
         nextLineContents = self._nextLineContents
         if index > 0 and nextLineContents:
-            nextObj = nextLineContents[0]
-            nextOffset = nextLineContents[1]
+            nextObj = nextLineContents[0][0]
+            nextOffset = nextLineContents[0][1]
 
         # The labels for combo boxes won't be found below the combo box
         # because expanding the combo box will cover up the label. Labels
