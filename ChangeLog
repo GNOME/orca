@@ -1,3 +1,11 @@
+2008-01-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/Evolution.py:
+          src/orca/speechgenerator.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #503874 - Read by row in Evolution reads cell 
+          information incorrectly
+
 2008-01-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/flat_review.py:

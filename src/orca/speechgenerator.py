@@ -1348,7 +1348,7 @@ class SpeechGenerator:
 
         displayedText = self._script.getDisplayedText( \
                           self._script.getRealActiveDescendant(obj))
-        if not already_focused:
+        if not already_focused and not displayedText in utterances:
             utterances.append(displayedText)
 
         # If there is no displayed text, check to see if this table cell 

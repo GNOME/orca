@@ -1205,6 +1205,7 @@ class BrailleGenerator:
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
                     regions = self._getBrailleRegionsForCheckBox(obj)
+                    regions[0].append(braille.Region(" "))
 
                     # If this table cell doesn't have any label associated
                     # with it then also braille the table column header.

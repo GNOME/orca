@@ -908,6 +908,16 @@ class Script(default.Script):
             column = \
                 parentTable.getColumnAtIndex(event.source.getIndexInParent())
 
+            # If we are on the same row, then just speak/braille the table
+            # cell as if settings.readTableCellRow was False. 
+            # See bug #503874 for more details.
+            #
+            if self.lastMessageRow == row:
+                default.Script.locusOfFocusChanged(self, event,
+                                           oldLocusOfFocus, newLocusOfFocus)
+                settings.readTableCellRow = True
+                return
+
             # This is an indication of whether we should speak all the table
             # cells (the user has moved focus up or down the list, or just
             # deleted a message), or just the current one (focus has moved
@@ -971,6 +981,12 @@ class Script(default.Script):
 
                     checkbox = False
                     toRead = True
+                    # Whether or not we want to replace the cell's column
+                    # header with a more user-friendly alternative name.
+                    # Currently we only do this with the "status" column,
+                    # which we replace with "unread" if it is not checked.
+                    #
+                    useAlternativeName = False
                     try:
                         action = cell.queryAction()
                     except NotImplementedError:
@@ -990,6 +1006,15 @@ class Script(default.Script):
                                     #
                                     if header.name == _("Status"):
                                         toRead = not checked
+                                        useAlternativeName = True
+                                        break
+                                    # Translators: this is the name of the
+                                    # flagged column header in the message
+                                    # list in Evolution.  The name needs to
+                                    # match what Evolution is using.
+                                    #
+                                    elif header.name == _("Flagged"):
+                                        toRead = checked
                                         break
                                     if not checked:
                                         toRead = False
@@ -999,7 +1024,8 @@ class Script(default.Script):
                         # Speak/braille the column header for this table cell
                         # if it has focus (unless it's a checkbox).
                         #
-                        if not checkbox and verbose:
+                        if (verbose or (checkbox and column == i)) \
+                           and not useAlternativeName:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
                             settings.speechVerbosityLevel = \
@@ -1057,8 +1083,20 @@ class Script(default.Script):
                         elif header.name == _("Attachment"):
                             text = header.name
                             utterances = [ text ]
-                            brailleRegions.append(braille.Region(text))
-                            brailleRegions.append(braille.Region(" "))
+                            if column != i:
+                                brailleRegions.append(braille.Region(text))
+                                brailleRegions.append(braille.Region(" "))
+                        # Translators: this is the name of the
+                        # flagged column header in the message
+                        # list in Evolution.  The name needs to
+                        # match what Evolution is using.
+                        #
+                        elif header.name == _("Flagged"):
+                            text = header.name
+                            utterances = [ text ]
+                            if column != i:
+                                brailleRegions.append(braille.Region(text))
+                                brailleRegions.append(braille.Region(" "))
                         else:
                             brailleRegions.extend(cellRegions)
                             brailleRegions.append(braille.Region(" "))
