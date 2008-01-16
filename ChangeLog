@@ -1,3 +1,11 @@
+2008-01-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Work on fix for bug #432308 - Problem with Evolution and threads 
+          always speaking "expanded 0 items". Adding in code to no longer
+          speak the "0 items" if this is a table cell in the mail message 
+          header list with an expanded state.
+
 2008-01-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/Evolution.py:

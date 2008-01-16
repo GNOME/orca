@@ -36,6 +36,7 @@ import orca.braille as braille
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 import orca.speechserver as speechserver
 import orca.settings as settings
 import orca.chnames as chnames
@@ -232,6 +233,45 @@ class WhereAmI(where_am_I.WhereAmI):
 
         return [textContents, startOffset, endOffset]
 
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell so that, if this is an expanded 
+       table cell,  we can strip off the "0 items".
+    """
+
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech utterances for a single table cell
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = speechgenerator.SpeechGenerator.\
+                      _getSpeechForTableCell(self, obj, already_focused)
+
+        # Check that we are in a table cell in the mail message header list.
+        # If we are and this table cell has an expanded state, and the first
+        # token of the last utterances is "0", then strip off that last 
+        # utterance ("0 items"). See bug #432308 for more details.
+        #
+        self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                          pyatspi.ROLE_TREE_TABLE, \
+                          pyatspi.ROLE_UNKNOWN]
+        if self._script.isDesiredFocusedItem(obj, self.rolesList):
+            state = obj.getState()
+            if state and state.contains(pyatspi.STATE_EXPANDABLE):
+                if state.contains(pyatspi.STATE_EXPANDED):
+                    tokens = utterances[-1].split()
+                    if tokens[0] == "0":
+                        utterances = utterances[0:-1]
+
+        return utterances
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -318,6 +358,12 @@ class Script(default.Script):
             # Translators: spoken words for the rolename of a calendar event.
             #
             _("calendar event"))
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+
+        return SpeechGenerator(self)
 
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
