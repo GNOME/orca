@@ -2548,7 +2548,8 @@ class Script(script.Script):
         # to the focused object, then we should speak/braille the
         # focused object, as if it had just got focus.
         #
-        if obj.getRole() == pyatspi.ROLE_LABEL:
+        if obj.getRole() == pyatspi.ROLE_LABEL \
+           and obj.getState().contains(pyatspi.STATE_SHOWING):
             for relation in relations:
                 if relation.getRelationType() \
                        == pyatspi.RELATION_LABEL_FOR:

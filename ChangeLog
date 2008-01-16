@@ -6,6 +6,10 @@
           speak the "0 items" if this is a table cell in the mail message 
           header list with an expanded state.
 
+        * src/orca/default.py:
+          Fix for bug #508682 – Orca speak combobox item three time in 
+          Pidgin 2.3.0.
+
 2008-01-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/Evolution.py:
