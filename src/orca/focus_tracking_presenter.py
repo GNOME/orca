@@ -873,6 +873,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             debug.println(debug.LEVEL_SEVERE,
                           "focus_tracking_presenter:_dequeueEvent: " \
                           + " the event queue is empty!")
+            rerun = False # destroy and don't call again
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
