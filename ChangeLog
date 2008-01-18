@@ -1,3 +1,13 @@
+2008-01-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braillegenerator.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          Fixup for bug #503874 - Read by row in Evolution reads cell 
+          information incorrectly. With the fix for bug #508153, we no 
+          longer need to put an extra space after the table cell regions 
+          for a table cell that has a toggle action (i.e. checkbox). 
+          Regression test updated to remove the bogus spaces.
+
 2008-01-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 

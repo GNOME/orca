@@ -49,8 +49,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame'",
      "     VISIBLE:  'Shopping list Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke '",
-     "     VISIBLE:  '3 bottles of coke ', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
+     "     VISIBLE:  '3 bottles of coke', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page'",
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Editable Cells'",
@@ -59,7 +59,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Shopping list frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Number column header'",
-     "SPEECH OUTPUT: '3 bottles of coke '"]))
+     "SPEECH OUTPUT: '3 bottles of coke'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -69,8 +69,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke '",
-     "     VISIBLE:  '3 bottles of coke ', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
+     "     VISIBLE:  '3 bottles of coke', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: '3'",
@@ -90,10 +90,10 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Table down one line",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles '",
-     "     VISIBLE:  '5 packages of noodles ', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
+     "     VISIBLE:  '5 packages of noodles', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '5 packages of noodles '"]))
+     "SPEECH OUTPUT: '5 packages of noodles'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
