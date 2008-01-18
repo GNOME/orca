@@ -35,32 +35,58 @@ sequence.append(utils.AssertPresentationAction(
     "u for Page Setup",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
      "     VISIBLE:  'Location  $l', cursor=10",
-     "BRAILLE LINE:  'Page Setup Dialog Format for:  Combo'",
-     "     VISIBLE:  ' Combo', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Page Setup Dialog'",
+     "     VISIBLE:  'Page Setup Dialog', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
+     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Location autocomplete'",
      "SPEECH OUTPUT: 'Location text '",
-     "SPEECH OUTPUT: 'Format for: combo box'"]))
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Page Setup %'",
+     "SPEECH OUTPUT: 'Format panel Orientation: panel'",
+     "SPEECH OUTPUT: 'Portrait selected radio button'"]))
+ 
+sequence.append(WaitForWindowActivate("Page Setup",None))
 
 ########################################################################
-# Tab twice to get to the Portrait radio button.
-# 
+# In the Page Setup dialog, focus should already be on the "Portrait"
+# radio button.  Right Arrow to the "Landscape" radio button.
+#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "Tab",
-    ["BRAILLE LINE:  'Page Setup Dialog Paper size:  Combo'",
-     "     VISIBLE:  ' Combo', cursor=1",
+    "Right Arrow to Landscape",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Landscape RadioButton'",
+     "     VISIBLE:  '&=y Landscape RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Paper size: combo box'"]))
+     "SPEECH OUTPUT: 'Landscape selected radio button'"]))
 
+########################################################################
+# Do a basic "Where Am I" via KP_Enter. 
+#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Tab",
-    ["BRAILLE LINE:  'Page Setup Dialog &=y Orientation: Portrait RadioButton'",
-     "     VISIBLE:  '&=y Orientation: Portrait RadioB', cursor=1",
-     "SPEECH OUTPUT: ''",
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Landscape RadioButton'",
+     "     VISIBLE:  '&=y Landscape RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Orientation:'",
+     "SPEECH OUTPUT: 'Landscape radio button'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''"]))
+
+########################################################################
+# Left Arrow to return to the "Portrait" radio button. 
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow to Portrait",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
+     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Portrait selected radio button'"]))
 
 ########################################################################
@@ -71,40 +97,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Page Setup Dialog &=y Orientation: Portrait RadioButton'",
-     "     VISIBLE:  '&=y Orientation: Portrait RadioB', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
+     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Orientation:'",
-     "SPEECH OUTPUT: 'Orientation: Portrait radio button'",
+     "SPEECH OUTPUT: 'Portrait radio button'",
      "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 1 of 4'",
-     "SPEECH OUTPUT: 'Alt o'"]))
-
-########################################################################
-# Right Arrow to the "Reverse portrait" radio button. 
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(utils.AssertPresentationAction(
-    "Right Arrow to radio button",
-    ["BRAILLE LINE:  'Page Setup Dialog & y Reverse portrait RadioButton'",
-     "     VISIBLE:  '& y Reverse portrait RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Reverse portrait not selected radio button'"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter. 
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Basic Where Am I", 
-    ["BRAILLE LINE:  'Page Setup Dialog &=y Reverse portrait RadioButton'",
-     "     VISIBLE:  '&=y Reverse portrait RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Reverse portrait radio button'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 2 of 4'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################

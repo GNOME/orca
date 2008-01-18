@@ -35,25 +35,42 @@ sequence.append(utils.AssertPresentationAction(
     "u for Page Setup",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
      "     VISIBLE:  'Location  $l', cursor=10",
-     "BRAILLE LINE:  'Page Setup Dialog Format for:  Combo'",
-     "     VISIBLE:  ' Combo', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Page Setup Dialog'",
+     "     VISIBLE:  'Page Setup Dialog', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
+     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Location autocomplete'",
      "SPEECH OUTPUT: 'Location text '",
-     "SPEECH OUTPUT: 'Format for: combo box'"]))
-
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Page Setup %'",
+     "SPEECH OUTPUT: 'Format panel Orientation: panel'",
+     "SPEECH OUTPUT: 'Portrait selected radio button'"]))
+ 
 sequence.append(WaitForWindowActivate("Page Setup",None))
 
 ########################################################################
-# Shift+tab again to move to the Apply push button. 
-# 
+# In the Page Setup dialog, shift+tab once to move to the page tabs.
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "Shift Tab to the Apply button",
-    ["BRAILLE LINE:  'Page Setup Dialog Apply Button'",
-     "     VISIBLE:  'Page Setup Dialog Apply Button', cursor=19",
+    "Shift+Tab to page tabs",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog Format & Options Page'",
+     "     VISIBLE:  'Format & Options Page', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Apply button'"]))
+     "SPEECH OUTPUT: 'Format & Options page'"]))
+
+########################################################################
+# Shift+tab again to move to the OK push button. 
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Tab to OK button",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -63,21 +80,21 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Page Setup Dialog Apply Button'",
-     "     VISIBLE:  'Page Setup Dialog Apply Button', cursor=19",
-     "SPEECH OUTPUT: 'Apply'",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'OK'",
      "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'Alt a'"]))
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Shift+tab again to move to the Cancel push button. 
-# 
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "Shift Tab to the Cancel button",
-    ["BRAILLE LINE:  'Page Setup Dialog Cancel Button'",
-     "     VISIBLE:  'Page Setup Dialog Cancel Button', cursor=19",
+    "Shift+Tab to Cancel button",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog Cancel Button'",
+     "     VISIBLE:  'Cancel Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cancel button'"]))
 
@@ -89,11 +106,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Page Setup Dialog Cancel Button'",
-     "     VISIBLE:  'Page Setup Dialog Cancel Button', cursor=19",
+    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog Cancel Button'",
+     "     VISIBLE:  'Cancel Button', cursor=1",
      "SPEECH OUTPUT: 'Cancel'",
      "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'Alt c'"]))
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Space on the Cancel button and wait 
