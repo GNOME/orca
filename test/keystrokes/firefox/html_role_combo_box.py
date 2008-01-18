@@ -202,7 +202,7 @@ sequence.append(utils.AssertPresentationAction(
     "Left out of combo box", 
     ["BRAILLE LINE:  'Version 2.16 Combo'",
      "     VISIBLE:  'Version 2.16 Combo', cursor=0",
-     "SPEECH OUTPUT: 'n'"]))
+     "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
 
 ########################################################################
 # Press Down Arrow once to move to the next line which contains
@@ -241,7 +241,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Speech'",
      "     VISIBLE:  'Speech', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Speech combo box'"
+     "SPEECH OUTPUT: 'Speech combo box'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Speech'"]))
 
@@ -264,8 +264,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
-    ["BUG? - It would be nice to handle this better", 
-     "BRAILLE LINE:  'Braille Combo'",
+    ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
      "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test panel'",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
