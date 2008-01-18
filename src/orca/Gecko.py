@@ -8021,11 +8021,7 @@ class Script(default.Script):
             [obj, characterOffset] = self.getCaretContext()
 
         if not obj:
-            obj = self.getLastObject()
-            [obj, characterOffset] = self.findPreviousCaretInOrder(obj, 0)
-
-        if not obj:
-            return [None, -1]
+            return self.getTopOfFile()
 
         currentLine = self._currentLineContents
         index = self.findObjectOnLine(obj, characterOffset, currentLine)
@@ -8248,11 +8244,7 @@ class Script(default.Script):
             [obj, characterOffset] = self.getCaretContext()
 
         if not obj:
-            obj = self.getDocumentFrame()
-            [obj, characterOffset] = self.findFirstCaretContext(obj, -1)
-
-        if not obj:
-            return [None, -1]
+            return self.getBottomOfFile()
 
         currentLine = self._currentLineContents
         index = self.findObjectOnLine(obj, characterOffset, currentLine)
@@ -8414,6 +8406,9 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         [previousObj, previousCharOffset] = \
                                    self.findPreviousLine(obj, characterOffset)
+        if not previousObj:
+            return
+
         self.setCaretPosition(previousObj, previousCharOffset)
         self.presentLine(previousObj, previousCharOffset)
 
@@ -8427,8 +8422,13 @@ class Script(default.Script):
         """Positions the caret offset at the next line in the document
         window, attempting to preserve horizontal caret position.
         """
+
         [obj, characterOffset] = self.getCaretContext()
         [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
+
+        if not nextObj:
+            return
+
         self.setCaretPosition(nextObj, nextCharOffset)
         self.presentLine(nextObj, nextCharOffset)
 
