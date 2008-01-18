@@ -5216,11 +5216,16 @@ class Script(default.Script):
         # extents based on their physical position, even though they are
         # not showing.  Therefore, if the object in question is a menu
         # item, get the object extents rather than the range extents for
-        # the text.
+        # the text. Similarly, if it's a menu in a combo box, get the
+        # extents of the combo box.
         #
         text = self.queryNonEmptyText(obj)
         if text and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
             extents = text.getRangeExtents(startOffset, endOffset, 0)
+        elif obj.getRole() == pyatspi.ROLE_MENU \
+             and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            ext = obj.parent.queryComponent().getExtents(0)
+            extents = [ext.x, ext.y, ext.width, ext.height]
         else:
             ext = obj.queryComponent().getExtents(0)
             extents = [ext.x, ext.y, ext.width, ext.height]

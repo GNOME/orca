@@ -1,5 +1,11 @@
 2008-01-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/Gecko.py: 
+          Fix for bug #509731 - braille for collapsed html combo boxes
+          is not updating correctly.
+
+2008-01-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/html_role_combo_box.py:
           test/keystrokes/firefox/html_role_lists.py:
           test/keystrokes/firefox/line_nav_enter_bug.py:
