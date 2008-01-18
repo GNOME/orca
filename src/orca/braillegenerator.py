@@ -1189,6 +1189,8 @@ class BrailleGenerator:
                 regions = [regions, cellFocusedRegion]
                 return regions
 
+        label = None
+
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
         # bunch of stuff we can do here, such as check the EXPANDABLE
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
@@ -1219,17 +1221,20 @@ class BrailleGenerator:
                         n = table.getColumnAtIndex(obj.getIndexInParent())
                         accHeader = table.getColumnHeader(n)
                         regions[0].append(braille.Region(" "))
-                        regions[0].append(braille.Region(accHeader.name))
+                        label = accHeader.name
+                        regions[0].append(braille.Region(label))
 
                     break
 
+        descendant = self._script.getRealActiveDescendant(obj)
         if len(regions) == 0:
-            regions = self._getDefaultBrailleRegions(
-                              self._script.getRealActiveDescendant(obj))
+            regions = self._getDefaultBrailleRegions(descendant)
         else:
-            [cellRegions, focusRegion] = self._getDefaultBrailleRegions(\
-                self._script.getRealActiveDescendant(obj))
-            regions[0].extend(cellRegions)
+            cellText = self._script.getDisplayedText(descendant)
+            if not cellText or (cellText and label != cellText):
+                [cellRegions, focusRegion] = \
+                    self._getDefaultBrailleRegions(descendant)
+                regions[0].extend(cellRegions)
 
         # Check to see if this table cell contains an icon (image).
         # If yes:

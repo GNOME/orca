@@ -2347,7 +2347,8 @@ class Script(script.Script):
                         topName = self.getTopLevelName(newLocusOfFocus)
                         if not topName.endswith(" - Thunderbird"):
                             desc = table.getColumnDescription(newCol)
-                            if desc and len(desc):
+                            cellText = self.getDisplayedText(newLocusOfFocus)
+                            if desc and len(desc) and cellText != desc:
                                 text = desc
                                 if settings.speechVerbosityLevel \
                                        == settings.VERBOSITY_LEVEL_VERBOSE:
