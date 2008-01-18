@@ -24,3 +24,28 @@ __license__   = "LGPL"
 
 from _louis import *
 from constants import *
+import os
+
+def listTables():
+   tables = {}
+   try:
+      for fname in os.listdir(TABLES_DIR):
+         if fname[-4:] in ('.utb', '.ctb'):
+            alias = fname[:-4]
+            tables[TABLE_NAMES.get(alias, alias)] = \
+                                          os.path.join(TABLES_DIR, fname)
+   except OSError:
+      pass
+
+   return tables
+
+def getDefaultTable():
+   try:
+      for fname in os.listdir(TABLES_DIR):
+         if fname[-4:] in ('.utb', '.ctb'):
+            if fname.startswith('en-us'):
+               return os.path.join(TABLES_DIR, fname)
+   except OSError:
+      pass
+
+   return ''

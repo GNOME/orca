@@ -55,6 +55,7 @@ TABLE_NAMES = {'Cz-Cz-g1': _('Czech Grade 1'),
                'it-it-g1': _('Italian Grade 1'),
                'nl-be-g1': _('Belgium Dutch Grade 1')}
 
+TABLES_DIR = '@LOUIS_TABLE_DIR@'
 
 class TYPEFORM:
    plain_text = 0

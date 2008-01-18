@@ -2,13 +2,14 @@ louis_LTLIBRARIES = _louis.la
 
 louisdir = $(pyexecdir)/orca/louis
 
-_louis_la_CFLAGS = \
-	$(louis_CFLAGS) \
+_louis_la_CFLAGS = 		\
+	$(LOUIS_CFLAGS) 	\
 	$(PYTHON_INCLUDES)
 
-_louis_la_LDFLAGS = \
-	-module \
-	-avoid-version \
+_louis_la_LDFLAGS = 	\
+	$(LOUIS_LIBS)	\
+	-module 			\
+	-avoid-version 		\
 	-llouis
 
 _louis_la_SOURCES = \
@@ -17,5 +18,7 @@ _louis_la_SOURCES = \
 louis_pythondir=$(louisdir)
 
 louis_python_PYTHON = \
-	__init__.py \
+	__init__.py 
+
+nodist_louis_python_PYTHON = \
 	constants.py

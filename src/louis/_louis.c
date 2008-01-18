@@ -134,6 +134,9 @@ louis_translateString(PyObject *self, PyObject *args, PyObject *kw)
 				free(typeform);
 		free(trantab_joined);
         free(outbuf);
+
+        PyErr_Clear();
+
         return out;
 
 }
@@ -145,8 +148,8 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
                                 "typeform", "cursorPos","mode", 0};
 		char *typeform = NULL, *trantab_joined, *spacing = NULL;
 		widechar *outbuf;
-		int inlen, outlen, mode = 0, cursorPos = 0;
-		int rv, *outputPos, *inputPos;
+		int inlen, outlen, mode = 0, cursorPos = 0, inlen_cp;
+		int rv, *outputPos = NULL, *inputPos = NULL, i;
 		PyObject *trantab_list, *out, *typeform_list = NULL, *outputPos_list,
 				*inputPos_list;
 		Py_UNICODE *u_inbuf;
@@ -173,7 +176,10 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
 		if (PySequence_Size(typeform_list) > 0) 
 				typeform = pylist_to_typeform(typeform_list, inlen);
 
-		inputPos = calloc(inlen, sizeof(int));
+
+        inlen_cp = inlen;
+
+		inputPos = calloc(inlen*2, sizeof(int));
 
         outlen = inlen*2;
 		outbuf = calloc(outlen, sizeof(widechar));
@@ -184,8 +190,8 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
                            outputPos, inputPos, &cursorPos, mode);
 
         out = PyUnicode_FromUnicode((Py_UNICODE *)outbuf, outlen);
-		inputPos_list = intbuf_to_pylist(inputPos, inlen);
-		outputPos_list = intbuf_to_pylist(outputPos, outlen);
+		inputPos_list = intbuf_to_pylist(inputPos, outlen);
+		outputPos_list = intbuf_to_pylist(outputPos, inlen_cp);
 
 		if (typeform != NULL) 
 				free(typeform);
@@ -193,10 +199,6 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
         free(outbuf);
         free(outputPos);
         free(inputPos);
-
-        Py_INCREF(outputPos_list);
-        Py_INCREF(inputPos_list);
-        Py_INCREF(out);
 
         PyErr_Clear();
 
