@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of where Am I output in a dialog box using Firefox.
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -15,48 +17,46 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 ########################################################################
 # Open the "File" menu and press U for the Page Setup dialog
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
+sequence.append(utils.AssertPresentationAction(
+    "File menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar New Window(Control N)'",
+     "     VISIBLE:  'New Window(Control N)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'File menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'New Window Control N'"]))
 
-sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
-sequence.append(TypeAction("u"))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("u"))
+sequence.append(utils.AssertPresentationAction(
+    "u for Page Setup",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
+     "BRAILLE LINE:  'Page Setup Dialog Format for:  Combo'",
+     "     VISIBLE:  ' Combo', cursor=1",
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: 'Format for: combo box'"]))
 
 sequence.append(WaitForWindowActivate("Page Setup",None))
 
 ########################################################################
-# Currently we aren't getting proper focus events for this dialog.
-# Therefore press Tab once to trigger a focus event before proceeding.
+# Read the title bar with Orca+KP_ENTER
 #
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Shrink To Fit Page Width", acc_role=pyatspi.ROLE_CHECK_BOX))
-
-########################################################################
-# Do modified "Where Am I" via Orca_Modifier + KP_Enter to get the title
-# The following should be presented in speech and braille:
-#
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane <x> Shrink To Fit Page Width CheckBox'
-#      VISIBLE:  '<x> Shrink To Fit Page Width Che', cursor=1
-# SPEECH OUTPUT: 'Page Setup'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
-
-########################################################################
-# Do double-click modified "Where Am I" via Orca_Modifier + KP_Enter to
-# get the default button. The following should be presented in speech 
-# and braille [[[BUG? depending on the timing, the first click command
-# still gets spoken]]].
-#
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane <x> Shrink To Fit Page Width CheckBox'
-#      VISIBLE:  '<x> Shrink To Fit Page Width Che', cursor=1
-# SPEECH OUTPUT: 'Default button is OK'
-#
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Title Bar", 
+    ["BRAILLE LINE:  'Page Setup Dialog Format for:  Combo'",
+     "     VISIBLE:  ' Combo', cursor=1",
+     "SPEECH OUTPUT: 'Page Setup'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

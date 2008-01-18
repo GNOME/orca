@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -18,107 +19,83 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Open the "File" menu.  Focus is on the "New Window" menu item.  We
-# get a focus event for the menu, then one for the menu item.
+# Open the "File" menu.
 #
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File'
-#      VISIBLE:  'File', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'File'
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar File New Window(Control N)'
-#      VISIBLE:  'New Window(Control N)', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'New Window Control N'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
-sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "File menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar New Window(Control N)'",
+     "     VISIBLE:  'New Window(Control N)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'File menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'New Window Control N'"]))
 
 ########################################################################
-# Right Arrow to the "Edit" menu.  [[[Bug?  When you arrow from menu
-# to menu on the menu bar, whatever had focus before claims it again
-# before the next menu -- or really menu item -- gains focus.  This
-# is annoying.  I'll file a bug against Mozilla asking if those
-# events are really necessary.]]] After focus momentarily goes to the
-# Location autocomplete, it's claimed by the Edit menu.  Finally, the
-# Select All menu item in the Edit menu claims focus.  (Yes, all from
-# one little press of Right Arrow).
+# Press Right Arrow to move forward menu by menu
 #
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'
-#      VISIBLE:  'Location  $l', cursor=10
-# SPEECH OUTPUT: 'Location autocomplete'
-# SPEECH OUTPUT: 'Location text '
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit'
-#      VISIBLE:  'Edit', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Edit'
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Edit Select All(Control A)'
-#      VISIBLE:  'Select All(Control A)', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Select All Control A'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Select All", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow on menu bar",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+     "     VISIBLE:  'Edit Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
+     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Edit menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Select All Control A'"]))
 
-########################################################################
-# Right Arrow to the "View" menu.  Focus is on the Toolbars menu. 
-# See above comments regarding menus that claim to be menu items and
-# the repeated focus events for the Location Autocomplete.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'
-#      VISIBLE:  'Location  $l', cursor=10
-# SPEECH OUTPUT: 'Location autocomplete'
-# SPEECH OUTPUT: 'Location text '
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View'
-#      VISIBLE:  'View', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'View'
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Toolbars'
-#      VISIBLE:  'Toolbars', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Toolbars'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Toolbars", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow on menu bar",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View Menu'",
+     "     VISIBLE:  'View Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "     VISIBLE:  'Toolbars Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'View menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Toolbars menu'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow on menu bar",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
+     "     VISIBLE:  '<x> Navigation Toolbar CheckItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Navigation Toolbar check item checked'"]))
 
 ########################################################################
-# Left Arrow back to the "Edit" menu.  Focus is on the "Select All" 
-# menu item. See above comments.
+# Press Left Arrow to move backward menu by menu
 #
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'
-#      VISIBLE:  'Location  $l', cursor=10
-# SPEECH OUTPUT: 'Location autocomplete'
-# SPEECH OUTPUT: 'Location text '
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit'
-#      VISIBLE:  'Edit', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Edit'
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Edit Select All(Control A)'
-#      VISIBLE:  'Select All(Control A)', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Select All Control A'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("Select All", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow on menu bar",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "     VISIBLE:  'Toolbars Menu', cursor=1",
+     "SPEECH OUTPUT: 'Minefield application Minefield frame View menu'",
+     "SPEECH OUTPUT: 'Toolbars menu'"]))
 
-########################################################################
-# Left Arrow back to the "File" menu.  Focus is on the "New Window"
-# menu item.  See above comments.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'
-#      VISIBLE:  'Location  $l', cursor=10
-# SPEECH OUTPUT: 'Location autocomplete'
-# SPEECH OUTPUT: 'Location text '
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File'
-#      VISIBLE:  'File', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'File'
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar File New Window(Control N)'
-#      VISIBLE:  'New Window(Control N)', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'New Window Control N'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow on menu bar",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+     "     VISIBLE:  'Edit Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
+     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Edit menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Select All Control A'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

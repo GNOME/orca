@@ -27,96 +27,123 @@ sequence.append(WaitForFocus("Status Bar Regression Test",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Press Tab to move to the first push button, "Who expects the Spanish
-# Inquistion?".  When it has focus, press it with the space bar which
-# will cause the status bar text to display the following text:
-# "NOBODY expects the Spanish Inquisition!"
+# Press Control+Home to move to the top.
 #
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Who expects the Spanish Inquisition?",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
-sequence.append(TypeAction(" "))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "Top of file", 
+    ["BRAILLE LINE:  'Press a button to change the status bar text'",
+     "     VISIBLE:  'Press a button to change the sta', cursor=1",
+     "SPEECH OUTPUT: 'Press a button to change the status bar text'"]))
 
 ########################################################################
-# Double-click Orca_Modifier+KP_Enter to read the status bar.
-# [[[Bug: Gecko's readPageSummary() should, I believe, only kick in for
-# unmodified double-clicks of KP_Enter.  Currently it kicks in for both.
-# See bug #480501.]]] [[[Bug? As has been observed in other tests, the
-# double-click doesn't always "take".  Sometimes it's treated as a
-# single click; other times it's treated as a double click, but we have
-# already started speaking the single click stuff.]]]
+# Press Tab to the first push button and press it with space bar.  
 #
-# BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'
-#      VISIBLE:  'Who expects the Spanish Inquisit', cursor=1
-# SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'
-# SPEECH OUTPUT: '1 form'
-# SPEECH OUTPUT: '60 percent of document read'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to button", 
+    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+     "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Who expects the Spanish Inquisition? button'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Press button", 
+    [""]))
+
+########################################################################
+# Read the status bar with Orca+KP_ENTER double clicked.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Status bar", 
+    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+     "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
+     "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+     "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'"]))
 
 ########################################################################
-# Press Tab to move to the second push button, "Our chief weapon is..."
-# When it has focus, press it with the space bar which will cause the 
-# the status bar to display the following text:
-# "Surprise.  Surprise and fear. Fear and surprise... And ruthless 
-# efficiency...  And an almost fanatical devotion to the Pope... And nice
-# red uniforms."
+# Press Tab to the second push button and press it with space bar.  
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Our chief weapon is...",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to button", 
+    ["BRAILLE LINE:  'Our chief weapon is... Button'",
+     "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Our chief weapon is... button'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Press button", 
+    [""]))
 
 ########################################################################
-# Double-click Orca_Modifier+KP_Enter to read the status bar.
-# (See comments above re bugs).
+# Read the status bar with Orca+KP_ENTER double clicked.
 #
-# BRAILLE LINE:  'Our chief weapon is... Button'
-#      VISIBLE:  'Our chief weapon is... Button', cursor=1
-# SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'
-# SPEECH OUTPUT: '1 form'
-# SPEECH OUTPUT: '80 percent of document read'
-#
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Status bar", 
+    ["BRAILLE LINE:  'Our chief weapon is... Button'",
+     "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
+     "BRAILLE LINE:  'Our chief weapon is... Button'",
+     "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Surprise.  Surprise and fear. Fear and surprise... And ruthless efficiency...  And an almost fanatical devotion to the Pope... And nice red uniforms.'"]))
 
 ########################################################################
-# Press Tab to move to the third push button, "Fetch the COMFY CHAIR
-# (AKA clear out the status bar)".  When it has focus, press it with the
-# space bar which will cause the status bar text to be removed, which
-# causes Firefox to display "Done".
+# Press Tab to the third push button and press it with space bar.  
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus( \
-                  "Fetch the COMFY CHAIR (AKA clear out the status bar)",
-                   acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to button", 
+    ["BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
+     "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Fetch the COMFY CHAIR (AKA clear out the status bar) button'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "Press button", 
+    [""]))
 
 ########################################################################
-# Double-click Orca_Modifier+KP_Enter to read the status bar.
-# (See comments above re bugs).
+# Read the status bar with Orca+KP_ENTER double clicked.
 #
-# BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'
-#      VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1
-# SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'
-# SPEECH OUTPUT: '1 form'
-# SPEECH OUTPUT: '100 percent of document read'
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Status bar", 
+    ["BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
+     "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
+     "BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
+     "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Done'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

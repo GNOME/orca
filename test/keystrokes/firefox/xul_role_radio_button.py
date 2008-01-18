@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -15,73 +16,96 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 ########################################################################
 # Open the "File" menu and press U for the Page Setup dialog
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
+sequence.append(utils.AssertPresentationAction(
+    "File menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar New Window(Control N)'",
+     "     VISIBLE:  'New Window(Control N)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'File menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'New Window Control N'"]))
 
-sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
-sequence.append(TypeAction("u"))
-
-sequence.append(WaitForWindowActivate("Page Setup",None))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("u"))
+sequence.append(utils.AssertPresentationAction(
+    "u for Page Setup",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
+     "BRAILLE LINE:  'Page Setup Dialog Format for:  Combo'",
+     "     VISIBLE:  ' Combo', cursor=1",
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: 'Format for: combo box'"]))
 
 ########################################################################
-# In the Page Setup dialog, focus should already be on the "Portrait"
-# radio button.  Right Arrow to the "Landscape" radio button. The 
-# following should be presented in speech and braille:
+# Tab twice to get to the Portrait radio button.
+# 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab",
+    ["BRAILLE LINE:  'Page Setup Dialog Paper size:  Combo'",
+     "     VISIBLE:  ' Combo', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Paper size: combo box'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab",
+    ["BRAILLE LINE:  'Page Setup Dialog &=y Orientation: Portrait RadioButton'",
+     "     VISIBLE:  '&=y Orientation: Portrait RadioB', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Orientation:'",
+     "SPEECH OUTPUT: 'Portrait selected radio button'"]))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Orientation: Panel &=y Landscape RadioButton'
-#     VISIBLE:  '&=y Landscape RadioButton', cursor=1
-# SPEECH OUTPUT: 'Orientation: panel'
-# SPEECH OUTPUT: 'Landscape selected radio button'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Page Setup Dialog &=y Orientation: Portrait RadioButton'",
+     "     VISIBLE:  '&=y Orientation: Portrait RadioB', cursor=1",
+     "SPEECH OUTPUT: 'Orientation:'",
+     "SPEECH OUTPUT: 'Orientation: Portrait radio button'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: 'item 1 of 4'",
+     "SPEECH OUTPUT: 'Alt o'"]))
+
+########################################################################
+# Right Arrow to the "Reverse portrait" radio button. 
 #
-# [[[BUG: the Orientation panel was also announced because we currently
-# do not get a focus event for the Portrait radio button which initially
-# is focused when the dialog box appeared.  Thus it's new context as far
-# as we're concerned. 
-# https://bugzilla.mozilla.org/show_bug.cgi?id=388187]]]
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Landscape", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow to radio button",
+    ["BRAILLE LINE:  'Page Setup Dialog & y Reverse portrait RadioButton'",
+     "     VISIBLE:  '& y Reverse portrait RadioButton', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Reverse portrait not selected radio button'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Orientation: Panel &=y Landscape RadioButton'
-#      VISIBLE:  '&=y Landscape RadioButton', cursor=1
-# SPEECH OUTPUT: 'Orientation:'
-# SPEECH OUTPUT: 'Landscape radio button'
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
-########################################################################
-# Left Arrow to return to the "Portrait" radio button.  The following 
-# should be presented in speech and braille:
-#
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Orientation: Panel &=y Portrait RadioButton'
-#      VISIBLE:  '&=y Portrait RadioButton', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Portrait selected radio button'
-#
-sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("Portrait", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
-#
-# BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Orientation: Panel &=y Portrait RadioButton'
-#     VISIBLE:  '&=y Portrait RadioButton', cursor=1
-# SPEECH OUTPUT: 'Orientation:'
-# SPEECH OUTPUT: 'Portrait radio button'
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-#
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Page Setup Dialog &=y Reverse portrait RadioButton'",
+     "     VISIBLE:  '&=y Reverse portrait RadioButton', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Reverse portrait radio button'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: 'item 2 of 4'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

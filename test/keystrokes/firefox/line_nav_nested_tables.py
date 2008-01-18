@@ -37,11 +37,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'nested-tables Link Image'",
-     "     VISIBLE:  'nested-tables Link Image', cursor=1",
-     "BRAILLE LINE:  'nested-tables Link Image'",
-     "     VISIBLE:  'nested-tables Link Image', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables link image'",
-     "SPEECH OUTPUT: ''",
+     "     VISIBLE:  'nested-tables Link Image', cursor=0",
      "SPEECH OUTPUT: 'nested-tables link image'"]))
 
 ########################################################################

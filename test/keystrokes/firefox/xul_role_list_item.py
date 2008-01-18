@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -15,105 +16,118 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 ########################################################################
 # Open the "Edit" menu and Up Arrow to Preferences, then press Return.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>e"))
-sequence.append(WaitForFocus("Undo", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Edit menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+     "     VISIBLE:  'Edit Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
+     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Edit menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Select All Control A'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Preferences", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in Edit menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Preferences'",
+     "     VISIBLE:  'Preferences', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Preferences'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Press Return to make the Preferences dialog appear",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame'",
+     "     VISIBLE:  'Minefield Preferences Frame', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+     "     VISIBLE:  'Main ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Minefield Preferences frame'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Main list item'"]))
 
 ########################################################################
-# We wait for the Preferences dialog to appear.  Focus should be on the
-# Main list item.  [[[Bug: Orca reads the entire list.  Should it??  
-# We also seem to be missing a focus: event for the "Main" list item.
-# Lack of proper focus events in dialogs is a known issue that Aaron is 
-# working on.]]]
+# Press Right Arrow to move forward list item by list item.
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog'
-#      VISIBLE:  'Minefield Preferences Dialog', cursor=1
-# SPEECH OUTPUT: 'Minefield Preferences Main Tabs Content Applications Privacy Security Advanced'
-#
-sequence.append(WaitForWindowActivate("Minefield Preferences",None))
-
-########################################################################
-# Press Right Arrow to move forward to the "Tabs" list item.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Tabs ListItem'
-#      VISIBLE:  'Tabs ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tabs'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Tabs", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Tabs ListItem'",
+     "     VISIBLE:  'Tabs ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tabs list item'"]))
 
-########################################################################
-# Press Right Arrow to move forward to the "Content" list item.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Content ListItem'
-#     VISIBLE:  'Content ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Content'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Content", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
+     "     VISIBLE:  'Content ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Content list item'"]))
 
-########################################################################
-# Press Right Arrow to move forward to the "Applications" list item.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Applications ListItem'
-#      VISIBLE:  'Applications ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Applications'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Applications", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Applications ListItem'",
+     "     VISIBLE:  'Applications ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Applications list item'"]))
 
 ########################################################################
-# Press Left Arrow to move back to the "Content" list item.
+# Press Left Arrow to move backward list item by list item.
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Content ListItem'
-#     VISIBLE:  'Content ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Content'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("Content", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
+     "     VISIBLE:  'Content ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Content list item'"]))
 
-########################################################################
-# Press Left Arrow to move back to the "Tabs" list item.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Tabs ListItem'
-#      VISIBLE:  'Tabs ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Tabs'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("Tabs", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Tabs ListItem'",
+     "     VISIBLE:  'Tabs ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Tabs list item'"]))
 
-########################################################################
-# Press Left Arrow to move back to the "Main" list item.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Main ListItem'
-#      VISIBLE:  'Main ListItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Main'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
-sequence.append(WaitForFocus("Main", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow in list",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+     "     VISIBLE:  'Main ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Main list item'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  [[[Bug: The current where am I 
-# doesn't handle list items per se but treats them as generic.  We 
-# probably want to treat them more like items in a tree?]]]
-# 
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog List Main ListItem'
-#      VISIBLE:  'Main ListItem', cursor=1
-# SPEECH OUTPUT: 'Main'
-# SPEECH OUTPUT: 'list item'
+# Do a basic "Where Am I" via KP_Enter. 
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+     "     VISIBLE:  'Main ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: 'Main'",
+     "SPEECH OUTPUT: 'item 1 of 7'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -20,19 +21,23 @@ sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("javascript:alert('I am an alert')"))
-sequence.append(KeyComboAction("Return"))
 
-########################################################################
-# An alert will appear displaying the text "I am an alert" and the
-# "OK" push button.  [[[Bug? It seems we're only displaying the title
-# of the alert in braille; the contents are being spoken.  Is this
-# the desired behavior??]]]
-#
-# BRAILLE LINE:  'Minefield Application [JavaScript Application] Alert'
-#      VISIBLE:  '[JavaScript Application] Alert', cursor=1
-# SPEECH OUTPUT: '[JavaScript Application] I am an alert'
-#
-sequence.append(WaitForWindowActivate("[JavaScript Application]",None))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Press Return to make the alert appear",
+    ["BRAILLE LINE:  'about:blank HtmlPane'",
+     "     VISIBLE:  'about:blank HtmlPane', cursor=1",
+     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog'",
+     "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
+     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'about:blank panel'",
+     "SPEECH OUTPUT: 'about:blank html content'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '[JavaScript Application] I am an alert'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Focus will be on the OK button. [[[Bug: We don't get a focus event 
@@ -40,8 +45,18 @@ sequence.append(WaitForWindowActivate("[JavaScript Application]",None))
 # known issue.]]]  Press space bar on the OK button to dismiss the
 # alert and return to the Firefox main window.
 #
-sequence.append(TypeAction(" "))
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Press Space on the OK button to dismiss the alert",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame'",
+     "     VISIBLE:  'Minefield Frame', cursor=1",
+     "BRAILLE LINE:  'about:blank HtmlPane'",
+     "     VISIBLE:  'about:blank HtmlPane', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Minefield frame'",
+     "SPEECH OUTPUT: 'about:blank panel'",
+     "SPEECH OUTPUT: 'about:blank html content'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

@@ -72,14 +72,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'sense of priority, even if it is artificial'",
-     "     VISIBLE:  'sense of priority, even if it is', cursor=1",
-     "SPEECH OUTPUT: 'sense of priority, even if it is artificial'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
     ["BRAILLE LINE:  '0. look really cool when we carry them around on yellow Post-Itstm.'",
      "     VISIBLE:  '0. look really cool when we carr', cursor=1",
      "SPEECH OUTPUT: '0. look really cool when we carry them around on yellow Post-Itstm.'"]))

@@ -1,3 +1,24 @@
+2008-01-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/html_role_lists.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/xul_role_accel_label.py:
+          test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/xul_role_check_menu_item.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_push_button.py:
+          test/keystrokes/firefox/xul_role_radio_button.py:
+          test/keystrokes/firefox/xul_role_radio_menu_item.py:
+          test/keystrokes/firefox/xul_where_am_i_status_bar.py:
+          test/keystrokes/firefox/xul_where_am_i_dialog.py:
+          Updating the XUL tests to use assertions, making some of the 
+          navigation tests more thorough.
+
 2008-01-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

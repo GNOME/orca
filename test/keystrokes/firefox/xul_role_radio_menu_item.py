@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -13,75 +14,84 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Open the "View" menu.
+# Open the "View" menu then the Page Style menu. Focus should be on the
+# "No Style" radio menu item.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>v"))
-sequence.append(WaitForFocus("Toolbars", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "View menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View Menu'",
+     "     VISIBLE:  'View Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "     VISIBLE:  'Toolbars Menu', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'View menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Toolbars menu'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("y"))
+sequence.append(utils.AssertPresentationAction(
+    "y for Page Style menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Style Menu'",
+     "     VISIBLE:  'Page Style Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
+     "     VISIBLE:  '& y No Style RadioItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Page Style menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'No Style not selected radio menu item'"]))
 
 ########################################################################
-# When focus is on Toolbars, Press Y to open the Page Style menu. Focus
-# should be on the "No Style" radio menu item.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Page Style & y No Style RadioItem'
-#      VISIBLE:  '& y No Style RadioItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'No Style not selected radio menu item'
-#
-sequence.append(TypeAction("y"))
-sequence.append(WaitForFocus("No Style", acc_role=pyatspi.ROLE_RADIO_MENU_ITEM))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
-#
-# Note: Due to https://bugzilla.mozilla.org/show_bug.cgi?id=396799,
-# We might not speak the item count.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Page Style & y No Style RadioItem'
-#      VISIBLE:  '& y No Style RadioItem', cursor=1
-# SPEECH OUTPUT: 'Page Style menu'
-# SPEECH OUTPUT: 'No Style'
-# SPEECH OUTPUT: 'radio menu item'
-# SPEECH OUTPUT: 'not selected'
-# SPEECH OUTPUT: 'item 1 of 2'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
+     "     VISIBLE:  '& y No Style RadioItem', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Page Style menu'",
+     "SPEECH OUTPUT: 'No Style'",
+     "SPEECH OUTPUT: 'radio menu item'",
+     "SPEECH OUTPUT: 'not selected'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Down Arrow to the "Basic Page Style" radio menu item. The following
-# should be presented in speech and braille:
+# Down Arrow to the "Basic Page Style" radio menu item.
 #
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Page Style &=y Basic Page Style RadioItem'
-#      VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Basic Page Style selected radio menu item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Basic Page Style", acc_role=pyatspi.ROLE_RADIO_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
+     "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Basic Page Style selected radio menu item'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# Note: Due to https://bugzilla.mozilla.org/show_bug.cgi?id=396799,
-# We might not speak the item count.
-#
-# BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Page Style &=y Basic Page Style RadioItem'
-#      VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1
-# SPEECH OUTPUT: 'Page Style menu item'
-# SPEECH OUTPUT: 'Basic Page Style'
-# SPEECH OUTPUT: 'radio menu item'
-# SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: 'item 2 of 2'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
+     "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Page Style menu'",
+     "SPEECH OUTPUT: 'Basic Page Style'",
+     "SPEECH OUTPUT: 'radio menu item'",
+     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 2 of 2'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Dismiss the "Page Style" menu by pressing Escape.
