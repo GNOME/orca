@@ -29,10 +29,13 @@
           test/keystrokes/firefox/line_nav_wiki.py:
           test/keystrokes/firefox/xul_role_accel_label.py:
           test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/xul_role_check_box.py:
           test/keystrokes/firefox/xul_role_check_menu_item.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
           test/keystrokes/firefox/xul_role_entry.py:
           test/keystrokes/firefox/xul_role_list_item.py:
           test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_page_tab.py:
           test/keystrokes/firefox/xul_role_push_button.py:
           test/keystrokes/firefox/xul_role_radio_button.py:
           test/keystrokes/firefox/xul_role_radio_menu_item.py:

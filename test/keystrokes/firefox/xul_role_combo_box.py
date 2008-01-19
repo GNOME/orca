@@ -4,6 +4,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -15,174 +16,212 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 ########################################################################
 # Open the "Edit" menu and Up Arrow to Preferences, then press Return.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>e"))
-sequence.append(WaitForFocus("Undo", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Edit menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+     "     VISIBLE:  'Edit Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
+     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Edit menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Select All Control A'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Preferences", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in Edit menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Preferences'",
+     "     VISIBLE:  'Preferences', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Preferences'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Press Return to make the Preferences dialog appear",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame'",
+     "     VISIBLE:  'Minefield Preferences Frame', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+     "     VISIBLE:  'Main ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Minefield Preferences frame'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Main list item'"]))
 
 ########################################################################
-# We wait for the Preferences dialog to appear.  When it does, press
-# Tab to move to the "When Minefield starts" combo box.  This combo
+# Press Tab to move to the "When Minefield starts" combo box.  This combo
 # box is contained in a scroll pane called Main (which didn't used to
 # have focus) in a panel called "Startup".  The currently selected item
 # in the combo box is "Show a blank page".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'
-#      VISIBLE:  'Show a blank page Combo', cursor=1
-# SPEECH OUTPUT: 'Main scroll pane Startup panel'
-# SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'
-#
-sequence.append(WaitForWindowActivate("Minefield Preferences",None))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("When Minefield starts:", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'",
+     "     VISIBLE:  'Show a blank page Combo', cursor=1",
+     "SPEECH OUTPUT: 'Main scroll pane Startup panel'",
+     "SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'"]))
 
 ########################################################################
 # Now that focus is on the combo box, arrow down to "Show my windows
-# and tabs from last time". [[[Bug 1: Due to a Firefox regression around
-# 1 Sept, we no longer get events when arrowing in a collapsed XUL
-# combo box.  This is a known issue. For now, this test was conducted 
-# prior to that regression so that we would have coverage for combo
-# boxes.]]] [[[Bug 2, which may or may not be resolved when they fix
-# Bug 1:  Tabbing to the combo box gave focus to the combo box; not
-# the selected menu item.  It seems that as a result we first get a
-# focus event for the original item, followed by a focus event for the
-# item that just gained focus.]]] [[[Bug 3:  What's up with the brl?]]]
+# and tabs from last time".
 # 
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show a blank page'
-#      VISIBLE:  'Show a blank page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show a blank page'
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'
-#      VISIBLE:  'Show my windows and tabs from la', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show my windows and tabs from last time'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Show my windows and tabs from last time", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
+     "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show a blank page'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
 ########################################################################
 # Down arrow again to "Show my home page".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'
-#      VISIBLE:  'Show my home page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show my home page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Show my home page", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'",
+     "     VISIBLE:  'Show my home page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show my home page'"]))
 
 ########################################################################
 # Up arrow back to "Show my windows and tabs from last time".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'
-#      VISIBLE:  'Show my windows and tabs from la', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show my windows and tabs from last time'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Show my windows and tabs from last time", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
+     "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
 ########################################################################
 # Up arrow back to "Show a blank page".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'
-#      VISIBLE:  'Show a blank page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show a blank page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Show a blank page", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show a blank page'"]))
 
 ########################################################################
-# Now expand the combo box with Alt+Down Arrow.  [[[Bug?  I don't think
-# we're getting any events related to the combo box expanding,
-# we aren't speaking or brailling anything]]].
+# Now expand the combo box with Alt+Down Arrow.  [[]]].
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Alt Down Arrow to expand combobox",
+    ["BUG? - I don't think we're getting any events related to the combo box expanding. We aren't speaking or brailling anything.",
+     ""]))
 
 ########################################################################
 # Down arrow again to "Show my windows and tabs from last time".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show my windows and tabs from last time'
-#      VISIBLE:  'Show my windows and tabs from la', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show my windows and tabs from last time'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Show my windows and tabs from last time", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in expanded combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show my windows and tabs from last time'",
+     "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
 ########################################################################
 # Up arrow back to "Show a blank page".
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'
-#      VISIBLE:  'Show a blank page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show a blank page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Show a blank page", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in expanded combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show a blank page'"]))
 
 ########################################################################
 # Press Return to collapse the combo box.
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'
-#     VISIBLE:  'Show a blank page Combo', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("When Minefield starts:", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "Return to collapse combobox",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'",
+     "     VISIBLE:  'Show a blank page Combo', cursor=1",
+     "SPEECH OUTPUT: 'Minefield application Minefield Preferences frame Main scroll pane Startup panel'",
+     "SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'"]))
 
 ########################################################################
 # Now try first letter navigation.  All of the items begin with S.
-# The first press should move us to "Show my home page"
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'
-#      VISIBLE:  'Show my home page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show my home page'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("s"))
-sequence.append(WaitForFocus("Show my home page", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "First letter navigation with s",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'",
+     "     VISIBLE:  'Show my home page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show a blank page'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show my home page'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction("s"))
+sequence.append(utils.AssertPresentationAction(
+    "First letter navigation with s",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show a blank page'"]))
 
 ########################################################################
-# The second press should move us back to "Show a blank page".
+# Do a basic "Where Am I" via KP_Enter.  [[]]]
 #
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'
-#      VISIBLE:  'Show a blank page', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Show a blank page'
-#
-sequence.append(TypeAction("s"))
-sequence.append(WaitForFocus("Show a blank page", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.  [[[Bug:  Techically the parent
-# of the focused menu item (what combo boxes contain) is a menu, but
-# in this case we presumably want to indicate that the focused item
-# is a combo box.]]]
-#
-# BRAILLE LINE:  'Minefield Application Minefield Preferences Dialog Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'
-#      VISIBLE:  'Show a blank page', cursor=1
-# SPEECH OUTPUT: 'Show a blank page menu'
-# SPEECH OUTPUT: 'Show a blank page'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BUG? -  Techically the parent of the focused menu item (what combo boxes contain) is a menu, but in this case we presumably want to indicate that the focused item is a combo box.",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+     "     VISIBLE:  'Show a blank page', cursor=1",
+     "SPEECH OUTPUT: 'Show my home page menu'",
+     "SPEECH OUTPUT: 'Show a blank page'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'item 1 of 1'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Press Shift+Tab to move back to the Main list item.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
-sequence.append(WaitForFocus("Main", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Shift+Tab to list item",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+     "     VISIBLE:  'Main ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Main list item'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar
