@@ -7353,7 +7353,8 @@ class Script(default.Script):
                     line = text.getTextAtOffset(offset, boundary)
                     singleLine = (line[1] == 0) \
                              and (line[2] == text.characterCount)
-                    if not singleLine:
+                    if not singleLine \
+                       or role == pyatspi.ROLE_SECTION == sibling.getRole():
                         break
 
             obj = sibling

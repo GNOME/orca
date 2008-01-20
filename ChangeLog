@@ -1,6 +1,12 @@
 2008-01-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Work on bug #506360 - find{Next,Previous}Line() should be
+          more efficient.  
+
+2008-01-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           Fix for bug #509809 - We should try to do a better job of
           guessing labels in poorly-coded forms.
 
