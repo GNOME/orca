@@ -3,6 +3,7 @@
         * test/keystrokes/firefox/xul_role_tree.py:
           test/keystrokes/firefox/xul_role_entry.py:
           test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py: (new)
           test/keystrokes/firefox/line_nav_multi_line_text.py: (new)
           test/keystrokes/firefox/line_nav_bugzilla_search.py: (new)
           test/html/bugzilla-advanced.html: (new)

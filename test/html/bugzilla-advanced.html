@@ -1754,7 +1754,6 @@ function doOnSelectProduct(selectmode) {
               <tr valign="top">
                 <td align="left">
 
-                  <label for="classification">
                     <select name="classification" multiple="multiple" size="10" id="classification"
                             onchange="doOnSelectProduct(1);">
                       <option value="Admin">Admin
@@ -1775,7 +1774,6 @@ function doOnSelectProduct(selectmode) {
                       <option value="Productivity">Productivity
                       </option>
                     </select>
-                  </label>
                 </td>
               </tr>
 
@@ -1790,7 +1788,6 @@ function doOnSelectProduct(selectmode) {
 
                 
                 <td align="left">
-                  <label for="product" accesskey="p">
                     <select name="product" multiple="multiple" size="10" id="product"
                             onchange="doOnSelectProduct(2);">
                       <option value="accerciser">accerciser</option>
@@ -2236,7 +2233,6 @@ function doOnSelectProduct(selectmode) {
                       <option value="zapping">zapping</option>
                       <option value="zenity">zenity</option>
                     </select>
-                  </label>
                 </td>
               </tr>
 
@@ -2253,7 +2249,6 @@ function doOnSelectProduct(selectmode) {
               <tr valign="top">
                 
                 <td align="left">
-                  <label for="component" accesskey="m">
                     <select name="component" id="component"
                             multiple="multiple" size="10">
                       <option value="abiscan">abiscan</option>
@@ -3713,8 +3708,6 @@ function doOnSelectProduct(selectmode) {
                       <option value="ZIP">ZIP</option>
                       <option value="zvt">zvt</option>
                     </select>
-
-                  </label>
                 </td>
               </tr>
             </table>
@@ -3726,7 +3719,6 @@ function doOnSelectProduct(selectmode) {
 
               </tr>
               <tr valign="top"><td align="left">
-    <label for="version" accesskey="v">
       <select name="version" id="version"
               multiple="multiple" size="10">
         <option value="0.0.1">0.0.1</option>
@@ -4730,7 +4722,6 @@ function doOnSelectProduct(selectmode) {
         <option value="v0.6.x">v0.6.x</option>
         <option value="v0.7.x">v0.7.x</option>
       </select>
-    </label>
   </td>
               </tr>
             </table>
@@ -4742,7 +4733,6 @@ function doOnSelectProduct(selectmode) {
                 <th align="left"><u>T</u>arget Milestone:</th>
               </tr>
               <tr valign="top"><td align="left">
-    <label for="target_milestone" accesskey="t">
       <select name="target_milestone" id="target_milestone"
               multiple="multiple" size="10">
 
@@ -5394,7 +5384,6 @@ function doOnSelectProduct(selectmode) {
         <option value="2.21.92">2.21.92</option>
         <option value="FUTURE">FUTURE</option>
       </select>
-    </label>
   </td>
               </tr>
 
@@ -5494,8 +5483,6 @@ function doOnSelectProduct(selectmode) {
           <th align="left">St<u>a</u>tus:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="bug_status" accesskey="a">
-
       <select name="bug_status" id="bug_status"
               multiple="multiple" size="7">
         <option value="UNCONFIRMED" selected>UNCONFIRMED</option>
@@ -5508,7 +5495,6 @@ function doOnSelectProduct(selectmode) {
         <option value="VERIFIED">VERIFIED</option>
         <option value="CLOSED">CLOSED</option>
       </select>
-    </label>
   </td>
         </tr>
 
@@ -5523,7 +5509,6 @@ function doOnSelectProduct(selectmode) {
         </tr>
 
         <tr valign="top"><td align="left">
-    <label for="resolution" accesskey="r">
       <select name="resolution" id="resolution"
               multiple="multiple" size="7">
         <option value="FIXED">FIXED</option>
@@ -5541,7 +5526,6 @@ function doOnSelectProduct(selectmode) {
         <option value="NOTXIMIAN">NOTXIMIAN</option>
         <option value="---">---</option>
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -5553,8 +5537,6 @@ function doOnSelectProduct(selectmode) {
           <th align="left">S<u>e</u>verity:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="bug_severity" accesskey="e">
-
       <select name="bug_severity" id="bug_severity"
               multiple="multiple" size="7">
         <option value="blocker">blocker</option>
@@ -5566,7 +5548,6 @@ function doOnSelectProduct(selectmode) {
         <option value="trivial">trivial</option>
         <option value="enhancement">enhancement</option>
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -5578,8 +5559,6 @@ function doOnSelectProduct(selectmode) {
           <th align="left">Pr<u>i</u>ority:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="priority" accesskey="i">
-
       <select name="priority" id="priority"
               multiple="multiple" size="7">
         <option value="Immediate">Immediate</option>
@@ -5589,7 +5568,6 @@ function doOnSelectProduct(selectmode) {
         <option value="Low">Low</option>
 
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -5601,8 +5579,7 @@ function doOnSelectProduct(selectmode) {
           <th align="left"><u>O</u>S:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="op_sys" accesskey="o">
-      <select name="op_sys" id="op_sys"
+       <select name="op_sys" id="op_sys"
               multiple="multiple" size="7">
         <option value="All">All</option>
         <option value="AIX">AIX</option>
@@ -5630,7 +5607,6 @@ function doOnSelectProduct(selectmode) {
 
         <option value="other">other</option>
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -5671,19 +5647,14 @@ function doOnSelectProduct(selectmode) {
     <td>
       <input type="checkbox" name="emailassigned_to1"
              id="emailassigned_to1" value="1" checked>
-      <label for="emailassigned_to1">
         the bug assignee
-      </label>
-
     </td>
   </tr>
   <tr>
     <td>
       <input type="checkbox" name="emailreporter1"
              id="emailreporter1" value="1">
-      <label for="emailreporter1">
         the reporter
-      </label>
     </td>
 
   </tr>
@@ -5691,9 +5662,7 @@ function doOnSelectProduct(selectmode) {
     <td>
       <input type="checkbox" name="emailqa_contact1"
              id="emailqa_contact1" value="1">
-      <label for="emailqa_contact1">
         the QA contact
-      </label>
     </td>
   </tr>
 
@@ -5701,9 +5670,7 @@ function doOnSelectProduct(selectmode) {
     <td>
       <input type="checkbox" name="emailcc1"
              id="emailcc1" value="1">
-      <label for="emailcc1">
         a CC list member
-      </label>
     </td>
   </tr>
   <tr>
@@ -5711,9 +5678,7 @@ function doOnSelectProduct(selectmode) {
     <td>
         <input type="checkbox" name="emaillongdesc1"
                id="emaillongdesc1" value="1">
-      <label for="emaillongdesc1">
         a commenter
-      </label>
     </td>
   </tr>
   <tr>
@@ -5755,9 +5720,7 @@ function doOnSelectProduct(selectmode) {
     <td>
       <input type="checkbox" name="emailassigned_to2"
              id="emailassigned_to2" value="1" checked>
-      <label for="emailassigned_to2">
         the bug assignee
-      </label>
     </td>
   </tr>
   <tr>
@@ -5765,9 +5728,7 @@ function doOnSelectProduct(selectmode) {
     <td>
       <input type="checkbox" name="emailreporter2"
              id="emailreporter2" value="1" checked>
-      <label for="emailreporter2">
         the reporter
-      </label>
     </td>
   </tr>
   <tr>
@@ -5775,9 +5736,7 @@ function doOnSelectProduct(selectmode) {
 
       <input type="checkbox" name="emailqa_contact2"
              id="emailqa_contact2" value="1" checked>
-      <label for="emailqa_contact2">
         the QA contact
-      </label>
     </td>
   </tr>
   <tr>
@@ -5785,19 +5744,14 @@ function doOnSelectProduct(selectmode) {
       <input type="checkbox" name="emailcc2"
              id="emailcc2" value="1" checked>
 
-      <label for="emailcc2">
         a CC list member
-      </label>
     </td>
   </tr>
   <tr>
     <td>
         <input type="checkbox" name="emaillongdesc2"
                id="emaillongdesc2" value="1">
-      <label for="emaillongdesc2">
-
         a commenter
-      </label>
     </td>
   </tr>
   <tr>
@@ -5924,7 +5878,6 @@ function doOnSelectProduct(selectmode) {
           <th align="left">GNOME version:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="gnome_version" accesskey="a">
       <select name="gnome_version" id="gnome_version"
               multiple="multiple" size="7">
 
@@ -5945,7 +5898,6 @@ function doOnSelectProduct(selectmode) {
         <option value="2.19/2.20">2.19/2.20</option>
         <option value="2.21/2.22">2.21/2.22</option>
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -5957,7 +5909,6 @@ function doOnSelectProduct(selectmode) {
           <th align="left">GNOME target:</th>
         </tr>
         <tr valign="top"><td align="left">
-    <label for="gnome_target" accesskey="a">
       <select name="gnome_target" id="gnome_target"
               multiple="multiple" size="7">
 
@@ -5976,7 +5927,6 @@ function doOnSelectProduct(selectmode) {
         <option value="2.22.x">2.22.x</option>
 
       </select>
-    </label>
   </td>
         </tr>
       </table>
@@ -6005,10 +5955,7 @@ function doOnSelectProduct(selectmode) {
   &nbsp;&nbsp;&nbsp;
   <input type="checkbox" id="remasdefault"
          name="remtype" value="asdefault">
-  <label for="remasdefault">
     and remember these as my default search options
-  </label>
-
 </p>
 
 <hr>
@@ -6027,9 +5974,7 @@ function doOnSelectProduct(selectmode) {
       <td>
         <input type="checkbox" id="negate0"
              name="negate0" value="1">
-        <label for="negate0">
           Not (negate this whole chart)
-        </label>
       </td>
     </tr>
     <tr>
