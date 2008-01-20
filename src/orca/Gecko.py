@@ -6046,6 +6046,13 @@ class Script(default.Script):
                                          [pyatspi.ROLE_FORM],
                                          [pyatspi.ROLE_DOCUMENT_FRAME])
 
+        # If it's a radio button, we'll waive the requirement of the text
+        # on the right being within the form (or rather, we'll just act as
+        # if it were even if it's not).
+        #
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            rightIsInForm = True
+
         # [[[TODO: Grayed out buttons don't pass the isFormField() test
         # because they are neither focusable nor showing -- and thus
         # something we don't want to navigate to via structural navigation.
@@ -6109,7 +6116,9 @@ class Script(default.Script):
                     index = obj.getIndexInParent()
                     if index < onRight.childCount - 1:
                         nextSibling = onRight[index + 1]
-                        if self.isFormField(nextSibling):
+                        nextRole = nextSibling.getRole()
+                        if self.isFormField(nextSibling) \
+                           or nextRole == pyatspi.ROLE_RADIO_BUTTON:
                             endOffset = \
                                   self.getCharacterOffsetInParent(nextSibling)
                             if not preferRight:
@@ -6345,7 +6354,8 @@ class Script(default.Script):
             return guess
         elif self.getAncestor(obj,
                               [pyatspi.ROLE_PARAGRAPH],
-                              [pyatspi.ROLE_DOCUMENT_FRAME]):
+                              [pyatspi.ROLE_TABLE,
+                               pyatspi.ROLE_DOCUMENT_FRAME]):
             return guess
 
         [cellLeft, leftText, leftExtents, leftIsField] = \

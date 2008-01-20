@@ -1,3 +1,9 @@
+2008-01-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          Fix for bug #509809 - We should try to do a better job of
+          guessing labels in poorly-coded forms.
+
 2008-01-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/xul_role_tree.py:
