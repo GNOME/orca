@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of tree output using Firefox.
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -13,152 +15,198 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Open the "Bookmarks" menu, Down Arrow to Organize Bookmarks, then 
+# Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
 # press Return.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
-sequence.append(WaitForFocus("Bookmarks", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "Bookmarks menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Bookmarks Menu'",
+     "     VISIBLE:  'Bookmarks Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Bookmark This Page(Control D)'",
+     "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Bookmark This Page...", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Organize Bookmarks...", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in Bookmarks menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Show All Bookmarks...'",
+     "     VISIBLE:  'Show All Bookmarks...', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show All Bookmarks…'"]))
 
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
-# We wait for the focus to be in the Places Organizer window.
+# Press Shift+Tab to move to the tree of bookmarks on the left.  
 #
-sequence.append(WaitForWindowActivate("Places Organizer",None))
-
-########################################################################
-# Press Shift+Tab to move to the tree of bookmarks on the left.  Note
-# that this item is expanded and contains 3 items. [[[Bug:  We're not
-# handling list items in trees approriately for during navigation or
-# where am I.  I've created a patch for this.  See bug #480021.  The
-# output that follows is what we get without the patch, just so that
-# this widget is covered "for now".]]]
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Bookmarks expanded ListItem LEVEL 1'
-#      VISIBLE:  'Bookmarks expanded ListItem LEVE', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Bookmarks'
-# SPEECH OUTPUT: 'tree level 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
-sequence.append(WaitForFocus("Bookmarks", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Shift Tab for tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
+     "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'All Bookmarks list item expanded'"]))
 
 ########################################################################
-# Press Down Arrow to give focus to the first item within the Bookmarks
-# folder, Bookmarks Toolbar Folder.
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Bookmarks Toolbar Folder ListItem LEVEL 2'
-#      VISIBLE:  'Bookmarks Toolbar Folder ListIte', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Bookmarks Toolbar Folder'
-# SPEECH OUTPUT: 'tree level 2'
+# Press Down Arrow twice to give focus to the Bookmarks Menu list item.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Bookmarks Toolbar Folder", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
+     "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar list item collapsed'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
-########################################################################
-# Press Down Arrow to give focus to the second item within the Bookmarks
-# folder, GNOME.  Note that this item is expandable but collapsed.  See
-# comment above.
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree GNOME ListItem LEVEL 2'
-#      VISIBLE:  'GNOME ListItem LEVEL 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'GNOME'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("GNOME", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Menu list item collapsed'"]))
 
 ########################################################################
-# Press Down Arrow to give focus to the third item within the Bookmarks
-# folder, Mozilla.  Note that this item is expandable but collapsed.
-# See comment above.
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla collapsed ListItem LEVEL', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mozilla'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Mozilla", acc_role=pyatspi.ROLE_LIST_ITEM))
-
-########################################################################
-# Press KP_Enter to get where am I information for this item.  See
-# coment above.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla collapsed ListItem LEVEL', cursor=1
-# SPEECH OUTPUT: 'Mozilla'
-# SPEECH OUTPUT: 'list item'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: 'Bookmarks Menu'",
+     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 'collapsed'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-# Press Right Arrow to expand Mozilla.  See comment above.
+# Press Right Arrow to expand this item.
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla collapsed ListItem LEVEL', cursor=1
-# SPEECH OUTPUT: 'Mozilla'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow to expand folder", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################
-# Press KP_Enter to get where am I information for this item.  See
-# coment above.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla expanded ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla expanded ListItem LEVEL ', cursor=1
-# SPEECH OUTPUT: 'Mozilla'
-# SPEECH OUTPUT: 'list item'
+# Do a basic "Where Am I" via KP_Enter. 
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: 'Bookmarks Menu'",
+     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 'expanded'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-# Press Down Arrow to move to the first item within it, Firefox.  Note
-# that Firefox is expandable but collapsed.  See comment above.
+# Press Down Arrow to give focus to the next item, GNOME, which is not
+# expandable.
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Firefox ListItem LEVEL 3'
-#      VISIBLE:  'Firefox ListItem LEVEL 3', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Firefox'
-# SPEECH OUTPUT: 'tree level 3'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Firefox", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree GNOME ListItem'",
+     "     VISIBLE:  'GNOME ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'GNOME list item'",
+     "SPEECH OUTPUT: 'tree level 3'"]))
 
 ########################################################################
-# Press Up Arrow to return to Mozilla.
+# Do a basic "Where Am I" via KP_Enter. 
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla expanded ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla expanded ListItem LEVEL ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mozilla'
-# SPEECH OUTPUT: 'tree level 2'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree GNOME ListItem'",
+     "     VISIBLE:  'GNOME ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: 'GNOME'",
+     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: 'tree level 3'"]))
+
+########################################################################
+# Press Up Arrow to work back to the Bookmarks Toolbar list item.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Mozilla", acc_role=pyatspi.ROLE_LIST_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Menu list item expanded'",
+     "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-# Press Left Arrow to collapse Mozilla.  See comment above.
+# Press Left Arrow to collapse this item.
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame Tree Mozilla collapsed ListItem LEVEL 2'
-#      VISIBLE:  'Mozilla collapsed ListItem LEVEL', cursor=1
-# SPEECH OUTPUT: 'Mozilla'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow to collapse folder", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
+
+########################################################################
+# Press Up Arrow to work back to the Bookmarks Toolbar list item.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
+     "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar list item collapsed'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in tree",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
+     "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'All Bookmarks list item expanded'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Press Tab to return to the tree table that had focus initially.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("Firefox", acc_role=pyatspi.ROLE_TABLE_CELL))
+sequence.append(utils.AssertPresentationAction(
+    "Tab back to tree table",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Name column header'",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar  '"]))
 
 ########################################################################
 # Now that the Places Manager is back to its pre-explored state,

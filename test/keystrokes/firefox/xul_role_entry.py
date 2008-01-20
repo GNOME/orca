@@ -262,7 +262,7 @@ sequence.append(utils.AssertPresentationAction(
      ""]))
 
 ########################################################################
-# Press Control Delete twice to get rid of "so is".  [[[Bug:  ]]] 
+# Press Control Delete twice to get rid of "so is".  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))

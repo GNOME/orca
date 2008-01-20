@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of tree table output using Firefox.
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -13,172 +15,78 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Open the "Bookmarks" menu, Down Arrow to Organize Bookmarks, then 
+# Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
 # press Return.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
-sequence.append(WaitForFocus("Bookmarks", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "Bookmarks menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Bookmarks Menu'",
+     "     VISIBLE:  'Bookmarks Menu', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Bookmark This Page(Control D)'",
+     "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Bookmark This Page...", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Organize Bookmarks...", acc_role=pyatspi.ROLE_MENU_ITEM))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in Bookmarks menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Show All Bookmarks...'",
+     "     VISIBLE:  'Show All Bookmarks...', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show All Bookmarks…'"]))
 
 sequence.append(KeyComboAction("Return"))
-
-########################################################################
-# We wait for the focus to be in the Places Organizer window
-#
-sequence.append(WaitForWindowActivate("Places Organizer",None))
-
-########################################################################
-# Press Down Arrow to get to the first item in the tree.  The first
-# item is named GNOME, it is collapsed.  Up to this point, we're not
-# in the tree either, so when focus moves there, we speak the column
-# header of the cell that just gained focus. [[[Bug?  We're showing
-# the level of each item in the column.  The other columns are empty
-# but we still have "TREE LEVEL 1"s for each of them.  Should we?]]]
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader GNOME collapsed TREE LEVEL 1  TREE LEVEL 1  TREE LEVEL 1'
-#     VISIBLE:  'GNOME collapsed TREE LEVEL 1  TR', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Name column header'
-# SPEECH OUTPUT: 'GNOME collapsed  '
-# SPEECH OUTPUT: 'tree level 1'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("GNOME", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press Down Arrow to get to the second item in the tree.  Its name is
-# Mozilla.  It is also collapsed.  And it's at the same level as GNOME
-# so we should not speak the level.
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla collapsed TREE LEVEL 1  TREE LEVEL 1  TREE LEVEL 1'
-#      VISIBLE:  'Mozilla collapsed TREE LEVEL 1  ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mozilla collapsed  '
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Mozilla", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press KP_Enter to get where am I information for this item.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla collapsed TREE LEVEL 1'
-#      VISIBLE:  'Mozilla collapsed TREE LEVEL 1', cursor=1 
-# SPEECH OUTPUT: 'Mozilla'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'row 3 of 4'
-# SPEECH OUTPUT: 'collapsed'
-# SPEECH OUTPUT: 'tree level 1'
-#
-sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Press Right Arrow to expand the Mozilla tree item.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla expanded TREE LEVEL 1'
-#      VISIBLE:  'Mozilla expanded TREE LEVEL 1', cursor=1
-# SPEECH OUTPUT: 'Mozilla expanded 5 items'
+# Press Down Arrow to get to the first item in the tree.  
 #
-sequence.append(KeyComboAction("Right"))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in tree table",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Menu  '"]))
 
 ########################################################################
-# Press KP_Enter to get where am I information for this item now
-# that it is expanded.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla expanded TREE LEVEL 1'
-#      VISIBLE:  'Mozilla expanded TREE LEVEL 1', cursor=1 
-# SPEECH OUTPUT: 'Mozilla'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'row 3 of 9'
-# SPEECH OUTPUT: 'expanded'
-# SPEECH OUTPUT: 'tree level 1'
+# Do a basic "Where Am I" via KP_Enter. 
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I", 
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'Bookmarks Menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'row 2 of 3'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
-# Press Down Arrow to move to the first item in Mozilla.  Its name
-# is Firefox and it is expandable.  Because we're changing levels,
-# we should also have level information spoken.
+# Press Up Arrow to return to the previous item.
 #
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Firefox collapsed TREE LEVEL 2  TREE LEVEL 2  TREE LEVEL 2'
-#      VISIBLE:  'Firefox collapsed TREE LEVEL 2  ', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Firefox collapsed  '
-# SPEECH OUTPUT: 'tree level 2'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Firefox", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press Down Arrow to move to the second item in Mozilla.  Its name
-# is Thunderbird and it is expandable. 
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Thunderbird collapsed TREE LEVEL 2  TREE LEVEL 2  TREE LEVEL 2'
-#      VISIBLE:  'Thunderbird collapsed TREE LEVEL', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Thunderbird collapsed  '
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Thunderbird", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press Down Arrow to move to the third item in Mozilla.  Its name
-# is Mozilla Accessibility Project.  It is not expandable.  It also
-# has a URL showing for it.
-# 
-#  BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla Accessibility Project TREE LEVEL 2  TREE LEVEL 2 http://www.mozilla.org/access/ TREE LEVEL 2'
-#      VISIBLE:  'Mozilla Accessibility Project TR', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mozilla Accessibility Project  http://www.mozilla.org/access/'
-#
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Mozilla Accessibility Project", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press KP_Enter to get where am I information for this item.
-# 
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla Accessibility Project TREE LEVEL 2'
-#      VISIBLE:  'Mozilla Accessibility Project TR', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'cell'
-# SPEECH OUTPUT: 'Mozilla Accessibility Project'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'http://www.mozilla.org/access/'
-# SPEECH OUTPUT: 'row 6 of 9'
-#
-
-########################################################################
-# Press Up Arrow three times to return to the Mozilla row.
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Thunderbird", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Firefox", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Mozilla", acc_role=pyatspi.ROLE_TABLE_CELL))
-
-########################################################################
-# Press Left Arrow to collapse the Mozilla tree item.
-#
-# BRAILLE LINE:  'Minefield Application Places Organizer Frame ScrollPane TreeTable Name ColumnHeader Mozilla collapsed TREE LEVEL 1'
-#      VISIBLE:  'Mozilla collapsed TREE LEVEL 1', cursor=1
-# SPEECH OUTPUT: 'Mozilla collapsed'
-#
-sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in tree table",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar  '"]))
 
 ########################################################################
-# Now that the Places Manager is back to its pre-explored state,
-# press Alt F4 to close it.
+# Press Alt F4 to close the window.
 #
 sequence.append(KeyComboAction("<Alt>F4"))
 
