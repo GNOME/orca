@@ -1,0 +1,82 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head><body>
+<h2>Here are some entries</h2>
+<form>
+   <p>Type <a href="http://bugzilla.gnome.org/hello">something</a> rather <a href="http://bugzilla.gnome.org/blah">amusing</a> here:
+      <input name="something" size="22" type="text"></p>
+   <p>Amusing numbers fall between <input name="amusing1" size="5" type="text"> and <input name="amusing2" size="5" type="text">.</p>
+   <p><input name="labelledOnRight" size="22" type="text">I'm a label</p>
+   <table>
+      <tbody><tr><td width="240"><input name="LOR2" size="22" type="text"></td><td>Am I a label as well?</td></tr>
+   </tbody></table>
+   <h2>What the heck should we do here?</h2>
+   <p>Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are.</p>
+   <table>
+      <tbody><tr><td width="300"><input name="LOR2" size="22" type="text"></td><td>Too far away to be a label.</td></tr>
+   </tbody></table>
+   <table>
+      <tbody><tr><td width="400">Distance doesn't count on the left</td><td width="300"><input name="LOR2" size="22" type="text"></td></tr>
+   </tbody></table>
+   <h2>Sometimes labels can be below the fields due to &lt;br /&gt;</h2><p></p>
+   <table>
+          <tbody><tr><td><input name="first" size="22" type="text"><br>First Name</td>
+              <td><input name="middle" size="1" type="text"><br>M.I.</td>
+              <td><input name="last" size="22" type="text"><br>Last Name</td></tr>
+   </tbody></table>
+   <h2>Other times it's due to layout tables</h2><p></p>
+   <table><tbody><tr><td><input name="first" size="22" type="text"></td><td><input name="middle" size="1" type="text"></td><td><input name="last" size="22" type="text"></td></tr>
+          <tr><td>First name</td><td>Middle<br>initial</td><td>Last <a href="http://bugzilla.gnome.org/define-name">name</a></td></tr>
+   </tbody></table>
+
+   <h2>Second verse same as the first (only now the labels are above the fields)</h2>
+   <table>
+          <tbody><tr><td>First Name</td><td>Middle<br>initial</td><td>Last <a href="http://bugzilla.gnome.org/define-name">name</a></td></tr>
+          <tr><td><input name="first" size="22" type="text"></td><td><input name="middle" size="1" type="text"></td><td><input name="last" size="22" type="text"></td></tr>
+   </tbody></table>
+   <h2>Decisions, decisions.... When in doubt, closest table cell text wins</h2>
+   <table>
+          <tbody><tr height="50" valign="top"><td>First name</td><td>Middle<br>initial</td><td>Last name</td></tr>
+          <tr><td><input name="first" size="22" type="text"></td><td><input name="middle" size="1" type="text"></td><td><input name="last" size="22" type="text"></td></tr>
+          <tr><td>Given name</td><td>initial</td><td>Surname</td></tr>
+   </tbody></table>
+   <table>
+          <tbody><tr height="50" valign="bottom"><td>First name</td><td>Middle<br>initial</td><td>Last name</td></tr>
+          <tr><td><input name="first" size="22" type="text"></td><td><input name="middle" size="1" type="text"></td><td><input name="last" size="22" type="text"></td></tr>
+          <tr height="50" valign="bottom"><td>Given name</td><td>initial</td><td>Surname</td></tr>
+   </tbody></table>
+   <h2>Decisions, decisions.... We should try to figure out if we're in a grid of fields.</h2>
+   <table>
+          <tbody><tr height="50" valign="top"><td>First name</td><td>Middle<br>initial</td><td>Last name</td><td><img src="entries_files/P.png" alt="patched image"></td></tr>
+          <tr><td><input name="first" size="22" type="text"></td>
+              <td><input name="middle" size="1" type="text"></td>
+              <td><input name="last" size="22" type="text"></td>
+              <td><input name="patch" size="22" type="text"></td></tr>
+          <tr><td><input name="first2" size="22" type="text"></td>
+              <td><input name="middle2" size="1" type="text"></td>
+              <td><input name="last2"  size="22" type="text"></td>
+              <td><input name="patch2" size="22" type="text"></td></tr>
+          <tr><td><input name="first3" size="22" type="text"></td>
+              <td><input name="middle3" size="1" type="text"></td>
+              <td><input name="last3" size="22" type="text"></td>
+              <td><input name="patch2" size="22" type="text"></td></tr>
+   </tbody></table>
+   <h2>We mustn't forget images as labels -- even if that practice is lame</h2>
+   <p><img src="entries_files/P.png" alt="bandaid graphic"><input name="patch" size="22" type="text"></p>
+   <p><input name="patch2" size="22" type="text"><img src="entries_files/P.png" alt="bandaid graphic redux"></p>
+   <p>Magic disappearing text trick: 
+      <input value="tab to me and I disappear" onfocus="if(this.value=='tab to me and I disappear')this.value='';" name="magic" size="22" type="text">
+   </p>
+   <p>
+     Tell me a secret: 
+     <input name="secret" type="password">
+   </p>
+   <p>
+     Tell me a little more about yourself:<br>
+     <textarea name="self" rows="5" cols="40">I
+am a monkey with a long tail. I like to swing from trees and eat
+bananas. I've recently taken up typing and plan to write my memoirs. </textarea>
+   </p>
+  </form>
+
+</body></html>
