@@ -26,7 +26,7 @@ sequence.append(KeyComboAction("Return"))
 
 sequence.append(WaitForDocLoad())
 
-sequence.append(WaitForFocus("Mutli-Line Test,
+sequence.append(WaitForFocus("Mutli-Line Test",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
