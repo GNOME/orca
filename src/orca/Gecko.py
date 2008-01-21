@@ -5980,6 +5980,19 @@ class Script(default.Script):
             if end > childOffset + 1:
                 objects.append([obj, childOffset + 1, end])
 
+        if obj.getRole() == pyatspi.ROLE_IMAGE and obj.childCount:
+            # Imagemaps that don't have alternative text won't implement
+            # the text interface, but they will have children (essentially
+            # EOCs) that we need to get.
+            #
+            toAdd = []
+            for child in obj:
+                toAdd.extend(self.getObjectsFromEOCs(child, 0, boundary))
+            if len(toAdd):
+                if self.isSameObject(objects[-1][0], obj):
+                    objects.pop()
+                objects.extend(toAdd)
+
         return objects
 
     def guessLabelFromLine(self, obj):
