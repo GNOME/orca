@@ -7373,7 +7373,8 @@ class Script(default.Script):
             if o[2] - o[1] <= 1:
                 objExtents = self.getExtents(o[0], o[1], o[2])
                 if (objExtents[0] and objExtents[1]) \
-                    and not (objExtents[2] and objExtents[3]):
+                    and not (objExtents[2] and objExtents[3]) \
+                    and len(objects) > 1:
                     objects.pop(objects.index(o))
 
         # If we're in a table cell, get the remainder of the cells
@@ -8297,6 +8298,10 @@ class Script(default.Script):
             nextObj = self.findNextObject(nextObj)
             nextOffset = 0
             nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+            if currentLine == nextLine:
+                # print "find next line still stuck"
+                nextObj = self.findNextObject(nextObj)
+                nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
 
         if not arrowToLineBeginning:
             extents = self.getExtents(obj,
