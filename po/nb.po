@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-21 22:14+0100\n"
-"PO-Revision-Date: 2008-01-21 22:15+0100\n"
+"POT-Creation-Date: 2008-01-21 22:17+0100\n"
+"PO-Revision-Date: 2008-01-21 22:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -53,119 +53,119 @@ msgstr ""
 #. languages. You could read about braille tables at:
 #. http://en.wikipedia.org/wiki/Braille
 #.
-#: ../src/louis/constants.py:28
+#: ../src/louis/constants.py.in:28
 msgid "Czech Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:29
+#: ../src/louis/constants.py.in:29
 msgid "Spanish Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:30
+#: ../src/louis/constants.py.in:30
 msgid "Canada French Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:31
+#: ../src/louis/constants.py.in:31
 msgid "France French Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:32
+#: ../src/louis/constants.py.in:32
 msgid "Latvian Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:33
+#: ../src/louis/constants.py.in:33
 msgid "Netherlands Dutch Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:34
+#: ../src/louis/constants.py.in:34
 msgid "Norwegian Grade 0"
 msgstr ""
 
-#: ../src/louis/constants.py:35
+#: ../src/louis/constants.py.in:35
 msgid "Norwegian Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:36
+#: ../src/louis/constants.py.in:36
 msgid "Norwegian Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:37
+#: ../src/louis/constants.py.in:37
 msgid "Norwegian Grade 3"
 msgstr ""
 
-#: ../src/louis/constants.py:38
+#: ../src/louis/constants.py.in:38
 msgid "Polish Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:39
+#: ../src/louis/constants.py.in:39
 msgid "Portuguese Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:40
+#: ../src/louis/constants.py.in:40
 msgid "Swedish Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:41
+#: ../src/louis/constants.py.in:41
 msgid "Arabic Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:42
+#: ../src/louis/constants.py.in:42
 msgid "Welsh Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:43
+#: ../src/louis/constants.py.in:43
 msgid "Welsh Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:44
+#: ../src/louis/constants.py.in:44
 msgid "German Grade 0"
 msgstr ""
 
-#: ../src/louis/constants.py:45
+#: ../src/louis/constants.py.in:45
 msgid "German Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:46
+#: ../src/louis/constants.py.in:46
 msgid "German Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:47
+#: ../src/louis/constants.py.in:47
 msgid "U.K. English Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:48
+#: ../src/louis/constants.py.in:48
 msgid "U.K. English Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:49
+#: ../src/louis/constants.py.in:49
 msgid "U.S. English Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:50
+#: ../src/louis/constants.py.in:50
 msgid "U.S. English Grade 2"
 msgstr ""
 
-#: ../src/louis/constants.py:51
+#: ../src/louis/constants.py.in:51
 msgid "Canada French Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:52
+#: ../src/louis/constants.py.in:52
 msgid "France French 1"
 msgstr ""
 
-#: ../src/louis/constants.py:53
+#: ../src/louis/constants.py.in:53
 msgid "Greek Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:54
+#: ../src/louis/constants.py.in:54
 msgid "Hindi Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:55
+#: ../src/louis/constants.py.in:55
 msgid "Italian Grade 1"
 msgstr ""
 
-#: ../src/louis/constants.py:56
+#: ../src/louis/constants.py.in:56
 msgid "Belgium Dutch Grade 1"
 msgstr ""
 
@@ -1323,37 +1323,34 @@ msgstr "mellomrom"
 #.
 #: ../src/orca/chnames.py:668 ../src/orca/chnames.py:727
 msgid "black diamond"
-msgstr ""
+msgstr "sort diamant"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:673
-#, fuzzy
 msgid "white circle"
-msgstr "mellomrom"
+msgstr "hvit sirkel"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:678
 msgid "black circle"
-msgstr ""
+msgstr "sort sirkel"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:682
-#, fuzzy
 msgid "white bullet"
-msgstr "mellomrom"
+msgstr "hvitt kulepunkt"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:687
-#, fuzzy
 msgid "check mark"
-msgstr "avkrysningsoppføring"
+msgstr "avkrysningsmerke"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
@@ -1857,9 +1854,8 @@ msgstr "Viser innstillingsvinduet."
 #. preferences for a specific application within Orca.
 #.
 #: ../src/orca/default.py:646
-#, fuzzy
 msgid "Displays the application preferences configuration dialog."
-msgstr "Viser innstillingsvinduet."
+msgstr "Viser brukervalgdialogen for programmet."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -1935,9 +1931,8 @@ msgstr ""
 #. level.
 #.
 #: ../src/orca/default.py:766
-#, fuzzy
 msgid "Increases the magnification level."
-msgstr "Øker lesehastigheten."
+msgstr "Øker forstørrelsesnivået."
 
 #. Translators: this command decreases the magnification
 #. level.

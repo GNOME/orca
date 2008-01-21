@@ -1,5 +1,11 @@
 2008-01-21  Kjartan Maraas  <kmaraas@gnome.org>
 
+	* POTFILES.in: use constants.py.in here.
+	* nb.po: Updated Norwegian bokmål translation.
+	* POTFILES.skip: Add constants.py here since it's generated.
+
+2008-01-21  Kjartan Maraas  <kmaraas@gnome.org>
+
 	* nb.po: Updated Norwegian bokmål translation.
 
 2008-01-15  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
