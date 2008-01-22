@@ -7903,6 +7903,17 @@ class Script(default.Script):
             while self._objectForFocusGrab and obj:
                 if self._objectForFocusGrab.getState().contains(\
                     pyatspi.STATE_FOCUSABLE):
+                    # If we're on an image that's in a link and the link
+                    # contains more text than the EOC that represents the
+                    # image, we are in danger of getting stuck on the link
+                    # should we grab focus on it.
+                    #
+                    role = self._objectForFocusGrab.getRole()
+                    if role == pyatspi.ROLE_LINK \
+                       and obj.getRole() == pyatspi.ROLE_IMAGE:
+                        text = self.queryNonEmptyText(self._objectForFocusGrab)
+                        if text and text.characterCount > 1:
+                            self._objectForFocusGrab = None
                     break
                 else:
                     self._objectForFocusGrab = self._objectForFocusGrab.parent

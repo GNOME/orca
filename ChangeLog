@@ -1,3 +1,9 @@
+2008-01-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #511118 - We sometimes get stuck on images that are
+          also links.
+
 2008-01-22  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py:
