@@ -866,7 +866,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             return speechgenerator.SpeechGenerator.\
                        _getSpeechForListItem(self, obj, already_focused)
         
-        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        if not obj.getState().contains(pyatspi.STATE_SELECTABLE):
             return speechgenerator.SpeechGenerator.\
                        _getDefaultSpeech(self, obj, already_focused)
 
@@ -2418,6 +2418,22 @@ class Script(default.Script):
                 #
                 _("Review live region announcement."))
 
+        self.inputEventHandlers["goPreviousObjectInOrderHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousObjectInOrder,
+                # Translators: this is for navigating between objects
+                # (regardless of type) in HTML
+                #
+                _("Goes to the previous object."))
+
+        self.inputEventHandlers["goNextObjectInOrderHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextObjectInOrder,
+                # Translators: this is for navigating between objects
+                # (regardless of type) in HTML
+                #
+                _("Goes to the next object."))
+
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
@@ -2920,6 +2936,20 @@ class Script(default.Script):
                 fullModMask,
                 orcaModMask,
                 self.inputEventHandlers["toggleStructuralNavigationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Right",
+                fullModMask,
+                orcaModMask,
+                self.inputEventHandlers["goNextObjectInOrderHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Left",
+                fullModMask,
+                orcaModMask,
+                self.inputEventHandlers["goPreviousObjectInOrderHandler"]))
 
         if controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
@@ -4375,13 +4405,27 @@ class Script(default.Script):
         Returns the index of the item if found; -1 if not found.
         """
 
-        if not obj or not contents:
+        if not obj or not contents or not len(contents):
             return -1
 
         index = -1
         for content in contents:
-            if self.isSameObject(obj, content[0]) \
-               and content[1] <= offset <= content[2]:
+            [candidate, start, end] = content
+
+            # When we get the line contents, we include a focusable list
+            # as a list because that is what we want to present.  However,
+            # when we set the caret context, we set it to the position
+            # (and object) that immediately precedes it.  Therefore, that's
+            # what we need to look at when trying to determine our position.
+            #
+            if candidate.getRole() == pyatspi.ROLE_LIST \
+               and candidate.getState().contains(pyatspi.STATE_FOCUSABLE):
+                start = self.getCharacterOffsetInParent(candidate)
+                end = start + 1
+                candidate = candidate.parent
+
+            if self.isSameObject(obj, candidate) \
+               and start <= offset <= end:
                 index = contents.index(content)
                 break
 
@@ -5994,6 +6038,57 @@ class Script(default.Script):
                 objects.extend(toAdd)
 
         return objects
+
+    def getMeaningfulObjectsFromLine(self, line):
+        """Attempts to strip a list of (obj, start, end) tuples into one
+        that contains only meaningful objects."""
+
+        if not line or not len(line):
+            return []
+
+        lineContents = []
+        for item in line:
+            role = item[0].getRole()
+
+            # If it's labelling something on this line, don't move to
+            # it.
+            #
+            if role == pyatspi.ROLE_LABEL \
+               and self.isLabellingContents(item[0], line):
+                continue
+
+            # Rather than do a brute force label guess, we'll focus on
+            # entries as they are the most common and their label is
+            # likely on this line.  The functional label may be made up
+            # of several objects, so we'll examine the strings of what
+            # we've got and pop off the ones that match.
+            #
+            elif role == pyatspi.ROLE_ENTRY:
+                labelGuess = self.guessLabelFromLine(item[0])
+                index = len(lineContents) - 1
+                while labelGuess and index >= 0:
+                    prevItem = lineContents[index]
+                    prevText = self.queryNonEmptyText(prevItem[0])
+                    if prevText:
+                        string = prevText.getText(prevItem[1], prevItem[2])
+                        if labelGuess.endswith(string):
+                            lineContents.pop()
+                            length = len(labelGuess) - len(string)
+                            labelGuess = labelGuess[0:length]
+                        else:
+                            break
+                    index -= 1
+
+            else:
+                text = self.queryNonEmptyText(item[0])
+                if text:
+                    string = text.getText(item[1], item[2]).decode("UTF-8")
+                    if not len(string.strip()):
+                        continue
+
+            lineContents.append(item)
+
+        return lineContents
 
     def guessLabelFromLine(self, obj):
         """Attempts to guess what the label of an unlabeled form control
@@ -8798,6 +8893,156 @@ class Script(default.Script):
             # role landmark. This is an that one was not found.
             #
             speech.speak(_("No landmark found."))
+
+    def goPreviousObjectInOrder(self, inputEvent):
+        """Go to the previous object in order, regardless of type or size."""
+
+        [obj, characterOffset] = self.getCaretContext()
+
+        # Work our way out of form lists and combo boxes.
+        #
+        if obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
+            obj = obj.parent.parent
+            characterOffset = self.getCharacterOffsetInParent(obj)
+            self._currentLineContents = None
+
+        characterOffset = max(0, characterOffset)
+        [prevObj, prevOffset] = [obj, characterOffset]
+        found = False
+        mayHaveGoneTooFar = False
+
+        line = self._currentLineContents \
+               or self.getLineContentsAtOffset(obj, characterOffset)
+
+        while line and not found:
+            useful = self.getMeaningfulObjectsFromLine(line)
+            index = self.findObjectOnLine(prevObj, prevOffset, useful)
+            if not self.isSameObject(obj, prevObj):
+                # We have found a different object (e.g. text before the
+                # current link). 
+                #
+                prevObj = useful[-1][0]
+                prevOffset = useful[-1][1]
+                # The question is, have we found the beginning of this 
+                # object?  If the offset is 0 or there's more than one object
+                # on this line it's safe to assume we've found the beginning.
+                #
+                found = (prevOffset == 0 or len(useful) > 1)
+                # Otherwise, we won't know for certain until we've gone
+                # to the line(s) before this one and found a different
+                # object, at which point we may have gone too far.
+                #
+                if not found:
+                    mayHaveGoneTooFar = True
+                    obj = prevObj
+                    characterOffset = prevOffset
+
+            elif 0 < index < len(useful):
+                prevObj = useful[index - 1][0]
+                prevOffset = useful[index - 1][1]
+                found = True
+
+            if not found:
+                self._nextLineContents = line
+                [prevObj, prevOffset] = self.findPreviousLine(line[0][0], 
+                                                              line[0][1])
+                line = self._currentLineContents
+                if self._currentLineContents == self._nextLineContents:
+                    break
+
+        if not found:
+            # Translators: when the user is attempting to locate a
+            # particular object and the top of the web page has been
+            # reached without that object being found, we "wrap" to
+            # the bottom of the page and continuing looking upwards.
+            # We need to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to bottom."))
+            [prevObj, prevOffset] = self.getBottomOfFile()
+            line = self.getLineContentsAtOffset(prevObj, prevOffset)
+            useful = self.getMeaningfulObjectsFromLine(line)
+            if useful:
+                prevObj = useful[-1][0]
+                prevOffset = useful[-1][1]
+            found = not (prevObj is None)
+
+        elif mayHaveGoneTooFar and self._nextLineContents:
+            if not self.isSameObject(obj, prevObj):
+                line = self._nextLineContents
+                prevObj = line[0][0]
+                prevOffset = line[0][1]
+
+        if found:
+            self._currentLineContents = line
+            self.setCaretPosition(prevObj, prevOffset)
+            self.updateBraille(prevObj)
+            objectContents = self.getObjectContentsAtOffset(prevObj,
+                                                            prevOffset)
+            objectContents = [objectContents[0]]
+            self.speakContents(objectContents)
+
+    def goNextObjectInOrder(self, inputEvent):
+        """Go to the next object in order, regardless of type or size."""
+
+        [obj, characterOffset] = self.getCaretContext()
+
+        # Work our way out of form lists and combo boxes.
+        #
+        if obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
+            obj = obj.parent.parent
+            characterOffset = self.getCharacterOffsetInParent(obj)
+            self._currentLineContents = None
+
+        characterOffset = max(0, characterOffset)
+        [nextObj, nextOffset] = [obj, characterOffset]
+        found = False
+
+        line = self._currentLineContents \
+               or self.getLineContentsAtOffset(obj, characterOffset)
+
+        while line and not found:
+            useful = self.getMeaningfulObjectsFromLine(line)
+            index = self.findObjectOnLine(nextObj, nextOffset, useful)
+            if not self.isSameObject(obj, nextObj):
+                nextObj = useful[0][0]
+                nextOffset = useful[0][1]
+                found = True
+            elif 0 <= index < len(useful) - 1:
+                nextObj = useful[index + 1][0]
+                nextOffset = useful[index + 1][1]
+                found = True
+            else:
+                self._previousLineContents = line
+                [nextObj, nextOffset] = self.findNextLine(line[-1][0], 
+                                                          line[-1][2])
+                line = self._currentLineContents
+                if self._currentLineContents == self._previousLineContents:
+                    break
+
+        if not found:
+            # Translators: when the user is attempting to locate a
+            # particular object and the bottom of the web page has been
+            # reached without that object being found, we "wrap" to the
+            # top of the page and continuing looking downwards. We need
+            # to inform the user when this is taking place.
+            #
+            speech.speak(_("Wrapping to top."))
+            [nextObj, nextOffset] = self.getTopOfFile()
+            line = self.getLineContentsAtOffset(nextObj, nextOffset)
+            useful = self.getMeaningfulObjectsFromLine(line)
+            if useful:
+                nextObj = useful[0][0]
+                nextOffset = useful[0][1]
+            found = not (nextObj is None)
+
+        if found:
+            self._currentLineContents = line
+            self.setCaretPosition(nextObj, nextOffset)
+            self.updateBraille(nextObj)
+            objectContents = self.getObjectContentsAtOffset(nextObj,
+                                                            nextOffset)
+            objectContents = [objectContents[0]]
+            self.speakContents(objectContents)
 
     def goPreviousList(self, inputEvent):
         """Go to the previous (un)ordered list."""

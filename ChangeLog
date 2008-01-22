@@ -4,6 +4,16 @@
           Fix for bug #511118 - We sometimes get stuck on images that are
           also links.
 
+          Fix for bug #483023 - Orca should give the user the ability to
+          move between objects in order.  You can now use Orca+Left and
+          Orca+Right to move from object to object.  This should come
+          in handy for "escaping" combo boxes and lists in forms after
+          making your selection.  Because these new commands treat each
+          object as if it were on a line by itself, users who have 
+          requested this type of line navigation will hopefully find that
+          this new functionality also addresses some of those needs.
+          Please let us know.  Thanks!
+
 2008-01-22  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py:
