@@ -1,3 +1,10 @@
+2008-01-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py:
+          src/orca/braillegenerator.py:
+	  Fix for bug 482294 - Contextual information for gnome-terminal
+	  should only be shown in braille when you're on the first line
+
 2008-01-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

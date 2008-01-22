@@ -1408,23 +1408,9 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
 
-        title = None
-        frame = self._script.getFrame(obj)
-        if frame:
-            title = frame.name
-        if not title:
-            title = self._script.getDisplayedLabel(obj)
-
-        text = title
-        text = self._script.appendString(
-            text, rolenames.getBrailleForRoleName(obj))
-
         regions = []
-        regions.append(braille.Region(text))
-
         textRegion = braille.Text(obj)
         regions.append(textRegion)
-
         return [regions, textRegion]
 
     def _getBrailleRegionsForToggleButton(self, obj):

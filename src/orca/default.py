@@ -1586,6 +1586,20 @@ class Script(script.Script):
                 0,
                 self.inputEventHandlers["cycleZoomerTypeHandler"]))
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["panBrailleLeftHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["panBrailleRightHandler"]))
+
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
         return keyBindings
@@ -1707,7 +1721,9 @@ class Script(script.Script):
         - obj: an accessible
         """
         return obj and \
-            obj.getRole() in (pyatspi.ROLE_TEXT, pyatspi.ROLE_PARAGRAPH)
+            obj.getRole() in (pyatspi.ROLE_TEXT,
+                              pyatspi.ROLE_PARAGRAPH,
+                              pyatspi.ROLE_TERMINAL)
 
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
@@ -3767,6 +3783,7 @@ class Script(script.Script):
             self.updateBrailleReview(self.targetCursorCell)
         elif braille.beginningIsShowing and orca_state.locusOfFocus \
              and self.isTextArea(orca_state.locusOfFocus):
+
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -3779,8 +3796,20 @@ class Script(script.Script):
             [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
+            movedCaret = False
             if startOffset > 0:
-                text.setCaretOffset(startOffset - 1)
+                movedCaret = text.setCaretOffset(startOffset - 1)
+
+            # If we didn't move the caret and we're in a terminal, we
+            # jump into flat review to review the text.  See 
+            # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
+            #
+            if (not movedCaret) \
+               and (orca_state.locusOfFocus.getRole() \
+                    == pyatspi.ROLE_TERMINAL):
+                context = self.getFlatReviewContext()
+                context.goBegin(flat_review.Context.LINE)
+                self.reviewPreviousCharacter(inputEvent)
         else:
             braille.panLeft(panAmount)
             braille.refresh(False)
