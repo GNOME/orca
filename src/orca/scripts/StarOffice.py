@@ -2451,6 +2451,14 @@ class Script(default.Script):
         - event: the Event
         """
 
+        if orca_state.lastNonModifierKeyEvent:
+            event_string = orca_state.lastNonModifierKeyEvent.event_string
+            isShiftKey = orca_state.lastNonModifierKeyEvent.modifiers \
+                         & (1 << pyatspi.MODIFIER_SHIFT)
+        else:
+            event_string = ''
+            isShiftKey = False
+
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then just return (modulo the special cases below). Speaking and
         # brailling will have been done in the onStateChanged() routine
@@ -2459,7 +2467,6 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
            event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
            event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            event_string = orca_state.lastNonModifierKeyEvent.event_string
 
             # If we are moving up and down, and we are speaking-by-cell
             # (as opposed to by-row), then speak the cell name. Otherwise
@@ -2514,7 +2521,8 @@ class Script(default.Script):
         # Remove possible extra utterances of the current paragraph by
         # stopping any pending speech. See bug #435201 for more details.
         #
-        speech.stop()
+        if (event_string == "Up" or event_string == "Down") and not isShiftKey:
+            speech.stop()
 
         # Speak a newline, if appropriate.
         if self.speakNewLine(event.source):
