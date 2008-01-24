@@ -899,3 +899,9 @@ listenAllEvents = False
 # This is a list of events that Orca should immidiately drop and never look at.
 #
 ignoredEventsList = ['object:bounds-changed']
+
+# Listen to Live Region events.  Tells Gecko.onChildrenChanged() and 
+# onTextInserted() event handlers to monitor these events for live region
+# changes.  
+#
+inferLiveRegions = True

@@ -3,6 +3,8 @@ import gobject
 import time
 import pyatspi
 import speech
+import settings
+import copy
 
 from orca_i18n import _
 
@@ -14,7 +16,7 @@ LIVE_ASSERTIVE = 2
 LIVE_RUDE      = 3
 
 # Seconds a message is held in the queue before it is discarded
-MSG_KEEPALIVE_TIME = 5  # in seconds
+MSG_KEEPALIVE_TIME = 45  # in seconds
 
 # The number of messages that are cached and can later be reviewed via 
 # LiveRegionManager.reviewLiveAnnouncement.
@@ -30,10 +32,10 @@ class PriorityQueue:
     def __init__(self):
         self.queue = []
 
-    def enqueue(self, utts, priority, obj):
+    def enqueue(self, data, priority, obj):
         """ Add a new element to the queue according to 1) priority and
         2) timestamp. """
-        bisect.insort_left(self.queue, (priority, time.time(), utts, obj))
+        bisect.insort_left(self.queue, (priority, time.time(), data, obj))
        
     def dequeue(self):
         """get the highest priority element from the queue.  """
@@ -56,6 +58,46 @@ class PriorityQueue:
         myfilter = lambda item: item[0] > priority
         self.queue = filter(myfilter, self.queue)
 
+    def clumpContents(self):
+        """ Combines messages with the same 'label' by appending newer  
+        'content' and removing the newer message.  This operation is only
+        applied to the next dequeued message for performance reasons and is
+        often applied in conjunction with filterContents() """
+        if len(self.queue):
+            newqueue = []
+            newqueue.append(self.queue[0])
+            targetlabels = newqueue[0][2]['labels']
+            targetcontent = newqueue[0][2]['content']
+            for i in range(1, len(self.queue)):
+                if self.queue[i][2]['labels'] == targetlabels:
+                    newqueue[0][2]['content'].extend(self.queue[i][2]['content'])
+                else:
+                    newqueue.append(self.queue[i]) 
+
+            self.queue = newqueue
+
+    def filterContents(self):
+        """ Combines utterances by eliminating repeated utterances and
+        utterances that are part of other utterances. """
+        if len(self.queue[0][2]['content']) > 1:
+            oldcontent = self.queue[0][2]['content']
+            newcontent = [oldcontent[0]]
+
+            for i in range(1, len(oldcontent)):
+                found = False
+                for j in range(len(newcontent)):
+                    if oldcontent[i].find(newcontent[j]) != -1 \
+                        or newcontent[j].find(oldcontent[i]) != -1: 
+                        if len(oldcontent[i]) > len(newcontent[j]):
+                            newcontent[j] = oldcontent[i]
+                        found = True
+                        break
+
+                if not found:
+                    newcontent.append(oldcontent[i])
+
+            self.queue[0][2]['content'] = newcontent
+ 
     def __len__(self):
         """ Return the length of the queue """
         return len(self.queue)
@@ -73,6 +115,7 @@ class LiveRegionManager:
 
         # User overrides for politeness settings.
         self._politenessOverrides = None
+        self._restoreOverrides = None
 
         # last live obj to be announced
         self.lastliveobj = None
@@ -93,11 +136,23 @@ class LiveRegionManager:
         script.bookmarks.addSaveObserver(self.bookmarkSaveHandler)
         script.bookmarks.addLoadObserver(self.bookmarkLoadHandler)
 
+    def reset(self):
+        # First we will purge our politeness override dictionary of LIVE_NONE
+        # objects that are not registered for this page
+        newpoliteness = {}
+        currenturi = self._script.bookmarks.getURIKey()
+        for key, value in self._politenessOverrides.iteritems():
+            if key[0] == currenturi or value != LIVE_NONE:
+                newpoliteness[key] = value
+        self._politenessOverrides = newpoliteness
+
     def bookmarkSaveHandler(self):
+        """Bookmark save callback"""
         self._script.bookmarks.saveBookmarksToDisk(self._politenessOverrides,
                                                     filename='politeness')
 
     def bookmarkLoadHandler(self):
+        """Bookmark load callback"""
         # readBookmarksFromDisk() returns None on error. Just initialize to an
         # empty dictionary if this is the case.
         self._politenessOverrides = \
@@ -105,75 +160,90 @@ class LiveRegionManager:
         or {}
 
     def handleEvent(self, event):
-
-        livetype = self._getLiveType(event.source)
-        # Purge our queue of messages based on priority of incoming event and
-        # age of queued message.
-        if livetype == LIVE_NONE or livetype == LIVE_OFF:
-            # 1) we won't do anything for bad markup right now.
-            # 2) we won't waste processing power if live type is lower
-            #    than user define.
+        """Main live region event handler"""
+        politeness = self._getLiveType(event.source)
+        if politeness == LIVE_OFF:
             return
-
-        # Add a callback if the queue is empty because we are about to add 
-        # something to it.
-        if len(self.msg_queue) == 0:
-            gobject.idle_add(self.pumpMessages)
-
-        if livetype == LIVE_POLITE:
+        if politeness == LIVE_NONE:
+            # All the 'registered' LIVE_NONE objects will be set to off
+            # if not monitoring.  We will ignore LIVE_NONE objects that 
+            # arrive after the user switches off monitoring.
+            if not self.monitoring:
+               return
+        elif politeness == LIVE_POLITE:
             # Nothing to do for now
             pass
-        elif livetype ==  LIVE_ASSERTIVE:
+        elif politeness ==  LIVE_ASSERTIVE:
             self.msg_queue.purgeByPriority(LIVE_POLITE)
-        elif livetype == LIVE_RUDE:
+        elif politeness == LIVE_RUDE:
             self.msg_queue.purgeByPriority(LIVE_ASSERTIVE)
 
-        utterance = self._getUtterances(event)
-        if utterance:
-            self.msg_queue.enqueue(utterance, livetype, event.source)
+        message = self._getMessage(event)
+        if message:
+            if len(self.msg_queue) == 0:
+                gobject.idle_add(self.pumpMessages)
+            self.msg_queue.enqueue(message, politeness, event.source)
 
     def pumpMessages(self):
         """ Main gobject callback for live region support.  Handles both 
         purging the message queue and outputting any queued messages that
         were queued up in the handleEvent() method.
         """
-        # House cleaning on the message queue.  No purging is
-        # performed in handleEvent().
-        self.msg_queue.purgeByKeepAlive()
-
-        # If there are messages in the queue and we are not currently 
-        # speaking then speak queued message.
+        # If there are messages in the queue, we are monitoring, and we are not
+        # currently speaking then speak queued message.
+        # Note: Do all additional work within if statement to prevent
+        # it from being done for each event loop callback
+        # Note: isSpeaking() returns False way too early.  A strategy using
+        # a message length (in secs) could be used but don't forget many 
+        # parameters such as rate,expanded text and others must be considered.
         if len(self.msg_queue) > 0 and not speech.isSpeaking():
-            politeness, timestamp, utts, obj = self.msg_queue.dequeue()
+            # House cleaning on the message queue.  
+            # First we will purge the queue of old messages
+            self.msg_queue.purgeByKeepAlive()
+            # Next, we will filter the messages
+            self.msg_queue.clumpContents()
+            self.msg_queue.filterContents()
+            # Let's get our queued information
+            politeness, timestamp, message, obj = self.msg_queue.dequeue()
+            # Form output message.  No need to repeat labels and content.
+            # TODO: really needs to be tested in real life cases.  Perhaps
+            # a verbosity setting?
+            if message['labels'] == message['content']:
+                utts = message['content']
+            else:
+                utts = message['labels'] + message['content']
             speech.speakUtterances(utts)
+
             # set the last live obj to be announced
             self.lastliveobj = obj
+
             # cache our message
             self._cacheMessage(utts)
+
+        # We still want to maintain our queue if we are not monitoring
+        if not self.monitoring:
+            self.msg_queue.purgeByKeepAlive()
 
         # See you again soon, stay in event loop if we still have messages.
         if len(self.msg_queue) > 0:
             return True 
         else:
             return False
+        
+    def getLiveNoneObjects(self):
+        """Return the live objects that are registered and have a politeness
+        of LIVE_NONE. """
+        retval = []
+        currenturi = self._script.bookmarks.getURIKey()
+        for uri, objectid in self._politenessOverrides:
+            if uri == currenturi and isinstance(objectid, tuple):
+               retval.append(self._script.bookmarks._pathToObj(objectid))
+        return retval
 
     def advancePoliteness(self, obj):
+        """Advance the politeness level of the given object"""
         utterances = []
-        attrs = self._getAttrDictionary(obj)
-
-        # Should probably never see this situation because ids are used by
-        # web developers to identify the live region.  If we do, the user is
-        # out of luck and cannot override politeness level
-        if not attrs.has_key('id'):
-            # Translators: Objects within webpages sometimes do not have ids.
-            # In this rare case, the live politeness property cannot be 
-            # overriden. 
-            #
-            utterances.append(_('object does not have id'))
-            utterances.append(_('cannot override live priority'))
-            speech.speakUtterances(utterances)
-            return
-
+        objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
         try:
@@ -181,30 +251,27 @@ class LiveRegionManager:
             # live property.  If an exception is thrown, an override for 
             # this object has never occurred and the object does not have
             # live markup.  In either case, set the override to LIVE_NONE.
-            if self._politenessOverrides.has_key((uri, attrs['id'])):
-                cur_priority = self._politenessOverrides[(uri, attrs['id'])] 
-            else:
-                cur_priority = self._liveStringToType(obj, attributes=attrs)
+            cur_priority = self._politenessOverrides[(uri, objectid)] 
         except KeyError:
-            cur_priority = LIVE_NONE
+            cur_priority = self._liveStringToType(obj)
 
         if cur_priority == LIVE_OFF or cur_priority == LIVE_NONE:
-            self._politenessOverrides[(uri, attrs['id'])] = LIVE_POLITE
+            self._politenessOverrides[(uri, objectid)] = LIVE_POLITE
             # Translators:  sets the live region politeness level to polite
             #
             utterances.append(_('setting live region to polite'))
         elif cur_priority == LIVE_POLITE:
-            self._politenessOverrides[(uri, attrs['id'])] = LIVE_ASSERTIVE
+            self._politenessOverrides[(uri, objectid)] = LIVE_ASSERTIVE
             # Translators:  sets the live region politeness level to assertive
             #
             utterances.append(_('setting live region to assertive'))
         elif cur_priority == LIVE_ASSERTIVE:
-            self._politenessOverrides[(uri, attrs['id'])] = LIVE_RUDE
+            self._politenessOverrides[(uri, objectid)] = LIVE_RUDE
             # Translators:  sets the live region politeness level to rude
             #
             utterances.append(_('setting live region to rude'))
         elif cur_priority == LIVE_RUDE:
-            self._politenessOverrides[(uri, attrs['id'])] = LIVE_OFF
+            self._politenessOverrides[(uri, objectid)] = LIVE_OFF
             # Translators:  sets the live region politeness level to off
             #
             utterances.append(_('setting live region to off'))
@@ -212,6 +279,8 @@ class LiveRegionManager:
         speech.speakUtterances(utterances)
 
     def goLastLiveRegion(self):
+        """Move the caret to the last announced live region and speak the 
+        contents of that object"""
         if self.lastliveobj:
             self._script.setCaretPosition(self.lastliveobj, 0)
             self._script.outlineAccessible(self.lastliveobj)
@@ -219,6 +288,7 @@ class LiveRegionManager:
                                        self.lastliveobj,0))
 
     def reviewLiveAnnouncement(self, msgnum):
+        """Speak the given number cached message"""
         if msgnum > len(self.msg_cache):
             # Tranlators: this tells the user that a cached message
             # is not available.
@@ -227,50 +297,45 @@ class LiveRegionManager:
         else:
             speech.speakUtterances(self.msg_cache[-msgnum])
 
-    def monitorLiveRegions(self):
+    def setLivePolitenessOff(self):
+        """User toggle to set all live regions to LIVE_OFF or back to their
+        original politeness."""
         # start at the document frame
-        obj = self._script.getDocumentFrame()
+        docframe = self._script.getDocumentFrame()
         # get the URI of the page.  It is used as a partial key.
         uri = self._script.bookmarks.getURIKey()
 
         # The user is currently monitoring live regions but now wants to 
         # change all live region politeness on page to LIVE_OFF
         if self.monitoring:
-            # look through all the objects on the page and set/add to
-            # politeness overrides.
-            # TODO: use Collection
-            matches = pyatspi.findAllDescendants(obj, self._livePred)
-            for match in matches:
-                attrs = self._getAttrDictionary(match)
-                self._politenessOverrides[(uri, attrs['id'])] = LIVE_OFF
-
             # Translators: This lets the user know that all live regions
             # have been turned off.
             speech.speak(_("All live regions set to off"))
+
+            self.msg_queue.clear()
+            
+            # First we'll save off a copy for quick restoration
+            self._restoreOverrides = copy.copy(self._politenessOverrides)
+
+            # Set all politeness overrides to LIVE_OFF.
+            for override in self._politenessOverrides.keys():
+                self._politenessOverrides[override] = LIVE_OFF
+
+            # look through all the objects on the page and set/add to
+            # politeness overrides.  This only adds live regions with good
+            # markup.
+            matches = pyatspi.findAllDescendants(docframe, self.matchLiveRegion)
+            for match in matches:
+                objectid = self._getObjectId(match)
+                self._politenessOverrides[(uri, objectid)] = LIVE_OFF
 
             # Toggle our flag
             self.monitoring = False
 
         # The user wants to restore politeness levels
         else:
-            # Get the politeness bookmarks
-            oldpoliteness = \
-                self._script.bookmarks.readBookmarksFromDisk( \
-                filename='politeness') or {}
-
-            # look through all the objects on the page.
-            # TODO: use Collection
-            matches = pyatspi.findAllDescendants(obj, self._livePred)
-            for match in matches:
-                attrs = self._getAttrDictionary(match)
-                # Restore the bookmarked politeness or the markup politeness
-                try:
-                    self._politenessOverrides[(uri, attrs['id'])] = \
-                                oldpoliteness[(uri, attrs['id'])]
-                except KeyError:
-                    self._politenessOverrides[(uri, attrs['id'])] = \
-                            self._liveStringToType(obj, attributes=attrs)
-
+            for key, value in self._restoreOverrides.iteritems():
+                self._politenessOverrides[key] = value
             # Translators: This lets the user know that all live regions
             # have been restored to their original politeness level.
             speech.speak(_("live regions politeness levels restored"))
@@ -279,7 +344,9 @@ class LiveRegionManager:
             self.monitoring = True  
 
     def outputLiveRegionDescription(self, obj):
-        attrs = self._getAttrDictionary(obj)
+        """Used in conjuction with whereAmI to output description and 
+        politeness of the given live region object"""
+        objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
         utterances = []
@@ -296,46 +363,44 @@ class LiveRegionManager:
 
         # get the politeness level as a string
         try:
-            livepriority = self._politenessOverrides[(uri, attrs['id'])]
+            livepriority = self._politenessOverrides[(uri, objectid)]
             liveprioritystr = self._liveTypeToString(livepriority)
         except KeyError:
-            if attrs.has_key('live'):
-                liveprioritystr = attrs['live']
-            else:
-                liveprioritystr = 'unknown'
+            liveprioritystr = 'none'
 
-        # Translators: output the politeness level
-        #
-        utterances.append(_('politeness level %s') %liveprioritystr)
-        speech.speakUtterances(utterances)
+        # We will only output useful information
+        # TODO: check for repeated descriptions
+        if utterances or liveprioritystr != 'none':
+            # Translators: output the politeness level
+            #
+            utterances.append(_('politeness level %s') %liveprioritystr)
+            speech.speakUtterances(utterances)
 
-    def _livePred(self, obj):
+    def matchLiveRegion(self, obj):
+        """Predicate used to find a live region"""
         attrs = self._getAttrDictionary(obj)
-        return (attrs.has_key('container-live') and attrs.has_key('id'))
+        return attrs.has_key('container-live')
 
-    def _getUtterances(self, event):
-
+    def _getMessage(self, event):
+        """Gets the message associated with a given live event."""
         attrs = self._getAttrDictionary(event.source)
-        # TODO: handle relevant property here
-
-        # Get the message content for the event.  First the relations.
-        utterances = []
-
+        content = [] 
+        labels = []
         if event.type.startswith('object:children-changed:add'):
             # Get a handle to the Text interface for the target.
             try:
                 targetitext = event.any_data.queryText()
             except NotImplementedError:
-                return [] 
+                return None
 
             # Get the text based on the atomic property
             try:
                 if attrs['container-atomic'] == 'true':
-                    utterances.append(self._script.expandEOCs(event.source))
+                    content.append(self._script.expandEOCs(event.source))
                 else:
-                    utterances.append(targetitext.getText(0, -1))
+                    content.append(targetitext.getText(0, -1))
             except (KeyError, TypeError):
-                utterances.append(targetitext.getText(0, -1))
+                content.append(targetitext.getText(0, -1))
 
         else: #object:text-changed:insert
             # Get a handle to the Text interface for the source.
@@ -344,60 +409,102 @@ class LiveRegionManager:
             try:
                 sourceitext = event.source.queryText()
             except NotImplementedError:
-                # TODO: output warning
                 return None
 
             # We found an embed character.  We can expect a children-changed
             # event, which we will act on, so just return.
-            content = sourceitext.getText(0, -1)
-            if content.find(self._script.EMBEDDED_OBJECT_CHARACTER) == 0:
+            txt = sourceitext.getText(0, -1)
+            if txt.find(self._script.EMBEDDED_OBJECT_CHARACTER) == 0:
                 return None
 
             # Get labeling information
-            utterances.extend(self._getLabelsAsUtterances(event.source))
+            labels = self._getLabelsAsUtterances(event.source)
 
             # Get the text based on the atomic property
             try:
                 if attrs['container-atomic'] == 'true':
-                    utterances.append(content)
+                    content.append(txt)
                 else:
-                    utterances.append(content[event.detail1:]) 
+                    content.append(txt[event.detail1:]) 
             except KeyError:
-                utterances.append(content[event.detail1:])
- 
-        return utterances 
+                content.append(txt)
+
+        return {'content':content, 'labels':labels}
+
+    def flushMessages(self):
+        self.msg_queue.clear()
 
     def _cacheMessage(self, utts):
+        """Cache a message in our cache list of length CACHE_SIZE"""
         self.msg_cache.append(utts)
         if len(self.msg_cache) > CACHE_SIZE:
             self.msg_cache.pop(0)
 
     def _getLabelsAsUtterances(self, obj):
-        utterances = []
-        for relation in obj.getRelationSet():
-            relationtype = relation.getRelationType()
-            if relationtype == pyatspi.RELATION_LABELLED_BY:
-                labelobj = relation.getTarget(0)
-                try:
-                    utterances.append(labelobj.queryText().getText(0, -1))
-                except NotImplemented:
-                    pass
-        return utterances
+        """Get the labels for a given object"""
+        # try the Gecko label getter first
+        uttstring = self._script.getDisplayedLabel(obj)
+        if uttstring:
+            return [uttstring.strip()]
+        # often we see a table cell.  I'll implement my own label getter
+        elif obj.getRole() == pyatspi.ROLE_TABLE_CELL \
+                           and obj.parent.childCount > 1:
+            # We will try the table interface first for it's parent
+            try:
+                itable = obj.parent.queryTable()
+                # I'm in a table, now what row are we in?  Look in the first 
+                # columm of that row.
+                #
+                # Note: getRowHeader() fails for most markup.  We will use the
+                # relation when the markup is good (when getRowHeader() works) 
+                # so we won't see this code in those cases.  
+                row = itable.getRowAtIndex(obj.getIndexInParent())
+                header = itable.getAccessibleAt(row, 0)
+                # expand the header
+                return [self._script.expandEOCs(header).strip()]
+            except NotImplementedError:
+                pass
+
+            # Last ditch effort is to see if our parent is a table row <tr> 
+            # element.
+            parentattrs = self._getAttrDictionary(obj.parent) 
+            if parentattrs.has_key('tag') and parentattrs['tag'] == 'TR':
+                return [self._script.expandEOCs( \
+                                  obj.parent.getChildAtIndex(0)).strip()]
+
+        # Sorry, no valid labels found
+        return []
 
     def _getLiveType(self, obj):
-        attrs = self._getAttrDictionary(obj)
+        """Returns the live politeness setting for a given object. Also,
+        registers LIVE_NONE objects in politeness overrides when monitoring."""
+        objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
+        if self._politenessOverrides.has_key((uri, objectid)):
+            # look to see if there is a user politeness override
+            return self._politenessOverrides[(uri, objectid)]
+        else:
+            livetype = self._liveStringToType(obj)
+            # We'll save off a reference to LIVE_NONE if we are monitoring
+            # to give the user a chance to change the politeness level.  It
+            # is done here for performance sake (objectid, uri are expensive)
+            if livetype == LIVE_NONE and self.monitoring:
+                self._politenessOverrides[(uri, objectid)] = livetype
+            return livetype
 
-        # look to see if there is a user politeness override
+    def _getObjectId(self, obj):
+        """Returns the HTML 'id' or a path to the object is an HTML id is
+        unavailable"""
+        attrs = self._getAttrDictionary(obj)
+        if attrs is None:
+            return self._getPath(obj)
         try:
-            return self._politenessOverrides[(uri, attrs['id'])]
-        except (KeyError, TypeError):
-            # exception could be thrown due to no override, no 'id' or 
-            # attrs being None (unlikely).  In any case, just pass to logic 
-            # below.
-            return self._liveStringToType(obj, attributes=attrs)
+            return attrs['id']
+        except KeyError:
+            return self._getPath(obj)
 
     def _liveStringToType(self, obj, attributes=None):
+        """Returns the politeness enum for a given object"""
         attrs = attributes or self._getAttrDictionary(obj)
         try:
             if attrs['container-live'] == 'off': 
@@ -413,6 +520,7 @@ class LiveRegionManager:
             return LIVE_NONE
 
     def _liveTypeToString(self, politeness):
+        """Returns the politeness level as a string given a politeness enum"""
         if politeness == LIVE_OFF: 
             return 'off'
         elif politeness == LIVE_POLITE: 
@@ -427,3 +535,18 @@ class LiveRegionManager:
 
     def _getAttrDictionary(self, obj):
         return dict([attr.split(':', 1) for attr in obj.getAttributes()])
+    
+    def _getPath(self, obj):
+        """ Returns, as a tuple of integers, the path from the given object 
+        to the document frame."""
+        docframe = self._script.getDocumentFrame()
+        path = []
+        while 1:
+            if obj.parent is None or obj == docframe:
+                path.reverse()
+                return tuple(path)
+            try:
+                path.append(obj.getIndexInParent())
+            except Exception:
+                raise LookupError
+            obj = obj.parent

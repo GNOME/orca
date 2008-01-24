@@ -45,6 +45,7 @@ import gtk
 import math
 import pyatspi
 import re
+import time
 import urlparse
 
 import braille
@@ -148,9 +149,6 @@ onlySpeakChangedLinesDuringFind = False
 # The minimum number of characters of text that an accessible object must 
 # contain to be considered a match in go to next/prev large object
 largeObjectTextLength = 75
-
-# Whether or not Orca should speak live region changes.
-liveRegionsOn = True
 
 # Roles that imply their text starts on a new line.
 #
@@ -1399,8 +1397,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         if not doubleClick or statusOrTitle \
            or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, statusOrTitle)
-            if self._script.isLiveRegion(obj):
-                self._script.liveMngr.outputLiveRegionDescription(obj)
+            self._script.liveMngr.outputLiveRegionDescription(obj)
         else:
             try:
                 self._collectionPageSummary()
@@ -1786,12 +1783,10 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         """Return the object with the given path (relative to the
         document frame). """
         returnobj = self._script.getDocumentFrame()
-        
         for childnumber in path:
-            next = returnobj[childnumber]
-            if next:
-                returnobj = next
-            else:
+            try:
+                returnobj = returnobj[childnumber]
+            except IndexError:
                 return None
             
         return returnobj
@@ -1896,6 +1891,7 @@ class Script(default.Script):
              Script.goPreviousLiveRegion,
              Script.goLastLiveRegion,
              Script.advanceLivePoliteness,
+             Script.setLivePolitenessOff,
              Script.monitorLiveRegions,
              Script.reviewLiveAnnouncement,
              Script.goCellLeft,
@@ -2402,6 +2398,14 @@ class Script(default.Script):
                 #
                 _("Advance live region politeness setting."))
 
+        self.inputEventHandlers["setLivePolitenessOff"] = \
+            input_event.InputEventHandler(
+                Script.setLivePolitenessOff,
+                # Translators: this is for setting all live regions 
+                # to 'off' politeness.
+                #
+                _("Set default live region politeness level to off."))
+
         self.inputEventHandlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 Script.monitorLiveRegions,
@@ -2905,6 +2909,13 @@ class Script(default.Script):
                  | 1 << pyatspi.MODIFIER_ALT \
                  | 1 << pyatspi.MODIFIER_CONTROL),
                 1 << pyatspi.MODIFIER_SHIFT,
+                self.inputEventHandlers["setLivePolitenessOff"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                fullModMask,
+                orcaShiftModMask,
                 self.inputEventHandlers["monitorLiveRegions"]))
 
         keyBindings.add(
@@ -3817,10 +3828,10 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-        
         self._destroyLineCache()
 
-        if liveRegionsOn and self.isLiveRegion(event.source):
+        # handle live region events
+        if self.handleAsLiveRegion(event):
             self.liveMngr.handleEvent(event)
             return
 
@@ -3831,37 +3842,14 @@ class Script(default.Script):
         for addition events often associated with Javascipt insertion.  One such
         such example would be the programmatic insertion of a tooltip or alert  
         dialog."""
+        # no need moving forward if we don't have our target.
+        if event.any_data is None:
+            return
 
-        # We will just look at object addition events for now
-        if event.type.startswith('object:children-changed:add:system'):
-            # no use moving forward if we don't have our target.
-            if event.any_data is None:
-                return
-
-            if liveRegionsOn and self.isLiveRegion(event.source):
-                self.liveMngr.handleEvent(event)
-                return
-
-            newacc = event.any_data
-            output = None
-            # The addition could be an alert/tooltip, but the xml-role:alert
-            # or xml-role:tooltip object may be a child.  For performance
-            # reasons first look at the object then just look through the 
-            # objects immediate descendents, not recursively.  May need to 
-            # check xml-roles to make sure it is not a list or other 
-            # roles with potentially many children.
-            #
-            if self.isAriaAlert(newacc):
-                output = self.expandEOCs(newacc)
-            elif newacc.getRole() != pyatspi.ROLE_LIST:
-                for child in newacc:
-                    if self.isAriaAlert(child):
-                        output = self.expandEOCs(child)
-                        break
-
-            if output:
-                speech.speak(output)
-                braille.displayMessage(output)
+        # handle live region events
+        if self.handleAsLiveRegion(event):
+            self.liveMngr.handleEvent(event)
+            return
 
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
@@ -3877,6 +3865,8 @@ class Script(default.Script):
         # events from HTML iframes.
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            # Reset the live region manager.
+            self.liveMngr.reset()
             self._loadingDocumentContent = False
 
     def onDocumentLoadStopped(self, event):
@@ -3893,10 +3883,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-        # We ignore these because Gecko just happily keeps generating
-        # name changed events for objects whose name don't change.
-        #
-        return
+        if event.source.getRole() == pyatspi.ROLE_FRAME:
+            self.liveMngr.flushMessages()
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -5174,15 +5162,6 @@ class Script(default.Script):
         except (KeyError, TypeError):
             return True
 
-    def isLiveRegion(self, obj):
-        attrs = obj.getAttributes()
-        if attrs is None:
-            return False
-        for attr in attrs:
-            if attr.startswith('container-live:'):
-                return True
-        return False
-
     def isAriaWidget(self, obj=None):
         """Returns True if the object being examined is an ARIA widget.
 
@@ -5210,6 +5189,76 @@ class Script(default.Script):
             if attr == 'xml-roles:alert' or attr == 'xml-roles:tooltip':
                 return True
         return False
+
+    def handleAsLiveRegion(self, event):
+        """Returns True if the given event (object:children-changed, object:
+        text-insert only) should be considered a live region event"""
+
+        # We will try to eliminate objects that cannot be considered live
+        # regions.  We will handle everything else as a live region.  We
+        # will do the cheap tests first
+        if self._loadingDocumentContent \
+              or not  settings.inferLiveRegions \
+              or not event.type.endswith(':system'):
+            return False
+
+        # Ideally, we would like to do a inDocumentContent() call to filter out
+        # events that are not in the document.  Unfortunately, this is an 
+        # expensive call.  Instead we will do some heuristics to filter out
+        # chrome events with the least amount of IPC as possible.
+
+        # event.type specific checks
+        if event.type.startswith('object:children-changed'):
+            # This will filter out lists that are not of interest and
+            # events from other tabs.
+            stateset = event.source.getState()
+            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
+                   or stateset.contains(pyatspi.STATE_FOCUSED) \
+                   or not stateset.contains(pyatspi.STATE_VISIBLE):
+                return False
+
+            # Now we need to look at the object attributes
+            attrs = self._getAttrDictionary(event.source)
+            # Good live region markup
+            if attrs.has_key('container-live'):
+                return True
+
+            # We see this one with the URL bar opening (sometimes)
+            if attrs.has_key('tag') and attrs['tag'] == 'xul:richlistbox':
+                return False
+
+            # This eliminates all ARIA widgets that are not considered live
+            if attrs.has_key('xml-roles') \
+                                    and not attrs.has_key('container-live'):
+                return False
+
+        else: # object:text-inserted event
+            # Live regions will not be focusable.
+            # Filter out events from hidden tabs (not VISIBLE)
+            stateset = event.source.getState()
+            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
+                   or stateset.contains(pyatspi.STATE_FOCUSED) \
+                   or not stateset.contains(pyatspi.STATE_VISIBLE):
+                return False
+
+            attrs = self._getAttrDictionary(event.source)
+            # Good live region markup
+            if attrs.has_key('container-live'):
+                return True
+
+            # This might be too restrictive but we need it to filter
+            # out URLs that are displayed when the location list opens.
+            if attrs.has_key('tag') \
+                    and attrs['tag'] == 'xul:description' \
+                    or attrs['tag'] == 'xul:label':
+                return False
+
+            # This eliminates all ARIA widgets that are not considered live
+            if attrs.has_key('xml-roles') \
+                                and not attrs.has_key('container-live'):
+                return False
+        # It sure looks like a live region
+        return True
 
     def getCharacterOffsetInParent(self, obj):
         """Returns the character offset of the embedded object
@@ -9985,8 +10034,16 @@ class Script(default.Script):
             speech.speak(_("Not in a table."))
 
     def goNextLiveRegion(self, inputEvent):
+        # First, get any live regions that have been registered as LIVE_NONE
+        # because there is no markup to test for these but we still want to 
+        # find them
+        regobjs = self.liveMngr.getLiveNoneObjects()
+        # define our search predicate
+        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) or obj in regobjs)
+        # start looking
         wrap = True
-        [obj, wrapped] = self.findNextByPredicate(self.__matchLiveRegion, wrap)
+        [obj, wrapped] = \
+                  self.findNextByPredicate(pred, wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -10017,8 +10074,16 @@ class Script(default.Script):
             speech.speak(_("No more live regions."))
 
     def goPreviousLiveRegion(self, inputEvent):
+        # First, get any live regions that have been registered as LIVE_NONE
+        # because there is no markup to test for these but we still want to 
+        # find them
+        regobjs = self.liveMngr.getLiveNoneObjects()
+        # define our search predicate
+        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) or obj in regobjs)
+        # start looking
         wrap = True
-        [obj, wrapped] = self.findPrevByPredicate(self.__matchLiveRegion, wrap)
+        [obj, wrapped] = \
+                  self.findPrevByPredicate(pred, wrap)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -10047,7 +10112,7 @@ class Script(default.Script):
             speech.speak(_("No more live regions."))
             
     def goLastLiveRegion(self, inputEvent):
-        if liveRegionsOn:
+        if settings.inferLiveRegions:
             self.liveMngr.goLastLiveRegion()
         else:
             # Translators: this announces to the user that live region
@@ -10057,7 +10122,7 @@ class Script(default.Script):
 
     def advanceLivePoliteness(self, inputEvent):
         """Advances live region politeness level."""
-        if liveRegionsOn:
+        if settings.inferLiveRegions:
             self.liveMngr.advancePoliteness(orca_state.locusOfFocus)
         else:
             # Translators: this announces to the user that live region
@@ -10066,8 +10131,23 @@ class Script(default.Script):
             speech.speak(_("Live region support is off"))
             
     def monitorLiveRegions(self, inputEvent):
-        if liveRegionsOn:
-            self.liveMngr.monitorLiveRegions()
+        if not settings.inferLiveRegions:
+            settings.inferLiveRegions = True
+            # Translators: this announces to the user that live region
+            # are being monitored.
+            #
+            speech.speak(_("Live regions monitoring on"))
+        else:
+            settings.inferLiveRegions = False
+            # Translators: this announces to the user that live region
+            # are not being monitored.
+            #
+            self.liveMngr.flushMessages()
+            speech.speak(_("Live regions monitoring off"))
+            
+    def setLivePolitenessOff(self, inputEvent):
+        if settings.inferLiveRegions:
+            self.liveMngr.setLivePolitenessOff()
         else:
             # Translators: this announces to the user that live region
             # support has been turned off.
@@ -10075,7 +10155,7 @@ class Script(default.Script):
             speech.speak(_("Live region support is off"))
 
     def reviewLiveAnnouncement(self, inputEvent):
-        if liveRegionsOn:
+        if settings.inferLiveRegions:
             self.liveMngr.reviewLiveAnnouncement( \
                                     int(inputEvent.event_string[1:]))
         else:
@@ -10170,15 +10250,6 @@ class Script(default.Script):
                 return False
         else:
             return False
-
-    def __matchLiveRegion(self, obj):
-        attrs = obj.getAttributes()
-        if attrs is None:
-            return False
-        for attr in attrs:
-            if attr.startswith('live:'):
-                return True
-        return False
 
     def __matchLandmark(self, obj):
         if obj is None:
