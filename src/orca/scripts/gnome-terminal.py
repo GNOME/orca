@@ -31,6 +31,7 @@ import pyatspi
 
 import orca.default as default
 import orca.input_event as input_event
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
@@ -56,6 +57,26 @@ class Script(default.Script):
         # application.
         #
         self.presentIfInactive = False
+
+    def echoKey(self, keyEvent):
+        """Determine whether this script should echo the current key event.
+        If this is a printable key, then return False.
+
+        Note that the keyEcho() method in orca.py will still take into
+        account whatever the user's various preferences for key echoing
+        are, which may override what is return by this echoKey() method.
+
+        Arguments:
+        - keyEvent - the key event
+
+        Returns an indication of whether a key echo event should be
+        allowed to happen for this script.
+        """
+
+        if orca.isPrintableKey(keyEvent.event_string):
+            return False
+
+        return True
 
     #def onWindowActivated(self, event):
     #    # Sets the context to the top level window first, so we can
@@ -163,7 +184,8 @@ class Script(default.Script):
 
             # If the last input event was a keyboard event, check to see if
             # the text for this event matches what the user typed. If it does,
-            # then don't speak it.
+            # then call orca.keyEcho() to echo it (based on the user's key
+            # echo preferences).
             #
             # Note that the text widgets sometimes compress their events,
             # thus we might get a longer string from a single text inserted
@@ -203,6 +225,9 @@ class Script(default.Script):
                         input_event.MouseButtonEvent) and \
              orca_state.lastInputEvent.button == "2":
             speakThis = True
+
+        if matchFound:
+            orca.keyEcho(orca_state.lastInputEvent)
 
         if speakThis:
             if text.isupper():

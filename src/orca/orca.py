@@ -316,7 +316,7 @@ _keyBindings = None
 #
 _orcaModifierPressed = False
 
-def _isPrintableKey(event_string):
+def isPrintableKey(event_string):
     """Return an indication of whether this is an alphanumeric or
        punctuation key.
 
@@ -334,10 +334,10 @@ def _isPrintableKey(event_string):
                 and (unicodeString.isalnum() or unicodeString.isspace()
                 or unicodedata.category(unicodeString)[0] in ('P', 'S'))
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isPrintableKey: returning: %s" % reply)
+                  "orca.isPrintableKey: returning: %s" % reply)
     return reply
 
-def _isModifierKey(event_string):
+def isModifierKey(event_string):
     """Return an indication of whether this is a modifier key.
 
     Arguments:
@@ -352,10 +352,10 @@ def _isModifierKey(event_string):
 
     reply = event_string in modifierKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isModifierKey: returning: %s" % reply)
+                  "orca.isModifierKey: returning: %s" % reply)
     return reply
 
-def _isLockingKey(event_string):
+def isLockingKey(event_string):
     """Return an indication of whether this is a locking key.
 
     Arguments:
@@ -369,10 +369,10 @@ def _isLockingKey(event_string):
     reply = event_string in lockingKeys \
             and not event_string in settings.orcaModifierKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isLockingKey: returning: %s" % reply)
+                  "orca.isLockingKey: returning: %s" % reply)
     return reply
 
-def _isFunctionKey(event_string):
+def isFunctionKey(event_string):
     """Return an indication of whether this is a function key.
 
     Arguments:
@@ -390,10 +390,10 @@ def _isFunctionKey(event_string):
 
     reply = event_string in functionKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isFunctionKey: returning: %s" % reply)
+                  "orca.isFunctionKey: returning: %s" % reply)
     return reply
 
-def _isActionKey(event_string):
+def isActionKey(event_string):
     """Return an indication of whether this is an action key.
 
     Arguments:
@@ -407,10 +407,10 @@ def _isActionKey(event_string):
 
     reply = event_string in actionKeys
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isActionKey: returning: %s" % reply)
+                  "orca.isActionKey: returning: %s" % reply)
     return reply
 
-def _isNavigationKey(event_string):
+def isNavigationKey(event_string):
     """Return an indication of whether this is a navigation (arrow) key
     or if the user has the Orca modifier key held done.
 
@@ -426,7 +426,7 @@ def _isNavigationKey(event_string):
     reply = (event_string in navigationKeys) or _orcaModifierPressed
 
     debug.println(debug.LEVEL_FINEST,
-                  "orca._isNavigationKey: returning: %s" % reply)
+                  "orca.isNavigationKey: returning: %s" % reply)
     return reply
 
 class KeyEventType:
@@ -459,7 +459,7 @@ class KeyEventType:
     def __init__(self):
         pass
 
-def _keyEcho(event):
+def keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
     event it is and echo it via speech, if the user wants that type of
     key echoed.
@@ -480,7 +480,7 @@ def _keyEcho(event):
 
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,
-                  "orca._keyEcho: string to echo: %s" % event_string)
+                  "orca.keyEcho: string to echo: %s" % event_string)
 
     # If key echo is enabled, then check to see what type of key event
     # it is and echo it via speech, if the user wants that type of key
@@ -488,22 +488,22 @@ def _keyEcho(event):
     #
     if settings.enableKeyEcho:
 
-        if _isModifierKey(event_string):
+        if isModifierKey(event_string):
             if not settings.enableModifierKeys:
                 return
             eventType = KeyEventType.MODIFIER
 
-        elif _isNavigationKey(event_string):
+        elif isNavigationKey(event_string):
             if not settings.enableNavigationKeys:
                 return
             eventType = KeyEventType.NAVIGATION
 
-        elif _isPrintableKey(event_string):
+        elif isPrintableKey(event_string):
             if not settings.enablePrintableKeys:
                 return
             eventType = KeyEventType.PRINTABLE
 
-        elif _isLockingKey(event_string):
+        elif isLockingKey(event_string):
             if not settings.enableLockingKeys:
                 return
             eventType = KeyEventType.LOCKING
@@ -528,23 +528,23 @@ def _keyEcho(event):
                 #    eventType = KeyEventType.LOCKING_LOCKED
                 pass
 
-        elif _isFunctionKey(event_string):
+        elif isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
                 return
             eventType = KeyEventType.FUNCTION
 
-        elif _isActionKey(event_string):
+        elif isActionKey(event_string):
             if not settings.enableActionKeys:
                 return
             eventType = KeyEventType.ACTION
 
         else:
             debug.println(debug.LEVEL_FINEST,
-                  "orca._keyEcho: event string not handled: %s" % event_string)
+                  "orca.keyEcho: event string not handled: %s" % event_string)
             return
 
         debug.println(debug.LEVEL_FINEST,
-                      "orca._keyEcho: speaking: %s" % event_string)
+                      "orca.keyEcho: speaking: %s" % event_string)
 
         # We keep track of the time as means to let others know that
         # we are probably echoing a key and should not be interrupted.
@@ -559,8 +559,8 @@ def _processKeyCaptured(event):
     """
 
     if event.type == 0:
-        if _isModifierKey(event.event_string) \
-           or _isLockingKey(event.event_string):
+        if isModifierKey(event.event_string) \
+           or isLockingKey(event.event_string):
             return True
         else:
             # We want to capture this event, after first doing a little
@@ -667,8 +667,9 @@ def _processKeyboardEvent(event):
 
         # If learn mode is enabled, it will echo the keys.
         #
-        if not settings.learnModeEnabled:
-            _keyEcho(keyboardEvent)
+        if not settings.learnModeEnabled and \
+           orca_state.activeScript.echoKey(keyboardEvent):
+            keyEcho(keyboardEvent)
 
     elif isOrcaModifier \
         and (keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT):
@@ -720,7 +721,7 @@ def _processKeyboardEvent(event):
     # has been pressed, and we might get the key events in different orders.
     # See comment #15 of bug #435201 for more details.
     #
-    if not _isModifierKey(keyboardEvent.event_string):
+    if not isModifierKey(keyboardEvent.event_string):
         orca_state.lastNonModifierKeyEvent = keyboardEvent
 
     return consumed or isOrcaModifier
