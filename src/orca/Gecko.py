@@ -3960,8 +3960,9 @@ class Script(default.Script):
             and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
             try:
                 [obj, characterOffset] = self.getCaretContext()
-                orca.setLocusOfFocus(event, obj)
-                return
+                if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                    orca.setLocusOfFocus(event, obj)
+                    return
             except:
                 pass
 

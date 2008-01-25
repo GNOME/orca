@@ -1,3 +1,9 @@
+2008-01-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #509394 - First focusable item in document frame
+          not always spoken in FF3.
+
 2008-01-24  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-terminal.py:
