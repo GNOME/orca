@@ -1,5 +1,6 @@
 import bisect
 import gobject
+import orca_state
 import pyatspi
 import speech
 import copy
@@ -181,7 +182,7 @@ class LiveRegionManager:
         message = self._getMessage(event)
         if message:
             if len(self.msg_queue) == 0:
-                gobject.idle_add(self.pumpMessages)
+                gobject.timeout_add(100, self.pumpMessages)
             self.msg_queue.enqueue(message, politeness, event.source)
 
     def pumpMessages(self):
@@ -196,7 +197,9 @@ class LiveRegionManager:
         # Note: isSpeaking() returns False way too early.  A strategy using
         # a message length (in secs) could be used but don't forget many 
         # parameters such as rate,expanded text and others must be considered.
-        if len(self.msg_queue) > 0 and not speech.isSpeaking():
+        if len(self.msg_queue) > 0 \
+                  and not speech.isSpeaking() \
+                  and time.time() - orca_state.lastInputEvent.time > 1:
             # House cleaning on the message queue.  
             # First we will purge the queue of old messages
             self.msg_queue.purgeByKeepAlive()
