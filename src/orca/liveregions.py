@@ -1,6 +1,5 @@
 import bisect
 import gobject
-import time
 import pyatspi
 import speech
 import settings
