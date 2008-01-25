@@ -1,16 +1,16 @@
-2008-01-24 Scott Haeger <scott@bashautomation.com>
+2008-01-25 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py:
           Partial fix for bug #511893, Live region performance enhancements.
           Fix for navigation performance issue.
 
-2008-01-24 Scott Haeger <scott@bashautomation.com>
+2008-01-25 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py:
           src/orca/Gecko.py:
           More minor changes to boost pylint score.
 
-2008-01-24 Scott Haeger <scott@bashautomation.com>
+2008-01-25 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py:
           Removed import to boost pylint score.
