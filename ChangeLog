@@ -1,6 +1,12 @@
 2008-01-24 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py:
+          src/orca/Gecko.py:
+          More minor changes to boost pylint score.
+
+2008-01-24 Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/liveregions.py:
           Removed import to boost pylint score.
 
 2008-01-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>

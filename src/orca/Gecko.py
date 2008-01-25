@@ -45,7 +45,6 @@ import gtk
 import math
 import pyatspi
 import re
-import time
 import urlparse
 
 import braille
@@ -1584,7 +1583,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             self._script.systemBeep()
             return
         # convert our path to an object
-        obj = self._pathToObj(path)
+        obj = self.pathToObj(path)
        
         if obj:
             # restore the location
@@ -1603,7 +1602,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         index = (inputEvent.hw_code, self.getURIKey())
         try:
             path, characterOffset = self._bookmarks[index]
-            obj = self._pathToObj(path)
+            obj = self.pathToObj(path)
         except KeyError:
             self._script.systemBeep()
             return
@@ -1777,9 +1776,9 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         
         # could test for different obj types.  We'll just assume it is
         # list that represents a path for now.
-        return self._pathToObj(obj)
+        return self.pathToObj(obj)
             
-    def _pathToObj(self, path):
+    def pathToObj(self, path):
         """Return the object with the given path (relative to the
         document frame). """
         returnobj = self._script.getDocumentFrame()
@@ -10040,7 +10039,8 @@ class Script(default.Script):
         # find them
         regobjs = self.liveMngr.getLiveNoneObjects()
         # define our search predicate
-        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) or obj in regobjs)
+        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) \
+                                            or obj in regobjs)
         # start looking
         wrap = True
         [obj, wrapped] = \
@@ -10080,7 +10080,8 @@ class Script(default.Script):
         # find them
         regobjs = self.liveMngr.getLiveNoneObjects()
         # define our search predicate
-        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) or obj in regobjs)
+        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) \
+                                            or obj in regobjs)
         # start looking
         wrap = True
         [obj, wrapped] = \

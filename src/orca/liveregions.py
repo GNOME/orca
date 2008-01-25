@@ -2,8 +2,8 @@ import bisect
 import gobject
 import pyatspi
 import speech
-import settings
 import copy
+import time
 
 from orca_i18n import _
 
@@ -69,7 +69,8 @@ class PriorityQueue:
             targetcontent = newqueue[0][2]['content']
             for i in range(1, len(self.queue)):
                 if self.queue[i][2]['labels'] == targetlabels:
-                    newqueue[0][2]['content'].extend(self.queue[i][2]['content'])
+                    newqueue[0][2]['content'].extend \
+                                   (self.queue[i][2]['content'])
                 else:
                     newqueue.append(self.queue[i]) 
 
@@ -168,7 +169,7 @@ class LiveRegionManager:
             # if not monitoring.  We will ignore LIVE_NONE objects that 
             # arrive after the user switches off monitoring.
             if not self.monitoring:
-               return
+                return
         elif politeness == LIVE_POLITE:
             # Nothing to do for now
             pass
@@ -236,7 +237,7 @@ class LiveRegionManager:
         currenturi = self._script.bookmarks.getURIKey()
         for uri, objectid in self._politenessOverrides:
             if uri == currenturi and isinstance(objectid, tuple):
-               retval.append(self._script.bookmarks._pathToObj(objectid))
+                retval.append(self._script.bookmarks.pathToObj(objectid))
         return retval
 
     def advancePoliteness(self, obj):
