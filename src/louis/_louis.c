@@ -65,7 +65,7 @@ pylist_to_typeform(PyObject *typeform_list, int len)
 		int i;
 		PyObject *l_item;
 		typeform = calloc(len, sizeof(char));
-		for (i=0; i < PySequence_Size(typeform_list); i++)
+		for (i=0; i < len; i++)
 		{
 				l_item = PySequence_Fast_GET_ITEM(typeform_list, i);
 				typeform[i] = (char)PyInt_AsLong(l_item);
@@ -119,7 +119,8 @@ louis_translateString(PyObject *self, PyObject *args, PyObject *kw)
         }
 
 		if (PySequence_Size(typeform_list) > 0) 
-				typeform = pylist_to_typeform(typeform_list, inlen);
+				typeform = pylist_to_typeform(typeform_list, 
+                                              PySequence_Size(typeform_list));
 
         outlen = inlen*2;
 		outbuf = calloc(outlen, sizeof(widechar));
@@ -174,7 +175,8 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
         }
 
 		if (PySequence_Size(typeform_list) > 0) 
-				typeform = pylist_to_typeform(typeform_list, inlen);
+				typeform = pylist_to_typeform(typeform_list, 
+                                              PySequence_Size(typeform_list));
 
 
         inlen_cp = inlen;
@@ -194,7 +196,7 @@ louis_translate(PyObject *self, PyObject *args, PyObject *kw)
 		outputPos_list = intbuf_to_pylist(outputPos, inlen_cp);
 
 		if (typeform != NULL) 
-				free(typeform);
+                free(typeform);
 		free(trantab_joined);
         free(outbuf);
         free(outputPos);
@@ -217,7 +219,22 @@ static PyMethodDef louis_methods[] = {
 		{NULL, NULL}
 };
 
+static void
+cleanup_louis ()
+{
+        lou_free ();
+}
+
 PyMODINIT_FUNC 
 init_louis (void) {
+        static inited = 0;
+
         module = Py_InitModule ("_louis", louis_methods);
+
+        if (!inited) {
+                inited = 1;
+                if (Py_AtExit(cleanup_louis) != 0)
+                        fprintf(stderr,
+                                "Louis: warning: cleanup procedure not registered\n");
+        }
 }

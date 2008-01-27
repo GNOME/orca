@@ -1,3 +1,8 @@
+2008-01-27  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/louis/_louis.: 
+	Added cleanup routine for freeing the table cache.
+
 2008-01-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
