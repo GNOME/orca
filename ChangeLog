@@ -1,6 +1,12 @@
 2008-01-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          Fix for bug #509588 - Header information disappearing in ff3
+          on minefield page.
+
+2008-01-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Fix for bug #512270 - orca crash on visiting www.gmail.com 
           after login.
 

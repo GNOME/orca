@@ -7466,6 +7466,7 @@ class Script(default.Script):
         extents = self.getExtents(obj, offset, offset + 1)
         while not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
                                     pyatspi.ROLE_TABLE_CELL,
+                                    pyatspi.ROLE_LIST_ITEM,
                                     pyatspi.ROLE_SECTION,
                                     pyatspi.ROLE_PANEL,
                                     pyatspi.ROLE_TEXT]:
