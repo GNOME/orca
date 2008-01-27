@@ -6738,6 +6738,11 @@ class Script(default.Script):
         if not obj or not self.inDocumentContent(obj):
             return [None, -1]
 
+        if obj.getRole() == pyatspi.ROLE_INVALID:
+            debug.println(debug.LEVEL_SEVERE, \
+                          "findNextCaretInOrder: object is invalid")
+            return [None, -1]
+
         # We do not want to descend objects of certain role types.
         #
         doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
@@ -6757,7 +6762,7 @@ class Script(default.Script):
                 unicodeText = unicodeText[0:len(unicodeText) - 1]
 
             nextOffset = startOffset + 1
-            while nextOffset < len(unicodeText):
+            while 0 <= nextOffset < len(unicodeText):
                 if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
@@ -6838,6 +6843,11 @@ class Script(default.Script):
             obj = self.getDocumentFrame()
 
         if not obj or not self.inDocumentContent(obj):
+            return [None, -1]
+
+        if obj.getRole() == pyatspi.ROLE_INVALID:
+            debug.println(debug.LEVEL_SEVERE, \
+                          "findPreviousCaretInOrder: object is invalid")
             return [None, -1]
 
         # We do not want to descend objects of certain role types.
