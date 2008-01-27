@@ -1,6 +1,12 @@
 2008-01-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          Fix for bug #510478 - Character navigation in FF wraps from
+          bottom of file to top.
+
+2008-01-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Fix for bug #509588 - Header information disappearing in ff3
           on minefield page.
 

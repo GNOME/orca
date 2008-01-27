@@ -8115,13 +8115,14 @@ class Script(default.Script):
                                                                characterOffset)
             if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
                 break
-        if obj:
-            self.setCaretPosition(obj, characterOffset)
-        else:
-            self.clearCaretContext()
 
+        if not obj:
+            [obj, characterOffset] = self.getBottomOfFile()
+        else:
+            self.speakCharacterAtOffset(obj, characterOffset)
+
+        self.setCaretPosition(obj, characterOffset)
         self.updateBraille(obj)
-        self.speakCharacterAtOffset(obj, characterOffset)
 
     def goPreviousCharacter(self, inputEvent):
         """Positions the caret offset to the previous character or object
@@ -8134,13 +8135,13 @@ class Script(default.Script):
             if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
                 break
 
-        if obj:
-            self.setCaretPosition(obj, characterOffset)
+        if not obj:
+            [obj, characterOffset] = self.getTopOfFile()
         else:
-            self.clearCaretContext()
+            self.speakCharacterAtOffset(obj, characterOffset)
 
+        self.setCaretPosition(obj, characterOffset)
         self.updateBraille(obj)
-        self.speakCharacterAtOffset(obj, characterOffset)
 
     def goPreviousWord(self, inputEvent):
         """Positions the caret offset to beginning of the previous
