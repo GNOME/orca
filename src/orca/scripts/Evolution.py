@@ -259,10 +259,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # token of the last utterances is "0", then strip off that last 
         # utterance ("0 items"). See bug #432308 for more details.
         #
-        self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                          pyatspi.ROLE_TREE_TABLE, \
-                          pyatspi.ROLE_UNKNOWN]
-        if self._script.isDesiredFocusedItem(obj, self.rolesList):
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TREE_TABLE, \
+                     pyatspi.ROLE_UNKNOWN]
+        if self._script.isDesiredFocusedItem(obj, rolesList):
             state = obj.getState()
             if state and state.contains(pyatspi.STATE_EXPANDABLE):
                 if state.contains(pyatspi.STATE_EXPANDED):

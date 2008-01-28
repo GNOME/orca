@@ -6371,11 +6371,13 @@ class Script(script.Script):
 state_change_notifiers = {}
 
 state_change_notifiers[pyatspi.ROLE_CHECK_MENU_ITEM] = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", "indeterminate", 
-                                                         None)
+state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", 
+                                                        "indeterminate", 
+                                                        None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked", "expanded",
+state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked",
+                                                        "expanded",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_LIST_ITEM]       = ("expanded", None)
