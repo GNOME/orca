@@ -7610,8 +7610,9 @@ class Script(default.Script):
         # If we have, we'll want to include whatever follows this object
         # on the same line.
         #
-        if not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                 pyatspi.ROLE_SECTION]:
+        if not self.isAriaWidget(obj) \
+           and not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                     pyatspi.ROLE_SECTION]:
             text = self.queryNonEmptyText(obj.parent)
             if text:
                 offset = self.getCharacterOffsetInParent(obj) + 1
