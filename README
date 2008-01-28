@@ -1,4 +1,4 @@
-Orca v2.21.90pre
+Orca v2.21.90
 
 Introduction
 ========================================================================
@@ -43,7 +43,7 @@ to be installed:
 * BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
 * BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI AND PYATSPI FOR THE GNOME 2.21.x
+YOU ALSO NEED THE LATEST AT-SPI, ATK, AND GAIL FOR THE GNOME 2.21.x
 DEVELOPMENT RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed

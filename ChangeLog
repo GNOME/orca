@@ -1,5 +1,10 @@
 2008-01-28  Willie Walker <william.walker@sun.com>
 
+        * README, configure.in:
+	  Prep for Orca v2.21.90
+	
+2008-01-28  Willie Walker <william.walker@sun.com>
+
         * NEWS:
 	  Begin prepping for Orca v2.21.90
 	
