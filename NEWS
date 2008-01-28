@@ -78,7 +78,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     es      Spanish              Francisco Javier Dorado Martinez and
                                  Jorge Gonzalez
-    nb      Norwegian Bokm�L    Kjartan Maraas
+    nb      Norwegian Bokmål     Kjartan Maraas
     sv      Swedish              Daniel Nylander
 
 ==========
@@ -198,7 +198,7 @@ New and updated translations (THANKS EVERYONE!!!):
                                  Jorge Gonzalez
     et      Estonian             Ivar Smolin and Priit Laes
     it      Italian              Luca Ferretti
-    nb      Norwegian Bokm�L    Kjartan Maraas
+    nb      Norwegian Bokmål     Kjartan Maraas
     oc      Occitan              Yannig Marchegay
     sv      Swedish              Daniel Nylander
     vi      Vietnamese           Clytie Siddall
@@ -417,7 +417,7 @@ New and updated translations (THANKS EVERYONE!!!):
     es      Spanish              Francisco Javier Dorado Martinez and
                                  Jorge Gonzalez
     ko      Korean               Changwoo Ryu
-    nb      Norwegian Bokm�L    Espes Stefansen and Kjartan Maraas
+    nb      Norwegian Bokmål     Espes Stefansen and Kjartan Maraas
     sl      Slovenian            Matej Urbančič
 
 ==========
@@ -559,7 +559,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     pt_BR   Brazilian Portuguese Leonardo Ferreira Fontenelle
                                  and Tiago Melo Casal
-    nb      Norwegian Bokm�L    Espes Stefansen and Kjartan Maraas
+    nb      Norwegian Bokmål     Espes Stefansen and Kjartan Maraas
 
 ==========
 
@@ -754,7 +754,7 @@ General:
 + Fix for bug 469098 - Orca should indicate when a new chat window/tab
   has appeared in Pidgin
 
-+ Fix for bug 472907 - Characters "°" and "º" shouldn't have the 
++ Fix for bug 472907 - Characters "Â°" and "Âº" shouldn't have the 
   same description
 
 + Fix for bug 472978 - Short Braille and spoken word for "dial" should
@@ -864,7 +864,7 @@ New and updated translations (THANKS EVERYONE!!!):
     lt      Lithuanian           Gintautas Miliauskas and Romas Mažeika
     lv      Latvian              Raivis Dajus
     mk      Macedonian           Jovan Naumovski
-    nb      Norwegian Bokm�L    Espes Stefansen and Kjartan Maraas
+    nb      Norwegian Bokmål     Espes Stefansen and Kjartan Maraas
     pt      Portuguese           Duarte Loreto
     pt_BR   Brazilian Portuguese Djavan Fagundes and Raphael Higino
                                  and Tiago Melo Casal

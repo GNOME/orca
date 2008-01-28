@@ -1,3 +1,8 @@
+2008-01-28  Claude Paroz  <claude@2xlibre.net>
+
+	* NEWS:
+	Convert file to UTF-8 and fix special chars.
+
 2008-01-28  Willie Walker <william.walker@sun.com>
 
         * configure.in:
