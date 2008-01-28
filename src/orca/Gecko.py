@@ -4598,6 +4598,9 @@ class Script(default.Script):
                 if link:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(link)))
+                elif obj.getRole() == pyatspi.ROLE_CAPTION:
+                    regions.append(braille.Region(
+                        " " + rolenames.getBrailleForRoleName(obj)))
 
                 if isFocusedObj \
                    and (focusedCharacterOffset >= startOffset) \
@@ -6026,7 +6029,8 @@ class Script(default.Script):
             return []
 
         elif obj.getRole() == pyatspi.ROLE_TABLE:
-            # If this is a table, move to the first cell.
+            # If this is a table, move to the first cell -- or the caption,
+            # if present.
             # [[[TODOS - JD:
             #    1) It might be nice to announce the fact that we've just
             #       found a table, what its dimensions are, etc.
@@ -6034,7 +6038,10 @@ class Script(default.Script):
             #       arrow moves us to the last row.  Possible side effect
             #       of our existing caret browsing implementation??]]]
             #
-            obj = obj.queryTable().getAccessibleAt(0, 0)
+            if obj[0] and obj[0].getRole == pyatspi.ROLE_CAPTION:
+                obj = obj[0]
+            else:
+                obj = obj.queryTable().getAccessibleAt(0, 0)
 
         objects = []
         text = self.queryNonEmptyText(obj)
@@ -7481,6 +7488,7 @@ class Script(default.Script):
         while not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
                                     pyatspi.ROLE_TABLE_CELL,
                                     pyatspi.ROLE_LIST_ITEM,
+                                    pyatspi.ROLE_CAPTION,
                                     pyatspi.ROLE_SECTION,
                                     pyatspi.ROLE_PANEL,
                                     pyatspi.ROLE_TEXT]:
