@@ -3653,6 +3653,19 @@ class Script(default.Script):
             self._objectForFocusGrab = None
             return
 
+        # Or we called grabFocus() on a link which is the parent of some
+        # oject (e.g. an image).  If so, and if the caret moved event is
+        # for that link, we'll speak the link twice if we don't ignore
+        # this event.  See bug #511389.
+        #
+        elif self._objectForFocusGrab \
+             and self._objectForFocusGrab.getRole() == pyatspi.ROLE_LINK:
+            offset = self.getCharacterOffsetInParent(self._objectForFocusGrab)
+            parent = self._objectForFocusGrab.parent
+            if offset == event.detail1 \
+               and self.isSameObject(event.source, parent):
+                return
+
         # Possibility #5: Orca is controlling the caret, we just left an
         # entry, and text was inserted into that entry via javascript as
         # a result of it losing focus.  This is a bogus event, but a fix
@@ -3894,10 +3907,11 @@ class Script(default.Script):
         # If this event is the result of our calling grabFocus() on
         # this object in setCaretPosition(), we want to ignore it.
         # See bug #471537.  But we don't want to do this for entries.
-        # See bug #501447.
+        # See bug #501447. Or links.  See bug #511389.
         #
         if self.isSameObject(event.source, self._objectForFocusGrab) \
-           and event.source.getRole() != pyatspi.ROLE_ENTRY:
+           and not event.source.getRole() in [pyatspi.ROLE_ENTRY,
+                                              pyatspi.ROLE_LINK]:
             orca.setLocusOfFocus(event, event.source, False)
             return
             
