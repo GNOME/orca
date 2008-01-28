@@ -1,3 +1,88 @@
+2.21.90 - 28-Jan-2008
+
+General:
+
+* Workaround for blocked bug #432308 - Problem with Evolution and
+  threads always speaking "expanded 0 items". Adding in code to no
+  longer speak the "0 items" if this is a table cell in the mail
+  message header list with an expanded state.
+
+* Fix for bug #482294 - Contextual information for gnome-terminal
+  should only be shown in braille when you're on the first line.
+  Orca now automatically enters flat review mode when you pan left
+  past the beginning of the line containing the cursor.
+
+* Fix for bug #503874 - Read by row in Evolution reads cell
+  information incorrectly
+
+* Fix for bug #506874 - Flat review should support status bars that
+  have accessible text and children
+
+* Fix for bug #508682 - Orca speak combobox item three time in Pidgin
+  2.3.0
+
+* Fix for bug #510019 - Orca can continue trying to dequeue events
+  when queue is empty (thanks to Mike Gorse for this fix!)
+
+* Fix for bug #511447 - Orca speaks passwords when they are been typed
+
+OpenOffice:
+
+* Fix for bug #510207 - key echo by word is broken in OOo Writer.
+
+Firefox:
+
+* Updates to the regression tests.
+
+* Fix for bug #483023 - Orca should give the user the ability to
+  move between objects in order.  You can now use Orca+Left and
+  Orca+Right to move from object to object.  This should come
+  in handy for "escaping" combo boxes and lists in forms after
+  making your selection.  Because these new commands treat each
+  object as if it were on a line by itself, users who have 
+  requested this type of line navigation will hopefully find that
+  this new functionality also addresses some of those needs.
+
+* Fix for bug #505742, Accommodate no ARIA markup for live regions
+
+* Work on bug #506360 - find{Next,Previous}Line() should be more
+  efficient
+
+* Fix for bug #509394 - First focusable item in document frame not
+  always spoken in FF3
+
+* Fix for bug #509482 - Line navigation in FF wraps from top of file
+  to bottom
+
+* Fix for bug #509588 - Header information disappearing in ff3 on
+  minefield page
+
+* Fix for bug #509731 - braille for collapsed html combo boxes is not
+  updating correctly
+
+* Fix for bug #509809 - We should try to do a better job of guessing
+  labels in poorly-coded forms
+
+* Fix for bug #510478 - Character navigation in FF wraps from bottom
+  of file to top
+
+* Fix for bug #511118 - We sometimes get stuck on images that are also
+  links
+
+* Partial fix for bug #511893 - Live region performance
+  enhancements. Fix for navigation performance issue.
+
+* Fix for bug #512270 - orca crash on visiting www.gmail.com after login
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    nb      Norwegian Bokmã¥L    Kjartan Maraas
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.21.5 - 14-Jan-2008
 
 General:
