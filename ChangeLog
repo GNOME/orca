@@ -10,6 +10,14 @@
           Fix for bug #512847 - Flat review is quite broken in
           OpenOffice and Firefox.
 
+        * test/keystrokes/firefox/bug_512303.py: (new)
+          test/keystrokes/firefox/bug_511389.py: (new)
+          test/keystrokes/firefox/flat_review_text_by_line.py: (new)
+          test/keystrokes/firefox/flat_review_text_by_word_and_char.py: (new)
+          test/html/table-caption.html: (new)
+          test/html/bug-511389.html: (new)
+          New regression tests.
+
 2008-01-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
