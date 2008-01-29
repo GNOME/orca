@@ -1,7 +1,13 @@
+2008-01-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/flat_review.py: 
+          Fix for bug #512847 - Flat review is quite broken in
+          OpenOffice and Firefox.
+
 2008-01-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
-          Work on bug #512303 - (ff3) table captions are not being
+          Fix for bug #512303 - (ff3) table captions are not being
           presented.
 
         * test/keystrokes/firefox/xul_role_list_item.py:

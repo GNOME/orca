@@ -871,11 +871,12 @@ class Context:
 
         debug.println(debug.LEVEL_FINEST, "  looking at text:")
 
-        text = accessible.queryText()
-        if text:
-            zones = []
-        else:
+        try:
+            text = accessible.queryText()
+        except NotImplementedError:
             return []
+        else:
+            zones = []
 
         length = text.characterCount
 
