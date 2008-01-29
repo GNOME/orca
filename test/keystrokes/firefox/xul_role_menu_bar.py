@@ -43,24 +43,24 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
-     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Undo grayed(Control Z)'",
+     "     VISIBLE:  'Undo grayed(Control Z)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Select All Control A'"]))
+     "SPEECH OUTPUT: 'Undo grayed Control Z'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View Menu'",
-     "     VISIBLE:  'View Menu', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
      "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
      "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toolbars menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,12 +90,12 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
-     "     VISIBLE:  'Select All(Control A)', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Paste(Control V)'",
+     "     VISIBLE:  'Paste(Control V)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Select All Control A'"]))
+     "SPEECH OUTPUT: 'Paste Control V'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

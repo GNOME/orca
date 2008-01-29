@@ -6,19 +6,23 @@
 
         * test/keystrokes/firefox/xul_role_list_item.py:
           test/keystrokes/firefox/label_guess_bugzilla_search.py:
-          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
           test/keystrokes/firefox/html_role_combo_box.py:
-          test/keystrokes/firefox/xul_where_am_i_status_bar.py:
-          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/html_role_lists.py:
+          test/keystrokes/firefox/html_struct_nav_blockquote.py: 
           test/keystrokes/firefox/html_struct_nav_list_item.py:
           test/keystrokes/firefox/html_struct_nav_lists.py:
-          test/keystrokes/firefox/xul_role_check_box.py:
-          test/keystrokes/firefox/html_role_lists.py:
-          test/keystrokes/firefox/html_struct_nav_blockquote.py:
-          test/keystrokes/firefox/xul_where_am_i_dialog.py:
-          test/keystrokes/firefox/line_nav_bugzilla_search.py:
-          test/keystrokes/firefox/xul_role_page_tab.py:
           test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/xul_role_check_box.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
+          test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_page_tab.py:
+          test/keystrokes/firefox/xul_role_push_button.py:
+          test/keystrokes/firefox/xul_role_radio_button.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/xul_where_am_i_dialog.py:
+          test/keystrokes/firefox/xul_where_am_i_status_bar.py:
           Updated regression tests.
 
 2008-01-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>

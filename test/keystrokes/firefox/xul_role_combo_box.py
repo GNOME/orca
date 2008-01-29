@@ -16,44 +16,10 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 ########################################################################
 # Open the "Edit" menu and Up Arrow to Preferences, then press Return.
 #
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>e"))
-sequence.append(utils.AssertPresentationAction(
-    "Edit menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
-     "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Select All(Control A)'",
-     "     VISIBLE:  'Select All(Control A)', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Edit menu'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Select All Control A'"]))
-
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "Up Arrow in Edit menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Preferences'",
-     "     VISIBLE:  'Preferences', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Preferences'"]))
-
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(utils.AssertPresentationAction(
-    "Press Return to make the Preferences dialog appear",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
-     "     VISIBLE:  'Location  $l', cursor=10",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame'",
-     "     VISIBLE:  'Minefield Preferences Frame', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
-     "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: 'Location autocomplete'",
-     "SPEECH OUTPUT: 'Location text '",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Minefield Preferences frame'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Main list item'"]))
+sequence.append(WaitForWindowActivate("Minefield Preferences",None))
 
 ########################################################################
 # Press Tab to move to the "When Minefield starts" combo box.  This combo

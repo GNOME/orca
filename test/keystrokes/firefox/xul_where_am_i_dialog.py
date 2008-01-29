@@ -21,7 +21,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
 
 sequence.append(KeyComboAction("p"))
-sequence.append(WaitForWindowActivate("Print",None))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Read the title bar with Orca+KP_ENTER
