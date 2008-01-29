@@ -1,3 +1,18 @@
+2008-01-28  Tomas Cerha  <cerha@brailcom.org>
+
+	* src/orca/default.py (Script._reviewCurrentCharacter): Use
+	`speech.speakCharacter()' instead of `speech.speak()'.  Convert to
+	unicode before character case recognition.
+
+	* src/orca/speech.py (speakCharacter): New method.
+
+	* src/orca/speechdispatcherfactory.py (SpeechServer._apply_acss):
+	Use the default voice if `acss' is None.
+	(SpeechServer._speak, SpeechServer.speakKeyEvent): Don't care
+	about None value in `acss'.
+	(SpeechServer.speakCharacter): Apply `acss'.  Send a sound icon
+	for the newline character.
+
 2008-01-02  Rich Burridge <rich.burridge@sun.com>
  
         * src/orca/chnames.py:
