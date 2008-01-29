@@ -47,12 +47,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to first list", 
-    ["BUG? - For some reason in the harness, list numbers are all '0'. They are correct in actual use. I'm only marking this issue once.",
-    
-     "BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items'",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 ########################################################################
 # Press L to move to the second list.
@@ -61,10 +59,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to second list", 
-    ["BRAILLE LINE:  '0. And use roman numerals,'",
-     "     VISIBLE:  '0. And use roman numerals,', cursor=1",
+    ["BRAILLE LINE:  'VI. And use roman numerals,'",
+     "     VISIBLE:  'VI. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items'",
-     "SPEECH OUTPUT: '0. And use roman numerals,'"]))
+     "SPEECH OUTPUT: 'VI. And use roman numerals,'"]))
 
 ########################################################################
 # Press L to move to the third list.
@@ -198,18 +196,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "i should wrap to top", 
-    ["BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "i in first list", 
-    ["BRAILLE LINE:  '0. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'",
-     "     VISIBLE:  '0. arrange long and arbitrary li', cursor=1",
-     "SPEECH OUTPUT: '0. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'"]))
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+     "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
 
 ########################################################################
 # Now reverse our direction, but just for a few items.
@@ -218,9 +216,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>i"))
 sequence.append(utils.AssertPresentationAction(
     "shift + i in first list", 
-    ["BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>i"))

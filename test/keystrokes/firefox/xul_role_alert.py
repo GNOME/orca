@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Minefield frame'",
-     "SPEECH OUTPUT: 'about:blank panel'",
+     "SPEECH OUTPUT: 'about:blank internal frame'",
      "SPEECH OUTPUT: 'about:blank html content'"]))
 
 ########################################################################

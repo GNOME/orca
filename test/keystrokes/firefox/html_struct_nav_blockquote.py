@@ -124,8 +124,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I",
-    ["BUG? - Technically, this is correct.  But should we indicate we're in a blockquote?",
-     "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",

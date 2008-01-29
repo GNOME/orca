@@ -399,8 +399,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - It would be nice to not guess the text that follows the combobox in this case.",
-     "BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
+    ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
      "     VISIBLE:  'Only include Combo bugs numbered', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'bugs numbered: Only include combo box'"]))

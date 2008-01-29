@@ -15,39 +15,13 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield", None))
 
 ########################################################################
-# Open the "File" menu and press U for the Page Setup dialog
+# Open the "File" menu and press P for the Print dialog
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
-sequence.append(utils.AssertPresentationAction(
-    "File menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File Menu'",
-     "     VISIBLE:  'File Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar New Window(Control N)'",
-     "     VISIBLE:  'New Window(Control N)', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'New Window Control N'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("u"))
-sequence.append(utils.AssertPresentationAction(
-    "u for Page Setup",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
-     "     VISIBLE:  'Location  $l', cursor=10",
-     "BRAILLE LINE:  'Minefield Application Page Setup Dialog'",
-     "     VISIBLE:  'Page Setup Dialog', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
-     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Location autocomplete'",
-     "SPEECH OUTPUT: 'Location text '",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Page Setup %'",
-     "SPEECH OUTPUT: 'Format panel Orientation: panel'",
-     "SPEECH OUTPUT: 'Portrait selected radio button'"]))
- 
-sequence.append(WaitForWindowActivate("Page Setup", None))
+sequence.append(KeyComboAction("p"))
+sequence.append(WaitForWindowActivate("Print",None))
 
 ########################################################################
 # Read the title bar with Orca+KP_ENTER
@@ -59,9 +33,16 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Title Bar", 
-    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
-     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Page Setup'"]))
+    ["BRAILLE LINE:  'Minefield Application Print Dialog General Page'",
+     "     VISIBLE:  'General Page', cursor=1",
+     "SPEECH OUTPUT: 'Print'"]))
+
+########################################################################
+# Tab once to select an option so that the default button will be
+# available.
+#
+sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Obtain the default button with Orca+KP_ENTER double clicked.
@@ -74,12 +55,12 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Default button", 
-    ["BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
-     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Page Setup Dialog ScrollPane Format Panel Orientation: Panel &=y Portrait RadioButton'",
-     "     VISIBLE:  '&=y Portrait RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Page Setup'",
-     "SPEECH OUTPUT: 'Default button is OK'"]))
+    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
+     "     VISIBLE:  ' Print to File  ', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
+     "     VISIBLE:  ' Print to File  ', cursor=1",
+     "SPEECH OUTPUT: 'Print'",
+     "SPEECH OUTPUT: 'Default button is Print'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

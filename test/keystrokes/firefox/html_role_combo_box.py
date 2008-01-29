@@ -172,10 +172,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
-    ["BUG? - It would be nice to handle this better", 
-     "BRAILLE LINE:  'WONTFIX Combo'",
+    ["BRAILLE LINE:  'WONTFIX Combo'",
      "     VISIBLE:  'WONTFIX Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test panel'",
+     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
      "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'"]))
 
 ########################################################################
@@ -266,7 +265,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test panel'",
+     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
 
 ########################################################################
@@ -277,8 +276,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BUG? - We're not handling combo boxes in HTML very well in where am I", 
-     "BRAILLE LINE:  'Braille Combo'",
+    ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'combo box'",

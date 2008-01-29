@@ -53,7 +53,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All Bookmarks list item expanded'"]))
+     "SPEECH OUTPUT: 'All Bookmarks list item expanded'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Press Down Arrow twice to give focus to the Bookmarks Menu list item.

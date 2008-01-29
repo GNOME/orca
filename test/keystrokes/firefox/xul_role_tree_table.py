@@ -53,7 +53,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Menu  '"]))
+     "SPEECH OUTPUT: 'Name column header'",
+     "SPEECH OUTPUT: 'Bookmarks Menu  '",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 

@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
-     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Minefield'",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'"]))
 
 ########################################################################

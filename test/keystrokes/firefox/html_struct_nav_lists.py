@@ -47,12 +47,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to first list", 
-    ["BUG? - For some reason in the harness, list numbers are all '0'. They are correct in actual use. I'm only marking this issue once.",
-    
-     "BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items'",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 ########################################################################
 # Press L to move to the second list.
@@ -61,10 +59,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to second list", 
-    ["BRAILLE LINE:  '0. And use roman numerals,'",
-     "     VISIBLE:  '0. And use roman numerals,', cursor=1",
+    ["BRAILLE LINE:  'VI. And use roman numerals,'",
+     "     VISIBLE:  'VI. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items'",
-     "SPEECH OUTPUT: '0. And use roman numerals,'"]))
+     "SPEECH OUTPUT: 'VI. And use roman numerals,'"]))
 
 ########################################################################
 # Press L to move to the third list.
@@ -165,11 +163,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l - should wrap to top", 
-    ["BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'List with 4 items'",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 ########################################################################
 # Pressing Shift+L should result in our wrapping to the bottom
@@ -252,19 +250,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
-    ["BRAILLE LINE:  '0. And use roman numerals,'",
-     "     VISIBLE:  '0. And use roman numerals,', cursor=1",
+    ["BRAILLE LINE:  'VI. And use roman numerals,'",
+     "     VISIBLE:  'VI. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items'",
-     "SPEECH OUTPUT: '0. And use roman numerals,'"]))
+     "SPEECH OUTPUT: 'VI. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
-    ["BRAILLE LINE:  '0. remember what the heck we are doing each day'",
-     "     VISIBLE:  '0. remember what the heck we are', cursor=1",
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items'",
-     "SPEECH OUTPUT: '0. remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
