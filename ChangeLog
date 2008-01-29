@@ -8,6 +8,11 @@
           Fix for #486908 - Selection and navigation in multiselectable 
           items are not properly handled.
 
+        * test/keystrokes/gtk-demo/role_icon.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          Adjusted the regression tests for the gtk-demo icon and tree
+          tables, for the tests that the changes for bug #486908 have fixed.
+
 2008-01-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/flat_review.py: 

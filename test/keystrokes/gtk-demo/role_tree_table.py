@@ -103,7 +103,9 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "January cell collapsed",
-    ["BUG? - nothing presented", "BUG? - the cell name 'January' should not be spoken"]))
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
+     "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -131,7 +133,9 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "January cell expanded",
-    ["BUG? - nothing presented", "BUG? - the cell name 'January' should not be spoken"]))
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
+     "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
+     "SPEECH OUTPUT: 'expanded 3 items'"]))
 
 ########################################################################
 # Arrow down a row.
@@ -148,7 +152,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave TREE LEVEL 2'",
      "     VISIBLE:  'New Years Day <x> Alex <x> Havoc', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Holiday column header'",
      "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
@@ -168,7 +171,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Alex column header'",
-     "BUG? - should not speak entire row after moving right one cell",
      "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '"]))
 
 #

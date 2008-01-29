@@ -63,11 +63,11 @@ sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 sequence.append(utils.AssertPresentationAction(
     "bin icon",
-    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
-     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane Desktop Icon'",
-     "     VISIBLE:  'Desktop Icon', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
+     "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Desktop icon'"]))
+     "SPEECH OUTPUT: 'bin icon'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -88,7 +88,11 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 sequence.append(utils.AssertPresentationAction(
     "boot icon",
-    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /"]))
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane boot Icon'",
+     "     VISIBLE:  'boot Icon', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'boot icon'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
 # Select more than one icon by doing Shift+Right.
@@ -98,8 +102,11 @@ sequence.append(KeyComboAction("<Shift>Right", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 sequence.append(utils.AssertPresentationAction(
     "icon selection",
-    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
-     "BUG? - we do not announce selection of icons when they are selected."]))
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'",
+     "     VISIBLE:  'cdrom Icon', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'cdrom icon'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
