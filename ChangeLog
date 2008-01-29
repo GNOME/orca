@@ -4,6 +4,10 @@
           src/orca/scripts/Makefile.am:
           Fix for bug #512639 - rhythmbox Library table not accessible.
 
+        * src/orca/default.py:
+          Fix for #486908 - Selection and navigation in multiselectable 
+          items are not properly handled.
+
 2008-01-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/flat_review.py: 

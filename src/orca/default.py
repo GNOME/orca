@@ -838,6 +838,8 @@ class Script(script.Script):
             self.onStateChanged
         listeners["object:state-changed:expanded"]          = \
             self.onStateChanged
+        listeners["object:state-changed:selected"]          = \
+            self.onStateChanged
         listeners["object:selection-changed"]               = \
             self.onSelectionChanged
         listeners["object:property-change:accessible-value"] = \
@@ -2434,6 +2436,32 @@ class Script(script.Script):
                 #
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
+            # If this is an icon within an layered pane or a table cell 
+            # within a table or a tree table and the item is focused but not
+            # selected, let the user know. See bug #486908 for more details.
+            #
+            checkIfSelected = False
+            objRole = newLocusOfFocus.getRole()
+            parentRole = newLocusOfFocus.parent.getRole()
+            state = newLocusOfFocus.getState()
+
+            if objRole == pyatspi.ROLE_ICON and \
+                parentRole == pyatspi.ROLE_LAYERED_PANE:
+                checkIfSelected = True
+
+            if objRole == pyatspi.ROLE_TABLE_CELL and \
+               (parentRole == pyatspi.ROLE_TREE_TABLE or \
+                parentRole == pyatspi.ROLE_TABLE):
+                checkIfSelected = True
+
+            if checkIfSelected and not state.contains(pyatspi.STATE_SELECTED):
+                 # Translators: this is in reference to a table cell being
+                 # selected or not.
+                 #
+                 # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                 #
+                 utterances.append(Q_("tablecell| not selected"))
+
             # We might be automatically speaking the unbound labels
             # in a dialog box as the result of the dialog box suddenly
             # appearing.  If so, don't interrupt this because of a
@@ -3154,6 +3182,42 @@ class Script(script.Script):
                 self.findCommandRun = False
                 self.find()
                 return
+
+        if event.type.startswith("object:state-changed:selected"):
+            # If this selection state change is for the object which 
+            # currently has the locus of focus, and the last keyboard
+            # event was Control-Space, then let the user know. 
+            # See bug #486908 for more details.
+            #
+            if isinstance(orca_state.lastInputEvent,
+                          input_event.KeyboardEvent):
+                keyString = orca_state.lastNonModifierKeyEvent.event_string
+                mods = orca_state.lastInputEvent.modifiers
+                isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
+                if keyString != "Space" and isControlKey:
+                    state = orca_state.locusOfFocus.getState()
+                    if state.contains(pyatspi.STATE_FOCUSED):
+                        if self.isSameObject(event.source,
+                                             orca_state.locusOfFocus):
+                            if event.detail1:
+                                # Translators: this object is now selected.
+                                # Let the user know this.
+                                #
+                                # ONLY TRANSLATE THE PART AFTER THE PIPE
+                                # CHARACTER |
+                                #
+                                speech.speak(Q_("text|selected"),
+                                             None, False)
+                            else:
+                                # Translators: this object is now unselected.
+                                # Let the user know this.
+                                #
+                                # ONLY TRANSLATE THE PART AFTER THE PIPE
+                                # CHARACTER |
+                                #
+                                speech.speak(Q_("text|unselected"),
+                                             None, False)
+                            return
 
         if event.type.startswith("object:state-changed:focused"):
             iconified = False
