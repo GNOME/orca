@@ -22,6 +22,7 @@ orca_python_PYTHON = \
 	nautilus.py \
 	notification-daemon.py \
 	planner.py \
+	rhythmbox.py \
 	self_voicing.py \
 	StarOffice.py \
 	Thunderbird.py
