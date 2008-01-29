@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2007 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -195,8 +195,28 @@ def speakKeyEvent(event_string, eventType):
         debug.println(debug.LEVEL_INFO, logLine)
         log.info(logLine)
 
+def speakCharacter(character, acss=None):
+    """Speaks a single character immediately.
+    
+    Arguments:
+    - character: text to be spoken
+    - acss:      acss.ACSS instance; if None,
+                 the default voice settings will be used.
+                 Otherwise, the acss settings will be
+                 used to augment/override the default
+                 voice settings.
+    """
+    if settings.silenceSpeech:
+        return
+
+    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
+    log.info("speak character='%s'" % character)
+
+    if _speechserver:
+        _speechserver.speakCharacter(character, acss=acss)
+
 def isSpeaking():
-    """"Returns True if the system is currently speaking."""
+    """Returns True if the system is currently speaking."""
     if _speechserver:
         return _speechserver.isSpeaking()
     else:

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2007 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -4266,11 +4266,11 @@ class Script(script.Script):
                     self.spellCurrentItem(charString)
                 elif clickCount == 3:
                     self.phoneticSpellCurrentItem(charString)
-                elif charString.isupper():
-                    speech.speak(charString,
-                                 self.voices[settings.UPPERCASE_VOICE])
+                elif charString.decode("UTF-8").isupper():
+                    speech.speakCharacter(charString,
+                                          self.voices[settings.UPPERCASE_VOICE])
                 else:
-                    speech.speak(charString)
+                    speech.speakCharacter(charString)
 
         self.updateBrailleReview()
 

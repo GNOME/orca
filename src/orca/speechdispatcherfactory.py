@@ -1,4 +1,4 @@
-# Copyright 2006, 2007 Brailcom, o.p.s.
+# Copyright 2006, 2007, 2008 Brailcom, o.p.s.
 #
 # Author: Tomas Cerha <cerha@brailcom.org>
 #
@@ -54,10 +54,8 @@ except:
 else:    
     _speechd_available = True
     try:
-        # Done this way to prevent a pychecker warning.
-        callbackKey = "CallbackType"
-        setattr(speechd, callbackKey, getattr(speechd, callbackKey))
-    except ImportError:
+        getattr(speechd, "CallbackType")
+    except AttributeError:
         _speechd_version_ok = False
     else:
         _speechd_version_ok = True
@@ -129,9 +127,10 @@ class SpeechServer(speechserver.SpeechServer):
     # *** Instance methods ***
 
     def __init__(self, serverId):
-        speechserver.SpeechServer.__init__(self)
-
+        super(SpeechServer, self).__init__()
         self._id = serverId
+        self._client = None
+        self._current_voice_properties = {}
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
@@ -160,12 +159,6 @@ class SpeechServer(speechserver.SpeechServer):
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
            #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
-
-        # Initialize variables to None to make pylint happy.
-        #
-        self._current_voice_properties = None
-        self._client = None
-
         # Translators: This string will appear in the list of
         # available voices for the current speech engine.  %s will be
         # replaced by the name of the current speech engine, such as
@@ -237,16 +230,17 @@ class SpeechServer(speechserver.SpeechServer):
                 self._send_command(set_synthesis_voice, name)
             
     def _apply_acss(self, acss):
+        if acss is None:
+            acss = settings.voices[settings.DEFAULT_VOICE]
         current = self._current_voice_properties
-        for thisProperty, method in self._acss_manipulators:
-            value = acss.get(thisProperty)
-            if value is not None and current.get(thisProperty) != value:
+        for acss_property, method in self._acss_manipulators:
+            value = acss.get(acss_property)
+            if value is not None and current.get(acss_property) != value:
                 method(value)
-                current[thisProperty] = value
+                current[acss_property] = value
 
     def _speak(self, text, acss, **kwargs):
-        if acss is not None:
-            self._apply_acss(acss)
+        self._apply_acss(acss)
         self._send_command(self._client.speak, text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
@@ -350,7 +344,11 @@ class SpeechServer(speechserver.SpeechServer):
         gobject.idle_add(self._say_all, utteranceIterator, progressCallback)
 
     def speakCharacter(self, character, acss=None):
-        self._send_command(self._client.char, character)
+        self._apply_acss(acss)
+        if character == '\n':
+            self._send_command(self._client.sound_icon, 'end-of-line')
+        else:
+            self._send_command(self._client.char, character)
 
     def speakKeyEvent(self, event_string, eventType):
         if eventType == orca.KeyEventType.PRINTABLE:
@@ -358,12 +356,11 @@ class SpeechServer(speechserver.SpeechServer):
             # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
             # etc. we prefer Orca's verbalization.
             if event_string.decode("UTF-8").isupper():
-                voice = settings.voices[settings.UPPERCASE_VOICE]
+                acss = settings.voices[settings.UPPERCASE_VOICE]
             else:
-                voice = settings.voices[settings.DEFAULT_VOICE]
+                acss = None
             key = self.KEY_NAMES.get(event_string, event_string)
-            if voice is not None:
-                self._apply_acss(voice)
+            self._apply_acss(acss)
             self._send_command(self._client.key, key)
         else:
             return super(SpeechServer, self).speakKeyEvent(event_string, 
