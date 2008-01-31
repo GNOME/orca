@@ -210,7 +210,7 @@ def speakCharacter(character, acss=None):
         return
 
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
-    log.info("speak character='%s'" % character)
+    log.info("SPEECH OUTPUT: '%s'" % character)
 
     if _speechserver:
         _speechserver.speakCharacter(character, acss=acss)
