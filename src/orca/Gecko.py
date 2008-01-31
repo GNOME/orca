@@ -4415,12 +4415,14 @@ class Script(default.Script):
             [candidate, start, end] = content
 
             # When we get the line contents, we include a focusable list
-            # as a list because that is what we want to present.  However,
-            # when we set the caret context, we set it to the position
-            # (and object) that immediately precedes it.  Therefore, that's
-            # what we need to look at when trying to determine our position.
+            # as a list and combo box as a combo box because that is what
+            # we want to present.  However, when we set the caret context,
+            # we set it to the position (and object) that immediately
+            # precedes it.  Therefore, that's what we need to look at when
+            # trying to determine our position.
             #
-            if candidate.getRole() == pyatspi.ROLE_LIST \
+            if candidate.getRole() in [pyatspi.ROLE_LIST,
+                                       pyatspi.ROLE_COMBO_BOX] \
                and candidate.getState().contains(pyatspi.STATE_FOCUSABLE):
                 start = self.getCharacterOffsetInParent(candidate)
                 end = start + 1
@@ -5777,6 +5779,18 @@ class Script(default.Script):
             for attribute in attributes:
                 if attribute == "tag:BLOCKQUOTE":
                     return True
+
+        return False
+
+    def isLineBreakChar(self, obj, offset):
+        """Returns True of the character at the given offset within
+        obj is a line break character (i.e. <br />)
+        """
+
+        text = self.queryNonEmptyText(obj)
+        if text:
+            [attributeSet, start, end] = text.getAttributeRun(offset, True)
+            return 'tag:BR' in attributeSet
 
         return False
 
@@ -8480,6 +8494,8 @@ class Script(default.Script):
                and nextObj.getRole() != pyatspi.ROLE_ENTRY:
                 [nextObj, nextOffset] = \
                           self.findNextCaretInOrder(nextObj, nextOffset)
+                if self.isLineBreakChar(nextObj, nextOffset):
+                    nextOffset += 1
             else:
                 nextOffset = line[1]
 
@@ -8505,6 +8521,9 @@ class Script(default.Script):
                 # print "find next line still stuck"
                 nextObj = self.findNextObject(nextObj)
                 nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+
+        [nextObj, nextOffset] = \
+                  self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
 
         if not arrowToLineBeginning:
             extents = self.getExtents(obj,
@@ -9024,6 +9043,10 @@ class Script(default.Script):
             elif 0 < index < len(useful):
                 prevObj = useful[index - 1][0]
                 prevOffset = useful[index - 1][1]
+                found = True
+
+            elif self.isSameObject(obj, prevObj) \
+                 and 0 == prevOffset < characterOffset:
                 found = True
 
             if not found:
