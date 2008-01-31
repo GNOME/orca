@@ -4,6 +4,9 @@
           Fix for bug #513217 - (ff3) object navigation sticking on
           same line comboboxes.
 
+          Fix for bug #512236 - (ff3) missing links in ff3 when navigating
+          down page.
+
 2008-01-31  Willie Walker  <william.walker@sun.com>
 
 	* src/orca/speech.py:

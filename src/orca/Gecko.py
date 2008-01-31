@@ -7670,8 +7670,7 @@ class Script(default.Script):
         while len(objects) > 1:
             last = objects[-1]
             lastExtents = self.getExtents(last[0], last[1], last[2])
-            if not self.onSameLine(extents, lastExtents) \
-               and obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            if not self.onSameLine(extents, lastExtents):
                 objects.pop()
             else:
                 break
