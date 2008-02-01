@@ -1,3 +1,9 @@
+2008-02-01  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/louis/__init__.py: Override the translate function with some
+	fixups until we get fixes into liblouis proper.
+
+
 2008-01-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
