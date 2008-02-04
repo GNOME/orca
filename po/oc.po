@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-02 21:15+0100\n"
+"POT-Creation-Date: 2008-02-02 21:55+0100\n"
 "PO-Revision-Date: 2008-02-02 21:15+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -2181,7 +2181,9 @@ msgstr ""
 #: ../src/orca/default.py:5365
 #, python-format
 msgid "%d %s character"
-msgstr ""
+msgid_plural "%d %s characters"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -2364,7 +2366,9 @@ msgstr ""
 #: ../src/orca/Gecko.py:9248
 #, python-format
 msgid "List with %d item"
-msgstr ""
+msgid_plural "List with %d items"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
@@ -2392,7 +2396,9 @@ msgstr[1] "%d formularis"
 #: ../src/orca/Gecko.py:1525
 #, python-format
 msgid "%d table"
-msgstr ""
+msgid_plural "%d tables"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
@@ -2400,7 +2406,9 @@ msgstr ""
 #: ../src/orca/Gecko.py:1531
 #, python-format
 msgid "%d visited link"
-msgstr ""
+msgid_plural "%d visited links"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
@@ -2408,7 +2416,9 @@ msgstr ""
 #: ../src/orca/Gecko.py:1537
 #, python-format
 msgid "%d unvisited link"
-msgstr ""
+msgid_plural "%d unvisited links"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Announces the percentage of the document that has
 #. been read.  This is calculated by knowing the index of the
@@ -3151,7 +3161,9 @@ msgstr ""
 #: ../src/orca/Gecko.py:9776 ../src/orca/Gecko.py:9826
 #, python-format
 msgid "Table with %d row"
-msgstr ""
+msgid_plural "Table with %d rows"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -4374,7 +4386,7 @@ msgstr "Sintaxi : orca [OPCION...]"
 #.
 #: ../src/orca/orca.py:1247
 msgid "Show this help message"
-msgstr "Mostra aqueste messatge d'ajuda"
+msgstr "Visualizar aqueste messatge d'ajuda"
 
 #. Translators: this is the description of the command line option
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
@@ -7381,7 +7393,9 @@ msgstr ""
 #: ../src/orca/where_am_I.py:690
 #, python-format
 msgid "%d of %d item selected"
-msgstr ""
+msgid_plural "%d of %d items selected"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: this is a indication of the focused icon and the
 #. count of the total number of icons within an icon panel. An
@@ -7458,4 +7472,3 @@ msgstr ""
 #, python-format
 msgid "Default button is %s"
 msgstr ""
-
