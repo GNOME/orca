@@ -1,3 +1,8 @@
+2008-02-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/rhythmbox.py:
+          Removed uwanted lines, so we now get pylint score of 10.0.
+
 2008-02-01  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/louis/__init__.py: Override the translate function with some

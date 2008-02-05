@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.braillegenerator as braillegenerator
-import orca.debug as debug
 import orca.default as default
 import orca.speechgenerator as speechgenerator
 
@@ -85,8 +84,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             obj = obj[3]
         return speechgenerator.SpeechGenerator.\
                     _getSpeechForTableCell(self, obj, already_focused)
-
-        return utterances
 
 class Script(default.Script):
 
