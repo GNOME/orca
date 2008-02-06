@@ -1,3 +1,9 @@
+2008-02-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #363830 - Provide feedback in OOo when toggling bold, 
+          underline, and italics.
+
 2008-02-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/rhythmbox.py:

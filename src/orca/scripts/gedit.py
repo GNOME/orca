@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.orca as orca
@@ -442,6 +443,33 @@ class Script(default.Script):
 
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
+
+        # If we are doing a Print Preview and we are focused on the
+        # page number text area, also speak the "of n" labels to the
+        # right of this area. See bug #133275 for more details.
+        #
+        rolesList = [pyatspi.ROLE_TEXT,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_TOOL_BAR,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_PAGE_TAB,
+                     pyatspi.ROLE_PAGE_TAB_LIST]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(self.debugLevel,
+                          "gedit.onStateChanged - print preview - page #.")
+            line = braille.getShowingLine()
+            parent = event.source.parent
+            label1 = self.getDisplayedText(parent[1])
+            label2 = self.getDisplayedText(parent[2])
+
+            utterances = [ label1, label2 ]
+            line.addRegion(braille.Region(" " + label1))
+            line.addRegion(braille.Region(" " + label2))
+
+            speech.speakUtterances(utterances)
+            braille.refresh()
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.

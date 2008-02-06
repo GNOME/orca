@@ -801,13 +801,6 @@ class Script(default.Script):
           "right-margin:0mm; underline:none; strikethrough:none; " \
           "justification:left; style:normal;"
 
-        # [[[TODO: JD - HACK because we won't get events from toggle
-        # buttons on the Formatting toolbar until we "tickle/poke"
-        # the hierarchy. But we only want to do it once.
-        # See bug #363830 and OOo issue #70872.]]]
-        #
-        self.tickled = None
-
     def activate(self):
         """Called when this script is activated."""
         self.savedreadTableCellRow = settings.readTableCellRow
@@ -2225,17 +2218,6 @@ class Script(default.Script):
         if event.type.startswith("object:state-changed:active"):
             if self.findCommandRun:
                 return
-
-            # [[[TODO: JD - HACK because we won't get events from toggle
-            # buttons on the Formatting toolbar until we "tickle/poke"
-            # the hierarchy. But we only want to do it once.
-            # See bug #363830 and OOo issue #70872.]]]
-            #
-            if not self.tickled:
-                frame = self.getFrame(event.source)
-                if frame:
-                    self.getObjects(frame)
-                    self.tickled = True
 
         # Announce when the toolbar buttons are toggled if we just toggled
         # them; not if we navigated to some text.
