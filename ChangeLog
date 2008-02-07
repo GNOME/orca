@@ -1,3 +1,8 @@
+2008-02-06  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/louis/constants.py.in: 
+	  Fixed string mistake in table name (bug 514282).
+
 2008-02-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
