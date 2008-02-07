@@ -1,3 +1,8 @@
+2008-02-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gedit.py:
+          Fix for bug #133275 - accessible description for page not correct.
+
 2008-02-06  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/louis/constants.py.in: 
