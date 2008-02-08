@@ -1,3 +1,8 @@
+2008-02-07  Willie Walker <william.walker@sun.com>
+
+        * pylintrc:
+          Add W0141: Used builtin function 'map' to disable-msg
+
 2008-02-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gedit.py:
