@@ -8496,8 +8496,9 @@ class Script(default.Script):
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
 
-        [nextObj, nextOffset] = self.findNextCaretInOrder(currentLine[-1][0],
-                                                          currentLine[-1][2])
+        [nextObj, nextOffset] = \
+                  self.findNextCaretInOrder(currentLine[-1][0],
+                                            currentLine[-1][2] - 1)
 
         # We need to be sure that we've actually found a new line rather than
         # a space at the end of the current line.

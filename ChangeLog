@@ -1,6 +1,9 @@
 2008-02-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Fix for bug #514427 - Orca skips over headings at the end of
+          sections in FF3.
+
           Fix for bug #511354 - (ff3) firefox: cannot press enter to activate
           links in area tags, although tabbing works.
 
