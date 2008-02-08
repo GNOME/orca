@@ -62,6 +62,7 @@ import settings
 import speech
 import speechgenerator
 import speechserver
+import time
 import where_am_I
 import bookmarks
 
@@ -1911,6 +1912,7 @@ class Script(default.Script):
         # loading a page.
         #
         self._loadingDocumentContent = False
+        self._loadingDocumentTime = 0.0
 
         # In tabbed content (i.e., Firefox's support for one tab per
         # URL), we also keep track of the caret context in each tab.
@@ -3885,6 +3887,7 @@ class Script(default.Script):
             # Reset the live region manager.
             self.liveMngr.reset()
             self._loadingDocumentContent = False
+            self._loadingDocumentTime = time.time()
 
     def onDocumentLoadStopped(self, event):
         """Called when a web page load is interrupted."""
@@ -3893,6 +3896,7 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False
+            self._loadingDocumentTime = time.time()
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -5222,8 +5226,7 @@ class Script(default.Script):
         # regions.  We will handle everything else as a live region.  We
         # will do the cheap tests first
         if self._loadingDocumentContent \
-              or not  settings.inferLiveRegions \
-              or not event.type.endswith(':system'):
+              or not  settings.inferLiveRegions:
             return False
 
         # Ideally, we would like to do a inDocumentContent() call to filter out
@@ -5233,35 +5236,42 @@ class Script(default.Script):
 
         # event.type specific checks
         if event.type.startswith('object:children-changed'):
-            # This will filter out lists that are not of interest and
-            # events from other tabs.
-            stateset = event.source.getState()
-            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
-                   or stateset.contains(pyatspi.STATE_FOCUSED) \
-                   or not stateset.contains(pyatspi.STATE_VISIBLE):
-                return False
+            if event.type.endswith(':system'):
+                # This will filter out list items that are not of interest and
+                # events from other tabs.
+                stateset = event.any_data.getState()
+                if stateset.contains(pyatspi.STATE_SELECTABLE) \
+                    or not stateset.contains(pyatspi.STATE_VISIBLE):
+                    return False
 
-            # Now we need to look at the object attributes
-            attrs = self._getAttrDictionary(event.source)
-            # Good live region markup
-            if attrs.has_key('container-live'):
-                return True
+                # Now we need to look at the object attributes
+                attrs = self._getAttrDictionary(event.source)
+                # Good live region markup
+                if attrs.has_key('container-live'):
+                    return True
 
-            # We see this one with the URL bar opening (sometimes)
-            if attrs.has_key('tag') and attrs['tag'] == 'xul:richlistbox':
-                return False
+                # We see this one with the URL bar opening (sometimes)
+                if attrs.has_key('tag') and attrs['tag'] == 'xul:richlistbox':
+                    return False
 
-            # This eliminates all ARIA widgets that are not considered live
-            if attrs.has_key('xml-roles') \
-                                    and not attrs.has_key('container-live'):
-                return False
+                # This eliminates all ARIA widgets that are not considered live
+                if attrs.has_key('xml-roles') \
+                                      and attrs['xml-roles'] != 'alert':
+                    return False
+            else:
+                # Some alerts have been seen without the :system postfix.
+                # We will take care of them separately.
+                attrs = self._getAttrDictionary(event.any_data)
+                if attrs.has_key('xml-roles') \
+                                      and attrs['xml-roles'] != 'alert':
+                    return False
 
-        else: # object:text-inserted event
+        elif event.type.startswith('object:text-changed:insert:system'):
             # Live regions will not be focusable.
             # Filter out events from hidden tabs (not VISIBLE)
             stateset = event.source.getState()
             if stateset.contains(pyatspi.STATE_FOCUSABLE) \
-                   or stateset.contains(pyatspi.STATE_FOCUSED) \
+                   or stateset.contains(pyatspi.STATE_SELECTABLE) \
                    or not stateset.contains(pyatspi.STATE_VISIBLE):
                 return False
 
@@ -5278,11 +5288,18 @@ class Script(default.Script):
                 return False
 
             # This eliminates all ARIA widgets that are not considered live
-            if attrs.has_key('xml-roles') \
-                                and not attrs.has_key('container-live'):
+            if attrs.has_key('xml-roles'):
                 return False
-        # It sure looks like a live region
-        return True
+        else: # object:text-inserted events
+            return False
+
+        # This last filter gets rid of some events that come in after
+        # window:activate event.  They are usually areas of a page that
+        # are built dynamically.
+        if time.time() - self._loadingDocumentTime > 2.0:
+            return True
+        else:
+            return False
 
     def getCharacterOffsetInParent(self, obj):
         """Returns the character offset of the embedded object

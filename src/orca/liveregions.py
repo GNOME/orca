@@ -389,21 +389,29 @@ class LiveRegionManager:
         attrs = self._getAttrDictionary(event.source)
         content = [] 
         labels = []
+        
+        # A message is divided into two parts: labels and content.  We
+        # will first try to get the content.  If there is None, 
+        # assume it is an invalid message and return None
         if event.type.startswith('object:children-changed:add'):
-            # Get a handle to the Text interface for the target.
-            try:
-                targetitext = event.any_data.queryText()
-            except NotImplementedError:
-                return None
-
             # Get the text based on the atomic property
             try:
                 if attrs['container-atomic'] == 'true':
-                    content.append(self._script.expandEOCs(event.source))
+                    # expand the source if atomic is true
+                    newcontent = self._script.expandEOCs(event.source)
                 else:
-                    content.append(targetitext.getText(0, -1))
+                    # expand the target if atomic is false
+                    newcontent = self._script.expandEOCs(event.any_data)
             except (KeyError, TypeError):
-                content.append(targetitext.getText(0, -1))
+                # expand the target if there is no ARIA markup
+                newcontent = self._script.expandEOCs(event.any_data)
+
+            # add our content to the returned message or return None if no
+            # content
+            if newcontent:
+                content.append(newcontent)
+            else:
+                return None
 
         else: #object:text-changed:insert
             # Get a handle to the Text interface for the source.
@@ -417,20 +425,27 @@ class LiveRegionManager:
             # We found an embed character.  We can expect a children-changed
             # event, which we will act on, so just return.
             txt = sourceitext.getText(0, -1)
-            if txt.find(self._script.EMBEDDED_OBJECT_CHARACTER) == 0:
+            if txt.count(self._script.EMBEDDED_OBJECT_CHARACTER) > 0:
                 return None
-
-            # Get labeling information
-            labels = self._getLabelsAsUtterances(event.source)
 
             # Get the text based on the atomic property
             try:
                 if attrs['container-atomic'] == 'true':
-                    content.append(txt)
+                    newcontent = txt
                 else:
-                    content.append(txt[event.detail1:]) 
+                    newcontent = txt[event.detail1:event.detail1+event.detail2]
             except KeyError:
-                content.append(txt)
+                newcontent = txt[event.detail1:event.detail1+event.detail2]
+
+            # add our content to the returned message or return None if no
+            # content
+            if len(newcontent) > 0:
+                content.append(newcontent)
+            else:
+                return None
+
+        # Get the labeling information now that we have good content.
+        labels = self._getLabelsAsUtterances(event.source)
 
         return {'content':content, 'labels':labels}
 
