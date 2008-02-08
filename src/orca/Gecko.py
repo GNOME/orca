@@ -6350,7 +6350,7 @@ class Script(default.Script):
             prevObj = prevLineContents[0][0]
             prevOffset = prevLineContents[0][1]
         else:
-            [prevObj, prevOffset] = self.findPreviousLine(obj, 0)
+            [prevObj, prevOffset] = self.findPreviousLine(obj, 0, False)
             prevLineContents = self.getLineContentsAtOffset(prevObj,
                                                             prevOffset)
             self._previousLineContents = prevLineContents
@@ -6369,7 +6369,7 @@ class Script(default.Script):
                                                       pyatspi.ROLE_MENU_ITEM,
                                                       pyatspi.ROLE_LIST,
                                                       pyatspi.ROLE_LIST_ITEM]:
-            [nextObj, nextOffset] = self.findNextLine(obj, 0)
+            [nextObj, nextOffset] = self.findNextLine(obj, 0, False)
             nextLineContents = self.getLineContentsAtOffset(nextObj, 
                                                             nextOffset)
             self._nextLineContents = nextLineContents
@@ -8233,7 +8233,7 @@ class Script(default.Script):
         self.updateBraille(obj)
         self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
 
-    def altFindPreviousLine(self, obj, characterOffset):
+    def altFindPreviousLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the previous line in the document
         window.
 
@@ -8241,6 +8241,7 @@ class Script(default.Script):
         -obj:             the object from which the search should begin
         -characterOffset: the offset within obj from which the search should
                           begin
+        -updateCache:     whether or not we should update the line cache
 
         Returns the [obj, characterOffset] at the beginning of the line.
         """
@@ -8338,12 +8339,13 @@ class Script(default.Script):
                         prevOffset = text.getOffsetAtPoint(oldX, newY, 0)
                     break
 
-        self._nextLineContents = self._currentLineContents
-        self._currentLineContents = prevLine
+        if updateCache:
+            self._nextLineContents = self._currentLineContents
+            self._currentLineContents = prevLine
 
         return [prevObj, prevOffset]
 
-    def findPreviousLine(self, obj, characterOffset):
+    def findPreviousLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the previous line in the document
         window, attempting to preserve horizontal caret position.
 
@@ -8351,13 +8353,15 @@ class Script(default.Script):
         -obj:             the object from which the search should begin
         -characterOffset: the offset within obj from which the search should
                           begin
+        -updateCache:     whether or not we should update the line cache
 
         Returns the [obj, characterOffset] at which to position the caret.
         """
 
         if useNewLineNav:
             [prevObj, prevOffset] = self.altFindPreviousLine(obj,
-                                                             characterOffset)
+                                                             characterOffset,
+                                                             updateCache)
             return [prevObj, prevOffset]
 
         lineExtents = self.getExtents(
@@ -8456,7 +8460,7 @@ class Script(default.Script):
 
         return [lastObj, lastCharacterOffset]
 
-    def altFindNextLine(self, obj, characterOffset):
+    def altFindNextLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the next line in the document
         window.
 
@@ -8464,6 +8468,7 @@ class Script(default.Script):
         -obj:             the object from which the search should begin
         -characterOffset: the offset within obj from which the search should
                           begin
+        -updateCache:     whether or not we should update the line cache
 
         Returns the [obj, characterOffset] at the beginning of the line.
         """
@@ -8542,12 +8547,13 @@ class Script(default.Script):
                         nextOffset = text.getOffsetAtPoint(oldX, newY, 0)
                     break
 
-        self._previousLineContents = self._currentLineContents
-        self._currentLineContents = nextLine
+        if updateCache:
+            self._previousLineContents = self._currentLineContents
+            self._currentLineContents = nextLine
 
         return [nextObj, nextOffset]
 
-    def findNextLine(self, obj, characterOffset):
+    def findNextLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the next line in the document
         window, attempting to preserve horizontal caret position.
 
@@ -8555,12 +8561,14 @@ class Script(default.Script):
         -obj:             the object from which the search should begin
         -characterOffset: the offset within obj from which the search should
                           begin
+        -updateCache:     whether or not we should update the line cache
 
         Returns the [obj, characterOffset] at which to position the caret.
         """
 
         if useNewLineNav:
-            [nextObj, nextOffset] = self.altFindNextLine(obj, characterOffset)
+            [nextObj, nextOffset] = \
+                      self.altFindNextLine(obj, characterOffset, updateCache)
             return nextObj, nextOffset
 
         lineExtents = self.getExtents(
