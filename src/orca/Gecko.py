@@ -3665,6 +3665,11 @@ class Script(default.Script):
             if offset == event.detail1 \
                and self.isSameObject(event.source, parent):
                 return
+            # If it's an image map, we also want to ignore this event.
+            # See bug #511354.
+            #
+            elif parent.getRole() == pyatspi.ROLE_IMAGE:
+                return
 
         # Possibility #5: Orca is controlling the caret, we just left an
         # entry, and text was inserted into that entry via javascript as
@@ -8092,6 +8097,7 @@ class Script(default.Script):
             #
             self._objectForFocusGrab = obj
             while self._objectForFocusGrab and obj:
+                role = self._objectForFocusGrab.getRole()
                 if self._objectForFocusGrab.getState().contains(\
                     pyatspi.STATE_FOCUSABLE):
                     # If we're on an image that's in a link and the link
@@ -8099,13 +8105,19 @@ class Script(default.Script):
                     # image, we are in danger of getting stuck on the link
                     # should we grab focus on it.
                     #
-                    role = self._objectForFocusGrab.getRole()
                     if role == pyatspi.ROLE_LINK \
                        and obj.getRole() == pyatspi.ROLE_IMAGE:
                         text = self.queryNonEmptyText(self._objectForFocusGrab)
                         if text and text.characterCount > 1:
                             self._objectForFocusGrab = None
                     break
+                # Links in image maps seem to lack state focusable. If we're
+                # on such an object, we still want to grab focus on it.
+                #
+                elif role == pyatspi.ROLE_LINK:
+                    parent = self._objectForFocusGrab.parent
+                    if parent.getRole() == pyatspi.ROLE_IMAGE:
+                        break
                 else:
                     self._objectForFocusGrab = self._objectForFocusGrab.parent
 
