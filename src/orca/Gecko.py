@@ -8135,8 +8135,8 @@ class Script(default.Script):
                     parent = self._objectForFocusGrab.parent
                     if parent.getRole() == pyatspi.ROLE_IMAGE:
                         break
-                else:
-                    self._objectForFocusGrab = self._objectForFocusGrab.parent
+
+                self._objectForFocusGrab = self._objectForFocusGrab.parent
 
             if self._objectForFocusGrab:
                 # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
