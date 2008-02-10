@@ -1,5 +1,11 @@
 2008-02-10  Willie Walker <william.walker@sun.com>
 
+        * test/harness/utils.py:
+          Adjust output of UNEXPECTED failures so they are easier
+          to identify in the output log.
+
+2008-02-10  Willie Walker <william.walker@sun.com>
+
 	* test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
 	  Adjust regression test as a result of new (and improved)
 	  behavior from fix for bug #506874.

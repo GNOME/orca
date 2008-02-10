@@ -140,6 +140,9 @@ class AssertPresentationAction(AtomicAction):
                 AssertPresentationAction.totalExpectedToFail += 1
                 print >> myErr, '[FAILURE WAS EXPECTED - ' \
                                 'LOOK FOR BUG? IN EXPECTED RESULTS]'
+            else:
+                print >> myErr, '[FAILURE WAS UNEXPECTED]'
+
     def __str__(self):
         return 'Assert Presentation Action: %s' % self._name
 
@@ -152,17 +155,12 @@ class AssertionSummaryAction(AtomicAction):
 
     def _printSummary(self):
         print >> myOut, \
-            "SUMMARY: %d SUCCEEDED and %d FAILED of %d for %s" \
+            "SUMMARY: %d SUCCEEDED and %d FAILED (%d UNEXPECTED) of %d for %s"\
             % (AssertPresentationAction.totalSucceed,
                AssertPresentationAction.totalFail,
+               (AssertPresentationAction.totalFail \
+               - AssertPresentationAction.totalExpectedToFail),
                AssertPresentationAction.totalCount,
-               sys.argv[0])
-        if AssertPresentationAction.totalExpectedToFail \
-           != AssertPresentationAction.totalFail:
-            print >> myOut, \
-            "******** %d FAILURES NOT EXPECTED FOR %s" \
-            % (AssertPresentationAction.totalFail \
-               - AssertPresentationAction.totalExpectedToFail,
                sys.argv[0])
 
     def __str__(self):
