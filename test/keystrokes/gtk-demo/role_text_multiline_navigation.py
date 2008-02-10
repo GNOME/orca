@@ -1028,9 +1028,9 @@ sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+KP_9 to flat review end",
-    ["BRAILLE LINE:  'Cursor at row 1 column 5 - 243 chars in document Cursor at row 1 column 5 - 243 chars in document $l'",
-     "     VISIBLE:  't $l', cursor=1",
-     "SPEECH OUTPUT: 'Cursor at row 1 column 5 - 243 chars in document Cursor at row 1 column 5 - 243 chars in document'"]))
+    ["BRAILLE LINE:  'Cursor at row 1 column 5 - 243 chars in document $l'",
+     "     VISIBLE:  'hars in document $l', cursor=16",
+     "SPEECH OUTPUT: 'Cursor at row 1 column 5 - 243 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

@@ -1,3 +1,9 @@
+2008-02-10  Willie Walker <william.walker@sun.com>
+
+	* test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
+	  Adjust regression test as a result of new (and improved)
+	  behavior from fix for bug #506874.
+
 2008-02-08 Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py:
@@ -403,10 +409,10 @@
         * src/orca/flat_review.py:
           Fix for bug #506874 - Flat review should support status bars 
           that have accessible text and children (thanks Will!)
-
+ 
 2008-01-14  Willie Walker <william.walker@sun.com>
 
-        * configure.in:
+       * configure.in:
 	  README:
           Mark as Orca v2.21.90pre.
 	
