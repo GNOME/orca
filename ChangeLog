@@ -1,3 +1,20 @@
+2008-02-11  Joanmarie Diggs <via william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/learn_mode.py:
+          test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/orca.py:
+          src/orca/Gecko.py:
+          src/orca/where_am_I.py:
+          src/orca/input_event.py:
+          src/orca/script.py:
+          src/orca/keybindings.py:
+          src/orca/orca_gui_prefs.py:
+	  Fix for bug 440490 - Key bindings should allow double and triple
+	  press features to be rebound.
+
 2008-02-11  Eitan Isaacson <via william.walker@sun.com>
 
 	* src/orca/scripts/planner.py:

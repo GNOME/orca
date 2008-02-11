@@ -261,7 +261,14 @@ class Script:
         - appState: an object obtained from getAppState
         """
         return
-        
+
+    def getClickCount(self):
+        """Return the count of the number of clicks a user has made to one
+        of the keys on the keyboard.
+        """
+
+        return orca_state.clickCount
+
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
     # of a __del__ method prevents the garbage collector from
@@ -319,6 +326,7 @@ class Script:
 
         Returns True if the event is of interest.
         """
+
         user_bindings = None
         user_bindings_map = settings.keyBindingsMap
         if user_bindings_map.has_key(self.__module__):

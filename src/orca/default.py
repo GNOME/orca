@@ -170,9 +170,9 @@ class Script(script.Script):
                 #
                 _("Speaks entire document."))
 
-        self.inputEventHandlers["whereAmIHandler"] = \
+        self.inputEventHandlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
-                Script.getWhereAmIInfo,
+                Script.whereAmIBasic,
                 # Translators: the "Where am I" feature of Orca allows
                 # a user to press a key and then have information
                 # about their current context spoken and brailled to
@@ -180,17 +180,35 @@ class Script(script.Script):
                 # name of the current pushbutton with focus as well as
                 # its mnemonic.
                 #
-                _("Performs the where am I operation."))
+                _("Performs the basic where am I operation."))
 
-        self.inputEventHandlers["getTitleOrStatusHandler"] = \
+        self.inputEventHandlers["whereAmIDetailedHandler"] = \
             input_event.InputEventHandler(
-                Script.getTitleOrStatus,
-                # Translators: Orca has a command that will speak
-                # a window's title if pressed once.  If pressed
-                # two times quickly the contents of the status bar
-                # will be spoken instead.
+                Script.whereAmIDetailed,
+                # Translators: the "Where am I" feature of Orca allows
+                # a user to press a key and then have information
+                # about their current context spoken and brailled to
+                # them.  For example, the information may include the
+                # name of the current pushbutton with focus as well as
+                # its mnemonic.
                 #
-                _("Speaks the title bar or status bar."))
+                _("Performs the detailed where am I operation."))
+
+        self.inputEventHandlers["getTitleHandler"] = \
+            input_event.InputEventHandler(
+                Script.getTitle,
+                # Translators: This command will cause the window's
+                # title to be spoken.
+                #
+                _("Speaks the title bar."))
+
+        self.inputEventHandlers["getStatusBarHandler"] = \
+            input_event.InputEventHandler(
+                Script.getStatusBar,
+                # Translators: This command will cause the window's
+                # status bar contents to be spoken.
+                #
+                _("Speaks the status bar."))
 
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
@@ -282,9 +300,41 @@ class Script(script.Script):
                 # buttons, labels, etc.) as a sequence of words in a
                 # sequence of lines.  The flat review feature allows
                 # the user to explore this text by the {previous,next}
-                # {line,word,character}.
+                # {line,word,character}.  This particular command will
+                # cause Orca to speak the current line.
                 #
                 _("Speaks the current flat review line."))
+
+        self.inputEventHandlers["reviewSpellCurrentLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewSpellCurrentLine,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}. This particular command will
+                # cause Orca to spell the current line.
+                #
+                _("Spells the current flat review line."))
+
+        self.inputEventHandlers["reviewPhoneticCurrentLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewPhoneticCurrentLine,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}. This particular command will
+                # cause Orca to "phonetically spell" the current line,
+                # saying "Alpha" for "a", "Bravo" for "b" and so on.
+                #
+                _("Phonetically spells the current flat review line."))
 
         self.inputEventHandlers["reviewNextLineHandler"] = \
             input_event.InputEventHandler(
@@ -357,11 +407,41 @@ class Script(script.Script):
                 # buttons, labels, etc.) as a sequence of words in a
                 # sequence of lines.  The flat review feature allows
                 # the user to explore this text by the {previous,next}
-                # {line,word,character}.  The 'speaks' means it will
-                # speak the word.  The 'spells' means it will spell
-                # out a word letter by letter.
+                # {line,word,character}.  This command will speak the
+                # current word or item.
                 #
-                _("Speaks or spells the current flat review item or word."))
+                _("Speaks the current flat review item or word."))
+
+        self.inputEventHandlers["reviewSpellCurrentItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewSpellCurrentItem,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This command will spell out
+                # the current word or item letter by letter.
+                #
+                _("Spells the current flat review item or word."))
+
+        self.inputEventHandlers["reviewPhoneticCurrentItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewPhoneticCurrentItem,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This command will spell out
+                # the current word or item phonetically, saying "Alpha"
+                # for "a", "Bravo" for "b" and so on.
+                #
+                _("Phonetically spells the current flat review item or word."))
 
         self.inputEventHandlers["reviewCurrentAccessibleHandler"] = \
             input_event.InputEventHandler(
@@ -459,6 +539,25 @@ class Script(script.Script):
                 # character currently being reviewed.
                 #
                 _("Speaks the current flat review character."))
+
+        self.inputEventHandlers["reviewSpellCurrentCharacterHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewSpellCurrentCharacter,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  Previous will go backwards
+                # in the window until you reach the top (i.e., it will
+                # wrap across lines if necessary).  This command will
+                # cause Orca to speak a phonetic representation of the
+                # character currently being reviewed, saying "Alpha"
+                # for "a", "Bravo" for "b" and so on.
+                #
+                _("Phonetically speaks the current flat review character."))
 
         self.inputEventHandlers["reviewNextCharacterHandler"] = \
             input_event.InputEventHandler(
@@ -894,14 +993,32 @@ class Script(script.Script):
                 "KP_Enter",
                 orcaModMask,
                 0,
-                self.inputEventHandlers["whereAmIHandler"]))
+                self.inputEventHandlers["whereAmIBasicHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Enter",
+                orcaModMask,
+                0,
+                self.inputEventHandlers["whereAmIDetailedHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["getTitleOrStatusHandler"]))
+                self.inputEventHandlers["getTitleHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Enter",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["getStatusBarHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -957,14 +1074,48 @@ class Script(script.Script):
                 "KP_8",
                 0,
                 0,
-                self.inputEventHandlers["reviewCurrentLineHandler"]))
+                self.inputEventHandlers["reviewCurrentLineHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_8",
+                0,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentLineHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_8",
+                0,
+                0,
+                self.inputEventHandlers["reviewPhoneticCurrentLineHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
                 0,
                 0,
-                self.inputEventHandlers["reviewCurrentLineHandler"]))
+                self.inputEventHandlers["reviewCurrentLineHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Up",
+                0,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentLineHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Up",
+                0,
+                0,
+                self.inputEventHandlers["reviewPhoneticCurrentLineHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1027,14 +1178,48 @@ class Script(script.Script):
                 "KP_5",
                 orcaModMask,
                 0,
-                self.inputEventHandlers["reviewCurrentItemHandler"]))
+                self.inputEventHandlers["reviewCurrentItemHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_5",
+                orcaModMask,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentItemHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_5",
+                orcaModMask,
+                0,
+                self.inputEventHandlers["reviewPhoneticCurrentItemHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 orcaModMask,
                 0,
-                self.inputEventHandlers["reviewCurrentItemHandler"]))
+                self.inputEventHandlers["reviewCurrentItemHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Begin",
+                orcaModMask,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentItemHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Begin",
+                orcaModMask,
+                0,
+                self.inputEventHandlers["reviewPhoneticCurrentItemHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1111,14 +1296,32 @@ class Script(script.Script):
                 "KP_2",
                 0,
                 0,
-                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
+                self.inputEventHandlers["reviewCurrentCharacterHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_2",
+                0,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentCharacterHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
                 0,
                 0,
-                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
+                self.inputEventHandlers["reviewCurrentCharacterHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Down",
+                0,
+                0,
+                self.inputEventHandlers["reviewSpellCurrentCharacterHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1179,14 +1382,32 @@ class Script(script.Script):
                 "Return",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["whereAmIHandler"]))
+                self.inputEventHandlers["whereAmIBasicHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Return",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["whereAmIDetailedHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "slash",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["getTitleOrStatusHandler"]))
+                self.inputEventHandlers["getTitleHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "slash",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["getStatusBarHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1228,7 +1449,24 @@ class Script(script.Script):
                 "i",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["reviewCurrentLineHandler"]))
+                self.inputEventHandlers["reviewCurrentLineHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["reviewSpellCurrentLineHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["reviewPhoneticCurrentLineHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1263,7 +1501,24 @@ class Script(script.Script):
                 "k",
                 orcaControlModMask,
                 orcaModMask,
-                self.inputEventHandlers["reviewCurrentItemHandler"]))
+                self.inputEventHandlers["reviewCurrentItemHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                orcaControlModMask,
+                orcaModMask,
+                self.inputEventHandlers["reviewSpellCurrentItemHandler"],
+                2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                orcaControlModMask,
+                orcaModMask,
+                self.inputEventHandlers["reviewPhoneticCurrentItemHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1305,7 +1560,16 @@ class Script(script.Script):
                 "comma",
                 orcaModMask,
                 orcaModMask,
-                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
+                self.inputEventHandlers["reviewCurrentCharacterHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "comma",
+                orcaModMask,
+                orcaModMask,
+                self.inputEventHandlers["reviewSpellCurrentCharacterHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1675,7 +1939,7 @@ class Script(script.Script):
 
 
     def sayAll(self, inputEvent):
-        clickCount = self.getClickCount(self.lastSayAllEvent, inputEvent)
+        clickCount = self.getClickCount()
         doubleClick = clickCount == 2
         self.lastSayAllEvent = inputEvent
 
@@ -2077,35 +2341,48 @@ class Script(script.Script):
             braille.displayMessage(text)
             speech.speak(text)
 
-    def doWhereAmI(self, inputEvent, statusOrTitle):
+    def doWhereAmI(self, inputEvent, basicOnly):
         """Peforms the whereAmI operation.
 
         Arguments:
         - inputEvent:     The original inputEvent
-        - titleOrStatus:  If true, the user is interested in the window's
-                          title or status bar.
         """
 
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
-        clickCount = self.getClickCount(self.lastWhereAmIEvent, inputEvent)
-        doubleClick = clickCount == 2
-        self.lastWhereAmIEvent = inputEvent
+        return self.whereAmI.whereAmI(obj, basicOnly)
 
-        return self.whereAmI.whereAmI(obj, doubleClick, statusOrTitle)
-
-    def getWhereAmIInfo(self, inputEvent):
-        """Speaks information about the current object of interest."""
-
-        self.doWhereAmI(inputEvent, False)
-
-    def getTitleOrStatus(self, inputEvent):
-        """Speaks the window title for a single click; speaks the contents
-        of the status bar for a double click.
+    def whereAmIBasic(self, inputEvent):
+        """Speaks basic information about the current object of interest.
         """
 
         self.doWhereAmI(inputEvent, True)
+
+    def whereAmIDetailed(self, inputEvent):
+        """Speaks detailed/custom information about the current object of
+        interest.
+        """
+
+        self.doWhereAmI(inputEvent, False)
+
+    def getTitle(self, inputEvent):
+        """Speaks the title of the window with focus.
+        """
+
+        obj = orca_state.locusOfFocus
+        self.updateBraille(obj)
+
+        return self.whereAmI.speakTitle(orca_state.locusOfFocus)
+
+    def getStatusBar(self, inputEvent):
+        """Speaks the contents of the status bar of the window with focus.
+        """
+
+        obj = orca_state.locusOfFocus
+        self.updateBraille(obj)
+
+        return self.whereAmI.speakStatusBar(orca_state.locusOfFocus)
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
@@ -3968,21 +4245,36 @@ class Script(script.Script):
         return True
 
     def reviewCurrentLine(self, inputEvent):
-        """Presents the current flat review line via braille and speech."""
+        """Brailles and speaks the current flat review line."""
 
-        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
-                                           inputEvent)
-        self._reviewCurrentLine(inputEvent, clickCount)
+        self._reviewCurrentLine(inputEvent, 1)
         self.lastReviewCurrentEvent = inputEvent
 
         return True
 
-    def _reviewCurrentLine(self, inputEvent, clickCount=1):
+    def reviewSpellCurrentLine(self, inputEvent):
+        """Brailles and spells the current flat review line."""
+
+        self._reviewCurrentLine(inputEvent, 2)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def reviewPhoneticCurrentLine(self, inputEvent):
+        """Brailles and phonetically spells the current flat review line."""
+
+        self._reviewCurrentLine(inputEvent, 3)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def _reviewCurrentLine(self, inputEvent, speechType=1):
         """Presents the current flat review line via braille and speech.
 
         Arguments:
         - inputEvent - the current input event.
-        - clickCount - number of times the user has "clicked" the current key.
+        - speechType - the desired presentation: speak (1), spell (2), or
+                       phonetic (3)
         """
 
         context = self.getFlatReviewContext()
@@ -4007,11 +4299,11 @@ class Script(script.Script):
                 # user has navigated to a line with only whitespace on it.
                 #
                 speech.speak(_("white space"))
-            elif lineString.isupper() and (clickCount < 2 or clickCount > 3):
+            elif lineString.isupper() and (speechType < 2 or speechType > 3):
                 speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
-            elif clickCount == 2:
+            elif speechType == 2:
                 self.spellCurrentItem(lineString)
-            elif clickCount == 3:
+            elif speechType == 3:
                 self.phoneticSpellCurrentItem(lineString)
             else:
                 lineString = self.adjustForRepeats(lineString)
@@ -4093,14 +4385,25 @@ class Script(script.Script):
         return True
 
     def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
-        """Speak/Braille the current item to the user. A "double-click"
-        of this key will cause the word to be spelt. A "triple-click"
-        will cause the word to be phonetically spelt.
-        """
+        """Brailles and speaks the current item to the user."""
 
-        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
-                                           inputEvent)
-        self._reviewCurrentItem(inputEvent, targetCursorCell, clickCount)
+        self._reviewCurrentItem(inputEvent, targetCursorCell, 1)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def reviewSpellCurrentItem(self, inputEvent, targetCursorCell=0):
+        """Brailles and spells the current item to the user."""
+
+        self._reviewCurrentItem(inputEvent, targetCursorCell, 2)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def reviewPhoneticCurrentItem(self, inputEvent, targetCursorCell=0):
+        """Brailles and phonetically spells the current item to the user."""
+
+        self._reviewCurrentItem(inputEvent, targetCursorCell, 3)
         self.lastReviewCurrentEvent = inputEvent
 
         return True
@@ -4120,13 +4423,14 @@ class Script(script.Script):
                 speech.speak(character.encode("UTF-8"))
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
-                           clickCount=1):
+                           speechType=1):
         """Presents the current item to the user.
 
         Arguments:
         - inputEvent - the current input event.
         - targetCursorCell - if non-zero, the target braille cursor cell.
-        - clickCount - number of times the user has "clicked" the current key.
+        - speechType - the desired presentation: speak (1), spell (2), or
+                       phonetic (3).
         """
 
         context = self.getFlatReviewContext()
@@ -4158,15 +4462,14 @@ class Script(script.Script):
                     # user has navigated to a line with only whitespace on it.
                     #
                     speech.speak(_("white space"))
-                elif wordString.isupper() \
-                     and (clickCount < 2 or clickCount > 3):
+                elif wordString.isupper() and speechType == 1:
                     speech.speak(wordString,
                                  self.voices[settings.UPPERCASE_VOICE])
-                elif clickCount == 2:
+                elif speechType == 2:
                     self.spellCurrentItem(wordString)
-                elif clickCount == 3:
+                elif speechType == 3:
                     self.phoneticSpellCurrentItem(wordString)
-                else:
+                elif speechType == 1:
                     wordString = self.adjustForRepeats(wordString)
                     speech.speak(wordString)
 
@@ -4221,22 +4524,29 @@ class Script(script.Script):
         return True
 
     def reviewCurrentCharacter(self, inputEvent):
-        """Presents the current flat review character via braille and speech.
-        """
+        """Brailles and speaks the current flat review character."""
 
-        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
-                                           inputEvent)
-        self._reviewCurrentCharacter(inputEvent, clickCount)
+        self._reviewCurrentCharacter(inputEvent, 1)
         self.lastReviewCurrentEvent = inputEvent
 
         return True
 
-    def _reviewCurrentCharacter(self, inputEvent, clickCount=1):
+    def reviewSpellCurrentCharacter(self, inputEvent):
+        """Brailles and 'spells' (phonetically) the current flat review
+        character.
+        """
+
+        self._reviewCurrentCharacter(inputEvent, 2)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def _reviewCurrentCharacter(self, inputEvent, speechType=1):
         """Presents the current flat review character via braille and speech.
 
         Arguments:
         - inputEvent - the current input event.
-        - clickCount - number of times the user has "clicked" the current key.
+        - speechType - the desired presentation: speak (1) or phonetic (2)
         """
 
         context = self.getFlatReviewContext()
@@ -4262,9 +4572,7 @@ class Script(script.Script):
                     # user has navigated to an empty line.
                     #
                     speech.speak(_("blank"))
-                elif clickCount == 2:
-                    self.spellCurrentItem(charString)
-                elif clickCount == 3:
+                elif speechType == 2:
                     self.phoneticSpellCurrentItem(charString)
                 elif charString.decode("UTF-8").isupper():
                     speech.speakCharacter(charString,
@@ -5133,35 +5441,6 @@ class Script(script.Script):
             return obj[-1]
         else:
             return obj
-
-    def getClickCount(self, lastInputEvent, inputEvent):
-        """Return the count of the number of clicks a user has made to one
-        of the keys on the keyboard.
-
-        Arguments:
-        - lastInputEvent: the last input event.
-        - inputEvent: the current input event.
-        """
-
-        if not isinstance(inputEvent, input_event.KeyboardEvent):
-            orca_state.clickCount = 0
-            return orca_state.clickCount
-
-        if not isinstance(lastInputEvent, input_event.KeyboardEvent):
-            orca_state.clickCount = 1
-            return orca_state.clickCount
-
-        if (lastInputEvent.hw_code != inputEvent.hw_code) or \
-           (lastInputEvent.modifiers != inputEvent.modifiers):
-            orca_state.clickCount = 1
-            return orca_state.clickCount
-
-        if (inputEvent.time - lastInputEvent.time) < \
-                settings.doubleClickTimeout:
-            orca_state.clickCount += 1
-        else:
-            orca_state.clickCount = 1
-        return orca_state.clickCount
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of

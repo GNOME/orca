@@ -57,9 +57,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "Orca command: flat review current word",
-    ["BRAILLE LINE:  'Speaks or spells the current flat review item or word.'",
-     "     VISIBLE:  'Speaks or spells the current fla', cursor=0",
-     "SPEECH OUTPUT: 'Speaks or spells the current flat review item or word.'"]))
+    ["BRAILLE LINE:  'Speaks the current flat review item or word.'",
+     "     VISIBLE:  'Speaks the current flat review i', cursor=0",
+     "SPEECH OUTPUT: 'Speaks the current flat review item or word.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("5"))

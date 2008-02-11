@@ -729,6 +729,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is only  $l', cursor=6",
      "SPEECH OUTPUT: 'is'"]))
 
+sequence.append(PauseAction(1000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyComboAction("KP_5"))
@@ -741,6 +743,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'is'",
      "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 's'"]))
+
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
@@ -769,6 +773,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'This is only ",
      "'"]))
 
+sequence.append(PauseAction(1000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(KeyComboAction("KP_8"))
@@ -795,6 +801,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: '",
      "'"]))
+
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -849,33 +857,21 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is only  $l', cursor=6",
      "SPEECH OUTPUT: 'i'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_2"))
-sequence.append(KeyComboAction("KP_2"))
-sequence.append(utils.AssertPresentationAction(
-    "KP_2 2X to spell 'i'",
-    ["BRAILLE LINE:  'This is only  $l'",
-     "     VISIBLE:  'This is only  $l', cursor=6",
-     "BRAILLE LINE:  'This is only  $l'",
-     "     VISIBLE:  'This is only  $l', cursor=6",
-     "SPEECH OUTPUT: 'i'",
-     "SPEECH OUTPUT: 'i'"]))
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(KeyComboAction("KP_2"))
-sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
-    "KP_2 3X to military spell 'i'",
+    "KP_2 2X to military spell 'i'",
     ["BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=6",
      "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=6",
-     "BRAILLE LINE:  'This is only  $l'",
-     "     VISIBLE:  'This is only  $l', cursor=6",
-     "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 'india'"]))
+
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))

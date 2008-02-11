@@ -553,6 +553,34 @@ def keyEcho(event):
 
         speech.speakKeyEvent(event_string, eventType)
 
+def _setClickCount(inputEvent):
+    """Sets the count of the number of clicks a user has made to one
+    of the non-modifier keys on the keyboard.
+
+    Arguments:
+    - inputEvent: the current input event.
+    """
+
+    lastInputEvent = orca_state.lastNonModifierKeyEvent
+
+    if inputEvent.type == pyatspi.KEY_RELEASED_EVENT:
+        pass
+    elif not isinstance(inputEvent, KeyboardEvent):
+        orca_state.clickCount = 0
+    elif not isinstance(lastInputEvent, KeyboardEvent):
+        orca_state.clickCount = 1
+    elif (lastInputEvent.hw_code != inputEvent.hw_code) or \
+         (lastInputEvent.modifiers != inputEvent.modifiers):
+        orca_state.clickCount = 1
+    elif (inputEvent.time - lastInputEvent.time) < \
+           settings.doubleClickTimeout:
+        # Cap the possible number of clicks at 3.
+        #
+        if orca_state.clickCount < 3:
+            orca_state.clickCount += 1
+    else:
+        orca_state.clickCount = 1
+
 def _processKeyCaptured(event):
     """Called when a new key event arrives and orca_state.capturingKeys=True.
     (used for key bindings redefinition)
@@ -563,17 +591,6 @@ def _processKeyCaptured(event):
            or isLockingKey(event.event_string):
             return True
         else:
-            # We want to capture this event, after first doing a little
-            # clean up.  Eliminate modifiers we're not interested in.
-            #
-            mask = (1 << settings.MODIFIER_ORCA |
-                    1 << pyatspi.MODIFIER_ALT |
-                    1 << pyatspi.MODIFIER_SHIFT |
-                    1 << pyatspi.MODIFIER_CONTROL |
-                    1 << pyatspi.MODIFIER_META2 |
-                    1 << pyatspi.MODIFIER_META3)
-            event.modifiers = event.modifiers & mask
-
             # We want the keyname rather than the printable character.
             # If it's not on the keypad, get the name of the unshifted
             # character. (i.e. "1" instead of "!")
@@ -581,7 +598,8 @@ def _processKeyCaptured(event):
             keymap = gtk.gdk.keymap_get_default()
             entries = keymap.get_entries_for_keycode(event.hw_code)
             event.event_string = gtk.gdk.keyval_name(entries[0][0])
-            if event.event_string.startswith("KP"):
+            if event.event_string.startswith("KP") and \
+               event.event_string != "KP_Enter":
                 name = gtk.gdk.keyval_name(entries[1][0])
                 if name.startswith("KP"):
                     event.event_string = name
@@ -679,6 +697,19 @@ def _processKeyboardEvent(event):
         keyboardEvent.modifiers = keyboardEvent.modifiers \
                                   | (1 << settings.MODIFIER_ORCA)
 
+    orca_state.lastInputEvent = keyboardEvent
+
+    # If this is a key event for a non-modifier key, save a handle to it.
+    # This is needed to help determine user actions when a multi-key chord
+    # has been pressed, and we might get the key events in different orders.
+    # See comment #15 of bug #435201 for more details.  We also want to
+    # store the "click count" for the purpose of supporting keybindings
+    # with unique behaviors when double- or triple-clicked.
+    #
+    if not isModifierKey(keyboardEvent.event_string):
+        _setClickCount(keyboardEvent)
+        orca_state.lastNonModifierKeyEvent = keyboardEvent
+
     # Orca gets first stab at the event.  Then, the presenter gets
     # a shot. [[[TODO: WDW - might want to let the presenter try first?
     # The main reason this is staying as is is that we may not want
@@ -694,12 +725,10 @@ def _processKeyboardEvent(event):
                 consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                            processKeyboardEvent(keyboardEvent)
             if (not consumed) and settings.learnModeEnabled:
-                if keyboardEvent.type \
-                    == pyatspi.KEY_PRESSED_EVENT:
-                    clickCount = orca_state.activeScript.getClickCount(\
-                                                orca_state.lastInputEvent,
-                                                keyboardEvent)
-                    if clickCount == 2:
+                if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
+                    clickCount = orca_state.activeScript.getClickCount()
+                    if isPrintableKey(keyboardEvent.event_string) \
+                       and clickCount == 2:
                         orca_state.activeScript.phoneticSpellCurrentItem(\
                             keyboardEvent.event_string)
                     else:
@@ -713,16 +742,6 @@ def _processKeyboardEvent(event):
                 consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)
-
-    orca_state.lastInputEvent = keyboardEvent
-
-    # If this is a key event for a non-modifier key, save a handle to it.
-    # This is needed to help determine user actions when a multi-key chord
-    # has been pressed, and we might get the key events in different orders.
-    # See comment #15 of bug #435201 for more details.
-    #
-    if not isModifierKey(keyboardEvent.event_string):
-        orca_state.lastNonModifierKeyEvent = keyboardEvent
 
     return consumed or isOrcaModifier
 

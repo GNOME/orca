@@ -28,7 +28,7 @@
 # 
 # pylint: disable-msg=E1103
 
-"""Custom script for Gecko toolkit.  NOT WORKING WELL AT THE MOMENT.
+"""Custom script for Gecko toolkit.
 Please refer to the following URL for more information on the AT-SPI
 implementation in Gecko:
 http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
@@ -1388,14 +1388,13 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         where_am_I.WhereAmI.__init__(self, script)
         self._script = script
         
-    def whereAmI(self, obj, doubleClick, statusOrTitle):
-        """Calls the base class method for single clicks and Gecko specific
-        information presentation methods for double clicks
+    def whereAmI(self, obj, basicOnly):
+        """Calls the base class method for basic information and Gecko
+        specific presentation methods for detailed/custom information.
         """
 
-        if not doubleClick or statusOrTitle \
-           or not self._script.inDocumentContent(obj):
-            where_am_I.WhereAmI.whereAmI(self, obj, doubleClick, statusOrTitle)
+        if basicOnly or not self._script.inDocumentContent(obj):
+            where_am_I.WhereAmI.whereAmI(self, obj, basicOnly)
             self._script.liveMngr.outputLiveRegionDescription(obj)
         else:
             try:
@@ -1808,11 +1807,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
 ########################################################################
 
 class Script(default.Script):
-    """The script for Firefox.
-
-    NOTE: THIS IS UNDER DEVELOPMENT AND DOES NOT PROVIDE ANY COMPELLING
-    ACCESS TO FIREFOX AT THIS POINT.
-    """
+    """The script for Firefox."""
 
     ####################################################################
     #                                                                  #

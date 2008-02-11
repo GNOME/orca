@@ -50,7 +50,7 @@ class WhereAmI:
         self._defaultButton = None
         self._lastAttributeString = ""
 
-    def whereAmI(self, obj, doubleClick, titleOrStatus):
+    def whereAmI(self, obj, basicOnly):
         """Speaks information about the current object of interest, including
         the object itself, which window it is in, which application, which
         workspace, etc.
@@ -74,8 +74,7 @@ class WhereAmI:
            \n  parent label= %s \
            \n  parent name=%s \
            \n  parent role=%s \
-           \n  double-click=%s \
-           \n  titleOrStatus=%s" % \
+           \n  basicOnly=%s" % \
             (self._getObjLabel(obj),
              self._getObjName(obj),
              obj.getRoleName(),
@@ -83,78 +82,72 @@ class WhereAmI:
              self._getObjLabel(obj.parent),
              self._getObjName(obj.parent),
              obj.parent.getRoleName(),
-             doubleClick,
-             titleOrStatus))
+             basicOnly))
 
         role = obj.getRole()
 
-        if titleOrStatus:
-            self._speakTitleOrStatus(obj, doubleClick)
-            return True
-
-        else:
-            toolbar = self._getToolbar(obj)
-            if toolbar:
-                self._speakToolbar(toolbar)
+        toolbar = self._getToolbar(obj)
+        if toolbar:
+            self._speakToolbar(toolbar)
 
         if role == pyatspi.ROLE_CHECK_BOX:
-            self._speakCheckBox(obj, doubleClick)
+            self._speakCheckBox(obj, basicOnly)
 
         elif role == pyatspi.ROLE_RADIO_BUTTON:
-            self._speakRadioButton(obj, doubleClick)
+            self._speakRadioButton(obj, basicOnly)
 
         elif role == pyatspi.ROLE_COMBO_BOX:
-            self._speakComboBox(obj, doubleClick)
+            self._speakComboBox(obj, basicOnly)
 
         elif role == pyatspi.ROLE_SPIN_BUTTON:
-            self._speakSpinButton(obj, doubleClick)
+            self._speakSpinButton(obj, basicOnly)
 
         elif role == pyatspi.ROLE_PUSH_BUTTON:
-            self._speakPushButton(obj, doubleClick)
+            self._speakPushButton(obj, basicOnly)
 
         elif role == pyatspi.ROLE_SLIDER:
-            self._speakSlider(obj, doubleClick)
+            self._speakSlider(obj, basicOnly)
 
         elif role in [pyatspi.ROLE_MENU,
                       pyatspi.ROLE_MENU_ITEM,
                       pyatspi.ROLE_CHECK_MENU_ITEM,
                       pyatspi.ROLE_RADIO_MENU_ITEM]:
-            self._speakMenuItem(obj, doubleClick)
+            self._speakMenuItem(obj, basicOnly)
 
         elif role == pyatspi.ROLE_PAGE_TAB:
-            self._speakPageTab(obj, doubleClick)
+            self._speakPageTab(obj, basicOnly)
 
         elif role in [pyatspi.ROLE_TEXT,
                       pyatspi.ROLE_TERMINAL]:
-            self._speakText(obj, doubleClick)
+            self._speakText(obj, basicOnly)
 
         elif role == pyatspi.ROLE_TABLE_CELL:
-            self._speakTableCell(obj, doubleClick)
+            self._speakTableCell(obj, basicOnly)
 
         elif role == pyatspi.ROLE_LIST_ITEM:
-            self._speakListItem(obj, doubleClick)
+            self._speakListItem(obj, basicOnly)
 
         elif role == pyatspi.ROLE_PARAGRAPH:
-            self._speakParagraph(obj, doubleClick)
+            self._speakParagraph(obj, basicOnly)
 
         elif role == pyatspi.ROLE_ICON:
-            self._speakIconPanel(obj, doubleClick)
+            self._speakIconPanel(obj, basicOnly)
             
         elif role == pyatspi.ROLE_LINK:
-            self._speakLink(obj, doubleClick)
+            self._speakLink(obj, basicOnly)
 
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
-            self._speakToggleButton(obj, doubleClick)
+            self._speakToggleButton(obj, basicOnly)
 
         else:
-            self._speakGenericObject(obj, doubleClick)
+            self._speakGenericObject(obj, basicOnly)
 
-        if not doubleClick:
+        if basicOnly:
             self._speakObjDescription(obj)
 
         return True
 
-    def _speakCheckBox(self, obj, doubleClick):
+    def _speakCheckBox(self, obj, basicOnly):
         """Checkboxes present the following information
         (an example is 'Enable speech, checkbox checked, Alt E'):
         1. label
@@ -176,7 +169,7 @@ class WhereAmI:
                       % utterances)
         speech.speakUtterances(utterances)
 
-    def _speakRadioButton(self, obj, doubleClick):
+    def _speakRadioButton(self, obj, basicOnly):
         """Radio Buttons present the following information (an example is
         'Punctuation Level, Some, Radio button, selected, item 2 of 4, Alt M'):
 
@@ -224,7 +217,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakComboBox(self, obj, doubleClick):
+    def _speakComboBox(self, obj, basicOnly):
         """Comboboxes present the following information (an example is
         'Speech system: combo box, GNOME Speech Services, item 1 of 1,
         Alt S'):
@@ -256,7 +249,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakSpinButton(self, obj, doubleClick):
+    def _speakSpinButton(self, obj, basicOnly):
         """Spin Buttons present the following information (an example is
         'Scale factor: spin button, 4.00, Alt F'):
 
@@ -283,7 +276,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakPushButton(self, obj, doubleClick):
+    def _speakPushButton(self, obj, basicOnly):
         """ Push Buttons present the following information (an example is
         'Apply button, Alt A'):
 
@@ -306,7 +299,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakSlider(self, obj, doubleClick):
+    def _speakSlider(self, obj, basicOnly):
         """Sliders present the following information (examples include
         'Pitch slider, 5.0, 56%'; 'Volume slider, 9.0, 100%'):
 
@@ -337,7 +330,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakMenuItem(self, obj, doubleClick):
+    def _speakMenuItem(self, obj, basicOnly):
         """Menu items present the following information (examples include
         'File menu, Open..., Control + O, item 2 of 20, O', 'File menu,
         Wizards Menu, item 4 of 20, W'):
@@ -408,7 +401,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakPageTab(self, obj, doubleClick):
+    def _speakPageTab(self, obj, basicOnly):
         """Tabs in a Tab List present the following information (an example
         is 'Tab list, braille page, item 2 of 5'):
 
@@ -438,7 +431,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakText(self, obj, doubleClick):
+    def _speakText(self, obj, basicOnly):
         """Text boxes present the following information (an example is
         'Source display: text, blank, Alt O'):
 
@@ -463,8 +456,8 @@ class WhereAmI:
         utterances.append(text)
 
         [textContents, startOffset, endOffset, selected] = \
-                       self._getTextContents(obj, doubleClick)
-        if doubleClick:
+                       self._getTextContents(obj, basicOnly)
+        if not basicOnly:
             # Speak character attributes.
             textContents = \
                 self._insertAttributes(obj, startOffset,
@@ -478,7 +471,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-        if doubleClick:
+        if not basicOnly:
             settings.verbalizePunctuationStyle = savedStyle
 
         utterances = []
@@ -498,7 +491,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakTableCell(self, obj, doubleClick):
+    def _speakTableCell(self, obj, basicOnly):
         """Tree Tables present the following information (an example is
         'Tree table, Mike Pedersen, item 8 of 10, tree level 2'):
 
@@ -528,7 +521,7 @@ class WhereAmI:
         speech.speakUtterances(utterances)
 
         utterances = []
-        if doubleClick:
+        if not basicOnly:
             table = parent.queryTable()
             row = table.getRowAtIndex(
               orca_state.locusOfFocus.getIndexInParent())
@@ -547,7 +540,7 @@ class WhereAmI:
         # Speak the remaining items.
         utterances = []
 
-        if not doubleClick:
+        if basicOnly:
             try:
                 table = parent.queryTable()
             except NotImplementedError:
@@ -590,7 +583,7 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakListItem(self, obj, doubleClick):
+    def _speakListItem(self, obj, basicOnly):
         """List items should be treated like tree cells:
 
         1. label, if any
@@ -651,12 +644,12 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakParagraph(self, obj, doubleClick):
+    def _speakParagraph(self, obj, basicOnly):
         """Speak a paragraph object.
         """
-        self._speakText(obj, doubleClick)
+        self._speakText(obj, basicOnly)
 
-    def _speakIconPanel(self, obj, doubleClick):
+    def _speakIconPanel(self, obj, basicOnly):
         """Speak the contents of the pane containing this icon. The
         number of icons in the pane is spoken. Plus the total number of
         selected icons. Plus the name of each of the selected icons.
@@ -700,19 +693,19 @@ class WhereAmI:
         itemString = _("on item %d of %d") % (currentItem, childCount)
         utterances.append(itemString)
 
-        if doubleClick:
+        if not basicOnly:
             for i in range(0, len(selectedItems)):
                 utterances.append(self.getObjLabelAndName(selectedItems[i]))
 
         speech.speakUtterances(utterances)
         
-    def _speakLink(self, obj, doubleClick):
+    def _speakLink(self, obj, basicOnly):
         """Speaks information about a link including protocol, domain 
         comparisons and size of file if possible
         
         Arguments:
         - obj: the icon object that currently has focus.
-        - doubleClick: was it a doubleclick event?
+        - basicOnly: True if the user is performing a standard/basic whereAmI.
         """
         
         # get the URI for the link of interest and parse it.
@@ -772,7 +765,7 @@ class WhereAmI:
 
         speech.speakUtterances([linkoutput, domainoutput, sizeoutput])
 
-    def _speakToggleButton(self, obj, doubleClick):
+    def _speakToggleButton(self, obj, basicOnly):
         """Speak toggle button information:
            1. Name/Label
            2. Role
@@ -832,7 +825,7 @@ class WhereAmI:
             #
             return _('%.2f megabytes') % (float(size) * .000001) 
 
-    def _speakGenericObject(self, obj, doubleClick):
+    def _speakGenericObject(self, obj, basicOnly):
         """Speak a generic object; one not specifically handled by
         other methods.
         """
@@ -1164,15 +1157,15 @@ class WhereAmI:
 
         return [textContents, startOffset, endOffset]
 
-    def getTextSelections(self, obj, doubleClick):
+    def getTextSelections(self, obj, basicOnly):
         """Get all the text applicable text selections for the given object.
-        If the user doubleclicked, look to see if there are any previous 
-        or next text objects that also have selected text and add in their 
-        text contents.
+        If the user is doing a detailed whereAmI, look to see if there are
+        any previous or next text objects that also have selected text and
+        add in their text contents.
 
         Arguments:
         - obj: the text object to start extracting the selected text from.
-        - doubleClick: True if the user double-clicked the "where am I" key.
+        - basicOnly: True if the user is performing a standard/basic whereAmI.
 
         Returns: all the selected text contents plus the start and end
         offsets within the text for the given object.
@@ -1186,7 +1179,7 @@ class WhereAmI:
             [textContents, startOffset, endOffset] = \
                                             self._getTextSelection(obj)
 
-        if doubleClick:
+        if not basicOnly:
             current = obj
             morePossibleSelections = True
             while morePossibleSelections:
@@ -1308,7 +1301,7 @@ class WhereAmI:
 
         return [currentSelected, otherSelected]
 
-    def _getTextContents(self, obj, doubleClick):
+    def _getTextContents(self, obj, basicOnly):
         """Returns utterences for text.
 
         A. if no text on the current line is selected, the current line
@@ -1328,11 +1321,11 @@ class WhereAmI:
             (caretOffset, nSelections))
 
         [current, other] = self._hasTextSelections(obj)
-        if (doubleClick and (current or other)) or \
-           (not doubleClick and current):
+        if (not basicOnly and (current or other)) or \
+           (basicOnly and current):
             selected = True
             [textContents, startOffset, endOffset] = \
-                                  self.getTextSelections(obj, doubleClick)
+                                  self.getTextSelections(obj, basicOnly)
         else:
             # Get the line containing the caret
             #
@@ -1455,43 +1448,51 @@ class WhereAmI:
 
         return dictionary
 
-    def _speakTitleOrStatus(self, obj, doubleClick):
-        """When pressed a single time, Orca will speak the following
-        information:
+    def speakTitle(self, obj):
+        """Orca will speak the following information:
 
         1. The contents of the title bar of the application main window
         2. If in a dialog box within an application, the contents of the
         title bar of the dialog box.
         3. Orca will pause briefly between these two pieces of information
         so that the speech user can distinguish each.
-
-        If pressed twice, Orca will speak the status bar.
         """
 
         utterances = []
 
         results = self._getFrameAndDialog(obj)
 
-        if doubleClick:
-            if results[0]:
-                self._statusBar = None
-                self._getStatusBar(results[0])
-                if self._statusBar:
-                    self._speakStatusBar()
-            window = results[1] or results[0]
-            if window:
-                self._speakDefaultButton(window)
-        else:
-            if results[0]:
-                text = self.getObjLabelAndName(results[0])
-                utterances.append(text)
-            if results[1]:
-                text = self.getObjLabelAndName(results[1])
-                utterances.append(text)
+        if results[0]:
+            text = self.getObjLabelAndName(results[0])
+            utterances.append(text)
+        if results[1]:
+            text = self.getObjLabelAndName(results[1])
+            utterances.append(text)
 
-            debug.println(self._debugLevel, "titlebar utterances=%s" % \
-                          utterances)
-            speech.speakUtterances(utterances)
+        debug.println(self._debugLevel, "titlebar utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+    def speakStatusBar(self, obj):
+        """Speak the contents of the status bar of the window with focus.
+        """
+ 
+        utterances = []
+ 
+        results = self._getFrameAndDialog(obj)
+
+        if results[0]:
+            self._statusBar = None
+            self._getStatusBar(results[0])
+            if self._statusBar:
+                self._speakStatusBar()
+        window = results[1] or results[0]
+        if window:
+            self._speakDefaultButton(window)
+
+        debug.println(self._debugLevel, "status bar utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
 
     def _getFrameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing

@@ -56,8 +56,9 @@ except ImportError:
 
 from orca_i18n import _  # for gettext support
 
-(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, OLDTEXT1, TEXT1, \
- MOD_MASK2, MOD_USED2, KEY2, OLDTEXT2, TEXT2, MODIF, EDITABLE) = range(14)
+(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
+ TEXT1, MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, OLDTEXT2, TEXT2, MODIF, \
+ EDITABLE) = range(16)
 
 (NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
 
@@ -156,11 +157,13 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             gobject.TYPE_STRING,  # Modifier mask 1
             gobject.TYPE_STRING,  # Used Modifiers 1
             gobject.TYPE_STRING,  # Modifier key name 1
+            gobject.TYPE_STRING,  # Click count 1
             gobject.TYPE_STRING,  # Original Text of the Key Binding Shown 1
             gobject.TYPE_STRING,  # Text of the Key Binding Shown 1
             gobject.TYPE_STRING,  # Modifier mask 2
             gobject.TYPE_STRING,  # Used Modifiers 2
             gobject.TYPE_STRING,  # Modifier key name 2
+            gobject.TYPE_STRING,  # Click count 2
             gobject.TYPE_STRING,  # Original Text of the Key Binding Shown 2
             gobject.TYPE_STRING,  # Text of the Key Binding Shown 2
             gobject.TYPE_BOOLEAN, # Key Modified by User
@@ -224,6 +227,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(KEY1)
         self.keyBindView.append_column(column)
 
+        # CLICK_COUNT1 - invisble column
+        #
+        column = gtk.TreeViewColumn("ClickCount1",
+                                    gtk.CellRendererText(),
+                                    text=CLICK_COUNT1)
+        column.set_resizable(True)
+        column.set_visible(False)
+        column.set_sort_column_id(CLICK_COUNT1)
+        self.keyBindView.append_column(column)
+
         # OLDTEXT1 - invisble column which will store a copy of the
         # original keybinding in TEXT1 prior to the Apply or OK
         # buttons being pressed.  This will prevent automatic
@@ -248,7 +261,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         rendererText.connect('edited',
                              self.editedKey,
                              self.keyBindingsModel,
-                             MOD_MASK1, MOD_USED1, KEY1, TEXT1)
+                             MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, TEXT1)
 
         # Translators: Key Binding is a table column header where
         # the cells in the column represent keyboard combinations
@@ -290,6 +303,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         column.set_sort_column_id(KEY2)
         self.keyBindView.append_column(column)
 
+        # CLICK_COUNT2 - invisble column
+        #
+        column = gtk.TreeViewColumn("ClickCount2",
+                                    gtk.CellRendererText(),
+                                    text=CLICK_COUNT2)
+        column.set_resizable(True)
+        column.set_visible(False)
+        column.set_sort_column_id(CLICK_COUNT2)
+        self.keyBindView.append_column(column)
+
         # OLDTEXT2 - invisble column which will store a copy of the
         # original keybinding in TEXT1 prior to the Apply or OK
         # buttons being pressed.  This will prevent automatic
@@ -314,7 +337,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         rendererText.connect('edited',
                              self.editedKey,
                              self.keyBindingsModel,
-                             MOD_MASK2, MOD_USED2, KEY2, TEXT2)
+                             MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, TEXT2)
 
         # Translators: Alternate is a table column header where
         # the cells in the column represent keyboard combinations
@@ -1946,6 +1969,30 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         return None
 
+    def _clickCountToString(self, clickCount):
+        """Given a numeric clickCount, returns a string for inclusion
+        in the list of keybindings.
+
+        Argument:
+        - clickCount: the number of clicks associated with the keybinding.
+        """
+
+        clickCountString = ""
+        if clickCount == 2:
+            # Translators: Orca keybindings support double
+            # and triple "clicks" or key presses, similar to
+            # using a mouse. 
+            #
+            clickCountString = " " + _("(double click)")
+        elif clickCount == 3:
+            # Translators: Orca keybindings support double
+            # and triple "clicks" or key presses, similar to
+            # using a mouse. 
+            #
+            clickCountString = " " + _("(triple click)")
+
+        return clickCountString
+
     def _addAlternateKeyBinding(self, kb):
         """Adds an alternate keybinding to the existing handler and
         returns true.  In case it doesn't exist yet, just returns
@@ -1967,12 +2014,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                     if not kb.keysymstring:
                         text = None
                     else:
+                        clickCount = self._clickCountToString(kb.click_count)
                         text = keybindings.getModifierNames(kb.modifiers) \
-                               + kb.keysymstring
+                               + kb.keysymstring \
+                               + clickCount
                     model.set(iterChild,
                               MOD_MASK2, kb.modifier_mask,
                               MOD_USED2, kb.modifiers,
                               KEY2, kb.keysymstring,
+                              CLICK_COUNT2, kb.click_count,
                               OLDTEXT2, text,
                               TEXT2, text)
                 iterChild = model.iter_next(iterChild)
@@ -2002,18 +2052,21 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             if not kb.keysymstring:
                 text = None
             else:
+                clickCount = self._clickCountToString(kb.click_count)
                 text = keybindings.getModifierNames(kb.modifiers) \
-                       + kb.keysymstring
+                       + kb.keysymstring \
+                       + clickCount
             model.set (myiter,
-                       HANDLER,   handl,
-                       DESCRIP,   kb.handler.description,
-                       MOD_MASK1, kb.modifier_mask,
-                       MOD_USED1, kb.modifiers,
-                       KEY1,      kb.keysymstring,
-                       OLDTEXT1,  text,
-                       TEXT1,     text,
-                       MODIF,     modif,
-                       EDITABLE,  True)
+                       HANDLER,      handl,
+                       DESCRIP,      kb.handler.description,
+                       MOD_MASK1,    kb.modifier_mask,
+                       MOD_USED1,    kb.modifiers,
+                       KEY1,         kb.keysymstring,
+                       CLICK_COUNT1, kb.click_count,
+                       OLDTEXT1,     text,
+                       TEXT1,        text,
+                       MODIF,        modif,
+                       EDITABLE,     True)
             return myiter
         else:
             return None
@@ -3337,12 +3390,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             speech.speak(_("Key binding deleted. Press enter to confirm."))
             return True
 
+        clickCount = orca_state.clickCount
         self.newBinding = keybindings.KeyBinding(keyName,
                                                  captured.modifiers,
                                                  captured.modifiers,
-                                                 None)
+                                                 None,
+                                                 clickCount)
         modifierNames = keybindings.getModifierNames(captured.modifiers)
-        newString = modifierNames + keyName
+        clickCount = self._clickCountToString(clickCount)
+        newString = modifierNames + keyName + clickCount
         description = self.pendingKeyBindings.get(newString)
         if description is None \
            and self.kbindings.hasKeyBinding(self.newBinding, "keysNoMask"):
@@ -3369,7 +3425,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         return True
             
     def editedKey(self, cell, path, new_text, treeModel, 
-                  modMask, modUsed, key, text):
+                  modMask, modUsed, key, click_count, text):
         """The user changed the key for a Keybinding: update the model of
         the treeview.
         """
@@ -3382,15 +3438,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         try:
             string = self.newBinding.keysymstring
             mods = self.newBinding.modifiers
+            clickCount = self.newBinding.click_count
         except:
             string = None
             mods = 0
+            clickCount = 1
 
         treeModel.set(myiter,
                       modMask, mods,
                       modUsed, mods,
                       key, string,
                       text, new_text,
+                      click_count, clickCount,
                       MODIF, modified)
         speech.stop()
         if new_text:

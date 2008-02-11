@@ -58,9 +58,9 @@ class WhereAmI(where_am_I.WhereAmI):
 
         where_am_I.WhereAmI.__init__(self, script)
 
-    def _speakTableCell(self, obj, doubleClick):
+    def _speakTableCell(self, obj, basicOnly):
         """Given the nature of OpenOffice Calc, Orca should override the
-        default KP_Enter behavior when the item with focus is a cell
+        default whereAmI behavior when the item with focus is a cell
         within Calc. In this instance, the following information should
         be spoken/displayed:
 
@@ -97,18 +97,18 @@ class WhereAmI(where_am_I.WhereAmI):
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakParagraph(self, obj, doubleClick):
+    def _speakParagraph(self, obj, basicOnly):
         """OpenOffice Calc cells have the role "paragraph" when
         they are being edited.
         """
 
         top = self._script.getTopLevel(obj)
         if top and top.name.endswith(" Calc"):
-            self._speakCalc(obj, doubleClick)
+            self._speakCalc(obj, basicOnly)
         elif top and top.name.endswith(" Writer"):
-            self._speakText(obj, doubleClick)
+            self._speakText(obj, basicOnly)
 
-    def _speakCalc(self, obj, doubleClick):
+    def _speakCalc(self, obj, basicOnly):
         """Speak a OpenOffice Calc cell.
         """
 
@@ -118,7 +118,7 @@ class WhereAmI(where_am_I.WhereAmI):
         # No way to get cell coordinates?
 
         [textContents, startOffset, endOffset, selected] = \
-            self._getTextContents(obj, doubleClick)
+            self._getTextContents(obj, basicOnly)
         text = textContents
         utterances.append(text)
         if selected:
@@ -169,12 +169,10 @@ class WhereAmI(where_am_I.WhereAmI):
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakTitleOrStatus(self, obj, doubleClick):
-        """Speak the title or status bar contents.
+    def speakTitle(self, obj):
+        """Speak the title bar.
 
-        Calc-Specific Handling: If pressed a single time while focus is
-        on a cell within OpenOffice Calc, Orca will speak the following
-        information:
+        Calc-Specific Handling: 
 
         1. The contents of the title bar of the application main window
         2. The title of the current worksheet
@@ -185,29 +183,45 @@ class WhereAmI(where_am_I.WhereAmI):
 
         top = self._script.getTopLevel(obj)
         if top and not top.name.endswith(" Calc"):
-            return where_am_I.WhereAmI._speakTitleOrStatus(self,
-                                                           obj,
-                                                           doubleClick)
+            return where_am_I.WhereAmI.speakTitle(self, obj)
+
         utterances = []
 
         mylist = self._getCalcFrameAndSheet(obj)
-        if doubleClick:
-            if mylist[0]:
-                self._statusBar = None
-                self._getStatusBar(mylist[0])
-                if self._statusBar:
-                    self._speakCalcStatusBar()
-        else:
-            if mylist[0]:
-                text = self.getObjLabelAndName(mylist[0])
-                utterances.append(text)
-            if mylist[1]:
-                text = self.getObjLabelAndName(mylist[1])
-                utterances.append(text)
+        if mylist[0]:
+            text = self.getObjLabelAndName(mylist[0])
+            utterances.append(text)
+        if mylist[1]:
+            text = self.getObjLabelAndName(mylist[1])
+            utterances.append(text)
 
-            debug.println(self._debugLevel,
-                          "Calc titlebar and sheet utterances=%s" % utterances)
-            speech.speakUtterances(utterances)
+        debug.println(self._debugLevel,
+                      "Calc titlebar and sheet utterances=%s" % utterances)
+        speech.speakUtterances(utterances)
+
+    def speakStatusBar(self, obj):
+        """Speak the status bar contents.
+
+        Note that if the application with focus is Calc, but a cell does not
+        have focus, the default behavior should be used.
+        """
+
+        top = self._script.getTopLevel(obj)
+        if top and not top.name.endswith(" Calc"):
+            return where_am_I.WhereAmI.speakStatusBar(self, obj)
+
+        utterances = []
+
+        mylist = self._getCalcFrameAndSheet(obj)
+        if mylist[0]:
+            self._statusBar = None
+            self._getStatusBar(mylist[0])
+            if self._statusBar:
+                self._speakCalcStatusBar()
+
+        debug.println(self._debugLevel,
+                      "Calc status bar utterances=%s" % utterances)
+        speech.speakUtterances(utterances)
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCellRow so that , when we are
@@ -773,11 +787,6 @@ class Script(default.Script):
         self.lastStartOff = -1
         self.lastEndOff = -1
 
-        # Used to determine if the user has double-clicked the dynamic
-        # row/column hotkeys.
-
-        self.lastDynamicEvent = None
-
         # Used to determine whether the caret has moved to a new paragraph.
         #
         self.currentParagraph = None
@@ -883,6 +892,14 @@ class Script(default.Script):
                 _("Set the row to use as dynamic column headers " \
                   "when speaking calc cells."))
 
+        self.inputEventHandlers["clearDynamicColumnHeadersHandler"] = \
+            input_event.InputEventHandler(
+                Script.clearDynamicColumnHeaders,
+                # Translators: Orca allows you to dynamically define which
+                # row of a spreadsheet or table counts as column headers.
+                #
+                _("Clears the dynamic column headers."))
+
         self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.setDynamicRowHeaders,
@@ -891,6 +908,14 @@ class Script(default.Script):
                 #
                 _("Set the column to use as dynamic row headers " \
                   "to use when speaking calc cells."))
+
+        self.inputEventHandlers["clearDynamicRowHeadersHandler"] = \
+            input_event.InputEventHandler(
+                Script.clearDynamicRowHeaders,
+                # Translators: Orca allows you to dynamically define which
+                # column of a spreadsheet or table counts as row headers.
+                #
+                _("Clears the dynamic row headers"))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -913,14 +938,32 @@ class Script(default.Script):
                 "r",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["setDynamicColumnHeadersHandler"]))
+                self.inputEventHandlers["setDynamicColumnHeadersHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["clearDynamicColumnHeadersHandler"],
+                2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "c",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["setDynamicRowHeadersHandler"]))
+                self.inputEventHandlers["setDynamicRowHeadersHandler"],
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "c",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["clearDynamicRowHeadersHandler"],
+                2))
 
         return keyBindings
 
@@ -1409,40 +1452,48 @@ class Script(default.Script):
         Once the user has defined the row, it will be used to first speak
         this header when moving between columns.
 
-        A "double-click" of the Insert-c hotkey, will clear the dynamic
-        header column.
-
         Arguments:
         - inputEvent: if not None, the input event that caused this action.
         """
 
         debug.println(self.debugLevel, "StarOffice.setDynamicColumnHeaders.")
 
-        clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
         table = self.getTable(orca_state.locusOfFocus)
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
-            if clickCount == 2:
-                try:
-                    del self.dynamicColumnHeaders[table]
-                    # Translators: Orca allows you to dynamically define which
-                    # row of a spreadsheet or table counts as column headers.
-                    #
-                    line = _("Dynamic column header cleared.")
-                    speech.stop()
-                    speech.speak(line)
-                    braille.displayMessage(line)
-                except:
-                    pass
-            else:
-                self.dynamicColumnHeaders[table] = row
+            self.dynamicColumnHeaders[table] = row
+            # Translators: Orca allows you to dynamically define which
+            # row of a spreadsheet or table counts as column headers.
+            #
+            line = _("Dynamic column header set for row %d") % (row+1)
+            speech.speak(line)
+            braille.displayMessage(line)
+
+        return True
+
+    def clearDynamicColumnHeaders(self, inputEvent):
+        """Clear the dynamic header column.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "StarOffice.clearDynamicColumnHeaders.")
+
+        table = self.getTable(orca_state.locusOfFocus)
+        if table:
+            row = self.getTableRow(orca_state.locusOfFocus)
+            try:
+                del self.dynamicColumnHeaders[table]
                 # Translators: Orca allows you to dynamically define which
                 # row of a spreadsheet or table counts as column headers.
                 #
-                line = _("Dynamic column header set for row ") + str(row+1)
+                line = _("Dynamic column header cleared.")
+                speech.stop()
                 speech.speak(line)
                 braille.displayMessage(line)
-        self.lastDynamicEvent = inputEvent
+            except:
+                pass
 
         return True
 
@@ -1477,42 +1528,49 @@ class Script(default.Script):
         Once the user has defined the column, it will be used to first speak
         this header when moving between rows.
 
-        A "double-click" of the Insert-r hotkey, will clear the dynamic
-        header row.
-
         Arguments:
         - inputEvent: if not None, the input event that caused this action.
         """
 
         debug.println(self.debugLevel, "StarOffice.setDynamicRowHeaders.")
 
-        clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
         table = self.getTable(orca_state.locusOfFocus)
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)
-            if clickCount == 2:
-                try:
-                    del self.dynamicRowHeaders[table]
-                    # Translators: Orca allows you to dynamically define which
-                    # column of a spreadsheet or table counts as row headers.
-                    #
-                    line = _("Dynamic row header cleared.")
-                    speech.stop()
-                    speech.speak(line)
-                    braille.displayMessage(line)
-                except:
-                    pass
-            else:
-                self.dynamicRowHeaders[table] = column
+            self.dynamicRowHeaders[table] = column
+            # Translators: Orca allows you to dynamically define which
+            # column of a spreadsheet or table counts as row headers.
+            #
+            line = _("Dynamic row header set for column %s") \
+                   % self.columnConvert(column+1)
+            speech.speak(line)
+            braille.displayMessage(line)
+
+        return True
+
+    def clearDynamicRowHeaders(self, inputEvent):
+        """Clear the dynamic row headers.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "StarOffice.clearDynamicRowHeaders.")
+
+        table = self.getTable(orca_state.locusOfFocus)
+        if table:
+            column = self.getTableColumn(orca_state.locusOfFocus)
+            try:
+                del self.dynamicRowHeaders[table]
                 # Translators: Orca allows you to dynamically define which
                 # column of a spreadsheet or table counts as row headers.
                 #
-                line = _("Dynamic row header set for column %s") \
-                       % self.columnConvert(column+1)
+                line = _("Dynamic row header cleared.")
+                speech.stop()
                 speech.speak(line)
                 braille.displayMessage(line)
-
-        self.lastDynamicEvent = inputEvent
+            except:
+                pass
 
         return True
 

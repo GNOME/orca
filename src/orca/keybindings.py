@@ -39,6 +39,7 @@ except ImportError:
 import pyatspi
 import debug
 import settings
+import orca_state
 
 from orca_i18n import _           # for gettext support
 
@@ -200,7 +201,8 @@ class KeyBinding:
     and the InputEventHandler.
     """
 
-    def __init__(self, keysymstring, modifier_mask, modifiers, handler):
+    def __init__(self, keysymstring, modifier_mask, modifiers, handler,
+                 click_count = 1):
         """Creates a new key binding.
 
         Arguments:
@@ -219,6 +221,7 @@ class KeyBinding:
         self.modifier_mask = modifier_mask
         self.modifiers = modifiers
         self.handler = handler
+        self.click_count = click_count
         self.keycode = None
 
     def matches(self, keycode, modifiers):
@@ -249,10 +252,12 @@ class KeyBindings:
     def __str__(self):
         result = "[\n"
         for keyBinding in self.keyBindings:
-            result += "  [%x %x %s %s]\n" % (keyBinding.modifier_mask,
-                                             keyBinding.modifiers,
-                                             keyBinding.keysymstring,
-                                             keyBinding.handler.description)
+            result += "  [%x %x %s %d %s]\n" % \
+                      (keyBinding.modifier_mask,
+                       keyBinding.modifiers,
+                       keyBinding.keysymstring,
+                       keyBinding.click_count,
+                       keyBinding.handler.description)
         result += "]"
         return result
     
@@ -283,10 +288,12 @@ class KeyBindings:
         """Return True if keyBinding is already in self.keyBindings.
 
            The typeOfSearch can be:
-              "strict":      matches description, modifiers, key
+              "strict":      matches description, modifiers, key, and
+                             click count
               "description": matches only description.
-              "keys":        matches the modifiers, key, and modifier mask
-              "keysNoMask":  matches the modifiers and key only
+              "keys":        matches the modifiers, key, and modifier mask,
+                             and click count
+              "keysNoMask":  matches the modifiers, key, and click count
         """
 
         hasIt = False
@@ -300,7 +307,9 @@ class KeyBindings:
                     and (keyBinding.modifier_mask \
                          == newKeyBinding.modifier_mask) \
                     and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers):
+                         == newKeyBinding.modifiers) \
+                    and (keyBinding.click_count \
+                         == newKeyBinding.click_count):
                     hasIt = True
             elif typeOfSearch == "description":
                 if keyBinding.handler.description \
@@ -312,13 +321,17 @@ class KeyBindings:
                     and (keyBinding.modifier_mask \
                          == newKeyBinding.modifier_mask) \
                     and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers):
+                         == newKeyBinding.modifiers) \
+                    and (keyBinding.click_count \
+                         == newKeyBinding.click_count):
                     hasIt = True
             elif typeOfSearch == "keysNoMask":
                 if (keyBinding.keysymstring \
                     == newKeyBinding.keysymstring) \
                     and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers):
+                         == newKeyBinding.modifiers) \
+                    and (keyBinding.click_count \
+                         == newKeyBinding.click_count):
                     hasIt = True
 
         return hasIt
@@ -327,15 +340,31 @@ class KeyBindings:
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.
         """
-        handler = None
+
+        if not orca_state.activeScript:
+            return None
+
+        candidates = []
+        clickCount = orca_state.activeScript.getClickCount()
         for keyBinding in self.keyBindings:
             if keyBinding.matches(keyboardEvent.hw_code, \
                                   keyboardEvent.modifiers):
-                handler = keyBinding.handler
-                if keyBinding.modifier_mask == keyboardEvent.modifiers:
-                    break
+                if keyBinding.modifier_mask == keyboardEvent.modifiers and \
+                   keyBinding.click_count == clickCount:
+                    return keyBinding.handler
+                candidates.append(keyBinding)
 
-        return handler
+        # If we're still here, we don't have an exact match. Prefer
+        # the one whose click count is closest to, but does not exceed,
+        # the actual click count.
+        #
+        candidates.sort(cmp=lambda x, y: x.click_count - y.click_count,
+                        reverse=True)
+        for candidate in candidates:
+            if candidate.click_count <= clickCount:
+                return candidate.handler
+
+        return None
 
     def consumeKeyboardEvent(self, script, keyboardEvent):
         """Attempts to consume the given keyboard event.  If these
