@@ -1,3 +1,80 @@
+2.21.91 - 11-Feb-2008
+
+General:
+
+* Fix for bug #133275 - (gedit) accessible description for page not
+  correct
+
+* Work on bug #354470 - Contracted braille.  This provides fundamental
+  contracted braille support via liblouis.
+
+* Fix for bug #434654 - Orca skips a line in flat review mode or
+  with braille navigation (braille up / down).  This fixes the
+  bug in question, but there is an asymmetric behavior that happens
+  when flat reviewing by word.  Flat review by previous word will
+  land blank line at the end of a text area (if it has one), but
+  won't do do when navigating by next work.  Tracking the asymmetric 
+  navigation issue in bug #515817.
+
+* Fix for bug #440490 - Key bindings should allow double and triple
+  press features to be rebound
+
+* Fix for bug #486908 - Selection and navigation in multiselectable
+  items are not properly handled
+
+* Fix for bug #512608 - Punctuation in keyboard review mode
+
+* Fix for bug #512639 - rhythmbox Library table not accessible
+
+* Fix for bug #512847 - Flat review is quite broken in OpenOffice and
+  Firefox
+
+OpenOffice:
+
+* Fix for bug #363830 - Provide feedback in OOo when toggling bold,
+  underline, and italics
+
+Firefox:
+
+* Fix for bug #462883 - ARIA tooltips/alerts are not being output
+
+* Fix for bug #506360 - find{Next,Previous}Line() should be more
+  efficient
+
+* Fix for bug #511354 - cannot press enter to activate links in area
+  tags, although tabbing works
+
+* Fix for bug #511389 - Orca doesn't always speak a link that regains
+  focus in FF3
+
+* Fix for bug #512236 - missing links in ff3 when navigating down page
+
+* Fix for bug #512303 - table captions are not being presented
+
+* Fix for bug #513217 - object navigation sticking on same line
+  comboboxes
+
+* Fix for bug #513425 - orca object navigation is not consistant when
+  moving to the left/to the right
+
+* Fix for bug #514427 - Orca skips over headings at the end of
+  sections in FF3
+
+* Fix for bug #515652 - Gecko.py script causing Traceback
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    de      German               Jochen Skulj
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    it      Italian              Luca Ferretti
+    oc      Occitan              Yannig Marchegay
+    pt      Portuguese           Duarte Loreto
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.21.90 - 28-Jan-2008
 
 General:
