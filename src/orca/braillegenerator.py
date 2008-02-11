@@ -331,9 +331,6 @@ class BrailleGenerator:
 
         text = ""
         state = obj.getState()
-        text = self._script.appendString(
-            text,
-            settings.brailleCheckBoxIndicators[indicatorindex])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -344,7 +341,9 @@ class BrailleGenerator:
             text, self._getTextForRole(obj, pyatspi.ROLE_CHECK_BOX))
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleCheckBoxIndicators[indicatorindex])
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -372,9 +371,6 @@ class BrailleGenerator:
 
         text = ""
         state = obj.getState()
-        text = self._script.appendString(
-            text,
-            settings.brailleCheckBoxIndicators[indicatorindex])
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -390,7 +386,9 @@ class BrailleGenerator:
                                       "")
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleCheckBoxIndicators[indicatorindex])
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -764,9 +762,9 @@ class BrailleGenerator:
         #
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
-            text = self._script.appendString(
-                text,
-                settings.brailleCheckBoxIndicators[1])
+            indicator = settings.brailleCheckBoxIndicators[1]
+        else:
+            indicator = ''
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -781,7 +779,7 @@ class BrailleGenerator:
                                       "")
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(obj, text, indicator=indicator)
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -968,10 +966,6 @@ class BrailleGenerator:
 
         text = ""
         state = obj.getState()
-        text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[
-                int(state.contains(pyatspi.STATE_CHECKED))],
-            text)
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -988,7 +982,10 @@ class BrailleGenerator:
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleRadioButtonIndicators[ \
+            int(state.contains(pyatspi.STATE_CHECKED))])
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -1009,10 +1006,6 @@ class BrailleGenerator:
         text = ""
 
         state = obj.getState()
-        text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[
-                state.contains(pyatspi.STATE_CHECKED)],
-            text)
 
         text = self._script.appendString(
             text, self._script.getDisplayedLabel(obj))
@@ -1028,7 +1021,10 @@ class BrailleGenerator:
                                       "")
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleRadioButtonIndicators[ \
+            int(state.contains(pyatspi.STATE_CHECKED))])
         regions.append(componentRegion)
 
         return [regions, componentRegion]

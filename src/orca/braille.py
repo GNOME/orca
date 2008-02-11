@@ -38,6 +38,14 @@ import signal
 
 import pyatspi
 
+try:
+    import louis
+except ImportError:
+    louis = None
+    _defaultContractionTable = None
+else:
+    _defaultContractionTable = louis.getDefaultTable()
+
 # We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
 # are available.  Otherwise, we'll fall back to our own bindings.
 #
@@ -264,7 +272,7 @@ class Region:
     each region is determined by its string.
     """
 
-    def __init__(self, string, cursorOffset=0):
+    def __init__(self, string, cursorOffset=0, expandOnCursor=False):
         """Creates a new Region containing the given string.
 
         Arguments:
@@ -276,13 +284,27 @@ class Region:
         if not string:
             string = ""
 
+        # If louis is None, then we don't go into contracted mode.
+        self.contracted = settings.enableContractedBraille and \
+                          louis is not None
+        
+        self.expandOnCursor = expandOnCursor
+        
         string = string.decode("UTF-8")
-        if string[-1:] == "\n":
-            string = string[:-1]
-        self.string = string.encode("UTF-8")
+        string = string.strip('\n')
+        self.rawLine = string.encode("UTF-8")
 
-        self.cursorOffset = cursorOffset
+        if self.contracted:
+            self.contractionTable = settings.brailleContractionTable or \
+                                    _defaultContractionTable
 
+            self.string, self.inPos, self.outPos, self.cursorOffset = \
+                         self.contractLine(self.rawLine,
+                                           cursorOffset, expandOnCursor)
+        else:
+            self.string = self.rawLine
+            self.cursorOffset = cursorOffset
+            
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
@@ -299,14 +321,91 @@ class Region:
         #
         mask = ['\x00'] * len(self.string)
         return "".join(mask)
+    
+    def repositionCursor(self):
+        """Reposition the cursor offset for contracted mode.
+        """
+        if self.contracted:
+            self.string, self.inPos, self.outPos, self.cursorOffset = \
+                       self.contractLine(self.rawLine,
+                                         self.cursorOffset,
+                                         self.expandOnCursor)
 
+    def contractLine(self, line, cursorOffset=0, expandOnCursor=False):
+        """Contract the given line. Returns the contracted line, and the
+        cursor position in the contracted line.
+
+        Arguments:
+        - line: Line to contract.
+        - cursorOffset: Offset of cursor,defaults to 0.
+        - expandOnCursor: Expand word under cursor, False by default.
+        """
+
+        try:
+            cursorOnSpace = line[cursorOffset] == ' '
+        except IndexError:
+            cursorOnSpace = False
+            
+        if not expandOnCursor or cursorOnSpace:
+            contracted, inPos, outPos, cursorPos = \
+                             louis.translate([self.contractionTable],
+                                             line.decode(),
+                                             cursorPos=cursorOffset)
+        else:
+            contracted, inPos, outPos, cursorPos = \
+                             louis.translate([self.contractionTable],
+                                             line.decode(),
+                                             cursorPos=cursorOffset,
+                                             mode=louis.MODE.compbrlAtCursor)
+
+        return contracted, inPos, outPos, cursorPos
+    
+    def displayToBufferOffset(self, display_offset):
+        try:
+            offset = self.inPos[display_offset]
+        except IndexError:
+            # Off the chart, we just place the cursor at the end of the line.
+            offset = len(self.rawLine)
+        except AttributeError:
+            # Not in contracted mode.
+            offset = display_offset
+
+        return offset
+
+    def setContractedBraille(self, contracted):
+        if self.contracted == contracted:
+            return
+        self.contracted = contracted
+        if contracted:
+            self.contractionTable = settings.brailleContractionTable or \
+                                    _defaultContractionTable
+            self.contractRegion()
+        else:
+            self.expandRegion()
+
+    def contractRegion(self):
+        self.string, self.inPos, self.outPos, self.cursorOffset = \
+                     self.contractLine(self.rawLine,
+                                       self.cursorOffset,
+                                       self.expandOnCursor)
+        
+    def expandRegion(self):
+        if not self.contracted:
+            return
+        self.string = self.rawLine
+        try:
+            self.cursorOffset = self.inPos[self.cursorOffset]
+        except IndexError:
+            self.cursorOffset = len(self.string)
+        
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
     to any cursor routing key events and perform the default action on the
     accessible, if a default action exists.
     """
 
-    def __init__(self, accessible, string, cursorOffset=0):
+    def __init__(self, accessible, string, cursorOffset=0,
+                 indicator='', expandOnCursor=False):
         """Creates a new Component.
 
         Arguments:
@@ -316,7 +415,13 @@ class Component(Region):
                         for this Region if it gets focus.
         """
 
-        Region.__init__(self, string, cursorOffset)
+        Region.__init__(self, string, cursorOffset, expandOnCursor)
+        if indicator:
+            if self.string:
+                self.string = indicator + ' ' + self.string
+            else:
+                self.string = indicator
+
         self.accessible = accessible
 
     def processRoutingKey(self, offset):
@@ -349,7 +454,7 @@ class Text(Region):
     [[[TODO: WDW - need to add in text selection capabilities.  Logged
     as bugzilla bug 319754.]]]"""
 
-    def __init__(self, accessible, label=None, eol=""):
+    def __init__(self, accessible, label="", eol=""):
         """Creates a new Text region.
 
         Arguments:
@@ -381,14 +486,20 @@ class Text(Region):
         self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
 
         self.eol = eol
-        string = string + self.eol
 
-        self.label = label
-        if self.label:
-            string = self.label + " " + string
-            cursorOffset += len(self.label.decode("UTF-8")) + 1
+        if label:
+            self.label = label + ' '
+        else:
+            self.label = ''
 
-        Region.__init__(self, string, cursorOffset)
+        string = self.label + string
+
+        cursorOffset += len(self.label)
+        
+        Region.__init__(self, string, cursorOffset, True)
+
+        if not self.contracted:
+            self.string += self.eol
 
     def repositionCursor(self):
         """Attempts to reposition the cursor in response to a new
@@ -400,15 +511,20 @@ class Text(Region):
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
         cursorOffset = min(caretOffset - lineOffset, len(string))
-        if self.label:
-            cursorOffset += len(self.label.decode("UTF-8")) + 1
-
+        
         if lineOffset != self.lineOffset:
             return False
-        else:
-            self.caretOffset = caretOffset
-            self.lineOffset = lineOffset
-            self.cursorOffset = cursorOffset
+
+        self.caretOffset = caretOffset
+        self.lineOffset = lineOffset
+
+        cursorOffset += len(self.label)
+
+        if self.contracted:
+            self.string, self.inPos, self.outPos, cursorOffset = \
+                       self.contractLine(self.rawLine, cursorOffset, True)
+
+        self.cursorOffset = cursorOffset
 
         return True
 
@@ -417,11 +533,11 @@ class Text(Region):
         is 0-based, where 0 represents the leftmost character of text
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
+        
+        offset = self.displayToBufferOffset(offset)
 
-        if self.label:
-            offset = offset - len(self.label.decode("UTF-8")) - 1
-            if offset < 0:
-                return
+        if offset < 0:
+            return
 
         newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
         self.accessible.queryText().setCaretOffset(newCaretOffset)
@@ -517,16 +633,47 @@ class Text(Region):
 
         mask = "".join(attrMask)
 
+        if self.contracted:
+            contractedMask = [0] * len(self.rawLine)
+            outPos = self.outPos[len(self.label):]
+            if self.label:
+                # Transform the offsets.
+                outPos = \
+                       [offset - len(self.label) - 1 for offset in outPos]
+            for i, m in enumerate(mask):
+                try:
+                    contractedMask[outPos[i]] |= ord(m)
+                except IndexError:
+                    continue
+            mask = ''.join(map(chr, contractedMask))
+
         # Add empty mask characters for the EOL character as well as for
         # any label that might be present.
         #
         for i in range (0, len(self.eol)):
             mask += '\x00'
+
         if self.label:
             for i in range (0, len(self.label) + 1):
                 mask = '\x00' + mask
 
         return mask
+
+    def contractLine(self, line, cursorOffset=0, expandOnCursor=True):
+        contracted, inPos, outPos, cursorPos = Region.contractLine(
+            self, line, cursorOffset, expandOnCursor)
+        
+        return contracted + self.eol, inPos, outPos, cursorPos
+
+    def displayToBufferOffset(self, display_offset):
+        offset = Region.displayToBufferOffset(self, display_offset)
+        offset -= len(self.label)
+        return offset
+
+    def setContractedBraille(self, contracted):
+        Region.setContractedBraille(self, contracted)
+        if not contracted:
+            self.string += self.eol
 
 class ReviewComponent(Component):
     """A subclass of Component that is to be used for flat review mode."""
@@ -562,7 +709,7 @@ class ReviewText(Region):
         - zone: the flat review Zone associated with this component
         """
 
-        Region.__init__(self, string)
+        Region.__init__(self, string, expandOnCursor=True)
         self.accessible = accessible
         self.lineOffset = lineOffset
         self.zone = zone
@@ -573,6 +720,7 @@ class ReviewText(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
+        offset = self.displayToBufferOffset(offset)
         newCaretOffset = self.lineOffset + offset
         self.accessible.queryText().setCaretOffset(newCaretOffset)
 
@@ -656,6 +804,10 @@ class Line:
         [region, regionOffset] = self.getRegionAtOffset(offset)
         if region:
             region.processRoutingKey(regionOffset)
+
+    def setContractedBraille(self, contracted):
+        for region in self.regions:
+            region.setContractedBraille(contracted)
 
 def getRegionAtCell(cell):
     """Given a 1-based cell offset, return the braille region
@@ -1052,6 +1204,12 @@ def _processBrailleEvent(command):
             _lines[lineNum].processRoutingKey(cursor)
             consumed = True
 
+    if command in (0x2141, 65): # Toggle six dot braille
+        settings.enableContractedBraille = not settings.enableContractedBraille
+        for line in _lines:
+            line.setContractedBraille(settings.enableContractedBraille)
+        refresh()
+
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
@@ -1067,7 +1225,7 @@ def _brlAPIKeyReader(source, condition):
         lower = key & 0xFFFFFFFF
         #keyType = lower >> 29
         keyCode = lower & 0x1FFFFFFF
-
+        
         # [[TODO: WDW - HACK If we have a cursor routing key, map
         # it back to the code we used to get with earlier versions
         # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
@@ -1103,8 +1261,10 @@ def setupKeyRanges(keys):
         #
         for key in keys:
             keySet.append(brlapi.KEY_TYPE_CMD | key)
-
+            
         brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
+
+        brlAPI.acceptKeys(brlapi.rangeType_key, [65])
 
         debug.println(debug.LEVEL_FINEST, "Using BrlAPI v0.5.0+")
     except:

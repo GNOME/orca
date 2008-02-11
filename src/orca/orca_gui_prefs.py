@@ -49,6 +49,11 @@ import braille
 import speech
 import speechserver
 
+try:
+    import louis
+except ImportError:
+    louis = None
+
 from orca_i18n import _  # for gettext support
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, OLDTEXT1, TEXT1, \
@@ -947,7 +952,13 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
     def contractedBrailleToggled(self, checkbox):
         hbox = self.widgets.get_widget('contractionTablesHBox')
         hbox.set_sensitive(checkbox.get_active())
+        self.prefsDict["enableContractedBraille"] = checkbox.get_active()
 
+    def contractionTableComboChanged(self, combobox):
+        model = combobox.get_model()
+        myIter = combobox.get_active_iter()
+        self.prefsDict["brailleContractionTable"] = model[myIter][1]
+        
     def textAttributeSpokenToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
         checkboxes to be spoken. Update our model to reflect this, then
@@ -1431,6 +1442,36 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
+        if louis is None:
+            self.get_widget( \
+                "contractedBrailleCheckbutton").set_sensitive(False)
+        else:
+            self.get_widget("contractedBrailleCheckbutton").set_active( \
+                prefs["enableContractedBraille"])
+            # Set up contraction table combo box and set it to the
+            # currently used one.
+            # 
+            tablesCombo = self.get_widget("contractionTableCombo")
+            tableDict = louis.listTables()
+            selectedTableIter = None
+            selectedTable = prefs["brailleContractionTable"] or \
+                             louis.getDefaultTable()
+            if tableDict:
+                tablesModel = gtk.ListStore(str, str)
+                for name, fname in tableDict.items():
+                    it = tablesModel.append([name, fname])
+                    if os.path.join(louis.TABLES_DIR, fname) == selectedTable:
+                        selectedTable = it
+                cell = gtk.CellRendererText()
+                tablesCombo.pack_start(cell, True)
+                tablesCombo.add_attribute(cell, 'text', 0)
+                tablesCombo.set_model(tablesModel)
+                if selectedTable:
+                    tablesCombo.set_active_iter(selectedTable)
+                else:
+                    tablesCombo.set_active(0)
+            else:
+                tablesCombo.set_sensitive(False)
         if prefs["brailleVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
             self.get_widget("brailleBriefButton").set_active(True)
         else:

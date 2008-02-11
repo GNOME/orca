@@ -133,6 +133,52 @@ def _mushPosArrays(prefixPos, uncontractedLen, suffixPos):
 
    return pos
 
+def _partition(myStr, mySep):
+   """Provides an implementation of partition for compatibility with
+   Python 2.4.
+
+   Arguments:
+   - myStr: the string
+   - mySep: the separator to look for, starting at the beginning of the string
+
+   Returns:
+   (stringBeforeSep, mySep, stringAfterSep)
+   """
+
+   try:
+     return myStr.partition(mySep)
+   except AttributeError:
+     index = myStr.find(mySep)
+     if index < 0:
+        return (myStr, u'', u'')
+     else:
+        return (myStr[0:index], 
+                myStr[index:index+len(mySep)], 
+                myStr[index+len(mySep):])
+
+def _rpartition(myStr, mySep):
+   """Provides an implementation of rpartition for compatibility with
+   Python 2.4.
+
+   Arguments:
+   - myStr: the string
+   - mySep: the separator to look for, starting at the end of the string
+
+   Returns:
+   (stringBeforeSep, mySep, stringAfterSep)
+   """
+
+   try:
+     return myStr.rpartition(mySep)
+   except AttributeError:
+     index = myStr.rfind(mySep)
+     if index < 0:
+        return (u'', u'', myStr)
+     else:
+        return (myStr[0:index], 
+                myStr[index:index+len(mySep)], 
+                myStr[index+len(mySep):])
+
 def _divideLine(line, offset):
    """Isolates a word the cursor is on and returns the prefix,
    the cursored word, and the suffix. This is a temporary method
@@ -144,8 +190,9 @@ def _divideLine(line, offset):
    """
    if len(line) <= offset:
       return line, '', ''
-   firstHalf = line[:offset].rpartition(' ')
-   secondHalf = line[offset:].partition(' ')
+   
+   firstHalf = _rpartition(line[:offset], ' ')
+   secondHalf = _partition(line[offset:], ' ')
    return firstHalf[0] + firstHalf[1], \
           firstHalf[2] + secondHalf[0], \
           secondHalf[1] + secondHalf[2]

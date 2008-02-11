@@ -1654,6 +1654,9 @@ class Context:
                         regionWithFocus.cursorOffset += \
                             len(zone.words[wordIndex].string.decode("UTF-8"))
                 regionWithFocus.cursorOffset += self.charIndex
+                regionWithFocus.repositionCursor()
+                if isinstance(regionWithFocus, braille.ReviewComponent):
+                    regionWithFocus.expandRegion()
                 break
 
         return [regions, regionWithFocus]

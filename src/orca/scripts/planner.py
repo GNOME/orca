@@ -94,19 +94,18 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             allLabels = self._script.findByRole(filler, pyatspi.ROLE_LABEL)
             text += allLabels[0].name
 
+        text = self._script.appendString(text, self._getTextForRole(obj))
+
         if obj.getState().contains(pyatspi.STATE_CHECKED):
             brailleindicatorindex = 1
         else:
             brailleindicatorindex = 0
 
-        text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[brailleindicatorindex],
-            text)
-
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=\
+            settings.brailleRadioButtonIndicators[brailleindicatorindex])
         regions.append(componentRegion)
 
         return [regions, componentRegion]

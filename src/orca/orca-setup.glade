@@ -1252,8 +1252,8 @@ Hyperlink</property>
 				  <property name="wrap">False</property>
 				  <property name="adjustment">10 1 9999 1 10 10</property>
 				  <accessibility>
-				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
 				    <atkrelation target="speakProgressBarUnitsLabel" type="labelled-by"/>
+				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
 				  </accessibility>
 				  <signal name="value_changed" handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT"/>
 				</widget>
@@ -1525,6 +1525,7 @@ Sentence</property>
 
 		  <child>
 		    <widget class="GtkFrame" id="contractedBrailleFrame">
+		      <property name="visible">True</property>
 		      <property name="label_xalign">0</property>
 		      <property name="label_yalign">0.5</property>
 		      <property name="shadow_type">GTK_SHADOW_NONE</property>
@@ -1549,7 +1550,7 @@ Sentence</property>
 			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkCheckButton" id="checkbutton1">
+				<widget class="GtkCheckButton" id="contractedBrailleCheckbutton">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">_Enable Contracted Braille</property>
@@ -1612,6 +1613,7 @@ Sentence</property>
 				      <accessibility>
 					<atkrelation target="contractionTableLabel" type="labelled-by"/>
 				      </accessibility>
+				      <signal name="changed" handler="contractionTableComboChanged" last_modification_time="Fri, 18 Jan 2008 00:39:59 GMT"/>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -3504,8 +3506,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 24 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
 							    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
+							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCursorSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:31:48 GMT"/>
 							</widget>
@@ -3857,8 +3859,8 @@ Custom</property>
 							  <property name="wrap">False</property>
 							  <property name="adjustment">1 1 256 1 10 10</property>
 							  <accessibility>
-							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
 							    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
+							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
 							  </accessibility>
 							  <signal name="value_changed" handler="magCrossHairSizeValueChanged" last_modification_time="Wed, 03 May 2006 15:39:23 GMT"/>
 							</widget>
@@ -4295,8 +4297,8 @@ None</property>
 						  <property name="wrap">False</property>
 						  <property name="adjustment">0 0 100 1 10 10</property>
 						  <accessibility>
-						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
 						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
+						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
 						  </accessibility>
 						  <signal name="value_changed" handler="magEdgeMarginValueChanged" last_modification_time="Thu, 06 Dec 2007 22:57:50 GMT"/>
 						</widget>

@@ -155,7 +155,9 @@ userCustomizableSettings = [
     "enabledBrailledTextAttributes",
     "textAttributesBrailleIndicator",
     "enableProgressBarUpdates",
-    "progressBarUpdateInterval"
+    "progressBarUpdateInterval",
+    "enableContractedBraille",
+    "brailleContractionTable"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -905,3 +907,11 @@ ignoredEventsList = ['object:bounds-changed']
 # changes.  
 #
 inferLiveRegions = True
+
+# Contracted braille support.
+# 
+enableContractedBraille = False
+
+# Contracted braille table.
+# 
+brailleContractionTable = ''

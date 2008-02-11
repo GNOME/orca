@@ -261,6 +261,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
+        text = self._script.appendString(text, self._getTextForRole(obj))
+
         # get the Braille indicator
         state = obj.getState()
         if state.contains(pyatspi.STATE_INDETERMINATE):
@@ -269,14 +271,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             indicatorIndex = 1
         else:
             indicatorIndex = 0
-        text = self._script.appendString(
-            settings.brailleCheckBoxIndicators[indicatorIndex],
-            text)
-
-        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
-        componentRegion = braille.Component(obj, text)
+
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleCheckBoxIndicators[indicatorIndex])
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -325,15 +325,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not isLabelled and obj.name and len(obj.name):
                 text = self._script.appendString(text, obj.name)
 
-        indicatorIndex = 0 + obj.getState().contains(pyatspi.STATE_CHECKED)
-        text = self._script.appendString(
-            settings.brailleRadioButtonIndicators[indicatorIndex],
-            text)
-
         text = self._script.appendString(text, self._getTextForRole(obj))
 
+        indicatorIndex = int(obj.getState().contains(pyatspi.STATE_CHECKED))
+
         regions = []
-        componentRegion = braille.Component(obj, text)
+        componentRegion = braille.Component(
+            obj, text,
+            indicator=settings.brailleRadioButtonIndicators[indicatorIndex])
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -4602,7 +4601,8 @@ class Script(default.Script):
                 string = text.getText(startOffset, endOffset)
                 regions = [braille.Region(
                     string,
-                    focusedCharacterOffset - startOffset)]
+                    focusedCharacterOffset - startOffset,
+                    expandOnCursor=True)]
                 if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
                 else:

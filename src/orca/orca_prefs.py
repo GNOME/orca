@@ -687,6 +687,8 @@ class OrcaPrefs:
             elif key == "textAttributesBrailleIndicator":
                 value = self._getTextAttributesBrailleIndicatorString( \
                                                               prefsDict[key])
+            elif key == "brailleContractionTable":
+                value = "'%s'" % prefsDict[key]
             else:
                 value = prefsDict[key]
 
