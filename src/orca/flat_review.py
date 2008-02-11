@@ -702,7 +702,7 @@ class Context:
                 zone = line.zones[zoneToCheck]
                 currentLineIndex = lineToCheck
                 currentZoneIndex = zoneToCheck
-                if caretOffset:
+                if caretOffset and zone.words:
                     currentWordIndex = len(zone.words) - 1
                     currentCharIndex = \
                           zone.words[currentWordIndex].length - 1
@@ -941,6 +941,22 @@ class Context:
 
             textZones = self.splitTextIntoZones(
                 accessible, string, startOffset, cliprect)
+
+            # We need to account for the fact that newlines at the end of 
+            # text are treated as being on the same line when they in fact
+            # are a whole separate blank line.  So, we check for this and
+            # make up a new text zone for these cases.  See bug 434654.
+            #
+            if (endOffset == length) and (string[-1:] == "\n"):
+                [x, y, width, height] = text.getRangeExtents(startOffset, 
+                                                             endOffset,
+                                                             0)
+                if not textZones:
+                    textZones = []
+                textZones.append(TextZone(accessible,
+                                          endOffset,
+                                          "",
+                                          x, y + height, 0, height))
 
             if textZones:
                 zones.extend(textZones)

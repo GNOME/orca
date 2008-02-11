@@ -1,7 +1,17 @@
+2008-02-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/flat_review.py:
+	  Work on bug 434654 - Orca skips a line in flat review mode or
+	  with braille navigation (braille up / down).  This fixes the
+	  bug in question, but there is an asymmetric behavior that happens
+	  when flat reviewing by word.  Flat review by previous word will
+	  land blank line at the end of a text area (if it has one), but
+	  won't do do when navigating by next work.
+
 2008-02-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/Gecko.py:
-          Fixed bug #515652 – Gecko.py script causing Traceback.
+          Fix for bug #515652 - Gecko.py script causing Traceback.
 
 2008-02-10  Willie Walker <william.walker@sun.com>
 
