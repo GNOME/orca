@@ -55,12 +55,12 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
-     "     VISIBLE:  'Location  $l', cursor=10",
+     "     VISIBLE:  'View Menu', cursor=1",
      "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: 'Location autocomplete'",
-     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toolbars menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -79,10 +79,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+     "     VISIBLE:  'Location  $l', cursor=10",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield frame View menu'",
-     "SPEECH OUTPUT: 'Toolbars menu'"]))
+     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: 'View menu'",
+     "SPEECH OUTPUT: 'Toolbars menu'",]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

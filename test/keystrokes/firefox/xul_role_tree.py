@@ -207,7 +207,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Name column header'",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar  '"]))
+     "SPEECH OUTPUT: 'Bookmarks Toolbar  '",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
 # Now that the Places Manager is back to its pre-explored state,

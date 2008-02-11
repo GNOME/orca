@@ -181,7 +181,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Keywords Link : contains all of the keywords Combo  $l'",
      "     VISIBLE:  'contains all of the keywords Com', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Keywords: contains all of the keywords combo box'"]))
+     "SPEECH OUTPUT: 'Keywords contains all of the keywords combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -402,7 +402,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
      "     VISIBLE:  'Only include Combo bugs numbered', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'bugs numbered: Only include combo box'"]))
+     "SPEECH OUTPUT: 'Only include combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -444,7 +444,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '[Bug creation] List'",
      "     VISIBLE:  '[Bug creation] List', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
+     "SPEECH OUTPUT: 'Alias [Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -487,7 +487,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
      "     VISIBLE:  'Reuse same sort as last time Com', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
+     "SPEECH OUTPUT: 'Reuse same sort as last time combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

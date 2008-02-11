@@ -29,10 +29,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to button",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Cancel Button'",
-     "     VISIBLE:  'Cancel Button', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Print Dialog Print Button'",
+     "     VISIBLE:  'Print Button', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Cancel button'"]))
+     "SPEECH OUTPUT: 'Print button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -42,17 +42,17 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Cancel Button'",
-     "     VISIBLE:  'Cancel Button', cursor=1",
-     "SPEECH OUTPUT: 'Cancel'",
+    ["BRAILLE LINE:  'Minefield Application Print Dialog Print Button'",
+     "     VISIBLE:  'Print Button', cursor=1",
+     "SPEECH OUTPUT: 'Print'",
      "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'Alt c'"]))
+     "SPEECH OUTPUT: 'Alt p'"]))
 
 ########################################################################
-# Dismiss the dialog by pressing Space on the Cancel button and wait 
-# for the location bar to regain focus.
+# Dismiss the dialog by pressing Escape and wait for the location bar
+# to regain focus.
 #
-sequence.append(TypeAction(" "))
+sequence.append(TypeAction("Escape"))
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 # Just a little extra wait to let some events get through.

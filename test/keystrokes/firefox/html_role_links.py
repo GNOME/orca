@@ -47,7 +47,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
-     "     VISIBLE:  '• anchors.html Link', cursor=0",
+     "     VISIBLE:  '• anchors.html Link', cursor=3",
+     "BRAILLE LINE:  '• anchors.html Link'",
+     "     VISIBLE:  '• anchors.html Link', cursor=3",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'anchors.html link'"]))
 
@@ -59,7 +61,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
+     "BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
@@ -71,7 +75,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to bugzilla_top.html link", 
     ["BRAILLE LINE:  '• bugzilla_top.html Link'",
-     "     VISIBLE:  '• bugzilla_top.html Link', cursor=0",
+     "     VISIBLE:  '• bugzilla_top.html Link', cursor=3",
+     "BRAILLE LINE:  '• bugzilla_top.html Link'",
+     "     VISIBLE:  '• bugzilla_top.html Link', cursor=3",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'bugzilla_top.html link'"]))
 
@@ -83,7 +89,9 @@ sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
+     "BRAILLE LINE:  '• blockquotes.html Link'",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
@@ -97,7 +105,7 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=0",
+     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
      "SPEECH OUTPUT: 'file link to blockquotes.html'",
      "SPEECH OUTPUT: 'same site'",
      "SPEECH OUTPUT: '1188 bytes'"]))

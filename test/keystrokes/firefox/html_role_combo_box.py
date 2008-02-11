@@ -62,7 +62,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Priority Link", 
     ["BRAILLE LINE:  'Priority Link : Normal Combo'",
-     "     VISIBLE:  'Priority Link : Normal Combo', cursor=0",
+     "     VISIBLE:  'Priority Link : Normal Combo', cursor=1",
+     "BRAILLE LINE:  'Priority Link : Normal Combo'",
+     "     VISIBLE:  'Priority Link : Normal Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority link'"]))
 
@@ -73,7 +75,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Priority Link : Normal Combo'",
      "     VISIBLE:  'Priority Link : Normal Combo', cursor=17",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Priority: Normal combo box'"]))
+     "SPEECH OUTPUT: 'Normal combo box'"]))
 
 ########################################################################
 # Press Tab once to get to the Resolution combo box.  This combo box
@@ -174,7 +176,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'WONTFIX Combo'",
      "     VISIBLE:  'WONTFIX Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
+     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
      "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'"]))
 
 ########################################################################
@@ -265,7 +267,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
+     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
 
 ########################################################################

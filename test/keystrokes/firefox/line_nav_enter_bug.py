@@ -160,8 +160,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Description:  $l  '",
-     "     VISIBLE:  'Description:  $l  ', cursor=1",
+    ["BRAILLE LINE:  'Description:  $l'",
+     "     VISIBLE:  'Description:  $l', cursor=1",
      "SPEECH OUTPUT: 'Description: text '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -323,8 +323,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Description:  $l  '",
-     "     VISIBLE:  'Description:  $l  ', cursor=1",
+    ["BRAILLE LINE:  'Description:  $l'",
+     "     VISIBLE:  'Description:  $l', cursor=1",
      "SPEECH OUTPUT: 'Description: text '"]))
 
 sequence.append(utils.StartRecordingAction())

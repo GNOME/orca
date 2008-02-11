@@ -455,14 +455,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' $l  and Now $l  '",
-     "     VISIBLE:  ' $l  and Now $l  ', cursor=0",
-     "SPEECH OUTPUT: 'Only bugs changed between: text '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
     ["BRAILLE LINE:  '(YYYY-MM-DD or relative dates)'",
      "     VISIBLE:  '(YYYY-MM-DD or relative dates)', cursor=1",
      "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates)'"]))
@@ -762,8 +754,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=1",
+    ["BRAILLE LINE:  ' $l  and Now $l  '",
+     "     VISIBLE:  ' $l  and Now $l  ', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text   and text Now'"]))
 
 sequence.append(utils.StartRecordingAction())

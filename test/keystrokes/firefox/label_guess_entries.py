@@ -122,9 +122,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l '",
-     "     VISIBLE:  ' $l ', cursor=1",
-     "SPEECH OUTPUT: 'First Name text '"]))
+    ["BUG? - We're not guessing this correctly",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'Sometimes labels can be below the fields due to <br /> text '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -132,9 +133,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l '",
+    ["BUG? - We're not guessing this correctly",
+     "BRAILLE LINE:  ' $l '",
      "     VISIBLE:  ' $l ', cursor=1",
-     "SPEECH OUTPUT: 'M.I. text '"]))
+     "SPEECH OUTPUT: 'text '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -142,9 +144,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l '",
+    ["BUG? - We're not guessing this correctly",
+     "BRAILLE LINE:  ' $l '",
      "     VISIBLE:  ' $l ', cursor=1",
-     "SPEECH OUTPUT: 'Last Name text '"]))
+     "SPEECH OUTPUT: 'text '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
