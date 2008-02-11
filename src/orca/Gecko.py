@@ -1795,8 +1795,11 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         """Returns the URI key for a given page as a URI stripped of 
         parameters?query#fragment as seen in urlparse."""
         uri = self._script.getDocumentFrameURI()
-        parsed_uri = urlparse.urlparse(uri)
-        return ''.join(parsed_uri[0:3])
+        if uri:
+            parsed_uri = urlparse.urlparse(uri)
+            return ''.join(parsed_uri[0:3])
+        else:
+            return None
             
     
 ########################################################################
@@ -5013,14 +5016,12 @@ class Script(default.Script):
     
     def getDocumentFrameURI(self):
         """Returns the URI of the document frame that is active."""
-        try:
-            documentFrame = self.getDocumentFrame()
-        except AttributeError:
-            return None
-        attrs = documentFrame.queryDocument().getAttributes()
-        for attr in attrs:
-            if attr.startswith('DocURL'):
-                return attr[7:]
+        documentFrame = self.getDocumentFrame()
+        if documentFrame:
+            attrs = documentFrame.queryDocument().getAttributes()
+            for attr in attrs:
+                if attr.startswith('DocURL'):
+                    return attr[7:]
         return None
 
     def getUnicodeText(self, obj):
