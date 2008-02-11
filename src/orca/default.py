@@ -2455,12 +2455,12 @@ class Script(script.Script):
                 checkIfSelected = True
 
             if checkIfSelected and not state.contains(pyatspi.STATE_SELECTED):
-                 # Translators: this is in reference to a table cell being
-                 # selected or not.
-                 #
-                 # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                 #
-                 utterances.append(Q_("tablecell| not selected"))
+                # Translators: this is in reference to a table cell being
+                # selected or not.
+                #
+                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                #
+                utterances.append(Q_("tablecell| not selected"))
 
             # We might be automatically speaking the unbound labels
             # in a dialog box as the result of the dialog box suddenly
