@@ -1188,12 +1188,14 @@ class Script(default.Script):
 
         return [startIndex, endIndex]
 
-    def isSpreadSheetCell(self, obj):
+    def isSpreadSheetCell(self, obj, startFromTable=False):
         """Return an indication of whether the given obj is a spread sheet
         table cell.
 
         Arguments:
         - obj: the object to check.
+        - startFromTable: if True, then the component hierarchy check should
+                          start from a table (as opposed to a table cell).
 
         Returns True if this is a table cell, False otherwise.
         """
@@ -1207,6 +1209,8 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE, \
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
+        if startFromTable:
+            rolesList = rolesList[1:]
         if self.isDesiredFocusedItem(obj, rolesList):
             # We've found a table cell with the correct hierarchy. Now check
             # that we are in a spreadsheet as opposed to the writer application.
@@ -1807,6 +1811,7 @@ class Script(default.Script):
     # 3) Welcome to StarOffice dialog.
     # 4) Calc: cell editor.
     # 5) Calc: name box.
+    # 6) Calc: spreadsheet cell.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -2090,6 +2095,21 @@ class Script(default.Script):
             # cell coordinate (e.g., A4) and then move to it.
             #
             event.source.name = _("Move to cell")
+
+        # 6) Calc: spreadsheet cell.
+        #
+        # Check to see if this is a Calc: spread sheet cell. If it is then
+        # we don't want to speak "not selected" after giving the cell
+        # location and contents (which is what the default locusOfFocusChanged
+        # method would now do).
+        #
+        if self.isSpreadSheetCell(event.source, True):
+            if newLocusOfFocus:
+                self.updateBraille(newLocusOfFocus)
+                utterances = self.speechGenerator.getSpeech(newLocusOfFocus,
+                                                            False)
+                speech.speakUtterances(utterances)
+                return
 
         # Pass the event onto the parent class to be handled in the default way.
 
