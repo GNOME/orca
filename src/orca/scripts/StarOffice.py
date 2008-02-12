@@ -2109,6 +2109,21 @@ class Script(default.Script):
                 utterances = self.speechGenerator.getSpeech(newLocusOfFocus,
                                                             False)
                 speech.speakUtterances(utterances)
+
+                # Save the current row and column information in the table
+                # cell's table, so that we can use it the next time.
+                #
+                try:
+                    table = newLocusOfFocus.parent.queryTable()
+                except:
+                    pass
+                else:
+                    column = table.getColumnAtIndex( \
+                                    newLocusOfFocus.getIndexInParent())
+                    self.pointOfReference['lastColumn'] = column
+                    row = table.getRowAtIndex( \
+                                    newLocusOfFocus.getIndexInParent())
+                    self.pointOfReference['lastRow'] = row
                 return
 
         # Pass the event onto the parent class to be handled in the default way.

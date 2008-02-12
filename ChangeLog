@@ -9,6 +9,11 @@
           Fix for bug #419136 – Planner toggle button in main window not 
           accessible.
 
+        * src/orca/scripts/StarOffice.py:
+          Further work on bug #515651 - Navigation of cells in oocalc now says
+          "not selected". We now need to save the 'lastColumn' and 'lastRow'
+          values in case #6 of locusOfFocusChanged() in StarOffice.py.
+
 2008-02-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
