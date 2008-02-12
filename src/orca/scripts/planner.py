@@ -84,7 +84,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
         indicator=\
             settings.brailleRadioButtonIndicators[brailleindicatorindex]
-        componentRegion = braille.Component(obj, text, indicator)
+        componentRegion = braille.Component(obj, text, indicator=indicator)
         regions.append(componentRegion)
 
         return [regions, componentRegion]
