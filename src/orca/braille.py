@@ -689,7 +689,8 @@ class ReviewComponent(Component):
         - zone: the flat review Zone associated with this component
         """
 
-        Component.__init__(self, accessible, string, cursorOffset)
+        Component.__init__(self, accessible, string,
+                           cursorOffset, expandOnCursor=True)
         self.zone = zone
 
 class ReviewText(Region):

@@ -1484,13 +1484,13 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                 for name, fname in tableDict.items():
                     it = tablesModel.append([name, fname])
                     if os.path.join(louis.TABLES_DIR, fname) == selectedTable:
-                        selectedTable = it
+                        selectedTableIter = it
                 cell = gtk.CellRendererText()
                 tablesCombo.pack_start(cell, True)
                 tablesCombo.add_attribute(cell, 'text', 0)
                 tablesCombo.set_model(tablesModel)
-                if selectedTable:
-                    tablesCombo.set_active_iter(selectedTable)
+                if selectedTableIter:
+                    tablesCombo.set_active_iter(selectedTableIter)
                 else:
                     tablesCombo.set_active(0)
             else:

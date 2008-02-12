@@ -1,5 +1,12 @@
 2008-02-12  Eitan Isaacson  <eitan@ascender.com>
 
+	* src/orca/braille.py: 
+	Make ReviewComponent expand on cursor.
+	* src/orca/flat_review.py: 
+	Don't expand the entire reviewed component.
+	* src/orca/orca_gui_prefs.py: 
+	Fixed a typo where we were using the wrong variable.
+
 	* src/orca/scripts/planner.py: 
 	Fixed traceback in side toggle buttons (bug #419136).
 
