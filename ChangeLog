@@ -1,3 +1,9 @@
+2008-02-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/planner.py:
+          Fix for bug #419136 – Planner toggle button in main window not 
+          accessible.
+
 2008-02-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

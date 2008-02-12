@@ -74,26 +74,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             text += _("Display more options")
 
-        # Second special case is each one of the four graphics toggle
-        # buttons in the main window Application should implement an
-        # accessible relationship between the button and the label,
-        # but until this is made we append for each one the button the
-        # label that should be associated and its state (checked or
-        # not)
-        #
-        rolesList = [pyatspi.ROLE_TOGGLE_BUTTON, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_PANEL]
-        if self._script.isDesiredFocusedItem(obj, rolesList):
-            debug.println(debug.LEVEL_FINEST,
-                          "planner.onFocus - main window: " \
-                          + "one of the four graphic toggle buttons.")
-            filler = obj.parent
-            allLabels = self._script.findByRole(filler, pyatspi.ROLE_LABEL)
-            text += allLabels[0].name
-
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         if obj.getState().contains(pyatspi.STATE_CHECKED):
@@ -102,10 +82,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             brailleindicatorindex = 0
 
         regions = []
-        componentRegion = braille.Component(
-            obj, text,
-            indicator=\
+        indicator=\
             settings.brailleRadioButtonIndicators[brailleindicatorindex])
+        componentRegion = braille.Component(obj, text, indicator)
         regions.append(componentRegion)
 
         return [regions, componentRegion]
@@ -139,41 +118,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 tmp.append(_("Display more options"))
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
 
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    tmp.append(_("pressed"))
-                else:
-                    tmp.append(_("not pressed"))
-
-                utterances.extend(tmp)
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    utterances.append(_("pressed"))
-                else:
-                    utterances.append(_("not pressed"))
-
-            return utterances
-
-        # Application should implement an accessible relationship
-        # between the button and the label, but until this is made we
-        # append for each one the button the label that should be
-        # associated and its state (checked or not)
-        #
-        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_PANEL, \
-                    pyatspi.ROLE_PANEL]
-
-        if self._script.isDesiredFocusedItem(obj, roleList):
-            debug.println(debug.LEVEL_FINEST,
-                          "planner.onFocus - main window: " \
-                          + "one of the four graphic toggle buttons.")
-            if not already_focused:
-                filler = obj.parent
-                allLabels = self._script.findByRole(filler, pyatspi.ROLE_LABEL)
-                tmp.append(allLabels[0].name)
-                tmp.extend(self._getDefaultSpeech(obj, already_focused))
                 if obj.getState().contains(pyatspi.STATE_CHECKED):
                     tmp.append(_("pressed"))
                 else:
