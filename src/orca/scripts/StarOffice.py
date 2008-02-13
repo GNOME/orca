@@ -2618,23 +2618,19 @@ class Script(default.Script):
            Otherwise, returns False.
         """
 
-        print "XXXX: Star: speakNewLine called."
         # Get the the AccessibleText interface.
         try:
             text = obj.queryText()
         except NotImplementedError:
-            print "XXXX: return [1]."
             return False
 
         # Was a left or right-arrow key pressed?
         if not (orca_state.lastInputEvent and \
                 orca_state.lastInputEvent.__dict__.has_key("event_string")):
-            print "XXXX: return [2]."
             return False
 
         lastKey = orca_state.lastNonModifierKeyEvent.event_string
         if lastKey != "Left" and lastKey != "Right":
-            print "XXXX: return [3]."
             return False
 
         # Was a control key pressed?
@@ -2658,25 +2654,20 @@ class Script(default.Script):
 
             if lastKey == "Right":
                 if wordStart == lineStart:
-                    print "XXXX: return [4]."
                     return True
             else:
                 if wordEnd == lineEnd:
-                    print "XXXX: return [5]."
                     return True
 
         else:  # right arrow or left arrow
 
             if lastKey == "Right":
                 if caretOffset == lineStart:
-                    print "XXXX: return [6]."
                     return True
             else:
                 if caretOffset == lineEnd:
-                    print "XXXX: return [7]."
                     return True
 
-        print "XXXX: return [8]."
         return False
 
 
