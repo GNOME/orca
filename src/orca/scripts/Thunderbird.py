@@ -225,3 +225,11 @@ class Script(Gecko.Script):
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
                     speech.speakUtterances(utterances)
+
+    def isLineBreakChar(self, obj, offset):
+        """Returns True of the character at the given offset within
+        obj is a newline.
+        """
+
+        char = self.getCharacterAtOffset(obj, offset)
+        return char == "\n"

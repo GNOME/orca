@@ -661,6 +661,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj.getRole() in [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_SECTION,
                              pyatspi.ROLE_LABEL,
+                             pyatspi.ROLE_FORM,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_MENU_ITEM,
                              pyatspi.ROLE_UNKNOWN]:
@@ -3765,6 +3766,10 @@ class Script(default.Script):
             return
 
         text = self.queryNonEmptyText(event.source)
+        if text:
+            caretOffset = text.caretOffset
+        else:
+            caretOffset = 0
 
         #print "HERE: caretContext=", self.getCaretContext()
         #print "            source=", event.source
@@ -4594,6 +4599,12 @@ class Script(default.Script):
                     focusedRegion = regions[0]
             elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
                 string = text.getText(startOffset, endOffset)
+                if string.endswith(" "):
+                    endOffset -= 1
+                    string = text.getText(startOffset, endOffset)
+                if not len(string):
+                    continue
+
                 regions = [braille.Region(
                     string,
                     focusedCharacterOffset - startOffset,
@@ -4651,6 +4662,7 @@ class Script(default.Script):
                 regions.append(braille.Region(" " + _("h%d" % level)))
 
             if len(line.regions):
+                line.regions[-1].string.rstrip(" ")
                 line.addRegion(braille.Region(" "))
 
             line.addRegions(regions)
@@ -4664,6 +4676,9 @@ class Script(default.Script):
 
         if extraRegion:
             line.addRegion(extraRegion)
+
+        if len(line.regions):
+            line.regions[-1].string.rstrip(" ")
 
         braille.setFocus(focusedRegion)
         braille.refresh(True)
@@ -6078,34 +6093,22 @@ class Script(default.Script):
         objects = []
         text = self.queryNonEmptyText(obj)
         if text:
-            [textAtOffset, start, end] = text.getTextAtOffset(offset,
-                                                              boundary)
-            unicodeText = textAtOffset.decode("UTF-8")
-            if unicodeText.startswith(self.EMBEDDED_OBJECT_CHARACTER):
-                [textAtOffset, start, end] = text.getTextAfterOffset(offset,
-                                                                     boundary)
-            if textAtOffset and textAtOffset[-1] == " ":
-                newEnd = len(textAtOffset) - 1
-                if newEnd:
-                    textAtOffset = textAtOffset[0:newEnd]
-                    end -= 1
+            [string, start, end] = text.getTextAfterOffset(offset, boundary)
         else:
-            textAtOffset = ""
+            string = ""
             start = 0
             end = 1
         objects.append([obj, start, end])
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
-        unicodeText = textAtOffset.decode("UTF-8")
+        unicodeText = string.decode("UTF-8")
         matches = re.finditer(pattern, unicodeText)
         for m in matches:
             # Adjust the last object's endOffset to the last character
-            # before the EOC. Also check to see if we have a space to
-            # strip out.
+            # before the EOC.
             #
             childOffset = m.start(0) + start
-            adjustment = int(unicodeText[m.start(0) - 1] == " ")
-            objects[-1][2] = childOffset - adjustment
+            objects[-1][2] = childOffset
             if objects[-1][1] == objects[-1][2]:
                 # A zero-length object is an indication of something
                 # whose sole contents was an EOC.  Delete it from the
@@ -6117,9 +6120,7 @@ class Script(default.Script):
             #
             childIndex = self.getChildIndex(obj, childOffset)
             child = obj[childIndex]
-            objects.extend(self.getObjectsFromEOCs(child,
-                                                   0,
-                                                   boundary))
+            objects.extend(self.getObjectsFromEOCs(child, 0, boundary))
 
             # Tack on the remainder of the original object, if any.
             #
@@ -7513,199 +7514,138 @@ class Script(default.Script):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
-        # Work up the hierarchy to locate the ancestor that begins on
-        # this line.
-        #
-        extents = self.getExtents(obj, offset, offset + 1)
-        while not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                    pyatspi.ROLE_TABLE_CELL,
-                                    pyatspi.ROLE_LIST_ITEM,
-                                    pyatspi.ROLE_CAPTION,
-                                    pyatspi.ROLE_SECTION,
-                                    pyatspi.ROLE_PANEL,
-                                    pyatspi.ROLE_TEXT]:
-            offsetInParent = self.getCharacterOffsetInParent(obj)
-            parentExtents = self.getExtents(obj.parent,
-                                            offsetInParent,
-                                            offsetInParent + 1)
-            if not self.onSameLine(extents, parentExtents):
-                break
-            offset = offsetInParent
+        if obj.getRole() == pyatspi.ROLE_IMAGE \
+           and obj.parent.getRole() == pyatspi.ROLE_LINK:
+            offset = obj.getIndexInParent()
             obj = obj.parent
 
-        # Find the beginning of the line.
+        # Find the beginning of this line w.r.t. this object.
         #
         text = self.queryNonEmptyText(obj)
-        singleLine = False
         if text:
-            line = text.getTextAtOffset(offset, boundary)
-            singleLine = (line[1] == 0) and (line[2] == text.characterCount)
-            if line[2] < offset:
-                index = self.getChildIndex(obj, line[1])
-                if index >= 0:
-                    # The start of the line is a link that started on the
-                    # previous line.  We'll set obj to it and get the
-                    # rest of the line later.
-                    #
-                    child = obj[index]
-                    text = self.queryNonEmptyText(child)
+            [line, start, end] = text.getTextAtOffset(offset, boundary)
+            unicodeText = line.decode("UTF-8")
+            if unicodeText.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+                childIndex = self.getChildIndex(obj, start)
+                if childIndex >= 0:
+                    obj = obj[childIndex]
+                    text = self.queryNonEmptyText(obj)
                     if text:
-                        line = text.getTextAtOffset(text.characterCount, 
-                                                    boundary)
-                        obj = child
-                        offset = line[1]
-            else:
-                offset = line[1]
+                        noChars = text.characterCount
+                        [line, start, end] = text.getTextAtOffset(noChars - 1,
+                                                                  boundary)
 
-        # Move to the left to see if there's a sibling on this line which
-        # we should include.
-        #
-        index = obj.getIndexInParent()
-        sibling = obj
-        role = obj.getRole()
-        while sibling and index > 0:
-            sibling = obj.parent[index - 1]
-            siblingExtents = self.getExtents(sibling, 0, 1)
-
-            if not self.onSameLine(extents, siblingExtents) or not singleLine:
-                break
-            else:
-                text = self.queryNonEmptyText(sibling)
-                if text:
-                    line = text.getTextAtOffset(offset, boundary)
-                    singleLine = (line[1] == 0) \
-                             and (line[2] == text.characterCount)
-                    if not singleLine \
-                       or role == pyatspi.ROLE_SECTION == sibling.getRole():
-                        break
-
-            obj = sibling
+        if text:
+            offset = start
+        else:
             offset = 0
-            index -= 1
+
+        extents = self.getExtents(obj, offset, offset + 1)
 
         # Get the objects on this line.
         #
         objects = self.getObjectsFromEOCs(obj, offset, boundary)
 
-        # Get rid of any that are zero-sized as for all intents and
-        # purposes, they're not on the line.  We see this with empty
-        # links: <a href="someurl"></a>
+        # Check for things on the left.
         #
-        for o in objects:
-            if o[2] - o[1] <= 1:
-                objExtents = self.getExtents(o[0], o[1], o[2])
-                if (objExtents[0] and objExtents[1]) \
-                    and not (objExtents[2] and objExtents[3]) \
-                    and len(objects) > 1:
-                    objects.pop(objects.index(o))
+        lastExtents = (0, 0, 0, 0)
+        done = False
+        while not done:
+            [firstObj, start, end] = objects[0]
+            isAria = self.isAriaWidget(firstObj)
 
-        # If we're in a table cell, get the remainder of the cells
-        # in the row.  But first we'll check to be sure that the
-        # column doesn't span the entire row.  We also need to be
-        # sure it's a cell inside a table.  (See Mozilla bug #409009).
-        #
-        cell = None
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            cell = obj
-        elif len(objects) \
-             and objects[-1][0].getRole() == pyatspi.ROLE_TABLE_CELL:
-            cell = objects[-1][0]
-        containingTable = self.getAncestor(cell,
-                                           [pyatspi.ROLE_TABLE],
-                                           [pyatspi.ROLE_DOCUMENT_FRAME])
-        if containingTable:
-            table = containingTable.queryTable()
-            if table.nColumns <= 0:
-                cell = None
-            elif cell.parent == containingTable:
-                index = cell.getIndexInParent()
+            text = self.queryNonEmptyText(firstObj)
+            if text and start > 0 and not isAria:
+                break
+
+            if isAria:
+                prevObj = self.findPreviousObject(firstObj)
+                pOffset =0
             else:
-                index = cell.parent.getIndexInParent()
-            row = table.getRowAtIndex(index)
-            col = table.getColumnAtIndex(index)
-            col += table.getColumnExtentAt(row, col)
+                [prevObj, pOffset] = \
+                    self.findPreviousCaretInOrder(firstObj, start)
 
-            if cell:
-                cellContents = []
-                while singleLine and col < table.nColumns:
-                    cell = table.getAccessibleAt(row, col)
-                    if not cell:
-                        break
+            if not prevObj or self.isSameObject(prevObj, firstObj):
+                break
 
-                    text = self.queryNonEmptyText(cell)
-                    if text:
-                        line = text.getTextAtOffset(offset, boundary)
-                        singleLine = line[1] == 0 \
-                                     and line[2] == text.characterCount
-
-                    colspan = table.getColumnExtentAt(row, col)
-                    col += colspan
-                    cellContents.extend(self.getObjectsFromEOCs(cell,
-                                                                0,
-                                                                boundary))
-                if singleLine:
-                    objects.extend(cellContents)
-
-        # We need to find out if we've started from an embedded object.
-        # If we have, we'll want to include whatever follows this object
-        # on the same line.
-        #
-        if not self.isAriaWidget(obj) \
-           and not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                     pyatspi.ROLE_SECTION]:
-            text = self.queryNonEmptyText(obj.parent)
+            text = self.queryNonEmptyText(prevObj)
             if text:
-                offset = self.getCharacterOffsetInParent(obj) + 1
-                atOffset = text.getTextAtOffset(offset, boundary)
-                afterOffset = text.getTextAfterOffset(offset, boundary)
-                if atOffset[1] < afterOffset[1] < afterOffset[2]:
-                    # We're on an EOC with more text on this line.
-                    #
-                    objects.extend(self.getObjectsFromEOCs(obj.parent,
-                                                           offset,
-                                                           boundary))
+                line = text.getTextAtOffset(pOffset, boundary)
+                pOffset = line[1]
 
-        # There may be objects that are not *quite* on this line, but are
-        # more or less on this line.  This can be seen with the search form
-        # currently at live.gnome.org.
-        #
-        if objects and singleLine:
-            nextObject = self.findNextObject(objects[-1][0])
-            if nextObject \
-              and not nextObject.parent in [obj, objects[-1][0]]:
-                toAdd = self.getObjectsFromEOCs(nextObject, 0, boundary)
-                if toAdd:
-                    objExtents = self.getExtents(toAdd[0][0],
-                                                 toAdd[0][1],
-                                                 toAdd[0][2])
-                    if self.onSameLine(extents, objExtents) \
-                       and extents != objExtents:
-                        objects.extend(toAdd)
-
-        # Check to see that the objects that claimed to be on this line
-        # really are on the same line as what we started with.
-        #
-        while len(objects) > 1:
-            last = objects[-1]
-            lastExtents = self.getExtents(last[0], last[1], last[2])
-            if not self.onSameLine(extents, lastExtents):
-                objects.pop()
+            prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
+            if self.onSameLine(extents, prevExtents) \
+               and lastExtents != prevExtents \
+               or prevExtents == (0, 0, 0, 0):
+                toAdd = self.getObjectsFromEOCs(prevObj, pOffset, boundary)
+                objects[0:0] = toAdd
             else:
                 break
 
-        # [[[TODO - JD: We're getting the newline character at the end
-        # of links and other objects.  Ultimately, we might want to keep
-        # it  around for the purpose of placing the caret on the next
-        # line. Or we might not. :-) For now the goal is to make this
-        # alternative method return the very same contents as our current
-        # getLineContentsAtOffset(), which does not include these newline
-        # chars.]]]
+            lastExtents = prevExtents
+
+        # Check for things on the right.
         #
-        [obj, start, end] = objects[-1]
-        text = self.queryNonEmptyText(obj)
-        if text and (end - start > 1) and \
-           text.getText(end - 1, end) == "\n":
-            objects[-1][2] -= 1
+        lastExtents = (0, 0, 0, 0)
+        done = False
+        while not done:
+            [lastObj, start, end] = objects[-1]
+            isAria = self.isAriaWidget(lastObj)
+
+            text = self.queryNonEmptyText(lastObj)
+            if text and end < text.characterCount - 1 and not isAria:
+                break
+
+            if isAria:
+                nextObj = self.findNextObject(lastObj)
+                nOffset = 0
+            else:
+                [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
+
+            if not nextObj or self.isSameObject(nextObj, lastObj):
+                break
+
+            text = self.queryNonEmptyText(nextObj)
+            if text:
+                line = text.getTextAfterOffset(nOffset, boundary)
+                nOffset = line[1]
+
+            nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
+            if self.onSameLine(extents, nextExtents) \
+               and lastExtents != nextExtents \
+               or nextExtents == (0, 0, 0, 0):
+                toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                objects.extend(toAdd)
+            elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
+                                        pyatspi.ROLE_TABLE_CELL] \
+                  and not isAria and self.isUselessObject(nextObj)):
+                toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                for item in toAdd:
+                    itemExtents = self.getExtents(item[0], item[1], item[2])
+                    if not self.onSameLine(extents, itemExtents):
+                        toAdd.pop(toAdd.index(item))
+                if len(toAdd):
+                    objects.extend(toAdd)
+                else:
+                    break
+            else:
+                break
+
+            lastExtents = nextExtents
+
+        # Get rid of duplicates (real and functional).
+        #
+        parentLink = None
+        for o in objects:
+            if objects.count(o) > 1:
+                objects.pop(objects.index(o))
+            elif o[0].parent.getRole() == pyatspi.ROLE_LINK:
+                if not parentLink:
+                    parentLink = o[0].parent
+                elif self.isSameObject(o[0].parent, parentLink):
+                    objects.pop(objects.index(o))
+                else:
+                    parentLink = o[0].parent
 
         return objects
 
@@ -7959,7 +7899,6 @@ class Script(default.Script):
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 
-
         # Pylint is confused and flags these errors:
         #
         # E1101:6957:Script.getUtterancesFromContents: Instance of 
@@ -8011,6 +7950,7 @@ class Script(default.Script):
             if len(clumped) == 0:
                 clumped = [[string, acss]]
             elif acss == clumped[-1][1]:
+                clumped [-1][0] = clumped[-1][0].rstrip(" ")
                 clumped[-1][0] += " " + string
             else:
                 clumped.append([string, acss])
@@ -8021,6 +7961,9 @@ class Script(default.Script):
                 # user has navigated to an empty line.
                 #
                 return [[_("blank"), clumped[0][1]]]
+
+        if len(clumped):
+            clumped [-1][0] = clumped[-1][0].rstrip(" ")
 
         return clumped
 
@@ -8282,22 +8225,13 @@ class Script(default.Script):
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
 
-        [prevObj, prevOffset] = \
-            self.findPreviousCaretInOrder(currentLine[0][0], currentLine[0][1])
+        prevObj = currentLine[0][0]
+        prevOffset = currentLine[0][1]
+        [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj, 
+                                                              prevOffset)
 
-        # We need to be sure that we've actually found a new line rather than
-        # a space at the end of the current line.
-        #
-        text = self.queryNonEmptyText(prevObj)
-        if text:
-            line = text.getTextAfterOffset(prevOffset,
-                                           pyatspi.TEXT_BOUNDARY_LINE_START)
-            if not len(line[0].strip()) \
-                   and prevObj.getRole() != pyatspi.ROLE_ENTRY:
-                [prevObj, prevOffset] = \
-                          self.findPreviousCaretInOrder(prevObj, prevOffset)
-            else:
-                prevOffset = line[1]
+        if self.isLineBreakChar(prevObj, prevOffset):
+            prevOffset -= 1
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
@@ -8313,35 +8247,20 @@ class Script(default.Script):
         prevObj = prevLine[0][0]
         prevOffset = prevLine[0][1]
 
-        # Dealing with things like nested tables from the right side is hard.
-        # For now, I'm going to look at the previous caret in order.  If it's
-        # on the same line, we'll give it another go.  In testing, we usually
-        # get it right the first time so this shouldn't be too much of a hit.
-        #
-        [testObj, testOffset] = self.findPreviousCaretInOrder(prevObj,
-                                                              prevOffset)
-        extents1 = self.getExtents(prevObj, prevOffset, prevOffset + 1)
-        extents2 = self.getExtents(testObj, testOffset, testOffset + 1)
-        if self.onSameLine(extents1, extents2):
-            #print "previous line failed"
-            prevLine = self.getLineContentsAtOffset(testObj, testOffset)
-            if not prevLine:
-                return [None, -1]
-
-            prevObj = prevLine[0][0]
-            prevOffset = prevLine[0][1]
-
-        if currentLine == prevLine:
-            # For some reason we're stuck.
+        failureCount = 0
+        while failureCount < 5 and prevObj and currentLine == prevLine:
+            # For some reason we're stuck. We'll try a few times by
+            # caret before trying by object.
             #
-            #print "find prev line failed"
+            # print "find prev line failed", prevObj, prevOffset
+            [prevObj, prevOffset] = \
+                      self.findPreviousCaretInOrder(prevObj, prevOffset)
+            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
+            failureCount += 1
+        if currentLine == prevLine:
+            # print "find prev line still stuck", prevObj, prevOffset
             prevObj = self.findPreviousObject(prevObj)
             prevOffset = 0
-            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
-            if currentLine == prevLine:
-                # print "find prev line still stuck"
-                prevObj = self.findPreviousObject(prevObj)
-                prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
 
         [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj, 
                                                           prevOffset - 1)
@@ -8509,25 +8428,13 @@ class Script(default.Script):
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
 
-        [nextObj, nextOffset] = \
-                  self.findNextCaretInOrder(currentLine[-1][0],
-                                            currentLine[-1][2] - 1)
+        nextObj = currentLine[-1][0]
+        nextOffset = currentLine[-1][2] - 1
 
-        # We need to be sure that we've actually found a new line rather than
-        # a space at the end of the current line.
-        #
-        text = self.queryNonEmptyText(nextObj)
-        if text:
-            line = text.getTextAfterOffset(nextOffset,
-                                           pyatspi.TEXT_BOUNDARY_LINE_START)
-            if not len(line[0].strip()) \
-               and nextObj.getRole() != pyatspi.ROLE_ENTRY:
-                [nextObj, nextOffset] = \
-                          self.findNextCaretInOrder(nextObj, nextOffset)
-                if self.isLineBreakChar(nextObj, nextOffset):
-                    nextOffset += 1
-            else:
-                nextOffset = line[1]
+        [nextObj, nextOffset] = self.findNextCaretInOrder(nextObj, nextOffset)
+
+        if self.isLineBreakChar(nextObj, nextOffset):
+            nextOffset += 1
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
@@ -8540,17 +8447,20 @@ class Script(default.Script):
         if not nextLine:
             return [None, -1]
 
-        elif currentLine == nextLine:
-            # For some reason we're stuck.
+        failureCount = 0
+        while failureCount < 5 and nextObj and currentLine == nextLine:
+            # For some reason we're stuck. We'll try a few times by
+            # caret before trying by object.
             #
-            # print "find next line failed"
+            #print "find next line failed", nextObj, nextOffset
+            [nextObj, nextOffset] = \
+                      self.findNextCaretInOrder(nextObj, nextOffset)
+            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+            failureCount += 1
+        if currentLine == nextLine:
+            #print "find next line still stuck", nextObj, nextOffset
             nextObj = self.findNextObject(nextObj)
             nextOffset = 0
-            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
-            if currentLine == nextLine:
-                # print "find next line still stuck"
-                nextObj = self.findNextObject(nextObj)
-                nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
 
         [nextObj, nextOffset] = \
                   self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
