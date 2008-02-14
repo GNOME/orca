@@ -5215,20 +5215,6 @@ class Script(default.Script):
     def _getAttrDictionary(self, obj):
         return dict([attr.split(':', 1) for attr in obj.getAttributes()])
 
-    def isAriaAlert(self, obj):
-        """Returns True if the given object is an ARIA wairole:alert or 
-           wairole:tooltip.
-        """
-        if obj is None:
-            return False
-        attrs = obj.getAttributes()
-        if attrs is None:
-            return False
-        for attr in attrs:
-            if attr == 'xml-roles:alert' or attr == 'xml-roles:tooltip':
-                return True
-        return False
-
     def handleAsLiveRegion(self, event):
         """Returns True if the given event (object:children-changed, object:
         text-insert only) should be considered a live region event"""
@@ -5256,7 +5242,7 @@ class Script(default.Script):
                     return False
 
                 # Now we need to look at the object attributes
-                attrs = self._getAttrDictionary(event.source)
+                attrs = self._getAttrDictionary(event.any_data)
                 # Good live region markup
                 if attrs.has_key('container-live'):
                     return True
@@ -5265,10 +5251,16 @@ class Script(default.Script):
                 if attrs.has_key('tag') and attrs['tag'] == 'xul:richlistbox':
                     return False
 
-                # This eliminates all ARIA widgets that are not considered live
-                if attrs.has_key('xml-roles') \
-                                      and attrs['xml-roles'] != 'alert':
-                    return False
+                if attrs.has_key('xml-roles'):
+                    # This eliminates all ARIA widgets that are not 
+                    # considered live        
+                    if attrs['xml-roles'] != 'alert' \
+                               and attrs['xml-roles'] != 'tooltip':
+                        return False
+                    # Only present tooltips when user wants them presented
+                    elif attrs['xml-roles'] == 'tooltip' \
+                                   and not settings.presentToolTips:
+                        return False
             else:
                 # Some alerts have been seen without the :system postfix.
                 # We will take care of them separately.

@@ -1,3 +1,9 @@
+2008-02-14  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          Fixed bug #515263, ARIA tooltips should respect presentToolTips 
+          setting.
+
 2008-02-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
