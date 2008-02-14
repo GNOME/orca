@@ -5817,15 +5817,26 @@ class Script(default.Script):
 
     def isLineBreakChar(self, obj, offset):
         """Returns True of the character at the given offset within
-        obj is a line break character (i.e. <br />)
+        obj is a line break character (i.e. <br />) or is a newline
+        character within preformatted text.
         """
+
+        isBreak = False
 
         text = self.queryNonEmptyText(obj)
         if text:
+            char = text.getText(offset, offset + 1)
             [attributeSet, start, end] = text.getAttributeRun(offset, True)
-            return 'tag:BR' in attributeSet
+            isBreak = 'tag:BR' in attributeSet
+            if not isBreak and char == "\n":
+                attributes = obj.getAttributes()
+                if attributes:
+                    for attribute in attributes:
+                        if attribute == "tag:PRE":
+                            isBreak = True
+                            break
 
-        return False
+        return isBreak
 
     def isUselessObject(self, obj):
         """Returns true if the given object is an obj that doesn't
@@ -8231,7 +8242,8 @@ class Script(default.Script):
                                                               prevOffset)
 
         if self.isLineBreakChar(prevObj, prevOffset):
-            prevOffset -= 1
+            [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj, 
+                                                                  prevOffset)
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
@@ -8433,8 +8445,12 @@ class Script(default.Script):
 
         [nextObj, nextOffset] = self.findNextCaretInOrder(nextObj, nextOffset)
 
-        if self.isLineBreakChar(nextObj, nextOffset):
+        if self.getCharacterAtOffset(nextObj, nextOffset) == " ":
             nextOffset += 1
+
+        if self.isLineBreakChar(nextObj, nextOffset):
+            [nextObj, nextOffset] = self.findNextCaretInOrder(nextObj,
+                                                              nextOffset)
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
