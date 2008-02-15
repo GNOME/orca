@@ -10,7 +10,7 @@ sequence = MacroSequence()
 
 ########################################################################
 # We wait for the focus to be on the Firefox window as well as for focus
-# to move to the "application/xhtml+xml: Tree Example 1" frame.
+# to move to the "inline: Tree Example 1" frame.
 #
 sequence.append(WaitForWindowActivate("Minefield",None))
 
@@ -19,10 +19,10 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tree/view_html.php?title=Tree%20Example%201&ginc=includes/tree1_inline.inc&gcss=css/tree1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/tree1_inline.js"))
+sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tree/view_inline.php?title=Tree%20Example%201&ginc=includes/tree1_inline.inc&gcss=css/tree1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/tree1_inline.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("text/html: Tree Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("inline: Tree Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
 # Tab to the tree.  

@@ -36,8 +36,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to tab 2", 
-    [ "BRAILLE LINE:  'Tab 2 Page Tab 3 Page'",
-     "     VISIBLE:  'Tab 2 Page Tab 3 Page', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
+     "BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 2 page'"]))
 
@@ -49,11 +51,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Tab 2 Page Tab 3 Page'",
-     "     VISIBLE:  'Tab 2 Page Tab 3 Page', cursor=1",
-     "SPEECH OUTPUT: 'section'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
+     "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Tab 2 page'",
-     "SPEECH OUTPUT: 'item 1 of 1'",
+     "SPEECH OUTPUT: 'item 2 of 7'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################
@@ -63,7 +65,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BRAILLE LINE:  'Tab 3 Page Programmatically created tab Page'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
      "     VISIBLE:  'Tab 3 Page Programmatically crea', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
@@ -74,7 +76,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
-    ["BRAILLE LINE:  'Programmatically created tab Page Inlined Sub TabContainer Page'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
      "     VISIBLE:  'Programmatically created tab Pag', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Programmatically created tab page'"]))
@@ -86,7 +88,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to sub tab container", 
-    ["BRAILLE LINE:  'Inlined Sub TabContainer Page Sub TabContainer from href Page'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
      "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
@@ -97,9 +99,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to tab 2 contents", 
-    ["BRAILLE LINE:  'SubTab 2 Page'",
+    ["BRAILLE LINE:  'TabList SubTab 1 Page SubTab 2 Page'",
      "     VISIBLE:  'SubTab 2 Page', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "BRAILLE LINE:  'TabList SubTab 1 Page SubTab 2 Page'",
+     "     VISIBLE:  'SubTab 2 Page', cursor=1",
+     "SPEECH OUTPUT: 'Inlined Sub TabContainer scroll pane'",
      "SPEECH OUTPUT: 'SubTab 2 page'"]))
     
 ########################################################################
@@ -109,10 +113,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to next tab container", 
-    ["BRAILLE LINE:  'Tab 1 Page  $l Tab 2 Page'",
-     "     VISIBLE:  'Tab 1 Page  $l Tab 2 Page', cursor=1",
+    ["BRAILLE LINE:  'TabList First Page  $l Second Page Third Page  $l'",
+     "     VISIBLE:  'First Page  $l Second Page Third', cursor=1",
+     "BRAILLE LINE:  'TabList First Page  $l Second Page Third Page  $l'",
+     "     VISIBLE:  'First Page  $l Second Page Third', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab 1 page'"]))
+     "SPEECH OUTPUT: 'First page'"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'SubTab1'.  The following will be presented
@@ -126,10 +132,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BRAILLE LINE:  'Tab 3 Page  $l'",
-     "     VISIBLE:  'Tab 3 Page  $l', cursor=1",
+    ["BRAILLE LINE:  'First Page TabList  $l Second Page Third Page  $l'",
+     "     VISIBLE:  'Third Page  $l', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab 3 page'"]))
+     "SPEECH OUTPUT: 'Third page'"]))
 
 ########################################################################
 # Close the demo

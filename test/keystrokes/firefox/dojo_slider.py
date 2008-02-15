@@ -41,8 +41,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'slider 10'"]))
 
@@ -71,8 +71,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "1 move first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: '10'"]))
                             
 sequence.append(utils.StartRecordingAction())
@@ -84,8 +84,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "2 move first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: '10'"]))
                                
 sequence.append(utils.StartRecordingAction())                      
@@ -97,8 +97,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "3 move first slider", 
-    ["BRAILLE LINE:  '11 Slider Section'",
-     "     VISIBLE:  '11 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '11 Slider'",
+     "     VISIBLE:  '11 Slider', cursor=1",
      "SPEECH OUTPUT: '11'"]))
                            
 sequence.append(utils.StartRecordingAction())
@@ -110,8 +110,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "4 move first slider", 
-    ["BRAILLE LINE:  '11 Slider Section'",
-     "     VISIBLE:  '11 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '11 Slider'",
+     "     VISIBLE:  '11 Slider', cursor=1",
      "SPEECH OUTPUT: '11'"]))
                                
 sequence.append(utils.StartRecordingAction())                  
@@ -123,8 +123,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "5 move first slider", 
-    ["BRAILLE LINE:  '11 Slider Section'",
-     "     VISIBLE:  '11 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '11 Slider'",
+     "     VISIBLE:  '11 Slider', cursor=1",
      "SPEECH OUTPUT: '11'"]))
                                   
 sequence.append(utils.StartRecordingAction())                    
@@ -136,8 +136,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "6 move first slider", 
-    ["BRAILLE LINE:  '11 Slider Section'",
-     "     VISIBLE:  '11 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '11 Slider'",
+     "     VISIBLE:  '11 Slider', cursor=1",
      "SPEECH OUTPUT: '11'"]))
                                  
 sequence.append(utils.StartRecordingAction())                     
@@ -149,8 +149,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "7 move first slider", 
-    ["BRAILLE LINE:  '11 Slider Section'",
-     "     VISIBLE:  '11 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '11 Slider'",
+     "     VISIBLE:  '11 Slider', cursor=1",
      "SPEECH OUTPUT: '11'"]))
                                   
 sequence.append(utils.StartRecordingAction())                    
@@ -162,8 +162,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "8 move first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: '10'"]))
                              
 sequence.append(utils.StartRecordingAction())                     
@@ -175,8 +175,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "9 move first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: '10'"]))
                             
 sequence.append(utils.StartRecordingAction())                       
@@ -188,13 +188,13 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "10 move first slider", 
-    ["BRAILLE LINE:  '10 Slider Section'",
-     "     VISIBLE:  '10 Slider Section', cursor=1",
+    ["BRAILLE LINE:  '10 Slider'",
+     "     VISIBLE:  '10 Slider', cursor=1",
      "SPEECH OUTPUT: '10'"]))
 
 ########################################################################
 # Tab to the next entry between the sliders. 
-#
+# bug? not labeling properly.  should be as shown below
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
@@ -213,10 +213,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move to button", 
-    ["BRAILLE LINE:  'Disable previous slider    Button'",
-     "     VISIBLE:  'Disable previous slider    Butto', cursor=1",
+    ["BRAILLE LINE:  'Disable previous slider Button'",
+     "     VISIBLE:  'Disable previous slider Button', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Disable previous slider    button'"]))
+     "SPEECH OUTPUT: 'Disable previous slider button'"]))
      
 ########################################################################
 # Tab to the next slider.  

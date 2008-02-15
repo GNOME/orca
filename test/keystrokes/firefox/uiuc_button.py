@@ -19,93 +19,125 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/button/html.php?title=Button%20Example%201&ginc=includes/button1.inc&gcss=css/button1.css&gjs=../js/globals.js,../js/enable_app.js,js/button1.js"))
+sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/button/view_class.php?title=Button%20Example%201&ginc=includes/button1_class.inc&gcss=css/button1_class.css&gjs=../js/globals.js,../js/widgets_class.js,js/button1_class.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("text/html: Button Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(WaitForFocus("class: Button Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
 # Tab to the first button.  The following will be presented.
 #
-#  BRAILLE LINE:  ' Reduce Text 1 Button'
-#       VISIBLE:  ' Reduce Text 1 Button', cursor=1
-# SPEECH OUTPUT: 'Button example 1 panel'
-# SPEECH OUTPUT: ' Reduce Text 1 button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(" Reduce Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "tab to first button", 
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
+     "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
+     "SPEECH OUTPUT: 'Font Larger + toggle button not pressed'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech and braille:
 #
-# BRAILLE LINE:  ' Reduce Text 1 Button'
-#      VISIBLE:  ' Reduce Text 1 Button', cursor=1
-# SPEECH OUTPUT: 'Reduce Text 1'
-# SPEECH OUTPUT: 'button'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereamI", 
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
+     "SPEECH OUTPUT: 'Font Larger +'",
+     "SPEECH OUTPUT: 'toggle button'",
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 ########################################################################
 # Now push the first button.  The following will be presented.
 #
 # [[[Bug?: No output when button is pressed.]]]
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "push first button", 
+    [""]))
 
 ########################################################################
 # Tab to the second button.
 #
-# BRAILLE LINE:  ' Enlarge Text 1 Button'
-#      VISIBLE:  ' Enlarge Text 1 Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ' Enlarge Text 1 button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(" Enlarge Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
+sequence.append(utils.AssertPresentationAction(
+    "tab to second button", 
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Font Smaller - ToggleButton ', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Font Smaller - ToggleButton ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Font Smaller - toggle button not pressed'"]))
 ########################################################################
 # Now push the second button.  The following will be presented.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "push second button", 
+    [""]))
 
 ########################################################################
 # Tab to the third button.
 #
-#  BRAILLE LINE:  ' Italicize Text 1 Button'
-#       VISIBLE:  ' Italicize Text 1 Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ' Italicize Text 1 button'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(" Italicize Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
+sequence.append(utils.AssertPresentationAction(
+    "tab to third button", 
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Italic i ToggleButton & y Bo', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Italic i ToggleButton & y Bo', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Italic i toggle button not pressed'"]))
 ########################################################################
 # Now push the third button.  The following will be presented.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "push third button", 
+    [""]))
 
 ########################################################################
 # Tab to the fourth button.  The following will be presented.
 #
-#  BRAILLE LINE:  ' Bold Text 1 Button'
-#       VISIBLE:  ' Bold Text 1 Button', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ' Bold Text 1 button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus(" Bold Text 1", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
+sequence.append(utils.AssertPresentationAction(
+    "tab to fourth button", 
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Bold B ToggleButton', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
+     "     VISIBLE:  '& y Bold B ToggleButton', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Bold B toggle button not pressed'"]))
 ########################################################################
 # Now push the fourth button.  The following will be presented.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction           ("  "))
+sequence.append(utils.AssertPresentationAction(
+    "push fourth button", 
+    [""]))
 
 ########################################################################
 # Now push the fourth button again.  The following will be presented.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction           ("  "))
+sequence.append(utils.AssertPresentationAction(
+    "push fourth button again", 
+    [""]))
 
 ########################################################################
 # Close the demo

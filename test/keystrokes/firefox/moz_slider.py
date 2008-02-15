@@ -25,140 +25,175 @@ sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Graphical ARIA Slider", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Tab to the slider.  The following will be presented.
-# [[[Bug?: is Braille output correct?]]]
+# Tab to the first slider.  The following will be presented.
 #
-#  BRAILLE LINE:  '0 Move slider left Button 10 Slider Move slider right Button 100'
-#       VISIBLE:  '10 Slider Move slider right Butt', cursor=1
+#  BRAILLE LINE:  '10 Slider'
+#       VISIBLE:  '10 Slider', cursor=1
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'slider 10'
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("My slider", acc_role=pyatspi.ROLE_SLIDER))
+sequence.append(utils.AssertPresentationAction(
+    "tab to slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 10 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '10 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'slider 10'"]))
+     
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
+# Do a basic "Where Am I" via KP_Enter.  
 #
-# BRAILLE LINE:  '0 Move slider left Button Move slider right Button 100'
-#      VISIBLE:  '0 Move slider left Button Move s', cursor=0
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'slider'
-# SPEECH OUTPUT: '10.0'
-# SPEECH OUTPUT: '10 percent'
-# SPEECH OUTPUT: ''
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 10 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '10 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'slider'",
+     "SPEECH OUTPUT: '10.0'",
+     "SPEECH OUTPUT: '10 percent'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
-# Move the slider.  The following will be presented for each.
+# Move the slider several times.  The following will be presented for each.
 #
-#  BRAILLE LINE:  '0 Move slider left Button 15 Slider Move slider right Button 100'
-#       VISIBLE:  '15 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '15'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 20 Slider Move slider right Button 100'
-#       VISIBLE:  '20 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '20'                           
+sequence.append(utils.AssertPresentationAction(
+    "0 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 15 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '15 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '15'"]))
+                               
+sequence.append(utils.StartRecordingAction())                       
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 25 Slider Move slider right Button 100'
-#       VISIBLE:  '25 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '25'                           
+sequence.append(utils.AssertPresentationAction(
+    "1 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 20 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '20 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '20'"]))
+                              
+sequence.append(utils.StartRecordingAction())                         
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 30 Slider Move slider right Button 100'
-#       VISIBLE:  '30 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '30'                  
+sequence.append(utils.AssertPresentationAction(
+    "2 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 25 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '25 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '25'"]))
+                                     
+sequence.append(utils.StartRecordingAction())           
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 25 Slider Move slider right Button 100'
-#       VISIBLE:  '25 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '25'                           
+sequence.append(utils.AssertPresentationAction(
+    "3 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 30 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '30 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '30'"]))
+                               
+sequence.append(utils.StartRecordingAction())                        
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 20 Slider Move slider right Button 100'
-#       VISIBLE:  '20 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '20'                           
+sequence.append(utils.AssertPresentationAction(
+    "4 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 25 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '25 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '25'"]))
+                                       
+sequence.append(utils.StartRecordingAction())                  
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 15 Slider Move slider right Button 100'
-#       VISIBLE:  '15 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '15'                           
+sequence.append(utils.AssertPresentationAction(
+    "5 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 20 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '20 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '20'"]))
+                                     
+sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
-#  BRAILLE LINE:  '0 Move slider left Button 10 Slider Move slider right Button 100'
-#       VISIBLE:  '10 Slider Move slider right Butt', cursor=1
-# SPEECH OUTPUT: '10'                           
+sequence.append(utils.AssertPresentationAction(
+    "6 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 15 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '15 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '15'"]))                           
+  
+sequence.append(utils.StartRecordingAction())                     
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
+sequence.append(utils.AssertPresentationAction(
+    "7 move slider", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 10 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '10 Slider Move slider right Butt', cursor=1",
+     "SPEECH OUTPUT: '10'"]))   
+                            
 #  Move the slider with the 'end' key.
-#
-#  BRAILLE LINE:  '0 Move slider left Button 100 Slider Move slider right Button 100'
-#       VISIBLE:  '100 Slider Move slider right But', cursor=1
-# SPEECH OUTPUT: '100'                           
+#         
+sequence.append(utils.StartRecordingAction())                
 sequence.append(KeyComboAction("End"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-                           
+sequence.append(utils.AssertPresentationAction(
+    "move slider end", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 100 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '100 Slider Move slider right But', cursor=1",
+     "SPEECH OUTPUT: '100'"]))
+                               
 #  Move the slider with the 'home' key.
-#
-#  BRAILLE LINE:  '0 Move slider left Button 0 Slider Move slider right Button 100'
-#       VISIBLE:  '0 Slider Move slider right But', cursor=1
-# SPEECH OUTPUT: '0'                               
+#                
+sequence.append(utils.StartRecordingAction())              
 sequence.append(KeyComboAction("Home"))
 sequence.append(WaitAction("object:property-change:accessible-value",
                            None,
                            None,
                            pyatspi.ROLE_SLIDER,
                            5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "move slider home", 
+    ["BRAILLE LINE:  '0 Cell Move slider left Button 0 Slider Move slider right Button 100 Cell'",
+     "     VISIBLE:  '0 Slider Move slider right Butto', cursor=1",
+     "SPEECH OUTPUT: '0'"]))
 ########################################################################
 # Close the demo
 #

@@ -5,8 +5,9 @@ harness does that automatically for you."""
 
 # Where to find Dojo tests.
 #
-DojoURLPrefix="http://archive.dojotoolkit.org/dojo-2007-09-20/dojotoolkit/dijit/tests/"
-
+DojoURLPrefix="http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/"
+#DojoURLPrefix="http://localhost/apache2-default/dojo-release-1.0.0/dijit/tests/"
+#DojoURLPrefix="http://bashautomation.com/dojo-release-1.0.0/dijit/tests/"
 # Where to find our local HTML tests.
 #
 import sys, os

@@ -60,17 +60,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to View", 
-    ["BRAILLE LINE:  'View'",
-     "     VISIBLE:  'View', cursor=1",
+    ["BRAILLE LINE:  'Edit View'",
+     "     VISIBLE:  'Edit View', cursor=6",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View'"]))
     
+# We get flagged because of the unicode.  Everything else seems good.
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
-    ["BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=0",
+    ["BRAILLE LINE:  'Themes          > Themes          >'",
+     "     VISIBLE:  'Themes          > Themes �', cursor=0",
      "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -82,10 +83,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
-    ["BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=0",
-     "BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=0",
+    ["BRAILLE LINE:  'Basic Grey '",
+     "     VISIBLE:  'Basic Grey ', cursor=0",
+     "BRAILLE LINE:  'Basic Grey '",
+     "     VISIBLE:  'Basic Grey ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
@@ -189,8 +190,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "leave menu", 
-    ["BRAILLE LINE:  'Entry # $l Date $l'",
-     "     VISIBLE:  'Entry # $l Date $l', cursor=0",
+    ["BRAILLE LINE:  'Entry # $l Date $l Expense $l Amount $l Merchant $l Type ColumnHeader'",
+     "     VISIBLE:  'Entry # $l Date $l Expense $l Am', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'"]))
 
