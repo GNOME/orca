@@ -7063,6 +7063,8 @@ class Script(default.Script):
                      and state.contains(pyatspi.STATE_FOCUSABLE) \
                      and not self.isAriaWidget(previousObj):
                     break
+                elif previousObj.childCount > 1000:
+                    break
 
                 index = previousObj.childCount - 1
                 while index >= 0:
@@ -7114,6 +7116,8 @@ class Script(default.Script):
         elif role == pyatspi.ROLE_LIST \
             and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
             and not self.isAriaWidget(obj):
+            descend = False
+        elif obj.childCount > 1000:
             descend = False
         else:
             descend = True

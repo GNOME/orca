@@ -1,3 +1,9 @@
+2008-02-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
+          Fix for bug #516121 - Orca stalls on barackobama.com when
+          navigating by heading in FF3.
+
 2008-02-15  Scott Haeger <scott@bashautomation.com>
 
         * test/harness/utils.py
