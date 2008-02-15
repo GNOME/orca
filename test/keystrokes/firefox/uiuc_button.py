@@ -56,7 +56,6 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Now push the first button.  The following will be presented.
 #
-# [[[Bug?: No output when button is pressed.]]]
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))

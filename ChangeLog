@@ -1,3 +1,13 @@
+2008-02-15  Scott Haeger <scott@bashautomation.com>
+
+         * test/keystrokes/firefox/moz_menu.py
+           test/keystrokes/firefox/dojo_slider.py
+           test/keystrokes/firefox/uiuc_button.py
+           test/keystrokes/firefox/moz_slider.py
+           test/keystrokes/firefox/dojo_dialog.py
+           test/keystrokes/firefox/moz_tabpanel.py
+           Update/added ARIA regression tests.
+
 2008-02-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 

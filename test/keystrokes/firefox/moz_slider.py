@@ -27,11 +27,6 @@ sequence.append(WaitForFocus("Graphical ARIA Slider", acc_role=pyatspi.ROLE_DOCU
 ########################################################################
 # Tab to the first slider.  The following will be presented.
 #
-#  BRAILLE LINE:  '10 Slider'
-#       VISIBLE:  '10 Slider', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'slider 10'
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(

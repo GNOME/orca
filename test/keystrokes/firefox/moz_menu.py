@@ -66,6 +66,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'View'"]))
     
 # We get flagged because of the unicode.  Everything else seems good.
+# [[[Bug?: This is probably not a bug.  Chalk the whitespace up to a hack web design.]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(

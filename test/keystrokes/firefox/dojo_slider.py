@@ -54,8 +54,6 @@ sequence.append(utils.AssertPresentationAction(
 #      VISIBLE:  
 # SPEECH OUTPUT:
 #
-# [[[Bug?: dojo is not providing correct value information which throws an
-# exception on our side]]]
 # sequence.append(KeyComboAction("KP_Enter"))
 # sequence.append(PauseAction(3000))
 
@@ -194,7 +192,8 @@ sequence.append(utils.AssertPresentationAction(
 
 ########################################################################
 # Tab to the next entry between the sliders. 
-# bug? not labeling properly.  should be as shown below
+# [[[Bug?: not labeling properly.]]]
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(

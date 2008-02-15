@@ -25,15 +25,6 @@ sequence.append(WaitForDocLoad())
 
 
 ########################################################################
-# This is a kludge to ensure that the dojo widgets render properly
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("Dialog Widget Dojo Tests", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-
-########################################################################
 # Give the widget a moment to construct itself
 #
 sequence.append(PauseAction(3000))
@@ -53,75 +44,43 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Launch the dialog  
 #
+# [[[Bug?: Braille output may not be correct.]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(WaitForFocus("Name:", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Launch first dialog", 
-    ["BRAILLE LINE:  'First Dialog Dialog  $l'",
-     "     VISIBLE:  'First Dialog Dialog  $l', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'First Dialog'"]))
+    ["BRAILLE LINE:  'Name: Name:   $l'",
+     "     VISIBLE:  'Name: Name:   $l', cursor=14",
+     "SPEECH OUTPUT: 'First Dialog dialog'",
+     "SPEECH OUTPUT: 'Name:  text '"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
 #
+# [[[Bug?: Braille output may not be correct.]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
-    ["BRAILLE LINE:  'First Dialog Dialog  $l'",
-     "     VISIBLE:  'First Dialog Dialog  $l', cursor=1",
-     "SPEECH OUTPUT: 'First Dialog'",
-     "SPEECH OUTPUT: 'dialog'"]))
+    ["BRAILLE LINE:  'Name: Name:   $l'",
+     "     VISIBLE:  'Name: Name:   $l', cursor=14",
+     "SPEECH OUTPUT: 'Name:  Name:'",
+     "SPEECH OUTPUT: 'text'"]))
 
 ########################################################################
 # Close the dialog, focus goes back to button.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
+sequence.append(WaitForFocus("Show Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "close first dialog", 
     ["BRAILLE LINE:  'Show Dialog    Button'",
      "     VISIBLE:  'Show Dialog    Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show Dialog    button'"]))
-
-########################################################################
-# Tab to the second button.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "tab to second button", 
-    ["BRAILLE LINE:  'Show Tooltip Dialog Button'",
-     "     VISIBLE:  'Show Tooltip Dialog Button', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show Tooltip Dialog button'"]))
-
-########################################################################
-# Launch the dialog  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return"))
-sequence.append(utils.AssertPresentationAction(
-    "launch second dialog", 
-    ["BRAILLE LINE:  'User:  $l'",
-     "     VISIBLE:  'User:  $l', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Enter Login information User: Password:'"]))
-    
-########################################################################
-# Close the dialog, focus goes back to button.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Escape"))
-sequence.append(utils.AssertPresentationAction(
-    "close second dialog", 
-    ["BRAILLE LINE:  'Show Tooltip Dialog Button'",
-     "     VISIBLE:  'Show Tooltip Dialog Button', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show Tooltip Dialog button'"]))
 
 ########################################################################
 # Close the demo

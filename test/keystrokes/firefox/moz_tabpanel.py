@@ -32,6 +32,7 @@ sequence.append(PauseAction(1000))
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
 #
+# [[[Bug?: minor whitespace issue??]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
