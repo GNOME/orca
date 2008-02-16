@@ -6768,7 +6768,7 @@ msgstr "Nói tên phòng trò chuyện"
 
 #: ../src/orca/scripts/gaim.py:478
 msgid "Speak all _new messages"
-msgstr "_Nói mọi tin nhẳn mới"
+msgstr "_Nói mọi tin nhắn mới"
 
 #.Translators: Orca will speak only new chat messages for the channel
 #.that currently has focus, irrespective of whether the pidgin
@@ -6787,7 +6787,7 @@ msgstr "Nói mọi _kênh khi ứng dụng có tiêu điểm"
 #.
 #: ../src/orca/scripts/gaim.py:513
 msgid "Messages"
-msgstr "Tin nhẳn"
+msgstr "Tin nhắn"
 
 #: ../src/orca/scripts/gaim.py:583
 msgid "speak chat room name."
@@ -6880,7 +6880,7 @@ msgstr "Đã tìm thấy."
 
 #: ../src/orca/scripts/gnome-mud.py:119
 msgid "Read the latest n messages in the incoming messages text area."
-msgstr "Đọc tin nhẳn mới nhất trong vùng văn bản tin nhẳn gửi đến."
+msgstr "Đọc tin nhắn mới nhất trong vùng văn bản tin nhắn gửi đến."
 
 #: ../src/orca/scripts/gnome-search-tool.py:100
 msgid "Searching."
