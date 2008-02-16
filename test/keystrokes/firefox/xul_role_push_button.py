@@ -59,4 +59,6 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

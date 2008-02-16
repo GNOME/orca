@@ -1,12 +1,23 @@
+2008-02-15  Willie Walker <william.walker@sun.com>
+
+	* test/keystrokes/firefox/*.py:
+	  Add sequence.append(utils.AssertionSummaryAction()) to the
+	  tests so we can get summaries such as:
+	  SUMMARY: 4 SUCCEEDED and 0 FAILED (0 UNEXPECTED) of 4 for ...
+
+	* test/200*: 
+	  Delete old harness results.  We don't use them anymore and
+	  they just slow down checking out new things from trunk.
+
 2008-02-15  Scott Haeger <scott@bashautomation.com>
 
-         * test/keystrokes/firefox/moz_menu.py
-           test/keystrokes/firefox/dojo_slider.py
-           test/keystrokes/firefox/uiuc_button.py
-           test/keystrokes/firefox/moz_slider.py
-           test/keystrokes/firefox/dojo_dialog.py
-           test/keystrokes/firefox/moz_tabpanel.py
-           Update/added ARIA regression tests.
+        * test/keystrokes/firefox/moz_menu.py
+          test/keystrokes/firefox/dojo_slider.py
+          test/keystrokes/firefox/uiuc_button.py
+          test/keystrokes/firefox/moz_slider.py
+          test/keystrokes/firefox/dojo_dialog.py
+          test/keystrokes/firefox/moz_tabpanel.py
+          Update/added ARIA regression tests.
 
 2008-02-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

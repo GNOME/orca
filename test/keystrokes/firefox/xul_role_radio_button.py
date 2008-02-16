@@ -87,4 +87,6 @@ sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

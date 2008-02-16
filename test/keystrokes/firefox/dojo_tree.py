@@ -201,4 +201,6 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_INVALID, timeout=3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()

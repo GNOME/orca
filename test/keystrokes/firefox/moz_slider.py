@@ -202,4 +202,6 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(PauseAction(3000))
 
+sequence.append(utils.AssertionSummaryAction())
+
 sequence.start()
