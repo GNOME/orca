@@ -14,7 +14,12 @@
           test/keystrokes/firefox/line_nav_enter_bug.py:
           test/keystrokes/firefox/line_nav_simple_form.py:
           test/keystrokes/firefox/line_nav_nested_tables.py:
-          Updated regression tests.
+          test/keystrokes/firefox/line_nav_heading_section.py: (new)
+          test/keystrokes/firefox/line_nav_table_cell_links.py: (new)
+          test/html/table-cell-links.html: (new)
+          test/html/two-combos-on-line.html: (new)
+          test/html/heading-section.html: (new)
+          New and updated regression tests.
 
 2008-02-15  Willie Walker <william.walker@sun.com>
 
