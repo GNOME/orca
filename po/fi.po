@@ -51,119 +51,119 @@ msgstr ""
 #.
 #: ../src/louis/constants.py.in:28
 msgid "Czech Grade 1"
-msgstr ""
+msgstr "Tsekki taso 1"
 
 #: ../src/louis/constants.py.in:29
 msgid "Spanish Grade 1"
-msgstr ""
+msgstr "Espanja taso 1"
 
 #: ../src/louis/constants.py.in:30
 msgid "Canada French Grade 2"
-msgstr ""
+msgstr "Kanadan ranska taso 2"
 
 #: ../src/louis/constants.py.in:31
 msgid "France French Grade 2"
-msgstr ""
+msgstr "Ranska taso 2"
 
 #: ../src/louis/constants.py.in:32
 msgid "Latvian Grade 1"
-msgstr ""
+msgstr "Latvia taso 2"
 
 #: ../src/louis/constants.py.in:33
 msgid "Netherlands Dutch Grade 1"
-msgstr ""
+msgstr "Hollannin hollanti taso 1"
 
 #: ../src/louis/constants.py.in:34
 msgid "Norwegian Grade 0"
-msgstr ""
+msgstr "Norja taso 0"
 
 #: ../src/louis/constants.py.in:35
 msgid "Norwegian Grade 1"
-msgstr ""
+msgstr "Norja taso 1"
 
 #: ../src/louis/constants.py.in:36
 msgid "Norwegian Grade 2"
-msgstr ""
+msgstr "Norja taso 2"
 
 #: ../src/louis/constants.py.in:37
 msgid "Norwegian Grade 3"
-msgstr ""
+msgstr "Norja taso 3"
 
 #: ../src/louis/constants.py.in:38
 msgid "Polish Grade 1"
-msgstr ""
+msgstr "Puola taso 1"
 
 #: ../src/louis/constants.py.in:39
 msgid "Portuguese Grade 1"
-msgstr ""
+msgstr "Portugali taso 1"
 
 #: ../src/louis/constants.py.in:40
 msgid "Swedish Grade 1"
-msgstr ""
+msgstr "Ruotsi taso 1"
 
 #: ../src/louis/constants.py.in:41
 msgid "Arabic Grade 1"
-msgstr ""
+msgstr "Arabia taso 1"
 
 #: ../src/louis/constants.py.in:42
 msgid "Welsh Grade 1"
-msgstr ""
+msgstr "Iiri taso 1"
 
 #: ../src/louis/constants.py.in:43
 msgid "Welsh Grade 2"
-msgstr ""
+msgstr "Iiri taso 2"
 
 #: ../src/louis/constants.py.in:44
 msgid "German Grade 0"
-msgstr ""
+msgstr "Saksa taso 0"
 
 #: ../src/louis/constants.py.in:45
 msgid "German Grade 1"
-msgstr ""
+msgstr "Saksa taso 1"
 
 #: ../src/louis/constants.py.in:46
 msgid "German Grade 2"
-msgstr ""
+msgstr "Saksa taso 2"
 
 #: ../src/louis/constants.py.in:47
 msgid "U.K. English Grade 2"
-msgstr ""
+msgstr "Brittienglanti taso 2"
 
 #: ../src/louis/constants.py.in:48
 msgid "U.K. English Grade 1"
-msgstr ""
+msgstr "Brittienglanti taso 1"
 
 #: ../src/louis/constants.py.in:49
 msgid "U.S. English Grade 1"
-msgstr ""
+msgstr "Amerikanenglanti taso 1"
 
 #: ../src/louis/constants.py.in:50
 msgid "U.S. English Grade 2"
-msgstr ""
+msgstr "Amerikanenglanti taso 2"
 
 #: ../src/louis/constants.py.in:51
 msgid "Canada French Grade 1"
-msgstr ""
+msgstr "Kanadan ranska taso 1"
 
 #: ../src/louis/constants.py.in:52
 msgid "France French Grade 1"
-msgstr ""
+msgstr "Ranska taso 1"
 
 #: ../src/louis/constants.py.in:53
 msgid "Greek Grade 1"
-msgstr ""
+msgstr "Kreikka taso 1"
 
 #: ../src/louis/constants.py.in:54
 msgid "Hindi Grade 1"
-msgstr ""
+msgstr "Hindi taso 1"
 
 #: ../src/louis/constants.py.in:55
 msgid "Italian Grade 1"
-msgstr ""
+msgstr "Italia taso 1"
 
 #: ../src/louis/constants.py.in:56
 msgid "Belgium Dutch Grade 1"
-msgstr ""
+msgstr "Belgian hollanti taso 1"
 
 #: ../src/orca/app_gui_prefs.py:123
 #, python-format
@@ -1992,7 +1992,7 @@ msgstr "Siirry edelliseen kirjanmerkkiin."
 #.
 #: ../src/orca/default.py:846
 msgid "Toggles color enhancements."
-msgstr ""
+msgstr "Käytetäänkö väritoimintoja."
 
 #. Translators: "mouse enhancements" are changes users can
 #. make to the appearance of the mouse pointer to make it
@@ -2002,7 +2002,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:857
 msgid "Toggles mouse enhancements."
-msgstr ""
+msgstr "Käytetäänkö hiiritoimintoja."
 
 #. Translators: this command increases the magnification
 #. level.
@@ -2854,48 +2854,48 @@ msgstr "Siirtyy edelliseen tauluun."
 #.
 #: ../src/orca/Gecko.py:2375
 msgid "Goes to previous live region."
-msgstr ""
+msgstr "Siirtyy edelliseen aktiiviseen alueeseen."
 
 #. Translators: this is for navigating between live regions
 #.
 #: ../src/orca/Gecko.py:2382
 msgid "Goes to next live region."
-msgstr ""
+msgstr "Siirtyy seuraavaan aktiiviseen alueeseen."
 
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
 #: ../src/orca/Gecko.py:2390
 msgid "Goes to last live region."
-msgstr ""
+msgstr "Siirtyy viimeiseen aktiiviseen alueeseen."
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
 #: ../src/orca/Gecko.py:2398
 msgid "Advance live region politeness setting."
-msgstr ""
+msgstr "Kasvata aktiivisen alueen kohteliaisuustasoa."
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
 #: ../src/orca/Gecko.py:2406
 msgid "Set default live region politeness level to off."
-msgstr ""
+msgstr "Aseta aktiivisten alueiden kohteliaisuustason oletus pois päältä."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
 #: ../src/orca/Gecko.py:2414
 msgid "Monitor live regions."
-msgstr ""
+msgstr "Tarkkaile aktiivisia alueita."
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
 #: ../src/orca/Gecko.py:2422
 msgid "Review live region announcement."
-msgstr ""
+msgstr "Tarkista aktiivisen alueen ilmoitus."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
@@ -3317,7 +3317,7 @@ msgstr "Sarakkeen alin."
 #.
 #: ../src/orca/Gecko.py:10088 ../src/orca/Gecko.py:10127
 msgid "No more live regions."
-msgstr ""
+msgstr "Ei enempää aktiivisia alueita."
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
@@ -3325,18 +3325,18 @@ msgstr ""
 #: ../src/orca/Gecko.py:10136 ../src/orca/Gecko.py:10146
 #: ../src/orca/Gecko.py:10170 ../src/orca/Gecko.py:10180
 msgid "Live region support is off"
-msgstr ""
+msgstr "Aktiiviset alueet eivät ole käytössä"
 
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
 #: ../src/orca/Gecko.py:10154
 msgid "Live regions monitoring on"
-msgstr ""
+msgstr "Aktiivisten alueiden tarkkailu on päällä."
 
 #: ../src/orca/Gecko.py:10161
 msgid "Live regions monitoring off"
-msgstr ""
+msgstr "Aktiivisten alueiden tarkkailu on pois päältä."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3614,51 +3614,51 @@ msgstr "F 12"
 #.
 #: ../src/orca/liveregions.py:265
 msgid "setting live region to polite"
-msgstr ""
+msgstr "asetetaan aktiivinen alue kohteliaaksi"
 
 #. Translators:  sets the live region politeness level to assertive
 #.
 #: ../src/orca/liveregions.py:270
 msgid "setting live region to assertive"
-msgstr ""
+msgstr "asetetaan aktiivinen alue vakuuttavaksi"
 
 #. Translators:  sets the live region politeness level to rude
 #.
 #: ../src/orca/liveregions.py:275
 msgid "setting live region to rude"
-msgstr ""
+msgstr "asetetaan aktiivinen alue epäkohteliaaksi"
 
 #. Translators:  sets the live region politeness level to off
 #.
 #: ../src/orca/liveregions.py:280
 msgid "setting live region to off"
-msgstr ""
+msgstr "asetetaan aktiivinen alue pois päältä"
 
 #. Tranlators: this tells the user that a cached message
 #. is not available.
 #.
 #: ../src/orca/liveregions.py:299
 msgid "no live message saved"
-msgstr ""
+msgstr "aktiivisia viestejä ei ole tallennettu"
 
 #. Translators: This lets the user know that all live regions
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr ""
+msgstr "Kaikki aktiiviset alueet poistettu käytöstä"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
 #: ../src/orca/liveregions.py:344
 msgid "live regions politeness levels restored"
-msgstr ""
+msgstr "aktiivisten alueiden kohteliaisuustasot palautettu"
 
 #. Translators: output the politeness level
 #.
 #: ../src/orca/liveregions.py:379
 #, python-format
 msgid "politeness level %s"
-msgstr ""
+msgstr "kohteliaisuustaso %s"
 
 #. Translators: "color enhancements" are changes users can
 #. make to the appearance of the screen to make things easier
@@ -4359,7 +4359,7 @@ msgstr "Uusi näppäin on: %s"
 #.
 #: ../src/orca/orca_gui_prefs.py:3468
 msgid "The keybinding has been removed."
-msgstr ""
+msgstr "Näppäinsidos on poistettu."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
@@ -4410,7 +4410,7 @@ msgstr "Kyllästä sininen"
 #.
 #: ../src/orca/orca_gui_prefs.py:4183 ../src/orca/orca_gui_prefs.py:4273
 msgid "Desaturate red"
-msgstr ""
+msgstr "Vähennä punaisen värikylläisyyttä"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the green value for all
@@ -4419,7 +4419,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4191 ../src/orca/orca_gui_prefs.py:4281
 msgid "Desaturate green"
-msgstr ""
+msgstr "Vähennä vihreän värikylläisyyttä"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the blue value for all
@@ -4428,7 +4428,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4199 ../src/orca/orca_gui_prefs.py:4289
 msgid "Desaturate blue"
-msgstr ""
+msgstr "Vähennä sinisen värikylläisyyttä"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It shifts RGB values to the right. For
@@ -4437,7 +4437,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4207 ../src/orca/orca_gui_prefs.py:4297
 msgid "Positive hue shift"
-msgstr ""
+msgstr "Positiivinen värisävyn siirto"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It shifts RGB values to the left. For
@@ -4446,7 +4446,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4215 ../src/orca/orca_gui_prefs.py:4305
 msgid "Negative hue shift"
-msgstr ""
+msgstr "Negatiivinen värisävyn siirto"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
@@ -4617,6 +4617,9 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
+"Jos orcaa ei ole aiemmin määritelty käyttäjälle, orca\n"
+"käynnistää asetusikkunan automaattisesti, jollei valistinta\n"
+"-n tai --no-setup anneta."
 
 #: ../src/orca/orca.py:1345
 msgid "Report bugs to orca-list@gnome.org."
@@ -4819,7 +4822,7 @@ msgstr "Estä gksu:n _näppäimistön kaappaus"
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
 #: ../src/orca/orca-setup.glade.h:54
 msgid "Edge mar_gin:"
-msgstr ""
+msgstr "Reunan mar_ginaali:"
 
 #: ../src/orca/orca-setup.glade.h:55
 msgid "Enable Braille _monitor"
@@ -4977,6 +4980,15 @@ msgid ""
 "Positive hue shift\n"
 "Negative hue shift"
 msgstr ""
+"Ei mitään\n"
+"Kyllästä punainen\n"
+"Kyllästä vihreä\n"
+"Kyllästä sininen\n"
+"Vähennä punaisen värikylläisyyttä\n"
+"Vähennä vihreän värikylläisyyttä\n"
+"Vähennä sinisen värikylläisyyttä\n"
+"Positiivinen värisävyn siirto\n"
+"Negatiivinen värisävyn siirto"
 
 #: ../src/orca/orca-setup.glade.h:106
 msgid "Orca Modifier Keys"
@@ -7630,48 +7642,3 @@ msgstr "kohta %d kaikkiaan %d"
 msgid "Default button is %s"
 msgstr "Oletuspainike on %s"
 
-#~ msgid "Accessibility support for GNOME has just been enabled. "
-#~ msgstr "Gnomen esteettömyystuki on otettu nyt käyttöön. "
-
-#~ msgid "You need to log out and log back in for the change to take effect. "
-#~ msgstr ""
-#~ "Sinun täytyy kirjautua kerran ulos jotta muutokset tulevat voimaan. "
-
-#~ msgid "Preferences"
-#~ msgstr "Asetukset"
-
-#~ msgid "Quit"
-#~ msgstr "Lopeta"
-
-#~ msgid "<b>Zoomer Position</b>"
-#~ msgstr "<b>Lähentimen sijainti</b>"
-
-#~ msgid "Color:"
-#~ msgstr "Väri:"
-
-#~ msgid "Mouse trac_king mode:"
-#~ msgstr "Hiiren _seurantatila:"
-
-#~ msgid "Si_ze:"
-#~ msgstr "Ko_ko:"
-
-#~ msgid "_Width:"
-#~ msgstr "_Leveys:"
-
-#~ msgid "ckm"
-#~ msgstr "rsv"
-
-#~ msgid "CheckMenu"
-#~ msgstr "Rastivalikko"
-
-#~ msgid "check menu"
-#~ msgstr "rastivalikko"
-
-#~ msgid "rdmnu"
-#~ msgstr "vev"
-
-#~ msgid "RadioMenu"
-#~ msgstr "Vaihtoehtovalikko"
-
-#~ msgid "radio menu"
-#~ msgstr "vaihtoehtovalikko"
