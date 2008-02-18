@@ -1391,15 +1391,21 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'The complete list of work to do,', cursor=1",
      "SPEECH OUTPUT: 'The complete list of work to do, including bugs and feature'"]))
 
-# We should be landing on this link but we're not.
-#
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("Up"))
-#sequence.append(utils.AssertPresentationAction(
-#    "Line Up", 
-#    ["BRAILLE LINE:  'from many community members Link .'",
-#     "     VISIBLE:  'from many community members Link', cursor=1",
-#     "SPEECH OUTPUT: 'from many community members link .'"]))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up", 
+    ["BRAILLE LINE:  'from many community members Link .'",
+     "     VISIBLE:  'from many community members Link', cursor=1",
+     "SPEECH OUTPUT: 'from many community members link .'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up", 
+    ["BRAILLE LINE:  'contributions Link'",
+     "     VISIBLE:  'contributions Link', cursor=1",
+     "SPEECH OUTPUT: 'contributions link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

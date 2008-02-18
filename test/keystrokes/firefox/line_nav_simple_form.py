@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Type something here:  $l'",
      "     VISIBLE:  'Type something here:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Type something here: text '"]))
+     "SPEECH OUTPUT: 'Type something here: text'"]))
 
 ########################################################################
 # Down Arrow to the End.
@@ -56,15 +56,16 @@ sequence.append(utils.AssertPresentationAction(
     "2. line Down",
     ["BRAILLE LINE:  'Tell me a secret:  $l'",
      "     VISIBLE:  'Tell me a secret:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a secret: password '"]))
+     "SPEECH OUTPUT: 'Tell me a secret: password'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. line Down",
-    ["BRAILLE LINE:  'Tell me a little more about yourself:'",
+    [     "BRAILLE LINE:  'Tell me a little more about yourself:'",
      "     VISIBLE:  'Tell me a little more about your', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself:'"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself:",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -72,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. line Down",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: text I am a monkey with a long tail.  I like '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: text I am a monkey with a long tail.  I like'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -136,7 +137,8 @@ sequence.append(utils.AssertPresentationAction(
     "12. line Down",
     ["BRAILLE LINE:  'Which sports do you like?'",
      "     VISIBLE:  'Which sports do you like?', cursor=1",
-     "SPEECH OUTPUT: 'Which sports do you like?'"]))
+     "SPEECH OUTPUT: 'Which sports do you like?",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -187,7 +189,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. line Up",
     ["BRAILLE LINE:  'Which sports do you like?'",
      "     VISIBLE:  'Which sports do you like?', cursor=1",
-     "SPEECH OUTPUT: 'Which sports do you like?'"]))
+     "SPEECH OUTPUT: 'Which sports do you like?",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -211,7 +214,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Up",
     ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: text      '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -249,9 +252,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Up",
-    ["BRAILLE LINE:  'Tell me a little more about yourself:'",
+    [     "BRAILLE LINE:  'Tell me a little more about yourself:'",
      "     VISIBLE:  'Tell me a little more about your', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself:'"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself:",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -259,7 +263,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. line Up",
     ["BRAILLE LINE:  'Tell me a secret:  $l'",
      "     VISIBLE:  'Tell me a secret:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a secret: password '"]))
+     "SPEECH OUTPUT: 'Tell me a secret: password'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -275,7 +279,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. line Up",
     ["BRAILLE LINE:  'Type something here:  $l'",
      "     VISIBLE:  'Type something here:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Type something here: text '"]))
+     "SPEECH OUTPUT: 'Type something here: text'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

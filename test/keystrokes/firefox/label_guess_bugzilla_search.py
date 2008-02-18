@@ -63,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo  $l Search Button'",
      "     VISIBLE:  ' $l Search Button', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -149,7 +149,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
      "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -170,7 +170,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -191,7 +191,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Keywords Link : contains all of the keywords Combo  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -319,7 +319,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -391,7 +391,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -413,7 +413,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'bugs numbered: text '"]))
+     "SPEECH OUTPUT: 'bugs numbered: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -421,9 +421,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: text '"]))
+    ["BRAILLE LINE:  ' $l  and Now $l  '",
+     "     VISIBLE:  ' $l  and Now $l  ', cursor=1",
+     "SPEECH OUTPUT: 'Only bugs changed between: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -431,8 +431,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=10",
+    ["BRAILLE LINE:  ' $l  and Now $l  '",
+     "     VISIBLE:  ' $l  and Now $l  ', cursor=10",
      "SPEECH OUTPUT: 'and text Now'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -454,7 +454,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: text '"]))
+     "SPEECH OUTPUT: 'and the new value was: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

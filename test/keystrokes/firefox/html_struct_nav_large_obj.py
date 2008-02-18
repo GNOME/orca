@@ -137,7 +137,7 @@ sequence.append(utils.AssertPresentationAction(
      "make up for the absence of God, ",
      "help pick out your widow's weeds. ",
      "What are you waiting for - ",
-     "have faith in chemistry's compassion. '"]))
+     "have faith in chemistry's compassion.'"]))
 
 ########################################################################
 # Navigate to the previous 'large chunk'.  It is the 3rd paragraph under 'From 

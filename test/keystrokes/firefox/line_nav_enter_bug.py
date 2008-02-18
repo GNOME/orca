@@ -104,9 +104,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'GNOME Link'",
-     "     VISIBLE:  'GNOME Link', cursor=1",
-     "SPEECH OUTPUT: 'GNOME link'"]))
+    ["BRAILLE LINE:  'GNOME Link Unspecified Combo'",
+     "     VISIBLE:  'GNOME Link Unspecified Combo', cursor=0",
+     "SPEECH OUTPUT: 'GNOME link Unspecified combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -154,7 +154,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Summary:  $l'",
      "     VISIBLE:  'Summary:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Summary: text '"]))
+     "SPEECH OUTPUT: 'Summary: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -162,7 +162,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Description:  $l'",
      "     VISIBLE:  'Description:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Description: text '"]))
+     "SPEECH OUTPUT: 'Description: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -186,7 +186,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Cc:  $l'",
      "     VISIBLE:  'Cc:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Cc: text '"]))
+     "SPEECH OUTPUT: 'Cc: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -194,7 +194,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Keywords Link :  $l'",
      "     VISIBLE:  'Keywords Link :  $l', cursor=1",
-     "SPEECH OUTPUT: 'Keywords link : text '"]))
+     "SPEECH OUTPUT: 'Keywords link : text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -202,7 +202,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Depends on:  $l'",
      "     VISIBLE:  'Depends on:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Depends on: text '"]))
+     "SPEECH OUTPUT: 'Depends on: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -210,7 +210,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Blocks:  $l'",
      "     VISIBLE:  'Blocks:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Blocks: text '"]))
+     "SPEECH OUTPUT: 'Blocks: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -277,7 +277,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Blocks:  $l'",
      "     VISIBLE:  'Blocks:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Blocks: text '"]))
+     "SPEECH OUTPUT: 'Blocks: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -285,7 +285,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Depends on:  $l'",
      "     VISIBLE:  'Depends on:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Depends on: text '"]))
+     "SPEECH OUTPUT: 'Depends on: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -293,7 +293,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Keywords Link :  $l'",
      "     VISIBLE:  'Keywords Link :  $l', cursor=1",
-     "SPEECH OUTPUT: 'Keywords link : text '"]))
+     "SPEECH OUTPUT: 'Keywords link : text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -301,7 +301,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Cc:  $l'",
      "     VISIBLE:  'Cc:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Cc: text '"]))
+     "SPEECH OUTPUT: 'Cc: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -325,7 +325,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Description:  $l'",
      "     VISIBLE:  'Description:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Description: text '"]))
+     "SPEECH OUTPUT: 'Description: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -333,7 +333,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Summary:  $l'",
      "     VISIBLE:  'Summary:  $l', cursor=1",
-     "SPEECH OUTPUT: 'Summary: text '"]))
+     "SPEECH OUTPUT: 'Summary: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -363,18 +363,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Unspecified Combo'",
-     "     VISIBLE:  'Unspecified Combo', cursor=0",
-     "SPEECH OUTPUT: 'Unspecified combo box'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Up",
-    ["BUG? - We really should land on version since it's split across lines",
-     "BRAILLE LINE:  'GNOME Link'",
-     "     VISIBLE:  'GNOME Link', cursor=1",
-     "SPEECH OUTPUT: 'GNOME link'"]))
+    ["BRAILLE LINE:  'GNOME Link Unspecified Combo'",
+     "     VISIBLE:  'GNOME Link Unspecified Combo', cursor=1",
+     "SPEECH OUTPUT: 'GNOME link Unspecified combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

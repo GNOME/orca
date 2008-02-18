@@ -27,7 +27,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
     ["BUG? - It seems that the internal frame may be causing us to not speak the alert",
-    ["BRAILLE LINE:  'about:blank HtmlPane'",
+     "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog'",
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",

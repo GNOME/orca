@@ -98,8 +98,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Down: WONTFIX",
-    ["BRAILLE LINE:  'WONTFIX Combo'",
-     "     VISIBLE:  'WONTFIX Combo', cursor=0",
+    ["BUG? - We're picking up the previous menu item in the braille context",
+     "BRAILLE LINE:  'FIXED Combo WONTFIX'",
+     "     VISIBLE:  'FIXED Combo WONTFIX', cursor=13",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'WONTFIX'"]))
 
@@ -110,8 +111,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Down: NOTABUG", 
-    ["BRAILLE LINE:  'NOTABUG Combo'",
-     "     VISIBLE:  'NOTABUG Combo', cursor=0",
+    ["BRAILLE LINE:  'WONTFIX Combo NOTABUG'",
+     "     VISIBLE:  'WONTFIX Combo NOTABUG', cursor=15",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'NOTABUG'"]))
 
@@ -122,8 +123,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Up: WONTFIX",
-    ["BRAILLE LINE:  'WONTFIX Combo'",
-     "     VISIBLE:  'WONTFIX Combo', cursor=0",
+    ["BUG? - We're picking up the previous menu item in the braille context",
+     "BRAILLE LINE:  'FIXED Combo WONTFIX'",
+     "     VISIBLE:  'FIXED Combo WONTFIX', cursor=13",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'WONTFIX'"]))
 
@@ -134,8 +136,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Up: FIXED", 
-    ["BRAILLE LINE:  'FIXED Combo'",
-     "     VISIBLE:  'FIXED Combo', cursor=0",
+    ["BRAILLE LINE:  'FIXED'",
+     "     VISIBLE:  'FIXED', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'FIXED'"]))
 
@@ -176,7 +178,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'WONTFIX Combo'",
      "     VISIBLE:  'WONTFIX Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
+     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
      "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'"]))
 
 ########################################################################
@@ -267,7 +269,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Combo Box Regression Test - Minefield frame Combo Box Regression Test internal frame'",
+     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
 
 ########################################################################

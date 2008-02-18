@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to button", 
-    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button '",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Who expects the Spanish Inquisition? button'"]))
@@ -66,9 +66,9 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Status bar", 
-    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+    ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button '",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
-     "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
+     "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button '",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'"]))
