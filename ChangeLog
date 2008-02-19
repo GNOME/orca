@@ -1,5 +1,11 @@
 2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/input_event.py: 
+          Fix for bug #516321 - Caps lock not correctly reporting the
+          state when toggled.
+
+2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/flat_review.py: 
           Fix for bug #513238 - Flat review is broken in Evolution.
 

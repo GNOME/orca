@@ -76,12 +76,14 @@ class KeyboardEvent(InputEvent):
             if value < 32:
                 event_string = chr(value + 0x40)
 
-        # Eliminate modifiers we're not interested in.
+        # Filter out the NUMLOCK modifier -- it always causes problems.
         #
         mask = (1 << settings.MODIFIER_ORCA |
-                1 << pyatspi.MODIFIER_ALT |
                 1 << pyatspi.MODIFIER_SHIFT |
+                1 << pyatspi.MODIFIER_SHIFTLOCK |
                 1 << pyatspi.MODIFIER_CONTROL |
+                1 << pyatspi.MODIFIER_ALT |
+                1 << pyatspi.MODIFIER_META |
                 1 << pyatspi.MODIFIER_META2 |
                 1 << pyatspi.MODIFIER_META3)
         event.modifiers = event.modifiers & mask
