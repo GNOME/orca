@@ -447,7 +447,16 @@ class LiveRegionManager:
         # Get the labeling information now that we have good content.
         labels = self._getLabelsAsUtterances(event.source)
 
-        return {'content':content, 'labels':labels}
+        # instantly send out notify messages
+        if attrs.has_key('channel') and attrs['channel'] == 'notify':
+            utts = labels + content
+            speech.stop()
+            # Note: we would like to use a different ACSS for alerts.  This work
+            # should be done as part of bug #412656.
+            speech.speakUtterances(utts)
+            return None
+        else:
+            return {'content':content, 'labels':labels}
 
     def flushMessages(self):
         self.msg_queue.clear()

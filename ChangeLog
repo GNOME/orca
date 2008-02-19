@@ -1,3 +1,9 @@
+2008-02-19  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/liveregions.py
+          Fixed bug #511885, Support relevant and channel live region 
+          properties.
+
 2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/oocalc/bug_361167.py:
