@@ -1305,7 +1305,11 @@ class Context:
             return []
 
         zones = []
-        rootexts = root.queryComponent().getExtents(0)
+        try:
+            rootexts = root.queryComponent().getExtents(0)
+        except:
+            return []
+
         rootrole = root.getRole()
 
         # If we're at a leaf node, then we've got a good one on our hands.

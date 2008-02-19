@@ -1,5 +1,10 @@
 2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/flat_review.py: 
+          Fix for bug #513238 - Flat review is broken in Evolution.
+
+2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/xul_role_menu_bar.py:
           test/keystrokes/firefox/label_guess_bugzilla_search.py:
           test/keystrokes/firefox/html_role_combo_box.py:
