@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
 """Test to verify bug #342602 is still fixed.
-   StarOffice Writer - order of speaking information of table cells is incorrect.
+   StarOffice Writer - order of speaking information of table cells is 
+   incorrect.
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -53,25 +55,40 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 5. Enter a and Tab (Inserts "a" into cell A1 and moves to cell B1).
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph a $l'
-# VISIBLE:  'Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B1'
-# SPEECH OUTPUT: 'blank'
-#
 sequence.append(TypeAction("a"))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Move to cell B1",
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'",
+     "     VISIBLE:  'a Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell B1'",
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 6. Enter Shift-Tab (Returns to cell A1).
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'
-# VISIBLE:  'a Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell A1'
-# SPEECH OUTPUT: 'a'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Move back to cell A1",
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'",
+     "     VISIBLE:  'a Paragraph', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell A1'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 7. Enter Alt-f, Alt-c to close the Writer application.
@@ -100,5 +117,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

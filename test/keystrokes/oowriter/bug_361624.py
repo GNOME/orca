@@ -6,6 +6,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -24,44 +25,51 @@ sequence.append(KeyComboAction("<Control>Home"))
 ######################################################################
 # 3. Type KP-8 to read the first line in flat review mode.
 #
-# BRAILLE LINE:  'panel EFFector Vol. 19, No. 38  October   $l'
-# VISIBLE:  'EFFector Vol. 19, No. 38  Octobe', cursor=1 
-# SPEECH OUTPUT: 'EFFector Vol. 19, No. 38  October '
-# SPEECH OUTPUT: 'panel EFFector Vol. 19, No. 38  October
-# '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 3000))
+sequence.append(utils.AssertPresentationAction(
+    "Read first line in flat review mode",
+    ["BRAILLE LINE:  'panel EFFector Vol. 19, No. 38  October   $l'",
+     "     VISIBLE:  'EFFector Vol. 19, No. 38  Octobe', cursor=1",
+     "SPEECH OUTPUT: 'panel EFFector Vol. 19, No. 38  October  ",
+     "'"]))
 
 ######################################################################
 # 4. Type KP-9 to read the next line in flat review mode.
 #
-# BRAILLE LINE:  '10, 2006  editor@eff.org * EFF Sues for Information on  $l'
-# VISIBLE:  '10, 2006  editor@eff.org * EFF S', cursor=1
-# SPEECH OUTPUT: '10, 2006  editor@eff.org
-# * EFF Sues for Information on '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
+sequence.append(utils.AssertPresentationAction(
+    "Read line two in flat review mode",
+    ["BRAILLE LINE:  '10, 2006  editor@eff.org * EFF Sues for Information on  $l'",
+     "     VISIBLE:  '10, 2006  editor@eff.org * EFF S', cursor=1",
+     "SPEECH OUTPUT: '10, 2006  editor@eff.org",
+     " * EFF Sues for Information on '"]))
 
 ######################################################################
 # 5. Type KP-9 to read the next line in flat review mode.
 #
-# BRAILLE LINE:  ' Electronic Surveillance  $l'
-# VISIBLE:  ' Electronic Surveillance  $l', cursor=1
-# SPEECH OUTPUT: '
-# Electronic Surveillance 
-#'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
+sequence.append(utils.AssertPresentationAction(
+    "Read line three in flat review mode",
+    ["BRAILLE LINE:  ' Electronic Surveillance  $l'",
+     "     VISIBLE:  ' Electronic Surveillance  $l', cursor=1",
+     "SPEECH OUTPUT: '",
+     " Electronic Surveillance ",
+     "'"]))
 
 ######################################################################
 # 6. Type KP-9 to read the next line in flat review mode.
 #
-# BRAILLE LINE:  'A Publication of the Electronic  Systems $l'
-# VISIBLE:  'A Publication of the Electronic ', cursor=1
-# SPEECH OUTPUT: 'A Publication of the Electronic  Systems
-# '
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
+sequence.append(utils.AssertPresentationAction(
+    "Read line four in flat review mode",
+    ["BRAILLE LINE:  'A Publication of the Electronic  Systems $l'",
+     "     VISIBLE:  'A Publication of the Electronic ', cursor=1",
+     "SPEECH OUTPUT: 'A Publication of the Electronic  Systems",
+     "'"]))
 
 ######################################################################
 # 7. Enter Alt-f, Alt-c to close the Writer application.
@@ -98,5 +106,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 9. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

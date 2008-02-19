@@ -6,6 +6,14 @@
           so that if the new locus of focus has a "defunct" state, then we 
           just return.
 
+        * /test/keystrokes/oowriter/bug_342602.py:
+          /test/keystrokes/oowriter/bug_350219.py:
+          /test/keystrokes/oowriter/bug_353268.py:
+          /test/keystrokes/oowriter/bug_355733.py:
+          /test/keystrokes/oowriter/bug_361624.py:
+          /test/keystrokes/oowriter/bug_361747.py:
+          Adjusted various oowriter regression tests to use assertions.
+
 2008-02-19  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py
