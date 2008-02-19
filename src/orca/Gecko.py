@@ -3775,10 +3775,8 @@ class Script(default.Script):
         #print "            source=", event.source
         #print "       caretOffset=", text.caretOffset
         #print "    characterCount=", text.characterCount
-
         [obj, characterOffset] = \
-            self.findFirstCaretContext(event.source,
-                                       text.caretOffset)
+            self.findFirstCaretContext(event.source, caretOffset)
         self.setCaretContext(obj, characterOffset)
 
         #print "       ended up at=", self.getCaretContext()

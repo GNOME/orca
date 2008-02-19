@@ -1,3 +1,8 @@
+2008-02-19  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          Fixed bug #517521, Gecko.py is throwing exception in onCaretMoved.
+
 2008-02-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
