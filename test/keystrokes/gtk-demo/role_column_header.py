@@ -109,16 +109,42 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Normal cell Where Am I",
+    "Normal cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'row 1 of 14'"]))
+
+########################################################################
+# Do a detailed "Where Am I" via KP_Enter.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Normal cell detailed Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Severity'",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'row 1 of 14'",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Severity'",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: '60482'",
      "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'",
-     "SPEECH OUTPUT: 'row 1 of 14'"]))
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the number "60482".
@@ -163,16 +189,42 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Checkbox cell Where Am I",
+    "Checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Fixed?'",
      "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'row 1 of 14'"]))
+
+########################################################################
+# Do a detailed "Where Am I" via KP_Enter.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Checkbox cell detailed Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Fixed?'",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'row 1 of 14'",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Fixed?'",
+     "SPEECH OUTPUT: 'cell'",
+     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: '60482'",
      "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'",
-     "SPEECH OUTPUT: 'row 1 of 14'"]))
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'"]))
  
 ########################################################################
 # Close the GtkListStore demo

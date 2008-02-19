@@ -1,5 +1,16 @@
 2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/oocalc/bug_361167.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_column_header.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/where_am_I.py:
+          Fix for bug #486897 - Where Am I doesn't present row/column
+          headers.
+
+2008-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/input_event.py: 
           Fix for bug #516321 - Caps lock not correctly reporting the
           state when toggled.

@@ -85,10 +85,50 @@ class WhereAmI(where_am_I.WhereAmI):
                (table.getColumnAtIndex(obj.getIndexInParent()) + 1)
         utterances.append(text)
 
+        # Speak the dynamic column header (if any).
+        #
+        if self._script.dynamicColumnHeaders.has_key(table):
+            row = self._script.dynamicColumnHeaders[table]
+            header = self._script.getDynamicRowHeaderCell(obj, row)
+            try:
+                headerText = header.queryText()
+            except:
+                headerText = None
+
+            if header.childCount > 0:
+                for child in header:
+                    text = self._script.getText(child, 0, -1)
+                    if text:
+                        utterances.append(text)
+            elif headerText:
+                text = self._script.getText(header, 0, -1)
+                if text:
+                    utterances.append(text)
+
         # Translators: this represents the row number of a table.
         #
         text = _("row %d") % (table.getRowAtIndex(obj.getIndexInParent()) + 1)
         utterances.append(text)
+
+        # Speak the dynamic row header (if any).
+        #
+        if self._script.dynamicRowHeaders.has_key(table):
+            column = self._script.dynamicRowHeaders[table]
+            header = self._script.getDynamicColumnHeaderCell(obj, column)
+            try:
+                headerText = header.queryText()
+            except:
+                headerText = None
+
+            if header.childCount > 0:
+                for child in header:
+                    text = self._script.getText(child, 0, -1)
+                    if text:
+                        utterances.append(text)
+            elif headerText:
+                text = self._script.getText(header, 0, -1)
+                if text:
+                    utterances.append(text)
 
         text = obj.queryText().getText(0, -1)
         utterances.append(text)

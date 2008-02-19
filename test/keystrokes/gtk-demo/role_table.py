@@ -71,11 +71,10 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
      "     VISIBLE:  '3 bottles of coke', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Number'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: '3'",
-     "SPEECH OUTPUT: 'bottles of coke'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'row 1 of 5'"]))
 
 ########################################################################
@@ -104,11 +103,10 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I (again)",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5'",
      "     VISIBLE:  '5', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'",
+     "SPEECH OUTPUT: 'Number'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: 'packages of noodles'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'row 2 of 5'"]))
 
 ########################################################################

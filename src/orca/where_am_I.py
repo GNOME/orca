@@ -495,34 +495,61 @@ class WhereAmI:
         """Tree Tables present the following information (an example is
         'Tree table, Mike Pedersen, item 8 of 10, tree level 2'):
 
-        1. label, if any
-        2. role
-        3. current row (regardless of speak cell/row setting)
-        4. relative position
-        5. if expandable/collapsible: expanded/collapsed
-        6. if applicable, the level
+        1. parent's role
+        2. column header of object
+        3. row header of object
+        4. object's role
+        5. object's contents, if there are multiple columns
+        6. current row (regardless of speak cell/row setting), if
+           performing a detailed whereAmI.
+        7. relative position
+        8. if expandable/collapsible: expanded/collapsed
+        9. if applicable, the level
 
         Nautilus and Gaim
         """
 
-        # Speak the first two items (and possibly the position)
         utterances = []
         if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
         parent = obj.parent
 
-        text = self._getObjLabel(obj)
+        text = rolenames.getSpeechForRoleName(parent)
         utterances.append(text)
+
+        try:
+            table = parent.queryTable()
+        except:
+            table = None
+            nColumns = 0
+        else:
+            nColumns = table.nColumns
+
+            column = table.getColumnAtIndex(obj.getIndexInParent())
+            header = table.getColumnHeader(column)
+            if header:
+                text = self._getObjName(header)
+                utterances.append(text)
+
+            row = table.getRowAtIndex(obj.getIndexInParent())
+            header = table.getRowHeader(row)
+            if header:
+                text = self._getObjName(header)
+                utterances.append(text)
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
+
+        if nColumns > 1:
+            text = self._getTableCell(obj)
+            utterances.append(text)
+
         debug.println(self._debugLevel, "first table cell utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
 
         utterances = []
-        if not basicOnly:
-            table = parent.queryTable()
+        if not basicOnly and table:
             row = table.getRowAtIndex(
               orca_state.locusOfFocus.getIndexInParent())
             # Translators: this in reference to a row in a table.
@@ -531,11 +558,14 @@ class WhereAmI:
             utterances.append(text)
             speech.speakUtterances(utterances)
 
-        # Speak the current row
-        utterances = self._getTableRow(obj)
-        debug.println(self._debugLevel, "second table cell utterances=%s" % \
-                      utterances)
-        speech.speakUtterances(utterances)
+        # Speak the current row if performing a "detailed" whereAmI.
+        #
+        if not basicOnly:
+            utterances = self._getTableRow(obj)
+            debug.println(self._debugLevel, \
+                          "second table cell utterances=%s" % \
+                          utterances)
+            speech.speakUtterances(utterances)
 
         # Speak the remaining items.
         utterances = []
