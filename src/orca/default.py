@@ -2518,6 +2518,9 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
+        if newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
+            return
+
         try:
             if self.findCommandRun:
                 # Then the Orca Find dialog has just given up focus

@@ -1,3 +1,11 @@
+2008-02-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Work on bug #517026 - crash in Open Folder: Deleting the last file 
+          in a directory. Added a check to locusOfFocusChanged() in default.py
+          so that if the new locus of focus has a "defunct" state, then we 
+          just return.
+
 2008-02-19  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/liveregions.py
