@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -32,22 +33,31 @@ sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
 ######################################################################
 # 5. Type down arrow three times to get to the Freeze menu item
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar Freeze'
-# VISIBLE:  'Freeze', cursor=1
-# SPEECH OUTPUT: 'Freeze'
-#
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Type down arrow to get to the Freeze menu item [1]",
+    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar Freeze'",
+     "     VISIBLE:  'Freeze', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Freeze'"]))
 
 ######################################################################
 # 6. Type Return to check it.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '
-# VISIBLE:  'Apples Cell B1 ', cursor=1
-# SPEECH OUTPUT: 'Apples B1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Type Return to check it",
+    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
+     "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
+     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
+     "     VISIBLE:  'Apples Cell B1 ', cursor=1",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
+     "SPEECH OUTPUT: 'Apples B1'"]))
 
 ######################################################################
 # 7. Type Alt-w to bring up the Windows menu.
@@ -58,13 +68,17 @@ sequence.append(WaitForFocus("New Window", acc_role=pyatspi.ROLE_MENU_ITEM))
 ######################################################################
 # 8. Type down arrow three times to get to the Freeze menu item.
 #
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar <x> Freeze'
-# VISIBLE:  '<x> Freeze', cursor=1
-# SPEECH OUTPUT: 'Freeze checked'
-#
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Type down arrow to get to the Freeze menu item [2]",
+    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar <x> Freeze'",
+     "     VISIBLE:  '<x> Freeze', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Freeze checked'"]))
 
 ######################################################################
 # 9. Type Return to uncheck it.
@@ -73,7 +87,16 @@ sequence.append(KeyComboAction("Down"))
 # VISIBLE:  'Apples Cell B1 ', cursor=1
 # SPEECH OUTPUT: 'Apples B1'
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "Type Return to uncheck it",
+    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+     "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
+     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
+     "     VISIBLE:  'Apples Cell B1 ', cursor=1",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
+     "SPEECH OUTPUT: 'Apples B1'"]))
 
 ######################################################################
 # 10. Enter Alt-f, Alt-c to close the Calc spreadsheet window.
@@ -113,5 +136,7 @@ sequence.append(WaitAction("object:property-change:accessible-name",
 # 12. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()
