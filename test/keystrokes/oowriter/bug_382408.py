@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -29,24 +30,31 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 ######################################################################
 # 4. Type a down arrow to move to the next line.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'
-# VISIBLE:  'This is a test. $l', cursor=16
-# SPEECH OUTPUT: 'This is a test.'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to the next line",
+    ["BRAILLE LINE:  'December 2006 $l'",
+     "     VISIBLE:  'December 2006 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=16",
+     "SPEECH OUTPUT: 'This is a test.'"]))
 
 ######################################################################
 # 5. Type a down arrow to move to the Mon table column header.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'
-# VISIBLE:  'Mon Paragraph', cursor=1
-# SPEECH OUTPUT: 'table with 7 rows and 7 columns.'
-# SPEECH OUTPUT: 'Cell B1'
-# SPEECH OUTPUT: 'Mon'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to the Mon table column header",
+    ["BRAILLE LINE:  'This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat'",
+     "     VISIBLE:  'Mon Tue Wed Thu Fri Sat', cursor=1",
+     "SPEECH OUTPUT: 'Sun Mon Tue Wed Thu Fri Sat'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close this Writer application.
@@ -84,5 +92,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 8. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

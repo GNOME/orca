@@ -6,6 +6,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -41,29 +42,28 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 ######################################################################
 # 4. Enter up arrow to position the text caret on the first line.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view                    This is a test. $l'
-# VISIBLE:  '                   This is a test. $l', cursor=1
-# SPEECH OUTPUT: '3 spaces 2 tabs '
-# SPEECH OUTPUT: '                   This is a test.
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Enter up arrow to position the text caret on the first line",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view             This is a test. $l'",
+     "     VISIBLE:  '             This is a test. $l', cursor=1",
+     "SPEECH OUTPUT: '             This is a test.'"]))
 
 ######################################################################
 # 5. Enter Insert-f to get text information.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view                    This is a test. $l'
-# VISIBLE:  '                   This is a test. $l', cursor=1
-# SPEECH OUTPUT: 'size 12'
-# SPEECH OUTPUT: 'family-name Thorndale'
-# SPEECH OUTPUT: 'indent 0'
-# SPEECH OUTPUT: 'left-margin 0 pixels'
-# SPEECH OUTPUT: 'right-margin 0 pixels'
-# SPEECH OUTPUT: 'strikethrough false'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(utils.AssertPresentationAction(
+    "Enter Insert-f to get text information",
+    ["SPEECH OUTPUT: 'size 12'",
+     "SPEECH OUTPUT: 'family-name Times'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close the Writer application.
@@ -75,7 +75,6 @@ sequence.append(KeyComboAction("<Alt>c"))
 
 # We'll get a new window, but we'll wait for the "Save" button to get focus.
 #
-#sequence.append(WaitForWindowActivate("OpenOffice.org 2.3 ",None))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ######################################################################
@@ -92,5 +91,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

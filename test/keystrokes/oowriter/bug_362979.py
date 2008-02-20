@@ -6,6 +6,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -71,22 +72,30 @@ sequence.append(KeyComboAction("Return"))
 # 8. Enter Control-Home to position the text caret to the left of
 #    the first character on the first line.
 #
-# BRAILLE LINE: 'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 1 $l'
-# VISIBLE:  '•Line 1 $l', cursor=2
-# SPEECH OUTPUT: '•Line 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Move cursor to start of document",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 1 $l'",
+     "     VISIBLE:  '•Line 1 $l', cursor=2",
+     "SPEECH OUTPUT: '•Line 1'"]))
 
 ######################################################################
 # 9. Type a down arrow to go to the second bulleted line.
 #
-# BRAILLE LINE: 'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 2 $l'
-# VISIBLE:  '•Line 2 $l', cursor=2
-# SPEECH OUTPUT: '•Line 2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Move to second bulleted line",
+    ["BRAILLE LINE:  '•Line 1 $l'",
+     "     VISIBLE:  '•Line 1 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 2 $l'",
+     "     VISIBLE:  '•Line 2 $l', cursor=2",
+     "SPEECH OUTPUT: '•Line 2'"]))
 
 ######################################################################
 # 10. Enter Alt-f, Alt-c to close the Writer application.
@@ -112,5 +121,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -22,89 +23,141 @@ sequence.append(KeyComboAction("<Control>Home"))
 ######################################################################
 # 3. Type a down arrow to move to the next line.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'
-# VISIBLE:  'This is a test. $l', cursor=16
-# SPEECH OUTPUT: 'This is a test.'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to the next line",
+    ["BRAILLE LINE:  'December 2006 $l'",
+     "     VISIBLE:  'December 2006 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=16",
+     "SPEECH OUTPUT: 'This is a test.'"]))
 
 ######################################################################
 # 4. Type a down arrow to move to the Mon table column header.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'
-# VISIBLE:  'Mon Paragraph', cursor=1
-# SPEECH OUTPUT: 'table with 7 rows and 7 columns.'
-# SPEECH OUTPUT: 'Cell B1'
-# SPEECH OUTPUT: 'Mon'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to the Mon table column header",
+    ["BRAILLE LINE:  'This is a test. $l'",
+     "     VISIBLE:  'This is a test. $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
+     "     VISIBLE:  'Mon Paragraph', cursor=1",
+     "SPEECH OUTPUT: 'Cell B1'",
+     "SPEECH OUTPUT: 'Mon'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 5. Type a Tab to move to the Tue table column header.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Tue Paragraph'
-# VISIBLE:  'Tue Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell C1' 
-# SPEECH OUTPUT: 'Tue'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a Tab to move to the Tue table column header",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
+     "     VISIBLE:  'Mon Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Tue Paragraph'",
+     "     VISIBLE:  'Tue Paragraph', cursor=1",
+     "SPEECH OUTPUT: 'Mon'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.'",
+     "SPEECH OUTPUT: 'Cell C1'",
+     "SPEECH OUTPUT: 'Tue'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 6. Type a down arrow to move to the blank cell C2.
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'
-# VISIBLE:  'Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell C2'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to the blank cell C2",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Tue Paragraph'",
+     "     VISIBLE:  'Tue Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "SPEECH OUTPUT: 'Tue'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell C2'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 7. Type a down arrow to move to cell C3 containing "5".
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 5 Paragraph'
-# VISIBLE:  '5 Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell C3'
-# SPEECH OUTPUT: '5'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to cell C3 containing '5'",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 5 Paragraph'",
+     "     VISIBLE:  '5 Paragraph', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell C3'",
+     "SPEECH OUTPUT: '5'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 8. Type a Shift-Tab to move to cell B3 containing "4".
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'
-# VISIBLE:  '4 Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B3'
-# SPEECH OUTPUT: '4'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a Shift-Tab to move to cell B3 containing '4'",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 5 Paragraph'",
+     "     VISIBLE:  '5 Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
+     "     VISIBLE:  '4 Paragraph', cursor=1",
+     "SPEECH OUTPUT: '5'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell B3'",
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 9. Type a down arrow to move to cell B4 containing "11".
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'
-# VISIBLE:  '11 Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B4'
-# SPEECH OUTPUT: '11'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to move to cell B4 containing '11'",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
+     "     VISIBLE:  '4 Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'",
+     "     VISIBLE:  '11 Paragraph', cursor=1",
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell B4'",
+     "SPEECH OUTPUT: '11'",
+     "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
 # 10. Type an up arrow to move to cell B3 containing "4".
 #
-# BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'
-# VISIBLE:  '4 Paragraph', cursor=1
-# SPEECH OUTPUT: 'Cell B3'
-# SPEECH OUTPUT: '4'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type an up arrow to move to cell B3 containing '4'",
+    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'",
+     "     VISIBLE:  '11 Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
+     "     VISIBLE:  '4 Paragraph', cursor=1",
+     "SPEECH OUTPUT: '11'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell B3'"]))
 
 ######################################################################
 # 11. Enter Alt-f, Alt-c to close this Writer application.
@@ -142,5 +195,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 13. Wait for things to get back to normal.
 #
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

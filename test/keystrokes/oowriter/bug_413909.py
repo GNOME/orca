@@ -6,6 +6,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -45,24 +46,64 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 4. Type Control-Home to position the text caret to the left of
 #    the first character on the first line.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'
-# VISIBLE:  'The quuuiick brown fox $l', cursor=1
-# SPEECH OUTPUT: 'The quuuiick brown fox'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type Control-Home to move to the start of the document",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
+     "SPEECH OUTPUT: 'The quuuiick brown fox'"]))
 
 ######################################################################
 # 5. Enter F7 to bring up the spell checking dialog.
 #
-# BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog Spellcheck:  (English (USA)) OptionPane Change Button'
-# VISIBLE:  'Change Button', cursor=1
-# SPEECH OUTPUT: 'Spellcheck:  (English (USA))'
-# SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'
-# SPEECH OUTPUT: 'Change button'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F7"))
 sequence.append(WaitForFocus("Change", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "Enter F7 to bring up the spell checking dialog",
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=2",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=3",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=4",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=5",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=14",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=15",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=16",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=17",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=18",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=19",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=20",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=21",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=22",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
+     "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog'",
+     "     VISIBLE:  'Spellcheck:  (English (USA)) Dia', cursor=1",
+     "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog Spellcheck:  (English (USA)) OptionPane Change Button'",
+     "     VISIBLE:  'Change Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Spellcheck:  (English (USA))'",
+     "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Change button'"]))
 
 ######################################################################
 # 6. Press Esc to dismiss the spell checking dialog.
@@ -92,5 +133,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

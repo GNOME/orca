@@ -5,6 +5,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -57,24 +58,34 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 # 6. Type Control-Home to move the text caret to the start of the
 #    document (and leave the table).
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
-# VISIBLE:  'Line 1 $l', cursor=1
-# SPEECH OUTPUT: 'leaving table.'
-# SPEECH OUTPUT: 'Line 1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type Control-Home to move to start of document",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'Line 1'"]))
 
 ######################################################################
 # 7. Type a down arrow to enter the table.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 1 $l'
-# VISIBLE:  ' Line 1 $l', cursor=1
-# SPEECH OUTPUT: 'table with 2 rows and 2 columns.'
-# SPEECH OUTPUT: 'Cell A1'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(utils.AssertPresentationAction(
+    "Type a down arrow to enter the table",
+    ["BRAILLE LINE:  'Line 1 $l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
+     "SPEECH OUTPUT: 'Cell A1'"]))
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close the Writer application.
@@ -100,5 +111,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

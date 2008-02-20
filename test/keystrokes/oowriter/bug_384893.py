@@ -6,6 +6,7 @@
 """
 
 from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -48,24 +49,26 @@ sequence.append(KeyComboAction("<Control>b"))
 # 4. Type Control-Home to position the text caret to the left of
 #    the first character.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'
-# VISIBLE:  'This is a test $l', cursor=1
-# SPEECH OUTPUT: 'This is a test'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "Type Control-Home to move to start of document",
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'",
+     "     VISIBLE:  'This is a test $l', cursor=1",
+     "SPEECH OUTPUT: 'This is a test'"]))
 
 ######################################################################
 # 5. Enter Insert-f to get text information on the underlined word.
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'
-# VISIBLE:  'This is a test $l', cursor=1
-# SPEECH OUTPUT: 'size 12'
-# SPEECH OUTPUT: 'family-name Times'
-# SPEECH OUTPUT: 'underline single'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(utils.AssertPresentationAction(
+    "Enter Insert-f to get text information on the underlined word",
+    ["SPEECH OUTPUT: 'size 12'",
+     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'underline single'"]))
 
 ######################################################################
 # 6. Type Control right arrow three times to position the cursor at
@@ -78,15 +81,15 @@ sequence.append(KeyComboAction("<Control>Right"))
 ######################################################################
 # 7. Enter Insert-f to get text information on the bold word. 
 #
-# BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'
-# VISIBLE:  'This is a test $l', cursor=12
-# SPEECH OUTPUT: 'size 12'
-# SPEECH OUTPUT: 'family-name Times'
-# SPEECH OUTPUT: 'bold'
-#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
 sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(utils.AssertPresentationAction(
+    "Enter Insert-f to get text information on the bold word",
+    ["SPEECH OUTPUT: 'size 12'",
+     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'bold'"]))
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close the Writer application.
@@ -111,5 +114,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()
