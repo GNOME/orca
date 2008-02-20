@@ -1,3 +1,9 @@
+2008-02-20  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          Fixed bug #517716, Live regions being output on listitem changes 
+          for Bugzilla.
+
 2008-02-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 

@@ -5266,7 +5266,9 @@ class Script(default.Script):
                 # We will take care of them separately.
                 attrs = self._getAttrDictionary(event.any_data)
                 if attrs.has_key('xml-roles') \
-                                      and attrs['xml-roles'] != 'alert':
+                                      and attrs['xml-roles'] == 'alert':
+                    return True
+                else:
                     return False
 
         elif event.type.startswith('object:text-changed:insert:system'):
