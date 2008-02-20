@@ -415,10 +415,22 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 menu = child
                 break
         if menu:
-            for child in menu:
-                if child.getState().contains(pyatspi.STATE_SELECTED):
-                    regions.append(braille.Region(child.name))
-                    break
+            child = None
+            try:
+                # This should work...
+                #
+                child = menu.querySelection().getSelectedChild(0)
+            except:
+                # But just in case, we'll fall back on this.
+                # [[[TODO - JD: Will we ever have a case where the first
+                # fails, but this will succeed???]]]
+                #
+                for item in menu:
+                    if item.getState().contains(pyatspi.STATE_SELECTED):
+                        child = item
+                        break
+            if child:
+                regions.append(braille.Region(child.name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -787,10 +799,22 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 menu = child
                 break
         if menu:
-            for child in menu:
-                if child.getState().contains(pyatspi.STATE_SELECTED):
-                    utterances.append(child.name)
-                    break
+            child = None
+            try:
+                # This should work...
+                #
+                child = menu.querySelection().getSelectedChild(0)
+            except:
+                # But just in case, we'll fall back on this.
+                # [[[TODO - JD: Will we ever have a case where the first
+                # fails, but this will succeed???]]]
+                #
+                for item in menu:
+                    if item.getState().contains(pyatspi.STATE_SELECTED):
+                        child = item
+                        break
+            if child:
+                utterances.append(child.name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 

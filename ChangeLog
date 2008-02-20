@@ -1,6 +1,12 @@
 2008-02-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Fix for bug #508163 - Orca tends to be slow in the vicinity
+          of combo boxes in Firefox.
+
+2008-02-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           Fix for bug #515571 - FF3 form field structural navigation
           should handle form fields that are not in forms.
 
