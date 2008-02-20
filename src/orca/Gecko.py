@@ -7533,13 +7533,19 @@ class Script(default.Script):
             if unicodeText.startswith(self.EMBEDDED_OBJECT_CHARACTER):
                 childIndex = self.getChildIndex(obj, start)
                 if childIndex >= 0:
-                    obj = obj[childIndex]
-                    text = self.queryNonEmptyText(obj)
-                    if text:
-                        noChars = text.characterCount
-                        [line, start, end] = text.getTextAtOffset(noChars - 1,
-                                                                  boundary)
-
+                    child = obj[childIndex]
+                    childText = self.queryNonEmptyText(child)
+                    if childText:
+                        noChars = childText.characterCount
+                        [line, start, end] = \
+                               childText.getTextAtOffset(noChars - 1, boundary)
+                        obj = child
+                    elif child.getRole() != pyatspi.ROLE_LINK:
+                        text = None
+                        obj = child
+                    else:
+                        [line, start, end] = \
+                               text.getTextAfterOffset(offset, boundary)
         if text:
             offset = start
         else:
