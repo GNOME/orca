@@ -5782,16 +5782,21 @@ class Script(default.Script):
     def isFormField(self, obj):
         """Returns True if the given object is a field inside of a form."""
 
-        containingForm = self.getAncestor(obj,
-                                          [pyatspi.ROLE_FORM],
-                                          [pyatspi.ROLE_DOCUMENT_FRAME])
-        isField = containingForm \
-                  and not obj.getRole() in [pyatspi.ROLE_LINK,
-                                            pyatspi.ROLE_MENU_ITEM,
-                                            pyatspi.ROLE_LIST_ITEM,
-                                            pyatspi.ROLE_UNKNOWN] \
-                  and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-                  and obj.getState().contains(pyatspi.STATE_SENSITIVE)
+        if not obj or not self.inDocumentContent(obj):
+            return False
+
+        formRoles = [pyatspi.ROLE_CHECK_BOX,
+                     pyatspi.ROLE_RADIO_BUTTON,
+                     pyatspi.ROLE_COMBO_BOX,
+                     pyatspi.ROLE_LIST,
+                     pyatspi.ROLE_ENTRY,
+                     pyatspi.ROLE_PASSWORD_TEXT,
+                     pyatspi.ROLE_PUSH_BUTTON]
+
+        state = obj.getState()
+        isField = obj.getRole() in formRoles \
+                  and state.contains(pyatspi.STATE_FOCUSABLE) \
+                  and state.contains(pyatspi.STATE_SENSITIVE)
 
         return isField
 
