@@ -3585,10 +3585,12 @@ class Script(default.Script):
         # the selected item changes in the list on the left, we're
         # getting caret-moved events for the changing content on
         # the right.  We want to update the caret context but not
-        # the locus of focus.
+        # the locus of focus.  Do the same thing for the UIUC
+        # accessibility extension.
         #
         if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LIST_ITEM \
+           and orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_LIST_ITEM,
+                                                     pyatspi.ROLE_TABLE_CELL] \
            and not self.inDocumentContent(orca_state.locusOfFocus) \
            and self.inDocumentContent(event.source):
             self.setCaretContext(event.source, event.detail1)

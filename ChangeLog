@@ -1,6 +1,15 @@
 2008-02-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
+          Fix for bug #512261 - We should implement better support for the
+          FF A11y extension.  What this change does is update the caret
+          position to the offset specified by the caret-moved event that 
+          results -- i.e. we move to wherever the extension told Firefox to
+          tell us to move. :-)
+
+2008-02-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py: 
           Fix for bug #517371 - Orca gets stuck when browsing humanware.ca
           in FF3.
 
