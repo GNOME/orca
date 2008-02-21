@@ -4,6 +4,10 @@
           Tweak to the fix for bug #517371 - Orca gets stuck when browsing
           humanware.ca in FF3.
 
+        * test/keystrokes/firefox/line_nav_empty_anchor.py: (new)
+          test/html/bug-517371.html: (new)
+          New regression test.
+
 2008-02-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 
