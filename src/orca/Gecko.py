@@ -7578,7 +7578,7 @@ class Script(default.Script):
                         obj = child
                     else:
                         [line, start, end] = \
-                               text.getTextAfterOffset(offset, boundary)
+                               text.getTextAfterOffset(start + 1, boundary)
         if text:
             offset = start
         else:
