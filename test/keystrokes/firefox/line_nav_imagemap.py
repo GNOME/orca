@@ -44,6 +44,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
     ["BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",

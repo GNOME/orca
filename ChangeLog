@@ -1,3 +1,18 @@
+2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/line_nav_imagemap.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/xul_where_am_i_dialog.py:
+          test/keystrokes/firefox/xul_role_page_tab.py:
+          test/keystrokes/firefox/html_struct_nav_links.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          Updated regression tests to add some WaitForFocus's which will
+          hopefully improve test reproducability.  Also, the FF guys fixed
+          a bug which required updated tests.  Yea!
+
 2008-02-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py: 

@@ -55,10 +55,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Default button", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
-     "     VISIBLE:  ' Print to File  ', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
-     "     VISIBLE:  ' Print to File  ', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  PDF  '",
+     "     VISIBLE:  ' PDF  ', cursor=1",
+     "BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  PDF  '",
+     "     VISIBLE:  ' PDF  ', cursor=1",
      "SPEECH OUTPUT: 'Print'",
      "SPEECH OUTPUT: 'Default button is Print'"]))
 

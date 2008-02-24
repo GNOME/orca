@@ -67,11 +67,10 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'tree table'",
+     "SPEECH OUTPUT: 'Name'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'row 2 of 3'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 

@@ -307,6 +307,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  ' $l  $l  $l  $l'",
@@ -389,6 +390,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  ' $l  $l  $l  $l'",
