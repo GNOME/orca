@@ -206,7 +206,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'this is a $l', cursor=9",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a $l'",
      "     VISIBLE:  'this is a $l', cursor=9",
-     "SPEECH OUTPUT: 'a'"))
+     "SPEECH OUTPUT: 'a'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
