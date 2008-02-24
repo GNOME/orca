@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-22 10:22+0300\n"
+"POT-Creation-Date: 2008-02-24 15:40+0300\n"
 "PO-Revision-Date: 2007-03-05 18:04+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -721,7 +721,7 @@ msgstr "yläindeksi 1"
 #.
 #: ../src/orca/chnames.py:279
 msgid "ordinal"
-msgstr ""
+msgstr "järjestysnumero"
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
@@ -4673,7 +4673,7 @@ msgstr "<b>Väriasetukset</b>"
 
 #: ../src/orca/orca-setup.glade.h:9
 msgid "<b>Contracted Braille</b>"
-msgstr ""
+msgstr "<b>Lyhennetty braille</b>"
 
 #: ../src/orca/orca-setup.glade.h:10
 msgid "<b>Contrast</b>"
@@ -4779,7 +4779,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Contraction _Table:"
-msgstr ""
+msgstr "Lyhennys_taulu:"
 
 #: ../src/orca/orca-setup.glade.h:40
 msgid "Contrast:"
@@ -5145,7 +5145,7 @@ msgstr "_Poista"
 
 #: ../src/orca/orca-setup.glade.h:150
 msgid "_Enable Contracted Braille"
-msgstr ""
+msgstr "_Käytä lyhennettyä braillea"
 
 #: ../src/orca/orca-setup.glade.h:151
 msgid "_Enable speech"
