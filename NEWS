@@ -34,6 +34,9 @@ Firefox:
 * Fix for bug #515263 - ARIA tooltips should respect presentToolTips
   setting
 
+* Fix for bug #512503 - Remove "object:visible-data-changed" listener
+  from Gecko.py
+
 * Fix for bug #515571 - FF3 form field structural navigation should
   handle form fields that are not in forms
 
