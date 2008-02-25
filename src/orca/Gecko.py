@@ -9008,21 +9008,20 @@ class Script(default.Script):
 
         line = self._currentLineContents \
                or self.getLineContentsAtOffset(obj, characterOffset)
+        startingPoint = line
+        useful = self.getMeaningfulObjectsFromLine(line)
 
         while line and not found:
-            useful = self.getMeaningfulObjectsFromLine(line)
             index = self.findObjectOnLine(prevObj, prevOffset, useful)
             if not self.isSameObject(obj, prevObj):
-                # We have found a different object (e.g. text before the
-                # current link). 
-                #
-                prevObj = useful[-1][0]
-                prevOffset = useful[-1][1]
                 # The question is, have we found the beginning of this 
-                # object?  If the offset is 0 or there's more than one object
-                # on this line it's safe to assume we've found the beginning.
+                # object?  If the offset is 0 or there's more than one
+                # object on this line and we started on a later line, 
+                # it's safe to assume we've found the beginning.
                 #
-                found = (prevOffset == 0 or len(useful) > 1)
+                found = (prevOffset == 0) \
+                        or (len(useful) > 1 and line != startingPoint)
+
                 # Otherwise, we won't know for certain until we've gone
                 # to the line(s) before this one and found a different
                 # object, at which point we may have gone too far.
@@ -9035,7 +9034,9 @@ class Script(default.Script):
             elif 0 < index < len(useful):
                 prevObj = useful[index - 1][0]
                 prevOffset = useful[index - 1][1]
-                found = True
+                found = (prevOffset == 0) or (index > 1)
+                if not found:
+                    mayHaveGoneTooFar = True
 
             elif self.isSameObject(obj, prevObj) \
                  and 0 == prevOffset < characterOffset:
@@ -9043,9 +9044,11 @@ class Script(default.Script):
 
             if not found:
                 self._nextLineContents = line
-                [prevObj, prevOffset] = self.findPreviousLine(line[0][0], 
-                                                              line[0][1])
+                prevLine = self.findPreviousLine(line[0][0], line[0][1])
                 line = self._currentLineContents
+                useful = self.getMeaningfulObjectsFromLine(line)
+                prevObj = useful[-1][0]
+                prevOffset = useful[-1][1]
                 if self._currentLineContents == self._nextLineContents:
                     break
 
@@ -9067,9 +9070,8 @@ class Script(default.Script):
 
         elif mayHaveGoneTooFar and self._nextLineContents:
             if not self.isSameObject(obj, prevObj):
-                line = self._nextLineContents
-                prevObj = line[0][0]
-                prevOffset = line[0][1]
+                prevObj = useful[index][0]
+                prevOffset = useful[index][1]
 
         if found:
             self._currentLineContents = line

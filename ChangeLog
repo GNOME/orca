@@ -1,8 +1,13 @@
 2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          Fix for bug #517752 - (ff3) more orca+left/right inconsistancy
+
+2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           test/keystrokes/firefox/html_struct_nav_links.py:
-          Fix for bug #518502 -  Orca doesn't always speak wrapping
+          Fix for bug #518502 - Orca doesn't always speak wrapping
           announcement for link structural nav in FF3.
 
 2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
