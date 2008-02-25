@@ -2518,7 +2518,8 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        if newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
+        if newLocusOfFocus \
+           and newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
             return
 
         try:

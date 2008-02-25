@@ -1446,6 +1446,12 @@ class SpeechGenerator:
                 if speakAll:
                     for i in range(0, parent_table.nColumns):
                         cell = parent_table.getAccessibleAt(row, i)
+                        if not cell:
+                            debug.println(debug.LEVEL_WARNING,
+                                 "ERROR: speechgenerator." \
+                                 + "_getSpeechForTableCellRow" \
+                                 + " no accessible at (%d, %d)" % (row, i))
+                            continue
                         state = cell.getState()
                         showing = state.contains(pyatspi.STATE_SHOWING)
                         if showing:

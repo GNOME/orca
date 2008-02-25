@@ -1320,6 +1320,12 @@ class BrailleGenerator:
                 focusRowRegion = None
                 for i in range(0, table.nColumns):
                     cell = table.getAccessibleAt(row, i)
+                    if not cell:
+                        debug.println(debug.LEVEL_WARNING,
+                             "ERROR: braillegenerator." \
+                             + "_getBrailleRegionsForTableCellRow" \
+                             + " no accessible at (%d, %d)" % (row, i))
+                        continue
                     state = cell.getState()
                     showing = state.contains(pyatspi.STATE_SHOWING)
                     if showing:
