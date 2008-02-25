@@ -1,5 +1,12 @@
 2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/Gecko.py:
+          test/keystrokes/firefox/html_struct_nav_links.py:
+          Fix for bug #518502 -  Orca doesn't always speak wrapping
+          announcement for link structural nav in FF3.
+
+2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * test/keystrokes/firefox/line_nav_imagemap.py:
           test/keystrokes/firefox/label_guess_bugzilla_search.py:
           test/keystrokes/firefox/xul_role_entry.py:

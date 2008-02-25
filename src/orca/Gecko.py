@@ -9370,7 +9370,7 @@ class Script(default.Script):
             if obj and \
                not obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
-        if wrapped:
+        if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
             # reached without that object being found, we "wrap" to
@@ -9405,7 +9405,7 @@ class Script(default.Script):
             if obj and \
                not obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
-        if wrapped:
+        if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
             # reached without that object being found, we "wrap" to the
@@ -9451,7 +9451,7 @@ class Script(default.Script):
             if obj and \
                obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
-        if wrapped:
+        if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
             # reached without that object being found, we "wrap" to
@@ -9487,7 +9487,7 @@ class Script(default.Script):
             if obj and \
                obj.getState().contains(pyatspi.STATE_VISITED):
                 found = True
-        if wrapped:
+        if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
             # reached without that object being found, we "wrap" to the

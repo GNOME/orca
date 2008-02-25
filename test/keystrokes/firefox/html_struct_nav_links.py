@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
+sequence.append(WaitForFocus("anchors.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
@@ -58,7 +58,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
+sequence.append(WaitForFocus("blockquotes.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
+sequence.append(WaitForFocus("anchors.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
+sequence.append(WaitForFocus("textattributes.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u wrapping to bottom",
     ["BRAILLE LINE:  '• textattributes.html Link'",
@@ -98,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
+sequence.append(WaitForFocus("tables.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to tables.html",
     ["BRAILLE LINE:  '• tables.html Link'",
@@ -185,24 +185,22 @@ sequence.append(KeyComboAction("v"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "v to blockquotes.html link", 
-    ["BUG? - We're not speaking the wrapping announcement.",
-     "BRAILLE LINE:  '• blockquotes.html Link'",
+    ["BRAILLE LINE:  '• blockquotes.html Link'",
      "     VISIBLE:  '• blockquotes.html Link', cursor=3",
+     "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
 # Press Shift V to move to the previous visited link, tables.html. 
-# [[[Bug: it seems we've lost the wrapping announcement for visited 
-# links.]]]
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>v"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + v to tables.html link", 
-    ["BUG? - We're not speaking the wrapping announcement.",
-     "BRAILLE LINE:  '• tables.html Link'",
+    ["BRAILLE LINE:  '• tables.html Link'",
      "     VISIBLE:  '• tables.html Link', cursor=3",
+     "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'tables.html link'"]))
 
 ########################################################################
