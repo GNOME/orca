@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-17 20:32+0000\n"
-"PO-Revision-Date: 2008-02-23 13:19+0100\n"
+"PO-Revision-Date: 2008-02-24 15:23+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -2633,7 +2633,7 @@ msgstr "%d procent van document gelezen"
 #.
 #: ../src/orca/Gecko.py:1571
 msgid "entered bookmark"
-msgstr ""
+msgstr "ingegeven bladwijzer"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
@@ -2843,7 +2843,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2235
 msgid "Goes to previous large object."
-msgstr ""
+msgstr "Gaat naar vorige grote object."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'large object' is a logical chunk of
@@ -2875,7 +2875,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2270
 msgid "Goes to previous list."
-msgstr ""
+msgstr "Gaat naar vorige lijst."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
@@ -2890,78 +2890,78 @@ msgstr " Context is "
 #.
 #: ../src/orca/Gecko.py:2286
 msgid "Goes to previous list item."
-msgstr ""
+msgstr "Gaat naar vorige lijstitem."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
 #: ../src/orca/Gecko.py:2294
 msgid "Goes to next list item."
-msgstr ""
+msgstr "Gaat naar volgende lijstitem."
 
 #. Translators: this is for navigating between links in HTML
 #.
 #: ../src/orca/Gecko.py:2301
 msgid "Goes to previous unvisited link."
-msgstr ""
+msgstr "Gaat naar vorige niet-bezochte verwijzing."
 
 #. Translators: this is for navigating between links in HTML
 #.
 #: ../src/orca/Gecko.py:2308
 msgid "Goes to next unvisited link."
-msgstr ""
+msgstr "Gaat naar volgende niet-bezochte verwijzing."
 
 #. Translators: this is for navigating between links in HTML
 #.
 #: ../src/orca/Gecko.py:2315
 msgid "Goes to previous visited link."
-msgstr ""
+msgstr "Gaat naar vorige bezochte verwijzing."
 
 #. Translators: this is for navigating between links in HTML
 #.
 #: ../src/orca/Gecko.py:2322
 msgid "Goes to next visited link."
-msgstr ""
+msgstr "Gaat naar volgende bezochte verwijzing."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 #: ../src/orca/Gecko.py:2330
 msgid "Goes to previous form field."
-msgstr ""
+msgstr "Gaat naar vorige veld."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
 #: ../src/orca/Gecko.py:2338
 msgid "Goes to next form field."
-msgstr ""
+msgstr "Gaat naar volgende veld."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 #: ../src/orca/Gecko.py:2346
 msgid "Goes to previous blockquote."
-msgstr ""
+msgstr "Gaat naar vorige citaat."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
 #: ../src/orca/Gecko.py:2354
 msgid "Goes to next blockquote."
-msgstr ""
+msgstr "Gaat naar volgende citaat."
 
 #. Translators: this is for navigating between tables in HTML
 #.
 #: ../src/orca/Gecko.py:2361
 msgid "Goes to previous table."
-msgstr ""
+msgstr "Gaat naar vorige tabel."
 
 #. Translators: this is for navigating between tables in HTML
 #.
 #: ../src/orca/Gecko.py:2368
 msgid "Goes to next table."
-msgstr ""
+msgstr "Gaat naar volgende tabel."
 
 #. Translators: this is for navigating between live regions
 #.
@@ -3023,7 +3023,7 @@ msgstr "Verplaatst flat review naar het vorige teken."
 #.
 #: ../src/orca/Gecko.py:2438
 msgid "Goes to the next object."
-msgstr ""
+msgstr "Gaat naar het volgende object."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3034,7 +3034,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2450
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr ""
+msgstr "Wisselt tussen Gecko's eigen navigatie en de Orca-caretversie."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3045,7 +3045,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:2462
 msgid "Toggles structural navigation keys."
-msgstr ""
+msgstr "Schakelt structurele navigatietoetsen aan/uit."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3056,7 +3056,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3020
 msgid "Use _Orca Caret Navigation"
-msgstr ""
+msgstr "_Orca caretnavigatie gebruiken"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
@@ -3064,7 +3064,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3033
 msgid "Use Orca _Structural Navigation"
-msgstr ""
+msgstr "_Structurele Orcanavigatie gebruiken"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -3074,7 +3074,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3048
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
+msgstr "Cursor aan het _begin van de regel zetten bij verticale navigatie"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -3082,7 +3082,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3061
 msgid "Automatically start speaking a page when it is first _loaded"
-msgstr ""
+msgstr "Pagina automatisch oplezen wanneer deze voor het _eerst geladen wordt"
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -3090,14 +3090,14 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3073
 msgid "Page Navigation"
-msgstr ""
+msgstr "Paginanavigatie"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
 #: ../src/orca/Gecko.py:3096
 msgid "Speak _cell coordinates"
-msgstr ""
+msgstr "_Celcoördinaten uitspreken"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many
@@ -3105,28 +3105,28 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3108
 msgid "Speak _multiple cell spans"
-msgstr ""
+msgstr "Celspanne _uitspreken"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
 #: ../src/orca/Gecko.py:3119
 msgid "Announce cell _header"
-msgstr ""
+msgstr "Cel_kop uitspreken"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
 #: ../src/orca/Gecko.py:3130
 msgid "Skip _blank cells"
-msgstr ""
+msgstr "_Lege cellen overslaan"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
 #: ../src/orca/Gecko.py:3141
 msgid "Table Navigation"
-msgstr ""
+msgstr "Tabelnavigatie"
 
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
@@ -3134,7 +3134,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3165
 msgid "Speak results during _find"
-msgstr ""
+msgstr "Resultaten uitspreken _tijdens zoekactie"
 
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
@@ -3143,7 +3143,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3178
 msgid "Onl_y speak changed lines during find"
-msgstr ""
+msgstr "Alleen ge_wijzigde regels uitspreken tijden zoekactie"
 
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
@@ -3151,33 +3151,33 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:3195
 msgid "Minimum length of matched text:"
-msgstr ""
+msgstr "Minimumlengte van overeenkomende tekst:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
 #: ../src/orca/Gecko.py:3220
 msgid "Find Options"
-msgstr ""
+msgstr "Zoekopties"
 
 #. Translators: this is in reference to loading a web page.
 #.
 #: ../src/orca/Gecko.py:4143
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "Laden. Een ogenblik geduld alstublieft."
 
 #. Translators: this is in reference to loading a web page.
 #.
 #: ../src/orca/Gecko.py:4148
 #, python-format
 msgid "Finished loading %s."
-msgstr ""
+msgstr "Klaar met laden van %s."
 
 #. Translators: this is in reference to loading a web page.
 #.
 #: ../src/orca/Gecko.py:4154
 msgid "Finished loading."
-msgstr ""
+msgstr "Klaar met laden."
 
 #. Translators: the 'h' below represents a heading level
 #. attribute for content that you might find in something
@@ -3198,7 +3198,7 @@ msgstr "kop"
 #: ../src/orca/Gecko.py:5718
 #, python-format
 msgid "Cell spans %d rows and %d columns"
-msgstr ""
+msgstr "Cel is %d rijen hoog en %d kolommen breed"
 
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -3207,7 +3207,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:5725
 #, python-format
 msgid "Cell spans %d columns"
-msgstr ""
+msgstr "Cel is %d kolommen breed"
 
 #. Translators: The cell here refers to a cell within an HTML
 #. table.  We need to announce when the cell occupies or "spans"
@@ -3216,7 +3216,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:5731
 #, python-format
 msgid "Cell spans %d rows"
-msgstr ""
+msgstr "Cel is %d rijen hoog"
 
 # vertakking/boomniveau/vertakkingsniveau
 #. Translators: this is in reference to a heading level
@@ -3240,7 +3240,7 @@ msgstr "vertakking %d"
 #: ../src/orca/Gecko.py:9424 ../src/orca/Gecko.py:9507
 #: ../src/orca/Gecko.py:9591 ../src/orca/Gecko.py:9712
 msgid "Wrapping to bottom."
-msgstr ""
+msgstr "Omgeslagen naar onder."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -3263,7 +3263,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:9649 ../src/orca/Gecko.py:9762
 #: ../src/orca/Gecko.py:10068 ../src/orca/Gecko.py:10109
 msgid "Wrapping to top."
-msgstr ""
+msgstr "Omgeslagen naar boven."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
@@ -3279,7 +3279,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:8879 ../src/orca/Gecko.py:8904
 msgid "No more large objects."
-msgstr ""
+msgstr "Geen grote objecten meer."
 
 #. Translators: this is for navigating to the previous ARIA
 #. role landmark.  ARIA role landmarks are the W3C defined HTML
@@ -3310,7 +3310,7 @@ msgstr "vertakking %d"
 #.
 #: ../src/orca/Gecko.py:9168 ../src/orca/Gecko.py:9228
 msgid "No more lists."
-msgstr ""
+msgstr "Geen lijsten meer."
 
 #. Translators: this is for navigating HTML content by
 #. moving from bulleted/numbered list item to
@@ -3326,28 +3326,28 @@ msgstr "lijst-item"
 #.
 #: ../src/orca/Gecko.py:9354 ../src/orca/Gecko.py:9389
 msgid "No more unvisited links."
-msgstr ""
+msgstr "Geen niet-bezochte verwijzingen meer."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
 #: ../src/orca/Gecko.py:9435 ../src/orca/Gecko.py:9471
 msgid "No more visited links."
-msgstr ""
+msgstr "Geen bezochte verwijzingen meer."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
 #: ../src/orca/Gecko.py:9516 ../src/orca/Gecko.py:9550
 msgid "No more blockquotes."
-msgstr ""
+msgstr "Geen citaten meer."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
 #: ../src/orca/Gecko.py:9610 ../src/orca/Gecko.py:9669
 msgid "No more form fields."
-msgstr ""
+msgstr "Geen velden meer."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
@@ -3355,7 +3355,7 @@ msgstr ""
 #: ../src/orca/Gecko.py:9696
 #, python-format
 msgid "Row %d, column %d."
-msgstr ""
+msgstr "Rij %d, kolom %d."
 
 #. Translators: a uniform table is one in which each table
 #. cell occupies one row and one column (i.e. a perfect grid)
@@ -3364,7 +3364,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:9727 ../src/orca/Gecko.py:9777
 msgid "Non-uniform"
-msgstr ""
+msgstr "Niet-uniform"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
@@ -3372,8 +3372,8 @@ msgstr ""
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tabel van %d rij"
+msgstr[1] "Tabel met %d rijen"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -3381,8 +3381,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tabel van %d kolom"
+msgstr[1] "Tabel vmet %d kolommen"
 
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
@@ -3397,7 +3397,7 @@ msgstr "boomtabel"
 #.
 #: ../src/orca/Gecko.py:9844
 msgid "Beginning of row."
-msgstr ""
+msgstr "Begin van rij."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
@@ -3414,21 +3414,21 @@ msgstr "Geen stemmen beschikbaar.\n"
 #.
 #: ../src/orca/Gecko.py:9899
 msgid "End of row."
-msgstr ""
+msgstr "Einde van rij."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 #: ../src/orca/Gecko.py:9950
 msgid "Top of column."
-msgstr ""
+msgstr "Top van kolom."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
 #: ../src/orca/Gecko.py:10005
 msgid "Bottom of column."
-msgstr ""
+msgstr "Onderkant van kolom."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'live region' is a location in a web page
@@ -3466,7 +3466,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:10198
 msgid "Gecko is controlling the caret."
-msgstr ""
+msgstr "Gecko beheert de caret."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -3477,7 +3477,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:10210
 msgid "Orca is controlling the caret."
-msgstr ""
+msgstr "Orca beheert de caret."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3491,7 +3491,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:10234
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "Structurele navigatietoetsen ingeschakeld."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3505,7 +3505,7 @@ msgstr ""
 #.
 #: ../src/orca/Gecko.py:10246
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "Structurele navigatietoetsen uitgeschakeld."
 
 # diensten/services
 #: ../src/orca/gnomespeechfactory.py:177
@@ -3603,14 +3603,14 @@ msgstr "Alert"
 #.
 #: ../src/orca/keybindings.py:169
 msgid "Super"
-msgstr ""
+msgstr "Super"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
 #: ../src/orca/keybindings.py:174
 msgid "Meta2"
-msgstr ""
+msgstr "Meta2"
 
 # dit is geen waarschuwing
 #. Translators: this is presented in a GUI to represent the
@@ -3641,7 +3641,7 @@ msgstr "Caps_Lock"
 #.
 #: ../src/orca/keybindings.py:196
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #. Translators: this is how someone would speak the name of the left shift key
 #.
@@ -3796,7 +3796,7 @@ msgstr "vertakking %d"
 #.
 #: ../src/orca/mag.py:1507
 msgid "Color enhancements disabled."
-msgstr ""
+msgstr "Kleurverrijking uitgeschakeld."
 
 #. Translators: "color enhancements" are changes users can
 #. make to the appearance of the screen to make things easier
@@ -3804,7 +3804,7 @@ msgstr ""
 #.
 #: ../src/orca/mag.py:1515
 msgid "Color enhancements enabled."
-msgstr ""
+msgstr "Kleurverrijking ingeschakeld."
 
 #. Translators: "mouse enhancements" are changes users can
 #. make to the appearance of the mouse pointer to make it
@@ -3813,7 +3813,7 @@ msgstr ""
 #.
 #: ../src/orca/mag.py:1537
 msgid "Mouse enhancements disabled."
-msgstr ""
+msgstr "Muisverbeteringen uitgeschakeld."
 
 #. Translators: "mouse enhancements" are changes users can
 #. make to the appearance of the mouse pointer to make it
@@ -3822,7 +3822,7 @@ msgstr ""
 #.
 #: ../src/orca/mag.py:1570
 msgid "Mouse enhancements enabled."
-msgstr ""
+msgstr "Muisverbeteringen ingeschakeld."
 
 #. Translators: this is the message spoken when a user enables the
 #. magnifier.  In addition to screen magnification, the user's
@@ -3866,7 +3866,7 @@ msgstr "Spraak is niet beschikbaar."
 #.
 #: ../src/orca/mag.py:1706 ../src/orca/orca_gui_prefs.py:1670
 msgid "Top Half"
-msgstr ""
+msgstr "Bovenste helft"
 
 # onderkant/onder
 #. Translators: magnification will use the bottom half of the screen.
@@ -3916,7 +3916,7 @@ msgstr "_Aangepaste grootte"
 #.
 #: ../src/orca/orca_console_prefs.py:69
 msgid "^[Yy1]"
-msgstr ""
+msgstr "^[yY1jJ]"
 
 # zie ook: speech is not available
 #. Translators: this means speech synthesis (i.e., the machine
@@ -4053,9 +4053,8 @@ msgstr "Kies het gewenste spraaksysteem:"
 #. layouts for how they might control Orca.
 #.
 #: ../src/orca/orca_console_prefs.py:390
-#, fuzzy
 msgid "1. Desktop"
-msgstr "Bureaubladpictogram"
+msgstr "1. Desktop"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -4063,11 +4062,11 @@ msgstr "Bureaubladpictogram"
 #.
 #: ../src/orca/orca_console_prefs.py:396
 msgid "2. Laptop"
-msgstr ""
+msgstr "2. Laptop"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr ""
+msgstr "Ongeldige keus. Desktop wordt gekozen.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
@@ -4098,11 +4097,11 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:478
 msgid "Do you want to logout now?  Enter y or n: "
-msgstr ""
+msgstr "Wilt u zich nu afmelden? Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:484
 msgid "Setup complete. Logging out now."
-msgstr ""
+msgstr "Configuretie gereed. U wordt nu afgemeld."
 
 #: ../src/orca/orca_console_prefs.py:498
 msgid "Setup complete.  Press Return to continue."
@@ -4110,15 +4109,15 @@ msgstr "Configuratie voltooid. Geef Return om door te gaan."
 
 #: ../src/orca/orca-find.glade.h:1
 msgid "<b>Start from:</b>"
-msgstr ""
+msgstr "<b>Start bij:</b>"
 
 #: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:144
 msgid "C_urrent location"
-msgstr ""
+msgstr "_Huidige locatie"
 
 #: ../src/orca/orca-find.glade.h:3
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #. Check to see if we have just had an "object:state-changed:showing"
 #. event for the Find button. If the name is "Find", and one of its
@@ -4139,15 +4138,15 @@ msgstr "Venster"
 
 #: ../src/orca/orca-find.glade.h:5
 msgid "Match _entire word only"
-msgstr ""
+msgstr "Zoeken op _hele woorden"
 
 #: ../src/orca/orca-find.glade.h:6
 msgid "Orca Find Dialog"
-msgstr ""
+msgstr "Orca zoekvenster"
 
 #: ../src/orca/orca-find.glade.h:7
 msgid "Search _backwards"
-msgstr ""
+msgstr "_Achterwaards zoeken"
 
 #: ../src/orca/orca-find.glade.h:8
 #, fuzzy
@@ -4156,7 +4155,7 @@ msgstr "Scheiding"
 
 #: ../src/orca/orca-find.glade.h:9
 msgid "Start from:"
-msgstr ""
+msgstr "Start bij:"
 
 #: ../src/orca/orca-find.glade.h:10
 #, fuzzy
@@ -4165,11 +4164,11 @@ msgstr "venster"
 
 #: ../src/orca/orca-find.glade.h:11
 msgid "_Match case"
-msgstr ""
+msgstr "_Hooftlettergevoelig"
 
 #: ../src/orca/orca-find.glade.h:12
 msgid "_Search for:"
-msgstr ""
+msgstr "Zoeken _naar:"
 
 #: ../src/orca/orca-find.glade.h:13
 #, fuzzy
@@ -4178,7 +4177,7 @@ msgstr "venster"
 
 #: ../src/orca/orca-find.glade.h:14
 msgid "_Wrap around"
-msgstr ""
+msgstr "_Omslaan"
 
 #. Translators: this is an algorithm for tracking an object
 #. of interest (mouse pointer, caret, or widget) with the
@@ -4240,7 +4239,7 @@ msgstr "vraag"
 #.
 #: ../src/orca/orca_gui_prefs.py:270
 msgid "Key Binding"
-msgstr ""
+msgstr "Toetsbindingen"
 
 # dit is geen waarschuwing
 #. Translators: Alternate is a table column header where
@@ -4261,7 +4260,7 @@ msgstr "Alert"
 #.
 #: ../src/orca/orca_gui_prefs.py:383
 msgid "Modified"
-msgstr ""
+msgstr "Aangepast"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
@@ -4291,7 +4290,7 @@ msgstr "Hyperlink"
 #.
 #: ../src/orca/orca_gui_prefs.py:1085
 msgid "Attribute Name"
-msgstr ""
+msgstr "Attribuutnaam"
 
 #. Attribute Speak column (IS_SPOKEN).
 #.
@@ -4301,7 +4300,6 @@ msgstr ""
 #. presses Orca_Modifier+F.
 #.
 #: ../src/orca/orca_gui_prefs.py:1100
-#, fuzzy
 msgid "Speak"
 msgstr "Spreken"
 
@@ -4314,7 +4312,7 @@ msgstr "Spreken"
 #.
 #: ../src/orca/orca_gui_prefs.py:1118
 msgid "Mark in braille"
-msgstr ""
+msgstr "Markering in braille"
 
 #. Attribute Value column (VALUE)
 #.
@@ -4333,7 +4331,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1144
 msgid "Present Unless"
-msgstr ""
+msgstr "Weergeven tenzij"
 
 #. Pronunciation Dictionary actual string (word) column (ACTUAL).
 #.
@@ -4344,7 +4342,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1259
 msgid "Actual String"
-msgstr ""
+msgstr "Eigenlijke tekst"
 
 #. Pronunciation Dictionary replacement string column (REPLACEMENT)
 #.
@@ -4355,7 +4353,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1276
 msgid "Replacement String"
-msgstr ""
+msgstr "Vervanging"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -4363,7 +4361,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1986
 msgid "(double click)"
-msgstr ""
+msgstr "(dubbelklik)"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -4371,7 +4369,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1992
 msgid "(triple click)"
-msgstr ""
+msgstr "(driedubbelklik)"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
@@ -4391,7 +4389,7 @@ msgstr "Braille"
 #: ../src/orca/orca_gui_prefs.py:2528 ../src/orca/orca_gui_prefs.py:2568
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Dot _7"
-msgstr ""
+msgstr "Punt _7"
 
 #. Translators: If the user chooses this setting, the
 #. dot in the bottom right corner of the braille cell
@@ -4400,7 +4398,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2535 ../src/orca/orca_gui_prefs.py:2575
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Dot _8"
-msgstr ""
+msgstr "Punt _8"
 
 #. Translators: If the user chooses this setting, the
 #. two dots at the bottom of the braille cell will be
@@ -4409,7 +4407,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2542 ../src/orca/orca_gui_prefs.py:2582
 #: ../src/orca/orca-setup.glade.h:52
 msgid "Dots 7 an_d 8"
-msgstr ""
+msgstr "Punten 7 _en 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
@@ -4441,16 +4439,15 @@ msgstr "_Meeste"
 #.
 #: ../src/orca/orca_gui_prefs.py:2641
 msgid "Line"
-msgstr ""
+msgstr "Regel"
 
 #. Translators: If this setting is chosen and the user is reading
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
 #: ../src/orca/orca_gui_prefs.py:2647
-#, fuzzy
 msgid "Sentence"
-msgstr "Gecentreerd"
+msgstr "Zin"
 
 #. Translators: This refers to the amount of information
 #. Orca provides about a particular object that receives
@@ -4475,7 +4472,7 @@ msgstr "Huidige _cell oplezen"
 #.
 #: ../src/orca/orca_gui_prefs.py:3362
 msgid "enter new key"
-msgstr ""
+msgstr "geef nieuwe sneltoets"
 
 #. Translators: this is a spoken prompt letting the user know
 #. Orca has deleted an existing key combination based upon
@@ -4493,7 +4490,7 @@ msgstr "Configuratie voltooid. Geef Return om door te gaan."
 #: ../src/orca/orca_gui_prefs.py:3414
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr ""
+msgstr "De ingegeven toets is reeds gebonden aan %s"
 
 #. Translators: this is a spoken prompt letting the user know Orca
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -4511,7 +4508,7 @@ msgstr "Configuratie voltooid. Geef Return om door te gaan."
 #: ../src/orca/orca_gui_prefs.py:3460
 #, python-format
 msgid "The new key is: %s"
-msgstr ""
+msgstr "De nieuwe sneltoets is: %s"
 
 #. Translators: this is a spoken prompt confirming that an
 #. existing key combination (e.g., Ctrl+Alt+f) that was
@@ -4519,7 +4516,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:3468
 msgid "The keybinding has been removed."
-msgstr ""
+msgstr "Sneltoets is verwijderd."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
@@ -4544,7 +4541,7 @@ msgstr "Bilineair"
 #.
 #: ../src/orca/orca_gui_prefs.py:4159 ../src/orca/orca_gui_prefs.py:4249
 msgid "Saturate red"
-msgstr ""
+msgstr "Rood verzadigen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will maximize the green value for all
@@ -4553,7 +4550,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4167 ../src/orca/orca_gui_prefs.py:4257
 msgid "Saturate green"
-msgstr ""
+msgstr "Groen verzadigen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will maximize the blue value for all
@@ -4561,9 +4558,8 @@ msgstr ""
 #. (75, 100, 125) would become (75, 100, 255).
 #.
 #: ../src/orca/orca_gui_prefs.py:4175 ../src/orca/orca_gui_prefs.py:4265
-#, fuzzy
 msgid "Saturate blue"
-msgstr "boomtabel"
+msgstr "Blauw verzadigen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the red value for all
@@ -4572,7 +4568,7 @@ msgstr "boomtabel"
 #.
 #: ../src/orca/orca_gui_prefs.py:4183 ../src/orca/orca_gui_prefs.py:4273
 msgid "Desaturate red"
-msgstr ""
+msgstr "Rood uitschakelen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the green value for all
@@ -4581,7 +4577,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4191 ../src/orca/orca_gui_prefs.py:4281
 msgid "Desaturate green"
-msgstr ""
+msgstr "Groen verzadigen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the blue value for all
@@ -4590,7 +4586,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4199 ../src/orca/orca_gui_prefs.py:4289
 msgid "Desaturate blue"
-msgstr ""
+msgstr "Blauw verzadigen"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It shifts RGB values to the right. For
@@ -4599,7 +4595,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4207 ../src/orca/orca_gui_prefs.py:4297
 msgid "Positive hue shift"
-msgstr ""
+msgstr "Positieve tintverschuiving"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It shifts RGB values to the left. For
@@ -4608,13 +4604,13 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:4215 ../src/orca/orca_gui_prefs.py:4305
 msgid "Negative hue shift"
-msgstr ""
+msgstr "Negatieve tintverschuiving"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
 #: ../src/orca/orca_gui_prefs.py:4542
 msgid "Starting Orca Preferences. This may take a while."
-msgstr ""
+msgstr "Starten van Orca-voorkeuren… Dit kan even duren."
 
 # vergrootglas/loep
 #: ../src/orca/orca-mainwin.glade.h:1
@@ -4699,7 +4695,7 @@ msgstr "-n, --no-setup               Gebruikersinstellingen overslaan"
 #.
 #: ../src/orca/orca.py:1299
 msgid "Use alternate directory for user preferences"
-msgstr ""
+msgstr "Alternatieve map gebruiken voor gebruikersvoorkeuren"
 
 #. Translators: this option is for enabling speech synthesis
 #. output.
@@ -4754,7 +4750,7 @@ msgstr "optiepaneel"
 #: ../src/orca/orca.py:1306 ../src/orca/orca.py:1319 ../src/orca/orca.py:1468
 #: ../src/orca/orca.py:1485
 msgid "option|main-window"
-msgstr ""
+msgstr "hoofdvenster"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
 #. command line option, it will be automatically enabled as Orca is
@@ -4762,7 +4758,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1312
 msgid "Force use of option"
-msgstr ""
+msgstr "Optiegebruik forceren"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is
@@ -4770,7 +4766,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1325
 msgid "Prevent use of option"
-msgstr ""
+msgstr "Optiegebruik voorkomen"
 
 #. Translators: this is the Orca command line option that will quit Orca.
 #. The user would run the Orca shell script again from a terminal window.
@@ -4779,7 +4775,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1333
 msgid "Quits Orca (if shell script used)"
-msgstr ""
+msgstr "Orca afsluiten (bij shell scriptgebruik)"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
@@ -4809,17 +4805,23 @@ msgid ""
 "This will stop all speech output and screen magnification.\n"
 "\n"
 msgstr ""
+"<b><big>Orca afsluiten?</big></b>\n"
+"\n"
+"Hierdoor zal alle spraak en schermvergroting gestopt worden.\n"
+"\n"
 
 #: ../src/orca/orca-setup.glade.h:2
 #, no-c-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../src/orca/orca-setup.glade.h:3
 msgid ""
 "<b>Adjust selected\n"
 "attributes</b>"
 msgstr ""
+"<b>Geselecteerde attributen\n"
+"aanpassen</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 #, fuzzy
@@ -4828,7 +4830,7 @@ msgstr "<b>Zoomer instellingen</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Braille Indicator</b>"
-msgstr ""
+msgstr "<b>Braille-indicator</b>"
 
 # uitvoerigheid/uitgebreidheid
 #: ../src/orca/orca-setup.glade.h:7
@@ -4861,7 +4863,7 @@ msgstr "<b>Cursor instellingen</b>"
 
 #: ../src/orca/orca-setup.glade.h:13
 msgid "<b>Keyboard Layout</b>"
-msgstr ""
+msgstr "<b>Toetsenbordindeling</b>"
 
 #: ../src/orca/orca-setup.glade.h:14
 #, fuzzy
@@ -4887,7 +4889,7 @@ msgstr "<b>Tabelrij uitspreken</b>"
 
 #: ../src/orca/orca-setup.glade.h:19
 msgid "<b>Text attributes</b>"
-msgstr ""
+msgstr "<b>Tekstattributen</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
 #: ../src/orca/orca-setup.glade.h:21
@@ -4911,7 +4913,7 @@ msgstr "_Steminstellingen:"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Advanced _Settings..."
-msgstr ""
+msgstr "Extra _instellingen..."
 
 # volume geluidssterkte
 #: ../src/orca/orca-setup.glade.h:26
@@ -4921,11 +4923,11 @@ msgstr "_Geluidsvolume:"
 
 #: ../src/orca/orca-setup.glade.h:27
 msgid "Border color:"
-msgstr ""
+msgstr "Randkleur:"
 
 #: ../src/orca/orca-setup.glade.h:28
 msgid "Border size:"
-msgstr ""
+msgstr "Randdikte:"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Braille"
@@ -4933,7 +4935,7 @@ msgstr "Braille"
 
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brightness:"
-msgstr ""
+msgstr "Helderheid:"
 
 #: ../src/orca/orca-setup.glade.h:32
 #, fuzzy
@@ -4962,7 +4964,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:40
 msgid "Contrast:"
-msgstr ""
+msgstr "Contrast:"
 
 #: ../src/orca/orca-setup.glade.h:41
 #, fuzzy
@@ -5000,7 +5002,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:49
 msgid "Disable gksu _keyboard grab"
-msgstr ""
+msgstr "Gksu _aandacht grijpen uitschakelen"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
 #: ../src/orca/orca-setup.glade.h:54
@@ -5081,14 +5083,19 @@ msgid ""
 "Right Half\n"
 "Custom"
 msgstr ""
-
+"Volledig Scherm\n"
+"Bovenste helft\n"
+"Onderste helft\n"
+"Linker helft\n"
+"Rechter helft\n"
+"Aangepast"
 #: ../src/orca/orca-setup.glade.h:76
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: ../src/orca/orca-setup.glade.h:77
 msgid "Gree_n:"
-msgstr ""
+msgstr "Groe_n:"
 
 # verwisselen/omdraaien
 #: ../src/orca/orca-setup.glade.h:78
@@ -5097,11 +5104,11 @@ msgstr "_Kleuren omdraaien"
 
 #: ../src/orca/orca-setup.glade.h:79
 msgid "Key Binding List"
-msgstr ""
+msgstr "Lijst van sneltoetsen"
 
 #: ../src/orca/orca-setup.glade.h:80
 msgid "Key Bindings"
-msgstr ""
+msgstr "Sneltoetsen"
 
 # toetsecho
 #: ../src/orca/orca-setup.glade.h:81
@@ -5113,6 +5120,9 @@ msgid ""
 "Line\n"
 "Sentence"
 msgstr ""
+"Regel\n"
+"Zin"
+
 
 #: ../src/orca/orca-setup.glade.h:85
 msgid "Magnifier"
@@ -5120,17 +5130,17 @@ msgstr "Vergrootglas"
 
 #: ../src/orca/orca-setup.glade.h:86
 msgid "Mouse poi_nter:"
-msgstr ""
+msgstr "Muisaa_nwijzer:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.glade.h:88
 msgid "Move _down one"
-msgstr ""
+msgstr "Één naar _beneden"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.glade.h:90
 msgid "Move _up one"
-msgstr ""
+msgstr "Één naar bo_ven"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.glade.h:92
@@ -5162,6 +5172,15 @@ msgid ""
 "Positive hue shift\n"
 "Negative hue shift"
 msgstr ""
+"Geen\n"
+"Rood verzadigen\n"
+"Groen verzadigen\n"
+"Blauw verzadigen\n"
+"Rood uitschakelen\n"
+"Groen uitschakelen\n"
+"Blauw uitschakelen\n"
+"Positieve tintverschuiving\n"
+"Negatieve tintverschuiving"
 
 #: ../src/orca/orca-setup.glade.h:106
 #, fuzzy
@@ -5184,29 +5203,28 @@ msgstr "_Toonhoogte"
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
 #: ../src/orca/orca-setup.glade.h:111
 msgid "Pointer follows focus"
-msgstr ""
+msgstr "Aanwijzer volgt invoeraandacht"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
 #: ../src/orca/orca-setup.glade.h:113
 msgid "Pointer follows zoomer"
-msgstr ""
+msgstr "Aanwijzer volgt vergrootglas"
 
 #: ../src/orca/orca-setup.glade.h:114
-#, fuzzy
 msgid "Pronunciation"
-msgstr "Animatie"
+msgstr "Uitspraak"
 
 #: ../src/orca/orca-setup.glade.h:115
 msgid "Quit Orca _without confirmation"
-msgstr ""
+msgstr "Orca direct afsl_uiten"
 
 #: ../src/orca/orca-setup.glade.h:116
 msgid "R_ed:"
-msgstr ""
+msgstr "R_ood:"
 
 #: ../src/orca/orca-setup.glade.h:117
 msgid "S_ource display:"
-msgstr ""
+msgstr "_Bron:"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:119
@@ -5219,7 +5237,7 @@ msgstr "Schaal_factor:"
 
 #: ../src/orca/orca-setup.glade.h:121
 msgid "Show Orca _main window"
-msgstr ""
+msgstr "Orca _hoofdvenster weergeven"
 
 #: ../src/orca/orca-setup.glade.h:123
 msgid "Speak _indentation and justification"
