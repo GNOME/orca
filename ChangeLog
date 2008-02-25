@@ -1,3 +1,11 @@
+2008-02-25  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py: Removed visible-data-changed listener,
+	and replaced it with a state-changed:focused listener (bug
+	#512503).
+	* test/keystrokes/firefox/doc_tabs.py: Added a document 
+	tab-switching test.
+
 2008-02-25  Willie Walker <william.walker@sun.com>
 
         * configure.in:

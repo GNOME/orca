@@ -1985,6 +1985,12 @@ class Script(default.Script):
         self._currentLineContents = None
         self._nextLineContents = None
 
+        # Last focused frame. We are only interested in frame focused events
+        # when it is a different frame, so here we store the last frame
+        # that recieved state-changed:focused.
+        #
+        self._currentFrame = None
+
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
@@ -2511,8 +2517,6 @@ class Script(default.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
-        listeners["object:visible-data-changed"]            = \
-            self.onVisibleDataChanged
         listeners["object:state-changed:showing"]           = \
             self.onStateChanged
         listeners["object:state-changed:checked"]           = \
@@ -2525,6 +2529,8 @@ class Script(default.Script):
             self.onChildrenChanged
         listeners["object:text-changed:insert"]             = \
             self.onTextInserted
+        listeners["object:state-changed:focused"]           = \
+            self.onStateFocused
 
         # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
         # use of underscores instead of dashes until they fix their bug.
@@ -4242,27 +4248,18 @@ class Script(default.Script):
 
         default.Script.onStateChanged(self, event)
 
-    def onVisibleDataChanged(self, event):
-        """Called when the visible data of an object changes.
-        We do this to detect when the user switches between
-        the tabs holding different URL pages in the Firefox
-        window."""
-
-        # See if we have a frame who has a document frame.
-        #
-        documentFrame = None
-        if (event.source.getRole() == pyatspi.ROLE_FRAME) \
-            and event.source.getState().contains(pyatspi.STATE_ACTIVE):
-
-            documentFrame = self.getDocumentFrame()
-
-            # If the document frame is busy loading, we won't present
-            # anything to prevent Orca from being too chatty.  We also
-            # don't want to present anything if we're not in the document.
-            #
-            if self._loadingDocumentContent or not self.inDocumentContent():
+    def onStateFocused(self, event):
+        default.Script.onStateChanged(self, event)
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and \
+               event.detail1:
+            documentFrame = event.source
+            
+            if self._loadingDocumentContent or \
+                   documentFrame == self._currentFrame:
                 return
 
+            self._currentFrame = documentFrame
+            
             braille.displayMessage(documentFrame.name)
             speech.stop()
             speech.speak(
