@@ -26,30 +26,28 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
-    ["BUG? - It seems that the internal frame may be causing us to not speak the alert",
+    ["BRAILLE LINE:  'about:blank HtmlPane'",
+     "     VISIBLE:  'about:blank HtmlPane', cursor=1",
+     "BRAILLE LINE:  'about:blank'",
+     "     VISIBLE:  'about:blank', cursor=0",
      "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog'",
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
-     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog OK Button'",
-     "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: 'about:blank internal frame'",
      "SPEECH OUTPUT: 'about:blank html content'",
+     "SPEECH OUTPUT: 'about:blank page'",
+     "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '[JavaScript Application] '",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'OK button'"]))
+     "SPEECH OUTPUT: '[JavaScript Application] I am an alert'"]))
 
 ########################################################################
-# Focus will be on the OK button. [[[Bug: We don't get a focus event 
-# for it.  This seems to be true for all Firefox dialogs and is a
-# known issue.]]]  Press space bar on the OK button to dismiss the
-# alert and return to the Firefox main window.
+# Dismiss the alert by pressing Return
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
-    "Press Space on the OK button to dismiss the alert",
+    "Press Return to dismiss the alert",
     ["BRAILLE LINE:  'Minefield Application Minefield Frame'",
      "     VISIBLE:  'Minefield Frame', cursor=1",
      "BRAILLE LINE:  'about:blank HtmlPane'",

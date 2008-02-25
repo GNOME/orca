@@ -324,7 +324,8 @@ class SpeechGenerator:
         #
         labels = self._script.findUnrelatedLabels(obj)
         for label in labels:
-            utterances.append(label.name)
+            name = self._getSpeechForObjectName(label)
+            utterances.extend(name)
 
         self._debugGenerator("_getSpeechForAlert",
                              obj,
