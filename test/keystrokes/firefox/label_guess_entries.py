@@ -134,8 +134,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BUG? - We're not guessing this correctly",
-     "BRAILLE LINE:  ' $l '",
-     "     VISIBLE:  ' $l ', cursor=1",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())

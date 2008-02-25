@@ -47,9 +47,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'New bug Link  · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'New bug Link  · Browse Link  ·', cursor=1",
-     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+    ["BRAILLE LINE:  'New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
+     "     VISIBLE:  'New bug Link · Browse Link  · ', cursor=1",
+     "SPEECH OUTPUT: 'New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -104,9 +104,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'GNOME Link Unspecified Combo'",
-     "     VISIBLE:  'GNOME Link Unspecified Combo', cursor=0",
-     "SPEECH OUTPUT: 'GNOME link Unspecified combo box'"]))
+    ["BRAILLE LINE:  'GNOME Link'",
+     "     VISIBLE:  'GNOME Link', cursor=1",
+     "SPEECH OUTPUT: 'GNOME link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -120,9 +120,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Unspecified Combo'",
-     "     VISIBLE:  'Unspecified Combo', cursor=0",
-     "SPEECH OUTPUT: 'Unspecified combo box'"]))
+    ["BRAILLE LINE:  'GNOME Link Unspecified Combo'",
+     "     VISIBLE:  'GNOME Link Unspecified Combo', cursor=0",
+     "SPEECH OUTPUT: 'GNOME link Unspecified combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -216,9 +216,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Commit Button       Remember values as bookmarkable template Button'",
-     "     VISIBLE:  'Commit Button       Remember', cursor=1",
-     "SPEECH OUTPUT: 'Commit button       Remember values as bookmarkable template button'"]))
+    ["BRAILLE LINE:  'Commit Button      Remember values as bookmarkable template Button'",
+     "     VISIBLE:  'Commit Button      Remember ', cursor=1",
+     "SPEECH OUTPUT: 'Commit button      Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -240,9 +240,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Saved Searches: All Orca Link  | Firefox Link  | open orca Link  | Open RFEs Link'",
+    ["BRAILLE LINE:  'Saved Searches: All Orca Link | Firefox Link  | open orca Link  | Open RFEs Link'",
      "     VISIBLE:  'Saved Searches: All Orca Link ', cursor=1",
-     "SPEECH OUTPUT: 'Saved Searches: All Orca link  | Firefox link  | open orca link  | Open RFEs link'"]))
+     "SPEECH OUTPUT: 'Saved Searches: All Orca link | Firefox link  | open orca link  | Open RFEs link'"]))
 
 ########################################################################
 # Up Arrow.

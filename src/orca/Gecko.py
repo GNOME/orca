@@ -7654,6 +7654,10 @@ class Script(default.Script):
                 line = text.getTextAfterOffset(nOffset, boundary)
                 nOffset = line[1]
 
+            char = self.getCharacterAtOffset(nextObj, nOffset)
+            if char == " ":
+                nOffset += 1
+
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
             if self.onSameLine(extents, nextExtents) \
                and lastExtents != nextExtents \

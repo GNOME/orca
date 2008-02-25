@@ -77,9 +77,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Home Link  | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link'",
-     "     VISIBLE:  'Home Link  | Download/Installati', cursor=1",
-     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link'"]))
+    ["BRAILLE LINE:  'Home Link | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link'",
+     "     VISIBLE:  'Home Link | Download/Installatio', cursor=1",
+     "SPEECH OUTPUT: 'Home link | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -247,9 +247,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Program Office of Sun Microsystems, Inc. Link  with contributions Link'",
+    ["BRAILLE LINE:  'Program Office of Sun Microsystems, Inc. Link with contributions Link'",
      "     VISIBLE:  'Program Office of Sun Microsyste', cursor=1",
-     "SPEECH OUTPUT: 'Program Office of Sun Microsystems, Inc. link  with contributions link'"]))
+     "SPEECH OUTPUT: 'Program Office of Sun Microsystems, Inc. link with contributions link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -312,9 +312,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Darragh Ó Héiligh Link  has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link  has cr', cursor=1",
-     "SPEECH OUTPUT: 'Darragh Ó Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
+    ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
+     "     VISIBLE:  'Darragh Ó Héiligh Link has cre', cursor=1",
+     "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -466,9 +466,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'GUI Link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
-     "     VISIBLE:  'GUI Link  (accessed by pressing ', cursor=1",
-     "SPEECH OUTPUT: 'GUI link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
+    ["BRAILLE LINE:  'GUI Link (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
+     "     VISIBLE:  'GUI Link (accessed by pressing I', cursor=1",
+     "SPEECH OUTPUT: 'GUI link (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1184,9 +1184,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'GUI Link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
-     "     VISIBLE:  'GUI Link  (accessed by pressing ', cursor=1",
-     "SPEECH OUTPUT: 'GUI link  (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
+    ["BRAILLE LINE:  'GUI Link (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
+     "     VISIBLE:  'GUI Link (accessed by pressing I', cursor=1",
+     "SPEECH OUTPUT: 'GUI link (accessed by pressing Insert+Space when Orca is running) and for using flat review'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1338,9 +1338,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Darragh Ó Héiligh Link  has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link  has cr', cursor=1",
-     "SPEECH OUTPUT: 'Darragh Ó Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
+    ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
+     "     VISIBLE:  'Darragh Ó Héiligh Link has cre', cursor=1",
+     "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1412,9 +1412,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BUG? - We're missing a link that's split across two lines", 
-     "BRAILLE LINE:  'Program Office of Sun Microsystems, Inc. Link  with contributions Link'",
+     "BRAILLE LINE:  'Program Office of Sun Microsystems, Inc. Link with contributions Link'",
      "     VISIBLE:  'Program Office of Sun Microsyste', cursor=1",
-     "SPEECH OUTPUT: 'Program Office of Sun Microsystems, Inc. link  with contributions link'"]))
+     "SPEECH OUTPUT: 'Program Office of Sun Microsystems, Inc. link with contributions link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1582,9 +1582,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Home Link  | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link'",
-     "     VISIBLE:  'Home Link  | Download/Installati', cursor=1",
-     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link'"]))
+    ["BRAILLE LINE:  'Home Link | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link'",
+     "     VISIBLE:  'Home Link | Download/Installatio', cursor=1",
+     "SPEECH OUTPUT: 'Home link | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

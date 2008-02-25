@@ -1,6 +1,17 @@
 2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          Fix for bug #517336 - Spaces interfere with Orca's ability to
+          get the line contents.
+
+2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Fix for bug #517752 - (ff3) more orca+left/right inconsistancy
 
 2008-02-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
