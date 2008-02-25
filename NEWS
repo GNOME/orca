@@ -1,3 +1,85 @@
+2.21.92 - 25-Feb-2008
+
+General:
+
+* Fix for bug #419136 - Planner toggle button in main window not
+  accessible
+
+* Fix for bug #486897 - Where Am I doesn't present row/column headers
+
+* Fix for bug #513238 - Flat review is broken in Evolution
+
+* Fix for bug #516321 - Caps lock not correctly reporting the state
+  when toggled
+
+* Workaround for bug #517026 - crash in Open Folder: Deleting the last
+  file in a directory
+
+OOo:
+
+* Fix for bug #515651 - Navigation of cells in oocalc now says "not
+  selected"
+
+Firefox:
+
+* Fix for bug #508163 - Orca tends to be slow in the vicinity of combo
+  boxes in Firefox
+
+* Fix for bug #511885 - Support relevant and channel live region
+  properties
+
+* Fix for bug #512261 - We should implement better support for the FF
+  A11y extension
+
+* Fix for bug #515263 - ARIA tooltips should respect presentToolTips
+  setting
+
+* Fix for bug #515571 - FF3 form field structural navigation should
+  handle form fields that are not in forms
+
+* Fix for bug #516121 - Orca stalls on barackobama.com when navigating
+  by heading in FF3
+
+* Fix for bug #516174 - FF line navigation needs to be more
+  accurate. (We know these aren't all the issues, but hopefully this
+  fix will resolve many of them.)
+
+* Fix for bug #517521 - Gecko.py is throwing exception in onCaretMoved
+
+* Fix for bug #517336 - Spaces interfere with Orca's ability to get
+  the line contents
+
+* Fix for bug #517371 - Orca gets stuck when browsing humanware.ca in FF3
+
+* Fix for bug #517716 - Live regions being output on listitem changes
+  for Bugzilla
+
+* Fix for bug #517752 - (ff3) more orca+left/right inconsistency
+
+* Fix for bug #518502 - Orca doesn't always speak wrapping
+  announcement for link structural nav in FF3
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de      German               Jochen Skulj
+    es      Spanish              Francisco Javier Dorado Martinez
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Robert-André Mauchin and Claude Paroz
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    kn      Kannada              Shankar Prasad and Runa Bhattacharjee
+    mk      Macedonian           Jovan Naumovski
+    nb      Norwegian Bokmål     Kjartan Maraas
+    ne      Nepali               Pawan Chitrakar
+    nl      Dutch                Vincent van Adrighem
+    pt      Portuguese           Duarte Loreto
+    ru      Russian              Nickolay V. Shmyrev
+    th      Thai                 Theppitak Karoonboonyanan
+    vi      Vietnamese           Nguyễn Thái Ngọc Duy
+    zh_HK   Traditional Chinese  Chao-Hsiung Liao
+    zh_TW   Traditional Chinese  Chao-Hsiung Liao
+
+==========
+
 2.21.91 - 11-Feb-2008
 
 General:
