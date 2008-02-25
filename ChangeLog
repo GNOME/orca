@@ -1,6 +1,14 @@
 2008-02-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #518518 - Need to do some sanity checks for broken
+          table hierarchies.
+
+2008-02-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/speechgenerator.py:
           test/keystrokes/firefox/xul_role_alert.py:
           Fix for bug #518507 - getSpeechForAlert() assumes unrelated
           labels have names.
