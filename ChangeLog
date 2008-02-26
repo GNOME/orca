@@ -1,3 +1,10 @@
+2008-02-26  Willie Walker <william.walker@sun.com>
+
+        * ChangeLog:
+          README:
+          configure.in:
+          Mark as Orca v2.22.0pre
+
 2008-02-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/speechgenerator.py:
