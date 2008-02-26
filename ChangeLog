@@ -1,3 +1,10 @@
+2008-02-26  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
+	  README:
+          Mark as Orca v2.23.0pre
+          The Orca v2.22 code is in the gnome-2-22 branch.
+	
 2008-02-26  Scott Haeger <scott@bashautomation.com>
 
         * test/harness/utils.py
