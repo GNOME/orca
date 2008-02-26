@@ -26,7 +26,7 @@ sequence.append(WaitForFocus("inline: Tree Example 1", acc_role=pyatspi.ROLE_DOC
 
 ########################################################################
 # Tab to the tree.  
-#
+#[[[Bug?: repeated Braille]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Fruits", acc_role=pyatspi.ROLE_LIST_ITEM))
@@ -191,6 +191,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Vegetables list item expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
+# [[[Bug?: "Panel list" addition.  below are expected results]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(

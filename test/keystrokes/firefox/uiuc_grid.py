@@ -31,8 +31,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to grid", 
-    ["BRAILLE LINE:  'E-mail List Sorted by Date $l Sel $l'",
-     "     VISIBLE:  'E-mail List Sorted by Date $l Se', cursor=0",
+    ["BRAILLE LINE:  'E-mail List Sorted by Date Caption Sel $l'",
+     "     VISIBLE:  'E-mail List Sorted by Date Capti', cursor=0",
      "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
      "     VISIBLE:  '< > Email 0 Selected CheckBox 1 ', cursor=1",
      "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",

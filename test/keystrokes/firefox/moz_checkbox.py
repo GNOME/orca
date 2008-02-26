@@ -26,7 +26,7 @@ sequence.append(WaitForFocus("ARIA Checkbox", acc_role=pyatspi.ROLE_DOCUMENT_FRA
 
 ########################################################################
 # Tab to the first checkbox.
-#
+# [[[Bug?: repeated Braille.  below are expected results]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
