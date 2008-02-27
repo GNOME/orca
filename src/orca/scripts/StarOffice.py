@@ -2301,6 +2301,13 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # If this is state change "focused" event and event.source isn't a
+        # focused object, then just return. See bug #517502 for more details.
+        #
+        if event.type.startswith("object:state-changed:focused") and \
+           not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
         # Check to see if we are in the Presentation startup wizard. If so,
         # then speak the object that currently has focus.
         #

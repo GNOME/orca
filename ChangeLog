@@ -1,3 +1,9 @@
+2008-02-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #517502 - Orca should not speak the previously 
+          focused menu item when arrowing across the menu bar in OpenOffice.
+
 2008-02-26  Willie Walker <william.walker@sun.com>
 
         * configure.in:
