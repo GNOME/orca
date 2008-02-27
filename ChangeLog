@@ -4,6 +4,11 @@
           Fix for bug #517502 - Orca should not speak the previously
           focused menu item when arrowing across the menu bar in OpenOffice.
 
+        * src/orca/scripts/gnome-terminal.py:
+          Fix for bug #518762 - When using gnome-terminal with multiple
+          tabs, the name on the tab is not announced when switching
+          between tabbed windows.
+
 2008-02-26  Willie Walker <william.walker@sun.com>
 
         * ChangeLog:
