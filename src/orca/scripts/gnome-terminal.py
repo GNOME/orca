@@ -78,6 +78,33 @@ class Script(default.Script):
 
         return True
 
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+
+        # If the new locus of focus has a role of "terminal", then update
+        # the braille display accordingly. Also speak the page tab that this
+        # terminal is in if it's sensitive (i.e. there are two or more tabs)
+        # and if the old locus of focus also had a "terminal role.
+        # See bug #518762 for more details.
+        #
+        if newLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL:
+            pageTab = event.source.parent.parent.parent
+            if oldLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL and \
+               pageTab.getRole() == pyatspi.ROLE_PAGE_TAB and \
+               pageTab.getState().contains(pyatspi.STATE_SENSITIVE):
+                self.updateBraille(newLocusOfFocus)
+                utterances = self.speechGenerator.getSpeech(pageTab, False)
+                speech.speakUtterances(utterances)
+
+        default.Script.locusOfFocusChanged(self, event, 
+                                           oldLocusOfFocus, newLocusOfFocus)
+
     #def onWindowActivated(self, event):
     #    # Sets the context to the top level window first, so we can
     #    # get information about it the window we just moved to.
