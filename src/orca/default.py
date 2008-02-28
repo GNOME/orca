@@ -4926,7 +4926,8 @@ class Script(script.Script):
                 parent1 = parent1.parent
                 parent2 = parent2.parent
             if parent1 and parent2 and parent1 == parent2:
-                return True
+                return self.getRealActiveDescendant(obj1).name == \
+                       self.getRealActiveDescendant(obj2).name
         except:
             pass
 
