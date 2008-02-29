@@ -82,8 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     "Split pane decrement value",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'",
      "     VISIBLE:  '60 SplitPane', cursor=1",
-     "BUG? - no presentation in speech",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: '60'"]))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
