@@ -1,3 +1,10 @@
+2008-02-20  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          src/orca/settings.py
+          Fixed bug #491837, Implement Gecko.py 'go to' functions with 
+          Collections.
+
 2008-02-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
