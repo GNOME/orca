@@ -15,6 +15,11 @@
           Fix for bug #519561 – gtk-demo/role_split_pane.py regression 
           test #2 produces the wrong results.
 
+        * src/orca/where_am_I.py:
+          test/keystrokes/gtk-demo/role_split_pane.py:
+          Fix for bug #519563 – gtk-demo/role_split_pane.py regression
+          test #3 produces the wrong results.
+
         * test/keystrokes/gtk-demo/role_split_pane.py:
           Fix for bug #519563 – gtk-demo/role_split_pane.py regression
           test #4 produces the wrong results.

@@ -139,6 +139,9 @@ class WhereAmI:
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
             self._speakToggleButton(obj, basicOnly)
 
+        elif role == pyatspi.ROLE_SPLIT_PANE:
+            self._speakSplitPane(obj, basicOnly)
+
         else:
             self._speakGenericObject(obj, basicOnly)
 
@@ -821,6 +824,25 @@ class WhereAmI:
 
         speech.speakUtterances(utterances)
       
+    def _speakSplitPane(self, obj, basicOnly):
+        """Speak split pane information:
+           1. Name/Label
+           2. Role
+           3. Value
+        """
+
+        utterances = []
+        text = self.getObjLabelAndName(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+
+        valueString = self._script.getTextForValue(obj)
+        utterances.append(valueString)
+
+        speech.speakUtterances(utterances)
+
     def __extractSize(self, uri):
         """Get the http header for a given uri and try to extract the size
         (Content-length).

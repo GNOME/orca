@@ -65,8 +65,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'",
      "     VISIBLE:  '61 SplitPane', cursor=1",
      "SPEECH OUTPUT: ''",
-     "BUG? - no value spoken?",
-     "SPEECH OUTPUT: 'split pane'"]))
+     "SPEECH OUTPUT: 'split pane'",
+     "SPEECH OUTPUT: '61'"]))
 
 ########################################################################
 # Put things back the way they were
