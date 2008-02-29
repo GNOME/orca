@@ -1,3 +1,8 @@
+2008-02-28  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py:
+	  Fixed extra verbosity in web pages with nested frames (bug #518893).
+
 2008-02-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
