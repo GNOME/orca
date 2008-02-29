@@ -915,3 +915,7 @@ enableContractedBraille = False
 # Contracted braille table.
 # 
 brailleContractionTable = ''
+
+# Use Collection Interface?
+# 
+useCollection = True

@@ -1,3 +1,10 @@
+2008-02-29  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          src/orca/settings.py
+          Fixed bug #491837, Implement Gecko.py 'go to' functions with 
+          Collections.
+
 2008-02-29  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/gtk-demo/role_split_pane.py:

@@ -1417,14 +1417,17 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """Calls the base class method for basic information and Gecko
         specific presentation methods for detailed/custom information.
         """
-
         if basicOnly or not self._script.inDocumentContent(obj):
             where_am_I.WhereAmI.whereAmI(self, obj, basicOnly)
             self._script.liveMngr.outputLiveRegionDescription(obj)
         else:
-            try:
-                self._collectionPageSummary()
-            except:
+            if settings.useCollection:
+                try:
+                    self._collectionPageSummary()
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+                    self._iterativePageSummary(obj)
+            else:
                 self._iterativePageSummary(obj)
 
     def _speakDefaultButton(self, obj):
@@ -1444,7 +1447,6 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """
         docframe = self._script.getDocumentFrame()
         col = docframe.queryCollection()
-
         # We will initialize these after the queryCollection() call in case
         # Collection is not supported
         headings = 0 
@@ -1462,7 +1464,8 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                                    "", col.MATCH_NONE,
                                    False)
 
-        matches = col.getMatches (rule, col.SORT_ORDER_CANONICAL, 0)
+        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+
         col.freeMatchRule(rule)
         for obj in matches:
             role = obj.getRole()
@@ -7223,6 +7226,38 @@ class Script(default.Script):
         return nextObj
 
     def findPreviousRole(self, roles, wrap, currentObj=None):
+        if settings.useCollection:
+            try:
+                # The docframe is our collection
+                docframe = self.getDocumentFrame()
+                col = docframe.queryCollection()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                # Collection is probably not implemented, use the fallback
+                return self.iterFindPreviousRole(roles, wrap, currentObj)
+
+            try:
+                # We have our Collection so define our matchRule and go find it
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
+                            "", col.MATCH_NONE,
+                            roles, col.MATCH_ANY,
+                            "", col.MATCH_NONE,
+                            False)
+                retval = self.findPrevByMatchRule(col, rule, wrap, currentObj)
+                # we created the matchRule so we need to free it
+                col.freeMatchRule(rule)            
+                return retval
+            except:
+                # we have created our matchRule at this point so free it
+                col.freeMatchRule(rule) 
+                debug.printException(debug.LEVEL_SEVERE)
+                # Collection is probably not implemented, use the fallback
+                return self.iterFindPreviousRole(roles, wrap, currentObj)
+        else:
+            return self.iterFindPreviousRole(roles, wrap, currentObj)
+
+    def iterFindPreviousRole(self, roles, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match.
 
@@ -7267,6 +7302,38 @@ class Script(default.Script):
         return [None, wrapped]
 
     def findNextRole(self, roles, wrap, currentObj=None):
+        if settings.useCollection:
+            try:
+                # The docframe is our collection
+                docframe = self.getDocumentFrame()
+                col = docframe.queryCollection()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                # Collection is probably not implemented, use the fallback
+                return self.iterFindNextRole(roles, wrap, currentObj)
+
+            try:
+                # We have our Collection so define our matchRule and go find it
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
+                            "", col.MATCH_NONE,
+                            roles, col.MATCH_ANY,
+                            "", col.MATCH_NONE,
+                            False)
+                retval = self.findNextByMatchRule(col, rule, wrap, currentObj)
+                # we created the matchRule so we need to free it
+                col.freeMatchRule(rule)            
+                return retval
+            except:
+                # we created the matchRule at this point so free it
+                col.freeMatchRule(rule)
+                debug.printException(debug.LEVEL_SEVERE)
+                # Collection is probably not implemented, use the fallback
+                return self.iterFindNextRole(roles, wrap, currentObj)
+        else:
+            return self.iterFindNextRole(roles, wrap, currentObj)
+
+    def iterFindNextRole(self, roles, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
@@ -7309,7 +7376,87 @@ class Script(default.Script):
                     wrapped = True
 
         return [None, wrapped]
-                
+
+    def findPrevByMatchRule(self, col, matchrule, wrap, currentObj=None):
+        # get our current object
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
+            
+        # Get the ancestors.  We won't stop on any of them.
+        ancestors = []
+        obj = currentObj.parent
+        while obj:
+            ancestors.append(obj)
+            obj = obj.parent
+
+        wrapped = False
+        rs = col.getMatchesTo(currentObj, matchrule, 
+                              col.SORT_ORDER_CANONICAL, 
+                              col.TREE_INORDER, True, 1, True)
+        while True:
+            if len(rs) == 0:
+                if wrapped:
+                    return [None, True]
+                elif wrap:
+                    lastobj = self.getLastObject()
+                    # Collection does not do an inclusive search, meaning
+                    # that the start object is not part of the search.  So
+                    # we need to test the lastobj separately using the given 
+                    # matchRule.  We don't have this problem for 'Next' because
+                    # the startobj is the doc frame.
+                    #
+                    secondlastobj = self.findPreviousObject(lastobj)
+                    rs = col.getMatchesFrom(secondlastobj, matchrule, 
+                              col.SORT_ORDER_CANONICAL, 
+                              col.TREE_INORDER, 1, True)
+                    if len(rs) > 0:
+                        return [rs[0], True]
+                    else:
+                        rs = col.getMatchesTo(lastobj, matchrule, 
+                              col.SORT_ORDER_CANONICAL, 
+                              col.TREE_INORDER, True, 1, True)
+                        wrapped = True
+                 # caller doesn't want us to wrap and we haven't found anything
+                else:
+                    return [None, False]
+            elif len(rs) > 0:
+                if rs[0] in ancestors:
+                    rs = col.getMatchesTo(rs[0], matchrule, 
+                              col.SORT_ORDER_CANONICAL, 
+                              col.TREE_INORDER, True, 1, True)
+                else:
+                    return [rs[0], wrapped]
+                 
+    def findNextByMatchRule(self, col, matchrule, wrap, currentObj=None):
+        # get our current object
+        if not currentObj:
+            [currentObj, characterOffset] = self.getCaretContext()
+
+        # go find the next match
+        rs = col.getMatchesFrom(currentObj, 
+                                    matchrule,
+                                    col.SORT_ORDER_CANONICAL,
+                                    col.TREE_INORDER,
+                                    1, 
+                                    True)
+
+        if len(rs) > 0:
+            return [rs[0], False]
+        elif wrap:
+            # We didn't find anything so start at the doc frame and try again
+            rs = col.getMatchesFrom(self.getDocumentFrame(), 
+                                    matchrule,
+                                    col.SORT_ORDER_CANONICAL,
+                                    col.TREE_INORDER,
+                                    1, 
+                                    True)
+            if len(rs) > 0:
+                return [rs[0], True]
+            else:
+                return [None, True]
+        else:
+            return [None, False] 
+
     def findPrevByPredicate(self, pred, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the previous object
         using the given predicate as a pattern to match.
@@ -8946,8 +9093,41 @@ class Script(default.Script):
             speech.speak(_("No more large objects."))
 
     def goPreviousLandmark(self, inputEvent):
-        wrap = True
-        [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark, wrap)
+        [obj, characterOffset] = self.getCaretContext()
+
+        # Try to find it using Collection first
+        success = False
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                found = False
+                col = self.getDocumentFrame().queryCollection() 
+                # form our list of attribute strings
+                attrs = []
+                for landmark in ARIA_LANDMARKS:
+                    attrs.append('xml-roles:' + landmark)
+                # define matchRule and find it
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             attrs, col.MATCH_ANY,
+                             "", col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
+                if obj != startobj:
+                    found = True
+                success = True
+                col.freeMatchRule(rule)   
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark, 
+                                                      True, obj)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -8972,8 +9152,42 @@ class Script(default.Script):
             speech.speak(_("No landmark found."))
 
     def goNextLandmark(self, inputEvent):
-        wrap = True
-        [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark, wrap)
+        [obj, characterOffset] = self.getCaretContext()
+
+        # Try to find it using Collection first
+        success = False
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                # form our list of attribute strings
+                attrs = []
+                for landmark in ARIA_LANDMARKS:
+                    attrs.append('xml-roles:' + landmark)
+                # define matchRule and find it
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             attrs, col.MATCH_ANY,
+                             "", col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark, 
+                                                      True, obj)
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -9365,18 +9579,49 @@ class Script(default.Script):
         if containingLink:
             obj = containingLink
 
-        found = False
+        success = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
-            if obj and \
-               not obj.getState().contains(pyatspi.STATE_VISITED):
-                found = True
+        found = False
+
+        # Try to find it using Collection first
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_VISITED)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+                if obj and \
+                not obj.getState().contains(pyatspi.STATE_VISITED):
+                    found = True
+
         if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -9400,18 +9645,49 @@ class Script(default.Script):
     def goNextUnvisitedLink(self, inputEvent):
         """Go to the next unvisited link."""
         [obj, characterOffset] = self.getCaretContext()
-        found = False
+
+        success = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
-            if obj and \
-               not obj.getState().contains(pyatspi.STATE_VISITED):
-                found = True
+        found = False
+
+        # Try to find it using Collection first
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_VISITED)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except AttributeError:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+                if obj and \
+                not obj.getState().contains(pyatspi.STATE_VISITED):
+                    found = True
+
         if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -9446,18 +9722,48 @@ class Script(default.Script):
         if containingLink:
             obj = containingLink
 
-        found = False
+        success = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
-            if obj and \
-               obj.getState().contains(pyatspi.STATE_VISITED):
-                found = True
+        found = False
+
+        # Try to find it using Collection first
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_VISITED)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+                if obj and \
+                obj.getState().contains(pyatspi.STATE_VISITED):
+                    found = True
+
         if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -9481,19 +9787,50 @@ class Script(default.Script):
     def goNextVisitedLink(self, inputEvent):
         """Go to the next visited link."""
         [obj, characterOffset] = self.getCaretContext()
+
+        success = False
         found = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
 
-            if obj and \
-               obj.getState().contains(pyatspi.STATE_VISITED):
-                found = True
+        # Try to find it using Collection first    
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_VISITED)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection: 
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+
+                if obj and \
+                obj.getState().contains(pyatspi.STATE_VISITED):
+                    found = True
+
         if wrapped or not wrap:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -9529,18 +9866,46 @@ class Script(default.Script):
                 break
             else:
                 candidate = candidate.parent
-        currentObj = obj
-        found = False
-        wrapped = False
-        wrap = True
-        while obj and not found:
-            obj = self.findPreviousObject(obj)
-            if not obj and wrap and not wrapped:
-                obj = self.getLastObject()
-                wrapped = True
-            if obj and self.isBlockquote(obj) and \
-               not self.isSameObject(currentObj, obj):
-                found = True
+
+        # Try to find it using Collection first
+        success = False
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                found = False
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             ['tag:BLOCKQUOTE'], col.MATCH_ANY,
+                             "", col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
+                if obj != startobj:
+                    found = True
+                success = True
+                col.freeMatchRule(rule)   
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection: 
+            currentObj = obj
+            found = False
+            wrapped = False
+            wrap = True
+            while obj and not found:
+                obj = self.findPreviousObject(obj)
+                if not obj and wrap and not wrapped:
+                    obj = self.getLastObject()
+                    wrapped = True
+                if obj and self.isBlockquote(obj) and \
+                not self.isSameObject(currentObj, obj):
+                    found = True
+
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -9549,7 +9914,7 @@ class Script(default.Script):
             # We need to inform the user when this is taking place.
             #
             speech.speak(_("Wrapping to bottom."))
-        if obj:
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.presentLine(obj, characterOffset)
@@ -9562,19 +9927,56 @@ class Script(default.Script):
     def goNextBlockquote(self, inputEvent):
         """Go to the next blockquote."""
         [obj, characterOffset] = self.getCaretContext()
-        currentObj = obj
-        found = False
-        wrapped = False
-        wrap = True
-        while obj and not found:
-            obj = self.findNextObject(obj)
-            if not obj and wrap and not wrapped:
-                documentFrame = self.getDocumentFrame()
-                obj = documentFrame[0]
-                wrapped = True
-            if obj and self.isBlockquote(obj) and \
-               not self.isSameObject(currentObj, obj):
-                found = True
+
+        # get the ancestors because setCaretPosition may drop us lower
+        # in the tree.  This is used to check that the start object is not
+        # the same as the found object.
+        ancestors = []
+        ancestor = obj
+        while ancestor:
+            ancestors.append(ancestor)
+            ancestor = ancestor.parent
+
+        # Try to find it using Collection first
+        success = False
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                found = False
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                             ['tag:BLOCKQUOTE'], col.MATCH_ANY,
+                             "", col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj not in ancestors:
+                    found = True
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection: 
+            currentObj = obj
+            found = False
+            wrapped = False
+            wrap = True
+            while obj and not found:
+                obj = self.findNextObject(obj)
+                if not obj and wrap and not wrapped:
+                    documentFrame = self.getDocumentFrame()
+                    obj = documentFrame[0]
+                    wrapped = True
+                if obj and self.isBlockquote(obj) and \
+                not self.isSameObject(currentObj, obj):
+                    found = True
+
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -9583,7 +9985,7 @@ class Script(default.Script):
             # to inform the user when this is taking place.
             #
             speech.speak(_("Wrapping to top."))
-        if obj:
+        if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.presentLine(obj, characterOffset)
