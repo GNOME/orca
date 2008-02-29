@@ -36,8 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'",
      "     VISIBLE:  '60 SplitPane', cursor=1",
      "SPEECH OUTPUT: ''",
-     "BUG? - no value spoken?",
-     "SPEECH OUTPUT: 'split pane'"]))
+     "SPEECH OUTPUT: 'split pane 60'"]))
 
 ########################################################################
 # Move the split pane to the right.
