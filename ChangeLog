@@ -4,6 +4,10 @@
           Fix for bug #519560 – gtk-demo/role_split_pane.py regression 
           test #1 produces the wrong results.
 
+        * test/keystrokes/gtk-demo/role_split_pane.py:
+          Fix for bug #519561 – gtk-demo/role_split_pane.py regression 
+          test #2 produces the wrong results.
+
 2008-02-28  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/Gecko.py:

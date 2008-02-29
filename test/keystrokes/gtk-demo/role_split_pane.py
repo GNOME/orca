@@ -52,8 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     "Split pane increment value",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'",
      "     VISIBLE:  '61 SplitPane', cursor=1",
-     "BUG? - no presentation in speech?",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: '61'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
