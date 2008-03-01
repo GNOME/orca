@@ -84,7 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Admin List'",
      "     VISIBLE:  'Admin List', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Classification: Admin  multi-select List with 8 items'"]))
+     "SPEECH OUTPUT: 'Classification: Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
