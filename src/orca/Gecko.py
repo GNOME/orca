@@ -3538,6 +3538,26 @@ class Script(default.Script):
 
         return True
 
+    def getDisplayedText(self, obj):
+        """Returns the text being displayed for an object.
+
+        Arguments:
+        - obj: the object
+
+        Returns the text being displayed for an object or None if there isn't
+        any text being shown.  Overridden in this script because we have lots
+        of whitespace we need to remove.
+        """
+
+        displayedText = default.Script.getDisplayedText(self, obj)
+        if displayedText \
+           and not (obj.getState().contains(pyatspi.STATE_EDITABLE) \
+                    or obj.getRole() in [pyatspi.ROLE_ENTRY, 
+                                         pyatspi.ROLE_PASSWORD_TEXT]):
+            displayedText = displayedText.strip()
+
+        return displayedText
+
     def getDisplayedLabel(self, obj):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
