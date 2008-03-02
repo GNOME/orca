@@ -39,6 +39,8 @@ sequence.append(utils.AssertPresentationAction(
     "tab to continents", 
     ["BRAILLE LINE:  'Continents ListItem'",
      "     VISIBLE:  'Continents ListItem', cursor=1",
+     "BRAILLE LINE:  'Continents ListItem'",
+     "     VISIBLE:  'Continents ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Continents list item expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
@@ -64,7 +66,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Africa ListItem'",
+    ["[[[Bug: no item # of #]]]",
+     "BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Africa'",

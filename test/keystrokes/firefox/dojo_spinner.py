@@ -31,12 +31,13 @@ sequence.append(PauseAction(3000))
 
 ########################################################################
 # Tab to the first spinner.  
-# [[[Bug?: "Form" addition in Braille.  below are expected results]]]
+# 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the first spinner", 
-    ["BRAILLE LINE:  'Spinbox #1:  900 $l not fired yet! $l'",
+    ["[[[Bug?: \"Form\" addition in Braille.]]]",
+     "BRAILLE LINE:  'Spinbox #1:  900 $l not fired yet! $l'",
      "     VISIBLE:  'Spinbox #1:  900 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  900 $l not fired yet! $l'",
      "     VISIBLE:  'Spinbox #1:  900 $l not fired ye', cursor=17",

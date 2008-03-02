@@ -31,10 +31,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
-     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
+    ["BRAILLE LINE:  '& y Font Larger + ToggleButton'",
+     "     VISIBLE:  '& y Font Larger + ToggleButton', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger + ToggleButton'",
+     "     VISIBLE:  '& y Font Larger + ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
      "SPEECH OUTPUT: 'Font Larger + toggle button not pressed'"]))
 

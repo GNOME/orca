@@ -38,8 +38,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    [ "BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page'",
-     "     VISIBLE:  'Tab Zero  Page Tab One  Page Tab', cursor=1",
+    [ "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Zero Page Tab One Page Tab T', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Tab Zero page'",
      "SPEECH OUTPUT: 'item 1 of 5'",
@@ -52,10 +52,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 2", 
-    ["BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page Tab Zero  Tab Zero ScrollPane'",
-     "     VISIBLE:  'Tab One  Page Tab Two  Page Tab ', cursor=1",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab Zero  Tab Zero ScrollPane'",
+     "     VISIBLE:  'Tab One Page Tab Two Page Tab Th', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab One  page'"]))
+     "SPEECH OUTPUT: 'Tab One page'"]))
 ########################################################################
 # Move to tab 3
 #
@@ -63,10 +63,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    [ "BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page Tab One  Tab One ScrollPane'",
-     "     VISIBLE:  'Tab Two  Page Tab Three  Page Ta', cursor=1",
+    [ "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab One  Tab One ScrollPane'",
+     "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab Two  page'"]))
+     "SPEECH OUTPUT: 'Tab Two page'"]))
 ########################################################################
 # Move to tab 3 contents
 #
@@ -86,12 +86,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move back to tab 3", 
-    ["BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page'",
-     "     VISIBLE:  'Tab Two  Page Tab Three  Page Ta', cursor=1",
-     "BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page'",
-     "     VISIBLE:  'Tab Two  Page Tab Three  Page Ta', cursor=1",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
+     "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab Two  page'"]))
+     "SPEECH OUTPUT: 'Tab Two page'"]))
 ########################################################################
 # Move to tab 4
 #
@@ -99,10 +99,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 4", 
-    ["BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page Tab Two  Tab Two ScrollPane'",
-     "     VISIBLE:  'Tab Three  Page Tab Four  Page T', cursor=1",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab Two  Tab Two ScrollPane'",
+     "     VISIBLE:  'Tab Three Page Tab Four Page Tab', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab Three  page'"]))
+     "SPEECH OUTPUT: 'Tab Three page'"]))
 ########################################################################
 # Move to tab 5
 #
@@ -110,10 +110,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 5", 
-    ["BRAILLE LINE:  'Tab Zero  Page Tab One  Page Tab Two  Page Tab Three  Page Tab Four  Page'",
-     "     VISIBLE:  'Tab Four  Page', cursor=1",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+     "     VISIBLE:  'Tab Four Page', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tab Four  page'"]))
+     "SPEECH OUTPUT: 'Tab Four page'"]))
 ########################################################################
 # Close the demo
 #

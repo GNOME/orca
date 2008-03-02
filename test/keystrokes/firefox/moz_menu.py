@@ -71,7 +71,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
-    ["BRAILLE LINE:  'Themes          > Themes          >'",
+    ["[[[Bug: not a bug]]]",
+     "BRAILLE LINE:  'Themes          > Themes          >'",
      "     VISIBLE:  'Themes          > Themes �', cursor=0",
      "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
@@ -84,14 +85,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
-    ["BRAILLE LINE:  'Basic Grey '",
-     "     VISIBLE:  'Basic Grey ', cursor=0",
-     "BRAILLE LINE:  'Basic Grey '",
-     "     VISIBLE:  'Basic Grey ', cursor=1",
+    ["BRAILLE LINE:  'Basic Grey'",
+     "     VISIBLE:  'Basic Grey', cursor=0",
+     "BRAILLE LINE:  'Basic Grey'",
+     "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Basic Grey '"]))
+     "SPEECH OUTPUT: 'Basic Grey'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -124,10 +125,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move to rose", 
-    ["BRAILLE LINE:  'Rose '",
-     "     VISIBLE:  'Rose ', cursor=1",
+    ["BRAILLE LINE:  'Rose'",
+     "     VISIBLE:  'Rose', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Rose '"]))
+     "SPEECH OUTPUT: 'Rose'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -169,14 +170,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
-    ["BRAILLE LINE:  'one '",
-     "     VISIBLE:  'one ', cursor=0",
-     "BRAILLE LINE:  'one '",
-     "     VISIBLE:  'one ', cursor=1",
+    ["BRAILLE LINE:  'one'",
+     "     VISIBLE:  'one', cursor=0",
+     "BRAILLE LINE:  'one'",
+     "     VISIBLE:  'one', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'one '"]))
+     "SPEECH OUTPUT: 'one'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

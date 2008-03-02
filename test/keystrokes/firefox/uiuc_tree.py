@@ -36,6 +36,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Fruits ListItem', cursor=1",
      "BRAILLE LINE:  'Fruits ListItem'",
      "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
      "SPEECH OUTPUT: ''",
@@ -196,7 +198,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "collapse vegetables", 
-    ["BRAILLE LINE:  'Vegetables ListItem'",
+    ["[[[Bug: list and panel should probably not be output]]]",
+     "BRAILLE LINE:  'Vegetables ListItem'",
      "     VISIBLE:  'Vegetables ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
