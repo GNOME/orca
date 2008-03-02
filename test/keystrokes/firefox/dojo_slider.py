@@ -198,7 +198,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move to entry", 
-    ["BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
+    ["[[Bug: labeling problem]]",
+    "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
      "     VISIBLE:  '10.0% $l  ', cursor=6",
      "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
      "     VISIBLE:  '10.0% $l  ', cursor=6",
@@ -207,7 +208,7 @@ sequence.append(utils.AssertPresentationAction(
      
 ########################################################################
 # Tab to the button between the sliders.  
-#
+# [[[Bug?: whitespace.  below are expected results]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(

@@ -35,25 +35,50 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "Tab to show dialog", 
-    ["BRAILLE LINE:  'Show Dialog    Button'",
-     "     VISIBLE:  'Show Dialog    Button', cursor=1",
+    "Tab to show dialog button", 
+    ["BRAILLE LINE:  'Show Dialog Button'",
+     "     VISIBLE:  'Show Dialog Button', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show Dialog    button'"]))
+     "SPEECH OUTPUT: 'Show Dialog button'"]))
+     
+########################################################################
+# Tab to the programatic dialog button.  
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to programatic dialog button", 
+    ["BRAILLE LINE:  'Programatic Dialog (3 second delay) Button'",
+     "     VISIBLE:  'Programatic Dialog (3 second del', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Programatic Dialog (3 second delay) button'"]))
+     
+########################################################################
+# Tab to the show dialog button.  
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to tabcontainer dialog button", 
+    ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################
 # Launch the dialog  
 #
-# [[[Bug?: Braille output may not be correct.]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("Name:", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus("First tab", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
-    "Launch first dialog", 
-    ["BRAILLE LINE:  'Name: Name:   $l'",
-     "     VISIBLE:  'Name: Name:   $l', cursor=14",
-     "SPEECH OUTPUT: 'First Dialog dialog'",
-     "SPEECH OUTPUT: 'Name:  text '"]))
+    "Launch dialog", 
+    ["BRAILLE LINE:  'TabList First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
+     "BRAILLE LINE:  'TabList First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
+     "SPEECH OUTPUT: 'First tab page'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -64,23 +89,25 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
-    ["BRAILLE LINE:  'Name: Name:   $l'",
-     "     VISIBLE:  'Name: Name:   $l', cursor=14",
-     "SPEECH OUTPUT: 'Name:  Name:'",
-     "SPEECH OUTPUT: 'text'"]))
+    ["BRAILLE LINE:  'TabList First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'First tab page'",
+     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Close the dialog, focus goes back to button.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Show Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(WaitForFocus("Show TabContainer Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
-    "close first dialog", 
-    ["BRAILLE LINE:  'Show Dialog    Button'",
-     "     VISIBLE:  'Show Dialog    Button', cursor=1",
+    "close dialog", 
+    ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show Dialog    button'"]))
+     "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################
 # Close the demo

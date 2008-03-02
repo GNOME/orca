@@ -26,15 +26,17 @@ sequence.append(WaitForFocus("ARIA Checkbox", acc_role=pyatspi.ROLE_DOCUMENT_FRA
 
 ########################################################################
 # Tab to the first checkbox.
-#
+# [[[Bug?: repeated Braille.  below are expected results]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to first checkbox", 
-    ["BRAILLE LINE:  '<x>  Include decorative fruit basket  CheckBox'",
-     "     VISIBLE:  '<x>  Include decorative fruit ba', cursor=1",
+    ["BRAILLE LINE:  '<x> Include decorative fruit basket CheckBox'",
+     "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
+     "BRAILLE LINE:  '<x> Include decorative fruit basket CheckBox'",
+     "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' Include decorative fruit basket  check box checked'"]))
+     "SPEECH OUTPUT: 'Include decorative fruit basket check box checked'"]))
 
 ########################################################################
 # Now, change its state.
@@ -43,8 +45,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state of first checkbox", 
-    ["BRAILLE LINE:  '< >  Include decorative fruit basket  CheckBox'",
-     "     VISIBLE:  '< >  Include decorative fruit ba', cursor=1",
+    ["BRAILLE LINE:  '< > Include decorative fruit basket CheckBox'",
+     "     VISIBLE:  '< > Include decorative fruit bas', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
@@ -54,10 +56,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to second checkbox", 
-    ["BRAILLE LINE:  '<x>  Invalid checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Invalid checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '<x> Invalid checkbox CheckBox'",
+     "     VISIBLE:  '<x> Invalid checkbox CheckBox', cursor=1",
+     "BRAILLE LINE:  '<x> Invalid checkbox CheckBox'",
+     "     VISIBLE:  '<x> Invalid checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' Invalid checkbox  check box checked'"]))
+     "SPEECH OUTPUT: 'Invalid checkbox check box checked'"]))
 ########################################################################
 # Now, change its state.
 #
@@ -65,8 +69,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state of second checkbox", 
-    ["BRAILLE LINE:  '< >  Invalid checkbox  CheckBox'",
-     "     VISIBLE:  '< >  Invalid checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '< > Invalid checkbox CheckBox'",
+     "     VISIBLE:  '< > Invalid checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
@@ -76,10 +80,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to third checkbox", 
-    ["BRAILLE LINE:  '<x>  Required checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Required checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '<x> Required checkbox CheckBox'",
+     "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
+     "BRAILLE LINE:  '<x> Required checkbox CheckBox'",
+     "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' Required checkbox  check box checked'"]))
+     "SPEECH OUTPUT: 'Required checkbox check box checked'"]))
     
 ########################################################################
 # Now, change its state.
@@ -88,8 +94,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state of third checkbox", 
-    ["BRAILLE LINE:  '< >  Required checkbox  CheckBox'",
-     "     VISIBLE:  '< >  Required checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '< > Required checkbox CheckBox'",
+     "     VISIBLE:  '< > Required checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
@@ -99,8 +105,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state of third checkbox again", 
-    ["BRAILLE LINE:  '<x>  Required checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Required checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '<x> Required checkbox CheckBox'",
+     "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
@@ -111,8 +117,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  '<x>  Required checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Required checkbox  CheckBox', cursor=1",
+    ["BRAILLE LINE:  '<x> Required checkbox CheckBox'",
+     "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'Required checkbox check box checked'",
      "SPEECH OUTPUT: ''"]))
      
@@ -123,10 +129,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to checkbox tristate", 
-    ["BRAILLE LINE:  '<x>  Tri-state checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Tri-state checkbox  CheckBo', cursor=1",
+    ["BRAILLE LINE:  '<x> Tri-state checkbox CheckBox'",
+     "     VISIBLE:  '<x> Tri-state checkbox CheckBox', cursor=1",
+     "BRAILLE LINE:  '<x> Tri-state checkbox CheckBox'",
+     "     VISIBLE:  '<x> Tri-state checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' Tri-state checkbox  check box checked'"]))
+     "SPEECH OUTPUT: 'Tri-state checkbox check box checked'"]))
     
 ########################################################################
 # change checkbox tristate state three times
@@ -135,24 +143,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1 change state of tristate checkbox", 
-    ["BRAILLE LINE:  '< >  Tri-state checkbox  CheckBox'",
-     "     VISIBLE:  '< >  Tri-state checkbox  CheckBo', cursor=1",
+    ["BRAILLE LINE:  '< > Tri-state checkbox CheckBox'",
+     "     VISIBLE:  '< > Tri-state checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "2 change state of tristate checkbox", 
-    ["BRAILLE LINE:  '<->  Tri-state checkbox  CheckBox'",
-     "     VISIBLE:  '<->  Tri-state checkbox  CheckBo', cursor=1",
+    ["BRAILLE LINE:  '<-> Tri-state checkbox CheckBox'",
+     "     VISIBLE:  '<-> Tri-state checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'partially checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "3 change state of tristate checkbox", 
-    ["BRAILLE LINE:  '<x>  Tri-state checkbox  CheckBox'",
-     "     VISIBLE:  '<x>  Tri-state checkbox  CheckBo', cursor=1",
+    ["BRAILLE LINE:  '<x> Tri-state checkbox CheckBox'",
+     "     VISIBLE:  '<x> Tri-state checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
