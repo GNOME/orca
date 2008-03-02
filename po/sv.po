@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-02 00:27+0100\n"
-"PO-Revision-Date: 2008-03-02 00:29+0100\n"
+"PO-Revision-Date: 2008-03-02 09:35+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -796,7 +796,7 @@ msgstr "A AKUT"
 #.
 #: ../src/orca/chnames.py:315
 msgid "A CIRCUMFLEX"
-msgstr "A CIRCUMFLEX"
+msgstr "A CIRKUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ã' (U+00c3)
 #.
@@ -844,7 +844,7 @@ msgstr "E AKUT"
 #.
 #: ../src/orca/chnames.py:347
 msgid "E CIRCUMFLEX"
-msgstr "E CIRCUMFLEX"
+msgstr "E CIRKUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ë' (U+00cb)
 #.
@@ -868,7 +868,7 @@ msgstr "I AKUT"
 #.
 #: ../src/orca/chnames.py:363
 msgid "I CIRCUMFLEX"
-msgstr "I CIRCUMFLEX"
+msgstr "I CIRKUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ï' (U+00cf)
 #.
@@ -904,7 +904,7 @@ msgstr "O AKUT"
 #.
 #: ../src/orca/chnames.py:387
 msgid "O CIRCUMFLEX"
-msgstr "O CIRCUMFLEX"
+msgstr "O CIRKUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Õ' (U+00d5)
 #.
@@ -946,7 +946,7 @@ msgstr "U AKUT"
 #.
 #: ../src/orca/chnames.py:415
 msgid "U CIRCUMFLEX"
-msgstr "U CIRCUMFLEX"
+msgstr "U CIRKUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
@@ -982,7 +982,7 @@ msgstr "a grav"
 #.
 #: ../src/orca/chnames.py:439
 msgid "a circumflex"
-msgstr "a circumflex"
+msgstr "a cirkumflex"
 
 #. Translators: this is the spoken word for the character 'ã' (U+00e3)
 #.
@@ -1030,7 +1030,7 @@ msgstr "e akut"
 #.
 #: ../src/orca/chnames.py:471
 msgid "e circumflex"
-msgstr "e circumflex"
+msgstr "e cirkumflex"
 
 #. Translators: this is the spoken word for the character 'ë' (U+00eb)
 #.
@@ -1054,7 +1054,7 @@ msgstr "i akut"
 #.
 #: ../src/orca/chnames.py:487
 msgid "i circumflex"
-msgstr "i circumflex"
+msgstr "i cirkumflex"
 
 #. Translators: this is the spoken word for the character 'ï' (U+00ef)
 #.
@@ -1090,7 +1090,7 @@ msgstr "o akut"
 #.
 #: ../src/orca/chnames.py:511
 msgid "o circumflex"
-msgstr "o circumflex"
+msgstr "o cirkumflex"
 
 #. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
@@ -1138,7 +1138,7 @@ msgstr "u grav"
 #.
 #: ../src/orca/chnames.py:543
 msgid "u circumflex"
-msgstr "u circumflex"
+msgstr "u cirkumflex"
 
 #. Translators: this is the spoken word for the character 'ü' (U+00fc)
 #.
