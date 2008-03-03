@@ -259,7 +259,8 @@ class WhereAmI:
         1. label
         2. role
         3. current value
-        4. accelerator (i.e. Alt plus the underlined letter), if any
+        4. selected (if True).
+        5. accelerator (i.e. Alt plus the underlined letter), if any
         """
 
         utterances = []
@@ -272,6 +273,23 @@ class WhereAmI:
         name = self._getObjName(obj)
         utterances.append(name)
         
+        try:
+            textObj = obj.queryText()
+        except:
+            pass
+        else:
+            noOfSelections = textObj.getNSelections()
+            if noOfSelections == 1:
+                [string, startOffset, endOffset] = \
+                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+                if startOffset == 0 and endOffset == len(string):
+                    # Translators: when the user selects (highlights) text in
+                    # a document, Orca lets them know this.
+                    #
+                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                    #
+                    utterances.append(Q_("text|selected"))
+
         text = self._getObjAccelerator(obj)
         utterances.append(text)
 

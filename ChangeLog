@@ -1,3 +1,10 @@
+2008-03-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/where_am_I.py:
+          test/keystrokes/gtk-demo/role_spin_button.py:
+          Fix for bug #519557 - gtk-demo/role_spin_button.py regression 
+          test #2 produces the wrong results.
+
 2008-03-03  Scott Haeger <scott@bashautomation.com>
 
         * src/orca/Gecko.py:

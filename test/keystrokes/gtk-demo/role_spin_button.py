@@ -61,12 +61,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
-    ["BUG? - Text is selected, but selection not presented.",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
@@ -78,18 +78,19 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
-    ["BUG? - Text is selected, but selection not presented.",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'Alt h'",
      "SPEECH OUTPUT: 'Hue:'",
      "SPEECH OUTPUT: 'spin button'",
      "SPEECH OUTPUT: '240'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
