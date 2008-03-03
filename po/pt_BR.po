@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-29 18:40-0300\n"
-"PO-Revision-Date: 2008-02-29 18:40-0300\n"
+"PO-Revision-Date: 2008-03-02 21:17-0300\n"
 "Last-Translator: Tiago Melo Casal <tiagocasal@yahoo.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -1946,7 +1946,7 @@ msgstr "Exibe o diálogo de configuração de preferências da aplicação."
 #.
 #: ../src/orca/default.py:753
 msgid "Toggles the silencing of speech."
-msgstr "Alterna o silenciamento da fala."
+msgstr "Habilita ou desabilita o silenciamento da fala."
 
 #. Translators: this command announces information regarding
 #. the relationship of the given bookmark to the current
@@ -6840,7 +6840,7 @@ msgstr "evento da agenda"
 #: ../src/orca/scripts/Evolution.py:394
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr ""
-"Alterna entre apresentar ou não novo e-mail se não formos o script ativo."
+"Alterna entre apresentar ou não novo e-mail mesmo sem ser o script ativo."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
