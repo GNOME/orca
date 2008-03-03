@@ -7828,9 +7828,14 @@ class Script(default.Script):
                 nOffset += 1
 
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
+
+            imgOnLine = obj.getRole() == pyatspi.ROLE_IMAGE \
+                     and extents[1] < nextExtents[1] < extents[1] + extents[3]
+                              
             if self.onSameLine(extents, nextExtents) \
                and lastExtents != nextExtents \
-               or nextExtents == (0, 0, 0, 0):
+               or nextExtents == (0, 0, 0, 0) \
+               or imgOnLine:
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
