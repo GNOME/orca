@@ -7397,7 +7397,8 @@ class Script(default.Script):
 
         return [None, wrapped]
 
-    def findPrevByMatchRule(self, col, matchrule, wrap, currentObj=None):
+    def findPrevByMatchRule(self, col, matchrule, 
+                                  wrap, currentObj, allowNesting=False):
         # get our current object
         if not currentObj:
             [currentObj, characterOffset] = self.getCaretContext()
@@ -7405,9 +7406,12 @@ class Script(default.Script):
         # Get the ancestors.  We won't stop on any of them.
         ancestors = []
         obj = currentObj.parent
-        while obj:
+        if allowNesting:
             ancestors.append(obj)
-            obj = obj.parent
+        else:
+            while obj:
+                ancestors.append(obj)
+                obj = obj.parent
 
         wrapped = False
         rs = col.getMatchesTo(currentObj, matchrule, 
@@ -7777,7 +7781,7 @@ class Script(default.Script):
 
             if isAria:
                 prevObj = self.findPreviousObject(firstObj)
-                pOffset =0
+                pOffset = 0
             else:
                 [prevObj, pOffset] = \
                     self.findPreviousCaretInOrder(firstObj, start)
@@ -9399,20 +9403,50 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findPreviousRole([pyatspi.ROLE_LIST], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
+        success = False
 
-            # We need to be sure that the list in question is an (un)ordered
-            # list rather than a list in a form field. Form field lists are
-            # focusable; (un)ordered lists are not.
-            #
-            if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                found = True
+        # Try to find it using Collection first
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_FOCUSABLE)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LIST], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, 
+                                          rule, True, obj, allowNesting = True)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findPreviousRole([pyatspi.ROLE_LIST], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+    
+                # We need to be sure that the list in question is an (un)ordered
+                # list rather than a list in a form field. Form field lists are
+                # focusable; (un)ordered lists are not.
+                #
+                if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                    found = True
 
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -9460,20 +9494,50 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findNextRole([pyatspi.ROLE_LIST], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
+        success = False
 
-            # We need to be sure that the list in question is an (un)ordered
-            # list rather than a list in a form field. Form field lists are
-            # focusable; (un)ordered lists are not.
-            #
-            if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                found = True
+        # Try to find it using Collection first    
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_FOCUSABLE)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LIST], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findNextRole([pyatspi.ROLE_LIST], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+    
+                # We need to be sure that the list in question is an (un)ordered
+                # list rather than a list in a form field. Form field lists are
+                # focusable; (un)ordered lists are not.
+                #
+                if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                    found = True
+
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been
@@ -9520,22 +9584,52 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findPreviousRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
+        success = False
 
-            # We need to be sure that the list item in question is the child
-            # of an (un)ordered list rather than a list in a form field.
-            # Form field list items are focusable; (un)ordered list items are
-            # not.
-            #
-            if obj and \
-               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                found = True
+        # Try to find it using Collection first
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_FOCUSABLE)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findPreviousRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+    
+                # We need to be sure that the list item in question is the 
+                # child of an (un)ordered list rather than a list in a form 
+                # field. Form field list items are focusable; (un)ordered 
+                # list items are not.
+                #
+                if obj and \
+                not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+                    found = True
+
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the top of the web page has been
@@ -9560,22 +9654,52 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         found = False
         wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findNextRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
+        success = False
 
-            # We need to be sure that the list item in question is the child
-            # of an (un)ordered list rather than a list in a form field.
-            # Form field list items are focusable; (un)ordered list items are
-            # not.
-            #
-            if obj and \
-               not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                found = True
+        # Try to find it using Collection first    
+        if settings.useCollection:       
+            try:
+                startobj = obj
+                col = self.getDocumentFrame().queryCollection() 
+                stateset = pyatspi.StateSet()
+                stateset.add(pyatspi.STATE_FOCUSABLE)
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                             "", col.MATCH_ANY,
+                             [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
+                             "", col.MATCH_ALL,
+                             False)
+                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
+                if obj and obj != startobj:
+                    found = True
+                else:
+                    found = False
+                success = True 
+                col.freeMatchRule(rule)  
+            except NotImplementedError:
+                debug.printException(debug.LEVEL_SEVERE)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                col.freeMatchRule(rule)
+
+        # Do it iteratively when Collection failed or is disabled
+        if not success or not settings.useCollection:
+            while obj and not found:
+                [obj, wrapped] = \
+                    self.findNextRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
+                # We should only wrap if we haven't already done so.
+                #
+                if wrapped:
+                    wrap = False
+    
+                # We need to be sure that the list item in question is the 
+                # child of an (un)ordered list rather than a list in a form 
+                # field. Form field list items are focusable; (un)ordered 
+                # list items are not.
+                #
+                if obj and \
+                not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
+                    found = True
+
         if wrapped:
             # Translators: when the user is attempting to locate a
             # particular object and the bottom of the web page has been

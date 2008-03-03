@@ -1,3 +1,9 @@
+2008-03-03  Scott Haeger <scott@bashautomation.com>
+
+        * src/orca/Gecko.py:
+          Fixed bug #519587, Navigating nested lists with Collection not 
+          functioning properly.
+
 2008-03-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
