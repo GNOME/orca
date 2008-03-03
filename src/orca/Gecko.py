@@ -7738,15 +7738,20 @@ class Script(default.Script):
                     childText = self.queryNonEmptyText(child)
                     if childText:
                         noChars = childText.characterCount
-                        [line, start, end] = \
+                        [cLine, cStart, cEnd] = \
                                childText.getTextAtOffset(noChars - 1, boundary)
-                        obj = child
+                        if cEnd - cStart > 1:
+                            obj = child
+                            start = cStart
+                        else:
+                            start += 1
                     elif child.getRole() != pyatspi.ROLE_LINK:
                         text = None
                         obj = child
                     else:
                         [line, start, end] = \
                                text.getTextAfterOffset(start + 1, boundary)
+
         if text:
             offset = start
         else:

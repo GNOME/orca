@@ -1,3 +1,9 @@
+2008-03-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #517277 - Orca should not get stuck while
+          browsing articles at espn.com
+
 2008-03-01  Scott Haeger <scott@bashautomation.com>
 
         * test/keystrokes/firefox/moz_menu.py:
