@@ -4276,9 +4276,13 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and \
                event.detail1:
             documentFrame = event.source
+
+            parent_attribs = self._getAttrDictionary(documentFrame.parent)
+            parent_tag = parent_attribs.get('tag', '')
             
             if self._loadingDocumentContent or \
-                   documentFrame == self._currentFrame:
+                   documentFrame == self._currentFrame or \
+                   not parent_tag.endswith('browser'):
                 return
 
             self._currentFrame = documentFrame
