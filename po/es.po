@@ -1,19 +1,20 @@
+# translation of orca.HEAD.po to Español
 # Traducción de Orca al Español
 # This file is distributed under the same license as the ORCA package.
 # Copyright (C) 2005 GNOME Foundation.
 #
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2006.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-11 18:11+0000\n"
-"PO-Revision-Date: 2008-02-13 18:20+0100\n"
+"POT-Creation-Date: 2008-02-13 22:59+0000\n"
+"PO-Revision-Date: 2008-03-03 21:03+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Spanish <gnome-es-list@gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,8 +26,7 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Lector de pantalla y magnificador Orca"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Presenta información sobre lo que hay en la pantalla por medio de voz, "
 "braille o magnificando ésta"
@@ -199,8 +199,7 @@ msgstr "Ninguna aplicación tiene el foco."
 #: ../src/orca/app_gui_prefs.py:305
 #, python-format
 msgid "Starting Orca Preferences for %s. This may take a while."
-msgstr ""
-"Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
+msgstr "Iniciando las preferencias de Orca para %s. Esto puede llevar un tiempo."
 
 #. Translators: this announces that a bookmark has been entered.
 #. Orca allows users to tell it to remember a particular spot in an
@@ -931,7 +930,7 @@ msgstr "U CON TILDE"
 #.
 #: ../src/orca/chnames.py:415
 msgid "U CIRCUMFLEX"
-msgstr "U CIRCONFLEJA"
+msgstr "U CIRCUNFLEJA"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
@@ -1940,8 +1939,7 @@ msgstr "Muestra el diálogo de configuración de preferencias."
 #.
 #: ../src/orca/default.py:745
 msgid "Displays the application preferences configuration dialog."
-msgstr ""
-"Muestra el diálogo de configuración de preferencias para la aplicación."
+msgstr "Muestra el diálogo de configuración de preferencias para la aplicación."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2043,7 +2041,7 @@ msgstr "Conmuta el magnificador."
 #.
 #: ../src/orca/default.py:893
 msgid "Cycles to the next magnifier position."
-msgstr "Cambia a lasiguiente posición del magnificador."
+msgstr "Cambia a la siguiente posición del magnificador."
 
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
@@ -2060,8 +2058,8 @@ msgstr "Cambia a lasiguiente posición del magnificador."
 #: ../src/orca/default.py:4574 ../src/orca/Gecko.py:8023
 #: ../src/orca/Gecko.py:9767 ../src/orca/scripts/Evolution.py:763
 #: ../src/orca/scripts/StarOffice.py:652
-#: ../src/orca/scripts/StarOffice.py:2558
-#: ../src/orca/scripts/StarOffice.py:2576 ../src/orca/where_am_I.py:1354
+#: ../src/orca/scripts/StarOffice.py:2593
+#: ../src/orca/scripts/StarOffice.py:2611 ../src/orca/where_am_I.py:1354
 msgid "blank"
 msgstr "en blanco"
 
@@ -2401,18 +2399,16 @@ msgstr "no marcado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/scripts/planner.py:143
-#: ../src/orca/scripts/planner.py:151 ../src/orca/scripts/planner.py:178
-#: ../src/orca/scripts/planner.py:186 ../src/orca/speechgenerator.py:1591
+#: ../src/orca/flat_review.py:363 ../src/orca/scripts/planner.py:122
+#: ../src/orca/scripts/planner.py:130 ../src/orca/speechgenerator.py:1591
 #: ../src/orca/where_am_I.py:785
 msgid "pressed"
 msgstr "pulsado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:367 ../src/orca/scripts/planner.py:145
-#: ../src/orca/scripts/planner.py:153 ../src/orca/scripts/planner.py:180
-#: ../src/orca/scripts/planner.py:188 ../src/orca/speechgenerator.py:1595
+#: ../src/orca/flat_review.py:367 ../src/orca/scripts/planner.py:124
+#: ../src/orca/scripts/planner.py:132 ../src/orca/speechgenerator.py:1595
 #: ../src/orca/where_am_I.py:789
 msgid "not pressed"
 msgstr "no pulsado"
@@ -2973,8 +2969,7 @@ msgstr "Usar la navegación _estructural de Orca"
 #.
 #: ../src/orca/Gecko.py:3047
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
-"_Posicionar el cursor al principio de línea cuando se navega verticalmente"
+msgstr "_Posicionar el cursor al principio de línea cuando se navega verticalmente"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -2999,7 +2994,7 @@ msgstr "Navegación por páginas"
 #.
 #: ../src/orca/Gecko.py:3095
 msgid "Speak _cell coordinates"
-msgstr "Leer las coordenadas de una celda"
+msgstr "Leer las coordenadas de una _celda"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many
@@ -3552,7 +3547,7 @@ msgstr "control izquierdo"
 #.
 #: ../src/orca/keynames.py:53
 msgid "right shift"
-msgstr "mayusculas derecha"
+msgstr "mayúsculas derecha"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
@@ -3937,8 +3932,7 @@ msgstr "2. Portátil"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-msgstr ""
-"Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
+msgstr "Selección inválida. Seleccionando distribución de teclado de escritorio.\n"
 
 #. Translators: this is prompting for whether the user wants to use a
 #. refreshable braille display (an external hardware device) or not.
@@ -4750,7 +4744,7 @@ msgstr "Configuración avanzada"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Advanced _Settings..."
-msgstr "Configuración avanzada…"
+msgstr "Co_nfiguración avanzada…"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "B_lue:"
@@ -5206,7 +5200,7 @@ msgstr "_Rojo:"
 
 #: ../src/orca/orca-setup.glade.h:162
 msgid "_Reset"
-msgstr "_Reestablecer"
+msgstr "_Restablecer"
 
 #: ../src/orca/orca-setup.glade.h:163
 msgid "_Right:"
@@ -5914,7 +5908,7 @@ msgstr "Enlace"
 
 #. Translators: spoken words for the rolename of a link.
 #.
-#: ../src/orca/rolenames.py:604 ../src/orca/scripts/StarOffice.py:1696
+#: ../src/orca/rolenames.py:604 ../src/orca/scripts/StarOffice.py:1700
 msgid "link"
 msgstr "enlace"
 
@@ -6752,14 +6746,14 @@ msgstr "documento"
 
 #. We've entered a table.  Announce the dimensions.
 #.
-#: ../src/orca/scripts/acroread.py:277 ../src/orca/scripts/StarOffice.py:1361
+#: ../src/orca/scripts/acroread.py:277 ../src/orca/scripts/StarOffice.py:1365
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tabla con %d filas y %d columnas."
 
 #. We've left a table.  Announce this fact.
 #.
-#: ../src/orca/scripts/acroread.py:284 ../src/orca/scripts/StarOffice.py:1366
+#: ../src/orca/scripts/acroread.py:284 ../src/orca/scripts/StarOffice.py:1370
 msgid "leaving table."
 msgstr "dejando la tabla."
 
@@ -6828,8 +6822,7 @@ msgstr "evento del calendario"
 #.
 #: ../src/orca/scripts/Evolution.py:394
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr ""
-"Conmutar si se presenta el correo nuevo si no se tiene el script activo."
+msgstr "Conmutar si se presenta el correo nuevo si no se tiene el script activo."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -6957,8 +6950,7 @@ msgid "row %d of %d"
 msgstr "fila %d de %d"
 
 #: ../src/orca/scripts/gaim.py:386
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 "conmutar si se prefijan los mensajes de la sala de charla con el nombre de "
 "la sala de charla."
@@ -7159,7 +7151,7 @@ msgstr "No es accesible"
 msgid "Notification %s"
 msgstr "Notificación %s"
 
-#: ../src/orca/scripts/planner.py:75 ../src/orca/scripts/planner.py:139
+#: ../src/orca/scripts/planner.py:75 ../src/orca/scripts/planner.py:118
 msgid "Display more options"
 msgstr "Mostrar más opciones"
 
@@ -7228,8 +7220,7 @@ msgstr "Limpia las cabeceras dinámicas de columna."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/StarOffice.py:909
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Establece la columna que usar como cabeceras dinámicas de fila para usar al "
 "decir las celdas de cálculo."
@@ -7239,7 +7230,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/StarOffice.py:918
 msgid "Clears the dynamic row headers"
-msgstr "Limpia las cabeceras dinámicas de fila."
+msgstr "Limpia las cabeceras dinámicas de fila"
 
 #. Checkbox for "Speak spread sheet cell coordinates".
 #.
@@ -7257,21 +7248,21 @@ msgstr "Leer las coordenadas de las celdas en hojas de cálculo"
 #. really try to avoid doing this kind of thing, but sometimes
 #. it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/StarOffice.py:1224
+#: ../src/orca/scripts/StarOffice.py:1228
 msgid "Calc"
 msgstr "Calc"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/StarOffice.py:1392
+#: ../src/orca/scripts/StarOffice.py:1396
 msgid "empty"
 msgstr "vacío"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1468
+#: ../src/orca/scripts/StarOffice.py:1472
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "Cabecera dinámica fijada para la fila %d"
@@ -7279,14 +7270,14 @@ msgstr "Cabecera dinámica fijada para la fila %d"
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1491
+#: ../src/orca/scripts/StarOffice.py:1495
 msgid "Dynamic column header cleared."
 msgstr "Cabecera dinámica de columna vaciada."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1544
+#: ../src/orca/scripts/StarOffice.py:1548
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Fila de cabecera dinámica establecida para la columna %s"
@@ -7294,7 +7285,7 @@ msgstr "Fila de cabecera dinámica establecida para la columna %s"
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/StarOffice.py:1568
+#: ../src/orca/scripts/StarOffice.py:1572
 msgid "Dynamic row header cleared."
 msgstr "Fila de cabecera dinámica vaciada."
 
@@ -7304,7 +7295,7 @@ msgstr "Fila de cabecera dinámica vaciada."
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1720
+#: ../src/orca/scripts/StarOffice.py:1724
 msgid "Welcome to StarOffice"
 msgstr "Bienvenido a StarOffice"
 
@@ -7315,7 +7306,7 @@ msgstr "Bienvenido a StarOffice"
 #. We really try to avoid doing this kind of thing, but
 #. sometimes it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/StarOffice.py:1767
+#: ../src/orca/scripts/StarOffice.py:1771
 msgid "Available fields"
 msgstr "Campos disponibles"
 
@@ -7326,7 +7317,7 @@ msgstr "Campos disponibles"
 #. keying off stuff like this, but we're forced to do so in
 #. this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1874
+#: ../src/orca/scripts/StarOffice.py:1879
 msgid "Text Document"
 msgstr "Documento de Texto"
 
@@ -7336,18 +7327,18 @@ msgstr "Documento de Texto"
 #. hate keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:1945
-#: ../src/orca/scripts/StarOffice.py:2180
+#: ../src/orca/scripts/StarOffice.py:1950
+#: ../src/orca/scripts/StarOffice.py:2215
 msgid "Spellcheck:"
 msgstr "Corregir:"
 
-#: ../src/orca/scripts/StarOffice.py:1973
+#: ../src/orca/scripts/StarOffice.py:1978
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Note que el botón de desplazamiento hacia abajo tiene que pulsarse varias "
 "veces."
 
-#: ../src/orca/scripts/StarOffice.py:1989
+#: ../src/orca/scripts/StarOffice.py:1994
 msgid "License Agreement Accept button now has focus."
 msgstr "El botón de Aceptar el Acuerdo de Licencia ahora tiene el foco."
 
@@ -7357,7 +7348,7 @@ msgstr "El botón de Aceptar el Acuerdo de Licencia ahora tiene el foco."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/StarOffice.py:2018
+#: ../src/orca/scripts/StarOffice.py:2023
 msgid "First name"
 msgstr "Nombre"
 
@@ -7365,7 +7356,7 @@ msgstr "Nombre"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/StarOffice.py:2092
+#: ../src/orca/scripts/StarOffice.py:2097
 msgid "Move to cell"
 msgstr "Ir a la celda"
 
@@ -7376,7 +7367,7 @@ msgstr "Ir a la celda"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:2246
+#: ../src/orca/scripts/StarOffice.py:2281
 msgid "Presentation Wizard"
 msgstr "Asistente de presentación"
 
@@ -7387,7 +7378,7 @@ msgstr "Asistente de presentación"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/StarOffice.py:2267
+#: ../src/orca/scripts/StarOffice.py:2302
 msgid "Writer"
 msgstr "Escritor"
 
@@ -7396,13 +7387,13 @@ msgstr "Escritor"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/StarOffice.py:2431
+#: ../src/orca/scripts/StarOffice.py:2466
 msgid "has formula"
 msgstr "tiene fórmula"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/StarOffice.py:2484
+#: ../src/orca/scripts/StarOffice.py:2519
 #, python-format
 msgid "Cell %s"
 msgstr "Celda %s"
@@ -7665,20 +7656,3 @@ msgstr "elemento %d de %d"
 msgid "Default button is %s"
 msgstr "El botón predeterminado es %s"
 
-#~ msgid "France French 1"
-#~ msgstr "Francés de Francia grado 1"
-
-#~ msgid "object does not have id"
-#~ msgstr "el objeto no tiene id"
-
-#~ msgid "cannot override live priority"
-#~ msgstr "no se puede sobreescribir la prioridad activa"
-
-#~ msgid "Speak only _channel with focus"
-#~ msgstr "Hablar solamente el _canal con el foco"
-
-#~ msgid "Speak all channels when application has _focus"
-#~ msgstr "Hablar todos los canales cuando la aplicación tiene el _foco"
-
-#~ msgid "Messages"
-#~ msgstr "Mensajes"
