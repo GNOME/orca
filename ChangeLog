@@ -1,3 +1,16 @@
+2008-03-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #519931 - Orca does not read certain news feeds
+          correctly.
+
+        * test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py:
+          test/html/table-caption.html:
+          Updated regression tests.
+
 2008-03-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
