@@ -188,14 +188,12 @@ msgstr "Orca"
 #. an associated key binding.
 #.
 #: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2155
-#, fuzzy
 msgid "Unbound"
-msgstr "pond"
+msgstr "Ongebonden"
 
 #: ../src/orca/app_gui_prefs.py:288
-#, fuzzy
 msgid "No application has focus."
-msgstr "toepassing"
+msgstr "Geen enkel programma heeft de invoeraandacht."
 
 #. Translators: Orca Preferences in this case, is a configuration GUI
 #. for allowing users to set application specific settings from within
@@ -295,9 +293,9 @@ msgstr "ingevouwen"
 #. view (i.e., how many ancestors a node has).
 #.
 #: ../src/orca/braillegenerator.py:686
-#, fuzzy, python-format
+#, python-format
 msgid "LEVEL %d"
-msgstr "BOOM NIVEAU %d"
+msgstr "NIVEAU %d"
 
 # wordt dit uitgesproken?
 #. Translators: this represents the depth of a node in a tree
@@ -564,9 +562,8 @@ msgstr "laag streepje"
 #. Translators: this is the spoken word for the character '`' (U+0060)
 #.
 #: ../src/orca/chnames.py:159
-#, fuzzy
 msgid "grave"
-msgstr "grijs"
+msgstr "grave"
 
 # teken {
 # haakje open
@@ -580,9 +577,8 @@ msgstr "linker accolade"
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
 #: ../src/orca/chnames.py:167
-#, fuzzy
 msgid "vertical bar"
-msgstr "verticale lijn"
+msgstr "verticale balk"
 
 # teken }
 # haakje sluiten
@@ -607,14 +603,12 @@ msgstr "omgekeerd uitroepteken"
 #. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
 #: ../src/orca/chnames.py:183
-#, fuzzy
 msgid "cents"
-msgstr "procent"
+msgstr "cent"
 
 #. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: ../src/orca/chnames.py:187
-#, fuzzy
 msgid "pounds"
 msgstr "pond"
 
@@ -633,25 +627,22 @@ msgstr "yen"
 #. Translators: this is the spoken word for the character '¦' (U+00a6)
 #.
 #: ../src/orca/chnames.py:199
-#, fuzzy
 msgid "broken bar"
-msgstr "menubalk"
+msgstr "verticaal streepje"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
 #. Translators: spoken words for the rolename of a section (e.g., in html).
 #.
 #: ../src/orca/chnames.py:203 ../src/orca/rolenames.py:844
-#, fuzzy
 msgid "section"
-msgstr "vraag"
+msgstr "sectie"
 
 #. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
 #: ../src/orca/chnames.py:207
-#, fuzzy
 msgid "umlaut"
-msgstr "auto"
+msgstr "umlaut"
 
 #. Translators: this is the spoken word for the character '©' (U+00a9)
 #.
@@ -689,9 +680,8 @@ msgstr "koppelteken"
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
 #: ../src/orca/chnames.py:231
-#, fuzzy
 msgid "registered"
-msgstr "Gecentreerd"
+msgstr "geregistreerd"
 
 #. Translators: this is the spoken word for the character '¯' (U+00af)
 #.
@@ -727,23 +717,20 @@ msgstr "superscript 3"
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
 #: ../src/orca/chnames.py:255
-#, fuzzy
 msgid "acute accent"
-msgstr "accent grave"
+msgstr "accent acute"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
 #: ../src/orca/chnames.py:259
-#, fuzzy
 msgid "mu"
-msgstr "mnu"
+msgstr "mu"
 
 #. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
 #: ../src/orca/chnames.py:263
-#, fuzzy
 msgid "paragraph marker"
-msgstr "alinea"
+msgstr "alineamarkering"
 
 #. Translators: this is the spoken word for the character '·' (U+00b7)
 #.
@@ -754,9 +741,8 @@ msgstr "middenpunt"
 #. Translators: this is the spoken word for the character '¸' (U+00b8)
 #.
 #: ../src/orca/chnames.py:271
-#, fuzzy
 msgid "cedilla"
-msgstr "cel"
+msgstr "cedille"
 
 #. Translators: this is the spoken word for the character '¹' (U+00b9)
 #.
@@ -950,9 +936,8 @@ msgstr "O UMLAUT"
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
 #: ../src/orca/chnames.py:399
-#, fuzzy
 msgid "times"
-msgstr "tilde"
+msgstr "maal"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
@@ -1006,9 +991,8 @@ msgstr "ringel-s"
 #. Translators: this is the spoken word for the character 'à' (U+00e0)
 #.
 #: ../src/orca/chnames.py:435
-#, fuzzy
 msgid "a grave"
-msgstr "grijs"
+msgstr "a accent grave"
 
 #. Translators: this is the spoken word for the character 'â' (U+00e2)
 #.
@@ -1019,9 +1003,8 @@ msgstr "a accent circumflex"
 #. Translators: this is the spoken word for the character 'ã' (U+00e3)
 #.
 #: ../src/orca/chnames.py:443
-#, fuzzy
 msgid "a tilde"
-msgstr "tilde"
+msgstr "a tilde"
 
 #. Translators: this is the spoken word for the character 'ä' (U+00e4)
 #.
@@ -1032,9 +1015,8 @@ msgstr "a umlaut"
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
 #: ../src/orca/chnames.py:451
-#, fuzzy
 msgid "a ring"
-msgstr "uitroepteken"
+msgstr "a ring"
 
 #. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
@@ -1045,17 +1027,15 @@ msgstr "a e"
 #. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
 #: ../src/orca/chnames.py:459
-#, fuzzy
 msgid "c cedilla"
-msgstr "cel"
+msgstr "c cedille"
 
 # grijs (houdt het zo kort mogelijk, uitgegrijsd is te lang)
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
 #: ../src/orca/chnames.py:463
-#, fuzzy
 msgid "e grave"
-msgstr "grijs"
+msgstr "e accent grave"
 
 #. Translators: this is the spoken word for the character 'é' (U+00e9)
 #.
@@ -1079,9 +1059,8 @@ msgstr "e umlaut"
 #. Translators: this is the spoken word for the character 'ì' (U+00ec)
 #.
 #: ../src/orca/chnames.py:479
-#, fuzzy
 msgid "i grave"
-msgstr "grijs"
+msgstr "i accent grave"
 
 #. Translators: this is the spoken word for the character 'í' (U+00ed)
 #.
@@ -1110,17 +1089,15 @@ msgstr "eth"
 #. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
 #: ../src/orca/chnames.py:499
-#, fuzzy
 msgid "n tilde"
-msgstr "tilde"
+msgstr "n tilde"
 
 # grijs (houdt het zo kort mogelijk, uitgegrijsd is te lang)
 #. Translators: this is the spoken word for the character 'ò' (U+00f2)
 #.
 #: ../src/orca/chnames.py:503
-#, fuzzy
 msgid "o grave"
-msgstr "grijs"
+msgstr "o accent grave"
 
 #. Translators: this is the spoken word for the character 'ó' (U+00f3)
 #.
@@ -1137,9 +1114,8 @@ msgstr "o accent circumflex"
 #. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
 #: ../src/orca/chnames.py:515
-#, fuzzy
 msgid "o tilde"
-msgstr "tilde"
+msgstr "o tilde"
 
 #. Translators: this is the spoken word for the character 'ö' (U+00f6)
 #.
@@ -1176,9 +1152,8 @@ msgstr "u accent acute"
 #. Translators: this is the spoken word for the character 'ù' (U+00f9)
 #.
 #: ../src/orca/chnames.py:539
-#, fuzzy
 msgid "u grave"
-msgstr "grijs"
+msgstr "u accentgrave"
 
 #. Translators: this is the spoken word for the character 'û' (U+00fb)
 #.
@@ -1213,9 +1188,8 @@ msgstr "Y UMLAUT"
 #. Translators: this is the spoken word for the character 'ƒ' (U+0192)
 #.
 #: ../src/orca/chnames.py:563
-#, fuzzy
 msgid "florin"
-msgstr "vlr"
+msgstr "florijn"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
@@ -1279,9 +1253,8 @@ msgstr "driehoekig opsommingsteken"
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:605
-#, fuzzy
 msgid "per mille"
-msgstr "Braille"
+msgstr "promille"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
@@ -1305,9 +1278,8 @@ msgstr "opsommingsteken"
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
 #: ../src/orca/chnames.py:621
-#, fuzzy
 msgid "euro"
-msgstr "punt"
+msgstr "euro"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
@@ -1392,9 +1364,8 @@ msgstr "zwarte ruit"
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:673
-#, fuzzy
 msgid "white circle"
-msgstr "spatie"
+msgstr "witte cirkel"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
@@ -1441,9 +1412,8 @@ msgstr "X-vormig opsommingsteken"
 #. the bullet without too much verbiage, hence simply "right-pointing arrow".
 #.
 #: ../src/orca/chnames.py:708
-#, fuzzy
 msgid "right-pointing arrow"
-msgstr "rechter control"
+msgstr "pijltje naar rechts"
 
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
@@ -1551,9 +1521,8 @@ msgstr "Opent het zoekvenster van Orca."
 #. next occurence of a string.
 #.
 #: ../src/orca/default.py:232
-#, fuzzy
 msgid "Searches for the next instance of a string."
-msgstr "Schakelt naar de volgende presentatiemanager."
+msgstr "Zoekt naar de volgende overeenkomende tekenreeks."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1630,9 +1599,8 @@ msgstr "Spreekt de huidige regel uit."
 #. cause Orca to spell the current line.
 #.
 #: ../src/orca/default.py:321
-#, fuzzy
 msgid "Spells the current flat review line."
-msgstr "Spreekt de huidige regel uit."
+msgstr "Spelt de huidige regel."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1646,9 +1614,8 @@ msgstr "Spreekt de huidige regel uit."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #.
 #: ../src/orca/default.py:337
-#, fuzzy
 msgid "Phonetically spells the current flat review line."
-msgstr "Spreekt de huidige regel uit."
+msgstr "Spelt de huidige regel fonetisch."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
