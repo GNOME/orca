@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 03:13+0100\n"
-"PO-Revision-Date: 2007-03-07 09:27+0100\n"
+"POT-Creation-Date: 2008-03-04 23:47+0100\n"
+"PO-Revision-Date: 2008-03-04 23:51+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -494,10 +494,6 @@ msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per sentir la "
 "seva funcionalitat."
-
-#: ../src/orca/default.py:2728
-msgid "To exit learn mode, press the escape key."
-msgstr "Per sortir del mode d'aprenentatge, premeu la tecla Esc."
 
 #: ../src/orca/default.py:2729
 msgid "Learn mode.  Press escape to exit."
@@ -1484,132 +1480,106 @@ msgid "pixels"
 msgstr "píxels"
 
 #: ../src/orca/phonnames.py:36
-#, fuzzy
 msgid "alpha"
-msgstr "alfa"
+msgstr "alpha"
 
 #: ../src/orca/phonnames.py:37
-#, fuzzy
 msgid "bravo"
 msgstr "bravo"
 
 #: ../src/orca/phonnames.py:38
-#, fuzzy
 msgid "charlie"
-msgstr "carles"
+msgstr "charlie"
 
 #: ../src/orca/phonnames.py:39
-#, fuzzy
 msgid "delta"
 msgstr "delta"
 
 #: ../src/orca/phonnames.py:40
-#, fuzzy
 msgid "echo"
-msgstr "eco"
+msgstr "echo"
 
 #: ../src/orca/phonnames.py:41
-#, fuzzy
 msgid "foxtrot"
 msgstr "foxtrot"
 
 #: ../src/orca/phonnames.py:42
-#, fuzzy
 msgid "golf"
 msgstr "golf"
 
 #: ../src/orca/phonnames.py:43
-#, fuzzy
 msgid "hotel"
 msgstr "hotel"
 
 #: ../src/orca/phonnames.py:44
-#, fuzzy
 msgid "india"
-msgstr "índia"
+msgstr "india"
 
 #: ../src/orca/phonnames.py:45
-#, fuzzy
 msgid "juliet"
-msgstr "julieta"
+msgstr "juliet"
 
 #: ../src/orca/phonnames.py:46
-#, fuzzy
 msgid "kilo"
-msgstr "quilo"
+msgstr "kilo"
 
 #: ../src/orca/phonnames.py:47
-#, fuzzy
 msgid "lima"
-msgstr "llima"
+msgstr "lima"
 
 #: ../src/orca/phonnames.py:48
-#, fuzzy
 msgid "mike"
-msgstr "miquel"
+msgstr "mike"
 
 #: ../src/orca/phonnames.py:49
-#, fuzzy
 msgid "november"
 msgstr "novembre"
 
 #: ../src/orca/phonnames.py:50
-#, fuzzy
 msgid "oscar"
-msgstr "òscar"
+msgstr "oscar"
 
 #: ../src/orca/phonnames.py:51
-#, fuzzy
 msgid "papa"
 msgstr "papa"
 
 #: ../src/orca/phonnames.py:52
-#, fuzzy
 msgid "quebec"
 msgstr "quebec"
 
 #: ../src/orca/phonnames.py:53
-#, fuzzy
 msgid "romeo"
-msgstr "romeu"
+msgstr "romeo"
 
 #: ../src/orca/phonnames.py:54
-#, fuzzy
 msgid "sierra"
-msgstr "serra"
+msgstr "sierra"
 
 #: ../src/orca/phonnames.py:55
-#, fuzzy
 msgid "tango"
 msgstr "tango"
 
 #: ../src/orca/phonnames.py:56
-#, fuzzy
 msgid "uniform"
-msgstr "uniforme"
+msgstr "uniform"
 
 #: ../src/orca/phonnames.py:57
-#, fuzzy
 msgid "victor"
-msgstr "víctor"
+msgstr "victor"
 
 #: ../src/orca/phonnames.py:58
-#, fuzzy
 msgid "whiskey"
-msgstr "whisky"
+msgstr "whiskey"
 
 #: ../src/orca/phonnames.py:59
-#, fuzzy
 msgid "xray"
-msgstr "rajos X"
+msgstr "xray"
 
 #: ../src/orca/phonnames.py:60
-#, fuzzy
 msgid "yankee"
-msgstr "pixapí"
+msgstr "yankee"
 
 #: ../src/orca/phonnames.py:61
-#, fuzzy
 msgid "zulu"
 msgstr "zulu"
 
@@ -3159,6 +3129,9 @@ msgstr "element %d de %d"
 #: ../src/orca/where_am_I.py:904
 msgid "Read"
 msgstr "Llegir"
+
+#~ msgid "To exit learn mode, press the escape key."
+#~ msgstr "Per sortir del mode d'aprenentatge, premeu la tecla Esc."
 
 #~ msgid "%s text %s %s"
 #~ msgstr "%s text %s %s"
