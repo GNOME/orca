@@ -61,12 +61,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label Where Am I",
-    ["BUG? - text is selected but not presented as such in speech or braille",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
@@ -78,18 +77,17 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label Extended Where Am I",
-    ["BUG? - text is selected but not presented as such in speech or braille",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
@@ -135,13 +133,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret selection Where Am I",
-    ["BUG? - text selection not presented in speech or braille",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
-     "BUG? - the cursor is wrong in the following braille output",
-     "     VISIBLE:  'This message box has been popped', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################
@@ -153,20 +149,17 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret selection Extended Where Am I",
-    ["BUG? - text selection not presented in speech or braille",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
-     "BUG? - the cursor is wrong in the following braille output",
-     "     VISIBLE:  'This message box has been popped', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following",
-     "number of times: Label'",
-     "BUG? - the cursor is wrong in the following braille output",
-     "     VISIBLE:  'This message box has been popped', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'label'"]))
 
 ########################################################################

@@ -142,6 +142,9 @@ class WhereAmI:
         elif role == pyatspi.ROLE_SPLIT_PANE:
             self._speakSplitPane(obj, basicOnly)
 
+        elif role == pyatspi.ROLE_LABEL:
+            self._speakLabel(obj, basicOnly)
+
         else:
             self._speakGenericObject(obj, basicOnly)
 
@@ -273,22 +276,7 @@ class WhereAmI:
         name = self._getObjName(obj)
         utterances.append(name)
         
-        try:
-            textObj = obj.queryText()
-        except:
-            pass
-        else:
-            noOfSelections = textObj.getNSelections()
-            if noOfSelections == 1:
-                [string, startOffset, endOffset] = \
-                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
-                if startOffset == 0 and endOffset == len(string):
-                    # Translators: when the user selects (highlights) text in
-                    # a document, Orca lets them know this.
-                    #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    utterances.append(Q_("text|selected"))
+        utterances.extend(self._getSpeechForAllTextSelection(obj))
 
         text = self._getObjAccelerator(obj)
         utterances.append(text)
@@ -860,6 +848,51 @@ class WhereAmI:
         utterances.append(valueString)
 
         speech.speakUtterances(utterances)
+
+    def _speakLabel(self, obj, basicOnly):
+        """Speak label information:
+           1. Name/Label
+           2. selected (if True).
+           3. Role
+        """
+
+        utterances = []
+        text = self.getObjLabelAndName(obj)
+        utterances.append(text)
+
+        utterances.extend(self._getSpeechForAllTextSelection(obj))
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+        speech.speakUtterances(utterances)
+
+    def _getSpeechForAllTextSelection(self, obj):
+        """Check if this object has text associated with it and it's
+        completely selected.
+
+        Arguments:
+        - obj: the object being presented
+        """
+
+        utterance = []
+        try:
+            textObj = obj.queryText()
+        except:
+            pass
+        else:
+            noOfSelections = textObj.getNSelections()
+            if noOfSelections == 1:
+                [string, startOffset, endOffset] = \
+                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+                if startOffset == 0 and endOffset == len(string):
+                    # Translators: when the user selects (highlights) text in
+                    # a document, Orca lets them know this.
+                    #
+                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+                    #
+                    utterance = [Q_("text|selected")]
+
+        return utterance
 
     def __extractSize(self, uri):
         """Get the http header for a given uri and try to extract the size
