@@ -124,11 +124,11 @@ class AssertPresentationAction(AtomicAction):
             expectedToFail = False
             if isinstance(self._expectedResults, [].__class__):
                 for result in self._expectedResults:
-                    if result.startswith("BUG?"):
+                    if result.startswith("KNOWN ISSUE"):
                         expectedToFail = True
                     print >> myErr, '     "%s",' % result
             else:
-                if self._expectedResults.startswith("BUG?"):
+                if self._expectedResults.startswith("KNOWN ISSUE"):
                     expectedToFail = True
                 print >> myErr, '     "%s"' % self._expectedResults
             print >> myErr, "ACTUAL:"
@@ -140,7 +140,7 @@ class AssertPresentationAction(AtomicAction):
             if expectedToFail:
                 AssertPresentationAction.totalExpectedToFail += 1
                 print >> myErr, '[FAILURE WAS EXPECTED - ' \
-                                'LOOK FOR BUG? IN EXPECTED RESULTS]'
+                                'LOOK FOR KNOWN ISSUE IN EXPECTED RESULTS]'
             else:
                 print >> myErr, '[FAILURE WAS UNEXPECTED]'
 

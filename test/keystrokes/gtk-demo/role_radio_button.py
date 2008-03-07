@@ -70,7 +70,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Range", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Range radio button",
-    ["BUG? - the radio button should be presented as selected.",
+    ["KNOWN ISSUE - the radio button should be presented as selected.",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler & y Range RadioButton'",
      "     VISIBLE:  '& y Range RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -100,7 +100,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "All radio button",
-    ["BUG? - the radio button should be presented as selected.",
+    ["KNOWN ISSUE - the radio button should be presented as selected.",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler & y All RadioButton'",
      "     VISIBLE:  '& y All RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
