@@ -3340,7 +3340,13 @@ class Script(script.Script):
         # If this is a spin button, then speak the text and return.
         #
         if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
-            speech.speak(text)
+            # We are using getTextLineAtCaret here instead of the "text"
+            # variable, because of a problem with selected text in spin 
+            # buttons. See bug #520395 for more details.
+            #
+            [spinValue, caretOffset, startOffset] = \
+                self.getTextLineAtCaret(event.source)
+            speech.speak(spinValue)
             return
 
         # If the last input event was a keyboard event, check to see if

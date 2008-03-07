@@ -14,6 +14,11 @@
           Fix for bug #519553 - gtk-demo/role_radio_button.py regression 
           test #3 produces the wrong results.
 
+        * src/orca/default.py:
+          test/keystrokes/gtk-demo/role_spin_button.py:
+          Fix for bug #519559 - gtk-demo/role_spin_button.py regression 
+          test #4 produces the wrong results.
+
 2008-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:
