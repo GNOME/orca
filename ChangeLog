@@ -4,6 +4,10 @@
           Fix for bug #519539 - gtk-demo/role_icon.py regression test #1
           produces the wrong results.
 
+        * test/keystrokes/gtk-demo/role_icon.py:
+          Fix for bug #519541 - gtk-demo/role_icon.py regression test #2 
+          produces the wrong results.
+
 2008-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:

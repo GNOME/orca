@@ -145,6 +145,9 @@ class WhereAmI:
         elif role == pyatspi.ROLE_LABEL:
             self._speakLabel(obj, basicOnly)
 
+        elif role  == pyatspi.ROLE_LAYERED_PANE:
+            self._speakLayeredPane(obj, basicOnly)
+
         else:
             self._speakGenericObject(obj, basicOnly)
 
@@ -703,34 +706,7 @@ class WhereAmI:
 
         utterances.append(_("Icon panel"))
         utterances.append(self.getObjLabelAndName(obj))
-
-        selectedItems = []
-        totalSelectedItems = 0
-        currentItem = 0
-        for child in panel:
-            state = child.getState()
-            if state.contains(pyatspi.STATE_SELECTED):
-                totalSelectedItems += 1
-                selectedItems.append(child)
-            if state.contains(pyatspi.STATE_FOCUSED):
-                currentItem = child.getIndexInParent() + 1
-
-        # Translators: this is a count of the number of selected icons 
-        # and the count of the total number of icons within an icon panel. 
-        # An example of an icon panel is the Nautilus folder view.
-        #
-        itemString = ngettext("%d of %d item selected",
-                              "%d of %d items selected",
-                              childCount) % \
-                              (totalSelectedItems, childCount)
-        utterances.append(itemString)
-
-        # Translators: this is a indication of the focused icon and the
-        # count of the total number of icons within an icon panel. An
-        # example of an icon panel is the Nautilus folder view.
-        #
-        itemString = _("on item %d of %d") % (currentItem, childCount)
-        utterances.append(itemString)
+        utterances.extend(self._getSelectedItemCount(panel))
 
         if not basicOnly:
             for i in range(0, len(selectedItems)):
@@ -866,6 +842,23 @@ class WhereAmI:
         utterances.append(text)
         speech.speakUtterances(utterances)
 
+    def _speakLayeredPane(self, obj, basicOnly):
+        """Speak layered pane information:
+           1. Name/Label
+           2. Role
+           3. Number of selected items and total number of items.
+        """
+
+        utterances = []
+        text = self.getObjLabelAndName(obj)
+        utterances.append(text)
+
+        text = rolenames.getSpeechForRoleName(obj)
+        utterances.append(text)
+        utterances.extend(self._getSelectedItemCount(obj))
+
+        speech.speakUtterances(utterances)
+
     def _getSpeechForAllTextSelection(self, obj):
         """Check if this object has text associated with it and it's
         completely selected.
@@ -893,6 +886,43 @@ class WhereAmI:
                     utterance = [Q_("text|selected")]
 
         return utterance
+
+    def _getSelectedItemCount(self, obj):
+        """Return a string indicating how many items are selected in this
+        object. This object will by an icon panel or a layered pane.
+
+        Arguments:
+        - obj: the object being presented
+        """
+
+        childCount = obj.childCount
+        selectedItems = []
+        totalSelectedItems = 0
+        currentItem = 0
+        for child in obj:
+            state = child.getState()
+            if state.contains(pyatspi.STATE_SELECTED):
+                totalSelectedItems += 1
+                selectedItems.append(child)
+            if state.contains(pyatspi.STATE_FOCUSED):
+                currentItem = child.getIndexInParent() + 1
+
+        # Translators: this is a count of the number of selected icons
+        # and the count of the total number of icons within an icon panel.
+        # An example of an icon panel is the Nautilus folder view.
+        #
+        countString = ngettext("%d of %d item selected",
+                              "%d of %d items selected",
+                              childCount) % \
+                              (totalSelectedItems, childCount)
+
+        # Translators: this is a indication of the focused icon and the
+        # count of the total number of icons within an icon panel. An
+        # example of an icon panel is the Nautilus folder view.
+        #
+        itemString = _("on item %d of %d") % (currentItem, childCount)
+
+        return [ countString, itemString ]
 
     def __extractSize(self, uri):
         """Get the http header for a given uri and try to extract the size

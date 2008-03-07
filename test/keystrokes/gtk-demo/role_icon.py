@@ -67,11 +67,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Layered pane Where Am I",
-    ["BUG? - should we present the number of items in the layered pane?",
-     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
      "     VISIBLE:  'LayeredPane', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'layered pane'"]))
+     "SPEECH OUTPUT: 'layered pane'",
+     "SPEECH OUTPUT: '0 of 24 items selected'",
+     "SPEECH OUTPUT: 'on item 0 of 24'"]))
 
 ########################################################################
 # Down into the icon list, finally making something be selected in the
@@ -96,8 +97,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "bin icon Where Am I",
-    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
-     "BUG? - the icon is shown as selected, so we should present 1 of 26 items selected."]))
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
+     "     VISIBLE:  'bin Icon', cursor=1",
+     "SPEECH OUTPUT: 'Icon panel'",
+     "SPEECH OUTPUT: 'bin'",
+     "SPEECH OUTPUT: '1 of 24 items selected'",
+     "SPEECH OUTPUT: 'on item 1 of 24'"]))
 
 ########################################################################
 # Arrow right and wait for the next icon to be selected.
@@ -135,8 +140,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "icon selection Where Am I",
-    ["BUG? - we cannot get reliable output from this test since it depends on the contents of /",
-     "BUG? - we do not announce selection of icons (e.g., 2 of 26 items selected)."]))
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'",
+     "     VISIBLE:  'cdrom Icon', cursor=1",
+     "SPEECH OUTPUT: 'Icon panel'",
+     "SPEECH OUTPUT: 'cdrom'",
+     "SPEECH OUTPUT: '2 of 24 items selected'",
+     "SPEECH OUTPUT: 'on item 3 of 24'"]))
 
 ########################################################################
 # Close the GtkIconView demo window
