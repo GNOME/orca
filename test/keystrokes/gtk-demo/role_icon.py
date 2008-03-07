@@ -32,13 +32,32 @@ sequence.append(WaitAction("object:state-changed:expanded",
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Icon View Basics", 1000))
-sequence.append(KeyComboAction("Return", 500))
 
 sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LAYERED_PANE))
 sequence.append(utils.AssertPresentationAction(
     "Layered pane focus",
-    ["BUG? - should something be presented here?"]))
+    ["BRAILLE LINE:  'gtk-demo Application Window Icon View Basics $l'",
+     "     VISIBLE:  'Icon View Basics $l', cursor=17",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Icon View Basics TREE LEVEL 2'",
+     "     VISIBLE:  'Icon View Basics TREE LEVEL 2', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame'",
+     "     VISIBLE:  'GtkIconView demo Frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
+     "     VISIBLE:  'LayeredPane', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
+     "SPEECH OUTPUT: 'Icon View Basics'",
+     "SPEECH OUTPUT: 'tree level 2'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'GtkIconView demo frame'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'layered pane'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
