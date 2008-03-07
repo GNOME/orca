@@ -11,13 +11,15 @@
 #   per evitare confusioni con altri tipi di segnalibro
 #   (web browser, posizioni...) qui in orca lo traduco
 #   come contrassegno
+# speak
+#   leggere
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-29 11:03+0100\n"
-"PO-Revision-Date: 2008-02-29 13:15+0100\n"
+"PO-Revision-Date: 2008-03-07 22:45+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -3003,14 +3005,15 @@ msgstr "Imposta il livello predefinito di cortesia delle regioni attive a disatt
 #.
 #: ../src/orca/Gecko.py:2444
 msgid "Monitor live regions."
-msgstr "Monitorare le regioni attive."
+msgstr "Monitoraggio delle regioni attive."
 
+# GNOME-2-22
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
 #: ../src/orca/Gecko.py:2452
 msgid "Review live region announcement."
-msgstr ""
+msgstr "Revisiona gli annunci delle regioni attive."
 
 # GNOME-2-22
 #. Translators: this is for navigating between objects
@@ -5246,10 +5249,11 @@ msgstr "Ro_sso:"
 msgid "S_ource display:"
 msgstr "Display d'_origine:"
 
+# GNOME-2-22
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:119
 msgid "Say All B_y:"
-msgstr ""
+msgstr "Pro_nuncia tutto per:"
 
 #: ../src/orca/orca-setup.glade.h:120
 msgid "Scale _factor:"
@@ -5263,10 +5267,14 @@ msgstr "_Mostrare la finestra principale di Orca"
 msgid "Speak _indentation and justification"
 msgstr "Le_ggere i rientri e la giustificazione"
 
+# GNOME-2-22
+# pulsante in scheda attributi di testo
+# non è detto sia visibile.
 #: ../src/orca/orca-setup.glade.h:124
 msgid "Speak _none"
-msgstr ""
+msgstr "_Non leggere"
 
+# manca l'acceleratore :-(
 #: ../src/orca/orca-setup.glade.h:125
 msgid "Speak blank lines"
 msgstr "Leggere le righe in bianco"
@@ -5357,9 +5365,12 @@ msgstr "In_feriore:"
 msgid "_Color Filtering:"
 msgstr "_Filtraggio del colore:"
 
+# GNOME-2-22
+# lo so che è al singolare, ma dalla UI pare meglio così
+# da approfondire come funzione, cmq....  Luca
 #: ../src/orca/orca-setup.glade.h:147
 msgid "_Control and menu item:"
-msgstr ""
+msgstr "_Controlli e voci di menù:"
 
 #: ../src/orca/orca-setup.glade.h:148
 msgid "_Delete"
@@ -5424,9 +5435,12 @@ msgstr "_Destro:"
 msgid "_Smoothing:"
 msgstr "S_mussatura:"
 
+# GNOME-2-22
+# pulsante in scheda attibuti di testo
+# non è detto sia visibile...
 #: ../src/orca/orca-setup.glade.h:165
 msgid "_Speak all"
-msgstr "_Leggere tutto"
+msgstr "_Leggi tutto"
 
 #: ../src/orca/orca-setup.glade.h:166
 msgid "_Top:"
@@ -5813,19 +5827,19 @@ msgstr "cornice della scrivania"
 #.
 #: ../src/orca/rolenames.py:377
 msgid "shortbraille|dial"
-msgstr ""
+msgstr "qua"
 
 #. Translators: long braille for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:380
 msgid "Dial"
-msgstr ""
+msgstr "Quadrante"
 
 #. Translators: spoken words for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:383
 msgid "dial"
-msgstr ""
+msgstr "quadrante"
 
 #. Translators: short braille for the rolename of a dialog.
 #.
@@ -5864,25 +5878,26 @@ msgid "directory pane"
 msgstr "riquadro directory"
 
 # NOTA in ATK è ROLE_DOCUMENT_FRAME, anche in orca, ma viene usato HTML pane...
+# condiviso con ROLE_HTML_CONTAINER
 #. Translators: short braille for the rolename of an HTML document frame.
 #.
 #. Translators: short braille for the rolename of an html container.
 #.
 #: ../src/orca/rolenames.py:413 ../src/orca/rolenames.py:526
 msgid "html"
-msgstr ""
+msgstr "html"
 
 #. Translators: long braille for the rolename of an HTML document frame.
 #.
 #: ../src/orca/rolenames.py:416
 msgid "HtmlPane"
-msgstr ""
+msgstr "RiquadroHtml"
 
 #. Translators: spoken words for the rolename of an HTML document frame.
 #.
 #: ../src/orca/rolenames.py:419
 msgid "html content"
-msgstr ""
+msgstr "contenuto h t m l"
 
 #. Translators: short braille for the rolename of a drawing area.
 #.
@@ -5995,19 +6010,19 @@ msgstr "cornice"
 #.
 #: ../src/orca/rolenames.py:502
 msgid "gpn"
-msgstr ""
+msgstr "riqtr"
 
 #. Translators: long braille for the rolename of a glass pane.
 #.
 #: ../src/orca/rolenames.py:505
 msgid "GlassPane"
-msgstr ""
+msgstr "RiquadroTrasparente"
 
 #. Translators: spoken words for the rolename of a glass pane.
 #.
 #: ../src/orca/rolenames.py:508
 msgid "glass pane"
-msgstr ""
+msgstr "riquadro trasparente"
 
 #. Translators: short braille for the rolename of a heading.
 #.
@@ -6073,19 +6088,19 @@ msgstr "immagine"
 #.
 #: ../src/orca/rolenames.py:562
 msgid "ifrm"
-msgstr ""
+msgstr "corint"
 
 #. Translators: long braille for the rolename of an internal frame.
 #.
 #: ../src/orca/rolenames.py:565
 msgid "InternalFrame"
-msgstr ""
+msgstr "CorniceInterna"
 
 #. Translators: spoken words for the rolename of an internal frame.
 #.
 #: ../src/orca/rolenames.py:568
 msgid "internal frame"
-msgstr ""
+msgstr "cornice interna"
 
 #. Translators: short braille for the rolename of a label.
 #.
@@ -6109,25 +6124,25 @@ msgstr "etichetta"
 #.
 #: ../src/orca/rolenames.py:586
 msgid "lyrdpn"
-msgstr ""
+msgstr "riqliv"
 
 #. Translators: long braille for the rolename of a layered pane.
 #.
 #: ../src/orca/rolenames.py:589
 msgid "LayeredPane"
-msgstr ""
+msgstr "RiquadroLivelli"
 
 #. Translators: spoken words for the rolename of a layered pane.
 #.
 #: ../src/orca/rolenames.py:592
 msgid "layered pane"
-msgstr ""
+msgstr "riquadro a livelli"
 
 #. Translators: short braille for the rolename of a link.
 #.
 #: ../src/orca/rolenames.py:598
 msgid "lnk"
-msgstr ""
+msgstr "coll"
 
 #. Translators: long braille for the rolename of a link.
 #.
@@ -6235,55 +6250,55 @@ msgstr "voce di menù"
 #.
 #: ../src/orca/rolenames.py:670
 msgid "optnpn"
-msgstr ""
+msgstr "riqopz"
 
 #. Translators: long braille for the rolename of an option pane.
 #.
 #: ../src/orca/rolenames.py:673
 msgid "OptionPane"
-msgstr ""
+msgstr "RiquadroOpzioni"
 
 #. Translators: spoken words for the rolename of an option pane.
 #.
 #: ../src/orca/rolenames.py:676
 msgid "option pane"
-msgstr ""
+msgstr "riquadro opzioni"
 
 #. Translators: short braille for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:682
 msgid "pgt"
-msgstr ""
+msgstr "sch"
 
 #. Translators: long braille for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:685
 msgid "Page"
-msgstr "Pagina"
+msgstr "Scheda"
 
 #. Translators: spoken words for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:688
 msgid "page"
-msgstr "pagina"
+msgstr "scheda"
 
 #. Translators: short braille for the rolename of a page tab list.
 #.
 #: ../src/orca/rolenames.py:694
 msgid "tblst"
-msgstr ""
+msgstr "elsch"
 
 #. Translators: long braille for the rolename of a page tab list.
 #.
 #: ../src/orca/rolenames.py:697
 msgid "TabList"
-msgstr ""
+msgstr "ElencoSchede"
 
 #. Translators: spoken words for the rolename of a page tab list.
 #.
 #: ../src/orca/rolenames.py:700
 msgid "tab list"
-msgstr ""
+msgstr "elenco di schede"
 
 #. Translators: short braille for the rolename of a panel.
 #.
@@ -6397,37 +6412,37 @@ msgstr "pulsante radio"
 #.
 #: ../src/orca/rolenames.py:778
 msgid "rdmnuitm"
-msgstr ""
+msgstr "vocmnurad"
 
 #. Translators: long braille for the rolename of a radio menu item.
 #.
 #: ../src/orca/rolenames.py:781
 msgid "RadioItem"
-msgstr ""
+msgstr "VoceRadio"
 
 #. Translators: spoken words for the rolename of a radio menu item.
 #.
 #: ../src/orca/rolenames.py:784
 msgid "radio menu item"
-msgstr ""
+msgstr "voce di menù radio"
 
 #. Translators: short braille for the rolename of a root pane.
 #.
 #: ../src/orca/rolenames.py:790
 msgid "rtpn"
-msgstr ""
+msgstr "riqrad"
 
 #. Translators: long braille for the rolename of a root pane.
 #.
 #: ../src/orca/rolenames.py:793
 msgid "RootPane"
-msgstr ""
+msgstr "RiquadroRadice"
 
 #. Translators: spoken words for the rolename of a root pane.
 #.
 #: ../src/orca/rolenames.py:796
 msgid "root pane"
-msgstr ""
+msgstr "riquadro radice"
 
 #. Translators: short braille for the rolename of a row header.
 #.
@@ -6435,7 +6450,7 @@ msgstr ""
 #.
 #: ../src/orca/rolenames.py:802 ../src/orca/rolenames.py:946
 msgid "rwhdr"
-msgstr ""
+msgstr "intrig"
 
 #. Translators: long braille for the rolename of a row header.
 #.
@@ -6443,7 +6458,7 @@ msgstr ""
 #.
 #: ../src/orca/rolenames.py:805 ../src/orca/rolenames.py:949
 msgid "RowHeader"
-msgstr ""
+msgstr "IntestazioneRiga"
 
 #. Translators: spoken words for the rolename of a row header.
 #.
@@ -6451,49 +6466,49 @@ msgstr ""
 #.
 #: ../src/orca/rolenames.py:808 ../src/orca/rolenames.py:952
 msgid "row header"
-msgstr ""
+msgstr "intestazione di riga"
 
 #. Translators: short braille for the rolename of a scroll bar.
 #.
 #: ../src/orca/rolenames.py:814
 msgid "scbr"
-msgstr ""
+msgstr "brscr"
 
 #. Translators: long braille for the rolename of a scroll bar.
 #.
 #: ../src/orca/rolenames.py:817
 msgid "ScrollBar"
-msgstr ""
+msgstr "BarraScorrimento"
 
 #. Translators: spoken words for the rolename of a scroll bar.
 #.
 #: ../src/orca/rolenames.py:820
 msgid "scroll bar"
-msgstr ""
+msgstr "barra di scorrimento"
 
 #. Translators: short braille for the rolename of a scroll pane.
 #.
 #: ../src/orca/rolenames.py:826
 msgid "scpn"
-msgstr ""
+msgstr "rqscr"
 
 #. Translators: long braille for the rolename of a scroll pane.
 #.
 #: ../src/orca/rolenames.py:829
 msgid "ScrollPane"
-msgstr ""
+msgstr "RiquadroScorrimento"
 
 #. Translators: spoken words for the rolename of a scroll pane.
 #.
 #: ../src/orca/rolenames.py:832
 msgid "scroll pane"
-msgstr ""
+msgstr "riquadro a scorrimento"
 
 #. Translators: short braille for the rolename of a section (e.g., in html).
 #.
 #: ../src/orca/rolenames.py:838
 msgid "sctn"
-msgstr ""
+msgstr "sez"
 
 #. Translators: long braille for the rolename of a section (e.g., in html).
 #.
@@ -6523,55 +6538,55 @@ msgstr "separatore"
 #.
 #: ../src/orca/rolenames.py:862
 msgid "sldr"
-msgstr ""
+msgstr "scor"
 
 #. Translators: long braille for the rolename of a slider.
 #.
 #: ../src/orca/rolenames.py:865
 msgid "Slider"
-msgstr ""
+msgstr "Scorrevole"
 
 #. Translators: spoken words for the rolename of a slider.
 #.
 #: ../src/orca/rolenames.py:868
 msgid "slider"
-msgstr ""
+msgstr "scorrevole"
 
 #. Translators: short braille for the rolename of a split pane.
 #.
 #: ../src/orca/rolenames.py:874
 msgid "spltpn"
-msgstr ""
+msgstr "riqdiv"
 
 #. Translators: long braille for the rolename of a split pane.
 #.
 #: ../src/orca/rolenames.py:877
 msgid "SplitPane"
-msgstr ""
+msgstr "RiquadroDiviso"
 
 #. Translators: spoken words for the rolename of a split pane.
 #.
 #: ../src/orca/rolenames.py:880
 msgid "split pane"
-msgstr ""
+msgstr "riquadro diviso"
 
 #. Translators: short braille for the rolename of a spin button.
 #.
 #: ../src/orca/rolenames.py:886
 msgid "spin"
-msgstr ""
+msgstr "plssel"
 
 #. Translators: long braille for the rolename of a spin button.
 #.
 #: ../src/orca/rolenames.py:889
 msgid "SpinButton"
-msgstr ""
+msgstr "PulsanteSelezione"
 
 #. Translators: spoken words for the rolename of a spin button.
 #.
 #: ../src/orca/rolenames.py:892
 msgid "spin button"
-msgstr ""
+msgstr "pulsante di selezione"
 
 #. Translators: short braille for the rolename of a statusbar.
 #.
@@ -6613,7 +6628,7 @@ msgstr "tabella"
 #.
 #: ../src/orca/rolenames.py:922
 msgid "cll"
-msgstr ""
+msgstr "cll"
 
 #. Translators: long braille for the rolename of a table cell.
 #.
@@ -6632,19 +6647,19 @@ msgstr "cella"
 #.
 #: ../src/orca/rolenames.py:958
 msgid "tomnuitm"
-msgstr ""
+msgstr "vocmnusta"
 
 #. Translators: long braille for the rolename of a tear off menu item.
 #.
 #: ../src/orca/rolenames.py:961
 msgid "TearOffMenuItem"
-msgstr ""
+msgstr "VoceMenuStaccabile"
 
 #. Translators: spoken words for the rolename of a tear off menu item.
 #.
 #: ../src/orca/rolenames.py:964
 msgid "tear off menu item"
-msgstr ""
+msgstr "voce di menù staccabile"
 
 #. Translators: short braille for the rolename of a terminal.
 #.
@@ -6686,19 +6701,19 @@ msgstr "testo"
 #.
 #: ../src/orca/rolenames.py:996
 msgid "tglbtn"
-msgstr ""
+msgstr "plscom"
 
 #. Translators: long braille for the rolename of a toggle button.
 #.
 #: ../src/orca/rolenames.py:999
 msgid "ToggleButton"
-msgstr ""
+msgstr "PulsanteCommutazione"
 
 #. Translators: spoken words for the rolename of a toggle button.
 #.
 #: ../src/orca/rolenames.py:1002
 msgid "toggle button"
-msgstr ""
+msgstr "pulsante di commutazione"
 
 #. Translators: short braille for the rolename of a toolbar.
 #.
@@ -6740,7 +6755,7 @@ msgstr "suggerimento"
 #.
 #: ../src/orca/rolenames.py:1032
 msgid "tre"
-msgstr ""
+msgstr "alb"
 
 #. Translators: long braille for the rolename of a tree.
 #.
@@ -6794,19 +6809,19 @@ msgstr "sconosciuto"
 #.
 #: ../src/orca/rolenames.py:1068
 msgid "vwprt"
-msgstr ""
+msgstr "arvis"
 
 #. Translators: long braille for the rolename of a viewport.
 #.
 #: ../src/orca/rolenames.py:1071
 msgid "Viewport"
-msgstr ""
+msgstr "AreaVisibile"
 
 #. Translators: spoken words for the rolename of a viewport.
 #.
 #: ../src/orca/rolenames.py:1074
 msgid "viewport"
-msgstr ""
+msgstr "area visibile"
 
 #. Translators: short braille for the rolename of a window.
 #.
@@ -7608,7 +7623,7 @@ msgstr "Sposta alla cella"
 #.
 #: ../src/orca/scripts/StarOffice.py:2328
 msgid "Presentation Wizard"
-msgstr ""
+msgstr "Presentazione guidata"
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Writer.  The
