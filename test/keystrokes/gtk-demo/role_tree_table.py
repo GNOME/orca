@@ -303,7 +303,7 @@ sequence.append(utils.AssertPresentationAction(
 # Change the state of the checkbox.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction(" "))
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
@@ -311,13 +311,15 @@ sequence.append(WaitAction("object:state-changed:checked",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell unchecked",
-    ["BUG? - nothing presented"]))
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader < > Alex'",
+     "     VISIBLE:  '< > Alex', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
 # Change the state of the checkbox.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction(" "))
+sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:state-changed:checked",
                            None,
                            None,
@@ -325,7 +327,9 @@ sequence.append(WaitAction("object:state-changed:checked",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell checked",
-    ["BUG? - nothing presented"]))
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
+     "     VISIBLE:  '<x> Alex', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
 # Close the Card planning sheet demo

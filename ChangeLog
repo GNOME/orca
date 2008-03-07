@@ -24,6 +24,10 @@
           test #2 produces the wrong results.
           'keyString != "Space"' should have been 'keyString == "space"'.
 
+        * test/keystrokes/gtk-demo/role_tree_table.py:
+          Fix for bug #519567 - gtk-demo/role_tree_table.py regression
+          test #13 produces the wrong results.
+
 2008-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:
