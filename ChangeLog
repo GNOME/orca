@@ -19,6 +19,11 @@
           Fix for bug #519559 - gtk-demo/role_spin_button.py regression 
           test #4 produces the wrong results.
 
+        * src/orca/default.py:
+          Work on bug #519564 – gtk-demo/role_tree_table.py regression 
+          test #2 produces the wrong results.
+          'keyString != "Space"' should have been 'keyString == "space"'.
+
 2008-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/where_am_I.py:

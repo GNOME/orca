@@ -3481,7 +3481,7 @@ class Script(script.Script):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
                 mods = orca_state.lastInputEvent.modifiers
                 isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
-                if keyString != "Space" and isControlKey:
+                if keyString == "space" and isControlKey:
                     state = orca_state.locusOfFocus.getState()
                     if state.contains(pyatspi.STATE_FOCUSED):
                         if self.isSameObject(event.source,
