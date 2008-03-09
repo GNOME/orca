@@ -1,4 +1,4 @@
-Orca v2.22.0pre
+Orca v2.22.0
 
 Introduction
 ========================================================================
@@ -27,7 +27,7 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca v2.21.x is supported on GNOME 2.21.x only.  We highly suggest you
+Orca v2.22.x is supported on GNOME 2.22.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -43,7 +43,7 @@ to be installed:
 * BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
 * BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI, ATK, AND GAIL FOR THE GNOME 2.21.x
+YOU ALSO NEED THE LATEST ATK, GAIL, AND AT-SPI FOR THE GNOME 2.22.x
 DEVELOPMENT RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed

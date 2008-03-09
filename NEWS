@@ -1,3 +1,54 @@
+2.22.0 - 09-Mar-2008
+
+General:
+
+* Fix for bug #517505 - Orca doesn't present new active descendant
+  when deleting from the top of a list
+
+* Fix for bug #518762 - When using gnome-terminal with multiple tabs,
+  the name on the tab is not announced when switching between tabbed
+  windows
+
+OpenOffice:
+
+* Fix for bug #517502 - Orca should not speak the previously focused
+  menu item when arrowing across the menu bar in OpenOffice
+
+Firefox:
+
+* Fix for bug #491837, Implement Gecko.py 'go to' functions with
+  Collections
+
+* Fix for bug #515804 - Whitespace needs to be removed from speech and
+  braille contexts in FF3
+
+* Fix for bug #517277 - Orca should not get stuck while browsing
+  articles at espn.com
+
+* Fix for bug #518893 - Extra verbosity in web pages
+
+* Fix for bug #519931 - Orca does not read certain news feeds
+  correctly
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca      Catalan              Gil Forcada
+    cs      Czech                Lucas Lommer, Martin Sukany and 
+                                 Petr Kovar
+    da      Danish               Kenneth Nielsen
+    en_GB   Philip Withnall      English/British
+    es      Spanish              Jorge Gonzalez
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    it      Italian              Luca Ferretti
+    ja      Japanese             Takeshi Aihana
+    ml      Malayalam            Ani Peter
+    nl      Dutch                Vincent van Adrighem
+    pt_BR   Brazilian Portuguese Tiago Melo Casal and 
+                                 Leonardo Ferreira Fontenelle
+    tr      Turkish              Deniz Kocak and Baris Cicek
+
+==========
+
 2.21.92 - 25-Feb-2008
 
 General:
