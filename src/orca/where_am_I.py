@@ -706,11 +706,7 @@ class WhereAmI:
 
         utterances.append(_("Icon panel"))
         utterances.append(self.getObjLabelAndName(obj))
-        utterances.extend(self._getSelectedItemCount(panel))
-
-        if not basicOnly:
-            for i in range(0, len(selectedItems)):
-                utterances.append(self.getObjLabelAndName(selectedItems[i]))
+        utterances.extend(self._getSelectedItemCount(panel, basicOnly))
 
         speech.speakUtterances(utterances)
         
@@ -855,7 +851,7 @@ class WhereAmI:
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
-        utterances.extend(self._getSelectedItemCount(obj))
+        utterances.extend(self._getSelectedItemCount(obj, basicOnly))
 
         speech.speakUtterances(utterances)
 
@@ -887,9 +883,11 @@ class WhereAmI:
 
         return utterance
 
-    def _getSelectedItemCount(self, obj):
-        """Return a string indicating how many items are selected in this
-        object. This object will by an icon panel or a layered pane.
+    def _getSelectedItemCount(self, obj, basicOnly):
+        """Return an utterance indicating how many items are selected in this
+        object, the current item, and (if a detailed whereAmI), the names of
+        all the selected items. This object will be an icon panel or a 
+        layered pane.
 
         Arguments:
         - obj: the object being presented
@@ -907,6 +905,7 @@ class WhereAmI:
             if state.contains(pyatspi.STATE_FOCUSED):
                 currentItem = child.getIndexInParent() + 1
 
+        utterances = []
         # Translators: this is a count of the number of selected icons
         # and the count of the total number of icons within an icon panel.
         # An example of an icon panel is the Nautilus folder view.
@@ -915,14 +914,20 @@ class WhereAmI:
                               "%d of %d items selected",
                               childCount) % \
                               (totalSelectedItems, childCount)
+        utterances.append(countString)
 
         # Translators: this is a indication of the focused icon and the
         # count of the total number of icons within an icon panel. An
         # example of an icon panel is the Nautilus folder view.
         #
         itemString = _("on item %d of %d") % (currentItem, childCount)
+        utterances.append(itemString)
 
-        return [ countString, itemString ]
+        if not basicOnly:
+            for i in range(0, len(selectedItems)):
+                utterances.append(self.getObjLabelAndName(selectedItems[i]))
+
+        return utterances
 
     def __extractSize(self, uri):
         """Get the http header for a given uri and try to extract the size

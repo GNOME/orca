@@ -1,3 +1,9 @@
+2008-03-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/where_am_I.py:
+          Tweak for bug #519541 - gtk-demo/role_icon.py regression test #2 
+          produces the wrong results.  (Needed a slight pylinting)
+
 2008-03-07  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/gtk-demo/role_icon.py:
