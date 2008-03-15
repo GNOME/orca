@@ -4539,7 +4539,7 @@ def showPreferencesUI():
     if not orca_state.appOS and not orca_state.orcaOS:
         # Translators: Orca Preferences is the configuration GUI for Orca.
         #
-        line = _("Starting Orca Preferences. This may take a while.")
+        line = _("Starting Orca Preferences.")
         braille.displayMessage(line)
         speech.speak(line)
 
