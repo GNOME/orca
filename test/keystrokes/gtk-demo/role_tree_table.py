@@ -75,7 +75,7 @@ sequence.append(WaitAction("object:state-changed:selected",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "January cell focus",
-    ["BUG? - nothing spoken and line not brailled"]))
+    ["SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

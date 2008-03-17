@@ -3473,38 +3473,59 @@ class Script(script.Script):
         if event.type.startswith("object:state-changed:selected"):
             # If this selection state change is for the object which 
             # currently has the locus of focus, and the last keyboard
-            # event was Control-Space, then let the user know. 
-            # See bug #486908 for more details.
+            # event was Space, or we are a focused table cell and we 
+            # arrowed Down or Up and are now selected, then let the 
+            # user know the selection state. 
+            # See bugs #486908 and #519564 for more details.
             #
             if isinstance(orca_state.lastInputEvent,
                           input_event.KeyboardEvent):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
                 mods = orca_state.lastInputEvent.modifiers
                 isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
-                if keyString == "space" and isControlKey:
-                    state = orca_state.locusOfFocus.getState()
-                    if state.contains(pyatspi.STATE_FOCUSED):
-                        if self.isSameObject(event.source,
-                                             orca_state.locusOfFocus):
-                            if event.detail1:
-                                # Translators: this object is now selected.
-                                # Let the user know this.
-                                #
-                                # ONLY TRANSLATE THE PART AFTER THE PIPE
-                                # CHARACTER |
-                                #
-                                speech.speak(Q_("text|selected"),
-                                             None, False)
-                            else:
-                                # Translators: this object is now unselected.
-                                # Let the user know this.
-                                #
-                                # ONLY TRANSLATE THE PART AFTER THE PIPE
-                                # CHARACTER |
-                                #
-                                speech.speak(Q_("text|unselected"),
-                                             None, False)
-                            return
+                state = orca_state.locusOfFocus.getState()
+                announceState = False
+
+                if state.contains(pyatspi.STATE_FOCUSED) and \
+                   self.isSameObject(event.source, orca_state.locusOfFocus):
+
+                    if keyString == "space":
+                        if isControlKey:
+                            announceState = True
+                        else:
+                            # Weed out a bogus situation. If we are already 
+                            # selected and the user presses "space" again, 
+                            # we don't want to speak the intermediate
+                            # "unselected" state.
+                            #
+                            eventState = event.source.getState()
+                            selected = eventState.contains(\
+                                           pyatspi.STATE_SELECTED)
+                            announceState = (selected and event.detail1)
+
+                    if (keyString == "Down" or keyString == "Up") and \
+                       event.source.getRole() == pyatspi.ROLE_TABLE_CELL and \
+                       state.contains(pyatspi.STATE_SELECTED):
+                            announceState = True
+
+                if announceState:
+                    if event.detail1:
+                        # Translators: this object is now selected.
+                        # Let the user know this.
+                        #
+                        # ONLY TRANSLATE THE PART AFTER THE PIPE
+                        # CHARACTER |
+                        #
+                        speech.speak(Q_("text|selected"), None, False)
+                    else:
+                        # Translators: this object is now unselected.
+                        # Let the user know this.
+                        #
+                        # ONLY TRANSLATE THE PART AFTER THE PIPE
+                        # CHARACTER |
+                        #
+                        speech.speak(Q_("text|unselected"), None, False)
+                    return
 
         if event.type.startswith("object:state-changed:focused"):
             iconified = False
