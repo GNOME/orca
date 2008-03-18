@@ -2267,16 +2267,23 @@ class Script(default.Script):
 
     def onFocus(self, event):
         """Called whenever an object gets focus. Overridden in this script
-        so that we can adjust "focus:" events for children of a combo-box
-        to just set the focus to the combo box. This is needed to help
-        reduce the verbosity of focusing on the Calc Name combo box (see
-        bug #364407).
+        so that we can adjust the "focus:" events for the Calc Name combo
+        box to reduce its verbosity (see bug #364407).
 
         Arguments:
         - event: the Event
         """
 
-        if event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+        rolesList = [pyatspi.ROLE_LIST, \
+                     pyatspi.ROLE_COMBO_BOX, \
+                     pyatspi.ROLE_TOOL_BAR, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(self.debugLevel, "StarOffice.onFocus - " \
+                          + "Calc: Name combo box.")
             orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
