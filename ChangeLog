@@ -5,6 +5,10 @@
           Fix for bug #519564 - gtk-demo/role_tree_table.py regression 
           test #2 produces the wrong results.
 
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #523018 - Orca does not speak the role for edits 
+          in the find and replace dialog in openoffice.
+
 2008-03-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
