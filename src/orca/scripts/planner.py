@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.debug as debug
 import orca.default as default
 import orca.braille as braille
 import orca.settings as settings
@@ -82,7 +81,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             brailleindicatorindex = 0
 
         regions = []
-        indicator=\
+        indicator = \
             settings.brailleRadioButtonIndicators[brailleindicatorindex]
         componentRegion = braille.Component(obj, text, indicator=indicator)
         regions.append(componentRegion)

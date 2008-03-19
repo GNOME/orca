@@ -3503,10 +3503,10 @@ class Script(script.Script):
                                            pyatspi.STATE_SELECTED)
                             announceState = (selected and event.detail1)
 
-                    if (keyString == "Down" or keyString == "Up") and \
-                       event.source.getRole() == pyatspi.ROLE_TABLE_CELL and \
-                       state.contains(pyatspi.STATE_SELECTED):
-                            announceState = True
+                    if (keyString == "Down" or keyString == "Up") \
+                       and event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
+                       and state.contains(pyatspi.STATE_SELECTED):
+                        announceState = True
 
                 if announceState:
                     if event.detail1:
