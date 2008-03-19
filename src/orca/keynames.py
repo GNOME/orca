@@ -100,6 +100,10 @@ __keynames["SunF36"]       = _("F 11")
 #
 __keynames["SunF37"]       = _("F 12")
 
+# Translators: this is the spoken word for the space character
+#
+__keynames["space"] = _("space")
+
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it
     in ordinary conversation.
