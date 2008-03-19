@@ -23,7 +23,7 @@ sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("javascript:alert('I am an alert')"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Return", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
     ["BRAILLE LINE:  'about:blank HtmlPane'",
@@ -34,12 +34,16 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog'",
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
+     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: 'about:blank internal frame'",
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: 'about:blank page'",
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '[JavaScript Application] I am an alert'"]))
+     "SPEECH OUTPUT: '[JavaScript Application] I am an alert'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Dismiss the alert by pressing Return

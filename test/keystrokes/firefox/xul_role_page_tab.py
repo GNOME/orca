@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'General page'",
-     "SPEECH OUTPUT: 'item 1 of 5'",
+     "SPEECH OUTPUT: 'item 1 of 6'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################
@@ -61,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Page Setup page'",
-     "SPEECH OUTPUT: 'item 2 of 5'",
+     "SPEECH OUTPUT: 'item 2 of 6'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################

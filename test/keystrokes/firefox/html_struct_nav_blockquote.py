@@ -49,9 +49,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
 sequence.append(utils.AssertPresentationAction(
     "q to first quote", 
-    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'",
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'"]))
 
 ########################################################################
 # Press Q to move to the second blockquote which begins with: "Now
@@ -61,9 +61,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
 sequence.append(utils.AssertPresentationAction(
     "q to second quote", 
-    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'"]))
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'"]))
 
 ########################################################################
 # Press Q to move to the third and final blockquote which begins with:
@@ -86,10 +86,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
 sequence.append(utils.AssertPresentationAction(
     "q wrap to top", 
-    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'",
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and'"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'"]))
 
 ########################################################################
 # Press Shift+Q.  There are no more blockquotes above us on the page
@@ -112,9 +112,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>q"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+q wrap to second quote", 
-    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'"]))
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -124,11 +124,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I",
-    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the '",
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall '",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################

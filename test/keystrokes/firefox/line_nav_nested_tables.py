@@ -236,8 +236,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Up",
     ["BRAILLE LINE:  'nested-tables Link Image Campus Link   .   Classroom Link   .   Communicate Link   .   Reports Link  '",
-     "     VISIBLE:  'nested-tables Link Image Campus', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables link image Campus Link   .   Classroom Link   .   Communicate Link   .   Reports Link  '"]))
+     "     VISIBLE:  'nested-tables Link Image Campus ', cursor=1",
+     "SPEECH OUTPUT: 'nested-tables link image Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

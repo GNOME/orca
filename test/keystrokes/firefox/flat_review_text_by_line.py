@@ -32,7 +32,7 @@ sequence.append(PauseAction(3000))
 # Read the current line with KP_8.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_8"))
+sequence.append(KeyComboAction("KP_8", 1000))
 sequence.append(utils.AssertPresentationAction(
     "flat review current line", 
     ["BRAILLE LINE:  'On weaponry: $l'",
@@ -46,49 +46,41 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and '"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'surprise. Our two weapons are fear and surprise. And ruthless efficiency. Our three weapons are fear,  $l'",
-     "     VISIBLE:  'surprise. Our two weapons are fe', cursor=1",
-     "SPEECH OUTPUT: 'surprise. Our two weapons are fear and surprise. And ruthless efficiency. Our three weapons are fear, '"]))
+    ["BRAILLE LINE:  'surprise. And ruthless efficiency. Our three weapons are fear, surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope.  $l'",
+     "     VISIBLE:  'surprise. And ruthless efficienc', cursor=1",
+     "SPEECH OUTPUT: 'surprise. And ruthless efficiency. Our three weapons are fear, surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. Our four. No. Amongst  $l'",
-     "     VISIBLE:  'surprise, and ruthless efficienc', cursor=1",
-     "SPEECH OUTPUT: 'surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. Our four. No. Amongst '"]))
+    ["BRAILLE LINE:  'Our four. No. Amongst our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY expects the  $l'",
+     "     VISIBLE:  'Our four. No. Amongst our weapon', cursor=1",
+     "SPEECH OUTPUT: 'Our four. No. Amongst our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY expects the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY  $l'",
-     "     VISIBLE:  'our weapons. Amongst our weaponr', cursor=1",
-     "SPEECH OUTPUT: 'our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY '"]))
+    ["BRAILLE LINE:  'Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the  $l'",
+     "     VISIBLE:  'Spanish Inquisition! Amongst our', cursor=1",
+     "SPEECH OUTPUT: 'Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise,  $l'",
-     "     VISIBLE:  'expects the Spanish Inquisition!', cursor=1",
-     "SPEECH OUTPUT: 'expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_9"))
-sequence.append(utils.AssertPresentationAction(
-    "flat review next line", 
-    ["BRAILLE LINE:  'ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn!  $l'",
-     "     VISIBLE:  'ruthless efficiency, an almost f', cursor=1",
-     "SPEECH OUTPUT: 'ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn! '"]))
+    ["BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn!  $l'",
+     "     VISIBLE:  'Pope, and nice red uniforms - Oh', cursor=1",
+     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -102,25 +94,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the  $l'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall  $l'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the '"]))
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the  $l'",
-     "     VISIBLE:  'ungodly. Two last chances. And y', cursor=1",
-     "SPEECH OUTPUT: 'ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_9"))
-sequence.append(utils.AssertPresentationAction(
-    "flat review next line", 
-    ["BRAILLE LINE:  'nature of which I have divulged in my previous utterance.  $l'",
-     "     VISIBLE:  'nature of which I have divulged ', cursor=1",
-     "SPEECH OUTPUT: 'nature of which I have divulged in my previous utterance. '"]))
+    ["BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
+     "     VISIBLE:  'be free. Three last chances. You', cursor=1",
+     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -153,25 +137,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'nature of which I have divulged in my previous utterance.  $l'",
-     "     VISIBLE:  'nature of which I have divulged ', cursor=1",
-     "SPEECH OUTPUT: 'nature of which I have divulged in my previous utterance. '"]))
+    ["BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
+     "     VISIBLE:  'be free. Three last chances. You', cursor=1",
+     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the  $l'",
-     "     VISIBLE:  'ungodly. Two last chances. And y', cursor=1",
-     "SPEECH OUTPUT: 'ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
-sequence.append(utils.AssertPresentationAction(
-    "flat review previous line", 
-    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the  $l'",
+    ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall  $l'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the '"]))
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -185,49 +161,41 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn!  $l'",
-     "     VISIBLE:  'ruthless efficiency, an almost f', cursor=1",
-     "SPEECH OUTPUT: 'ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn! '"]))
+    ["BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn!  $l'",
+     "     VISIBLE:  'Pope, and nice red uniforms - Oh', cursor=1",
+     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise,  $l'",
-     "     VISIBLE:  'expects the Spanish Inquisition!', cursor=1",
-     "SPEECH OUTPUT: 'expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, '"]))
+    ["BRAILLE LINE:  'Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the  $l'",
+     "     VISIBLE:  'Spanish Inquisition! Amongst our', cursor=1",
+     "SPEECH OUTPUT: 'Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY  $l'",
-     "     VISIBLE:  'our weapons. Amongst our weaponr', cursor=1",
-     "SPEECH OUTPUT: 'our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY '"]))
+    ["BRAILLE LINE:  'Our four. No. Amongst our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY expects the  $l'",
+     "     VISIBLE:  'Our four. No. Amongst our weapon', cursor=1",
+     "SPEECH OUTPUT: 'Our four. No. Amongst our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY expects the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. Our four. No. Amongst  $l'",
-     "     VISIBLE:  'surprise, and ruthless efficienc', cursor=1",
-     "SPEECH OUTPUT: 'surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. Our four. No. Amongst '"]))
+    ["BRAILLE LINE:  'surprise. And ruthless efficiency. Our three weapons are fear, surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope.  $l'",
+     "     VISIBLE:  'surprise. And ruthless efficienc', cursor=1",
+     "SPEECH OUTPUT: 'surprise. And ruthless efficiency. Our three weapons are fear, surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'surprise. Our two weapons are fear and surprise. And ruthless efficiency. Our three weapons are fear,  $l'",
-     "     VISIBLE:  'surprise. Our two weapons are fe', cursor=1",
-     "SPEECH OUTPUT: 'surprise. Our two weapons are fear and surprise. And ruthless efficiency. Our three weapons are fear, '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
-sequence.append(utils.AssertPresentationAction(
-    "flat review previous line", 
-    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
+    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and '"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))

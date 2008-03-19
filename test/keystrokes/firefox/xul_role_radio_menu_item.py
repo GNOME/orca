@@ -34,14 +34,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("y"))
 sequence.append(utils.AssertPresentationAction(
     "y for Page Style menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Style Menu'",
+    ["BUG? - We're speaking a tree level for a non tree item",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Style Menu'",
      "     VISIBLE:  'Page Style Menu', cursor=1",
      "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
      "     VISIBLE:  '& y No Style RadioItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Style menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'No Style not selected radio menu item'"]))
+     "SPEECH OUTPUT: 'No Style not selected radio menu item'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 

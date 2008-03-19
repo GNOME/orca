@@ -35,10 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Show All Bookmarks...'",
-     "     VISIBLE:  'Show All Bookmarks...', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks'",
+     "     VISIBLE:  'Organize Bookmarks', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show All Bookmarks…'"]))
+     "SPEECH OUTPUT: 'Organize Bookmarks'"]))
 
 sequence.append(KeyComboAction("Return"))
 
@@ -46,24 +46,8 @@ sequence.append(KeyComboAction("Return"))
 # Press Shift+F10 to bring up a context menu then Down Arrow once to
 # get to "New Bookmark..." and press Return.
 #
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>F10"))
-sequence.append(utils.AssertPresentationAction(
-    "Shift F10 for context menu",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Menu'",
-     "     VISIBLE:  'Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'menu'"]))
-
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Down Arrow in context menu",
-    ["BRAILLE LINE:  'Minefield Application Library Frame New Bookmark...'",
-     "     VISIBLE:  'New Bookmark...', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'New Bookmark…'"]))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 1000))
 sequence.append(utils.AssertPresentationAction(

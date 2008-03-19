@@ -66,9 +66,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Q. Which way is up? Link'",
-     "     VISIBLE:  'Q. Which way is up? Link', cursor=1",
-     "SPEECH OUTPUT: 'Q. Which way is up? link'"]))
+    ["BRAILLE LINE:  'Q. Which way is up? Link '",
+     "     VISIBLE:  'Q. Which way is up? Link ', cursor=1",
+     "SPEECH OUTPUT: 'Q. Which way is up? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -277,9 +278,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Q. Which way is up? Link'",
-     "     VISIBLE:  'Q. Which way is up? Link', cursor=1",
-     "SPEECH OUTPUT: 'Q. Which way is up? link'"]))
+    ["BRAILLE LINE:  'Q. Which way is up? Link '",
+     "     VISIBLE:  'Q. Which way is up? Link ', cursor=1",
+     "SPEECH OUTPUT: 'Q. Which way is up? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

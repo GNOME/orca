@@ -36,3 +36,6 @@ user_pref("privacy.sanitize.promptOnSanitize", false);
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
 user_pref("signon.rememberSignons", false);
 user_pref("spellchecker.dictionary", "en-US");
+user_pref("font.name.sans-serif.x-western", "FreeSans");
+user_pref("font.name.serif.x-western", "FreeSerif");
+

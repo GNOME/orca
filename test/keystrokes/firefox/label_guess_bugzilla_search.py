@@ -38,7 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Home Link Image Bugzilla New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
      "     VISIBLE:  'Home Link Image Bugzilla New bug', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'"]))
+     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 ########################################################################
 # Press Insert+Tab to move from form field to form field.
@@ -501,6 +501,7 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",

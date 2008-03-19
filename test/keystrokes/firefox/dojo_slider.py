@@ -38,7 +38,7 @@ sequence.append(PauseAction(3000))
 # SPEECH OUTPUT: 'slider 10'
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "tab to first slider", 
     ["BRAILLE LINE:  '10 Slider'",

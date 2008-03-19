@@ -35,10 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Show All Bookmarks...'",
-     "     VISIBLE:  'Show All Bookmarks...', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks'",
+     "     VISIBLE:  'Organize Bookmarks', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show All Bookmarks…'"]))
+     "SPEECH OUTPUT: 'Organize Bookmarks'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
@@ -65,13 +65,13 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
-     "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable     TREE LEVEL 1'",
+     "     VISIBLE:  'Minefield Application Library Fr', cursor=0",
      "SPEECH OUTPUT: 'tree table'",
      "SPEECH OUTPUT: 'Name'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'row 2 of 3'",
+     "SPEECH OUTPUT: 'row 1 of 3'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################

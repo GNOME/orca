@@ -71,7 +71,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button '",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Press Tab to the second push button and press it with space bar.  
@@ -107,7 +108,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Our chief weapon is... Button'",
      "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
-     "SPEECH OUTPUT: 'Surprise.  Surprise and fear. Fear and surprise... And ruthless efficiency...  And an almost fanatical devotion to the Pope... And nice red uniforms.'"]))
+     "SPEECH OUTPUT: 'Surprise. Surprise and fear. Fear and surprise... And ruthless efficiency... And an almost fanatical devotion to the Pope... And nice red uniforms.'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Press Tab to the third push button and press it with space bar.  
@@ -143,7 +145,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
      "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
-     "SPEECH OUTPUT: 'Done'"]))
+     "SPEECH OUTPUT: 'Done'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

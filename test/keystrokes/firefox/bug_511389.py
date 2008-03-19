@@ -42,9 +42,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Foo Link'",
-     "     VISIBLE:  'Foo Link', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+    ["BRAILLE LINE:  'Foo Link '",
+     "     VISIBLE:  'Foo Link ', cursor=1",
+     "SPEECH OUTPUT: 'Foo link ",
+     "'"]))
 
 ########################################################################
 # Tab forward.
@@ -53,10 +54,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab",
-    ["BRAILLE LINE:  'Bar Link'",
-     "     VISIBLE:  'Bar Link', cursor=1",
-     "BRAILLE LINE:  'Bar Link'",
-     "     VISIBLE:  'Bar Link', cursor=1",
+    ["BRAILLE LINE:  'Bar Link '",
+     "     VISIBLE:  'Bar Link ', cursor=1",
+     "BRAILLE LINE:  'Bar Link '",
+     "     VISIBLE:  'Bar Link ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bar link'"]))
 
@@ -68,10 +69,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab",
-    ["BRAILLE LINE:  'Foo Link'",
-     "     VISIBLE:  'Foo Link', cursor=1",
-     "BRAILLE LINE:  'Foo Link'",
-     "     VISIBLE:  'Foo Link', cursor=1",
+    ["BRAILLE LINE:  'Foo Link '",
+     "     VISIBLE:  'Foo Link ', cursor=1",
+     "BRAILLE LINE:  'Foo Link '",
+     "     VISIBLE:  'Foo Link ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foo link'"]))
 

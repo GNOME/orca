@@ -67,10 +67,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
+    ["BUG? - We're speaking the tree level for a non-tree",
+     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
      "     VISIBLE:  '<x> Navigation Toolbar CheckItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Navigation Toolbar check item checked'"]))
+     "SPEECH OUTPUT: 'Navigation Toolbar check item checked'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
 # Press Left Arrow to move backward menu by menu

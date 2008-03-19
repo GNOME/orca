@@ -1,3 +1,10 @@
+2008-03-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/*:
+          test/html/FirefoxProfile/prefs.js:
+          Fix for bug 519849 - Firefox regression test profile should define
+          the font and size to be used.
+
 2008-03-17  Willie Walker <william.walker@sun.com>
 
         * src/orca/keynames.py:

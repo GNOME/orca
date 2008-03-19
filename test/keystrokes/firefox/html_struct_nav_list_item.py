@@ -205,9 +205,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "i in first list", 
-    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'",
      "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
-     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of priority, even if it is artificial'"]))
 
 ########################################################################
 # Now reverse our direction, but just for a few items.

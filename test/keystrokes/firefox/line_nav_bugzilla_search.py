@@ -25,9 +25,7 @@ sequence.append(TypeAction(utils.htmlURLPrefix + "bugzilla-advanced.html"))
 sequence.append(KeyComboAction("Return"))
 
 sequence.append(WaitForDocLoad())
-
-sequence.append(WaitForFocus("Search for bugs",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+sequence.append(PauseAction(1000))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -38,7 +36,11 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Home Link Image Bugzilla New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
      "     VISIBLE:  'Home Link Image Bugzilla New bug', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'"]))
+     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+sequence.append(PauseAction(1000))
+
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Up"))
 
 ########################################################################
 # Down Arrow.

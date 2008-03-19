@@ -35,10 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Show All Bookmarks...'",
-     "     VISIBLE:  'Show All Bookmarks...', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks'",
+     "     VISIBLE:  'Organize Bookmarks', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Show All Bookmarks…'"]))
+     "SPEECH OUTPUT: 'Organize Bookmarks'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
@@ -47,7 +47,7 @@ sequence.append(PauseAction(3000))
 # Press Shift+Tab to move to the tree of bookmarks on the left.  
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",

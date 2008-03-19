@@ -105,12 +105,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to second radio group", 
-    ["BRAILLE LINE:  '&=y Water RadioButton'",
-     "     VISIBLE:  '&=y Water RadioButton', cursor=1",
-     "BRAILLE LINE:  '&=y Water RadioButton'",
-     "     VISIBLE:  '&=y Water RadioButton', cursor=1",
+    ["BRAILLE LINE:  '&=y Coffee RadioButton'",
+     "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Coffee RadioButton'",
+     "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Drink Options panel'",
-     "SPEECH OUTPUT: 'Water selected radio button'"]))
+     "SPEECH OUTPUT: 'Coffee selected radio button'"]))
 ########################################################################
 # Move to the second radio button.
 #
@@ -118,10 +118,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "move to second radio button grp2", 
-    ["BRAILLE LINE:  '&=y Tea RadioButton'",
-     "     VISIBLE:  '&=y Tea RadioButton', cursor=1",
+    ["BRAILLE LINE:  '&=y Cola RadioButton'",
+     "     VISIBLE:  '&=y Cola RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tea selected radio button'"]))
+     "SPEECH OUTPUT: 'Cola selected radio button'"]))
 ########################################################################
 # Move back to the first radio button.
 #
@@ -129,10 +129,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "move back to first radio button grp2", 
-    ["BRAILLE LINE:  '&=y Water RadioButton'",
-     "     VISIBLE:  '&=y Water RadioButton', cursor=1",
+    ["BRAILLE LINE:  '&=y Coffee RadioButton'",
+     "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Water selected radio button'"]))
+     "SPEECH OUTPUT: 'Coffee selected radio button'"]))
 ########################################################################
 # Close the demo
 #

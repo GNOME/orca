@@ -121,6 +121,10 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(3000))
+
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Up"))
 
 ########################################################################
 # Press Down Arrow to move to the anchors.html link.  
