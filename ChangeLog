@@ -1,3 +1,14 @@
+2008-03-17  Willie Walker <william.walker@sun.com>
+
+        * src/orca/keynames.py:
+          Fix for bug #523147 - "space" keyname is not marked for translation
+
+2008-03-17  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/planner.py:
+          pylint fixups.
+
 2008-03-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
