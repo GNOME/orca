@@ -2123,7 +2123,8 @@ class Script(default.Script):
         # locusOfFocusChanged method, which in turn will result in our
         # _getSpeechForComboBox() method being called.
         #
-        rolesList = [pyatspi.ROLE_COMBO_BOX, \
+        rolesList = [pyatspi.ROLE_LIST, \
+                     pyatspi.ROLE_COMBO_BOX, \
                      pyatspi.ROLE_TOOL_BAR, \
                      pyatspi.ROLE_PANEL, \
                      pyatspi.ROLE_ROOT_PANE, \
@@ -2134,11 +2135,15 @@ class Script(default.Script):
             and (not event.source.name or len(event.source.name) == 0):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: name box.")
+
+            self.updateBraille(newLocusOfFocus)
+
             # Translators: this is our made up name for the nameless field
             # in StarOffice/OpenOffice calc that allows you to type in a
             # cell coordinate (e.g., A4) and then move to it.
             #
-            event.source.name = _("Move to cell")
+            speech.speak(_("Move to cell"))
+            return
 
         # 6) Calc: spreadsheet cell.
         #
@@ -2270,14 +2275,15 @@ class Script(default.Script):
 
 
     def onFocus(self, event):
-        """Called whenever an object gets focus. Overridden in this script
-        so that we can adjust the "focus:" events for the Calc Name combo
-        box to reduce its verbosity (see bug #364407).
+        """Called whenever an object gets focus.
 
         Arguments:
         - event: the Event
         """
 
+        # If this is a "focus:" event for the Calc Name combo box, catch 
+        # it here to reduce verbosity (see bug #364407).
+        #
         rolesList = [pyatspi.ROLE_LIST, \
                      pyatspi.ROLE_COMBO_BOX, \
                      pyatspi.ROLE_TOOL_BAR, \
@@ -2288,7 +2294,7 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.onFocus - " \
                           + "Calc: Name combo box.")
-            orca.setLocusOfFocus(None, event.source.parent, False)
+            orca.setLocusOfFocus(event, event.source, True)
             return
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),

@@ -33,6 +33,12 @@
           Fix for bug #523468 - oocalc/bug_435307.py regression tests #1
           through #2 produce the wrong results.
 
+        * test/keystrokes/oocalc/bug_364407.py:
+          src/orca/scripts/StarOffice.py:
+          Fix for bug #523018 - Orca does not speak the role for edits 
+          in the find and replace dialog in openoffice. Really a new fix
+          for bug #364407 which broke again with the recent pyatspi migration.
+
 2008-03-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/*:

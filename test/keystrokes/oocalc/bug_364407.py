@@ -60,7 +60,9 @@ sequence.append(KeyComboAction("<Shift><Control>t"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LIST))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Shift-t to give focus to the spreadsheet cell locator",
-    ["BUG: not brailling/speaking anything"]))
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ToolBar List'",
+     "     VISIBLE:  'List', cursor=1",
+     "SPEECH OUTPUT: 'Move to cell'"]))
 
 ######################################################################
 # 4. Type right arrow twice and backspace twice to remove the current 
@@ -94,8 +96,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'c3 $l', cursor=3",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ToolBar c3 $l'",
      "     VISIBLE:  'c3 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell C3 '",
      "     VISIBLE:  'Cell C3 ', cursor=1",
+     "SPEECH OUTPUT: ' A1'",
      "SPEECH OUTPUT: ' C3'"]))
 
 ######################################################################
