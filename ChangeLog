@@ -29,6 +29,10 @@
           Fix for bug #523467 - oocalc/bug_433398.py regression tests #1
           through #4 produce the wrong results.
 
+        * test/keystrokes/oocalc/bug_435307.py:
+          Fix for bug #523468 - oocalc/bug_435307.py regression tests #1
+          through #2 produce the wrong results.
+
 2008-03-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/*:
