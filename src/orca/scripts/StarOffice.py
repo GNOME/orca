@@ -73,6 +73,9 @@ class WhereAmI(where_am_I.WhereAmI):
             C. otherwise, the full contents of the cell
         """
 
+        if not self._script.isSpreadSheetCell(obj):
+            return where_am_I.WhereAmI._speakTableCell(self, obj, basicOnly)
+
         utterances = []
         utterances.append(_("cell"))
 
@@ -1264,7 +1267,8 @@ class Script(default.Script):
                 # really try to avoid doing this kind of thing, but sometimes
                 # it is necessary and we apologize.
                 #
-                if current.getRole() == pyatspi.ROLE_FRAME and \
+                if current.getRole() in [pyatspi.ROLE_FRAME,
+                                         pyatspi.ROLE_ROOT_PANE] and \
                    (current.name and current.name.endswith(_("Calc"))):
                     found = True
                 current = current.parent
