@@ -7,6 +7,12 @@
           numerous bogus "not selected" differences in several oocalc
           regression tests.
 
+        * test/keystrokes/oocalc/bug_356334.py:
+          More work on bug #523459 - oocalc/bug_356334.py regression tests #1
+          through #4 produce the wrong results. This adjusts the expected
+          braille results for regression tests #1 and #3 to make what is 
+          now displayed.
+
 2008-03-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/*:
