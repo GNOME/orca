@@ -13,6 +13,10 @@
           braille results for regression tests #1 and #3 to make what is 
           now displayed.
 
+        * test/keystrokes/oocalc/bug_361167.py:
+          Fix for bug #523460 - oocalc/bug_361167.py - 8 out 10 regression
+          tests produce the wrong results.
+
 2008-03-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/*:
