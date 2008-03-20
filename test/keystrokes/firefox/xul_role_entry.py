@@ -18,48 +18,17 @@ sequence.append(WaitForWindowActivate("Minefield",None))
 # Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
 # press Return.
 #
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
-sequence.append(utils.AssertPresentationAction(
-    "Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Bookmarks Menu'",
-     "     VISIBLE:  'Bookmarks Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Bookmark This Page(Control D)'",
-     "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks menu'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
-
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks'",
-     "     VISIBLE:  'Organize Bookmarks', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Organize Bookmarks'"]))
-
 sequence.append(KeyComboAction("Return"))
 
 ########################################################################
-# Press Shift+F10 to bring up a context menu then Down Arrow once to
-# get to "New Bookmark..." and press Return.
+# Down Arrow to select Bookmarks menu (necessary to add a new item).
+# Then Press Alt+O for Organize and Return on "New Bookmark..."
 #
-sequence.append(KeyComboAction("<Shift>F10"))
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down", 3000))
+sequence.append(KeyComboAction("<Alt>o"))
 sequence.append(KeyComboAction("Return", 1000))
-sequence.append(utils.AssertPresentationAction(
-    "Return for a new bookmark",
-    ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog'",
-     "     VISIBLE:  'Add Bookmark Dialog', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Add Bookmark'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Name: text '"]))
 
 ########################################################################
 # Focus will be in the Name single-line entry.  Type "this is a test"
