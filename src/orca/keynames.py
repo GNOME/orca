@@ -104,6 +104,14 @@ __keynames["SunF37"]       = _("F 12")
 #
 __keynames["space"] = _("space")
 
+# Translators: this is the spoken word for the BackSpace key
+#
+__keynames["BackSpace"] = _("backspace")
+
+#translators: this is the spoken word for Return key
+#
+__keynames["Return"] = _("return")
+
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it
     in ordinary conversation.

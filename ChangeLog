@@ -1,3 +1,9 @@
+2008-03-20  Attila Hammer <via william.walker@sun.com>
+
+        * src/orca/keynames.py:	
+          Fix for bug #523309 - "return" and "backspace" keynames is not
+	  marked for translations
+
 2008-03-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
@@ -46,7 +52,7 @@
           Fix for bug 519849 - Firefox regression test profile should define
           the font and size to be used.
 
-2008-03-17  Willie Walker <william.walker@sun.com>
+2008-03-17  Attila Hammer <william.walker@sun.com>
 
         * src/orca/keynames.py:
           Fix for bug #523147 - "space" keyname is not marked for translation
