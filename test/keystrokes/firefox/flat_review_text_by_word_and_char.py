@@ -32,7 +32,7 @@ sequence.append(PauseAction(3000))
 # Read the current word with KP_5.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_5"))
+sequence.append(KeyComboAction("KP_5", 1000))
 sequence.append(utils.AssertPresentationAction(
     "flat review current word", 
     ["BRAILLE LINE:  'On weaponry: $l'",
