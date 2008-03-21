@@ -302,8 +302,7 @@ def showPreferencesUI():
         # for allowing users to set application specific settings from within
         # Orca for the application that currently has focus.
         #
-        line = _("Starting Orca Preferences for %s. This may take a while.") % \
-               applicationName
+        line = _("Starting Orca Preferences for %s.") % applicationName
         braille.displayMessage(line)
         speech.speak(line)
 
