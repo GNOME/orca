@@ -26,6 +26,10 @@
           Fix for bug #523447 - oowriter/bug_382880.py regression tests #1
           through #8 produce the wrong results.
 
+        * test/keystrokes/oowriter/bug_382888.py:
+          Fix for bug #523449 - oowriter/bug_382888.py regression tests #1
+          through #8 produce the wrong results.
+
 2008-03-20  Attila Hammer <via william.walker@sun.com>
 
         * src/orca/keynames.py:	
