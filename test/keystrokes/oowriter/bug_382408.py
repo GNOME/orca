@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the next line",
     ["BRAILLE LINE:  'December 2006 $l'",
      "     VISIBLE:  'December 2006 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
@@ -51,7 +51,7 @@ sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the Mon table column header",
     ["BRAILLE LINE:  'This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat'",
      "     VISIBLE:  'Mon Tue Wed Thu Fri Sat', cursor=1",
      "SPEECH OUTPUT: 'Sun Mon Tue Wed Thu Fri Sat'",
      "SPEECH OUTPUT: ' not selected'"]))
