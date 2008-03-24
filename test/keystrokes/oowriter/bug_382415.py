@@ -30,7 +30,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down arrow to next line",
     ["BRAILLE LINE:  'December 2006 $l'",
      "     VISIBLE:  'December 2006 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the Mon table column header",
     ["BRAILLE LINE:  'This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
      "     VISIBLE:  'Mon Paragraph', cursor=1",
      "SPEECH OUTPUT: 'Cell B1'",
      "SPEECH OUTPUT: 'Mon'",
@@ -58,9 +58,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the blank table cell on the next row",
-    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Mon Paragraph'",
      "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'Mon'",
      "SPEECH OUTPUT: ' not selected'",
@@ -76,9 +76,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the '4' table cell on the next row",
-    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
@@ -94,9 +94,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the '11' table cell on the next row",
-    ["BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 4 Paragraph'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application table-sample - OpenOffice.org Writer Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'",
+     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table 11 Paragraph'",
      "     VISIBLE:  '11 Paragraph', cursor=1",
      "SPEECH OUTPUT: '4'",
      "SPEECH OUTPUT: ' not selected'",
