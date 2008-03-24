@@ -1,3 +1,9 @@
+2008-03-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #520760 - (ff3) read document ignoring remainder of
+          object when first subelement is non-text.
+
 2008-03-24  Willie Walker <william.walker@sun.com>
 
 	* test/harness/utils.py:
