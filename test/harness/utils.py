@@ -10,7 +10,7 @@ harness does that automatically for you."""
 DojoURLPrefix="http://bashautomation.com/dojo-release-1.1.0b2/dijit/tests/"
 # Where to find our local HTML tests.
 #
-import sys, os
+import sys, os, re
 wd = os.path.dirname(sys.argv[0])
 fullPath = os.path.abspath(wd)
 htmlDir = os.path.abspath(fullPath + "/../../html")
@@ -58,13 +58,31 @@ class StartRecordingAction(AtomicAction):
 def assertListEquality(rawOrcaResults, expectedList):
     '''Convert raw speech and braille output obtained from Orca into a
     list by splitting it at newline boundaries.  Compare it to the
-    list passed in and return the actual results if they differ.'''
+    list passed in and return the actual results if they differ.
+    Otherwise, return None to indicate an equality.'''
 
     results = rawOrcaResults.strip().split("\n")
-    if results != expectedList:
-        return results
-    else:
+
+    # Shoot for a string comparison first.
+    #
+    if results == expectedList:
         return None
+    elif len(results) != len(expectedList):
+        return results
+
+    # If the string comparison failed, do a regex match item by item
+    #
+    for i in range(0, len(expectedList)):
+	if results[i] == expectedList[i]:
+            continue
+        else:
+            expectedResultRE = re.compile(expectedList[i])
+            if expectedResultRE.match(results[i]):
+                continue
+            else:
+                return results
+
+    return None
 
 class AssertPresentationAction(AtomicAction):
     '''Ask Orca for the speech and braille logged since the last use
@@ -78,7 +96,8 @@ class AssertPresentationAction(AtomicAction):
     def __init__(self, name, expectedResults, 
                  assertionPredicate=assertListEquality):
         '''name:               the name of the test
-           expectedResults:    the results we want (typically a list)
+           expectedResults:    the results we want (typically a list of strings
+                               that can be treated as regular expressions)
            assertionPredicate: method to compare actual results to expected
                                results
         '''
