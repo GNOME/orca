@@ -1,3 +1,9 @@
+2008-03-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #519478 - (ff3) missing text with line down navigation
+          (www.fixedearth.com)
+
 2008-03-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
