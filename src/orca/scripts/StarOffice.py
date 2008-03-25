@@ -2779,3 +2779,21 @@ class Script(default.Script):
                 speech.speak(text)
         else:
             default.Script.onTextInserted(self, event)
+
+    def getTextAttributes(self, acc, offset, get_defaults=False):
+        """Get the text attributes run for a given offset in a given accessible
+
+        Arguments:
+        - acc: An accessible.
+        - offset: Offset in the accessible's text for which to retrieve the
+        attributes.
+        - get_defaults: Get the default attributes as well as the unique ones. 
+        Default is True
+        
+        Returns a dictionary of attributes, a start offset where the attributes
+        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
+        supprt the text attribute.
+        """
+        rv, start, end = \
+            default.Script.getTextAttributes(self, acc, offset, get_defaults)
+        return rv, start, end - 1

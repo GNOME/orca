@@ -221,10 +221,10 @@ brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 # The values represent the character to be used in the attrOr
 # field of brlAPI's writeStruct.
 #
-BRAILLE_SEL_NONE = '\x00' # 00000000
-BRAILLE_SEL_7    = '\x40' # 01000000
-BRAILLE_SEL_8    = '\x80' # 10000000
-BRAILLE_SEL_BOTH = '\xc0' # 11000000
+BRAILLE_SEL_NONE = 0x00 # 00000000
+BRAILLE_SEL_7    = 0x40 # 01000000
+BRAILLE_SEL_8    = 0x80 # 10000000
+BRAILLE_SEL_BOTH = 0xc0 # 11000000
 brailleSelectorIndicator = BRAILLE_SEL_BOTH
 
 # Speech punctuation levels (see verbalizePunctuationStyle).
@@ -593,10 +593,10 @@ enabledBrailledTextAttributes = \
 # The values represent the character to be used in the attrOr
 # field of brlAPI's writeStruct.
 #
-TEXT_ATTR_BRAILLE_NONE = '\x00' # 00000000
-TEXT_ATTR_BRAILLE_7    = '\x40' # 01000000
-TEXT_ATTR_BRAILLE_8    = '\x80' # 10000000
-TEXT_ATTR_BRAILLE_BOTH = '\xc0' # 11000000
+TEXT_ATTR_BRAILLE_NONE = 0x00 # 00000000
+TEXT_ATTR_BRAILLE_7    = 0x40 # 01000000
+TEXT_ATTR_BRAILLE_8    = 0x80 # 10000000
+TEXT_ATTR_BRAILLE_BOTH = 0xc0 # 11000000
 textAttributesBrailleIndicator = TEXT_ATTR_BRAILLE_NONE
 
 # The limit to enable a repeat character count to be spoken.

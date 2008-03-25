@@ -555,83 +555,42 @@ class Text(Region):
         # Start with an empty mask.
         #
         stringLength = len(self.string) - len(self.eol)
-        attrMask = ['\x00']*stringLength
+        lineEndOffset = self.lineOffset + stringLength
+        regionMask = [settings.TEXT_ATTR_BRAILLE_NONE]*stringLength
 
         attrIndicator = settings.textAttributesBrailleIndicator
         selIndicator = settings.brailleSelectorIndicator
-        indicateAttr = (attrIndicator != settings.TEXT_ATTR_BRAILLE_NONE)
-        indicateSel = (selIndicator != settings.BRAILLE_SEL_NONE)
+        script = orca_state.activeScript
 
-        if indicateAttr and settings.enabledBrailledTextAttributes:
-            # Identify what attributes the user cares about.  Also get the
-            # default attributes for the text object because those attributes
-            # may not be included as attributes for the character.
-            #
-            script = orca_state.activeScript
-            enabledAttributes = settings.enabledBrailledTextAttributes
-            [userAttrList, userAttrDict] = \
-                script.textAttrsToDictionary(enabledAttributes)
-            defaultAttributes = text.getDefaultAttributes()
-            [defaultAttrList, defaultAttrDict] = \
-                script.textAttrsToDictionary(defaultAttributes)
+        if attrIndicator:
+            enabledAttributes = script.attribsToDictionary(
+                settings.enabledBrailledTextAttributes)
 
-            # [[[TODO - HACK - JD: The end offset returned by SO/OOo is the
-            # offset of the first character that doesn't have the attribute
-            # in question; all other apps return the offset of the last
-            # character that has that attribute]]]
-            #
-            adjustment = 0
-            appName = orca_state.locusOfFocus.getApplication().name
-            if appName.startswith("soffice"):
-                adjustment += 1
+            offset = self.lineOffset
+            while offset < lineEndOffset:
+                attributes, startOffset, endOffset = \
+                            script.getTextAttributes(self.accessible,
+                                                     offset, True)
+                mask = settings.TEXT_ATTR_BRAILLE_NONE
+                offset = endOffset
+                for attrib in attributes:
+                    if enabledAttributes.get(attrib, '') != '':
+                        if enabledAttributes[attrib] != attributes[attrib]:
+                            mask = attrIndicator
+                            break
+                if mask != settings.TEXT_ATTR_BRAILLE_NONE:
+                    maskStart = max(startOffset - self.lineOffset, 0)
+                    maskEnd = min(endOffset - self.lineOffset, stringLength)
+                    for i in xrange(maskStart, maskEnd):
+                        regionMask[i] |= attrIndicator
 
-            i = self.lineOffset
-            endOffset = self.lineOffset + stringLength
-            while i < endOffset - 1:
-                for attribute in userAttrList:
-                    defaultValue = None
-                    if attribute in defaultAttrList:
-                        defaultValue = defaultAttrDict[attribute]
-                    [value, start, end, defined] = \
-                            text.getAttributeValue(i, attribute)
-
-                    notOfInterest = userAttrDict[attribute]
-                    if defined:
-                        weCare = (value != notOfInterest)
-                    elif defaultValue and len(notOfInterest):
-                        weCare = (defaultValue != notOfInterest)
-                    else:
-                        weCare = False
-
-                    if weCare and start >= 0:
-                        maskStart = start - self.lineOffset
-                        maskEnd = end - self.lineOffset - adjustment
-                        maskLength = maskEnd - maskStart
-                        attrMask[maskStart:maskEnd] = \
-                                                  [attrIndicator] * maskLength
-                if (end <= i):
-                    break
-
-                i = end
-
-        if indicateSel:
-            nSelections = text.getNSelections()
-            if nSelections:
-                for i in range(0, nSelections):
-                    [start, end] = text.getSelection(i)
-                    maskStart = max(self.lineOffset, start) - self.lineOffset
-                    maskEnd = min(end - self.lineOffset, stringLength)
-                    # Combine the selection indicator with the attribute
-                    # indicator.
-                    #
-                    for j in range(maskStart, maskEnd):
-                        if attrMask[j] != '\x00' \
-                           and attrMask[j] != selIndicator:
-                            attrMask[j] = '\xc0'
-                        else:
-                            attrMask[j] = selIndicator
-
-        mask = "".join(attrMask)
+        if selIndicator:
+            selections = script.getTextSelections(self.accessible)
+            for startOffset, endOffset in selections:
+                maskStart = max(startOffset - self.lineOffset, 0)
+                maskEnd = min(endOffset - self.lineOffset, stringLength)
+                for i in xrange(maskStart, maskEnd):
+                    regionMask[i] |= selIndicator
 
         if self.contracted:
             contractedMask = [0] * len(self.rawLine)
@@ -640,24 +599,23 @@ class Text(Region):
                 # Transform the offsets.
                 outPos = \
                        [offset - len(self.label) - 1 for offset in outPos]
-            for i, m in enumerate(mask):
+            for i, m in enumerate(regionMask):
                 try:
-                    contractedMask[outPos[i]] |= ord(m)
+                    contractedMask[outPos[i]] |= m
                 except IndexError:
                     continue
-            mask = ''.join(map(chr, contractedMask))
+            regionMask = contractedMask
 
         # Add empty mask characters for the EOL character as well as for
         # any label that might be present.
         #
-        for i in range (0, len(self.eol)):
-            mask += '\x00'
+        regionMask += [0]*len(self.eol)
+
 
         if self.label:
-            for i in range (0, len(self.label) + 1):
-                mask = '\x00' + mask
+            regionMask = [0]*len(self.label) + mask
 
-        return mask
+        return ''.join(map(chr, regionMask))
 
     def contractLine(self, line, cursorOffset=0, expandOnCursor=True):
         contracted, inPos, outPos, cursorPos = Region.contractLine(

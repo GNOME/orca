@@ -6739,6 +6739,74 @@ class Script(script.Script):
         """
         print "\a"
 
+    def attribsToDictionary(self, dict_string):
+        """Creates a Python dict from a typical attributes list returned from
+        different AT-SPI methods.
+
+        Arguments:
+        - dict_string: A list of colon seperated key/value pairs seperated by
+        semicolons.
+
+        Returns a Python dict of the given attributes.
+        """
+        try:
+            return dict(
+                map(lambda pair: pair.strip().split(':'),
+                    dict_string.strip(';').split(';')))
+        except ValueError:
+            return {}
+
+    def getTextSelections(self, acc):
+        """Get a list of text selections in the given accessible object,
+        equivelent to getNSelections()*texti.getSelection()
+
+        Arguments:
+        - acc: An accessible.
+        
+        Returns list of start and end offsets for multiple selections, or an 
+        empty list if nothing is selected or if the accessible does not support
+        the text interface.
+        """
+        rv = []
+        try:
+            texti = acc.queryText()
+        except:
+            return rv
+       
+        for i in xrange(texti.getNSelections()):
+            rv.append(texti.getSelection(i))
+            
+        return rv
+
+    def getTextAttributes(self, acc, offset, get_defaults=False):
+        """Get the text attributes run for a given offset in a given accessible
+
+        Arguments:
+        - acc: An accessible.
+        - offset: Offset in the accessible's text for which to retrieve the
+        attributes.
+        - get_defaults: Get the default attributes as well as the unique ones. 
+        Default is True
+        
+        Returns a dictionary of attributes, a start offset where the attributes
+        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
+        supprt the text attribute.
+        """
+        rv = {}
+        try:
+            texti = acc.queryText()
+        except:
+            return rv, 0, 0
+
+        if get_defaults:
+            rv.update(self.attribsToDictionary(texti.getDefaultAttributes()))
+
+        attrib_str, start, end = texti.getAttributes(offset)
+
+        rv.update(self.attribsToDictionary(attrib_str))
+
+        return rv, start, end
+
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list
 # of states that we care about.
