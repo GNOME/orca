@@ -1,6 +1,12 @@
 2008-03-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
+          Fix for bug #520760 - (ff3) read document ignoring remainder of
+          object when first subelement is non-text.
+
+2008-03-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
           Fix for bug #519478 - (ff3) missing text with line down navigation
           (www.fixedearth.com)
 

@@ -3406,30 +3406,34 @@ class Script(default.Script):
                       (settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE)
 
         [obj, characterOffset] = self.getCaretContext()
-        text = self.queryNonEmptyText(obj)
-        if text:
+        if sayAllBySentence:
             # Attempt to locate the start of the current sentence by
             # searching to the left for a sentence terminator.  If we don't
             # find one, or if the "say all by" mode is not sentence, we'll
             # just start the sayAll from at the beginning of this line/object.
             #
-            [line, startOffset, endOffset] = \
-                text.getTextAtOffset(
-                                 characterOffset,
-                                 pyatspi.TEXT_BOUNDARY_LINE_START)
-            beginAt = 0
-            if line and sayAllBySentence:
-                terminators = ['. ', '? ', '! ']
-                for terminator in terminators:
-                    try:
-                        index = line.rindex(terminator,
-                                            0,
-                                            characterOffset - startOffset)
-                        if index > beginAt:
-                            beginAt = index
-                    except:
-                        pass
-                characterOffset = startOffset + beginAt
+            text = self.queryNonEmptyText(obj)
+            if text:
+                [line, startOffset, endOffset] = \
+                    text.getTextAtOffset(characterOffset,
+                                         pyatspi.TEXT_BOUNDARY_LINE_START)
+
+                beginAt = 0
+                if line.strip():
+                    terminators = ['. ', '? ', '! ']
+                    for terminator in terminators:
+                        try:
+                            index = line.rindex(terminator,
+                                                0,
+                                                characterOffset - startOffset)
+                            if index > beginAt:
+                                beginAt = index
+                        except:
+                            pass
+                    characterOffset = startOffset + beginAt
+                else:
+                    [obj, characterOffset] = \
+                        self.findNextCaretInOrder(obj, characterOffset)
 
         done = False
         while not done:
@@ -3455,41 +3459,17 @@ class Script(default.Script):
                                                   startOffset, endOffset),
                        voice]
 
-            moreLines = False
-            if sayAllBySentence:
-                # getObjectContentsAtOffset() gave us all of the descendants
-                # of the last object, as long as the last object was not a
-                # table.  We need to be sure that we don't "find" one of those
-                # children with findNextObject().
-                #
-                if obj.childCount and obj.getRole() != pyatspi.ROLE_TABLE:
-                    obj = obj[obj.childCount - 1]
-                while obj and not moreLines:
-                    obj = self.findNextObject(obj)
-                    if obj:
-                        if obj.getRole() in [pyatspi.ROLE_LIST,
-                                             pyatspi.ROLE_LIST_ITEM]:
-                            # Adjust the offset so that the item number is
-                            # spoken.
-                            #
-                            offset = -1
-                        else:
-                            offset = 0
-                        [obj, characterOffset] = \
-                                  self.findFirstCaretContext(obj, offset)
-                        moreLines = True
-            else:
-                [nextObj, nextCharOffset] = self.findNextLine(obj, endOffset-1)
-                objExtents = self.getExtents(
-                                  obj, characterOffset, characterOffset + 1)
-                nextObjExtents = self.getExtents(
-                                  nextObj, nextCharOffset, nextCharOffset + 1)
-                if not self.onSameLine(objExtents, nextObjExtents):
-                    [obj, characterOffset] = nextObj, nextCharOffset
-                    moreLines = True
 
-            if not moreLines:
-                done = True
+            obj = contents[-1][0]
+            characterOffset = max(0, contents[-1][2] - 1)
+
+            if sayAllBySentence:
+                [obj, characterOffset] = \
+                    self.findNextCaretInOrder(obj, characterOffset)
+            else:
+                [obj, characterOffset] = \
+                    self.findNextLine(obj, characterOffset)
+            done = (obj == None)
 
     def __sayAllProgressCallback(self, context, callbackType):
         if callbackType == speechserver.SayAllContext.PROGRESS:
@@ -7859,13 +7839,13 @@ class Script(default.Script):
                                         pyatspi.ROLE_TABLE_CELL] \
                   and not isAria and self.isUselessObject(nextObj)):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                done = True
                 for item in toAdd:
                     itemExtents = self.getExtents(item[0], item[1], item[2])
-                    if not self.onSameLine(extents, itemExtents):
-                        toAdd.pop(toAdd.index(item))
-                if len(toAdd):
-                    objects.extend(toAdd)
-                else:
+                    if self.onSameLine(extents, itemExtents):
+                       objects.append(item)
+                       done = False
+                if done:
                     break
             else:
                 break
@@ -8018,11 +7998,15 @@ class Script(default.Script):
 
         #if not obj.getState().contains(pyatspi.STATE_SHOWING):
         #    return [[None, -1, -1]]
-
-        if not self.queryNonEmptyText(obj):
-            return [[obj, -1, -1]]
-
         contents = []
+        if obj.getRole() == pyatspi.ROLE_TABLE:
+            for child in obj:
+                contents.extend(self.getObjectContentsAtOffset(child, 0))
+            return contents
+
+        elif not self.queryNonEmptyText(obj):
+            return [[obj, -1, -1]]
+        
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
             if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
