@@ -7735,6 +7735,15 @@ class Script(default.Script):
                     else:
                         [line, start, end] = \
                                text.getTextAfterOffset(start + 1, boundary)
+            elif offset > end and start < end:
+                # Line break characters might be messing us up. If the
+                # difference is 1, then we're moving down and want the
+                # text that comes after this offset.  Otherwise, we're
+                # moving up and want the text that comes after the end.
+                # 
+                if offset - end > 1:
+                    offset = end + 1
+                [line, start, end] = text.getTextAfterOffset(end + 1, boundary)
 
         if text:
             offset = start
