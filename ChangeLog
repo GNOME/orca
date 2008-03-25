@@ -1,3 +1,9 @@
+2008-03-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          Fix for bug #523712 - Orca application specific preferences window
+          doesn't always get focus when user types Insert-Control-Space.
+
 2008-03-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

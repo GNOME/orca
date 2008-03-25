@@ -1859,24 +1859,22 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         # We want the Orca preferences window to have focus when it is
         # shown. First try using the present() call. If this isn't present
-        # in the version of pygtk that the user is using, fall back to
-        # trying to set the current time on the Preferences window using
-        # set_user_time. If that isn't found, then catch the exception and
-        # fail gracefully.
+        # in the version of pygtk that the user is using, just catch the
+        # exception. Then try to set the current time on the Preferences 
+        # window using set_user_time. If that isn't found, then catch the 
+        # exception and fail gracefully.
         #
         orcaSetupWindow.realize()
         try:
             if settings.showMainWindow:
                 orcaSetupWindow.present()
-            else:
-                orcaSetupWindow.window.set_user_time(\
-                    orca_state.lastInputEventTimestamp)
         except:
-            try:
-                orcaSetupWindow.window.set_user_time(\
-                    orca_state.lastInputEventTimestamp)
-            except AttributeError:
-                debug.printException(debug.LEVEL_FINEST)
+            pass
+        try:
+            orcaSetupWindow.window.set_user_time(\
+                orca_state.lastInputEventTimestamp)
+        except AttributeError:
+            debug.printException(debug.LEVEL_FINEST)
 
         # We always want to re-order the text attributes page so that enabled
         # items are consistently at the top.
