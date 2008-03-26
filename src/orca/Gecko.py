@@ -5352,7 +5352,15 @@ class Script(default.Script):
         except NotImplementedError:
             offset = -1
         else:
-            offset = hyperlink.startIndex
+            # We need to make sure that this is an embedded object in
+            # some accessible text (as opposed to an imagemap link).
+            #
+            try:
+                obj.parent.queryText()
+            except NotImplementedError:
+                offset = -1
+            else:
+                offset = hyperlink.startIndex
 
         return offset
 
