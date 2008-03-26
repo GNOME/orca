@@ -49,6 +49,10 @@
           Fix for bug #523441 - oowriter/bug_361624.py regression tests #1
           through #4 produce the wrong results.
 
+        * test/keystrokes/oowriter/bug_450210.py:
+          Fix for bug #523457 – oowriter/bug_450210.py regression tests #1
+          produces the wrong results.
+
 2008-03-25  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/braille.py: 

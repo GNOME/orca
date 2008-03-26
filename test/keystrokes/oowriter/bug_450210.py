@@ -35,12 +35,12 @@ sequence.append(utils.AssertPresentationAction(
     "Press 'o' to open the Open File Chooser",
     ["BRAILLE LINE:  'soffice Application Open Dialog'",
      "     VISIBLE:  'soffice Application Open Dialog', cursor=21",
-     "BRAILLE LINE:  'soffice Application Open Dialog Location:  $l'",
-     "     VISIBLE:  'Location:  $l', cursor=11",
+     "BRAILLE LINE:  'soffice Application Open Dialog File name: File name: List'",
+     "     VISIBLE:  'File name: File name: List', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Open Version:'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Location: text '"]))
+     "SPEECH OUTPUT: 'Open'",
+     "SPEECH OUTPUT: 'File name: combo box'",
+     "SPEECH OUTPUT: 'File name: list'"]))
 
 ######################################################################
 # 4. Press Escape to dismiss the Open File Chooser.
