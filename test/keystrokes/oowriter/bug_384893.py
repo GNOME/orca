@@ -11,23 +11,17 @@ import utils
 sequence = MacroSequence()
 
 ######################################################################
-# 1. Start oowriter.
+# 1. Start oowriter. There is a bug_384893.params file that will
+#    automatically load empty_document.odt. This uses the FreeSerif
+#    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("empty_document - OpenOffice.org Writer",None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 2. Enter Alt-f, right arrow and Return.  (File->New->Text Document).
+# 2. Type Control-Home to move the text caret to the start of the document.
 #
-sequence.append(KeyComboAction("<Alt>f"))
-sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
-
-sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer",None))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(KeyComboAction("<Control>Home"))
 
 ######################################################################
 # 3. Enter the following (without the quotation marks) to create a
@@ -53,7 +47,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'",
+    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'",
      "     VISIBLE:  'This is a test $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test'"]))
 
@@ -67,7 +61,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the underlined word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'family-name FreeSerif'",
      "SPEECH OUTPUT: 'underline single'"]))
 
 ######################################################################
@@ -88,7 +82,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the bold word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'family-name FreeSerif'",
      "SPEECH OUTPUT: 'bold'"]))
 
 ######################################################################
@@ -111,8 +105,6 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 10. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.AssertionSummaryAction())
