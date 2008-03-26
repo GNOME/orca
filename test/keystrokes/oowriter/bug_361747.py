@@ -10,52 +10,46 @@ sequence = MacroSequence()
 import utils
 
 ######################################################################
-# 1. Start oowriter.
+# 1. Start oowriter. There is a bug_361747.params file that will
+#    automatically load empty_document.odt. This uses the FreeSerif 
+#    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("empty_document - OpenOffice.org Writer",None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 2. Enter Alt-f, right arrow and Return.  (File->New->Text Document).
+# 2. Type Control-Home to move the text caret to the start of the document.
 #
-sequence.append(KeyComboAction("<Alt>f"))
-sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
-
-sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
-
-sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer",None))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(KeyComboAction("<Control>Home"))
 
 ######################################################################
 # 3. Enter the following (without the quotation marks) to create a line 
 #    with three words on it; one bold, one italic and one in a regular font:
-#  Control-b "bold" Control-b Space Control-i "italic" Control-i Space "normal"
+#    Control-b "Bold" Control-b Space Control-i "Italic" Control-i " Normal"
 #
 sequence.append(KeyComboAction("<Control>b"))
-sequence.append(TypeAction("bold"))
+sequence.append(TypeAction("Bold"))
 sequence.append(KeyComboAction("<Control>b"))
 sequence.append(TypeAction(" "))
 sequence.append(KeyComboAction("<Control>i"))
-sequence.append(TypeAction("italic"))
+sequence.append(TypeAction("Italic"))
 sequence.append(KeyComboAction("<Control>i"))
-sequence.append(TypeAction(" normal"))
+sequence.append(TypeAction(" Normal"))
 
 ######################################################################
-# 4. Enter Control-Home to position the text caret to the left of
+# 5. Enter Control-Home to position the text caret to the left of
 #    the first character in the line.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'",
-     "     VISIBLE:  'bold italic normal $l', cursor=1",
-     "SPEECH OUTPUT: 'bold italic normal'"]))
+    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+     "     VISIBLE:  'Bold Italic Normal $l', cursor=1",
+     "SPEECH OUTPUT: 'Bold Italic Normal'"]))
 
 ######################################################################
-# 5. Type Insert-f to get the text information for the bold word.
+# 6. Type Insert-f to get the text information for the bold word.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
@@ -64,11 +58,11 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for bold word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'family-name FreeSerif'",
      "SPEECH OUTPUT: 'bold'"]))
 
 ######################################################################
-# 6. Type Control-right and Insert-f to get the text information
+# 7. Type Control-right and Insert-f to get the text information
 #    for the italic word.
 #
 sequence.append(utils.StartRecordingAction())
@@ -78,15 +72,15 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for italic word",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'",
-     "     VISIBLE:  'bold italic normal $l', cursor=6",
-     "SPEECH OUTPUT: 'italic '",
+    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+     "     VISIBLE:  'Bold Italic Normal $l', cursor=6",
+     "SPEECH OUTPUT: 'Italic '",
      "SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name Times'",
+     "SPEECH OUTPUT: 'family-name FreeSerif'",
      "SPEECH OUTPUT: 'style italic'"]))
 
 ######################################################################
-# 7. Type Control-right and Insert-f to get the text information
+# 8. Type Control-right and Insert-f to get the text information
 #    for the regular word.
 #
 sequence.append(utils.StartRecordingAction())
@@ -96,14 +90,14 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for regular word",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view bold italic normal $l'",
-     "     VISIBLE:  'bold italic normal $l', cursor=13",
-     "SPEECH OUTPUT: 'normal'",
+    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+     "     VISIBLE:  'Bold Italic Normal $l', cursor=13",
+     "SPEECH OUTPUT: 'Normal'",
      "SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name Times'"]))
+     "SPEECH OUTPUT: 'family-name FreeSerif'"]))
 
 ######################################################################
-# 8. Enter Alt-f, Alt-c to close the Writer application.
+# 9. Enter Alt-f, Alt-c to close the Writer application.
 #
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
@@ -115,7 +109,7 @@ sequence.append(KeyComboAction("<Alt>c"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ######################################################################
-# 9. Enter Tab and Return to discard the current changes.
+# 10. Enter Tab and Return to discard the current changes.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Discard", acc_role=pyatspi.ROLE_PUSH_BUTTON))
@@ -123,10 +117,8 @@ sequence.append(WaitForFocus("Discard", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Return"))
 
 ######################################################################
-# 10. Wait for things to get back to normal.
+# 11. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.AssertionSummaryAction())
