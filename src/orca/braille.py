@@ -554,7 +554,7 @@ class Text(Region):
 
         # Start with an empty mask.
         #
-        stringLength = len(self.string) - len(self.eol)
+        stringLength = len(self.rawLine) - len(self.label)
         lineEndOffset = self.lineOffset + stringLength
         regionMask = [settings.TEXT_ATTR_BRAILLE_NONE]*stringLength
 
@@ -613,7 +613,11 @@ class Text(Region):
 
 
         if self.label:
+<<<<<<< HEAD:src/orca/braille.py
             regionMask = [0]*len(self.label) + mask
+=======
+            regionMask = [0]*len(self.label) + regionMask
+>>>>>>> brl_attributes_cleanup:src/orca/braille.py
 
         return ''.join(map(chr, regionMask))
 

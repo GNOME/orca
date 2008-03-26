@@ -1,6 +1,11 @@
 2008-03-25  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/braille.py: 
+	  Fixed a bad regression from the previous patch 
+	  (bug #523268, comment #7).
+	
+2008-03-25  Eitan Isaacson  <eitan@ascender.com>
+
 	* src/orca/default.py: 
 	* src/orca/scripts/StarOffice.py: 
 	* src/orca/settings.py: 
