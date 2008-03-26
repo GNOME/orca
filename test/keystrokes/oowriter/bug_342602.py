@@ -53,19 +53,19 @@ sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer", None)
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
-# 5. Enter a and Tab (Inserts "a" into cell A1 and moves to cell B1).
+# 5. Enter A and Tab (Inserts "A" into cell A1 and moves to cell B1).
 #
-sequence.append(TypeAction("a"))
+sequence.append(TypeAction("A"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move to cell B1",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'",
-     "     VISIBLE:  'a Paragraph', cursor=1",
+    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
+     "     VISIBLE:  'A Paragraph', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'A'",
      "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell B1'",
      "SPEECH OUTPUT: 'blank'",
@@ -82,12 +82,12 @@ sequence.append(utils.AssertPresentationAction(
     "Move back to cell A1",
     ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table a Paragraph'",
-     "     VISIBLE:  'a Paragraph', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
+     "     VISIBLE:  'A Paragraph', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell A1'",
-     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'A'",
      "SPEECH OUTPUT: ' not selected'"]))
 
 ######################################################################
