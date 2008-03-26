@@ -1,5 +1,14 @@
 2008-03-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          src/orca/Gecko.py:
+          From Tomas Cerha <cerha@brailcom.org>
+          From Peter Vagner <peter.v@datagate.sk>
+          Fix for bug #520494 – Keyboard review punctuation in Firefox.
+          Use `speech.speakCharacter()' instead of `speech.speak()'.
+
+2008-03-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/app_prefs.py:
           src/orca/orca_prefs.py:
           Fix for bug #523642 - orca_prefs.py:_writePronunciation should 

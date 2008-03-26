@@ -2316,7 +2316,7 @@ class Script(script.Script):
                     #
                     speech.speak(_("blank"), voice, False)
         else:
-            speech.speak(chnames.getCharacterName(character), voice, False)
+            speech.speakCharacter(character, voice)
 
         self.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -3297,11 +3297,17 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        # We won't interrupt what else might be being spoken
-        # right now because it is typically something else
-        # related to this event.
+        # Make sure single characters are sent to speakCharacter()
+        # rather than to speak().
         #
-        speech.speak(character, voice, False)
+        if len(character) == 1:
+            speech.speakCharacter(character, voice)
+        else:
+            # We won't interrupt what else might be being spoken
+            # right now because it is typically something else
+            # related to this event.
+            #
+            speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -4448,10 +4454,10 @@ class Script(script.Script):
 
         for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
             if character.isupper():
-                speech.speak(character.encode("UTF-8"),
+                speech.speakCharacter(character.encode("UTF-8"),
                              self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(character.encode("UTF-8"))
+                speech.speakCharacter(character.encode("UTF-8"))
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            speechType=1):
@@ -6276,7 +6282,10 @@ class Script(script.Script):
             else:
                 voice =  settings.voices[settings.DEFAULT_VOICE]
             phoneticString = phonnames.getPhoneticName(character)
-            speech.speak(phoneticString, voice)
+            if len(phoneticString) == 1:
+                speech.speakCharacter(phoneticString, voice)
+            else:
+                speech.speak(phoneticString, voice)
 
     def printAncestry(self, child):
         """Prints a hierarchical view of a child's ancestry."""
