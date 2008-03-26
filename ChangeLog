@@ -36,6 +36,11 @@
           Fix for bug #523450 - oowriter/bug_384893.py regression tests #2
           and #3 produce the wrong results.
 
+        * test/keystrokes/oowriter/bug_469367.py:
+          test/keystrokes/oowriter/bug_469367.params: (new)
+          Fix for bug #523458 - oowriter/bug_469367.py regression tests #1
+          and #2 produce the wrong results.
+
 2008-03-25  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/braille.py: 
