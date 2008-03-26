@@ -586,8 +586,8 @@ class OrcaPrefs:
         - value: the replacement string to use.
         """
 
-        prefs.writelines("orca.pronunciation_dict.setPronunciation(\"" + \
-                 word + "\", \"" + value + "\")\n")
+        prefs.writelines("orca.pronunciation_dict.setPronunciation(" + \
+                         repr(word) + ", " + repr(value) + ")\n")
 
     def _iteratePronunciations(self, prefs, treeModel):
         """Iterate over each of the entries in the tree model and write out

@@ -125,8 +125,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         - value: the replace string to use.
         """
 
-        prefs.writelines("    orca.pronunciation_dict.setPronunciation(\"" + \
-                    word + "\", \"" + value + "\", pronunciations)\n")
+        prefs.writelines("    orca.pronunciation_dict.setPronunciation(" + \
+                    repr(word) + ", " + repr(value) + ", pronunciations)\n")
 
     def _writePronunciationMap(self, prefs, treeModel):
         """Write to configuration file 'prefs' the new application specific
