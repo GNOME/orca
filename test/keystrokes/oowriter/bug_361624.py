@@ -29,9 +29,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 3000))
 sequence.append(utils.AssertPresentationAction(
     "Read first line in flat review mode",
-    ["BRAILLE LINE:  'panel EFFector Vol. 19, No. 38  October   $l'",
+    ["BRAILLE LINE:  'panel EFFector Vol. 19, No. 38  October  Intercept Personal  $l'",
      "     VISIBLE:  'EFFector Vol. 19, No. 38  Octobe', cursor=1",
-     "SPEECH OUTPUT: 'panel EFFector Vol. 19, No. 38  October  ",
+     "SPEECH OUTPUT: 'panel EFFector Vol. 19, No. 38  October  Intercept Personal ",
      "'"]))
 
 ######################################################################
@@ -41,10 +41,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
 sequence.append(utils.AssertPresentationAction(
     "Read line two in flat review mode",
-    ["BRAILLE LINE:  '10, 2006  editor@eff.org * EFF Sues for Information on  $l'",
-     "     VISIBLE:  '10, 2006  editor@eff.org * EFF S', cursor=1",
+    ["BRAILLE LINE:  '10, 2006  editor@eff.org Communications $l'",
+     "     VISIBLE:  '10, 2006  editor@eff.org Communi', cursor=1",
      "SPEECH OUTPUT: '10, 2006  editor@eff.org",
-     " * EFF Sues for Information on '"]))
+     " Communications",
+     "'"]))
 
 ######################################################################
 # 5. Type KP-9 to read the next line in flat review mode.
@@ -53,11 +54,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
 sequence.append(utils.AssertPresentationAction(
     "Read line three in flat review mode",
-    ["BRAILLE LINE:  ' Electronic Surveillance  $l'",
-     "     VISIBLE:  ' Electronic Surveillance  $l', cursor=1",
-     "SPEECH OUTPUT: '",
-     " Electronic Surveillance ",
-     "'"]))
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: 'white space'"]))
 
 ######################################################################
 # 6. Type KP-9 to read the next line in flat review mode.
@@ -66,10 +65,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9", 3000))
 sequence.append(utils.AssertPresentationAction(
     "Read line four in flat review mode",
-    ["BRAILLE LINE:  'A Publication of the Electronic  Systems $l'",
+    ["BRAILLE LINE:  'A Publication of the Electronic  Washington, D.C. - The FLAG  $l'",
      "     VISIBLE:  'A Publication of the Electronic ', cursor=1",
-     "SPEECH OUTPUT: 'A Publication of the Electronic  Systems",
-     "'"]))
+     "SPEECH OUTPUT: 'A Publication of the Electronic  Washington, D.C. - The FLAG '"]))
 
 ######################################################################
 # 7. Enter Alt-f, Alt-c to close the Writer application.
