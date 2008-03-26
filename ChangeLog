@@ -19,6 +19,8 @@
           and #2 produce the wrong results.
 
         * test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_361747.params: (new)
+          test/keystrokes/oowriter/empty_document.odt: (new)
           Fix for bug #523443 - oowriter/bug_361747.py regression tests #1
           through #4 produce the wrong results.
 
