@@ -47,8 +47,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
-    ["KNOWN ISSUE - They broke something in Firefox.  Need to investigate",
-     "BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
+    ["BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
      "     VISIBLE:  'Test: z Link y Link x Link w Lin', cursor=1",
      "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'"]))
 
@@ -56,8 +55,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Down",
-    ["KNOWN ISSUE - They broke something in Firefox.  Need to investigate",
-     "BRAILLE LINE:  'Here is some text.'",
+    ["BRAILLE LINE:  'Here is some text.'",
      "     VISIBLE:  'Here is some text.', cursor=1",
      "SPEECH OUTPUT: 'Here is some text.'"]))
 
@@ -68,8 +66,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Up",
-    ["KNOWN ISSUE - They broke something in Firefox.  Need to investigate",
-     "BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
+    ["BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
      "     VISIBLE:  'Test: z Link y Link x Link w Lin', cursor=1",
      "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'"]))
 
@@ -77,8 +74,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Up",
-    ["KNOWN ISSUE - They broke something in Firefox.  Need to investigate",
-     "BRAILLE LINE:  'This looks like A to Z, but it's really Z to A.'",
+    ["BRAILLE LINE:  'This looks like A to Z, but it's really Z to A.'",
      "     VISIBLE:  'This looks like A to Z, but it's', cursor=1",
      "SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'"]))
 
