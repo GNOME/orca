@@ -610,14 +610,8 @@ class Text(Region):
         # any label that might be present.
         #
         regionMask += [0]*len(self.eol)
-
-
         if self.label:
-<<<<<<< HEAD:src/orca/braille.py
-            regionMask = [0]*len(self.label) + mask
-=======
             regionMask = [0]*len(self.label) + regionMask
->>>>>>> brl_attributes_cleanup:src/orca/braille.py
 
         return ''.join(map(chr, regionMask))
 
