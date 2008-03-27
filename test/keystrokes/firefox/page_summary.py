@@ -47,7 +47,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(30000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I for page summary info",
-    [     "BRAILLE LINE:  'This is a Heading 6. h6'",
+    ["BUG? - Seems that we're no longer indicating the percent",
+     "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",

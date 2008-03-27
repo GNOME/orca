@@ -525,7 +525,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '    < > CheckBox  and remember these as my default search options'",
+    ["BUG? - Extra garbage",
+     "BRAILLE LINE:  '    < > CheckBox  and remember these as my default search options'",
      "     VISIBLE:  '  < > CheckBox  and remember th', cursor=1",
      "SPEECH OUTPUT: 'and remember these as my default search options check box not checked'"]))
 

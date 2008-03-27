@@ -196,10 +196,11 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "move to entry", 
-    ["[[Bug: labeling problem]]",
-    "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
+    ["BUG? - We're not guessing the label",
+     "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
      "     VISIBLE:  '10.0% $l  ', cursor=6",
      "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l  '",
      "     VISIBLE:  '10.0% $l  ', cursor=6",

@@ -1,3 +1,20 @@
+2008-03-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/page_summary.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          Fix for bug #523480 - Unwanted roles appearing in the braille
+          context for dojo in FF3.  In addition, as long as I was updating
+          tests, I marked some known bugs in the regression tests to help
+          spot new regressions.
+
 2008-03-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
