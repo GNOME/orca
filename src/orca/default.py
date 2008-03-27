@@ -245,7 +245,13 @@ class Script(script.Script):
         self.inputEventHandlers["showZonesHandler"] = \
             input_event.InputEventHandler(
                 Script.showZones,
-                "Paints and prints the visible zones in the active window.")
+                # Translators: this is a debug message that Orca users
+                # will not normally see. It describes a debug routine that
+                # paints rectangles around the interesting (e.g., text)
+                # zones in the active window for the application that
+                # currently has focus.
+                #
+                _("Paints and prints the visible zones in the active window."))
 
         self.inputEventHandlers["toggleFlatReviewModeHandler"] = \
             input_event.InputEventHandler(
@@ -598,7 +604,13 @@ class Script(script.Script):
         self.inputEventHandlers["reportScriptInfoHandler"] = \
             input_event.InputEventHandler(
                 Script.reportScriptInfo,
-                "Reports information on current script.")
+                # Translators: this is a debug message that Orca users
+                # will not normally see. It describes a debug routine
+                # that outputs useful information on the current script
+                #  via speech and braille. This information will be 
+                # helpful to script writers.
+                #
+                _("Reports information on current script."))
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
@@ -755,35 +767,69 @@ class Script(script.Script):
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
                 Script.printAppsHandler,
-                "Prints a debug listing of all known applications to the " \
-                "console where Orca is running.")
+                # Translators: this is a debug message that Orca users
+                # will not normally see. It describes a debug routine
+                # that prints a list of all known applications currently
+                # running on the desktop, to stdout.
+                #
+                _("Prints a debug listing of all known applications to the " \
+                "console where Orca is running."))
 
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
                 orca.cycleDebugLevel,
-                "Cycles the debug level at run time.")
+                # Translators: this is a debug message that Orca users 
+                # will not normally see. It describes a debug routine
+                # that allows the user to adjust the level of debug
+                # information that Orca generates at run time.
+                #
+                _("Cycles the debug level at run time."))
 
         self.inputEventHandlers["printActiveAppHandler"] = \
             input_event.InputEventHandler(
                 Script.printActiveAppHandler,
-                "Prints debug information about the currently active " \
-                "application to the console where Orca is running.")
+                # Translators: this is a debug message that Orca users
+                # will not normally see. It describes a debug routine
+                # that prints useful debugging information to the console,
+                # for the application that is currently running (has focus).
+                #
+                _("Prints debug information about the currently active " \
+                "application to the console where Orca is running."))
 
         self.inputEventHandlers["printAncestryHandler"] = \
             input_event.InputEventHandler(
                 Script.printAncestryHandler,
-                "Prints debug information about the ancestry of the object " \
-                "with focus.")
+                # Translators: this is a debug message that Orca users 
+                # will not normally see. It describes a debug routine
+                # that will take the component in the currently running
+                # application that has focus, and print debug information
+                # to the console giving its component ancestry (i.e. all
+                # the components that are its descendants in the component
+                # tree).
+                #
+                _("Prints debug information about the ancestry of the object " \
+                "with focus."))
 
         self.inputEventHandlers["printHierarchyHandler"] = \
             input_event.InputEventHandler(
                 Script.printHierarchyHandler,
-                "Prints debug information about the application with focus.")
+                # Translators: this is a debug message that Orca users 
+                # will not normally see. It describes a debug routine
+                # that will take the currently running application, and
+                # print debug information to the console giving its 
+                # component hierarchy (i.e. all the components and all
+                # their descendants in the component tree).
+                #
+                _("Prints debug information about the application with focus."))
 
         self.inputEventHandlers["printMemoryUsageHandler"] = \
             input_event.InputEventHandler(
                 Script.printMemoryUsageHandler,
-                "Prints memory usage information.")
+                # Translators: this is a debug message that Orca users 
+                # will not normally see. It describes a debug routine
+                # that will print Orca memory usage information.
+                #
+                _("Prints memory usage information."))
                         
         self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
             input_event.InputEventHandler(
