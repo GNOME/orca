@@ -1,3 +1,15 @@
+2008-03-27  Willie Walker <william.walker@sun.com>
+
+	* test/keystrokes/gtk-demo/role_icon.py:
+	  Fix for bug #519543 - gtk-demo/role_icon.py regression test #7
+	  produces different results on Solaris and Ubuntu. Used the
+	  new regular expression syntax to manage the different numbers
+	  of files.  Also looked at only the first two icons in the
+	  window ('bin' and 'boot') since those are common to both
+	  Ubuntu and Solaris.  Not the greatest, but this one has me
+	  beat due to the sheer flakiness of the gtk-demo test in
+	  question.
+
 2008-03-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

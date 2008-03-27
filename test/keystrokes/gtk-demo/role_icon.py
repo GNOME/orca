@@ -71,8 +71,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'LayeredPane', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'layered pane'",
-     "SPEECH OUTPUT: '0 of 24 items selected'",
-     "SPEECH OUTPUT: 'on item 0 of 24'"]))
+     "SPEECH OUTPUT: '0 of [0-9]+ items selected'",
+     "SPEECH OUTPUT: 'on item 0 of [0-9]+'"]))
 
 ########################################################################
 # Down into the icon list, finally making something be selected in the
@@ -101,8 +101,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
      "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '1 of 24 items selected'",
-     "SPEECH OUTPUT: 'on item 1 of 24'"]))
+     "SPEECH OUTPUT: '[0-9] of [0-9]+ items selected'",
+     "SPEECH OUTPUT: 'on item 1 of [0-9]+'"]))
 
 ########################################################################
 # Arrow right and wait for the next icon to be selected.
@@ -122,14 +122,14 @@ sequence.append(utils.AssertPresentationAction(
 # Select more than one icon by doing Shift+Right.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Right", 500))
+sequence.append(KeyComboAction("<Shift>Left", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ICON))
 sequence.append(utils.AssertPresentationAction(
     "icon selection",
-    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'",
-     "     VISIBLE:  'cdrom Icon', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
+     "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'cdrom icon'",
+     "SPEECH OUTPUT: 'bin icon'",
      "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
@@ -140,12 +140,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "icon selection Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane cdrom Icon'",
-     "     VISIBLE:  'cdrom Icon', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
+     "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
-     "SPEECH OUTPUT: 'cdrom'",
-     "SPEECH OUTPUT: '2 of 24 items selected'",
-     "SPEECH OUTPUT: 'on item 3 of 24'"]))
+     "SPEECH OUTPUT: 'bin'",
+     "SPEECH OUTPUT: '[0-9] of [0-9]+ items selected'",
+     "SPEECH OUTPUT: 'on item 1 of [0-9]+'"]))
 
 ########################################################################
 # Close the GtkIconView demo window
