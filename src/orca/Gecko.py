@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -8212,7 +8212,7 @@ class Script(default.Script):
         character = self.getCharacterAtOffset(obj, characterOffset)
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
-                speech.speakCharacter(character, self.getACSS(obj, character))
+                speech.speak(character, self.getACSS(obj, character), False)
             elif obj.getRole() != pyatspi.ROLE_ENTRY:
                 # We won't have a character if we move to the end of an
                 # entry (in which case we're not on a character and therefore
