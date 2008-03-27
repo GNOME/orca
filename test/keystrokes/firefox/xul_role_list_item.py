@@ -38,7 +38,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow in list",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
+    ["BUG? - Extra stuff is being spoken",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
      "     VISIBLE:  'Content ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Content list item'"]))

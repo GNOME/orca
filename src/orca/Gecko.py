@@ -190,6 +190,15 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         self.brailleGenerators[pyatspi.ROLE_LINK]         = \
              self._getBrailleRegionsForLink
 
+    def _getTextForRole(self, obj, role=None):
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+           and not obj.getRole() in [pyatspi.ROLE_SECTION,
+                                     pyatspi.ROLE_FORM,
+                                     pyatspi.ROLE_UNKNOWN]:
+            return rolenames.getBrailleForRoleName(obj, role)
+        else:
+            return None
+
     def _getBrailleRegionsForAutocomplete(self, obj):
         """Gets the braille for an autocomplete box.  We let the
         handlers for the children do the rest.
@@ -4610,6 +4619,11 @@ class Script(default.Script):
                 isFocusedObj = self.isSameObject(obj, focusedObj)
 
             text = self.queryNonEmptyText(obj)
+            if text and text.getText(startOffset, endOffset) == " " \
+               and not obj.getRole() in [pyatspi.ROLE_PAGE_TAB_LIST,
+                                         pyatspi.ROLE_ENTRY]:
+                continue
+
             if not self.isNavigableAria(obj):
                 # Treat unnavigable ARIA widgets like normal default.py widgets
                 #
@@ -4630,8 +4644,6 @@ class Script(default.Script):
                 if string.endswith(" "):
                     endOffset -= 1
                     string = text.getText(startOffset, endOffset)
-                if not len(string):
-                    continue
 
                 regions = [braille.Region(
                     string,

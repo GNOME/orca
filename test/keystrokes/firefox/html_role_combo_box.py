@@ -48,7 +48,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
-    ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
+    ["BUG? - For some reason we're also speaking the link that precedes the combo box",
+     "BRAILLE LINE:  'Severity Link : Severity normal Combo'",
      "     VISIBLE:  'normal Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity normal combo box'"]))

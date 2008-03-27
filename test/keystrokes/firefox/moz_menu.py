@@ -65,15 +65,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View'"]))
     
-# We get flagged because of the unicode.  Everything else seems good.
-# [[[Bug?: This is probably not a bug.  Chalk the whitespace up to a hack web design.]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
-    ["[[[Bug: not a bug]]]",
-     "BRAILLE LINE:  'Themes          > Themes          >'",
-     "     VISIBLE:  'Themes          > Themes �', cursor=0",
+    ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=1",
      "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -83,10 +81,11 @@ sequence.append(utils.AssertPresentationAction(
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
     ["BRAILLE LINE:  'Basic Grey'",
-     "     VISIBLE:  'Basic Grey', cursor=0",
+     "     VISIBLE:  'Basic Grey', cursor=1",
      "BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -168,6 +167,7 @@ sequence.append(utils.AssertPresentationAction(
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
     ["BRAILLE LINE:  'one'",

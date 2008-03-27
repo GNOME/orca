@@ -50,7 +50,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
+    ["BUG? - We are no longer speaking the Level",
+     "BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'All Bookmarks list item expanded'",
@@ -90,7 +91,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 'item 2 of 4'",
      "SPEECH OUTPUT: 'collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
@@ -117,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
+     "SPEECH OUTPUT: 'item 2 of 4'",
      "SPEECH OUTPUT: 'expanded'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
@@ -203,11 +204,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
-     "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable   Bookmarks Menu  TREE LEVEL 1'",
+     "     VISIBLE:  'Minefield Application Library Fr', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Name column header'",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar  '",
+     "SPEECH OUTPUT: '  Bookmarks Menu '",
      "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################

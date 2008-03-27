@@ -66,7 +66,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["[[[Bug: no item # of #]]]",
+    ["BUG? - We aren't getting the correct item count",
      "BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
