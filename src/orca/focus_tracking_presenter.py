@@ -266,7 +266,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         return script
 
-    def _getScript(self, app):
+    def getScript(self, app):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.
 
@@ -575,7 +575,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # displayed. See Orca bug #409731 for more details.
             #
             if not event.type.startswith("mouse:"):
-                s = self._getScript(event.host_application or \
+                s = self.getScript(event.host_application or \
                                       event.source.getApplication())
             else:
                 s = orca_state.activeScript
@@ -610,7 +610,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                       + orca_state.activeScript.name)
 
                         self.setActiveScript(
-                            self._getScript(event.host_application or \
+                            self.getScript(event.host_application or \
                                               event.source.getApplication()))
 
                         # Load in the application specific settings for the
@@ -961,7 +961,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         """Restores script and application state information."""
         try:
             for [app, appState] in self._appStateInfo:
-                script = self._getScript(app)
+                script = self.getScript(app)
                 script.setAppState(appState)
         except:
             pass
@@ -979,7 +979,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         self._restoreAppStates()
 
-        self.setActiveScript(self._getScript(None))
+        self.setActiveScript(self.getScript(None))
 
         # Tell BrlTTY which commands we care about.
         #

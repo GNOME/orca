@@ -62,6 +62,8 @@ import script
 import settings
 import speech
 import speechserver
+import mouse_review
+
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -122,6 +124,8 @@ class Script(script.Script):
         #
         self.lastProgressBarTime = {}
         self.lastProgressBarValue = {}
+
+        self.lastSelectedMenu = None
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -937,6 +941,14 @@ class Script(script.Script):
                 # magnifier.
                 #
                 _("Cycles to the next magnifier position."))
+
+        self.inputEventHandlers["toggleMouseReviewHandler"] = \
+            input_event.InputEventHandler(
+                mouse_review.toggle,
+                # Translators: Orca allows the item under the pointer to
+                # be spoken. This toggles the feature.
+                #
+                _("Toggle mouse review mode."))
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -1912,6 +1924,13 @@ class Script(script.Script):
                 0,
                 self.inputEventHandlers["panBrailleRightHandler"]))
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                None,
+                0,
+                0,
+                self.inputEventHandlers["toggleMouseReviewHandler"]))
+
         keyBindings = settings.overrideKeyBindings(self, keyBindings)
 
         return keyBindings
@@ -2837,7 +2856,6 @@ class Script(script.Script):
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
-
         # Check if this event is for a progress bar.
         #
         if obj.getRole() == pyatspi.ROLE_PROGRESS_BAR:
@@ -3645,6 +3663,15 @@ class Script(script.Script):
 
         if not event or not event.source:
             return
+
+        # Save the event source, if it is a menu or combo box. It will be 
+        # useful for optimizing getComponentAtDesktopCoords in the case
+        # that the  pointer is hovering over a menu item. The alternative is
+        # to traverse the application's tree looking for potential moused-over
+        # menu items.
+        if event.source.getRole() in (pyatspi.ROLE_COMBO_BOX, 
+                                           pyatspi.ROLE_MENU):
+            self.lastSelectedMenu = event.source
 
         # Avoid doing this with objects that manage their descendants
         # because they'll issue a descendant changed event.
@@ -6789,10 +6816,10 @@ class Script(script.Script):
         """Creates a Python dict from a typical attributes list returned from
         different AT-SPI methods.
 
+
         Arguments:
         - dict_string: A list of colon seperated key/value pairs seperated by
         semicolons.
-
         Returns a Python dict of the given attributes.
         """
         try:
@@ -6801,6 +6828,77 @@ class Script(script.Script):
                     dict_string.strip(';').split(';')))
         except ValueError:
             return {}
+
+    def _getPopupItemAtDesktopCoords(self, x, y):
+        """Since pop-up items often don't contain nested components, we need
+        a way to efficiently determine if the cursor is over a menu item.
+
+        Arguments:
+        - x: X coordinate.
+        - y: Y coordinate.
+        
+        Returns a menu item the mouse is over, or None.
+        """
+        suspect_children = []
+        if self.lastSelectedMenu:
+            try:
+                si = self.lastSelectedMenu.querySelection()
+            except NotImplementedError:
+                return None
+
+            if si.nSelectedChildren > 0:
+                suspect_children = [si.getSelectedChild(0)]
+            else:
+                suspect_children = self.lastSelectedMenu
+            for child in suspect_children:
+                try:
+                    ci = child.queryComponent()
+                except NotImplementedError:
+                    continue
+
+                if ci.contains(x,y, pyatspi.DESKTOP_COORDS) and \
+                        ci.getLayer() == pyatspi.LAYER_POPUP:
+                    return child
+
+    def getComponentAtDesktopCoords(self, parent, x, y):
+        """Get the descendant component at the given desktop coordinates.
+
+        Arguments:
+        
+        - parent: The parent component we are searching below.
+        - x: X coordinate.
+        - y: Y coordinate.
+
+        Returns end-node that contains the given coordinates, or None.
+        """
+        acc = self._getPopupItemAtDesktopCoords(x, y)
+        if acc: 
+            return acc
+
+        container = parent
+        while True:
+            if container.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
+                try:
+                    si = container.querySelection()
+                    container = si.getSelectedChild(0)[0]
+                except NotImplementedError:
+                    pass
+            try:
+                ci = container.queryComponent()
+            except:
+                return None
+            else:
+                inner_container = container
+            container =  ci.getAccessibleAtPoint(x, y, pyatspi.DESKTOP_COORDS)
+            if not container or container.queryComponent() == ci:
+                # The gecko bridge simply has getAccessibleAtPoint return
+                # itself if there are no further children.
+                # TODO: Put in Gecko.py
+                break
+        if inner_container == parent:
+            return None
+        else:
+            return inner_container
 
     def getTextSelections(self, acc):
         """Get a list of text selections in the given accessible object,
@@ -6823,6 +6921,17 @@ class Script(script.Script):
             rv.append(texti.getSelection(i))
             
         return rv
+
+    def speakWordUnderMouse(self, acc):
+        """Determine if the speak-word-under-mouse capability applies to
+        the given accessible.
+
+        Arguments:
+        - acc: Accessible to test.
+
+        Returns True if this accessible should provide the single word.
+        """
+        return acc and acc.getState().contains(pyatspi.STATE_EDITABLE)
 
     def getTextAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
@@ -6852,6 +6961,58 @@ class Script(script.Script):
         rv.update(self.attribsToDictionary(attrib_str))
 
         return rv, start, end
+
+    def getWordAtCoords(self, acc, x, y):
+        """Get the word at the given coords in the accessible.
+
+        Arguments:
+        - acc: Accessible that supports the Text interface.
+        - x: X coordinate.
+        - y: Y coordinate.
+
+        Returns a tuple containing the word, start offset, and end offset.
+        """
+        try:
+            ti = acc.queryText()
+        except NotImplementedError:
+            return '', 0, 0
+        
+        text_contents = ti.getText(0, -1)
+        line_offsets = []
+        start_offset = 0
+        while True:
+            try:
+                end_offset = text_contents.index('\n', start_offset)
+            except ValueError:
+                line_offsets.append((start_offset, len(text_contents)))
+                break
+            line_offsets.append((start_offset, end_offset))
+            start_offset = end_offset + 1
+        for start, end in line_offsets:
+            bx, by, bw, bh = \
+                ti.getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+            bb = mouse_review.BoundingBox(bx, by, bw, bh)
+            if bb.isInBox(x, y):
+                start_offset = 0
+                word_offsets = []
+                while True:
+                    try:
+                        end_offset = \
+                            text_contents[start:end].index(' ', start_offset)
+                    except ValueError:
+                        word_offsets.append((start_offset, 
+                                             len(text_contents[start:end])))
+                        break
+                    word_offsets.append((start_offset, end_offset))
+                    start_offset = end_offset + 1
+                for a, b in word_offsets:
+                    bx, by, bw, bh = \
+                        ti.getRangeExtents(start+a, start+b,
+                                           pyatspi.DESKTOP_COORDS)
+                    bb = mouse_review.BoundingBox(bx, by, bw, bh)
+                    if bb.isInBox(x, y):
+                        return text_contents[start+a:start+b], start+a, start+b
+        return '', 0, 0
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

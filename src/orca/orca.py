@@ -62,6 +62,7 @@ import orca_state
 import platform
 import settings
 import speech
+import mouse_review
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
@@ -140,6 +141,17 @@ def _switchToNextPresentationManager(script=None, inputEvent=None):
 
     _switchToPresentationManager(_currentPresentationManager + 1)
     return True
+
+def getScriptForApp(app):
+    """Get the script for the given application object from the current
+    presentation manager.
+
+    Arguments:
+    - app: An application accessible.
+
+    Returns a Script instance.
+    """
+    return _PRESENTATION_MANAGERS[_currentPresentationManager].getScript(app)
 
 ########################################################################
 #                                                                      #
@@ -889,6 +901,11 @@ def loadUserSettings(script=None, inputEvent=None):
     else:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
+
+
+    # I'm not sure where else this should go. But it doesn't really look
+    # right here.
+    mouse_review.mouse_reviewer.toggle(on=settings.enableMouseReview)
 
     # We don't want the Caps_Lock modifier to act as a locking
     # modifier if it used as the Orca modifier key.  In addition, if

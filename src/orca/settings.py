@@ -157,7 +157,9 @@ userCustomizableSettings = [
     "enableProgressBarUpdates",
     "progressBarUpdateInterval",
     "enableContractedBraille",
-    "brailleContractionTable"
+    "brailleContractionTable",
+    "enableMouseReview",
+    "mouseDwellDelay"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -919,3 +921,17 @@ brailleContractionTable = ''
 # Use Collection Interface?
 # 
 useCollection = True
+
+
+# Report object under mouse.
+#
+enableMouseReview = False
+
+# Mouse dwell delay in milliseconds for mouse review mode. 
+# If the value is zero, the review will be read time.
+#
+mouseDwellDelay = 0
+
+# Maximum allowed drift while pointer is dwelling in mouse review mode.
+# 
+mouseDwellMaxDrift = 3

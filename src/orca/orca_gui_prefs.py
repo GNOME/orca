@@ -1456,6 +1456,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         interval = prefs["progressBarUpdateInterval"]
         self.get_widget("speakProgressBarSpinButton").set_value(interval)
 
+        enable = prefs["enableMouseReview"]
+        self.get_widget("speakUnderMouseCheckButton").set_active(enable)
+
         # Braille pane.
         #
         self.get_widget("brailleSupportCheckbutton").set_active( \
@@ -2719,6 +2722,22 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["progressBarUpdateInterval"] = widget.get_value_as_int()
+
+
+    def speakUnderMouseChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakUnderMouseCheckButton GtkCheckButton widget.
+           The user has [un]checked the "Speak object under mouse" checkbox.
+           Set the 'enableMouseReview' preference to the new value.
+           Set the rest of the 'dwell time' hbox items [in]sensensitive
+           depending upon whether this checkbox is checked.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["enableMouseReview"] = enable
 
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames

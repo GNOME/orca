@@ -33,6 +33,7 @@ orca_python_PYTHON = \
 	keynames.py \
 	liveregions.py \
 	mag.py \
+	mouse_review.py \
 	orca.py \
 	orca_console_prefs.py \
 	orca_glade.py \

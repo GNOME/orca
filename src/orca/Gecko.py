@@ -10862,6 +10862,24 @@ class Script(default.Script):
         speech.speak(string)
         braille.displayMessage(string)
         
+
+
+    def speakWordUnderMouse(self, acc):
+        """Determine if the speak-word-under-mouse capability applies to
+        the given accessible.
+
+        Arguments:
+        - acc: Accessible to test.
+
+        Returns True if this accessible should provide the single word.
+        """
+        if self.inDocumentContent(acc):
+            try:
+                ai = acc.queryAction()
+            except NotImplementedError:
+                return True
+        default.Script.speakWordUnderMouse(self, acc)
+
     ####################################################################
     #                                                                  #
     # Match Predicates                                                 #

@@ -1,3 +1,29 @@
+2008-03-28  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/mouse_review.py:
+	  Fix for bug #520611.
+	  New mouse review feature (all of the changes below too).
+	* src/orca/Makefile.am: 
+	  Added mouse_review.py.
+	* src/orca/default.py: 
+	  - Added unbound mouse review toggle key.
+	  - Added getComponentAtDesktopCoords() (and 
+	    _getPopupItemAtDesktopCoords).
+	  - Added speakWordUnderMouse().
+	  - Added getWordAtCoords().
+	* src/orca/Gecko.py: 
+	  Added override for speakWordUnderMouse().
+	* src/orca/focus_tracking_presenter.py: 
+	  Chaged _getScript to a public getScript.
+	* src/orca/orca.py: 
+	  - Initialize mouse review on start up.
+	  - Added getScriptForApp.
+	* src/orca/settings.py: 
+	  Added enableMouseReview and mouseDwellDelay
+	* src/orca/orca_gui_prefs.py: 
+	* src/orca/orca-setup.glade
+	  Toggle mouse review in general tab.
+
 2008-03-27  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gtk-demo/role_icon.py:
