@@ -1,3 +1,9 @@
+2008-03-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/gnomespeechfactory.py:
+	  Add an additional except clause in __idleHandler to
+	  prevent tracebacks from killing Say All.
+
 2008-03-28  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/mouse_review.py:

@@ -538,6 +538,13 @@ class SpeechServer(speechserver.SpeechServer):
                             self.__sayAll.currentContext,
                             speechserver.SayAllContext.COMPLETED)
                         self.__sayAll = None
+                    except:
+                        # This is here to deal with the situation where speech
+                        # might have stopped and __sayAll was set to None.
+                        # If we don't handle those cases, Say All can stop
+                        # working.
+                        #
+                        pass
 
         rerun = True
 
