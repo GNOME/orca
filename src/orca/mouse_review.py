@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2008 Eitan Isaacson"
 __license__   = "LGPL"
 
 import pyatspi
-import orca_state
 import wnck
 import gtk
 import speech
@@ -36,7 +35,7 @@ import settings
 import orca
 
 class BoundingBox:
-    """A bounding box, currently it is used to test if a given point is 
+    """A bounding box, currently it is used to test if a given point is
     inside the bounds of the box.
     """
     # TODO: Find if we pygtk or something already has this,
@@ -65,7 +64,7 @@ class BoundingBox:
             (self.y <= y <= self.y + self.height)
 
 class _WordContext:
-    """A word on which the mouse id hovering above. This class should have 
+    """A word on which the mouse id hovering above. This class should have
     enough info to make it unique, so we know when we have left the word.
     """
     def __init__(self, word, acc, start, end):
@@ -86,13 +85,14 @@ class _WordContext:
         """Compare two word contexts, if they refer to the same word, return 0.
         Otherwise return 1
         """
-        if other is None: return 1
+        if other is None:
+            return 1
         return int(not(self.word == other.word and self.acc == other.acc and
                        self.start == other.start and self.end == other.end))
 
 class _ItemContext:
     """An _ItemContext holds all the information of the item we are currently
-    hovering above. If the accessible supports word speaking, we also store 
+    hovering above. If the accessible supports word speaking, we also store
     a word context here.
     """
     def __init__(self, x=0, y=0, acc=None, frame=None, app=None, script=None):
@@ -113,7 +113,7 @@ class _ItemContext:
         self.word_ctx = self._getWordContext(x, y)
 
     def _getWordContext(self, x, y):
-        """If the context's accessible supports it, retrieve the word we are 
+        """If the context's accessible supports it, retrieve the word we are
         currently hovering above.
 
         Arguments:
@@ -149,30 +149,31 @@ class MouseReviewer:
         if on is None:
             on = not self.active
         if on and not self.active:
-            pyatspi.Registry.registerEventListener(self._onMouseMoved, 
+            pyatspi.Registry.registerEventListener(self._onMouseMoved,
                                                    "mouse:abs")
         elif not on and self.active:
-            pyatspi.Registry.deregisterEventListener(self._onMouseMoved, 
+            pyatspi.Registry.deregisterEventListener(self._onMouseMoved,
                                                      "mouse:abs")
         self.active = on
-                 
 
     def _onMouseMoved(self, event):
         """Callback for "mouse:abs" AT-SPI event. We will check after the dwell
-        delay if the mouse moved away, if it didn't we will review the 
+        delay if the mouse moved away, if it didn't we will review the
         component under it.
 
         Arguments:
         - event: The event we recieved.
         """
         if settings.mouseDwellDelay:
-            gobject.timeout_add(settings.mouseDwellDelay, self._mouseDwellTimeout, 
-                                event.detail1, event.detail2)
+            gobject.timeout_add(settings.mouseDwellDelay,
+                                self._mouseDwellTimeout,
+                                event.detail1,
+                                event.detail2)
         else:
             self._mouseDwellTimeout(event.detail1, event.detail2)
 
     def _mouseDwellTimeout(self, prev_x, prev_y):
-        """Dwell timout callback. If we are still dwelling, review the 
+        """Dwell timout callback. If we are still dwelling, review the
         component.
 
         Arguments:
@@ -181,13 +182,13 @@ class MouseReviewer:
         """
         display = gtk.gdk.Display(gtk.gdk.get_display())
         screen, x, y, flags =  display.get_pointer()
-        if abs(prev_x - x) <= settings.mouseDwellMaxDrift and \
-                abs(prev_y - y) <= settings.mouseDwellMaxDrift and \
-                not (x, y) == self._lastReportedCoord:
-                self._lastReportedCoord = (x, y)
-                self._reportUnderMouse(x, y)
+        if abs(prev_x - x) <= settings.mouseDwellMaxDrift \
+           and abs(prev_y - y) <= settings.mouseDwellMaxDrift \
+           and not (x, y) == self._lastReportedCoord:
+            self._lastReportedCoord = (x, y)
+            self._reportUnderMouse(x, y)
         return False
-        
+
     def _reportUnderMouse(self, x, y):
         """Report the element under the given coordinates:
 
@@ -224,20 +225,21 @@ class MouseReviewer:
 
         self._outputElements(output_obj)
         return False
-            
+
     def _outputElements(self, output_obj):
         """Output the given elements.
         TODO: Now we are mainly using WhereAmI, we might need to find out a
         better, less verbose output method.
 
         Arguments:
-        - output_obj: A list of objects to output, could be accessibles and 
+        - output_obj: A list of objects to output, could be accessibles and
         text.
         """
         if output_obj:
             speech.stop()
         for obj in output_obj:
-            if obj is None: continue
+            if obj is None:
+                continue
             if isinstance(obj, str):
                 speech.speak(obj)
                 # TODO: There is probably something more useful that we could
@@ -249,6 +251,7 @@ class MouseReviewer:
                             obj,
                             False))
                 self._currentMouseOver.script.updateBraille(obj)
+
     def _getZOrder(self, frame_name):
         """Determine the stack position of a given window.
 
@@ -261,8 +264,8 @@ class MouseReviewer:
         wnck_screen = wnck.screen_get_default()
         window_order = \
             [w.get_name() for w in wnck_screen.get_windows_stacked()]
-        return window_order.index(frame_name)    
-        
+        return window_order.index(frame_name)
+
     def _getContextUnderMouse(self, x, y):
         """Get the context under the mouse.
 
@@ -288,24 +291,23 @@ class MouseReviewer:
                     try:
                         z_order = self._getZOrder(frame.name)
                     except ValueError:
-                        # It's possibly a popup menu, so it would not be in 
+                        # It's possibly a popup menu, so it would not be in
                         # our frame name list.
-                        # And if it is, it is probably the top-most 
+                        # And if it is, it is probably the top-most
                         # component.
                         try:
                             if acc.queryComponent().getLayer() == \
                                     pyatspi.LAYER_POPUP:
-                                return _ItemContext(x, y, acc, frame, 
+                                return _ItemContext(x, y, acc, frame,
                                                     app, script)
                         except:
                             pass
                     else:
                         if z_order > top_window[-1]:
                             top_window = \
-                                [_ItemContext(x, y, acc, frame, app, script), 
+                                [_ItemContext(x, y, acc, frame, app, script),
                                  z_order]
         return top_window[0]
-
 
 # Initialize a singleton reviewer.
 mouse_reviewer = MouseReviewer()
