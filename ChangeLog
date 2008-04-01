@@ -8,6 +8,10 @@
           Fix for bug #523236 - gtk-demo/role_combo_box.py regression tests
           #12, #13, #14 and #15 produce the wrong results.
 
+        * test/keystrokes/gtk-demo/role_table_py:
+          Fix for bug #523237 - gtk-demo/role_table.py regression tests
+          1, 2, 3, 4, 6, and 7 produce the wrong results.
+
 2008-04-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py:

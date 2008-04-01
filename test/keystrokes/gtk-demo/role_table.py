@@ -35,6 +35,7 @@ sequence.append(TypeAction("Editable Cells", 1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
+sequence.append(KeyComboAction("Down"))
 #sequence.append(WaitForWindowActivate("Shopping list",None))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
