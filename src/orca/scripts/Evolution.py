@@ -66,7 +66,11 @@ class WhereAmI(where_am_I.WhereAmI):
 
         if action:
             for i in range(0, action.nActions):
-                if action.getName(i) == "toggle":
+                # Translators: this is the action name for
+                # the 'toggle' action. It must be the same
+                # string used in the *.po file for gail.
+                #
+                if action.getName(i) in ["toggle", _("toggle")]:
                     if not obj.getState().contains(pyatspi.STATE_CHECKED):
                         notChecked = True
                     break
@@ -1040,7 +1044,11 @@ class Script(default.Script):
 
                     if action:
                         for j in range(0, action.nActions):
-                            if action.getName(j) == "toggle":
+                            # Translators: this is the action name for
+                            # the 'toggle' action. It must be the same
+                            # string used in the *.po file for gail.
+                            #
+                            if action.getName(j) in ["toggle", _("toggle")]:
                                 checkbox = True
                                 checked = cell.getState().contains( \
                                     pyatspi.STATE_CHECKED)

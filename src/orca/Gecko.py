@@ -8911,7 +8911,9 @@ class Script(default.Script):
             comboBox.queryComponent().grabFocus()
             for i in range(0, action.nActions):
                 name = action.getName(i)
-                if name == "open":
+                # Translators: this is the action name for the 'open' action.
+                #
+                if name in ["open", _("open")]:
                     action.doAction(i)
                     break
 

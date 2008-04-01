@@ -1,3 +1,14 @@
+2008-03-31  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          src/orca/flat_review.py:
+          src/orca/speechgenerator.py:
+          src/orca/Gecko.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #519936 - In Evolution Orca does not read the 
+          messages list properly when in "read table row" mode.
+
 2008-03-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py:

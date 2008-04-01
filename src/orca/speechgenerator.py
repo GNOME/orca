@@ -1307,7 +1307,11 @@ class SpeechGenerator:
                     continue
                 else:
                     for j in range(0, action.nActions):
-                        if action.getName(j) == "toggle":
+                        # Translators: this is the action name for
+                        # the 'toggle' action. It must be the same
+                        # string used in the *.po file for gail.
+                        #
+                        if action.getName(j) in ["toggle", _("toggle")]:
                             hasToggle[i] = True
                             break
 
@@ -1342,7 +1346,12 @@ class SpeechGenerator:
                 debug.println(debug.LEVEL_FINEST,
                     "speechgenerator.__getTableCellUtterances " \
                     + "looking at action %d" % i)
-                if action.getName(i) == "toggle":
+
+                # Translators: this is the action name for
+                # the 'toggle' action. It must be the same
+                # string used in the *.po file for gail.
+                #
+                if action.getName(i) in ["toggle", _("toggle")]:
                     utterances = self._getSpeechForCheckBox(obj,
                                                             already_focused)
                     break
@@ -1468,7 +1477,12 @@ class SpeechGenerator:
                                 action = None
                             if action and (label == None or len(label) == 0):
                                 for j in range(0, action.nActions):
-                                    if action.getName(j) == "toggle":
+                                    # Translators: this is the action name for
+                                    # the 'toggle' action. It must be the same
+                                    # string used in the *.po file for gail.
+                                    #
+                                    if action.getName(j) in ["toggle", \
+                                                             _("toggle")]:
                                         accHeader = \
                                             parent_table.getColumnHeader(i)
                                         utterances.append(accHeader.name)

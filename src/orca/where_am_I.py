@@ -1216,7 +1216,11 @@ class WhereAmI:
             pass
         else:
             for i in range(0, action.nActions):
-                if action.getName(i) == "toggle":
+                # Translators: this is the action name for
+                # the 'toggle' action. It must be the same
+                # string used in the *.po file for gail.
+                #
+                if action.getName(i) in ["toggle", _("toggle")]:
                     isToggle = True
                     break
 
@@ -1243,7 +1247,11 @@ class WhereAmI:
                 pass
             else:
                 for i in range(0, action.nActions):
-                    if action.getName(i) == "toggle":
+                    # Translators: this is the action name for
+                    # the 'toggle' action. It must be the same
+                    # string used in the *.po file for gail.
+                    #
+                    if action.getName(i) in ["toggle", _("toggle")]:
                         isToggle = True
                         break
         if not isToggle:

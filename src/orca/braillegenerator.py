@@ -1165,7 +1165,11 @@ class BrailleGenerator:
                     continue
                 else:
                     for j in range(0, action.nActions):
-                        if action.getName(j) == "toggle":
+                        # Translators: this is the action name for
+                        # the 'toggle' action. It must be the same
+                        # string used in the *.po file for gail.
+                        #
+                        if action.getName(j) in ["toggle", _("toggle")]:
                             hasToggle[i] = True
                             break
 
@@ -1201,7 +1205,12 @@ class BrailleGenerator:
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator._getBrailleRegionsForTableCell " \
                     + "looking at action %d" % i)
-                if action.getName(i) == "toggle":
+
+                # Translators: this is the action name for
+                # the 'toggle' action. It must be the same
+                # string used in the *.po file for gail.
+                #
+                if action.getName(i) in ["toggle", _("toggle")]:
                     regions = self._getBrailleRegionsForCheckBox(obj)
 
                     # If this table cell doesn't have any label associated
