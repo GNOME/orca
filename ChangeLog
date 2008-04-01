@@ -1,3 +1,9 @@
+2008-04-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fix for bug #523235 - gtk-demo/role_column_header.py regression
+          tests #3, #4, #7 and #8 produce the wrong results.
+
 2008-03-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:

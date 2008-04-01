@@ -2726,13 +2726,22 @@ class Script(script.Script):
             parentRole = newLocusOfFocus.parent.getRole()
             state = newLocusOfFocus.getState()
 
-            if objRole == pyatspi.ROLE_ICON and \
-                parentRole == pyatspi.ROLE_LAYERED_PANE:
-                checkIfSelected = True
-
             if objRole == pyatspi.ROLE_TABLE_CELL and \
                (parentRole == pyatspi.ROLE_TREE_TABLE or \
                 parentRole == pyatspi.ROLE_TABLE):
+                checkIfSelected = True
+
+            # If we met the last set of conditions, but we got here by 
+            # moving left or right on the same row, then don't announce the 
+            # selection state to the user. See bug #523235 for more details.
+            #
+            if checkIfSelected == True and \
+               (orca_state.lastNonModifierKeyEvent.event_string == "Left" or \
+               orca_state.lastNonModifierKeyEvent.event_string == "Right"):
+                checkIfSelected = False
+
+            if objRole == pyatspi.ROLE_ICON and \
+                parentRole == pyatspi.ROLE_LAYERED_PANE:
                 checkIfSelected = True
 
             if checkIfSelected and not state.contains(pyatspi.STATE_SELECTED):
