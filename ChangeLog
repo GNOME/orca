@@ -4,6 +4,10 @@
           Fix for bug #523451 - oowriter/bug_385828.py regression tests #1
           produces the wrong results.
 
+        * test/keystrokes/gtk-demo/role_combo_box.py:
+          Fix for bug #523236 - gtk-demo/role_combo_box.py regression tests
+          #12, #13, #14 and #15 produce the wrong results.
+
 2008-04-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py:

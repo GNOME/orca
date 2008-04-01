@@ -237,16 +237,22 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("One", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box menu",
     ["BRAILLE LINE:  'gtk-demo Application Window'",
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
+     "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Editable panel'", "SPEECH OUTPUT: 'One'"]))
+     "SPEECH OUTPUT: 'Editable panel'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'One'"]))
 
 ########################################################################
 # Now down arrow to the "Two" item.
