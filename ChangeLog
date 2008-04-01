@@ -12,6 +12,10 @@
           Fix for bug #523237 - gtk-demo/role_table.py regression tests
           1, 2, 3, 4, 6, and 7 produce the wrong results.
 
+        * src/orca/default.py:
+          Fix for bug #523235 - gtk-demo/role_column_header.py regression
+          tests #3, #4, #7 and #8 produce the wrong results.
+
 2008-04-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py:
