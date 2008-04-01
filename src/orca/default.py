@@ -6865,8 +6865,8 @@ class Script(script.Script):
                 except NotImplementedError:
                     continue
 
-                if ci.contains(x,y, pyatspi.DESKTOP_COORDS) and \
-                        ci.getLayer() == pyatspi.LAYER_POPUP:
+                if ci.contains(x, y, pyatspi.DESKTOP_COORDS) \
+                   and ci.getLayer() == pyatspi.LAYER_POPUP:
                     return child
 
     def getComponentAtDesktopCoords(self, parent, x, y):
