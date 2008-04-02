@@ -801,10 +801,12 @@ class Script(default.Script):
                 message = message[1:]
 
             # If the user doesn't want announcements for when their buddies
-            # are typing, and this is such a message, then just return.
+            # are typing (or have stopped typing), and this is such a message,
+            # then just return.
             #
             if not announceBuddyTyping and \
-               message.endswith(_(" is typing...")):
+               (message.endswith(_(" is typing...")) or \
+                message.endswith(_(" has stopped typing")):
                 return
 
             chatRoomName = self.getDisplayedText(chatRoomTab)
