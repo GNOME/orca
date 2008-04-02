@@ -800,16 +800,15 @@ class Script(default.Script):
             if message and message[0] == "\n":
                 message = message[1:]
 
+            chatRoomName = self.getDisplayedText(chatRoomTab)
+
             # If the user doesn't want announcements for when their buddies
             # are typing (or have stopped typing), and this is such a message,
             # then just return.
             #
             if not announceBuddyTyping and \
-               (message.endswith(_(" is typing...")) or \
-                message.endswith(_(" has stopped typing")):
+               message.startswith(chatRoomName + " "):
                 return
-
-            chatRoomName = self.getDisplayedText(chatRoomTab)
 
             # If the new message came from the room with focus, we don't
             # want to speak its name even if prefixChatMessage is enabled.
