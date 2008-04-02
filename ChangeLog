@@ -1,3 +1,9 @@
+2008-04-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Slight adjustmet to the fix for bug #523235. Needed to check that
+          orca_state.lastNonModifierKeyEvent wasn't None.
+
 2008-04-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

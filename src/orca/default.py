@@ -2736,8 +2736,9 @@ class Script(script.Script):
             # selection state to the user. See bug #523235 for more details.
             #
             if checkIfSelected == True and \
+               (orca_state.lastNonModifierKeyEvent and \
                (orca_state.lastNonModifierKeyEvent.event_string == "Left" or \
-               orca_state.lastNonModifierKeyEvent.event_string == "Right"):
+               orca_state.lastNonModifierKeyEvent.event_string == "Right")):
                 checkIfSelected = False
 
             if objRole == pyatspi.ROLE_ICON and \
