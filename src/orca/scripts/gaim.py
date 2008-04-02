@@ -55,6 +55,10 @@ from orca.orca_i18n import ngettext  # for ngettext support
 #
 prefixChatMessage = False
 
+# Whether we announce when a buddy is typing.
+#
+announceBuddyTyping = False
+
 # Possible ways of how Orca should speak pidgin chat messages.
 #
 SPEAK_ALL_MESSAGES              = 0
@@ -386,6 +390,11 @@ class Script(default.Script):
                 _("Toggle whether we prefix chat room messages with " \
                   "the name of the chat room."))
 
+        self.inputEventHandlers["toggleBuddyTypingHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleBuddyTyping,
+                _("Toggle whether we announce when our buddies are typing."))
+
         # Add the chat room message history event handler.
         #
         self.inputEventHandlers["reviewMessage"] = \
@@ -454,6 +463,16 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
         gtk.ToggleButton.set_active(self.speakNameCheckButton,
                                     prefixChatMessage)
+
+        # Translators: If this checkbox is checked, then Orca will tell
+        # you when one of your buddies is typing a message.
+        #
+        label = _("Announce when your _buddies are typing")
+        self.buddyTypingCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.buddyTypingCheckButton)
+        gtk.Box.pack_start(vbox, self.buddyTypingCheckButton, False, False, 0)
+        gtk.ToggleButton.set_active(self.buddyTypingCheckButton,
+                                    announceBuddyTyping)
 
         # "Speak Messages" frame.
         #
@@ -526,12 +545,16 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global prefixChatMessage, speakMessages
+        global announceBuddyTyping, prefixChatMessage, speakMessages
 
         prefixChatMessage = self.speakNameCheckButton.get_active()
         prefs.writelines("\n")
         prefs.writelines("orca.scripts.gaim.prefixChatMessage = %s\n" % \
                          prefixChatMessage)
+
+        announceBuddyTyping = self.buddyTypingCheckButton.get_active()
+        prefs.writelines("orca.scripts.gaim.announceBuddyTyping = %s\n" % \
+                         announceBuddyTyping)
 
         if self.allMessagesRadioButton.get_active():
             speakMessages = SPEAK_ALL_MESSAGES
@@ -585,6 +608,26 @@ class Script(default.Script):
         prefixChatMessage = not prefixChatMessage
         if not prefixChatMessage:
             line = _("Do not speak chat room name.")
+
+        speech.speak(line)
+
+        return True
+
+    def toggleBuddyTyping(self, inputEvent):
+        """ Toggle whether we announce when our buddies are typing a message.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        global prefixChatMessage
+
+        debug.println(self.debugLevel, "gaim.toggleBuddyTyping.")
+
+        line = _("announce when your buddies are typing.")
+        announceBuddyTyping = not announceBuddyTyping
+        if not announceBuddyTyping:
+            line = _("Do not announce when your buddies are typing.")
 
         speech.speak(line)
 
@@ -756,6 +799,13 @@ class Script(default.Script):
                                    event.detail1 + event.detail2)
             if message and message[0] == "\n":
                 message = message[1:]
+
+            # If the user doesn't want announcements for when their buddies
+            # are typing, and this is such a message, then just return.
+            #
+            if not announceBuddyTyping and \
+               message.endswith(_(" is typing...")):
+                return
 
             chatRoomName = self.getDisplayedText(chatRoomTab)
 
