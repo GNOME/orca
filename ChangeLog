@@ -1,5 +1,10 @@
 2008-04-03  Eitan Isaacson  <eitan@ascender.com>
 
+	* src/orca/orca.py:
+	  Fixed bug #525649 - Don't bomb when no DISPLAY is set.
+
+2008-04-03  Eitan Isaacson  <eitan@ascender.com>
+
 	* src/orca/Gecko.py: 
 	  src/orca/default.py:
 	  src/orca/flat_review.py: 
