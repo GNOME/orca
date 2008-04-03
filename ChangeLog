@@ -1,3 +1,12 @@
+2008-04-03  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py: 
+	  src/orca/default.py:
+	  src/orca/flat_review.py: 
+	  src/orca/scripts/gnome-terminal.py: 
+	  src/orca/braille.py: 
+	  Added cursor key routing support to Gecko (bug #520612).
+
 2008-04-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

@@ -4641,23 +4641,30 @@ class Script(default.Script):
                     focusedRegion = regions[0]
             elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
                 string = text.getText(startOffset, endOffset)
-                if string.endswith(" "):
-                    endOffset -= 1
-                    string = text.getText(startOffset, endOffset)
+                string = string.strip(" ")
+                endOffset = startOffset + len(string)
+                if endOffset == startOffset:
+                    continue
 
-                regions = [braille.Region(
-                    string,
-                    focusedCharacterOffset - startOffset,
-                    expandOnCursor=True)]
                 if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
                 else:
                     link = self.getAncestor(obj,
                                             [pyatspi.ROLE_LINK],
                                             [pyatspi.ROLE_DOCUMENT_FRAME])
+
+                if not link:
+                    regions = [braille.Text(obj, 
+                                            startOffset=startOffset, 
+                                            endOffset=endOffset)]
+
                 if link:
-                    regions.append(braille.Region(
-                        " " + rolenames.getBrailleForRoleName(link)))
+                    regions = [braille.Component(
+                            link,
+                            string + " " + \
+                                rolenames.getBrailleForRoleName(link),
+                            focusedCharacterOffset - startOffset,
+                            expandOnCursor=True)]
                 elif obj.getRole() == pyatspi.ROLE_CAPTION:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(obj)))
@@ -8241,6 +8248,10 @@ class Script(default.Script):
     # Methods to navigate to previous and next objects.                #
     #                                                                  #
     ####################################################################
+
+    def setCaretOffset(self, obj, characterOffset):
+        self.setCaretPosition(obj, characterOffset)
+        self.updateBraille(obj)
 
     def setCaretPosition(self, obj, characterOffset):
         """Sets the caret position to the given character offset in the
