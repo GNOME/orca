@@ -55,6 +55,10 @@ from orca.orca_i18n import ngettext  # for ngettext support
 #
 prefixChatMessage = False
 
+# Whether we announce when a buddy is typing.
+#
+announceBuddyTyping = False
+
 # Possible ways of how Orca should speak pidgin chat messages.
 #
 SPEAK_ALL_MESSAGES              = 0
@@ -758,6 +762,14 @@ class Script(default.Script):
                 message = message[1:]
 
             chatRoomName = self.getDisplayedText(chatRoomTab)
+
+            # If the user doesn't want announcements for when their buddies
+            # are typing (or have stopped typing), and this is such a message,
+            # then just return.
+            #
+            if not announceBuddyTyping and \
+               message.startswith(chatRoomName + " "):
+                return
 
             # If the new message came from the room with focus, we don't
             # want to speak its name even if prefixChatMessage is enabled.

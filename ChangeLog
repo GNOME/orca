@@ -1,3 +1,10 @@
+2008-04-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          Fix for bug #525656 - Orca needs to handle the new Pidgin typing
+          status updates. This is a subset of the fix that went into the
+          Orca SVN trunk. It just hard-wires the ignoring of status messages.
+
 2008-04-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
