@@ -993,7 +993,7 @@ def _showPreferencesConsole(script=None, inputEvent=None):
                             globals(),
                             locals(),
                             [''])
-        module.showPreferencesUI()
+        module.showPreferencesUI(_commandLineSettings)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 

@@ -1,3 +1,10 @@
+2008-04-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          src/orca/orca_console_prefs.py:
+          Fixed bug #523082 - text-setup should not use speech if
+          --disable=speech is used.
+
 2008-04-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:

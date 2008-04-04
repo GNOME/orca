@@ -427,12 +427,14 @@ def logoutUser():
                         False,                 # Fast
                         True)                  # All apps save state
 
-def showPreferencesUI():
+def showPreferencesUI(commandLineSettings):
     """Uses the console to query the user for Orca preferences."""
 
     prefsDict = {}
 
-    if not setupSpeech(prefsDict):
+    if ("enableSpeech" in commandLineSettings and \
+        not commandLineSettings["enableSpeech"]) or \
+       (not setupSpeech(prefsDict)):
         prefsDict["enableSpeech"]     = False
         prefsDict["enableEchoByWord"] = False
         prefsDict["enableKeyEcho"]    = False
