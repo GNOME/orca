@@ -356,11 +356,16 @@ class Script(default.Script):
         #
         self.speakNameCheckButton = None
 
+        # Keep track of the last status message to see if it's changed.
+        #
+        self.lastStatus = None
+
         # To make pylint happy.
         #
         self.focusedChannelRadioButton = None
         self.allChannelsRadioButton = None
         self.allMessagesRadioButton = None
+        self.buddyTypingCheckButton = None
 
         default.Script.__init__(self, app)
 
@@ -419,6 +424,13 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["togglePrefixHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                None,
+                None,
+                self.inputEventHandlers["toggleBuddyTypingHandler"]))
 
         # keybindings to provide chat room message history.
         #
@@ -620,7 +632,7 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global prefixChatMessage
+        global announceBuddyTyping
 
         debug.println(self.debugLevel, "gaim.toggleBuddyTyping.")
 
@@ -657,9 +669,9 @@ class Script(default.Script):
         if message and message != "":
             text += message
 
-        if text != "":
-            braille.displayMessage(text)
+        if len(text.strip()):
             speech.speak(text)
+        braille.displayMessage(text)
 
     def readPreviousMessage(self, inputEvent):
         """ Speak/braille a previous chat room message. Up to nine
@@ -804,11 +816,18 @@ class Script(default.Script):
 
             # If the user doesn't want announcements for when their buddies
             # are typing (or have stopped typing), and this is such a message,
-            # then just return.
+            # then just return. The only reliable way to identify such text
+            # is by the scale.  We also want to store the last message because
+            # msn seems to be sending a constant stream of "is typing" updates.
             #
-            if not announceBuddyTyping and \
-               message.startswith(chatRoomName + " "):
-                return
+            attr, start, end = \
+                self.getTextAttributes(event.source, event.detail1)
+            if float(attr.get('scale', '1')) < 1:
+                if not announceBuddyTyping or self.lastStatus == message:
+                    return
+                self.lastStatus = message
+            else:
+                self.lastStatus = None
 
             # If the new message came from the room with focus, we don't
             # want to speak its name even if prefixChatMessage is enabled.
@@ -821,9 +840,11 @@ class Script(default.Script):
 
             # Add the latest message to the list of saved ones. For each
             # one added, the oldest one automatically gets dropped off.
+            # We don't want to do this for the status messages however.
             #
-            self.previousMessages.append(message)
-            self.previousChatRoomNames.append(chatRoomName)
+            if not self.lastStatus:
+                self.previousMessages.append(message)
+                self.previousChatRoomNames.append(chatRoomName)
 
         elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
              and orca_state.lastNonModifierKeyEvent \
