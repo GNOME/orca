@@ -5,6 +5,10 @@
           Fixed bug #523082 - text-setup should not use speech if
           --disable=speech is used.
 
+        * src/orca/scripts/gaim.py:
+          Fixed bug #525656 - Orca needs to handle the new Pidgin typing 
+          status updates.
+
 2008-04-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:

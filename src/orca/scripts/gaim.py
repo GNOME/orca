@@ -356,6 +356,10 @@ class Script(default.Script):
         #
         self.speakNameCheckButton = None
 
+        # Keep track of the last status message to see if it's changed.
+        #
+        self.lastStatus = None
+
         # To make pylint happy.
         #
         self.focusedChannelRadioButton = None
@@ -618,9 +622,9 @@ class Script(default.Script):
         if message and message != "":
             text += message
 
-        if text != "":
-            braille.displayMessage(text)
+        if len(text.strip()):
             speech.speak(text)
+        braille.displayMessage(text)
 
     def readPreviousMessage(self, inputEvent):
         """ Speak/braille a previous chat room message. Up to nine
@@ -700,6 +704,53 @@ class Script(default.Script):
                         line = _("New chat tab %s") % child.name
                         speech.speak(line)
 
+    def attribsToDictionary(self, dict_string):
+        """Creates a Python dict from a typical attributes list returned from
+        different AT-SPI methods.
+
+
+        Arguments:
+        - dict_string: A list of colon seperated key/value pairs seperated by
+        semicolons.
+        Returns a Python dict of the given attributes.
+        """
+        try:
+            return dict(
+                map(lambda pair: pair.strip().split(':'),
+                    dict_string.strip(';').split(';')))
+        except ValueError:
+            return {}
+
+    def getTextAttributes(self, acc, offset, get_defaults=False):
+        """Get the text attributes run for a given offset in a given accessible
+
+        Arguments:
+        - acc: An accessible.
+        - offset: Offset in the accessible's text for which to retrieve the
+        attributes.
+        - get_defaults: Get the default attributes as well as the unique ones.
+        Default is True
+
+        Returns a dictionary of attributes, a start offset where the attributes
+        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
+        support the text attribute.
+        """
+
+        rv = {}
+        try:
+            texti = acc.queryText()
+        except:
+            return rv, 0, 0
+
+        if get_defaults:
+            rv.update(self.attribsToDictionary(texti.getDefaultAttributes()))
+
+        attrib_str, start, end = texti.getAttributes(offset)
+
+        rv.update(self.attribsToDictionary(attrib_str))
+
+        return rv, start, end
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Gaim's text
         objects.  If the object is an instant message or chat, speak
@@ -765,11 +816,18 @@ class Script(default.Script):
 
             # If the user doesn't want announcements for when their buddies
             # are typing (or have stopped typing), and this is such a message,
-            # then just return.
+            # then just return. The only reliable way to identify such text
+            # is by the scale.  We also want to store the last message because
+            # msn seems to be sending a constant stream of "is typing" updates.
             #
-            if not announceBuddyTyping and \
-               message.startswith(chatRoomName + " "):
-                return
+            attr, start, end = \
+                self.getTextAttributes(event.source, event.detail1)
+            if float(attr.get('scale', '1')) < 1:
+                if not announceBuddyTyping or self.lastStatus == message:
+                    return
+                self.lastStatus = message
+            else:
+                self.lastStatus = None
 
             # If the new message came from the room with focus, we don't
             # want to speak its name even if prefixChatMessage is enabled.
@@ -782,9 +840,11 @@ class Script(default.Script):
 
             # Add the latest message to the list of saved ones. For each
             # one added, the oldest one automatically gets dropped off.
+            # We don't want to do this for the status messages however.
             #
-            self.previousMessages.append(message)
-            self.previousChatRoomNames.append(chatRoomName)
+            if not self.lastStatus:
+                self.previousMessages.append(message)
+                self.previousChatRoomNames.append(chatRoomName)
 
         elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
              and orca_state.lastNonModifierKeyEvent \
