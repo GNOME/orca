@@ -1,3 +1,13 @@
+2008-04-04  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/Gecko.py: 
+	  src/orca/default.py:
+	  src/orca/flat_review.py: 
+	  src/orca/scripts/gnome-terminal.py: 
+	  src/orca/braille.py: 
+	  Reopening bug #520612 - This patch needs a lot more work,
+	  reverting for now...
+
 2008-04-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

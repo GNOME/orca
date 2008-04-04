@@ -454,8 +454,7 @@ class Text(Region):
     [[[TODO: WDW - need to add in text selection capabilities.  Logged
     as bugzilla bug 319754.]]]"""
 
-    def __init__(self, accessible, label="", eol="", 
-                 startOffset=0, endOffset=-1):
+    def __init__(self, accessible, label="", eol=""):
         """Creates a new Text region.
 
         Arguments:
@@ -468,17 +467,20 @@ class Text(Region):
             [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
 
-        if endOffset == -1:
-            self.endOffset = len(string)
-        else:
-            self.endOffset = endOffset - self.lineOffset
+        # Sometimes, gnome-terminal will give us very odd values when
+        # the user is editing using 'vi' and has positioned the caret
+        # at the first character of the first line.  In this case, we
+        # end up getting a very large negative number for the line offset.
+        # So, we just assume the user is at the first character.
+        #
+        if self.lineOffset < 0:
+            self.caretOffset = 0
+            self.lineOffset = 0
+            [string, startOffset, endOffset] = \
+                self.accessible.queryText().getTextAtOffset(
+                    0,
+                    pyatspi.TEXT_BOUNDARY_LINE_START)
 
-        self.startOffset = startOffset - self.lineOffset
-
-        string = string.decode("UTF-8")[self.startOffset:self.endOffset]
-
-
-        self.caretOffset -= self.startOffset
         cursorOffset = min(self.caretOffset - self.lineOffset, len(string))
 
         self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
@@ -538,8 +540,7 @@ class Text(Region):
             return
 
         newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
-        orca_state.activeScript.setCaretOffset(
-            self.accessible, newCaretOffset)
+        self.accessible.queryText().setCaretOffset(newCaretOffset)
 
     def getAttributeMask(self):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -570,8 +571,6 @@ class Text(Region):
                 attributes, startOffset, endOffset = \
                             script.getTextAttributes(self.accessible,
                                                      offset, True)
-                if endOffset <= offset:
-                    break
                 mask = settings.TEXT_ATTR_BRAILLE_NONE
                 offset = endOffset
                 for attrib in attributes:
@@ -611,7 +610,6 @@ class Text(Region):
         # any label that might be present.
         #
         regionMask += [0]*len(self.eol)
-
         if self.label:
             regionMask = [0]*len(self.label) + regionMask
 
@@ -625,7 +623,6 @@ class Text(Region):
 
     def displayToBufferOffset(self, display_offset):
         offset = Region.displayToBufferOffset(self, display_offset)
-        offset += self.startOffset
         offset -= len(self.label)
         return offset
 
@@ -647,6 +644,7 @@ class ReviewComponent(Component):
                         for this Region if it gets focus.
         - zone: the flat review Zone associated with this component
         """
+
         Component.__init__(self, accessible, string,
                            cursorOffset, expandOnCursor=True)
         self.zone = zone
@@ -667,6 +665,7 @@ class ReviewText(Region):
         - lineOffset: the character offset into where the text line starts
         - zone: the flat review Zone associated with this component
         """
+
         Region.__init__(self, string, expandOnCursor=True)
         self.accessible = accessible
         self.lineOffset = lineOffset
@@ -680,7 +679,7 @@ class ReviewText(Region):
 
         offset = self.displayToBufferOffset(offset)
         newCaretOffset = self.lineOffset + offset
-        orca_state.activeScript.setCaretOffset(self.accessible, newCaretOffset)
+        self.accessible.queryText().setCaretOffset(newCaretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential

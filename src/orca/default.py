@@ -6822,21 +6822,6 @@ class Script(script.Script):
         """
         print "\a"
 
-    def setCaretOffset(self, obj, offset):
-        """Set the caret offset on a given accessible. Similar to
-        Accessible.setCaretOffset()
-
-        Arguments:
-        - obj: Given accessible object.
-        - offset: Offset to hich to set the caret.
-        """
-        try:
-            texti = obj.queryText()
-        except:
-           return None
-
-        texti.setCaretOffset(offset)
-
     def attribsToDictionary(self, dict_string):
         """Creates a Python dict from a typical attributes list returned from
         different AT-SPI methods.
@@ -7001,7 +6986,7 @@ class Script(script.Script):
             ti = acc.queryText()
         except NotImplementedError:
             return '', 0, 0
-
+        
         text_contents = ti.getText(0, -1)
         line_offsets = []
         start_offset = 0
