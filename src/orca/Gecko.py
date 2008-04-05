@@ -7749,7 +7749,8 @@ class Script(default.Script):
                             start = cStart
                         else:
                             start += 1
-                    elif child.getRole() != pyatspi.ROLE_LINK:
+                    elif not child.getRole() in [pyatspi.ROLE_LINK,
+                                                 pyatspi.ROLE_IMAGE]:
                         text = None
                         obj = child
                     else:
@@ -7846,13 +7847,9 @@ class Script(default.Script):
 
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
 
-            imgOnLine = obj.getRole() == pyatspi.ROLE_IMAGE \
-                     and extents[1] < nextExtents[1] < extents[1] + extents[3]
-                              
             if self.onSameLine(extents, nextExtents) \
                and lastExtents != nextExtents \
-               or nextExtents == (0, 0, 0, 0) \
-               or imgOnLine:
+               or nextExtents == (0, 0, 0, 0):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
