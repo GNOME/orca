@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-29 18:22+0100\n"
-"PO-Revision-Date: 2008-03-02 16:23+0100\n"
+"PO-Revision-Date: 2008-04-05 09:48+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -5182,7 +5182,7 @@ msgstr "_Pozíció:"
 
 #: ../src/orca/orca-setup.glade.h:159
 msgid "_Present tooltips"
-msgstr "G_yorstippek megjelenítése"
+msgstr "Buboréksúgók megjele_nítése"
 
 #: ../src/orca/orca-setup.glade.h:160
 msgid "_Rate:"
@@ -5500,19 +5500,19 @@ msgstr "oszlopfejléc"
 #.
 #: ../src/orca/rolenames.py:324
 msgid "cbo"
-msgstr "lgd"
+msgstr "kmb"
 
 #. Translators: long braille for the rolename of a combo box.
 #.
 #: ../src/orca/rolenames.py:327
 msgid "Combo"
-msgstr "Legördülő"
+msgstr "kombinált"
 
 #. Translators: spoken words for the rolename of a combo box.
 #.
 #: ../src/orca/rolenames.py:330
 msgid "combo box"
-msgstr "legördülő doboz"
+msgstr "kombinált listamező"
 
 #. Translators: short braille for the rolename of a date editor.
 #.
