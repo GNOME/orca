@@ -66,8 +66,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 2", 
-    ["BRAILLE LINE:  'Spinbox #1:  899 $l'",
-     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  899 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  899 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  898 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  898 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '898'"]))
@@ -79,8 +79,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 3", 
-    ["BRAILLE LINE:  'Spinbox #1:  898 $l'",
-     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  898 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  898 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  897 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  897 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '897'"]))
@@ -92,8 +92,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 4", 
-    ["BRAILLE LINE:  'Spinbox #1:  897 $l'",
-     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  897 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  897 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  896 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  896 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '896'"]))
@@ -105,8 +105,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 5", 
-    ["BRAILLE LINE:  'Spinbox #1:  896 $l'",
-     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  896 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  896 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  895 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  895 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '895'"]))
@@ -118,8 +118,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 1", 
-    ["BRAILLE LINE:  'Spinbox #1:  895 $l'",
-     "     VISIBLE:  'Spinbox #1:  895 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  895 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  895 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  896 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  896 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '896'"]))
@@ -131,8 +131,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 2", 
-    ["BRAILLE LINE:  'Spinbox #1:  896 $l'",
-     "     VISIBLE:  'Spinbox #1:  896 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  896 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  896 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  897 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  897 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '897'"]))
@@ -144,8 +144,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 3", 
-    ["BRAILLE LINE:  'Spinbox #1:  897 $l'",
-     "     VISIBLE:  'Spinbox #1:  897 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  897 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  897 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  898 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  898 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '898'"]))
@@ -157,8 +157,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 4", 
-    ["BRAILLE LINE:  'Spinbox #1:  898 $l'",
-     "     VISIBLE:  'Spinbox #1:  898 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  898 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  898 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  899 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  899 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '899'"]))
@@ -170,8 +170,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 5", 
-    ["BRAILLE LINE:  'Spinbox #1:  899 $l'",
-     "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  899 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  899 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  900 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  900 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '900'"]))
@@ -183,8 +183,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 6", 
-    ["BRAILLE LINE:  'Spinbox #1:  900 $l'",
-     "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  900 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  900 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  901 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  901 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '901'"]))
@@ -196,8 +196,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 7", 
-    ["BRAILLE LINE:  'Spinbox #1:  901 $l'",
-     "     VISIBLE:  'Spinbox #1:  901 $l', cursor=17",
+    ["BRAILLE LINE:  'Spinbox #1:  901 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1:  901 $l not fired ye', cursor=17",
      "BRAILLE LINE:  'Spinbox #1:  902 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1:  902 $l not fired ye', cursor=17",
      "SPEECH OUTPUT: '902'"]))

@@ -35,10 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks'",
-     "     VISIBLE:  'Organize Bookmarks', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks...'",
+     "     VISIBLE:  'Organize Bookmarks...', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Organize Bookmarks'"]))
+     "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))

@@ -34,9 +34,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Link Image Bugzilla New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'Home Link Image Bugzilla New bug', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+    ["BRAILLE LINE:  'Home Link Image Bugzilla'",
+     "     VISIBLE:  'Home Link Image Bugzilla', cursor=1",
+     "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
 sequence.append(PauseAction(1000))
 
 sequence.append(KeyComboAction("Down"))
@@ -45,6 +45,14 @@ sequence.append(KeyComboAction("Up"))
 ########################################################################
 # Down Arrow.
 #
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  'New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
+     "     VISIBLE:  'New bug Link · Browse Link  · ', cursor=1",
+     "SPEECH OUTPUT: 'New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
