@@ -7860,8 +7860,8 @@ class Script(default.Script):
                 for item in toAdd:
                     itemExtents = self.getExtents(item[0], item[1], item[2])
                     if self.onSameLine(extents, itemExtents):
-                       objects.append(item)
-                       done = False
+                        objects.append(item)
+                        done = False
                 if done:
                     break
             else:
