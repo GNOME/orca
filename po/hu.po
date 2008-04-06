@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-29 18:22+0100\n"
-"PO-Revision-Date: 2008-04-05 09:48+0200\n"
+"PO-Revision-Date: 2008-03-02 16:23+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -4211,7 +4211,7 @@ msgstr "Helyettesítő szó"
 #.
 #: ../src/orca/orca_gui_prefs.py:1986
 msgid "(double click)"
-msgstr "(Dupla kattintás)"
+msgstr "(Kétszer gyorsan megnyomva)"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -4219,7 +4219,7 @@ msgstr "(Dupla kattintás)"
 #.
 #: ../src/orca/orca_gui_prefs.py:1992
 msgid "(triple click)"
-msgstr "(háromszori kattintás)"
+msgstr "(Háromszor gyorsan megnyomva)"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
@@ -5182,7 +5182,7 @@ msgstr "_Pozíció:"
 
 #: ../src/orca/orca-setup.glade.h:159
 msgid "_Present tooltips"
-msgstr "Buboréksúgók megjele_nítése"
+msgstr "Buborék súgók megjele_nítése"
 
 #: ../src/orca/orca-setup.glade.h:160
 msgid "_Rate:"
@@ -5500,13 +5500,13 @@ msgstr "oszlopfejléc"
 #.
 #: ../src/orca/rolenames.py:324
 msgid "cbo"
-msgstr "kmb"
+msgstr "lgd"
 
 #. Translators: long braille for the rolename of a combo box.
 #.
 #: ../src/orca/rolenames.py:327
 msgid "Combo"
-msgstr "kombinált"
+msgstr "Legördülő"
 
 #. Translators: spoken words for the rolename of a combo box.
 #.
