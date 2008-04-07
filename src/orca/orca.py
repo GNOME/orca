@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2007 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 # We're going to force the name of the app to "orca" so pygtk
@@ -55,6 +55,7 @@ import unicodedata
 import pyatspi
 import braille
 import debug
+import dbusserver
 import httpserver
 import keynames
 import keybindings
@@ -829,6 +830,7 @@ def loadUserSettings(script=None, inputEvent=None):
 
     # Shutdown the output drivers and give them a chance to die.
     #
+    dbusserver.shutdown()
     httpserver.shutdown()
     speech.shutdown()
     braille.shutdown()
@@ -940,6 +942,7 @@ def loadUserSettings(script=None, inputEvent=None):
 
     showMainWindowGUI()
 
+    dbusserver.init()
     httpserver.init()
 
     return True

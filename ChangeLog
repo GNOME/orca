@@ -1,3 +1,23 @@
+2008-04-07  Willie Walker <william.walker@sun.com>
+
+        * test/harness/utils.py:
+          test/harness/harness.sh:
+          src/orca/settings.py:
+          src/orca/httpserver.py:
+          src/orca/dbusserver.py:
+          src/orca/orca.py:
+          src/orca/orca.in:
+          src/orca/Makefile.am:
+          Fix for bug #525348 - Orca uses wget.  This moves the
+	  watchdog and testing harness to DBus from HTTP.  It also
+	  disables the HTTP speech server in Orca by making the
+	  settings.py:httpServerPort=0 instead the old value of
+	  20433.  BTW, 20433 happened to be my old telephone 
+	  extension at work, so if that's any indication of what
+	  a hack I think the whole FireVox/Orca thing was...
+	  (it really was meant to be an interim solution until we 
+	  got FF3/Orca working.)
+
 2008-04-07  Rich Burridge <rich.burridge@sun.com>
 
         * test/harness/utils.py:

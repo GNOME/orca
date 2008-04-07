@@ -2,7 +2,7 @@
 #
 # Orca
 #
-# Copyright 2006-2007 Sun Microsystems Inc.
+# Copyright 2006-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -25,7 +25,7 @@
 # __id__        = "$Id: orca.in,v 1.22 2006/12/08 16:21:25 wwalker Exp $"
 # __version__   = "$Revision: 1.22 $"
 # __date__      = "$Date: 2006/12/08 16:21:25 $"
-# __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+# __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 # __license__   = "LGPL"
 
 # Set the user's $PATH for this script.
@@ -50,17 +50,17 @@ ARGS="$*"
 
 # The watchdog will periodically ping Orca to see if it is responding.
 # If orca isn't responding, the watchdog will kill the Orca process.
-# The watchdog logic requires 'wget', so we won't do it if we can't
-# find wget in the path.  Note also that you can force WATCHDOG=0 if you
+# The watchdog logic requires 'dbus-send', so we won't do it if we can't
+# find dbus-send in the path.  Note also that you can force WATCHDOG=0 if you
 # do not want a background process that periodically pings Orca to see
 # if it is responding.
 #
 IFS=:
-WGETCMD=
+DBUSSENDCMD=
 WATCHDOG=0
 for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
-    test -x "$dir/wget" && {
-        WGETCMD="$dir/wget"
+    test -x "$dir/dbus-send" && {
+        DBUSSENDCMD="$dir/dbus-send"
         WATCHDOG=1
         break
     }
@@ -134,7 +134,7 @@ runOrca()
 
 # Runs a watchdog process in the background.  It merely attempts to
 # get to Orca via some other means than the AT-SPI.  Here we use
-# Orca's http server at port 20433.  If it doesn't respond, then
+# a Ping on the Orca DBus service.  If it doesn't respond, then
 # we assume Orca is dead.
 #
 watchdog()
@@ -151,10 +151,12 @@ watchdog()
             then
                 exit
             else
-                $WGETCMD -q -t 0 -O /dev/null -w 2 "http://localhost:20433" || {
+                $DBUSSENDCMD --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
+                if [ "$?" -ne 0 ] 
+                then
                     echo Orca watchdog detected something bad.  Cleaning up.
                     cleanup
-                }
+                fi
             fi
         done
     ) &

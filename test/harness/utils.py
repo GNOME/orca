@@ -3,6 +3,11 @@ sure your PYTHONPATH includes the directory containing this
 file in order for the tests that use it to work.  The test
 harness does that automatically for you."""
 
+import dbus
+bus = dbus.SessionBus()
+dbusOrca = bus.get_object('org.gnome.Orca', '/')
+dbusOrcaLogging = dbus.Interface(dbusOrca, 'org.gnome.Orca.Logging')
+
 # Where to find Dojo tests.
 #
 #DojoURLPrefix="http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/"
@@ -56,10 +61,7 @@ class StartRecordingAction(AtomicAction):
             AtomicAction.__init__(self, 0, lambda: None)
 
     def _startRecording(self):
-        import sys, urllib
-        f = urllib.urlopen("http://localhost:20433", "recordStart")
-        result = f.read()
-        f.close()
+        dbusOrcaLogging.startRecording()
 
     def __str__(self):
         return 'Start Recording Action'
@@ -177,17 +179,7 @@ class AssertPresentationAction(AtomicAction):
         return expectedToFail
 
     def _stopRecording(self):
-        import sys, urllib
-
-        f = urllib.urlopen("http://localhost:20433", "recordStop")
-        result = ''
-        while True:
-            someRead = f.read()
-            result += someRead
-            if not len(someRead):
-                break
-        f.close()
-
+        result = dbusOrcaLogging.stopRecording()
         results = self._assertionPredicate(result, self._expectedResults)
         if not results:
             AssertPresentationAction.totalSucceed += 1

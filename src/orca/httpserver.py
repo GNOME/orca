@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2007 Sun Microsystems Inc.
+# Copyright 2006-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@ service."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import threading
@@ -49,11 +49,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     as a speech service.
 
     The protocol is simple: POST content is 'stop', 'speak:<text>',
-    or 'isSpeaking'.  A POST content of 'log:filename' will also
-    instruct Orca to log speech and braille output to
-    'filename.speech' and 'filename.braille'.  A POST content of
-    'debug:level:filename' will instruct Orca to send debug output
-    at 'level' (an integer value) to 'filename.debug'.
+    or 'isSpeaking'.
 
     To test this, run:
 
@@ -92,74 +88,6 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
                 self.wfile.write("%s" % speech.isSpeaking())
-            elif settings.enableRemoteLogging and inputBody.startswith("log:"):
-                import logging
-                logFile = inputBody[4:]
-                for logger in ['braille', 'speech']:
-                    log = logging.getLogger(logger)
-                    formatter = logging.Formatter('%(message)s')
-                    try:
-                        loggingFileHandlers[logger].flush()
-                        loggingFileHandlers[logger].close()
-                        log.removeHandler(loggingFileHandlers[logger])
-                    except:
-                        pass
-                    if logFile and len(logFile):
-                        loggingFileHandlers[logger] = logging.FileHandler(
-                            '%s.%s' % (logFile, logger), 'w')
-                        loggingFileHandlers[logger].setFormatter(formatter)
-                        log.addHandler(loggingFileHandlers[logger])
-                    log.setLevel(logging.INFO)
-                self.send_response(200, 'OK')
-            elif settings.enableRemoteLogging and inputBody == "recordStart":
-                import logging
-                import StringIO
-                for logger in ['braille', 'speech']:
-                    log = logging.getLogger(logger)
-                    try:
-                        [stringIO, handler] = loggingStreamHandlers[logger]
-                        handler.close()
-                        log.removeHandler(handler)
-                        stringIO.close()
-                    except:
-                        pass
-                    formatter = logging.Formatter('%(message)s')
-                    stringIO = StringIO.StringIO()
-                    handler = logging.StreamHandler(stringIO)
-                    handler.setFormatter(formatter)
-                    log.addHandler(handler)
-                    loggingStreamHandlers[logger] = [stringIO, handler]
-                    log.setLevel(logging.INFO)
-                self.send_response(200, 'OK')
-            elif settings.enableRemoteLogging and inputBody == "recordStop":
-                import logging
-                import StringIO
-                result = ''
-                for logger in ['braille', 'speech']:
-                    log = logging.getLogger(logger)
-                    try:
-                        [stringIO, handler] = loggingStreamHandlers[logger]
-                        handler.flush()
-                        handler.close()
-                        log.removeHandler(handler)
-                        result += stringIO.getvalue()
-                        stringIO.close()
-                    except:
-                        debug.printException(debug.LEVEL_OFF)
-                    stringIO = StringIO.StringIO()
-                self.send_response(200, 'OK')
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(result)
-            elif inputBody.startswith("debug:"):
-                split = inputBody.split(':')
-                debug.debugLevel = int(split[1])
-                if debug.debugFile:
-                    debug.debugFile.close()
-                    debug.debugFile = None
-                if (len(split) == 3) and (len(split[2])):
-                    debug.debugFile = open('%s.debug' % split[2], 'w', 0)
-                self.send_response(200, 'OK')
         else:
             debug.println(debug.LEVEL_FINEST,
                           "httpserver._HTTPRequestHandler received no data")

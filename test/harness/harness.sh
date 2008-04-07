@@ -261,11 +261,11 @@ do
 
             echo === $testFile
             newResultsFile=`basename $testFile .py`
-            wget --output-file /dev/null --post-data="debug:0:./tmp/$application/$newResultsFile" localhost:20433
-            wget --output-file /dev/null --post-data="log:./tmp/$application/$newResultsFile" localhost:20433
+            dbus-send --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.gnome.Orca.Logging.setDebug string:"./tmp/$application/$newResultsFile" int:0
+            dbus-send --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.gnome.Orca.Logging.setLogFile string:"./tmp/$application/$newResultsFile"
             python $testFile
-            wget --output-file /dev/null --post-data="log:" localhost:20433
-            wget --output-file /dev/null --post-data="debug:10000" localhost:20433
+            dbus-send --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.gnome.Orca.Logging.setLogFile string:""
+            dbus-send --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.gnome.Orca.Logging.setDebug string:"" int:10000
 
             # Copy the results (.orca) file to the output directory.
             # This is the file that will be used for regression

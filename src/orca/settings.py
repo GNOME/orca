@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2007 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@ case of gdm) or doesn't have the specified attribute."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
@@ -258,7 +258,7 @@ speechPitchDelta        = 0.5
 # The port to listen on if orca is to act as an HTTP server
 # (mainly as a speech server for self-voicing applications).
 #
-httpServerPort          = 20433
+httpServerPort          = 0
 
 # The number of attempts to retry setting up an HTTP server
 # connection (each time incrementing the port number by 1).
