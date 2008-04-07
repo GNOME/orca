@@ -274,9 +274,13 @@ else
         #
         if [ `egrep -c "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS` -eq 0 ]
         then
-            runOrca "NO_CLEANUP"
+            runOrca "NO_CLEANUP" &
+            orca_pid=$!
+            wait $orca_pid
         else
-            runOrca
+            runOrca &
+            orca_pid=$!
+            wait $orca_pid
         fi
     fi
 fi
