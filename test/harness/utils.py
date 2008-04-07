@@ -16,6 +16,15 @@ fullPath = os.path.abspath(wd)
 htmlDir = os.path.abspath(fullPath + "/../../html")
 htmlURLPrefix = "file://" + htmlDir + "/"
 
+createDiffs = True
+try:
+    # If the difflib module is not found, fall back to generating the
+    # old-style EXPECTED/ACTUAL output.
+    #
+    import difflib
+except:
+    createDiffs = False
+
 from macaroon.playback import *
 
 enable_assert = \
@@ -114,6 +123,59 @@ class AssertPresentationAction(AtomicAction):
         else:
             AtomicAction.__init__(self, 0, lambda: None)
 
+    def printDiffs(self, results):
+        """Compare the expected results with the actual results and print
+        out a set of diffs.
+
+        Arguments:
+        - results: the actual results.
+
+        Returns an indication of whether this test was expected to fail.
+        """
+
+        expectedToFail = False
+        print >> myErr, "DIFFERENCES FOUND:"
+        if isinstance(self._expectedResults, [].__class__):
+            for result in self._expectedResults:
+                if result.startswith("KNOWN ISSUE"):
+                    expectedToFail = True
+        else:
+            if self._expectedResults.startswith("KNOWN ISSUE"):
+                expectedToFail = True
+
+        d = difflib.Differ()
+        diffs = list(d.compare(self._expectedResults, results))
+        print >> myErr, '\n'.join(list(diffs))
+        return expectedToFail
+
+    def printResults(self, results):
+        """Print out the expected results and the actual results.
+
+        Arguments:
+        - results: the actual results.
+
+        Returns an indication of whether this test was expected to fail.
+        """
+
+        expectedToFail = False
+        print >> myErr, "EXPECTED:"
+        if isinstance(self._expectedResults, [].__class__):
+            for result in self._expectedResults:
+                if result.startswith("KNOWN ISSUE"):
+                    expectedToFail = True
+                print >> myErr, '     "%s",' % result
+        else:
+            if self._expectedResults.startswith("KNOWN ISSUE"):
+                expectedToFail = True
+            print >> myErr, '     "%s"' % self._expectedResults
+        print >> myErr, "ACTUAL:"
+        if isinstance(results, [].__class__):
+            for result in results:
+                print >> myErr, '     "%s",' % result
+        else:
+            print >> myErr, '     "%s"' % results
+        return expectedToFail
+
     def _stopRecording(self):
         import sys, urllib
 
@@ -139,23 +201,11 @@ class AssertPresentationAction(AtomicAction):
                             % (self._num, 
                                AssertPresentationAction.totalCount, 
                                self._name)
-            print >> myErr, "EXPECTED:"
-            expectedToFail = False
-            if isinstance(self._expectedResults, [].__class__):
-                for result in self._expectedResults:
-                    if result.startswith("KNOWN ISSUE"):
-                        expectedToFail = True
-                    print >> myErr, '     "%s",' % result
+            if createDiffs:
+                expectedToFail = self.printDiffs(results)
             else:
-                if self._expectedResults.startswith("KNOWN ISSUE"):
-                    expectedToFail = True
-                print >> myErr, '     "%s"' % self._expectedResults
-            print >> myErr, "ACTUAL:"
-            if isinstance(results, [].__class__):
-                for result in results:
-                    print >> myErr, '     "%s",' % result
-            else:
-                print >> myErr, '     "%s"' % results
+                expectedToFail = self.printResults(results)
+
             if expectedToFail:
                 AssertPresentationAction.totalExpectedToFail += 1
                 print >> myErr, '[FAILURE WAS EXPECTED - ' \
