@@ -1,3 +1,64 @@
+2.22.1 - 07-Apr-2008
+
+General:
+
+* Much work on regression tests.
+
+* Fix for bug #520494 - Keyboard review punctuation in Firefox
+
+* Fix for bug #523082 - text-setup should not use speech if
+  --disable=speech is used
+
+* Fix for bug #523147 - "space" keyname is not marked for translation
+
+* Fix for bug #523642 - orca_prefs.py:_writePronunciation should not
+  generate bad Python syntax
+
+* Fix for bug #523712 - Orca application specific preferences window
+  doesn't always get focus when user types Insert-Control-Space
+
+* Fix for bug #525656 - Orca needs to handle the new Pidgin typing
+  status updates
+
+OpenOffice:
+
+* Fix for bug #523018 - Orca does not speak the role for edits in the
+  find and replace dialog in OpenOffice
+
+Firefox:
+
+* Fix for bug #519478 - (ff3) missing text with line down navigation
+  (www.fixedearth.com)
+
+* Fix for bug 519587, Navigating nested lists with Collection not
+  functioning properly
+
+* Fix for bug #520029 - Better handle our presentation of images and
+  text on a web page when the image spans multiple lines
+
+* Fix for bug #520760 - (ff3) read document ignoring remainder of
+  object when first subelement is non-text
+
+* Fix for bug #523480 - Unwanted roles appearing in the braille
+  context for dojo in FF3
+
+* Fix for bug #523759 - Gecko.getCharacterOffsetInParent() needs to
+  check the parent for text
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da      Danish               Kenneth Nielsen
+    el      Greek                Giannis Katsampipis and Kostas Papadimas
+    hi      Hindi                Rajesh Ranjan
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    ja      Japanese             Takeshi Aihana
+    nn      Norwegian Nyorsk     Eskild Hustvedt
+    ta      Tamil                I. Felix
+    te      Telugu               Krishna Babu K and Sunil Mohan Adapa
+    tr      Turkish              Deniz Kocak and Baris Cicek
+
+==========
+
 2.22.0 - 09-Mar-2008
 
 General:

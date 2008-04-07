@@ -1,4 +1,4 @@
-Orca v2.22.1pre
+Orca v2.22.1
 
 Introduction
 ========================================================================
@@ -73,6 +73,15 @@ Traceback (most recent call last):
 ImportError: No module named brlapi
 
 If you run into this, install python-pyrex and rebuild/reinstall BrlTTY.
+
+NOTE FOR SPEECH DISPATCHER USERS:
+
+The Speech Dispatcher implementation in Orca is unsupported at this
+time.  It is in there as an experiment and proof of concept for how
+Orca might use Speech Dispatcher.  The only support speech system at
+this time is gnome-speech. As a result, if you are experiencing speech
+issues with Orca, please try to verify the problem when you are using
+gnome-speech before reporting a problem.
 
 Running Orca
 ========================================================================
