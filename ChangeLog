@@ -1,3 +1,9 @@
+2008-04-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/mag.py:
+          Fix for bug #519416 - Zoomer loses focus when doing a web
+          search.
+
 2008-04-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in:
