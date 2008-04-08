@@ -53,18 +53,22 @@ ARGS="$*"
 # The watchdog logic requires 'dbus-send', so we won't do it if we can't
 # find dbus-send in the path.  Note also that you can force WATCHDOG=0 if you
 # do not want a background process that periodically pings Orca to see
-# if it is responding.
+# if it is responding.  We only do this if we can get to the DBus Session
+# bus.  Otherwise, we have no hope of being able to monitor Orca.
 #
 IFS=:
 DBUSSENDCMD=
 WATCHDOG=0
-for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
-    test -x "$dir/dbus-send" && {
-        DBUSSENDCMD="$dir/dbus-send"
-        WATCHDOG=1
-        break
-    }
-done
+if [ "x$DBUS_SESSION_BUS_ADDRESS" != "x" ]
+then
+    for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
+        test -x "$dir/dbus-send" && {
+            DBUSSENDCMD="$dir/dbus-send"
+            WATCHDOG=1
+            break
+        }
+    done
+fi
 
 # Cleans up any orca-related processes that might be running,
 # restricting it to those processes owned by the user. These include
@@ -151,7 +155,7 @@ watchdog()
             then
                 exit
             else
-                $DBUSSENDCMD --reply-timeout=100 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
+                $DBUSSENDCMD --reply-timeout=5000 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
                 if [ "$?" -ne 0 ] 
                 then
                     echo Orca watchdog detected something bad.  Cleaning up.
