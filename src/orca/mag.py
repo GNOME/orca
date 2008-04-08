@@ -885,9 +885,13 @@ def magnifyAccessible(event, obj, extents=None):
         try:
             text = obj.queryText()
             if text and (text.caretOffset >= 0):
+                offset = text.caretOffset
+                if offset == text.characterCount:
+                    offset -= 1
                 [x, y, width, height] = \
-                    text.getCharacterExtents(text.caretOffset, 0)
-                haveSomethingToMagnify = True
+                    text.getCharacterExtents(offset, 0)
+                haveSomethingToMagnify = (width + height > 0)
+                    
         except:
             haveSomethingToMagnify = False
 
