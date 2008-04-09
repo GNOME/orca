@@ -30,7 +30,6 @@ import dbus.service
 import dbus.mainloop.glib
 
 import debug
-import platform
 import settings
 
 # Handlers for logging speech and braille output.
@@ -38,7 +37,13 @@ import settings
 loggingFileHandlers = {}
 loggingStreamHandlers = {}
 
+# pylint: disable-msg=R0923
+# Server: Interface not implemented
+
 class Server(dbus.service.Object):
+
+    def __init__(self, object_path, bus_name):
+        dbus.service.Object.__init__(self, None, object_path, bus_name)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logging',
                          in_signature='si', out_signature='')
@@ -148,7 +153,7 @@ def init():
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
         bus = dbus.SessionBus()
         name = dbus.service.BusName('org.gnome.Orca', bus=bus)
-        obj = Server(name, '/')
+        obj = Server('/', name)
     except:
         debug.println(debug.LEVEL_WARNING,
                       "dbusserver.py: Could not initialize DBus server")

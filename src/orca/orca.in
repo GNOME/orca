@@ -69,6 +69,8 @@ then
         }
     done
 fi
+# [[WDW - disabled the watchdog by default since it is problematic.]]
+WATCHDOG=0
 
 # Cleans up any orca-related processes that might be running,
 # restricting it to those processes owned by the user. These include
@@ -155,7 +157,7 @@ watchdog()
             then
                 exit
             else
-                $DBUSSENDCMD --reply-timeout=5000 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
+                $DBUSSENDCMD --reply-timeout=30000 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
                 if [ "$?" -ne 0 ] 
                 then
                     echo Orca watchdog detected something bad.  Cleaning up.
