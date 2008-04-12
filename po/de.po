@@ -302,7 +302,7 @@ msgstr "EBENE %d"
 #: ../src/orca/speechgenerator.py:1354 ../src/orca/speechgenerator.py:1485
 #: ../src/orca/where_am_I.py:1223 ../src/orca/where_am_I.py:1254
 msgid "toggle"
-msgstr "umschalten"
+msgstr "Umschalten"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
