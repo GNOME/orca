@@ -266,3 +266,33 @@ class Script(default.Script):
            and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
             if matchFound:
                 self.echoPreviousWord(event.source)
+
+    def getTextLineAtCaret(self, acc):
+        """Gets the line of text where the caret is.
+
+        Argument:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+
+        Returns the [string, caretOffset, startOffset] for the line of text
+        where the caret is.
+        """
+        string, caretOffset, lineOffset = \
+                default.Script.getTextLineAtCaret(self, acc)
+
+        # Sometimes, gnome-terminal will give us very odd values when
+        # the user is editing using 'vi' and has positioned the caret
+        # at the first character of the first line.  In this case, we
+        # end up getting a very large negative number for the line offset.
+        # So, we just assume the user is at the first character.
+        #
+        if lineOffset < 0:
+            caretOffset = 0
+            lineOffset = 0
+            texti = acc.queryText()
+            string, startOffset, endOffset = \
+                    texti.getTextAtOffset(0,
+                                          pyatspi.TEXT_BOUNDARY_LINE_START)
+
+        return string, caretOffset, lineOffset
+        

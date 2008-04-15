@@ -4640,24 +4640,32 @@ class Script(default.Script):
                 if isFocusedObj:
                     focusedRegion = regions[0]
             elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
-                string = text.getText(startOffset, endOffset)
-                if string.endswith(" "):
-                    endOffset -= 1
-                    string = text.getText(startOffset, endOffset)
+                string = text.getText(startOffset, endOffset).decode('utf-8')
+                string = string.rstrip()
+                endOffset = startOffset + len(string)
 
-                regions = [braille.Region(
-                    string,
-                    focusedCharacterOffset - startOffset,
-                    expandOnCursor=True)]
+                if endOffset == startOffset:
+                    continue
+
                 if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
                 else:
                     link = self.getAncestor(obj,
                                             [pyatspi.ROLE_LINK],
                                             [pyatspi.ROLE_DOCUMENT_FRAME])
+
+                if not link:
+                    regions = [braille.Text(obj, 
+                                            startOffset=startOffset, 
+                                            endOffset=endOffset)]
+
                 if link:
-                    regions.append(braille.Region(
-                        " " + rolenames.getBrailleForRoleName(link)))
+                    regions = [braille.Component(
+                            link,
+                            string + " " + \
+                                rolenames.getBrailleForRoleName(link),
+                            focusedCharacterOffset - startOffset,
+                            expandOnCursor=True)]
                 elif obj.getRole() == pyatspi.ROLE_CAPTION:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(obj)))
@@ -7602,6 +7610,28 @@ class Script(default.Script):
 
         self._updateLineCache(obj, characterOffset)
 
+    def getTextLineAtCaret(self, obj):
+        """Gets the line of text where the caret is. This is an override to accomodate
+        the intricities of our caret navigation management.
+
+        Argument:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+
+        Returns the [string, caretOffset, startOffset] for the line of text
+        where the caret is.
+        """
+
+        contextObj, contextCaret = self.getCaretContext()
+
+        string, caretOffset, startOffset = default.Script.getTextLineAtCaret(self, obj)
+
+        if contextObj == obj:
+            if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+                caretOffset = contextCaret
+        
+        return string, caretOffset, startOffset
+
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
         it returns the first [obj, caretOffset] found by an in order
@@ -8238,6 +8268,10 @@ class Script(default.Script):
     # Methods to navigate to previous and next objects.                #
     #                                                                  #
     ####################################################################
+
+    def setCaretOffset(self, obj, characterOffset):
+        self.setCaretPosition(obj, characterOffset)
+        self.updateBraille(obj)
 
     def setCaretPosition(self, obj, characterOffset):
         """Sets the caret position to the given character offset in the

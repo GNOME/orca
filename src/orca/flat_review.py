@@ -531,10 +531,19 @@ class Line:
                 # The 'isinstance(zone, TextZone)' test is a sanity check
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
-                   ((zone.accessible.getRole() == pyatspi.ROLE_TEXT) \
-                    or (zone.accessible.getRole() == \
-                                                pyatspi.ROLE_PASSWORD_TEXT) \
-                    or (zone.accessible.getRole() == pyatspi.ROLE_TERMINAL)):
+                   ((zone.accessible.getRole() in \
+                         (pyatspi.ROLE_TEXT,  
+                          pyatspi.ROLE_PASSWORD_TEXT,
+                          pyatspi.ROLE_TERMINAL)) or \
+                    # [[[TODO: Eitan - HACK: 
+                    # This is just to get FF3 cursor key routing support.
+                    # We really should not be determining all this stuff here,
+                    # it should be in the scripts. 
+                    # Same applies to roles above.]]]
+                    (zone.accessible.getRole() in \
+                         (pyatspi.ROLE_PARAGRAPH,
+                          pyatspi.ROLE_HEADING,
+                          pyatspi.ROLE_LINK))):
                     region = braille.ReviewText(zone.accessible,
                                                 zone.string,
                                                 zone.startOffset,
