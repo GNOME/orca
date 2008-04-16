@@ -37,7 +37,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb0 checkbox", 
-    [ "BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)  '",
+    [ "BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
      "     VISIBLE:  '< > CheckBox cb0: Vanilla (non-d', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box not checked'"]))
@@ -49,7 +49,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state on cb0 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)  '",
+    ["BRAILLE LINE:  '<x> CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
      "     VISIBLE:  '<x> CheckBox cb0: Vanilla (non-d', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
@@ -60,7 +60,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb1 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages  '",
+    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages'",
      "     VISIBLE:  '< > CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb1: normal checkbox, with value=foo, clicking generates console log messages check box not checked'"]))
@@ -72,7 +72,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state on cb1 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages  '",
+    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages'",
      "     VISIBLE:  '<x> CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 

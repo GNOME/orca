@@ -63,8 +63,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BUG? - We're getting an extra and",
-     "BRAILLE LINE:  'Amusing numbers fall between  $l  and  $l .'",
-     "     VISIBLE:  ' $l  and  $l .', cursor=1",
+     "BRAILLE LINE:  'Amusing numbers fall between  and  $l and  $l .'",
+     "     VISIBLE:  ' $l and  $l .', cursor=1,
      "SPEECH OUTPUT: 'Amusing numbers fall between text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -146,8 +146,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BUG? - We're not guessing this correctly",
-     "BRAILLE LINE:  ' $l '",
-     "     VISIBLE:  ' $l ', cursor=1",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -180,7 +180,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - We're not guessing this correctly",
      "BRAILLE LINE:  ' $l  $l  $l'",
      "     VISIBLE:  ' $l  $l  $l', cursor=9",
-     "SPEECH OUTPUT: 'Last text'"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

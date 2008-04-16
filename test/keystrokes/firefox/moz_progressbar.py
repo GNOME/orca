@@ -33,8 +33,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to button", 
-    ["BRAILLE LINE:  'Load schedule   Cancel'",
-     "     VISIBLE:  'Load schedule   Cancel', cursor=0",
+    ["BRAILLE LINE:  'Load schedule Cancel'",
+     "     VISIBLE:  'Load schedule Cancel', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Load schedule button'"]))
 
@@ -143,7 +143,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 
 sequence.append(utils.AssertPresentationAction(
     "progress output", 
-    ["SPEECH OUTPUT: '10 percent. '",
+    ["BUG? - We're also speaking the progress bar number.  We weren't before.  Should we be?",
+     "SPEECH OUTPUT: '10 percent. '",
      "SPEECH OUTPUT: '20 percent. '",
      "SPEECH OUTPUT: '30 percent. '",
      "SPEECH OUTPUT: '40 percent. '",

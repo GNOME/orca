@@ -96,8 +96,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -144,8 +144,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -168,8 +168,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -216,8 +216,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Commit Button      Remember values as bookmarkable template Button'",
-     "     VISIBLE:  'Commit Button      Remember ', cursor=1",
+    ["BRAILLE LINE:  'Commit Button Remember values as bookmarkable template Button'",
+     "     VISIBLE:  'Commit Button Remember values as', cursor=1",
      "SPEECH OUTPUT: 'Commit button      Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -267,9 +267,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Commit Button       Remember values as bookmarkable template Button'",
-     "     VISIBLE:  'Commit Button       Remember', cursor=1",
-     "SPEECH OUTPUT: 'Commit button       Remember values as bookmarkable template button'"]))
+    ["BRAILLE LINE:  'Commit Button Remember values as bookmarkable template Button'",
+     "     VISIBLE:  'Commit Button Remember values as', cursor=1",
+     "SPEECH OUTPUT: 'Commit button      Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -315,8 +315,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -339,8 +339,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -371,8 +371,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())

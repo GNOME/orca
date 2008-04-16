@@ -57,8 +57,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '  Short Bug Search Form Link Complicated Bug Search Form  '",
-     "     VISIBLE:  '  Short Bug Search Form Link Co', cursor=1",
+    ["BRAILLE LINE:  'Short Bug Search Form Link Complicated Bug Search Form'",
+     "     VISIBLE:  'Short Bug Search Form Link Compl', cursor=0",
      "SPEECH OUTPUT: '  Short Bug Search Form link Complicated Bug Search Form  '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -449,8 +449,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' $l and Now $l  '",
-     "     VISIBLE:  ' $l and Now $l  ', cursor=1",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text and text Now  ",
      "'"]))
 
@@ -546,8 +546,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '    < > CheckBox  and remember these as my default search options'",
-     "     VISIBLE:  '    < > CheckBox  and remembe', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  and remember these as my default search options'",
+     "     VISIBLE:  '< > CheckBox  and remember these', cursor=1",
      "SPEECH OUTPUT: '    check box not checked  and remember these as my default search options'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -586,8 +586,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'And Button       Add another boolean chart Button       '",
-     "     VISIBLE:  'And Button       Add anothe', cursor=1",
+    ["BRAILLE LINE:  'And Button Add another boolean chart Button'",
+     "     VISIBLE:  'And Button Add another boolean c', cursor=1",
      "SPEECH OUTPUT: 'And button       Add another boolean chart button       '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -621,8 +621,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'And Button       Add another boolean chart Button       '",
-     "     VISIBLE:  'And Button       Add anothe', cursor=1",
+    ["BRAILLE LINE:  'And Button Add another boolean chart Button'",
+     "     VISIBLE:  'And Button Add another boolean c', cursor=1",
      "SPEECH OUTPUT: 'And button       Add another boolean chart button       '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -661,8 +661,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '    < > CheckBox  and remember these as my default search options'",
-     "     VISIBLE:  '    < > CheckBox  and remembe', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  and remember these as my default search options'",
+     "     VISIBLE:  '< > CheckBox  and remember these', cursor=0",
      "SPEECH OUTPUT: '    check box not checked  and remember these as my default search options'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -757,8 +757,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' $l and Now $l  '",
-     "     VISIBLE:  ' $l and Now $l  ', cursor=1",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text and text Now  ",
      "'"]))
 
@@ -1150,8 +1150,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '  Short Bug Search Form Link Complicated Bug Search Form  '",
-     "     VISIBLE:  '  Short Bug Search Form Link Co', cursor=1",
+    ["BRAILLE LINE:  'Short Bug Search Form Link Complicated Bug Search Form'",
+     "     VISIBLE:  'Short Bug Search Form Link Compl', cursor=0",
      "SPEECH OUTPUT: '  Short Bug Search Form link Complicated Bug Search Form  '"]))
 
 sequence.append(utils.StartRecordingAction())

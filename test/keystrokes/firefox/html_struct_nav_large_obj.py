@@ -129,7 +129,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("o"))
 sequence.append(utils.AssertPresentationAction(
     "Fourth large chunk", 
-    ["BRAILLE LINE:  'I know how to cope with misfortune, '",
+    ["BRAILLE LINE:  'I know how to cope with misfortune,'",
      "     VISIBLE:  'I know how to cope with misfortu', cursor=1",
      "SPEECH OUTPUT: 'I know how to cope with misfortune, ",
      "how to endure bad news, ",

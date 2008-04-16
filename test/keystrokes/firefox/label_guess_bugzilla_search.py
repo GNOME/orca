@@ -434,8 +434,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l and Now $l  '",
-     "     VISIBLE:  ' $l and Now $l  ', cursor=1",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -445,8 +445,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l and Now $l  '",
-     "     VISIBLE:  ' $l and Now $l  ', cursor=9",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=9",
      "SPEECH OUTPUT: 'and text Now'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -525,9 +525,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Extra garbage",
-     "BRAILLE LINE:  '    < > CheckBox  and remember these as my default search options'",
-     "     VISIBLE:  '  < > CheckBox  and remember th', cursor=1",
+    ["BRAILLE LINE:  ' and remember these as my default search options < > CheckBox and remember these as my default search options'",
+     "     VISIBLE:  '< > CheckBox and remember these ', cursor=1",
      "SPEECH OUTPUT: 'and remember these as my default search options check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
