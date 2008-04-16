@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BUG? - We're getting an extra and",
      "BRAILLE LINE:  'Amusing numbers fall between  and  $l and  $l .'",
-     "     VISIBLE:  ' $l and  $l .', cursor=1,
+     "     VISIBLE:  ' $l and  $l .', cursor=1",
      "SPEECH OUTPUT: 'Amusing numbers fall between text'"]))
 
 sequence.append(utils.StartRecordingAction())

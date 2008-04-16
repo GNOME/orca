@@ -547,7 +547,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '< > CheckBox  and remember these as my default search options'",
-     "     VISIBLE:  '< > CheckBox  and remember these', cursor=1",
+     "     VISIBLE:  '< > CheckBox  and remember these', cursor=0",
      "SPEECH OUTPUT: '    check box not checked  and remember these as my default search options'"]))
 
 sequence.append(utils.StartRecordingAction())
