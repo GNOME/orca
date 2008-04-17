@@ -116,6 +116,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'"]))
 
 ########################################################################
@@ -135,11 +136,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: '60482'",
@@ -196,6 +199,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Fixed?'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'"]))
 
 ########################################################################
@@ -215,11 +219,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Fixed?'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: 'Fixed?'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4'",
      "SPEECH OUTPUT: 'row 1 of 14'",
      "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: '60482'",

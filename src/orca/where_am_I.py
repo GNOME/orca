@@ -460,6 +460,12 @@ class WhereAmI:
         Gaim, gedit, OpenOffice Writer and Terminal
         """
 
+        cell = self._script.getAncestor(obj,
+                                        [pyatspi.ROLE_TABLE_CELL],
+                                        [pyatspi.ROLE_FRAME])
+        if cell:
+            return self._speakTableCell(cell, basicOnly)
+
         utterances = []
         text = self._getObjLabel(obj)
         utterances.append(text)
@@ -512,9 +518,9 @@ class WhereAmI:
         3. row header of object
         4. object's role
         5. object's contents, if there are multiple columns
-        6. current row (regardless of speak cell/row setting), if
+        6. relative position
+        7. current row (regardless of speak cell/row setting), if
            performing a detailed whereAmI.
-        7. relative position
         8. if expandable/collapsible: expanded/collapsed
         9. if applicable, the level
 
@@ -536,7 +542,6 @@ class WhereAmI:
             nColumns = 0
         else:
             nColumns = table.nColumns
-
             column = table.getColumnAtIndex(obj.getIndexInParent())
             header = table.getColumnHeader(column)
             if header:
@@ -552,7 +557,7 @@ class WhereAmI:
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        if nColumns > 1:
+        if nColumns:
             text = self._getTableCell(obj)
             utterances.append(text)
 
@@ -561,43 +566,28 @@ class WhereAmI:
         speech.speakUtterances(utterances)
 
         utterances = []
-        if not basicOnly and table:
-            row = table.getRowAtIndex(
-              orca_state.locusOfFocus.getIndexInParent())
-            # Translators: this in reference to a row in a table.
+        if table:
+            # Translators: this is in references to a column in a
+            # table.
+            text = _("column %d of %d") % ((column + 1), table.nColumns)
+            utterances.append(text)
+
+            # Translators: this is in reference to a row in a table.
             #
-            text = _("row %d of %d") % ((row+1), table.nRows)
+            text = _("row %d of %d") % ((row + 1), table.nRows)
             utterances.append(text)
             speech.speakUtterances(utterances)
 
-        # Speak the current row if performing a "detailed" whereAmI.
-        #
-        if not basicOnly:
-            utterances = self._getTableRow(obj)
-            debug.println(self._debugLevel, \
-                          "second table cell utterances=%s" % \
-                          utterances)
-            speech.speakUtterances(utterances)
-
-        # Speak the remaining items.
+            # Speak the current row if performing a "detailed" whereAmI.
+            #
+            if not basicOnly:
+                utterances = self._getTableRow(obj)
+                debug.println(self._debugLevel, \
+                              "second table cell utterances=%s" % \
+                              utterances)
+                speech.speakUtterances(utterances)
+        
         utterances = []
-
-        if basicOnly:
-            try:
-                table = parent.queryTable()
-            except NotImplementedError:
-                debug.println(self._debugLevel, 
-                              "??? parent=%s" % parent.getRoleName())
-                return
-            else:
-                row = \
-                    table.getRowAtIndex(
-                       orca_state.locusOfFocus.getIndexInParent())
-                # Translators: this in reference to a row in a table.
-                #
-                text = _("row %d of %d") % ((row+1), table.nRows)
-                utterances.append(text)
-
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):

@@ -76,6 +76,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Number'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: '3'",
+     "SPEECH OUTPUT: 'column 1 of 3'",
      "SPEECH OUTPUT: 'row 1 of 5'"]))
 
 ########################################################################
@@ -108,6 +109,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Number'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: '5'",
+     "SPEECH OUTPUT: 'column 1 of 3'",
      "SPEECH OUTPUT: 'row 2 of 5'"]))
 
 ########################################################################

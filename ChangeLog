@@ -1,3 +1,12 @@
+2008-04-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_column_header.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          src/orca/where_am_I.py:
+          Fix for bug #518914 - table column number missing in whereAmI
+          info.
+
 2008-04-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/dojo_slider.py:
