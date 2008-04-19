@@ -182,7 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'WONTFIX Combo'",
      "     VISIBLE:  'WONTFIX Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'"]))
 
 ########################################################################
@@ -274,7 +274,7 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield frame about:blank internal frame'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
 
 ########################################################################

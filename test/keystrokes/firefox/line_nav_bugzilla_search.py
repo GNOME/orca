@@ -39,9 +39,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
 sequence.append(PauseAction(1000))
 
-sequence.append(KeyComboAction("Down"))
-sequence.append(KeyComboAction("Up"))
-
 ########################################################################
 # Down Arrow.
 #

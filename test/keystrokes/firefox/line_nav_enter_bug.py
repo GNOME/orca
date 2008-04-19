@@ -269,7 +269,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Commit Button Remember values as bookmarkable template Button'",
      "     VISIBLE:  'Commit Button Remember values as', cursor=1",
-     "SPEECH OUTPUT: 'Commit button      Remember values as bookmarkable template button'"]))
+     "SPEECH OUTPUT: 'Commit button       Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

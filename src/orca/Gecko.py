@@ -70,16 +70,6 @@ from orca_i18n import _
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import Q_        # to provide qualified translatable strings
 
-# Temporary debugging/testing setting.  If True, use the experimental
-# performance enhancements.
-#
-performanceEnhancements = True
-
-# Temporary debugging/testing setting.  If True, use the experimental
-# methods to find the next/previous line.
-#
-useNewLineNav = True
-
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
 #
@@ -1243,77 +1233,58 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
+        # Skip items of unknown rolenames, menu bars, labels with 
+        # children, and autocompletes.  (With autocompletes, we
+        # wind up speaking the text object)
+        #
+        skipRoles = [pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_MENU_BAR,
+                     pyatspi.ROLE_LABEL,
+                     pyatspi.ROLE_AUTOCOMPLETE]
+
+        # Stop if we get to a document frame or an internal frame.
+        #
+        stopRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
+                     pyatspi.ROLE_INTERNAL_FRAME]
+
+        # There are some objects we want to include in the context,
+        # but not add their rolenames.
+        #
+        dontSpeakRoles = [pyatspi.ROLE_TABLE_CELL,
+                          pyatspi.ROLE_FILLER]
+
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if self._script.isSameObject(parent, stopAncestor):
+            role = parent.getRole()
+            if self._script.isSameObject(parent, stopAncestor) \
+               or role in stopRoles:
                 break
 
-            # We try to omit layout things right off the bat.
-            #
-            if self._script.isLayoutOnly(parent):
+            if role in skipRoles or self._script.isLayoutOnly(parent):
                 parent = parent.parent
                 continue
 
-            # If the rolename is unknown, skip this item.
+            # If the parent is a menu and its parent is a combo box
+            # we'll speak the object as a combo box.
             #
-            if parent.getRole() == pyatspi.ROLE_UNKNOWN:
-                parent = parent.parent
-                continue
-
-            # To be consistent with how we provide access to other
-            # applications, don't speak the name of menu bars.
-            #
-            if parent.getRole() == pyatspi.ROLE_MENU_BAR:
-                parent = parent.parent
-                continue
-
-            # Skip unfocusable menus.  This is for earlier versions
-            # of Firefox where menus were nested in kind of an odd
-            # dual nested menu hierarchy.
-            #
-            if (parent.getRole() == pyatspi.ROLE_MENU) \
-               and not parent.getState().contains(pyatspi.STATE_FOCUSABLE):
-                parent = parent.parent
-                continue
-
-            # Now...autocompletes are weird.  We'll let the handling of
-            # the entry give us the name -- unless we're in a toolbar.
-            #
-            containingToolbar = \
-                  self._script.getAncestor(obj,
-                                           [pyatspi.ROLE_TOOL_BAR],
-                                           [pyatspi.ROLE_DOCUMENT_FRAME])
-            if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE and \
-               not containingToolbar:
-                parent = parent.parent
-                continue
-
-            # Labels with children should be ignored.  (This is the
-            # bugzilla form bogusity bug.)
-            #
-            if parent.getRole() == pyatspi.ROLE_LABEL:
+            if role == pyatspi.ROLE_MENU \
+               and parent.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
                 parent = parent.parent
                 continue
                 
-            # Well...now we skip the parent if it's accessible text is
-            # a single EMBEDDED_OBJECT_CHARACTER.  The reason for this
-            # is that it Script.getDisplayedText will end up coming
-            # back to the children of an object for the text in the
-            # children if an object's text contains an
-            # EMBEDDED_OBJECT_CHARACTER.
+            # Also skip the parent if its accessible text is a single 
+            # EMBEDDED_OBJECT_CHARACTER: Script.getDisplayedText will
+            # end up coming back to the child of an object for the text
+            # if an object's text contains a single EOC.
             #
             parentText = self._script.queryNonEmptyText(parent)
             if parentText:
-                displayedText = parentText.getText(0, -1)
-                unicodeText = displayedText.decode("UTF-8")
-                if unicodeText \
-                    and (len(unicodeText) == 1) \
-                    and (unicodeText[0] == \
-                                     self._script.EMBEDDED_OBJECT_CHARACTER):
+                unicodeText = parentText.getText(0, -1).decode("UTF-8")
+                if unicodeText == self._script.EMBEDDED_OBJECT_CHARACTER:
                     parent = parent.parent
                     continue
 
-            # Finally, put in the text and label (if they exist)
+            # Put in the text and label (if they exist).
             #
             text = self._script.getDisplayedText(parent)
             label = self._script.getDisplayedLabel(parent)
@@ -1324,12 +1295,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if label and len(label.strip()):
                 newUtterances.append(label)
 
-            # Well...if we made it this far, we will now append the
-            # role, then the text, and then the label.
+            # Finally add the role if it's not among the roles we don't
+            # wish to speak.
             #
-            if not parent.getRole() in [pyatspi.ROLE_TABLE_CELL,
-                                        pyatspi.ROLE_FILLER] \
-                and len(newUtterances):
+            if not role in dontSpeakRoles and len(newUtterances):
                 utterances.append(rolenames.getSpeechForRoleName(parent))
 
             utterances.extend(newUtterances)
@@ -7735,7 +7704,7 @@ class Script(default.Script):
 
         return contents
 
-    def altGetLineContents(self, obj, offset):
+    def getLineContentsAtOffset(self, obj, offset):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
         via an in-order traversal of the document contents starting at
@@ -7914,127 +7883,6 @@ class Script(default.Script):
                     parentLink = o[0].parent
 
         return objects
-
-    def getLineContentsAtOffset(self, obj, characterOffset):
-        """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
-        via an in-order traversal of the document contents starting at
-        the given object and characterOffset.  The first element in
-        the list represents the beginning of the line.  The last
-        element in the list represents the character just before the
-        beginning of the next line.
-
-        Arguments:
-        -obj: the object to start at
-        -characterOffset: the characterOffset in the object
-        """
-
-        if not obj:
-            return []
-
-        if performanceEnhancements:
-            myContents = self.altGetLineContents(obj,
-                                                 characterOffset)
-            return myContents
-        
-        # If we're looking for the current word, we'll search
-        # backwards to the beginning the current line and then
-        # forwards to the beginning of the next line.
-        #
-        contents = []
-
-        lineExtents = self.getExtents(
-            obj, characterOffset, characterOffset + 1)
-
-        [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-        # If we're in a focused HTML list, treat this object as if
-        # it's the only thing on this line.
-        #
-        limitToThis = obj.getState().contains(pyatspi.STATE_FOCUSED) \
-                      and obj.getRole() in [pyatspi.ROLE_LIST_ITEM,
-                                            pyatspi.ROLE_LIST]
-
-        while obj and not limitToThis:
-            [obj, characterOffset] = \
-                  self.findPreviousCaretInOrder(obj, characterOffset)
-
-            extents = self.getExtents(
-                obj, characterOffset, characterOffset + 1)
-
-            # [[[TODO: WDW - HACK.  I think we end up with a zero
-            # sized character when the accessible text implementation
-            # of Gecko gives us whitespace that is not visible, but
-            # is in the raw HTML source.  This should hopefully be
-            # fixed at some point, but we just ignore it for now.
-            #
-            if extents != (0, 0, 0, 0):
-                if lineExtents == (0, 0, 0, 0):
-                    lineExtents = extents
-                elif not self.onSameLine(extents, lineExtents):
-                    break
-                else:
-                    lineExtents = self.getBoundary(lineExtents, extents)
-                    [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-            # [[[TODO: JD - HACK. The numbers/bullets of a list item will
-            # have extents of (0, 0, 0, 0).  We need to work around this
-            # for now.  See bug #416971.]]]
-            #
-            elif obj.getRole() == pyatspi.ROLE_LIST_ITEM:
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-        # [[[TODO: WDW - efficiency alert - we could always start from
-        # what was passed in rather than starting at the beginning of
-        # the line.  I just want to make this work for now, though.]]]
-        #
-        [obj, characterOffset] = [lastObj, lastCharacterOffset]
-        while obj:
-            extents = self.getExtents(
-                obj, characterOffset, characterOffset + 1)
-
-            # [[[TODO: WDW - HACK.  I think we end up with a zero
-            # sized character when the accessible text implementation
-            # of Gecko gives us whitespace that is not visible, but
-            # is in the raw HTML source.  This should hopefully be
-            # fixed at some point, but we just ignore it for now.
-            #
-            if extents != (0, 0, 0, 0):
-                if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
-                   and not obj.getState().contains(pyatspi.STATE_SHOWING):
-                    # If a combo box is on the current line, only append the
-                    # menu item which is showing.
-                    #
-                    pass
-                elif not self.onSameLine(extents, lineExtents) \
-                     or (limitToThis and (lastObj != obj)):
-                    break
-                elif (lastObj == obj) and len(contents):
-                    contents[-1][2] = characterOffset + 1
-                else:
-                    contents.append([obj,
-                                     characterOffset,
-                                     characterOffset + 1])
-                lineExtents = self.getBoundary(lineExtents, extents)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-            # [[[TODO: JD - HACK. The numbers/bullets of a list item will
-            # have extents of (0, 0, 0, 0).  We need to work around this
-            # for now.  See bug #416971.]]]
-            #
-            elif (obj.getRole() == pyatspi.ROLE_LIST_ITEM) and (lastObj == obj):
-                if len(contents):
-                    contents[-1][2] = characterOffset + 1
-                else:
-                    contents.append([obj,
-                                     characterOffset,
-                                     characterOffset + 1])
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-            [obj, characterOffset] = \
-                  self.findNextCaretInOrder(obj, characterOffset)
-
-        return contents
 
     def getObjectContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -8373,7 +8221,6 @@ class Script(default.Script):
         character = self.getCharacterAtOffset(obj, characterOffset)
         if character:
             if self.isAriaWidget() \
-               or useNewLineNav \
                or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
                      and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
                 obj.queryText().setCaretOffset(characterOffset)
@@ -8475,7 +8322,7 @@ class Script(default.Script):
         self.updateBraille(obj)
         self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
 
-    def altFindPreviousLine(self, obj, characterOffset, updateCache=True):
+    def findPreviousLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the previous line in the document
         window.
 
@@ -8564,122 +8411,7 @@ class Script(default.Script):
 
         return [prevObj, prevOffset]
 
-    def findPreviousLine(self, obj, characterOffset, updateCache=True):
-        """Locates the caret offset at the previous line in the document
-        window, attempting to preserve horizontal caret position.
-
-        Arguments:
-        -obj:             the object from which the search should begin
-        -characterOffset: the offset within obj from which the search should
-                          begin
-        -updateCache:     whether or not we should update the line cache
-
-        Returns the [obj, characterOffset] at which to position the caret.
-        """
-
-        if useNewLineNav:
-            [prevObj, prevOffset] = self.altFindPreviousLine(obj,
-                                                             characterOffset,
-                                                             updateCache)
-            return [prevObj, prevOffset]
-
-        lineExtents = self.getExtents(
-            obj, characterOffset, characterOffset + 1)
-        try:
-            characterExtents = self.targetCharacterExtents
-        except:
-            characterExtents = lineExtents
-
-        #print "FPL STARTING AT", obj.getRole(), characterOffset
-
-        crossedLineBoundary = False
-        [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        while obj:
-            extents = self.getExtents(
-                obj, characterOffset, characterOffset + 1)
-            text = self.queryNonEmptyText(obj)
-            if text:
-                if characterOffset > 0:
-                    previousChar = \
-                        text.getText(characterOffset - 1, characterOffset)
-                else:
-                    previousChar = None
-                currentChar = text.getText(characterOffset,
-                                           characterOffset + 1)
-            else:
-                previousChar = None
-                currentChar = None
-
-            #print "FPL LOOKING AT", obj.getRole(), extents
-
-            # Sometimes the reported width and/or height of a character
-            # is a large negative number.  When that occurs, we want to
-            # ignore that character.
-            #
-            validExtents = True
-            if (extents[2] < 0) or (extents[3] < 0):
-                validExtents = False
-
-            # [[[TODO: WDW - HACK.  I think we end up with a zero
-            # sized character when the accessible text implementation
-            # of Gecko gives us whitespace that is not visible, but
-            # is in the raw HTML source.  This should hopefully be
-            # fixed at some point, but we just ignore it for now.
-            #
-            if validExtents and extents != (0, 0, 0, 0):
-                if not self.onSameLine(extents, lineExtents):
-                    if not crossedLineBoundary:
-                        if currentChar != "\n" and extents[1] >= 0:
-                            crossedLineBoundary = True
-                        elif previousChar == "\n":
-                            crossedLineBoundary = True
-                        elif obj.getRole() == pyatspi.ROLE_ENTRY:
-                            crossedLineBoundary = True
-                        if crossedLineBoundary:
-                            lineExtents = extents
-                    else:
-                        break
-                elif crossedLineBoundary \
-                     and (extents[0] <= characterExtents[0]):
-                    break
-                else:
-                    lineExtents = self.getBoundary(lineExtents, extents)
-
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-            [obj, characterOffset] = \
-                  self.findPreviousCaretInOrder(obj, characterOffset)
-
-        #print "FPL ENDED UP AT", lastObj.getRole(), lineExtents
-
-        contents = self.getLineContentsAtOffset(lastObj,
-                                                lastCharacterOffset)
-
-        if not len(contents):
-            return
-
-        if arrowToLineBeginning:
-            [lastObj, lastCharacterOffset, endOffset] = contents[0]
-            # [[[TODO: JD - HACK. Our work-around for the problem of
-            # list numbers/bullets having extents of (0, 0, 0, 0) means
-            # that lastCharacterOffset is the unfocusable number/bullet.
-            # Move back to the first character in the list before setting
-            # the caret position.
-            #
-            if lastObj.getRole() == pyatspi.ROLE_LIST_ITEM and not \
-               lastObj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                extents = self.getExtents(lastObj,
-                                          lastCharacterOffset,
-                                          lastCharacterOffset + 1)
-                while extents == (0, 0, 0, 0):
-                    lastCharacterOffset += 1
-                    extents = self.getExtents(lastObj,
-                                              lastCharacterOffset,
-                                              lastCharacterOffset + 1)
-
-        return [lastObj, lastCharacterOffset]
-
-    def altFindNextLine(self, obj, characterOffset, updateCache=True):
+    def findNextLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the next line in the document
         window.
 
@@ -8767,97 +8499,6 @@ class Script(default.Script):
             self._currentLineContents = nextLine
 
         return [nextObj, nextOffset]
-
-    def findNextLine(self, obj, characterOffset, updateCache=True):
-        """Locates the caret offset at the next line in the document
-        window, attempting to preserve horizontal caret position.
-
-        Arguments:
-        -obj:             the object from which the search should begin
-        -characterOffset: the offset within obj from which the search should
-                          begin
-        -updateCache:     whether or not we should update the line cache
-
-        Returns the [obj, characterOffset] at which to position the caret.
-        """
-
-        if useNewLineNav:
-            [nextObj, nextOffset] = \
-                      self.altFindNextLine(obj, characterOffset, updateCache)
-            return nextObj, nextOffset
-
-        lineExtents = self.getExtents(
-            obj, characterOffset, characterOffset + 1)
-        try:
-            characterExtents = self.targetCharacterExtents
-        except:
-            characterExtents = lineExtents
-
-        #print "FNL STARTING AT", obj.getRole(), characterOffset
-
-        crossedLineBoundary = False
-        [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        while obj:
-            extents = self.getExtents(
-                obj, characterOffset, characterOffset + 1)
-            text = self.queryNonEmptyText(obj)
-            if text:
-                if characterOffset > 0:
-                    previousChar = \
-                        text.getText(characterOffset - 1, characterOffset)
-                else:
-                    previousChar = None
-                currentChar = \
-                        text.getText(characterOffset, characterOffset + 1)
-            else:
-                previousChar = None
-                currentChar = None
-
-            #print "FNL LOOKING AT", obj.getRole(), extents
-
-            # Sometimes the reported width and/or height of a character
-            # is a large negative number.  When that occurs, we want to
-            # ignore that character.
-            #
-            validExtents = True
-            if (extents[2] < 0) or (extents[3] < 0):
-                validExtents = False
-
-            # [[[TODO: WDW - HACK.  I think we end up with a zero
-            # sized character when the accessible text implementation
-            # of Gecko gives us whitespace that is not visible, but
-            # is in the raw HTML source.  This should hopefully be
-            # fixed at some point, but we just ignore it for now.]]]
-            #
-            if validExtents and extents != (0, 0, 0, 0):
-                if not self.onSameLine(extents, lineExtents):
-                    if not crossedLineBoundary:
-                        if currentChar != "\n" and extents[1] >= 0:
-                            crossedLineBoundary = True
-                        elif previousChar == "\n":
-                            crossedLineBoundary = True
-                        elif obj.getRole() == pyatspi.ROLE_ENTRY:
-                            crossedLineBoundary = True
-                        if crossedLineBoundary:
-                            lineExtents = extents
-                            if arrowToLineBeginning:
-                                [lastObj, lastCharacterOffset] = \
-                                    [obj, characterOffset]
-                                break
-                    else:
-                        break
-                elif crossedLineBoundary \
-                     and (extents[0] >= characterExtents[0]):
-                    break
-                else:
-                    lineExtents = self.getBoundary(extents, lineExtents)
-
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-            [obj, characterOffset] = \
-                  self.findNextCaretInOrder(obj, characterOffset)
-
-        return [lastObj, lastCharacterOffset]
 
     def goPreviousLine(self, inputEvent):
         """Positions the caret offset at the previous line in the document

@@ -1,3 +1,18 @@
+2008-04-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/dojo_checkbox.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          1) Fix for bug #512103 - Orca speaks too much of the context in
+             FF3.
+          2) Fix for bug #526366 - Remove the unused line navigation code
+             from Gecko.py.
+
 2008-04-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/gtk-demo/role_table.py:

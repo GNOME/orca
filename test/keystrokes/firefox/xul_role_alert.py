@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
      "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'about:blank internal frame'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: 'about:blank page'",
      "SPEECH OUTPUT: 'about:blank html content'",
@@ -58,7 +58,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Minefield frame'",
-     "SPEECH OUTPUT: 'about:blank internal frame'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'"]))
 
 ########################################################################
