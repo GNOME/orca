@@ -5,6 +5,10 @@
           Fix for bug #519901 - Orca doesn't warn via braille that an 
           inaccessible object got the focus.
 
+        * src/orca/scripts/gaim.py:
+          Fix for bug #525644 - Pidgin buddy status changes cause Orca 
+          to display "cell" in braille
+
 2008-04-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/mag.py:

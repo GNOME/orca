@@ -751,6 +751,66 @@ class Script(default.Script):
 
         return rv, start, end
 
+    def isBuddyListEvent(self, event):
+        """If pidgin gets a status changed message for one of the users
+        buddies then just ignore it. See bug #525644 for more details.
+
+        Arguments:
+        - event: the Event
+
+        Return an indication of whether this is a buddy list event.
+        """
+
+        isBuddyListEvent = False
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TREE_TABLE, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_FILLER, \
+                     pyatspi.ROLE_PAGE_TAB, \
+                     pyatspi.ROLE_PAGE_TAB_LIST]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            isBuddyListEvent = True
+
+        return isBuddyListEvent
+
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if self.isBuddyListEvent(event):
+            return
+        else:
+            default.Script.onTextDeleted(self, event)
+
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if self.isBuddyListEvent(event):
+            return
+        else:
+            default.Script.onNameChanged(self, event)
+
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if self.isBuddyListEvent(event):
+            return
+        else:
+            default.Script.onValueChanged(self, event)
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Gaim's text
         objects.  If the object is an instant message or chat, speak
@@ -760,6 +820,9 @@ class Script(default.Script):
         Arguments:
         - event: the text inserted Event
         """
+
+        if self.isBuddyListEvent(event):
+            return
 
         chatRoomTab = self.getChatRoomTab(event.source)
         if not chatRoomTab:
