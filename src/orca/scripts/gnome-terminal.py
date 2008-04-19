@@ -93,7 +93,8 @@ class Script(default.Script):
         # and if the old locus of focus also had a "terminal role.
         # See bug #518762 for more details.
         #
-        if newLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL:
+        if newLocusOfFocus and \
+           newLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL:
             pageTab = event.source.parent.parent.parent
             if oldLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL and \
                pageTab.getRole() == pyatspi.ROLE_PAGE_TAB and \

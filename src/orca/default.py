@@ -947,6 +947,8 @@ class Script(script.Script):
             self.onValueChanged
         listeners["window:activate"]                        = \
             self.onWindowActivated
+        listeners["window:deactivate"]                      = \
+            self.onWindowDeactivated
 
         return listeners
 
@@ -3704,6 +3706,12 @@ class Script(script.Script):
           (orca_state.locusOfFocus.getApplication() == \
              event.source.getApplication()):
             speech.stop()
+
+            # Clear the braille display just in case we are about to give
+            # focus to an inaccessible application. See bug #519901 for
+            # more details.
+            #
+            braille.clear()
 
         # Because window activated and deactivated events may be
         # received in any order when switching from one application to
