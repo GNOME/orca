@@ -35,8 +35,17 @@ sequence.append(TypeAction("Editable Cells", 1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-sequence.append(KeyComboAction("Down"))
-#sequence.append(WaitForWindowActivate("Shopping list",None))
+
+# [WDW - on Solaris, the table comes up with focus.  On 
+# Ubuntu, it doesn't.  So, we conditionally add steps to
+# handle this difference -- on Ubuntu, we need to down
+# arrow to give the table focus.
+#
+import os
+if not os.sys.platform.startswith("sun"):
+    sequence.append(WaitForWindowActivate("Shopping list",None))
+    sequence.append(KeyComboAction("Down"))
+
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Table initial focus",
@@ -50,17 +59,22 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame'",
      "     VISIBLE:  'Shopping list Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
-     "     VISIBLE:  '3 bottles of coke', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
+     "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page'",
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Editable Cells'",
      "SPEECH OUTPUT: 'tree level 2'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Shopping list frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Number column header'",
-     "SPEECH OUTPUT: '3 bottles of coke'"]))
+     "SPEECH OUTPUT: '3 bottles of coke[ ]*'"])) # [WDW - the [ ]* re is to account for the last
+                                                 # column not showing on some systems (e.g.,
+                                                 # Ubuntu, but showing on others (e.g., Solaris).
+                                                 # When the last column is showing, the speech
+                                                 # generator will join a ' ' to the end.]
+                                                 # We will add this regular expression to the
+                                                 # rest of the tests as well.
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -70,8 +84,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
-     "     VISIBLE:  '3 bottles of coke', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
+     "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
      "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: 'Number'",
      "SPEECH OUTPUT: 'cell'",
@@ -91,10 +105,10 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Table down one line",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
-     "     VISIBLE:  '5 packages of noodles', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles[ ]*'",
+     "     VISIBLE:  '5 packages of noodles[ ]*', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '5 packages of noodles'"]))
+     "SPEECH OUTPUT: '5 packages of noodles[ ]*'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

@@ -1,3 +1,38 @@
+2008-04-21  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_combo_box.py:
+          test/keystrokes/gtk-demo/role_alert.py:
+          test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_icon.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          Adjust regression tests as a result of an odd side effect from
+	  the fix for bug #519901.  By listening for window deactivated
+	  events, we are no longer inserting an empty string into the 
+	  speech context.  Not sure why, but this new behavior is better
+	  than the old.  
+
+	  In addition, also got to the bottom of why role_table.py was
+	  giving us differences between Ubuntu and Solaris -- turns out
+	  the 3rd column of the table is hidden on Ubuntu, but is exposed
+	  on Solaris.  Adjusted the tests by adding a regular expression
+	  to match on optional extra whitespace.
+
+	  Finally, also in row_table.py, we are indeed seeing different
+	  behavior between Hardy w/GNOME 2.22.1 and Solaris with
+	  Vermillion 88 (GNOME 2.22.20).  The difference is that you need
+	  to down arrow into the table on Ubuntu, but not on Solaris.
+	  Adjusted the rest, reluctantly, to do the down arrow only if you
+	  are not on Solaris.
+
+	  With these changes, gtk-demo runs wonderfully on snv_87 with
+	  Vermillion 88.  The only failures are the ones we expect
+	  (KNOWN_ISSUE and BUG?).  Yee Haa!
+
 2008-04-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-terminal.py:

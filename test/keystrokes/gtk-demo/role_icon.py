@@ -54,7 +54,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Icon View Basics'",
      "SPEECH OUTPUT: 'tree level 2'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'GtkIconView demo frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'layered pane'"]))

@@ -45,7 +45,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Printing'",
      "SPEECH OUTPUT: 'tree level 1'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Print Print Pages Copies'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'tab list'",

@@ -44,7 +44,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
      "SPEECH OUTPUT: 'Application main window'",
      "SPEECH OUTPUT: 'tree level 1'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Open button'"]))
