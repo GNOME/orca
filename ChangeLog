@@ -1,5 +1,12 @@
 2008-04-21  Willie Walker <william.walker@sun.com>
 
+        * NEWS:
+	  README:
+	  configure.in:
+          Prep for Orca v2.23.1
+	
+2008-04-21  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/gtk-demo/role_combo_box.py:
           test/keystrokes/gtk-demo/role_alert.py:
           test/keystrokes/gtk-demo/role_push_button.py:
