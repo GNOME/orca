@@ -453,12 +453,16 @@ class SpeechServer(speechserver.SpeechServer):
 
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
 
-        # Turn off punctuation if the speaker allows us to do so.  We
-        # do this because we want to handle spoken punctuation on our
-        # own.
+        # Turn off punctuation.  We do this because we want to handle
+        # spoken punctuation on our own.  Only do so if "punctuation mode" 
+        # is available (see # bug #528797).
         #
         try:
-            speaker.setParameterValue("punctuation mode", 0.0)
+            parameters = speaker.getSupportedParameters()
+            for parameter in parameters:
+                if parameter.name == "punctuation mode":
+                    speaker.setParameterValue("punctuation mode", 0.0)
+                    break
         except:
             pass
 
