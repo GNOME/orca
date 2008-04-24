@@ -32,7 +32,6 @@ import speech
 import braille
 import gobject
 import settings
-import orca
 
 class BoundingBox:
     """A bounding box, currently it is used to test if a given point is
@@ -310,7 +309,10 @@ class MouseReviewer:
         return top_window[0]
 
 # Initialize a singleton reviewer.
-mouse_reviewer = MouseReviewer()
+if gtk.gdk.display_get_default():
+    mouse_reviewer = MouseReviewer()
+else:
+    raise RuntimeError('Cannot initialize mouse review, no display')
 
 def toggle(script=None, event=None):
     """

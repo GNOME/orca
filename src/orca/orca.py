@@ -41,8 +41,13 @@ try:
     # the desktop is not running.
     #
     import gtk
-    import mouse_review
 except:
+    pass
+
+try:
+    # If we don't have an active desktop, we will get a RuntimeError.
+    import mouse_review
+except RuntimeError:
     pass
 
 import getopt
