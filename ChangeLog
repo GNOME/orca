@@ -1,3 +1,9 @@
+2008-04-24  Willie Walker <william.walker@sun.com>
+
+	* src/orca/gnomespeechfactory.py: Fix for bug #528797 -
+	  gnome-speech inappropriately uses g_return_if_fail.
+          Only set "punctuation mode" if we can.
+
 2008-04-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-terminal.py:
