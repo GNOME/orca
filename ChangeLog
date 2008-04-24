@@ -1,3 +1,9 @@
+2008-04-24  William Walker <william.walker@sun.com>
+
+	* src/orca/orca.in:
+	  Additional fix for bug #525831 - isn't properly handling SIGTERM.
+	  Needed to fix this so orca_console_prefs would work again.
+
 2008-04-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: Fix for bug #528797 -
