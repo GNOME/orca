@@ -1,3 +1,9 @@
+2008-04-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/app_gui_prefs.py:
+          Fixed bug #523731 - Pidgin events interfere with app-specific
+          Prefs dialog.
+
 2008-04-24  William Walker <william.walker@sun.com>
 
 	* src/orca/orca.in:

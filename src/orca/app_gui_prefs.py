@@ -94,7 +94,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
         vbox = self.appScript.getAppPreferencesGUI()
         if vbox:
-            label = gtk.Label(orca_state.locusOfFocus.getApplication().name)
+            label = gtk.Label(orca_state.activeScript.app.name)
             self.get_widget("notebook").append_page(vbox, label)
 
     def _createPronunciationTreeView(self, pronunciations=None):
@@ -118,7 +118,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         # Adjust the title of the app-specific Orca Preferences dialog to
         # include the name of the application.
         #
-        self.app = orca_state.locusOfFocus.getApplication()
+        self.app = orca_state.activeScript.app
         self.applicationName = self.app.name 
         title = _("Orca Preferences for %s") % self.applicationName
         self.get_widget("orcaSetupWindow").set_title(title)
@@ -294,7 +294,7 @@ def showPreferencesUI():
 
     # The name of the application that currently has focus.
     #
-    applicationName = orca_state.locusOfFocus.getApplication().name
+    applicationName = orca_state.activeScript.app.name
 
     removeGeneralPane = False
     if not orca_state.appOS and not orca_state.orcaOS:
