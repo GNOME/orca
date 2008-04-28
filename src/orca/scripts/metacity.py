@@ -67,6 +67,16 @@ class Script(default.Script):
         #
         speech.stop()
 
+        # If the window was iconified, then obj.name will be surronded by
+        # brackets. If this is the case, remove them before comparing the
+        # name against the various window names. See bug #522797 for more
+        # details.
+        #
+        objName = obj.name
+        if objName and len(objName):
+            if objName[0] == "[" and objName[-1] == "]":
+                objName = objName[1:-1]
+
         # Do we know about this window?  Traverse through our list of apps
         # and go through the toplevel windows in each to see if we know
         # about this one.  If we do, it's accessible.  If we don't, it is
@@ -79,11 +89,11 @@ class Script(default.Script):
                 win = app.getChildAtIndex(i)
                 if win is None:
                     print "app error " + app.name
-                elif win.name == obj.name:
+                elif win.name == objName:
                     found = True
                 i = i + 1
 
-        text = obj.name
+        text = objName
 
         # Translators: the "Workspace " and "Desk " strings are
         # the prefix of what metacity shows when you press
