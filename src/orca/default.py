@@ -691,18 +691,6 @@ class Script(script.Script):
                 #
                 _("Enters learn mode.  Press escape to exit learn mode."))
 
-        self.inputEventHandlers["exitLearnModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.exitLearnMode,
-                # Translators: Orca has a "Learn Mode" that will allow
-                # the user to type any key on the keyboard and hear what
-                # the effects of that key would be.  The effects might
-                # be what Orca would do if it had a handler for the
-                # particular key combination, or they might just be to
-                # echo the name of the key if Orca doesn't have a handler.
-                #
-                _("Exits learn mode."))
-
         self.inputEventHandlers["decreaseSpeechRateHandler"] = \
             input_event.InputEventHandler(
                 speech.decreaseSpeechRate,
@@ -1969,10 +1957,6 @@ class Script(script.Script):
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
         """
-
-        if (keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT) and \
-           (keyboardEvent.event_string == "Escape"):
-            settings.learnModeEnabled = False
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
@@ -4068,13 +4052,6 @@ class Script(script.Script):
         if settings.learnModeEnabled:
             return True
 
-        self.exitLearnModeKeyBinding = keybindings.KeyBinding(
-            "Escape",
-            0,
-            0,
-            self.inputEventHandlers["exitLearnModeHandler"])
-        self.keyBindings.add(self.exitLearnModeKeyBinding)
-
         speech.speak(
             # Translators: Orca has a "Learn Mode" that will allow
             # the user to type any key on the keyboard and hear what
@@ -4098,28 +4075,6 @@ class Script(script.Script):
         #
         braille.displayMessage(_("Learn mode.  Press escape to exit."))
         settings.learnModeEnabled = True
-        return True
-
-    def exitLearnMode(self, inputEvent=None):
-        """Turns learn mode off.
-
-        Returns True to indicate the input event has been consumed.
-        """
-
-        self.keyBindings.remove(self.exitLearnModeKeyBinding)
-
-        # Translators: Orca has a "Learn Mode" that will allow
-        # the user to type any key on the keyboard and hear what
-        # the effects of that key would be.  The effects might
-        # be what Orca would do if it had a handler for the
-        # particular key combination, or they might just be to
-        # echo the name of the key if Orca doesn't have a handler.
-        # Exiting learn mode puts the user back in normal operating
-        # mode.
-        #
-        message = _("Exiting learn mode.")
-        speech.speak(message)
-        braille.displayMessage(message)
         return True
 
     def pursueForFlatReview(self, obj):
