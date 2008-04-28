@@ -8,6 +8,11 @@
           Fixed bug #522797 - Orca should not speak false "inaccessible"
           messages when switching applications
 
+        * src/orca/default.py:
+          src/orca/orca.py:
+          Fixed bug #528507 - Escape doesn't exit "learn mode" if the
+          active script changes.
+
 2008-04-24  William Walker <william.walker@sun.com>
 
 	* src/orca/orca.in:

@@ -297,6 +297,27 @@ def cycleDebugLevel(script=None, inputEvent=None):
 
     return True
 
+def exitLearnMode(self, inputEvent=None):
+    """Turns learn mode off.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    # Translators: Orca has a "Learn Mode" that will allow
+    # the user to type any key on the keyboard and hear what
+    # the effects of that key would be.  The effects might
+    # be what Orca would do if it had a handler for the
+    # particular key combination, or they might just be to
+    # echo the name of the key if Orca doesn't have a handler.
+    # Exiting learn mode puts the user back in normal operating
+    # mode.
+    #
+    message = _("Exiting learn mode.")
+    speech.speak(message)
+    braille.displayMessage(message)
+    settings.learnModeEnabled = False
+    return True
+
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
@@ -739,6 +760,10 @@ def _processKeyboardEvent(event):
                         event_string = keyboardEvent.event_string
                         event_string = keynames.getKeyName(event_string)
                         speech.speak(event_string)
+                elif (event.type == pyatspi.KEY_RELEASED_EVENT) and \
+                     (keyboardEvent.event_string == "Escape"):
+                    exitLearnMode(keyboardEvent)
+
                 consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)
