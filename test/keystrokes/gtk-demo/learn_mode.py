@@ -73,8 +73,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "Exit learn mode",
-    ["BRAILLE LINE:  'Exiting learn mode.'",
+    ["BRAILLE LINE:  'Escape'",
+     "     VISIBLE:  'Escape', cursor=0",
+     "BRAILLE LINE:  'Exiting learn mode.'",
      "     VISIBLE:  'Exiting learn mode.', cursor=0",
+     "SPEECH OUTPUT: 'Escape'",
      "SPEECH OUTPUT: 'Exiting learn mode.'"]))
 
 # Just a little extra wait to let some events get through.
