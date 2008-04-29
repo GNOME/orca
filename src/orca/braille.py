@@ -36,8 +36,6 @@ log = logging.getLogger("braille")
 
 import signal
 
-import pyatspi
-
 try:
     import louis
 except ImportError:

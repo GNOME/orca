@@ -25,12 +25,14 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Eitan Isaacson"
 __license__   = "LGPL"
 
-import pyatspi
 import wnck
 import gtk
+import gobject
+
+import orca
+import pyatspi
 import speech
 import braille
-import gobject
 import settings
 
 class BoundingBox:

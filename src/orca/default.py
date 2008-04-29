@@ -6796,7 +6796,7 @@ class Script(script.Script):
         try:
             texti = obj.queryText()
         except:
-           return None
+            return None
 
         texti.setCaretOffset(offset)
 
