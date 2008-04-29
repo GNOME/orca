@@ -59,6 +59,10 @@ prefixChatMessage = False
 #
 announceBuddyTyping = False
 
+# Whether we provide chat room specific message histories.
+#
+chatRoomHistories = False
+
 # Possible ways of how Orca should speak pidgin chat messages.
 #
 SPEAK_ALL_MESSAGES              = 0
@@ -330,14 +334,21 @@ class Script(default.Script):
         # chat room messages and the other that will contain the names
         # of the associated chat rooms.
         #
-        self.previousMessages = RingList(Script.MESSAGE_LIST_LENGTH)
+        self.allPreviousMessages = RingList(Script.MESSAGE_LIST_LENGTH)
         self.previousChatRoomNames = RingList(Script.MESSAGE_LIST_LENGTH)
+
+        # Create a dictionary that will be used to contain chat room
+        # specific message histories. The key will be the chat room
+        # name and the value will be a cyclic list of previous messages
+        # for that chat room.
+        #
+        self.chatRoomMessages = {}
 
         # Initially populate the cyclic lists with empty strings.
         #
         i = 0
-        while i < self.previousMessages.maxsize():
-            self.previousMessages.append("")
+        while i < self.allPreviousMessages.maxsize():
+            self.allPreviousMessages.append("")
             i += 1
 
         i = 0
@@ -366,6 +377,7 @@ class Script(default.Script):
         self.allChannelsRadioButton = None
         self.allMessagesRadioButton = None
         self.buddyTypingCheckButton = None
+        self.chatRoomHistoriesCheckButton = None
 
         default.Script.__init__(self, app)
 
@@ -400,6 +412,12 @@ class Script(default.Script):
                 Script.toggleBuddyTyping,
                 _("Toggle whether we announce when our buddies are typing."))
 
+        self.inputEventHandlers["toggleMessageHistoriesHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleMessageHistories,
+                _("Toggle whether we provide chat room specific message " \
+                  "histories."))
+
         # Add the chat room message history event handler.
         #
         self.inputEventHandlers["reviewMessage"] = \
@@ -431,6 +449,13 @@ class Script(default.Script):
                 None,
                 None,
                 self.inputEventHandlers["toggleBuddyTypingHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                None,
+                None,
+                self.inputEventHandlers["toggleMessageHistoriesHandler"]))
 
         # keybindings to provide chat room message history.
         #
@@ -485,6 +510,19 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, self.buddyTypingCheckButton, False, False, 0)
         gtk.ToggleButton.set_active(self.buddyTypingCheckButton,
                                     announceBuddyTyping)
+
+        # Translators: If this checkbox is checked, then Orca will provide
+        # the user with chat room specific message histories rather than just
+        # a single history which contains the latest messages from all the
+        # chat rooms that they are currently in.
+        #
+        label = _("Provide chat room specific _message histories")
+        self.chatRoomHistoriesCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.chatRoomHistoriesCheckButton)
+        gtk.Box.pack_start(vbox, self.chatRoomHistoriesCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.chatRoomHistoriesCheckButton,
+                                    chatRoomHistories)
 
         # "Speak Messages" frame.
         #
@@ -557,7 +595,8 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global announceBuddyTyping, prefixChatMessage, speakMessages
+        global announceBuddyTyping, chatRoomHistories
+        global prefixChatMessage, speakMessages
 
         prefixChatMessage = self.speakNameCheckButton.get_active()
         prefs.writelines("\n")
@@ -567,6 +606,10 @@ class Script(default.Script):
         announceBuddyTyping = self.buddyTypingCheckButton.get_active()
         prefs.writelines("orca.scripts.gaim.announceBuddyTyping = %s\n" % \
                          announceBuddyTyping)
+
+        chatRoomHistories = self.chatRoomHistoriesCheckButton.get_active()
+        prefs.writelines("orca.scripts.gaim.chatRoomHistories = %s\n" % \
+                         chatRoomHistories)
 
         if self.allMessagesRadioButton.get_active():
             speakMessages = SPEAK_ALL_MESSAGES
@@ -585,8 +628,9 @@ class Script(default.Script):
         object will be use by setAppState to restore any state information
         that was being maintained by the script."""
         return [default.Script.getAppState(self),
-                self.previousMessages,
+                self.allPreviousMessages,
                 self.previousChatRoomNames,
+                self.chatRoomMessages,
                 self.chatAreas]
 
     def setAppState(self, appState):
@@ -597,8 +641,9 @@ class Script(default.Script):
         """
         try:
             [defaultAppState,
-             self.previousMessages,
+             self.allPreviousMessages,
              self.previousChatRoomNames,
+             self.chatRoomMessages,
              self.chatAreas] = appState
             default.Script.setAppState(self, defaultAppState)
         except:
@@ -645,6 +690,26 @@ class Script(default.Script):
 
         return True
 
+    def toggleMessageHistories(self, inputEvent):
+        """ Toggle whether we provide chat room specific message histories.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        global chatRoomHistories
+
+        debug.println(self.debugLevel, "gaim.toggleMessageHistories.")
+
+        line = _("Provide chat room specific message histories.")
+        chatRoomHistories = not chatRoomHistories
+        if not chatRoomHistories:
+            line = _("Do not provide chat room specific message histories.")
+
+        speech.speak(line)
+
+        return True
+
     def utterMessage(self, chatRoomName, message, hasFocus=True):
         """ Speak/braille a chat room message.
 
@@ -686,12 +751,18 @@ class Script(default.Script):
         i = int(inputEvent.event_string[1:])
         messageNo = Script.MESSAGE_LIST_LENGTH - i
 
-        chatRoomNames = self.previousChatRoomNames.get()
-        chatRoomName = chatRoomNames[messageNo]
+        if chatRoomHistories:
+            chatRoomTab = self.getChatRoomTab(orca_state.locusOfFocus)
+            chatRoomName = self.getDisplayedText(chatRoomTab)
+            if not chatRoomName in self.chatRoomMessages:
+                return
+            messages = self.chatRoomMessages[chatRoomName].get()
+        else:
+            chatRoomNames = self.previousChatRoomNames.get()
+            chatRoomName = chatRoomNames[messageNo]
+            messages = self.allPreviousMessages.get()
 
-        messages = self.previousMessages.get()
         message = messages[messageNo]
-
         self.utterMessage(chatRoomName, message)
 
     def getChatRoomTab(self, obj):
@@ -844,7 +915,7 @@ class Script(default.Script):
         # children-changed events and clean up in that.]]]
         #
         chatArea = None
-        if not self.chatAreas.has_key(chatRoomTab):
+        if not chatRoomTab in self.chatAreas:
             # Different message types (AIM, IRC ...) have a different
             # component hierarchy for their chat rooms. By testing
             # with AIM and IRC, we've found that the messages area for
@@ -861,6 +932,19 @@ class Script(default.Script):
                 chatArea = self.chatAreas[chatRoomTab]
         else:
             chatArea = self.chatAreas[chatRoomTab]
+
+        # Create a new cyclic message list for this chat room name
+        # (if one doesn't already exist) and populate it with empty
+        # strings.
+        #
+        chatRoomName = self.getDisplayedText(chatRoomTab)
+        if not chatRoomName in self.chatRoomMessages:
+            self.chatRoomMessages[chatRoomName] = \
+                                 RingList(Script.MESSAGE_LIST_LENGTH)
+            i = 0
+            while i < self.chatRoomMessages[chatRoomName].maxsize():
+                self.chatRoomMessages[chatRoomName].append("")
+                i += 1
 
         if event.source and (event.source == chatArea):
             # We always automatically go back to focus tracking mode when
@@ -906,8 +990,12 @@ class Script(default.Script):
             # We don't want to do this for the status messages however.
             #
             if not self.lastStatus:
-                self.previousMessages.append(message)
+                chatRoomName = self.getDisplayedText(chatRoomTab)
+
+                self.allPreviousMessages.append(message)
                 self.previousChatRoomNames.append(chatRoomName)
+
+                self.chatRoomMessages[chatRoomName].append(message)
 
         elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
              and orca_state.lastNonModifierKeyEvent \
@@ -960,7 +1048,10 @@ class Script(default.Script):
         if not self.isInBuddyList(obj):
             return default.Script.getNodeLevel(self, obj)
 
-        obj = obj.parent[obj.getIndexInParent() - 1]
+        try:
+            obj = obj.parent[obj.getIndexInParent() - 1]
+        except:
+            return -1
 
         try:
             table = obj.parent.queryTable()

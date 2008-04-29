@@ -1,3 +1,9 @@
+2008-04-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          Fix for bug #474673 - Add option to have chatroom-specific message
+          histories in Pidgin.
+
 2008-04-29  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/gdmlogin.py:	
