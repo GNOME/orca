@@ -278,6 +278,21 @@ class OrcaPrefs:
         else:
             return "orca.settings.BRAILLE_SEL_NONE"
 
+    def _getBrailleLinkIndicatorString(self, linkIndicator):
+        """Returns a string that represents the braille link indicator
+        value passed in."""
+
+        if linkIndicator == settings.BRAILLE_LINK_NONE:
+            return "orca.settings.BRAILLE_LINK_NONE"
+        elif linkIndicator == settings.BRAILLE_LINK_7:
+            return "orca.settings.BRAILLE_LINK_7"
+        elif linkIndicator == settings.BRAILLE_LINK_8:
+            return "orca.settings.BRAILLE_LINK_8"
+        elif linkIndicator == settings.BRAILLE_LINK_BOTH:
+            return "orca.settings.BRAILLE_LINK_BOTH"
+        else:
+            return "orca.settings.BRAILLE_LINK_NONE"
+
     def _getVerbosityString(self, verbosityLevel):
         """Returns a string that represents the verbosity level passed in."""
 
@@ -668,6 +683,8 @@ class OrcaPrefs:
                 value = self._getBrailleRolenameStyleString(prefsDict[key])
             elif key == "brailleSelectorIndicator":
                 value = self._getBrailleSelectionIndicatorString(prefsDict[key])
+            elif key == "brailleLinkIndicator":
+                value = self._getBrailleLinkIndicatorString(prefsDict[key])
             elif key == "verbalizePunctuationStyle":
                 value = self._getVerbalizePunctuationStyleString(prefsDict[key])
             elif key == "sayAllStyle":

@@ -2110,6 +2110,7 @@ class Script(script.Script):
 
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(obj, line)
+            line = self.adjustForLinks(obj, line)
             line = self.adjustForRepeats(line)
             speech.speak(line, voice)
             self.speakTextSelectionState(obj, startOffset, caretOffset)
@@ -4011,6 +4012,14 @@ class Script(script.Script):
 
             self.outputCharAttributes(userAttrList, attributes)
 
+            # If this is a hypertext link, then let the user know:
+            #
+            if self.getLinkIndex(orca_state.locusOfFocus, caretOffset) >= 0:
+                # Translators: this indicates that this piece of
+                # text is a hypertext link.
+                #
+                speech.speak(_("link"))
+
         return True
 
     def reportScriptInfo(self, inputEvent=None):
@@ -5726,6 +5735,45 @@ class Script(script.Script):
                 line += segment
         else:
             line += segment
+
+        return line
+
+    def adjustForLinks(self, obj, line):
+        """Adjust line to include the word "link" after any hypertext links.
+
+        Arguments:
+        - obj: the accessible object that this line came from.
+        - line: the string to adjust for links.
+
+        Returns: a new line adjusted for repeat character counts (if enabled).
+        """
+
+        try:
+            hyperText = obj.queryHypertext()
+            nLinks = hyperText.getNLinks()
+        except:
+            nLinks = 0
+
+        n = nLinks
+        while n > 0:
+            link = hyperText.getLink(n-1)
+
+            # If the link was not followed by a whitespace or punctuation
+            # character, then add in a space to make it more presentable.
+            #
+            trailingChar = " "
+            if link.endIndex < len(line) and \
+               (line[link.endIndex] in self.whitespace or \
+                punctuation_settings.getPunctuationInfo(line[link.endIndex])):
+                trailingChar = ""
+
+            # Translators: this indicates that this piece of
+            # text is a hypertext link.
+            #
+            line = line[0:link.endIndex] + " " + _("link") + \
+                   trailingChar + line[link.endIndex:]
+
+            n -= 1
 
         return line
 

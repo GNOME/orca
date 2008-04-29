@@ -105,6 +105,7 @@ userCustomizableSettings = [
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
+    "brailleLinkIndicator",
     "enableBrailleMonitor",
     "enableMagnifier",
     "enableMagLiveUpdating",
@@ -228,6 +229,16 @@ BRAILLE_SEL_7    = 0x40 # 01000000
 BRAILLE_SEL_8    = 0x80 # 10000000
 BRAILLE_SEL_BOTH = 0xc0 # 11000000
 brailleSelectorIndicator = BRAILLE_SEL_BOTH
+
+# Braille Link Indicator (see brailleLinkIndicator).
+# The values represent the character to be used in the attrOr
+# field of brlAPI's writeStruct.
+#
+BRAILLE_LINK_NONE = 0x00 # 00000000
+BRAILLE_LINK_7    = 0x40 # 01000000
+BRAILLE_LINK_8    = 0x80 # 10000000
+BRAILLE_LINK_BOTH = 0xc0 # 11000000
+brailleLinkIndicator = BRAILLE_LINK_BOTH
 
 # Speech punctuation levels (see verbalizePunctuationStyle).
 #

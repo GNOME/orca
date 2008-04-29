@@ -1504,7 +1504,7 @@ class WhereAmI:
         textOffset = startOffset
 
         for i in range(0, len(line)):
-            attribs = self._getAttributesForChar(text, textOffset, line, i)
+            attribs = self._getAttributesForChar(obj, text, textOffset, line, i)
             debug.println(self._debugLevel,
                           "line attribs <%s>" % (attribs))
             if attribs:
@@ -1519,7 +1519,7 @@ class WhereAmI:
 
         return newLine
 
-    def _getAttributesForChar(self, text, textOffset, line, lineIndex):
+    def _getAttributesForChar(self, obj, text, textOffset, line, lineIndex):
 
         keys = [ "style", "weight", "underline" ]
         attribStr = ""
@@ -1555,6 +1555,15 @@ class WhereAmI:
                         else:
                             attribStr += " "
                             attribStr += (key + " " + attribute)
+
+            # Also check to see if this is a hypertext link.
+            #
+            if self._script.getLinkIndex(obj, textOffset) >= 0:
+                attribStr += " "
+                # Translators: this indicates that this piece of
+                # text is a hypertext link.
+                #
+                attribStr += _("link")
 
             debug.println(self._debugLevel,
                           "char <%s>: %s" % (line[lineIndex], attribStr))

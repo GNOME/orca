@@ -1513,6 +1513,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             self.get_widget("brailleSelectionNoneButton").set_active(True)
 
+        linkIndicator = prefs["brailleLinkIndicator"]
+        if linkIndicator == settings.BRAILLE_LINK_7:
+            self.get_widget("brailleLink7Button").set_active(True)
+        elif linkIndicator == settings.BRAILLE_LINK_8:
+            self.get_widget("brailleLink8Button").set_active(True)
+        elif linkIndicator == settings.BRAILLE_LINK_BOTH:
+            self.get_widget("brailleLinkBothButton").set_active(True)
+        else:
+            self.get_widget("brailleLinkNoneButton").set_active(True)
+
         # Key Echo pane.
         #
         self.get_widget("keyEchoCheckbutton").set_active( \
@@ -2546,6 +2556,47 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             else:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_NONE
+
+    def brailleLinkChanged(self, widget):
+        """Signal handler for the "toggled" signal for the
+           brailleLinkNoneButton, brailleLink7Button,
+           brailleLink8Button or brailleLinkBothButton
+           GtkRadioButton widgets. The user has toggled the braille
+           link indicator value. If this signal was generated
+           as the result of a radio button getting selected (as
+           opposed to a radio button losing the selection), set the
+           'brailleLinkIndicator' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            # Translators: A single braille cell on a refreshable
+            # braille display consists of 8 dots.  If the user
+            # chooses this setting, the dot in the bottom left
+            # corner will be used to 'underline' text of interest.
+            #
+            if widget.get_label() == _("Dot _7"):
+                self.prefsDict["brailleLinkIndicator"] = \
+                    settings.BRAILLE_LINK_7
+            # Translators: If the user chooses this setting, the
+            # dot in the bottom right corner of the braille cell
+            # will be used to 'underline' text of interest.
+            #
+            elif widget.get_label() == _("Dot _8"):
+                self.prefsDict["brailleLinkIndicator"] = \
+                    settings.BRAILLE_LINK_8
+            # Translators: If the user chooses this setting, the
+            # two dots at the bottom of the braille cell will be
+            # used to 'underline' text of interest.
+            #
+            elif widget.get_label() == _("Dots 7 an_d 8"):
+                self.prefsDict["brailleLinkIndicator"] = \
+                    settings.BRAILLE_LINK_BOTH
+            else:
+                self.prefsDict["brailleLinkIndicator"] = \
+                    settings.BRAILLE_LINK_NONE
 
     def brailleIndicatorChanged(self, widget):
         """Signal handler for the "toggled" signal for the

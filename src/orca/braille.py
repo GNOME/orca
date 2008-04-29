@@ -465,6 +465,8 @@ class Text(Region):
         if orca_state.activeScript:
             [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
+        else:
+            string = ""
 
         string = string.decode("UTF-8")
 
@@ -562,7 +564,26 @@ class Text(Region):
 
         attrIndicator = settings.textAttributesBrailleIndicator
         selIndicator = settings.brailleSelectorIndicator
+        linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript
+
+        if linkIndicator != settings.BRAILLE_LINK_NONE:
+            try:
+                hyperText = self.accessible.queryHypertext()
+                nLinks = hyperText.getNLinks()
+            except:
+                nLinks = 0
+
+            n = 0
+            while n < nLinks:
+                link = hyperText.getLink(n)
+                if self.lineOffset <= link.startIndex:
+                    for i in xrange(link.startIndex, link.endIndex):
+                        try:
+                            regionMask[i] |= linkIndicator
+                        except:
+                            pass
+                n += 1
 
         if attrIndicator:
             enabledAttributes = script.attribsToDictionary(

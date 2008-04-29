@@ -4,6 +4,15 @@
           Fix for bug #474673 - Add option to have chatroom-specific message
           histories in Pidgin.
 
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/braille.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #426010 - Implement Verbalized Links.
+
 2008-04-29  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/gdmlogin.py:	
