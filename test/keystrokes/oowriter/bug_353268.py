@@ -61,8 +61,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Arrow down over first line of text",
-    ["BRAILLE LINE:  'Line 1 $l'",
-     "     VISIBLE:  'Line 1 $l', cursor=1",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Line 2 $l'",
      "     VISIBLE:  'Line 2 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 2'"]))
@@ -75,8 +75,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Arrow down over second line of text",
-    ["BRAILLE LINE:  'Line 2 $l'",
-     "     VISIBLE:  'Line 2 $l', cursor=1",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))

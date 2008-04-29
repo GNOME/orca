@@ -82,8 +82,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to enter the table",
-    ["BRAILLE LINE:  'Line 1 $l'",
-     "     VISIBLE:  'Line 1 $l', cursor=1",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'Cell A1'"]))
 

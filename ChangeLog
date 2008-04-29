@@ -13,6 +13,18 @@
           src/orca/orca_gui_prefs.py:
           Fixed bug #426010 - Implement Verbalized Links.
 
+        * test/keystrokes/oowriter/bug_450210.py:
+          test/keystrokes/oowriter/bug_382415.py:
+          test/keystrokes/oowriter/bug_353268.py:
+          test/keystrokes/oowriter/bug_350219.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_382880.py:
+          test/keystrokes/oowriter/bug_385828.py:
+          test/keystrokes/oowriter/bug_362979.py:
+          test/keystrokes/oowriter/bug_382888.py:
+          Work on bug #523438 - oowriter regression tests need work.
+
 2008-04-29  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/gdmlogin.py:	

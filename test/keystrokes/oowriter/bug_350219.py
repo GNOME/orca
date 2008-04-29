@@ -34,7 +34,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Untitled2 - OpenOffice.org Write', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane Panel'",
      "     VISIBLE:  'Panel', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Untitled2 - OpenOffice.org Writer frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'panel'"]))

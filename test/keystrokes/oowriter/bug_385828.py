@@ -40,11 +40,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'aw-5blue (read-only) - OpenOffic', cursor=1",
      "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog'",
      "     VISIBLE:  'Agenda Wizard Dialog', cursor=1",
-     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog Steps Panel Page design $l'",
-     "     VISIBLE:  'Page design $l', cursor=1",
-     "SPEECH OUTPUT: ''",
+     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog Steps Panel  $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'aw-5blue (read-only) - OpenOffice.org Writer frame'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Agenda Wizard'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page design label'"]))
