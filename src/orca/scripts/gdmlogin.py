@@ -28,6 +28,7 @@ __license__   = "LGPL"
 
 import orca.default as default
 import orca.orca as orca
+import orca.settings as settings
 
 ########################################################################
 #                                                                      #
@@ -59,3 +60,13 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
         else:
             default.Script.onWindowActivated(self, event)
+
+    def activate(self):
+        """Called when this script is activated."""
+        # We disable key echo because gdm reuses the username text
+        # area for the password area and doesn't change the role 
+        # from 'text' to 'password' when doing so.  As a result,
+        # key echo will echo the keys typed when entering a password.
+        # See bug #517387.
+        #
+        settings.enableKeyEcho = False
