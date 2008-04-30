@@ -1439,6 +1439,36 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             else:
                 self._iterativePageSummary(obj)
 
+    def _speakText(self, obj, basicOnly):
+        """Speaks the line if the current line contains embedded object
+        characters; otherwise calls the parent class.
+        """
+
+        line = self._script.currentLineContents
+        if not self._script.inDocumentContent(obj) \
+           or not line or len(line) == 1:
+            return where_am_I.WhereAmI._speakText(self, obj, basicOnly)
+
+        cell = self._script.getAncestor(obj,
+                                        [pyatspi.ROLE_TABLE_CELL],
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
+        if cell:
+            return self._speakTableCell(cell, basicOnly)
+
+        utterances = []
+        text = self._getObjLabel(obj)
+        utterances.append(text)
+
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            text = rolenames.getSpeechForRoleName(obj.parent)
+        else:
+            text = rolenames.getSpeechForRoleName(obj)
+        
+        utterances.append(text)
+        
+        speech.speakUtterances(utterances)
+        self._script.speakContents(line)
+
     def _speakDefaultButton(self, obj):
         """Speaks the default button in a dialog.
 
@@ -1994,7 +2024,7 @@ class Script(default.Script):
         # getLineContentsAtOffset() twice.
         #
         self._previousLineContents = None
-        self._currentLineContents = None
+        self.currentLineContents = None
         self._nextLineContents = None
 
         # Last focused frame. We are only interested in frame focused events
@@ -4492,22 +4522,22 @@ class Script(default.Script):
         - offset: the character offset within obj
         """
 
-        index = self.findObjectOnLine(obj, offset, self._currentLineContents)
+        index = self.findObjectOnLine(obj, offset, self.currentLineContents)
         if index < 0:
             index = self.findObjectOnLine(obj, 
                                           offset, 
                                           self._previousLineContents)
             if index >= 0:
-                self._nextLineContents = self._currentLineContents
-                self._currentLineContents = self._previousLineContents
+                self._nextLineContents = self.currentLineContents
+                self.currentLineContents = self._previousLineContents
                 self._previousLineContents = None
             else:
                 index = self.findObjectOnLine(obj, 
                                               offset, 
                                               self._nextLineContents)
                 if index >= 0:
-                    self._previousLineContents = self._currentLineContents
-                    self._currentLineContents = self._nextLineContents
+                    self._previousLineContents = self.currentLineContents
+                    self.currentLineContents = self._nextLineContents
                     self._nextLineContents = None
                 else:
                     self._destroyLineCache()
@@ -4516,7 +4546,7 @@ class Script(default.Script):
         """Removes all of the stored lines."""
 
         self._previousLineContents = None
-        self._currentLineContents = None
+        self.currentLineContents = None
         self._nextLineContents = None
 
     def presentLine(self, obj, offset):
@@ -4527,12 +4557,12 @@ class Script(default.Script):
         - offset: the offset within obj
         """
 
-        contents = self._currentLineContents
+        contents = self.currentLineContents
         index = self.findObjectOnLine(obj, offset, contents)
         if index < 0:
-            self._currentLineContents = self.getLineContentsAtOffset(obj,
+            self.currentLineContents = self.getLineContentsAtOffset(obj,
                                                                      offset)
-        self.speakContents(self._currentLineContents)
+        self.speakContents(self.currentLineContents)
         self.updateBraille(obj)
 
     def updateBraille(self, obj, extraRegion=None):
@@ -4577,14 +4607,14 @@ class Script(default.Script):
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
                 needToRefresh = True
 
-        contents = self._currentLineContents
+        contents = self.currentLineContents
         index = self.findObjectOnLine(focusedObj, 
                                       max(0, lineContentsOffset),
                                       contents)
         if index < 0 or needToRefresh:
             contents = self.getLineContentsAtOffset(focusedObj,
                                                     max(0, lineContentsOffset))
-            self._currentLineContents = contents
+            self.currentLineContents = contents
 
         if not len(contents):
             return
@@ -6276,7 +6306,7 @@ class Script(default.Script):
         extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
 
-        lineContents = self._currentLineContents
+        lineContents = self.currentLineContents
         ourIndex = self.findObjectOnLine(obj, 0, lineContents)
         if ourIndex < 0:
             lineContents = self.getLineContentsAtOffset(obj, 0)
@@ -6421,7 +6451,7 @@ class Script(default.Script):
         objExtents = \
                [extents.x, extents.y, extents.width, extents.height]
 
-        index = self.findObjectOnLine(obj, 0, self._currentLineContents)
+        index = self.findObjectOnLine(obj, 0, self.currentLineContents)
         if index > 0 and self._previousLineContents:
             prevLineContents = self._previousLineContents
             prevObj = prevLineContents[0][0]
@@ -8460,7 +8490,7 @@ class Script(default.Script):
         if not obj:
             return self.getTopOfFile()
 
-        currentLine = self._currentLineContents
+        currentLine = self.currentLineContents
         index = self.findObjectOnLine(obj, characterOffset, currentLine)
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
@@ -8525,8 +8555,8 @@ class Script(default.Script):
                     break
 
         if updateCache:
-            self._nextLineContents = self._currentLineContents
-            self._currentLineContents = prevLine
+            self._nextLineContents = self.currentLineContents
+            self.currentLineContents = prevLine
 
         return [prevObj, prevOffset]
 
@@ -8664,7 +8694,7 @@ class Script(default.Script):
         if not obj:
             return self.getBottomOfFile()
 
-        currentLine = self._currentLineContents
+        currentLine = self.currentLineContents
         index = self.findObjectOnLine(obj, characterOffset, currentLine)
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
@@ -8729,8 +8759,8 @@ class Script(default.Script):
                     break
 
         if updateCache:
-            self._previousLineContents = self._currentLineContents
-            self._currentLineContents = nextLine
+            self._previousLineContents = self.currentLineContents
+            self.currentLineContents = nextLine
 
         return [nextObj, nextOffset]
 
@@ -9262,14 +9292,14 @@ class Script(default.Script):
         if obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
             obj = obj.parent.parent
             characterOffset = self.getCharacterOffsetInParent(obj)
-            self._currentLineContents = None
+            self.currentLineContents = None
 
         characterOffset = max(0, characterOffset)
         [prevObj, prevOffset] = [obj, characterOffset]
         found = False
         mayHaveGoneTooFar = False
 
-        line = self._currentLineContents \
+        line = self.currentLineContents \
                or self.getLineContentsAtOffset(obj, characterOffset)
         startingPoint = line
         useful = self.getMeaningfulObjectsFromLine(line)
@@ -9308,11 +9338,11 @@ class Script(default.Script):
             if not found:
                 self._nextLineContents = line
                 prevLine = self.findPreviousLine(line[0][0], line[0][1])
-                line = self._currentLineContents
+                line = self.currentLineContents
                 useful = self.getMeaningfulObjectsFromLine(line)
                 prevObj = useful[-1][0]
                 prevOffset = useful[-1][1]
-                if self._currentLineContents == self._nextLineContents:
+                if self.currentLineContents == self._nextLineContents:
                     break
 
         if not found:
@@ -9337,7 +9367,7 @@ class Script(default.Script):
                 prevOffset = useful[index][1]
 
         if found:
-            self._currentLineContents = line
+            self.currentLineContents = line
             self.setCaretPosition(prevObj, prevOffset)
             self.updateBraille(prevObj)
             objectContents = self.getObjectContentsAtOffset(prevObj,
@@ -9355,13 +9385,13 @@ class Script(default.Script):
         if obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
             obj = obj.parent.parent
             characterOffset = self.getCharacterOffsetInParent(obj)
-            self._currentLineContents = None
+            self.currentLineContents = None
 
         characterOffset = max(0, characterOffset)
         [nextObj, nextOffset] = [obj, characterOffset]
         found = False
 
-        line = self._currentLineContents \
+        line = self.currentLineContents \
                or self.getLineContentsAtOffset(obj, characterOffset)
 
         while line and not found:
@@ -9379,8 +9409,8 @@ class Script(default.Script):
                 self._previousLineContents = line
                 [nextObj, nextOffset] = self.findNextLine(line[-1][0], 
                                                           line[-1][2])
-                line = self._currentLineContents
-                if self._currentLineContents == self._previousLineContents:
+                line = self.currentLineContents
+                if self.currentLineContents == self._previousLineContents:
                     break
 
         if not found:
@@ -9400,7 +9430,7 @@ class Script(default.Script):
             found = not (nextObj is None)
 
         if found:
-            self._currentLineContents = line
+            self.currentLineContents = line
             self.setCaretPosition(nextObj, nextOffset)
             self.updateBraille(nextObj)
             objectContents = self.getObjectContentsAtOffset(nextObj,
