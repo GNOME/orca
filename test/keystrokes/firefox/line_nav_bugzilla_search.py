@@ -54,8 +54,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Short Bug Search Form Link Complicated Bug Search Form'",
+    ["BUG? - For some reason we're getting the page load information",
+     "BRAILLE LINE:  'Short Bug Search Form Link Complicated Bug Search Form'",
      "     VISIBLE:  'Short Bug Search Form Link Compl', cursor=0",
+     "BRAILLE LINE:  'Search for bugs'",
+     "     VISIBLE:  'Search for bugs', cursor=0",
+     "BRAILLE LINE:  'Short Bug Search Form Link Complicated Bug Search Form'",
+     "     VISIBLE:  'Short Bug Search Form Link Compl', cursor=0",
+     "SPEECH OUTPUT: '  Short Bug Search Form link Complicated Bug Search Form  '",
+     "SPEECH OUTPUT: 'Search for bugs page'",
      "SPEECH OUTPUT: '  Short Bug Search Form link Complicated Bug Search Form  '"]))
 
 sequence.append(utils.StartRecordingAction())

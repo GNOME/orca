@@ -47,6 +47,8 @@ sequence.append(utils.AssertPresentationAction(
     "First large chunk", 
     ["BRAILLE LINE:  'I have of late but'",
      "     VISIBLE:  'I have of late but', cursor=1",
+     "BRAILLE LINE:  'I have of late but'",
+     "     VISIBLE:  'I have of late but', cursor=1",
      "SPEECH OUTPUT: 'I have of late but",
      "wherefore I know not lost all my mirth,",
      "forgone all custom of exercises;",

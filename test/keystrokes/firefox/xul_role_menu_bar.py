@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Location  $l', cursor=10",
      "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: 'Location autocomplete'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Location text '",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Toolbars menu'",]))

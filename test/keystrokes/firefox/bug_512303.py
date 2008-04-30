@@ -42,8 +42,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'this is a caption for this table Caption'",
+    ["BUG? - For some reason we're repeating ourselves",
+     "BRAILLE LINE:  'this is a caption for this table Caption'",
      "     VISIBLE:  'this is a caption for this table', cursor=1",
+     "BRAILLE LINE:  'this is a caption for this table Caption'",
+     "     VISIBLE:  'this is a caption for this table', cursor=1",
+     "SPEECH OUTPUT: 'this is a caption for this table caption'",
      "SPEECH OUTPUT: 'this is a caption for this table caption'"]))
 
 sequence.append(utils.StartRecordingAction())

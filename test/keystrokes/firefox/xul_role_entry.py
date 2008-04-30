@@ -15,7 +15,7 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate("Minefield",None))
 
 ########################################################################
-# Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
+# Open the "Bookmarks" menu, Down Arrow to Organize Bookmarks, then 
 # press Return.
 #
 sequence.append(KeyComboAction("<Alt>b"))
@@ -23,10 +23,15 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
 
 ########################################################################
-# Down Arrow to select Bookmarks menu (necessary to add a new item).
-# Then Press Alt+O for Organize and Return on "New Bookmark..."
+# Tab three times, then down arrow twice to Bookmarks Menu. (This is
+# necessary to add a new item).  Then Press Alt+O for Organize and Return
+# on "New Bookmark..."
 #
-sequence.append(KeyComboAction("Down", 3000))
+sequence.append(KeyComboAction("Tab", 1000))
+sequence.append(KeyComboAction("Tab", 1000))
+sequence.append(KeyComboAction("Tab", 1000))
+sequence.append(KeyComboAction("Down", 1000))
+sequence.append(KeyComboAction("Down", 1000))
 sequence.append(KeyComboAction("<Alt>o"))
 sequence.append(KeyComboAction("Return", 1000))
 
@@ -313,40 +318,40 @@ sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  this $l'",
-     "     VISIBLE:  ' this $l', cursor=2",
-     "SPEECH OUTPUT: 't'"]))
+     "     VISIBLE:  ' this $l', cursor=1",
+     "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this $l'",
-     "     VISIBLE:  'this $l', cursor=2",
-     "SPEECH OUTPUT: 'h'"]))
+     "     VISIBLE:  'this $l', cursor=1",
+     "SPEECH OUTPUT: 't'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog his $l'",
-     "     VISIBLE:  'his $l', cursor=2",
-     "SPEECH OUTPUT: 'i'"]))
+     "     VISIBLE:  'his $l', cursor=1",
+     "SPEECH OUTPUT: 'h'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog is $l'",
-     "     VISIBLE:  'is $l', cursor=2",
-     "SPEECH OUTPUT: 's'"]))
+     "     VISIBLE:  'is $l', cursor=1",
+     "SPEECH OUTPUT: 'i'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog s $l'",
-     "     VISIBLE:  's $l', cursor=2",
-     "SPEECH OUTPUT: ''"]))
+     "     VISIBLE:  's $l', cursor=1",
+     "SPEECH OUTPUT: 's'"]))
 
 ########################################################################
 # Press Tab to get to the Location entry.

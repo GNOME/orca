@@ -51,6 +51,8 @@ sequence.append(utils.AssertPresentationAction(
     "q to first quote", 
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
+     "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
+     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'"]))
 
 ########################################################################

@@ -35,6 +35,8 @@ sequence.append(utils.AssertPresentationAction(
     "Navigate to 'This is a Heading 6.'",
     ["BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
+     "BRAILLE LINE:  'This is a Heading 6. h6'",
+     "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "SPEECH OUTPUT: 'This is a Heading 6. heading  '",
      "SPEECH OUTPUT: 'level 6'"]))
 
@@ -47,18 +49,19 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(30000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I for page summary info",
-    ["BUG? - Seems that we're no longer indicating the percent",
+    ["BUG? - Seems that we're no longer indicating the percent of document read",
      "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
-     "SPEECH OUTPUT: 'This is a Heading 6.'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'heading'",
+     "SPEECH OUTPUT: 'This is a Heading 6.'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '14 headings'",
      "SPEECH OUTPUT: '3 forms'",
      "SPEECH OUTPUT: '47 tables'",
-     "SPEECH OUTPUT: '19 unvisited links'",
-     "SPEECH OUTPUT: '1 percent of document read'"]))
+     "SPEECH OUTPUT: '19 unvisited links'"]))
 
 ########################################################################
 # Close the demo

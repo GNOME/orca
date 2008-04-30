@@ -24,17 +24,17 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("inline: Tree Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
+sequence.append(PauseAction(5000))
+
 ########################################################################
 # Tab to the tree.  
-#[[[Bug?: repeated Braille]]]
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Fruits", acc_role=pyatspi.ROLE_LIST_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "tab to tree", 
     ["BRAILLE LINE:  'Fruits ListItem'",
-     "     VISIBLE:  'Fruits ListItem', cursor=1",
-     "BRAILLE LINE:  'Fruits ListItem'",
      "     VISIBLE:  'Fruits ListItem', cursor=1",
      "BRAILLE LINE:  'Fruits ListItem'",
      "     VISIBLE:  'Fruits ListItem', cursor=1",
@@ -198,9 +198,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "collapse vegetables", 
-    ["[[[Bug: list and panel should probably not be output]]]",
-     "BRAILLE LINE:  'Vegetables ListItem'",
-     "     VISIBLE:  'Vegetables ListItem', cursor=1",
+    ["Bug? - list and panel should probably not be output",
+     "BRAILLE LINE:  'Vegetables ListItem Panel List'",
+     "     VISIBLE:  'Vegetables ListItem Panel List', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################

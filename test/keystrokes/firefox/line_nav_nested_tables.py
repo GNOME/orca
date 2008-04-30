@@ -64,8 +64,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. line Down",
-    ["BRAILLE LINE:  'Below is a list of the courses that make up your learning plan.'",
+    ["BUG? - For some reason we're repeating ourselves",
+     "BRAILLE LINE:  'Below is a list of the courses that make up your learning plan.'",
      "     VISIBLE:  'Below is a list of the courses t', cursor=1",
+     "BRAILLE LINE:  'Below is a list of the courses that make up your learning plan.'",
+     "     VISIBLE:  'Below is a list of the courses t', cursor=1",
+     "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan.'",
      "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan.'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -40,6 +40,20 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Severity link : Severity normal combo box'"]))
 
 ########################################################################
+# Press Tab once to get to the Severity link. 
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to Severity combo box", 
+    ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
+     "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
+     "BRAILLE LINE:  'Severity Link : Severity normal Combo'",
+     "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Severity link'"]))
+
+########################################################################
 # Press Tab once to get to the Severity combo box.  This combo box
 # has a proper label (the Severity link that precedes it).
 #
@@ -48,16 +62,14 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
-    ["BUG? - For some reason we're also speaking the link that precedes the combo box",
-     "BRAILLE LINE:  'Severity Link : Severity normal Combo'",
+    ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
      "     VISIBLE:  'normal Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity normal combo box'"]))
 
 ########################################################################
 # Press Tab twice to get to the Priority combo box.  This combo box
-# lacks a proper label. Label guess should guess "Priority" from the
-# link that precedes it.
+# lacks a proper label. 
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -81,69 +93,30 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Normal combo box'"]))
 
 ########################################################################
-# Press Tab once to get to the Resolution combo box.  This combo box
-# lacks a proper label. Label guess should guess "Resolution" from the
-# text above it. 
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
-sequence.append(utils.AssertPresentationAction(
-    "Tab to Resolution combo box", 
-    ["BRAILLE LINE:  'FIXED Combo'",
-     "     VISIBLE:  'FIXED Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
-
-########################################################################
-# Press Down Arrow to change the selection to WONTFIX.  
+# Press Down Arrow to change the selection to Low.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Change selection Down: WONTFIX",
+    "Change selection Down: Low",
     ["BUG? - We're picking up the previous menu item in the braille context",
-     "BRAILLE LINE:  'FIXED Combo WONTFIX'",
-     "     VISIBLE:  'FIXED Combo WONTFIX', cursor=13",
+     "BRAILLE LINE:  'Normal Combo Low'",
+     "     VISIBLE:  'Normal Combo Low', cursor=14",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'WONTFIX'"]))
+     "SPEECH OUTPUT: 'Low'"]))
 
 ########################################################################
-# Press Down Arrow to change the selection to NOTABUG
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Change selection Down: NOTABUG", 
-    ["BRAILLE LINE:  'WONTFIX Combo NOTABUG'",
-     "     VISIBLE:  'WONTFIX Combo NOTABUG', cursor=15",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'NOTABUG'"]))
-
-########################################################################
-# Press Up Arrow to change the selection back to WONTFIX.
+# Press Up Arrow to change the selection back to Normal.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Change selection Up: WONTFIX",
+    "Change selection Up: Normal",
     ["BUG? - We're picking up the previous menu item in the braille context",
-     "BRAILLE LINE:  'FIXED Combo WONTFIX'",
-     "     VISIBLE:  'FIXED Combo WONTFIX', cursor=13",
+     "BRAILLE LINE:  'High Combo Normal'",
+     "     VISIBLE:  'High Combo Normal', cursor=12",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'WONTFIX'"]))
-
-########################################################################
-# Press Up Arrow to change the selection back to FIXED.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "Change selection Up: FIXED", 
-    ["BRAILLE LINE:  'FIXED'",
-     "     VISIBLE:  'FIXED', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'FIXED'"]))
+     "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
 # Press Alt Down Arrow to expand the combo box.  
@@ -152,81 +125,89 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "Alt Down to Expand",
-    ["BRAILLE LINE:  'FIXED Combo'",
-     "     VISIBLE:  'FIXED Combo', cursor=1",
-     "BRAILLE LINE:  'FIXED'",
-     "     VISIBLE:  'FIXED', cursor=1",
+    ["BRAILLE LINE:  'Priority Link : Normal Combo'",
+     "     VISIBLE:  'Priority Link : Normal Combo', cursor=17",
+     "BRAILLE LINE:  'Normal'",
+     "     VISIBLE:  'Normal', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'FIXED combo box'",
+     "SPEECH OUTPUT: 'Normal combo box'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'FIXED'"]))
+     "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
-# Press Down Arrow to change the selection back to WONTFIX.
+# Press Down Arrow to change the selection back to Low.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Change selection Down: WONTFIX",
-    ["BRAILLE LINE:  'WONTFIX'",
-     "     VISIBLE:  'WONTFIX', cursor=1",
+    "Change selection Down: Low",
+    ["BRAILLE LINE:  'Low'",
+     "     VISIBLE:  'Low', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'WONTFIX'"]))
+     "SPEECH OUTPUT: 'Low'"]))
 
 ########################################################################
-# Press Return to collapse the combo box with WONTFIX selected.
+# Press Return to collapse the combo box with Low selected.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
-    ["BRAILLE LINE:  'WONTFIX Combo'",
-     "     VISIBLE:  'WONTFIX Combo', cursor=1",
+    ["BRAILLE LINE:  'Priority Link : Low Combo'",
+     "     VISIBLE:  'Priority Link : Low Combo', cursor=17",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'"]))
+     "SPEECH OUTPUT: 'Low combo box'"]))
 
 ########################################################################
-# Press Tab once to get to the Version combo box.  This combo box
-# lacks a proper label. Label guess should guess "Version" from the
-# text in the table cell on the left.
+# Press Tab once to get to the Resolution combo box.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab",
-    ["BRAILLE LINE:  'Version 2.16 Combo'",
-     "     VISIBLE:  'Version 2.16 Combo', cursor=9",
+    ["BRAILLE LINE:  'FIXED Combo'",
+     "     VISIBLE:  'FIXED Combo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
+     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
 
 ########################################################################
-# Press Left Arrow once to move off of this combo box and onto the
-# 'n' at the end of "Version".
+# Press Left Arrow once to move off of this combo box.
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left out of combo box", 
-    ["BRAILLE LINE:  'Version 2.16 Combo'",
-     "     VISIBLE:  'Version 2.16 Combo', cursor=0",
-     "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
+    ["BRAILLE LINE:  'FIXED Combo'",
+     "     VISIBLE:  'FIXED Combo', cursor=0",
+     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
 
 ########################################################################
-# Press Down Arrow once to move to the next line which contains
-# the text "Component" in a table cell.
+# Press Down Arrow once to move to the next line.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down to Component",
+    "Line Down",
+    ["BRAILLE LINE:  'Version 2.16 Combo'",
+     "     VISIBLE:  'Version 2.16 Combo', cursor=1",
+     "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
+
+########################################################################
+# Press Down Arrow again to move to the next line which contains the
+# word Component.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
     ["BRAILLE LINE:  'Component'",
      "     VISIBLE:  'Component', cursor=1",
      "SPEECH OUTPUT: 'Component'"]))
 
 ########################################################################
-# Press Down Arrow again to move to the next line which contains
-# a combo box.
+# Press Down Arrow again to move to the next line which contains a
+# combo box.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -254,19 +235,19 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Speech'"]))
 
 ########################################################################
-# Press Down Arrow to change the selection to Braille.
+# Press Down Arrow to change the selection.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Change selection Down: Braille", 
+    "Change selection Down", 
     ["BRAILLE LINE:  'Braille'",
      "     VISIBLE:  'Braille', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Braille'"]))
 
 ########################################################################
-# Press Return to collapse the combo box with Braille selected.
+# Press Return to collapse the combo box.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

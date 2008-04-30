@@ -46,7 +46,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("anchors.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
@@ -58,7 +57,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("blockquotes.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
@@ -70,7 +68,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("anchors.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
@@ -85,7 +82,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("textattributes.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u wrapping to bottom",
     ["BRAILLE LINE:  '• textattributes.html Link'",
@@ -98,7 +94,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
-sequence.append(WaitForFocus("tables.html", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to tables.html",
     ["BRAILLE LINE:  '• tables.html Link'",
@@ -122,7 +117,6 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
@@ -134,7 +128,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "u to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
@@ -158,7 +151,6 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "v to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
@@ -170,7 +162,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "v to tables.html link", 
     ["BRAILLE LINE:  '• tables.html Link'",
@@ -182,7 +173,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "v to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html Link'",
@@ -195,7 +185,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>v"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LINK))
 sequence.append(utils.AssertPresentationAction(
     "shift + v to tables.html link", 
     ["BRAILLE LINE:  '• tables.html Link'",

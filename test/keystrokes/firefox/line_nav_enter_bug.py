@@ -72,8 +72,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'reported bugs Link , and please search Link  or browse Link  for the bug.'",
-     "     VISIBLE:  'reported bugs Link , and please ', cursor=1",
+    ["BUG? - We're missing some info in braille",
+     "BRAILLE LINE:  'reported bugs Link  search Link  browse Link '",
+     "     VISIBLE:  'reported bugs Link  search Link ', cursor=1",
      "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -112,8 +113,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'version Link :'",
-     "     VISIBLE:  'version Link :', cursor=1",
+    ["BUG? - We're missing the colon in the braille",
+     "BRAILLE LINE:  'version Link '",
+     "     VISIBLE:  'version Link ', cursor=1",
      "SPEECH OUTPUT: 'version link :'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -395,8 +397,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'reported bugs Link , and please search Link  or browse Link  for the bug.'",
-     "     VISIBLE:  'reported bugs Link , and please ', cursor=1",
+    ["BUG? - We're missing some info in braille",
+     "BRAILLE LINE:  'reported bugs Link  search Link  browse Link '",
+     "     VISIBLE:  'reported bugs Link  search Link ', cursor=1",
      "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())

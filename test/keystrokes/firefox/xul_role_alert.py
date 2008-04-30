@@ -40,7 +40,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: 'about:blank page'",
      "SPEECH OUTPUT: 'about:blank html content'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '[JavaScript Application] I am an alert'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'OK button'"]))

@@ -200,9 +200,9 @@ sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "move to entry", 
     ["BUG? - We're not guessing the label",
-     "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l'",
+     "BRAILLE LINE:  'Slider1 Value: 10.0% $l'",
      "     VISIBLE:  'Slider1 Value: 10.0% $l', cursor=21",
-     "BRAILLE LINE:  '10.0% $l Slider1 Value: 10.0% $l'",
+     "BRAILLE LINE:  'Slider1 Value: 10.0% $l'",
      "     VISIBLE:  'Slider1 Value: 10.0% $l', cursor=21",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'text 10.0%'"]))

@@ -127,7 +127,10 @@ class WhereAmI:
         elif role == pyatspi.ROLE_LIST_ITEM:
             self._speakListItem(obj, basicOnly)
 
-        elif role == pyatspi.ROLE_PARAGRAPH:
+        elif role in [pyatspi.ROLE_PARAGRAPH,
+                      pyatspi.ROLE_SECTION,
+                      pyatspi.ROLE_HEADING,
+                      pyatspi.ROLE_DOCUMENT_FRAME]:
             self._speakParagraph(obj, basicOnly)
 
         elif role == pyatspi.ROLE_ICON:
@@ -716,8 +719,9 @@ class WhereAmI:
         if link_uri:
             link_uri_info = urlparse.urlparse(link_uri)
         else:
-            # something is wrong, just return
-            return
+            # It might be an anchor.  Try to speak the text.
+            #
+            return self._speakText(obj, basicOnly)
       
         # Try to get the URI of the active document and parse it
         doc_uri = self._script.getDocumentFrameURI()

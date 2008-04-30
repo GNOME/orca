@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
@@ -144,7 +144,7 @@ sequence.append(utils.AssertPresentationAction(
     "First letter navigation with s",
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show a blank page'",
+     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'",
      "     VISIBLE:  'Show my home page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'",
@@ -171,7 +171,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? -  Techically the parent of the focused menu item (what combo boxes contain) is a menu, but in this case we presumably want to indicate that the focused item is a combo box.",
      "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
-     "SPEECH OUTPUT: 'Show my windows and tabs from last time menu'",
+     "SPEECH OUTPUT: 'Show a blank page menu'",
      "SPEECH OUTPUT: 'Show a blank page'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'item 1 of 1'",

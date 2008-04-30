@@ -31,12 +31,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton'",
-     "     VISIBLE:  '& y Font Larger + ToggleButton', cursor=1",
-     "BRAILLE LINE:  '& y Font Larger + ToggleButton'",
-     "     VISIBLE:  '& y Font Larger + ToggleButton', cursor=1",
+    ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
+     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
      "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
-     "SPEECH OUTPUT: 'Font Larger + toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Font Larger + button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -47,11 +47,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Font Larger + ToggleButton &', cursor=1",
+    ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
      "SPEECH OUTPUT: 'Font Larger +'",
-     "SPEECH OUTPUT: 'toggle button'",
-     "SPEECH OUTPUT: 'not pressed'"]))
+     "SPEECH OUTPUT: 'button'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Now push the first button.  The following will be presented.
@@ -70,12 +70,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to second button", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Font Smaller - ToggleButton ', cursor=1",
-     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Font Smaller - ToggleButton ', cursor=1",
+    ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Smaller - Button & y Italic', cursor=1",
+     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Smaller - Button & y Italic', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Font Smaller - toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Font Smaller - button'"]))
+
 ########################################################################
 # Now push the second button.  The following will be presented.
 #
@@ -92,12 +93,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to third button", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Italic i ToggleButton & y Bo', cursor=1",
-     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Italic i ToggleButton & y Bo', cursor=1",
+    ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  '& y Italic i ToggleButton Bold B', cursor=1",
+     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  '& y Italic i ToggleButton Bold B', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Italic i toggle button not pressed'"]))
+
 ########################################################################
 # Now push the third button.  The following will be presented.
 #
@@ -114,12 +116,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to fourth button", 
-    ["BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Bold B ToggleButton', cursor=1",
-     "BRAILLE LINE:  '& y Font Larger + ToggleButton & y Font Smaller - ToggleButton & y Italic i ToggleButton & y Bold B ToggleButton'",
-     "     VISIBLE:  '& y Bold B ToggleButton', cursor=1",
+    ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Bold B Button', cursor=1",
+     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Bold B Button', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bold B toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Bold B button'"]))
+
 ########################################################################
 # Now push the fourth button.  The following will be presented.
 #

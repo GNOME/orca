@@ -66,12 +66,12 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'View'"]))
     
 sequence.append(utils.StartRecordingAction())
+sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
     ["BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=1",
+     "     VISIBLE:  'Themes          >', cursor=0",
      "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -80,12 +80,12 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Themes          >'"]))
 
 sequence.append(utils.StartRecordingAction())
+sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("Right"))
-sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
     ["BRAILLE LINE:  'Basic Grey'",
-     "     VISIBLE:  'Basic Grey', cursor=1",
+     "     VISIBLE:  'Basic Grey', cursor=0",
      "BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: ''",

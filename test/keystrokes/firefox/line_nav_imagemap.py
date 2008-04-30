@@ -47,8 +47,12 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
-    ["BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
+    ["BUG? - For some reason we're repeating ourselves",
+     "BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
      "     VISIBLE:  'Test: z Link y Link x Link w Lin', cursor=1",
+     "BRAILLE LINE:  'Test: z Link y Link x Link w Link v Link u Link t Link s Link r Link q Link p Link o Link n Link m Link l Link k Link j Link i Link h Link g Link f Link e Link d Link c Link b Link a Link'",
+     "     VISIBLE:  'Test: z Link y Link x Link w Lin', cursor=1",
+     "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'",
      "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'"]))
 
 sequence.append(utils.StartRecordingAction())

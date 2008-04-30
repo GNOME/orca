@@ -38,11 +38,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow in list",
-    ["BUG? - Extra stuff is being spoken",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
+    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
      "     VISIBLE:  'Content ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Content list item'"]))
+     "SPEECH OUTPUT: 'Content list item'",
+     "SPEECH OUTPUT: 'Size:'"]))
 
 ########################################################################
 # Press Left Arrow to move backward list item by list item.

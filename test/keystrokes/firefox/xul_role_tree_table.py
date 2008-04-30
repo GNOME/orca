@@ -50,12 +50,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree table",
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
+    ["BUG? - We're not speaking the tree level",
+     "BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Name column header'",
-     "SPEECH OUTPUT: 'Bookmarks Menu  '",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Bookmarks Menu  '"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -65,13 +64,14 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable     TREE LEVEL 1'",
-     "     VISIBLE:  'Minefield Application Library Fr', cursor=0",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: 'tree table'",
      "SPEECH OUTPUT: 'Name'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'row 1 of 3'",
+     "SPEECH OUTPUT: 'column 1 of 3',
+     "SPEECH OUTPUT: 'row 2 of 3'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################

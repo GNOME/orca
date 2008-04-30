@@ -66,12 +66,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BUG? - We aren't getting the correct item count",
-     "BRAILLE LINE:  'Africa ListItem'",
+    ["BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Africa'",
-     "SPEECH OUTPUT: 'item 1 of 6'",
+     "SPEECH OUTPUT: 'item 1 of 1'",
      "SPEECH OUTPUT: 'collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 

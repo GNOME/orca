@@ -27,7 +27,7 @@ sequence.append(WaitForFocus("TabContainer Demo", acc_role=pyatspi.ROLE_DOCUMENT
 ########################################################################
 # Give the widget a moment to construct itself
 #
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(5000))
 
 ########################################################################
 # Tab to 'Tab 2'.  

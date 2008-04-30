@@ -49,8 +49,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Battery h2'",
+    ["BUG? - For some reason, we're repeating ourselves",
+     "BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
+     "BRAILLE LINE:  'Battery h2'",
+     "     VISIBLE:  'Battery h2', cursor=1",
+     "SPEECH OUTPUT: 'Battery heading  '",
+     "SPEECH OUTPUT: 'level 2'",
      "SPEECH OUTPUT: 'Battery heading  '",
      "SPEECH OUTPUT: 'level 2'"]))
 
@@ -119,8 +124,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' h2'",
-     "     VISIBLE:  ' h2', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
      " heading  '",
      "SPEECH OUTPUT: 'level 2'"]))

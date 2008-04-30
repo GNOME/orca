@@ -54,8 +54,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All Bookmarks list item expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'All Bookmarks list item expanded'"]))
 
 ########################################################################
 # Press Down Arrow twice to give focus to the Bookmarks Menu list item.
@@ -91,7 +90,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 4'",
+     "SPEECH OUTPUT: 'item 2 of 3'",
      "SPEECH OUTPUT: 'collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
@@ -118,22 +117,21 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 4'",
+     "SPEECH OUTPUT: 'item 2 of 3'",
      "SPEECH OUTPUT: 'expanded'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
-# Press Down Arrow to give focus to the next item, GNOME, which is not
-# expandable.
+# Press Down Arrow to give focus to the next item, Recently Bookmarked.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree GNOME ListItem'",
-     "     VISIBLE:  'GNOME ListItem', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Recently Bookmarked ListItem'",
+     "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'GNOME list item'",
+     "SPEECH OUTPUT: 'Recently Bookmarked list item'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 ########################################################################
@@ -144,11 +142,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree GNOME ListItem'",
-     "     VISIBLE:  'GNOME ListItem', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Recently Bookmarked ListItem'",
+     "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'GNOME'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
+     "SPEECH OUTPUT: 'Recently Bookmarked'",
+     "SPEECH OUTPUT: 'item 1 of 4'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 ########################################################################
@@ -204,11 +202,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable   Bookmarks Menu  TREE LEVEL 1'",
-     "     VISIBLE:  'Minefield Application Library Fr', cursor=0",
+    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Name column header'",
-     "SPEECH OUTPUT: '  Bookmarks Menu '",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar  '",
      "SPEECH OUTPUT: ' not selected'"]))
 
 ########################################################################
