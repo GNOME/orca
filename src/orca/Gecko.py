@@ -8634,7 +8634,9 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            self.speakContents(contents)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -8656,7 +8658,9 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            self.speakContents(contents)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -8698,7 +8702,9 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            self.speakContents(contents)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -8738,7 +8744,9 @@ class Script(default.Script):
         if obj and found:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            self.speakContents(contents)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
