@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Name'",
      "SPEECH OUTPUT: 'cell'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'column 1 of 3',
+     "SPEECH OUTPUT: 'column 1 of 3'",
      "SPEECH OUTPUT: 'row 2 of 3'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
