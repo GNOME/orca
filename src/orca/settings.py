@@ -778,7 +778,8 @@ settingsPackages          = ["app-settings"]
 # REMEMBER: to make something a package, the directory has to
 # have a __init__.py file in it.
 #
-scriptPackages          = ["orca-scripts", "scripts"]
+scriptPackages          = ["orca-scripts", "scripts", 
+                           "scripts.apps", "scripts.toolkits"]
 
 # A list that helps us map application names to script module
 # names.  The key is the name of an application, and the value is
@@ -836,22 +837,22 @@ def getScriptModuleName(app):
 # I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 # names, but it's what we're stuck with (unfortunately).
 #
-setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "StarOffice")
+setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "soffice")
 
 # Translators: see the regular expression note above.  This is for
 # OpenOffice and StarOffice.
 #
-setScriptMapping(re.compile(_('soffice.bin')), "StarOffice")
+setScriptMapping(re.compile(_('soffice.bin')), "soffice")
 
 # Translators: see the regular expression note above.  This is for
 # OpenOffice and StarOffice.
 #
-setScriptMapping(re.compile(_('soffice')), "StarOffice")
+setScriptMapping(re.compile(_('soffice')), "soffice")
 
 # Translators: see the regular expression note above.  This is for the
 # Evolution mail application.
 #
-setScriptMapping(re.compile(_('[Ee]volution')), "Evolution")
+setScriptMapping(re.compile(_('[Ee]volution')), "evolution")
 
 # Translators: see the regular expression note above.  This is for the
 # help application (yelp).
@@ -892,9 +893,9 @@ setScriptMapping(re.compile(_('bug-buddy')), "gnome_segv2")
 setScriptMapping(re.compile(_('vte')), "gnome-terminal")
 
 # Translators: see the regular expression note above.  This is for
-# supporting pidgin, which is the new name for gaim.
+# supporting gaim, which has recently be renamed to pidgin.
 #
-setScriptMapping(re.compile(_('pidgin')), "gaim")
+setScriptMapping(re.compile(_('gaim')), "pidgin")
 
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems

@@ -30,58 +30,10 @@ import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
 import orca.speech as speech
-import orca.speechgenerator as speechgenerator
-import orca.where_am_I as where_am_I
 import pyatspi
 
-class WhereAmI(where_am_I.WhereAmI):
-
-    def __init__(self, script):
-        """Create a new WhereAmI that will be used to speak information
-        about the current object of interest.
-        """
-
-        where_am_I.WhereAmI.__init__(self, script)
-
-    def _speakStatusBar(self):
-        """Speaks the status bar."""
-
-        if not self._statusBar:
-            return
-
-        utterances = []
-        text = self.getObjLabelAndName(self._statusBar)
-        utterances.append(text)
-        speech.speakUtterances(utterances)
-
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForPushButton to handle 'unspeakable'
-    button labels displayed on the screen.
-    """
-    def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
-
-    def _getSpeechForObjectName(self, obj):
-        """Gives preference to the object name versus what is being
-        displayed on the screen.  This helps accomodate the naming
-        hints being given to us by gcalctool for it's mathematical
-        operator buttons."""
-
-        if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
-            return speechgenerator.SpeechGenerator._getSpeechForObjectName(\
-                self, obj)
-
-        if obj.name:
-            name = obj.name
-        else:
-            name = self._script.getDisplayedText(obj)
-
-        if name:
-            return [name]
-        elif obj.description:
-            return [obj.description]
-        else:
-            return []
+from speech_generator import SpeechGenerator
+from where_am_i import WhereAmI
 
 ########################################################################
 #                                                                      #

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,53 +17,24 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Custom script for gnome-window-properties."""
+"""Custom script for planner."""
 
-__id__ = "$Id$"
+__id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.default as default
-import orca.speechgenerator as speechgenerator
+
+from speech_generator import SpeechGenerator
+from braille_generator import BrailleGenerator
 
 ########################################################################
 #                                                                      #
-# The gnome-window-properties script class.                            #
+# The planner script class.                                            #
 #                                                                      #
 ########################################################################
-
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForFrame so as to avoid digging into the
-    gedit hierarchy and tickling a bug in gedit.
-    """
-    def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
-
-    def _getSpeechForAlert(self, obj, already_focused):
-        """Gets the title of the dialog.  Do NOT get the contents
-        of labels inside the dialog that are not associated with any
-        other objects.
-
-        Arguments:
-        - obj: the Accessible dialog
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances be spoken.
-        """
-
-        utterances = []
-        utterances.extend(self._getSpeechForObjectLabel(obj))
-        utterances.extend(self._getSpeechForObjectName(obj))
-        utterances.extend(self._getSpeechForObjectRole(obj))
-
-        self._debugGenerator("gnome-window-properties._getSpeechForAlert",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
 
 class Script(default.Script):
 
@@ -75,7 +46,12 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
+    # This method tries to detect and handle the following cases:
+    # 1) Toolbar: the last toggle button to show 'more options'
+    # 2) Main window: one of the four graphic toggle buttons.
+    #
+    def getBrailleGenerator(self):
+        return BrailleGenerator(self)
+
     def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
         return SpeechGenerator(self)

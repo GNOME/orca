@@ -26,8 +26,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.braillegenerator as braillegenerator
-import orca.default as default
-import orca.speechgenerator as speechgenerator
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCell to correctly handle 
@@ -56,52 +54,3 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         return braillegenerator.BrailleGenerator.\
                     _getBrailleRegionsForTableCell(self, obj)
-
-
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell to correctly handle the table
-    cells in the Library table.
-    """
-
-    def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
-
-    def _getSpeechForTableCell(self, obj, already_focused):
-        """Get the speech utterances for a single table cell
-
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # Check to see if this is a table cell from the Library table.
-        # If so, it'll have five children and we are interested in the
-        # penultimate one. See bug #512639 for more details.
-        #
-        if obj.childCount == 5:
-            obj = obj[3]
-        return speechgenerator.SpeechGenerator.\
-                    _getSpeechForTableCell(self, obj, already_focused)
-
-class Script(default.Script):
-
-    def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-        default.Script.__init__(self, app)
-
-    def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
-
-        return BrailleGenerator(self)
-
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-        return SpeechGenerator(self)

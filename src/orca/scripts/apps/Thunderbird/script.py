@@ -32,32 +32,11 @@ import orca.orca as orca
 import orca.debug as debug
 import orca.default as default
 import orca.speech as speech
-import orca.Gecko as Gecko
+import orca.scripts.toolkits.Gecko as Gecko
 
 from orca.orca_i18n import _
 
-########################################################################
-#                                                                      #
-# Custom SpeechGenerator for Thunderbird                               #
-#                                                                      #
-########################################################################
-
-class SpeechGenerator(Gecko.SpeechGenerator):
-    """Provides a speech generator specific to Thunderbird.
-    """
-
-    def __init__(self, script):
-        # Set the debug level for all the methods in this script.
-        #
-        self.debugLevel = debug.LEVEL_FINEST
-
-        self._debug("__init__")
-        Gecko.SpeechGenerator.__init__(self, script)
-
-    def _debug(self, msg):
-        """ Convenience method for printing debug messages
-        """
-        debug.println(self.debugLevel, "Thunderbird.SpeechGenerator: "+msg)
+from speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #

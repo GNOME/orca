@@ -25,17 +25,17 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import default
-import debug
-import orca
-import orca_state
-import keybindings
-import speech
-import rolenames
-import speechgenerator
+import orca.default as default
+import orca.debug as debug
+import orca.orca as orca
+import orca.orca_state as orca_state
+import orca.keybindings as keybindings
+import orca.speech as speech
+import orca.rolenames as rolenames
+import orca.speechgenerator as speechgenerator
 
-from orca_i18n import _ # for gettext support
-from orca_i18n import Q_ # to provide qualified translatable strings
+from orca.orca_i18n import _ # for gettext support
+from orca.orca_i18n import Q_ # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #

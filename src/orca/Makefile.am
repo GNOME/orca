@@ -25,11 +25,9 @@ orca_python_PYTHON = \
 	find.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
-	Gecko.py \
 	gnomespeechfactory.py \
 	httpserver.py \
 	input_event.py \
-	J2SE-access-bridge.py \
 	keybindings.py \
 	keynames.py \
 	liveregions.py \

@@ -240,26 +240,31 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # package for now.
         #
         if (not script) and app and getattr(app, "toolkitName", None):
-            try:
-                debug.println(
-                    debug.LEVEL_FINE,
-                    "Looking for toolkit script %s.py..." % app.toolkitName)
-                module = __import__(app.toolkitName,
-                                    globals(),
-                                    locals(),
-                                    [''])
-                script = module.Script(app)
-                debug.println(debug.LEVEL_FINE,
-                              "...found %s.py" % name)
-            except ImportError:
-                debug.println(
-                    debug.LEVEL_FINE,
-                    "...could not find %s.py" % app.toolkitName)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                debug.println(
-                    debug.LEVEL_SEVERE,
-                    "While attempting to import %s" % app.toolkitName)
+            for package in scriptPackages:
+                if package:
+                    name = '.'.join((package, app.toolkitName))
+                else:
+                    name = app.toolkitName
+                try:
+                    debug.println(
+                        debug.LEVEL_FINE,
+                        "Looking for toolkit script %s.py..." % app.toolkitName)
+                    module = __import__(name,
+                                        globals(),
+                                        locals(),
+                                        [''])
+                    script = module.Script(app)
+                    debug.println(debug.LEVEL_FINE,
+                                  "...found %s.py" % name)
+                except ImportError:
+                    debug.println(
+                        debug.LEVEL_FINE,
+                        "...could not find %s.py" % app.toolkitName)
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+                    debug.println(
+                        debug.LEVEL_SEVERE,
+                        "While attempting to import %s" % app.toolkitName)
 
         if not script:
             script = default.Script(app)

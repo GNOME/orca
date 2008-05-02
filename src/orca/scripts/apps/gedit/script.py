@@ -34,49 +34,11 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
-import orca.speechgenerator as speechgenerator
 import orca.speechserver as speechserver
 
 from orca.orca_i18n import _
 
-########################################################################
-#                                                                      #
-# The GEdit script class.                                              #
-#                                                                      #
-########################################################################
-
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForFrame so as to avoid digging into the
-    gedit hierarchy and tickling a bug in gedit.
-    """
-    def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
-
-    def _getSpeechForFrame(self, obj, already_focused):
-        """Get the speech for a frame.  [[[TODO: WDW - This avoids
-        digging into the component hierarchy so as to avoid tickling
-        a bug in GEdit (see module comment above).]]]
-
-        Arguments:
-        - obj: the frame
-        - already_focused: if False, the obj just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        # This will dig deep into the hierarchy, causing issues with
-        # gedit.  So, we won't do this.
-        #
-        #utterances = self._getSpeechForAlert(obj, already_focused)
-
-        self._debugGenerator("GEditSpeechGenerator._getSpeechForFrame",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
+from speech_generator import SpeechGenerator
 
 class Script(default.Script):
 
