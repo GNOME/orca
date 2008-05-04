@@ -628,77 +628,58 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
+        # Skip items of unknown rolenames, menu bars, labels with 
+        # children, and autocompletes.  (With autocompletes, we
+        # wind up speaking the text object)
+        #
+        skipRoles = [pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_MENU_BAR,
+                     pyatspi.ROLE_LABEL,
+                     pyatspi.ROLE_AUTOCOMPLETE]
+
+        # Stop if we get to a document frame or an internal frame.
+        #
+        stopRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
+                     pyatspi.ROLE_INTERNAL_FRAME]
+
+        # There are some objects we want to include in the context,
+        # but not add their rolenames.
+        #
+        dontSpeakRoles = [pyatspi.ROLE_TABLE_CELL,
+                          pyatspi.ROLE_FILLER]
+
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if self._script.isSameObject(parent, stopAncestor):
+            role = parent.getRole()
+            if self._script.isSameObject(parent, stopAncestor) \
+               or role in stopRoles:
                 break
 
-            # We try to omit layout things right off the bat.
-            #
-            if self._script.isLayoutOnly(parent):
+            if role in skipRoles or self._script.isLayoutOnly(parent):
                 parent = parent.parent
                 continue
 
-            # If the rolename is unknown, skip this item.
+            # If the parent is a menu and its parent is a combo box
+            # we'll speak the object as a combo box.
             #
-            if parent.getRole() == pyatspi.ROLE_UNKNOWN:
-                parent = parent.parent
-                continue
-
-            # To be consistent with how we provide access to other
-            # applications, don't speak the name of menu bars.
-            #
-            if parent.getRole() == pyatspi.ROLE_MENU_BAR:
-                parent = parent.parent
-                continue
-
-            # Skip unfocusable menus.  This is for earlier versions
-            # of Firefox where menus were nested in kind of an odd
-            # dual nested menu hierarchy.
-            #
-            if (parent.getRole() == pyatspi.ROLE_MENU) \
-               and not parent.getState().contains(pyatspi.STATE_FOCUSABLE):
-                parent = parent.parent
-                continue
-
-            # Now...autocompletes are weird.  We'll let the handling of
-            # the entry give us the name -- unless we're in a toolbar.
-            #
-            containingToolbar = \
-                  self._script.getAncestor(obj,
-                                           [pyatspi.ROLE_TOOL_BAR],
-                                           [pyatspi.ROLE_DOCUMENT_FRAME])
-            if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE and \
-               not containingToolbar:
-                parent = parent.parent
-                continue
-
-            # Labels with children should be ignored.  (This is the
-            # bugzilla form bogusity bug.)
-            #
-            if parent.getRole() == pyatspi.ROLE_LABEL:
+            if role == pyatspi.ROLE_MENU \
+               and parent.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
                 parent = parent.parent
                 continue
                 
-            # Well...now we skip the parent if it's accessible text is
-            # a single EMBEDDED_OBJECT_CHARACTER.  The reason for this
-            # is that it Script.getDisplayedText will end up coming
-            # back to the children of an object for the text in the
-            # children if an object's text contains an
-            # EMBEDDED_OBJECT_CHARACTER.
+            # Also skip the parent if its accessible text is a single 
+            # EMBEDDED_OBJECT_CHARACTER: Script.getDisplayedText will
+            # end up coming back to the child of an object for the text
+            # if an object's text contains a single EOC.
             #
             parentText = self._script.queryNonEmptyText(parent)
             if parentText:
-                displayedText = parentText.getText(0, -1)
-                unicodeText = displayedText.decode("UTF-8")
-                if unicodeText \
-                    and (len(unicodeText) == 1) \
-                    and (unicodeText[0] == \
-                                     self._script.EMBEDDED_OBJECT_CHARACTER):
+                unicodeText = parentText.getText(0, -1).decode("UTF-8")
+                if unicodeText == self._script.EMBEDDED_OBJECT_CHARACTER:
                     parent = parent.parent
                     continue
 
-            # Finally, put in the text and label (if they exist)
+            # Put in the text and label (if they exist).
             #
             text = self._script.getDisplayedText(parent)
             label = self._script.getDisplayedLabel(parent)
@@ -709,12 +690,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if label and len(label.strip()):
                 newUtterances.append(label)
 
-            # Well...if we made it this far, we will now append the
-            # role, then the text, and then the label.
+            # Finally add the role if it's not among the roles we don't
+            # wish to speak.
             #
-            if not parent.getRole() in [pyatspi.ROLE_TABLE_CELL,
-                                        pyatspi.ROLE_FILLER] \
-                and len(newUtterances):
+            if not role in dontSpeakRoles and len(newUtterances):
                 utterances.append(rolenames.getSpeechForRoleName(parent))
 
             utterances.extend(newUtterances)
