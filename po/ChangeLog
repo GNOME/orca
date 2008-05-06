@@ -1,3 +1,8 @@
+2008-05-06  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* POTFILES.in: Account for moving and changing stuff.
+	* nb.po: Updated Norwegian bokmål translation.
+
 2008-04-30  Gabor Kelemen  <kelemeng@gnome.org>
 
 	* hu.po: Translation updated.
