@@ -1,4 +1,10 @@
-2008-04-29  Rich Burridge <rich.burridge@sun.com>
+2008-05-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/html/FirefoxProfile/prefs.js:
+          Updated the profile used by the test harness so that the
+          new EULA dialog no longer pops up for each and every test.
+
+2008-05-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
           test/keystrokes/gtk-demo/role_text_multiline_navigation2.py:

@@ -16,6 +16,7 @@ user_pref("app.update.lastUpdateTime.blocklist-background-update-timer", 1189712
 user_pref("app.update.lastUpdateTime.microsummary-generator-update-timer", 1189712567);
 user_pref("app.update.lastUpdateTime.search-engine-update-timer", 1189712566);
 user_pref("browser.download.manager.retention", 0);
+user_pref("browser.EULA.3.accepted", true);
 user_pref("browser.formfill.enable", false);
 user_pref("browser.history_expire_days", 1);
 user_pref("browser.history_expire_days.mirror", 180);
