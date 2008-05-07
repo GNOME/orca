@@ -1,3 +1,12 @@
+2008-04-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          test/keystrokes/gtk-demo/role_text_multiline_navigation2.py:
+          test/keystrokes/gtk-demo/role_label.py:
+          test/keystrokes/gtk-demo/role_spin_button.py:
+          Fixed bug #517127 - Orca doesn't always speak expected message 
+          when selecting all.
+
 2008-05-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/speech_generator.py:

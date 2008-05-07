@@ -114,6 +114,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "SPEECH OUTPUT: '240'",
+     "SPEECH OUTPUT: 'unselected'",
      "SPEECH OUTPUT: '240'"]))
 
 ########################################################################

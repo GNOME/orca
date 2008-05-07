@@ -109,6 +109,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'unselected'",
      "SPEECH OUTPUT: 'h'"]))
 
 ########################################################################
@@ -181,6 +182,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'unselected'",
      "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'selected'"]))
 

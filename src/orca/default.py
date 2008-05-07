@@ -985,6 +985,8 @@ class Script(script.Script):
             self.onStateChanged
         listeners["object:state-changed:selected"]          = \
             self.onStateChanged
+        listeners["object:text-selection-changed"]          = \
+            self.onTextSelectionChanged
         listeners["object:selection-changed"]               = \
             self.onSelectionChanged
         listeners["object:property-change:accessible-value"] = \
@@ -2063,14 +2065,6 @@ class Script(script.Script):
         - endOffset: the end text offset.
         """
 
-        # Swap values if in wrong order (StarOffice is fussy about that).
-        #
-        if ((startOffset > endOffset) and (endOffset != -1)) or \
-           (startOffset == -1):
-            temp = endOffset
-            endOffset = startOffset
-            startOffset = temp
-
         phrase = self.getText(obj, startOffset, endOffset)
 
         if len(phrase):
@@ -2081,7 +2075,6 @@ class Script(script.Script):
 
             phrase = self.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
-            self.speakTextSelectionState(obj, startOffset, endOffset)
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
@@ -2113,7 +2106,6 @@ class Script(script.Script):
             line = self.adjustForLinks(obj, line)
             line = self.adjustForRepeats(line)
             speech.speak(line, voice)
-            self.speakTextSelectionState(obj, startOffset, caretOffset)
 
         else:
             # Speak blank line if appropriate. It's necessary to
@@ -2180,7 +2172,6 @@ class Script(script.Script):
         word = self.adjustForRepeats(word)
         orca_state.lastWord = word
         speech.speak(word, voice)
-        self.speakTextSelectionState(obj, startOffset, endOffset)
 
     def speakTextIndentation(self, obj, line):
         """Speaks a summary of the number of spaces and/or tabs at the
@@ -2370,7 +2361,6 @@ class Script(script.Script):
         else:
             speech.speak(chnames.getCharacterName(character), voice, False)
 
-        self.speakTextSelectionState(obj, startOffset, endOffset)
 
     def presentTooltip(self, obj):
         """
@@ -3108,10 +3098,11 @@ class Script(script.Script):
 
     def _presentTextAtNewCaretPosition(self, event):
 
-        text = event.source.queryText()
+        obj = event.source
+        text = obj.queryText()
 
-        if event.source:
-            mag.magnifyAccessible(event, event.source)
+        if obj:
+            mag.magnifyAccessible(event, obj)
 
         # Update the Braille display - if we can just reposition
         # the cursor, then go for it.
@@ -3120,21 +3111,21 @@ class Script(script.Script):
         line = braille.getShowingLine()
         for region in line.regions:
             if isinstance(region, braille.Text) \
-               and (region.accessible == event.source):
+               and (region.accessible == obj):
                 if region.repositionCursor():
                     braille.refresh(True)
                     brailleNeedsRepainting = False
                 break
 
         if brailleNeedsRepainting:
-            self.updateBraille(event.source)
+            self.updateBraille(obj)
 
         if not orca_state.lastInputEvent:
             return
 
         if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
             if not orca_state.lastInputEvent.pressed:
-                self.sayLine(event.source)
+                self.sayLine(obj)
             return
 
         # Guess why the caret moved and say something appropriate.
@@ -3160,11 +3151,11 @@ class Script(script.Script):
             # currently positioned.
             #
             if hasLastPos and isShiftKey and not isControlKey:
-                self.sayPhrase(event.source, 
-                               self.pointOfReference["lastCursorPosition"],
-                               text.caretOffset)
+                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
+                self.sayPhrase(obj, startOffset, endOffset)
             else:
-                self.sayLine(event.source)
+                [startOffset, endOffset] = self.getOffsetsForLine(obj)
+                self.sayLine(obj)
 
         elif (keyString == "Left") or (keyString == "Right"):
             # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
@@ -3174,13 +3165,14 @@ class Script(script.Script):
             # the character at the text cursor position.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, 
-                               self.pointOfReference["lastCursorPosition"],
-                               text.caretOffset)
+                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
+                self.sayPhrase(obj, startOffset, endOffset)
             elif isControlKey:
-                self.sayWord(event.source)
+                [startOffset, endOffset] = self.getOffsetsForWord(obj)
+                self.sayWord(obj)
             else:
-                self.sayCharacter(event.source)
+                [startOffset, endOffset] = self.getOffsetsForChar(obj)
+                self.sayCharacter(obj)
 
         elif keyString == "Page_Up":
             # If the user has typed Control-Shift-Page_Up, then we want
@@ -3190,13 +3182,14 @@ class Script(script.Script):
             # position otherwise we speak the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, 
-                               self.pointOfReference["lastCursorPosition"],
-                               text.caretOffset)
+                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
+                self.sayPhrase(obj, startOffset, endOffset)
             elif isControlKey:
-                self.sayCharacter(event.source)
+                [startOffset, endOffset] = self.getOffsetsForChar(obj)
+                self.sayCharacter(obj)
             else:
-                self.sayLine(event.source)
+                [startOffset, endOffset] = self.getOffsetsForLine(obj)
+                self.sayLine(obj)
 
         elif keyString == "Page_Down":
             # If the user has typed Control-Shift-Page_Down, then we want
@@ -3205,11 +3198,11 @@ class Script(script.Script):
             # the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
-                self.sayPhrase(event.source, 
-                               self.pointOfReference["lastCursorPosition"],
-                               text.caretOffset)
+                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
+                self.sayPhrase(obj, startOffset, endOffset)
             else:
-                self.sayLine(event.source)
+                [startOffset, endOffset] = self.getOffsetsForLine(obj)
+                self.sayLine(obj)
 
         elif (keyString == "Home") or (keyString == "End"):
             # If the user has typed Shift-Home or Shift-End, then we want
@@ -3219,27 +3212,21 @@ class Script(script.Script):
             # to the right of the current text cursor position.
             #
             if hasLastPos and isShiftKey and not isControlKey:
-                self.sayPhrase(event.source, 
-                               self.pointOfReference["lastCursorPosition"],
-                               text.caretOffset)
+                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
+                self.sayPhrase(obj, startOffset, endOffset)
             elif isControlKey:
-                self.sayLine(event.source)
+                [startOffset, endOffset] = self.getOffsetsForLine(obj)
+                self.sayLine(obj)
             else:
-                self.sayCharacter(event.source)
+                [startOffset, endOffset] = self.getOffsetsForChar(obj)
+                self.sayCharacter(obj)
 
-        elif (keyString == "A") and isControlKey:
-            # The user has typed Control-A. Check to see if the entire
-            # document has been selected, and if so, let the user know.
-            #
-            charCount = text.characterCount
-            for i in range(0, text.getNSelections()):
-                [startSelOffset, endSelOffset] = text.getSelection(i)
-                if text.caretOffset == 0 and \
-                   startSelOffset == 0 and endSelOffset == charCount:
-                    # Translators: this means the user has selected
-                    # all the text in a document (e.g., Ctrl+a in gedit).
-                    #
-                    speech.speak(_("entire document selected"))
+        else:
+            startOffset = text.caretOffset
+            endOffset = text.caretOffset
+
+        self._saveLastCursorPosition(text)
+        self._saveSpokenTextRange(startOffset, endOffset)
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
@@ -3650,6 +3637,85 @@ class Script(script.Script):
         #   and event.source == orca_state.locusOfFocus:
         #    print "FOO INSENSITIVE"
         #    #orca.setLocusOfFocus(event, None)
+
+    def getOffsetsForPhrase(self, obj):
+        """Return the start and end offset for the given phrase
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        text = obj.queryText()
+        startOffset = self.pointOfReference["lastCursorPosition"]
+        endOffset = text.caretOffset
+
+        # Swap values if in wrong order (StarOffice is fussy about that).
+        #
+        if ((startOffset > endOffset) and (endOffset != -1)) or \
+           (startOffset == -1):
+            temp = endOffset
+            endOffset = startOffset
+            startOffset = temp
+        return [startOffset, endOffset]
+
+    def getOffsetsForLine(self, obj):
+        """Return the start and end offset for the given line
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        [line, endOffset, startOffset] = self.getTextLineAtCaret(obj)
+        return [startOffset, endOffset]
+
+    def getOffsetsForWord(self, obj):
+        """Return the start and end offset for the given word
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        text = obj.queryText()
+        offset = text.caretOffset
+        [word, startOffset, endOffset] = text.getTextAtOffset(offset,
+                                           pyatspi.TEXT_BOUNDARY_WORD_START)
+        return [startOffset, endOffset]
+
+    def getOffsetsForChar(self, obj):
+        """Return the start and end offset for the given character
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        text = obj.queryText()
+        offset = text.caretOffset
+
+        mods = orca_state.lastInputEvent.modifiers
+        shiftMask = 1 << pyatspi.MODIFIER_SHIFT
+        if (mods & shiftMask) \
+            and orca_state.lastNonModifierKeyEvent.event_string == "Right":
+            startOffset = offset-1
+            endOffset = offset
+        else:
+            startOffset = offset
+            endOffset = offset+1
+
+        return [startOffset, endOffset]
+
+    def onTextSelectionChanged(self, event):
+        """Called when an object's text selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        startOffset = 0
+        endOffset = 0
+        if "spokenTextRange" in self.pointOfReference:
+            startOffset = self.pointOfReference["spokenTextRange"][0]
+            endOffset = self.pointOfReference["spokenTextRange"][1]
+        self.speakTextSelectionState(event.source, startOffset, endOffset)
 
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
@@ -6644,6 +6710,12 @@ class Script(script.Script):
         Returns an indication of whether the text is selected.
         """
 
+        # If start offset and end offset are the same, just return False.
+        # This is possible if there was no text spoken in onCaretMoved.
+        #
+        if startOffset == endOffset:
+            return False
+
         try:
             text = obj.queryText()
         except:
@@ -6651,11 +6723,43 @@ class Script(script.Script):
 
         for i in xrange(text.getNSelections()):
             [startSelOffset, endSelOffset] = text.getSelection(i)
-            if (startOffset >= startSelOffset) \
-               and (endOffset <= endSelOffset):
+            if (startOffset >= startSelOffset) and (endOffset <= endSelOffset):
                 return True
 
         return False
+
+    def _saveSpokenTextRange(self, startOffset, endOffset):
+        """Save away the start and end offset of the range of text that 
+        was spoken. It will be used by speakTextSelectionState, to try
+        to determine if the text was selected or unselected.
+
+        Arguments:
+        - startOffset: the start of the spoken text range.
+        - endOffset: the end of the spoken text range.
+        """
+
+        self.pointOfReference["spokenTextRange"] = [startOffset, endOffset]
+
+    def _saveLastCursorPosition(self, text):
+        """Save away the current text cursor position for next time.
+
+        Arguments:
+        - text: the text object.
+        """
+
+        self.pointOfReference["lastCursorPosition"] = text.caretOffset
+
+    def _saveLastTextSelections(self, text):
+        """Save away the list of text selections for next time.
+
+        Arguments:
+        - text: the text object.
+        """
+
+        self.pointOfReference["lastSelections"] = []
+        for i in xrange(text.getNSelections()):
+            self.pointOfReference["lastSelections"].append(
+              text.getSelection(i))
 
     def speakTextSelectionState(self, obj, startOffset, endOffset):
         """Speak "selected" if the text was just selected, "unselected" if
@@ -6674,14 +6778,19 @@ class Script(script.Script):
 
         # Handle special cases.
         #
-        # Shift-Page-Down:    speak "page selected from cursor position".
-        # Shift-Page-Up:      speak "page selected to cursor position".
+        # Shift-Page-Down:    speak "page <state> from cursor position".
+        # Shift-Page-Up:      speak "page <state> to cursor position".
         #
-        # Control-Shift-Down: speak "line selected down from cursor position".
-        # Control-Shift-Up:   speak "line selected up from cursor position".
+        # Control-Shift-Down: speak "line <state> down from cursor position".
+        # Control-Shift-Up:   speak "line <state> up from cursor position".
         #
-        # Control-Shift-Home: speak "document selected to cursor position".
-        # Control-Shift-End:  speak "document selected from cursor position".
+        # Control-Shift-Home: speak "document <state> to cursor position".
+        # Control-Shift-End:  speak "document <state> from cursor position".
+        #
+        # Control-a:          speak "entire document selected".
+        #
+        # where <state> is either "selected" or "unselected" depending
+        # upon whether there are any text selections.
         #
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             eventStr = orca_state.lastNonModifierKeyEvent.event_string
@@ -6692,55 +6801,108 @@ class Script(script.Script):
 
         isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
+        selectedText = (text.getNSelections() != 0)
 
         specialCaseFound = False
         if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("page selected from cursor position")
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("page selected from cursor position")
+            else:
+                # Translators: when the user unselects text in a document,
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("page unselected from cursor position")
 
         elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("page selected to cursor position")
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("page selected to cursor position")
+            else:
+                # Translators: when the user unselects text in a document, 
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("page unselected to cursor position")
 
         elif (eventStr == "Down") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("line selected down from cursor position")
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("line selected down from cursor position")
+            else:
+                # Translators: when the user unselects text in a document, 
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("line unselected down from cursor position")
 
         elif (eventStr == "Up") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("line selected up from cursor position")
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("line selected up from cursor position")
+            else:
+                # Translators: when the user unselects text in a document, 
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("line unselected up from cursor position")
 
         elif (eventStr == "Home") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("document selected to cursor position")
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("document selected to cursor position")
+            else:
+                # Translators: when the user unselects text in a document, 
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("document unselected to cursor position")
 
         elif (eventStr == "End") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
+            if selectedText:
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca will speak information about what they
+                # have selected.
+                #
+                line = _("document selected from cursor position")
+            else:
+                # Translators: when the user unselects text in a document, 
+                # Orca will speak information about what they have unselected.
+                #
+                line = _("document unselected from cursor position")
+
+        elif (eventStr == "A") and isControlKey:
+            # The user has typed Control-A. Check to see if the entire
+            # document has been selected, and if so, let the user know.
             #
-            line = _("document selected from cursor position")
+            charCount = text.characterCount
+            for i in range(0, text.getNSelections()):
+                [startOffset, endOffset] = text.getSelection(i)
+                if text.caretOffset == 0 and \
+                   startOffset == 0 and endOffset == charCount:
+                    specialCaseFound = True
+
+                    # Translators: this means the user has selected
+                    # all the text in a document (e.g., Ctrl+a in gedit).
+                    #
+                    line = _("entire document selected")
 
         if specialCaseFound:
             speech.speak(line, None, False)
@@ -6803,14 +6965,7 @@ class Script(script.Script):
                         speech.speak(Q_("text|unselected"), None, False)
                         break
 
-        # Save away the current text cursor position and list of text
-        # selections for next time.
-        #
-        self.pointOfReference["lastCursorPosition"] = text.caretOffset
-        self.pointOfReference["lastSelections"] = []
-        for i in xrange(text.getNSelections()):
-            self.pointOfReference["lastSelections"].append(
-              text.getSelection(i))
+        self._saveLastTextSelections(text)
 
     def getURI(self, obj):
         """Return the URI for a given link object.
