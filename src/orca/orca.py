@@ -1394,6 +1394,14 @@ def usage():
             "will automatically launch the preferences set up unless\n" \
             "the -n or --no-setup option is used.")
 
+    # Translators: this is more text being sent to a terminal and we want to 
+    # keep the text lines within terminal boundaries.
+    #
+    print
+    print _("WARNING: suspending Orca, e.g. by pressing Control-Z, from\n" \
+            "an AT-SPI enabled shell (such as gnome-terminal), can also\n" \
+            "suspend the desktop until Orca is killed.")
+
     print
     print _("Report bugs to orca-list@gnome.org.")
 

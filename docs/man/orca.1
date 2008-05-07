@@ -1,4 +1,4 @@
-.\" Copyright (C) 2005-2007 Sun Microsystems Inc.
+.\" Copyright (C) 2005-2008 Sun Microsystems Inc.
 .\"
 .\" This is free software; you may redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as
@@ -14,7 +14,7 @@
 .\" along with this; if not write to the Free Software Foundation, Inc.
 .\" 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 '\"
-.TH orca 1 "28 Mar 2007" "GNOME"
+.TH orca 1 "30 Apr 2008" "GNOME"
 .SH NAME
 orca \- a screen reader / magnifier
 .SH SYNOPSIS
@@ -34,6 +34,12 @@ applications/toolkits that support the assistive technology
 service provide interface (AT-SPI), which include GTK,
 Mozilla, Firefox, Evolution, OpenOffice, StarOffice,
 Java/Swing, etc.
+.P
+WARNING: suspending 
+.B orca,
+e.g. by pressing Control-Z, from
+an AT-SPI enabled shell (such as gnome-terminal), can also
+suspend the desktop until Orca is killed.
 .SH OPTIONS
 .TP
 .B \-s, --gui-setup, --setup
