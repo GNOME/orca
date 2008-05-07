@@ -17,6 +17,10 @@
           docs/man/orca.1:
           Fixed bug #530541 - Suspending Orca in terminal screws up session.
 
+        * (Most files):
+          Fixed bug #531378 – FSF address has changed.
+          Also updated copyright messages to 2008 as well.
+
 2008-05-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/speech_generator.py:

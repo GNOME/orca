@@ -1,7 +1,7 @@
 # Orca
 #
-# Copyright 2005-2007 Google Inc.
-# Portions Copyright 2007, Sun Microsystems, Inc.
+# Copyright 2005-2008 Google Inc.
+# Portions Copyright 2007-2008, Sun Microsystems, Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -15,8 +15,8 @@
 #
 # You should have received a copy of the GNU Library General Public
 # License along with this library; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 #
 """ACSS --- Aural CSS.
 
@@ -30,7 +30,7 @@ __id__ = "$Id$"
 __author__ = "T. V. Raman"
 __version__ = "$Revision$"
 __date__ = "$Date$"
-__copyright__ = "Copyright (c) 2005-2007 Google Inc."
+__copyright__ = "Copyright (c) 2005-2008 Google Inc."
 __license__ = "LGPL"
 
 class ACSS(dict):

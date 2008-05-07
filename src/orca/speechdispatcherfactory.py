@@ -14,8 +14,8 @@
 #
 # You should have received a copy of the GNU Library General Public
 # License along with this library; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 # # [[[TODO: richb - Pylint is giving us a bunch of warnings along these
 # lines throughout this file:
@@ -35,7 +35,7 @@ __id__        = "$Id: $"
 __version__   = "$Revision: $"
 __date__      = "$Date: 2007-02-28 $"
 __author__    = "Tomas Cerha <cerha@brailcom.org>"
-__copyright__ = "Copyright (c) 2006, 2007 Brailcom, o.p.s."
+__copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
 
 import gobject
