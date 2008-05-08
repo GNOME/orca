@@ -1,5 +1,15 @@
 2008-05-08  Willie Walker <william.walker@sun.com>
 
+	* docs/doc-set/*:
+	  Rip out lots of stuff now that it has been moved to the WIKI.
+	  The remaining documents in here that are of any relevance are
+	  the user's guide and the internals guide.  The README describes
+	  how to make them.  NOTE that this was only a slash/burn
+	  operation -- the internals guide and user's guide were not
+	  brought up to date.
+	
+2008-05-08  Willie Walker <william.walker@sun.com>
+
 	* test/keystrokes/gtk-demo/debug_commands.py:
 	  Adjust to reflect new script packaging.
 	

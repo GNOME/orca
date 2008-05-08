@@ -1,29 +1,4 @@
-<!-- Copyright 2005, Sun Microsystems, Inc. -->
-
-<book id="scriptguide">
-  <title>Orca Script Writing Guide</title>
-  <bookinfo>
-    &legal;
-  </bookinfo>
-
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * FORWARD                                                              *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <preface id="sgforward"><title>Foreword</title>
-    &blurb;
-    <para>This book is intended for programmers intending to
-      extend Orca's functionality by writing custom scripts.
-    </para>
-  </preface>
-
-
+<!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
 
   <!--
   ************************************************************************
@@ -33,9 +8,9 @@
   ************************************************************************
   -->
 
-  <chapter id="sgintroduction"><title>Introduction</title>
+  <chapter id="scriptguide"><title>Introduction to Scripting</title>
 
-    <para>In this document, you will learn more about the Orca
+    <para>In this section, you will learn more about the Orca
       architecture as well as how to create your own custom scripts
       for Orca.</para>
 
@@ -54,18 +29,6 @@
       mind that the "default" script is intended to cover a large
       variety of applications.  As such, you may find that it is
       not necessary to write a custom script.</para>
-  </chapter>
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * HIGH LEVEL OVERVIEW                                                  *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <chapter id="sgoverview"><title>Overview</title>
 
     <para>The primary operating mode of Orca is "focus tracking
       mode," where Orca keeps track of the most relevant user
@@ -934,5 +897,3 @@ if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
     </section>
 
   </chapter>
-
-</book>

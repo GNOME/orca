@@ -1,11 +1,23 @@
-<!-- Copyright 2005, Sun Microsystems, Inc. -->
+<!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.0//EN"
+[
+<!ENTITY blurb SYSTEM "blurb.sgml">
+<!ENTITY legal SYSTEM "legal.sgml">
+<!ENTITY todo '<emphasis>TODO:</emphasis>'>
+<!ENTITY note '<emphasis>NOTE:</emphasis>'>
+<!ENTITY wkc 'well known command'>
+<!ENTITY detail '<emphasis>IMPLEMENTATION DETAIL:</emphasis>'>
+<!ENTITY issue '<emphasis>KNOWN ISSUE:</emphasis>'>
+<!ENTITY example '<emphasis>EXAMPLE:</emphasis>'>
+]
+>
 
 <book id="userguide">
   <title>Orca User's Guide</title>
   <bookinfo>
     &legal;
   </bookinfo>
-
 
   <!--
   ************************************************************************
@@ -122,10 +134,7 @@ Report bugs to orca-list@gnome.org.
     <para>To get help while running Orca, you can press
       <literal>Insert+F1</literal> to enter learn mode.  In learn
       mode, you can type any key combination and Orca will tell you
-      the effects of that key combination.  See the
-      &keyboardgestureslink; and &braillegestureslink; sections of the
-      "User Experience Design" book for a list of the input gestures
-      supported by Orca.  To exit learn mode, press
+      the effects of that key combination. To exit learn mode, press
       <literal>Escape</literal>.</para>
 
     <para>To quit Orca, you can do any of the following:</para>
@@ -278,8 +287,7 @@ except ImportError:
 
     <section id="ugmodkeys"><title><literal>orcaModifierKeys</literal> - Override "Insert" as Orca Modifier Key</title>
 
-      <para>As described in the &keyboardgestureslink; section of the "User
-        Experience Design" book, Orca defines keystrokes for the
+      <para>Orca defines keystrokes for the
         keypad and also makes special used of the
         <literal>Insert</literal> key as the Orca modifier key.  Orca
         also provides an <literal>orcaModifierKeys</literal>

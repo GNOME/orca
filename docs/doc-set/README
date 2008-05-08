@@ -1,9 +1,14 @@
-In order to generate the HTML and PDF versions of the orca documentation perform the following steps from the docs/doc-set directory after installing the docbook-utils.
+In order to generate the HTML and PDF versions of the orca
+documentation perform the following steps from the docs/doc-set
+directory after installing the docbook-utils.
 
 To generate the pdf documentation:
-    db2pdf orca.sgml
+    db2pdf internals.sgml
+    db2pdf user_guide.sgml
 
 To generate the HTML docs:
-    db2html --nochunks orca.sgml 
+    db2html --nochunks internals.sgml
+    db2html --nochunks user_guide.sgml
 
-After the HTML is generated you must copy the docs/doc-set/orca/orca.html file to docs/doc-set
+The HTML will be generated in a subdirectory.  You need to copy
+it to the current directory or the image links will not work.

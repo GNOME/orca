@@ -1,38 +1,14 @@
-<!-- Copyright 2005, Sun Microsystems, Inc. -->
-
-<book id="archandfunc">
-  <title>Orca Architecture and Functional Specification</title>
-  <bookinfo>
-    &legal;
-  </bookinfo>
-
+<!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
 
   <!--
   ************************************************************************
   *                                                                      *
-  * FORWARD                                                              *
+  * ARCHITECTURE                                                         *
   *                                                                      *
   ************************************************************************
   -->
 
-  <preface id="archforward"><title>Foreword</title>
-    &blurb;
-    <para>This book covers the architecture and functional
-      specification of Orca.  The specification was driven primarily
-      by the Orca User Experience Design.
-    </para>
-  </preface>
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * INTRODUCTION                                                         *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <chapter id="archintroduction"><title>Introduction</title>
+  <chapter id="architecture"><title>Architecture</title>
 
     <para>The Orca architecture has been driven primarily by the Orca
       User Experience Design.  There are two primary operating modes
@@ -67,118 +43,6 @@
       however, one can use a custom script for the application.
       Furthermore, scripts can subclass other scripts, allowing
       them to be quite simple.</para>
-  </chapter>
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * INFRASTRUCTURE SUPPORT                                               *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <chapter id="prereq"><title>Prerequisites</title>
-    <para>To help narrow the scope of the Orca development activity,
-      Orca uses existing software where available.  For example, as
-      mentioned in the requirements, Orca is a screen reader that
-      needs to be able to interact with speech synthesis, braille,
-      and screen magnification services, but it need not be the
-      provider of such services.  Given this, Orca has the following
-      dependencies:</para>
-
-    <section id="prereqgnome"><title>GNOME 2.14 or better</title> 
-      <para>The GNOME 2.14 desktop contains a number of bug fixes and
-        enhancements to the accessibility infrastructure.  These are
-	needed for Orca to run properly.</para>
-    </section>
-
-    <section id="prereqpython"><title>Python v2.4 or better</title> 
-      <para>Orca is written in the Python programming language and
-        depends upon features found in Python versions 2.4 and
-        greater.</para>
-    </section>
-
-    <section id="prereqpyorbit"><title>pyorbit v2.14.0 or better</title> 
-      <para>PyORBit provides the Python language bindings for ORBit,
-        which is Bonobo's CORBA ORB implementation.</para>
-    </section>
-
-    <section id="prereqlibbonobo"><title>libbonobo v2.0.0 or better</title> 
-      <para>libbonobo provides the Python language bindings for Bonobo,
-        which gives Orca access to the AT-SPI.</para>
-    </section>
-
-    <section id="prereqgnomepython"><title>gnome-python-2.0 v2.6.0 or better</title> 
-      <para>GNOME-Python provides the Python language bindings for the
-        GNOME libraries.</para>
-    </section>
-
-    <section id="prereqpygtk"><title>pygtk-2.0 v2.4.0 or better</title> 
-      <para>PyGTK provides a convenient wrapper for the GTK library
-        for use in Python programs, and takes care of many of the
-        details such as managing memory and type casting. When
-        combined with PyORBit and gnome-python, it can be used to
-        write full featured GNOME applications.</para>
-    </section>
-
-    <section id="prereqatspi"><title>AT-SPI v1.6.6 or better</title>
-      <para> Orca's means of gathering information about the desktop
-        as well interacting with the desktop will be done through
-        the AT-SPI <citation><xref linkend="at-spi"
-        endterm="at-spi.abbrev"/></citation>.  As such, a
-        functioning AT-SPI environment is mandatory.  The AT-SPI
-        provides an IDL/CORBA-based approach to detect, examine, and
-        manipulate desktop and application content.  It supports the
-        registration of event listeners for changes to desktop and
-        application content.  Finally, the AT-SPI supports the
-        registration of listeners for input device events, with an
-        option for these listeners to intercept (and possibly
-        consume) the events before they are processed by the desktop
-        or applications on the desktop.</para>
-    </section>
-
-    <section id="prereqgnomespeech"><title>gnome-speech v0.3.9 or better</title>
-      <para>gnome-Speech <citation><xref linkend="gnome-speech"
-      endterm="gnome-speech.abbrev"/></citation> provides an
-      IDL/CORBA-based approach to access speech synthesizers as network
-      services.</para>
-    </section>
-
-    <section id="prereqbrltty"><title>BrlTTY v3.7.2 or better</title>
-      <para>BrlTTY <citation><xref linkend="brltty"
-        endterm="brltty.abbrev"/></citation> provides access to a
-        variety of Braille displays, and consists of a library and a
-        daemon to provide programmatic interaction with the
-        display.</para>
-    </section>
-
-    <section id="prereqgnomemag"><title>gnome-mag v0.11.11 or better</title>
-      <para>GNOME-mag <citation><xref linkend="gnome-mag"
-      endterm="gnome-mag.abbrev"/></citation> provides an IDL/CORBA-based
-      approach to access and manipulate a screen magnifier as a
-      network service.</para>
-    </section>
-
-    <section id="prereqkeyboardnav"><title>Keyboard Navigation</title>
-      <para>As much as possible, Orca relies upon the keyboard
-        navigation methods built in to the native platform.  For
-        example, it is expected that the native platform will provide
-        access via traditional methods such as the "tab" key, keyboard
-        mnemonics, and keyboard accelerators.</para>
-    </section>
-  </chapter>
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * ARCHITECTURE                                                         *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <chapter id="architecture"><title>Architecture and Implementation</title>
 
     <para>As illustrated in the high level Orca architecture diagram,
       the main components of Orca are as follows: desktop applications
@@ -320,7 +184,7 @@
 
     </section>
 
-    <section id="archorca"><title>Orca</title>
+    <section id="archorca"><title>Orca Module</title>
 
       <para>The <literal>orca</literal> module is the "main entry
         point" of Orca.  It initializes the components that Orca uses
@@ -360,13 +224,13 @@
         be set directly.</para>
 
       <section id="archsettings"><title>settings</title> 
+
         <para>The <emphasis role="bold">settings</emphasis> module
           (not depicted in the high level Orca architecture diagram)
           holds preferences set by the user during configuration.
           These settings include the following: use of speech and/or
-          braille, voice styles, key echo, text echo, and command echo
-          (see the &userrequirementslink; for details on these
-          features).</para>
+          braille, voice styles, key echo, text echo, and command
+          echo.</para>
 
         <para>Any Orca module can check the value of a setting by
           examining the field directly in the
@@ -499,163 +363,3 @@
     </section>
 
   </chapter>
-
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * I18N SUPPORT                                                         *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <chapter id="i18n"><title>Internationalization (I18N) Support</title>
-    <para>All human-consumable text obtained from AT-SPI calls is
-      expected to be in a localized form.  As such, Orca does not
-      do any extra localization processing when working with text
-      obtained via the AT-SPI.</para>
-    <para>For text generated by Orca itself, Orca handles
-      internationalization and localization using the <citation><xref
-      linkend="gettext" endterm="gettext.abbrev"/></citation> support
-      of Python.  The gettext support of Python is similar to the GNU
-      gettext module.  Each human consumable string of Orca is US
-      English text wrapped in a call to gettext.gettext.  The call to
-      gettext.gettext will either return a localized string or default
-      to the US English text. Orca depends upon an active and thriving
-      community of open source translators to provide the
-      localizations.</para>
-    <para>The synthesis of localized speech is to be provided by the
-      underlying gnome-speech engine.  That is, Orca merely passes
-      localized text to the speech engine, which is responsible for
-      the correct interpretation and pronunciation.</para>
-    <para>The generation of localized braille is to be determined.
-      &todo; BrlTTY currently does not support this at the moment, but
-      it is expected that the BrlTTY developers will add this in the
-      future.</para>
-  </chapter>
-
-  <!--
-  ************************************************************************
-  *                                                                      *
-  * BIBLIOGRAPHY                                                         *
-  *                                                                      *
-  ************************************************************************
-  -->
-
-  <bibliography id="archbibliography">
-    <biblioentry role="unpublished" id="at-spi">
-      <abbrev id="at-spi.abbrev">AT-SPI</abbrev>
-      <authorgroup>
-        <author><firstname>Bill</firstname><surname>Haneman</surname></author>
-        <author><firstname>Marc</firstname><surname>Mulcahy</surname></author>
-        <author><firstname>Michael</firstname><surname>Meeks</surname></author>
-      </authorgroup>
-      <title><ulink url="http://directory.fsf.org/accessibility/at-spi.html">
-        AT-SPI</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="acss">
-      <abbrev id="acss.abbrev">ACSS</abbrev>
-      <authorgroup>
-        <author><firstname>T.V.</firstname><surname>Raman</surname></author>
-      </authorgroup>
-      <title><ulink url="http://www.w3.org/TR/1998/REC-CSS2-19980512/aural.html">Aural Style Sheets</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="bonobo">
-      <abbrev id="bonobo.abbrev">Bonobo</abbrev>
-      <author><firstname>George</firstname><surname>Lebl</surname></author>
-      <title><ulink url="http://lidn.sourceforge.net/articles/gnomenclatureintrotobonobo/">
-        Gnomenclature: Intro to bonobo</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="brltty">
-      <abbrev id="brltty.abbrev">BRLTTY</abbrev>
-      <authorgroup>
-        <author><firstname>Dave</firstname><surname>Meilke</surname></author>
-        <author><firstname>Nicolas</firstname><surname>Pitre</surname></author>
-        <author><firstname>Stephane</firstname><surname>Doyon</surname></author>
-      </authorgroup>
-      <title><ulink url="http://directory.fsf.org/accessibility/brltty.html">
-        BRLTTY</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="emacspeak">
-      <abbrev id="emacspeak.abbrev">Emacspeak</abbrev>
-      <authorgroup>
-        <author><firstname>T.V.</firstname><surname>Raman</surname></author>
-      </authorgroup>
-      <title><ulink url="http://emacspeak.sourceforge.net/">Emacspeak</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="gail">
-      <abbrev id="gail.abbrev">GAIL</abbrev>
-      <author><firstname>Bill</firstname><surname>Haneman</surname></author>
-      <title><ulink url="http://freshmeat.net/projects/gail/">
-        GAIL</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="gettext">
-      <abbrev id="gettext.abbrev">gettext</abbrev>
-      <author><surname>&todo; Unknown</surname></author>
-      <title><ulink url="http://docs.python.org/lib/module-gettext.html">
-        gettext</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="gnome-mag">
-      <abbrev id="gnome-mag.abbrev">gnome-mag</abbrev>
-      <author><firstname>Bill</firstname><surname>Haneman</surname></author>
-      <title><ulink url="http://directory.fsf.org/accessibility/gnome-mag.html">
-        gnome-mag</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="gnome-speech">
-      <abbrev id="gnome-speech.abbrev">gnome-speech</abbrev>
-      <authorgroup>
-        <author><firstname>Marc</firstname><surname>Mulcahy</surname></author>
-        <author><firstname>Michael</firstname><surname>Meeks</surname></author>
-      </authorgroup>
-      <title><ulink url="http://directory.fsf.org/accessibility/gnome-speech.html">
-        gnome-speech</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="gnopernicus">
-      <abbrev id="gnopernicus.abbrev">Gnopernicus</abbrev>
-      <author><firstname>Remus</firstname><surname>Draica</surname></author>
-      <title><ulink url="http://directory.fsf.org/accessibility/gnopernicus.html">
-        Gnopernicus</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="jaws">
-      <abbrev id="jaws.abbrev">JAWS</abbrev>
-      <author><firstname></firstname><surname>Freedom Scientific</surname></author>
-      <title><ulink url="http://www.freedomscientific.com/fsproducts/softwarejaws.asp">
-        JAWS</ulink>
-    </title>
-    </biblioentry>
-
-    <biblioentry role="unpublished" id="xkb">
-      <abbrev id="xkb.abbrev">XKB</abbrev>
-      <authorgroup>
-        <author><firstname>Erik</firstname><surname>Fortune</surname></author>
-        <author><firstname>William</firstname><surname>Walker</surname></author>
-        <author><firstname>Donna</firstname><surname>Converse</surname></author>
-        <author><firstname>George</firstname><surname>Sachs</surname></author>
-      </authorgroup>
-      <title><ulink url="http://matrix.netsoc.tcd.ie/hcksplat/work/XKBlib.pdf">
-        The XKB keyboard extension</ulink>
-    </title>
-    </biblioentry>
-  </bibliography>
-
-</book>
