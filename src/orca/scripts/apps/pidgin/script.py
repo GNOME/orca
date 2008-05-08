@@ -385,28 +385,34 @@ class Script(default.Script):
 
         prefixChatMessage = self.speakNameCheckButton.get_active()
         prefs.writelines("\n")
-        prefs.writelines("orca.scripts.gaim.prefixChatMessage = %s\n" % \
+        prefs.writelines( \
+          "orca.scripts.apps.pidgin.script.prefixChatMessage = %s\n" % \
                          prefixChatMessage)
 
         announceBuddyTyping = self.buddyTypingCheckButton.get_active()
-        prefs.writelines("orca.scripts.gaim.announceBuddyTyping = %s\n" % \
+        prefs.writelines( \
+          "orca.scripts.apps.pidgin.script.announceBuddyTyping = %s\n" % \
                          announceBuddyTyping)
 
         chatRoomHistories = self.chatRoomHistoriesCheckButton.get_active()
-        prefs.writelines("orca.scripts.gaim.chatRoomHistories = %s\n" % \
+        prefs.writelines( \
+          "orca.scripts.apps.pidgin.script.chatRoomHistories = %s\n" % \
                          chatRoomHistories)
 
         if self.allMessagesRadioButton.get_active():
             speakMessages = SPEAK_ALL_MESSAGES
-            option = "orca.scripts.gaim.SPEAK_ALL_MESSAGES"
+            option = "orca.scripts.apps.pidgin.script.SPEAK_ALL_MESSAGES"
         elif self.focusedChannelRadioButton.get_active():
             speakMessages = SPEAK_CHANNEL_WITH_FOCUS
-            option = "orca.scripts.gaim.SPEAK_CHANNEL_WITH_FOCUS"
+            option = \
+              "orca.scripts.apps.pidgin.script.SPEAK_CHANNEL_WITH_FOCUS"
         elif self.allChannelsRadioButton.get_active():
             speakMessages = SPEAK_ALL_CHANNELS_WHEN_FOCUSED
-            option = "orca.scripts.gaim.SPEAK_ALL_CHANNELS_WHEN_FOCUSED"
+            option = \
+            "orca.scripts.apps.pidgin.script.SPEAK_ALL_CHANNELS_WHEN_FOCUSED"
         prefs.writelines("\n")
-        prefs.writelines("orca.scripts.gaim.speakMessages = %s\n" % option)
+        prefs.writelines( \
+          "orca.scripts.apps.pidgin.script.speakMessages = %s\n" % option)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This

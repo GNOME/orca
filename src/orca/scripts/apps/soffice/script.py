@@ -309,7 +309,7 @@ class Script(default.Script):
         speakCellCoordinates = \
                  self.speakCellCoordinatesCheckButton.get_active()
         prefs.writelines( \
-                 "orca.scripts.StarOffice.speakCellCoordinates = %s\n" % \
+          "orca.scripts.apps.soffice.script.speakCellCoordinates = %s\n" % \
                  speakCellCoordinates)
 
     def getAppState(self):
