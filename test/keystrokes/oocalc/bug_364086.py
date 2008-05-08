@@ -42,7 +42,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Untitled2 - OpenOffice.org Calc frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'panel'",

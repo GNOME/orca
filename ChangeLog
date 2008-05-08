@@ -5,6 +5,16 @@
           More tweaks for bug #528147 (fix the application-unique preferences
           for pidgin and soffice).
 
+        * test/keystrokes/oocalc/bug_363802.py:
+          test/keystrokes/oocalc/bug_435307.py:
+          test/keystrokes/oocalc/bug_356334.py:
+          test/keystrokes/oocalc/bug_361167.py:
+          test/keystrokes/oocalc/bug_363804.py:
+          test/keystrokes/oocalc/bug_364086.py:
+          test/keystrokes/oocalc/bug_433398.py:
+          Fixed up the oocalc regression tests to match the new braille
+          context output.
+
 2008-05-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
