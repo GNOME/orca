@@ -1514,51 +1514,52 @@ class Script(default.Script):
         global onlySpeakChangedLinesDuringFind
 
         prefs.writelines("\n")
+        prefix = "orca.scripts.toolkits.Gecko.script"
 
         value = self.controlCaretNavigationCheckButton.get_active()
-        prefs.writelines("orca.Gecko.controlCaretNavigation = %s\n" % value)
+        prefs.writelines("%s.controlCaretNavigation = %s\n" % (prefix, value))
         controlCaretNavigation = value
 
         value = self.structuralNavigationCheckButton.get_active()
-        prefs.writelines("orca.Gecko.structuralNavigationEnabled = %s\n" % \
-                         value)
+        prefs.writelines("%s.structuralNavigationEnabled = %s\n" \
+                         % (prefix, value))
         structuralNavigationEnabled = value
 
         value = self.arrowToLineBeginningCheckButton.get_active()
-        prefs.writelines("orca.Gecko.arrowToLineBeginning = %s\n" % value)
+        prefs.writelines("%s.arrowToLineBeginning = %s\n" % (prefix, value))
         arrowToLineBeginning = value
 
         value = self.sayAllOnLoadCheckButton.get_active()
-        prefs.writelines("orca.Gecko.sayAllOnLoad = %s\n" % value)
+        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         sayAllOnLoad = value
 
         value = self.speakCellCoordinatesCheckButton.get_active()
-        prefs.writelines("orca.Gecko.speakCellCoordinates = %s\n" % value)
+        prefs.writelines("%s.speakCellCoordinates = %s\n" % (prefix, value))
         speakCellCoordinates = value
 
         value = self.speakCellSpanCheckButton.get_active()
-        prefs.writelines("orca.Gecko.speakCellSpan = %s\n" % value)
+        prefs.writelines("%s.speakCellSpan = %s\n" % (prefix, value))
         speakCellSpan = value
 
         value = self.speakCellHeadersCheckButton.get_active()
-        prefs.writelines("orca.Gecko.speakCellHeaders = %s\n" % value)
+        prefs.writelines("%s.speakCellHeaders = %s\n" % (prefix, value))
         speakCellHeaders = value
 
         value = self.skipBlankCellsCheckButton.get_active()
-        prefs.writelines("orca.Gecko.skipBlankCells = %s\n" % value)
+        prefs.writelines("%s.skipBlankCells = %s\n" % (prefix, value))
         skipBlankCells = value
 
         value = self.speakResultsDuringFindCheckButton.get_active()
-        prefs.writelines("orca.Gecko.speakResultsDuringFind = %s\n" % value)
+        prefs.writelines("%s.speakResultsDuringFind = %s\n" % (prefix, value))
         speakResultsDuringFind = value
 
         value = self.changedLinesOnlyCheckButton.get_active()
-        prefs.writelines("orca.Gecko.onlySpeakChangedLinesDuringFind = %s\n"\
-                         % value)
+        prefs.writelines("%s.onlySpeakChangedLinesDuringFind = %s\n"\
+                         % (prefix, value))
         onlySpeakChangedLinesDuringFind = value
 
         value = self.minimumFindLengthSpinButton.get_value()
-        prefs.writelines("orca.Gecko.minimumFindLength = %s\n" % value)
+        prefs.writelines("%s.minimumFindLength = %s\n" % (prefix, value))
         minimumFindLength = value
 
     def getAppState(self):
