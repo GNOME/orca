@@ -308,9 +308,12 @@ class Script(default.Script):
         prefs.writelines("\n")
         speakCellCoordinates = \
                  self.speakCellCoordinatesCheckButton.get_active()
-        prefs.writelines( \
-          "orca.scripts.apps.soffice.script.speakCellCoordinates = %s\n" % \
-                 speakCellCoordinates)
+        prefix = "orca.scripts.apps.soffice.script"
+        prefs.writelines("%s.speakCellCoordinates = %s\n" % \
+                         (prefix, speakCellCoordinates))
+        prefix = "orca.scripts.apps.soffice.speech_generator"
+        prefs.writelines("%s.speakCellCoordinates = %s\n" % \
+                         (prefix, speakCellCoordinates))
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
