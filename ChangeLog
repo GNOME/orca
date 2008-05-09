@@ -1,3 +1,16 @@
+2008-05-08  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_icon.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+	  Update to reflect new behavior introduced by fix for
+	  caching bug #527229.
+
 2008-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/pidgin/script.py:
