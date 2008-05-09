@@ -1,3 +1,9 @@
+2008-05-09  Willie Walker <william.walker@sun.com>
+
+        * run_pylint.sh.in:
+          Fix for bug #532376 - Running pylint can potentially overwrite 
+          previous results.
+
 2008-05-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
@@ -5,7 +11,7 @@
           preferences for soffice). This gets oocalc regression test
           bug_363804.py working again.
 
-2008-05-08  Willie Walker <william.walker@sun.com>
+2008-05-09  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/role_push_button.py:
           test/keystrokes/gtk-demo/role_toggle_button.py:

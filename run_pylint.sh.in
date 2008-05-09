@@ -16,7 +16,8 @@ echo Thank you for your attention to quality
 for foo in $FILES
 do
     echo
-    OUTPUT_FILE=`basename $foo .py`.pylint
+    OUTPUT_FILE=`dirname $foo`/`basename $foo .py`.pylint
+    OUTPUT_FILE=`echo $OUTPUT_FILE | sed 's~^./~~' | sed 's^/^.^g'`
     echo Checking $foo, sending output to $OUTPUT_FILE
     PYTHONPATH=$INSTALL_DIR:$PYTHONPATH pylint --init-hook="import pyatspi" $INSTALL_DIR/orca/$foo > $OUTPUT_FILE 2>&1
     grep "code has been rated" $OUTPUT_FILE | cut -f1 -d\( \
