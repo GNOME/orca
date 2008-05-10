@@ -1962,6 +1962,9 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
+    def __spellItemProgressCallback(self, context, progressType):
+        return
+
     def __sayAllProgressCallback(self, context, progressType):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
@@ -4439,6 +4442,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
+            speech.stop()
             if (not lineString) \
                or (not len(lineString)) \
                or (lineString == "\n"):
@@ -4560,20 +4564,6 @@ class Script(script.Script):
 
         return True
 
-    def spellCurrentItem(self, itemString):
-        """Spell the current flat review word or line.
-
-        Arguments:
-        - itemString: the string to spell.
-        """
-
-        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
-            if character.isupper():
-                speech.speak(character.encode("UTF-8"),
-                             self.voices[settings.UPPERCASE_VOICE])
-            else:
-                speech.speak(character.encode("UTF-8"))
-
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            speechType=1):
         """Presents the current item to the user.
@@ -4594,6 +4584,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
+            speech.stop()
             if (not wordString) \
                or (not len(wordString)) \
                or (wordString == "\n"):
@@ -6422,21 +6413,64 @@ class Script(script.Script):
 
         return sortedLabels
 
+    def spellingGenerator(self, itemString, phonetic=False):
+        """ Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
+
+        Arguments:
+        - itemString: the string to spell
+        - phonetic: whether or not the string should be spelled
+          phonetically.
+
+        """
+
+        context = self.getFlatReviewContext()
+        obj = context.getCurrentAccessible()
+        zone = context.lines[context.lineIndex].zones[context.zoneIndex]
+        if isinstance(zone, flat_review.TextZone):
+            startOffset = zone.startOffset
+        else:
+            startOffset = 0
+
+        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
+            if character.isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice =  settings.voices[settings.DEFAULT_VOICE]
+
+            if character == " ":
+                string = chnames.getCharacterName(character)
+            elif phonetic:
+                character = character.lower()
+                string = phonnames.getPhoneticName(character)
+            else:
+                string = character.encode("UTF-8")
+
+            yield [speechserver.SayAllContext(obj, string,
+                                              startOffset, startOffset + 1),
+                   voice]
+            startOffset += 1
+
+    def spellCurrentItem(self, itemString):
+        """Spell the current item.
+
+        Arguments:
+        - itemString: the string to spell.
+        """
+
+        speech.sayAll(self.spellingGenerator(itemString),
+                      self.__spellItemProgressCallback)
+
     def phoneticSpellCurrentItem(self, itemString):
-        """Phonetically spell the current flat review word or line.
+        """Phonetically spell the current item.
 
         Arguments:
         - itemString: the string to phonetically spell.
         """
 
-        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
-            if character.isupper():
-                voice = settings.voices[settings.UPPERCASE_VOICE]
-                character = character.lower()
-            else:
-                voice =  settings.voices[settings.DEFAULT_VOICE]
-            phoneticString = phonnames.getPhoneticName(character)
-            speech.speak(phoneticString, voice)
+        speech.sayAll(self.spellingGenerator(itemString, True),
+                      self.__spellItemProgressCallback)
 
     def printAncestry(self, child):
         """Prints a hierarchical view of a child's ancestry."""
