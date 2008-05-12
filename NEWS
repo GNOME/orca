@@ -1,3 +1,67 @@
+2.23.2 - 12-May-2008
+
++ = means it's also part of the gnome-2-22 branch
+
+General:
+
+* Fix for bug #426010 - Implement Verbalized Links.
+
+* Fix for bug #517127 - Orca doesn't always speak expected message
+  when selecting all.
+
++ Fix for bug #517387 - Orca should not read password out in gdm login
+  window.  This just turns off key echo when the login window is up.
+  The real fix belongs in gdm (see bug #529145).
+
++ Fix for bug #517736 - whereAmI does not handle text with embedded
+  object characters.
+
++ Fix for bug #522797 - Orca should not speak false "inaccessible"
+  messages when switching applications.
+
++ Additional fix for bug #525831 - isn't properly handling SIGTERM.
+  Needed to fix this so orca_console_prefs would work again.
+
+* Fix for bug #528147 - Broke up multi-class scripts into packages.
+
++ Fix for bug #528507 - Escape doesn't exit "learn mode" if the active
+  script changes.
+
++ Fix for bug #528797 - gnome-speech inappropriately uses
+  g_return_if_fail.  Only set "punctuation mode" if we can.
+
+* Fix for bug #530541 - Suspending Orca in terminal screws up session.
+
+* Fix for bug #531378 - FSF address has changed.  Also updated
+  copyright messages to 2008.
+
+* Fix for bug #532376 - Running pylint can potentially overwrite
+  previous results.
+
+Pidgin:
+
+* Fix for bug #474673 - Add option to have chatroom-specific message
+  histories in Pidgin.
+
++ Fix for bug #523731 - Pidgin events interfere with app-specific
+  Prefs dialog.
+
+Firefox:
+
+* Fix for bug #529784 - Speech cannot always be interrupted with flat
+  review.
+
++ Fix for bug #530766 - (ff3) split headings not fully read when nav
+  by structure.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    nb      Norwegian Bokmål     Kjartan Maraas
+
+==========
+
 2.23.1 - 21-Apr-2008
 
 + = means it's also part of the gnome-2-22 branch
@@ -78,7 +142,7 @@ OOo:
   find and replace dialog in openoffice
 
 Firefox:
-  
+
 + Fix for bug #491837 - Implement Gecko.py 'go to' functions with Collections
 
 * Fix for bug #512103 - Orca speaks too much of the context in FF3
@@ -125,7 +189,7 @@ Firefox:
 New and updated translations (THANKS EVERYONE!!!):
 
     ca      Catalan              Gil Forcada
-    cs      Czech                Lucas Lommer, Martin Sukany and 
+    cs      Czech                Lucas Lommer, Martin Sukany and
                                  Petr Kovar
     da      Danish               Kenneth Nielsen
     de      German               Jochen Skulj
@@ -138,7 +202,7 @@ New and updated translations (THANKS EVERYONE!!!):
     nb      Norwegian Bokmål     Kjartan Maraas
     nl      Dutch                Vincent van Adrighem
     nn      Norwegian Nynorsk    Eskild Hustvedt
-    pt_BR   Brazilian Portuguese Tiago Melo Casal and 
+    pt_BR   Brazilian Portuguese Tiago Melo Casal and
                                  Leonardo Ferreira Fontenelle
     sv      Swedish              Daniel Nylander
     te      Telugu               Krishna Babu K and Sunil Mohan Adapa
@@ -245,7 +309,7 @@ General:
   bug in question, but there is an asymmetric behavior that happens
   when flat reviewing by word.  Flat review by previous word will
   land blank line at the end of a text area (if it has one), but
-  won't do do when navigating by next work.  Tracking the asymmetric 
+  won't do do when navigating by next work.  Tracking the asymmetric
   navigation issue in bug #515817.
 
 * Fix for bug #440490 - Key bindings should allow double and triple
@@ -348,7 +412,7 @@ Firefox:
   Orca+Right to move from object to object.  This should come
   in handy for "escaping" combo boxes and lists in forms after
   making your selection.  Because these new commands treat each
-  object as if it were on a line by itself, users who have 
+  object as if it were on a line by itself, users who have
   requested this type of line navigation will hopefully find that
   this new functionality also addresses some of those needs.
 
@@ -436,7 +500,7 @@ Evolution:
 * Fix for bug #490317 - Orca echoes the first letter of each new line
   when composing a message in Evolution
 
-Java platform: 
+Java platform:
 
 * Fix for bug #507886 - Orca+Space when in Java application presents
   script summary debug
@@ -458,7 +522,7 @@ Firefox/Thunderbird:
 * Fix for bug #500016 - Reading web pages by line in Firefox 3 is
   slow
 
-* Fix for bug #502084 - Running Orca with Thunderbird v2.0.X with 
+* Fix for bug #502084 - Running Orca with Thunderbird v2.0.X with
   compose window open generates a stack trace
 
 * Fix for bug #504742 - Gecko.py should not call
@@ -551,7 +615,7 @@ Magnification:
   right half, top half, bottom half, and custom.  Choosing custom
   allows you to specify the location of each edge of the zoomer.
   The new default zoomer position is full screen if full screen
-  magnification is possible.  Otherwise, the right half of the 
+  magnification is possible.  Otherwise, the right half of the
   screen will be used by default.
 
 * Bug #463881 - Evaluate other gnome-mag features for inclusion in
@@ -578,7 +642,7 @@ Magnification:
 
 * Bug #464705 - Provide option to keep caret in center of magnifier
   region of interest
- 
+
   We've added individual tracking and alignment settings for
   controls and the text cursor: each can have an alignment of
   centered or push (move the magnifier window the least).  In
@@ -633,7 +697,7 @@ Magnification:
    menu items and move among controls in dialog boxes.
 
 We also know we have more work to do and are tracking the work with
-these bugs: 
+these bugs:
 
 http://bugzilla.gnome.org/show_bug.cgi?id=464734
 Provide some kind of visual feedback for the item with focus
@@ -644,7 +708,7 @@ Orca should provide support for smooth/linear panning of the zoomer
 http://bugzilla.gnome.org/show_bug.cgi?id=504077
 Orca should support mouse bindings
 
-Firefox: 
+Firefox:
 
 * Fix for bug #451988 - Firefox: navigation by landmark
 
@@ -652,7 +716,7 @@ Firefox:
   contentinfo, definition, main, navigation, note, search, secondary,
   seealso.  New functionality in Orca allows you to navigate to the
   next and previous landmark on a page via the unbound keybindings:
-  
+
   - Goes to previous landmark
   - Goes to next landmark
 
@@ -694,7 +758,7 @@ Firefox:
   announcement, where n is the number of the function key (i.e., the
   last announcement is obtained via Orca+F1, the 9th last announcement
   is obtained via Orca+F9).
-  
+
 * Fix for bug #473009 - Cannot arrow to the end of an HTML entry if
   Orca is controlling the caret
 
@@ -718,7 +782,7 @@ General:
 
 * Fix for bug #496846 - When tabbing to an editable combobox, text
   selection should be displayed in braille
- 
+
 * Fix for bug #503527 - Mnemonics are not supported well
 
 New and updated translations (THANKS EVERYONE!!!):
@@ -727,7 +791,7 @@ New and updated translations (THANKS EVERYONE!!!):
                                  Jorge Gonzalez
     ko      Korean               Changwoo Ryu
     nb      Norwegian Bokmål     Espes Stefansen and Kjartan Maraas
-    sl      Slovenian            Matej Urbančič
+    sl      Slovenian            Matej Urbanči
 
 ==========
 
@@ -804,7 +868,7 @@ New and updated translations (THANKS EVERYONE!!!):
                                  Jorge Gonzalez
     gl      Galician             Ignacio Casal Quinteiro
     hu      Hungarian            Kálmán Kéménczy and Gabor Kelemen
-    sl      Slovenian            Matej Urbančič
+    sl      Slovenian            Matej Urbanči
 
 ==========
 
@@ -822,7 +886,7 @@ General:
 
 * Fix for bug #486969 - Status bar not being read with Where Am I
 
-* Fix for bug #486972 - Expanding/collapsing tree nodes in a table 
+* Fix for bug #486972 - Expanding/collapsing tree nodes in a table
   should not speak nodename again
 
 * Fix for bug #487226 - "/" and the OrcaKey should not be hardcoded in
@@ -832,26 +896,26 @@ General:
   have) and the new "Speaks the title bar or status bar" handler.
   All keybindings are still the same.
 
-* Fix for bug #487514 - Keys for navigation purposes should not be 
+* Fix for bug #487514 - Keys for navigation purposes should not be
   echoed
 
 * Fix for bug #489875 - Some Orca macaroon oowriter and oocalc tests
   have timeout problems
 
-* Fix for bug #489913 - Changing preferences from a test causes 
+* Fix for bug #489913 - Changing preferences from a test causes
   tracebacks and spontaneous speech
 
-* Fix for bug #489928 - Orca oocalc macaroon test for bug #363804 
+* Fix for bug #489928 - Orca oocalc macaroon test for bug #363804
   doesn't completely restore initial state
 
 * Fix for bug #491417 - Orca script should inherit PATH and PYTHONPATH
   from environment.  (Thanks David Csercsics!!!)
 
-* Fix for bug #494651 - Orca's OBJECT EVENT debug routine not 
-  outputting all information for "object:selection-changed" 
+* Fix for bug #494651 - Orca's OBJECT EVENT debug routine not
+  outputting all information for "object:selection-changed"
   menu bar event
 
-* Additional work related to pyatspi migration (bug #489490, 
+* Additional work related to pyatspi migration (bug #489490,
   bug #491885).  We will be looking at improving performance for the
   next release.
 
@@ -941,10 +1005,10 @@ OpenOffice:
 
 * Fix for bug #435852 - Orca and OpenOffice Calc have a memory lovefest.
 
-* Fix for bug #480278 - where-am-I ("double click") for StarOffice.py 
+* Fix for bug #480278 - where-am-I ("double click") for StarOffice.py
   smushs the output.
 
-+ Fix for bug #489490 - Test for OOo Writer bug #413909 not producing the 
++ Fix for bug #489490 - Test for OOo Writer bug #413909 not producing the
   correct output.
 
 + Fix for bug #490623, work around for flat_review __cmp__ issue for
@@ -955,7 +1019,7 @@ New and updated translations (THANKS EVERYONE!!!):
     ar      Arabic               Djihed Afifi
     es      Spanish              Francisco Javier Dorado Martinez and
                                  Jorge Gonzalez
-    sl      Slovenian            Matej Urbančič
+    sl      Slovenian            Matej Urbanči
     sv      Swedish              Daniel Nylander
 
 ==========
@@ -977,13 +1041,13 @@ General:
 * Fix for bug 455308 - Output module and voice selection with Speech
   Dispatcher backend
 
-* Fix for bug 456970 - Orca says "0 items" for tree tables that use 
+* Fix for bug 456970 - Orca says "0 items" for tree tables that use
   NODE_CHILD_OF relationship
 
 * Fix for bug 457198 - Orca shouldn't exit if user-settings import
   fails
 
-* Fix for bug 461719 - gnome-mud script failed at import 
+* Fix for bug 461719 - gnome-mud script failed at import
   (Thanks Javier!!!)
 
 * Fix for bug 462650 - Traceback when using whereAmI in Evolution New
@@ -998,7 +1062,7 @@ General:
 * Work on bug 465989 - Adding panel applets.  Manage the presentation
   of images in tables better
 
-* Fix for bug 466500 - Speech Dispatcher backend crashes with older SD 
+* Fix for bug 466500 - Speech Dispatcher backend crashes with older SD
   versions (Thanks Tomas Cerha!)
 
 * Fix for bug 466725 - Traceback when using SayAll in Gedit when text
@@ -1023,15 +1087,15 @@ General:
 * Fix for bug 471220 - Gaim's prefixChatMessage setting should have
   option to only prefix non-focused tabs
 
-* Fix for bug 472407 - Orca doesn't always announce new messages 
+* Fix for bug 472407 - Orca doesn't always announce new messages
   in unfocused tabs in Pidgin
 
 * Fix for bug 472962 - Trailing space at end of message/string
 
-* Fix for bug 473420 - Orca speaking an extra "seconds" for the 
+* Fix for bug 473420 - Orca speaking an extra "seconds" for the
   Preferences dialog
 
-* Fix for bug 473422 - Orca has traceback when giving focus to the 
+* Fix for bug 473422 - Orca has traceback when giving focus to the
   pidgin application
 
 * Fix for bug 473991 - Orca doesn't announce autocompleted user names
@@ -1063,7 +1127,7 @@ General:
 + Fix for bug 469098 - Orca should indicate when a new chat window/tab
   has appeared in Pidgin
 
-+ Fix for bug 472907 - Characters "Â°" and "Âº" shouldn't have the 
++ Fix for bug 472907 - Characters "Â°" and "Âº" shouldn't have the
   same description
 
 + Fix for bug 472978 - Short Braille and spoken word for "dial" should
@@ -1162,7 +1226,7 @@ New and updated translations (THANKS EVERYONE!!!):
     bg      Bulgarian            Alexander Shopov
     da      Danish               Kenneth Nielsen
     de      German               Jochen Skulj
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamaj
     el      Greek                Nikos Charonitakis
     es      Spanish              Francisco Javier Dorado Martinez and
                                  Jorge Gonzalez
@@ -1191,7 +1255,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 General:
 
-* NOTICE: the automake requirement for Orca has been moved from 
+* NOTICE: the automake requirement for Orca has been moved from
   automake 1.7.2 to 1.9.
 
 * Work on bug 364518 - Create a GUI interface to the pronunciation
@@ -1211,7 +1275,7 @@ General:
 * Fix for bug 455230 - Read table cell row should insert column
   headers for non-text cells
 
-* Fix for bug 456296 - Traceback in braille.py when doing a 
+* Fix for bug 456296 - Traceback in braille.py when doing a
   "Select All" in gedit.
 
 * Fix for bug 459080 - Some files missing from POTFILES.in (sorry!)
@@ -1857,7 +1921,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 * New and updated translations (THANKS EVERYONE!!!):
 
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamaj
     da      Danish               Peter Bach
     de      German               Hendrik Richter and Jochen Skulj
     en_GB   English/British      David Lodge and Gareth Owen
@@ -1898,7 +1962,7 @@ New and updated translations (THANKS EVERYONE!!!):
     ar      Arabic               Khaled Hosny and Djihed Afifi
     bg      Bulgarian            Alexander Shopov, Rostislav Raykov,
                                  Vladimir Petkov, and Iassen Pramatarov
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamaj
     de      German               Hendrik Richter and Jochen Skulj
     dz      Dzongkha             Pema Geyleg
     en_GB   English/British      David Lodge and Gareth Owen
@@ -2012,7 +2076,7 @@ New and updated translations (THANKS EVERYONE!!!):
 * New and updated translations (THANKS EVERYONE!!!):
 
     ar      Arabic               Djihed Afifi and Khaled Hosny
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamaj
     en_GB   English/British      David Lodge
     fr      French               Stéphane Raimbault, Robert-André Mauchin
                                  and Jonathan Ernst
@@ -2630,7 +2694,7 @@ the attributes of an AT-SPI object.
                                  Vladimir Petkov, and Iassen Pramatarov
     bn      Bengali              Runa Bhattacharjee
     bn_IN   Bengali              Runa Bhattacharjee
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamaj
     cs      Czech                Miloslav Trmac
     cy      Welsh                Rhys Jones
     de      German               Hendrik Brandt
