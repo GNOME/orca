@@ -64,7 +64,6 @@ import speech
 import speechserver
 import mouse_review
 
-
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import Q_        # to provide qualified translatable strings
@@ -611,7 +610,7 @@ class Script(script.Script):
                 # Translators: this is a debug message that Orca users
                 # will not normally see. It describes a debug routine
                 # that outputs useful information on the current script
-                #  via speech and braille. This information will be 
+                #  via speech and braille. This information will be
                 # helpful to script writers.
                 #
                 _("Reports information on current script."))
@@ -770,7 +769,7 @@ class Script(script.Script):
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
                 orca.cycleDebugLevel,
-                # Translators: this is a debug message that Orca users 
+                # Translators: this is a debug message that Orca users
                 # will not normally see. It describes a debug routine
                 # that allows the user to adjust the level of debug
                 # information that Orca generates at run time.
@@ -791,7 +790,7 @@ class Script(script.Script):
         self.inputEventHandlers["printAncestryHandler"] = \
             input_event.InputEventHandler(
                 Script.printAncestryHandler,
-                # Translators: this is a debug message that Orca users 
+                # Translators: this is a debug message that Orca users
                 # will not normally see. It describes a debug routine
                 # that will take the component in the currently running
                 # application that has focus, and print debug information
@@ -805,10 +804,10 @@ class Script(script.Script):
         self.inputEventHandlers["printHierarchyHandler"] = \
             input_event.InputEventHandler(
                 Script.printHierarchyHandler,
-                # Translators: this is a debug message that Orca users 
+                # Translators: this is a debug message that Orca users
                 # will not normally see. It describes a debug routine
                 # that will take the currently running application, and
-                # print debug information to the console giving its 
+                # print debug information to the console giving its
                 # component hierarchy (i.e. all the components and all
                 # their descendants in the component tree).
                 #
@@ -817,21 +816,21 @@ class Script(script.Script):
         self.inputEventHandlers["printMemoryUsageHandler"] = \
             input_event.InputEventHandler(
                 Script.printMemoryUsageHandler,
-                # Translators: this is a debug message that Orca users 
+                # Translators: this is a debug message that Orca users
                 # will not normally see. It describes a debug routine
                 # that will print Orca memory usage information.
                 #
                 _("Prints memory usage information."))
-                        
+
         self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
             input_event.InputEventHandler(
                 Script.bookmarkCurrentWhereAmI,
                 # Translators: this command announces information regarding
-                # the relationship of the given bookmark to the current 
+                # the relationship of the given bookmark to the current
                 # position
                 #
-                _("Bookmark where am I with respect to current position."))    
-                
+                _("Bookmark where am I with respect to current position."))
+
         self.inputEventHandlers["goToBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToBookmark,
@@ -839,23 +838,23 @@ class Script(script.Script):
                 # location stored at the bookmark.
                 #
                 _("Go to bookmark."))
-                
+
         self.inputEventHandlers["addBookmark"] = \
             input_event.InputEventHandler(
                 Script.addBookmark,
-                # Translators: this event handler binds an in-page accessible 
+                # Translators: this event handler binds an in-page accessible
                 # object location to the given input key command.
                 #
                 _("Add bookmark."))
-                
+
         self.inputEventHandlers["saveBookmarks"] = \
             input_event.InputEventHandler(
                 Script.saveBookmarks,
-                # Translators: this event handler saves all bookmarks for the 
+                # Translators: this event handler saves all bookmarks for the
                 # current application to disk.
                 #
                 _("Save bookmarks."))
-                
+
         self.inputEventHandlers["goToNextBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToNextBookmark,
@@ -863,12 +862,12 @@ class Script(script.Script):
                 # bookmarks and takes the user to the next bookmark location.
                 #
                 _("Go to next bookmark location."))
-                
+
         self.inputEventHandlers["goToPrevBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToPrevBookmark,
-                # Translators: this event handler cycles through the 
-                # registered bookmarks and takes the user to the previous 
+                # Translators: this event handler cycles through the
+                # registered bookmarks and takes the user to the previous
                 # bookmark location.
                 #
                 _("Go to previous bookmark location."))
@@ -1755,31 +1754,31 @@ class Script(script.Script):
         #                                                                   #
         #  Bookmark key bindings                                            #
         #                                                                   #
-        #####################################################################   
-        # key binding to save bookmark information to disk 
+        #####################################################################
+        # key binding to save bookmark information to disk
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
                 orcaShiftAltModMask,
                 orcaAltModMask,
-                self.inputEventHandlers["saveBookmarks"])) 
-        # key binding to move to the previous bookmark         
+                self.inputEventHandlers["saveBookmarks"]))
+        # key binding to move to the previous bookmark
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
                 orcaShiftAltModMask,
                 orcaShiftModMask,
-                self.inputEventHandlers["goToPrevBookmark"])) 
-        # key binding to move to the next bookmark             
+                self.inputEventHandlers["goToPrevBookmark"]))
+        # key binding to move to the next bookmark
         keyBindings.add(
             keybindings.KeyBinding(
                 "b",
                 orcaShiftAltModMask,
                 orcaModMask,
-                self.inputEventHandlers["goToNextBookmark"]))    
-                
-        # key bindings for '1' through '6' for relevant commands            
-        for key in xrange(1, 7):  
+                self.inputEventHandlers["goToNextBookmark"]))
+
+        # key bindings for '1' through '6' for relevant commands
+        for key in xrange(1, 7):
             # 'Add bookmark' key bindings
             keyBindings.add(
                 keybindings.KeyBinding(
@@ -1787,7 +1786,7 @@ class Script(script.Script):
                     orcaShiftAltModMask,
                     orcaAltModMask,
                     self.inputEventHandlers["addBookmark"]))
-                    
+
             # 'Go to bookmark' key bindings
             keyBindings.add(
                 keybindings.KeyBinding(
@@ -1795,8 +1794,8 @@ class Script(script.Script):
                     orcaShiftAltModMask,
                     orcaModMask,
                     self.inputEventHandlers["goToBookmark"]))
-                    
-            # key binding for WhereAmI information with respect to root acc 
+
+            # key binding for WhereAmI information with respect to root acc
             keyBindings.add(
                 keybindings.KeyBinding(
                     str(key),
@@ -1993,7 +1992,6 @@ class Script(script.Script):
         if text.getNSelections():
             text.setSelection(0, context.currentOffset, context.currentOffset)
 
-
     def sayAll(self, inputEvent):
         clickCount = self.getClickCount()
         doubleClick = clickCount == 2
@@ -2157,13 +2155,13 @@ class Script(script.Script):
             lastChar = lastWord[len(lastWord) - 1]
             if lastChar == "\n" and lastWord != word:
                 voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice, False)
+                speech.speakCharacter("\n", voice)
 
         if lastKey == "Left" and len(word) > 0:
             lastChar = word[len(word) - 1]
             if lastChar == "\n" and lastWord != word:
                 voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice, False)
+                speech.speakCharacter("\n", voice)
 
         if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -2343,14 +2341,14 @@ class Script(script.Script):
             if prevChar == "\n":
                 # The cursor is at the beginning of a line.
                 # Speak a newline.
-                speech.speak(chnames.getCharacterName("\n"), voice, False)
+                speech.speakCharacter("\n", voice)
 
         # Handle speaking newlines when the left-arrow key is pressed.
         elif orca_state.lastNonModifierKeyEvent.event_string == "Left":
             if character == "\n":
                 # The cursor is at the end of a line.
                 # Speak a newline.
-                speech.speak(chnames.getCharacterName("\n"), voice, False)
+                speech.speakCharacter("\n", voice)
 
         if character == "\n":
             if prevChar == "\n":
@@ -2362,8 +2360,7 @@ class Script(script.Script):
                     #
                     speech.speak(_("blank"), voice, False)
         else:
-            speech.speak(chnames.getCharacterName(character), voice, False)
-
+            speech.speakCharacter(character, voice)
 
     def presentTooltip(self, obj):
         """
@@ -2613,7 +2610,7 @@ class Script(script.Script):
             newParent = None
 
         # Clear the point of reference.
-        # If the point of reference is a cell, we want to keep the 
+        # If the point of reference is a cell, we want to keep the
         # table-related points of reference.
         if oldParent is not None and oldParent == newParent and \
               newParent.getRole() == pyatspi.ROLE_TABLE:
@@ -2732,9 +2729,9 @@ class Script(script.Script):
                 if (not inSameGroup) and radioGroupLabel:
                     utterances.append(self.getDisplayedText(radioGroupLabel))
 
-            # Check to see if we are in the Pronunciation Dictionary in the 
-            # Orca Preferences dialog. If so, then we do not want to use the 
-            # pronunciation dictionary to replace the actual words in the 
+            # Check to see if we are in the Pronunciation Dictionary in the
+            # Orca Preferences dialog. If so, then we do not want to use the
+            # pronunciation dictionary to replace the actual words in the
             # first column of this table.
             #
             rolesList = [pyatspi.ROLE_TABLE_CELL, \
@@ -2762,7 +2759,7 @@ class Script(script.Script):
                 #
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
-            # If this is an icon within an layered pane or a table cell 
+            # If this is an icon within an layered pane or a table cell
             # within a table or a tree table and the item is focused but not
             # selected, let the user know. See bug #486908 for more details.
             #
@@ -2776,8 +2773,8 @@ class Script(script.Script):
                 parentRole == pyatspi.ROLE_TABLE):
                 checkIfSelected = True
 
-            # If we met the last set of conditions, but we got here by 
-            # moving left or right on the same row, then don't announce the 
+            # If we met the last set of conditions, but we got here by
+            # moving left or right on the same row, then don't announce the
             # selection state to the user. See bug #523235 for more details.
             #
             if checkIfSelected == True and \
@@ -3028,7 +3025,7 @@ class Script(script.Script):
         # that it selected.]]]
         #
         role = event.source.getRole()
-        if role in (pyatspi.ROLE_MENU, 
+        if role in (pyatspi.ROLE_MENU,
                     pyatspi.ROLE_MENU_ITEM,
                     pyatspi.ROLE_CHECK_MENU_ITEM,
                     pyatspi.ROLE_RADIO_MENU_ITEM):
@@ -3047,12 +3044,12 @@ class Script(script.Script):
         #
         newFocus = event.source
 
-        if role in (pyatspi.ROLE_LAYERED_PANE, 
+        if role in (pyatspi.ROLE_LAYERED_PANE,
                     pyatspi.ROLE_TABLE,
                     pyatspi.ROLE_TREE_TABLE,
                     pyatspi.ROLE_TREE):
             if event.source.childCount:
-                # We might have tucked away some information for this 
+                # We might have tucked away some information for this
                 # thing in the onActiveDescendantChanged method.
                 #
                 if self.pointOfReference.has_key("activeDescendantInfo"):
@@ -3352,7 +3349,10 @@ class Script(script.Script):
         # right now because it is typically something else
         # related to this event.
         #
-        speech.speak(character, voice, False)
+        if len(character.decode('utf-8')) == 1:
+            speech.speakCharacter(character, voice)
+        else:
+            speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -3392,7 +3392,7 @@ class Script(script.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
             # We are using getTextLineAtCaret here instead of the "text"
-            # variable, because of a problem with selected text in spin 
+            # variable, because of a problem with selected text in spin
             # buttons. See bug #520395 for more details.
             #
             [spinValue, caretOffset, startOffset] = \
@@ -3522,11 +3522,11 @@ class Script(script.Script):
                 return
 
         if event.type.startswith("object:state-changed:selected"):
-            # If this selection state change is for the object which 
+            # If this selection state change is for the object which
             # currently has the locus of focus, and the last keyboard
-            # event was Space, or we are a focused table cell and we 
-            # arrowed Down or Up and are now selected, then let the 
-            # user know the selection state. 
+            # event was Space, or we are a focused table cell and we
+            # arrowed Down or Up and are now selected, then let the
+            # user know the selection state.
             # See bugs #486908 and #519564 for more details.
             #
             if isinstance(orca_state.lastInputEvent,
@@ -3544,8 +3544,8 @@ class Script(script.Script):
                         if isControlKey:
                             announceState = True
                         else:
-                            # Weed out a bogus situation. If we are already 
-                            # selected and the user presses "space" again, 
+                            # Weed out a bogus situation. If we are already
+                            # selected and the user presses "space" again,
                             # we don't want to speak the intermediate
                             # "unselected" state.
                             #
@@ -3730,12 +3730,12 @@ class Script(script.Script):
         if not event or not event.source:
             return
 
-        # Save the event source, if it is a menu or combo box. It will be 
+        # Save the event source, if it is a menu or combo box. It will be
         # useful for optimizing getComponentAtDesktopCoords in the case
         # that the  pointer is hovering over a menu item. The alternative is
         # to traverse the application's tree looking for potential moused-over
         # menu items.
-        if event.source.getRole() in (pyatspi.ROLE_COMBO_BOX, 
+        if event.source.getRole() in (pyatspi.ROLE_COMBO_BOX,
                                            pyatspi.ROLE_MENU):
             self.lastSelectedMenu = event.source
 
@@ -4006,8 +4006,8 @@ class Script(script.Script):
                             # Translators: these represent the number of pixels
                             # for the left or right margins in a document.  We
                             # are hesitant to interpret the values -- they are
-                            # given to us in some unknown form by the 
-                            # application, so we leave things in plural form 
+                            # given to us in some unknown form by the
+                            # application, so we leave things in plural form
                             # here.
                             #
                             line = ngettext("%s %s pixel",
@@ -4297,7 +4297,7 @@ class Script(script.Script):
                 movedCaret = text.setCaretOffset(startOffset - 1)
 
             # If we didn't move the caret and we're in a terminal, we
-            # jump into flat review to review the text.  See 
+            # jump into flat review to review the text.  See
             # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
             #
             if (not movedCaret) \
@@ -4877,46 +4877,46 @@ class Script(script.Script):
             self.find(lastQuery)
         else:
             orca.showFindGUI()
-            
-    def goToBookmark(self, inputEvent): 
-        """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to 
+
+    def goToBookmark(self, inputEvent):
+        """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to
         Bookmark.goToBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.goToBookmark(inputEvent)
-    
-    def addBookmark(self, inputEvent): 
+
+    def addBookmark(self, inputEvent):
         """ Add an in-page accessible object bookmark for this key.
         Delegates to Bookmark.addBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.addBookmark(inputEvent)
-    
+
     def bookmarkCurrentWhereAmI(self, inputEvent):
-        """ Report "Where am I" information for this bookmark relative to the 
-        current pointer location.  Delegates to 
-        Bookmark.bookmarkCurrentWhereAmI""" 
+        """ Report "Where am I" information for this bookmark relative to the
+        current pointer location.  Delegates to
+        Bookmark.bookmarkCurrentWhereAmI"""
         bookmarks = self.getBookmarks()
         bookmarks.bookmarkCurrentWhereAmI(inputEvent)
-    
-    def saveBookmarks(self, inputEvent): 
-        """ Save the bookmarks for this script. Delegates to 
+
+    def saveBookmarks(self, inputEvent):
+        """ Save the bookmarks for this script. Delegates to
         Bookmark.saveBookmarks """
         bookmarks = self.getBookmarks()
         bookmarks.saveBookmarks(inputEvent)
-    
-    def goToNextBookmark(self, inputEvent): 
+
+    def goToNextBookmark(self, inputEvent):
         """ Go to the next bookmark location.  If no bookmark has yet to be
-        selected, the first bookmark will be used.  Delegates to 
+        selected, the first bookmark will be used.  Delegates to
         Bookmark.goToNextBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.goToNextBookmark(inputEvent)
-    
+
     def goToPrevBookmark(self, inputEvent):
-        """ Go to the previous bookmark location.  If no bookmark has yet to 
-        be selected, the first bookmark will be used.  Delegates to 
-        Bookmark.goToPrevBookmark """ 
+        """ Go to the previous bookmark location.  If no bookmark has yet to
+        be selected, the first bookmark will be used.  Delegates to
+        Bookmark.goToPrevBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.goToPrevBookmark(inputEvent)
-           
+
 ########################################################################
 #                                                                      #
 # DEBUG support.                                                       #
@@ -5314,7 +5314,7 @@ class Script(script.Script):
         labelString = None
         labels = self.findDisplayedLabel(obj)
         for label in labels:
-            labelString = self.appendString(labelString, 
+            labelString = self.appendString(labelString,
                                             self.getDisplayedText(label))
 
         return labelString
@@ -5888,16 +5888,16 @@ class Script(script.Script):
         return newLine.encode("UTF-8")
 
     def _getPronunciationForSegment(self, segment):
-        """Adjust the word segment to potentially replace it with what 
+        """Adjust the word segment to potentially replace it with what
         those words actually sound like. Two pronunciation dictionaries
         are checked. First the application specific one (which might be
         empty), then the default (global) one.
 
-        Arguments: 
+        Arguments:
         - segment: the string to adjust for words in the pronunciation
           dictionaries.
 
-        Returns: a new word segment adjusted for words found in the 
+        Returns: a new word segment adjusted for words found in the
         pronunciation dictionaries, or the original word segment if there
         was no dictionary entry.
         """
@@ -6174,7 +6174,7 @@ class Script(script.Script):
             if not obj.getState().contains(pyatspi.STATE_EXPANDED):
                 return []
 
-        nodes = []        
+        nodes = []
         row = table.getRowAtIndex(obj.getIndexInParent())
         col = table.getColumnAtIndex(obj.getIndexInParent())
         nodeLevel = self.getNodeLevel(obj)
@@ -6212,7 +6212,6 @@ class Script(script.Script):
         Arguments:
         - obj: the Accessible object
 
-      
         Returns: list containing strings: [mnemonic, accelerator, shortcut]
         """
 
@@ -6763,7 +6762,7 @@ class Script(script.Script):
         return False
 
     def _saveSpokenTextRange(self, startOffset, endOffset):
-        """Save away the start and end offset of the range of text that 
+        """Save away the start and end offset of the range of text that
         was spoken. It will be used by speakTextSelectionState, to try
         to determine if the text was selected or unselected.
 
@@ -6861,7 +6860,7 @@ class Script(script.Script):
                 #
                 line = _("page selected to cursor position")
             else:
-                # Translators: when the user unselects text in a document, 
+                # Translators: when the user unselects text in a document,
                 # Orca will speak information about what they have unselected.
                 #
                 line = _("page unselected to cursor position")
@@ -6875,7 +6874,7 @@ class Script(script.Script):
                 #
                 line = _("line selected down from cursor position")
             else:
-                # Translators: when the user unselects text in a document, 
+                # Translators: when the user unselects text in a document,
                 # Orca will speak information about what they have unselected.
                 #
                 line = _("line unselected down from cursor position")
@@ -6889,7 +6888,7 @@ class Script(script.Script):
                 #
                 line = _("line selected up from cursor position")
             else:
-                # Translators: when the user unselects text in a document, 
+                # Translators: when the user unselects text in a document,
                 # Orca will speak information about what they have unselected.
                 #
                 line = _("line unselected up from cursor position")
@@ -6903,7 +6902,7 @@ class Script(script.Script):
                 #
                 line = _("document selected to cursor position")
             else:
-                # Translators: when the user unselects text in a document, 
+                # Translators: when the user unselects text in a document,
                 # Orca will speak information about what they have unselected.
                 #
                 line = _("document unselected to cursor position")
@@ -6917,7 +6916,7 @@ class Script(script.Script):
                 #
                 line = _("document selected from cursor position")
             else:
-                # Translators: when the user unselects text in a document, 
+                # Translators: when the user unselects text in a document,
                 # Orca will speak information about what they have unselected.
                 #
                 line = _("document unselected from cursor position")
@@ -6948,7 +6947,7 @@ class Script(script.Script):
             # the startOffset and endOffset to exclude them.
             #
             try:
-                tmpStr = text.getText(startOffset, 
+                tmpStr = text.getText(startOffset,
                                       endOffset).decode("UTF-8")
             except:
                 tmpStr = u''
@@ -7014,7 +7013,7 @@ class Script(script.Script):
         possibly subclassing whereamI for the Gecko script.
         """
         return None
-    
+
     def systemBeep(self):
         """Rings the system bell.  This is really a hack.  Ideally, we want
         a method that will present an earcon (any sound designated representing
@@ -7041,7 +7040,6 @@ class Script(script.Script):
         """Creates a Python dict from a typical attributes list returned from
         different AT-SPI methods.
 
-
         Arguments:
         - dict_string: A list of colon seperated key/value pairs seperated by
         semicolons.
@@ -7061,7 +7059,7 @@ class Script(script.Script):
         Arguments:
         - x: X coordinate.
         - y: Y coordinate.
-        
+
         Returns a menu item the mouse is over, or None.
         """
         suspect_children = []
@@ -7089,7 +7087,7 @@ class Script(script.Script):
         """Get the descendant component at the given desktop coordinates.
 
         Arguments:
-        
+
         - parent: The parent component we are searching below.
         - x: X coordinate.
         - y: Y coordinate.
@@ -7097,7 +7095,7 @@ class Script(script.Script):
         Returns end-node that contains the given coordinates, or None.
         """
         acc = self._getPopupItemAtDesktopCoords(x, y)
-        if acc: 
+        if acc:
             return acc
 
         container = parent
@@ -7131,8 +7129,8 @@ class Script(script.Script):
 
         Arguments:
         - acc: An accessible.
-        
-        Returns list of start and end offsets for multiple selections, or an 
+
+        Returns list of start and end offsets for multiple selections, or an
         empty list if nothing is selected or if the accessible does not support
         the text interface.
         """
@@ -7141,10 +7139,10 @@ class Script(script.Script):
             texti = acc.queryText()
         except:
             return rv
-       
+
         for i in xrange(texti.getNSelections()):
             rv.append(texti.getSelection(i))
-            
+
         return rv
 
     def speakWordUnderMouse(self, acc):
@@ -7165,9 +7163,9 @@ class Script(script.Script):
         - acc: An accessible.
         - offset: Offset in the accessible's text for which to retrieve the
         attributes.
-        - get_defaults: Get the default attributes as well as the unique ones. 
+        - get_defaults: Get the default attributes as well as the unique ones.
         Default is True
-        
+
         Returns a dictionary of attributes, a start offset where the attributes
         begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
         supprt the text attribute.
@@ -7225,7 +7223,7 @@ class Script(script.Script):
                         end_offset = \
                             text_contents[start:end].index(' ', start_offset)
                     except ValueError:
-                        word_offsets.append((start_offset, 
+                        word_offsets.append((start_offset,
                                              len(text_contents[start:end])))
                         break
                     word_offsets.append((start_offset, end_offset))
@@ -7246,8 +7244,8 @@ class Script(script.Script):
 state_change_notifiers = {}
 
 state_change_notifiers[pyatspi.ROLE_CHECK_MENU_ITEM] = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked", 
-                                                        "indeterminate", 
+state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
+                                                        "indeterminate",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)

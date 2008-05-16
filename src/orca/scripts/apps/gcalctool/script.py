@@ -35,6 +35,8 @@ import pyatspi
 from speech_generator import SpeechGenerator
 from where_am_i import WhereAmI
 
+from orca.orca_i18n import _ # for gettext support
+
 ########################################################################
 #                                                                      #
 # The GCalcTool script class.                                          #
@@ -99,7 +101,11 @@ class Script(default.Script):
             # gcalctool display. Inform the user.
             #
             if len(d) == 0:
-                contents = "Unable to get calculator display"
+                # Translators: this is an indication that Orca is unable to
+                # obtain the display of the gcalctool calculator, which is
+                # the area where calculation results are presented.
+                #
+                contents = _("Unable to get calculator display")
                 speech.speak(contents)
                 braille.displayMessage(contents)
             else:

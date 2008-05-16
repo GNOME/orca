@@ -38,7 +38,6 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.settings as settings
-import orca.chnames as chnames
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -97,7 +96,7 @@ class Script(default.Script):
 
         # Pylint is confused and flags several errors of the type:
         #
-        # E1101:282:Script.__init__: Module 'orca.rolenames' has no 
+        # E1101:282:Script.__init__: Module 'orca.rolenames' has no
         # 'ROLE_CALENDAR_VIEW' member
         #
         # So for now, we just disable these errors in this method.
@@ -460,7 +459,7 @@ class Script(default.Script):
                 done = True
 
         # If there is anything left unspoken, speak it now.
-        # 
+        #
         if len(string) != 0:
             string = self.adjustForRepeats(string)
             if string.isupper():
@@ -526,7 +525,7 @@ class Script(default.Script):
         line = self.adjustForRepeats(string)
 
         if self.speakNewLine(obj):
-            speech.speak(chnames.getCharacterName("\n"), None, False)
+            speech.speakCharacter("\n", None)
 
         if self.speakBlankLine(obj):
             # Translators: "blank" is a short word to mean the
@@ -591,7 +590,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        # Save the previous role hierarchy list for possible comparison 
+        # Save the previous role hierarchy list for possible comparison
         # in section 8).
         #
         self.lastRolesList = self.rolesList
@@ -630,7 +629,6 @@ class Script(default.Script):
 
             self.presentMessageLine(event.source, newLocusOfFocus)
             return
-
 
         # 2) Mail view: current message pane: "standard" mail header lines.
         #
@@ -727,7 +725,7 @@ class Script(default.Script):
                 parentTable.getColumnAtIndex(event.source.getIndexInParent())
 
             # If we are on the same row, then just speak/braille the table
-            # cell as if settings.readTableCellRow was False. 
+            # cell as if settings.readTableCellRow was False.
             # See bug #503874 for more details.
             #
             if self.lastMessageRow == row:
@@ -740,7 +738,7 @@ class Script(default.Script):
             # cells (the user has moved focus up or down the list, or just
             # deleted a message), or just the current one (focus has moved
             # left or right in the same row). If we at the start or the end
-            # of the message header list and the row and column haven't 
+            # of the message header list and the row and column haven't
             # changed, then speak all the table cells.
             #
             justDeleted = False
@@ -1186,9 +1184,9 @@ class Script(default.Script):
             # We are getting extra (bogus?) "focus:" events from Evolution
             # when we type the first character at the beginning of a line.
             # If the last input event was a keyboard event and the parent
-            # of the locusOfFocus and the event.source are the same, and 
+            # of the locusOfFocus and the event.source are the same, and
             # the last roles hierarchy is the same as this one and
-            # the last key pressed wasn't a navigation key, then just 
+            # the last key pressed wasn't a navigation key, then just
             # ignore it. See bug #490317 for more details.
             #
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
@@ -1413,7 +1411,7 @@ class Script(default.Script):
         line = text.getTextAtOffset(caretOffset, \
             pyatspi.TEXT_BOUNDARY_LINE_START)
 
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
             "speakBlankLine: start=%d, end=%d, line=<%s>" % \
             (line[1], line[2], line[0]))
 
@@ -1423,7 +1421,6 @@ class Script(default.Script):
             return settings.speakBlankLines
         else:
             return False
-
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
@@ -1479,7 +1476,7 @@ class Script(default.Script):
         default.Script.onStateChanged(self, event)
 
     def onFocus(self, event):
-        """Called whenever an object gets focus.  
+        """Called whenever an object gets focus.
 
         Arguments:
         - event: the Event
@@ -1489,9 +1486,9 @@ class Script(default.Script):
         # two focus events:  One for the index of the new message prior to
         # deletion and one for the index of the new message after deletion.
         # This causes us to speak the message after the one that gets focus
-        # prior to speaking the actual message that gets focus. 
+        # prior to speaking the actual message that gets focus.
         # See bug #347964.
-        # 
+        #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string

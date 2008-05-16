@@ -1,5 +1,28 @@
 2008-05-12  Willie Walker <william.walker@sun.com>
 
+        * src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/gnome-terminal.py:
+          src/orca/scripts/apps/gcalctool/script.py:
+          src/orca/scripts/apps/acroread.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/orca.py:
+          src/orca/default.py:
+          src/orca/speech.py:
+          src/orca/gnomespeechfactory.py:
+          Fix for bug #520494 - Keyboard review punctuation in Firefox.
+	  This fix reflects an across the board survery of our calls to
+	  the various speech.speak{Utterances,Character,KeyEvent,...} 
+	  methods and attempts to make sure we call them appropriately.
+	  I also moves some logic into gnomespeechfactory.py in an
+	  attempt to delegate appropriately to the speech server factory.
+	  This has not been tested with the unsupported speech dispatcher
+	  support - we can update that as needed.  Note also that some
+	  of the regression tests will need some updating and that will
+	  come in a later commit.
+	
+2008-05-12  Willie Walker <william.walker@sun.com>
+
         * README:
 	  configure.in:
           Mark as Orca v2.23.3pre

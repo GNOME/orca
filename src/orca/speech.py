@@ -31,6 +31,7 @@ log = logging.getLogger("speech")
 
 import time
 
+import chnames
 import debug
 import keynames
 import orca
@@ -197,7 +198,7 @@ def speakKeyEvent(event_string, eventType):
 
 def speakCharacter(character, acss=None):
     """Speaks a single character immediately.
-    
+
     Arguments:
     - character: text to be spoken
     - acss:      acss.ACSS instance; if None,
@@ -209,6 +210,7 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
+    character = chnames.getCharacterName(character)
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
     log.info("SPEECH OUTPUT: '%s'" % character)
 

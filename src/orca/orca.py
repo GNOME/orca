@@ -679,9 +679,9 @@ def _processKeyboardEvent(event):
 
     # See if this is one of our special Orca modifier keys.
     #
-    # Just looking at the keycode should suffice, but there is a 
-    # "feature" in the Java Access Bridge where it chooses to emit 
-    # Java platform-independent keycodes instead of the keycodes 
+    # Just looking at the keycode should suffice, but there is a
+    # "feature" in the Java Access Bridge where it chooses to emit
+    # Java platform-independent keycodes instead of the keycodes
     # for the base platform:
     #
     # http://bugzilla.gnome.org/show_bug.cgi?id=106004
@@ -934,7 +934,6 @@ def loadUserSettings(script=None, inputEvent=None):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
-
     # I'm not sure where else this should go. But it doesn't really look
     # right here.
     try:
@@ -1060,7 +1059,7 @@ def helpForOrca(script=None, inputEvent=None):
 
     props = { gnome.PARAM_APP_DATADIR : '/usr/share'}
     prog = gnome.program_init('orca', '1.0', properties=props)
-    gnome.help_display_with_doc_id(prog, 'gnome-access-guide', 
+    gnome.help_display_with_doc_id(prog, 'gnome-access-guide',
                                          'gnome-access-guide', 'ats-2')
 
     return True
@@ -1185,7 +1184,7 @@ def start(registry):
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
-    
+
     if settings.cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
@@ -1313,7 +1312,7 @@ def usage():
     print _("Usage: orca [OPTION...]")
     print
 
-    # Translators: this is the description of the command line option 
+    # Translators: this is the description of the command line option
     # '-?, --help' that is used to display usage information.
     #
     print "-?, --help                   " + _("Show this help message")
@@ -1321,22 +1320,22 @@ def usage():
     print "-v, --version                %s" % platform.version
 
     # Translators: this is the description of the command line option
-    # '-s, --setup, --gui-setup' that will initially display a GUI dialog 
+    # '-s, --setup, --gui-setup' that will initially display a GUI dialog
     # that would allow the user to set their Orca preferences.
     #
     print "-s, --setup, --gui-setup     " + _("Set up user preferences")
 
-    # Translators: this is the description of the command line option 
-    # '-t, --text-setup' that will initially display a list of questions 
-    # in text form, that the user will need to answer, before Orca will 
-    # startup. For this to happen properly, Orca will need to be run 
+    # Translators: this is the description of the command line option
+    # '-t, --text-setup' that will initially display a list of questions
+    # in text form, that the user will need to answer, before Orca will
+    # startup. For this to happen properly, Orca will need to be run
     # from a terminal window.
     #
     print "-t, --text-setup             " + \
           _("Set up user preferences (text version)")
 
-    # Translators: this is the description of the command line option 
-    # '-n, --no-setup' that means that Orca will startup without setting 
+    # Translators: this is the description of the command line option
+    # '-n, --no-setup' that means that Orca will startup without setting
     # up any user preferences.
     #
     print "-n, --no-setup               " +  \
@@ -1344,7 +1343,7 @@ def usage():
 
     # Translators: by default, Orca expects to find its user preferences
     # in a directory called .orca under the user's home directory. This
-    # is the description of the command line option 
+    # is the description of the command line option
     # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
     # location for those user preferences.
     #
@@ -1375,7 +1374,7 @@ def usage():
     # command line option, it will be automatically disabled as Orca is
     # started.
     #
-    print _("Prevent use of option") 
+    print _("Prevent use of option")
 
     # Translators: this is the Orca command line option that will quit Orca.
     # The user would run the Orca shell script again from a terminal window.
@@ -1387,14 +1386,14 @@ def usage():
 
     print
 
-    # Translators: this is text being sent to a terminal and we want to 
+    # Translators: this is text being sent to a terminal and we want to
     # keep the text lines within terminal boundaries.
     #
     print _("If Orca has not been previously set up by the user, Orca\n" \
             "will automatically launch the preferences set up unless\n" \
             "the -n or --no-setup option is used.")
 
-    # Translators: this is more text being sent to a terminal and we want to 
+    # Translators: this is more text being sent to a terminal and we want to
     # keep the text lines within terminal boundaries.
     #
     print
@@ -1505,7 +1504,7 @@ def main():
                 elif feature == Q_("option|braille"):
                     _commandLineSettings["enableBraille"] = True
 
-                # Translators: this option is for enabling a GUI to monitor 
+                # Translators: this option is for enabling a GUI to monitor
                 # what is being sent to the physical braille display.
                 #
                 # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
@@ -1513,7 +1512,7 @@ def main():
                 elif feature == Q_("option|braille-monitor"):
                     _commandLineSettings["enableBrailleMonitor"] = True
 
-                # Translators: this option is for enabling screen 
+                # Translators: this option is for enabling screen
                 # magnification.
                 #
                 # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |

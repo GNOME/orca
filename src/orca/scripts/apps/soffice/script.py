@@ -29,7 +29,6 @@ import gtk
 import pyatspi
 
 import orca.debug as debug
-import orca.chnames as chnames
 import orca.default as default
 import orca.input_event as input_event
 import orca.braille as braille
@@ -536,7 +535,7 @@ class Script(default.Script):
                     found = True
                 current = current.parent
 
-        return found     
+        return found
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
@@ -564,10 +563,10 @@ class Script(default.Script):
 
             if current_role != role:
                 return False
-            
+
             current = self._getParent(current)
 
-        return True   
+        return True
 
     def printHierarchy(self, root, ooi, indent="",
                        onlyShowing=True, omitManaged=True):
@@ -629,13 +628,12 @@ class Script(default.Script):
             for frame in app:
                 if frame.childCount < 1 or \
                       frame[0].getRole() not in (pyatspi.ROLE_ROOT_PANE,
-                                                 pyatspi.ROLE_OPTION_PANE): 
+                                                 pyatspi.ROLE_OPTION_PANE):
                     continue
                 root_pane = frame[0]
                 if obj in root_pane:
                     return root_pane
         return parent
-
 
     def checkForTableBoundry(self, oldFocus, newFocus):
         """Check to see if we've entered or left a table.
@@ -1061,7 +1059,7 @@ class Script(default.Script):
 
     def __isAvailableFieldsPanel(self, event):
         """If we are in the sbase Table Wizard, try to reduce the numerous
-        utterances of "Available fields panel". See bug #465087 for more 
+        utterances of "Available fields panel". See bug #465087 for more
         details.
 
         Arguments:
@@ -1482,7 +1480,6 @@ class Script(default.Script):
             #
             default.Script.onWindowActivated(self, event)
 
-
     # This method tries to detect and handle the following cases:
     # 1) Writer: spell checking dialog.
 
@@ -1536,7 +1533,6 @@ class Script(default.Script):
 
         default.Script.onNameChanged(self, event)
 
-
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
@@ -1544,7 +1540,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # If this is a "focus:" event for the Calc Name combo box, catch 
+        # If this is a "focus:" event for the Calc Name combo box, catch
         # it here to reduce verbosity (see bug #364407).
         #
         rolesList = [pyatspi.ROLE_LIST, \
@@ -1606,7 +1602,7 @@ class Script(default.Script):
                 if current.getRole() == pyatspi.ROLE_DIALOG and \
                    (current.name and \
                     current.name.startswith(_("Presentation Wizard"))):
-                    self.locusOfFocusChanged(event, None, 
+                    self.locusOfFocusChanged(event, None,
                                              orca_state.locusOfFocus)
                     break
                 current = current.parent
@@ -1729,7 +1725,6 @@ class Script(default.Script):
 
         default.Script.onStateChanged(self, event)
 
-
     # This method tries to detect and handle the following cases:
     # 1) Calc: spread sheet Name Box line.
 
@@ -1785,7 +1780,7 @@ class Script(default.Script):
                                                  self.inputLineForCell, 0, -1)
                                         if inputLine and (len(inputLine) > 1) \
                                             and (inputLine[0] == "="):
-                                            # Translators: this means a 
+                                            # Translators: this means a
                                             # particular cell in a spreadsheet
                                             # has a formula
                                             # (e.g., "=sum(a1:d1)")
@@ -1928,7 +1923,7 @@ class Script(default.Script):
 
         # Speak a newline, if appropriate.
         if self.speakNewLine(event.source):
-            speech.speak(chnames.getCharacterName("\n"), None, False)
+            speech.speakCharacter("\n", None)
 
         # Speak a blank line, if appropriate.
         if self.speakBlankLine(event.source):
@@ -1938,7 +1933,6 @@ class Script(default.Script):
             speech.speak(_("blank"), None, False)
 
         default.Script.onCaretMoved(self, event)
-
 
     def speakNewLine(self, obj):
         """Returns True if a newline should be spoken.
@@ -1997,7 +1991,6 @@ class Script(default.Script):
 
         return False
 
-
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.
         Otherwise, returns False.
@@ -2050,9 +2043,9 @@ class Script(default.Script):
         - acc: An accessible.
         - offset: Offset in the accessible's text for which to retrieve the
         attributes.
-        - get_defaults: Get the default attributes as well as the unique ones. 
+        - get_defaults: Get the default attributes as well as the unique ones.
         Default is True
-        
+
         Returns a dictionary of attributes, a start offset where the attributes
         begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
         supprt the text attribute.

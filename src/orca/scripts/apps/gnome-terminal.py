@@ -156,9 +156,14 @@ class Script(default.Script):
         #
         character = event.any_data.decode("UTF-8")[0].encode("UTF-8")
         if character.isupper():
-            speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
+            voice = self.voices[settings.UPPERCASE_VOICE]
         else:
-            speech.speak(character)
+            voice = self.voices[settings.DEFAULT_VOICE]
+
+        if len(character.decode('utf-8')) == 1:
+            speech.speakCharacter(character, voice)
+        else:
+            speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.

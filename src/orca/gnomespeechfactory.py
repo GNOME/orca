@@ -454,7 +454,7 @@ class SpeechServer(speechserver.SpeechServer):
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
 
         # Turn off punctuation.  We do this because we want to handle
-        # spoken punctuation on our own.  Only do so if "punctuation mode" 
+        # spoken punctuation on our own.  Only do so if "punctuation mode"
         # is available (see # bug #528797).
         #
         try:
@@ -652,7 +652,7 @@ class SpeechServer(speechserver.SpeechServer):
                      used to augment/override the default
                      voice settings.
         """
-        self.speak(character, acss)
+        self.speak(chnames.getCharacterName(character), acss)
 
     def speakUtterances(self, utterances, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
@@ -880,6 +880,13 @@ class SpeechServer(speechserver.SpeechServer):
         """
         if self.__sayAll:
             self.stop()
+
+        if not acss and text and text.isupper():
+            try:
+                acss = \
+                    orca_state.activeScript.voices[settings.UPPERCASE_VOICE]
+            except:
+                pass
 
         self.__speak(text, acss, interrupt)
 

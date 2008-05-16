@@ -22,10 +22,10 @@
 #
 # E1103:4241:Script.updateBraille: Instance of 'list' has no 'getRole'
 # member (but some types could not be inferred)
-# 
+#
 # I don't know what is going on, so I'm going to tell pylint to
 # disable those messages for Gecko.py.]]]
-# 
+#
 # pylint: disable-msg=E1103
 
 """Custom script for Gecko toolkit.
@@ -68,7 +68,7 @@ from bookmarks import GeckoBookmarks
 
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext # for ngettext support
-    
+
 ########################################################################
 #                                                                      #
 # Script                                                               #
@@ -211,7 +211,7 @@ class Script(default.Script):
         # are valid.  See bug #471537.
         #
         self._objectForFocusGrab = None
-        
+
         # We don't want to prevent the user from arrowing into an
         # autocomplete when it appears in a search form.  We need to
         # keep track if one has appeared or disappeared.
@@ -239,12 +239,12 @@ class Script(default.Script):
         """Returns the "where am I" class for this script.
         """
         return GeckoWhereAmI(self)
-    
+
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
         """
         try:
-            return self.bookmarks 
+            return self.bookmarks
         except AttributeError:
             self.bookmarks = GeckoBookmarks(self)
             return self.bookmarks
@@ -521,8 +521,8 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goPreviousLandmark,
                 # Translators: this is for navigating to the previous ARIA
-                # role landmark.  ARIA role landmarks are the W3C defined HTML 
-                # tag attribute 'role' used to identify important part of 
+                # role landmark.  ARIA role landmarks are the W3C defined HTML
+                # tag attribute 'role' used to identify important part of
                 # webpage like banners, main context, search etc.
                 #
                 _("Goes to previous landmark."))
@@ -666,7 +666,7 @@ class Script(default.Script):
         self.inputEventHandlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 Script.advanceLivePoliteness,
-                # Translators: this is for advancing the live regions 
+                # Translators: this is for advancing the live regions
                 # politeness setting
                 #
                 _("Advance live region politeness setting."))
@@ -674,7 +674,7 @@ class Script(default.Script):
         self.inputEventHandlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 Script.setLivePolitenessOff,
-                # Translators: this is for setting all live regions 
+                # Translators: this is for setting all live regions
                 # to 'off' politeness.
                 #
                 _("Set default live region politeness level to off."))
@@ -682,7 +682,7 @@ class Script(default.Script):
         self.inputEventHandlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 Script.monitorLiveRegions,
-                # Translators: this is a toggle to monitor live regions 
+                # Translators: this is a toggle to monitor live regions
                 # or not.
                 #
                 _("Monitor live regions."))
@@ -747,8 +747,6 @@ class Script(default.Script):
                 # interrupted.
                 #
                 _("Speaks entire document."))
-                
-        
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -1164,7 +1162,7 @@ class Script(default.Script):
                  | 1 << pyatspi.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goLastLiveRegion"]))
-                
+
         # keybindings to provide chat room message history.
         messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" ]
         for messageKey in messageKeys:
@@ -1476,7 +1474,7 @@ class Script(default.Script):
         self.minimumFindLengthSpinButton = \
                        gtk.SpinButton(self.minimumFindLengthAdjustment, 0.0, 0)
         gtk.Widget.show(self.minimumFindLengthSpinButton)
-        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton, 
+        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton,
                            False, False, 5)
 
         acc_targets = []
@@ -1701,7 +1699,6 @@ class Script(default.Script):
                                                   startOffset, endOffset),
                        voice]
 
-
             obj = contents[-1][0]
             characterOffset = max(0, contents[-1][2] - 1)
 
@@ -1774,7 +1771,7 @@ class Script(default.Script):
         displayedText = default.Script.getDisplayedText(self, obj)
         if displayedText \
            and not (obj.getState().contains(pyatspi.STATE_EDITABLE) \
-                    or obj.getRole() in [pyatspi.ROLE_ENTRY, 
+                    or obj.getRole() in [pyatspi.ROLE_ENTRY,
                                          pyatspi.ROLE_PASSWORD_TEXT]):
             displayedText = displayedText.strip()
 
@@ -2082,7 +2079,7 @@ class Script(default.Script):
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.MouseButtonEvent):
-            return                
+            return
 
         default.Script.onCaretMoved(self, event)
 
@@ -2136,7 +2133,7 @@ class Script(default.Script):
     def onChildrenChanged(self, event):
         """Called when a child node has changed.  In particular, we are looking
         for addition events often associated with Javascipt insertion.  One such
-        such example would be the programmatic insertion of a tooltip or alert  
+        such example would be the programmatic insertion of a tooltip or alert
         dialog."""
         # no need moving forward if we don't have our target.
         if event.any_data is None:
@@ -2200,7 +2197,7 @@ class Script(default.Script):
                                               pyatspi.ROLE_LINK]:
             orca.setLocusOfFocus(event, event.source, False)
             return
-            
+
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
         # on the context.
@@ -2390,7 +2387,7 @@ class Script(default.Script):
             if orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
                                                      pyatspi.ROLE_LIST_ITEM]:
                 self._autocompleteVisible = event.detail1
-            
+
         # We care when the document frame changes it's busy state.  That
         # means it has started/stopped loading content.
         #
@@ -2501,14 +2498,14 @@ class Script(default.Script):
 
             parent_attribs = self._getAttrDictionary(documentFrame.parent)
             parent_tag = parent_attribs.get('tag', '')
-            
+
             if self._loadingDocumentContent or \
                    documentFrame == self._currentFrame or \
                    not parent_tag.endswith('browser'):
                 return
 
             self._currentFrame = documentFrame
-            
+
             braille.displayMessage(documentFrame.name)
             speech.stop()
             speech.speak(
@@ -2531,7 +2528,7 @@ class Script(default.Script):
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
         For Firefox, we don't want to speak the small "page load" progress
-        bar. All other Firefox progress bars get passed onto the parent 
+        bar. All other Firefox progress bars get passed onto the parent
         class for handling.
 
         Arguments:
@@ -2727,16 +2724,16 @@ class Script(default.Script):
 
         index = self.findObjectOnLine(obj, offset, self.currentLineContents)
         if index < 0:
-            index = self.findObjectOnLine(obj, 
-                                          offset, 
+            index = self.findObjectOnLine(obj,
+                                          offset,
                                           self._previousLineContents)
             if index >= 0:
                 self._nextLineContents = self.currentLineContents
                 self.currentLineContents = self._previousLineContents
                 self._previousLineContents = None
             else:
-                index = self.findObjectOnLine(obj, 
-                                              offset, 
+                index = self.findObjectOnLine(obj,
+                                              offset,
                                               self._nextLineContents)
                 if index >= 0:
                     self._previousLineContents = self.currentLineContents
@@ -2811,7 +2808,7 @@ class Script(default.Script):
                 needToRefresh = True
 
         contents = self.currentLineContents
-        index = self.findObjectOnLine(focusedObj, 
+        index = self.findObjectOnLine(focusedObj,
                                       max(0, lineContentsOffset),
                                       contents)
         if index < 0 or needToRefresh:
@@ -2888,8 +2885,8 @@ class Script(default.Script):
                                             [pyatspi.ROLE_DOCUMENT_FRAME])
 
                 if not link:
-                    regions = [braille.Text(obj, 
-                                            startOffset=startOffset, 
+                    regions = [braille.Text(obj,
+                                            startOffset=startOffset,
                                             endOffset=endOffset)]
 
                 if link:
@@ -3286,17 +3283,17 @@ class Script(default.Script):
                             documentFrame = None
 
         return documentFrame
-                        
+
     def getURI(self, obj):
         """Return the URI for a given link object.
 
         Arguments:
         - obj: the Accessible object.
         """
-        # Getting a link's URI requires a little workaround due to  
+        # Getting a link's URI requires a little workaround due to
         # https://bugzilla.mozilla.org/show_bug.cgi?id=379747.  You should be
         # able to use getURI() directly on the link but instead must use
-        # ihypertext.getLink(0) on parent then use getURI on returned 
+        # ihypertext.getLink(0) on parent then use getURI on returned
         # ihyperlink.
         try:
             ihyperlink = obj.parent.queryHypertext().getLink(0)
@@ -3304,7 +3301,7 @@ class Script(default.Script):
             return None
         else:
             return ihyperlink.getURI(0)
-    
+
     def getDocumentFrameURI(self):
         """Returns the URI of the document frame that is active."""
         documentFrame = self.getDocumentFrame()
@@ -3508,7 +3505,7 @@ class Script(default.Script):
             return False
 
         # Ideally, we would like to do a inDocumentContent() call to filter out
-        # events that are not in the document.  Unfortunately, this is an 
+        # events that are not in the document.  Unfortunately, this is an
         # expensive call.  Instead we will do some heuristics to filter out
         # chrome events with the least amount of IPC as possible.
 
@@ -3533,8 +3530,8 @@ class Script(default.Script):
                     return False
 
                 if attrs.has_key('xml-roles'):
-                    # This eliminates all ARIA widgets that are not 
-                    # considered live        
+                    # This eliminates all ARIA widgets that are not
+                    # considered live
                     if attrs['xml-roles'] != 'alert' \
                                and attrs['xml-roles'] != 'tooltip':
                         return False
@@ -4195,7 +4192,7 @@ class Script(default.Script):
         of 0 means there is no heading level."""
 
         level = 0
-        
+
         if obj is None:
             return level
 
@@ -4209,15 +4206,15 @@ class Script(default.Script):
                     break
 
         return level
-            
+
     def getNodeLevel(self, obj):
         """ Determines the level of at which this object is at by using the
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
-        
+
         if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
             return -1
-        
+
         attrs = obj.getAttributes()
         if attrs is None:
             return -1
@@ -4365,7 +4362,7 @@ class Script(default.Script):
 
         Arguments
         - obj: the object whose EOCs we need to expand into tuples
-        - offset: the character offset after which 
+        - offset: the character offset after which
         - boundary: the pyatspi text boundary type
 
         Returns a list of object tuples.
@@ -4688,7 +4685,7 @@ class Script(default.Script):
                                                       pyatspi.ROLE_LIST,
                                                       pyatspi.ROLE_LIST_ITEM]:
             [nextObj, nextOffset] = self.findNextLine(obj, 0, False)
-            nextLineContents = self.getLineContentsAtOffset(nextObj, 
+            nextLineContents = self.getLineContentsAtOffset(nextObj,
                                                             nextOffset)
             self._nextLineContents = nextLineContents
         else:
@@ -5319,7 +5316,7 @@ class Script(default.Script):
             # we go to get them.  So...we'll just keep going backwards
             # until we find a real child that we can work with.]]]
             #
-            while not isinstance(previousObj, 
+            while not isinstance(previousObj,
                                  pyatspi.Accessibility.Accessible) \
                 and index >= 0:
                 previousObj = obj.parent[index]
@@ -5507,11 +5504,11 @@ class Script(default.Script):
                             False)
                 retval = self.findPrevByMatchRule(col, rule, wrap, currentObj)
                 # we created the matchRule so we need to free it
-                col.freeMatchRule(rule)            
+                col.freeMatchRule(rule)
                 return retval
             except:
                 # we have created our matchRule at this point so free it
-                col.freeMatchRule(rule) 
+                col.freeMatchRule(rule)
                 debug.printException(debug.LEVEL_SEVERE)
                 # Collection is probably not implemented, use the fallback
                 return self.iterFindPreviousRole(roles, wrap, currentObj)
@@ -5583,7 +5580,7 @@ class Script(default.Script):
                             False)
                 retval = self.findNextByMatchRule(col, rule, wrap, currentObj)
                 # we created the matchRule so we need to free it
-                col.freeMatchRule(rule)            
+                col.freeMatchRule(rule)
                 return retval
             except:
                 # we created the matchRule at this point so free it
@@ -5638,12 +5635,12 @@ class Script(default.Script):
 
         return [None, wrapped]
 
-    def findPrevByMatchRule(self, col, matchrule, 
+    def findPrevByMatchRule(self, col, matchrule,
                                   wrap, currentObj, allowNesting=False):
         # get our current object
         if not currentObj:
             [currentObj, characterOffset] = self.getCaretContext()
-            
+
         # Get the ancestors.  We won't stop on any of them.
         ancestors = []
         obj = currentObj.parent
@@ -5655,8 +5652,8 @@ class Script(default.Script):
                 obj = obj.parent
 
         wrapped = False
-        rs = col.getMatchesTo(currentObj, matchrule, 
-                              col.SORT_ORDER_CANONICAL, 
+        rs = col.getMatchesTo(currentObj, matchrule,
+                              col.SORT_ORDER_CANONICAL,
                               col.TREE_INORDER, True, 1, True)
         while True:
             if len(rs) == 0:
@@ -5666,19 +5663,19 @@ class Script(default.Script):
                     lastobj = self.getLastObject()
                     # Collection does not do an inclusive search, meaning
                     # that the start object is not part of the search.  So
-                    # we need to test the lastobj separately using the given 
+                    # we need to test the lastobj separately using the given
                     # matchRule.  We don't have this problem for 'Next' because
                     # the startobj is the doc frame.
                     #
                     secondlastobj = self.findPreviousObject(lastobj)
-                    rs = col.getMatchesFrom(secondlastobj, matchrule, 
-                              col.SORT_ORDER_CANONICAL, 
+                    rs = col.getMatchesFrom(secondlastobj, matchrule,
+                              col.SORT_ORDER_CANONICAL,
                               col.TREE_INORDER, 1, True)
                     if len(rs) > 0:
                         return [rs[0], True]
                     else:
-                        rs = col.getMatchesTo(lastobj, matchrule, 
-                              col.SORT_ORDER_CANONICAL, 
+                        rs = col.getMatchesTo(lastobj, matchrule,
+                              col.SORT_ORDER_CANONICAL,
                               col.TREE_INORDER, True, 1, True)
                         wrapped = True
                  # caller doesn't want us to wrap and we haven't found anything
@@ -5686,41 +5683,41 @@ class Script(default.Script):
                     return [None, False]
             elif len(rs) > 0:
                 if rs[0] in ancestors:
-                    rs = col.getMatchesTo(rs[0], matchrule, 
-                              col.SORT_ORDER_CANONICAL, 
+                    rs = col.getMatchesTo(rs[0], matchrule,
+                              col.SORT_ORDER_CANONICAL,
                               col.TREE_INORDER, True, 1, True)
                 else:
                     return [rs[0], wrapped]
-                 
+
     def findNextByMatchRule(self, col, matchrule, wrap, currentObj=None):
         # get our current object
         if not currentObj:
             [currentObj, characterOffset] = self.getCaretContext()
 
         # go find the next match
-        rs = col.getMatchesFrom(currentObj, 
+        rs = col.getMatchesFrom(currentObj,
                                     matchrule,
                                     col.SORT_ORDER_CANONICAL,
                                     col.TREE_INORDER,
-                                    1, 
+                                    1,
                                     True)
 
         if len(rs) > 0:
             return [rs[0], False]
         elif wrap:
             # We didn't find anything so start at the doc frame and try again
-            rs = col.getMatchesFrom(self.getDocumentFrame(), 
+            rs = col.getMatchesFrom(self.getDocumentFrame(),
                                     matchrule,
                                     col.SORT_ORDER_CANONICAL,
                                     col.TREE_INORDER,
-                                    1, 
+                                    1,
                                     True)
             if len(rs) > 0:
                 return [rs[0], True]
             else:
                 return [None, True]
         else:
-            return [None, False] 
+            return [None, False]
 
     def findPrevByPredicate(self, pred, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the previous object
@@ -5764,7 +5761,7 @@ class Script(default.Script):
                     wrapped = True
 
         return [None, wrapped]
-                
+
     def findNextByPredicate(self, pred, wrap, currentObj=None):
         """Finds the caret offset at the beginning of the next object
         using the given predicate as a pattern to match or not match.
@@ -5844,7 +5841,7 @@ class Script(default.Script):
         self._updateLineCache(obj, characterOffset)
 
     def getTextLineAtCaret(self, obj):
-        """Gets the line of text where the caret is. This is an override to 
+        """Gets the line of text where the caret is. This is an override to
         accomodate the intricities of our caret navigation management.
 
         Argument:
@@ -5863,7 +5860,7 @@ class Script(default.Script):
         if contextObj == obj:
             if not obj.getState().contains(pyatspi.STATE_EDITABLE):
                 caretOffset = contextCaret
-        
+
         return string, caretOffset, startOffset
 
     def getCaretContext(self, includeNonText=True):
@@ -6025,7 +6022,7 @@ class Script(default.Script):
                 # difference is 1, then we're moving down and want the
                 # text that comes after this offset.  Otherwise, we're
                 # moving up and want the text that comes after the end.
-                # 
+                #
                 if offset - end > 1:
                     offset = end + 1
                 [line, start, end] = text.getTextAfterOffset(end + 1, boundary)
@@ -6166,7 +6163,7 @@ class Script(default.Script):
 
         elif not self.queryNonEmptyText(obj):
             return [[obj, -1, -1]]
-        
+
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
             if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
@@ -6284,9 +6281,9 @@ class Script(default.Script):
 
         # Pylint is confused and flags these errors:
         #
-        # E1101:6957:Script.getUtterancesFromContents: Instance of 
+        # E1101:6957:Script.getUtterancesFromContents: Instance of
         # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
-        # E1101:6962:Script.getUtterancesFromContents: Instance of 
+        # E1101:6962:Script.getUtterancesFromContents: Instance of
         # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
         #
         # So for now, we just disable these errors in this method.
@@ -6364,7 +6361,8 @@ class Script(default.Script):
         character = self.getCharacterAtOffset(obj, characterOffset)
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
-                speech.speak(character, self.getACSS(obj, character), False)
+                speech.speakCharacter(character,
+                                      self.getACSS(obj, character))
             elif obj.getRole() != pyatspi.ROLE_ENTRY:
                 # We won't have a character if we move to the end of an
                 # entry (in which case we're not on a character and therefore
@@ -6613,11 +6611,11 @@ class Script(default.Script):
 
         prevObj = currentLine[0][0]
         prevOffset = currentLine[0][1]
-        [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj, 
+        [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj,
                                                               prevOffset)
 
         if self.isLineBreakChar(prevObj, prevOffset):
-            [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj, 
+            [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj,
                                                                   prevOffset)
 
         # If the user did some back-to-back arrowing, we might already have
@@ -6627,7 +6625,7 @@ class Script(default.Script):
         index = self.findObjectOnLine(prevObj, prevOffset, prevLine)
         if index < 0:
             prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
-    
+
         if not prevLine:
             return [None, -1]
 
@@ -6649,12 +6647,12 @@ class Script(default.Script):
             prevObj = self.findPreviousObject(prevObj)
             prevOffset = 0
 
-        [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj, 
+        [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj,
                                                           prevOffset - 1)
 
         if not arrowToLineBeginning:
-            extents = self.getExtents(obj, 
-                                      characterOffset, 
+            extents = self.getExtents(obj,
+                                      characterOffset,
                                       characterOffset + 1)
             oldX = extents[0]
             for item in prevLine:
@@ -6743,7 +6741,7 @@ class Script(default.Script):
 
         if not arrowToLineBeginning:
             extents = self.getExtents(obj,
-                                      characterOffset, 
+                                      characterOffset,
                                       characterOffset + 1)
             oldX = extents[0]
             for item in nextLine:
@@ -6908,7 +6906,7 @@ class Script(default.Script):
         Arguments:
         - desiredLevel: the level (1-6) of the heading to locate
         """
-        
+
         found = False
         level = 0
         [obj, characterOffset] = self.getCaretContext()
@@ -6939,7 +6937,7 @@ class Script(default.Script):
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
             contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            self.speakContents(contents)             
+            self.speakContents(contents)
         else:
             # Translators: this is in reference to navigating HTML content
             # by heading (e.g., <h1>).
@@ -7091,18 +7089,18 @@ class Script(default.Script):
 
         # Try to find it using Collection first
         success = False
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
                 found = False
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 # form our list of attribute strings
                 attrs = []
                 for landmark in ARIA_LANDMARKS:
                     attrs.append('xml-roles:' + landmark)
                 # define matchRule and find it
                 stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              attrs, col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7111,7 +7109,7 @@ class Script(default.Script):
                 if obj != startobj:
                     found = True
                 success = True
-                col.freeMatchRule(rule)   
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7120,7 +7118,7 @@ class Script(default.Script):
 
         # Do it iteratively when Collection failed or is disabled
         if not success or not settings.useCollection:
-            [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark, 
+            [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark,
                                                       True, obj)
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7138,9 +7136,9 @@ class Script(default.Script):
                                                               characterOffset))
         else:
             # Translators: this is for navigating to the previous ARIA
-            # role landmark.  ARIA role landmarks are the W3C defined HTML 
-            # tag attribute 'role' used to identify important part of 
-            # webpage like banners, main context, search etc.  This is an 
+            # role landmark.  ARIA role landmarks are the W3C defined HTML
+            # tag attribute 'role' used to identify important part of
+            # webpage like banners, main context, search etc.  This is an
             # that one was not found.
             #
             speech.speak(_("No landmark found."))
@@ -7150,17 +7148,17 @@ class Script(default.Script):
 
         # Try to find it using Collection first
         success = False
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 # form our list of attribute strings
                 attrs = []
                 for landmark in ARIA_LANDMARKS:
                     attrs.append('xml-roles:' + landmark)
                 # define matchRule and find it
                 stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              attrs, col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7170,8 +7168,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7180,7 +7178,7 @@ class Script(default.Script):
 
         # Do it iteratively when Collection failed or is disabled
         if not success or not settings.useCollection:
-            [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark, 
+            [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark,
                                                       True, obj)
         if wrapped:
             # Translators: when the user is attempting to locate a
@@ -7227,9 +7225,9 @@ class Script(default.Script):
         while line and not found:
             index = self.findObjectOnLine(prevObj, prevOffset, useful)
             if not self.isSameObject(obj, prevObj):
-                # The question is, have we found the beginning of this 
+                # The question is, have we found the beginning of this
                 # object?  If the offset is 0 or there's more than one
-                # object on this line and we started on a later line, 
+                # object on this line and we started on a later line,
                 # it's safe to assume we've found the beginning.
                 #
                 found = (prevOffset == 0) \
@@ -7327,7 +7325,7 @@ class Script(default.Script):
                 found = True
             else:
                 self._previousLineContents = line
-                [nextObj, nextOffset] = self.findNextLine(line[-1][0], 
+                [nextObj, nextOffset] = self.findNextLine(line[-1][0],
                                                           line[-1][2])
                 line = self.currentLineContents
                 if self.currentLineContents == self._previousLineContents:
@@ -7366,25 +7364,25 @@ class Script(default.Script):
         success = False
 
         # Try to find it using Collection first
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LIST], col.MATCH_ANY,
                              "", col.MATCH_ALL,
                              False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, 
+                [obj, wrapped] = self.findPrevByMatchRule(col,
                                           rule, True, obj, allowNesting = True)
                 if obj and obj != startobj:
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7400,7 +7398,7 @@ class Script(default.Script):
                 #
                 if wrapped:
                     wrap = False
-    
+
                 # We need to be sure that the list in question is an (un)ordered
                 # list rather than a list in a form field. Form field lists are
                 # focusable; (un)ordered lists are not.
@@ -7456,14 +7454,14 @@ class Script(default.Script):
         wrap = True
         success = False
 
-        # Try to find it using Collection first    
-        if settings.useCollection:       
+        # Try to find it using Collection first
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LIST], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7473,8 +7471,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7490,7 +7488,7 @@ class Script(default.Script):
                 #
                 if wrapped:
                     wrap = False
-    
+
                 # We need to be sure that the list in question is an (un)ordered
                 # list rather than a list in a form field. Form field lists are
                 # focusable; (un)ordered lists are not.
@@ -7547,13 +7545,13 @@ class Script(default.Script):
         success = False
 
         # Try to find it using Collection first
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7563,8 +7561,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7580,10 +7578,10 @@ class Script(default.Script):
                 #
                 if wrapped:
                     wrap = False
-    
-                # We need to be sure that the list item in question is the 
-                # child of an (un)ordered list rather than a list in a form 
-                # field. Form field list items are focusable; (un)ordered 
+
+                # We need to be sure that the list item in question is the
+                # child of an (un)ordered list rather than a list in a form
+                # field. Form field list items are focusable; (un)ordered
                 # list items are not.
                 #
                 if obj and \
@@ -7616,14 +7614,14 @@ class Script(default.Script):
         wrap = True
         success = False
 
-        # Try to find it using Collection first    
-        if settings.useCollection:       
+        # Try to find it using Collection first
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7633,8 +7631,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7650,10 +7648,10 @@ class Script(default.Script):
                 #
                 if wrapped:
                     wrap = False
-    
-                # We need to be sure that the list item in question is the 
-                # child of an (un)ordered list rather than a list in a form 
-                # field. Form field list items are focusable; (un)ordered 
+
+                # We need to be sure that the list item in question is the
+                # child of an (un)ordered list rather than a list in a form
+                # field. Form field list items are focusable; (un)ordered
                 # list items are not.
                 #
                 if obj and \
@@ -7698,13 +7696,13 @@ class Script(default.Script):
         found = False
 
         # Try to find it using Collection first
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LINK], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7714,8 +7712,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7724,7 +7722,7 @@ class Script(default.Script):
 
         # Do it iteratively when Collection failed or is disabled
         if not success or not settings.useCollection:
-            
+
             while obj and not found:
                 [obj, wrapped] = \
                     self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
@@ -7765,13 +7763,13 @@ class Script(default.Script):
         found = False
 
         # Try to find it using Collection first
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LINK], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7781,8 +7779,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except AttributeError:
@@ -7841,13 +7839,13 @@ class Script(default.Script):
         found = False
 
         # Try to find it using Collection first
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LINK], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7857,8 +7855,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7906,14 +7904,14 @@ class Script(default.Script):
         found = False
         wrap = True
 
-        # Try to find it using Collection first    
-        if settings.useCollection:       
+        # Try to find it using Collection first
+        if settings.useCollection:
             try:
                 startobj = obj
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
                 stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              [pyatspi.ROLE_LINK], col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7923,8 +7921,8 @@ class Script(default.Script):
                     found = True
                 else:
                     found = False
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -7932,7 +7930,7 @@ class Script(default.Script):
                 col.freeMatchRule(rule)
 
         # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection: 
+        if not success or not settings.useCollection:
             while obj and not found:
                 [obj, wrapped] = \
                     self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
@@ -7983,13 +7981,13 @@ class Script(default.Script):
 
         # Try to find it using Collection first
         success = False
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
                 found = False
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              ['tag:BLOCKQUOTE'], col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -7998,7 +7996,7 @@ class Script(default.Script):
                 if obj != startobj:
                     found = True
                 success = True
-                col.freeMatchRule(rule)   
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -8006,7 +8004,7 @@ class Script(default.Script):
                 col.freeMatchRule(rule)
 
         # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection: 
+        if not success or not settings.useCollection:
             currentObj = obj
             found = False
             wrapped = False
@@ -8053,13 +8051,13 @@ class Script(default.Script):
 
         # Try to find it using Collection first
         success = False
-        if settings.useCollection:       
+        if settings.useCollection:
             try:
                 startobj = obj
                 found = False
-                col = self.getDocumentFrame().queryCollection() 
+                col = self.getDocumentFrame().queryCollection()
                 stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,  
+                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
                              ['tag:BLOCKQUOTE'], col.MATCH_ANY,
                              "", col.MATCH_ANY,
                              "", col.MATCH_ALL,
@@ -8067,8 +8065,8 @@ class Script(default.Script):
                 [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
                 if obj and obj not in ancestors:
                     found = True
-                success = True 
-                col.freeMatchRule(rule)  
+                success = True
+                col.freeMatchRule(rule)
             except NotImplementedError:
                 debug.printException(debug.LEVEL_SEVERE)
             except:
@@ -8076,7 +8074,7 @@ class Script(default.Script):
                 col.freeMatchRule(rule)
 
         # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection: 
+        if not success or not settings.useCollection:
             currentObj = obj
             found = False
             wrapped = False
@@ -8608,7 +8606,7 @@ class Script(default.Script):
 
     def goNextLiveRegion(self, inputEvent):
         # First, get any live regions that have been registered as LIVE_NONE
-        # because there is no markup to test for these but we still want to 
+        # because there is no markup to test for these but we still want to
         # find them
         regobjs = self.liveMngr.getLiveNoneObjects()
         # define our search predicate
@@ -8627,7 +8625,7 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to top."))
         if obj:
-            # TODO:   We don't want to move to a list item.  
+            # TODO:   We don't want to move to a list item.
             # Is this the best place to handle this?
             if obj.getRole() == pyatspi.ROLE_LIST:
                 characterOffset = 0
@@ -8649,7 +8647,7 @@ class Script(default.Script):
 
     def goPreviousLiveRegion(self, inputEvent):
         # First, get any live regions that have been registered as LIVE_NONE
-        # because there is no markup to test for these but we still want to 
+        # because there is no markup to test for these but we still want to
         # find them
         regobjs = self.liveMngr.getLiveNoneObjects()
         # define our search predicate
@@ -8668,7 +8666,7 @@ class Script(default.Script):
             #
             speech.speak(_("Wrapping to top."))
         if obj:
-            # TODO:   We don't want to move to a list item.  
+            # TODO:   We don't want to move to a list item.
             # Is this the best place to handle this?
             if obj.getRole() == pyatspi.ROLE_LIST:
                 characterOffset = 0
@@ -8685,7 +8683,7 @@ class Script(default.Script):
             # that are updated without having to refresh the entire page.
             #
             speech.speak(_("No more live regions."))
-            
+
     def goLastLiveRegion(self, inputEvent):
         if settings.inferLiveRegions:
             self.liveMngr.goLastLiveRegion()
@@ -8704,7 +8702,7 @@ class Script(default.Script):
             # support has been turned off.
             #
             speech.speak(_("Live region support is off"))
-            
+
     def monitorLiveRegions(self, inputEvent):
         if not settings.inferLiveRegions:
             settings.inferLiveRegions = True
@@ -8719,7 +8717,7 @@ class Script(default.Script):
             #
             self.liveMngr.flushMessages()
             speech.speak(_("Live regions monitoring off"))
-            
+
     def setLivePolitenessOff(self, inputEvent):
         if settings.inferLiveRegions:
             self.liveMngr.setLivePolitenessOff()
@@ -8808,8 +8806,6 @@ class Script(default.Script):
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
         braille.displayMessage(string)
-        
-
 
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to

@@ -22,13 +22,12 @@
 __id__        = "$Id:$"
 __version__   = "$Revision:$"
 __date__      = "$Date:$"
-__copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc. and Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc. Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
 
 import orca.braille as braille
-import orca.chnames as chnames
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
@@ -123,7 +122,7 @@ class Script(default.Script):
             self.onStateChanged
         listeners["object:state-changed:focused"]           = \
             self.onStateChanged
-      
+
         return listeners
 
     def getDocument(self, locusOfFocus):
@@ -370,7 +369,7 @@ class Script(default.Script):
             if parent and parent.getRole() in [pyatspi.ROLE_DRAWING_AREA,
                                                pyatspi.ROLE_UNKNOWN]:
                 # We're going to get at least one (and likely several)
-                # caret-moved events which will cause this to get spoken, 
+                # caret-moved events which will cause this to get spoken,
                 # so skip it for now.
                 #
                 return
@@ -523,7 +522,7 @@ class Script(default.Script):
 
         # [[[TODO: JD - Sometimes it's showing AND we didn't just leave
         # it. This also seems to occur sometimes with the Find toolbar.]]]
-        
+
         self.currentInputEvent = orca_state.lastInputEvent
         self.checkForTableBoundary(orca_state.locusOfFocus, event.source)
         default.Script.onCaretMoved(self, event)
@@ -653,7 +652,7 @@ class Script(default.Script):
             if lastKey == "Right":
                 penultimateWord = orca_state.lastWord
                 [lastWord, startOffset, endOffset] = \
-                    text.getTextAtOffset(offset, 
+                    text.getTextAtOffset(offset,
                                          pyatspi.TEXT_BOUNDARY_WORD_START)
                 [word, startOffset, endOffset] = \
                     text.getTextAfterOffset(endOffset+1,
@@ -662,9 +661,7 @@ class Script(default.Script):
                     lastCharPW = penultimateWord[len(penultimateWord) - 1]
                     if lastCharPW == "\n":
                         voice = self.voices[settings.DEFAULT_VOICE]
-                        speech.speak(chnames.getCharacterName("\n"),
-                                     voice,
-                                     False)
+                        speech.speakCharacter("\n", voice)
                         if penultimateWord != lastWord:
                             word = lastWord
 
@@ -677,9 +674,7 @@ class Script(default.Script):
                     lastChar = word[len(word) - 1]
                     if lastChar == "\n" and lastWord != word:
                         voice = self.voices[settings.DEFAULT_VOICE]
-                        speech.speak(chnames.getCharacterName("\n"),
-                                     voice,
-                                     False)
+                        speech.speakCharacter("\n", voice)
                     if lastWord == word:
                         return
 
