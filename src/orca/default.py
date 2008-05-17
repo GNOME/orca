@@ -2709,7 +2709,10 @@ class Script(script.Script):
             #
             checkIfSelected = False
             objRole = newLocusOfFocus.getRole()
-            parentRole = newLocusOfFocus.parent.getRole()
+            if newLocusOfFocus.parent:
+                parentRole = newLocusOfFocus.parent.getRole()
+            else:
+                parentRole = None
             state = newLocusOfFocus.getState()
 
             if objRole == pyatspi.ROLE_TABLE_CELL and \
