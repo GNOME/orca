@@ -2094,7 +2094,8 @@ class Script(default.Script):
 
         # The search entries in Firefox's and Thunderbird's top toolbars
         # contain text which functions as the label (Yahoo, Entire Message)
-        # and which gets deleted just prior to the entry gaining focus.  If
+        # and which gets deleted just prior to the entry gaining focus.
+        # This is also true of the search entry in the Downloads frame. If
         # we pass that event on to the default script, it will set the
         # entry to the locus of focus silently and then the focus event
         # will not cause the entry to be spoken.  In addition, if the
@@ -2104,6 +2105,9 @@ class Script(default.Script):
         #
         if event.source and orca_state.locusOfFocus \
            and not self.isSameObject(event.source, orca_state.locusOfFocus):
+            if event.source.parent.getRole() == pyatspi.ROLE_FRAME:
+                return
+
             toolbar = self.getAncestor(event.source,
                                        [pyatspi.ROLE_TOOL_BAR],
                                        [pyatspi.ROLE_DOCUMENT_FRAME])
