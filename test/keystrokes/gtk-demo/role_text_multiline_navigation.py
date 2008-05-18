@@ -420,7 +420,7 @@ sequence.append(utils.AssertPresentationAction(
     "KP_2 to flat review ' '",
     ["BRAILLE LINE:  '  $l'",
      "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -600,7 +600,7 @@ sequence.append(utils.AssertPresentationAction(
     "Ctrl+Delete right 'is'",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  is a test.  $l'",
      "     VISIBLE:  ' is a test.  $l', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -646,7 +646,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is only a test. $l', cursor=21",
      "BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=20",
-     "SPEECH OUTPUT: '.'"]))
+     "SPEECH OUTPUT: 'dot'"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
 # the regression tests use, the BackSpace will not give the same output
@@ -880,7 +880,7 @@ sequence.append(utils.AssertPresentationAction(
     "KP_1 to flat review space",
     ["BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=5",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))
@@ -896,7 +896,7 @@ sequence.append(utils.AssertPresentationAction(
     "KP_3 to flat review space",
     ["BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=5",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
@@ -1075,7 +1075,7 @@ sequence.append(utils.AssertPresentationAction(
     "Insert+KP_1 to flat review end of line",
     ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
      "     VISIBLE:  'l GTK! $l', cursor=6",
-     "SPEECH OUTPUT: '!'"]))
+     "SPEECH OUTPUT: 'exclaim'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
