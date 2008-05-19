@@ -1,3 +1,11 @@
+2008-05-19  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speech.py:
+
+          Additional fix for bug #520494 - Keyboard review punctuation in
+	  Firefox.  Do not normalize character name before sending to
+	  _speechServer.speakCharacter.
+
 2008-05-18  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gtk-demo/role_text_multiline_navigation.py:

@@ -210,9 +210,9 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
-    character = chnames.getCharacterName(character)
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
-    log.info("SPEECH OUTPUT: '%s'" % character)
+    spokenCharacter = chnames.getCharacterName(character)
+    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + spokenCharacter + "'")
+    log.info("SPEECH OUTPUT: '%s'" % spokenCharacter)
 
     if _speechserver:
         _speechserver.speakCharacter(character, acss=acss)
