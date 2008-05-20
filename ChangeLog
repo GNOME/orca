@@ -1,3 +1,9 @@
+2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/Gecko.py:
+          Fix for bug #527959 - Incorrect caret movement in Firefox 3 on
+          certain Web pages.
+
 2008-05-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/Gecko.py:
