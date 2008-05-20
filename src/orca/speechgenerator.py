@@ -604,13 +604,33 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        # [[[TODO: richb - readjusted to just get the default speech instead
-        # of treating the frame like an alert and speaking all unrelated
-        # labels. We'll need to see if this has any adverse effects and
-        # adjust accordingly.]]]
-        #
-        utterances = self._getDefaultSpeech(obj, already_focused)
-        #utterances = self._getSpeechForAlert(obj, already_focused)
+        utterances = []
+
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+            utterances.extend(self._getSpeechForAllTextSelection(obj))
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+            # If this application has more than one unfocused alert or
+            # dialog window, then speak '<m> unfocused dialogs'
+            # to let the user know.
+            #
+            alertAndDialogCount = \
+                        self._script.getUnfocusedAlertAndDialogCount(obj)
+            if alertAndDialogCount > 0:
+                # Translators: this tells the user how many unfocused
+                # alert and dialog windows that this application has.
+                #
+                line = ngettext("%d unfocused dialog",
+                                "%d unfocused dialogs",
+                                alertAndDialogCount) % alertAndDialogCount
+                utterances.append(line)
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         self._debugGenerator("_getSpeechForFrame",
                              obj,

@@ -37,6 +37,7 @@ import rolenames
 import settings
 
 from orca_i18n import _                     # for gettext support
+from orca_i18n import ngettext              # for ngettext support
 
 class BrailleGenerator:
     """Takes accessible objects and produces a list of braille Regions
@@ -534,7 +535,38 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForFrame", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        regions = []
+
+        text = ""
+        text = self._script.appendString(
+            text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(
+            text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text,
+                                         self._script.getTextForValue(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
+
+        # If this application has more than one unfocused alert or
+        # dialog window, then add '(<m> dialogs)' to the braille context,
+        # to let the user know.
+        #
+        alertAndDialogCount = \
+                    self._script.getUnfocusedAlertAndDialogCount(obj)
+        if alertAndDialogCount > 0:
+            # Translators: this tells the user how many unfocused
+            # alert and dialog windows plus the total number of
+            # windows that this application has.
+            #
+            line = ngettext("(%d dialog)",
+                            "(%d dialogs)",
+                            alertAndDialogCount) % alertAndDialogCount
+            text = self._script.appendString(text, line)
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
     def _getBrailleRegionsForHtmlContainer(self, obj):
         """Get the braille for an HTML container.

@@ -2053,3 +2053,33 @@ class Script(default.Script):
         rv, start, end = \
             default.Script.getTextAttributes(self, acc, offset, get_defaults)
         return rv, start, end - 1
+
+    def isFunctionalDialog(self, obj):
+        """Returns true if the window is functioning as a dialog."""
+
+        # The OOo Navigator window looks like a dialog, acts like a
+        # dialog, and loses focus requiring the user to know that it's
+        # there and needs Alt+F6ing into.  But officially it's a normal
+        # window.
+ 
+        # There doesn't seem to be (an efficient) top-down equivalent
+        # of isDesiredFocusedItem(). But OOo documents have root panes;
+        # this thing does not.
+        #
+        rolesList = [pyatspi.ROLE_FRAME,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_TOOL_BAR,
+                     pyatspi.ROLE_PUSH_BUTTON]
+
+        if obj.getRole() != rolesList[0]:
+            # We might be looking at the child.
+            #
+            rolesList.pop(0)
+
+        while obj and obj.childCount and len(rolesList):
+            if obj.getRole() != rolesList.pop(0):
+                return False
+            obj = obj[0]
+
+        return True

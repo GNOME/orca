@@ -1603,7 +1603,9 @@ class WhereAmI:
         1. The contents of the title bar of the application main window
         2. If in a dialog box within an application, the contents of the
         title bar of the dialog box.
-        3. Orca will pause briefly between these two pieces of information
+        3. '<n> unfocused dialogs' if this application has more than
+           one unfocused alert or dialog window.
+        4. Orca will pause briefly between these two pieces of information
         so that the speech user can distinguish each.
         """
 
@@ -1617,6 +1619,17 @@ class WhereAmI:
         if results[1]:
             text = self.getObjLabelAndName(results[1])
             utterances.append(text)
+
+        alertAndDialogCount = \
+                    self._script.getUnfocusedAlertAndDialogCount(obj)
+        if alertAndDialogCount > 0:
+            # Translators: this tells the user how many unfocused
+            # alert and dialog windows that this application has.
+            #
+            line = ngettext("%d unfocused dialog",
+                            "%d unfocused dialogs",
+                            alertAndDialogCount) % alertAndDialogCount
+            utterances.append(line)
 
         debug.println(self._debugLevel, "titlebar utterances=%s" % \
                       utterances)

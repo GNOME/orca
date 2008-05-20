@@ -38,8 +38,6 @@ import orca.speechserver as speechserver
 
 from orca.orca_i18n import _
 
-from speech_generator import SpeechGenerator
-
 class Script(default.Script):
 
     def __init__(self, app):
@@ -67,11 +65,6 @@ class Script(default.Script):
         self.lastCaretPosition = -1
         self.lastBadWord = ''
         self.lastEventType = ''
-
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-        return SpeechGenerator(self)
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.

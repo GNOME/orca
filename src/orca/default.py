@@ -2362,6 +2362,40 @@ class Script(script.Script):
         else:
             speech.speakCharacter(character, voice)
 
+
+    def isFunctionalDialog(self, obj):
+        """Returns true if the window is a functioning as a dialog.
+        This method should be subclassed by application scripts as needed.
+        """
+
+        return False
+
+    def getUnfocusedAlertAndDialogCount(self, obj):
+        """If the current application has one or more alert or dialog
+        windows and the currently focused window is not an alert or a dialog,
+        return a count of the number of alert and dialog windows, otherwise
+        return a count of zero.
+
+        Arguments:
+        - obj: the Accessible object
+
+        Returns the alert and dialog count.
+        """
+
+        alertAndDialogCount = 0
+        app = obj.getApplication()
+        window = self.getTopLevel(obj)
+        if window.getRole() != pyatspi.ROLE_ALERT and \
+           window.getRole() != pyatspi.ROLE_DIALOG and \
+           not self.isFunctionalDialog(window):
+            for child in app:
+                if child.getRole() == pyatspi.ROLE_ALERT or \
+                   child.getRole() == pyatspi.ROLE_DIALOG or \
+                   self.isFunctionalDialog(child):
+                    alertAndDialogCount += 1
+
+        return alertAndDialogCount
+
     def presentTooltip(self, obj):
         """
         Speaks the tooltip for the current object of interest.
