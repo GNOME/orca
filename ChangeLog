@@ -38,6 +38,11 @@
           information when navigating and/or selecting text across 
           object boundaries in OOo Writer.
 
+        * src/orca/test/keystrokes/gtk-demo/role_text_multiline_navigation2.py:
+          More work on bug #517048 - fixed up the Gtk+
+          role_text_multiline_navigation2.py regression test to work 
+          with the new expected output.
+
 2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

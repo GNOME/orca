@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
      "SPEECH OUTPUT: 'This '",
-     "SPEECH OUTPUT: 'selected'"]))
+     "SPEECH OUTPUT: 'line selected from start to previous cursor position'"]))
 
 ########################################################################
 # Test #2 - Shift+Ctrl+Page_Down to select text to end of line.
@@ -80,7 +80,8 @@ sequence.append(utils.AssertPresentationAction(
     "Shift+Ctrl+Page_Down to select text to end of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=21",
-     "SPEECH OUTPUT: 'This is only a test.'"]))
+     "SPEECH OUTPUT: 'This is only a test.'",
+     "SPEECH OUTPUT: 'line selected to end from previous cursor position'"]))
 
 ########################################################################
 # Test #3 - Shift+Up to select text.
@@ -97,7 +98,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=17",
      "SPEECH OUTPUT: '",
-     "This is only a test.'"]))
+     "This is only a test.'",
+     "SPEECH OUTPUT: 'unselected'"]))
 
 ########################################################################
 # Test #4 - Shift+Down to deselect text.
@@ -114,7 +116,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=21",
      "SPEECH OUTPUT: '",
-     "This is only a test.'"]))
+     "This is only a test.'",
+     "SPEECH OUTPUT: 'unselected'"]))
 
 ########################################################################
 # Test #5 - Ctrl+Page_Up to beginning of line.
@@ -130,7 +133,8 @@ sequence.append(utils.AssertPresentationAction(
     "Ctrl+Page_Up to beginning of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'T'"]))
+     "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'unselected'"]))
 
 ########################################################################
 # Test #6 - Ctrl+Page_Down to end of line.
