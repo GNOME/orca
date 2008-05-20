@@ -31,6 +31,7 @@ import pyatspi
 import orca.orca as orca
 import orca.debug as debug
 import orca.default as default
+import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 
@@ -212,3 +213,18 @@ class Script(Gecko.Script):
 
         char = self.getCharacterAtOffset(obj, offset)
         return char == "\n"
+
+    def getDocumentFrame(self):
+        """Returns the document frame that holds the content being shown.
+        Overridden here because multiple open messages are not arranged
+        in tabs like they are in Firefox."""
+
+        obj = orca_state.locusOfFocus
+        while obj:
+            role = obj.getRole()
+            if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_EMBEDDED]:
+                return obj
+            else:
+                obj = obj.parent
+
+        return None

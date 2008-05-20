@@ -1,3 +1,10 @@
+2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #511561 - Orca should not impact the cursor position
+          when replying to a message in thunderbird.
+
 2008-05-19  Willie Walker <william.walker@sun.com>
 
         * src/orca/speech.py:

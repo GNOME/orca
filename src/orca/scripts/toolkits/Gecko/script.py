@@ -114,7 +114,9 @@ class Script(default.Script):
              Script.goPreviousWord,
              Script.goNextLine,
              Script.goPreviousLine,
-             Script.expandComboBox]
+             Script.expandComboBox,
+             Script.goTopOfFile,
+             Script.goBottomOfFile]
 
         # _structuralNavigationFunctions are functions that represent
         # more complex navigation functions (e.g., moving by heading,
