@@ -1456,8 +1456,9 @@ class SpeechGenerator:
             if settings.readTableCellRow and parent_table \
                 and (not self._script.isLayoutOnly(obj.parent)):
                 parent = obj.parent
-                row = parent_table.getRowAtIndex(obj.getIndexInParent())
-                column = parent_table.getColumnAtIndex(obj.getIndexInParent())
+                index = self._script.getCellIndex(obj)
+                row = parent_table.getRowAtIndex(index)
+                column = parent_table.getColumnAtIndex(index)
 
                 # This is an indication of whether we should speak all the
                 # table cells (the user has moved focus up or down a row),

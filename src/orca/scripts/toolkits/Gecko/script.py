@@ -3182,7 +3182,7 @@ class Script(default.Script):
                         contents += "\n"
                     elif obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                         parent = obj.parent
-                        index = obj.getIndexInParent()
+                        index = self.getCellIndex(obj)
                         if parent.queryTable().getColumnAtIndex(index) != 0:
                             contents += " "
                     elif obj.getRole() == pyatspi.ROLE_LINK:
@@ -3767,11 +3767,35 @@ class Script(default.Script):
 
         return None
 
+    def getCellIndex(self, obj):
+        """Returns the index of the cell which should be used with the
+        table interface.  This is necessary because we cannot count on
+        the index we need being the same as the index in the parent.
+        See, for example, tables with captions and tables with rows
+        that have attributes."""
+
+        index = -1
+        parent = self.getAncestor(obj,
+                                 [pyatspi.ROLE_TABLE],
+                                 [pyatspi.ROLE_DOCUMENT_FRAME])
+        try:
+            table = parent.queryTable()
+        except:
+            pass
+        else:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+            index = attrs.get('table-cell-index')
+            if index:
+                index = int(index)
+            else:
+                index = obj.getIndexInParent()
+
+        return index
+
     def getCellCoordinates(self, obj):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0]
         if the coordinates cannot be found.
         """
-
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             obj = self.getAncestor(obj,
                                    [pyatspi.ROLE_TABLE_CELL],
@@ -3783,8 +3807,9 @@ class Script(default.Script):
         except:
             pass
         else:
-            row = table.getRowAtIndex(obj.getIndexInParent())
-            col = table.getColumnAtIndex(obj.getIndexInParent())
+            index = self.getCellIndex(obj)
+            row = table.getRowAtIndex(index)
+            col = table.getColumnAtIndex(index)
             return [row, col]
 
         return [0, 0]
@@ -3799,14 +3824,19 @@ class Script(default.Script):
         - coordinates2: [row, col]
         """
 
+        if coordinates1 == coordinates2:
+            return True
+
         try:
             table = obj.queryTable()
         except:
             pass
         else:
-            index1 = table.getIndexAt(coordinates1[0], coordinates1[1])
-            index2 = table.getIndexAt(coordinates2[0], coordinates2[1])
-            return (index1 == index2)
+            cell1 = table.getAccessibleAt(coordinates1[0], 
+                                          coordinates1[1])
+            cell2 = table.getAccessibleAt(coordinates2[0],
+                                          coordinates2[1])
+            return self.isSameObject(cell1, cell2)
 
         return False
 
@@ -3872,12 +3902,20 @@ class Script(default.Script):
         """
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            table = obj.parent.queryTable()
-            row = table.getRowAtIndex(obj.getIndexInParent())
-            for col in xrange(table.nColumns):
-                cell = table.getAccessibleAt(row, col)
-                if not self.isHeader(cell):
-                    return False
+            parent = self.getAncestor(obj,
+                                      [pyatspi.ROLE_TABLE],
+                                      [pyatspi.ROLE_DOCUMENT_FRAME])
+            try:
+                table = parent.queryTable()
+            except:
+                return False
+            else:
+                index = self.getCellIndex(obj)
+                row = table.getRowAtIndex(index)
+                for col in xrange(table.nColumns):
+                    cell = table.getAccessibleAt(row, col)
+                    if not self.isHeader(cell):
+                        return False
 
         return True
 
@@ -3890,12 +3928,20 @@ class Script(default.Script):
         """
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            table = obj.parent.queryTable()
-            col = table.getColumnAtIndex(obj.getIndexInParent())
-            for row in xrange(table.nRows):
-                cell = table.getAccessibleAt(row, col)
-                if not self.isHeader(cell):
-                    return False
+            parent = self.getAncestor(obj,
+                                      [pyatspi.ROLE_TABLE],
+                                      [pyatspi.ROLE_DOCUMENT_FRAME])
+            try:
+                table = parent.queryTable()
+            except:
+                return False
+            else:
+                index = self.getCellIndex(obj)
+                col = table.getColumnAtIndex(index)
+                for row in xrange(table.nRows):
+                    cell = table.getAccessibleAt(row, col)
+                    if not self.isHeader(cell):
+                        return False
 
         return True
 

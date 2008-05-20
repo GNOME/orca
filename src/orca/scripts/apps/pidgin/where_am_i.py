@@ -93,8 +93,8 @@ class WhereAmI(where_am_I.WhereAmI):
         utterances = []
         if doubleClick:
             table = parent.queryTable()
-            row = table.getRowAtIndex(
-              orca_state.locusOfFocus.getIndexInParent())
+            index = self._script.getCellIndex(orca_state.locusOfFocus)
+            row = table.getRowAtIndex(index)
             # Translators: this in reference to a row in a table.
             #
             text = _("row %d of %d") % ((row+1), table.nRows)
@@ -120,9 +120,8 @@ class WhereAmI(where_am_I.WhereAmI):
                               "??? parent=%s" % parent.getRoleName())
                 return
             else:
-                row = \
-                    table.getRowAtIndex(
-                       orca_state.locusOfFocus.getIndexInParent())
+                index = self._script.getCellIndex(orca_state.locusOfFocus)
+                row = table.getRowAtIndex(index)
                 # Translators: this in reference to a row in a table.
                 #
                 text = _("row %d of %d") % ((row+1), table.nRows)

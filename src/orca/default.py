@@ -2688,10 +2688,9 @@ class Script(script.Script):
                     table = None
                 if table and \
                       oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-                    oldRow = table.getRowAtIndex( \
-                                           oldLocusOfFocus.getIndexInParent())
-                    oldCol = table.getColumnAtIndex( \
-                                           oldLocusOfFocus.getIndexInParent())
+                    index = self.getCellIndex(oldLocusOfFocus)
+                    oldRow = table.getRowAtIndex(index)
+                    oldCol = table.getColumnAtIndex(index)
                 else:
                     oldRow = -1
                     oldCol = -1
@@ -2701,10 +2700,9 @@ class Script(script.Script):
                 except:
                     pass
                 else:
-                    newRow = table.getRowAtIndex( \
-                                  newLocusOfFocus.getIndexInParent())
-                    newCol = table.getColumnAtIndex( \
-                                  newLocusOfFocus.getIndexInParent())
+                    index = self.getCellIndex(newLocusOfFocus)
+                    newRow = table.getRowAtIndex(index)
+                    newCol = table.getColumnAtIndex(index)
 
                     if (newRow != oldRow) or (oldParent != newParent):
                         desc = table.getRowDescription(newRow)
@@ -2859,11 +2857,10 @@ class Script(script.Script):
                 except:
                     pass
                 else:
-                    column = table.getColumnAtIndex( \
-                                    newLocusOfFocus.getIndexInParent())
+                    index = self.getCellIndex(newLocusOfFocus)
+                    column = table.getColumnAtIndex(index)
                     self.pointOfReference['lastColumn'] = column
-                    row = table.getRowAtIndex( \
-                                    newLocusOfFocus.getIndexInParent())
+                    row = table.getRowAtIndex(index)
                     self.pointOfReference['lastRow'] = row
         else:
             orca_state.noFocusTimeStamp = time.time()
@@ -6142,6 +6139,16 @@ class Script(script.Script):
 
         return -1
 
+    def getCellIndex(self, obj):
+        """Returns the index of the cell which should be used with the
+        table interface.  This is necessary because in some apps we
+        cannot count on getIndexInParent() returning the index we need.
+
+        Arguments:
+        -obj: the table cell whose index we need.
+        """
+        return obj.getIndexInParent()
+
     def isWordDelimiter(self, character):
         """Returns True if the given character is a word delimiter.
 
@@ -6347,8 +6354,9 @@ class Script(script.Script):
                 return []
 
         nodes = []
-        row = table.getRowAtIndex(obj.getIndexInParent())
-        col = table.getColumnAtIndex(obj.getIndexInParent())
+        index = self.getCellIndex(obj)
+        row = table.getRowAtIndex(index)
+        col = table.getColumnAtIndex(index)
         nodeLevel = self.getNodeLevel(obj)
         done = False
 

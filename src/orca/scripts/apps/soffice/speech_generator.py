@@ -147,9 +147,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             except NotImplementedError:
                 parentTable = None
 
+            index = self._script.getCellIndex(obj)
             if self._script.pointOfReference.has_key("lastColumn") and \
                self._script.pointOfReference["lastColumn"] != \
-               parentTable.getColumnAtIndex(obj.getIndexInParent()):
+               parentTable.getColumnAtIndex(index):
                 if self._script.dynamicColumnHeaders.has_key(table):
                     row = self._script.dynamicColumnHeaders[table]
                     header = self._script.getDynamicRowHeaderCell(obj, row)
@@ -170,7 +171,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             if self._script.pointOfReference.has_key("lastRow") and \
                self._script.pointOfReference["lastRow"] != \
-               parentTable.getRowAtIndex(obj.getIndexInParent()):
+               parentTable.getRowAtIndex(index):
                 if self._script.dynamicRowHeaders.has_key(table):
                     column = self._script.dynamicRowHeaders[table]
                     header = self._script.getDynamicColumnHeaderCell(obj,
@@ -194,9 +195,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if not already_focused:
                 if settings.readTableCellRow:
                     parent = obj.parent
-                    row = parentTable.getRowAtIndex(obj.getIndexInParent())
-                    column = \
-                        parentTable.getColumnAtIndex(obj.getIndexInParent())
+                    index = self._script.getCellIndex(obj)
+                    row = parentTable.getRowAtIndex(index)
+                    column = parentTable.getColumnAtIndex(index)
 
                     # This is an indication of whether we should speak all the
                     # table cells (the user has moved focus up or down a row),

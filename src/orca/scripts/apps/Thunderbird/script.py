@@ -98,7 +98,8 @@ class Script(Gecko.Script):
         #
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = parent.queryTable()
-            row = table.getRowAtIndex(obj.getIndexInParent())
+            index = self.getCellIndex(obj)
+            row = table.getRowAtIndex(index)
             acc = table.getAccessibleAt(row, 0)
             orca.setLocusOfFocus(event, acc)
             consume = True

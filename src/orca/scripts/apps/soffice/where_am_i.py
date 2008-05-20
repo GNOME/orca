@@ -69,8 +69,8 @@ class WhereAmI(where_am_I.WhereAmI):
         # Translators: this represents the column we're
         # on in a table.
         #
-        text = _("column %d") % \
-               (table.getColumnAtIndex(obj.getIndexInParent()) + 1)
+        index = self._script.getCellIndex(obj)
+        text = _("column %d") % (table.getColumnAtIndex(index) + 1)
         utterances.append(text)
 
         # Speak the dynamic column header (if any).
@@ -95,7 +95,8 @@ class WhereAmI(where_am_I.WhereAmI):
 
         # Translators: this represents the row number of a table.
         #
-        text = _("row %d") % (table.getRowAtIndex(obj.getIndexInParent()) + 1)
+        index = self._script.getCellIndex(obj)
+        text = _("row %d") % (table.getRowAtIndex(index) + 1)
         utterances.append(text)
 
         # Speak the dynamic row header (if any).

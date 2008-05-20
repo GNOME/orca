@@ -394,7 +394,8 @@ class Script(default.Script):
             parentTable = None
 
         if parent and parentTable:
-            row = parentTable.getRowAtIndex(obj.getIndexInParent())
+            index = self.getCellIndex(obj)
+            row = parentTable.getRowAtIndex(index)
             accCell = parentTable.getAccessibleAt(row, column)
 
         return accCell
@@ -420,7 +421,8 @@ class Script(default.Script):
             parentTable = None
 
         if parent and parentTable:
-            column = parentTable.getColumnAtIndex(obj.getIndexInParent())
+            index = self.getCellIndex(obj)
+            column = parentTable.getColumnAtIndex(index)
             accCell = parentTable.getAccessibleAt(row, column)
 
         return accCell
@@ -482,14 +484,16 @@ class Script(default.Script):
                 parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
             if leftCell:
                 table = leftCell.parent.queryTable()
-                startIndex = table.getColumnAtIndex(leftCell.getIndexInParent())
+                index = self.getCellIndex(leftCell)
+                startIndex = table.getColumnAtIndex(index)
 
             rightX = extents.x + extents.width - 1
             rightCell = \
                 parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
             if rightCell:
                 table = rightCell.parent.queryTable()
-                endIndex = table.getColumnAtIndex(rightCell.getIndexInParent())
+                index = self.getCellIndex(rightCell)
+                endIndex = table.getColumnAtIndex(index)
 
         return [startIndex, endIndex]
 
@@ -725,7 +729,8 @@ class Script(default.Script):
                 parentTable = None
 
             if parent and parentTable:
-                row = parentTable.getRowAtIndex(cell.getIndexInParent())
+                index = self.getCellIndex(cell)
+                row = parentTable.getRowAtIndex(index)
 
         return row
 
@@ -749,7 +754,8 @@ class Script(default.Script):
                 parentTable = None
 
             if parent and parentTable:
-                column = parentTable.getColumnAtIndex(cell.getIndexInParent())
+                index = self.getCellIndex(cell)
+                column = parentTable.getColumnAtIndex(index)
 
         return column
 
@@ -1428,11 +1434,10 @@ class Script(default.Script):
                 except:
                     pass
                 else:
-                    column = table.getColumnAtIndex( \
-                                    newLocusOfFocus.getIndexInParent())
+                    index = self.getCellIndex(newLocusOfFocus)
+                    column = table.getColumnAtIndex(index)
                     self.pointOfReference['lastColumn'] = column
-                    row = table.getRowAtIndex( \
-                                    newLocusOfFocus.getIndexInParent())
+                    row = table.getRowAtIndex(index)
                     self.pointOfReference['lastRow'] = row
                 return
 

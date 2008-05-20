@@ -1,3 +1,22 @@
+2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/pidgin/where_am_i.py:
+          src/orca/scripts/apps/pidgin/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          src/orca/scripts/apps/soffice/speech_generator.py:
+          src/orca/scripts/apps/soffice/where_am_i.py:
+          src/orca/scripts/apps/soffice/braille_generator.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/liveregions.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #515665 - Orca has problems with tables that have
+          captions in FF3.
+
 2008-05-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/gedit/speech_generator.py:

@@ -545,13 +545,14 @@ class WhereAmI:
             nColumns = 0
         else:
             nColumns = table.nColumns
-            column = table.getColumnAtIndex(obj.getIndexInParent())
+            index = self._script.getCellIndex(obj)
+            column = table.getColumnAtIndex(index)
             header = table.getColumnHeader(column)
             if header:
                 text = self._getObjName(header)
                 utterances.append(text)
 
-            row = table.getRowAtIndex(obj.getIndexInParent())
+            row = table.getRowAtIndex(index)
             header = table.getRowHeader(row)
             if header:
                 text = self._getObjName(header)
@@ -1189,8 +1190,8 @@ class WhereAmI:
             debug.println(self._debugLevel, "??? parent=%s" % parent.getRole())
             return []
         else:
-            row = table.getRowAtIndex(obj.getIndexInParent())
-
+            index = self._script.getCellIndex(obj)
+            row = table.getRowAtIndex(index)
             for i in range(0, table.nColumns):
                 acc = table.getAccessibleAt(row, i)
                 utterances.append(self._getTableCell(acc))

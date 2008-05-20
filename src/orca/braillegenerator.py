@@ -1254,7 +1254,8 @@ class BrailleGenerator:
 
                     if label == None or len(label) == 0:
                         table = obj.parent.queryTable()
-                        n = table.getColumnAtIndex(obj.getIndexInParent())
+                        index = self._script.getCellIndex(obj)
+                        n = table.getColumnAtIndex(index)
                         accHeader = table.getColumnHeader(n)
                         regions[0].append(braille.Region(" "))
                         label = accHeader.name
@@ -1340,9 +1341,9 @@ class BrailleGenerator:
             savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
             settings.brailleVerbosityLevel = \
                                          settings.VERBOSITY_LEVEL_BRIEF
-
-            row = table.getRowAtIndex(obj.getIndexInParent())
-            column = table.getColumnAtIndex(obj.getIndexInParent())
+            index = self._script.getCellIndex(obj)
+            row = table.getRowAtIndex(index)
+            column = table.getColumnAtIndex(index)
 
             # This is an indication of whether we should speak all the
             # table cells (the user has moved focus up or down a row),
@@ -1687,7 +1688,8 @@ class BrailleGenerator:
         except (NotImplementedError, AttributeError):
             table = None
         if parent and table:
-            row = table.getRowAtIndex(obj.getIndexInParent())
+            index = self._script.getCellIndex(obj)
+            row = table.getRowAtIndex(index)
             if (row >= 0) \
                 and (not obj.getRole() in [pyatspi.ROLE_ROW_HEADER,
                                            pyatspi.ROLE_TABLE_ROW_HEADER]):
@@ -1708,7 +1710,7 @@ class BrailleGenerator:
                     text = desc
                 regions.append(braille.Region(text))
 
-            col = table.getColumnAtIndex(obj.getIndexInParent())
+            col = table.getColumnAtIndex(index)
             if (col >= 0) \
                 and (not obj.getRole() in [pyatspi.ROLE_COLUMN_HEADER,
                                            pyatspi.ROLE_TABLE_COLUMN_HEADER]):

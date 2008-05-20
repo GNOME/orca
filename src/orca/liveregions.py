@@ -485,7 +485,8 @@ class LiveRegionManager:
                 # Note: getRowHeader() fails for most markup.  We will use the
                 # relation when the markup is good (when getRowHeader() works) 
                 # so we won't see this code in those cases.  
-                row = itable.getRowAtIndex(obj.getIndexInParent())
+                index = self._script.getCellIndex(obj)
+                row = itable.getRowAtIndex(index)
                 header = itable.getAccessibleAt(row, 0)
                 # expand the header
                 return [self._script.expandEOCs(header).strip()]

@@ -664,7 +664,8 @@ class Script(default.Script):
             parent = obj.parent
             if parent.getRole() == pyatspi.ROLE_TABLE:
                 parentTable = parent.queryTable()
-                row = parentTable.getRowAtIndex(obj.getIndexInParent())
+                index = self.getCellIndex(obj)
+                row = parentTable.getRowAtIndex(index)
                 utterances = []
                 regions = []
                 for i in range(0, parentTable.nColumns):
@@ -720,9 +721,9 @@ class Script(default.Script):
 
             parent = event.source.parent
             parentTable = parent.queryTable()
-            row = parentTable.getRowAtIndex(event.source.getIndexInParent())
-            column = \
-                parentTable.getColumnAtIndex(event.source.getIndexInParent())
+            index = self.getCellIndex(event.source)
+            row = parentTable.getRowAtIndex(index)
+            column = parentTable.getColumnAtIndex(index)
 
             # If we are on the same row, then just speak/braille the table
             # cell as if settings.readTableCellRow was False.
@@ -1502,10 +1503,10 @@ class Script(default.Script):
                    self.isDesiredFocusedItem(oldLocusOfFocus, rolesList):
                     parent = event.source.parent
                     parentTable = parent.queryTable()
-                    newRow = parentTable.getRowAtIndex( \
-                                  event.source.getIndexInParent())
-                    oldRow = parentTable.getRowAtIndex( \
-                                  oldLocusOfFocus.getIndexInParent())
+                    newIndex = self.getCellIndex(event.source)
+                    newRow = parentTable.getRowAtIndex(newIndex)
+                    oldIndex = self.getCellIndex(oldLocusOfFocus)
+                    oldRow = parentTable.getRowAtIndex(oldIndex)
                     nRows = parentTable.nRows
                     if (newRow != oldRow) and (oldRow != nRows):
                         return

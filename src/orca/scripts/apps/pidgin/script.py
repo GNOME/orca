@@ -902,8 +902,9 @@ class Script(default.Script):
                 return []
 
         nodes = []        
-        row = table.getRowAtIndex(obj.getIndexInParent())
-        col = table.getColumnAtIndex(obj.getIndexInParent() + 1)
+        index = self.getCellIndex(obj)
+        row = table.getRowAtIndex(index)
+        col = table.getColumnAtIndex(index + 1)
         nodeLevel = self.getNodeLevel(obj)
         done = False
 
