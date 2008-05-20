@@ -6007,7 +6007,12 @@ class Script(default.Script):
                 if childIndex >= 0:
                     child = obj[childIndex]
                     childText = self.queryNonEmptyText(child)
-                    if childText:
+                    childRole = child.getRole()
+                    # If the object represented by the EOC at the beginning
+                    # of this line is a section, it is functionally not part
+                    # of this line and should not be included here.
+                    #
+                    if childText and childRole != pyatspi.ROLE_SECTION:
                         noChars = childText.characterCount
                         [cLine, cStart, cEnd] = \
                                childText.getTextAtOffset(noChars - 1, boundary)
@@ -6016,8 +6021,9 @@ class Script(default.Script):
                             start = cStart
                         else:
                             start += 1
-                    elif not child.getRole() in [pyatspi.ROLE_LINK,
-                                                 pyatspi.ROLE_IMAGE]:
+                    elif not childRole in [pyatspi.ROLE_LINK,
+                                           pyatspi.ROLE_IMAGE,
+                                           pyatspi.ROLE_SECTION]:
                         text = None
                         obj = child
                     else:
