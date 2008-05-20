@@ -11,6 +11,14 @@
           Fixed bug #463646 - Orca doesn't announce the presence of 
           unfocused dialogs when an app gains focus.
 
+        * src/orca/scripts/apps/gedit/script.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          Fixed bug #517048 - Orca does not always speak the correct 
+          information when navigating and/or selecting text across 
+          object boundaries in OOo Writer.
+
 2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

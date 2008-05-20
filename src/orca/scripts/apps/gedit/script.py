@@ -291,6 +291,9 @@ class Script(default.Script):
         """
 
         obj = orca_state.locusOfFocus
+        if not obj:
+            return False
+
         rolesList1 = [pyatspi.ROLE_PUSH_BUTTON,
                       pyatspi.ROLE_FILLER,
                       pyatspi.ROLE_FILLER,

@@ -1848,6 +1848,11 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # If the object is losing focus, then just ignore this event.
+        #
+        if event.detail1 == -1:
+            return
+
         if orca_state.lastNonModifierKeyEvent:
             event_string = orca_state.lastNonModifierKeyEvent.event_string
             isShiftKey = orca_state.lastNonModifierKeyEvent.modifiers \
@@ -1921,10 +1926,6 @@ class Script(default.Script):
         if (event_string == "Up" or event_string == "Down") and not isShiftKey:
             speech.stop()
 
-        # Speak a newline, if appropriate.
-        if self.speakNewLine(event.source):
-            speech.speakCharacter("\n", None)
-
         # Speak a blank line, if appropriate.
         if self.speakBlankLine(event.source):
             # Translators: "blank" is a short word to mean the
@@ -1933,63 +1934,6 @@ class Script(default.Script):
             speech.speak(_("blank"), None, False)
 
         default.Script.onCaretMoved(self, event)
-
-    def speakNewLine(self, obj):
-        """Returns True if a newline should be spoken.
-           Otherwise, returns False.
-        """
-
-        # Get the the AccessibleText interface.
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return False
-
-        # Was a left or right-arrow key pressed?
-        if not (orca_state.lastInputEvent and \
-                orca_state.lastInputEvent.__dict__.has_key("event_string")):
-            return False
-
-        lastKey = orca_state.lastNonModifierKeyEvent.event_string
-        if lastKey != "Left" and lastKey != "Right":
-            return False
-
-        # Was a control key pressed?
-        mods = orca_state.lastInputEvent.modifiers
-        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
-
-        # Get the line containing the caret
-        caretOffset = text.caretOffset
-        line = text.getTextAtOffset(caretOffset, \
-            pyatspi.TEXT_BOUNDARY_LINE_START)
-        lineStart = line[1]
-        lineEnd = line[2]
-
-        if isControlKey:  # control-right-arrow or control-left-arrow
-
-            # Get the word containing the caret.
-            word = text.getTextAtOffset(caretOffset, \
-                pyatspi.TEXT_BOUNDARY_WORD_START)
-            wordStart = word[1]
-            wordEnd = word[2]
-
-            if lastKey == "Right":
-                if wordStart == lineStart:
-                    return True
-            else:
-                if wordEnd == lineEnd:
-                    return True
-
-        else:  # right arrow or left arrow
-
-            if lastKey == "Right":
-                if caretOffset == lineStart:
-                    return True
-            else:
-                if caretOffset == lineEnd:
-                    return True
-
-        return False
 
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.

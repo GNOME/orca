@@ -1267,7 +1267,7 @@ class WhereAmI:
 
         return text
 
-    def _getTextSelection(self, obj):
+    def getTextSelection(self, obj):
         """Get the text selection for the given object.
 
         Arguments:
@@ -1284,12 +1284,12 @@ class WhereAmI:
             [startOffset, endOffset] = textObj.getSelection(i)
 
             debug.println(self._debugLevel,
-                "_getTextSelection: selection start=%d, end=%d" % \
+                "getTextSelection: selection start=%d, end=%d" % \
                 (startOffset, endOffset))
 
             selectedText = textObj.getText(startOffset, endOffset)
             debug.println(self._debugLevel,
-                "_getTextSelection: selected text=<%s>" % selectedText)
+                "getTextSelection: selected text=<%s>" % selectedText)
 
             if i > 0:
                 textContents += " "
@@ -1317,7 +1317,7 @@ class WhereAmI:
         text = obj.queryText()
         if text.getNSelections() > 0:
             [textContents, startOffset, endOffset] = \
-                                            self._getTextSelection(obj)
+                                            self.getTextSelection(obj)
 
         if not basicOnly:
             current = obj
@@ -1331,7 +1331,7 @@ class WhereAmI:
                         prevObjText = prevObj.queryText()
                         if prevObjText.getNSelections() > 0:
                             [newTextContents, start, end] = \
-                                         self._getTextSelection(prevObj)
+                                         self.getTextSelection(prevObj)
                             textContents = newTextContents + " " + textContents
                             current = prevObj
                             morePossibleSelections = True
@@ -1353,7 +1353,7 @@ class WhereAmI:
                         nextObjText = nextObj.queryText()
                         if nextObjText.getNSelections() > 0:
                             [newTextContents, start, end] = \
-                                         self._getTextSelection(nextObj)
+                                         self.getTextSelection(nextObj)
                             textContents += " " + newTextContents
                             current = nextObj
                             morePossibleSelections = True

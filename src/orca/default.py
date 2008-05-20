@@ -3133,8 +3133,81 @@ class Script(script.Script):
         self.pointOfReference['oldName'] = event.source.name
         orca.visualAppearanceChanged(event, event.source)
 
-    def _presentTextAtNewCaretPosition(self, event):
+    def _speakContiguousSelection(self, obj, relationship):
+        """Check if the contiguous object has a selection. If it does, then
+        speak it. If the user pressed Shift-Down, then look for an object 
+        with a RELATION_FLOWS_FROM relationship. If they pressed Shift-Up,
+        then look for a RELATION_FLOWS_TO relationship.
 
+        Arguments:
+        - the current text object
+        - the flows relationship (RELATION_FLOWS_FROM or RELATION_FLOWS_TO).
+
+        Returns an indication of whether anything was spoken.
+        """
+
+        lastPos = self.pointOfReference.get("lastCursorPosition")
+
+        # Reasons to NOT speak contiguous selections:
+        #
+        # 1. The new cursor position is in the same object as the old
+        #    cursor position. (The change in selection is all within
+        #    the current object.)
+        # 2. If we are selecting up line by line from the beginning of
+        #    the line and have just crossed into a new object, the change
+        #    in selection is the previous line (which has just become
+        #    selected).  Nothing has changed on the line we came from.
+        #
+        if self.isSameObject(lastPos[0], obj) \
+           or relationship == pyatspi.RELATION_FLOWS_TO and lastPos[1] == 0:
+            return False
+
+        selSpoken = False
+        current = obj
+        for relation in current.getRelationSet():
+            if relation.getRelationType() == relationship:
+                obj = relation.getTarget(0)
+                objText = obj.queryText()
+
+                # When selecting down across paragraph boundaries, what
+                # we've (un)selected on (what is now) the previous line
+                # is from wherever the cursor used to be to the end of 
+                # the line.
+                #
+                if relationship == pyatspi.RELATION_FLOWS_FROM:
+                    start, end = lastPos[1], objText.characterCount
+
+                # When selecting up across paragraph boundaries, what
+                # we've (un)selected on (what is now) the next line is
+                # from the beginning of the line to wherever the cursor
+                # used to be.
+                #
+                else:
+                    start, end = 0, lastPos[1]
+
+                if objText.getNSelections() > 0:
+                    [textContents, startOffset, endOffset] = \
+                        self.whereAmI.getTextSelection(obj)
+
+                    # Now that we have the full selection, adjust based
+                    # on the relation type. (see above comment)
+                    #
+                    startOffset = start or startOffset
+                    endOffset = end or endOffset
+                    self.sayPhrase(obj, startOffset, endOffset)
+                    selSpoken = True
+                else:
+                    # We don't have selections in this object. But we're
+                    # here, which means that something is selected in a
+                    # neighboring object and the text in this object must
+                    # have just become unselected and needs to be spoken.
+                    #
+                    self.sayPhrase(obj, start, end)
+                    selSpoken = True
+
+        return selSpoken
+
+    def _presentTextAtNewCaretPosition(self, event):
         obj = event.source
         text = obj.queryText()
 
@@ -3179,7 +3252,8 @@ class Script(script.Script):
         mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
-        hasLastPos = self.pointOfReference.has_key("lastCursorPosition")
+        lastPos = self.pointOfReference.get("lastCursorPosition")
+        hasLastPos = (lastPos != None)
 
         if (keyString == "Up") or (keyString == "Down"):
             # If the user has typed Shift-Up or Shift-Down, then we want
@@ -3188,8 +3262,39 @@ class Script(script.Script):
             # currently positioned.
             #
             if hasLastPos and isShiftKey and not isControlKey:
-                [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
-                self.sayPhrase(obj, startOffset, endOffset)
+                if keyString == "Up":
+                    # If we have just crossed a paragraph boundary with
+                    # Shift+Up, what we've selected in this object starts
+                    # with the current offset and goes to the end of the
+                    # paragraph.
+                    # 
+                    if not self.isSameObject(lastPos[0], obj):
+                        [startOffset, endOffset] = \
+                            text.caretOffset, text.characterCount
+                    else:
+                        [startOffset, endOffset] \
+                                             = self.getOffsetsForPhrase(obj)
+                    self.sayPhrase(obj, startOffset, endOffset)
+                    selSpoken = self._speakContiguousSelection(obj,
+                                                   pyatspi.RELATION_FLOWS_TO)
+                else:
+                    selSpoken = self._speakContiguousSelection(obj,
+                                                 pyatspi.RELATION_FLOWS_FROM)
+
+                    # If we have just crossed a paragraph boundary with
+                    # Shift+Down, what we've selected in this object starts
+                    # with the beginning of the paragraph and goes to the
+                    # current offset.
+                    #
+                    if not self.isSameObject(lastPos[0], obj):
+                        [startOffset, endOffset] = 0, text.caretOffset
+                    else:
+                        [startOffset, endOffset] \
+                                             = self.getOffsetsForPhrase(obj)
+
+                    if startOffset != endOffset:
+                        self.sayPhrase(obj, startOffset, endOffset)
+
             else:
                 [startOffset, endOffset] = self.getOffsetsForLine(obj)
                 self.sayLine(obj)
@@ -3201,12 +3306,17 @@ class Script(script.Script):
             # or Control-Right, we speak the current word otherwise we speak
             # the character at the text cursor position.
             #
-            if hasLastPos and isShiftKey and isControlKey:
+            inNewObj = hasLastPos and not self.isSameObject(lastPos[0], obj)
+
+            if hasLastPos and not inNewObj and isShiftKey and isControlKey:
                 [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
                 self.sayPhrase(obj, startOffset, endOffset)
-            elif isControlKey:
+            elif isControlKey and not inNewObj:
                 [startOffset, endOffset] = self.getOffsetsForWord(obj)
-                self.sayWord(obj)
+                if startOffset == endOffset:
+                    self.sayCharacter(obj)
+                else:
+                    self.sayWord(obj)
             else:
                 [startOffset, endOffset] = self.getOffsetsForChar(obj)
                 self.sayCharacter(obj)
@@ -3262,7 +3372,7 @@ class Script(script.Script):
             startOffset = text.caretOffset
             endOffset = text.caretOffset
 
-        self._saveLastCursorPosition(text)
+        self._saveLastCursorPosition(obj, text.caretOffset)
         self._saveSpokenTextRange(startOffset, endOffset)
 
     def onCaretMoved(self, event):
@@ -3686,7 +3796,8 @@ class Script(script.Script):
         """
 
         text = obj.queryText()
-        startOffset = self.pointOfReference["lastCursorPosition"]
+        lastPos = self.pointOfReference.get("lastCursorPosition")
+        startOffset = lastPos[1]
         endOffset = text.caretOffset
 
         # Swap values if in wrong order (StarOffice is fussy about that).
@@ -3750,13 +3861,37 @@ class Script(script.Script):
         - event: the Event
         """
 
-        startOffset = 0
-        endOffset = 0
-        if "spokenTextRange" in self.pointOfReference:
-            startOffset = self.pointOfReference["spokenTextRange"][0]
-            endOffset = self.pointOfReference["spokenTextRange"][1]
-        self.speakTextSelectionState(event.source, startOffset, endOffset)
+        obj = event.source
+        spokenRange = self.pointOfReference.get("spokenTextRange") or [0, 0]
+        startOffset, endOffset = spokenRange
 
+        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            # If we are selecting text across object boundaries with
+            # Shift+Down and doing so from the very beginning of the
+            # line, we will get an event telling us that the selection
+            # has changed for the line we just left.  Because nothing
+            # is selected on the line which contains the caret, we won't
+            # speak "selected."  So check to see if the event is for the
+            # object we just left and be sure that we don't have a spoken
+            # range (otherwise, we'll say selected twice when we are
+            # selecting across boundaries from the middle of the line).
+            #
+            lastPos = self.pointOfReference.get("lastCursorPosition")
+            if not lastPos or spokenRange != [0, 0]:
+                return
+
+            prevObj = None
+            for relation in lastPos[0].getRelationSet():
+                if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
+                    prevObj = relation.getTarget(0)
+
+            if not self.isSameObject(prevObj, obj):
+                return
+
+            endOffset = obj.queryText().characterCount
+
+        self.speakTextSelectionState(obj, startOffset, endOffset)    
+            
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
 
@@ -6810,14 +6945,15 @@ class Script(script.Script):
 
         self.pointOfReference["spokenTextRange"] = [startOffset, endOffset]
 
-    def _saveLastCursorPosition(self, text):
+    def _saveLastCursorPosition(self, obj, caretOffset):
         """Save away the current text cursor position for next time.
 
         Arguments:
-        - text: the text object.
+        - obj: the current accessible
+        - caretOffset: the cursor position within this object
         """
 
-        self.pointOfReference["lastCursorPosition"] = text.caretOffset
+        self.pointOfReference["lastCursorPosition"] = [obj, caretOffset]
 
     def _saveLastTextSelections(self, text):
         """Save away the list of text selections for next time.
@@ -6848,8 +6984,13 @@ class Script(script.Script):
 
         # Handle special cases.
         #
-        # Shift-Page-Down:    speak "page <state> from cursor position".
-        # Shift-Page-Up:      speak "page <state> to cursor position".
+        # Control-Shift-Page_Down:
+        #          speak "line selected to end from previous cursor position".
+        # Control-Shift-Page_Up:
+        #        speak "line selected from start to previous cursor position".
+        #
+        # Shift-Page_Down:    speak "page <state> from cursor position".
+        # Shift-Page_Up:      speak "page <state> to cursor position".
         #
         # Control-Shift-Down: speak "line <state> down from cursor position".
         # Control-Shift-Up:   speak "line <state> up from cursor position".
@@ -6874,7 +7015,23 @@ class Script(script.Script):
         selectedText = (text.getNSelections() != 0)
 
         specialCaseFound = False
-        if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
+        if (eventStr == "Page_Down") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
+            line = _("line selected to end from previous cursor position")
+
+        elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
+            line = _("line selected from start to previous cursor position")
+
+        elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
             specialCaseFound = True
             if selectedText:
                 # Translators: when the user selects (highlights) text in
@@ -6977,6 +7134,8 @@ class Script(script.Script):
         if specialCaseFound:
             speech.speak(line, None, False)
             return
+        elif startOffset == endOffset:
+            return
 
         try:
             # If we are selecting by word, then there possibly will be
@@ -7007,6 +7166,7 @@ class Script(script.Script):
                         startOffset += 1
                     else:
                         break
+
         except:
             debug.printException(debug.LEVEL_FINEST)
 
@@ -7017,23 +7177,14 @@ class Script(script.Script):
             # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
             #
             speech.speak(Q_("text|selected"), None, False)
-        else:
-            if self.pointOfReference.has_key("lastSelections"):
-                for i in xrange(len(self.pointOfReference["lastSelections"])):
-                    startSelOffset = \
-                        self.pointOfReference["lastSelections"][0][0]
-                    endSelOffset = \
-                        self.pointOfReference["lastSelections"][0][1]
-                    if (startOffset >= startSelOffset) \
-                        and (endOffset <= endSelOffset):
-                        # Translators: when the user unselects
-                        # (unhighlights) text in a document, Orca lets
-                        # them know this.
-                        #
-                        # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                        #
-                        speech.speak(Q_("text|unselected"), None, False)
-                        break
+        elif len(text.getText(startOffset, endOffset)):
+            # Translators: when the user unselects
+            # (unhighlights) text in a document, Orca lets
+            # them know this.
+            #
+            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+            #
+            speech.speak(Q_("text|unselected"), None, False)
 
         self._saveLastTextSelections(text)
 
