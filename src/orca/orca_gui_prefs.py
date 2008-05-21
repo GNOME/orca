@@ -115,6 +115,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.defaultVoice = None
         self.defKeyBindings = None
         self.disableKeyGrabPref = None
+        self.enableAutostart = None
         self.getTextAttributesView = None
         self.hyperlinkVoice = None
         self.initializingSpeech = None
@@ -1841,6 +1842,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         self.enableLiveUpdating = liveUpdating
 
+        self.enableAutostart = settings.isOrcaAutostarted()
+        self.get_widget("autostartOrcaCheckbutton").set_active( \
+                         self.enableAutostart)
+
     def getComboBoxIndex(self, combobox, searchStr, col=0):
         """ For each of the entries in the given combo box, look for searchStr.
             Return the index of the entry if searchStr is found.
@@ -2789,6 +2794,20 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableMouseReview"] = enable
+
+    def autostartOrcaChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           autoStartOrcaCheckbutton GtkCheckButton widget.
+           The user has [un]checked the 'Start Orca when you login'
+           checkbox. Remember the new setting so that it can be used
+           to create or remove ~/.config/autostart/orca.desktop, if 
+           the user presses the Apply or OK button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.enableAutostart = widget.get_active()
 
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames
@@ -3833,6 +3852,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             }
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
+
+        status = settings.setOrcaAutostart(self.enableAutostart)
+        self.get_widget("autostartOrcaCheckbutton").set_active(status)
 
         self.writeUserPreferences()
 

@@ -1,3 +1,11 @@
+2008-05-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #448817 - Being able to configure autostart from 
+          orca's settings.
+
 2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

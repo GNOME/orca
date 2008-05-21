@@ -29,6 +29,9 @@ __license__   = "LGPL"
 
 import os
 import re
+import shutil
+
+import platform
 
 screenWidth = 640
 screenHeight = 480
@@ -737,6 +740,54 @@ def setAccessibilityEnabled(enable):
                                     enable)
     except:
         return False
+
+# Obtain/set information regarding whether Orca is autostarted for this 
+# user at login time.
+#
+def isOrcaAutostarted():
+    """Return an indication of whether Orca autostart at login time is enabled.
+    """
+
+    userDesktopFile = os.path.join(os.environ["HOME"], ".config", \
+                                   "autostart", "orca.desktop")
+    return os.path.exists(userDesktopFile)
+
+def setOrcaAutostart(enable):
+    """Enable or disable the autostart of Orca at login time.
+
+    Arguments:
+    - enable: if True, whether Orca autostart at login time is enabled.
+
+    Returns an indication of whether the operation was successful.
+    """
+
+    status = True
+    systemDesktopFile = os.path.join(platform.prefix, platform.datadirname, \
+                                     "applications", "orca.desktop")
+    autostartDir = os.path.join(os.environ["HOME"], ".config", "autostart")
+    userDesktopFile = os.path.join(os.environ["HOME"], ".config", \
+                                   "autostart", "orca.desktop")
+
+    try:
+        # If the user wants to enable Orca autostart, then copy the
+        # orca.desktop file from /usr/share/applications to
+        # ~/.config/autostart directory (creating the autostart directory
+        # if neccessary).
+        #
+        # If the user wants to disable this feature, then just remove 
+        # ~/.config/autostart/orca.desktop (if it exists).
+        #
+        if enable:
+            try:
+                os.chdir(autostartDir)
+            except:
+                os.mkdir(autostartDir)
+            shutil.copy(systemDesktopFile, userDesktopFile)
+        else:
+            os.remove(userDesktopFile)
+    except:
+        status = False
+    return status
 
 # Obtain/set information regarding whether the gksu keyboard grab is enabled
 # or not.
