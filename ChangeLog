@@ -6,6 +6,13 @@
           Fix for bug #448817 - Being able to configure autostart from 
           orca's settings.
 
+        * src/orca/orca_gui_prefs.py:
+          Further tweak for bug #448817. If we are pressing Apply or OK 
+          from an application preferences dialog (rather than the general 
+          Orca preferences), then there won't be a general pane, so we 
+          won't be able to adjust the login checkbox. Just catch the
+          failure and carry on.
+
 2008-05-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

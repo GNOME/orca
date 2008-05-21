@@ -3853,8 +3853,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
 
-        status = settings.setOrcaAutostart(self.enableAutostart)
-        self.get_widget("autostartOrcaCheckbutton").set_active(status)
+        try:
+            status = settings.setOrcaAutostart(self.enableAutostart)
+            self.get_widget("autostartOrcaCheckbutton").set_active(status)
+        except:
+            # If we are pressing Apply or OK from an application preferences
+            # dialog (rather than the general Orca preferences), then there
+            # won't be a general pane, so we won't be able to adjust this
+            # checkbox.
+            #
+            pass
 
         self.writeUserPreferences()
 
