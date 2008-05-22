@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-19 01:59+0100\n"
+"POT-Creation-Date: 2008-05-22 23:41+0100\n"
 "PO-Revision-Date: 2007-10-24 20:34+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team:  <doc@arabeyes.org>\n"
@@ -176,14 +176,14 @@ msgid "Orca Preferences for %s"
 msgstr "تفضيلات أوركا لـ %s"
 
 #: ../src/orca/app_gui_prefs.py:189 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2059 ../src/orca/orca_gui_prefs.py:2160
+#: ../src/orca/orca_gui_prefs.py:2064 ../src/orca/orca_gui_prefs.py:2165
 msgid "Orca"
 msgstr " أوركا"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2166
+#: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2171
 #, fuzzy
 msgid "Unbound"
 msgstr "جنيه استرليني"
@@ -262,20 +262,33 @@ msgstr "لم يمكن حفظ علامات المواقع"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:190 ../src/orca/speechgenerator.py:188
+#: ../src/orca/braillegenerator.py:191 ../src/orca/speechgenerator.py:188
 msgid "grayed"
 msgstr "رمادي"
+
+#. Translators: this tells the user how many unfocused
+#. alert and dialog windows plus the total number of
+#. windows that this application has.
+#.
+#: ../src/orca/braillegenerator.py:560
+#, fuzzy, python-format
+msgid "(%d dialog)"
+msgid_plural "(%d dialogs)"
+msgstr[0] "حوار"
+msgstr[1] "حوار"
+msgstr[2] "حوار"
+msgstr[3] "حوار"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:665 ../src/orca/braillegenerator.py:1272
+#: ../src/orca/braillegenerator.py:697 ../src/orca/braillegenerator.py:1305
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:91
-#: ../src/orca/scripts/apps/pidgin/where_am_i.py:145
+#: ../src/orca/scripts/apps/pidgin/where_am_i.py:144
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge.py:73
-#: ../src/orca/speechgenerator.py:799 ../src/orca/speechgenerator.py:1390
-#: ../src/orca/where_am_I.py:601 ../src/orca/where_am_I.py:662
+#: ../src/orca/speechgenerator.py:819 ../src/orca/speechgenerator.py:1410
+#: ../src/orca/where_am_I.py:602 ../src/orca/where_am_I.py:663
 msgid "expanded"
 msgstr "ممدد"
 
@@ -283,19 +296,19 @@ msgstr "ممدد"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:671 ../src/orca/braillegenerator.py:1278
+#: ../src/orca/braillegenerator.py:703 ../src/orca/braillegenerator.py:1311
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:110
-#: ../src/orca/scripts/apps/pidgin/where_am_i.py:151
+#: ../src/orca/scripts/apps/pidgin/where_am_i.py:150
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge.py:80
-#: ../src/orca/speechgenerator.py:805 ../src/orca/speechgenerator.py:1409
-#: ../src/orca/where_am_I.py:607 ../src/orca/where_am_I.py:668
+#: ../src/orca/speechgenerator.py:825 ../src/orca/speechgenerator.py:1429
+#: ../src/orca/where_am_I.py:608 ../src/orca/where_am_I.py:669
 msgid "collapsed"
 msgstr "منهار"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:686
+#: ../src/orca/braillegenerator.py:718
 #, python-format
 msgid "LEVEL %d"
 msgstr "المستوى %d"
@@ -304,13 +317,13 @@ msgstr "المستوى %d"
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/braillegenerator.py:1172 ../src/orca/braillegenerator.py:1213
+#: ../src/orca/braillegenerator.py:1204 ../src/orca/braillegenerator.py:1245
 #: ../src/orca/flat_review.py:1068
-#: ../src/orca/scripts/apps/evolution/script.py:817
+#: ../src/orca/scripts/apps/evolution/script.py:818
 #: ../src/orca/scripts/apps/evolution/where_am_i.py:61
-#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1354
-#: ../src/orca/speechgenerator.py:1485 ../src/orca/where_am_I.py:1217
-#: ../src/orca/where_am_I.py:1248
+#: ../src/orca/speechgenerator.py:1334 ../src/orca/speechgenerator.py:1374
+#: ../src/orca/speechgenerator.py:1506 ../src/orca/where_am_I.py:1218
+#: ../src/orca/where_am_I.py:1249
 #, fuzzy
 msgid "toggle"
 msgstr "زر التحول"
@@ -318,7 +331,7 @@ msgstr "زر التحول"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/braillegenerator.py:1360
+#: ../src/orca/braillegenerator.py:1393
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "مستوى الشجرة %d"
@@ -384,8 +397,8 @@ msgstr "موقع المؤشّر"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6261
-#: ../src/orca/default.py:6268 ../src/orca/keynames.py:105
+#: ../src/orca/chnames.py:39 ../src/orca/default.py:6438
+#: ../src/orca/default.py:6445 ../src/orca/keynames.py:105
 msgid "space"
 msgstr "فراغ"
 
@@ -1441,7 +1454,7 @@ msgstr "أداء نقر الزر الأيمن على عنصر المراجعة �
 #.
 #: ../src/orca/default.py:174 ../src/orca/scripts/apps/acroread.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:156
-#: ../src/orca/scripts/toolkits/Gecko/script.py:749
+#: ../src/orca/scripts/toolkits/Gecko/script.py:751
 msgid "Speaks entire document."
 msgstr "عرض كامل للمستند"
 
@@ -2167,16 +2180,16 @@ msgstr ""
 #. user has navigated to an empty line.
 #.
 #: ../src/orca/default.py:2128 ../src/orca/default.py:2361
-#: ../src/orca/default.py:4455 ../src/orca/default.py:4597
-#: ../src/orca/default.py:4605 ../src/orca/default.py:4712
-#: ../src/orca/default.py:4720
+#: ../src/orca/default.py:4621 ../src/orca/default.py:4763
+#: ../src/orca/default.py:4771 ../src/orca/default.py:4878
+#: ../src/orca/default.py:4886
 #: ../src/orca/scripts/apps/evolution/script.py:534
-#: ../src/orca/scripts/apps/soffice/script.py:1915
-#: ../src/orca/scripts/apps/soffice/script.py:1933
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:262
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6347
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8251
-#: ../src/orca/where_am_I.py:1494
+#: ../src/orca/scripts/apps/soffice/script.py:1925
+#: ../src/orca/scripts/apps/soffice/script.py:1939
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:263
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6401
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8305
+#: ../src/orca/where_am_I.py:1495
 msgid "blank"
 msgstr "فارغ"
 
@@ -2208,7 +2221,7 @@ msgstr[3] "%d علامة جدولة"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:2538
+#: ../src/orca/default.py:2572
 #, python-format
 msgid "Progress bar %d."
 msgstr "عمود التقدم %d."
@@ -2222,8 +2235,8 @@ msgstr "عمود التقدم %d."
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2546 ../src/orca/flat_review.py:444
-#: ../src/orca/speechgenerator.py:1006
+#: ../src/orca/default.py:2580 ../src/orca/flat_review.py:444
+#: ../src/orca/speechgenerator.py:1026
 #, python-format
 msgid "%d percent."
 msgstr "%d نسبة مئوية"
@@ -2231,9 +2244,9 @@ msgstr "%d نسبة مئوية"
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2760
-#: ../src/orca/scripts/apps/pidgin/where_am_i.py:159
-#: ../src/orca/where_am_I.py:615 ../src/orca/where_am_I.py:676
+#: ../src/orca/default.py:2792
+#: ../src/orca/scripts/apps/pidgin/where_am_i.py:158
+#: ../src/orca/where_am_I.py:616 ../src/orca/where_am_I.py:677
 #, python-format
 msgid "tree level %d"
 msgstr "مستوى الشجرة %d"
@@ -2243,7 +2256,7 @@ msgstr "مستوى الشجرة %d"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:2799
+#: ../src/orca/default.py:2831
 #, fuzzy
 msgid "tablecell| not selected"
 msgstr "غير منتقى"
@@ -2259,11 +2272,11 @@ msgstr "غير منتقى"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3573 ../src/orca/default.py:3886
-#: ../src/orca/default.py:6985
-#: ../src/orca/scripts/apps/soffice/where_am_i.py:158
+#: ../src/orca/default.py:3714 ../src/orca/default.py:4052
+#: ../src/orca/default.py:7187
+#: ../src/orca/scripts/apps/soffice/where_am_i.py:159
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:505
-#: ../src/orca/where_am_I.py:876
+#: ../src/orca/where_am_I.py:877
 msgid "text|selected"
 msgstr "منتقى"
 
@@ -2279,7 +2292,7 @@ msgstr "منتقى"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3581 ../src/orca/default.py:7001
+#: ../src/orca/default.py:3722 ../src/orca/default.py:7195
 msgid "text|unselected"
 msgstr "غير منتقى"
 
@@ -2287,7 +2300,7 @@ msgstr "غير منتقى"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3943
+#: ../src/orca/default.py:4109
 msgid "Speak row"
 msgstr "انطق سطر"
 
@@ -2295,13 +2308,13 @@ msgstr "انطق سطر"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:3949
+#: ../src/orca/default.py:4115
 msgid "Speak cell"
 msgstr "انطق خلية"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:3999 ../src/orca/where_am_I.py:1548
+#: ../src/orca/default.py:4165 ../src/orca/where_am_I.py:1549
 msgid "bold"
 msgstr "سميك"
 
@@ -2312,7 +2325,7 @@ msgstr "سميك"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:4016
+#: ../src/orca/default.py:4182
 #, python-format
 msgid "%s %s pixel"
 msgid_plural "%s %s pixels"
@@ -2329,10 +2342,10 @@ msgstr[3] "%s %s بكسل"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:4093 ../src/orca/default.py:5833
+#: ../src/orca/default.py:4259 ../src/orca/default.py:5999
 #: ../src/orca/rolenames.py:604
-#: ../src/orca/scripts/apps/soffice/script.py:1005
-#: ../src/orca/where_am_I.py:1570
+#: ../src/orca/scripts/apps/soffice/script.py:1011
+#: ../src/orca/where_am_I.py:1571
 msgid "link"
 msgstr "وصلة"
 
@@ -2344,7 +2357,7 @@ msgstr "وصلة"
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:4145
+#: ../src/orca/default.py:4311
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -2359,14 +2372,14 @@ msgstr "الدخول إلى نمط التعلم. اضغط أي زر لسماع �
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:4157
+#: ../src/orca/default.py:4323
 msgid "Learn mode.  Press escape to exit."
 msgstr "نسق التعلم. اضغط  ESC للخروج."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:4460 ../src/orca/default.py:4610
+#: ../src/orca/default.py:4626 ../src/orca/default.py:4776
 msgid "white space"
 msgstr "فراغ"
 
@@ -2376,7 +2389,7 @@ msgstr "فراغ"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:4843
+#: ../src/orca/default.py:5009
 msgid "string not found"
 msgstr "غير قادر على العثور على العبارة"
 
@@ -2385,12 +2398,12 @@ msgstr "غير قادر على العثور على العبارة"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:5646
+#: ../src/orca/default.py:5812
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "كلمة مهجأة خاطئا:%s"
 
-#: ../src/orca/default.py:5654
+#: ../src/orca/default.py:5820
 #, python-format
 msgid "Context is %s"
 msgstr "السياق هو %s"
@@ -2400,7 +2413,7 @@ msgstr "السياق هو %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:5791
+#: ../src/orca/default.py:5957
 #, python-format
 msgid "%d %s character"
 msgid_plural "%d %s characters"
@@ -2413,14 +2426,32 @@ msgstr[3] " %d %s محرف"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6850
+#: ../src/orca/default.py:7032
+#, fuzzy
+msgid "line selected to end from previous cursor position"
+msgstr "مستند مختار تحت مكان المؤشّر."
+
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca will speak information about what they
+#. have selected.
+#.
+#: ../src/orca/default.py:7040
+#, fuzzy
+msgid "line selected from start to previous cursor position"
+msgstr "مستند مختار فوق مكان المؤشّر."
+
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca will speak information about what they
+#. have selected.
+#.
+#: ../src/orca/default.py:7049
 msgid "page selected from cursor position"
 msgstr "صفحة مختارة من مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6855
+#: ../src/orca/default.py:7054
 #, fuzzy
 msgid "page unselected from cursor position"
 msgstr "صفحة مختارة من مكان المؤشّر."
@@ -2429,14 +2460,14 @@ msgstr "صفحة مختارة من مكان المؤشّر."
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6864
+#: ../src/orca/default.py:7063
 msgid "page selected to cursor position"
 msgstr "صفحة مختارة إلى مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6869
+#: ../src/orca/default.py:7068
 #, fuzzy
 msgid "page unselected to cursor position"
 msgstr "صفحة مختارة إلى مكان المؤشّر."
@@ -2445,14 +2476,14 @@ msgstr "صفحة مختارة إلى مكان المؤشّر."
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6878
+#: ../src/orca/default.py:7077
 msgid "line selected down from cursor position"
 msgstr "مستند مختار تحت مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6883
+#: ../src/orca/default.py:7082
 #, fuzzy
 msgid "line unselected down from cursor position"
 msgstr "مستند مختار تحت مكان المؤشّر."
@@ -2461,14 +2492,14 @@ msgstr "مستند مختار تحت مكان المؤشّر."
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6892
+#: ../src/orca/default.py:7091
 msgid "line selected up from cursor position"
 msgstr "مستند مختار فوق مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6897
+#: ../src/orca/default.py:7096
 #, fuzzy
 msgid "line unselected up from cursor position"
 msgstr "مستند مختار فوق مكان المؤشّر."
@@ -2477,14 +2508,14 @@ msgstr "مستند مختار فوق مكان المؤشّر."
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6906
+#: ../src/orca/default.py:7105
 msgid "document selected to cursor position"
 msgstr "مستند مختار إلى مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6911
+#: ../src/orca/default.py:7110
 #, fuzzy
 msgid "document unselected to cursor position"
 msgstr "مستند مختار إلى مكان المؤشّر."
@@ -2493,14 +2524,14 @@ msgstr "مستند مختار إلى مكان المؤشّر."
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:6920
+#: ../src/orca/default.py:7119
 msgid "document selected from cursor position"
 msgstr "مستند مختار من مكان المؤشّر."
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:6925
+#: ../src/orca/default.py:7124
 #, fuzzy
 msgid "document unselected from cursor position"
 msgstr "مستند مختار من مكان المؤشّر."
@@ -2508,7 +2539,7 @@ msgstr "مستند مختار من مكان المؤشّر."
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:6941
+#: ../src/orca/default.py:7140
 msgid "entire document selected"
 msgstr "كامل المستند"
 
@@ -2551,7 +2582,7 @@ msgstr "اللف للأعلى"
 #: ../src/orca/flat_review.py:348
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:582
 #: ../src/orca/speechgenerator.py:400 ../src/orca/where_am_I.py:378
-#: ../src/orca/where_am_I.py:1258
+#: ../src/orca/where_am_I.py:1259
 #, fuzzy
 msgid "partially checked"
 msgstr "غير مؤكّد"
@@ -2564,8 +2595,8 @@ msgstr "غير مؤكّد"
 #.
 #: ../src/orca/flat_review.py:352
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:586
-#: ../src/orca/speechgenerator.py:404 ../src/orca/speechgenerator.py:884
-#: ../src/orca/where_am_I.py:382 ../src/orca/where_am_I.py:1262
+#: ../src/orca/speechgenerator.py:404 ../src/orca/speechgenerator.py:904
+#: ../src/orca/where_am_I.py:382 ../src/orca/where_am_I.py:1263
 msgid "checked"
 msgstr "مؤكّد"
 
@@ -2574,7 +2605,7 @@ msgstr "مؤكّد"
 #: ../src/orca/flat_review.py:356
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:590
 #: ../src/orca/speechgenerator.py:408 ../src/orca/where_am_I.py:386
-#: ../src/orca/where_am_I.py:1266
+#: ../src/orca/where_am_I.py:1267
 msgid "not checked"
 msgstr "غير مؤكّد"
 
@@ -2583,7 +2614,7 @@ msgstr "غير مؤكّد"
 #: ../src/orca/flat_review.py:363
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 #: ../src/orca/scripts/apps/planner/speech_generator.py:71
-#: ../src/orca/speechgenerator.py:1612 ../src/orca/where_am_I.py:790
+#: ../src/orca/speechgenerator.py:1633 ../src/orca/where_am_I.py:791
 msgid "pressed"
 msgstr "مضغوط"
 
@@ -2592,7 +2623,7 @@ msgstr "مضغوط"
 #: ../src/orca/flat_review.py:367
 #: ../src/orca/scripts/apps/planner/speech_generator.py:65
 #: ../src/orca/scripts/apps/planner/speech_generator.py:73
-#: ../src/orca/speechgenerator.py:1616 ../src/orca/where_am_I.py:794
+#: ../src/orca/speechgenerator.py:1637 ../src/orca/where_am_I.py:795
 msgid "not pressed"
 msgstr "غير مضغوط"
 
@@ -2603,7 +2634,7 @@ msgstr "غير مضغوط"
 #.
 #: ../src/orca/flat_review.py:377
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:524
-#: ../src/orca/speechgenerator.py:1065 ../src/orca/where_am_I.py:211
+#: ../src/orca/speechgenerator.py:1085 ../src/orca/where_am_I.py:211
 msgid "radiobutton|selected"
 msgstr "منتقى"
 
@@ -2614,7 +2645,7 @@ msgstr "منتقى"
 #.
 #: ../src/orca/flat_review.py:384
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:531
-#: ../src/orca/speechgenerator.py:1072 ../src/orca/where_am_I.py:218
+#: ../src/orca/speechgenerator.py:1092 ../src/orca/where_am_I.py:218
 msgid "radiobutton|not selected"
 msgstr "غير منتقى"
 
@@ -2965,8 +2996,8 @@ msgstr "مكبر"
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1701 ../src/orca/orca_gui_prefs.py:1679
-#: ../src/orca/orca_gui_prefs.py:1705
+#: ../src/orca/mag.py:1701 ../src/orca/orca_gui_prefs.py:1680
+#: ../src/orca/orca_gui_prefs.py:1706
 #, fuzzy
 msgid "Full Screen"
 msgstr "%s شاشة"
@@ -2981,28 +3012,28 @@ msgstr "الكلام غير متوفّر"
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1710 ../src/orca/orca_gui_prefs.py:1683
+#: ../src/orca/mag.py:1710 ../src/orca/orca_gui_prefs.py:1684
 #, fuzzy
 msgid "Top Half"
 msgstr "أعلى اليسار"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1714 ../src/orca/orca_gui_prefs.py:1687
+#: ../src/orca/mag.py:1714 ../src/orca/orca_gui_prefs.py:1688
 #, fuzzy
 msgid "Bottom Half"
 msgstr "اﻷ_سفل"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1718 ../src/orca/orca_gui_prefs.py:1691
+#: ../src/orca/mag.py:1718 ../src/orca/orca_gui_prefs.py:1692
 #, fuzzy
 msgid "Left Half"
 msgstr "زر alt اليساري"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1722 ../src/orca/orca_gui_prefs.py:1695
+#: ../src/orca/mag.py:1722 ../src/orca/orca_gui_prefs.py:1696
 #, fuzzy
 msgid "Right Half"
 msgstr "زر alt اليميني"
@@ -3010,7 +3041,7 @@ msgstr "زر alt اليميني"
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1727 ../src/orca/orca_gui_prefs.py:1700
+#: ../src/orca/mag.py:1727 ../src/orca/orca_gui_prefs.py:1701
 #, fuzzy
 msgid "Custom"
 msgstr "_حجم مخصّص"
@@ -3083,7 +3114,7 @@ msgstr "لا وجود لنوادل.\n"
 #.
 #: ../src/orca/orca_console_prefs.py:196
 msgid "Select desired speech server."
-msgstr "اختر خادم الصوت."
+msgstr "اختر خادوم الصوت."
 
 #. Translators: this means the speech server (speech synthesis
 #. engine) is not working properly and no voices (e.g., male,
@@ -3196,11 +3227,11 @@ msgstr "تفعيل البرايل؟ ادخل y أو n: "
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "تفعيل ملاحظ البرايل؟ ادخل y أو n: "
 
-#: ../src/orca/orca_console_prefs.py:466 ../src/orca/orca_gui_prefs.py:452
+#: ../src/orca/orca_console_prefs.py:466 ../src/orca/orca_gui_prefs.py:453
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "تم تفعيل الوصولية لجنوم"
 
-#: ../src/orca/orca_console_prefs.py:472 ../src/orca/orca_gui_prefs.py:454
+#: ../src/orca/orca_console_prefs.py:472 ../src/orca/orca_gui_prefs.py:455
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "ستحتاج للخروج من النظام ليأخذ التغيير أثره."
 
@@ -3239,8 +3270,8 @@ msgstr "أغلق"
 #. to do so in this case.
 #.
 #: ../src/orca/orca-find.glade.h:4
-#: ../src/orca/scripts/apps/gedit/script.py:322
-#: ../src/orca/scripts/apps/gedit/script.py:324
+#: ../src/orca/scripts/apps/gedit/script.py:318
+#: ../src/orca/scripts/apps/gedit/script.py:320
 #: ../src/orca/scripts/apps/gnome-search-tool.py:165
 msgid "Find"
 msgstr "اجد"
@@ -3302,9 +3333,9 @@ msgstr "موسَّط"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:80 ../src/orca/orca_gui_prefs.py:4017
-#: ../src/orca/orca_gui_prefs.py:4046 ../src/orca/orca_gui_prefs.py:4219
-#: ../src/orca/orca_gui_prefs.py:4286 ../src/orca/orca_gui_prefs.py:4309
+#: ../src/orca/orca_gui_prefs.py:80 ../src/orca/orca_gui_prefs.py:4047
+#: ../src/orca/orca_gui_prefs.py:4076 ../src/orca/orca_gui_prefs.py:4249
+#: ../src/orca/orca_gui_prefs.py:4316 ../src/orca/orca_gui_prefs.py:4339
 msgid "None"
 msgstr "لا شيء"
 
@@ -3334,7 +3365,7 @@ msgstr "دفع"
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:194
+#: ../src/orca/orca_gui_prefs.py:195
 msgid "Function"
 msgstr "الوظيفة"
 
@@ -3342,7 +3373,7 @@ msgstr "الوظيفة"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:270
+#: ../src/orca/orca_gui_prefs.py:271
 msgid "Key Binding"
 msgstr "ارتباط المفتاح"
 
@@ -3353,7 +3384,7 @@ msgstr "ارتباط المفتاح"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:349
+#: ../src/orca/orca_gui_prefs.py:350
 msgid "Alternate"
 msgstr "تناوب"
 
@@ -3361,28 +3392,28 @@ msgstr "تناوب"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:383
+#: ../src/orca/orca_gui_prefs.py:384
 msgid "Modified"
 msgstr "مُعدَّل"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:425 ../src/orca/orca_gui_prefs.py:474
+#: ../src/orca/orca_gui_prefs.py:426 ../src/orca/orca_gui_prefs.py:475
 msgid "Default"
 msgstr "افتراضي"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:431 ../src/orca/orca_gui_prefs.py:480
+#: ../src/orca/orca_gui_prefs.py:432 ../src/orca/orca_gui_prefs.py:481
 msgid "Uppercase"
 msgstr "حروف كبيرة"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:437 ../src/orca/orca_gui_prefs.py:490
+#: ../src/orca/orca_gui_prefs.py:438 ../src/orca/orca_gui_prefs.py:491
 msgid "Hyperlink"
 msgstr "وصله"
 
@@ -3391,7 +3422,7 @@ msgstr "وصله"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1085
+#: ../src/orca/orca_gui_prefs.py:1086
 msgid "Attribute Name"
 msgstr "اسم الصنف"
 
@@ -3402,7 +3433,7 @@ msgstr "اسم الصنف"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1100
+#: ../src/orca/orca_gui_prefs.py:1101
 msgid "Speak"
 msgstr "نطق"
 
@@ -3413,7 +3444,7 @@ msgstr "نطق"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1118
+#: ../src/orca/orca_gui_prefs.py:1119
 msgid "Mark in braille"
 msgstr "اكتب ببرايل"
 
@@ -3432,7 +3463,7 @@ msgstr "اكتب ببرايل"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1144
+#: ../src/orca/orca_gui_prefs.py:1145
 msgid "Present Unless"
 msgstr "موجود إلا إذا"
 
@@ -3443,7 +3474,7 @@ msgstr "موجود إلا إذا"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1259
+#: ../src/orca/orca_gui_prefs.py:1260
 msgid "Actual String"
 msgstr "النص الحالي"
 
@@ -3454,7 +3485,7 @@ msgstr "النص الحالي"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1276
+#: ../src/orca/orca_gui_prefs.py:1277
 msgid "Replacement String"
 msgstr "النص المستبدل"
 
@@ -3462,7 +3493,7 @@ msgstr "النص المستبدل"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1997
+#: ../src/orca/orca_gui_prefs.py:2002
 #, fuzzy
 msgid "(double click)"
 msgstr "فتحتين"
@@ -3471,7 +3502,7 @@ msgstr "فتحتين"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2003
+#: ../src/orca/orca_gui_prefs.py:2008
 msgid "(triple click)"
 msgstr ""
 
@@ -3480,7 +3511,7 @@ msgstr ""
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2107 ../src/orca/orca_gui_prefs.py:2201
+#: ../src/orca/orca_gui_prefs.py:2112 ../src/orca/orca_gui_prefs.py:2206
 msgid "Braille Bindings"
 msgstr "ارتباطات برايل"
 
@@ -3489,8 +3520,8 @@ msgstr "ارتباطات برايل"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2539 ../src/orca/orca_gui_prefs.py:2580
-#: ../src/orca/orca_gui_prefs.py:2620 ../src/orca/orca-setup.glade.h:51
+#: ../src/orca/orca_gui_prefs.py:2544 ../src/orca/orca_gui_prefs.py:2585
+#: ../src/orca/orca_gui_prefs.py:2625 ../src/orca/orca-setup.glade.h:51
 msgid "Dot _7"
 msgstr "النقطة _7"
 
@@ -3498,8 +3529,8 @@ msgstr "النقطة _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2546 ../src/orca/orca_gui_prefs.py:2587
-#: ../src/orca/orca_gui_prefs.py:2627 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:2551 ../src/orca/orca_gui_prefs.py:2592
+#: ../src/orca/orca_gui_prefs.py:2632 ../src/orca/orca-setup.glade.h:52
 msgid "Dot _8"
 msgstr "النقطة _8"
 
@@ -3507,15 +3538,15 @@ msgstr "النقطة _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2553 ../src/orca/orca_gui_prefs.py:2594
-#: ../src/orca/orca_gui_prefs.py:2634 ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca_gui_prefs.py:2558 ../src/orca/orca_gui_prefs.py:2599
+#: ../src/orca/orca_gui_prefs.py:2639 ../src/orca/orca-setup.glade.h:53
 msgid "Dots 7 an_d 8"
 msgstr "النقطة 7 _و 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2657 ../src/orca/orca-setup.glade.h:158
+#: ../src/orca/orca_gui_prefs.py:2662 ../src/orca/orca-setup.glade.h:159
 msgid "_None"
 msgstr "_لا شيء"
 
@@ -3524,7 +3555,7 @@ msgstr "_لا شيء"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2665 ../src/orca/orca-setup.glade.h:123
+#: ../src/orca/orca_gui_prefs.py:2670 ../src/orca/orca-setup.glade.h:123
 msgid "So_me"
 msgstr "ب_عض"
 
@@ -3532,7 +3563,7 @@ msgstr "ب_عض"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2672 ../src/orca/orca-setup.glade.h:85
+#: ../src/orca/orca_gui_prefs.py:2677 ../src/orca/orca-setup.glade.h:85
 msgid "M_ost"
 msgstr "م_عظم"
 
@@ -3540,7 +3571,7 @@ msgstr "م_عظم"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2693
+#: ../src/orca/orca_gui_prefs.py:2698
 msgid "Line"
 msgstr "خط"
 
@@ -3548,7 +3579,7 @@ msgstr "خط"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2699
+#: ../src/orca/orca_gui_prefs.py:2704
 msgid "Sentence"
 msgstr "جملة"
 
@@ -3556,7 +3587,7 @@ msgstr "جملة"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2719 ../src/orca/orca_gui_prefs.py:2823
+#: ../src/orca/orca_gui_prefs.py:2724 ../src/orca/orca_gui_prefs.py:2842
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brie_f"
 msgstr "م_لخّص"
@@ -3565,7 +3596,7 @@ msgstr "م_لخّص"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2743 ../src/orca/orca-setup.glade.h:127
+#: ../src/orca/orca_gui_prefs.py:2748 ../src/orca/orca-setup.glade.h:127
 msgid "Speak current _cell"
 msgstr "الكلام بال_خلية ال_حالية"
 
@@ -3573,7 +3604,7 @@ msgstr "الكلام بال_خلية ال_حالية"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3430
+#: ../src/orca/orca_gui_prefs.py:3449
 msgid "enter new key"
 msgstr "أدخل المفتاح الجديد"
 
@@ -3581,7 +3612,7 @@ msgstr "أدخل المفتاح الجديد"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3458
+#: ../src/orca/orca_gui_prefs.py:3477
 #, fuzzy
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "تم ادخال مفتاح: %s. اضغط مفتاح الرجوع للتأكيد."
@@ -3590,7 +3621,7 @@ msgstr "تم ادخال مفتاح: %s. اضغط مفتاح الرجوع للت�
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3482
+#: ../src/orca/orca_gui_prefs.py:3501
 #, fuzzy, python-format
 msgid "The key entered is already bound to %s"
 msgstr "المفتاح الذي تم إدخاله هو نفس المفتاح الموجود. لم يتم إجراء أي تغيير."
@@ -3599,7 +3630,7 @@ msgstr "المفتاح الذي تم إدخاله هو نفس المفتاح ا�
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3489
+#: ../src/orca/orca_gui_prefs.py:3508
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "تم ادخال مفتاح: %s. اضغط مفتاح الرجوع للتأكيد."
@@ -3608,7 +3639,7 @@ msgstr "تم ادخال مفتاح: %s. اضغط مفتاح الرجوع للت�
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3528
+#: ../src/orca/orca_gui_prefs.py:3547
 #, python-format
 msgid "The new key is: %s"
 msgstr "المفتاح الجديد هو: %s"
@@ -3617,22 +3648,22 @@ msgstr "المفتاح الجديد هو: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3536
+#: ../src/orca/orca_gui_prefs.py:3555
 msgid "The keybinding has been removed."
 msgstr ""
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3614 ../src/orca/orca-setup.glade.h:151
+#: ../src/orca/orca_gui_prefs.py:3633 ../src/orca/orca-setup.glade.h:152
 msgid "_Desktop"
 msgstr "_حاسوب مكتبي"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:4011 ../src/orca/orca_gui_prefs.py:4022
-#: ../src/orca/orca_gui_prefs.py:4044
+#: ../src/orca/orca_gui_prefs.py:4041 ../src/orca/orca_gui_prefs.py:4052
+#: ../src/orca/orca_gui_prefs.py:4074
 msgid "Bilinear"
 msgstr "ثنائي خطّي"
 
@@ -3641,7 +3672,7 @@ msgstr "ثنائي خطّي"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4227 ../src/orca/orca_gui_prefs.py:4317
+#: ../src/orca/orca_gui_prefs.py:4257 ../src/orca/orca_gui_prefs.py:4347
 msgid "Saturate red"
 msgstr ""
 
@@ -3650,7 +3681,7 @@ msgstr ""
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4235 ../src/orca/orca_gui_prefs.py:4325
+#: ../src/orca/orca_gui_prefs.py:4265 ../src/orca/orca_gui_prefs.py:4355
 msgid "Saturate green"
 msgstr ""
 
@@ -3659,7 +3690,7 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:4243 ../src/orca/orca_gui_prefs.py:4333
+#: ../src/orca/orca_gui_prefs.py:4273 ../src/orca/orca_gui_prefs.py:4363
 #, fuzzy
 msgid "Saturate blue"
 msgstr "جدول شجرة"
@@ -3669,7 +3700,7 @@ msgstr "جدول شجرة"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4251 ../src/orca/orca_gui_prefs.py:4341
+#: ../src/orca/orca_gui_prefs.py:4281 ../src/orca/orca_gui_prefs.py:4371
 msgid "Desaturate red"
 msgstr ""
 
@@ -3678,7 +3709,7 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4259 ../src/orca/orca_gui_prefs.py:4349
+#: ../src/orca/orca_gui_prefs.py:4289 ../src/orca/orca_gui_prefs.py:4379
 msgid "Desaturate green"
 msgstr ""
 
@@ -3687,7 +3718,7 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4267 ../src/orca/orca_gui_prefs.py:4357
+#: ../src/orca/orca_gui_prefs.py:4297 ../src/orca/orca_gui_prefs.py:4387
 msgid "Desaturate blue"
 msgstr ""
 
@@ -3696,7 +3727,7 @@ msgstr ""
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4275 ../src/orca/orca_gui_prefs.py:4365
+#: ../src/orca/orca_gui_prefs.py:4305 ../src/orca/orca_gui_prefs.py:4395
 msgid "Positive hue shift"
 msgstr ""
 
@@ -3705,13 +3736,13 @@ msgstr ""
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4283 ../src/orca/orca_gui_prefs.py:4373
+#: ../src/orca/orca_gui_prefs.py:4313 ../src/orca/orca_gui_prefs.py:4403
 msgid "Negative hue shift"
 msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4610
+#: ../src/orca/orca_gui_prefs.py:4640
 #, fuzzy
 msgid "Starting Orca Preferences."
 msgstr "خيارات أوركا"
@@ -4377,147 +4408,151 @@ msgid "Speech synthesi_zer:"
 msgstr "مؤ_لف الكلام:"
 
 #: ../src/orca/orca-setup.glade.h:134
+msgid "Start Orca when you lo_gin"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:135
 #, fuzzy
 msgid "Target displa_y:"
 msgstr "الشاشة ال_هدف:"
 
-#: ../src/orca/orca-setup.glade.h:135
+#: ../src/orca/orca-setup.glade.h:136
 msgid "Te_xt cursor:"
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:136
+#: ../src/orca/orca-setup.glade.h:137
 msgid "Text Attributes"
 msgstr "خصائص النص"
 
-#: ../src/orca/orca-setup.glade.h:137
+#: ../src/orca/orca-setup.glade.h:138
 msgid "Update interval:"
 msgstr "فترة التحديث:"
 
-#: ../src/orca/orca-setup.glade.h:138
+#: ../src/orca/orca-setup.glade.h:139
 msgid "Ver_bose"
 msgstr "ت_فصيلي"
 
-#: ../src/orca/orca-setup.glade.h:139
+#: ../src/orca/orca-setup.glade.h:140
 msgid "Vo_lume:"
 msgstr "ش_دة الصوت :"
 
-#: ../src/orca/orca-setup.glade.h:140
+#: ../src/orca/orca-setup.glade.h:141
 #, fuzzy
 msgid "Warning"
 msgstr "a حلقة"
 
-#: ../src/orca/orca-setup.glade.h:141
+#: ../src/orca/orca-setup.glade.h:142
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "\n"
 "Please close it before opening a new one."
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:144
+#: ../src/orca/orca-setup.glade.h:145
 msgid "_Abbreviated role names"
 msgstr "أ_سماء وضائف مختصرة"
 
-#: ../src/orca/orca-setup.glade.h:145
+#: ../src/orca/orca-setup.glade.h:146
 msgid "_All"
 msgstr "ال_كل"
 
-#: ../src/orca/orca-setup.glade.h:146
+#: ../src/orca/orca-setup.glade.h:147
 #, fuzzy
 msgid "_Blue:"
 msgstr "ش_دة الصوت :"
 
-#: ../src/orca/orca-setup.glade.h:147
+#: ../src/orca/orca-setup.glade.h:148
 msgid "_Bottom:"
 msgstr "اﻷ_سفل"
 
-#: ../src/orca/orca-setup.glade.h:148
+#: ../src/orca/orca-setup.glade.h:149
 msgid "_Color Filtering:"
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:149
+#: ../src/orca/orca-setup.glade.h:150
 #, fuzzy
 msgid "_Control and menu item:"
 msgstr "عنصر قائمة اختيار"
 
-#: ../src/orca/orca-setup.glade.h:150
+#: ../src/orca/orca-setup.glade.h:151
 msgid "_Delete"
 msgstr "إح_ذف"
 
-#: ../src/orca/orca-setup.glade.h:152
+#: ../src/orca/orca-setup.glade.h:153
 msgid "_Enable Contracted Braille"
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:153
+#: ../src/orca/orca-setup.glade.h:154
 msgid "_Enable speech"
 msgstr "تفعيل ال_كلام"
 
-#: ../src/orca/orca-setup.glade.h:154
+#: ../src/orca/orca-setup.glade.h:155
 msgid "_Green:"
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:155
+#: ../src/orca/orca-setup.glade.h:156
 msgid "_Laptop"
 msgstr "_حاسوب محمول"
 
-#: ../src/orca/orca-setup.glade.h:156
+#: ../src/orca/orca-setup.glade.h:157
 msgid "_Left:"
 msgstr "_يسار:"
 
-#: ../src/orca/orca-setup.glade.h:157
+#: ../src/orca/orca-setup.glade.h:158
 msgid "_New entry"
 msgstr "م_دخل جديد"
 
-#: ../src/orca/orca-setup.glade.h:159
+#: ../src/orca/orca-setup.glade.h:160
 msgid "_Person:"
 msgstr "_شخص:"
 
-#: ../src/orca/orca-setup.glade.h:160
+#: ../src/orca/orca-setup.glade.h:161
 #, fuzzy
 msgid "_Position:"
 msgstr "_شخص:"
 
-#: ../src/orca/orca-setup.glade.h:161
+#: ../src/orca/orca-setup.glade.h:162
 msgid "_Present tooltips"
 msgstr "ا_عرض التلميحات"
 
-#: ../src/orca/orca-setup.glade.h:162
+#: ../src/orca/orca-setup.glade.h:163
 msgid "_Rate:"
 msgstr "_معدل:"
 
-#: ../src/orca/orca-setup.glade.h:163
+#: ../src/orca/orca-setup.glade.h:164
 #, fuzzy
 msgid "_Red:"
 msgstr "_معدل:"
 
-#: ../src/orca/orca-setup.glade.h:164
+#: ../src/orca/orca-setup.glade.h:165
 msgid "_Reset"
 msgstr "أعد _ضبط"
 
-#: ../src/orca/orca-setup.glade.h:165
+#: ../src/orca/orca-setup.glade.h:166
 msgid "_Right:"
 msgstr "_يمين:"
 
-#: ../src/orca/orca-setup.glade.h:166
+#: ../src/orca/orca-setup.glade.h:167
 msgid "_Smoothing:"
 msgstr "تنعيم:"
 
-#: ../src/orca/orca-setup.glade.h:167
+#: ../src/orca/orca-setup.glade.h:168
 msgid "_Speak all"
 msgstr "انطق ال_كل"
 
-#: ../src/orca/orca-setup.glade.h:168
+#: ../src/orca/orca-setup.glade.h:169
 msgid "_Top:"
 msgstr "_فوق:"
 
-#: ../src/orca/orca-setup.glade.h:169
+#: ../src/orca/orca-setup.glade.h:170
 msgid "_Voice settings:"
 msgstr "إعدادات ال_صوت:"
 
-#: ../src/orca/orca-setup.glade.h:170
+#: ../src/orca/orca-setup.glade.h:171
 msgid "pixels"
 msgstr "بكسلات"
 
-#: ../src/orca/orca-setup.glade.h:171
+#: ../src/orca/orca-setup.glade.h:172
 msgid "seconds"
 msgstr "ثوان"
 
@@ -5682,7 +5717,7 @@ msgstr "خلية"
 #.
 #: ../src/orca/rolenames.py:928
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:65
-#: ../src/orca/scripts/apps/soffice/where_am_i.py:144
+#: ../src/orca/scripts/apps/soffice/where_am_i.py:145
 msgid "cell"
 msgstr "خلية"
 
@@ -6034,7 +6069,7 @@ msgstr "مستند"
 #. We've entered a table.  Announce the dimensions.
 #.
 #: ../src/orca/scripts/apps/acroread.py:276
-#: ../src/orca/scripts/apps/soffice/script.py:670
+#: ../src/orca/scripts/apps/soffice/script.py:674
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "جدول بـ %d أسطر و %d أعمدة."
@@ -6042,7 +6077,7 @@ msgstr "جدول بـ %d أسطر و %d أعمدة."
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/apps/acroread.py:283
-#: ../src/orca/scripts/apps/soffice/script.py:675
+#: ../src/orca/scripts/apps/soffice/script.py:679
 msgid "leaving table."
 msgstr "تركنا الجدول."
 
@@ -6058,7 +6093,7 @@ msgstr "صف %d، عمود %d"
 #. on in a table.
 #.
 #: ../src/orca/scripts/apps/acroread.py:307
-#: ../src/orca/scripts/apps/soffice/where_am_i.py:72
+#: ../src/orca/scripts/apps/soffice/where_am_i.py:73
 #, python-format
 msgid "column %d"
 msgstr "عمود %d"
@@ -6158,8 +6193,8 @@ msgstr "تهاني"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:827
-#: ../src/orca/scripts/apps/evolution/script.py:889
+#: ../src/orca/scripts/apps/evolution/script.py:828
+#: ../src/orca/scripts/apps/evolution/script.py:890
 msgid "Status"
 msgstr "الحالة"
 
@@ -6168,8 +6203,8 @@ msgstr "الحالة"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:836
-#: ../src/orca/scripts/apps/evolution/script.py:914
+#: ../src/orca/scripts/apps/evolution/script.py:837
+#: ../src/orca/scripts/apps/evolution/script.py:915
 #, fuzzy
 msgid "Flagged"
 msgstr "علامة الصليب"
@@ -6178,7 +6213,7 @@ msgstr "علامة الصليب"
 #. indicate that an email message has not been
 #. marked as having been read.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:894
+#: ../src/orca/scripts/apps/evolution/script.py:895
 msgid "unread"
 msgstr " غير مقروء"
 
@@ -6187,14 +6222,14 @@ msgstr " غير مقروء"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:903
+#: ../src/orca/scripts/apps/evolution/script.py:904
 msgid "Attachment"
 msgstr "مُرفق"
 
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1077
+#: ../src/orca/scripts/apps/evolution/script.py:1078
 msgid "No appointments"
 msgstr "لا مواعيد"
 
@@ -6202,7 +6237,7 @@ msgstr "لا مواعيد"
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1154
+#: ../src/orca/scripts/apps/evolution/script.py:1155
 msgid "Directories button"
 msgstr "زر الدلائل"
 
@@ -6212,8 +6247,8 @@ msgstr "زر الدلائل"
 #. keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1323
-#: ../src/orca/scripts/apps/evolution/script.py:1451
+#: ../src/orca/scripts/apps/evolution/script.py:1324
+#: ../src/orca/scripts/apps/evolution/script.py:1452
 msgid "Assistant"
 msgstr "مساعد"
 
@@ -6229,11 +6264,11 @@ msgstr "اقرأ"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:235
+#: ../src/orca/scripts/apps/gedit/script.py:228
 msgid "Change to:"
 msgstr "تغيير إلى: "
 
-#: ../src/orca/scripts/apps/gedit/script.py:236
+#: ../src/orca/scripts/apps/gedit/script.py:229
 msgid "Misspelled word:"
 msgstr "كلمة مهجأة خاطئا:"
 
@@ -6245,15 +6280,15 @@ msgstr "كلمة مهجأة خاطئا:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:269
+#: ../src/orca/scripts/apps/gedit/script.py:262
 msgid "Completed spell checking"
 msgstr "إكمال التهجئة"
 
-#: ../src/orca/scripts/apps/gedit/script.py:270
+#: ../src/orca/scripts/apps/gedit/script.py:263
 msgid "Spell checking is complete."
 msgstr "انتهى التحقق الاملائي."
 
-#: ../src/orca/scripts/apps/gedit/script.py:272
+#: ../src/orca/scripts/apps/gedit/script.py:265
 msgid "Press Tab and Return to terminate."
 msgstr "اضغط زر تاب و الإدخال للإنهاء."
 
@@ -6262,8 +6297,8 @@ msgstr "اضغط زر تاب و الإدخال للإنهاء."
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:396
-#: ../src/orca/scripts/apps/gedit/script.py:479
+#: ../src/orca/scripts/apps/gedit/script.py:392
+#: ../src/orca/scripts/apps/gedit/script.py:475
 msgid "Check Spelling"
 msgstr "تثبت من تهجيئ الكلمات"
 
@@ -6284,14 +6319,14 @@ msgstr "تثبت من تهجيئ الكلمات"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:506
+#: ../src/orca/scripts/apps/gedit/script.py:502
 msgid "Phrase not found"
 msgstr "الجملة غير موجودة"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:572
+#: ../src/orca/scripts/apps/gedit/script.py:568
 msgid "Phrase found."
 msgstr "الجملة موجودة"
 
@@ -6474,7 +6509,7 @@ msgstr "لسان محادثة جديد %s"
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:101
-#: ../src/orca/speechgenerator.py:1400
+#: ../src/orca/speechgenerator.py:1420
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -6488,8 +6523,8 @@ msgstr[3] " %d عنصرا"
 #. Translators: this is in reference to a row in a table.
 #.
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:100
-#: ../src/orca/scripts/apps/pidgin/where_am_i.py:128
-#: ../src/orca/where_am_I.py:580
+#: ../src/orca/scripts/apps/pidgin/where_am_i.py:127
+#: ../src/orca/where_am_I.py:581
 #, python-format
 msgid "row %d of %d"
 msgstr "صف %d من %d"
@@ -6546,21 +6581,21 @@ msgstr ""
 msgid "Speak spread sheet cell coordinates"
 msgstr "انطق بإحداثيات الخلية"
 
-#: ../src/orca/scripts/apps/soffice/script.py:534
+#: ../src/orca/scripts/apps/soffice/script.py:538
 msgid "Calc"
 msgstr "احسب"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:701
+#: ../src/orca/scripts/apps/soffice/script.py:705
 msgid "empty"
 msgstr "فارغ"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:777
+#: ../src/orca/scripts/apps/soffice/script.py:783
 #, fuzzy, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "تم تحديد ترويسة العمود للصف"
@@ -6568,14 +6603,14 @@ msgstr "تم تحديد ترويسة العمود للصف"
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:800
+#: ../src/orca/scripts/apps/soffice/script.py:806
 msgid "Dynamic column header cleared."
 msgstr "تم مسح ترويسة عمود الجدول الديناميكية."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:853
+#: ../src/orca/scripts/apps/soffice/script.py:859
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "تم تحديد ترويسة الصف للعمود %s"
@@ -6583,7 +6618,7 @@ msgstr "تم تحديد ترويسة الصف للعمود %s"
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:877
+#: ../src/orca/scripts/apps/soffice/script.py:883
 msgid "Dynamic row header cleared."
 msgstr "تم مسح ترويسة صف الجدول الديناميكية."
 
@@ -6593,7 +6628,7 @@ msgstr "تم مسح ترويسة صف الجدول الديناميكية."
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1029
+#: ../src/orca/scripts/apps/soffice/script.py:1035
 msgid "Welcome to StarOffice"
 msgstr "أهلا بك في StarOffice"
 
@@ -6604,7 +6639,7 @@ msgstr "أهلا بك في StarOffice"
 #. We really try to avoid doing this kind of thing, but
 #. sometimes it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1076
+#: ../src/orca/scripts/apps/soffice/script.py:1082
 msgid "Available fields"
 msgstr "المجالات المتوفرة"
 
@@ -6615,7 +6650,7 @@ msgstr "المجالات المتوفرة"
 #. keying off stuff like this, but we're forced to do so in
 #. this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1184
+#: ../src/orca/scripts/apps/soffice/script.py:1190
 msgid "Text Document"
 msgstr "مستند نصي"
 
@@ -6625,16 +6660,16 @@ msgstr "مستند نصي"
 #. hate keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1255
-#: ../src/orca/scripts/apps/soffice/script.py:1524
+#: ../src/orca/scripts/apps/soffice/script.py:1261
+#: ../src/orca/scripts/apps/soffice/script.py:1529
 msgid "Spellcheck:"
 msgstr "تحقق املائي:"
 
-#: ../src/orca/scripts/apps/soffice/script.py:1283
+#: ../src/orca/scripts/apps/soffice/script.py:1289
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "لاحظ أنه يجب ضغط زر التمرير السفلي عدة مرات."
 
-#: ../src/orca/scripts/apps/soffice/script.py:1299
+#: ../src/orca/scripts/apps/soffice/script.py:1305
 msgid "License Agreement Accept button now has focus."
 msgstr "زر قبول اتفاقيه له التركيز الآن."
 
@@ -6644,7 +6679,7 @@ msgstr "زر قبول اتفاقيه له التركيز الآن."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1328
+#: ../src/orca/scripts/apps/soffice/script.py:1334
 msgid "First name"
 msgstr "الاسم الأول"
 
@@ -6652,7 +6687,7 @@ msgstr "الاسم الأول"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1406
+#: ../src/orca/scripts/apps/soffice/script.py:1412
 msgid "Move to cell"
 msgstr "انقل إلى خلية"
 
@@ -6663,7 +6698,7 @@ msgstr "انقل إلى خلية"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1604
+#: ../src/orca/scripts/apps/soffice/script.py:1609
 msgid "Presentation Wizard"
 msgstr "مرشد العرض التقديمي"
 
@@ -6674,7 +6709,7 @@ msgstr "مرشد العرض التقديمي"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1625
+#: ../src/orca/scripts/apps/soffice/script.py:1630
 msgid "Writer"
 msgstr "الكاتب"
 
@@ -6683,13 +6718,13 @@ msgstr "الكاتب"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1788
+#: ../src/orca/scripts/apps/soffice/script.py:1793
 msgid "has formula"
 msgstr "له وظيفة"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1841
+#: ../src/orca/scripts/apps/soffice/script.py:1846
 #, python-format
 msgid "Cell %s"
 msgstr "الخلية %s"
@@ -6701,7 +6736,7 @@ msgstr "الخلية %s"
 #. or table.
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:117
-#: ../src/orca/speechgenerator.py:753 ../src/orca/speechgenerator.py:1277
+#: ../src/orca/speechgenerator.py:773 ../src/orca/speechgenerator.py:1297
 msgid "0 items"
 msgstr "0 عناصر"
 
@@ -6710,8 +6745,8 @@ msgstr "0 عناصر"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:306
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:336
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:307
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:337
 #: ../src/orca/speechserver.py:208 ../src/orca/speech.py:188
 msgid "on"
 msgstr "مشتغل"
@@ -6721,23 +6756,21 @@ msgstr "مشتغل"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:310
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:340
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:311
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:341
 #: ../src/orca/speechserver.py:213 ../src/orca/speech.py:193
 msgid "off"
 msgstr "موقف"
 
-#. Translators: this represents the row number of a table.
-#.
-#: ../src/orca/scripts/apps/soffice/where_am_i.py:98
+#: ../src/orca/scripts/apps/soffice/where_am_i.py:99
 #, python-format
 msgid "row %d"
 msgstr "صف %d"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:187
-#: ../src/orca/scripts/apps/Thunderbird/script.py:204
+#: ../src/orca/scripts/apps/Thunderbird/script.py:189
+#: ../src/orca/scripts/apps/Thunderbird/script.py:206
 #, python-format
 msgid "%s panel"
 msgstr "%s لوحة"
@@ -6751,49 +6784,49 @@ msgstr "تم ادخالعلامة الموقع"
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:282
+#: ../src/orca/scripts/toolkits/Gecko/script.py:284
 msgid "Goes to next character."
 msgstr "إلى الحرف التالي."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:290
+#: ../src/orca/scripts/toolkits/Gecko/script.py:292
 msgid "Goes to previous character."
 msgstr "إلى الحرف السابق."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:298
+#: ../src/orca/scripts/toolkits/Gecko/script.py:300
 msgid "Goes to next word."
 msgstr "إلى الكلمة التالية."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:306
+#: ../src/orca/scripts/toolkits/Gecko/script.py:308
 msgid "Goes to previous word."
 msgstr "إلى الكلمة السابقة."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:314
+#: ../src/orca/scripts/toolkits/Gecko/script.py:316
 msgid "Goes to next line."
 msgstr "إلى السطر التالي."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:322
+#: ../src/orca/scripts/toolkits/Gecko/script.py:324
 msgid "Goes to previous line."
 msgstr "إلى الكلمة السابق."
 
 #. Translators: this command will move the user to the
 #. beginning of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:330
+#: ../src/orca/scripts/toolkits/Gecko/script.py:332
 #, fuzzy
 msgid "Goes to the top of the file."
 msgstr "إلى الخلية الأخيرة في الجدول"
@@ -6801,7 +6834,7 @@ msgstr "إلى الخلية الأخيرة في الجدول"
 #. Translators: this command will move the user to the
 #. end of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:338
+#: ../src/orca/scripts/toolkits/Gecko/script.py:340
 #, fuzzy
 msgid "Goes to the bottom of the file."
 msgstr "يتكلم بمحتويات السطر."
@@ -6809,141 +6842,141 @@ msgstr "يتكلم بمحتويات السطر."
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:346
+#: ../src/orca/scripts/toolkits/Gecko/script.py:348
 msgid "Causes the current combo box to be expanded."
 msgstr "تؤدي إلى فتح صندوق الإختيار الحالي."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:353
+#: ../src/orca/scripts/toolkits/Gecko/script.py:355
 msgid "Goes left one cell."
 msgstr "إلى الخلية نحو اليسار."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:360
+#: ../src/orca/scripts/toolkits/Gecko/script.py:362
 msgid "Goes right one cell."
 msgstr "إلى الخلية نحو اليمين."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:367
+#: ../src/orca/scripts/toolkits/Gecko/script.py:369
 msgid "Goes down one cell."
 msgstr "إلى الخلية نحو الأسفل."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:374
+#: ../src/orca/scripts/toolkits/Gecko/script.py:376
 msgid "Goes up one cell."
 msgstr "إلى الخلية نحو الأعلى."
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:381
+#: ../src/orca/scripts/toolkits/Gecko/script.py:383
 msgid "Goes to the first cell in a table."
 msgstr "إلى الخلية الأولى في الجدول"
 
 #. Translators: this is for navigating inside HTML tables.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:388
+#: ../src/orca/scripts/toolkits/Gecko/script.py:390
 msgid "Goes to the last cell in a table."
 msgstr "إلى الخلية الأخيرة في الجدول"
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:396
+#: ../src/orca/scripts/toolkits/Gecko/script.py:398
 msgid "Goes to previous heading."
 msgstr "إلى العنوان السابق."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:404
+#: ../src/orca/scripts/toolkits/Gecko/script.py:406
 msgid "Goes to next heading."
 msgstr "إلى العنوان التالي."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:412
+#: ../src/orca/scripts/toolkits/Gecko/script.py:414
 msgid "Goes to previous heading at level 1."
 msgstr "إلى الترويسة السابقة ذات المرتبة 1."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:420
+#: ../src/orca/scripts/toolkits/Gecko/script.py:422
 msgid "Goes to next heading at level 1."
 msgstr "إلى الترويسة التالية ذات المرتبة 1."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:428
+#: ../src/orca/scripts/toolkits/Gecko/script.py:430
 msgid "Goes to previous heading at level 2."
 msgstr "إلى الترويسة السابقة ذات المرتبة 2."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h2>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:436
+#: ../src/orca/scripts/toolkits/Gecko/script.py:438
 msgid "Goes to next heading at level 2."
 msgstr "إلى الترويسة التالية ذات المرتبة 2."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:444
+#: ../src/orca/scripts/toolkits/Gecko/script.py:446
 msgid "Goes to previous heading at level 3."
 msgstr "إلى الترويسة السابقة ذات المرتبة 3."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h3>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:452
+#: ../src/orca/scripts/toolkits/Gecko/script.py:454
 msgid "Goes to next heading at level 3."
 msgstr "إلى الترويسة التالية ذات المرتبة 3."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:460
+#: ../src/orca/scripts/toolkits/Gecko/script.py:462
 msgid "Goes to previous heading at level 4."
 msgstr "إلى الترويسة السابقة ذات المرتبة 4."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h4>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:468
+#: ../src/orca/scripts/toolkits/Gecko/script.py:470
 msgid "Goes to next heading at level 4."
 msgstr "إلى الترويسة التالية ذات المرتبة 4."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:476
+#: ../src/orca/scripts/toolkits/Gecko/script.py:478
 msgid "Goes to previous heading at level 5."
 msgstr "إلى الترويسة السابقة ذات المرتبة 5."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h5>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:484
+#: ../src/orca/scripts/toolkits/Gecko/script.py:486
 msgid "Goes to next heading at level 5."
 msgstr "إلى الترويسة التالية ذات المرتبة 5."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:492
+#: ../src/orca/scripts/toolkits/Gecko/script.py:494
 msgid "Goes to previous heading at level 6."
 msgstr "إلى الترويسة السابقة ذات المرتبة 6."
 
 #. Translators: this is for navigating HTML by headers
 #. (e.g., <h6>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:500
+#: ../src/orca/scripts/toolkits/Gecko/script.py:502
 msgid "Goes to next heading at level 6."
 msgstr "إلى الترويسة التالية ذات المرتبة 6."
 
@@ -6951,7 +6984,7 @@ msgstr "إلى الترويسة التالية ذات المرتبة 6."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:509
+#: ../src/orca/scripts/toolkits/Gecko/script.py:511
 msgid "Goes to previous large object."
 msgstr "الى الجسم الكبير التالي."
 
@@ -6959,7 +6992,7 @@ msgstr "الى الجسم الكبير التالي."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:518
+#: ../src/orca/scripts/toolkits/Gecko/script.py:520
 msgid "Goes to next large object."
 msgstr "إلى الجسم الكبير التالي."
 
@@ -6968,7 +7001,7 @@ msgstr "إلى الجسم الكبير التالي."
 #. tag attribute 'role' used to identify important part of
 #. webpage like banners, main context, search etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:528
+#: ../src/orca/scripts/toolkits/Gecko/script.py:530
 #, fuzzy
 msgid "Goes to previous landmark."
 msgstr "إلى الكلمة السابق."
@@ -6976,7 +7009,7 @@ msgstr "إلى الكلمة السابق."
 #. Translators: this is for navigating to the next ARIA
 #. role landmark.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:536
+#: ../src/orca/scripts/toolkits/Gecko/script.py:538
 #, fuzzy
 msgid "Goes to next landmark."
 msgstr "إلى السطر التالي."
@@ -6984,105 +7017,105 @@ msgstr "إلى السطر التالي."
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:544
+#: ../src/orca/scripts/toolkits/Gecko/script.py:546
 msgid "Goes to previous list."
 msgstr "إلى القائمة السابقة."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. lists in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:552
+#: ../src/orca/scripts/toolkits/Gecko/script.py:554
 msgid "Goes to next list."
 msgstr "إلى القائمة التالية."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:560
+#: ../src/orca/scripts/toolkits/Gecko/script.py:562
 msgid "Goes to previous list item."
 msgstr "الى عنصر القائمة السابق."
 
 #. Translators: this is for navigating between bulleted/numbered
 #. list items in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:568
+#: ../src/orca/scripts/toolkits/Gecko/script.py:570
 msgid "Goes to next list item."
 msgstr "الى عنصر القائمة التالي."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:575
+#: ../src/orca/scripts/toolkits/Gecko/script.py:577
 msgid "Goes to previous unvisited link."
 msgstr "الى الوصلة غير المزارة السابقة."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:582
+#: ../src/orca/scripts/toolkits/Gecko/script.py:584
 msgid "Goes to next unvisited link."
 msgstr "الى الوصلة غير المزارة التالية."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:589
+#: ../src/orca/scripts/toolkits/Gecko/script.py:591
 msgid "Goes to previous visited link."
 msgstr "إذهب إلى الرابط المزار السابق."
 
 #. Translators: this is for navigating between links in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:596
+#: ../src/orca/scripts/toolkits/Gecko/script.py:598
 msgid "Goes to next visited link."
 msgstr "إذهب إلى الرابط المزار التالي."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:604
+#: ../src/orca/scripts/toolkits/Gecko/script.py:606
 msgid "Goes to previous form field."
 msgstr "إذهب إلى المجال السابق."
 
 #. Translators: this is for navigating between form fields in
 #. HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:612
+#: ../src/orca/scripts/toolkits/Gecko/script.py:614
 msgid "Goes to next form field."
 msgstr "إذهب إلى المجال التالي."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:620
+#: ../src/orca/scripts/toolkits/Gecko/script.py:622
 msgid "Goes to previous blockquote."
 msgstr "إذهب إلى الإقتباس السابق."
 
 #. Translators: this is for navigating among blockquotes in
 #. HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:628
+#: ../src/orca/scripts/toolkits/Gecko/script.py:630
 msgid "Goes to next blockquote."
 msgstr "إذهب إلى الإقتباس التالي."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:635
+#: ../src/orca/scripts/toolkits/Gecko/script.py:637
 msgid "Goes to previous table."
 msgstr "إذهب إلى الجدول السابق."
 
 #. Translators: this is for navigating between tables in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:642
+#: ../src/orca/scripts/toolkits/Gecko/script.py:644
 msgid "Goes to next table."
 msgstr "إذهب إلى الإقتباس التالي."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:649
+#: ../src/orca/scripts/toolkits/Gecko/script.py:651
 #, fuzzy
 msgid "Goes to previous live region."
 msgstr "إلى الكلمة السابق."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:656
+#: ../src/orca/scripts/toolkits/Gecko/script.py:658
 #, fuzzy
 msgid "Goes to next live region."
 msgstr "إلى السطر التالي."
@@ -7090,7 +7123,7 @@ msgstr "إلى السطر التالي."
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:664
+#: ../src/orca/scripts/toolkits/Gecko/script.py:666
 #, fuzzy
 msgid "Goes to last live region."
 msgstr "إلى السطر التالي."
@@ -7098,35 +7131,35 @@ msgstr "إلى السطر التالي."
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:672
+#: ../src/orca/scripts/toolkits/Gecko/script.py:674
 msgid "Advance live region politeness setting."
 msgstr ""
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:680
+#: ../src/orca/scripts/toolkits/Gecko/script.py:682
 msgid "Set default live region politeness level to off."
 msgstr ""
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:688
+#: ../src/orca/scripts/toolkits/Gecko/script.py:690
 msgid "Monitor live regions."
 msgstr ""
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:696
+#: ../src/orca/scripts/toolkits/Gecko/script.py:698
 msgid "Review live region announcement."
 msgstr ""
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:704
+#: ../src/orca/scripts/toolkits/Gecko/script.py:706
 #, fuzzy
 msgid "Goes to the previous object."
 msgstr "الى الجسم الكبير التالي."
@@ -7134,7 +7167,7 @@ msgstr "الى الجسم الكبير التالي."
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:712
+#: ../src/orca/scripts/toolkits/Gecko/script.py:714
 #, fuzzy
 msgid "Goes to the next object."
 msgstr "إلى الجسم الكبير التالي."
@@ -7146,7 +7179,7 @@ msgstr "إلى الجسم الكبير التالي."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:724
+#: ../src/orca/scripts/toolkits/Gecko/script.py:726
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "تحول من تصفح المؤشر لجيكو أو أوركا."
 
@@ -7157,7 +7190,7 @@ msgstr "تحول من تصفح المؤشر لجيكو أو أوركا."
 #. users prefer to turn this off to use Firefox's search
 #. when typing feature.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:736
+#: ../src/orca/scripts/toolkits/Gecko/script.py:738
 msgid "Toggles structural navigation keys."
 msgstr "فعل و عطل مفاتيح التصفح."
 
@@ -7168,7 +7201,7 @@ msgstr "فعل و عطل مفاتيح التصفح."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1292
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1294
 msgid "Use _Orca Caret Navigation"
 msgstr "استعمل تصفح المؤشر لأور_كا"
 
@@ -7176,7 +7209,7 @@ msgstr "استعمل تصفح المؤشر لأور_كا"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1305
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1307
 msgid "Use Orca _Structural Navigation"
 msgstr "استعمل التصفح التركيبي لأور_كا"
 
@@ -7186,7 +7219,7 @@ msgstr "استعمل التصفح التركيبي لأور_كا"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1320
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1322
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_ضع المؤشر عند بداية السطر عند التصفح عموديا"
 
@@ -7194,7 +7227,7 @@ msgstr "_ضع المؤشر عند بداية السطر عند التصفح عم
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1333
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1335
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "ا_نطق بالصفحة آليا عند تحميلها أولا"
 
@@ -7202,14 +7235,14 @@ msgstr "ا_نطق بالصفحة آليا عند تحميلها أولا"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1345
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1347
 msgid "Page Navigation"
 msgstr "تصفح الصفحة"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in HTML content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1368
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1370
 msgid "Speak _cell coordinates"
 msgstr "ا_نطق باحداثيات الخلية"
 
@@ -7217,28 +7250,28 @@ msgstr "ا_نطق باحداثيات الخلية"
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1380
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1382
 msgid "Speak _multiple cell spans"
 msgstr "انطق بمقدار _توسع الخلية"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in HTML content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1391
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1393
 msgid "Announce cell _header"
 msgstr "اعلن عنوان ال_خلية"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in HTML content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1402
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1404
 msgid "Skip _blank cells"
 msgstr "تخطى الخلايا الفارغة"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in HTML content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1413
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1415
 msgid "Table Navigation"
 msgstr "تصفح الجدول"
 
@@ -7246,7 +7279,7 @@ msgstr "تصفح الجدول"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1437
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1439
 msgid "Speak results during _find"
 msgstr "انطق بالنتائج عند ال_بحث"
 
@@ -7255,7 +7288,7 @@ msgstr "انطق بالنتائج عند ال_بحث"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1450
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1452
 msgid "Onl_y speak changed lines during find"
 msgstr "انطق بالأسطر الم_ختلفة فقط عند البحث"
 
@@ -7263,33 +7296,33 @@ msgstr "انطق بالأسطر الم_ختلفة فقط عند البحث"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1467
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1469
 msgid "Minimum length of matched text:"
 msgstr "الطول الأقصى للنص المطابَق:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1492
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1494
 msgid "Find Options"
 msgstr "جد خيارات"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2419
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2421
 msgid "Loading.  Please wait."
 msgstr "يجري التحميل. الرجاء الإنتظار."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2424
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2426
 #, python-format
 msgid "Finished loading %s."
 msgstr "انتهى تحميل %s."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2430
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2432
 msgid "Finished loading."
 msgstr "انتهى التحميل"
 
@@ -7300,7 +7333,7 @@ msgstr "انتهى التحميل"
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2944
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2946
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -7309,7 +7342,7 @@ msgstr "h%d"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4010
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4058
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "خلية تشمل %d صف و %d عمود"
@@ -7318,7 +7351,7 @@ msgstr "خلية تشمل %d صف و %d عمود"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4017
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4065
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "خلية تشمل %d عمود"
@@ -7327,7 +7360,7 @@ msgstr "خلية تشمل %d عمود"
 #. table.  We need to announce when the cell occupies or "spans"
 #. more than a single row and/or column.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4023
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4071
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "خلية تشمل %d صف"
@@ -7335,14 +7368,14 @@ msgstr "خلية تشمل %d صف"
 #. Translators: this is in reference to a heading level
 #. in HTML (e.g., For <h3>, the level is 3).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6319
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6373
 #, python-format
 msgid "level %d"
 msgstr "المستوى %d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6855
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6909
 #, fuzzy
 msgid "open"
 msgstr "مشتغل"
@@ -7353,26 +7386,26 @@ msgstr "مشتغل"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6870
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6938
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7052
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7134
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7277
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7420
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7602
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7748
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7890
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8032
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8153
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8274
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6924
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6992
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7106
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7188
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7331
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7474
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7656
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7802
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7944
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8086
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8207
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8328
 msgid "Wrapping to bottom."
 msgstr "اللف للأسفل."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6881
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6905
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6935
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6959
 msgid "No more headings."
 msgstr "لا عناوين أخرى."
 
@@ -7382,28 +7415,28 @@ msgstr "لا عناوين أخرى."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6894
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6980
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7077
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7194
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7345
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7510
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7672
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7814
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7957
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8103
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8211
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8324
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8630
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8671
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6948
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7034
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7131
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7248
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7399
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7564
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7726
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7868
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8011
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8157
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8265
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8378
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8684
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8725
 msgid "Wrapping to top."
 msgstr "اللف للأعلى."
 
 #. Translators: this is in reference to navigating HTML content
 #. by heading (e.g., <h1>).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6949
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6991
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7003
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7045
 #, python-format
 msgid "No more headings at level %d."
 msgstr "لا عناوين أخرى عند المستوى %d."
@@ -7412,8 +7445,8 @@ msgstr "لا عناوين أخرى عند المستوى %d."
 #. manner, where a 'large object' is a logical chunk of
 #. text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7064
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7089
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7118
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7143
 msgid "No more large objects."
 msgstr "لا أجسام كبيرة أخرى."
 
@@ -7426,16 +7459,16 @@ msgstr "لا أجسام كبيرة أخرى."
 #. Translators: this is for navigating to the next ARIA
 #. role landmark. This is an that one was not found.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7148
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7205
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7202
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7259
 #, fuzzy
 msgid "No landmark found."
 msgstr "لم يتم العثور على ملفات"
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7428
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7518
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7482
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7572
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:352
 #, python-format
 msgid "List with %d item"
@@ -7450,8 +7483,8 @@ msgstr[3] "قائمة بـ %d عنصر"
 #. a level of 2 represents a list item inside a list
 #. that's inside another list).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7443
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7533
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7497
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7587
 #, python-format
 msgid "Nesting level %d"
 msgstr "مستوى التفريع %d"
@@ -7459,8 +7492,8 @@ msgstr "مستوى التفريع %d"
 #. Translators: this is for navigating HTML content by moving
 #. from bulleted/numbered list to bulleted/numbered list.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7452
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7542
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7506
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7596
 msgid "No more lists."
 msgstr "لا قوائم أخرى."
 
@@ -7468,47 +7501,47 @@ msgstr "لا قوائم أخرى."
 #. moving from bulleted/numbered list item to
 #. bulleted/numbered list item.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7612
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7682
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7666
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7736
 msgid "No more list items."
 msgstr "لا عناصر قائمة أخرى."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7759
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7825
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7813
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7879
 msgid "No more unvisited links."
 msgstr "لا روابط غير مزارة أخرى."
 
 #. Translators: this is for navigating HTML content by
 #. moving from link to link.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7901
-#: ../src/orca/scripts/toolkits/Gecko/script.py:7968
+#: ../src/orca/scripts/toolkits/Gecko/script.py:7955
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8022
 msgid "No more visited links."
 msgstr "لا روابط مزارة أخرى."
 
 #. Translators: this is for navigating HTML content by
 #. moving from blockquote to blockquote.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8041
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8112
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8095
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8166
 msgid "No more blockquotes."
 msgstr "لا قطع أخرى."
 
 #. Translators: this is for navigating HTML content by
 #. moving from form field to form field.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8172
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8231
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8226
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8285
 msgid "No more form fields."
 msgstr "لا مجالات أخرى."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8258
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8312
 #, python-format
 msgid "Row %d, column %d."
 msgstr "صف %d، عمود %d"
@@ -7518,15 +7551,15 @@ msgstr "صف %d، عمود %d"
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8289
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8339
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8343
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8393
 msgid "Non-uniform"
 msgstr "غير متسق"
 
 #. Translators: this represents the number of rows in an HTML table.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8294
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8344
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8348
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8398
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -7537,8 +7570,8 @@ msgstr[3] "جدول بـ %d صف"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8299
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8349
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8353
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8403
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -7550,48 +7583,48 @@ msgstr[3] "%d عمود"
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8311
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8360
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8365
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8414
 msgid "No more tables."
 msgstr "لا جداول أخرى."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8406
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8460
 msgid "Beginning of row."
 msgstr "بداية الصف."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8411
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8466
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8517
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8572
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8589
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8609
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8465
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8520
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8571
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8626
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8643
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8663
 msgid "Not in a table."
 msgstr "ليس في جدول."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8461
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8515
 msgid "End of row."
 msgstr "نهاية الصف."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8512
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8566
 msgid "Top of column."
 msgstr "أعلى العمود."
 
 #. Translators: this is for navigating HTML content by
 #. moving from table cell to table cell.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8567
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8621
 msgid "Bottom of column."
 msgstr "أسفل العمود."
 
@@ -7599,8 +7632,8 @@ msgstr "أسفل العمود."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8650
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8689
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8704
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8743
 #, fuzzy
 msgid "No more live regions."
 msgstr "لا عناصر قائمة أخرى."
@@ -7608,21 +7641,21 @@ msgstr "لا عناصر قائمة أخرى."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8698
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8708
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8732
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8742
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8752
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8762
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8786
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8796
 msgid "Live region support is off"
 msgstr ""
 
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8716
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8770
 msgid "Live regions monitoring on"
 msgstr ""
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8723
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8777
 msgid "Live regions monitoring off"
 msgstr ""
 
@@ -7633,7 +7666,7 @@ msgstr ""
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8760
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8814
 msgid "Gecko is controlling the caret."
 msgstr "يتحكّم جيكو في المؤشر."
 
@@ -7644,7 +7677,7 @@ msgstr "يتحكّم جيكو في المؤشر."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8772
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8826
 msgid "Orca is controlling the caret."
 msgstr "يتحكّم أوركا بالمؤشر."
 
@@ -7658,7 +7691,7 @@ msgstr "يتحكّم أوركا بالمؤشر."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8796
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8850
 msgid "Structural navigation keys on."
 msgstr "مفاتيح التصفح مفعلة."
 
@@ -7672,7 +7705,7 @@ msgstr "مفاتيح التصفح مفعلة."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:8808
+#: ../src/orca/scripts/toolkits/Gecko/script.py:8862
 msgid "Structural navigation keys off."
 msgstr "مفاتيح التصفح معطلة."
 
@@ -7778,35 +7811,35 @@ msgstr "غير منتقى"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:840
+#: ../src/orca/settings.py:891
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:845
+#: ../src/orca/settings.py:896
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:850
+#: ../src/orca/settings.py:901
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:855
+#: ../src/orca/settings.py:906
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
-#: ../src/orca/settings.py:860
+#: ../src/orca/settings.py:911
 msgid "yelp"
 msgstr "يلب"
 
@@ -7814,7 +7847,7 @@ msgstr "يلب"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:866
+#: ../src/orca/settings.py:917
 msgid "Deer Park"
 msgstr "ديير بارك"
 
@@ -7822,7 +7855,7 @@ msgstr "ديير بارك"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:872
+#: ../src/orca/settings.py:923
 msgid "Bon Echo"
 msgstr "بون إيكو"
 
@@ -7830,35 +7863,35 @@ msgstr "بون إيكو"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:878
+#: ../src/orca/settings.py:929
 msgid "Minefield"
 msgstr "حقل الألغام"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:883
+#: ../src/orca/settings.py:934
 msgid "Mail/News"
 msgstr "رسائل/أخبار"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:888
+#: ../src/orca/settings.py:939
 msgid "bug-buddy"
 msgstr "باج بادي"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:893
+#: ../src/orca/settings.py:944
 msgid "vte"
 msgstr "فتي"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:898
+#: ../src/orca/settings.py:949
 #, fuzzy
 msgid "gaim"
 msgstr "انيم"
@@ -7894,10 +7927,22 @@ msgstr "نظام النطق"
 msgid "%s default voice"
 msgstr " %s صوت افتراضي"
 
+#. Translators: this tells the user how many unfocused
+#. alert and dialog windows that this application has.
+#.
+#: ../src/orca/speechgenerator.py:628 ../src/orca/where_am_I.py:1630
+#, python-format
+msgid "%d unfocused dialog"
+msgid_plural "%d unfocused dialogs"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
 #.
-#: ../src/orca/speechgenerator.py:1561
+#: ../src/orca/speechgenerator.py:1582
 msgid "tear off"
 msgstr "قلع"
 
@@ -7931,12 +7976,12 @@ msgstr "%s صفحة"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/where_am_I.py:575
+#: ../src/orca/where_am_I.py:576
 #, fuzzy, python-format
 msgid "column %d of %d"
 msgstr "عمود %d"
 
-#: ../src/orca/where_am_I.py:700
+#: ../src/orca/where_am_I.py:701
 msgid "Icon panel"
 msgstr "لوحة الإيقونات"
 
@@ -7944,27 +7989,27 @@ msgstr "لوحة الإيقونات"
 #. protocols.
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/where_am_I.py:737
+#: ../src/orca/where_am_I.py:738
 #, python-format
 msgid "%s link"
 msgstr "%s وصلة"
 
-#: ../src/orca/where_am_I.py:747
+#: ../src/orca/where_am_I.py:748
 #, python-format
 msgid "%s link to %s"
 msgstr "%s وصلة لـ %s"
 
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
-#: ../src/orca/where_am_I.py:757
+#: ../src/orca/where_am_I.py:758
 msgid "same page"
 msgstr "نفس الصفحة"
 
-#: ../src/orca/where_am_I.py:759 ../src/orca/where_am_I.py:767
+#: ../src/orca/where_am_I.py:760 ../src/orca/where_am_I.py:768
 msgid "same site"
 msgstr "نفس الموقع"
 
-#: ../src/orca/where_am_I.py:769
+#: ../src/orca/where_am_I.py:770
 msgid "different site"
 msgstr "موقع مختلف"
 
@@ -7972,7 +8017,7 @@ msgstr "موقع مختلف"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:907
+#: ../src/orca/where_am_I.py:908
 #, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
@@ -7985,14 +8030,14 @@ msgstr[3] "تم اختيار %d عنصرا من %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:917
+#: ../src/orca/where_am_I.py:918
 #, fuzzy, python-format
 msgid "on item %d of %d"
 msgstr "العنصر %d من %d"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/where_am_I.py:950
+#: ../src/orca/where_am_I.py:951
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8003,21 +8048,21 @@ msgstr[3] "%d بايت"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/where_am_I.py:954
+#: ../src/orca/where_am_I.py:955
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f كيلوبايت"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/where_am_I.py:958
+#: ../src/orca/where_am_I.py:959
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f ميغابايت"
 
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:1076 ../src/orca/where_am_I.py:1120
+#: ../src/orca/where_am_I.py:1077 ../src/orca/where_am_I.py:1121
 #, python-format
 msgid "item %d of %d"
 msgstr "العنصر %d من %d"
@@ -8026,7 +8071,7 @@ msgstr "العنصر %d من %d"
 #. that gets activated when Enter is pressed anywhere within that
 #. dialog box.
 #.
-#: ../src/orca/where_am_I.py:1758
+#: ../src/orca/where_am_I.py:1772
 #, python-format
 msgid "Default button is %s"
 msgstr "الزر الإفتراضي هو %s"
@@ -8154,7 +8199,7 @@ msgstr "الزر الإفتراضي هو %s"
 #~ msgstr "اضرب"
 
 #~ msgid "Reloads user settings and reinitializes services as necessary."
-#~ msgstr "يعيد تحميل تعيينات المستخدم و يعيد بدأ الخوادم اللازمة."
+#~ msgstr "يعيد تحميل تعيينات المستخدم و يعيد بدأ الخواديم اللازمة."
 
 #~ msgid "User logged out - shutting down."
 #~ msgstr "خرج المستخدم  - الخروج."
