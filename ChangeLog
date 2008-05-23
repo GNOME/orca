@@ -1,3 +1,9 @@
+2008-05-23  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Fix for bug #530368 – Only move focus if the event is for the 
+          focused/active window.
+
 2008-05-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:
