@@ -10,13 +10,12 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-30 14:57+0200\n"
-"PO-Revision-Date: 2008-03-02 16:23+0100\n"
+"PO-Revision-Date: 2008-05-23 17:01+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../orca.desktop.in.h:1
@@ -1466,7 +1465,7 @@ msgstr "Kimondja az állapotsort."
 #.
 #: ../src/orca/default.py:221
 msgid "Opens the Orca Find dialog."
-msgstr "Megnyitja az Orca keresés párbeszédablakát."
+msgstr "Megnyitja az Orka keresés párbeszédablakát."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -2909,7 +2908,7 @@ msgstr "Ugrás a következő objektumra."
 #.
 #: ../src/orca/Gecko.py:2492
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr "Váltás a Gecko beépített vagy az Orca mutatónavigáció között."
+msgstr "Váltás a Gecko beépített vagy az Orka mutatónavigáció között."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -2931,7 +2930,7 @@ msgstr "A strukturált navigációs billentyűk átváltása."
 #.
 #: ../src/orca/Gecko.py:3062
 msgid "Use _Orca Caret Navigation"
-msgstr "_Orca mutatónavigáció használata"
+msgstr "_Orka mutatónavigáció használata"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
@@ -2939,7 +2938,7 @@ msgstr "_Orca mutatónavigáció használata"
 #.
 #: ../src/orca/Gecko.py:3075
 msgid "Use Orca _Structural Navigation"
-msgstr "_Strukturált Orca navigáció használata"
+msgstr "_Strukturált Orka navigáció használata"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -3347,7 +3346,7 @@ msgstr "A Gecko vezérli a mutatót."
 #.
 #: ../src/orca/Gecko.py:10820
 msgid "Orca is controlling the caret."
-msgstr "Az Orca vezérli a mutatót."
+msgstr "Az Orka vezérli a mutatót."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around the HTML content by object type.
@@ -3983,7 +3982,7 @@ msgstr "Csak _teljes szóra"
 
 #: ../src/orca/orca-find.glade.h:6
 msgid "Orca Find Dialog"
-msgstr "Orca keresés párbeszédablak"
+msgstr "Orka keresés párbeszédablak"
 
 #: ../src/orca/orca-find.glade.h:7
 msgid "Search _backwards"
@@ -4446,7 +4445,7 @@ msgstr "Orka beállítások indítása. Ez eltarthat egy ideig."
 
 #: ../src/orca/orca-mainwin.glade.h:1
 msgid "Orca Screen Reader / Magnifier"
-msgstr "Orca képernyőolvasó és nagyító"
+msgstr "Orka képernyőolvasó és nagyító"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
@@ -4487,7 +4486,7 @@ msgstr "Beszéd tiltása."
 #.
 #: ../src/orca/orca.py:886
 msgid "Orca user settings reloaded."
-msgstr "Az Orka felhasználói beállításainak újratöltése megtörtént."
+msgstr "Az Orka felhasználói beállítások újratöltése megtörtént."
 
 #: ../src/orca/orca.py:1285
 msgid "Usage: orca [OPTION...]"
@@ -4609,7 +4608,7 @@ msgstr "A kapcsoló használatának megakadályozása"
 #.
 #: ../src/orca/orca.py:1358
 msgid "Quits Orca (if shell script used)"
-msgstr "Kilépés az Orcaból (parancsfájl használata esetén)"
+msgstr "Kilépés az Orkából (parancsfájl használata esetén)"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
@@ -4620,7 +4619,7 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
-"Ha az orca nem lett még testre szabva, akkor az orca \n"
+"Ha az orka nem lett még testre szabva, akkor az orka \n"
 "beállítások párbeszédablak automatikusan megjelenik, kivéve\n"
 "ha a -n vagy a --no-setup kapcsolót használja."
 
@@ -4995,7 +4994,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:106
 msgid "Orca Modifier Keys"
-msgstr "Orca módosítóbillentyűk"
+msgstr "Orka módosítóbillentyűk"
 
 #: ../src/orca/orca-setup.glade.h:107
 msgid "Orca Preferences"
@@ -5003,7 +5002,7 @@ msgstr "Beállítások"
 
 #: ../src/orca/orca-setup.glade.h:108
 msgid "Orca _Modifier Key(s):"
-msgstr "Orca _módosítóbillentyűk:"
+msgstr "Orka _módosítóbillentyűk:"
 
 #: ../src/orca/orca-setup.glade.h:109
 msgid "Pi_tch:"
@@ -5025,7 +5024,7 @@ msgstr "Kiejtés"
 
 #: ../src/orca/orca-setup.glade.h:115
 msgid "Quit Orca _without confirmation"
-msgstr "Kilépés az Orca programból jóváhagyás _nélkül"
+msgstr "Kilépés az Orka programból jóváhagyás _nélkül"
 
 #: ../src/orca/orca-setup.glade.h:116
 msgid "R_ed:"
@@ -5046,7 +5045,7 @@ msgstr "Nagyítási a_rány:"
 
 #: ../src/orca/orca-setup.glade.h:121
 msgid "Show Orca _main window"
-msgstr "Az Or_ca főablakának megjelenítése"
+msgstr "Az Or_ka főablakának megjelenítése"
 
 #: ../src/orca/orca-setup.glade.h:123
 msgid "Speak _indentation and justification"
@@ -5114,7 +5113,7 @@ msgid ""
 "\n"
 "Please close it before opening a new one."
 msgstr ""
-"Egy Orca beállítások párbeszédablak már nyitva van.\n"
+"Egy Orka beállítások párbeszédablak már nyitva van.\n"
 "\n"
 "Zárja be a párbeszédablakot egy új megnyitása előtt."
 
@@ -5252,10 +5251,10 @@ msgid ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"a : aladár, b : béla, c : cecil, d : dénes, e : elemér, é : éva, f : ferenc, "
+"a : aladár, á : ádám, b : béla, c : cecil, d : dénes, e : elemér, é : éva, f : ferenc, "
 "g : gábor, h : hugó, i : ilona, í : ilona hosszú, j : józsef, k : károly, "
 "l : lászló, m : márton, n: nándor, o : olga, ó : olga hosszú, ö : ödön, ő : "
-"ödön hosszú, ü : ürmös, ű : ürmös hosszú, p : péter, q : velle, r : róbert, "
+"ödön hosszú, ü : ürmös, ű : ürmös hosszú, p : péter, q : kvelle, r : róbert, "
 "s : sándor, t : tamás, u : ubul, ú : ubul hosszú, v : vilmos, w : dupla "
 "vilmos, x : xénia, y : ipszilon, z : zoltán"
 
@@ -7644,3 +7643,4 @@ msgstr "Alapértelmezett billentyű: %s"
 
 #~ msgid "Exits learn mode."
 #~ msgstr "Kilépés a tanulási módból."
+
