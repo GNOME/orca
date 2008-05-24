@@ -1,3 +1,9 @@
+2008-05-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Slight tweak to fix for bug #530368. Make sure that 
+          event.host_application is not None as well.
+
 2008-05-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
