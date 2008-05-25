@@ -4067,7 +4067,7 @@ msgstr "Görgetés"
 #.
 #: ../src/orca/orca_gui_prefs.py:194
 msgid "Function"
-msgstr "Függvény"
+msgstr "Funkció"
 
 #. Translators: Key Binding is a table column header where
 #. the cells in the column represent keyboard combinations
