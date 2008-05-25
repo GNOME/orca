@@ -1,3 +1,10 @@
+2008-05-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Removed patch for bug #530368 – Only move focus if the event 
+          is for the focused/active window. This breaks the 
+          gnome-screensaver lockscreen window; password is not announced.
+
 2008-05-24  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

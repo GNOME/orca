@@ -178,15 +178,6 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     if obj == orca_state.locusOfFocus:
         return
 
-    # If this event is not for the currently active script, then just return.
-    #
-    if event and event.source and \
-       event.host_application and orca_state.activeScript:
-        currentApp = orca_state.activeScript.app.name
-        if currentApp != event.host_application.name and \
-           currentApp != event.source.getApplication().name:
-            return
-
     oldLocusOfFocus = orca_state.locusOfFocus
     try:
         # Just to see if we have a valid object.
