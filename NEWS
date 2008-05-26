@@ -1,3 +1,58 @@
+2.22.2 - 26-May-2008
+
+General:
+
+* Fix for bug #517387 - Orca should not read password out in gdm login
+  window.  This just turns off key echo when the login window is up.
+  The real fix belongs in gdm (see bug #529145).
+
+* Fix for bug #519901 - Orca doesn't warn via braille that an
+  inaccessible object got the focus.
+
+* Fix for bug #522797 - Orca should not speak false "inaccessible"
+  messages when switching applications.
+
+* Fix for bug #523731 - Pidgin events interfere with app-specific
+  Prefs dialog.
+
+* Fix for bug #525644 - Pidgin buddy status changes cause Orca to
+  display "cell" in braille.
+
+* Fix for bug #525831 - isn't properly handling SIGTERM.
+
+* Fix for bug #528507 - Escape doesn't exit "learn mode" if the active
+  script changes.
+
+* Fix for bug #528797 - gnome-speech inappropriately uses
+  g_return_if_fail.  Only set "punctuation mode" if we can.
+
+Evolution:
+
+* Fix for bug #533499 - Evolution contacts not being spoken when you
+  navigate them.
+
+Firefox:
+
+* Fix for bug #517736 - whereAmI does not handle text with embedded
+  object characters
+
+* Fix for bug #519416 - Zoomer loses focus when doing a web search.
+
+* Fix for bug #527959 - Incorrect caret movement in Firefox 3 on
+  certain Web pages.
+
+* Fix for bug #530766 - (ff3) split headings not fully read when nav
+  by structure.
+
+* Fix for bug #533125 - Orca does not speak Search textbox in Firefox
+  Download Manager if it is empty.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+
+==========
+
 2.22.1 - 07-Apr-2008
 
 General:
