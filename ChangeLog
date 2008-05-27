@@ -1,3 +1,9 @@
+2008-05-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          src/orca/mouse_review.py:
+          Fix for bug #534383 - Orca mouse review traceback at startup.
+
 2008-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

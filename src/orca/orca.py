@@ -157,7 +157,12 @@ def getScriptForApp(app):
 
     Returns a Script instance.
     """
-    return _PRESENTATION_MANAGERS[_currentPresentationManager].getScript(app)
+
+    script = None
+    if _currentPresentationManager >= 0:
+        script = \
+            _PRESENTATION_MANAGERS[_currentPresentationManager].getScript(app)
+    return script
 
 ########################################################################
 #                                                                      #

@@ -198,6 +198,9 @@ class MouseReviewer:
         - y: Y coordinate.
         """
         current_element = self._getContextUnderMouse(x, y)
+        if not current_element:
+            return
+
         self._currentMouseOver, self._oldMouseOver = \
             current_element, self._currentMouseOver
 
@@ -283,11 +286,12 @@ class MouseReviewer:
             if not app:
                 continue
             script = orca.getScriptForApp(app)
+            if not script:
+                continue
             for frame in app:
                 if not frame:
                     continue
-                acc = script.getComponentAtDesktopCoords(
-                    frame, x, y)
+                acc = script.getComponentAtDesktopCoords(frame, x, y)
                 if acc:
                     try:
                         z_order = self._getZOrder(frame.name)
