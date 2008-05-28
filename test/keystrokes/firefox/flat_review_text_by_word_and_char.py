@@ -187,7 +187,7 @@ sequence.append(utils.AssertPresentationAction(
     "flat review next char", 
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and  $l'",
      "     VISIBLE:  'sition! Our chief weapon is surp', cursor=28",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
@@ -238,7 +238,7 @@ sequence.append(utils.AssertPresentationAction(
     "flat review previous char", 
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and  $l'",
      "     VISIBLE:  'sition! Our chief weapon is surp', cursor=28",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))

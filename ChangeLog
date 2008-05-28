@@ -4,6 +4,11 @@
           Fix for bug #532069 - Orca should read field labels on the NLS
           site.
 
+        * test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/flat_review_text_by_word_and_char.py:
+          Updated regression tests to reflect that we now say "space" rather
+          than " ".
+
 2008-05-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

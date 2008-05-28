@@ -150,7 +150,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'this is a  $l', cursor=11",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a  $l'",
      "     VISIBLE:  'this is a  $l', cursor=10",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 ########################################################################
 # Control Backspace 3 times thus removing "this is a" word by word from
@@ -299,7 +299,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - We are speaking the new caret location -- we land on a space -- rather than the word that was just deleted.",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is this $l'",
      "     VISIBLE:  'so is this $l', cursor=3",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))
@@ -308,7 +308,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - We are speaking the new caret location -- we land on a space -- rather than the word that was just deleted.",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  is this $l'",
      "     VISIBLE:  ' is this $l', cursor=4",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 ########################################################################
 # Press Delete 5 times to delete "<space>this".
@@ -319,7 +319,7 @@ sequence.append(utils.AssertPresentationAction(
     "Delete",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  this $l'",
      "     VISIBLE:  ' this $l', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
