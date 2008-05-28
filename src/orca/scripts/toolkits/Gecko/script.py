@@ -116,7 +116,9 @@ class Script(default.Script):
              Script.goPreviousLine,
              Script.expandComboBox,
              Script.goTopOfFile,
-             Script.goBottomOfFile]
+             Script.goBottomOfFile,
+             Script.goBeginningOfLine,
+             Script.goEndOfLine]
 
         # _structuralNavigationFunctions are functions that represent
         # more complex navigation functions (e.g., moving by heading,
@@ -338,6 +340,22 @@ class Script(default.Script):
                 # end of an HTML document.
                 #
                 _("Goes to the bottom of the file."))
+
+        self.inputEventHandlers["goBeginningOfLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.goBeginningOfLine,
+                # Translators: this command will move the user to the
+                # beginning of the line in an HTML document.
+                #
+                _("Goes to the beginning of the line."))
+
+        self.inputEventHandlers["goEndOfLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.goEndOfLine,
+                # Translators: this command will move the user to the
+                # end of the line in an HTML document.
+                #
+                _("Goes to the end of the line."))
 
         self.inputEventHandlers["expandComboBoxHandler"] = \
             input_event.InputEventHandler(
@@ -905,6 +923,20 @@ class Script(default.Script):
                 fullModMask,
                 controlModMask,
                 self.inputEventHandlers["goBottomOfFileHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Home",
+                fullModMask,
+                0,
+                self.inputEventHandlers["goBeginningOfLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "End",
+                fullModMask,
+                0,
+                self.inputEventHandlers["goEndOfLineHandler"]))
 
         return keyBindings
 
@@ -3356,6 +3388,12 @@ class Script(default.Script):
             # at the end.
             #
             newLineAdjustment = int(not singleLine)
+
+            # Home and End should not be overridden if we're in an
+            # entry.
+            #
+            if keyboardEvent.event_string in ["Home", "End"]:
+                return False
 
             # We want to use our caret navigation model in an entry if
             # there's nothing in the entry, we're at the beginning of
@@ -6861,6 +6899,28 @@ class Script(default.Script):
         #
         #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
         #self.dumpContents(inputEvent, contents)
+
+    def goBeginningOfLine(self, inputEvent):
+        """Positions the caret offset at the beginning of the line."""
+
+        [obj, characterOffset] = self.getCaretContext()
+        line = self.currentLineContents \
+               or self.getLineContentsAtOffset(obj, characterOffset)
+        obj, characterOffset = line[0][0], line[0][1]
+        self.setCaretPosition(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
+        self.updateBraille(obj)
+
+    def goEndOfLine(self, inputEvent):
+        """Positions the caret offset at the end of the line."""
+
+        [obj, characterOffset] = self.getCaretContext()
+        line = self.currentLineContents \
+               or self.getLineContentsAtOffset(obj, characterOffset)
+        obj, characterOffset = line[-1][0], line[-1][2] - 1
+        self.setCaretPosition(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
+        self.updateBraille(obj)
 
     def goTopOfFile(self, inputEvent):
         """Positions the caret offset at the beginning of the document."""

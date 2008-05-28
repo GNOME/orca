@@ -30,8 +30,13 @@ sequence.append(WaitForFocus("Search for bugs",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Press Control+Home to move to the top.
+# Press Orca+Right to get out of the focused entry, then Control+Home
+# to move to the top.
 #
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("Right"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(

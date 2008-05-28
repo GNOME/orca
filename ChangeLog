@@ -1,6 +1,13 @@
 2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          Fix for bug #535149 - Orca should override Home and End in 
+          Firefox 3 and Thunderbird.
+
+2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
           Fix for bug #532069 - Orca should read field labels on the NLS
           site.
 
