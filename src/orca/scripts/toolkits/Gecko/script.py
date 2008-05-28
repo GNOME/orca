@@ -8667,7 +8667,7 @@ class Script(default.Script):
                 # changed, and we don't want to speak headers if we're in
                 # a header row.
                 #
-                if script.settings.speakCellHeaders \
+                if script_settings.speakCellHeaders \
                    and not self.isInHeaderRow(obj):
                     rowHeaders = self.getRowHeaders(obj)
                     for header in rowHeaders:
