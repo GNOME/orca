@@ -1,3 +1,25 @@
+2008-05-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/pidgin/constants.py:            (removed)
+          src/orca/scripts/apps/pidgin/__init__.py:
+          src/orca/scripts/apps/pidgin/Makefile.am:
+          src/orca/scripts/apps/pidgin/script.py:
+          src/orca/scripts/apps/pidgin/script_settings.py:      (added)
+          src/orca/scripts/apps/soffice/constants.py:           (removed)
+          src/orca/scripts/apps/soffice/speech_generator.py
+          src/orca/scripts/apps/soffice/__init__.py:
+          src/orca/scripts/apps/soffice/Makefile.am:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/apps/soffice/script_settings.py:     (added)
+          src/orca/scripts/toolkits/Gecko/constants.py:         (removed)
+          src/orca/scripts/toolkits/Gecko/__init__.py:
+          src/orca/scripts/toolkits/Gecko/Makefile.am:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/toolkits/Gecko/script_settings.py:   (added)
+          Further changes to bug #528147 - Moved user settable script
+          variables into script_settings.py and removed constants.py.
+          Fixed up code to use this new format.
+
 2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

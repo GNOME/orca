@@ -43,7 +43,7 @@ from orca.orca_i18n import _ # for gettext support
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
 from where_am_i import WhereAmI
-from constants import speakCellCoordinates
+import script_settings
 
 class Script(default.Script):
 
@@ -290,7 +290,7 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    speakCellCoordinates)
+                                    script_settings.speakCellCoordinates)
 
         return vbox
 
@@ -302,17 +302,12 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global speakCellCoordinates
-
         prefs.writelines("\n")
-        speakCellCoordinates = \
+        script_settings.speakCellCoordinates = \
                  self.speakCellCoordinatesCheckButton.get_active()
-        prefix = "orca.scripts.apps.soffice.script"
+        prefix = "orca.scripts.apps.soffice.script_settings"
         prefs.writelines("%s.speakCellCoordinates = %s\n" % \
-                         (prefix, speakCellCoordinates))
-        prefix = "orca.scripts.apps.soffice.speech_generator"
-        prefs.writelines("%s.speakCellCoordinates = %s\n" % \
-                         (prefix, speakCellCoordinates))
+                         (prefix, script_settings.speakCellCoordinates))
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This

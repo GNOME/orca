@@ -32,7 +32,7 @@ import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
 
-from constants import speakCellCoordinates
+import script_settings
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForComboBox so that we can provide a name for
@@ -256,7 +256,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             try:
                 if obj.queryText():
                     objectText = self._script.getText(obj, 0, -1)
-                    if not speakCellCoordinates and len(objectText) == 0:
+                    if not script_settings.speakCellCoordinates and \
+                            len(objectText) == 0:
                         # Translators: this indicates an empty (blank) spread
                         # sheet cell.
                         #
@@ -266,7 +267,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             except NotImplementedError:
                 pass
 
-            if speakCellCoordinates:
+            if script_settings.speakCellCoordinates:
                 nameList = obj.name.split()
                 utterances.append(nameList[1])
         else:

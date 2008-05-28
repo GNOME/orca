@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for gaim.  This provides the ability for Orca to
+"""Custom script for pidgin.  This provides the ability for Orca to
 monitor both the IM input and IM output text areas at the same time.
 
 The following script specific key sequences are supported:
@@ -49,7 +49,7 @@ from orca.orca_i18n import _
 
 from speech_generator import SpeechGenerator
 from where_am_i import WhereAmI
-from constants import *
+import script_settings
 
 ########################################################################
 #                                                                      #
@@ -183,7 +183,7 @@ class Script(default.Script):
         prefix chat room messages with the name of the chat room.
         """
 
-        debug.println(self.debugLevel, "gaim.setupInputEventHandlers.")
+        debug.println(self.debugLevel, "pidgin.setupInputEventHandlers.")
 
         default.Script.setupInputEventHandlers(self)
         self.inputEventHandlers["togglePrefixHandler"] = \
@@ -218,7 +218,7 @@ class Script(default.Script):
         Returns an instance of keybindings.KeyBindings.
         """
 
-        debug.println(self.debugLevel, "gaim.getKeyBindings.")
+        debug.println(self.debugLevel, "pidgin.getKeyBindings.")
 
         keyBindings = default.Script.getKeyBindings(self)
         keyBindings.add(
@@ -284,7 +284,7 @@ class Script(default.Script):
         gtk.Widget.show(self.speakNameCheckButton)
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
         gtk.ToggleButton.set_active(self.speakNameCheckButton,
-                                    prefixChatMessage)
+                                    script_settings.prefixChatMessage)
 
         # Translators: If this checkbox is checked, then Orca will tell
         # you when one of your buddies is typing a message.
@@ -294,7 +294,7 @@ class Script(default.Script):
         gtk.Widget.show(self.buddyTypingCheckButton)
         gtk.Box.pack_start(vbox, self.buddyTypingCheckButton, False, False, 0)
         gtk.ToggleButton.set_active(self.buddyTypingCheckButton,
-                                    announceBuddyTyping)
+                                    script_settings.announceBuddyTyping)
 
         # Translators: If this checkbox is checked, then Orca will provide
         # the user with chat room specific message histories rather than just
@@ -307,7 +307,7 @@ class Script(default.Script):
         gtk.Box.pack_start(vbox, self.chatRoomHistoriesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.chatRoomHistoriesCheckButton,
-                                    chatRoomHistories)
+                                    script_settings.chatRoomHistories)
 
         # "Speak Messages" frame.
         #
@@ -333,7 +333,8 @@ class Script(default.Script):
         gtk.Box.pack_start(messagesVBox, self.allMessagesRadioButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.allMessagesRadioButton,
-                                    (speakMessages == SPEAK_ALL_MESSAGES))
+            (script_settings.speakMessages == \
+                     script_settings.SPEAK_ALL_MESSAGES))
 
 
         # Translators: Orca will speak only new chat messages for the channel
@@ -347,7 +348,8 @@ class Script(default.Script):
         gtk.Box.pack_start(messagesVBox, self.focusedChannelRadioButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.focusedChannelRadioButton,
-                              (speakMessages == SPEAK_CHANNEL_WITH_FOCUS))
+            (script_settings.speakMessages == \
+                     script_settings.SPEAK_CHANNEL_WITH_FOCUS))
 
         # Translators: Orca will speak new chat messages for all channels 
         # only when the pidgin application has focus.
@@ -359,7 +361,8 @@ class Script(default.Script):
         gtk.Box.pack_start(messagesVBox, self.allChannelsRadioButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.allChannelsRadioButton,
-                       (speakMessages == SPEAK_ALL_CHANNELS_WHEN_FOCUSED))
+            (script_settings.speakMessages == \
+                     script_settings.SPEAK_ALL_CHANNELS_WHEN_FOCUSED))
 
         # Translators: this is the title of a panel holding options for
         # how messages in the pidgin chat rooms should be spoken.
@@ -380,39 +383,37 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global announceBuddyTyping, chatRoomHistories
-        global prefixChatMessage, speakMessages
-
-        prefixChatMessage = self.speakNameCheckButton.get_active()
+        prefix = "orca.scripts.apps.pidgin.script_settings"
+        script_settings.prefixChatMessage = \
+                self.speakNameCheckButton.get_active()
         prefs.writelines("\n")
-        prefs.writelines( \
-          "orca.scripts.apps.pidgin.script.prefixChatMessage = %s\n" % \
-                         prefixChatMessage)
+        prefs.writelines("%s.prefixChatMessage = %s\n" % \
+                         (prefix, script_settings.prefixChatMessage))
 
-        announceBuddyTyping = self.buddyTypingCheckButton.get_active()
-        prefs.writelines( \
-          "orca.scripts.apps.pidgin.script.announceBuddyTyping = %s\n" % \
-                         announceBuddyTyping)
+        script_settings.announceBuddyTyping = \
+                self.buddyTypingCheckButton.get_active()
+        prefs.writelines("%s.announceBuddyTyping = %s\n" % \
+                         (prefix, script_settings.announceBuddyTyping))
 
-        chatRoomHistories = self.chatRoomHistoriesCheckButton.get_active()
-        prefs.writelines( \
-          "orca.scripts.apps.pidgin.script.chatRoomHistories = %s\n" % \
-                         chatRoomHistories)
+        script_settings.chatRoomHistories = \
+                self.chatRoomHistoriesCheckButton.get_active()
+        prefs.writelines("%s.chatRoomHistories = %s\n" % \
+                         (prefix, script_settings.chatRoomHistories))
 
         if self.allMessagesRadioButton.get_active():
-            speakMessages = SPEAK_ALL_MESSAGES
-            option = "orca.scripts.apps.pidgin.script.SPEAK_ALL_MESSAGES"
+            script_settings.speakMessages = \
+                    script_settings.SPEAK_ALL_MESSAGES
+            option = ("%s.SPEAK_ALL_MESSAGES" % prefix)
         elif self.focusedChannelRadioButton.get_active():
-            speakMessages = SPEAK_CHANNEL_WITH_FOCUS
-            option = \
-              "orca.scripts.apps.pidgin.script.SPEAK_CHANNEL_WITH_FOCUS"
+            script_settings.speakMessages = \
+                    script_settings.SPEAK_CHANNEL_WITH_FOCUS
+            option = ("%s.SPEAK_CHANNEL_WITH_FOCUS" % prefix)
         elif self.allChannelsRadioButton.get_active():
-            speakMessages = SPEAK_ALL_CHANNELS_WHEN_FOCUSED
-            option = \
-            "orca.scripts.apps.pidgin.script.SPEAK_ALL_CHANNELS_WHEN_FOCUSED"
+            script_settings.speakMessages = \
+                    script_settings.SPEAK_ALL_CHANNELS_WHEN_FOCUSED
+            option = ("%s.SPEAK_ALL_CHANNELS_WHEN_FOCUSED" % prefix)
         prefs.writelines("\n")
-        prefs.writelines( \
-          "orca.scripts.apps.pidgin.script.speakMessages = %s\n" % option)
+        prefs.writelines("%s.speakMessages = %s\n" % (prefix, option))
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -448,13 +449,12 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global prefixChatMessage
-
-        debug.println(self.debugLevel, "gaim.togglePrefix.")
+        debug.println(self.debugLevel, "pidgin.togglePrefix.")
 
         line = _("speak chat room name.")
-        prefixChatMessage = not prefixChatMessage
-        if not prefixChatMessage:
+        script_settings.prefixChatMessage = \
+                not script_settings.prefixChatMessage
+        if not script_settings.prefixChatMessage:
             line = _("Do not speak chat room name.")
 
         speech.speak(line)
@@ -468,13 +468,12 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global announceBuddyTyping
-
-        debug.println(self.debugLevel, "gaim.toggleBuddyTyping.")
+        debug.println(self.debugLevel, "pidgin.toggleBuddyTyping.")
 
         line = _("announce when your buddies are typing.")
-        announceBuddyTyping = not announceBuddyTyping
-        if not announceBuddyTyping:
+        script_settings.announceBuddyTyping = \
+                not script_settings.announceBuddyTyping
+        if not script_settings.announceBuddyTyping:
             line = _("Do not announce when your buddies are typing.")
 
         speech.speak(line)
@@ -488,13 +487,12 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global chatRoomHistories
-
-        debug.println(self.debugLevel, "gaim.toggleMessageHistories.")
+        debug.println(self.debugLevel, "pidgin.toggleMessageHistories.")
 
         line = _("Provide chat room specific message histories.")
-        chatRoomHistories = not chatRoomHistories
-        if not chatRoomHistories:
+        script_settings.chatRoomHistories = \
+                not script_settings.chatRoomHistories
+        if not script_settings.chatRoomHistories:
             line = _("Do not provide chat room specific message histories.")
 
         speech.speak(line)
@@ -512,14 +510,17 @@ class Script(default.Script):
         # Only speak/braille the new message if it matches how the user 
         # wants chat messages spoken.
         #
-        if speakMessages == SPEAK_ALL_CHANNELS_WHEN_FOCUSED and \
-           orca_state.activeScript != self:
+        if script_settings.speakMessages == \
+               script_settings.SPEAK_ALL_CHANNELS_WHEN_FOCUSED \
+           and orca_state.activeScript != self:
             return
-        elif speakMessages == SPEAK_CHANNEL_WITH_FOCUS and not hasFocus:
+        elif script_settings.speakMessages == \
+               script_settings.SPEAK_CHANNEL_WITH_FOCUS \
+           and not hasFocus:
             return
 
         text = ""
-        if prefixChatMessage:
+        if script_settings.prefixChatMessage:
             if chatRoomName and chatRoomName != "":
                 text += _("Message from chat room %s") % chatRoomName + " "
         if message and message != "":
@@ -537,12 +538,12 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        debug.println(self.debugLevel, "gaim.readPreviousMessage.")
+        debug.println(self.debugLevel, "pidgin.readPreviousMessage.")
 
         i = int(inputEvent.event_string[1:])
         messageNo = Script.MESSAGE_LIST_LENGTH - i
 
-        if chatRoomHistories:
+        if script_settings.chatRoomHistories:
             chatRoomTab = self.getChatRoomTab(orca_state.locusOfFocus)
             chatRoomName = self.getDisplayedText(chatRoomTab)
             if not chatRoomName in self.chatRoomMessages:
@@ -700,7 +701,7 @@ class Script(default.Script):
         # addition, this is a source of a very small memory leak since
         # we do not free up the entries when the tab goes away.  One
         # would have to engage in hundreds of chats with hundreds of
-        # different people from the same instance of gaim for that
+        # different people from the same instance of pidgin for that
         # memory leak to have an issue here.  One thing we could do if
         # that is deemed a severe enough problem is to check for
         # children-changed events and clean up in that.]]]
@@ -761,14 +762,16 @@ class Script(default.Script):
             attr, start, end = \
                 self.getTextAttributes(event.source, event.detail1)
             if float(attr.get('scale', '1')) < 1:
-                if not announceBuddyTyping or self.lastStatus == message:
+                if not script_settings.announceBuddyTyping or \
+                       self.lastStatus == message:
                     return
                 self.lastStatus = message
             else:
                 self.lastStatus = None
 
             # If the new message came from the room with focus, we don't
-            # want to speak its name even if prefixChatMessage is enabled.
+            # want to speak its name even if script_settings.prefixChatMessage
+            # is enabled.
             #
             state = event.source.getState()
             hasFocus = state.contains(pyatspi.STATE_SHOWING)
@@ -867,12 +870,12 @@ class Script(default.Script):
             #
             if (len(nodes) > 100) or nodes.count(node):
                 debug.println(debug.LEVEL_WARNING,
-                              "gaim.getNodeLevel detected a cycle!!!")
+                              "pidgin.getNodeLevel detected a cycle!!!")
                 done = True
             elif node:
                 nodes.append(node)
                 debug.println(debug.LEVEL_FINEST,
-                              "gaim.getNodeLevel %d" % len(nodes))
+                              "pidgin.getNodeLevel %d" % len(nodes))
             else:
                 done = True
 

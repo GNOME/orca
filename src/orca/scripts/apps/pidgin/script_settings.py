@@ -17,20 +17,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for gaim.  This provides the ability for Orca to
-monitor both the IM input and IM output text areas at the same time.
-
-The following script specific key sequences are supported:
-
-  Insert-h      -  Toggle whether we prefix chat room messages with
-                   the name of the chat room.
-  Insert-[1-9]  -  Speak and braille a previous chat room message.
-"""
-
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 # Whether we prefix chat room messages with the name of the chat room.

@@ -60,7 +60,7 @@ import orca.settings as settings
 import orca.speech as speech
 import orca.speechserver as speechserver
 
-from constants import *
+import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from where_am_i import GeckoWhereAmI
@@ -171,7 +171,7 @@ class Script(default.Script):
              Script.goCellFirst,
              Script.goCellLast]
 
-        if controlCaretNavigation:
+        if script_settings.controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Orca is controlling the caret.")
         else:
@@ -1267,7 +1267,7 @@ class Script(default.Script):
                 orcaModMask,
                 self.inputEventHandlers["goPreviousObjectInOrderHandler"]))
 
-        if controlCaretNavigation:
+        if script_settings.controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
@@ -1330,7 +1330,7 @@ class Script(default.Script):
                            self.controlCaretNavigationCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.controlCaretNavigationCheckButton,
-                                    controlCaretNavigation)
+                                    script_settings.controlCaretNavigation)
 
         # Translators: Orca provides keystrokes to navigate HTML content
         # in a structural manner: go to previous/next header, list item,
@@ -1342,7 +1342,7 @@ class Script(default.Script):
         gtk.Box.pack_start(generalVBox, self.structuralNavigationCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
-                                    structuralNavigationEnabled)
+                                  script_settings.structuralNavigationEnabled)
 
         # Translators: when the user arrows up and down in HTML content,
         # it is some times beneficial to always position the cursor at the
@@ -1357,7 +1357,7 @@ class Script(default.Script):
         gtk.Box.pack_start(generalVBox, self.arrowToLineBeginningCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.arrowToLineBeginningCheckButton,
-                                    arrowToLineBeginning)
+                                    script_settings.arrowToLineBeginning)
 
         # Translators: when the user loads a new page in Firefox, they
         # can optionally tell Orca to automatically start reading a
@@ -1370,7 +1370,7 @@ class Script(default.Script):
         gtk.Box.pack_start(generalVBox, self.sayAllOnLoadCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
-                                    sayAllOnLoad)
+                                    script_settings.sayAllOnLoad)
 
         # Translators: this is the title of a panel holding options for
         # how to navigate HTML content (e.g., Orca caret navigation,
@@ -1405,7 +1405,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    speakCellCoordinates)
+                                    script_settings.speakCellCoordinates)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
@@ -1417,7 +1417,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
-                                    speakCellSpan)
+                                    script_settings.speakCellSpan)
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in HTML content.
@@ -1428,7 +1428,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
-                                    speakCellHeaders)
+                                    script_settings.speakCellHeaders)
 
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in HTML content.
@@ -1439,7 +1439,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
-                                    skipBlankCells)
+                                    script_settings.skipBlankCells)
 
         # Translators: this is the title of a panel containing options
         # for specifying how to navigate tables in HTML content.
@@ -1474,7 +1474,7 @@ class Script(default.Script):
         gtk.Box.pack_start(findVBox, self.speakResultsDuringFindCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakResultsDuringFindCheckButton,
-                                    speakResultsDuringFind)
+                                    script_settings.speakResultsDuringFind)
 
         # Translators: this is an option which dictates whether the line
         # that contains the match from the Find toolbar should always
@@ -1487,7 +1487,7 @@ class Script(default.Script):
         gtk.Box.pack_start(findVBox, self.changedLinesOnlyCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.changedLinesOnlyCheckButton,
-                                    onlySpeakChangedLinesDuringFind)
+                              script_settings.onlySpeakChangedLinesDuringFind)
 
         hbox = gtk.HBox(False, 0)
         gtk.Widget.show(hbox)
@@ -1504,7 +1504,7 @@ class Script(default.Script):
         gtk.Box.pack_start(hbox, self.minimumFindLengthLabel, False, False, 5)
 
         self.minimumFindLengthAdjustment = \
-                       gtk.Adjustment(minimumFindLength, 0, 20, 1)
+                   gtk.Adjustment(script_settings.minimumFindLength, 0, 20, 1)
         self.minimumFindLengthSpinButton = \
                        gtk.SpinButton(self.minimumFindLengthAdjustment, 0.0, 0)
         gtk.Widget.show(self.minimumFindLengthSpinButton)
@@ -1538,61 +1538,54 @@ class Script(default.Script):
         - prefs: file handle for application preferences.
         """
 
-        global controlCaretNavigation, arrowToLineBeginning, sayAllOnLoad
-        global structuralNavigationEnabled
-        global speakCellCoordinates, speakCellSpan
-        global speakCellHeaders, skipBlankCells
-        global speakResultsDuringFind, minimumFindLength
-        global onlySpeakChangedLinesDuringFind
-
         prefs.writelines("\n")
-        prefix = "orca.scripts.toolkits.Gecko.script"
+        prefix = "orca.scripts.toolkits.Gecko.script_settings"
 
         value = self.controlCaretNavigationCheckButton.get_active()
         prefs.writelines("%s.controlCaretNavigation = %s\n" % (prefix, value))
-        controlCaretNavigation = value
+        script_settings.controlCaretNavigation = value
 
         value = self.structuralNavigationCheckButton.get_active()
         prefs.writelines("%s.structuralNavigationEnabled = %s\n" \
                          % (prefix, value))
-        structuralNavigationEnabled = value
+        script_settings.structuralNavigationEnabled = value
 
         value = self.arrowToLineBeginningCheckButton.get_active()
         prefs.writelines("%s.arrowToLineBeginning = %s\n" % (prefix, value))
-        arrowToLineBeginning = value
+        script_settings.arrowToLineBeginning = value
 
         value = self.sayAllOnLoadCheckButton.get_active()
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
-        sayAllOnLoad = value
+        script_settings.sayAllOnLoad = value
 
         value = self.speakCellCoordinatesCheckButton.get_active()
         prefs.writelines("%s.speakCellCoordinates = %s\n" % (prefix, value))
-        speakCellCoordinates = value
+        script_settings.speakCellCoordinates = value
 
         value = self.speakCellSpanCheckButton.get_active()
         prefs.writelines("%s.speakCellSpan = %s\n" % (prefix, value))
-        speakCellSpan = value
+        script_settings.speakCellSpan = value
 
         value = self.speakCellHeadersCheckButton.get_active()
         prefs.writelines("%s.speakCellHeaders = %s\n" % (prefix, value))
-        speakCellHeaders = value
+        script_settings.speakCellHeaders = value
 
         value = self.skipBlankCellsCheckButton.get_active()
         prefs.writelines("%s.skipBlankCells = %s\n" % (prefix, value))
-        skipBlankCells = value
+        script_settings.skipBlankCells = value
 
         value = self.speakResultsDuringFindCheckButton.get_active()
         prefs.writelines("%s.speakResultsDuringFind = %s\n" % (prefix, value))
-        speakResultsDuringFind = value
+        script_settings.speakResultsDuringFind = value
 
         value = self.changedLinesOnlyCheckButton.get_active()
         prefs.writelines("%s.onlySpeakChangedLinesDuringFind = %s\n"\
                          % (prefix, value))
-        onlySpeakChangedLinesDuringFind = value
+        script_settings.onlySpeakChangedLinesDuringFind = value
 
         value = self.minimumFindLengthSpinButton.get_value()
         prefs.writelines("%s.minimumFindLength = %s\n" % (prefix, value))
-        minimumFindLength = value
+        script_settings.minimumFindLength = value
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -1922,11 +1915,12 @@ class Script(default.Script):
                                          event.detail1 - 1,
                                          event.detail1)
             text = self.queryNonEmptyText(event.source)
-            if speakResultsDuringFind and text:
+            if script_settings.speakResultsDuringFind and text:
                 nSelections = text.getNSelections()
                 if nSelections:
                     [start, end] = text.getSelection(0)
-                    enoughSelected = (end - start) >= minimumFindLength
+                    enoughSelected = (end - start) >= \
+                                             script_settings.minimumFindLength
                     lineChanged = not self.onSameLine(origExtents, newExtents)
 
                     # If the user starts backspacing over the text in the
@@ -1943,7 +1937,7 @@ class Script(default.Script):
 
                     if enoughSelected:
                         if lineChanged or not self.madeFindAnnouncement or \
-                           not onlySpeakChangedLinesDuringFind:
+                           not script_settings.onlySpeakChangedLinesDuringFind:
                             line = self.getLineContentsAtOffset(event.source,
                                                                 event.detail1)
                             self.speakContents(line)
@@ -2094,8 +2088,8 @@ class Script(default.Script):
         # to make sure the caret moves somewhat vertically when
         # going up/down by line versus jumping to the beginning of
         # the line.  Note that whether we actually attempt to do
-        # this is handled by the value of the global
-        # arrowToLineBeginning.
+        # this is handled by the value of the 
+        # script_settings.arrowToLineBeginning.
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
@@ -2517,7 +2511,7 @@ class Script(default.Script):
                     if obj.getState().contains(pyatspi.STATE_EDITABLE):
                         speech.speakUtterances(\
                             self.speechGenerator.getSpeech(obj, True))
-                    elif not sayAllOnLoad:
+                    elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
                                                          characterOffset))
@@ -3366,7 +3360,7 @@ class Script(default.Script):
         """Returns True if we should do our own caret navigation.
         """
 
-        if not controlCaretNavigation:
+        if not script_settings.controlCaretNavigation:
             return False
 
         if not self.inDocumentContent():
@@ -3473,7 +3467,7 @@ class Script(default.Script):
                                      pyatspi.ROLE_LIST_ITEM,
                                      pyatspi.ROLE_MENU_ITEM]
 
-        if not structuralNavigationEnabled:
+        if not script_settings.structuralNavigationEnabled:
             return False
 
         if not self.isNavigableAria(orca_state.locusOfFocus):
@@ -3512,7 +3506,7 @@ class Script(default.Script):
         attrs = self._getAttrDictionary(orca_state.locusOfFocus)
         try:
             # ARIA landmark widgets
-            if attrs['xml-roles'] in ARIA_LANDMARKS:
+            if attrs['xml-roles'] in script_settings.ARIA_LANDMARKS:
                 return True
             # ARIA live region
             elif attrs.has_key('container-live'):
@@ -6749,7 +6743,7 @@ class Script(default.Script):
         [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj,
                                                           prevOffset - 1)
 
-        if not arrowToLineBeginning:
+        if not script_settings.arrowToLineBeginning:
             extents = self.getExtents(obj,
                                       characterOffset,
                                       characterOffset + 1)
@@ -6838,7 +6832,7 @@ class Script(default.Script):
         [nextObj, nextOffset] = \
                   self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
 
-        if not arrowToLineBeginning:
+        if not script_settings.arrowToLineBeginning:
             extents = self.getExtents(obj,
                                       characterOffset,
                                       characterOffset + 1)
@@ -7217,7 +7211,7 @@ class Script(default.Script):
                 col = self.getDocumentFrame().queryCollection()
                 # form our list of attribute strings
                 attrs = []
-                for landmark in ARIA_LANDMARKS:
+                for landmark in script_settings.ARIA_LANDMARKS:
                     attrs.append('xml-roles:' + landmark)
                 # define matchRule and find it
                 stateset = pyatspi.StateSet()
@@ -7275,7 +7269,7 @@ class Script(default.Script):
                 col = self.getDocumentFrame().queryCollection()
                 # form our list of attribute strings
                 attrs = []
-                for landmark in ARIA_LANDMARKS:
+                for landmark in script_settings.ARIA_LANDMARKS:
                     attrs.append('xml-roles:' + landmark)
                 # define matchRule and find it
                 stateset = pyatspi.StateSet()
@@ -8367,14 +8361,14 @@ class Script(default.Script):
             #
             speech.speak(_("blank"))
 
-        if speakCellCoordinates:
+        if script_settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(obj)
             # Translators: this represents the (row, col) position of
             # a cell in a table.
             #
             speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
 
-        if spanString and speakCellSpan:
+        if spanString and script_settings.speakCellSpan:
             speech.speak(spanString)
 
     def goPreviousTable(self, inputEvent):
@@ -8499,7 +8493,7 @@ class Script(default.Script):
                 obj = table.getAccessibleAt(row, col - 1)
                 self.lastTableCell = [row, col - 1]
                 if not self.isBlankCell(obj) or \
-                   not skipBlankCells:
+                   not script_settings.skipBlankCells:
                     found = True
                 else:
                     col -= 1
@@ -8509,7 +8503,8 @@ class Script(default.Script):
                 # changed, and we don't want to speak headers if we're in
                 # a header column.
                 #
-                if speakCellHeaders and not self.isInHeaderColumn(obj):
+                if script_settings.speakCellHeaders \
+                   and not self.isInHeaderColumn(obj):
                     colHeaders = self.getColumnHeaders(obj)
                     for header in colHeaders:
                         if not header in oldHeaders:
@@ -8552,7 +8547,7 @@ class Script(default.Script):
                 obj = table.getAccessibleAt(row, nextCol)
                 self.lastTableCell = [row, nextCol]
                 if not self.isBlankCell(obj) or \
-                   not skipBlankCells:
+                   not script_settings.skipBlankCells:
                     found = True
                 else:
                     col += 1
@@ -8564,7 +8559,8 @@ class Script(default.Script):
                 # changed, and we don't want to speak headers if we're in
                 # a header column.
                 #
-                if speakCellHeaders and not self.isInHeaderColumn(obj):
+                if script_settings.speakCellHeaders \
+                   and not self.isInHeaderColumn(obj):
                     colHeaders = self.getColumnHeaders(obj)
                     for header in colHeaders:
                         if not header in oldHeaders:
@@ -8605,7 +8601,7 @@ class Script(default.Script):
                 obj = table.getAccessibleAt(row - 1, col)
                 self.lastTableCell = [row - 1, col]
                 if not self.isBlankCell(obj) or \
-                   not skipBlankCells:
+                   not script_settings.skipBlankCells:
                     found = True
                 else:
                     row -= 1
@@ -8615,7 +8611,8 @@ class Script(default.Script):
                 # changed, and we don't want to speak headers if we're in
                 # a header row.
                 #
-                if speakCellHeaders and not self.isInHeaderRow(obj):
+                if script_settings.speakCellHeaders \
+                   and not self.isInHeaderRow(obj):
                     rowHeaders = self.getRowHeaders(obj)
                     for header in rowHeaders:
                         if not header in oldHeaders:
@@ -8658,7 +8655,7 @@ class Script(default.Script):
                 obj = table.getAccessibleAt(nextRow, col)
                 self.lastTableCell = [nextRow, col]
                 if not self.isBlankCell(obj) or \
-                   not skipBlankCells:
+                   not script_settings.skipBlankCells:
                     found = True
                 else:
                     row += 1
@@ -8670,7 +8667,8 @@ class Script(default.Script):
                 # changed, and we don't want to speak headers if we're in
                 # a header row.
                 #
-                if speakCellHeaders and not self.isInHeaderRow(obj):
+                if script.settings.speakCellHeaders \
+                   and not self.isInHeaderRow(obj):
                     rowHeaders = self.getRowHeaders(obj)
                     for header in rowHeaders:
                         if not header in oldHeaders:
@@ -8861,12 +8859,10 @@ class Script(default.Script):
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""
 
-        global controlCaretNavigation
-
-        if controlCaretNavigation:
+        if script_settings.controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.removeByHandler(keyBinding.handler)
-            controlCaretNavigation = False
+            script_settings.controlCaretNavigation = False
             # Translators: Gecko native caret navigation is where
             # Firefox itself controls how the arrow keys move the caret
             # around HTML content.  It's often broken, so Orca needs
@@ -8876,7 +8872,7 @@ class Script(default.Script):
             #
             string = _("Gecko is controlling the caret.")
         else:
-            controlCaretNavigation = True
+            script_settings.controlCaretNavigation = True
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.add(keyBinding)
             # Translators: Gecko native caret navigation is where
@@ -8895,11 +8891,10 @@ class Script(default.Script):
     def toggleStructuralNavigation(self, inputEvent):
         """Toggles structural navigation keys."""
 
-        global structuralNavigationEnabled
+        script_settings.structuralNavigationEnabled = \
+                not script_settings.structuralNavigationEnabled
 
-        structuralNavigationEnabled = not structuralNavigationEnabled
-
-        if structuralNavigationEnabled:
+        if script_settings.structuralNavigationEnabled:
             # Translators: the structural navigation keys are designed
             # to move the caret around the HTML content by object type.
             # Thus H moves you to the next heading, Shift H to the
@@ -8951,9 +8946,10 @@ class Script(default.Script):
     ####################################################################
 
     def __matchChunk(self, obj):
-        if obj.getRole() in OBJECT_ROLES:
+        if obj.getRole() in script_settings.OBJECT_ROLES:
             text = self.queryNonEmptyText(obj)
-            if text and text.characterCount > largeObjectTextLength \
+            if text \
+               and text.characterCount > script_settings.largeObjectTextLength \
                and not self.isUselessObject(obj):
                 return True
             else:
@@ -8966,7 +8962,7 @@ class Script(default.Script):
             return False
         attrs = self._getAttrDictionary(obj)
         try:
-            if attrs['xml-roles'] in ARIA_LANDMARKS:
+            if attrs['xml-roles'] in script_settings.ARIA_LANDMARKS:
                 return True
             else:
                 return False

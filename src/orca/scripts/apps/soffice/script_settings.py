@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,5 +17,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-from script import Script
-import script_settings
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
+__license__   = "LGPL"
+
+# Whether we speak spread sheet cell coordinates as the user moves around.
+#
+speakCellCoordinates = True
