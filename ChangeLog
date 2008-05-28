@@ -1,3 +1,9 @@
+2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #532069 - Orca should read field labels on the NLS
+          site.
+
 2008-05-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

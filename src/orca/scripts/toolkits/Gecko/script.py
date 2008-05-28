@@ -4598,13 +4598,16 @@ class Script(default.Script):
         # to be ignored.  Let's try that for now and adjust based on feedback
         # and testing.]]]
         #
-        leftIsInForm = self.getAncestor(onLeft,
-                                        [pyatspi.ROLE_FORM],
-                                        [pyatspi.ROLE_DOCUMENT_FRAME])
-        rightIsInForm = self.getAncestor(onRight,
-                                         [pyatspi.ROLE_FORM],
-                                         [pyatspi.ROLE_DOCUMENT_FRAME])
-
+        leftIsInForm = (onLeft and onLeft.getRole() == pyatspi.ROLE_FORM)
+        if not leftIsInForm:
+            leftIsInForm = self.getAncestor(onLeft,
+                                            [pyatspi.ROLE_FORM],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
+        rightIsInForm = (onRight and onRight.getRole() == pyatspi.ROLE_FORM)
+        if not rightIsInForm:
+            rightIsInForm = self.getAncestor(onRight,
+                                             [pyatspi.ROLE_FORM],
+                                             [pyatspi.ROLE_DOCUMENT_FRAME])
         # If it's a radio button, we'll waive the requirement of the text
         # on the right being within the form (or rather, we'll just act as
         # if it were even if it's not).
