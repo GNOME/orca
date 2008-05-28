@@ -1,3 +1,13 @@
+2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
+          Reversed the fix for bug #529784 - Speech cannot always be
+          interrupted with flat review.  Further investigation done by
+          Rich and Will indicate that the bug in question is an espeak
+          bug and this "fix" introduces more problems than it solves
+          (see, for instance, bug #532982).
+
 2008-05-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/pidgin/constants.py:            (removed)
