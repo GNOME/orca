@@ -28,8 +28,13 @@ sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(1000))
 
 ########################################################################
-# Press Control+Home to move to the top.
+# Press Orca+Right to get out of the focused entry, then Control+Home
+# to move to the top.
 #
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("Right"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
@@ -37,7 +42,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Home Link Image Bugzilla'",
      "     VISIBLE:  'Home Link Image Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
-sequence.append(PauseAction(1000))
 
 ########################################################################
 # Down Arrow.
