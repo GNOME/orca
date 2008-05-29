@@ -2419,6 +2419,21 @@ class Script(default.Script):
             if orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
                                                      pyatspi.ROLE_LIST_ITEM]:
                 self._autocompleteVisible = event.detail1
+                # If the autocomplete has just appeared, we want to speak
+                # its appearance if the user's verbosity level is verbose
+                # or if the user forced it to appear with (Alt+)Down Arrow.
+                #
+                if self._autocompleteVisible:
+                    speakIt = (settings.speechVerbosityLevel == \
+                               settings.VERBOSITY_LEVEL_VERBOSE)
+                    if not speakIt \
+                       and isinstance(orca_state.lastInputEvent, 
+                                      input_event.KeyboardEvent):
+                        keyEvent = orca_state.lastNonModifierKeyEvent
+                        speakIt = (keyEvent.event_string == ("Down"))
+                    if speakIt:
+                        speech.speak(rolenames.getSpeechForRoleName(\
+                                event.source, pyatspi.ROLE_AUTOCOMPLETE))
 
         # We care when the document frame changes it's busy state.  That
         # means it has started/stopped loading content.

@@ -1,3 +1,9 @@
+2008-05-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #528644 - Orca should indicate when an autocomplete
+          list has appeared in FF.
+
 2008-05-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/nautilus.py:
