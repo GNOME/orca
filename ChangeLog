@@ -4,6 +4,10 @@
           Fixed bug #371637 - Orca repeats "Location:" info repeatedly in 
           Nautilus File Browser Dialog.
 
+        * src/orca/default.py:
+          Fixed bug #524998 - Selection is not shown if Ctrl+A is used to
+          do "Select All".
+
 2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py:

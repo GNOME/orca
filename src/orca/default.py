@@ -7099,6 +7099,7 @@ class Script(script.Script):
                 if text.caretOffset == 0 and \
                    startOffset == 0 and endOffset == charCount:
                     specialCaseFound = True
+                    self.updateBraille(obj)
 
                     # Translators: this means the user has selected
                     # all the text in a document (e.g., Ctrl+a in gedit).
