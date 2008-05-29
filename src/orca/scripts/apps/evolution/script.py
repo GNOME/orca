@@ -524,9 +524,6 @@ class Script(default.Script):
             self.speakTextIndentation(obj, string)
         line = self.adjustForRepeats(string)
 
-        if self.speakNewLine(obj):
-            speech.speakCharacter("\n", None)
-
         if self.speakBlankLine(obj):
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.
@@ -1199,6 +1196,15 @@ class Script(default.Script):
                                        "Home", "End", "Return"]:
                         return
 
+                    # If the last keyboard event was a "same line" 
+                    # navigation key, then pass this event onto the
+                    # onCaretMoved() method in the parent class for
+                    # speaking. See bug #516565 for more details.
+                    #
+                    if lastKey in ["Left", "Right", "Home", "End"]:
+                        default.Script.onCaretMoved(self, event)
+                        return
+
             self.message_panel = event.source.parent.parent
 
             self.presentMessageLine(event.source, newLocusOfFocus)
@@ -1338,63 +1344,6 @@ class Script(default.Script):
 
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
-
-    def speakNewLine(self, obj):
-        """Returns True if a newline should be spoken.
-           Otherwise, returns False.
-        """
-
-        # Get the the AccessibleText interrface.
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return False
-
-        # Was a left or right-arrow key pressed?
-        if not (orca_state.lastInputEvent and \
-                orca_state.lastInputEvent.__dict__.has_key("event_string")):
-            return False
-
-        lastKey = orca_state.lastNonModifierKeyEvent.event_string
-        if lastKey != "Left" and lastKey != "Right":
-            return False
-
-        # Was a control key pressed?
-        mods = orca_state.lastInputEvent.modifiers
-        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
-
-        # Get the line containing the caret
-        caretOffset = text.caretOffset
-        line = text.getTextAtOffset(caretOffset, \
-            pyatspi.TEXT_BOUNDARY_LINE_START)
-        lineStart = line[1]
-        lineEnd = line[2]
-
-        if isControlKey:  # control-right-arrow or control-left-arrow
-
-            # Get the word containing the caret.
-            word = text.getTextAtOffset(caretOffset, \
-                pyatspi.TEXT_BOUNDARY_WORD_START)
-            wordStart = word[1]
-            wordEnd = word[2]
-
-            if lastKey == "Right":
-                if wordStart == lineStart:
-                    return True
-            else:
-                if wordEnd == lineEnd:
-                    return True
-
-        else:  # right arrow or left arrow
-
-            if lastKey == "Right":
-                if caretOffset == lineStart:
-                    return True
-            else:
-                if caretOffset == lineEnd:
-                    return True
-
-        return False
 
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.

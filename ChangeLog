@@ -8,6 +8,10 @@
           Fixed bug #524998 - Selection is not shown if Ctrl+A is used to
           do "Select All".
 
+        * src/orca/scripts/apps/evolution/script.py:
+          Fixed bug #516565 – Orca speaks the full line of a message in 
+          Evo when it should not.
+
 2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py:
