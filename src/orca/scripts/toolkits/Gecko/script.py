@@ -8961,16 +8961,52 @@ class Script(default.Script):
     ####################################################################
 
     def __matchChunk(self, obj):
-        if obj.getRole() in script_settings.OBJECT_ROLES:
+        role = obj.getRole()
+        if not role in script_settings.OBJECT_ROLES:
+            return False
+ 
+        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]:
+            # These roles are often serving as containers. We want to see
+            # if what they contain is a bunch of text (as opposed to a
+            # bunch of links or other embedded objects).  As for lists:
+            # We only care about those of the (un)ordered variety. Form
+            # field lists are not chunks.
+            #
+            if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                charCount = 0
+                for child in obj:
+                    text = self.queryNonEmptyText(child)
+                    if not text:
+                        continue
+
+                    string = text.getText(0, -1)
+                    if not string.count(self.EMBEDDED_OBJECT_CHARACTER):
+                        charCount += text.characterCount
+                        if charCount > script_settings.largeObjectTextLength:
+                            return True
+            return False
+        else:
+            # We're going to have to take a guess.  It's probably a big
+            # chunk of text if it contains at least the number of characters
+            # specified by largeObjectTextLength, AND
+            # - Guess #1: No more than 5% of the object's total characters
+            #   are EOCs, OR
+            # - Guess #2: No more than 0.5% of the object's initial n
+            #   characters are EOCs, where n is the largeObjectTextLength.
+            #
             text = self.queryNonEmptyText(obj)
             if text \
-               and text.characterCount > script_settings.largeObjectTextLength \
-               and not self.isUselessObject(obj):
-                return True
-            else:
-                return False
-        else:
-            return False
+               and text.characterCount > script_settings.largeObjectTextLength:
+                string = text.getText(0, -1).decode("UTF-8")
+                eocs = float(string.count(self.EMBEDDED_OBJECT_CHARACTER))
+                if eocs/text.characterCount < 0.05:
+                    # print "Guess #1", string, eocs/text.characterCount
+                    return True
+                else:
+                    string = string[0:script_settings.largeObjectTextLength]
+                    eocs = float(string.count(self.EMBEDDED_OBJECT_CHARACTER))
+                    # print "Guess #2", string, eocs/len(string)
+                    return eocs/len(string) < 0.005
 
     def __matchLandmark(self, obj):
         if obj is None:

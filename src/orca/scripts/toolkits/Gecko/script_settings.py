@@ -98,6 +98,7 @@ largeObjectTextLength = 75
 # Roles that represent a logical chunk of information in a document
 #
 OBJECT_ROLES = [pyatspi.ROLE_HEADING,
+                pyatspi.ROLE_LIST,
                 pyatspi.ROLE_PARAGRAPH,
                 pyatspi.ROLE_TABLE,
                 pyatspi.ROLE_TABLE_CELL,
