@@ -1,3 +1,11 @@
+2008-05-30  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
+	  Reconcile tests with more accurate results as a result of
+	  recent bug fixes.  Also remove ^M's embedded at the end of
+	  some of the lines (looks like a possible typescript 
+	  cut/paste thing that sneaked in there at some time).
+
 2008-05-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

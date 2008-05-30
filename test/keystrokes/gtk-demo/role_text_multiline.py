@@ -277,6 +277,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
      "     VISIBLE:  'y life than eat fruit and type. ', cursor=32",
      "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'unselected'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
      "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
