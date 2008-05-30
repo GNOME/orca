@@ -3672,7 +3672,10 @@ class Script(script.Script):
             #
             if isinstance(orca_state.lastInputEvent,
                           input_event.KeyboardEvent):
-                keyString = orca_state.lastNonModifierKeyEvent.event_string
+                if orca_state.lastNonModifierKeyEvent:
+                    keyString = orca_state.lastNonModifierKeyEvent.event_string
+                else:
+                    keyString = None
                 mods = orca_state.lastInputEvent.modifiers
                 isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
                 state = orca_state.locusOfFocus.getState()
