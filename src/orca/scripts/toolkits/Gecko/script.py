@@ -3823,7 +3823,7 @@ class Script(default.Script):
 
         index = -1
         parent = self.getAncestor(obj,
-                                 [pyatspi.ROLE_TABLE],
+                                 [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE],
                                  [pyatspi.ROLE_DOCUMENT_FRAME])
         try:
             table = parent.queryTable()

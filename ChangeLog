@@ -1,3 +1,9 @@
+2008-05-31  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Tweak for bug #515665 - Orca has problems with tables that have
+          captions in FF3.  Need to consider tree tables as well.
+
 2008-05-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/apps/evolution/where_am_i.py:
