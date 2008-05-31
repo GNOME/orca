@@ -84,7 +84,7 @@ class WhereAmI(where_am_I.WhereAmI):
         """Return an indication of whether this object has selected text.
         Note that it's possible that this object has no text, but is part
         of a selected text area. Because of this, we need to check the
-        objects on either side to see if they are none zero length and 
+        objects on either side to see if they are none zero length and
         have text selections.
 
         Arguments:
@@ -148,7 +148,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         return [currentSelected, otherSelected]
 
-    def _getTextSelections(self, obj, doubleClick):
+    def getTextSelections(self, obj, doubleClick):
         """Get all the text applicable text selections for the given object.
         If the user doubleclicked, look to see if there are any previous
         or next text objects that also have selected text and add in their
@@ -167,17 +167,17 @@ class WhereAmI(where_am_I.WhereAmI):
         endOffset = 0
         if obj.queryText().getNSelections() > 0:
             [textContents, startOffset, endOffset] = \
-                                            self._getTextSelection(obj)
+                                            self.getTextSelection(obj)
 
         if doubleClick:
-            # Unfortunately, Evolution doesn't use the FLOWS_FROM and 
-            # FLOWS_TO relationships to easily allow us to get to previous 
+            # Unfortunately, Evolution doesn't use the FLOWS_FROM and
+            # FLOWS_TO relationships to easily allow us to get to previous
             # and next text objects. Instead we have to move up the
             # component hierarchy until we get to the object containing all
             # the panels (with each line containing a single text item).
             # We can then check in both directions to see if there is other
-            # contiguous text that is selected. We also have to jump over 
-            # zero length (empty) text lines and continue checking on the 
+            # contiguous text that is selected. We also have to jump over
+            # zero length (empty) text lines and continue checking on the
             # other side.
             #
             container = obj.parent.parent
@@ -195,7 +195,7 @@ class WhereAmI(where_am_I.WhereAmI):
                             morePossibleSelections = True
                         elif prevObj.queryText().getNSelections() > 0:
                             [newTextContents, start, end] = \
-                                         self._getTextSelection(prevObj)
+                                         self.getTextSelection(prevObj)
                             textContents = newTextContents + " " + textContents
                             current -= 1
                             morePossibleSelections = True
@@ -216,7 +216,7 @@ class WhereAmI(where_am_I.WhereAmI):
                             morePossibleSelections = True
                         elif nextObj.queryText().getNSelections() > 0:
                             [newTextContents, start, end] = \
-                                         self._getTextSelection(nextObj)
+                                         self.getTextSelection(nextObj)
                             textContents += " " + newTextContents
                             current += 1
                             morePossibleSelections = True

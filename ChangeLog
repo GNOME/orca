@@ -1,5 +1,12 @@
 2008-05-30  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/apps/evolution/where_am_i.py:
+	  Make getTextSelection[s] methods public to account for
+	  change made as a result of fixes for text selection
+	  (pylint found this).
+	
+2008-05-30  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/gtk-demo/role_text_multiline_navigation.py:
 	  Reconcile tests with more accurate results as a result of
 	  recent bug fixes.  Also remove ^M's embedded at the end of
@@ -36,7 +43,7 @@
           do "Select All".
 
         * src/orca/scripts/apps/evolution/script.py:
-          Fixed bug #516565 – Orca speaks the full line of a message in 
+          Fixed bug #516565 - Orca speaks the full line of a message in 
           Evo when it should not.
 
 2008-05-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -98,7 +105,7 @@
 2008-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
-          Removed patch for bug #530368 – Only move focus if the event 
+          Removed patch for bug #530368 - Only move focus if the event 
           is for the focused/active window. This breaks the 
           gnome-screensaver lockscreen window; password is not announced.
 
@@ -111,7 +118,7 @@
 2008-05-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:
-          Fix for bug #530368 – Only move focus if the event is for the 
+          Fix for bug #530368 - Only move focus if the event is for the 
           focused/active window.
 
 2008-05-21  Rich Burridge <rich.burridge@sun.com>
