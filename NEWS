@@ -1,3 +1,83 @@
+2.23.1 - 21-Apr-2008
+
+General:
+
++ Fix for bug #371637 - Orca repeats "Location:" info repeatedly in
+  Nautilus File Browser Dialog.
+
+* Fix for bug #448817 - Being able to configure autostart from orca's
+  settings.
+
+* Fix for bug #463646 - Orca doesn't announce the presence of
+  unfocused dialogs when an app gains focus.
+
+* Additional fix for bug #520494 - Keyboard review punctuation in Firefox.
+  (This was actually a general fix not isolated to Firefox)
+
+* Fix for bug #524998 - Selection is not shown if Ctrl+A is used to do
+  "Select All".
+
+* Reversed the fix for bug #529784 - Speech cannot always be
+  interrupted with flat review.  Further investigation done by
+  Rich and Will indicate that the bug in question is an espeak
+  bug and this "fix" introduces more problems than it solves
+  (see, for instance, bug #532982).
+
+* Fix for bug #534383 - Orca mouse review traceback at startup.
+
+* Fix for bug #535747 - Do not assume
+  orca_state.lastNonModifierKeyEvent is non-None.
+
+Evolution:
+
+* Fix for bug #516565 - Orca speaks the full line of a message in Evo
+  when it should not.
+
++ Fix for bug #533499 - Evolution contacts not being spoken when you
+  navigate them.
+
+Firefox/Thunderbird:
+
+* Fix for bug #511561 - Orca should not impact the cursor position
+  when replying to a message in thunderbird.
+
+* Fix for bug #515665 - Orca has problems with tables that have
+  captions in FF3.
+
++ Fix for bug #527959 - Incorrect caret movement in Firefox 3 on
+  certain Web pages.
+
+* Fix for bug #528644 - Orca should indicate when an autocomplete list
+  has appeared in FF.
+
+* Fix for bug #532069 - Orca should read field labels on the NLS site.
+
++ Fix for bug #533125 - Orca does not speak Search textbox in Firefox
+  Download Manager if it is empty.
+
+* Fix for bug #534393 - Moving by large object in firefox can skip
+  text.
+
+* Fix for bug #535149 - Orca should override Home and End in Firefox 3
+  and Thunderbird.
+
+OOo:
+
+* Fix for bug #517048 - Orca does not always speak the correct
+  information when navigating and/or selecting text across object
+  boundaries in OOo Writer.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    nb      Norwegian Bokmål     Kjartan Maraas
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.23.2 - 12-May-2008
 
 + = means it's also part of the gnome-2-22 branch
