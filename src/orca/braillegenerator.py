@@ -122,6 +122,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForRowHeader
         self.brailleGenerators[pyatspi.ROLE_SCROLL_BAR]          = \
              self._getBrailleRegionsForScrollBar
+        self.brailleGenerators[pyatspi.ROLE_SCROLL_PANE]         = \
+             self._getBrailleRegionsForScrollPane
         self.brailleGenerators[pyatspi.ROLE_SLIDER]              = \
              self._getBrailleRegionsForSlider
         self.brailleGenerators[pyatspi.ROLE_SPIN_BUTTON]         = \
@@ -1089,6 +1091,30 @@ class BrailleGenerator:
         # 319744.]]]
         #
         self._debugGenerator("_getBrailleRegionsForScrollBar", obj)
+
+        return self._getDefaultBrailleRegions(obj)
+
+    def _getBrailleRegionsForScrollPane(self, obj):
+        """Get the braille for a scroll pane.
+
+        Arguments:
+        - obj: the scroll pane
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        self._debugGenerator("_getBrailleRegionsForScrollPane", obj)
+
+        # If this scroll pane is labelled by a page tab, then return the
+        # page tab information for the braille context instead. Thunderbird
+        # folder properties is such a case. See bug #507922 for more details.
+        #
+        relations = obj.getRelationSet()
+        for relation in relations:
+            if relation.getRelationType() ==  pyatspi.RELATION_LABELLED_BY:
+                labelledBy = relation.getTarget(0)
+                return self._getBrailleRegionsForPageTab(labelledBy)
 
         return self._getDefaultBrailleRegions(obj)
 

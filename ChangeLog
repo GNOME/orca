@@ -15,6 +15,10 @@
           Fix for bug #529655 - After inputting an incorrect password on 
           the screensaver, orca can't speak the whole dialog.
 
+        * src/orca/braillegenerator.py:
+          Fix for bug #507922 - Include page tab name in braille context
+          for Thunderbird.
+
 2008-06-02  Willie Walker <william.walker@sun.com>
 
         * README:
