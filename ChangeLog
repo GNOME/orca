@@ -10,6 +10,11 @@
           Fix for bug #530368 - Only move focus if the event is for the 
           focused/active window.
 
+        * src/orca/scripts/apps/gnome-screensaver-dialog.py:   (new)
+          src/orca/scripts/apps/Makefile.am:
+          Fix for bug #529655 - After inputting an incorrect password on 
+          the screensaver, orca can't speak the whole dialog.
+
 2008-06-02  Willie Walker <william.walker@sun.com>
 
         * README:
