@@ -605,9 +605,18 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # in use, and then issues a focus: event on the
                     # main window, which is a frame.]]]
                     #
-                    if (event.type == "window:activate") \
-                       or ((event.type.startswith("focus")) 
-                           and (event.source.getRole() == pyatspi.ROLE_FRAME)):
+                    # Added in a further check. We look for modal panels
+                    # that are now showing (such as gnome-screensaver-dialog).
+                    # See bug #530368 for more details.
+                    #
+                    eType = event.type
+                    if (eType == "window:activate") \
+                       or ((eType.startswith("focus")) 
+                         and (event.source.getRole() == pyatspi.ROLE_FRAME)) \
+                       or (eType.startswith("object:state-changed:showing")
+                         and (event.source.getRole() == pyatspi.ROLE_PANEL)
+                         and state.contains(pyatspi.STATE_MODAL)):
+
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()

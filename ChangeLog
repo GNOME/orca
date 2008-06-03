@@ -5,6 +5,11 @@
           Fix for bug #535192 - Misspelled word and suggestion not spoken 
           in Thunderbird spell check.
 
+        * src/orca/orca.py:
+          src/orca/focus_tracking_presenter.py:
+          Fix for bug #530368 - Only move focus if the event is for the 
+          focused/active window.
+
 2008-06-02  Willie Walker <william.walker@sun.com>
 
         * README:
