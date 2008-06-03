@@ -104,6 +104,27 @@ class Script(Gecko.Script):
             orca.setLocusOfFocus(event, acc)
             consume = True
 
+        # If we get a "focus:" event for the "Replace with:" entry in the
+        # spell checking dialog, then clear the current locus of focus so
+        # that this item will be spoken and brailled. See bug #535192 for
+        # more details.
+        #
+        if event.type.startswith("focus:"):
+            rolesList = [pyatspi.ROLE_ENTRY, \
+                         pyatspi.ROLE_DIALOG, \
+                         pyatspi.ROLE_APPLICATION]
+            if self.isDesiredFocusedItem(obj, rolesList):
+                dialog = obj.parent
+
+                # Translators: this is what the name of the spell checking
+                # dialog in Thunderbird begins with. The translated form
+                # has to match what Thunderbird is using.  We hate keying
+                # off stuff like this, but we're forced to do so in this case.
+                #
+                if dialog.name.startswith(_("Check Spelling")):
+                    orca_state.locusOfFocus = None
+                    orca.setLocusOfFocus(event, obj)
+
         # Handle dialogs.
         #
         if top and top.getRole() == pyatspi.ROLE_DIALOG:
@@ -162,6 +183,38 @@ class Script(Gecko.Script):
         # Thunderbird issues such an event.]]]
         #
         return
+
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        obj = event.source
+
+        # If we get a "object:property-change:accessible-name" event for 
+        # the first item in the Suggestions lists for the spell checking
+        # dialog, then speak the first two labels in that dialog. These
+        # will by the "Misspelled word:" label and the currently misspelled
+        # word. See bug #535192 for more details.
+        #
+        rolesList = [pyatspi.ROLE_LIST_ITEM, \
+                     pyatspi.ROLE_LIST, \
+                     pyatspi.ROLE_DIALOG, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(obj, rolesList):
+            dialog = obj.parent.parent
+
+            # Translators: this is what the name of the spell checking 
+            # dialog in Thunderbird begins with. The translated form
+            # has to match what Thunderbird is using.  We hate keying
+            # off stuff like this, but we're forced to do so in this case.
+            #
+            if dialog.name.startswith(_("Check Spelling")):
+                if obj.getIndexInParent() == 0:
+                    speech.speak(self.getDisplayedText(dialog[0]))
+                    speech.speak(self.getDisplayedText(dialog[1]))
 
     def _speakEnclosingPanel(self, obj):
         """Speak the enclosing panel for the object, if it is
