@@ -1,3 +1,6 @@
-import cProfile
+try:
+    import cProfile as myprofiler
+except:
+    import profile as myprofiler
 import orca.orca
-cProfile.run('orca.orca.main()', 'orcaprof')
+myprofiler.run('orca.orca.main()', 'orcaprof')

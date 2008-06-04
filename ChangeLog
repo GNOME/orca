@@ -1,3 +1,9 @@
+2008-06-04  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runprofile.py:
+          Fallback to profile module if cProfile isn't available.
+          This is typically due to a Python 2.4 vs. 2.5 installation.
+
 2008-06-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/Thunderbird/speech_generator.py
