@@ -72,6 +72,36 @@ class Script(Gecko.Script):
         """
         debug.println(self.debugLevel, "Thunderbird.py: "+msg)
 
+    def _isBogusSpellCheckListItemFocus(self, event):
+        """Check if this event is for a list item in the spell checking
+        dialog and whether it has a FOCUSED state.
+
+        Arguments:
+        - event: the Event
+
+        Return True is this event is for a list item in the spell checking 
+        dialog and it doesn't have a FOCUSED state, Otherwise return False.
+        """
+
+        rolesList = [pyatspi.ROLE_LIST_ITEM, \
+                     pyatspi.ROLE_LIST, \
+                     pyatspi.ROLE_DIALOG, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            dialog = event.source.parent.parent
+
+            # Translators: this is what the name of the spell checking
+            # dialog in Thunderbird begins with. The translated form
+            # has to match what Thunderbird is using.  We hate keying
+            # off stuff like this, but we're forced to do so in this case.
+            #
+            if dialog.name.startswith(_("Check Spelling")):
+                state = event.source.getState()
+                if not state.contains(pyatspi.STATE_FOCUSED):
+                    return True
+
+        return False
+
     def onFocus(self, event):
         """ Called whenever an object gets focus.
 
@@ -104,12 +134,12 @@ class Script(Gecko.Script):
             orca.setLocusOfFocus(event, acc)
             consume = True
 
-        # If we get a "focus:" event for the "Replace with:" entry in the
-        # spell checking dialog, then clear the current locus of focus so
-        # that this item will be spoken and brailled. See bug #535192 for
-        # more details.
-        #
         if event.type.startswith("focus:"):
+            # If we get a "focus:" event for the "Replace with:" entry in the
+            # spell checking dialog, then clear the current locus of focus so
+            # that this item will be spoken and brailled. See bug #535192 for
+            # more details.
+            #
             rolesList = [pyatspi.ROLE_ENTRY, \
                          pyatspi.ROLE_DIALOG, \
                          pyatspi.ROLE_APPLICATION]
@@ -124,6 +154,14 @@ class Script(Gecko.Script):
                 if dialog.name.startswith(_("Check Spelling")):
                     orca_state.locusOfFocus = None
                     orca.setLocusOfFocus(event, obj)
+
+            # If we get a "focus:" event for a list item in the spell
+            # checking dialog, and it doesn't have a FOCUSED state (i.e.
+            # we didn't navigate to it), then ignore it. See bug #535192
+            # for more details.
+            #
+            if self._isBogusSpellCheckListItemFocus(event):
+                return
 
         # Handle dialogs.
         #
@@ -146,6 +184,23 @@ class Script(Gecko.Script):
         # is counted as loading a page.
         #
         default.Script.onStateChanged(self, event)
+
+    def onStateFocused(self, event):
+        """Called whenever an object's state changes focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # If we get an "object:state-changed:focused" event for a list
+        # item in the spell checking dialog, and it doesn't have a
+        # FOCUSED state (i.e. we didn't navigate to it), then ignore it.
+        # See bug #535192 for more details.
+        #
+        if self._isBogusSpellCheckListItemFocus(event):
+            return
+
+        Gecko.Script.onStateChanged(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.

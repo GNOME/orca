@@ -23,6 +23,11 @@
           Fix for bug #517532 - change dict.has_key() usage to set
           operator in.
 
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Further work on bug #535192. Suppress speech for bogus 'focus:'
+          and 'object:state-changed:focused' events for the spell checking
+          dialog suggestion list items.
+
 2008-06-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py:
@@ -42,7 +47,7 @@
 
 2008-06-03  Rich Burridge <rich.burridge@sun.com>
 
-        * src/orca/scripts/apps/Thunderbird/speech_generator.py
+        * src/orca/scripts/apps/Thunderbird/speech_generator.py:
           src/orca/scripts/apps/Thunderbird/script.py:
           Fix for bug #535192 - Misspelled word and suggestion not spoken 
           in Thunderbird spell check.
