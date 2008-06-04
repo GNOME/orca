@@ -1377,8 +1377,8 @@ class BrailleGenerator:
             # the same row).
             #
             speakAll = True
-            if self._script.pointOfReference.has_key("lastRow") and \
-                self._script.pointOfReference.has_key("lastColumn"):
+            if "lastRow" in self._script.pointOfReference and \
+                "lastColumn" in self._script.pointOfReference:
                 pointOfReference = self._script.pointOfReference
                 speakAll = (pointOfReference["lastRow"] != row) or \
                        ((row == 0 or row == table.nRows-1) and \
@@ -1596,7 +1596,7 @@ class BrailleGenerator:
                     or (obj.getRole() == pyatspi.ROLE_PAGE_TAB_LIST)
 
         role = obj.getRole()
-        if self.brailleGenerators.has_key(role):
+        if role in self.brailleGenerators:
             generator = self.brailleGenerators[role]
         else:
             generator = self._getDefaultBrailleRegions

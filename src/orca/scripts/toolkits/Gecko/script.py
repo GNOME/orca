@@ -1629,9 +1629,9 @@ class Script(default.Script):
 
         user_bindings = None
         user_bindings_map = settings.keyBindingsMap
-        if user_bindings_map.has_key(self.__module__):
+        if self.__module__ in user_bindings_map:
             user_bindings = user_bindings_map[self.__module__]
-        elif user_bindings_map.has_key("default"):
+        elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
         consumes = False
@@ -3524,7 +3524,7 @@ class Script(default.Script):
             if attrs['xml-roles'] in script_settings.ARIA_LANDMARKS:
                 return True
             # ARIA live region
-            elif attrs.has_key('container-live'):
+            elif 'container-live' in attrs:
                 return True
             # All other ARIA widgets
             else:
@@ -3541,7 +3541,7 @@ class Script(default.Script):
         """
         obj = obj or orca_state.locusOfFocus
         attrs = self._getAttrDictionary(obj)
-        return (attrs.has_key('xml-roles') and not attrs.has_key('live'))
+        return ('xml-roles' in attrs and 'live' not in attrs)
 
     def _getAttrDictionary(self, obj):
         return dict([attr.split(':', 1) for attr in obj.getAttributes()])
@@ -3575,14 +3575,14 @@ class Script(default.Script):
                 # Now we need to look at the object attributes
                 attrs = self._getAttrDictionary(event.any_data)
                 # Good live region markup
-                if attrs.has_key('container-live'):
+                if 'container-live' in attrs:
                     return True
 
                 # We see this one with the URL bar opening (sometimes)
-                if attrs.has_key('tag') and attrs['tag'] == 'xul:richlistbox':
+                if 'tag' in attrs and attrs['tag'] == 'xul:richlistbox':
                     return False
 
-                if attrs.has_key('xml-roles'):
+                if 'xml-roles' in attrs:
                     # This eliminates all ARIA widgets that are not
                     # considered live
                     if attrs['xml-roles'] != 'alert' \
@@ -3596,7 +3596,7 @@ class Script(default.Script):
                 # Some alerts have been seen without the :system postfix.
                 # We will take care of them separately.
                 attrs = self._getAttrDictionary(event.any_data)
-                if attrs.has_key('xml-roles') \
+                if 'xml-roles' in attrs \
                                       and attrs['xml-roles'] == 'alert':
                     return True
                 else:
@@ -3613,18 +3613,18 @@ class Script(default.Script):
 
             attrs = self._getAttrDictionary(event.source)
             # Good live region markup
-            if attrs.has_key('container-live'):
+            if 'container-live' in attrs:
                 return True
 
             # This might be too restrictive but we need it to filter
             # out URLs that are displayed when the location list opens.
-            if attrs.has_key('tag') \
+            if 'tag' in attrs \
                     and attrs['tag'] == 'xul:description' \
                     or attrs['tag'] == 'xul:label':
                 return False
 
             # This eliminates all ARIA widgets that are not considered live
-            if attrs.has_key('xml-roles'):
+            if 'xml-roles' in attrs:
                 return False
         else: # object:text-inserted events
             return False

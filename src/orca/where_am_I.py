@@ -1536,7 +1536,7 @@ class WhereAmI:
                           "charDict: %s" % (charDict))
 
             for key in keys:
-                if charDict.has_key(key):
+                if key in charDict:
                     attribute = charDict[key]
                     if attribute:
                         # If it's the 'weight' attribute and greater than 400,

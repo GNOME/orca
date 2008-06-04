@@ -670,7 +670,7 @@ class OrcaPrefs:
         """
 
         value = None
-        if prefsDict.has_key(key):
+        if key in prefsDict:
             if key == "voices":
                 value = self._getVoicesString(prefsDict[key])
             elif key == "speechServerInfo":

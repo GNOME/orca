@@ -160,7 +160,7 @@ class SpeechServer(speechserver.SpeechServer):
     def __createServer(iid):
         server = None
 
-        if SpeechServer.__activeServers.has_key(iid):
+        if iid in SpeechServer.__activeServers:
             server = SpeechServer.__activeServers[iid]
         else:
             driver = SpeechServer.__activateDriver(iid)
@@ -191,7 +191,7 @@ class SpeechServer(speechserver.SpeechServer):
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
         for server in knownServers:
-            if not SpeechServer.__activeServers.has_key(server.iid):
+            if server.iid not in SpeechServer.__activeServers:
                 try:
                     SpeechServer.__createServer(server.iid)
                 except:
@@ -206,7 +206,7 @@ class SpeechServer(speechserver.SpeechServer):
         See SpeechServer.getInfo() for more info.
         """
 
-        if info and SpeechServer.__activeServers.has_key(info[1]):
+        if info and info[1] in SpeechServer.__activeServers:
             return SpeechServer.__activeServers[info[1]]
 
         server = None
@@ -283,7 +283,7 @@ class SpeechServer(speechserver.SpeechServer):
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
 
-        if not self.__rateInfo.has_key(speaker):
+        if speaker not in self.__rateInfo:
             return 50.0
 
         [minRate, averageRate, maxRate] = self.__rateInfo[speaker]
@@ -301,7 +301,7 @@ class SpeechServer(speechserver.SpeechServer):
         voice-independent ACSS rate value.
         """
 
-        if not self.__rateInfo.has_key(speaker):
+        if speaker not in self.__rateInfo:
             return
 
         [minRate, averageRate, maxRate] = self.__rateInfo[speaker]
@@ -322,7 +322,7 @@ class SpeechServer(speechserver.SpeechServer):
         Returns the voice-specific pitch setting.
         """
 
-        if not self.__pitchInfo.has_key(speaker):
+        if speaker not in self.__pitchInfo:
             return 5.0
 
         [minPitch, averagePitch, maxPitch] = self.__pitchInfo[speaker]
@@ -340,7 +340,7 @@ class SpeechServer(speechserver.SpeechServer):
         voice-independent ACSS pitch value.
         """
 
-        if not self.__pitchInfo.has_key(speaker):
+        if speaker not in self.__pitchInfo:
             return
 
         [minPitch, averagePitch, maxPitch] = self.__pitchInfo[speaker]
@@ -359,7 +359,7 @@ class SpeechServer(speechserver.SpeechServer):
         voice-independent ACSS rate value.
         """
 
-        if not self.__volumeInfo.has_key(speaker):
+        if speaker not in self.__volumeInfo:
             return
 
         [minVolume, averageVolume, maxVolume] = self.__volumeInfo[speaker]
@@ -375,7 +375,7 @@ class SpeechServer(speechserver.SpeechServer):
         if not acss:
             acss = defaultACSS
 
-        if self.__speakers.has_key(acss.name()):
+        if acss.name() in self.__speakers:
             return self.__speakers[acss.name()]
 
         # Search for matching languages first, as that is the most
@@ -384,10 +384,10 @@ class SpeechServer(speechserver.SpeechServer):
         #
         languages = []
         try:
-            if acss.has_key(ACSS.FAMILY):
+            if ACSS.FAMILY in acss:
                 family = acss[ACSS.FAMILY]
                 languages = [family[speechserver.VoiceFamily.LOCALE]]
-            elif defaultACSS.has_key(ACSS.FAMILY):
+            elif ACSS.FAMILY in defaultACSS:
                 family = defaultACSS[ACSS.FAMILY]
                 languages = [family[speechserver.VoiceFamily.LOCALE]]
         except:
@@ -424,10 +424,10 @@ class SpeechServer(speechserver.SpeechServer):
         # Now search for a matching family name.
         #
         familyName = None
-        if acss.has_key(ACSS.FAMILY):
+        if ACSS.FAMILY in acss:
             family = acss[ACSS.FAMILY]
             familyName = family[speechserver.VoiceFamily.NAME]
-        elif defaultACSS.has_key(ACSS.FAMILY):
+        elif ACSS.FAMILY in defaultACSS:
             family = defaultACSS[ACSS.FAMILY]
             familyName = family[speechserver.VoiceFamily.NAME]
 
@@ -480,13 +480,13 @@ class SpeechServer(speechserver.SpeechServer):
                 self.__volumeInfo[speaker] = \
                     [parameter.min, parameter.current, parameter.max]
 
-        if acss.has_key(ACSS.RATE):
+        if ACSS.RATE in acss:
             self.__setRate(speaker, acss[ACSS.RATE])
 
-        if acss.has_key(ACSS.AVERAGE_PITCH):
+        if ACSS.AVERAGE_PITCH in acss:
             self.__setPitch(speaker, acss[ACSS.AVERAGE_PITCH])
 
-        if acss.has_key(ACSS.GAIN):
+        if ACSS.GAIN in acss:
             self.__setVolume(speaker, acss[ACSS.GAIN])
 
         self.__speakers[acss.name()] = speaker
@@ -722,7 +722,7 @@ class SpeechServer(speechserver.SpeechServer):
         ##
         removeNewLines = True
         if orca_state.lastInputEvent and \
-               orca_state.lastInputEvent.__dict__.has_key("event_string"):
+               "event_string" in orca_state.lastInputEvent.__dict__:
             lastKey = orca_state.lastInputEvent.event_string
             if lastKey == "Left" or lastKey == "Right":
                 removeNewLines = False
@@ -829,10 +829,10 @@ class SpeechServer(speechserver.SpeechServer):
             return -1
 
         speaker = self.__getSpeaker(acss)
-        if acss and not acss.has_key(ACSS.RATE):
+        if acss and ACSS.RATE not in acss:
             voices = settings.voices
             defaultACSS = voices[settings.DEFAULT_VOICE]
-            if defaultACSS.has_key(ACSS.RATE):
+            if ACSS.RATE in defaultACSS:
                 self.__setRate(speaker, defaultACSS[ACSS.RATE])
 
         if not text:
@@ -1056,7 +1056,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shuts down the speech engine."""
-        if SpeechServer.__activeServers.has_key(self.__iid):
+        if self.__iid in SpeechServer.__activeServers:
             for speaker in self.__speakers.values():
                 speaker.stop()
                 speaker.unref()

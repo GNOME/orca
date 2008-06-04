@@ -262,7 +262,7 @@ class Script(default.Script):
                             # Only speak the screen label if we haven't already
                             # done so.
                             #
-                            if text and not self.setupLabels.has_key(label):
+                            if text and label not in self.setupLabels:
                                 # Translators: this is the name of a setup
                                 # assistant window/screen in Evolution.
                                 #
@@ -291,7 +291,7 @@ class Script(default.Script):
             # label, then just ignore it.
             #
             text = self.getDisplayedText(label)
-            if text and not self.setupLabels.has_key(label):
+            if text and label not in self.setupLabels:
                 # Most of the Setup Assistant screens have a useful piece
                 # of text starting with the word "Please". We want to speak
                 # these. For the first screen, the useful piece of text
@@ -1413,7 +1413,7 @@ class Script(default.Script):
                     # seen this panel, then handle it.
                     #
                     elif event.source.getRole() == pyatspi.ROLE_PANEL and \
-                        not self.setupPanels.has_key(event.source):
+                        event.source not in self.setupPanels:
                         self.handleSetupAssistantPanel(event.source)
                         self.setupPanels[event.source] = True
                         break

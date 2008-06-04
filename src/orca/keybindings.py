@@ -51,7 +51,7 @@ def getAllKeysyms(keysym):
     that is mapped to the given keysym.  This allows us, for example,
     to determine that the key bound to KP_Insert is also bound to KP_0."""
 
-    if not _keysymsCache.has_key(keysym):
+    if keysym not in _keysymsCache:
         # The keysym itself is always part of the list.
         #
         _keysymsCache[keysym] = [keysym]
@@ -119,7 +119,7 @@ def getKeycode(keysym):
     if not keysym:
         return 0
 
-    if not _keycodeCache.has_key(keysym):
+    if keysym not in _keycodeCache:
         keymap = gtk.gdk.keymap_get_default()
 
         # Find the numerical value of the keysym

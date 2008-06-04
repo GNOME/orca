@@ -148,10 +148,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parentTable = None
 
             index = self._script.getCellIndex(obj)
-            if self._script.pointOfReference.has_key("lastColumn") and \
+            if "lastColumn" in self._script.pointOfReference and \
                self._script.pointOfReference["lastColumn"] != \
                parentTable.getColumnAtIndex(index):
-                if self._script.dynamicColumnHeaders.has_key(table):
+                if table in self._script.dynamicColumnHeaders:
                     row = self._script.dynamicColumnHeaders[table]
                     header = self._script.getDynamicRowHeaderCell(obj, row)
                     try:
@@ -169,10 +169,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         if text:
                             utterances.append(text)
 
-            if self._script.pointOfReference.has_key("lastRow") and \
+            if "lastRow" in self._script.pointOfReference and \
                self._script.pointOfReference["lastRow"] != \
                parentTable.getRowAtIndex(index):
-                if self._script.dynamicRowHeaders.has_key(table):
+                if table in self._script.dynamicRowHeaders:
                     column = self._script.dynamicRowHeaders[table]
                     header = self._script.getDynamicColumnHeaderCell(obj,
                                                                      column)
@@ -205,8 +205,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     # the same row).
                     #
                     speakAll = True
-                    if self._script.pointOfReference.has_key("lastRow") and \
-                        self._script.pointOfReference.has_key("lastColumn"):
+                    if "lastRow" in self._script.pointOfReference and \
+                        "lastColumn" in self._script.pointOfReference:
                         pointOfReference = self._script.pointOfReference
                         speakAll = (pointOfReference["lastRow"] != row) or \
                                ((row == 0 or row == parentTable.nRows-1) and \

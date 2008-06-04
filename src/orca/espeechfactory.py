@@ -118,7 +118,7 @@ class SpeechServer(speechserver.SpeechServer):
             if line[0] == '#' or line.strip() == '':
                 continue
             name = line.strip()
-            if not SpeechServer.__activeServers.has_key(name):
+            if name not in SpeechServer.__activeServers:
                 try:
                     SpeechServer.__activeServers[name] = SpeechServer(name)
                 except:
@@ -133,7 +133,7 @@ class SpeechServer(speechserver.SpeechServer):
         """Gets a given SpeechServer based upon the info.
         See SpeechServer.getInfo() for more info.
         """
-        if SpeechServer.__activeServers.has_key(info[0]):
+        if info[0] in SpeechServer.__activeServers:
             return SpeechServer.__activeServers[info[0]]
         else:
             try:
@@ -288,7 +288,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shutdown speech engine."""
-        if SpeechServer.__activeServers.has_key(self._engine):
+        if self._engine in SpeechServer.__activeServers:
             self._output.close()
             del SpeechServer.__activeServers[self._engine]
 

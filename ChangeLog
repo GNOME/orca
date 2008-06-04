@@ -1,3 +1,28 @@
+2008-06-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/soffice/speech_generator.py:
+          src/orca/scripts/apps/soffice/where_am_i.py:
+          src/orca/scripts/apps/soffice/braille_generator.py:
+          src/orca/scripts/toolkits/Gecko/bookmarks.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/dectalk.py:
+          src/orca/speechgenerator.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/liveregions.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/where_am_I.py:
+          src/orca/espeechfactory.py:
+          src/orca/script.py:
+          src/orca/keybindings.py:
+          src/orca/speechdispatcherfactory.py:
+          src/orca/braillegenerator.py:
+          src/orca/gnomespeechfactory.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #517532 - change dict.has_key() usage to set
+          operator in.
+
 2008-06-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py:

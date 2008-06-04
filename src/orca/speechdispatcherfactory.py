@@ -104,7 +104,7 @@ class SpeechServer(speechserver.SpeechServer):
         when it is not possible to create the server.
         
         """
-        if not cls._active_servers.has_key(serverId):
+        if serverId not in cls._active_servers:
             cls(serverId)
         # Don't return the instance, unless it is succesfully added
         # to `_active_Servers'.

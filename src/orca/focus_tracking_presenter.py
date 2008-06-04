@@ -102,7 +102,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - eventType: the event type.
         """
 
-        if self._listenerCounts.has_key(eventType):
+        if eventType in self._listenerCounts:
             self._listenerCounts[eventType] += 1
         else:
             self.registry.registerEventListener(self._enqueueEvent,
@@ -289,7 +289,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 self._defaultScript = default.Script(None)
                 self._registerEventListeners(self._defaultScript)
             script = self._defaultScript
-        elif self._knownScripts.has_key(app):
+        elif app in self._knownScripts:
             script = self._knownScripts[app]
         else:
             script = self._createScript(app)
@@ -404,7 +404,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 try:
                     debug.println(debug.LEVEL_FINEST,
                                   "Looking for settings at %s.py..." % name)
-                    if not self._knownAppSettings.has_key(name):
+                    if name not in self._knownAppSettings:
                         self._knownAppSettings[name] = \
                             __import__(name, globals(), locals(), [''])
                     reload(self._knownAppSettings[name])

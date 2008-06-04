@@ -382,7 +382,7 @@ class LiveRegionManager:
     def matchLiveRegion(self, obj):
         """Predicate used to find a live region"""
         attrs = self._getAttrDictionary(obj)
-        return attrs.has_key('container-live')
+        return 'container-live' in attrs
 
     def _getMessage(self, event):
         """Gets the message associated with a given live event."""
@@ -448,7 +448,7 @@ class LiveRegionManager:
         labels = self._getLabelsAsUtterances(event.source)
 
         # instantly send out notify messages
-        if attrs.has_key('channel') and attrs['channel'] == 'notify':
+        if 'channel' in attrs and attrs['channel'] == 'notify':
             utts = labels + content
             speech.stop()
             # Note: we would like to use a different ACSS for alerts.  This work
@@ -496,7 +496,7 @@ class LiveRegionManager:
             # Last ditch effort is to see if our parent is a table row <tr> 
             # element.
             parentattrs = self._getAttrDictionary(obj.parent) 
-            if parentattrs.has_key('tag') and parentattrs['tag'] == 'TR':
+            if 'tag' in parentattrs and parentattrs['tag'] == 'TR':
                 return [self._script.expandEOCs( \
                                   obj.parent.getChildAtIndex(0)).strip()]
 
@@ -508,7 +508,7 @@ class LiveRegionManager:
         registers LIVE_NONE objects in politeness overrides when monitoring."""
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
-        if self._politenessOverrides.has_key((uri, objectid)):
+        if (uri, objectid) in self._politenessOverrides:
             # look to see if there is a user politeness override
             return self._politenessOverrides[(uri, objectid)]
         else:

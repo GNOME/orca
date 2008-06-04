@@ -1466,8 +1466,8 @@ class SpeechGenerator:
                 # the same row).
                 #
                 speakAll = True
-                if self._script.pointOfReference.has_key("lastRow") and \
-                    self._script.pointOfReference.has_key("lastColumn"):
+                if "lastRow" in self._script.pointOfReference and \
+                    "lastColumn" in self._script.pointOfReference:
                     pointOfReference = self._script.pointOfReference
                     speakAll = (pointOfReference["lastRow"] != row) or \
                         ((row == 0 or row == parent_table.nRows-1) and \
@@ -1746,7 +1746,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken.
         """
         role = obj.getRole()
-        if self.speechGenerators.has_key(role):
+        if role in self.speechGenerators:
             generator = self.speechGenerators[role]
         else:
             generator = self._getDefaultSpeech

@@ -75,7 +75,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         # Speak the dynamic column header (if any).
         #
-        if self._script.dynamicColumnHeaders.has_key(table):
+        if table in self._script.dynamicColumnHeaders:
             row = self._script.dynamicColumnHeaders[table]
             header = self._script.getDynamicRowHeaderCell(obj, row)
             try:
@@ -101,7 +101,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         # Speak the dynamic row header (if any).
         #
-        if self._script.dynamicRowHeaders.has_key(table):
+        if table in self._script.dynamicRowHeaders:
             column = self._script.dynamicRowHeaders[table]
             header = self._script.getDynamicColumnHeaderCell(obj, column)
             try:

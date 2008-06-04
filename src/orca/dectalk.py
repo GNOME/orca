@@ -533,7 +533,7 @@ def acss2voice(acss):
     for d in ['average-pitch', 'pitch-range',
               'richness', 'stress']:
         if d in acss:
-            if _table.has_key((familyName, d)):
+            if (familyName, d) in _table:
                 voice += _table[(familyName, d)][int(acss[d])]
     if voice:
         dv = " :dv %s" % voice

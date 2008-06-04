@@ -329,9 +329,9 @@ class Script:
 
         user_bindings = None
         user_bindings_map = settings.keyBindingsMap
-        if user_bindings_map.has_key(self.__module__):
+        if self.__module__ in user_bindings_map:
             user_bindings = user_bindings_map[self.__module__]
-        elif user_bindings_map.has_key("default"):
+        elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
         consumes = False
@@ -373,9 +373,9 @@ class Script:
         user_bindings = None
 
         user_bindings_map = settings.keyBindingsMap
-        if user_bindings_map.has_key(self.__module__):
+        if self.__module__ in user_bindings_map:
             user_bindings = user_bindings_map[self.__module__]
-        elif user_bindings_map.has_key("default"):
+        elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
         consumed = False
@@ -397,17 +397,17 @@ class Script:
         """
         user_bindings = None
         user_bindings_map = settings.brailleBindingsMap
-        if user_bindings_map.has_key(self.__module__):
+        if self.__module__ in user_bindings_map:
             user_bindings = user_bindings_map[self.__module__]
-        elif user_bindings_map.has_key("default"):
+        elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
         command = brailleEvent.event
         consumes = False
         if user_bindings:
-            consumes = user_bindings.has_key(command)
+            consumes = command in user_bindings
         if not consumes:
-            consumes = self.brailleBindings.has_key(command)
+            consumes = command in self.brailleBindings
         return consumes
 
     def processBrailleEvent(self, brailleEvent):
@@ -444,16 +444,16 @@ class Script:
         command = brailleEvent.event
 
         user_bindings_map = settings.brailleBindingsMap
-        if user_bindings_map.has_key(self.name):
+        if self.name in user_bindings_map:
             user_bindings = user_bindings_map[self.name]
-        elif user_bindings_map.has_key("default"):
+        elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
-        if user_bindings and user_bindings.has_key(command):
+        if user_bindings and command in user_bindings:
             handler = user_bindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
 
-        if (not consumed) and self.brailleBindings.has_key(command):
+        if (not consumed) and command in self.brailleBindings:
             handler = self.brailleBindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
 

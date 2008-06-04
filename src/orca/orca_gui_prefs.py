@@ -480,7 +480,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         elif voiceType == _("Uppercase"):
             voice = self.uppercaseVoice
-            if not voice.has_key(key):
+            if key not in voice:
                 if not useDefault:
                     return None
                 voice = self.defaultVoice
@@ -490,14 +490,14 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         elif voiceType == _("Hyperlink"):
             voice = self.hyperlinkVoice
-            if not voice.has_key(key):
+            if key not in voice:
                 if not useDefault:
                     return None
                 voice = self.defaultVoice
         else:
             voice = self.defaultVoice
 
-        if voice.has_key(key):
+        if key in voice:
             return voice[key]
         else:
             return None
@@ -515,7 +515,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         familyName = None
         family = self._getKeyValueForVoiceType(voiceType, acss.ACSS.FAMILY)
 
-        if family and family.has_key(speechserver.VoiceFamily.NAME):
+        if family and speechserver.VoiceFamily.NAME in family:
             familyName = family[speechserver.VoiceFamily.NAME]
 
         return familyName

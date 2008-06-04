@@ -185,7 +185,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             return
         # only 1 bookmark or we are just starting out
         elif len(thispage_hwkeys) == 1 or \
-                         not self._currentbookmarkindex.has_key(current_uri):
+                         current_uri not in self._currentbookmarkindex:
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))
             return
         
@@ -218,7 +218,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             return
         # only 1 bookmark or we are just starting out
         elif len(thispage_hwkeys) == 1 or \
-                         not self._currentbookmarkindex.has_key(current_uri):
+                         current_uri not in self._currentbookmarkindex:
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))
             return
         

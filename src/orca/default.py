@@ -2535,9 +2535,9 @@ class Script(script.Script):
                 # If this progress bar is not already known, create initial
                 # values for it.
                 #
-                if not self.lastProgressBarTime.has_key(obj):
+                if obj not in self.lastProgressBarTime:
                     self.lastProgressBarTime[obj] = 0.0
-                if not self.lastProgressBarValue.has_key(obj):
+                if obj not in self.lastProgressBarValue:
                     self.lastProgressBarValue[obj] = None
 
                 lastProgressBarTime = self.lastProgressBarTime[obj]
@@ -3083,7 +3083,7 @@ class Script(script.Script):
                 # We might have tucked away some information for this
                 # thing in the onActiveDescendantChanged method.
                 #
-                if self.pointOfReference.has_key("activeDescendantInfo"):
+                if "activeDescendantInfo" in self.pointOfReference:
                     [parent, index] = \
                         self.pointOfReference['activeDescendantInfo']
                     newFocus = parent[index]
@@ -3762,7 +3762,7 @@ class Script(script.Script):
 
             return
 
-        if state_change_notifiers.has_key(event.source.getRole()):
+        if event.source.getRole() in state_change_notifiers:
             notifiers = state_change_notifiers[event.source.getRole()]
             found = False
             for state in notifiers:
@@ -3950,7 +3950,7 @@ class Script(script.Script):
         # us their value changed even though it hasn't.
         #
         value = event.source.queryValue()
-        if self.pointOfReference.has_key("oldValue") \
+        if "oldValue" in self.pointOfReference \
            and (value.currentValue == self.pointOfReference["oldValue"]):
             return
 
@@ -4153,7 +4153,7 @@ class Script(script.Script):
         """
 
         for key in keys:
-            if attributes.has_key(key):
+            if key in attributes:
                 attribute = attributes[key]
                 if attribute:
                     # If it's the 'weight' attribute and greater than 400, just
@@ -4242,7 +4242,7 @@ class Script(script.Script):
             #
             attributes = {}
             for key in userAttrList:
-                if allAttributes.has_key(key):
+                if key in allAttributes:
                     textAttr = allAttributes.get(key)
                     userAttr = userAttrDict.get(key)
                     if textAttr != userAttr or len(userAttr) == 0:
@@ -6798,7 +6798,7 @@ class Script(script.Script):
         """
 
         for key in settings.userCustomizableSettings:
-            if prefsDict.has_key(key):
+            if key in prefsDict:
                 setattr(settings, key, prefsDict[key])
 
     ########################################################################
