@@ -1,5 +1,16 @@
 2008-06-04  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py:
+	  src/orca/settings.py:
+	  Fix for bug #435585 - Java ControlPanel GIVING UP AFTER 5 TRIES.
+	  This patch processes J2SE-access-bridge events synchronously.
+	  It's a nasty hack, but the Java/CORBA/ORBit/pyorbit stuff we're
+	  running into has eluded us for several years and this is the
+	  closest we've come to being able to resolving issues with Java
+	  accessibility for GNOME.
+
+2008-06-04  Willie Walker <william.walker@sun.com>
+
         * test/harness/runprofile.py:
           Fallback to profile module if cProfile isn't available.
           This is typically due to a Python 2.4 vs. 2.5 installation.

@@ -697,6 +697,14 @@ useBonoboMain           = True
 #
 asyncMode               = True
 
+# A list of toolkits whose events we need to process synchronously.
+# The only one right now is the Java toolkit (see bug #531869), but
+# we put this here to allow more toolkits to be more easily added
+# and for Java to be removed if issues with asynchronous processing
+# of its events are ever resolved.
+#
+synchronousToolkits     = ["J2SE-access-bridge"]
+
 # If True, we output debug information for the event queue.  We
 # use this in addition to log level to prevent debug logic from
 # bogging down event handling.
