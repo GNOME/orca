@@ -1,3 +1,9 @@
+2008-06-05  Eitan Isaacson  <eitan@ascender.com>
+
+	* src/orca/scripts/toolkits/Gecko/script.py: 
+	  Fixed bug 531806 – Wrapped item lists don't give proper 
+	  braille in Gecko
+
 2008-06-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/evolution/script.py:

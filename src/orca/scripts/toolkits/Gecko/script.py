@@ -5956,12 +5956,20 @@ class Script(default.Script):
 
         contextObj, contextCaret = self.getCaretContext()
 
-        string, caretOffset, startOffset = \
-            default.Script.getTextLineAtCaret(self, obj)
-
-        if contextObj == obj:
-            if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if contextObj == obj and \
+                not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            try:
+                ti = obj.queryText()
+            except NotImplementedError:
+                return ["", 0, 0]
+            else:
+                string, startOffset, endOffset = ti.getTextAtOffset(
+                    contextCaret, pyatspi.TEXT_BOUNDARY_LINE_START)
                 caretOffset = contextCaret
+        else:
+            string, caretOffset, startOffset = \
+                default.Script.getTextLineAtCaret(self, obj)
+
 
         return string, caretOffset, startOffset
 
