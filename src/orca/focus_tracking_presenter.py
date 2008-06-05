@@ -658,6 +658,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - e: an at-spi event.
         """
 
+        asyncMode = settings.asyncMode
+
         if settings.debugEventQueue:
             if self._enqueueEventCount:
                 debug.println(debug.LEVEL_ALL,
@@ -730,6 +732,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_ALL,
                               "---------> QUEUEING EVENT %s" % e.type)
 
+            # Some toolkits (e.g., Java - see bug #531869) need to
+            # have their events processed immediately.
+            #
+            try:
+                if event.host_application.toolkitName \
+                    in settings.synchronousToolkits:
+                    asyncMode = False
+            except:
+                pass
+
         if event:
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
@@ -746,7 +758,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           ...put complete")
-            if settings.asyncMode and (not self._gidleId):
+            if asyncMode and (not self._gidleId):
                 if settings.gilSleepTime:
                     time.sleep(settings.gilSleepTime)
                 self._gidleId = gobject.idle_add(self._dequeueEvent)
@@ -759,7 +771,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_ALL,
                               "           ...released")
 
-            if not settings.asyncMode:
+            if not asyncMode:
                 self._dequeueEvent()
 
         if settings.debugEventQueue:
