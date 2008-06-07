@@ -63,6 +63,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 1 51 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 1 51 Slider'",
      "     VISIBLE:  'Slider Control 1 51 Slider', cursor=1",
+     "SPEECH OUTPUT: '51'",
      "SPEECH OUTPUT: '51'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -75,6 +76,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 1 52 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 1 52 Slider'",
      "     VISIBLE:  'Slider Control 1 52 Slider', cursor=1",
+     "SPEECH OUTPUT: '52'",
      "SPEECH OUTPUT: '52'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -87,6 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 1 53 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 1 53 Slider'",
      "     VISIBLE:  'Slider Control 1 53 Slider', cursor=1",
+     "SPEECH OUTPUT: '53'",
      "SPEECH OUTPUT: '53'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -99,6 +102,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 1 54 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 1 54 Slider'",
      "     VISIBLE:  'Slider Control 1 54 Slider', cursor=1",
+     "SPEECH OUTPUT: '54'",
      "SPEECH OUTPUT: '54'"]))
     
 ########################################################################
@@ -124,6 +128,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 2 101 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 101 Slider'",
      "     VISIBLE:  'Slider Control 2 101 Slider', cursor=1",
+     "SPEECH OUTPUT: '101'",
      "SPEECH OUTPUT: '101'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -136,6 +141,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 2 102 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 102 Slider'",
      "     VISIBLE:  'Slider Control 2 102 Slider', cursor=1",
+     "SPEECH OUTPUT: '102'",
      "SPEECH OUTPUT: '102'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -148,6 +154,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 2 103 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 103 Slider'",
      "     VISIBLE:  'Slider Control 2 103 Slider', cursor=1",
+     "SPEECH OUTPUT: '103'",
      "SPEECH OUTPUT: '103'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -160,6 +167,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 2 104 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 104 Slider'",
      "     VISIBLE:  'Slider Control 2 104 Slider', cursor=1",
+     "SPEECH OUTPUT: '104'",
      "SPEECH OUTPUT: '104'"]))
 
 ########################################################################

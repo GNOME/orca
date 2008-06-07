@@ -42,7 +42,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Content ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Content list item'",
-     "SPEECH OUTPUT: 'Size:'"]))
+     "SPEECH OUTPUT: 'Size:'",
+     "SPEECH OUTPUT: 'Default font:'"]))
 
 ########################################################################
 # Press Left Arrow to move backward list item by list item.

@@ -38,6 +38,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Fruits ListItem', cursor=1",
      "BRAILLE LINE:  'Fruits ListItem'",
      "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
      "SPEECH OUTPUT: ''",

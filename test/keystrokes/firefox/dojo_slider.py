@@ -199,13 +199,14 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "move to entry", 
-    ["BUG? - We're not guessing the label",
+    ["BUG? - We're guessing other text in addition to the label",
      "BRAILLE LINE:  'Slider1 Value: 10.0% $l'",
      "     VISIBLE:  'Slider1 Value: 10.0% $l', cursor=21",
      "BRAILLE LINE:  'Slider1 Value: 10.0% $l'",
      "     VISIBLE:  'Slider1 Value: 10.0% $l', cursor=21",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text 10.0%'"]))
+     "SPEECH OUTPUT: 'initial value=10, min=0, max=100, pageIncrement=100, onChange event triggers input box value change immediately",
+     "Slider1 Value: text 10.0%'"]))
      
 ########################################################################
 # Tab to the button between the sliders.  

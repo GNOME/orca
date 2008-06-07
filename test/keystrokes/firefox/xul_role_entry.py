@@ -42,7 +42,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("this is a test"))
 sequence.append(utils.AssertPresentationAction(
     "Type 'this is a test'",
-    [     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog t $l'",
+    ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog t $l'",
      "     VISIBLE:  't $l', cursor=2",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog t $l'",
      "     VISIBLE:  't $l', cursor=2",
@@ -493,7 +493,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog Here is the first line. $l'",
      "     VISIBLE:  'Here is the first line. $l', cursor=23",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog Here is the first line. $l'",
-     "     VISIBLE:  'Here is the first line. $l', cursor=24"]))
+     "     VISIBLE:  'Here is the first line. $l', cursor=24",
+     "SPEECH OUTPUT: '",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -502,7 +504,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  $l'",
-     "     VISIBLE:  ' $l', cursor=1"]))
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: '",
+     "'"]))
 
 ########################################################################
 # Type "Here is the second line."

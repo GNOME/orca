@@ -124,22 +124,37 @@ sequence.append(utils.AssertPresentationAction(
      "the beauty of the world, the paragon of animals!'"]))
 
 ########################################################################
-# Navigate to the next 'large chunk'.  It is the 2nd paragraph under 'From 
-# Wislawa Szymborska - 1972'  The following will be presented.
+# Navigate to the next 'large chunk'.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("o"))
 sequence.append(utils.AssertPresentationAction(
     "Fourth large chunk", 
-    ["BRAILLE LINE:  'I know how to cope with misfortune,'",
-     "     VISIBLE:  'I know how to cope with misfortu', cursor=1",
-     "SPEECH OUTPUT: 'I know how to cope with misfortune, ",
+    ["BRAILLE LINE:  'I am a tranquilizer.'",
+     "     VISIBLE:  'I am a tranquilizer.', cursor=1",
+     "SPEECH OUTPUT: 'I am a tranquilizer.",
+     "I am effective at home, ",
+     "I work well at the office, ",
+     "I take exams, ",
+     "I appear in court, ",
+     "I carefully mend broken crockery - ",
+     "all you need do is take me, ",
+     "dissolve me under the tongue, ",
+     "all you need do is swallow me, ",
+     "just wash me down with water. I know how to cope with misfortune, ",
      "how to endure bad news, ",
      "take the edge of injustice, ",
      "make up for the absence of God, ",
      "help pick out your widow's weeds. ",
      "What are you waiting for - ",
-     "have faith in chemistry's compassion.'"]))
+     "have faith in chemistry's compassion. You're still a young man/woman, ",
+     "you really should settle down somehow. ",
+     "Who said ",
+     "life must be lived courageously? Hand your abyss over to me - ",
+     "I will line it up with soft sleep, ",
+     "you'll be grateful for ",
+     "the four-footed landing. Sell me your soul. ",
+     "There's no other buyer likely to turn up.'"]))
 
 ########################################################################
 # Navigate to the previous 'large chunk'.  It is the 3rd paragraph under 'From 

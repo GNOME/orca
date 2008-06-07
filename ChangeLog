@@ -1,3 +1,18 @@
+2008-06-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/dojo_slider.py::
+        * test/keystrokes/firefox/xul_role_menu_bar.py:
+        * test/keystrokes/firefox/xul_role_list_item.py:
+        * test/keystrokes/firefox/uiuc_slider.py:
+        * test/keystrokes/firefox/xul_role_entry.py:
+        * test/keystrokes/firefox/html_struct_nav_large_obj.py:
+        * test/keystrokes/firefox/uiuc_tree.py:
+        * test/keystrokes/firefox/xul_where_am_i_dialog.py:
+        * test/keystrokes/firefox/uiuc_grid.py:
+        * test/keystrokes/firefox/moz_tabpanel.py:
+        * test/keystrokes/firefox/xul_role_push_button.py:
+          Updated regression tests.
+
 2008-06-05  Eitan Isaacson  <eitan@ascender.com>
 
 	* src/orca/scripts/toolkits/Gecko/script.py: 
