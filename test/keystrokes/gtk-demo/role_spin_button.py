@@ -45,7 +45,7 @@ sequence.append(KeyComboAction("Tab", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPIN_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button",
-    ["BUG? - Text is selected, but selection not presented.",
+    ["KNOWN ISSUE - Selection state not spoken",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
