@@ -1,3 +1,10 @@
+2008-06-09  Rich Burridge <rich.burridge@sun.com>
+
+        * test/keystrokes/gtk-demo/role_label.py:
+          Fix for bug #519547 - gtk-demo/role_label.py regression test 
+          #5 produces the wrong results. Adjusted regression test to 
+          match the new results.
+
 2008-06-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/dojo_slider.py::
