@@ -1110,6 +1110,53 @@ class Script(default.Script):
 
         return isPanel
 
+    def _speakWriterText(self, event, textToSpeak):
+        """Called to speak the current line or paragraph of Writer text.
+
+        Arguments:
+        - event: the Event
+        - textToSpeak: the text to speak
+        """
+
+        # Check to see if there are any hypertext links in this paragraph.
+        # If no, then just speak the whole line. Otherwise, split the text
+        # to speak into words and call sayWriterWord() to speak that token
+        # in the appropriate voice.
+        #
+        try:
+            hypertext = event.source.queryHypertext()
+        except NotImplementedError:
+            hypertext = None
+
+        if not hypertext or (hypertext.getNLinks() == 0):
+            if settings.enableSpeechIndentation:
+                self.speakTextIndentation(event.source,
+                                          textToSpeak.encode("UTF-8"))
+            speech.speak(textToSpeak.encode("UTF-8"), None, False)
+        else:
+            started = False
+            startOffset = 0
+            for i in range(0, len(textToSpeak)):
+                if textToSpeak[i] == ' ':
+                    if started:
+                        endOffset = i
+                        self.sayWriterWord(event.source,
+                            textToSpeak[startOffset:endOffset+1].encode( \
+                                                                "UTF-8"),
+                            startOffset, endOffset)
+                        startOffset = i
+                        started = False
+                else:
+                    if not started:
+                        startOffset = i
+                        started = True
+
+            if started:
+                endOffset = len(textToSpeak)
+                self.sayWriterWord(event.source,
+                    textToSpeak[startOffset:endOffset].encode("UTF-8"),
+                    startOffset, endOffset)
+
     # This method tries to detect and handle the following cases:
     # 0) Writer: find command.
     # 1) Writer: text paragraph.
@@ -1171,7 +1218,7 @@ class Script(default.Script):
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
             result = self.getTextLineAtCaret(event.source)
-            result[0] = result[0].decode("UTF-8")
+            textToSpeak = result[0].decode("UTF-8")
 
             # Translators: this is the name of the menu item people
             # use in StarOffice to create a new text document.  It's
@@ -1183,50 +1230,11 @@ class Script(default.Script):
             if oldLocusOfFocus and \
                oldLocusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM and \
                oldLocusOfFocus.name == _("Text Document") and \
-               len(result[0]) == 0:
+               len(textToSpeak) == 0:
                 self.whereAmI.whereAmI(None)
 
-            # Check to see if there are any hypertext links in this paragraph.
-            # If no, then just speak the whole line. Otherwise, split the
-            # line into words and call sayWriterWord() to speak that token
-            # in the appropriate voice.
-            #
-            try:
-                hypertext = event.source.queryHypertext()
-            except NotImplementedError:
-                hypertext = None
-
-            if not hypertext or (hypertext.getNLinks() == 0):
-                if settings.enableSpeechIndentation:
-                    self.speakTextIndentation(event.source,
-                                              result[0].encode("UTF-8"))
-                speech.speak(result[0].encode("UTF-8"), None, False)
-            else:
-                started = False
-                startOffset = 0
-                for i in range(0, len(result[0])):
-                    if result[0][i] == ' ':
-                        if started:
-                            endOffset = i
-                            self.sayWriterWord(event.source,
-                                result[0][startOffset:endOffset+1].encode( \
-                                                                    "UTF-8"),
-                                startOffset, endOffset)
-                            startOffset = i
-                            started = False
-                    else:
-                        if not started:
-                            startOffset = i
-                            started = True
-
-                if started:
-                    endOffset = len(result[0])
-                    self.sayWriterWord(event.source,
-                        result[0][startOffset:endOffset].encode("UTF-8"),
-                        startOffset, endOffset)
-
+            self._speakWriterText(event, textToSpeak)
             braille.displayRegions(brailleGen.getBrailleRegions(event.source))
-
             return
 
         # 2) Writer: spell checking dialog.
@@ -1855,11 +1863,12 @@ class Script(default.Script):
 
         if orca_state.lastNonModifierKeyEvent:
             event_string = orca_state.lastNonModifierKeyEvent.event_string
-            isShiftKey = orca_state.lastNonModifierKeyEvent.modifiers \
-                         & (1 << pyatspi.MODIFIER_SHIFT)
+            mods = orca_state.lastInputEvent.modifiers
         else:
             event_string = ''
-            isShiftKey = False
+            mods = 0
+        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
+        isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then just return (modulo the special cases below). Speaking and
@@ -1933,7 +1942,19 @@ class Script(default.Script):
             #
             speech.speak(_("blank"), None, False)
 
-        default.Script.onCaretMoved(self, event)
+        # If the last input event was a keyboard event of Control-Up or
+        # Control-Down, we want to speak the whole paragraph rather than
+        # just the current line.
+        #
+        if (event_string == "Up" or event_string == "Down") and \
+            isControlKey and not isShiftKey:
+            result = self.getText(event.source, 0, -1)
+            textToSpeak = result.decode("UTF-8")
+            self._speakWriterText(event, textToSpeak)
+            braille.displayRegions( \
+                self.brailleGenerator.getBrailleRegions(event.source))
+        else:
+            default.Script.onCaretMoved(self, event)
 
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.

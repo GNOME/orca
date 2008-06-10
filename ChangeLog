@@ -1,3 +1,9 @@
+2008-06-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          Fix for bug #521450 - Orca should read the next/previous 
+          paragraph by a keystroke.
+
 2008-06-09  Rich Burridge <rich.burridge@sun.com>
 
         * test/keystrokes/gtk-demo/role_label.py:
