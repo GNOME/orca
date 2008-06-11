@@ -1857,7 +1857,8 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
-        if orca_state.lastNonModifierKeyEvent:
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
             event_string = orca_state.lastNonModifierKeyEvent.event_string
             mods = orca_state.lastInputEvent.modifiers
         else:

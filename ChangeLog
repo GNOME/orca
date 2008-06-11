@@ -1,3 +1,9 @@
+2008-06-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          Fixed bug #537851 - Moving cursor with mouse in oowriter causes
+          traceback.
+
 2008-06-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/script.py:
