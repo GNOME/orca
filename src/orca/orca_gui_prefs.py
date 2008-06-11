@@ -3479,7 +3479,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         clickCount = orca_state.clickCount
         self.newBinding = keybindings.KeyBinding(keyName,
-                                                 captured.modifiers,
+                                                 settings.defaultModifierMask,
                                                  captured.modifiers,
                                                  None,
                                                  clickCount)
@@ -3532,7 +3532,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             clickCount = 1
 
         treeModel.set(myiter,
-                      modMask, mods,
+                      modMask, settings.defaultModifierMask,
                       modUsed, mods,
                       key, string,
                       text, new_text,

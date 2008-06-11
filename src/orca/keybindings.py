@@ -153,7 +153,7 @@ def getModifierNames(mods):
     """
 
     text = ""
-    if mods & (1 << settings.MODIFIER_ORCA):
+    if mods & settings.ORCA_MODIFIER_MASK:
         text += _("Orca") + "+"
     #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
@@ -174,12 +174,12 @@ def getModifierNames(mods):
         text += _("Meta2") + "+"
     #if mods & (1 << pyatspi.MODIFIER_META):
     #    text += _("Meta") + "+"
-    if mods & (1 << pyatspi.MODIFIER_ALT):
+    if mods & settings.ALT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "left alt" modifier.
         #
         text += _("Alt_L") + "+"
-    if mods & (1 << pyatspi.MODIFIER_CONTROL):
+    if mods & settings.CTRL_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "control" modifier.
         #
@@ -189,7 +189,7 @@ def getModifierNames(mods):
         # "caps lock" modifier.
         #
         text += _("Caps_Lock") + "+"
-    if mods & (1 << pyatspi.MODIFIER_SHIFT):
+    if mods & settings.SHIFT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "shift " modifier.
         #

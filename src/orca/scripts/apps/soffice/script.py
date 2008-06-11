@@ -231,39 +231,39 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "a",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["speakInputLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "r",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["setDynamicColumnHeadersHandler"],
                 1))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "r",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["clearDynamicColumnHeadersHandler"],
                 2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "c",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["setDynamicRowHeadersHandler"],
                 1))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "c",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["clearDynamicRowHeadersHandler"],
                 2))
 
@@ -1661,11 +1661,7 @@ class Script(default.Script):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
                 navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
-                             & (1 << pyatspi.MODIFIER_CONTROL \
-                              | 1 << pyatspi.MODIFIER_ALT \
-                              | 1 << pyatspi.MODIFIER_META \
-                              | 1 << pyatspi.MODIFIER_META2 \
-                              | 1 << pyatspi.MODIFIER_META3)
+                             & settings.COMMAND_MODIFIER_MASK
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
@@ -1867,8 +1863,8 @@ class Script(default.Script):
         else:
             event_string = ''
             mods = 0
-        isControlKey = mods & (1 << pyatspi.MODIFIER_CONTROL)
-        isShiftKey = mods & (1 << pyatspi.MODIFIER_SHIFT)
+        isControlKey = mods & settings.CTRL_MODIFIER_MASK
+        isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then just return (modulo the special cases below). Speaking and

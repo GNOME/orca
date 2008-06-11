@@ -224,22 +224,22 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["togglePrefixHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                None,
-                None,
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleBuddyTypingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                None,
-                None,
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleMessageHistoriesHandler"]))
 
         # keybindings to provide chat room message history.
@@ -249,8 +249,8 @@ class Script(default.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     messageKey,
-                    1 << settings.MODIFIER_ORCA,
-                    1 << settings.MODIFIER_ORCA,
+                    settings.defaultModifierMask,
+                    settings.ORCA_MODIFIER_MASK,
                     self.inputEventHandlers["reviewMessage"]))
 
         return keyBindings

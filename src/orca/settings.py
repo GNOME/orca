@@ -80,6 +80,8 @@ try:
 except:
     gconfClient = None
 
+import pyatspi
+
 import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
@@ -1006,3 +1008,47 @@ mouseDwellDelay = 0
 # Maximum allowed drift while pointer is dwelling in mouse review mode.
 # 
 mouseDwellMaxDrift = 3
+
+# The different modifiers/modifier masks associated with keybindings
+#
+NO_MODIFIER_MASK              =  0
+ALT_MODIFIER_MASK             =  1 << pyatspi.MODIFIER_ALT
+CTRL_MODIFIER_MASK            =  1 << pyatspi.MODIFIER_CONTROL
+ORCA_MODIFIER_MASK            =  1 << MODIFIER_ORCA
+ORCA_ALT_MODIFIER_MASK        = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_ALT)
+ORCA_CTRL_MODIFIER_MASK       = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL)
+ORCA_CTRL_ALT_MODIFIER_MASK   = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT)
+ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_SHIFT)
+SHIFT_MODIFIER_MASK           =  1 << pyatspi.MODIFIER_SHIFT
+SHIFT_ALT_MODIFIER_MASK       = (1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_ALT)
+COMMAND_MODIFIER_MASK         = (1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_META2 |
+                                 1 << pyatspi.MODIFIER_META3)
+NON_LOCKING_MODIFIER_MASK     = (1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_META2 |
+                                 1 << pyatspi.MODIFIER_META3 |
+                                 1 << MODIFIER_ORCA)
+ALL_BUT_NUMLOCK_MODIFIER_MASK = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_SHIFTLOCK |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_META2 |
+                                 1 << pyatspi.MODIFIER_META3)
+
+# The 2nd parameter used when creating a keybinding refers to the
+# modifiers "we care about."  We typically care about all of the
+# modifiers which are not locking keys because we want to avoid
+# conflicts with other commands, such as Orca's command for moving
+# among headings (H) and the Help menu (Alt+H).
+#
+defaultModifierMask = NON_LOCKING_MODIFIER_MASK

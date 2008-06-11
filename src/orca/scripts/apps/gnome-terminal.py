@@ -208,7 +208,7 @@ class Script(default.Script):
             keyString = orca_state.lastNonModifierKeyEvent.event_string
 
             controlPressed = orca_state.lastInputEvent.modifiers \
-                             & (1 << pyatspi.MODIFIER_CONTROL)
+                             & settings.CTRL_MODIFIER_MASK
 
             if (keyString == "Delete") or (keyString == "BackSpace"):
                 return
@@ -240,11 +240,7 @@ class Script(default.Script):
             # compressed string is (we choose 5 here), then output that.
             #
             wasCommand = orca_state.lastInputEvent.modifiers \
-                         & (1 << pyatspi.MODIFIER_CONTROL \
-                            | 1 << pyatspi.MODIFIER_ALT \
-                            | 1 << pyatspi.MODIFIER_META \
-                            | 1 << pyatspi.MODIFIER_META2 \
-                            | 1 << pyatspi.MODIFIER_META3)
+                         & settings.COMMAND_MODIFIER_MASK
             wasCommand = wasCommand \
                          or (keyString == "Return") \
                          or (keyString == "Tab")

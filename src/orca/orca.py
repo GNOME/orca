@@ -748,7 +748,7 @@ def _processKeyboardEvent(event):
 
     if _orcaModifierPressed:
         keyboardEvent.modifiers = keyboardEvent.modifiers \
-                                  | (1 << settings.MODIFIER_ORCA)
+                                  | settings.ORCA_MODIFIER_MASK
 
     orca_state.lastInputEvent = keyboardEvent
 

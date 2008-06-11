@@ -29,7 +29,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
 import debug
 import settings
 import time
@@ -70,7 +69,7 @@ class KeyboardEvent(InputEvent):
         # mapping ASCII control characters to UTF-8.]]]
         #
         event_string = event.event_string
-        if (event.modifiers & (1 << pyatspi.MODIFIER_CONTROL)) \
+        if (event.modifiers & settings.CTRL_MODIFIER_MASK) \
             and (not event.is_text) and (len(event_string) == 1):
             value = ord(event.event_string[0])
             if value < 32:
@@ -78,15 +77,8 @@ class KeyboardEvent(InputEvent):
 
         # Filter out the NUMLOCK modifier -- it always causes problems.
         #
-        mask = (1 << settings.MODIFIER_ORCA |
-                1 << pyatspi.MODIFIER_SHIFT |
-                1 << pyatspi.MODIFIER_SHIFTLOCK |
-                1 << pyatspi.MODIFIER_CONTROL |
-                1 << pyatspi.MODIFIER_ALT |
-                1 << pyatspi.MODIFIER_META |
-                1 << pyatspi.MODIFIER_META2 |
-                1 << pyatspi.MODIFIER_META3)
-        event.modifiers = event.modifiers & mask
+        event.modifiers = event.modifiers \
+                          & settings.ALL_BUT_NUMLOCK_MODIFIER_MASK
 
         InputEvent.__init__(self, KEYBOARD_EVENT)
         self.type = event.type

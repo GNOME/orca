@@ -1,3 +1,21 @@
+2008-06-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/apps/gnome-mud.py:
+          src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/gnome-terminal.py:
+          src/orca/scripts/apps/pidgin/script.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/settings.py:
+          src/orca/orca_prefs.py:
+          src/orca/default.py:
+          src/orca/orca.py:
+          src/orca/input_event.py:
+          src/orca/keybindings.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #464194 - Refactor keybindings to always care
+          about Control/Shift/Alt/Orca modifiers.
+
 2008-06-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
@@ -17,17 +35,17 @@
 
 2008-06-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
-        * test/keystrokes/firefox/dojo_slider.py::
-        * test/keystrokes/firefox/xul_role_menu_bar.py:
-        * test/keystrokes/firefox/xul_role_list_item.py:
-        * test/keystrokes/firefox/uiuc_slider.py:
-        * test/keystrokes/firefox/xul_role_entry.py:
-        * test/keystrokes/firefox/html_struct_nav_large_obj.py:
-        * test/keystrokes/firefox/uiuc_tree.py:
-        * test/keystrokes/firefox/xul_where_am_i_dialog.py:
-        * test/keystrokes/firefox/uiuc_grid.py:
-        * test/keystrokes/firefox/moz_tabpanel.py:
-        * test/keystrokes/firefox/xul_role_push_button.py:
+        * test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/uiuc_slider.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/html_struct_nav_large_obj.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/xul_where_am_i_dialog.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/xul_role_push_button.py:
           Updated regression tests.
 
 2008-06-05  Eitan Isaacson  <eitan@ascender.com>

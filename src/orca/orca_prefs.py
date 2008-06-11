@@ -504,8 +504,8 @@ class OrcaPrefs:
                          + str(tupl[HANDLER])+"'])\n")
         if not (tupl[TEXT1] or tupl[TEXT2]):
             prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
-            prefs.writelines("      None,\n")
-            prefs.writelines("      0,\n")
+            prefs.writelines("      '',\n")
+            prefs.writelines("      %d,\n" % settings.defaultModifierMask)
             prefs.writelines("      0,\n")
             prefs.writelines('      script.inputEventHandlers["' + \
                              str(tupl[HANDLER]) +'"]))\n\n')
@@ -535,7 +535,7 @@ class OrcaPrefs:
                 prefs.writelines("      " + str(tupl[MOD_MASK2]) + ",\n")
                 prefs.writelines("      " + str(tupl[MOD_USED2]) + ",\n")
             else:
-                prefs.writelines("      0,\n")
+                prefs.writelines("      %d,\n" % settings.defaultModifierMask)
                 prefs.writelines("      0,\n")
             if (tupl[CLICK_COUNT2] == "1"):
                 prefs.writelines('      script.inputEventHandlers["' + \

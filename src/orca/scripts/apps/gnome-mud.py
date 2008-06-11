@@ -132,8 +132,8 @@ class Script(default.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     messagekey,
-                    1 << settings.MODIFIER_ORCA,
-                    1 << settings.MODIFIER_ORCA,
+                    settings.defaultModifierMask,
+                    settings.ORCA_MODIFIER_MASK,
                     self.inputEventHandlers["readPreviousMessageHandler"]))
 
         return keyBindings
