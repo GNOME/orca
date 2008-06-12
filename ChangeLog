@@ -1,3 +1,9 @@
+2008-06-12  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py:
+          Fix for bug #487585 - Orca Usage message should be localized.
+	  Do not mark the command line options for translation.
+
 2008-06-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
