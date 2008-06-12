@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2007 Sun Microsystems Inc.
+# Copyright 2004-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 # We're going to force the name of the app to "orca" so pygtk
@@ -69,7 +69,6 @@ from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
 from orca_i18n import _           # for gettext support
-from orca_i18n import Q_          # to provide qualified translatable strings
 
 if settings.debugMemoryUsage:
     import gc
@@ -1324,11 +1323,11 @@ def usage():
           _("Use alternate directory for user preferences")
 
     print "-e, --enable=[" \
-        + Q_("option|speech") + "|" \
-        + Q_("option|braille") + "|" \
-        + Q_("option|braille-monitor") + "|" \
-        + Q_("option|magnifier") + "|" \
-        + Q_("option|main-window") + "]",
+        + "speech" + "|" \
+        + "braille" + "|" \
+        + "braille-monitor" + "|" \
+        + "magnifier" + "|" \
+        + "main-window" + "]",
 
     # Translators: if the user supplies an option via the '-e, --enable'
     # command line option, it will be automatically enabled as Orca is
@@ -1337,11 +1336,11 @@ def usage():
     print _("Force use of option")
 
     print "-d, --disable=[" \
-        + Q_("option|speech") + "|" \
-        + Q_("option|braille") + "|" \
-        + Q_("option|braille-monitor") + "|" \
-        + Q_("option|magnifier") + "|" \
-        + Q_("option|main-window") + "]",
+        + "speech" + "|" \
+        + "braille" + "|" \
+        + "braille-monitor" + "|" \
+        + "magnifier" + "|" \
+        + "main-window" + "]",
 
     # Translators: if the user supplies an option via the '-d, --disable'
     # command line option, it will be automatically disabled as Orca is
@@ -1453,61 +1452,31 @@ def main():
             if opt in ("-e", "--enable"):
                 feature = val.strip()
 
-                # Translators: this option is for enabling speech synthesis
-                # output.
-                #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                if feature == Q_("option|speech"):
+                if feature == "speech":
                     _commandLineSettings["enableSpeech"] = True
-
-                # Translators: this option is for enabling braille output on
-                # a physical refreshable braille display.
-                #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                elif feature == Q_("option|braille"):
+                elif feature == "braille":
                     _commandLineSettings["enableBraille"] = True
-
-                # Translators: this option is for enabling a GUI to monitor 
-                # what is being sent to the physical braille display.
-                #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                elif feature == Q_("option|braille-monitor"):
+                elif feature == "braille-monitor":
                     _commandLineSettings["enableBrailleMonitor"] = True
-
-                # Translators: this option is for enabling screen 
-                # magnification.
-                #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                elif feature == Q_("option|magnifier"):
+                elif feature == "magnifier":
                     _commandLineSettings["enableMagnifier"] = True
-
-                # Translators: this option is for enabling the display
-                # of the Orca main window.
-                #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                elif feature == Q_("option|main-window"):
+                elif feature == "main-window":
                     _commandLineSettings["showMainWindow"] = True
-
                 else:
                     usage()
                     abort(2)
 
             if opt in ("-d", "--disable"):
                 feature = val.strip()
-                if feature == Q_("option|speech"):
+                if feature == "speech":
                     _commandLineSettings["enableSpeech"] = False
-                elif feature == Q_("option|braille"):
+                elif feature == "braille":
                     _commandLineSettings["enableBraille"] = False
-                elif feature == Q_("option|braille-monitor"):
+                elif feature == "braille-monitor":
                     _commandLineSettings["enableBrailleMonitor"] = False
-                elif feature == Q_("option|magnifier"):
+                elif feature == "magnifier":
                     _commandLineSettings["enableMagnifier"] = False
-                elif feature == Q_("option|main-window"):
+                elif feature == "main-window":
                     _commandLineSettings["showMainWindow"] = False
                 else:
                     usage()
