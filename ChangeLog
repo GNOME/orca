@@ -1,3 +1,9 @@
+2008-06-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #537425 - Orca should provide context for 
+          misspelled words in Thunderbird spell check.
+
 2008-06-12  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca.py:

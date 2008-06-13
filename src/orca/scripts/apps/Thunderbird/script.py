@@ -62,6 +62,11 @@ class Script(Gecko.Script):
 
         Gecko.Script.__init__(self, app)
 
+        # This will be used to cache a handle to the Thunderbird text area for
+        # spell checking purposes.
+
+        self.textArea = None
+
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
@@ -72,7 +77,7 @@ class Script(Gecko.Script):
         """
         debug.println(self.debugLevel, "Thunderbird.py: "+msg)
 
-    def _isBogusSpellCheckListItemFocus(self, event):
+    def _isSpellCheckListItemFocus(self, event):
         """Check if this event is for a list item in the spell checking
         dialog and whether it has a FOCUSED state.
 
@@ -134,6 +139,27 @@ class Script(Gecko.Script):
             orca.setLocusOfFocus(event, acc)
             consume = True
 
+        # Text area (for caching handle for spell checking purposes).
+        #
+        # This works in conjunction with code in the onNameChanged()
+        # method. Check to see if focus is currently in the Thunderbird
+        # message area. If it is, then, if this is the first time, save
+        # a pointer to the document frame which contains the text being
+        # edited.
+        #
+        # Note that this drops through to then use the default event
+        # processing in the parent class for this "focus:" event.
+
+        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME,
+                     pyatspi.ROLE_INTERNAL_FRAME,
+                     pyatspi.ROLE_FRAME,
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            self._debug("onFocus - message text area.")
+
+            self.textArea = event.source
+            # Fall-thru to process the event with the default handler.
+
         if event.type.startswith("focus:"):
             # If we get a "focus:" event for the "Replace with:" entry in the
             # spell checking dialog, then clear the current locus of focus so
@@ -160,7 +186,7 @@ class Script(Gecko.Script):
             # we didn't navigate to it), then ignore it. See bug #535192
             # for more details.
             #
-            if self._isBogusSpellCheckListItemFocus(event):
+            if self._isSpellCheckListItemFocus(event):
                 return
 
         # Handle dialogs.
@@ -197,7 +223,7 @@ class Script(Gecko.Script):
         # FOCUSED state (i.e. we didn't navigate to it), then ignore it.
         # See bug #535192 for more details.
         #
-        if self._isBogusSpellCheckListItemFocus(event):
+        if self._isSpellCheckListItemFocus(event):
             return
 
         Gecko.Script.onStateChanged(self, event)
@@ -268,8 +294,18 @@ class Script(Gecko.Script):
             #
             if dialog.name.startswith(_("Check Spelling")):
                 if obj.getIndexInParent() == 0:
-                    speech.speak(self.getDisplayedText(dialog[0]))
-                    speech.speak(self.getDisplayedText(dialog[1]))
+                    badWord = self.getDisplayedText(dialog[1])
+
+                    if self.textArea != None:
+                        # If we have a handle to the Thunderbird message text
+                        # area, then extract out all the text objects, and
+                        # create a list of all the words found in them.
+                        #
+                        allTokens = []
+                        text = self.getText(self.textArea, 0, -1)
+                        tokens = text.split()
+                        allTokens += tokens
+                        self.speakMisspeltWord(allTokens, badWord)
 
     def _speakEnclosingPanel(self, obj):
         """Speak the enclosing panel for the object, if it is
