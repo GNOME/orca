@@ -1,5 +1,18 @@
 2008-06-16  Willie Walker <william.walker@sun.com>
 
+        * README:
+          configure.in:
+          Mark as Orca v2.23.5pre
+
+2008-06-16  Willie Walker <william.walker@sun.com>
+
+        * NEWS:
+          README:
+          configure.in:
+          Prep for Orca v2.23.4
+
+2008-06-16  Willie Walker <william.walker@sun.com>
+
 	* src/orca/gnomespeechfactory.py: Fix for bug #397306 - Orca's
 	  default synthesis engine choice should take language into
 	  account.
