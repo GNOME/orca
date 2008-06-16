@@ -1,3 +1,65 @@
+2.23.4 - 16-Jun-2008
+
+General:
+
+* Fix for bug #397306 - Orca's default synthesis engine choice should
+  take language into account.
+
+* Fix for bug #464194 - Refactor keybindings to always care about
+  Control/Shift/Alt/Orca modifiers.
+
++ Refix for bug #487585 - Orca Usage message should be localized.  Do
+  not mark the command line options for translation.
+
+* Fix for bug #517532 - change dict.has_key() usage to set operator
+  'in'.
+
+* Fix for bug #529655 - After inputting an incorrect password on the
+  screensaver, orca can't speak the whole dialog.
+
+* Fix for bug #530368 - Only move focus if the event is for the
+  focused/active window.
+
+Java:
+
++ Fix for bug #435585 - Java ControlPanel GIVING UP AFTER 5 TRIES.
+
+OOo:
+
+* Fix for bug #521450 - Orca should read the next/previous paragraph
+  by a keystroke.
+
+* Fix for bug #537851 - Moving cursor with mouse in oowriter causes
+  traceback.
+
+Thunderbird:
+
+* Fix for bug #507922 - Include page tab name in braille context for
+  Thunderbird.
+
+* Fix for bug #535192 - Misspelled word and suggestion not spoken in
+  Thunderbird spell check.
+
+* Fix for bug #537425 - Orca should provide context for misspelled
+  words in Thunderbird spell check.
+
+Firefox:
+
+* Fix for bug #531806 - Wrapped item lists don't give proper braille
+  in Gecko.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    bg      Bulgarian            Alexander Shopov
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    nb      Norwegian Bokmål     Kjartan Maraas
+    oc      Occitan              Yannig Marchegay
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.23.3 - 02-Jun-2008
 
 General:
