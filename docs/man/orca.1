@@ -89,6 +89,21 @@ message of this release of the
 .B orca
 program.
 .TP
+.B \-l, --list-apps
+Prints the names of all the currently running applications.  This
+is used primarily for debugging purposes to see if
+.B orca
+can talk to the accessibility infrastructure.  Note that if
+.B orca
+is already running, this will not kill the other
+.B orca
+process.  It will just list the currently running applications,
+and you will see
+.B orca
+listed twice: once for the existing
+.B orca
+and once for this instance.
+.TP
 .B \-v, --version
 Return the 
 .B orca 

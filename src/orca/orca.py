@@ -1332,6 +1332,13 @@ def usage():
 
     print "-v, --version                %s" % platform.version
 
+    # Translators: this is a testing option for the command line.  It prints
+    # the names of the applications known to the accessibility infrastructure
+    # to stdout and then exits.
+    #
+    print "-l, --list-apps              " + \
+          _("Print the known running applications")
+
     # Translators: this is the description of the command line option
     # '-s, --setup, --gui-setup' that will initially display a GUI dialog
     # that would allow the user to set their Orca preferences.
@@ -1479,7 +1486,7 @@ def main():
         #
         opts, args = getopt.getopt(
             arglist,
-            "?stnvd:e:u:",
+            "?stnvld:e:u:",
             ["help",
              "user-prefs-dir=",
              "enable=",
@@ -1488,6 +1495,7 @@ def main():
              "gui-setup",
              "text-setup",
              "no-setup",
+             "list-apps",
              "version"])
         for opt, val in opts:
             if opt in ("-u", "--user-prefs-dir"):
@@ -1545,6 +1553,13 @@ def main():
             if opt in ("-v", "--version"):
                 print "Orca %s" % platform.version
                 abort(0)
+            if opt in ("-l", "--list-apps"):
+                apps = filter(lambda x: x is not None,
+                              pyatspi.Registry.getDesktop(0))
+                for app in apps:
+                    print app.name
+                abort(0)
+
     except:
         debug.printException(debug.LEVEL_OFF)
         usage()
