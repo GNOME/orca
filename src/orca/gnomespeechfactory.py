@@ -52,6 +52,50 @@ from orca_i18n import _           # for gettext support
 ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
+def _matchLanguage(desired, actual):
+    """Compares a desired language to an actual language and returns
+    a numerical value representing the degree of match.  The expected
+    language format is a string similar to the following, where the
+    delimiter can be '-' '_' or '.':
+
+      de-DE (German for Germany)
+      en-US (English as used in the United States)
+
+    Additional extensions for variants or dialects are allowed as well.
+
+    The return value is one of the following:
+
+      0 - no match at all
+      1 - some match
+      2 - exact match
+    """
+
+    if desired == actual:
+        return 2
+    if not desired or not actual:
+        return 0
+
+    # Break the strings into arrays where the delimiters are
+    # - or _.  Also lowercase everything to help with string 
+    # compares.
+    #
+    desired = desired.lower().replace("-","_").replace(".","_").split("_")
+    actual = actual.lower().replace("-","_").replace(".","_").split("_")
+
+    matchCount = 0
+    for i in range(0, min(len(desired), len(actual))):
+        if desired[i] == actual[i]:
+            matchCount += 1
+        else:
+            break
+
+    if matchCount == len(desired):
+        return 2
+    elif matchCount:
+        return 1
+    else:
+        return 0
+        
 class _SayAll:
     def __init__(self, iterator, context, utteranceId, progressCallback):
         self.utteranceIterator   = iterator
@@ -411,7 +455,16 @@ class SpeechServer(speechserver.SpeechServer):
         voices = self.__driver.getAllVoices()
         foundVoices = []
         for voice in voices:
-            if voice.language in languages:
+            match = 0
+            for language in languages:
+                match = max(match, _matchLanguage(voice.language, language))
+
+            # Exact matches get put at the beginning, inexact get added to
+            # the end.
+            #
+            if match == 2:
+                foundVoices.insert(0, voice)
+            elif match:
                 foundVoices.append(voice)
 
         # If we didn't find any matches, well...punt.
