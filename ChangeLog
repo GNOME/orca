@@ -1,3 +1,10 @@
+2008-06-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/soffice/braille_generator.py:
+          src/orca/scripts/apps/soffice/script.py:
+          Fixed bug #538056 - Orca should announce the "view" as part of 
+          the scroll pane context in Impress.
+
 2008-06-17  Willie Walker <william.walker@sun.com>
 
         * pylintrc:

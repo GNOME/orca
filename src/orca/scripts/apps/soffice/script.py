@@ -1165,6 +1165,7 @@ class Script(default.Script):
     # 4) Calc: cell editor.
     # 5) Calc: name box.
     # 6) Calc: spreadsheet cell.
+    # 7) Impress: scroll pane.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1443,6 +1444,32 @@ class Script(default.Script):
                     row = table.getRowAtIndex(index)
                     self.pointOfReference['lastRow'] = row
                 return
+
+        # 7) Impress: scroll pane.
+        #
+        # If we are in the slide presentation scroll pane, also announce
+        # the current page tab. See bug #538056 for more details.
+        #
+        rolesList = [pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(self.debugLevel, "soffice.locusOfFocusChanged - " \
+                          + "Impress: scroll pane.")
+
+            for child in event.source.parent:
+                if child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
+                    for tab in child:
+                        eventState = tab.getState()
+                        if eventState.contains(pyatspi.STATE_SELECTED):
+                            utterances = self.speechGenerator.getSpeech(tab,
+                                                                        False)
+                            speech.speakUtterances(utterances)
+            # Fall-thru to process the event with the default handler.
 
         # Pass the event onto the parent class to be handled in the default way.
 

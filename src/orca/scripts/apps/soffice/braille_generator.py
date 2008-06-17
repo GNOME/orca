@@ -233,3 +233,40 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 return [regions, focusRegion]
 
         return regions
+
+    def _getBrailleRegionsForScrollPane(self, obj):
+        """Get the braille for a scroll pane.
+
+        Arguments:
+        - obj: the scroll pane
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        self._debugGenerator("soffice: _getBrailleRegionsForScrollPane", obj)
+
+        scrollRegions = braillegenerator.BrailleGenerator.\
+                               _getBrailleRegionsForScrollPane(self, obj)
+
+        # If we are in the slide presentation scroll pane, also announce
+        # the current page tab. See bug #538056 for more details.
+        #
+        rolesList = [pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self._script.isDesiredFocusedItem(obj, rolesList):
+            for child in obj.parent:
+                if child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
+                    for tab in child:
+                        eventState = tab.getState()
+                        if eventState.contains(pyatspi.STATE_SELECTED):
+                            tabRegions = self.getBrailleRegions(tab)
+                            tabRegions[0].append(braille.Region(" ")) 
+                            tabRegions[0].extend(scrollRegions[0])
+                            return tabRegions
+
+        return scrollRegions
