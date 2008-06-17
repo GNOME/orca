@@ -64,6 +64,7 @@ load-plugins=
 #
 # W0102: Default argument is a mutable value (list or dictionary)
 # W0141: Used builtin function 'map'
+# W0333: Use of the `` operator
 # W0401: Wildcard import constants
 # W0403: Relative import
 # W0511: Warning note (FIXME or XXX) detected.
@@ -86,7 +87,7 @@ load-plugins=
 # R0914: Function or method has too many local variables
 # R0915: Function or method has too many statements
 #
-disable-msg=E0611,C0111,R0201,W0102,W0141,W0401,W0403,W0603,W0612,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
+disable-msg=E0611,C0111,R0201,W0102,W0141,W0333,W0401,W0403,W0603,W0612,W0613,W0702,W0704,W0511,R0801,R0912,R0915,R0914,R0904,R0903,R0401,R0911,R0913,C0302,R0902
 
 
 [REPORTS]

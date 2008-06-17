@@ -1,3 +1,9 @@
+2008-06-17  Willie Walker <william.walker@sun.com>
+
+        * pylintrc:
+          Add W0333 Use of the `` operator to list of messages to ignore.
+          Requires pylint 0.14.0 or better, I believe.
+
 2008-06-16  Willie Walker <william.walker@sun.com>
 
         * README:
