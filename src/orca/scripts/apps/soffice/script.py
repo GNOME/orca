@@ -1879,7 +1879,33 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # If the object is losing focus, then just ignore this event.
+        # If we are losing focus and we in a paragraph in a slide 
+        # presentation and the last thing the user typed was a Return,
+        # and echo by word is enabled, then echo the previous word 
+        # that the user typed.  See bug #538053 for more details.
+        #
+        if event.detail1 == -1:
+            rolesList = [pyatspi.ROLE_PARAGRAPH,
+                         pyatspi.ROLE_UNKNOWN,
+                         pyatspi.ROLE_UNKNOWN,
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_ROOT_PANE, \
+                         pyatspi.ROLE_FRAME, \
+                         pyatspi.ROLE_APPLICATION]
+            if self.isDesiredFocusedItem(event.source, rolesList) and \
+               settings.enableEchoByWord:
+                if isinstance(orca_state.lastInputEvent,
+                              input_event.KeyboardEvent):
+                    keyString = orca_state.lastNonModifierKeyEvent.event_string
+                    if keyString == "Return":
+                        result = self.getText(event.source, 0, -1)
+                        line = result.decode("UTF-8")
+                        self.echoPreviousWord(event.source, len(line))
+                        return
+
+        # Otherwise, if the object is losing focus, then just ignore this event.
         #
         if event.detail1 == -1:
             return

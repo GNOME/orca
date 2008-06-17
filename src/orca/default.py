@@ -2194,7 +2194,7 @@ class Script(script.Script):
         if len(utterance):
             speech.speak(utterance)
 
-    def echoPreviousWord(self, obj):
+    def echoPreviousWord(self, obj, offset=None):
         """Speaks the word prior to the caret, as long as there is
         a word prior to the caret and there is no intervening word
         delimiter between the caret and the end of the word.
@@ -2207,6 +2207,8 @@ class Script(script.Script):
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
                interface.
+        - offset: if not None, the offset within the text to use as the
+                  end of the word.
         """
 
         try:
@@ -2214,7 +2216,8 @@ class Script(script.Script):
         except NotImplementedError:
             return
 
-        offset = text.caretOffset - 1
+        if not offset:
+            offset = text.caretOffset - 1
         if (offset < 0):
             return
 
@@ -2230,7 +2233,7 @@ class Script(script.Script):
         # work our way to the beginning of the word, stopping when
         # we hit another word delimiter.
         #
-        wordEndOffset = text.caretOffset - 2
+        wordEndOffset = offset - 1
         wordStartOffset = wordEndOffset
 
         while wordStartOffset >= 0:

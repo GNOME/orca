@@ -13,6 +13,11 @@
           Fixed bug #538056 - Orca should announce the "view" as part of 
           the scroll pane context in Impress.
 
+        * src/orca/scripts/apps/soffice/script.py:
+          src/orca/default.py:
+          Fixed bug #538053 - Word echo is not echoing the word typed 
+          when return is pressed while editing an Impress slide.
+
 2008-06-17  Willie Walker <william.walker@sun.com>
 
         * pylintrc:
