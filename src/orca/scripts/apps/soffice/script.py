@@ -1879,9 +1879,6 @@ class Script(default.Script):
         - event: the Event
         """
 
-        print "XXX: onCaretMoved entered."
-        self.printAncestry(event.source)
-
         # If we are losing focus and we in:
         # 1/ a paragraph in an ooimpress slide presentation
         # 2/ a paragraph in an oowriter text document
