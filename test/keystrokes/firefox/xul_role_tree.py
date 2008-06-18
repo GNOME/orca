@@ -54,7 +54,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All Bookmarks list item expanded'"]))
+     "SPEECH OUTPUT: 'All Bookmarks expanded'"]))
 
 ########################################################################
 # Press Down Arrow twice to give focus to the Bookmarks Menu list item.
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar list item collapsed'",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -76,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Menu list item collapsed'"]))
+     "SPEECH OUTPUT: 'Bookmarks Menu collapsed'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree Recently Bookmarked ListItem'",
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Recently Bookmarked list item'",
+     "SPEECH OUTPUT: 'Recently Bookmarked'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 ########################################################################
@@ -159,7 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Menu list item expanded'",
+     "SPEECH OUTPUT: 'Bookmarks Menu expanded'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
@@ -183,7 +183,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar list item collapsed'"]))
+     "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -192,7 +192,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All Bookmarks list item expanded'",
+     "SPEECH OUTPUT: 'All Bookmarks expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################

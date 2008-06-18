@@ -187,7 +187,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Main list item'"]))
+     "SPEECH OUTPUT: 'Main'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

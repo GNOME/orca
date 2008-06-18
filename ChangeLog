@@ -1,3 +1,14 @@
+2008-06-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
+          test/keystrokes/firefox/uiuc_slider.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          Updated regression tests.
+
 2008-06-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:

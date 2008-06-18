@@ -31,7 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Tabs ListItem'",
      "     VISIBLE:  'Tabs ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tabs list item'",
+     "SPEECH OUTPUT: 'Tabs'",
      "SPEECH OUTPUT: 'New pages should be opened in:'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -41,7 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Content ListItem'",
      "     VISIBLE:  'Content ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Content list item'",
+     "SPEECH OUTPUT: 'Content'",
      "SPEECH OUTPUT: 'Size:'",
      "SPEECH OUTPUT: 'Default font:'"]))
 
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Tabs ListItem'",
      "     VISIBLE:  'Tabs ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Tabs list item'"]))
+     "SPEECH OUTPUT: 'Tabs'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Main list item'"]))
+     "SPEECH OUTPUT: 'Main'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 

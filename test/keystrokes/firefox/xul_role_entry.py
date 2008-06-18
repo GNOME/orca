@@ -493,9 +493,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog Here is the first line. $l'",
      "     VISIBLE:  'Here is the first line. $l', cursor=23",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog Here is the first line. $l'",
-     "     VISIBLE:  'Here is the first line. $l', cursor=24",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "     VISIBLE:  'Here is the first line. $l', cursor=24"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -504,9 +502,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "     VISIBLE:  ' $l', cursor=1"]))
 
 ########################################################################
 # Type "Here is the second line."

@@ -42,7 +42,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Continents ListItem'",
      "     VISIBLE:  'Continents ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Continents list item expanded'",
+     "SPEECH OUTPUT: 'Continents expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Africa list item collapsed'",
+     "SPEECH OUTPUT: 'Africa collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 ########################################################################
@@ -93,7 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Egypt ListItem'",
      "     VISIBLE:  'Egypt ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Egypt list item'",
+     "SPEECH OUTPUT: 'Egypt'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -104,7 +104,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Kenya ListItem'",
      "     VISIBLE:  'Kenya ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Kenya list item collapsed'"]))
+     "SPEECH OUTPUT: 'Kenya collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -129,7 +129,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Sudan ListItem'",
      "     VISIBLE:  'Sudan ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Sudan list item collapsed'"]))
+     "SPEECH OUTPUT: 'Sudan collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -138,7 +138,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Asia ListItem'",
      "     VISIBLE:  'Asia ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Asia list item collapsed'",
+     "SPEECH OUTPUT: 'Asia collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -156,7 +156,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'China ListItem'",
      "     VISIBLE:  'China ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'China list item'",
+     "SPEECH OUTPUT: 'China'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -166,7 +166,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'India ListItem'",
      "     VISIBLE:  'India ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'India list item'"]))
+     "SPEECH OUTPUT: 'India'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -175,7 +175,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Russia ListItem'",
      "     VISIBLE:  'Russia ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Russia list item'"]))
+     "SPEECH OUTPUT: 'Russia'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -184,7 +184,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Mongolia ListItem'",
      "     VISIBLE:  'Mongolia ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Mongolia list item'"]))
+     "SPEECH OUTPUT: 'Mongolia'"]))
     
 ########################################################################
 # End tree navigation

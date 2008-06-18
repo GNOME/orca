@@ -43,7 +43,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Fruits list item expanded'",
+     "SPEECH OUTPUT: 'Fruits expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
@@ -72,7 +72,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Oranges ListItem'",
      "     VISIBLE:  'Oranges ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Oranges list item'",
+     "SPEECH OUTPUT: 'Oranges'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -82,7 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Pineapples ListItem'",
      "     VISIBLE:  'Pineapples ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Pineapples list item'"]))
+     "SPEECH OUTPUT: 'Pineapples'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -91,7 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Apples ListItem'",
      "     VISIBLE:  'Apples ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Apples list item collapsed'"]))
+     "SPEECH OUTPUT: 'Apples collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -108,7 +108,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Macintosh ListItem'",
      "     VISIBLE:  'Macintosh ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Macintosh list item'",
+     "SPEECH OUTPUT: 'Macintosh'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -118,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Granny Smith ListItem'",
      "     VISIBLE:  'Granny Smith ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Granny Smith list item collapsed'"]))
+     "SPEECH OUTPUT: 'Granny Smith collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -135,7 +135,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Washington State ListItem'",
      "     VISIBLE:  'Washington State ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Washington State list item'",
+     "SPEECH OUTPUT: 'Washington State'",
      "SPEECH OUTPUT: 'tree level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +145,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Michigan ListItem'",
      "     VISIBLE:  'Michigan ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Michigan list item'"]))
+     "SPEECH OUTPUT: 'Michigan'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -154,7 +154,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'New York ListItem'",
      "     VISIBLE:  'New York ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'New York list item'"]))
+     "SPEECH OUTPUT: 'New York'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -163,7 +163,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Fuji ListItem'",
      "     VISIBLE:  'Fuji ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Fuji list item'",
+     "SPEECH OUTPUT: 'Fuji'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -173,7 +173,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Bananas ListItem'",
      "     VISIBLE:  'Bananas ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bananas list item'",
+     "SPEECH OUTPUT: 'Bananas'",
      "SPEECH OUTPUT: 'tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -183,7 +183,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Pears ListItem'",
      "     VISIBLE:  'Pears ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Pears list item'"]))
+     "SPEECH OUTPUT: 'Pears'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -192,7 +192,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Vegetables ListItem'",
      "     VISIBLE:  'Vegetables ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Vegetables list item expanded'",
+     "SPEECH OUTPUT: 'Vegetables expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 # [[[Bug?: "Panel list" addition.  below are expected results]]]
