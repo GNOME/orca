@@ -4,6 +4,10 @@
           Fixed bug #538835 - Word echo is not echoing the word typed 
           when return is pressed while creating an oowriter text document.
 
+        * src/orca/speechgenerator.py:
+          Fixed bug #538058 - The role for accessibles of ROLE_LIST_ITEM
+          should not be spoken when the accessible is given focus.
+
 2008-06-17  Willie Walker <william.walker@sun.com>
 
 	* docs/man/orca.1:

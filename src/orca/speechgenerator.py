@@ -92,6 +92,8 @@ class SpeechGenerator:
              self._getSpeechForLayeredPane
         self.speechGenerators[pyatspi.ROLE_LIST]                = \
              self._getSpeechForList
+        self.speechGenerators[pyatspi.ROLE_LIST_ITEM]           = \
+             self._getSpeechForListItem
         self.speechGenerators[pyatspi.ROLE_MENU]                = \
              self._getSpeechForMenu
         self.speechGenerators[pyatspi.ROLE_MENU_BAR]            = \
@@ -806,7 +808,16 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getDefaultSpeech(obj, already_focused)
+        utterances = []
+ 
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+            utterances.extend(self._getSpeechForAllTextSelection(obj))
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         # If already in focus then the tree probably collapsed or expanded
         state = obj.getState()
