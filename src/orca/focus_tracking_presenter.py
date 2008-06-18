@@ -620,12 +620,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
-                        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                                      + orca_state.activeScript.name)
 
                         self.setActiveScript(
                             self.getScript(event.host_application or \
                                               event.source.getApplication()))
+                        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
+                                      + orca_state.activeScript.name)
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
