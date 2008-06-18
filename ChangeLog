@@ -1,3 +1,9 @@
+2008-06-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          Fixed bug #538835 - Word echo is not echoing the word typed 
+          when return is pressed while creating an oowriter text document.
+
 2008-06-17  Willie Walker <william.walker@sun.com>
 
 	* docs/man/orca.1:

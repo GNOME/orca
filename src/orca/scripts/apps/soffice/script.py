@@ -1879,12 +1879,18 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # If we are losing focus and we in a paragraph in a slide 
-        # presentation and the last thing the user typed was a Return,
-        # and echo by word is enabled, then echo the previous word 
-        # that the user typed.  See bug #538053 for more details.
+        print "XXX: onCaretMoved entered."
+        self.printAncestry(event.source)
+
+        # If we are losing focus and we in:
+        # 1/ a paragraph in an ooimpress slide presentation
+        # 2/ a paragraph in an oowriter text document
+        # and the last thing the user typed was a Return, and echo by word
+        # is enabled, then echo the previous word that the user typed.
+        # See bug #538053 and bug #538835 for more details.
         #
         if event.detail1 == -1:
+            # ooimpress paragraph in a slide presentation.
             rolesList = [pyatspi.ROLE_PARAGRAPH,
                          pyatspi.ROLE_UNKNOWN,
                          pyatspi.ROLE_UNKNOWN,
@@ -1894,8 +1900,18 @@ class Script(default.Script):
                          pyatspi.ROLE_ROOT_PANE, \
                          pyatspi.ROLE_FRAME, \
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList) and \
-               settings.enableEchoByWord:
+
+            # oowriter paragraph in a text document.
+            rolesList1 = [pyatspi.ROLE_PARAGRAPH,
+                          pyatspi.ROLE_UNKNOWN,
+                          pyatspi.ROLE_SCROLL_PANE, \
+                          pyatspi.ROLE_PANEL, \
+                          pyatspi.ROLE_ROOT_PANE, \
+                          pyatspi.ROLE_FRAME, \
+                          pyatspi.ROLE_APPLICATION]
+            if settings.enableEchoByWord and \
+               (self.isDesiredFocusedItem(event.source, rolesList) or
+                self.isDesiredFocusedItem(event.source, rolesList1)):
                 if isinstance(orca_state.lastInputEvent,
                               input_event.KeyboardEvent):
                     keyString = orca_state.lastNonModifierKeyEvent.event_string
