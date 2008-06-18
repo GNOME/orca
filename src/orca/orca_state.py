@@ -65,6 +65,11 @@ lastNonModifierKeyEvent = None
 #
 lastInputEvent = None
 
+# Used to determine if the user wishes Orca to pass the next command
+# along to the current application rather than consuming it.
+#
+bypassNextCommand = False
+
 # The last timestamp from a device event. Used to set focus for the Orca
 # configuration GUI.
 #

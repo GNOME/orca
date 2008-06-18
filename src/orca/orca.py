@@ -796,6 +796,11 @@ def _processKeyboardEvent(event):
                     exitLearnMode(keyboardEvent)
 
                 consumed = True
+
+            if not consumed \
+               and not isModifierKey(keyboardEvent.event_string) \
+               and keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
+                orca_state.bypassNextCommand = False
     except:
         debug.printException(debug.LEVEL_SEVERE)
 

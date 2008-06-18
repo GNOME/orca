@@ -937,6 +937,18 @@ class Script(script.Script):
                 #
                 _("Toggle mouse review mode."))
 
+        self.inputEventHandlers["bypassNextCommandHandler"] = \
+            input_event.InputEventHandler(
+                Script.bypassNextCommand,
+                # Translators: Orca normally intercepts all keyboard
+                # commands and only passes them along to the current
+                # application when they are not Orca commands.  This
+                # command causes the next command issued to be passed
+                # along to the current application, bypassing Orca's
+                # interception of it.
+                #
+                _("Passes the next command on to the current application."))
+
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
         passed as argument
@@ -1781,6 +1793,13 @@ class Script(script.Script):
                     settings.defaultModifierMask,
                     settings.SHIFT_ALT_MODIFIER_MASK,
                     self.inputEventHandlers["bookmarkCurrentWhereAmI"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "BackSpace",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["bypassNextCommandHandler"]))
 
         #####################################################################
         #                                                                   #
@@ -4263,6 +4282,24 @@ class Script(script.Script):
             speech.speak(infoString)
             braille.displayMessage(infoString)
 
+        return True
+
+    def bypassNextCommand(self, inputEvent=None):
+        """Causes the next keyboard command to be ignored by Orca
+        and passed along to the current application.
+
+        Returns True to indicate the input event has been consumed.
+        """
+
+        # Translators: Orca normally intercepts all keyboard
+        # commands and only passes them along to the current
+        # application when they are not Orca commands.  This
+        # command causes the next command issued to be passed
+        # along to the current application, bypassing Orca's
+        # interception of it.
+        #
+        speech.speak(_("Bypass mode enabled."))
+        orca_state.bypassNextCommand = True
         return True
 
     def enterLearnMode(self, inputEvent=None):

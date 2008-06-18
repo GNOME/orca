@@ -923,12 +923,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns True if the event should be consumed.
         """
 
+        consume = False
         if orca_state.activeScript \
            and orca_state.activeScript.consumesKeyboardEvent(keyboardEvent):
-            self._enqueueEvent(keyboardEvent)
-            return True
-        else:
-            return False
+            consume = not orca_state.bypassNextCommand
+            if consume:
+                self._enqueueEvent(keyboardEvent)
+
+        return consume
 
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a cursor key is pressed on the Braille display.

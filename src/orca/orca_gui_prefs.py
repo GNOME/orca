@@ -3468,7 +3468,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             return False
 
         keyName = captured.event_string
-        if keyName in ["Delete", "BackSpace"]:
+        isOrcaModifier = captured.modifiers & settings.ORCA_MODIFIER_MASK
+        if keyName in ["Delete", "BackSpace"] and not isOrcaModifier:
             editable.set_text("")
             # Translators: this is a spoken prompt letting the user know
             # Orca has deleted an existing key combination based upon

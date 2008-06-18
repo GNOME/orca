@@ -15,6 +15,15 @@
           test/keystrokes/firefox/dojo_tree.py:
           Updated regression tests.
 
+        * src/orca/orca.py:
+          src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/orca_state.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #536825 - Allow bypass of Orca's keyboard commands.
+          (The default keybinding is Orca+Backspace, but you can change
+          that by specifying a new binding in the Orca Preferences dialog.)
+
 2008-06-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
