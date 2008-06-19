@@ -123,31 +123,10 @@ sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(3000))
 
+# Hack to ignore a focus event that will temporarily update braillle
+#
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Up"))
-
-########################################################################
-# Press Down Arrow to move to the anchors.html link.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down to anchors.html", 
-    ["BRAILLE LINE:  '• anchors.html Link'",
-     "     VISIBLE:  '• anchors.html Link', cursor=1",
-     "SPEECH OUTPUT: '• anchors.html link'"]))
-
-########################################################################
-# Press Down Arrow to move to the blockquotes.html link.  We probably
-# won't get a focus event, so we'll just pause in the next step.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down to blockquotes.html", 
-    ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=1",
-     "SPEECH OUTPUT: '• blockquotes.html link'"]))
 
 ########################################################################
 # Press Up Arrow to move to the anchors.html link.  We probably won't

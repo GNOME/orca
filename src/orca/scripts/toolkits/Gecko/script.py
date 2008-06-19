@@ -2467,7 +2467,7 @@ class Script(default.Script):
                         return
                     elif not atTop \
                         and not obj.getState().contains(\
-                            pyatspi.STATE_EDITABLE):
+                            pyatspi.STATE_FOCUSABLE):
                         self.clearCaretContext()
                         [obj, characterOffset] = self.getCaretContext()
                         if not obj:
@@ -2485,16 +2485,17 @@ class Script(default.Script):
                     # For braille, we just show the current line
                     # containing the caret.  For speech, however, we
                     # will start a Say All operation if the caret is
-                    # in an uneditable area (e.g., it's not in a text
-                    # entry area such as Google's search text entry).
-                    # Otherwise, we'll just speak the line that the
-                    # caret is on.
+                    # in an unfocusable area (e.g., it's not in a text
+                    # entry area such as Google's search text entry
+                    # or a link that we just returned to by pressing
+                    # the back button). Otherwise, we'll just speak the
+                    # line that the caret is on.
                     #
                     self.updateBraille(obj)
 
-                    if obj.getState().contains(pyatspi.STATE_EDITABLE):
+                    if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
                         speech.speakUtterances(\
-                            self.speechGenerator.getSpeech(obj, True))
+                            self.speechGenerator.getSpeech(obj, False))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,

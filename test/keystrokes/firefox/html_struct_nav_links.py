@@ -113,7 +113,18 @@ sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
 
 ########################################################################
-# Press U to move to the next unvisited link, anchors.html. 
+# Press U to move to the next unvisited link, textattributes.html. 
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("u"))
+sequence.append(utils.AssertPresentationAction(
+    "u to textattributes.html link", 
+    ["BRAILLE LINE:  '• textattributes.html Link'",
+     "     VISIBLE:  '• textattributes.html Link', cursor=3",
+     "SPEECH OUTPUT: 'textattributes.html link'"])) 
+
+########################################################################
+# Press U to move to the next unvisited link, anchors.html
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
@@ -121,18 +132,8 @@ sequence.append(utils.AssertPresentationAction(
     "u to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html Link'",
      "     VISIBLE:  '• anchors.html Link', cursor=3",
+     "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'anchors.html link'"]))
-
-########################################################################
-# Press U to move to the next unvisited link, blockquotes.html
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("u"))
-sequence.append(utils.AssertPresentationAction(
-    "u to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
-     "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
 # Press Return to follow the blockquotes.html link.
@@ -145,17 +146,6 @@ sequence.append(WaitForDocLoad())
 #
 sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
-
-########################################################################
-# Press V to move to the next visited link, blockquotes.html. 
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("v"))
-sequence.append(utils.AssertPresentationAction(
-    "v to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
-     "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
 # Press V to move to the next visited link, tables.html
@@ -175,10 +165,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
 sequence.append(utils.AssertPresentationAction(
     "v to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html Link'",
-     "     VISIBLE:  '• blockquotes.html Link', cursor=3",
+    ["BRAILLE LINE:  '• anchors.html Link'",
+     "     VISIBLE:  '• anchors.html Link', cursor=3",
      "SPEECH OUTPUT: 'Wrapping to top.'",
-     "SPEECH OUTPUT: 'blockquotes.html link'"]))
+     "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
 # Press Shift V to move to the previous visited link, tables.html. 

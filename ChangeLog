@@ -1,3 +1,18 @@
+2008-06-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/html_struct_nav_links.py:
+          test/keystrokes/firefox/html_role_links.py:
+          Fix for bug #537839 - Orca does not remember the last position
+          on a webpage in firefox when using the back command.  (Note:
+          This should cause us to remember the position of focusable
+          things such as links and form fields.  i.e. it will handle
+          typical use cases like filling out forms and looking at search
+          results.  However, if you are in the middle of reading some text
+          in a paragraph, go forward for some reason, and then go back,
+          odds are that you won't be where you left off in the paragraph.
+          We will work on that.)
+
 2008-06-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py:
