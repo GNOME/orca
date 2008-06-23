@@ -609,13 +609,19 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # that are now showing (such as gnome-screensaver-dialog).
                     # See bug #530368 for more details.
                     #
+                    # Also, we might be running into a gnome-panel
+                    # applet, which is indicated by a host application
+                    # with no children.  See bug #536985.
+                    #
                     eType = event.type
                     if (eType == "window:activate") \
                        or ((eType.startswith("focus")) 
                          and (event.source.getRole() == pyatspi.ROLE_FRAME)) \
                        or (eType.startswith("object:state-changed:showing")
                          and (event.source.getRole() == pyatspi.ROLE_PANEL)
-                         and state.contains(pyatspi.STATE_MODAL)):
+                         and state.contains(pyatspi.STATE_MODAL)) \
+                       or (event.host_application \
+                           and len(event.host_application) == 0):
 
                         # We'll let someone else decide if it's important
                         # to stop speech or not.

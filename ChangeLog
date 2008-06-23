@@ -1,3 +1,9 @@
+2008-06-23  Willie Walker <william.walker@sun.com>
+
+        * src/orca/focus_tracking_presenter.py:
+	  Fix for bug #536985 - Orca no longer reads applets on the panel.
+	  Accounts for odd applet application hierarchy anomaly.
+
 2008-06-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
