@@ -295,6 +295,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 # This should work...
                 #
                 child = menu.querySelection().getSelectedChild(0)
+                if not child:
+                    # It's probably a Gtk combo box.
+                    #
+                    return braillegenerator.BrailleGenerator.\
+                        _getBrailleRegionsForComboBox(self, obj)
             except:
                 # But just in case, we'll fall back on this.
                 # [[[TODO - JD: Will we ever have a case where the first

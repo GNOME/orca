@@ -198,6 +198,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 # This should work...
                 #
                 child = menu.querySelection().getSelectedChild(0)
+                if not child:
+                    # It's probably a Gtk combo box.
+                    #
+                    return speechgenerator.SpeechGenerator.\
+                        _getSpeechForComboBox(self, obj, already_focused)
             except:
                 # But just in case, we'll fall back on this.
                 # [[[TODO - JD: Will we ever have a case where the first
