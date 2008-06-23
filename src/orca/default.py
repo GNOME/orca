@@ -63,6 +63,7 @@ import settings
 import speech
 import speechserver
 import mouse_review
+import text_attribute_names
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -4148,8 +4149,11 @@ class Script(script.Script):
         """
 
         for key in keys:
+            localizedKey = text_attribute_names.getTextAttributeName(key)
             if key in attributes:
                 attribute = attributes[key]
+                localizedValue = \
+                    text_attribute_names.getTextAttributeName(attribute)
                 if attribute:
                     # If it's the 'weight' attribute and greater than 400, just
                     # speak it as bold, otherwise speak the weight.
@@ -4176,11 +4180,12 @@ class Script(script.Script):
                             #
                             line = ngettext("%s %s pixel",
                                             "%s %s pixels",
-                                            int(attribute)) % (key, attribute)
+                                            int(attribute)) % \
+                                                (localizedKey, localizedValue)
                         else:
-                            line = key + " " + attribute
+                            line = localizedKey + " " + localizedValue
                     else:
-                        line = key + " " + attribute
+                        line = localizedKey + " " + localizedValue
                     speech.speak(line)
 
     def readCharAttributes(self, inputEvent=None):

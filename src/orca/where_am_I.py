@@ -31,6 +31,7 @@ import orca_state
 import rolenames
 import settings
 import speech
+import text_attribute_names
 import urlparse, urllib2
 
 from orca_i18n import _ # for gettext support
@@ -1536,8 +1537,11 @@ class WhereAmI:
                           "charDict: %s" % (charDict))
 
             for key in keys:
+                localizedKey = text_attribute_names.getTextAttributeName(key)
                 if key in charDict:
                     attribute = charDict[key]
+                    localizedValue = \
+                        text_attribute_names.getTextAttributeName(attribute)
                     if attribute:
                         # If it's the 'weight' attribute and greater than 400,
                         # just speak it as bold, otherwise speak the weight.
@@ -1551,15 +1555,15 @@ class WhereAmI:
                         elif key == "underline":
                             if attribute != "none":
                                 attribStr += " "
-                                attribStr += key
+                                attribStr += localizedKey
 
                         elif key == "style":
                             if attribute != "normal":
                                 attribStr += " "
-                                attribStr += attribute
+                                attribStr += localizedValue
                         else:
                             attribStr += " "
-                            attribStr += (key + " " + attribute)
+                            attribStr += (localizedKey + " " + localizedValue)
 
             # Also check to see if this is a hypertext link.
             #

@@ -48,6 +48,7 @@ import pronunciation_dict
 import braille
 import speech
 import speechserver
+import text_attribute_names
 
 try:
     import louis
@@ -910,11 +911,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
-                if attrList[i] == model[path][NAME]:
+                localizedKey = \
+                        text_attribute_names.getTextAttributeName(attrList[i])
+                localizedValue = \
+                        text_attribute_names.getTextAttributeName( \
+                                                        attrDict[attrList[i]])
+                if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
-                    model.set(thisIter, NAME, attrList[i],
-                                        IS_SPOKEN, state,
-                                        VALUE, attrDict[attrList[i]])
+                    model.set(thisIter, 
+                        NAME, localizedKey,
+                        IS_SPOKEN, state,
+                        VALUE, localizedValue)
                     if moveToTop:
                         thisIter = model.get_iter(path)
                         otherIter = model.get_iter(i)
@@ -944,7 +951,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
-                if attrList[i] == model[path][NAME]:
+                localizedKey = \
+                        text_attribute_names.getTextAttributeName(attrList[i])
+                if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
                     model.set(thisIter, IS_BRAILLED, state)
                     break
@@ -963,12 +972,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         brailledAttrStr = ""
         noRows = model.iter_n_children(None)
         for path in range(0, noRows):
+            localizedKey = model[path][NAME]
+            key = text_attribute_names.getTextAttributeKey(localizedKey)
+            localizedValue = model[path][VALUE]
+            value = text_attribute_names.getTextAttributeKey(localizedValue)
+
             if model[path][IS_SPOKEN]:
-                spokenAttrStr += model[path][NAME] + ":" + \
-                                 model[path][VALUE] + "; "
+                spokenAttrStr += key + ":" + value + "; "
             if model[path][IS_BRAILLED]:
-                brailledAttrStr += model[path][NAME] + ":" + \
-                                   model[path][VALUE] + "; "
+                brailledAttrStr += key + ":" + value + "; "
 
         self.prefsDict["enabledSpokenTextAttributes"] = spokenAttrStr
         self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
@@ -1071,10 +1083,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                 defScript.textAttrsToDictionary(settings.allTextAttributes)
         for i in range(0, len(allAttrList)):
             thisIter = model.append()
-            model.set(thisIter, NAME, allAttrList[i],
-                                IS_SPOKEN, False,
-                                IS_BRAILLED, False,
-                                VALUE, allAttrDict[allAttrList[i]])
+            localizedKey = \
+                text_attribute_names.getTextAttributeName(allAttrList[i])
+            localizedValue = \
+                text_attribute_names.getTextAttributeName( \
+                                             allAttrDict[allAttrList[i]])
+            model.set(thisIter, 
+                NAME, localizedKey,
+                IS_SPOKEN, False,
+                IS_BRAILLED, False,
+                VALUE, localizedValue)
 
         self.getTextAttributesView.set_model(model)
 

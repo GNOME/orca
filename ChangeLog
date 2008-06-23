@@ -21,6 +21,15 @@
           Fixed bug #538064 - Orca should speak placeholder contents when 
           that placeholder is given focus on an Impress slide.
 
+        * src/orca/default.py:
+          src/orca/text_attribute_names.py: (new)
+          src/orca/where_am_I.py:
+          src/orca/Makefile.am:
+          src/orca/orca_gui_prefs.py:
+          po/POTFILES.in:
+          Fixed bug #538729 - In Orca preferences window /text attributes 
+          page the text attribute names not marked for translation.
+
 2008-06-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/speech_generator.py:
