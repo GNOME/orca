@@ -23,8 +23,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
-
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
 #
@@ -49,26 +47,6 @@ sayAllOnLoad = True
 #
 structuralNavigationEnabled = True
 
-# Whether or not to speak the cell's coordinates when navigating
-# from cell to cell in HTML tables.
-#
-speakCellCoordinates = True
-
-# Whether or not to speak the number of cells spanned by a cell
-# that occupies more than one row or column of an HTML table.
-#
-speakCellSpan = True
-
-# Whether or not to announce the header that applies to the current
-# when navigating from cell to cell in HTML tables.
-#
-speakCellHeaders = True
-
-# Whether blank cells should be skipped when navigating in an HTML
-# table using table navigation commands
-#
-skipBlankCells = False
-
 # Whether or not Orca should speak the changing location within the
 # document frame *during* a find (i.e. while focus is still in the
 # Find toolbar).
@@ -90,22 +68,6 @@ minimumFindLength = 4
 # that may be too verbose so it's configurable.
 #
 onlySpeakChangedLinesDuringFind = False
-
-# The minimum number of characters of text that an accessible object must 
-# contain to be considered a match in go to next/prev large object
-largeObjectTextLength = 75
-
-# Roles that represent a logical chunk of information in a document
-#
-OBJECT_ROLES = [pyatspi.ROLE_HEADING,
-                pyatspi.ROLE_LIST,
-                pyatspi.ROLE_PARAGRAPH,
-                pyatspi.ROLE_TABLE,
-                pyatspi.ROLE_TABLE_CELL,
-                pyatspi.ROLE_TEXT,
-                pyatspi.ROLE_SECTION,
-                pyatspi.ROLE_DOCUMENT_FRAME,
-                pyatspi.ROLE_AUTOCOMPLETE]
 
 ARIA_LANDMARKS = ["banner", "contentinfo", "definition", "main", "navigation",
                   "note", "search", "secondary", "seealso"]

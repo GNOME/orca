@@ -1,3 +1,20 @@
+2008-06-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/Makefile.am:
+        * src/orca/scripts/toolkits/Gecko/script.py:
+        * src/orca/scripts/toolkits/Gecko/script_settings.py:
+        * src/orca/scripts/toolkits/Gecko/structural_navigation.py: (new)
+        * src/orca/structural_navigation.py: (new)
+        * src/orca/settings.py:
+        * src/orca/script.py:
+        * src/orca/Makefile.am:
+        * po/POTFILES.in:
+          Fix for bug #535023 - Structural Navigation should be pulled out
+          of Gecko and include more objects.  Note:  You will need to do a
+          full install due to the two new files which were added.  The new
+          objects are: Anchors, Buttons, Check boxes, Combo boxes, Entries,
+          Paragraphs, and Radio buttons.
+
 2008-06-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:

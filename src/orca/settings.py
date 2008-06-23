@@ -165,7 +165,12 @@ userCustomizableSettings = [
     "enableContractedBraille",
     "brailleContractionTable",
     "enableMouseReview",
-    "mouseDwellDelay"
+    "mouseDwellDelay",
+    "speakCellCoordinates",
+    "speakCellSpan",
+    "speakCellHeaders",
+    "skipBlankCells",
+    "largeObjectTextLength"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -995,6 +1000,30 @@ brailleContractionTable = ''
 # 
 useCollection = True
 
+# Whether or not to speak the cell's coordinates when navigating
+# from cell to cell in a table.
+#
+speakCellCoordinates = True
+
+# Whether or not to speak the number of cells spanned by a cell
+# that occupies more than one row or column of a table.
+#
+speakCellSpan = True
+
+# Whether or not to announce the header that applies to the current
+# when navigating from cell to cell in a table.
+#
+speakCellHeaders = True
+
+# Whether blank cells should be skipped when navigating in a table
+# using table navigation commands.
+#
+skipBlankCells = False
+
+# The minimum size in characters to be considered a "large object"
+# or "chunk" for structural navigation.
+#
+largeObjectTextLength = 75
 
 # Report object under mouse.
 #

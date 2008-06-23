@@ -46,6 +46,7 @@ import keybindings
 import orca_state
 import settings
 import speechgenerator
+import structural_navigation
 import where_am_I
 import bookmarks
 
@@ -76,6 +77,7 @@ class Script:
         #
         self.presentIfInactive = True
 
+        self.structuralNavigation = self.getStructuralNavigation()
         self.inputEventHandlers = {}
         self.pointOfReference = {}
         self.setupInputEventHandlers()
@@ -183,6 +185,27 @@ class Script:
         """Returns the speech generator for this script.
         """
         return speechgenerator.SpeechGenerator(self)
+
+    def getEnabledStructuralNavigationTypes(self):
+        """Returns a list of the structural navigation object types
+        enabled in this script.
+        """
+        return []
+
+    def getStructuralNavigation(self):
+        """Returns the 'structural navigation' class for this script.
+        """
+        types = self.getEnabledStructuralNavigationTypes()
+        return structural_navigation.StructuralNavigation(self, types)
+
+    def useStructuralNavigationModel(self):
+        """Returns True if we should use structural navigation. Most
+        scripts will have no need to override this.  Gecko does however
+        because within an HTML document there are times when we do want
+        to use it and times when we don't even though it is enabled,
+        e.g. in a form field.
+        """
+        return self.structuralNavigation.enabled
 
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
@@ -336,9 +359,19 @@ class Script:
 
         consumes = False
         if user_bindings:
-            consumes = user_bindings.getInputHandler(keyboardEvent) != None
+            handler = user_bindings.getInputHandler(keyboardEvent)
+            if handler \
+                 and handler.function in self.structuralNavigation.functions:
+                return self.useStructuralNavigationModel()
+            else:
+                consumes = handler != None
         if not consumes:
-            consumes = self.keyBindings.getInputHandler(keyboardEvent) != None
+            handler = self.keyBindings.getInputHandler(keyboardEvent)
+            if handler \
+                 and handler.function in self.structuralNavigation.functions:
+                return self.useStructuralNavigationModel()
+            else:
+                consumes = handler != None
         return consumes
 
     def processKeyboardEvent(self, keyboardEvent):

@@ -56,6 +56,7 @@ orca_python_PYTHON = \
 	speechdispatcherfactory.py \
 	speechgenerator.py \
 	speechserver.py \
+	structural_navigation.py \
 	where_am_I.py
 
 orca_pythondir=$(pyexecdir)/orca

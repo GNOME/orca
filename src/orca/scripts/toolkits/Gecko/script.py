@@ -65,9 +65,10 @@ from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from where_am_i import GeckoWhereAmI
 from bookmarks import GeckoBookmarks
+from structural_navigation import GeckoStructuralNavigation
 
 from orca.orca_i18n import _
-from orca.orca_i18n import ngettext # for ngettext support
+
 
 ########################################################################
 #                                                                      #
@@ -86,7 +87,6 @@ class Script(default.Script):
 
     def __init__(self, app):
         default.Script.__init__(self, app)
-
         # Initialize variables to make pylint happy.
         #
         self.arrowToLineBeginningCheckButton = None
@@ -120,57 +120,6 @@ class Script(default.Script):
              Script.goBeginningOfLine,
              Script.goEndOfLine]
 
-        # _structuralNavigationFunctions are functions that represent
-        # more complex navigation functions (e.g., moving by heading,
-        # large object, etc.).
-        #
-        self._structuralNavigationFunctions = \
-            [Script.goNextHeading,
-             Script.goPreviousHeading,
-             Script.goNextHeading1,
-             Script.goPreviousHeading1,
-             Script.goNextHeading2,
-             Script.goPreviousHeading2,
-             Script.goNextHeading3,
-             Script.goPreviousHeading3,
-             Script.goNextHeading4,
-             Script.goPreviousHeading4,
-             Script.goNextHeading5,
-             Script.goPreviousHeading5,
-             Script.goNextHeading6,
-             Script.goPreviousHeading6,
-             Script.goNextChunk,
-             Script.goPreviousChunk,
-             Script.goNextLandmark,
-             Script.goPreviousLandmark,
-             Script.goNextList,
-             Script.goPreviousList,
-             Script.goNextListItem,
-             Script.goPreviousListItem,
-             Script.goNextUnvisitedLink,
-             Script.goPreviousUnvisitedLink,
-             Script.goNextVisitedLink,
-             Script.goPreviousVisitedLink,
-             Script.goNextFormField,
-             Script.goPreviousFormField,
-             Script.goNextBlockquote,
-             Script.goPreviousBlockquote,
-             Script.goNextTable,
-             Script.goPreviousTable,
-             Script.goNextLiveRegion,
-             Script.goPreviousLiveRegion,
-             Script.goLastLiveRegion,
-             Script.advanceLivePoliteness,
-             Script.setLivePolitenessOff,
-             Script.monitorLiveRegions,
-             Script.reviewLiveAnnouncement,
-             Script.goCellLeft,
-             Script.goCellRight,
-             Script.goCellUp,
-             Script.goCellDown,
-             Script.goCellFirst,
-             Script.goCellLast]
-
         if script_settings.controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Orca is controlling the caret.")
@@ -190,14 +139,6 @@ class Script(default.Script):
         # context for that frame.
         #
         self._documentFrameCaretContext = {}
-
-        # When navigating in a non-uniform table, one can move to a
-        # cell which spans multiple rows and/or columns.  When moving
-        # beyond that cell, into a cell that does NOT span multiple
-        # rows/columns, we want to be sure we land in the right place.
-        # Therefore, we'll store the coordinates from "our perspective."
-        #
-        self.lastTableCell = [-1, -1]
 
         # During a find we get caret-moved events reflecting the changing
         # screen contents.  The user can opt to have these changes announced.
@@ -263,12 +204,48 @@ class Script(default.Script):
         """
         return SpeechGenerator(self)
 
+    def getEnabledStructuralNavigationTypes(self):
+        """Returns a list of the structural navigation object types
+        enabled in this script.
+        """
+
+        enabledTypes = [GeckoStructuralNavigation.ANCHOR,
+                        GeckoStructuralNavigation.BLOCKQUOTE,
+                        GeckoStructuralNavigation.BUTTON,
+                        GeckoStructuralNavigation.CHECK_BOX,
+                        GeckoStructuralNavigation.CHUNK,
+                        GeckoStructuralNavigation.COMBO_BOX,
+                        GeckoStructuralNavigation.ENTRY,
+                        GeckoStructuralNavigation.FORM_FIELD,
+                        GeckoStructuralNavigation.HEADING,
+                        GeckoStructuralNavigation.LANDMARK,
+                        GeckoStructuralNavigation.LIST,
+                        GeckoStructuralNavigation.LIST_ITEM,
+                        GeckoStructuralNavigation.LIVE_REGION,
+                        GeckoStructuralNavigation.PARAGRAPH,
+                        GeckoStructuralNavigation.RADIO_BUTTON,
+                        GeckoStructuralNavigation.TABLE,
+                        GeckoStructuralNavigation.TABLE_CELL,
+                        GeckoStructuralNavigation.UNVISITED_LINK,
+                        GeckoStructuralNavigation.VISITED_LINK]
+
+        return enabledTypes
+
+    def getStructuralNavigation(self):
+        """Returns the 'structural navigation' class for this script.
+        """
+        types = self.getEnabledStructuralNavigationTypes()
+        enable = script_settings.structuralNavigationEnabled
+        return GeckoStructuralNavigation(self, types, enable)
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings.
         """
 
         default.Script.setupInputEventHandlers(self)
+        self.inputEventHandlers.update(\
+            self.structuralNavigation.inputEventHandlers)
 
         # Debug only.
         #
@@ -365,324 +342,6 @@ class Script(default.Script):
                 #
                 _("Causes the current combo box to be expanded."))
 
-        self.inputEventHandlers["goCellLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellLeft,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes left one cell."))
-
-        self.inputEventHandlers["goCellRightHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellRight,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes right one cell."))
-
-        self.inputEventHandlers["goCellDownHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellDown,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes down one cell."))
-
-        self.inputEventHandlers["goCellUpHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellUp,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes up one cell."))
-
-        self.inputEventHandlers["goCellFirstHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellFirst,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes to the first cell in a table."))
-
-        self.inputEventHandlers["goCellLastHandler"] = \
-            input_event.InputEventHandler(
-                Script.goCellLast,
-                # Translators: this is for navigating inside HTML tables.
-                #
-                _("Goes to the last cell in a table."))
-
-        self.inputEventHandlers["goPreviousHeadingHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h1>).
-                #
-                _("Goes to previous heading."))
-
-        self.inputEventHandlers["goNextHeadingHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h1>).
-                #
-                _("Goes to next heading."))
-
-        self.inputEventHandlers["goPreviousHeading1Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading1,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h1>).
-                #
-                _("Goes to previous heading at level 1."))
-
-        self.inputEventHandlers["goNextHeading1Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading1,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h1>).
-                #
-                _("Goes to next heading at level 1."))
-
-        self.inputEventHandlers["goPreviousHeading2Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading2,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h2>).
-                #
-                _("Goes to previous heading at level 2."))
-
-        self.inputEventHandlers["goNextHeading2Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading2,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h2>).
-                #
-                _("Goes to next heading at level 2."))
-
-        self.inputEventHandlers["goPreviousHeading3Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading3,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h3>).
-                #
-                _("Goes to previous heading at level 3."))
-
-        self.inputEventHandlers["goNextHeading3Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading3,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h3>).
-                #
-                _("Goes to next heading at level 3."))
-
-        self.inputEventHandlers["goPreviousHeading4Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading4,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h4>).
-                #
-                _("Goes to previous heading at level 4."))
-
-        self.inputEventHandlers["goNextHeading4Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading4,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h4>).
-                #
-                _("Goes to next heading at level 4."))
-
-        self.inputEventHandlers["goPreviousHeading5Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading5,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h5>).
-                #
-                _("Goes to previous heading at level 5."))
-
-        self.inputEventHandlers["goNextHeading5Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading5,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h5>).
-                #
-                _("Goes to next heading at level 5."))
-
-        self.inputEventHandlers["goPreviousHeading6Handler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousHeading6,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h6>).
-                #
-                _("Goes to previous heading at level 6."))
-
-        self.inputEventHandlers["goNextHeading6Handler"] = \
-            input_event.InputEventHandler(
-                Script.goNextHeading6,
-                # Translators: this is for navigating HTML by headers
-                # (e.g., <h6>).
-                #
-                _("Goes to next heading at level 6."))
-
-        self.inputEventHandlers["goPreviousChunkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousChunk,
-                # Translators: this is for navigating HTML in a structural
-                # manner, where a 'large object' is a logical chunk of
-                # text, such as a paragraph, a list, a table, etc.
-                #
-                _("Goes to previous large object."))
-
-        self.inputEventHandlers["goNextChunkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextChunk,
-                # Translators: this is for navigating HTML in a structural
-                # manner, where a 'large object' is a logical chunk of
-                # text, such as a paragraph, a list, a table, etc.
-                #
-                _("Goes to next large object."))
-
-        self.inputEventHandlers["goPreviousLandmark"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousLandmark,
-                # Translators: this is for navigating to the previous ARIA
-                # role landmark.  ARIA role landmarks are the W3C defined HTML
-                # tag attribute 'role' used to identify important part of
-                # webpage like banners, main context, search etc.
-                #
-                _("Goes to previous landmark."))
-
-        self.inputEventHandlers["goNextLandmark"] = \
-            input_event.InputEventHandler(
-                Script.goNextLandmark,
-                # Translators: this is for navigating to the next ARIA
-                # role landmark.
-                #
-                _("Goes to next landmark."))
-
-        self.inputEventHandlers["goPreviousListHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousList,
-                # Translators: this is for navigating between bulleted/numbered
-                # lists in HTML
-                #
-                _("Goes to previous list."))
-
-        self.inputEventHandlers["goNextListHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextList,
-                # Translators: this is for navigating between bulleted/numbered
-                # lists in HTML
-                #
-                _("Goes to next list."))
-
-        self.inputEventHandlers["goPreviousListItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousListItem,
-                # Translators: this is for navigating between bulleted/numbered
-                # list items in HTML
-                #
-                _("Goes to previous list item."))
-
-        self.inputEventHandlers["goNextListItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextListItem,
-                # Translators: this is for navigating between bulleted/numbered
-                # list items in HTML
-                #
-                _("Goes to next list item."))
-
-        self.inputEventHandlers["goPreviousUnvisitedLinkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousUnvisitedLink,
-                # Translators: this is for navigating between links in HTML
-                #
-                _("Goes to previous unvisited link."))
-
-        self.inputEventHandlers["goNextUnvisitedLinkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextUnvisitedLink,
-                # Translators: this is for navigating between links in HTML
-                #
-               _("Goes to next unvisited link."))
-
-        self.inputEventHandlers["goPreviousVisitedLinkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousVisitedLink,
-                # Translators: this is for navigating between links in HTML
-                #
-                _("Goes to previous visited link."))
-
-        self.inputEventHandlers["goNextVisitedLinkHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextVisitedLink,
-                # Translators: this is for navigating between links in HTML
-                #
-                _("Goes to next visited link."))
-
-        self.inputEventHandlers["goPreviousFormFieldHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousFormField,
-                # Translators: this is for navigating between form fields in
-                # HTML
-                #
-                _("Goes to previous form field."))
-
-        self.inputEventHandlers["goNextFormFieldHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextFormField,
-                # Translators: this is for navigating between form fields in
-                # HTML
-                #
-                _("Goes to next form field."))
-
-        self.inputEventHandlers["goPreviousBlockquoteHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousBlockquote,
-                # Translators: this is for navigating among blockquotes in
-                # HTML
-                #
-                _("Goes to previous blockquote."))
-
-        self.inputEventHandlers["goNextBlockquoteHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextBlockquote,
-                # Translators: this is for navigating among blockquotes in
-                # HTML
-                #
-                _("Goes to next blockquote."))
-
-        self.inputEventHandlers["goPreviousTableHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousTable,
-                # Translators: this is for navigating between tables in HTML
-                #
-                _("Goes to previous table."))
-
-        self.inputEventHandlers["goNextTableHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextTable,
-                # Translators: this is for navigating between tables in HTML
-                #
-                _("Goes to next table."))
-
-        self.inputEventHandlers["goPreviousLiveRegion"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousLiveRegion,
-                # Translators: this is for navigating between live regions
-                #
-                _("Goes to previous live region."))
-
-        self.inputEventHandlers["goNextLiveRegion"] = \
-            input_event.InputEventHandler(
-                Script.goNextLiveRegion,
-                # Translators: this is for navigating between live regions
-                #
-                _("Goes to next live region."))
-
-        self.inputEventHandlers["goLastLiveRegion"] = \
-            input_event.InputEventHandler(
-                Script.goLastLiveRegion,
-                # Translators: this is for navigating to the last live region
-                # to make an announcement.
-                #
-                _("Goes to last live region."))
-
         self.inputEventHandlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 Script.advanceLivePoliteness,
@@ -742,18 +401,6 @@ class Script(default.Script):
                 # Orca mode.
                 #
                 _("Switches between Gecko native and Orca caret navigation."))
-
-        self.inputEventHandlers["toggleStructuralNavigationHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleStructuralNavigation,
-                # Translators: the structural navigation keys are designed
-                # to move the caret around the HTML content by object type.
-                # Thus H moves you to the next heading, Shift H to the
-                # previous heading, T to the next table, and so on. Some
-                # users prefer to turn this off to use Firefox's search
-                # when typing feature.
-                #
-                _("Toggles structural navigation keys."))
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
@@ -861,48 +508,6 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "Right",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellRightHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellLeftHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellUpHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellDownHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellFirstHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "End",
-                settings.defaultModifierMask,
-                settings.SHIFT_ALT_MODIFIER_MASK,
-                self.inputEventHandlers["goCellLastHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
                 "Home",
                 settings.defaultModifierMask,
                 settings.CTRL_MODIFIER_MASK,
@@ -938,237 +543,6 @@ class Script(default.Script):
         """
 
         keyBindings = default.Script.getKeyBindings(self)
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "h",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeadingHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "h",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeadingHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "1",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading1Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "1",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading1Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "2",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading2Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "2",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading2Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "3",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading3Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "3",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading3Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "4",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading4Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "4",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading4Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "5",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading5Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "5",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading5Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "6",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousHeading6Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "6",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextHeading6Handler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "o",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousChunkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "o",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextChunkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "l",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousListHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "l",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextListHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "i",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousListItemHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "i",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextListItemHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "u",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousUnvisitedLinkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "u",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextUnvisitedLinkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "v",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousVisitedLinkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "v",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextVisitedLinkHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Tab",
-                settings.defaultModifierMask,
-                settings.ORCA_SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousFormFieldHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Tab",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["goNextFormFieldHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "q",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousBlockquoteHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "q",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextBlockquoteHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "t",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousTableHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "t",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextTableHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "r",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousLiveRegion"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "r",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextLiveRegion"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "y",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goLastLiveRegion"]))
 
         # keybindings to provide chat room message history.
         messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" ]
@@ -1217,13 +591,6 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "z",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleStructuralNavigationHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
                 "Right",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
@@ -1240,24 +607,9 @@ class Script(default.Script):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
-        #####################################################################
-        #                                                                   #
-        #  Unbound handlers                                                 #
-        #                                                                   #
-        #####################################################################
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousLandmark"]))
-
-        keyBindings.add(
-             keybindings.KeyBinding(
-                "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextLandmark"]))
+        bindings = self.structuralNavigation.keyBindings
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
 
         return keyBindings
 
@@ -1311,7 +663,7 @@ class Script(default.Script):
         gtk.Box.pack_start(generalVBox, self.structuralNavigationCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
-                                  script_settings.structuralNavigationEnabled)
+                                    self.structuralNavigation.enabled)
 
         # Translators: when the user arrows up and down in HTML content,
         # it is some times beneficial to always position the cursor at the
@@ -1374,7 +726,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    script_settings.speakCellCoordinates)
+                                    settings.speakCellCoordinates)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
@@ -1386,7 +738,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
-                                    script_settings.speakCellSpan)
+                                    settings.speakCellSpan)
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in HTML content.
@@ -1397,7 +749,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
-                                    script_settings.speakCellHeaders)
+                                    settings.speakCellHeaders)
 
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in HTML content.
@@ -1408,7 +760,7 @@ class Script(default.Script):
         gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
-                                    script_settings.skipBlankCells)
+                                    settings.skipBlankCells)
 
         # Translators: this is the title of a panel containing options
         # for specifying how to navigate tables in HTML content.
@@ -1527,22 +879,6 @@ class Script(default.Script):
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
 
-        value = self.speakCellCoordinatesCheckButton.get_active()
-        prefs.writelines("%s.speakCellCoordinates = %s\n" % (prefix, value))
-        script_settings.speakCellCoordinates = value
-
-        value = self.speakCellSpanCheckButton.get_active()
-        prefs.writelines("%s.speakCellSpan = %s\n" % (prefix, value))
-        script_settings.speakCellSpan = value
-
-        value = self.speakCellHeadersCheckButton.get_active()
-        prefs.writelines("%s.speakCellHeaders = %s\n" % (prefix, value))
-        script_settings.speakCellHeaders = value
-
-        value = self.skipBlankCellsCheckButton.get_active()
-        prefs.writelines("%s.skipBlankCells = %s\n" % (prefix, value))
-        script_settings.skipBlankCells = value
-
         value = self.speakResultsDuringFindCheckButton.get_active()
         prefs.writelines("%s.speakResultsDuringFind = %s\n" % (prefix, value))
         script_settings.speakResultsDuringFind = value
@@ -1556,13 +892,35 @@ class Script(default.Script):
         prefs.writelines("%s.minimumFindLength = %s\n" % (prefix, value))
         script_settings.minimumFindLength = value
 
+        # These structural navigation settings used to be application-
+        # specific preferences because at the time structural navigation
+        # was implemented it was part of the Gecko script. These settings
+        # are now part of settings.py so that other scripts can implement
+        # structural navigation. But until that happens, there's no need
+        # to move these controls/change the preferences dialog.
+        # 
+        value = self.speakCellCoordinatesCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % value)
+        settings.speakCellCoordinates = value
+
+        value = self.speakCellSpanCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellSpan = %s\n" % value)
+        settings.speakCellSpan = value
+
+        value = self.speakCellHeadersCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % value)
+        settings.speakCellHeaders = value
+
+        value = self.skipBlankCellsCheckButton.get_active()
+        prefs.writelines("orca.settings.skipBlankCells = %s\n" % value)
+        settings.skipBlankCells = value
+
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
         object will be use by setAppState to restore any state information
         that was being maintained by the script."""
         return [default.Script.getAppState(self),
-                self._documentFrameCaretContext,
-                self.lastTableCell]
+                self._documentFrameCaretContext]
 
     def setAppState(self, appState):
         """Sets the application state using the given appState object.
@@ -1572,8 +930,7 @@ class Script(default.Script):
         """
         try:
             [defaultAppState,
-             self._documentFrameCaretContext,
-             self.lastTableCell] = appState
+             self._documentFrameCaretContext] = appState
             default.Script.setAppState(self, defaultAppState)
         except:
             debug.printException(debug.LEVEL_WARNING)
@@ -1609,7 +966,7 @@ class Script(default.Script):
             if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                and handler.function in self._structuralNavigationFunctions:
+                 and handler.function in self.structuralNavigation.functions:
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
@@ -1618,7 +975,7 @@ class Script(default.Script):
             if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                and handler.function in self._structuralNavigationFunctions:
+                 and handler.function in self.structuralNavigation.functions:
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
@@ -3440,9 +2797,8 @@ class Script(default.Script):
 
     def useStructuralNavigationModel(self):
         """Returns True if we should do our own structural navigation.
-        [[[TODO: WDW - this should return False if we're in something
-        like an entry area or a list because we want their keyboard
-        navigation stuff to work.]]]
+        This should return False if we're in something like an entry
+        or a list.
         """
 
         letThemDoItEditableRoles = [pyatspi.ROLE_ENTRY,
@@ -3452,7 +2808,7 @@ class Script(default.Script):
                                      pyatspi.ROLE_LIST_ITEM,
                                      pyatspi.ROLE_MENU_ITEM]
 
-        if not script_settings.structuralNavigationEnabled:
+        if not self.structuralNavigation.enabled:
             return False
 
         if not self.isNavigableAria(orca_state.locusOfFocus):
@@ -3831,32 +3187,6 @@ class Script(default.Script):
 
         return [0, 0]
 
-    def isSameCell(self, obj, coordinates1, coordinates2):
-        """Returns True if coordinates1 and coordinates2 refer to the
-        same cell in the specified table.
-
-        Arguments:
-        - obj: the table in which to compare the coordinates
-        - coordinates1: [row, col]
-        - coordinates2: [row, col]
-        """
-
-        if coordinates1 == coordinates2:
-            return True
-
-        try:
-            table = obj.queryTable()
-        except:
-            pass
-        else:
-            cell1 = table.getAccessibleAt(coordinates1[0], 
-                                          coordinates1[1])
-            cell2 = table.getAccessibleAt(coordinates2[0],
-                                          coordinates2[1])
-            return self.isSameObject(cell1, cell2)
-
-        return False
-
     def isBlankCell(self, obj):
         """Returns True if the table cell is empty or consists of a single
         non-breaking space.
@@ -3874,231 +3204,6 @@ class Script(default.Script):
                     return False
 
             return True
-
-    def isNonUniformTable(self, obj):
-        """Returns True if the obj is a non-uniform table (i.e. a table
-        where at least one cell spans multiple rows and/or columns).
-
-        Arguments:
-        - obj: the table to examine
-        """
-
-        try:
-            table = obj.queryTable()
-        except:
-            pass
-        else:
-            for i in xrange(obj.childCount):
-                [isCell, row, col, rowExtents, colExtents, isSelected] = \
-                                       table.getRowColumnExtentsAtIndex(i)
-                if (rowExtents > 1) or (colExtents > 1):
-                    return True
-
-        return False
-
-    def isHeader(self, obj):
-        """Returns True if the table cell is a header"""
-
-        if not obj:
-            return False
-
-        attributes = obj.getAttributes()
-        if attributes:
-            for attribute in attributes:
-                if attribute == "tag:TH":
-                    return True
-
-        return False
-
-    def isInHeaderRow(self, obj):
-        """Returns True if all of the cells in the same row as this cell are
-        headers.
-
-        Arguments:
-        - obj: the table cell whose row is to be examined
-        """
-
-        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            parent = self.getAncestor(obj,
-                                      [pyatspi.ROLE_TABLE],
-                                      [pyatspi.ROLE_DOCUMENT_FRAME])
-            try:
-                table = parent.queryTable()
-            except:
-                return False
-            else:
-                index = self.getCellIndex(obj)
-                row = table.getRowAtIndex(index)
-                for col in xrange(table.nColumns):
-                    cell = table.getAccessibleAt(row, col)
-                    if not self.isHeader(cell):
-                        return False
-
-        return True
-
-    def isInHeaderColumn(self, obj):
-        """Returns True if all of the cells in the same column as this cell
-        are headers.
-
-        Arguments:
-        - obj: the table cell whose column is to be examined
-        """
-
-        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            parent = self.getAncestor(obj,
-                                      [pyatspi.ROLE_TABLE],
-                                      [pyatspi.ROLE_DOCUMENT_FRAME])
-            try:
-                table = parent.queryTable()
-            except:
-                return False
-            else:
-                index = self.getCellIndex(obj)
-                col = table.getColumnAtIndex(index)
-                for row in xrange(table.nRows):
-                    cell = table.getAccessibleAt(row, col)
-                    if not self.isHeader(cell):
-                        return False
-
-        return True
-
-    def getRowHeaders(self, obj):
-        """Returns a list of table cells that serve as a row header for
-        the specified TABLE_CELL.
-        """
-
-        rowHeaders = []
-        if not obj:
-            return rowHeaders
-
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            [row, col] = self.getCellCoordinates(obj)
-            # Theoretically, we should be able to quickly get the text
-            # of a {row, column}Header via get{Row,Column}Description().
-            # Mozilla doesn't expose the information that way, however.
-            # get{Row, Column}Header seems to work sometimes.
-            #
-            header = table.getRowHeader(row)
-            if header:
-                rowHeaders.append(header)
-
-            # Headers that are strictly marked up with <th> do not seem
-            # to be exposed through get{Row, Column}Header.
-            #
-            else:
-                # If our cell spans multiple rows, we want to get all of
-                # the headers that apply.
-                #
-                rowspan = table.getRowExtentAt(row, col)
-                for r in range(row, row+rowspan):
-                    # We could have multiple headers for a given row, one
-                    # header per column.  Presumably all of the headers are
-                    # prior to our present location.
-                    #
-                    for c in range(0, col):
-                        cell = table.getAccessibleAt(r, c)
-                        text = self.queryNonEmptyText(cell)
-                        if self.isHeader(cell) and text \
-                           and not cell in rowHeaders:
-                            rowHeaders.append(cell)
-
-        return rowHeaders
-
-    def getColumnHeaders(self, obj):
-        """Returns a list of table cells that serve as a column header for
-        the specified TABLE_CELL.
-        """
-
-        columnHeaders = []
-        if not obj:
-            return columnHeaders
-
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            [row, col] = self.getCellCoordinates(obj)
-            # Theoretically, we should be able to quickly get the text
-            # of a {row, column}Header via get{Row,Column}Description().
-            # Mozilla doesn't expose the information that way, however.
-            # get{Row, Column}Header seems to work sometimes.
-            #
-            header = table.getColumnHeader(col)
-            if header:
-                columnHeaders.append(header)
-
-            # Headers that are strictly marked up with <th> do not seem
-            # to be exposed through get{Row, Column}Header.
-            #
-            else:
-                # If our cell spans multiple columns, we want to get all of
-                # the headers that apply.
-                #
-                colspan = table.getColumnExtentAt(row, col)
-                for c in range(col, col+colspan):
-                    # We could have multiple headers for a given column, one
-                    # header per row.  Presumably all of the headers are
-                    # prior to our present location.
-                    #
-                    for r in range(0, row):
-                        cell = table.getAccessibleAt(r, c)
-                        text = self.queryNonEmptyText(cell)
-                        if self.isHeader(cell) and text \
-                           and not cell in columnHeaders:
-                            columnHeaders.append(cell)
-
-        return columnHeaders
-
-    def getCellSpanInfo(self, obj):
-        """Returns a string reflecting the number of rows and/or columns
-        spanned by a table cell when multiple rows and/or columns are spanned.
-        """
-
-        if not obj or (obj.getRole() != pyatspi.ROLE_TABLE_CELL):
-            return
-
-        [row, col] = self.getCellCoordinates(obj)
-        table = obj.parent.queryTable()
-        rowspan = table.getRowExtentAt(row, col)
-        colspan = table.getColumnExtentAt(row, col)
-        spanString = None
-        if (colspan > 1) and (rowspan > 1):
-            # Translators: The cell here refers to a cell within an HTML
-            # table.  We need to announce when the cell occupies or "spans"
-            # more than a single row and/or column.
-            #
-            spanString = _("Cell spans %d rows and %d columns") % \
-                          (rowspan, colspan)
-        elif (colspan > 1):
-            # Translators: The cell here refers to a cell within an HTML
-            # table.  We need to announce when the cell occupies or "spans"
-            # more than a single row and/or column.
-            #
-            spanString = _("Cell spans %d columns") % colspan
-        elif (rowspan > 1):
-            # Translators: The cell here refers to a cell within an HTML
-            # table.  We need to announce when the cell occupies or "spans"
-            # more than a single row and/or column.
-            #
-            spanString = _("Cell spans %d rows") % rowspan
-
-        return spanString
-
-    def getTableCaption(self, obj):
-        """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
-        if the caption cannot be found.
-        """
-
-        for child in obj:
-            if child and (child.getRole() == pyatspi.ROLE_CAPTION):
-                return child
-
-        return None
 
     def getLinkBasename(self, obj):
         """Returns the relevant information from the URI.  The idea is
@@ -4154,20 +3259,6 @@ class Script(default.Script):
                   and state.contains(pyatspi.STATE_SENSITIVE)
 
         return isField
-
-    def isBlockquote(self, obj):
-        """Returns True if the object is a blockquote"""
-
-        if not obj:
-            return False
-
-        attributes = obj.getAttributes()
-        if attributes:
-            for attribute in attributes:
-                if attribute == "tag:BLOCKQUOTE":
-                    return True
-
-        return False
 
     def isLineBreakChar(self, obj, offset):
         """Returns True of the character at the given offset within
@@ -4305,7 +3396,8 @@ class Script(default.Script):
         """Returns the object and last caret offset at the bottom of the
          document frame."""
 
-        obj = self.getLastObject()
+        documentFrame = self.getDocumentFrame()
+        obj = self.getLastObject(documentFrame)
         offset = 0
 
         # obj should now be the very last item in the entire document frame
@@ -4316,7 +3408,7 @@ class Script(default.Script):
         if text:
             offset = text.characterCount - 1
         else:
-            obj = self.findPreviousObject(obj)
+            obj = self.findPreviousObject(obj, documentFrame)
 
         while obj:
             [lastObj, lastOffset] = self.findNextCaretInOrder(obj, offset)
@@ -4328,13 +3420,12 @@ class Script(default.Script):
 
         return [obj, offset]
 
-    def getLastObject(self):
+    def getLastObject(self, documentFrame):
         """Returns the last object in the document frame"""
 
-        documentFrame = self.getDocumentFrame()
         lastChild = documentFrame[documentFrame.childCount - 1]
         while lastChild:
-            lastObj = self.findNextObject(lastChild)
+            lastObj = self.findNextObject(lastChild, documentFrame)
             if lastObj:
                 lastChild = lastObj
             else:
@@ -5012,12 +4103,14 @@ class Script(default.Script):
 
         return guess
 
-    def guessTheLabel(self, obj):
+    def guessTheLabel(self, obj, focusedOnly=True):
         """Attempts to guess what the label of an unlabeled form control
         might be.
 
         Arguments
         - obj: the form field about which to take a guess
+        - focusedOnly: If True, only take guesses about the form field
+          with focus.
 
         Returns the text which we think might be the label or None if we
         give up.
@@ -5035,8 +4128,9 @@ class Script(default.Script):
         # If we're not in the document frame, we don't want to be guessing.
         # We also don't want to be guessing if the item doesn't have focus.
         #
+        isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
         if not self.inDocumentContent() \
-           or not obj.getState().contains(pyatspi.STATE_FOCUSED) \
+           or (focusedOnly and not isFocused) \
            or self.isAriaWidget(obj):
             return guess
 
@@ -5354,7 +4448,7 @@ class Script(default.Script):
 
         return [None, -1]
 
-    def findPreviousObject(self, obj):
+    def findPreviousObject(self, obj, documentFrame):
         """Finds the object prior to this one, where the tree we're
         dealing with is a DOM and 'prior' means the previous object
         in a linear presentation sense.
@@ -5365,7 +4459,6 @@ class Script(default.Script):
 
         previousObj = None
         characterOffset = 0
-        documentFrame = self.getDocumentFrame()
 
         # If the object is the document frame, the previous object is
         # the one that follows us relative to our offset.
@@ -5380,7 +4473,7 @@ class Script(default.Script):
             else:
                 # We're likely at the very end of the document
                 # frame.
-                previousObj = self.getLastObject()
+                previousObj = self.getLastObject(documentFrame)
         else:
             # [[[TODO: HACK - WDW defensive programming because Gecko
             # ally hierarchies are not always working.  Objects say
@@ -5450,7 +4543,7 @@ class Script(default.Script):
 
         return previousObj
 
-    def findNextObject(self, obj):
+    def findNextObject(self, obj, documentFrame):
         """Finds the object after to this one, where the tree we're
         dealing with is a DOM and 'next' means the next object
         in a linear presentation sense.
@@ -5461,7 +4554,6 @@ class Script(default.Script):
 
         nextObj = None
         characterOffset = 0
-        documentFrame = self.getDocumentFrame()
 
         # If the object is the document frame, the next object is
         # the one that follows us relative to our offset.
@@ -5554,329 +4646,6 @@ class Script(default.Script):
                 break
 
         return nextObj
-
-    def findPreviousRole(self, roles, wrap, currentObj=None):
-        if settings.useCollection:
-            try:
-                # The docframe is our collection
-                docframe = self.getDocumentFrame()
-                col = docframe.queryCollection()
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                # Collection is probably not implemented, use the fallback
-                return self.iterFindPreviousRole(roles, wrap, currentObj)
-
-            try:
-                # We have our Collection so define our matchRule and go find it
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                            "", col.MATCH_NONE,
-                            roles, col.MATCH_ANY,
-                            "", col.MATCH_NONE,
-                            False)
-                retval = self.findPrevByMatchRule(col, rule, wrap, currentObj)
-                # we created the matchRule so we need to free it
-                col.freeMatchRule(rule)
-                return retval
-            except:
-                # we have created our matchRule at this point so free it
-                col.freeMatchRule(rule)
-                debug.printException(debug.LEVEL_SEVERE)
-                # Collection is probably not implemented, use the fallback
-                return self.iterFindPreviousRole(roles, wrap, currentObj)
-        else:
-            return self.iterFindPreviousRole(roles, wrap, currentObj)
-
-    def iterFindPreviousRole(self, roles, wrap, currentObj=None):
-        """Finds the caret offset at the beginning of the next object
-        using the given roles list as a pattern to match.
-
-        Arguments:
-        -roles: a list of roles from rolenames.py
-        -wrap: if True and the top of the document is reached, move
-               to the bottom and keep looking.
-        -currentObj: the object from which the search should begin
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-
-        ancestors = []
-        nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        wrapped = False
-        obj = self.findPreviousObject(currentObj)
-        while obj:
-            isNestedItem = ((obj != currentObj.parent) \
-                            and (currentObj.parent.getRole() == obj.getRole()) \
-                            and (obj.getRole() in nestableRoles))
-            if ((not obj in ancestors) or isNestedItem) \
-               and (obj.getRole() in roles) \
-               and (not self.isLayoutOnly(obj)):
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-                return [obj, wrapped]
-            else:
-                obj = self.findPreviousObject(obj)
-                if not obj and wrap and not wrapped:
-                    obj = self.getLastObject()
-                    wrapped = True
-
-        return [None, wrapped]
-
-    def findNextRole(self, roles, wrap, currentObj=None):
-        if settings.useCollection:
-            try:
-                # The docframe is our collection
-                docframe = self.getDocumentFrame()
-                col = docframe.queryCollection()
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                # Collection is probably not implemented, use the fallback
-                return self.iterFindNextRole(roles, wrap, currentObj)
-
-            try:
-                # We have our Collection so define our matchRule and go find it
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                            "", col.MATCH_NONE,
-                            roles, col.MATCH_ANY,
-                            "", col.MATCH_NONE,
-                            False)
-                retval = self.findNextByMatchRule(col, rule, wrap, currentObj)
-                # we created the matchRule so we need to free it
-                col.freeMatchRule(rule)
-                return retval
-            except:
-                # we created the matchRule at this point so free it
-                col.freeMatchRule(rule)
-                debug.printException(debug.LEVEL_SEVERE)
-                # Collection is probably not implemented, use the fallback
-                return self.iterFindNextRole(roles, wrap, currentObj)
-        else:
-            return self.iterFindNextRole(roles, wrap, currentObj)
-
-    def iterFindNextRole(self, roles, wrap, currentObj=None):
-        """Finds the caret offset at the beginning of the next object
-        using the given roles list as a pattern to match or not match.
-
-        Arguments:
-        -roles: a list of roles from rolenames.py
-        -wrap: if True and the bottom of the document is reached, move
-               to the top and keep looking.
-        -currentObj: the object from which the search should begin
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-
-        ancestors = []
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        wrapped = False
-        obj = self.findNextObject(currentObj)
-        if not obj and wrap:
-            documentFrame = self.getDocumentFrame()
-            obj = documentFrame[0]
-            wrapped = True
-        while obj:
-            if (not obj in ancestors) and (obj.getRole() in roles) \
-                and (not self.isLayoutOnly(obj)):
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-                return [obj, wrapped]
-            else:
-                obj = self.findNextObject(obj)
-                if not obj and wrap and not wrapped:
-                    documentFrame = self.getDocumentFrame()
-                    obj = documentFrame[0]
-                    wrapped = True
-
-        return [None, wrapped]
-
-    def findPrevByMatchRule(self, col, matchrule,
-                                  wrap, currentObj, allowNesting=False):
-        # get our current object
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-
-        # Get the ancestors.  We won't stop on any of them.
-        ancestors = []
-        obj = currentObj.parent
-        if allowNesting:
-            ancestors.append(obj)
-        else:
-            while obj:
-                ancestors.append(obj)
-                obj = obj.parent
-
-        wrapped = False
-        rs = col.getMatchesTo(currentObj, matchrule,
-                              col.SORT_ORDER_CANONICAL,
-                              col.TREE_INORDER, True, 1, True)
-        while True:
-            if len(rs) == 0:
-                if wrapped:
-                    return [None, True]
-                elif wrap:
-                    lastobj = self.getLastObject()
-                    # Collection does not do an inclusive search, meaning
-                    # that the start object is not part of the search.  So
-                    # we need to test the lastobj separately using the given
-                    # matchRule.  We don't have this problem for 'Next' because
-                    # the startobj is the doc frame.
-                    #
-                    secondlastobj = self.findPreviousObject(lastobj)
-                    rs = col.getMatchesFrom(secondlastobj, matchrule,
-                              col.SORT_ORDER_CANONICAL,
-                              col.TREE_INORDER, 1, True)
-                    if len(rs) > 0:
-                        return [rs[0], True]
-                    else:
-                        rs = col.getMatchesTo(lastobj, matchrule,
-                              col.SORT_ORDER_CANONICAL,
-                              col.TREE_INORDER, True, 1, True)
-                        wrapped = True
-                 # caller doesn't want us to wrap and we haven't found anything
-                else:
-                    return [None, False]
-            elif len(rs) > 0:
-                if rs[0] in ancestors:
-                    rs = col.getMatchesTo(rs[0], matchrule,
-                              col.SORT_ORDER_CANONICAL,
-                              col.TREE_INORDER, True, 1, True)
-                else:
-                    return [rs[0], wrapped]
-
-    def findNextByMatchRule(self, col, matchrule, wrap, currentObj=None):
-        # get our current object
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-
-        # go find the next match
-        rs = col.getMatchesFrom(currentObj,
-                                    matchrule,
-                                    col.SORT_ORDER_CANONICAL,
-                                    col.TREE_INORDER,
-                                    1,
-                                    True)
-
-        if len(rs) > 0:
-            return [rs[0], False]
-        elif wrap:
-            # We didn't find anything so start at the doc frame and try again
-            rs = col.getMatchesFrom(self.getDocumentFrame(),
-                                    matchrule,
-                                    col.SORT_ORDER_CANONICAL,
-                                    col.TREE_INORDER,
-                                    1,
-                                    True)
-            if len(rs) > 0:
-                return [rs[0], True]
-            else:
-                return [None, True]
-        else:
-            return [None, False]
-
-    def findPrevByPredicate(self, pred, wrap, currentObj=None):
-        """Finds the caret offset at the beginning of the previous object
-        using the given predicate as a pattern to match.
-
-        Arguments:
-        -pred: a python callable that takes an accessible argument and
-               returns true/false based on some match criteria
-        -wrap: if True and the top of the document is reached, move
-               to the bottom and keep looking.
-        -currentObj: the object from which the search should begin
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-
-        ancestors = []
-        nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        wrapped = False
-        obj = self.findPreviousObject(currentObj)
-        while obj:
-            isNestedItem = ((obj != currentObj.parent) \
-                            and (currentObj.parent.getRole() == obj.getRole()) \
-                            and (obj.getRole() in nestableRoles))
-            if ((not obj in ancestors) or isNestedItem) and pred(obj):
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-                return [obj, wrapped]
-            else:
-                obj = self.findPreviousObject(obj)
-                if not obj and wrap and not wrapped:
-                    obj = self.getLastObject()
-                    wrapped = True
-
-        return [None, wrapped]
-
-    def findNextByPredicate(self, pred, wrap, currentObj=None):
-        """Finds the caret offset at the beginning of the next object
-        using the given predicate as a pattern to match or not match.
-
-        Arguments:
-        -pred: a python callable that takes an accessible argument and
-               returns true/false based on some match criteria
-        -wrap: if True and the bottom of the document is reached, move
-               to the top and keep looking.
-        -currentObj: the object from which the search should begin
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        if not currentObj:
-            [currentObj, characterOffset] = self.getCaretContext()
-        ancestors = []
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        wrapped = False
-        obj = self.findNextObject(currentObj)
-        if not obj and wrap:
-            documentFrame = self.getDocumentFrame()
-            obj = documentFrame[0]
-            wrapped = True
-
-        while obj:
-            if (not obj in ancestors) and pred(obj):
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-                return [obj, wrapped]
-            else:
-                obj = self.findNextObject(obj)
-                if not obj and wrap and not wrapped:
-                    documentFrame = self.getDocumentFrame()
-                    obj = documentFrame[0]
-                    wrapped = True
-
-        return [None, wrapped]
 
     ####################################################################
     #                                                                  #
@@ -6137,7 +4906,8 @@ class Script(default.Script):
                 break
 
             if isAria:
-                prevObj = self.findPreviousObject(firstObj)
+                documentFrame = self.getDocumentFrame()
+                prevObj = self.findPreviousObject(firstObj, documentFrame)
                 pOffset = 0
             else:
                 [prevObj, pOffset] = \
@@ -6175,7 +4945,8 @@ class Script(default.Script):
                 break
 
             if isAria:
-                nextObj = self.findNextObject(lastObj)
+                documentFrame = self.getDocumentFrame()
+                nextObj = self.findNextObject(lastObj, documentFrame)
                 nOffset = 0
             else:
                 [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
@@ -6491,15 +5262,6 @@ class Script(default.Script):
 
         self.setCaretContext(obj, characterOffset)
 
-        # If we're not in a table cell, reset self.lastTableCell.
-        #
-        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            cell = self.getAncestor(obj,
-                                    [pyatspi.ROLE_TABLE_CELL],
-                                    [pyatspi.ROLE_DOCUMENT_FRAME])
-            if not cell:
-                self.lastTableCell = [-1, -1]
-
         # If the item is a focusable list in an HTML form, we're here
         # because we've arrowed to it.  We don't want to grab focus on
         # it and trap the user in the list. The same is true for combo
@@ -6730,7 +5492,8 @@ class Script(default.Script):
             failureCount += 1
         if currentLine == prevLine:
             # print "find prev line still stuck", prevObj, prevOffset
-            prevObj = self.findPreviousObject(prevObj)
+            documentFrame = self.getDocumentFrame()
+            prevObj = self.findPreviousObject(prevObj, documentFrame)
             prevOffset = 0
 
         [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj,
@@ -6819,7 +5582,8 @@ class Script(default.Script):
             failureCount += 1
         if currentLine == nextLine:
             #print "find next line still stuck", nextObj, nextOffset
-            nextObj = self.findNextObject(nextObj)
+            documentFrame = self.getDocumentFrame()
+            nextObj = self.findNextObject(nextObj, documentFrame)
             nextOffset = 0
 
         [nextObj, nextOffset] = \
@@ -6959,355 +5723,6 @@ class Script(default.Script):
                 if name in ["open", _("open")]:
                     action.doAction(i)
                     break
-
-    def goPreviousHeading(self, inputEvent):
-        """Go to the previous heading regardless of level."""
-        wrap = True
-        [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_HEADING], wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            self.speakContents(contents)
-        else:
-            # Translators: this is in reference to navigating HTML content
-            # by heading (e.g., <h1>).
-            #
-            speech.speak(_("No more headings."))
-
-    def goNextHeading(self, inputEvent):
-        """Go to the next heading regardless of level."""
-        wrap = True
-        [obj, wrapped] = self.findNextRole([pyatspi.ROLE_HEADING], wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            self.speakContents(contents)
-        else:
-            # Translators: this is in reference to navigating HTML content
-            # by heading (e.g., <h1>).
-            #
-            speech.speak(_("No more headings."))
-
-    def goPreviousHeadingAtLevel(self, inputEvent, desiredLevel):
-        """Go to the previous heading at the specified level.
-
-        Arguments:
-        - desiredLevel: the level (1-6) of the heading to locate
-        """
-
-        found = False
-        level = 0
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.parent.getRole() == pyatspi.ROLE_HEADING:
-            obj = obj.parent
-        wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findPreviousRole([pyatspi.ROLE_HEADING], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
-            if obj:
-                level = self.getHeadingLevel(obj)
-                if level == desiredLevel:
-                    found = True
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            self.speakContents(contents)
-        else:
-            # Translators: this is in reference to navigating HTML content
-            # by heading (e.g., <h1>).
-            #
-            speech.speak(_("No more headings at level %d.") % desiredLevel)
-
-    def goNextHeadingAtLevel(self, inputEvent, desiredLevel):
-        """Go to the next heading at the specified level.
-
-        Arguments:
-        - desiredLevel: the level (1-6) of the heading to locate
-        """
-
-        found = False
-        level = 0
-        [obj, characterOffset] = self.getCaretContext()
-        wrap = True
-        while obj and not found:
-            [obj, wrapped] = \
-                  self.findNextRole([pyatspi.ROLE_HEADING], wrap, obj)
-            # We should only wrap if we haven't already done so.
-            #
-            if wrapped:
-                wrap = False
-            if obj:
-                level = self.getHeadingLevel(obj)
-                if level == desiredLevel:
-                    found = True
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            contents = self.getObjectContentsAtOffset(obj, characterOffset)
-            self.speakContents(contents)
-        else:
-            # Translators: this is in reference to navigating HTML content
-            # by heading (e.g., <h1>).
-            #
-            speech.speak(_("No more headings at level %d.") % desiredLevel)
-
-    def goNextHeading1(self, inputEvent):
-        """Go to the next heading at the level 1."""
-        self.goNextHeadingAtLevel(inputEvent, 1)
-
-    def goPreviousHeading1(self, inputEvent):
-        """Go to the previous heading at the level 1."""
-        self.goPreviousHeadingAtLevel(inputEvent, 1)
-
-    def goNextHeading2(self, inputEvent):
-        """Go to the next heading at the level 2."""
-        self.goNextHeadingAtLevel(inputEvent, 2)
-
-    def goPreviousHeading2(self, inputEvent):
-        """Go to the previous heading at the level 2."""
-        self.goPreviousHeadingAtLevel(inputEvent, 2)
-
-    def goNextHeading3(self, inputEvent):
-        """Go to the next heading at the level 3."""
-        self.goNextHeadingAtLevel(inputEvent, 3)
-
-    def goPreviousHeading3(self, inputEvent):
-        """Go to the previous heading at the level 3."""
-        self.goPreviousHeadingAtLevel(inputEvent, 3)
-
-    def goNextHeading4(self, inputEvent):
-        """Go to the next heading at the level 4."""
-        self.goNextHeadingAtLevel(inputEvent, 4)
-
-    def goPreviousHeading4(self, inputEvent):
-        """Go to the previous heading at the level 4."""
-        self.goPreviousHeadingAtLevel(inputEvent, 4)
-
-    def goNextHeading5(self, inputEvent):
-        """Go to the next heading at the level 5."""
-        self.goNextHeadingAtLevel(inputEvent, 5)
-
-    def goPreviousHeading5(self, inputEvent):
-        """Go to the previous heading at the level 5."""
-        self.goPreviousHeadingAtLevel(inputEvent, 5)
-
-    def goNextHeading6(self, inputEvent):
-        """Go to the next heading at the level 6."""
-        self.goNextHeadingAtLevel(inputEvent, 6)
-
-    def goPreviousHeading6(self, inputEvent):
-        """Go to the previous heading at the level 6."""
-        self.goPreviousHeadingAtLevel(inputEvent, 6)
-
-    def goPreviousChunk(self, inputEvent):
-        """Go to the previous chunk/large object."""
-        wrap = True
-        [obj, wrapped] = self.findPrevByPredicate(self.__matchChunk, wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML in a structural
-            # manner, where a 'large object' is a logical chunk of
-            # text, such as a paragraph, a list, a table, etc.
-            #
-            speech.speak(_("No more large objects."))
-
-    def goNextChunk(self, inputEvent):
-        """Go to the next chunk/large object."""
-        wrap = True
-        [obj, wrapped] = self.findNextByPredicate(self.__matchChunk, wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML in a structural
-            # manner, where a 'large object' is a logical chunk of
-            # text, such as a paragraph, a list, a table, etc.
-            #
-            speech.speak(_("No more large objects."))
-
-    def goPreviousLandmark(self, inputEvent):
-        [obj, characterOffset] = self.getCaretContext()
-
-        # Try to find it using Collection first
-        success = False
-        if settings.useCollection:
-            try:
-                startobj = obj
-                found = False
-                col = self.getDocumentFrame().queryCollection()
-                # form our list of attribute strings
-                attrs = []
-                for landmark in script_settings.ARIA_LANDMARKS:
-                    attrs.append('xml-roles:' + landmark)
-                # define matchRule and find it
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             attrs, col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
-                if obj != startobj:
-                    found = True
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            [obj, wrapped] = self.findPrevByPredicate(self.__matchLandmark,
-                                                      True, obj)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating to the previous ARIA
-            # role landmark.  ARIA role landmarks are the W3C defined HTML
-            # tag attribute 'role' used to identify important part of
-            # webpage like banners, main context, search etc.  This is an
-            # that one was not found.
-            #
-            speech.speak(_("No landmark found."))
-
-    def goNextLandmark(self, inputEvent):
-        [obj, characterOffset] = self.getCaretContext()
-
-        # Try to find it using Collection first
-        success = False
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                # form our list of attribute strings
-                attrs = []
-                for landmark in script_settings.ARIA_LANDMARKS:
-                    attrs.append('xml-roles:' + landmark)
-                # define matchRule and find it
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             attrs, col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            [obj, wrapped] = self.findNextByPredicate(self.__matchLandmark,
-                                                      True, obj)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating to the next ARIA
-            # role landmark. This is an that one was not found.
-            #
-            speech.speak(_("No landmark found."))
-
     def goPreviousObjectInOrder(self, inputEvent):
         """Go to the previous object in order, regardless of type or size."""
 
@@ -7464,1347 +5879,6 @@ class Script(default.Script):
             objectContents = [objectContents[0]]
             self.speakContents(objectContents)
 
-    def goPreviousList(self, inputEvent):
-        """Go to the previous (un)ordered list."""
-        [obj, characterOffset] = self.getCaretContext()
-        found = False
-        wrap = True
-        success = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LIST], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col,
-                                          rule, True, obj, allowNesting = True)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findPreviousRole([pyatspi.ROLE_LIST], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-
-                # We need to be sure that the list in question is an (un)ordered
-                # list rather than a list in a form field. Form field lists are
-                # focusable; (un)ordered lists are not.
-                #
-                if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            nItems = 0
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_LIST_ITEM:
-                    nItems += 1
-            # Translators: this represents a list in HTML.
-            #
-            itemString = ngettext("List with %d item",
-                                  "List with %d items",
-                                  nItems) % nItems
-            speech.speak(itemString)
-            nestingLevel = 0
-            parent = obj.parent
-            while parent.getRole() == pyatspi.ROLE_LIST:
-                nestingLevel += 1
-                parent = parent.parent
-            if nestingLevel:
-                # Translators: this represents a list item in HTML.
-                # The nesting level is how 'deep' the item is (e.g.,
-                # a level of 2 represents a list item inside a list
-                # that's inside another list).
-                #
-                speech.speak(_("Nesting level %d") % nestingLevel)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-
-        else:
-            # Translators: this is for navigating HTML content by moving
-            # from bulleted/numbered list to bulleted/numbered list.
-            #
-            speech.speak(_("No more lists."))
-
-    def goNextList(self, inputEvent):
-        """Go to the next (un)ordered list."""
-        [obj, characterOffset] = self.getCaretContext()
-        found = False
-        wrap = True
-        success = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LIST], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findNextRole([pyatspi.ROLE_LIST], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-
-                # We need to be sure that the list in question is an (un)ordered
-                # list rather than a list in a form field. Form field lists are
-                # focusable; (un)ordered lists are not.
-                #
-                if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            nItems = 0
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_LIST_ITEM:
-                    nItems += 1
-            # Translators: this represents a list in HTML.
-            #
-            itemString = ngettext("List with %d item",
-                                  "List with %d items",
-                                  nItems) % nItems
-            speech.speak(itemString)
-            nestingLevel = 0
-            parent = obj.parent
-            while parent.getRole() == pyatspi.ROLE_LIST:
-                nestingLevel += 1
-                parent = parent.parent
-            if nestingLevel:
-                # Translators: this represents a list item in HTML.
-                # The nesting level is how 'deep' the item is (e.g.,
-                # a level of 2 represents a list item inside a list
-                # that's inside another list).
-                #
-                speech.speak(_("Nesting level %d") % nestingLevel)
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-
-        else:
-            # Translators: this is for navigating HTML content by moving
-            # from bulleted/numbered list to bulleted/numbered list.
-            #
-            speech.speak(_("No more lists."))
-
-    def goPreviousListItem(self, inputEvent):
-        """Go to the previous item in an (un)ordered list."""
-        [obj, characterOffset] = self.getCaretContext()
-        found = False
-        wrap = True
-        success = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findPreviousRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-
-                # We need to be sure that the list item in question is the
-                # child of an (un)ordered list rather than a list in a form
-                # field. Form field list items are focusable; (un)ordered
-                # list items are not.
-                #
-                if obj and \
-                not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from bulleted/numbered list item to
-            # bulleted/numbered list item.
-            #
-            speech.speak(_("No more list items."))
-
-    def goNextListItem(self, inputEvent):
-        """Go to the next item in an (un)ordered list."""
-        [obj, characterOffset] = self.getCaretContext()
-        found = False
-        wrap = True
-        success = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_FOCUSABLE)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LIST_ITEM], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findNextRole([pyatspi.ROLE_LIST_ITEM], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-
-                # We need to be sure that the list item in question is the
-                # child of an (un)ordered list rather than a list in a form
-                # field. Form field list items are focusable; (un)ordered
-                # list items are not.
-                #
-                if obj and \
-                not (obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from bulleted/numbered list item to
-            # bulleted/numbered list item.
-            #
-            speech.speak(_("No more list items."))
-
-    def goPreviousUnvisitedLink(self, inputEvent):
-        """Go to the previous unvisited link."""
-
-        # If the currentObject has a link in its ancestry, we've
-        # already started out on a link and need to move off of
-        # it else we'll get stuck.
-        #
-        [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getAncestor(obj,
-                                          [pyatspi.ROLE_LINK],
-                                          [pyatspi.ROLE_DOCUMENT_FRAME])
-        if containingLink:
-            obj = containingLink
-
-        success = False
-        wrap = True
-        found = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-                if obj and \
-                not obj.getState().contains(pyatspi.STATE_VISITED):
-                    found = True
-
-        if wrapped or not wrap:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from link to link.
-            #
-            speech.speak(_("No more unvisited links."))
-
-    def goNextUnvisitedLink(self, inputEvent):
-        """Go to the next unvisited link."""
-        [obj, characterOffset] = self.getCaretContext()
-
-        success = False
-        wrap = True
-        found = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except AttributeError:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-                if obj and \
-                not obj.getState().contains(pyatspi.STATE_VISITED):
-                    found = True
-
-        if wrapped or not wrap:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from link to link.
-            #
-            speech.speak(_("No more unvisited links."))
-
-    def goPreviousVisitedLink(self, inputEvent):
-        """Go to the previous visited link."""
-
-        # If the currentObject has a link in its ancestry, we've
-        # already started out on a link and need to move off of
-        # it else we'll get stuck.
-        #
-        [obj, characterOffset] = self.getCaretContext()
-        containingLink = self.getAncestor(obj,
-                                          [pyatspi.ROLE_LINK],
-                                          [pyatspi.ROLE_DOCUMENT_FRAME])
-        if containingLink:
-            obj = containingLink
-
-        success = False
-        wrap = True
-        found = False
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findPreviousRole([pyatspi.ROLE_LINK], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-                if obj and \
-                obj.getState().contains(pyatspi.STATE_VISITED):
-                    found = True
-
-        if wrapped or not wrap:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from link to link.
-            #
-            speech.speak(_("No more visited links."))
-
-    def goNextVisitedLink(self, inputEvent):
-        """Go to the next visited link."""
-        [obj, characterOffset] = self.getCaretContext()
-
-        success = False
-        found = False
-        wrap = True
-
-        # Try to find it using Collection first
-        if settings.useCollection:
-            try:
-                startobj = obj
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                stateset.add(pyatspi.STATE_VISITED)
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             [pyatspi.ROLE_LINK], col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj != startobj:
-                    found = True
-                else:
-                    found = False
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            while obj and not found:
-                [obj, wrapped] = \
-                    self.findNextRole([pyatspi.ROLE_LINK], wrap, obj)
-                # We should only wrap if we haven't already done so.
-                #
-                if wrapped:
-                    wrap = False
-
-                if obj and \
-                obj.getState().contains(pyatspi.STATE_VISITED):
-                    found = True
-
-        if wrapped or not wrap:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from link to link.
-            #
-            speech.speak(_("No more visited links."))
-
-    def goPreviousBlockquote(self, inputEvent):
-        """Go to the previous blockquote."""
-
-        # If the current object has a blockquote in its ancestry, we
-        # need to move out of it else we'll get stuck.
-        #
-        [obj, characterOffset] = self.getCaretContext()
-        candidate = obj
-        while candidate and (candidate != candidate.parent) and \
-              (candidate.getRole() != pyatspi.ROLE_DOCUMENT_FRAME):
-            if self.isBlockquote(candidate):
-                obj = candidate
-                break
-            else:
-                candidate = candidate.parent
-
-        # Try to find it using Collection first
-        success = False
-        if settings.useCollection:
-            try:
-                startobj = obj
-                found = False
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             ['tag:BLOCKQUOTE'], col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findPrevByMatchRule(col, rule, True, obj)
-                if obj != startobj:
-                    found = True
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            currentObj = obj
-            found = False
-            wrapped = False
-            wrap = True
-            while obj and not found:
-                obj = self.findPreviousObject(obj)
-                if not obj and wrap and not wrapped:
-                    obj = self.getLastObject()
-                    wrapped = True
-                if obj and self.isBlockquote(obj) and \
-                not self.isSameObject(currentObj, obj):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from blockquote to blockquote.
-            #
-            speech.speak(_("No more blockquotes."))
-
-    def goNextBlockquote(self, inputEvent):
-        """Go to the next blockquote."""
-        [obj, characterOffset] = self.getCaretContext()
-
-        # get the ancestors because setCaretPosition may drop us lower
-        # in the tree.  This is used to check that the start object is not
-        # the same as the found object.
-        ancestors = []
-        ancestor = obj
-        while ancestor:
-            ancestors.append(ancestor)
-            ancestor = ancestor.parent
-
-        # Try to find it using Collection first
-        success = False
-        if settings.useCollection:
-            try:
-                startobj = obj
-                found = False
-                col = self.getDocumentFrame().queryCollection()
-                stateset = pyatspi.StateSet()
-                rule = col.createMatchRule(stateset.raw(), col.MATCH_ANY,
-                             ['tag:BLOCKQUOTE'], col.MATCH_ANY,
-                             "", col.MATCH_ANY,
-                             "", col.MATCH_ALL,
-                             False)
-                [obj, wrapped] = self.findNextByMatchRule(col, rule, True, obj)
-                if obj and obj not in ancestors:
-                    found = True
-                success = True
-                col.freeMatchRule(rule)
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                col.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        if not success or not settings.useCollection:
-            currentObj = obj
-            found = False
-            wrapped = False
-            wrap = True
-            while obj and not found:
-                obj = self.findNextObject(obj)
-                if not obj and wrap and not wrapped:
-                    documentFrame = self.getDocumentFrame()
-                    obj = documentFrame[0]
-                    wrapped = True
-                if obj and self.isBlockquote(obj) and \
-                not self.isSameObject(currentObj, obj):
-                    found = True
-
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj and found:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.presentLine(obj, characterOffset)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from blockquote to blockquote.
-            #
-            speech.speak(_("No more blockquotes."))
-
-    def goPreviousFormField(self, inputEvent):
-        """Go to the previous form field."""
-
-        # If the current object is a list item in a form field, we
-        # need to move up to the parent list before we search
-        # for the previous list; otherwise we'll find the current
-        # list first.
-        #
-        [obj, characterOffset] = self.getCaretContext()
-        currentObj = obj
-        if obj.getRole() == pyatspi.ROLE_LIST_ITEM and \
-           obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            obj = obj.parent
-
-        found = False
-        wrapped = False
-        wrap = True
-        while obj and not found:
-            obj = self.findPreviousObject(obj)
-            if not obj and wrap and not wrapped:
-                obj = self.getLastObject()
-                wrapped = True
-            if obj:
-                # For performance purposes, we do not want to work
-                # our way up through list items in search of the
-                # parent list.
-                #
-                if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
-                    obj = obj.parent
-                found = self.isFormField(obj)
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            # We actively avoid grabbing focus on lists in HTML forms
-            # in setCaretPosition() so that a user doesn't accidentally
-            # arrow into one and change its value.  Here we actually
-            # do want to grab focus should we be on a list or combo box.
-            #
-            if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX]:
-                obj.queryComponent().grabFocus()
-            else:
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                             characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from form field to form field.
-            #
-            speech.speak(_("No more form fields."))
-
-    def goNextFormField(self, inputEvent):
-        """Go to the next form field."""
-        [obj, characterOffset] = self.getCaretContext()
-        currentObj = obj
-        found = False
-        wrapped = False
-        wrap = True
-        # For performance purposes, we do not want to examine each item
-        # in the current combo box or list via findNextObject.
-        #
-        if obj.getRole() == pyatspi.ROLE_LIST_ITEM \
-           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            obj = obj.parent
-        if obj.getRole() == pyatspi.ROLE_LIST \
-           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            obj = obj[obj.childCount - 1]
-        elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            menu = obj[0]
-            obj = menu[menu.childCount - 1]
-
-        while obj and not found:
-            obj = self.findNextObject(obj)
-            if not obj and wrap and not wrapped:
-                documentFrame = self.getDocumentFrame()
-                obj = documentFrame[0]
-                wrapped = True
-            if obj:
-                found = self.isFormField(obj)
-                if wrapped and self.isSameObject(currentObj, obj):
-                    obj = None
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-
-            # We actively avoid grabbing focus on lists in HTML forms
-            # in setCaretPosition() so that a user doesn't accidentally
-            # arrow into one and change its value.  Here we actually
-            # do want to grab focus should we be on a list or combo box.
-            #
-            if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX]:
-                obj.queryComponent().grabFocus()
-            else:
-                self.setCaretPosition(obj, characterOffset)
-                self.updateBraille(obj)
-                self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                             characterOffset))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from form field to form field.
-            #
-            speech.speak(_("No more form fields."))
-
-    def moveToCell(self, obj):
-        """Move to the specified cell in an HTML table.
-
-        Arguments:
-        - obj: the table cell to move to.
-        """
-        spanString = self.getCellSpanInfo (obj)
-        blank = self.isBlankCell(obj)
-        [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-        self.setCaretPosition(obj, characterOffset)
-        self.updateBraille(obj)
-        if not blank:
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                             characterOffset))
-        else:
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"))
-
-        if script_settings.speakCellCoordinates:
-            [row, col] = self.getCellCoordinates(obj)
-            # Translators: this represents the (row, col) position of
-            # a cell in a table.
-            #
-            speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
-
-        if spanString and script_settings.speakCellSpan:
-            speech.speak(spanString)
-
-    def goPreviousTable(self, inputEvent):
-        """Go to the previous table."""
-        wrap = True
-        [obj, wrapped] = self.findPreviousRole([pyatspi.ROLE_TABLE], wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
-            # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to bottom."))
-        if obj:
-            table = obj.queryTable()
-            caption = self.getTableCaption(obj)
-            if self.queryNonEmptyText(caption):
-                text = self.getDisplayedText(caption)
-                speech.speak(text)
-            nonUniformString = ""
-            nonUniform = self.isNonUniformTable(obj)
-            if nonUniform:
-                # Translators: a uniform table is one in which each table
-                # cell occupies one row and one column (i.e. a perfect grid)
-                # In contrast, a non-uniform table is one in which at least
-                # one table cell occupies more than one row and/or column.
-                #
-                nonUniformString = _("Non-uniform")
-            nRows = table.nRows
-            nColumns = table.nColumns
-            # Translators: this represents the number of rows in an HTML table.
-            #
-            rowString = ngettext("Table with %d row",
-                                 "Table with %d rows",
-                                  nRows) % nRows
-            # Translators: this represents the number of cols in an HTML table.
-            #
-            colString = ngettext("%d column",
-                                 "%d columns",
-                                  nColumns) % nColumns
-            speech.speak(nonUniformString + " " + rowString + " " + colString)
-
-            obj = table.getAccessibleAt(0, 0)
-            self.moveToCell(obj)
-
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table to table.
-            #
-            speech.speak(_("No more tables."))
-
-    def goNextTable(self, inputEvent):
-        """Go to the next table."""
-        wrap = True
-        [obj, wrapped] = self.findNextRole([pyatspi.ROLE_TABLE], wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            table = obj.queryTable()
-            caption = self.getTableCaption(obj)
-            if self.queryNonEmptyText(caption):
-                text = self.getDisplayedText(caption)
-                speech.speak(text)
-            nonUniformString = ""
-            nonUniform = self.isNonUniformTable(obj)
-            if nonUniform:
-                # Translators: a uniform table is one in which each table
-                # cell occupies one row and one column (i.e. a perfect grid)
-                # In contrast, a non-uniform table is one in which at least
-                # one table cell occupies more than one row and/or column.
-                #
-                nonUniformString = _("Non-uniform")
-            nRows = table.nRows
-            nColumns = table.nColumns
-            # Translators: this represents the number of rows in an HTML table.
-            #
-            rowString = ngettext("Table with %d row",
-                                 "Table with %d rows",
-                                  nRows) % nRows
-            # Translators: this represents the number of cols in an HTML table.
-            #
-            colString = ngettext("%d column",
-                                 "%d columns",
-                                  nColumns) % nColumns
-            speech.speak(nonUniformString + " " + rowString + " " + colString)
-            obj = table.getAccessibleAt(0, 0)
-            self.moveToCell(obj)
-
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table to table.
-            #
-            speech.speak(_("No more tables."))
-
-    def goCellLeft(self, inputEvent):
-        """Move to the cell on the left in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE_CELL],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            [row, col] = self.getCellCoordinates(obj)
-            oldHeaders = self.getColumnHeaders(obj)
-            table = obj.parent.queryTable()
-            if self.isSameCell(obj.parent,
-                               [row, col],
-                               self.lastTableCell):
-                # The stored row helps us maintain the correct position
-                # when traversing cells that span multiple rows.
-                #
-                row = self.lastTableCell[0]
-            found = False
-            while not found and col > 0:
-                obj = table.getAccessibleAt(row, col - 1)
-                self.lastTableCell = [row, col - 1]
-                if not self.isBlankCell(obj) or \
-                   not script_settings.skipBlankCells:
-                    found = True
-                else:
-                    col -= 1
-
-            if found:
-                # We only want to speak the header information that has
-                # changed, and we don't want to speak headers if we're in
-                # a header column.
-                #
-                if script_settings.speakCellHeaders \
-                   and not self.isInHeaderColumn(obj):
-                    colHeaders = self.getColumnHeaders(obj)
-                    for header in colHeaders:
-                        if not header in oldHeaders:
-                            text = self.getDisplayedText(header)
-                            speech.speak(text)
-                self.moveToCell(obj)
-            else:
-                # Translators: this is for navigating HTML content by
-                # moving from table cell to table cell.
-                #
-                speech.speak(_("Beginning of row."))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goCellRight(self, inputEvent):
-        """Move to the cell on the right in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE_CELL],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            [row, col] = self.getCellCoordinates(obj)
-            oldHeaders = self.getColumnHeaders(obj)
-            table = obj.parent.queryTable()
-            if self.isSameCell(obj.parent,
-                               [row, col],
-                               self.lastTableCell):
-                # The stored row helps us maintain the correct position
-                # when traversing cells that span multiple rows.
-                #
-                row = self.lastTableCell[0]
-            colspan = table.getColumnExtentAt(row, col)
-            nextCol = col + colspan
-            found = False
-            while not found and (nextCol <= table.nColumns - 1):
-                obj = table.getAccessibleAt(row, nextCol)
-                self.lastTableCell = [row, nextCol]
-                if not self.isBlankCell(obj) or \
-                   not script_settings.skipBlankCells:
-                    found = True
-                else:
-                    col += 1
-                    colspan = table.getColumnExtentAt(row, col)
-                    nextCol = col + colspan
-
-            if found:
-                # We only want to speak the header information that has
-                # changed, and we don't want to speak headers if we're in
-                # a header column.
-                #
-                if script_settings.speakCellHeaders \
-                   and not self.isInHeaderColumn(obj):
-                    colHeaders = self.getColumnHeaders(obj)
-                    for header in colHeaders:
-                        if not header in oldHeaders:
-                            text = self.getDisplayedText(header)
-                            speech.speak(text)
-                self.moveToCell(obj)
-            else:
-                # Translators: this is for navigating HTML content by
-                # moving from table cell to table cell.
-                #
-                speech.speak(_("End of row."))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goCellUp(self, inputEvent):
-        """Move one cell up in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE_CELL],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            [row, col] = self.getCellCoordinates(obj)
-            oldHeaders = self.getRowHeaders(obj)
-            table = obj.parent.queryTable()
-            if self.isSameCell(obj.parent,
-                               [row, col],
-                               self.lastTableCell):
-                # The stored column helps us maintain the correct position
-                # when traversing cells that span multiple columns.
-                #
-                col = self.lastTableCell[1]
-            found = False
-            while not found and row > 0:
-                obj = table.getAccessibleAt(row - 1, col)
-                self.lastTableCell = [row - 1, col]
-                if not self.isBlankCell(obj) or \
-                   not script_settings.skipBlankCells:
-                    found = True
-                else:
-                    row -= 1
-
-            if found:
-                # We only want to speak the header information that has
-                # changed, and we don't want to speak headers if we're in
-                # a header row.
-                #
-                if script_settings.speakCellHeaders \
-                   and not self.isInHeaderRow(obj):
-                    rowHeaders = self.getRowHeaders(obj)
-                    for header in rowHeaders:
-                        if not header in oldHeaders:
-                            text = self.getDisplayedText(header)
-                            speech.speak(text)
-                self.moveToCell(obj)
-            else:
-                # Translators: this is for navigating HTML content by
-                # moving from table cell to table cell.
-                #
-                speech.speak(_("Top of column."))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goCellDown(self, inputEvent):
-        """Move one cell down in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE_CELL],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            [row, col] = self.getCellCoordinates(obj)
-            oldHeaders = self.getRowHeaders(obj)
-            table = obj.parent.queryTable()
-            if self.isSameCell(obj.parent,
-                               [row, col],
-                               self.lastTableCell):
-                # The stored column helps us maintain the correct position
-                # when traversing cells that span multiple columns.
-                #
-                col = self.lastTableCell[1]
-            rowspan = table.getRowExtentAt(row, col)
-            nextRow = row + rowspan
-            found = False
-            while not found and (nextRow <= table.nRows - 1):
-                obj = table.getAccessibleAt(nextRow, col)
-                self.lastTableCell = [nextRow, col]
-                if not self.isBlankCell(obj) or \
-                   not script_settings.skipBlankCells:
-                    found = True
-                else:
-                    row += 1
-                    rowspan = table.getRowExtentAt(row, col)
-                    nextRow = row + rowspan
-
-            if found:
-                # We only want to speak the header information that has
-                # changed, and we don't want to speak headers if we're in
-                # a header row.
-                #
-                if script_settings.speakCellHeaders \
-                   and not self.isInHeaderRow(obj):
-                    rowHeaders = self.getRowHeaders(obj)
-                    for header in rowHeaders:
-                        if not header in oldHeaders:
-                            text = self.getDisplayedText(header)
-                            speech.speak(text)
-                self.moveToCell(obj)
-            else:
-                # Translators: this is for navigating HTML content by
-                # moving from table cell to table cell.
-                #
-                speech.speak(_("Bottom of column."))
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goCellFirst(self, inputEvent):
-        """Move to the first cell in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            obj = obj.queryTable().getAccessibleAt(0, 0)
-            self.lastTableCell = [0, 0]
-            self.moveToCell(obj)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goCellLast(self, inputEvent):
-        """Move to the last cell in an HTML table."""
-        [obj, characterOffset] = self.getCaretContext()
-        if obj.getRole() != pyatspi.ROLE_TABLE:
-            obj = self.getAncestor(obj,
-                                   [pyatspi.ROLE_TABLE],
-                                   [pyatspi.ROLE_DOCUMENT_FRAME])
-        if obj:
-            table = obj.queryTable()
-            lastRow = table.nRows - 1
-            lastCol = table.nColumns - 1
-            obj = table.getAccessibleAt(lastRow, lastCol)
-            self.lastTableCell = [lastRow, lastCol]
-            self.moveToCell(obj)
-        else:
-            # Translators: this is for navigating HTML content by
-            # moving from table cell to table cell.
-            #
-            speech.speak(_("Not in a table."))
-
-    def goNextLiveRegion(self, inputEvent):
-        # First, get any live regions that have been registered as LIVE_NONE
-        # because there is no markup to test for these but we still want to
-        # find them
-        regobjs = self.liveMngr.getLiveNoneObjects()
-        # define our search predicate
-        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) \
-                                            or obj in regobjs)
-        # start looking
-        wrap = True
-        [obj, wrapped] = \
-                  self.findNextByPredicate(pred, wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            # TODO:   We don't want to move to a list item.
-            # Is this the best place to handle this?
-            if obj.getRole() == pyatspi.ROLE_LIST:
-                characterOffset = 0
-                obj = obj[0]
-            else:
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            # For debugging
-            self.outlineAccessible(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML in a structural
-            # manner, where a 'live region' is a location in a web page
-            # that are updated without having to refresh the entire page.
-            #
-            speech.speak(_("No more live regions."))
-
-    def goPreviousLiveRegion(self, inputEvent):
-        # First, get any live regions that have been registered as LIVE_NONE
-        # because there is no markup to test for these but we still want to
-        # find them
-        regobjs = self.liveMngr.getLiveNoneObjects()
-        # define our search predicate
-        pred = lambda obj: (self.liveMngr.matchLiveRegion(obj) \
-                                            or obj in regobjs)
-        # start looking
-        wrap = True
-        [obj, wrapped] = \
-                  self.findPrevByPredicate(pred, wrap)
-        if wrapped:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
-            # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
-            #
-            speech.speak(_("Wrapping to top."))
-        if obj:
-            # TODO:   We don't want to move to a list item.
-            # Is this the best place to handle this?
-            if obj.getRole() == pyatspi.ROLE_LIST:
-                characterOffset = 0
-            else:
-                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
-            self.setCaretPosition(obj, characterOffset)
-            self.updateBraille(obj)
-            self.outlineAccessible(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
-        else:
-            # Translators: this is for navigating HTML in a structural
-            # manner, where a 'live region' is a location in a web page
-            # that are updated without having to refresh the entire page.
-            #
-            speech.speak(_("No more live regions."))
-
-    def goLastLiveRegion(self, inputEvent):
-        if settings.inferLiveRegions:
-            self.liveMngr.goLastLiveRegion()
-        else:
-            # Translators: this announces to the user that live region
-            # support has been turned off.
-            #
-            speech.speak(_("Live region support is off"))
-
     def advanceLivePoliteness(self, inputEvent):
         """Advances live region politeness level."""
         if settings.inferLiveRegions:
@@ -8881,41 +5955,6 @@ class Script(default.Script):
         speech.speak(string)
         braille.displayMessage(string)
 
-    def toggleStructuralNavigation(self, inputEvent):
-        """Toggles structural navigation keys."""
-
-        script_settings.structuralNavigationEnabled = \
-                not script_settings.structuralNavigationEnabled
-
-        if script_settings.structuralNavigationEnabled:
-            # Translators: the structural navigation keys are designed
-            # to move the caret around the HTML content by object type.
-            # Thus H moves you to the next heading, Shift H to the
-            # previous heading, T to the next table, and so on. Some
-            # users prefer to turn this off to use Firefox's search
-            # when typing feature.  This message is sent to both the
-            # braille display and the speech synthesizer when the user
-            # toggles the structural navigation feature of Orca.
-            # It should be a brief informative message.
-            #
-            string = _("Structural navigation keys on.")
-        else:
-            # Translators: the structural navigation keys are designed
-            # to move the caret around the HTML content by object type.
-            # Thus H moves you to the next heading, Shift H to the
-            # previous heading, T to the next table, and so on. Some
-            # users prefer to turn this off to use Firefox's search
-            # when typing feature.  This message is sent to both the
-            # braille display and the speech synthesizer when the user
-            # toggles the structural navigation feature of Orca.
-            # It should be a brief informative message.
-            #
-            string = _("Structural navigation keys off.")
-
-        debug.println(debug.LEVEL_CONFIGURATION, string)
-        speech.speak(string)
-        braille.displayMessage(string)
-
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to
         the given accessible.
@@ -8931,69 +5970,3 @@ class Script(default.Script):
             except NotImplementedError:
                 return True
         default.Script.speakWordUnderMouse(self, acc)
-
-    ####################################################################
-    #                                                                  #
-    # Match Predicates                                                 #
-    #                                                                  #
-    ####################################################################
-
-    def __matchChunk(self, obj):
-        role = obj.getRole()
-        if not role in script_settings.OBJECT_ROLES:
-            return False
- 
-        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]:
-            # These roles are often serving as containers. We want to see
-            # if what they contain is a bunch of text (as opposed to a
-            # bunch of links or other embedded objects).  As for lists:
-            # We only care about those of the (un)ordered variety. Form
-            # field lists are not chunks.
-            #
-            if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                charCount = 0
-                for child in obj:
-                    text = self.queryNonEmptyText(child)
-                    if not text:
-                        continue
-
-                    string = text.getText(0, -1)
-                    if not string.count(self.EMBEDDED_OBJECT_CHARACTER):
-                        charCount += text.characterCount
-                        if charCount > script_settings.largeObjectTextLength:
-                            return True
-            return False
-        else:
-            # We're going to have to take a guess.  It's probably a big
-            # chunk of text if it contains at least the number of characters
-            # specified by largeObjectTextLength, AND
-            # - Guess #1: No more than 5% of the object's total characters
-            #   are EOCs, OR
-            # - Guess #2: No more than 0.5% of the object's initial n
-            #   characters are EOCs, where n is the largeObjectTextLength.
-            #
-            text = self.queryNonEmptyText(obj)
-            if text \
-               and text.characterCount > script_settings.largeObjectTextLength:
-                string = text.getText(0, -1).decode("UTF-8")
-                eocs = float(string.count(self.EMBEDDED_OBJECT_CHARACTER))
-                if eocs/text.characterCount < 0.05:
-                    # print "Guess #1", string, eocs/text.characterCount
-                    return True
-                else:
-                    string = string[0:script_settings.largeObjectTextLength]
-                    eocs = float(string.count(self.EMBEDDED_OBJECT_CHARACTER))
-                    # print "Guess #2", string, eocs/len(string)
-                    return eocs/len(string) < 0.005
-
-    def __matchLandmark(self, obj):
-        if obj is None:
-            return False
-        attrs = self._getAttrDictionary(obj)
-        try:
-            if attrs['xml-roles'] in script_settings.ARIA_LANDMARKS:
-                return True
-            else:
-                return False
-        except KeyError:
-            return False
