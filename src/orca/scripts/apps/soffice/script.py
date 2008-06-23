@@ -1166,6 +1166,7 @@ class Script(default.Script):
     # 5) Calc: name box.
     # 6) Calc: spreadsheet cell.
     # 7) Impress: scroll pane.
+    # 8) Presentation: scroll pane: place holder
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1471,6 +1472,28 @@ class Script(default.Script):
                             speech.speakUtterances(utterances)
             # Fall-thru to process the event with the default handler.
 
+        # 8) Presentation: scroll pane: place holder
+        #
+        # If we are focused on a place holder element in the slide
+        # presentation scroll pane, first present the object, then
+        # try to present each of its children. See bug #538064 for
+        # more details.
+        #
+        rolesList = [pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_PANEL, \
+                     pyatspi.ROLE_ROOT_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            default.Script.locusOfFocusChanged(self, event,
+                                    oldLocusOfFocus, newLocusOfFocus)
+            for child in event.source:
+                speech.speak(self.getText(child, 0, -1), None, False)
+            return
+
         # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.locusOfFocusChanged(self, event,
@@ -1725,17 +1748,23 @@ class Script(default.Script):
             return
 
         # Two events are received when the caret moves
-        # to a new paragraph. The first is a focus event
+        # to a new paragraph in oowriter. The first is a focus event
         # (in the form of object:state-changed:focused
         # instead of focus:). The second is a caret-moved
         # event. Just set the locusOfFocus for the first event.
         #
-        if event.type.startswith("object:state-changed:focused") and \
-           event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
-           event.source != self.currentParagraph:
-            self.currentParagraph = event.source
-            orca.setLocusOfFocus(event, event.source, False)
-            return
+        if event.type.startswith("object:state-changed:focused"):
+            rolesList = [pyatspi.ROLE_PARAGRAPH, \
+                         pyatspi.ROLE_UNKNOWN, \
+                         pyatspi.ROLE_SCROLL_PANE, \
+                         pyatspi.ROLE_PANEL, \
+                         pyatspi.ROLE_ROOT_PANE, \
+                         pyatspi.ROLE_FRAME]
+            if self.isDesiredFocusedItem(event.source, rolesList) and \
+               event.source != self.currentParagraph:
+                self.currentParagraph = event.source
+                orca.setLocusOfFocus(event, event.source, False)
+                return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous
         # utterances of "Available fields panel". See bug #465087 for
@@ -1883,7 +1912,8 @@ class Script(default.Script):
         # 1/ a paragraph in an ooimpress slide presentation
         # 2/ a paragraph in an oowriter text document
         # and the last thing the user typed was a Return, and echo by word
-        # is enabled, then echo the previous word that the user typed.
+        # is enabled, and the last focused object was not of role "unknown",
+        # then echo the previous word that the user typed.
         # See bug #538053 and bug #538835 for more details.
         #
         if event.detail1 == -1:
@@ -1912,7 +1942,9 @@ class Script(default.Script):
                 if isinstance(orca_state.lastInputEvent,
                               input_event.KeyboardEvent):
                     keyString = orca_state.lastNonModifierKeyEvent.event_string
-                    if keyString == "Return":
+                    focusRole = orca_state.locusOfFocus.getRole()
+                    if focusRole != pyatspi.ROLE_UNKNOWN and \
+                       keyString == "Return":
                         result = self.getText(event.source, 0, -1)
                         line = result.decode("UTF-8")
                         self.echoPreviousWord(event.source, len(line))

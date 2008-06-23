@@ -1,3 +1,9 @@
+2008-06-23  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          Fixed bug #538064 - Orca should speak placeholder contents when 
+          that placeholder is given focus on an Impress slide.
+
 2008-06-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/speech_generator.py:
