@@ -31,6 +31,7 @@ import pyatspi
 import orca.orca as orca
 import orca.debug as debug
 import orca.default as default
+import orca.input_event as input_event
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
@@ -205,6 +206,38 @@ class Script(Gecko.Script):
 
         if not consume:
             Gecko.Script.onFocus(self, event)
+
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+
+        # If the user has just deleted a message from the middle of the 
+        # message header list, then we want to speak the newly focused 
+        # message in the header list (even though it has the same row 
+        # number as the previously deleted message).
+        # See bug #536451 for more details.
+        #
+        rolesList = [pyatspi.ROLE_TABLE_CELL, \
+                     pyatspi.ROLE_TREE_TABLE, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_SCROLL_PANE, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                string = orca_state.lastNonModifierKeyEvent.event_string
+                if string == "Delete":
+                    oldLocusOfFocus = None
+
+        # Pass the event onto the parent class to be handled in the default way.
+
+        Gecko.Script.locusOfFocusChanged(self, event,
+                                         oldLocusOfFocus, newLocusOfFocus)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
