@@ -60,6 +60,11 @@ class Script(Gecko.Script):
         # Set the debug level for all the methods in this script.
         self.debugLevel = debug.LEVEL_FINEST
 
+        # Store the last autocompleted string for the address fields
+        # so that we're not too 'chatty'.  See bug #533042.
+        #
+        self._lastAutoComplete = ""
+
         Gecko.Script.__init__(self, app)
 
         # This will be used to cache a handle to the Thunderbird text area for
@@ -118,6 +123,10 @@ class Script(Gecko.Script):
         parent = obj.parent
         top = self.getTopLevel(obj)
         consume = False
+
+        # Clear the stored autocomplete string.
+        #
+        self._lastAutoComplete = ""
 
         # Don't speak chrome URLs.
         #
@@ -237,18 +246,21 @@ class Script(Gecko.Script):
         obj = event.source
         parent = obj.parent
 
+        # Speak the autocompleted text, but only if it is different
+        # address so that we're not too "chatty." See bug #533042.
+        #
         if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-            # Thunderbird does not present all the text in an
-            # autocompletion text entry. This is a workaround.
-            #
-            speech.stop()
-
-            utterances = []
-            [text, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
-            utterances.append(text)
-            self._debug("onTextInserted: utterances='%s'" % utterances)
-
-            speech.speakUtterances(utterances)
+            if event.type.endswith("system") and event.any_data:
+                # The autocompleted address may start with the name,
+                # or it might start with the text typed by the user
+                # followed by ">>" followed by the address. Therefore
+                # we'll look at whatever follows the ">>" should it
+                # exist.
+                #
+                address = event.any_data.split(">>")[-1]
+                if self._lastAutoComplete != address:
+                    speech.speak(address)
+                self._lastAutoComplete = address
         else:
             Gecko.Script.onTextInserted(self, event)
 

@@ -15,6 +15,10 @@
           objects are: Anchors, Buttons, Check boxes, Combo boxes, Entries,
           Paragraphs, and Radio buttons.
 
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #533042 - Orca should be less verbose when reading
+          autocompletes in Thunderbird.
+
 2008-06-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
