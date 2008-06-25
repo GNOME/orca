@@ -12,6 +12,7 @@ orca_python_PYTHON = \
 	gnome-keyring-ask.py \
 	gnome-mud.py \
 	gnome-panel.py \
+	gnome-screensaver-dialog.py \
 	gnome-search-tool.py \
 	gnome-system-monitor.py \
 	gnome-terminal.py \

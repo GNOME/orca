@@ -1,3 +1,11 @@
+
+2008-05-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gnome-screensaver-dialog.py:   (new)
+          src/orca/scripts/Makefile.am:
+          Fixed bug #529655 - After inputting an incorrect password on
+          the screensaver, Orca can't speak the whole dialog.
+
 2008-06-17  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: Fix for bug #397306 - Orca's
