@@ -83,6 +83,28 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                 and not self._script.isAriaWidget(orca_state.locusOfFocus)):
             where_am_I.WhereAmI._speakDefaultButton(self, obj)
 
+    def _speakObjDescription(self, obj):
+        """Speaks the object's description if it is not the same as the
+        object's name or label. Overridden here because Gecko tacks on
+        the tag associated with an imagemap in the object's description.
+        We don't want to speak that information as-is.
+
+        Arguments:
+        - obj: the accessible whose description we might wish to speak
+        """
+
+        if not (obj.getRole() == pyatspi.ROLE_LINK \
+                and obj.parent.getRole() == pyatspi.ROLE_IMAGE):
+            where_am_I.WhereAmI._speakObjDescription(self, obj)
+        else:
+            # Translators: The following string is spoken to let the user
+            # know that he/she is on a link within an image map.
+            #
+            name = self._getObjName(obj)
+            if name:
+                speech.speak(name)
+            speech.speak(_("image map link"))
+
     def _collectionPageSummary(self):
         """Uses the Collection interface to get the quantity of headings, 
         forms, tables, visited and unvisited links.
