@@ -4,6 +4,12 @@
           Fixed bug #536451 - Newly focused message not spoken after 
           message deletion in Thunderbird.
 
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          With help from Joanie (thanks!)
+          Fixed bug #540039 - Newly focused message not spoken after 
+          message deletion in Thunderbird if a message is open.
+
 2008-06-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/Makefile.am:

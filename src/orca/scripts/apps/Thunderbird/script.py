@@ -234,6 +234,23 @@ class Script(Gecko.Script):
                 if string == "Delete":
                     oldLocusOfFocus = None
 
+        # If the user has just deleted an open mail message, then we want to
+        # try to speak the new name of the open mail message frame.
+        # See bug #540039 for more details.
+        #
+        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME, \
+                     pyatspi.ROLE_INTERNAL_FRAME, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                string = orca_state.lastNonModifierKeyEvent.event_string
+                if string == "Delete":
+                    oldLocusOfFocus = None
+                    state = newLocusOfFocus.getState()
+                    if state.contains(pyatspi.STATE_DEFUNCT):
+                        newLocusOfFocus = event.source
+
         # Pass the event onto the parent class to be handled in the default way.
 
         Gecko.Script.locusOfFocusChanged(self, event,
@@ -318,6 +335,26 @@ class Script(Gecko.Script):
         """
 
         obj = event.source
+
+        # If the user has just deleted an open mail message, then we want to
+        # try to speak the new name of the open mail message frame and also
+        # present the first line of that message to be consistent with what
+        # we do when a new message window is opened. See bug #540039 for more
+        # details.
+        #
+        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME, \
+                     pyatspi.ROLE_INTERNAL_FRAME, \
+                     pyatspi.ROLE_FRAME, \
+                     pyatspi.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                string = orca_state.lastNonModifierKeyEvent.event_string
+                if string == "Delete":
+                    speech.speak(obj.name)
+                    [obj, offset] = self.findFirstCaretContext(obj, 0)
+                    self.setCaretPosition(obj, offset)
+                    self.presentLine(obj, offset)
+                    return
 
         # If we get a "object:property-change:accessible-name" event for 
         # the first item in the Suggestions lists for the spell checking

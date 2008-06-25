@@ -2680,10 +2680,14 @@ class Script(default.Script):
         """Returns the URI of the document frame that is active."""
         documentFrame = self.getDocumentFrame()
         if documentFrame:
-            attrs = documentFrame.queryDocument().getAttributes()
-            for attr in attrs:
-                if attr.startswith('DocURL'):
-                    return attr[7:]
+            # If the document frame belongs to a Thunderbird message which
+            # has just been deleted, getAttributes() will crash Thunderbird.
+            #
+            if not documentFrame.getState().contains(pyatspi.STATE_DEFUNCT):
+                attrs = documentFrame.queryDocument().getAttributes()
+                for attr in attrs:
+                    if attr.startswith('DocURL'):
+                        return attr[7:]
         return None
 
     def getUnicodeText(self, obj):
