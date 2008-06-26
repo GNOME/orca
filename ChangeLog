@@ -1,3 +1,11 @@
+2008-06-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/text_attribute_names.py:
+          Further work on bug #538729 - In Orca preferences window /text 
+          attributes page the text attribute names not marked for translation.
+          Added in some text attribute values for the "vertical-align" 
+          and "paragraph" text attributes.
+
 2008-06-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/where_am_i.py:

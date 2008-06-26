@@ -322,174 +322,241 @@ _textAttributeTable["true"] = Q_("textattr|true")
 #
 _textAttributeTable["false"] = Q_("textattr|false")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "underline", "wrap mode" and "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["none"] = Q_("textattr|none")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["single"] = Q_("textattr|single")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["double"] = Q_("textattr|double")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["low"] = Q_("textattr|low")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "wrap mode".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["char"] = Q_("textattr|char")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "wrap mode".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["word"] = Q_("textattr|word")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["ltr"] = Q_("textattr|ltr")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["rtl"] = Q_("textattr|rtl")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["left"] = Q_("textattr|left")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["right"] = Q_("textattr|right")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["center"] = Q_("textattr|center")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["fill"] = Q_("textattr|fill")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["ultra_condensed"] = Q_("textattr|ultra condensed")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["extra_condensed"] = Q_("textattr|extra condensed")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["condensed"] = Q_("textattr|condensed")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["semi_condensed"] = Q_("textattr|semi condensed")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch" and "variant".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["normal"] = Q_("textattr|normal")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["semi_expanded"] = Q_("textattr|semi expanded")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["expanded"] = Q_("textattr|expanded")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["extra_expanded"] = Q_("textattr|extra expanded")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["ultra_expanded"] = Q_("textattr|ultra expanded")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "variant".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["small_caps"] = Q_("textattr|small caps")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "style".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["oblique"] = Q_("textattr|oblique")
 
-# Translators: this is one of the text attribute value for the following
+# Translators: this is one of the text attribute values for the following
 # text attributes: "style".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
 _textAttributeTable["italic"] = Q_("textattr|italic")
 
+# Translators: this is one of the text attribute values for the following
+# text attributes: "paragraph".
+#
+_textAttributeTable["Default"] = Q_("textattr|Default")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["baseline"] = Q_("textattr|baseline")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["sub"] = Q_("textattr|sub")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["super"] = Q_("textattr|super")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["top"] = Q_("textattr|top")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["text-top"] = Q_("textattr|text-top")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["middle"] = Q_("textattr|middle")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["bottom"] = Q_("textattr|bottom")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["text-bottom"] = Q_("textattr|text-bottom")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "vertical-align".
+# See:
+#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#
+_textAttributeTable["inherit"] = Q_("textattr|inherit")
 
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 
