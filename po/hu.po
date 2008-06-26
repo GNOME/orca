@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-24 22:00+0200\n"
-"PO-Revision-Date: 2008-06-26 11:25+0200\n"
+"PO-Revision-Date: 2008-06-26 12:25+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -4092,7 +4092,7 @@ msgstr "_Funkcióbillentyűk engedélyezése"
 
 #: ../src/orca/orca-setup.glade.h:60
 msgid "Enable _key echo"
-msgstr "Billentyűzet_visszhang engedélyezése"
+msgstr "Billentyű_visszhang engedélyezése"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "Enable _magnifier"
@@ -4104,7 +4104,7 @@ msgstr "_Módosítóbillentyűk engedélyezése"
 
 #: ../src/orca/orca-setup.glade.h:63
 msgid "Enable _navigation keys"
-msgstr "Na_vigációs billentyűk engedélyezése"
+msgstr "Navigá_ciós billentyűk engedélyezése"
 
 #: ../src/orca/orca-setup.glade.h:64
 msgid "Enable ac_tion keys"
@@ -4391,7 +4391,7 @@ msgstr "_Alul:"
 
 #: ../src/orca/orca-setup.glade.h:149
 msgid "_Color Filtering:"
-msgstr "_Szín szűrés:"
+msgstr "_Színszűrés:"
 
 #: ../src/orca/orca-setup.glade.h:150
 msgid "_Control and menu item:"
@@ -4427,7 +4427,7 @@ msgstr "Új _bejegyzés"
 
 #: ../src/orca/orca-setup.glade.h:160
 msgid "_Person:"
-msgstr "_Személy:"
+msgstr "Személ_y:"
 
 #: ../src/orca/orca-setup.glade.h:161
 msgid "_Position:"
@@ -7287,8 +7287,8 @@ msgstr "%s alapértelmezett hang"
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d nem fókuszált párbeszédablak"
+msgstr[1] "%d nem fókuszált párbeszédablak"
 
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
