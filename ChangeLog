@@ -1,5 +1,11 @@
+2008-06-30  Willie Walker <william.walker@sun.com>
 
-2008-05-29  Rich Burridge <rich.burridge@sun.com>
+        * configure.in:
+	  NEWS:
+	  README:
+          Prep for Orca v2.22.3.
+	
+2008-06-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gnome-screensaver-dialog.py:   (new)
           src/orca/scripts/Makefile.am:

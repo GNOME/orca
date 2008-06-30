@@ -1,3 +1,25 @@
+2.22.3 - 30-Jun-2008
+
+* Fix for bug #371637 - Orca repeats "Location:" info repeatedly in
+  Nautilus File Browser Dialog.
+
+* Fix for bug #397306 - Orca's default synthesis engine choice should
+  take language into account.
+
+* Fix for bug #435585 - Java ControlPanel GIVING UP AFTER 5 TRIES.
+
+* Fix for bug #487585 - Orca Usage message should be localized.  Do
+  not mark the command line options for translation.
+
+* Fix for bug #529655 - After inputting an incorrect password on the
+  screensaver, Orca can't speak the whole dialog.
+
+    bg      Bulgarian            Alexander Shopov
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    vi      Vietnamese           Clytie Siddall
+
+==========
+
 2.22.2 - 26-May-2008
 
 General:
