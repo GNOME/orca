@@ -311,8 +311,9 @@ class Script(Gecko.Script):
                 if self._lastAutoComplete != address:
                     speech.speak(address)
                 self._lastAutoComplete = address
-        else:
-            Gecko.Script.onTextInserted(self, event)
+                return
+
+        Gecko.Script.onTextInserted(self, event)
 
     def onVisibleDataChanged(self, event):
         """Called when the visible data of an object changes."""

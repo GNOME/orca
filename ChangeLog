@@ -1,3 +1,9 @@
+2008-06-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #540833 - Word echo not working in Thunderbird 
+          address fields if autocompletion is not active.
+
 2008-06-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/text_attribute_names.py:
