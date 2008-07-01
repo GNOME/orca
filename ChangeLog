@@ -6,6 +6,10 @@
           src/orca/orca_gui_prefs.py:
           Fix for bug #520596 - Orca should implement echo by sentence.
 
+        * src/orca/default.py:
+          Added in a comment to suppress some pylint E1103 errors in the
+          onTextInserted() method.
+
 2008-06-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/apps/Thunderbird/script.py:

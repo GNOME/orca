@@ -3670,6 +3670,17 @@ class Script(script.Script):
         except NotImplementedError:
             return
 
+        # Pylint is confused and flags this and similar lines, with the 
+        # following error:
+        #
+        # E1103:3673:Script.onTextInserted: Instance of 'str' has no 
+        #'caretOffset' member (but some types could not be inferred)
+        #
+        # But it does, so we'll just tell pylint that we know what we
+        # are doing.
+        #
+        # pylint: disable-msg=E1103
+
         offset = text.caretOffset - 1
         previousOffset = text.caretOffset - 2
         if (offset < 0 or previousOffset < 0):
