@@ -558,6 +558,18 @@ _textAttributeTable["text-bottom"] = Q_("textattr|text-bottom")
 #
 _textAttributeTable["inherit"] = Q_("textattr|inherit")
 
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode". It indicates that text is displayed
+# from left to right and top to bottom on the screen.
+#
+_textAttributeTable["lr-tb"] = Q_("textattr|lr-tb")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode". It indicates that text is displayed 
+# from right to left and top to bottom on the screen.
+#
+_textAttributeTable["rl-tb"] = Q_("textattr|rl-tb")
+
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 
     attribute, (i.e. the key value).
