@@ -98,6 +98,7 @@ userCustomizableSettings = [
     "readTableCellRow",
     "enableSpeechIndentation",
     "enableEchoByWord",
+    "enableEchoBySentence",
     "enableKeyEcho",
     "enablePrintableKeys",
     "enableModifierKeys",
@@ -507,6 +508,12 @@ magTargetDisplay                 = ''
 # to be True
 #
 enableEchoByWord        = False
+
+# if True, enable word echo.
+# Note that it is allowable for both enableEchoByWord and enableEchoBySentence
+# to be True.
+#
+enableEchoBySentence    = False
 
 # If True, enable key echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho

@@ -1560,6 +1560,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                         prefs["enableNavigationKeys"])
         self.get_widget("echoByWordCheckbutton").set_active( \
                         prefs["enableEchoByWord"])
+        self.get_widget("echoBySentenceCheckbutton").set_active( \
+                        prefs["enableEchoBySentence"])
 
         # Magnifier pane.
         #
@@ -2538,6 +2540,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["enableEchoByWord"] = widget.get_active()
+
+    def echoBySentenceChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           echoBySentenceCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Echo by Sentence' checkbox. Set the
+           'enableEchoBySentence' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enableEchoBySentence"] = widget.get_active()
 
     def brailleSelectionChanged(self, widget):
         """Signal handler for the "toggled" signal for the

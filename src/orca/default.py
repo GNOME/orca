@@ -2214,6 +2214,83 @@ class Script(script.Script):
         if len(utterance):
             speech.speak(utterance)
 
+    def echoPreviousSentence(self, obj):
+        """Speaks the sentence prior to the caret, as long as there is
+        a sentence prior to the caret and there is no intervening sentence
+        delimiter between the caret and the end of the sentence.
+ 
+        The entry condition for this method is that the character
+        prior to the current caret position is a sentence delimiter,
+        and it's what caused this method to be called in the first
+        place.
+ 
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+        interface.
+        """
+ 
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            return
+ 
+        offset = text.caretOffset - 1
+        previousOffset = text.caretOffset - 2
+        if (offset < 0 or previousOffset < 0):
+            return
+ 
+        [currentChar, startOffset, endOffset] = \
+            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        [previousChar, startOffset, endOffset] = \
+            text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
+        if not self.isSentenceDelimiter(currentChar, previousChar):
+            return
+ 
+        # OK - we seem to be cool so far.  So...starting with what
+        # should be the last character in the sentence (caretOffset - 2),
+        # work our way to the beginning of the sentence, stopping when
+        # we hit another sentence delimiter.
+        #
+        sentenceEndOffset = text.caretOffset - 2
+        sentenceStartOffset = sentenceEndOffset
+ 
+        while sentenceStartOffset >= 0:
+            [currentChar, startOffset, endOffset] = \
+                text.getTextAtOffset(sentenceStartOffset,
+                                     pyatspi.TEXT_BOUNDARY_CHAR)
+            [previousChar, startOffset, endOffset] = \
+                text.getTextAtOffset(sentenceStartOffset-1,
+                                     pyatspi.TEXT_BOUNDARY_CHAR)
+            if self.isSentenceDelimiter(currentChar, previousChar):
+                break
+            else:
+                sentenceStartOffset -= 1
+ 
+        # If we came across a sentence delimiter before hitting any
+        # text, we really don't have a previous sentence.
+        #
+        # Otherwise, get the sentence.  Remember we stopped when we
+        # hit a sentence delimiter, so the sentence really starts at
+        # sentenceStartOffset + 1.  getText also does not include
+        # the character at sentenceEndOffset, so we need to adjust
+        # for that, too.
+        #
+        if sentenceStartOffset == sentenceEndOffset:
+            return
+        else:
+            sentence = self.getText(obj, sentenceStartOffset + 1,
+                                         sentenceEndOffset + 1)
+ 
+        if self.getLinkIndex(obj, sentenceStartOffset + 1) >= 0:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif sentence.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+ 
+        sentence = self.adjustForRepeats(sentence)
+        speech.speak(sentence, voice)
+ 
     def echoPreviousWord(self, obj, offset=None):
         """Speaks the word prior to the caret, as long as there is
         a word prior to the caret and there is no intervening word
@@ -3588,8 +3665,26 @@ class Script(script.Script):
             else:
                 speech.speak(text)
 
-        if settings.enableEchoByWord \
-           and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
+        try:
+            text = event.source.queryText()
+        except NotImplementedError:
+            return
+
+        offset = text.caretOffset - 1
+        previousOffset = text.caretOffset - 2
+        if (offset < 0 or previousOffset < 0):
+            return
+
+        [currentChar, startOffset, endOffset] = \
+            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        [previousChar, startOffset, endOffset] = \
+            text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
+
+        if settings.enableEchoBySentence and \
+           self.isSentenceDelimiter(currentChar, previousChar):
+            self.echoPreviousSentence(event.source)
+
+        elif settings.enableEchoByWord and self.isWordDelimiter(currentChar):
             self.echoPreviousWord(event.source)
 
     def onActiveDescendantChanged(self, event):
@@ -6178,6 +6273,30 @@ class Script(script.Script):
         -obj: the table cell whose index we need.
         """
         return obj.getIndexInParent()
+
+    def isSentenceDelimiter(self, currentChar, previousChar):
+        """Returns True if we are positioned at the end of a sentence.
+        This is determined by checking if the current character is a 
+        white space character and the previous character is one of the 
+        normal end-of-sentence punctuation characters.
+
+        Arguments:
+        - currentChar:  the current character
+        - previousChar: the previous character
+
+        Returns True if the given character is a sentence delimiter.
+        """
+
+        if not isinstance(currentChar, unicode):
+            currentChar = currentChar.decode("UTF-8")
+
+        if not isinstance(previousChar, unicode):
+            previousChar = previousChar.decode("UTF-8")
+
+        if currentChar == '\r' or currentChar == '\n':
+            return True
+
+        return (currentChar in self.whitespace and previousChar in '!.?:;')
 
     def isWordDelimiter(self, character):
         """Returns True if the given character is a word delimiter.
