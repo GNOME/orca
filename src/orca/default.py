@@ -2754,15 +2754,21 @@ class Script(script.Script):
             # We also keep track of tree level depth and only announce
             # that if it changes.
             #
+            # Note that Java Swing allows things like ROLE_LABEL objects
+            # in trees and tables, so we'll check the parent's role to 
+            # see if it is a table.
+            #
             oldNodeLevel = -1
             newNodeLevel = -1
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+            if (newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL) \
+               or (newParent.getRole() == pyatspi.ROLE_TABLE):
                 try:
                     table = oldParent.queryTable()
                 except:
                     table = None
                 if table and \
-                      oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+                      ((oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                       or (oldParent.getRole() == pyatspi.ROLE_TABLE)):
                     index = self.getCellIndex(oldLocusOfFocus)
                     oldRow = table.getRowAtIndex(index)
                     oldCol = table.getColumnAtIndex(index)
@@ -2780,7 +2786,22 @@ class Script(script.Script):
                     newCol = table.getColumnAtIndex(index)
 
                     if (newRow != oldRow) or (oldParent != newParent):
+                        # Get the header information.  In Java Swing, the
+                        # information is not exposed via the description
+                        # but is instead a header object, so we fall back
+                        # to that if it exists.
+                        #
+                        # [[[TODO: WDW - the more correct thing to do, I 
+                        # think, is to look at the row header object.
+                        # We've been looking at the description for so 
+                        # long, though, that we'll give the description 
+                        # preference for now.]]]
+                        #
                         desc = table.getRowDescription(newRow)
+                        if not desc:
+                            header = table.getRowHeader(newRow)
+                            if header:
+                                desc = self.getDisplayedText(header)
                         if desc and len(desc):
                             text = desc
                             if settings.speechVerbosityLevel \
@@ -2794,7 +2815,22 @@ class Script(script.Script):
                         # it's not possible to navigate across a row.
                         topName = self.getTopLevelName(newLocusOfFocus)
                         if not topName.endswith(" - Thunderbird"):
+                            # Get the header information.  In Java Swing, the
+                            # information is not exposed via the description
+                            # but is instead a header object, so we fall back
+                            # to that if it exists.
+                            #
+                            # [[[TODO: WDW - the more correct thing to do, I 
+                            # think, is to look at the row header object.
+                            # We've been looking at the description for so 
+                            # long, though, that we'll give the description 
+                            # preference for now.]]]
+                            #
                             desc = table.getColumnDescription(newCol)
+                            if not desc:
+                                header = table.getColumnHeader(newCol)
+                                if header:
+                                    desc = self.getDisplayedText(header)
                             cellText = self.getDisplayedText(newLocusOfFocus)
                             if desc and len(desc) and cellText != desc:
                                 text = desc
@@ -3046,7 +3082,7 @@ class Script(script.Script):
                             self.speechGenerator.getSpeech(target, True))
                         return
 
-        if obj != orca_state.locusOfFocus:
+        if not self.isSameObject(obj, orca_state.locusOfFocus):
             return
 
         if event:
@@ -3279,8 +3315,11 @@ class Script(script.Script):
 
         return selSpoken
 
-    def _presentTextAtNewCaretPosition(self, event):
-        obj = event.source
+    def _presentTextAtNewCaretPosition(self, event, otherObj=None):
+        """Updates braille, magnification, and outputs speech for the 
+        event.source or the otherObj."""
+
+        obj = otherObj or event.source
         text = obj.queryText()
 
         if obj:

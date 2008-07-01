@@ -1,3 +1,25 @@
+2008-07-01  Willie Walker <william.walker@sun.com>
+
+       * configure.in:
+         (delete) src/orca/scripts/toolkits/J2SE-access-bridge.py:
+         src/orca/scripts/toolkits/Makefile.am:
+         src/orca/scripts/toolkits/J2SE-access-bridge:
+         src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:
+         src/orca/scripts/toolkits/J2SE-access-bridge/__init__.py:
+         src/orca/scripts/toolkits/J2SE-access-bridge/where_am_I.py:
+         src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py:
+         src/orca/scripts/toolkits/J2SE-access-bridge/Makefile.am:
+         src/orca/scripts/toolkits/J2SE-access-bridge/script.py:
+         src/orca/default.py:
+         src/orca/orca.py:
+         src/orca/braillegenerator.py:
+         po/POTFILES.in:
+         Work on bug #435623 - Java Platform Metabug.  This fixes a lot of
+	 issues with the Java platform (see comment #6 in the bug).  There
+	 are still a number of issues to resolve, such as where am I with
+	 trees, tables, and lists, but this gets us much further than we
+	 were.
+	
 2008-07-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:

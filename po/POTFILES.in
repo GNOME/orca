@@ -60,7 +60,8 @@ src/orca/scripts/toolkits/Gecko/script.py
 src/orca/scripts/toolkits/Gecko/speech_generator.py
 src/orca/scripts/toolkits/Gecko/structural_navigation.py
 src/orca/scripts/toolkits/Gecko/where_am_i.py
-src/orca/scripts/toolkits/J2SE-access-bridge.py
+src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py
+src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py
 src/orca/settings.py
 src/orca/speechdispatcherfactory.py
 src/orca/speechgenerator.py

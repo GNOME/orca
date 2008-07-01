@@ -1719,7 +1719,22 @@ class BrailleGenerator:
             if (row >= 0) \
                 and (not obj.getRole() in [pyatspi.ROLE_ROW_HEADER,
                                            pyatspi.ROLE_TABLE_ROW_HEADER]):
+                # Get the header information.  In Java Swing, the
+                # information is not exposed via the description
+                # but is instead a header object, so we fall back
+                # to that if it exists.
+                #
+                # [[[TODO: WDW - the more correct thing to do, I 
+                # think, is to look at the row header object.
+                # We've been looking at the description for so 
+                # long, though, that we'll give the description 
+                # preference for now.]]]
+                #
                 desc = table.getRowDescription(row)
+                if not desc:
+                    header = table.getRowHeader(row)
+                    if header:
+                        desc = self._script.getDisplayedText(header)
             else:
                 desc = None
             if desc and len(desc):
@@ -1740,7 +1755,22 @@ class BrailleGenerator:
             if (col >= 0) \
                 and (not obj.getRole() in [pyatspi.ROLE_COLUMN_HEADER,
                                            pyatspi.ROLE_TABLE_COLUMN_HEADER]):
+                # Get the header information.  In Java Swing, the
+                # information is not exposed via the description
+                # but is instead a header object, so we fall back
+                # to that if it exists.
+                #
+                # [[[TODO: WDW - the more correct thing to do, I 
+                # think, is to look at the row header object.
+                # We've been looking at the description for so 
+                # long, though, that we'll give the description 
+                # preference for now.]]]
+                #
                 desc = table.getColumnDescription(col)
+                if not desc:
+                    header = table.getColumnHeader(col)
+                    if header:
+                        desc = self._script.getDisplayedText(header)
             else:
                 desc = None
             if desc and len(desc):

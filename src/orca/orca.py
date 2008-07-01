@@ -607,7 +607,9 @@ def keyEcho(event):
 
 def _setClickCount(inputEvent):
     """Sets the count of the number of clicks a user has made to one
-    of the non-modifier keys on the keyboard.
+    of the non-modifier keys on the keyboard.  Note that this looks at
+    the event_string (keysym) instead of hw_code (keycode) because
+    the Java platform gives us completely different keycodes for keys.
 
     Arguments:
     - inputEvent: the current input event.
@@ -621,7 +623,7 @@ def _setClickCount(inputEvent):
         orca_state.clickCount = 0
     elif not isinstance(lastInputEvent, KeyboardEvent):
         orca_state.clickCount = 1
-    elif (lastInputEvent.hw_code != inputEvent.hw_code) or \
+    elif (lastInputEvent.event_string != inputEvent.event_string) or \
          (lastInputEvent.modifiers != inputEvent.modifiers):
         orca_state.clickCount = 1
     elif (inputEvent.time - lastInputEvent.time) < \
