@@ -35,7 +35,7 @@
         * src/orca/text_attribute_names.py:
           More work on bug #538729 - In Orca preferences window /text
           attributes page the text attribute names not marked for translation.
-          Added in two text attribute values for the "writing-mode" text 
+          Added in various text attribute values for the "writing-mode" text 
           attribute.
 
 2008-06-30  Rich Burridge <rich.burridge@sun.com>

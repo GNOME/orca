@@ -293,8 +293,10 @@ _textAttributeTable["weight"] = Q_("textattr|weight")
 _textAttributeTable["wrap-mode"] = Q_("textattr|wrap mode")
 
 # Translators: this attribute specifies the way the text is written.
-# Whether the text is from left to right or right to left and whether it
-# is from top to bottom or bottom to top.
+# Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
+# "rl" and "tb".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
 _textAttributeTable["writing-mode"] = Q_("textattr|writing mode")
 
@@ -552,23 +554,76 @@ _textAttributeTable["bottom"] = Q_("textattr|bottom")
 _textAttributeTable["text-bottom"] = Q_("textattr|text-bottom")
 
 # Translators: this is one of the text attribute values for the following
-# text attributes: "vertical-align".
+# text attributes: "vertical-align" and "writing-mode".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
 _textAttributeTable["inherit"] = Q_("textattr|inherit")
 
 # Translators: this is one of the text attribute values for the following
-# text attributes: "writing-mode". It indicates that text is displayed
-# from left to right and top to bottom on the screen.
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
 _textAttributeTable["lr-tb"] = Q_("textattr|lr-tb")
 
 # Translators: this is one of the text attribute values for the following
-# text attributes: "writing-mode". It indicates that text is displayed 
-# from right to left and top to bottom on the screen.
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
 _textAttributeTable["rl-tb"] = Q_("textattr|rl-tb")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["tb-rl"] = Q_("textattr|tb-rl")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["tb-lr"] = Q_("textattr|tb-lr")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["bt-rl"] = Q_("textattr|bt-rl")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["bt-lr"] = Q_("textattr|bt-lr")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["lr"] = Q_("textattr|lr")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["rl"] = Q_("textattr|rl")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "writing-mode".
+# See:
+# http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#
+_textAttributeTable["tb"] = Q_("textattr|tb")
+
 
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 
