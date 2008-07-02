@@ -114,6 +114,7 @@ _textAttributeTable["fg-stipple"] = Q_("textattr|foreground stipple")
 # used by the text.
 # See:
 # http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["font-effect"] = Q_("textattr|font effect")
 
@@ -154,6 +155,7 @@ _textAttributeTable["left-margin"] = Q_("textattr|left margin")
 # Translators: this attribute specifies the height of the line of text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["line-height"] = Q_("textattr|line height")
 
@@ -162,6 +164,8 @@ _textAttributeTable["line-height"] = Q_("textattr|line height")
 # (font, text size, alignment, etc.) of that paragraph. Examples of 
 # paragraph styles include "Heading 1", "Heading 2", "Caption", "Footnote",
 # "Text Body", "Title", and "Subtitle".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["paragraph-style"] = Q_("textattr|paragraph style")
 
@@ -240,6 +244,7 @@ _textAttributeTable["style"] = Q_("textattr|style")
 # Translators: this attribute specifies the decoration of the text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["text-decoration"] = Q_("textattr|text decoration")
 
@@ -248,12 +253,14 @@ _textAttributeTable["text-decoration"] = Q_("textattr|text decoration")
 # of rotation.
 # See:
 # http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["text-rotation"] = Q_("textattr|text rotation")
 
 # Translators: this attribute specifies the shadow effects applied to the text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["text-shadow"] = Q_("textattr|text shadow")
 
@@ -297,6 +304,7 @@ _textAttributeTable["wrap-mode"] = Q_("textattr|wrap mode")
 # "rl" and "tb".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["writing-mode"] = Q_("textattr|writing mode")
 
@@ -325,11 +333,62 @@ _textAttributeTable["true"] = Q_("textattr|true")
 _textAttributeTable["false"] = Q_("textattr|false")
 
 # Translators: this is one of the text attribute values for the following
-# text attributes: "underline", "wrap mode" and "direction".
+# text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
+# and "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["none"] = Q_("textattr|none")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "font-effect".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["engrave"] = Q_("textattr|engrave")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "font-effect".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["emboss"] = Q_("textattr|emboss")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "font-effect".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["outline"] = Q_("textattr|outline")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "text-decoration".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["overline"] = Q_("textattr|overline")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "text-decoration".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["line-through"] = Q_("textattr|line through")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "text-decoration".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["blink"] = Q_("textattr|blink")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "text-shadow".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["black"] = Q_("textattr|black")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
@@ -493,14 +552,31 @@ _textAttributeTable["oblique"] = Q_("textattr|oblique")
 _textAttributeTable["italic"] = Q_("textattr|italic")
 
 # Translators: this is one of the text attribute values for the following
-# text attributes: "paragraph".
+# text attributes: "paragraph-style".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["Default"] = Q_("textattr|Default")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "paragraph-style".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["Text body"] = Q_("textattr|Text body")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "paragraph-style".
+# See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["Heading"] = Q_("textattr|Heading")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 _textAttributeTable["baseline"] = Q_("textattr|baseline")
 
