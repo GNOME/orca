@@ -26,6 +26,7 @@ __date__      = "$Date: $"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gtk
 import pyatspi
 
 import orca.orca as orca
@@ -33,12 +34,14 @@ import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
+import orca.settings as settings
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 
 from orca.orca_i18n import _
 
 from speech_generator import SpeechGenerator
+import script_settings
 
 ########################################################################
 #                                                                      #
@@ -66,6 +69,15 @@ class Script(Gecko.Script):
         #
         self._lastAutoComplete = ""
 
+        # When a mail message gets focus, we'll get a window:activate event
+        # followed by two focus events for the document frame.  We want to
+        # present the message if it was just opened; we don't if it was
+        # already opened and the user has just returned focus to it. Store
+        # the fact that a message was loaded which we should present once
+        # the document frame claims focus. See bug #541018.
+        #
+        self._messageLoaded = False
+
         Gecko.Script.__init__(self, app)
 
         # This will be used to cache a handle to the Thunderbird text area for
@@ -77,6 +89,37 @@ class Script(Gecko.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        vbox = Gecko.Script.getAppPreferencesGUI(self)
+
+        # Reapply "say all on load" using the Thunderbird specific setting.
+        #
+        gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
+                                    script_settings.sayAllOnLoad)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        Gecko.Script.setAppPreferences(self, prefs)
+
+        # Write the Thunderbird specific setting.
+        #
+        prefix = "orca.scripts.apps.Thunderbird.script_settings"
+        value = self.sayAllOnLoadCheckButton.get_active()
+        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
+        script_settings.sayAllOnLoad = value
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
@@ -204,6 +247,14 @@ class Script(Gecko.Script):
         if top and top.getRole() == pyatspi.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
+        # Handle a newly-opened message.
+        #
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_FRAME \
+           and self._messageLoaded:
+            consume = True
+            self._presentMessage(event.source)
+
         if not consume:
             Gecko.Script.onFocus(self, event)
 
@@ -263,11 +314,14 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        # For now, we'll bypass the Gecko script's desire to let
-        # someone know when a page has started/completed loading.  The
-        # reason for this is that getting message content from someone
-        # is counted as loading a page.
-        #
+        if event.type.startswith("object:state-changed:busy"):
+            if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+               and not event.detail1:
+                self._messageLoaded = True
+                if self.inDocumentContent():
+                    self._presentMessage(event.source)
+            return
+
         default.Script.onStateChanged(self, event)
 
     def onStateFocused(self, event):
@@ -354,7 +408,6 @@ class Script(Gecko.Script):
                     speech.speak(obj.name)
                     [obj, offset] = self.findFirstCaretContext(obj, 0)
                     self.setCaretPosition(obj, offset)
-                    self.presentLine(obj, offset)
                     return
 
         # If we get a "object:property-change:accessible-name" event for 
@@ -433,6 +486,18 @@ class Script(Gecko.Script):
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
                     speech.speakUtterances(utterances)
+
+    def _presentMessage(self, documentFrame):
+        """Presents the first line of the message, or the entire message,
+        depending on the user's sayAllOnLoad setting."""
+
+        [obj, offset] = self.findFirstCaretContext(documentFrame, 0)
+        self.setCaretPosition(obj, offset)
+        if not script_settings.sayAllOnLoad:
+            self.presentLine(obj, offset)
+        elif settings.enableSpeech:
+            self.sayAll(None)
+        self._messageLoaded = False
 
     def isLineBreakChar(self, obj, offset):
         """Returns True of the character at the given offset within

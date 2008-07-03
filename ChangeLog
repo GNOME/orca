@@ -1,3 +1,11 @@
+2008-07-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/Thunderbird/Makefile.am:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          src/orca/scripts/apps/Thunderbird/script_settings.py:
+          Fix for bug #541018 - Mail messages not automatically read when
+          opened in Thunderbird.  Thanks for your help Rich!
+
 2008-07-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/text_attribute_names.py:
