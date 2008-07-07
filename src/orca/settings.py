@@ -950,6 +950,12 @@ setScriptMapping(re.compile(_('Bon Echo')), "Mozilla")
 #
 setScriptMapping(re.compile(_('Minefield')), "Mozilla")
 
+# Translators: see the regular expression note above.  This is for a
+# version of Thunderbird, which chooses to now call itself by a different
+# name.
+#
+setScriptMapping(re.compile(_('Shredder')), "Thunderbird")
+
 # Translators: see the regular expression note above.  This is for
 # the Thunderbird e-mail application.
 #
