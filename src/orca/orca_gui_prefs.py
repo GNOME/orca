@@ -1909,8 +1909,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         except:
             pass
         try:
-            orcaSetupWindow.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
+            ts = orca_state.lastInputEventTimestamp
+            if ts == 0:
+                ts = gtk.get_current_event_time()
+            orcaSetupWindow.window.set_user_time(ts)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 

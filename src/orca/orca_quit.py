@@ -58,7 +58,10 @@ class OrcaQuitGUI(orca_glade.GladeWrapper):
         #
         try:
             quitDialog.realize()
-            quitDialog.window.set_user_time(orca_state.lastInputEventTimestamp)
+            ts = orca_state.lastInputEventTimestamp
+            if ts == 0:
+                ts = gtk.get_current_event_time()
+            quitDialog.window.set_user_time(ts)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 

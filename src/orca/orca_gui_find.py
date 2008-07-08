@@ -87,7 +87,10 @@ class OrcaFindGUI(orca_glade.GladeWrapper):
         #
         try:
             findDialog.realize()
-            findDialog.window.set_user_time(orca_state.lastInputEventTimestamp)
+            ts = orca_state.lastInputEventTimestamp
+            if ts == 0:
+                ts = gtk.get_current_event_time()
+            findDialog.window.set_user_time(ts)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 

@@ -1,3 +1,11 @@
+2008-07-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_quit.py:
+          src/orca/orca_gui_find.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #541437 - Trying to quit Orca with the mouse doesn't
+          give focus to the Quit dialog.
+
 2008-07-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:
