@@ -1502,6 +1502,18 @@ class Script(default.Script):
             self.liveMngr.handleEvent(event)
             return
 
+        if event.type.startswith("object:children-changed:add") \
+           and event.any_data.getRole() == pyatspi.ROLE_ALERT \
+           and event.source.getRole() in [pyatspi.ROLE_SCROLL_PANE,
+                                          pyatspi.ROLE_FRAME]:
+            utterances = []
+            utterances.append(rolenames.getSpeechForRoleName(event.any_data))
+            if settings.speechVerbosityLevel == \
+                    settings.VERBOSITY_LEVEL_VERBOSE:
+                utterances.extend(\
+                    self.speechGenerator.getSpeech(event.any_data, False))
+            speech.speakUtterances(utterances)
+
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
         # We care about the main document and we'll ignore document
@@ -1800,7 +1812,6 @@ class Script(default.Script):
                     finishedLoading = True
 
                 braille.displayMessage(message)
-                speech.stop()
                 speech.speak(message)
 
                 if finishedLoading:
