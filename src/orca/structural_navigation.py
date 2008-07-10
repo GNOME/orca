@@ -784,7 +784,7 @@ class StructuralNavigation:
 
         obj = obj or self.getCurrentObject()
         success = False
-
+        wrap = settings.wrappedStructuralNavigation
         # Try to find it using Collection first.  But don't do this with form
         # fields for now.  It's a bit faster moving to the next form field,
         # but not on pages with huge forms (e.g. bugzilla's advanced search
@@ -827,13 +827,13 @@ class StructuralNavigation:
                 if not next:
                     [obj, wrapped] = self._findPrevByMatchRule(collection,
                                                                rule,
-                                                               True,
+                                                               wrap,
                                                                obj,
                                                                predicate)
                 else:
                     [obj, wrapped] = self._findNextByMatchRule(collection,
                                                                rule,
-                                                               True,
+                                                               wrap,
                                                                obj,
                                                                predicate)
                 success = True
@@ -850,10 +850,10 @@ class StructuralNavigation:
         if not success:
             pred = structuralNavigationObject.predicate
             if not next:
-                [obj, wrapped] = self._findPrevByPredicate(pred, True,
+                [obj, wrapped] = self._findPrevByPredicate(pred, wrap,
                                                            obj, arg)
             else:
-                [obj, wrapped] = self._findNextByPredicate(pred, True,
+                [obj, wrapped] = self._findNextByPredicate(pred, wrap,
                                                            obj, arg)
             # print "predicate", structuralNavigationObject.objType
         if wrapped:

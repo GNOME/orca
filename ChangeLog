@@ -1,3 +1,15 @@
+2008-07-09  Mesar Hameed <via joanmarie.diggs@gmail.com>
+
+        * src/orca/settings.py:
+          src/orca/structural_navigation.py:
+          Fix for bug #540187 - Wrapped structural navigation toggle. There
+          is a new setting (wrappedStructuralNavigation) which controls
+          whether or not we wrap around the document when structural 
+          navigation is used. The default value is True (i.e. do wrap). If
+          you would prefer Orca not wrap, you can set it to False in your
+          user-settings.py or your orca-customizations.py. Many thanks go
+          to Mesar (AKA Jon) for implementing this feature.
+
 2008-07-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

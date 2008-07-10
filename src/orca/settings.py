@@ -171,7 +171,8 @@ userCustomizableSettings = [
     "speakCellSpan",
     "speakCellHeaders",
     "skipBlankCells",
-    "largeObjectTextLength"
+    "largeObjectTextLength",
+    "wrappedStructuralNavigation"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -1037,6 +1038,9 @@ skipBlankCells = False
 # or "chunk" for structural navigation.
 #
 largeObjectTextLength = 75
+
+# Whether to wrap around the document when structural navigation is used.
+wrappedStructuralNavigation = True
 
 # Report object under mouse.
 #
