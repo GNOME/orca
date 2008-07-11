@@ -756,12 +756,15 @@ class Script(default.Script):
             # If the user doesn't want announcements for when their buddies
             # are typing (or have stopped typing), and this is such a message,
             # then just return. The only reliable way to identify such text
-            # is by the scale.  We also want to store the last message because
-            # msn seems to be sending a constant stream of "is typing" updates.
+            # is by the scale.  This attribute seems to have been removed by
+            # pidgin, so we'll also check the weight.  We also want to store
+            # the last message because msn seems to be sending a constant
+            # stream of "is typing" updates.
             #
             attr, start, end = \
                 self.getTextAttributes(event.source, event.detail1)
-            if float(attr.get('scale', '1')) < 1:
+            if float(attr.get('scale', '1')) < 1 \
+               or int(attr.get('weight', '400')) < 400:
                 if not script_settings.announceBuddyTyping or \
                        self.lastStatus == message:
                     return

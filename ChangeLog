@@ -1,3 +1,10 @@
+2008-07-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/pidgin/script.py:
+          Additional fix for bug #525656 - Orca needs to handle the new
+          Pidgin typing status updates. This was needed due to a change
+          in Pidgin.
+
 2008-07-09  Mesar Hameed <via joanmarie.diggs@gmail.com>
 
         * src/orca/settings.py:
