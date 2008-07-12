@@ -3720,8 +3720,8 @@ class Script(script.Script):
         #
         # pylint: disable-msg=E1103
 
-        offset = text.caretOffset - 1
-        previousOffset = text.caretOffset - 2
+        offset = min(event.detail1, text.caretOffset - 1)
+        previousOffset = offset - 1
         if (offset < 0 or previousOffset < 0):
             return
 

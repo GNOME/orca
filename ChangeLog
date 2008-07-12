@@ -5,6 +5,10 @@
           Pidgin typing status updates. This was needed due to a change
           in Pidgin.
 
+        * src/orca/default.py:
+          Fix for bug #542262 - Orca should only echo words once when
+          word echo is enabled.
+
 2008-07-09  Mesar Hameed <via joanmarie.diggs@gmail.com>
 
         * src/orca/settings.py:
