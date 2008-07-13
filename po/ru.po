@@ -391,7 +391,7 @@ msgstr "Нижний правый"
 #.
 #: ../src/orca/braille.py:211
 msgid "Cursor Position"
-msgstr "Позиция курсора"
+msgstr "Вернуться к курсору"
 
 #. Translators: this is the spoken word for the space character
 #.
@@ -1478,21 +1478,21 @@ msgstr "Сообщить о текущем положении."
 #.
 #: ../src/orca/default.py:199
 msgid "Performs the detailed where am I operation."
-msgstr "Подробно уведомляет о текущем положении."
+msgstr "Сообщить о текущем положении подробно."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
 #.
 #: ../src/orca/default.py:207
 msgid "Speaks the title bar."
-msgstr "Произносит заголовок окна."
+msgstr "Произнести заголовок окна."
 
 #. Translators: This command will cause the window's
 #. status bar contents to be spoken.
 #.
 #: ../src/orca/default.py:215
 msgid "Speaks the status bar."
-msgstr "Произносит содержимое строки состояния."
+msgstr "Произнести содержимое строки состояния."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1501,7 +1501,7 @@ msgstr "Произносит содержимое строки состояни�
 #.
 #: ../src/orca/default.py:225
 msgid "Opens the Orca Find dialog."
-msgstr "Открыть диалог поиска"
+msgstr "Открыть диалог поиска."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1511,7 +1511,7 @@ msgstr "Открыть диалог поиска"
 #.
 #: ../src/orca/default.py:236
 msgid "Searches for the next instance of a string."
-msgstr "Искать следующее вхождение строки."
+msgstr "Найти следующее вхождение строки."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1521,7 +1521,7 @@ msgstr "Искать следующее вхождение строки."
 #.
 #: ../src/orca/default.py:247
 msgid "Searches for the previous instance of a string."
-msgstr "Искать предыдущее вхождение строки"
+msgstr "Искать предыдущее вхождение строки."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine that
@@ -1531,7 +1531,7 @@ msgstr "Искать предыдущее вхождение строки"
 #.
 #: ../src/orca/default.py:258
 msgid "Paints and prints the visible zones in the active window."
-msgstr "Выделяет и выводит на терминал видимые зоны активного окна."
+msgstr "Выделить и вывести на терминал видимые зоны активного окна."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1557,7 +1557,7 @@ msgstr "Войти и выйти из режима общего осмотра."
 #.
 #: ../src/orca/default.py:286
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Переместить область общего осмотра к началу предыдущей строки."
+msgstr "Переместить общий осмотр к началу предыдущей строки."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1571,7 +1571,7 @@ msgstr "Переместить область общего осмотра к н�
 #.
 #: ../src/orca/default.py:301
 msgid "Moves flat review to the home position."
-msgstr "Переместить область общего осмотра в начало."
+msgstr "Переместить общий осмотр в начало."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1627,7 +1627,7 @@ msgstr "Произнести по буквам текущую линию в ре
 #.
 #: ../src/orca/default.py:361
 msgid "Moves flat review to the beginning of the next line."
-msgstr "Переместить область общего осмотра в начало следующей строки."
+msgstr "Переместить общий осмотр в начало следующей строки."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1641,7 +1641,7 @@ msgstr "Переместить область общего осмотра в н�
 #.
 #: ../src/orca/default.py:376
 msgid "Moves flat review to the end position."
-msgstr "Переместить область общего осмотра в конец."
+msgstr "Переместить общий осмотр в конец."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1656,7 +1656,7 @@ msgstr "Переместить область общего осмотра в к�
 #.
 #: ../src/orca/default.py:392
 msgid "Moves flat review to the previous item or word."
-msgstr "Переместить область общего осмотра к предыдущему элементу или слову."
+msgstr "Переместить общий осмотр к предыдущему элементу или слову."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1671,7 +1671,7 @@ msgstr "Переместить область общего осмотра к п�
 #.
 #: ../src/orca/default.py:408
 msgid "Moves flat review to the word above the current word."
-msgstr "Переместить область общего осмотра к слову над текущим словом."
+msgstr "Переместить общий осмотр к слову над текущим словом."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1747,7 +1747,7 @@ msgstr "Произнести текущий объект в режиме общ�
 #.
 #: ../src/orca/default.py:487
 msgid "Moves flat review to the next item or word."
-msgstr "Переместить область общего осмотра к следующему элементу или слову."
+msgstr "Переместить общий осмотр к следующему элементу или слову."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1762,7 +1762,7 @@ msgstr "Переместить область общего осмотра к с�
 #.
 #: ../src/orca/default.py:503
 msgid "Moves flat review to the word below the current word."
-msgstr "Переместить область общего осмотра к слову под текущим словом."
+msgstr "Переместить общий осмотр к слову под текущим словом."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1777,7 +1777,7 @@ msgstr "Переместить область общего осмотра к с�
 #.
 #: ../src/orca/default.py:519
 msgid "Moves flat review to the previous character."
-msgstr "Переместить область общего осмотра к предыдущему символу."
+msgstr "Переместить общий осмотр к предыдущему символу."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1790,7 +1790,7 @@ msgstr "Переместить область общего осмотра к п�
 #.
 #: ../src/orca/default.py:533
 msgid "Moves flat review to the end of the line."
-msgstr "Переместить область общего осмотра в конец строки."
+msgstr "Переместить общий осмотр в конец строки."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1825,7 +1825,7 @@ msgstr "Произнести текущий символ в области об�
 #.
 #: ../src/orca/default.py:570
 msgid "Phonetically speaks the current flat review character."
-msgstr "Произносит по буквам текущий символ в режиме общего осмотра."
+msgstr "Проговорить по буквам текущий символ в режиме общего осмотра."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1840,7 +1840,7 @@ msgstr "Произносит по буквам текущий символ в р
 #.
 #: ../src/orca/default.py:586
 msgid "Moves flat review to the next character."
-msgstr "Переместить область общего осмотра к следующему символу."
+msgstr "Переместить общий осмотр к следующему символу."
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -1906,7 +1906,7 @@ msgstr "Присоединить дисплей Брайля справа."
 #.
 #: ../src/orca/default.py:662
 msgid "Moves flat review to the bottom left."
-msgstr "Переместить область общего осмотра в левый нижний угол."
+msgstr "Переместить общий осмотр в левый нижний угол."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1991,7 +1991,7 @@ msgstr "Показать диалог настройки параметров п
 #.
 #: ../src/orca/default.py:757
 msgid "Toggles the silencing of speech."
-msgstr "Включить или выключить речь."
+msgstr "Временно включить или выключить речь."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2036,7 +2036,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:802
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr "Выводит отладочную информацию об объектах, содержащих сфокусированный."
+msgstr "Вывести отладочную информацию об объектах, содержащих сфокусированный."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2047,7 +2047,7 @@ msgstr "Выводит отладочную информацию об объек
 #.
 #: ../src/orca/default.py:815
 msgid "Prints debug information about the application with focus."
-msgstr "Вывести отладочную информацию о приложении"
+msgstr "Вывести отладочную информацию о приложении."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2063,14 +2063,14 @@ msgstr "Вывести информацию об использовании па
 #.
 #: ../src/orca/default.py:833
 msgid "Bookmark where am I with respect to current position."
-msgstr "Путь от закладки к текущему положению"
+msgstr "Произнести путь от закладки к текущему положению."
 
 #. Translators: this command moves the current position to the
 #. location stored at the bookmark.
 #.
 #: ../src/orca/default.py:841
 msgid "Go to bookmark."
-msgstr "Перейти к закладке"
+msgstr "Перейти к закладке."
 
 #. Translators: this event handler binds an in-page accessible
 #. object location to the given input key command.
@@ -2108,7 +2108,7 @@ msgstr "Перейти к положению предыдущей закладк
 #.
 #: ../src/orca/default.py:884
 msgid "Toggles color enhancements."
-msgstr "Включить улучшенную работу с цветом"
+msgstr "Включить улучшенную работу с цветом."
 
 #. Translators: "mouse enhancements" are changes users can
 #. make to the appearance of the mouse pointer to make it
@@ -2118,7 +2118,7 @@ msgstr "Включить улучшенную работу с цветом"
 #.
 #: ../src/orca/default.py:895
 msgid "Toggles mouse enhancements."
-msgstr "Включить улучшенную работу с мышью"
+msgstr "Включить улучшенную работу с мышью."
 
 #. Translators: this command increases the magnification
 #. level.
@@ -2168,7 +2168,7 @@ msgstr "Произносить элементы под указателем мы
 #.
 #: ../src/orca/default.py:951
 msgid "Passes the next command on to the current application."
-msgstr "Передавать следующие команды прямо в приложение"
+msgstr "Передавать следующие команды прямо в приложение."
 
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
@@ -3185,7 +3185,7 @@ msgstr "Выберите требуемую раскладку клавиату�
 #.
 #: ../src/orca/orca_console_prefs.py:390
 msgid "1. Desktop"
-msgstr "1. настольный компьютер"
+msgstr "1. Настольный компьютер"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3193,7 +3193,7 @@ msgstr "1. настольный компьютер"
 #.
 #: ../src/orca/orca_console_prefs.py:396
 msgid "2. Laptop"
-msgstr "2. ноутбук"
+msgstr "2. Ноутбук"
 
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
@@ -3645,7 +3645,7 @@ msgstr "Привязка к клавише удалена."
 #.
 #: ../src/orca/orca_gui_prefs.py:3668 ../src/orca/orca-setup.glade.h:153
 msgid "_Desktop"
-msgstr "_Настольный компьютер"
+msgstr "Н_астольный компьютер"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
@@ -3653,7 +3653,7 @@ msgstr "_Настольный компьютер"
 #: ../src/orca/orca_gui_prefs.py:4076 ../src/orca/orca_gui_prefs.py:4087
 #: ../src/orca/orca_gui_prefs.py:4109
 msgid "Bilinear"
-msgstr "Билинейный"
+msgstr "Билинейное"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will maximize the red value for all
@@ -4183,11 +4183,11 @@ msgstr "Ин_версия цветов"
 
 #: ../src/orca/orca-setup.glade.h:81
 msgid "Key Binding List"
-msgstr "Список быстрых клавиш"
+msgstr "Список клавиш"
 
 #: ../src/orca/orca-setup.glade.h:82
 msgid "Key Bindings"
-msgstr "Быстрые клавиши"
+msgstr "Клавиши"
 
 #: ../src/orca/orca-setup.glade.h:83
 msgid "Key Echo"
@@ -4198,8 +4198,8 @@ msgid ""
 "Line\n"
 "Sentence"
 msgstr ""
-"Строка\n"
-"Предложение"
+"строкам\n"
+"предложениям"
 
 #: ../src/orca/orca-setup.glade.h:87
 msgid "Magnifier"
@@ -4235,7 +4235,7 @@ msgid ""
 "Bilinear"
 msgstr ""
 "Нет\n"
-"Билинейный"
+"Билинейное"
 
 #: ../src/orca/orca-setup.glade.h:99
 msgid ""
@@ -4291,7 +4291,7 @@ msgstr "Произношение"
 
 #: ../src/orca/orca-setup.glade.h:117
 msgid "Quit Orca _without confirmation"
-msgstr "Выйти из Orca _без подтверждения"
+msgstr "Выходить _без подтверждения"
 
 #: ../src/orca/orca-setup.glade.h:118
 msgid "R_ed:"
@@ -4299,7 +4299,7 @@ msgstr "Кр_асный:"
 
 #: ../src/orca/orca-setup.glade.h:119
 msgid "S_ource display:"
-msgstr "Исходный _дисплей:"
+msgstr "Исходный _экран:"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.glade.h:121
@@ -4312,7 +4312,7 @@ msgstr "_Масштаб:"
 
 #: ../src/orca/orca-setup.glade.h:123
 msgid "Show Orca _main window"
-msgstr "Показать _главное окно Orca"
+msgstr "Показать _главное окно"
 
 #: ../src/orca/orca-setup.glade.h:125
 msgid "Speak _indentation and justification"
@@ -4352,7 +4352,7 @@ msgstr "_Синтезатор речи:"
 
 #: ../src/orca/orca-setup.glade.h:135
 msgid "Start Orca when you lo_gin"
-msgstr "Запускать Orca при входе в _сеанс"
+msgstr "Запускать при входе в _сеанс"
 
 #: ../src/orca/orca-setup.glade.h:136
 msgid "Target displa_y:"
@@ -4490,7 +4490,7 @@ msgstr "Параметры _голоса:"
 
 #: ../src/orca/orca-setup.glade.h:172
 msgid "pixels"
-msgstr "пиксели"
+msgstr "точек"
 
 #: ../src/orca/orca-setup.glade.h:173
 msgid "seconds"
@@ -8217,7 +8217,7 @@ msgstr "начертание"
 #.
 #: ../src/orca/text_attribute_names.py:249
 msgid "textattr|text decoration"
-msgstr "дополнения"
+msgstr "оформление"
 
 #. Translators: this attribute specifies the angle at which the text is
 #. displayed (i.e. rotated from the norm) and is represented in degrees
@@ -8237,7 +8237,7 @@ msgstr "вращение"
 #.
 #: ../src/orca/text_attribute_names.py:265
 msgid "textattr|text shadow"
-msgstr "тени"
+msgstr "тень"
 
 #. Translators: this attributes specifies whether the text is underlined.
 #. Values are "none", "single", "double" or "low".
