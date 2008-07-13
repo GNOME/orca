@@ -5524,12 +5524,15 @@ class Script(default.Script):
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
                 if newX1 <= oldX <= newX2:
-                    prevObj = item[0]
-                    prevOffset = 0
+                    newObj = item[0]
+                    newOffset = 0
                     text = self.queryNonEmptyText(prevObj)
                     if text:
                         newY = extents[1] + extents[3] / 2
-                        prevOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                        newOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                        if newOffset >= 0:
+                            prevOffset = newOffset
+                            prevObj = newObj
                     break
 
         if updateCache:
@@ -5614,12 +5617,15 @@ class Script(default.Script):
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
                 if newX1 <= oldX <= newX2:
-                    nextObj = item[0]
-                    nextOffset = 0
+                    newObj = item[0]
+                    newOffset = 0
                     text = self.queryNonEmptyText(nextObj)
                     if text:
                         newY = extents[1] + extents[3] / 2
-                        nextOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                        newOffset = text.getOffsetAtPoint(oldX, newY, 0)
+                        if newOffset >= 0:
+                            nextOffset = newOffset
+                            nextObj = newObj
                     break
 
         if updateCache:
