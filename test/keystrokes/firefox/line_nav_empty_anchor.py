@@ -49,13 +49,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BUG? - For some reason, we're repeating ourselves",
-     "BRAILLE LINE:  'Battery h2'",
+    ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "BRAILLE LINE:  'Battery h2'",
-     "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'",
      "SPEECH OUTPUT: 'Battery heading  '",
      "SPEECH OUTPUT: 'level 2'"]))
 
@@ -88,16 +83,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
     ["BRAILLE LINE:  'FOO h2'",
      "     VISIBLE:  'FOO h2', cursor=1",
      "SPEECH OUTPUT: 'FOO'",
@@ -119,16 +104,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow? Link'",
      "     VISIBLE:  'Q. What is the airspeed velocity', cursor=1",
      "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

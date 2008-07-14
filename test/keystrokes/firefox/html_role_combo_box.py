@@ -48,8 +48,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
     ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
      "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
-     "BRAILLE LINE:  'Severity Link : Severity normal Combo'",
-     "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity link'"]))
 
@@ -76,8 +74,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Priority Link", 
     ["BRAILLE LINE:  'Priority Link : Normal Combo'",
-     "     VISIBLE:  'Priority Link : Normal Combo', cursor=1",
-     "BRAILLE LINE:  'Priority Link : Normal Combo'",
      "     VISIBLE:  'Priority Link : Normal Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority link'"]))

@@ -46,12 +46,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
-    ["BUG? - For some reason we're repeating ourselves",
-     "BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
+    ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
      "     VISIBLE:  'Magic disappearing text trick: t', cursor=1",
-     "BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
-     "     VISIBLE:  'Magic disappearing text trick: t', cursor=1",
-     "SPEECH OUTPUT: 'Magic disappearing text trick: text tab to me and I disappear'",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text tab to me and I disappear'"]))
 
 sequence.append(utils.StartRecordingAction())

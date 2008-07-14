@@ -75,8 +75,6 @@ sequence.append(utils.AssertPresentationAction(
     "Launch dialog", 
     ["BRAILLE LINE:  'TabList First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "BRAILLE LINE:  'TabList First tab Page Second tab Page'",
-     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
      "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
      "SPEECH OUTPUT: 'First tab page'"]))
 

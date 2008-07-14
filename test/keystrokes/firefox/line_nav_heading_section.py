@@ -48,13 +48,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BUG? - For some reason we're repeating ourselves",
-     "BRAILLE LINE:  'Heading 2. h1'",
+    ["BRAILLE LINE:  'Heading 2. h1'",
      "     VISIBLE:  'Heading 2. h1', cursor=1",
-     "BRAILLE LINE:  'Heading 2. h1'",
-     "     VISIBLE:  'Heading 2. h1', cursor=1",
-     "SPEECH OUTPUT: 'Heading 2. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
      "SPEECH OUTPUT: 'Heading 2. heading  '",
      "SPEECH OUTPUT: 'level 1'"]))
 

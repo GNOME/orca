@@ -1,3 +1,33 @@
+2008-07-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/default.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/bug_512303.py:
+          test/keystrokes/firefox/line_nav_imagemap.py:
+          test/keystrokes/firefox/uiuc_button.py:
+          test/keystrokes/firefox/bug_511389.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/html_struct_nav_large_obj.py:
+          test/keystrokes/firefox/line_nav_multi_line_text.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/page_summary.py:
+          test/keystrokes/firefox/line_nav_heading_section.py:
+          test/keystrokes/firefox/line_nav_table_cell_links.py:
+          test/keystrokes/firefox/line_nav_empty_anchor.py:
+          test/keystrokes/firefox/html_struct_nav_blockquote.py:
+          test/keystrokes/firefox/dojo_dialog.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/html_role_links.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py
+          Fix for bug #541094 - Back out 'silent focus' code.
+
 2008-07-14  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/toolkits/Gecko/braille_generator.py:

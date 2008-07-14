@@ -102,7 +102,6 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
         self.speakResultsDuringFindCheckButton = None
         self.structuralNavigationCheckButton = None
-        self.targetCharacterExtents = (0, 0, 0, 0)
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
@@ -1087,13 +1086,54 @@ class Script(default.Script):
             self.updateBraille(context.obj)
         elif callbackType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
-            orca.setLocusOfFocus(None, context.obj, False)
             try:
                 self.setCaretPosition(context.obj, context.currentOffset)
             except:
                 characterCount = context.obj.queryText().characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
             self.updateBraille(context.obj)
+
+    def presentFindResults(self, obj, offset):
+        """Updates the caret context to the match indicated by obj and
+        offset.  Then presents the results according to the user's
+        preferences.
+
+        Arguments:
+        -obj: The accessible object within the document
+        -offset: The offset with obj where the caret should be positioned
+        """
+
+        origObj, origOffset = self.getCaretContext()
+        self.setCaretContext(obj, offset)
+        origExtents = self.getExtents(origObj, origOffset - 1, origOffset)
+        newExtents = self.getExtents(obj, offset - 1, offset)
+        text = self.queryNonEmptyText(obj)
+        if script_settings.speakResultsDuringFind and text:
+            nSelections = text.getNSelections()
+            if nSelections:
+                [start, end] = text.getSelection(0)
+                enoughSelected = (end - start) >= \
+                                  script_settings.minimumFindLength
+                lineChanged = not self.onSameLine(origExtents, newExtents)
+
+                # If the user starts backspacing over the text in the
+                # toolbar entry, he/she is indicating they want to perform
+                # a different search. Because madeFindAnnounement may
+                # be set to True, we should reset it -- but only if we
+                # detect the line has also changed.  We're not getting
+                # events from the Find entry, so we have to compare
+                # offsets.
+                #
+                if self.isSameObject(origObj, obj) and (origOffset > offset) \
+                   and lineChanged:
+                    self.madeFindAnnouncement = False
+
+                if enoughSelected:
+                    if lineChanged or not self.madeFindAnnouncement or \
+                       not script_settings.onlySpeakChangedLinesDuringFind:
+                        line = self.getLineContentsAtOffset(obj, offset)
+                        self.speakContents(line)
+                        self.madeFindAnnouncement = True
 
     def sayAll(self, inputEvent):
         """Speaks the contents of the document beginning with the present
@@ -1188,253 +1228,80 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
-        # We now get caret-moved events for items that do not have
-        # focus.  This will enable us to provide better support for
-        # the use of the Find toolbar.  It also means that we need
-        # to check the event.source before assuming that we should
-        # update our position, set the locus of focus, etc.
-        #
-        # Possibility #1: A form control is given focus and a non-
-        # focusable item (the form itself, a table cell within the
-        # form, etc.) issues the event.  These should be ignored
-        # UNLESS focus was moved from a form field  to non-focusable
-        # text in the document frame via mouse click.
-        #
-        if not event.source.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and self.isFormField(orca_state.locusOfFocus) \
-           and not isinstance(orca_state.lastInputEvent,
-                              input_event.MouseButtonEvent):
-            return
+        eventSourceRole = event.source.getRole()
+        eventSourceState = event.source.getState()
+        eventSourceInDocument = self.inDocumentContent(event.source)
 
-        # Possibility #2: We're looking at the Help contents.  As
-        # the selected item changes in the list on the left, we're
-        # getting caret-moved events for the changing content on
-        # the right.  We want to update the caret context but not
-        # the locus of focus.  Do the same thing for the UIUC
-        # accessibility extension.
-        #
-        if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_LIST_ITEM,
-                                                     pyatspi.ROLE_TABLE_CELL] \
-           and not self.inDocumentContent(orca_state.locusOfFocus) \
-           and self.inDocumentContent(event.source):
-            self.setCaretContext(event.source, event.detail1)
-            return
+        try:
+            locusOfFocusRole = orca_state.locusOfFocus.getRole()
+            locusOfFocusState = orca_state.locusOfFocus.getState()
+        except:
+            locusOfFocusRole = None
+            locusOfFocusState = pyatspi.StateSet()
+            locusOfFocusState = locusOfFocusState.raw()
 
-        # Possibility #3: We're using the Find toolbar.  In this case
-        # we want to update the caret context.  If the user has opted
-        # to have results spoken during the find (i.e., while still
-        # in the Find toolbar), speak the line containing the caret
-        # based on the user-customizable settings.
-        #
-        if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
-                                                pyatspi.ROLE_PUSH_BUTTON] \
-           and orca_state.locusOfFocus.parent.getRole() == \
-                                            pyatspi.ROLE_TOOL_BAR \
-           and self.inDocumentContent(event.source):
-            [obj, offset] = self.getCaretContext()
-            self.setCaretContext(event.source, event.detail1)
-
-            origExtents = self.getExtents(obj, offset - 1, offset)
-            newExtents = self.getExtents(event.source,
-                                         event.detail1 - 1,
-                                         event.detail1)
-            text = self.queryNonEmptyText(event.source)
-            if script_settings.speakResultsDuringFind and text:
-                nSelections = text.getNSelections()
-                if nSelections:
-                    [start, end] = text.getSelection(0)
-                    enoughSelected = (end - start) >= \
-                                             script_settings.minimumFindLength
-                    lineChanged = not self.onSameLine(origExtents, newExtents)
-
-                    # If the user starts backspacing over the text in the
-                    # toolbar entry, he/she is indicating they want to perform
-                    # a different search. Because madeFindAnnounement may
-                    # be set to True, we should reset it -- but only if we
-                    # detect the line has also changed.  We're not getting
-                    # events from the Find entry, so we have to compare
-                    # offsets.
-                    #
-                    if (obj == event.source) and (offset > event.detail1) \
-                        and lineChanged:
-                        self.madeFindAnnouncement = False
-
-                    if enoughSelected:
-                        if lineChanged or not self.madeFindAnnouncement or \
-                           not script_settings.onlySpeakChangedLinesDuringFind:
-                            line = self.getLineContentsAtOffset(event.source,
-                                                                event.detail1)
-                            self.speakContents(line)
-                            self.madeFindAnnouncement = True
-
-            return
-
-        # Possibility #4: We called grabFocus() on this item because it has
-        # the overflow:auto; style associated with it.  We need to ignore
-        # this event.  See bug #471537.  But we don't want to do this for
-        # entries.  See bug #501447.
-        #
-        if self.isSameObject(event.source, self._objectForFocusGrab) \
-           and event.source.getRole() != pyatspi.ROLE_ENTRY:
-            self._objectForFocusGrab = None
-            return
-
-        # Or we called grabFocus() on a link which is the parent of some
-        # oject (e.g. an image).  If so, and if the caret moved event is
-        # for that link, we'll speak the link twice if we don't ignore
-        # this event.  See bug #511389.
-        #
-        elif self._objectForFocusGrab \
-             and self._objectForFocusGrab.getRole() == pyatspi.ROLE_LINK:
-            offset = self.getCharacterOffsetInParent(self._objectForFocusGrab)
-            parent = self._objectForFocusGrab.parent
-            if offset == event.detail1 \
-               and self.isSameObject(event.source, parent):
-                return
-            # If it's an image map, we also want to ignore this event.
-            # See bug #511354.
-            #
-            elif parent.getRole() == pyatspi.ROLE_IMAGE:
-                return
-
-        # Possibility #5: Orca is controlling the caret, we just left an
-        # entry, and text was inserted into that entry via javascript as
-        # a result of it losing focus.  This is a bogus event, but a fix
-        # might not make it into Firefox 3.  :-(  See GNOME bug 472345
-        # as well as https://bugzilla.mozilla.org/show_bug.cgi?id=394493.
-        #
-        if event.source \
-           and event.source.getRole() == pyatspi.ROLE_ENTRY \
-           and event.source.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and not event.source.getState().contains( \
-                                           pyatspi.STATE_FOCUSED):
-            return
-
-        # Possibility #6: We are looking at an ARIA widget where the user
-        # has traversed the widget (eg. tree) with the arrows.  We are getting
-        # an extra caret-moved event in these situations. See bug #471878 and
-        # Mozilla bug #394318.
-        #
-        if self.isAriaWidget(event.source) \
-                and isinstance(orca_state.lastInputEvent,
-                           input_event.KeyboardEvent) \
-                and orca_state.lastInputEvent.event_string in \
-                                              ["Up", "Down", "Left", "Right"] \
-                and orca_state.locusOfFocus.getRole() != pyatspi.ROLE_ENTRY:
-            return
-
-        # If Orca is controlling the caret and we just moved to a line that
-        # begins with a link, and that link begins on the previous line,
-        # we need to ignore this event. Otherwise our caret context will
-        # become the beginning of the link on the previous line.
-        #
-        if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LINK \
-           and self.isSameObject(orca_state.locusOfFocus.parent, event.source):
-            offset = self.getCharacterOffsetInParent(orca_state.locusOfFocus)
-            if offset == event.detail1:
-                return
-
-        # If Orca is controlling the caret, it is possible to arrow into
-        # a menu item inside of a combo box.  This is something that is
-        # not possible in Firefox caret browsing mode and seems to confuse
-        # Firefox sufficiently that it wants to generate a caret-moved
-        # event for *something*:  might be the menu item, might be a nearby
-        # link, might be something else.  If it's the menu item, we double
-        # speak it.  If it's something else, we don't want the locusOfFocus
-        # to be set there.  So for now, let's just ignore these.
-        #
-        if orca_state.locusOfFocus \
-            and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM \
-            and self.inDocumentContent(event.source):
-            return
-
-        # If {overflow:hidden} is in the document's style sheet, we seem
-        # to get an additional item in the hierarchy:  An object of role
-        # ROLE_UNKNOWN which is the single child of the document frame and
-        # contains all the items which we'd expect to find in the document
-        # frame.  Under these conditions, we will get a caret-moved event
-        # for the document frame with detail1 == 0 after a focus: event for
-        # the object.  We need to ignore both of these events else we will
-        # jump to the top of the document.
-        #
-        # http://bugzilla.gnome.org/show_bug.cgi?id=412677
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
-        #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
-           and event.source.childCount \
-           and event.source[0].getRole() == pyatspi.ROLE_UNKNOWN:
-            return
-
-        # Otherwise, we'll just assume that the thing in which the caret
-        # moved is the locus of focus.  We'll only do this if the current
-        # object that's the locus of focus no longer has focus, though.
-        # The reason for this is that we can indeed get caret-moved events
-        # from things that really have nothing to do with the locus of
-        # focus.
-        #
-        if orca_state.locusOfFocus \
-            and not orca_state.locusOfFocus.getState().contains(
-                        pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
-
-        # We need to handle HTML content differently because we do our
-        # own navigation and we also handle the
-        # EMBEDDED_OBJECT_CHARACTER.  If we're not in HTML content,
-        # we'll defer to the default script.  If we are in HTML
-        # content, we'll figure out where we are and then defer to the
-        # default script.  It will typically end up calling some of
-        # our other overidden methods (e.g., sayCharacter, sayWord,
-        # sayLine, etc.).
-        #
-        if not self.inDocumentContent():
-            default.Script.onCaretMoved(self, event)
-            return
-
-        text = self.queryNonEmptyText(event.source)
-        if text:
-            caretOffset = text.caretOffset
-        else:
-            caretOffset = 0
-
-        #print "HERE: caretContext=", self.getCaretContext()
-        #print "            source=", event.source
-        #print "       caretOffset=", text.caretOffset
-        #print "    characterCount=", text.characterCount
-        [obj, characterOffset] = \
-            self.findFirstCaretContext(event.source, caretOffset)
-        self.setCaretContext(obj, characterOffset)
-
-        #print "       ended up at=", self.getCaretContext()
-
-        # If the user presses left or right, we'll set the target
-        # column for up/down navigation by line.  The goal here is
-        # to make sure the caret moves somewhat vertically when
-        # going up/down by line versus jumping to the beginning of
-        # the line.  Note that whether we actually attempt to do
-        # this is handled by the value of the 
-        # script_settings.arrowToLineBeginning.
-        #
-        if isinstance(orca_state.lastInputEvent,
-                      input_event.KeyboardEvent):
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string
-            if (string == "Left") or (string == "Right"):
-                [obj, characterOffset] = self.getCaretContext()
-                self.targetCharacterExtents = \
-                    self.getExtents(obj,
-                                    characterOffset,
-                                    characterOffset + 1)
+            if self.useCaretNavigationModel(orca_state.lastInputEvent):
+                # Orca is set to control the caret and is in a place where
+                # doing so is appropriate.  Therefore, this event is likely
+                # extraneous and can be ignored. Exceptions:
+                #
+                # 1. If the object is an entry and useCaretNavigationModel is
+                #    true, then we must be at the edge of the entry and about
+                #    to exit it (returning to the document).
+                #
+                if eventSourceRole != pyatspi.ROLE_ENTRY:
+                    return
 
-        # If the last event was a mouse event, then just return. This
-        # prevents the multiple utterances of text selected via the mouse
-        # (see bug #409728).
+            elif self.isAriaWidget(event.source):
+                # Sometimes we get extra caret-moved events. See bug #471878
+                # and Mozilla bug #394318. However, we cannot do a blanket
+                # ignore of all caret-moved events.  See bug #539075 as an
+                # example.
+                #
+                orca.setLocusOfFocus(event, event.source, False)
+                if eventSourceRole == pyatspi.ROLE_SPIN_BUTTON:
+                    text = self.queryNonEmptyText(event.source)
+                    if text and text.characterCount == event.detail1:
+                        return
+                elif event.detail1 == 0 \
+                     and eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
+                                             pyatspi.ROLE_LIST_ITEM]:
+                    return
+
+            elif eventSourceInDocument and not self.inDocumentContent() \
+                 and orca_state.locusOfFocus:
+                # This is an indication that soemthing else is moving
+                # the caret on our behalf, such as a help window, the
+                # Find toolbar, the UIUC accessiblity extension, etc.
+                # If that's the case, we want to update our position.
+                # If we're in the Find toolbar, we also want to present
+                # the results.
+                #
+                parent = orca_state.locusOfFocus.parent
+                if parent and parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+                    self.presentFindResults(event.source, event.detail1)
+                else:
+                    self.setCaretContext(event.source, event.detail1)
+                return
+
+        # If we're still here, and in document content, update the caret
+        # context.
         #
-        if isinstance(orca_state.lastInputEvent,
-                      input_event.MouseButtonEvent):
-            return
+        if eventSourceInDocument:
+            text = self.queryNonEmptyText(event.source)
+            if text:
+                caretOffset = text.caretOffset
+            else:
+                caretOffset = 0
 
+            [obj, characterOffset] = \
+                self.findFirstCaretContext(event.source, caretOffset)
+            self.setCaretContext(obj, characterOffset)
+
+        # Pass the event along to the default script for processing.
+        #
         default.Script.onCaretMoved(self, event)
 
     def onTextDeleted(self, event):
@@ -1445,32 +1312,6 @@ class Script(default.Script):
         """
 
         self._destroyLineCache()
-
-        # The search entries in Firefox's and Thunderbird's top toolbars
-        # contain text which functions as the label (Yahoo, Entire Message)
-        # and which gets deleted just prior to the entry gaining focus.
-        # This is also true of the search entry in the Downloads frame. If
-        # we pass that event on to the default script, it will set the
-        # entry to the locus of focus silently and then the focus event
-        # will not cause the entry to be spoken.  In addition, if the
-        # Location autocomplete is expanded and Backspace is pressed,
-        # the locus of focus will be a table cell and the default script
-        # will not speak the characters being deleted from the entry.
-        #
-        if event.source and orca_state.locusOfFocus \
-           and not self.isSameObject(event.source, orca_state.locusOfFocus):
-            if event.source.parent.getRole() == pyatspi.ROLE_FRAME:
-                return
-
-            toolbar = self.getAncestor(event.source,
-                                       [pyatspi.ROLE_TOOL_BAR],
-                                       [pyatspi.ROLE_DOCUMENT_FRAME])
-            if toolbar:
-                if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-                    orca.setLocusOfFocus(event, event.source, False)
-                else:
-                    return
-
         default.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
@@ -1564,7 +1405,8 @@ class Script(default.Script):
         #
         if self.isSameObject(event.source, self._objectForFocusGrab) \
            and not event.source.getRole() in [pyatspi.ROLE_ENTRY,
-                                              pyatspi.ROLE_LINK]:
+                                              pyatspi.ROLE_LINK,
+                                              pyatspi.ROLE_DOCUMENT_FRAME]:
             orca.setLocusOfFocus(event, event.source, False)
             return
 
@@ -1840,15 +1682,6 @@ class Script(default.Script):
                         [obj, characterOffset] = self.getCaretContext()
                         if not obj:
                             return
-
-                    # When a document is loaded, we are going to
-                    # assume that the newly loaded document frame has
-                    # focus.  Gecko doesn't seem to give us a focus
-                    # event for this, though, so we will force the
-                    # locus of focus here.
-                    #
-                    orca.setLocusOfFocus(event, obj, False)
-                    self.setCaretPosition(obj, characterOffset)
 
                     # For braille, we just show the current line
                     # containing the caret.  For speech, however, we

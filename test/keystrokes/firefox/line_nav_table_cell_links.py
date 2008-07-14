@@ -47,13 +47,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BUG? - For some reason, we're repeating ourselves",
-     "BRAILLE LINE:  'HTML Tags'",
+    ["BRAILLE LINE:  'HTML Tags'",
      "     VISIBLE:  'HTML Tags', cursor=1",
-     "BRAILLE LINE:  'HTML Tags'",
-     "     VISIBLE:  'HTML Tags', cursor=1",
-     "SPEECH OUTPUT: 'HTML Tags",
-     "'",
      "SPEECH OUTPUT: 'HTML Tags",
      "'"]))
 

@@ -38,8 +38,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 2", 
     ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
      "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
-     "BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 2 page'"]))
 
@@ -101,8 +99,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 2 contents", 
     ["BRAILLE LINE:  'TabList SubTab 1 Page SubTab 2 Page'",
      "     VISIBLE:  'SubTab 2 Page', cursor=1",
-     "BRAILLE LINE:  'TabList SubTab 1 Page SubTab 2 Page'",
-     "     VISIBLE:  'SubTab 2 Page', cursor=1",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer scroll pane'",
      "SPEECH OUTPUT: 'SubTab 2 page'"]))
     
@@ -114,8 +110,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to next tab container", 
     ["BRAILLE LINE:  'TabList First Page  $l Second Page Third Page  $l'",
-     "     VISIBLE:  'First Page  $l Second Page Third', cursor=1",
-     "BRAILLE LINE:  'TabList First Page  $l Second Page Third Page  $l'",
      "     VISIBLE:  'First Page  $l Second Page Third', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'First page'"]))

@@ -39,8 +39,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to continents", 
     ["BRAILLE LINE:  'Continents ListItem'",
      "     VISIBLE:  'Continents ListItem', cursor=1",
-     "BRAILLE LINE:  'Continents ListItem'",
-     "     VISIBLE:  'Continents ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Continents expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))

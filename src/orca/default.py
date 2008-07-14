@@ -3493,15 +3493,6 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # We don't always get focus: events for text areas, so if we
-        # see caret moved events for a focused text area, we silently
-        # set them to be the locus of focus.
-        #
-        if event and event.source and \
-           (event.source != orca_state.locusOfFocus) and \
-            event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
-
         # Ignore caret movements from non-focused objects, unless the
         # currently focused object is the parent of the object which
         # has the caret.
@@ -3524,15 +3515,6 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
-        # We don't always get focus: events for text areas, so if we
-        # see deleted text events for a focused text area, we silently
-        # set them to be the locus of focus..
-        #
-        if event and event.source and \
-           (event.source != orca_state.locusOfFocus) and \
-            event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
 
         # Ignore text deletions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
@@ -3618,15 +3600,6 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
-        # We don't always get focus: events for text areas, so if we
-        # see inserted text events for a focused text area, we silently
-        # set them to be the locus of focus..
-        #
-        if event and event.source and \
-           (event.source != orca_state.locusOfFocus) and \
-            event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
 
         # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which

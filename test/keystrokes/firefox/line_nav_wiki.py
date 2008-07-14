@@ -51,14 +51,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BUG? - For some reason, we're repeating ourselves",
-     "BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
+    ["BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
      "     VISIBLE:  'live.gnome.org h1 Search $l Titl', cursor=1",
-     "BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
-     "     VISIBLE:  'live.gnome.org h1 Search $l Titl', cursor=1",
-     "SPEECH OUTPUT: 'live.gnome.org heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'text Search Titles button grayed Text button grayed'",
      "SPEECH OUTPUT: 'live.gnome.org heading  '",
      "SPEECH OUTPUT: 'level 1'",
      "SPEECH OUTPUT: 'text Search Titles button grayed Text button grayed'"]))

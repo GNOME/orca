@@ -88,8 +88,6 @@ sequence.append(utils.AssertPresentationAction(
     "move back to tab 3", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
-     "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
-     "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Two page'"]))
 ########################################################################
