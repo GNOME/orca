@@ -2251,7 +2251,9 @@ class Script(default.Script):
                 or ((obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME) \
                     and obj.getState().contains(pyatspi.STATE_EDITABLE)):
                 label = self.getDisplayedLabel(obj)
-                regions = [braille.Text(obj, label, " $l")]
+                regions = [braille.Text(obj,
+                                        label,
+                                        settings.brailleEOLIndicator)]
                 if isFocusedObj:
                     focusedRegion = regions[0]
             elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):

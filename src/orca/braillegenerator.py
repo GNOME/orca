@@ -648,7 +648,7 @@ class BrailleGenerator:
 
         textRegion = braille.Text(obj,
                                   self._script.getDisplayedLabel(obj),
-                                  " $l")
+                                  settings.brailleEOLIndicator)
         regions.append(textRegion)
 
         # We do not want the role at the end of text areas.
@@ -834,7 +834,7 @@ class BrailleGenerator:
 
         textRegion = braille.Text(obj,
                                   self._script.getDisplayedLabel(obj),
-                                  " $l")
+                                  settings.brailleEOLIndicator)
         regions.append(textRegion)
 
         # We do not want the role at the end of text areas.

@@ -108,6 +108,8 @@ userCustomizableSettings = [
     "enableNavigationKeys",
     "enableBraille",
     "enableBrailleGrouping",
+    "disableBrailleEOL",
+    "brailleEOLIndicator",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
@@ -337,6 +339,11 @@ enableBrailleGrouping   = False
 # If True, enable braille monitor.
 #
 enableBrailleMonitor    = False
+
+# string to indicate end of printed line for braille displays:
+#
+disableBrailleEOL = False
+brailleEOLIndicator = " $l"
 
 # Strings used to indicate checkbox/radio button states in braille:
 #

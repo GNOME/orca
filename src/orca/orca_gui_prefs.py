@@ -1487,6 +1487,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
+
+        self.get_widget("disableBrailleEOL").set_active(
+            prefs["disableBrailleEOL"])
+
         if louis is None:
             self.get_widget( \
                 "contractedBrailleCheckbutton").set_sensitive(False)
@@ -2859,6 +2863,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             self.prefsDict["brailleRolenameStyle"] = \
                 settings.BRAILLE_ROLENAME_STYLE_LONG
+
+    def disableBrailleEOLChecked(self, widget):
+        """Signal handler for the "toggled" signal for the disableBrailleEOL
+           GtkCheckButton widget. The user has [un]checked the 'Disable
+           braille end of line symbol' checkbox. Set the 'disableBrailleEOL'
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["disableBrailleEOL"] = widget.get_active()
 
     def brailleVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the brailleBriefButton,

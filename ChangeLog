@@ -1,5 +1,19 @@
 2008-07-14  Willie Walker <william.walker@sun.com>
 
+        * src/orca/scripts/toolkits/Gecko/braille_generator.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/flat_review.py:
+          src/orca/orca_prefs.py:
+          src/orca/braille.py:
+          src/orca/braillegenerator.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #534022 - The Line-end symbol (46 123) should be 
+          configurable per application.
+
+2008-07-14  Willie Walker <william.walker@sun.com>
+
         * src/orca/structural_navigation.py:
           Fix for bug #542324 - When launch Firefox 3.0 and pressing 
           CTRL+Orca+space key, In Orca application preferences/keybindings 

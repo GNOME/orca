@@ -501,7 +501,7 @@ class Text(Region):
 
         Region.__init__(self, string, cursorOffset, True)
 
-        if not self.contracted:
+        if not self.contracted and not settings.disableBrailleEOL:
             self.string += self.eol
 
     def repositionCursor(self):

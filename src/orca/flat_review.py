@@ -569,14 +569,15 @@ class Line:
 
                 brailleOffset += len(region.string.decode("UTF-8"))
 
-            if len(self.brailleRegions):
-                pad = braille.Region(" ")
-                pad.brailleOffset = brailleOffset
-                self.brailleRegions.append(pad)
-                brailleOffset += 1
-            eol = braille.Region("$l")
-            eol.brailleOffset = brailleOffset
-            self.brailleRegions.append(eol)
+            if not settings.disableBrailleEOL:
+                if len(self.brailleRegions):
+                    pad = braille.Region(" ")
+                    pad.brailleOffset = brailleOffset
+                    self.brailleRegions.append(pad)
+                    brailleOffset += 1
+                eol = braille.Region("$l")
+                eol.brailleOffset = brailleOffset
+                self.brailleRegions.append(eol)
 
         return self.brailleRegions
 

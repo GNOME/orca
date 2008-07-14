@@ -246,7 +246,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if not label or not len(label):
             label = parent.name
 
-        textRegion = braille.Text(obj, label, " $l")
+        textRegion = braille.Text(obj, label, settings.brailleEOLIndicator)
         regions.append(textRegion)
         return [regions, textRegion]
 
