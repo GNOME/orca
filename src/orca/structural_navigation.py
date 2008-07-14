@@ -2503,14 +2503,14 @@ class StructuralNavigation:
             # Translators: this is for navigating in a document by heading.
             # (e.g. <h1> is a heading at level 1).
             #
-            prevDesc = _("Goes to previous heading at level %d." % i)
+            prevDesc = _("Goes to previous heading at level %d.") % i
             prevAtLevelBindings.append([str(i),
                                         settings.SHIFT_MODIFIER_MASK,
                                         prevDesc])
             # Translators: this is for navigating in a document by heading.
             # (e.g. <h1> is a heading at level 1).
             #
-            nextDesc = _("Goes to next heading at level %d." % i)
+            nextDesc = _("Goes to next heading at level %d.") % i
             nextAtLevelBindings.append([str(i),
                                         settings.NO_MODIFIER_MASK,
                                         nextDesc])

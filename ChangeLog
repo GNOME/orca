@@ -1,3 +1,11 @@
+2008-07-14  Willie Walker <william.walker@sun.com>
+
+        * src/orca/structural_navigation.py:
+          Fix for bug #542324 - When launch Firefox 3.0 and pressing 
+          CTRL+Orca+space key, In Orca application preferences/keybindings 
+          page some structural navigation description not marked for 
+          translation.
+
 2008-07-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
