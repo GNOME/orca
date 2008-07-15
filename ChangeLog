@@ -1,6 +1,12 @@
 2008-07-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #542927 - Live region commands should be treated as
+          structural navigation commands when in form fields in Firefox 3.
+
+2008-07-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
           src/orca/default.py:
           test/keystrokes/firefox/moz_menu.py:
           test/keystrokes/firefox/bug_512303.py:

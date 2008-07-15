@@ -119,6 +119,12 @@ class Script(default.Script):
              Script.goBeginningOfLine,
              Script.goEndOfLine]
 
+        self._liveRegionFunctions = \
+            [Script.setLivePolitenessOff,
+             Script.advanceLivePoliteness,
+             Script.monitorLiveRegions,
+             Script.reviewLiveAnnouncement]
+
         if script_settings.controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Orca is controlling the caret.")
@@ -965,7 +971,8 @@ class Script(default.Script):
             if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                 and handler.function in self.structuralNavigation.functions:
+                 and (handler.function in self.structuralNavigation.functions \
+                      or handler.function in self._liveRegionFunctions):
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
@@ -974,7 +981,8 @@ class Script(default.Script):
             if handler and handler.function in self._caretNavigationFunctions:
                 return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
-                 and handler.function in self.structuralNavigation.functions:
+                 and (handler.function in self.structuralNavigation.functions \
+                      or handler.function in self._liveRegionFunctions):
                 return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
