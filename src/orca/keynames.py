@@ -88,6 +88,10 @@ __keynames["Page_Up"]      = _("page up")
 #
 __keynames["Page_Down"]    = _("page down")
 
+# Translators: this is how someone would speak the name of the tab key
+#
+__keynames["Tab"] = _("tab")
+
 # Translators: this is how someone would speak the name of the left tab key
 #
 __keynames["ISO_Left_Tab"] = _("left tab")
@@ -104,13 +108,61 @@ __keynames["SunF37"]       = _("F 12")
 #
 __keynames["space"] = _("space")
 
-# Translators: this is the spoken word for the BackSpace key
+# Translators: this is how someone would speak the name of the backspace key
 #
 __keynames["BackSpace"] = _("backspace")
 
-#translators: this is the spoken word for Return key
+# Translators: this is how someone would speak the name of the return key
 #
 __keynames["Return"] = _("return")
+
+# Translators: this is how someone would speak the name of the up arrow key 
+#
+__keynames["Up"] = _("up")
+
+# Translators: this is how someone would speak the name of the down arrow key 
+#
+__keynames["Down"] = _("down")
+
+# Translators: this is how someone would speak the name of the left arrow key 
+#
+__keynames["Left"] = _("left")
+
+# Translators: this is how someone would speak the name of the right arrow key 
+#
+__keynames["Right"] = _("right")
+
+# Translators: this is how someone would speak the name of the left super key 
+#
+__keynames["Super_L"] = _("left super")
+
+# Translators: this is how someone would speak the name of the right super key 
+#
+__keynames["Super_R"] = _("right super")
+
+# Translators: this is how someone would speak the name of the menu key 
+#
+__keynames["Menu"] = _("menu")
+
+# Translators: this is how someone would speak the name of the ISO shift key 
+#
+__keynames["ISO_Level3_Shift"] = _("ISO level 3 shift")
+
+# Translators: this is how someone would speak the name of the help key 
+#
+__keynames["Help"] = _("help")
+
+# Translators: this is how someone would speak the name of the multi key 
+#
+__keynames["Multi_key"] = _("multi")
+
+# Translators: this is how someone would speak the name of the mode switch key 
+#
+__keynames["Mode_switch"] = _("mode switch")
+
+# Translators: this is how someone would speak the name of the escape key 
+#
+__keynames["Escape"] = _("escape")
 
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it
