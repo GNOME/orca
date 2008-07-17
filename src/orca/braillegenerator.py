@@ -194,6 +194,25 @@ class BrailleGenerator:
         else:
             return None
 
+    def _getTextForRequiredObject(self, obj):
+        """Returns a string to be displayed that describes the required
+        state of the given object.
+
+        Arguments:
+        - obj: the Accessible object
+
+        Returns a string to be displayed.
+        """
+
+        if not settings.presentRequiredState:
+            return None
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_REQUIRED):
+            return settings.brailleRequiredStateString
+        else:
+            return None
+
     def _getTextForRole(self, obj, role=None):
         if (settings.brailleVerbosityLevel \
             == settings.VERBOSITY_LEVEL_VERBOSE)\
@@ -245,6 +264,8 @@ class BrailleGenerator:
         text = self._script.appendString(text, 
                                          self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj, role))
+        text = self._script.appendString(text,
+                                         self._getTextForRequiredObject(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -342,6 +363,8 @@ class BrailleGenerator:
 
         text = self._script.appendString(
             text, self._getTextForRole(obj, pyatspi.ROLE_CHECK_BOX))
+        text = self._script.appendString(text,
+                                         self._getTextForRequiredObject(obj))
 
         regions = []
         componentRegion = braille.Component(
@@ -836,6 +859,9 @@ class BrailleGenerator:
                                   self._script.getDisplayedLabel(obj),
                                   settings.brailleEOLIndicator)
         regions.append(textRegion)
+        text = self._getTextForRequiredObject(obj)
+        if text:
+            regions.append(braille.Region(" " + text))
 
         # We do not want the role at the end of text areas.
 
@@ -1142,6 +1168,8 @@ class BrailleGenerator:
         text = self._script.appendString(text,
                                          self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text,
+                                         self._getTextForRequiredObject(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)

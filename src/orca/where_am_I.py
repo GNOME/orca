@@ -178,6 +178,10 @@ class WhereAmI:
         accelerator = self._getObjAccelerator(obj)
         utterances.append(accelerator)
 
+        text = self._getRequiredState(obj)
+        if text:
+            utterances.append(text)
+
         debug.println(self._debugLevel, "check box utterances=%s" \
                       % utterances)
         speech.speakUtterances(utterances)
@@ -197,6 +201,10 @@ class WhereAmI:
         utterances = []
         text = self._getGroupLabel(obj)
         utterances.append(text)
+
+        text = self._getRequiredState(obj)
+        if text:
+            utterances.append(text)
 
         text = self.getObjLabelAndName(obj) + " " + \
                rolenames.getSpeechForRoleName(obj)
@@ -274,19 +282,24 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self._getObjLabel(obj)
-        utterances.append(text)
+        label = self._getObjLabel(obj)
+        utterances.append(label)
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
         name = self._getObjName(obj)
-        utterances.append(name)
+        if name != label:
+            utterances.append(name)
         
         utterances.extend(self._getSpeechForAllTextSelection(obj))
 
         text = self._getObjAccelerator(obj)
         utterances.append(text)
+
+        text = self._getRequiredState(obj)
+        if text:
+            utterances.append(text)
 
         debug.println(self._debugLevel, "spin button utterances=%s" % \
                       utterances)
@@ -341,6 +354,10 @@ class WhereAmI:
 
         text = self._getObjAccelerator(obj)
         utterances.append(text)
+
+        text = self._getRequiredState(obj)
+        if text:
+            utterances.append(text)
 
         debug.println(self._debugLevel, "slider utterances=%s" % \
                       utterances)
@@ -564,6 +581,10 @@ class WhereAmI:
 
         if nColumns:
             text = self._getTableCell(obj)
+            utterances.append(text)
+
+        text = self._getRequiredState(obj)
+        if text:
             utterances.append(text)
 
         debug.println(self._debugLevel, "first table cell utterances=%s" % \
@@ -982,7 +1003,7 @@ class WhereAmI:
             name = obj.description
 
         if name and name != "None":
-            text = name
+            text = name.strip()
         debug.println(self._debugLevel, "%s name=<%s>" % (obj.getRole(), text))
 
         return text
@@ -995,7 +1016,7 @@ class WhereAmI:
         label = self._script.getDisplayedLabel(obj)
 
         if label and label != "None":
-            text = label
+            text = label.strip()
 
         debug.println(self._debugLevel, "%s label=<%s>" % (obj.getRole(), text))
 
@@ -1818,3 +1839,23 @@ class WhereAmI:
         debug.println(self._debugLevel, "toolbar utterances=%s" \
                       % utterances)
         speech.speakUtterances(utterances)
+
+    def _getRequiredState(self, obj):
+        """Returns a string describing the required state of the given
+        object.
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        if not settings.presentRequiredState:
+            return ""
+
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            obj = obj.parent
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_REQUIRED):
+            return settings.speechRequiredStateString
+        else:
+            return ""

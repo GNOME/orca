@@ -241,6 +241,25 @@ class SpeechGenerator:
 
         return utterance
 
+    def _getSpeechForRequiredObject(self, obj):
+        """Returns the list of utterances that describe the required state
+        of the given object.
+
+        Arguments:
+        - obj: the Accessible object
+
+        Returns a list of utterances to be spoken.
+        """
+
+        if not settings.presentRequiredState:
+            return []
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_REQUIRED):
+            return [settings.speechRequiredStateString]
+        else:
+            return []
+
     def _debugGenerator(self, generatorName, obj, already_focused, utterances):
         """Prints debug.LEVEL_FINER information regarding the speech generator.
 
@@ -425,6 +444,7 @@ class SpeechGenerator:
                 utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
+            utterances.extend(self._getSpeechForRequiredObject(obj))
         else:
             utterances.append(checkedState)
 
@@ -1221,6 +1241,7 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
+            utterances.extend(self._getSpeechForRequiredObject(obj))
 
         self._debugGenerator("_getSpeechForSlider",
                              obj,
@@ -1244,6 +1265,7 @@ class SpeechGenerator:
             utterances = [self._script.getDisplayedText(obj)]
         else:
             utterances = self._getDefaultSpeech(obj, already_focused)
+            utterances.extend(self._getSpeechForRequiredObject(obj))
 
         self._debugGenerator("_getSpeechForSpinButton",
                              obj,
@@ -1438,6 +1460,8 @@ class SpeechGenerator:
                 # 'collapsed' means the children are not showing.
                 #
                 utterances.append(_("collapsed"))
+
+        utterances.extend(self._getSpeechForRequiredObject(obj))
 
         self._debugGenerator("_getSpeechForTableCell",
                              obj,

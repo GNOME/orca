@@ -701,6 +701,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if not role in dontSpeakRoles and len(newUtterances):
                 utterances.append(rolenames.getSpeechForRoleName(parent))
 
+            # If this object is an ARIA widget with STATE_REQUIRED, add
+            # that. (Note that for the most part, the ARIA widget itself
+            # has this state, but in the case of a group of radio buttons,
+            # it is the group which has the state).
+            #
+            utterances.extend(self._getSpeechForRequiredObject(parent))
+
             utterances.extend(newUtterances)
 
             parent = parent.parent
@@ -721,7 +728,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """
         
         # Let default handle non-ARIA widgets (XUL?)
-        if not self._script.isAriaWidget(obj):
+        if self._script.isAriaWidget(obj):
             return speechgenerator.SpeechGenerator.\
                        _getSpeechForSlider(self, obj, already_focused)
 
@@ -769,7 +776,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
 
-        self._debugGenerator("_getSpeechForSlider",
+        self._debugGenerator("Gecko._getSpeechForSlider",
                              obj,
                              already_focused,
                              utterances)

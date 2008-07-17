@@ -175,7 +175,10 @@ userCustomizableSettings = [
     "speakCellHeaders",
     "skipBlankCells",
     "largeObjectTextLength",
-    "wrappedStructuralNavigation"
+    "wrappedStructuralNavigation",
+    "presentRequiredState",
+    "brailleRequiredStateString",
+    "speechRequiredStateString"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -1110,3 +1113,24 @@ ALL_BUT_NUMLOCK_MODIFIER_MASK = (1 << MODIFIER_ORCA |
 # among headings (H) and the Help menu (Alt+H).
 #
 defaultModifierMask = NON_LOCKING_MODIFIER_MASK
+
+# Whether or not we should present objects with STATE_REQUIRED to
+# the user. Currently, this is only seen with ARIA widgets.
+#
+presentRequiredState = False
+
+# Translators: Certain objects (such as form controls on web pages)
+# can have STATE_REQUIRED set on them to inform the user that this
+# field must be filled out. This string is the default string which
+# will be spoken and displayed in braille to indicate this state is
+# present.
+#
+brailleRequiredStateString = _("required")
+
+# Translators: Certain objects (such as form controls on web pages)
+# can have STATE_REQUIRED set on them to inform the user that this
+# field must be filled out. This string is the default string which
+# will be spoken and displayed in braille to indicate this state is
+# present.
+#
+speechRequiredStateString = _("required")

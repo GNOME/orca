@@ -1222,7 +1222,9 @@ class Script(default.Script):
                 # See bug #441610 and
                 # https://bugzilla.mozilla.org/show_bug.cgi?id=348901
                 #
-                string = self.appendString(string, self.expandEOCs(label))
+                expandedLabel = self.expandEOCs(label)
+                if expandedLabel:
+                    string = self.appendString(string, expandedLabel.strip())
 
         return string
 
