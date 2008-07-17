@@ -140,29 +140,17 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            pyatspi.ROLE_PROGRESS_BAR,
                            5000))
 
-
 sequence.append(utils.AssertPresentationAction(
     "progress output", 
-    ["BUG? - We're also speaking the progress bar number.  We weren't before.  Should we be?",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
-     "SPEECH OUTPUT: '10 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
+    ["SPEECH OUTPUT: '10 percent. '",
      "SPEECH OUTPUT: '20 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '30 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '40 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '50 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '60 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '70 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '80 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '90 percent. '",
-     "SPEECH OUTPUT: 'Progress bar 2.'",
      "SPEECH OUTPUT: '100 percent. '"]))
 
 ########################################################################

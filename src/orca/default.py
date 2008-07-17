@@ -2610,6 +2610,27 @@ class Script(script.Script):
                orca_state.locusOfFocus.getApplication() == obj.getApplication():
                 currentTime = time.time()
 
+                # Check for defunct progress bars. Get rid of them if they
+                # are all defunct. Also find out which progress bar was
+                # the most recently updated.
+                #
+                defunctBars = 0
+                mostRecentUpdate = [obj, 0]
+                for key, value in self.lastProgressBarTime.items():
+                    if value > mostRecentUpdate[1]:
+                        mostRecentUpdate = [key, value]
+                    try:
+                        isDefunct = \
+                            key.getState().contains(pyatspi.STATE_DEFUNCT)
+                    except:
+                        isDefunct = True
+                    if isDefunct:
+                        defunctBars += 1
+
+                if defunctBars == len(self.lastProgressBarTime):
+                    self.lastProgressBarTime = {}
+                    self.lastProgressBarValue = {}
+
                 # If this progress bar is not already known, create initial
                 # values for it.
                 #
@@ -2634,12 +2655,14 @@ class Script(script.Script):
                         # bar is updating at the same time in a window.
                         # If this is the case, then speak the index of this
                         # progress bar in the dictionary of known progress
-                        # bars, as well as the value.
+                        # bars, as well as the value. But only speak the
+                        # index if this progress bar was not the most
+                        # recently updated to prevent chattiness.
                         #
                         if len(self.lastProgressBarTime) > 1:
                             index = 0
                             for key in self.lastProgressBarTime.keys():
-                                if key == obj:
+                                if key == obj and key != mostRecentUpdate[0]:
                                     # Translators: this is an index value
                                     # so that we can tell which progress bar
                                     # we are referring to.
