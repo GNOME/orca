@@ -722,6 +722,10 @@ class OrcaPrefs:
                 value = "'%s'" % prefsDict[key]
             elif key == "brailleEOLIndicator":
                 value = "'%s'" % prefsDict[key]
+            elif key == "brailleRequiredStateString":
+                value = "'%s'" % prefsDict[key]
+            elif key == "speechRequiredStateString":
+                value = "'%s'" % prefsDict[key]
             else:
                 value = prefsDict[key]
 
