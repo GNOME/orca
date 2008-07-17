@@ -1589,6 +1589,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("magCursorOnOffCheckButton").set_active(value)
         self.get_widget("magCursorTable").set_sensitive(value)
 
+        # Get the 'Hide system cursor' preference and set the checkbox 
+        # accordingly.
+        #
+        value = prefs["magHideCursor"]
+        self.get_widget("magHideCursorCheckButton").set_active(value)
+
         # Get the 'Explicit cursor size' preference and set the checkbox
         # accordingly. If the value is not checked, then the cursor size
         # spin button and label need to be set insensitive.
@@ -1738,6 +1744,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         self.get_widget("magZoomerCustomPositionTable").\
                 set_sensitive(zoomerPref == settings.MAG_ZOOMER_TYPE_CUSTOM)
+
+        # If the Zoomer settings position is full screen, and we are full
+        # screen capable and we are capable of hiding or showing the system
+        # pointer, then show the Hide system cursor checkbox.
+        #
+        isFullScreen = (zoomerPref == settings.MAG_ZOOMER_TYPE_FULL_SCREEN)
+        try:
+            showCheckbox = mag.isFullScreenCapable() and isFullScreen
+            mag.setSystemPointer(False)
+        except:
+            showCheckbox = False
+        self.get_widget("magHideCursorCheckButton").set_sensitive(showCheckbox)
 
         # Populate the zoomer spin buttons based on the size of the target
         # display.
@@ -3099,8 +3117,32 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             size = \
                  self.get_widget("magBorderSizeSpinButton").get_value_as_int()
 
+        # If the Zoomer settings position is full screen, and we are full
+        # screen capable and we are capable of hiding or showing the system
+        # pointer, then show the Hide system cursor checkbox.
+        #
+        isFullScreen = (zoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN)
+        try:
+            showCheckbox = mag.isFullScreenCapable() and isFullScreen
+            mag.setSystemPointer(False)
+        except:
+            showCheckbox = False
+        self.get_widget("magHideCursorCheckButton").set_sensitive(showCheckbox)
+
+        # Also if it's not full screen, then automatically clear the 
+        # 'hide cursor' preference and check box.
+        #
+        if not isFullScreen:
+            self.prefsDict["magHideCursor"] = False
+            self.get_widget("magHideCursorCheckButton").set_active(False)
+
         if not self.enableLiveUpdating:
             return
+
+        try:
+            mag.setSystemPointer(self.prefsDict["magHideCursor"])
+        except:
+            pass
 
         if zoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
             top = \
@@ -3117,6 +3159,22 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             mag.setupMagnifier(zoomerType, restore=self.prefsDict)
         mag.setZoomerObjectSize("border-size", size)
+
+    def magHideCursorChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magHideCursorCheckButton GtkCheckButton widget. The user
+           has [un]checked the hide system cursor checkbox. Set the
+           'magHideCursor' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        checked = widget.get_active()
+        self.prefsDict["magHideCursor"] = checked
+
+        if self.enableLiveUpdating:
+            mag.setSystemPointer(checked)
 
     def magZoomerTopValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the

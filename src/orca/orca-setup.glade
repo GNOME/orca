@@ -2576,58 +2576,6 @@ Sentence</property>
 				      </child>
 
 				      <child>
-					<widget class="GtkAlignment" id="alignment31">
-					  <property name="visible">True</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xscale">1</property>
-					  <property name="yscale">1</property>
-					  <property name="top_padding">12</property>
-					  <property name="bottom_padding">0</property>
-					  <property name="left_padding">0</property>
-					  <property name="right_padding">0</property>
-
-					  <child>
-					    <placeholder/>
-					  </child>
-					</widget>
-					<packing>
-					  <property name="left_attach">0</property>
-					  <property name="right_attach">1</property>
-					  <property name="top_attach">2</property>
-					  <property name="bottom_attach">3</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options">fill</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkAlignment" id="alignment30">
-					  <property name="visible">True</property>
-					  <property name="xalign">0.5</property>
-					  <property name="yalign">0.5</property>
-					  <property name="xscale">1</property>
-					  <property name="yscale">1</property>
-					  <property name="top_padding">12</property>
-					  <property name="bottom_padding">0</property>
-					  <property name="left_padding">0</property>
-					  <property name="right_padding">0</property>
-
-					  <child>
-					    <placeholder/>
-					  </child>
-					</widget>
-					<packing>
-					  <property name="left_attach">1</property>
-					  <property name="right_attach">2</property>
-					  <property name="top_attach">2</property>
-					  <property name="bottom_attach">3</property>
-					  <property name="x_options">fill</property>
-					  <property name="y_options">fill</property>
-					</packing>
-				      </child>
-
-				      <child>
 					<widget class="GtkSpinButton" id="magZoomFactorSpinButton">
 					  <property name="visible">True</property>
 					  <property name="can_focus">True</property>
@@ -3059,6 +3007,44 @@ Custom</property>
 					  <property name="bottom_attach">2</property>
 					  <property name="x_options"></property>
 					  <property name="y_options"></property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment31">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+					  <property name="top_padding">2</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">19</property>
+					  <property name="right_padding">0</property>
+
+					  <child>
+					    <widget class="GtkCheckButton" id="magHideCursorCheckButton">
+					      <property name="border_width">3</property>
+					      <property name="visible">True</property>
+					      <property name="can_focus">True</property>
+					      <property name="label" translatable="yes">Hide s_ystem pointer</property>
+					      <property name="use_underline">True</property>
+					      <property name="relief">GTK_RELIEF_NORMAL</property>
+					      <property name="focus_on_click">True</property>
+					      <property name="active">False</property>
+					      <property name="inconsistent">False</property>
+					      <property name="draw_indicator">True</property>
+					      <signal name="toggled" handler="magHideCursorChecked" last_modification_time="Mon, 07 Jul 2008 14:41:59 GMT"/>
+					    </widget>
+					  </child>
+					</widget>
+					<packing>
+					  <property name="left_attach">0</property>
+					  <property name="right_attach">2</property>
+					  <property name="top_attach">2</property>
+					  <property name="bottom_attach">3</property>
+					  <property name="x_options">fill</property>
+					  <property name="y_options">fill</property>
 					</packing>
 				      </child>
 				    </widget>

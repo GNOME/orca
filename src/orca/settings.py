@@ -119,6 +119,7 @@ userCustomizableSettings = [
     "enableMagLiveUpdating",
     "enableMagCursor",
     "enableMagCursorExplicitSize",
+    "magHideCursor",
     "magCursorSize",
     "magCursorColor",
     "enableMagCrossHair",
@@ -367,6 +368,10 @@ enableMagCursor                  = True
 # If True, allow an explicit size for the magnification cursor.
 #
 enableMagCursorExplicitSize      = False
+
+# If True, hide the system cursor.
+#
+magHideCursor                    = False
 
 # Size of the magnification cursor (in pixels).
 #

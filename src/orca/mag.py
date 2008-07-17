@@ -465,6 +465,21 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     except:
         debug.printException(debug.LEVEL_WARNING)
 
+    # If we are running in full screen mode, try to hide the original cursor
+    # (assuming the user wants to). See bug #533095 for more details.
+    # Depends upon new functionality in gnome-mag, so just catch the 
+    # exception if this functionality isn't there.
+    #
+    try:
+        hideCursor = restore.get('magHideCursor', settings.magHideCursor)
+        if hideCursor and \
+           _fullScreenCapable and \
+           _magnifier.SourceDisplay == _magnifier.TargetDisplay and \
+           position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+            _magnifier.hideCursor()
+    except:
+        pass
+
     _magnifierPBag = _magnifier.getProperties()
     sdb = _magnifierPBag.getValue("source-display-bounds").value()
     if not _originalSourceDisplayBounds:
@@ -1376,6 +1391,42 @@ def setZoomerColorFilter(colorFilter, updateScreen=True):
 
     if updateScreen:
         _zoomer.markDirty(_roi)
+
+def setSystemPointer(hidePointer):
+    """Hide or show the system pointer.
+
+    Arguments:
+    -hidePointer: If True, hide the system pointer, otherwise show it.
+    """
+
+    global _magnifier
+
+    if not _initialized:
+        _magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
+                                       "GNOME/Magnifier/Magnifier")
+
+    # Depends upon new functionality in gnome-mag, so just catch the
+    # exception if this functionality isn't there.
+    #
+    try:
+        if hidePointer:
+            _magnifier.hideCursor()
+        else:
+            _magnifier.showCursor()
+    except:
+        pass
+
+def isFullScreenCapable():
+    """Returns True if we are capable of doing full screen (i.e. whether
+    composite is being used.
+    """
+
+    try:
+        capable = _magnifier.fullScreenCapable()
+    except:
+        capable = False
+
+    return capable
 
 def isFilteringCapable():
     """Returns True if we're able to take advantage of libcolorblind's color
