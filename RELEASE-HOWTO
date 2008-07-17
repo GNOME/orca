@@ -20,6 +20,15 @@ Modify ./README to make sure it has the right Orca version.
 
 Update ./NEWS based upon entries in ./ChangeLog
 
+NOTE about giving credit to translators:
+
+You should get the translator name from the "Last Translator" field in
+the .po file, not from po/Changelog. Sometimes the translator is not the
+same person as who commits the file.
+
+There is even a script to help us on this job:
+http://svn.gnome.org/viewcvs/releng/trunk/single_module/tools/list_translators.sh?view=markup
+
 NOTE: You should also make sure the external dependencies listed in
 configure.in and README are accurate.
 
