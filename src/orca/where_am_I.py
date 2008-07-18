@@ -491,6 +491,10 @@ class WhereAmI:
         text = self._getObjLabel(obj)
         utterances.append(text)
 
+        if settings.presentReadOnlyText \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            utterances.append(settings.speechReadOnlyString)
+
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 

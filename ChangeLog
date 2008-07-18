@@ -1,5 +1,14 @@
 2008-07-18  Willie Walker <william.walker@sun.com>
 
+        * src/orca/settings.py:
+          src/orca/speechgenerator.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+	  Work on bug #542714 - Orca should indicate read-only text boxes.
+	  This handles the general case -- Firefox still needs to be done.
+
+2008-07-18  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca_gui_prefs.py:
 	  Fix for bug #542719 - Modified column header does not appear 
 	  translated in Preferences - Key bindings page.

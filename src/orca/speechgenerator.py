@@ -960,6 +960,11 @@ class SpeechGenerator:
         if len(utterances) == 0:
             if obj.name and (len(obj.name)):
                 utterances.append(obj.name)
+
+        if settings.presentReadOnlyText \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            utterances.append(settings.speechReadOnlyString)
+
         if obj.getRole() != pyatspi.ROLE_PARAGRAPH:
             utterances.extend(self._getSpeechForObjectRole(obj))
 

@@ -863,6 +863,11 @@ class BrailleGenerator:
         if text:
             regions.append(braille.Region(" " + text))
 
+        if settings.presentReadOnlyText \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            regions.append(braille.Region(" " \
+                                          + settings.brailleReadOnlyString))
+
         # We do not want the role at the end of text areas.
 
         return [regions, textRegion]
