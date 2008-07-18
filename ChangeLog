@@ -1,3 +1,9 @@
+2008-07-18  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_gui_prefs.py:
+	  Fix for bug #542719 - Modified column header does not appear 
+	  translated in Preferences - Key bindings page.
+	
 2008-07-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py:

@@ -364,7 +364,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                                self.keyBindingsModel,
                                MODIF)
 
-        column = gtk.TreeViewColumn("Modified",
+        # Translators: Modified is a table column header where the
+        # cells represent whether a key binding has been modified
+        # from the default key binding.
+        #
+        column = gtk.TreeViewColumn(_("Modified"),
                                     rendererToggle,
                                     active=MODIF,
                                     activatable=EDITABLE)
@@ -377,12 +381,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         rendererToggle = gtk.CellRendererToggle()
         rendererToggle.set_property('activatable', False)
-
-        # Translators: Modified is a table column header where the
-        # cells represent whether a key binding has been modified
-        # from the default key binding.
-        #
-        column = gtk.TreeViewColumn(_("Modified"),
+        column = gtk.TreeViewColumn("Modified",
                                     rendererToggle,
                                     active=EDITABLE)
         column.set_visible(False)
