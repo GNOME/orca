@@ -13,7 +13,7 @@ sequence = MacroSequence()
 # 1. Start oowriter. There is a bug_382408.params file that will
 #    automatically load table-sample.odt
 #
-sequence.append(WaitForWindowActivate("table-sample - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("table-sample(.odt|) - " + utils.getOOoName("Writer"),None))
 
 ######################################################################
 # 2. Type Control-Home to move the text caret to the start of the document.
@@ -35,9 +35,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the next line",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view This is a test. $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample", "This is a test. \$l") + "'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
@@ -49,9 +47,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the Mon table column header",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Frame table-sample - OpenOffice.org Writer RootPane ScrollPane Document view Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample", "Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat") + "'",
      "     VISIBLE:  'Mon Tue Wed Thu Fri Sat', cursor=1",
      "SPEECH OUTPUT: 'Sun Mon Tue Wed Thu Fri Sat'",
      "SPEECH OUTPUT: ' not selected'"]))

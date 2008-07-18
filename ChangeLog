@@ -1,5 +1,38 @@
 2008-07-18  Willie Walker <william.walker@sun.com>
 
+        * test/harness/utils.py:
+          test/keystrokes/oowriter/bug_450210.py:
+          test/keystrokes/oowriter/bug_430402.py:
+          test/keystrokes/oowriter/bug_435226.py:
+          test/keystrokes/oowriter/bug_382415.py:
+	  test/keystrokes/oowriter/bug_413909.py:
+          test/keystrokes/oowriter/bug_355733.py:
+          test/keystrokes/oowriter/bug_353268.py:
+          test/keystrokes/oowriter/bug_384893.py:
+          test/keystrokes/oowriter/bug_435201.py:
+          test/keystrokes/oowriter/bug_342602.py:
+          test/keystrokes/oowriter/bug_350219.py:
+          test/keystrokes/oowriter/bug_361624.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_382880.py:
+          test/keystrokes/oowriter/bug_364765.py:
+          test/keystrokes/oowriter/bug_385828.py:
+          test/keystrokes/oowriter/bug_469367.py:
+          test/keystrokes/oowriter/bug_362979.py:
+          test/keystrokes/oowriter/bug_382888.py:
+          Get the oowriter tests working well, at least with StarOffice 8
+	  on OpenSolaris.  bug_362979.py has some toxic bullet issues that
+	  need to be resolved, bug_435201.py has some nastiness to resolve
+	  as well (all the tests fail), and bug_382418.py has a 
+	  'leaving table' issue that looks like it might be fixed in
+	  later OOo releases, so I'm leaving it in there.  I'm checking
+	  these in because they work.  ;-)  I'm off to try an OOo 3.0
+	  development build now.
+
+2008-07-18  Willie Walker <william.walker@sun.com>
+
         * src/orca/keynames.py:
           test/keystrokes/gtk-demo/learn_mode.py:
           More fix for bug #542367 - Some key names not marked for translation.

@@ -21,6 +21,32 @@ fullPath = os.path.abspath(wd)
 htmlDir = os.path.abspath(fullPath + "/../../html")
 htmlURLPrefix = "file://" + htmlDir + "/"
 
+# Various OpenOffice names as a regex.  These are needed because OOo likes
+# to do various things with its window titles from release to release. 
+# These regex's attempt to provide a way to manage those differences.
+#
+OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
+
+#OOO_VERSION="OOo2.4"
+#OOO_VERSION="OOo-dev 3.0 Beta"
+OOO_VERSION="StarOffice 8"
+
+def getOOoName(app):
+    if OOO_VERSION == "OOo2.4":
+        return "OpenOffice.org %s" % app
+    elif OOO_VERSION == "OOo-dev 3.0 Beta":
+        return "OOo-dev %s Beta" % app
+    elif OOO_VERSION == "StarOffice 8":
+        return "StarOffice %s" % app
+        
+def getOOoBrailleLine(app, title, remainder):
+    if OOO_VERSION == "OOo2.4":
+        return "soffice Application " + title + " - OpenOffice.org " + app + " Frame " +  title + " - OpenOffice.org " + app + " RootPane ScrollPane Document view " + remainder
+    elif OOO_VERSION == "OOo-dev 3.0 Beta":
+        return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
+    elif OOO_VERSION == "StarOffice 8":
+        return "soffice Application " + title + " - StarOffice " + app + " Frame " +  title + " - StarOffice " + app + " RootPane ScrollPane Document view " + remainder
+
 createDiffs = True
 try:
     # If the difflib module is not found, fall back to generating the
@@ -91,8 +117,8 @@ def assertListEquality(rawOrcaResults, expectedList):
             if expectedResultRE.match(results[i]):
                 continue
             else:
+                print "NO MATCH", results[i], expectedList[i]
                 return results
-
     return None
 
 class AssertPresentationAction(AtomicAction):
@@ -146,8 +172,14 @@ class AssertPresentationAction(AtomicAction):
                 expectedToFail = True
 
         d = difflib.Differ()
-        diffs = list(d.compare(self._expectedResults, results))
-        print >> myErr, '\n'.join(list(diffs))
+        try:
+            # This can stack trace for some odd reason (UTF-8 characters?),
+            # so we need to capture it.  Otherwise, it can hang the tests.
+            #
+            diffs = list(d.compare(self._expectedResults, results))
+            print >> myErr, '\n'.join(list(diffs))
+        except:
+            print "(ERROR COMPUTING DIFFERENCES!!!)"
         return expectedToFail
 
     def printResults(self, results):

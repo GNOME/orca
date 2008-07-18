@@ -14,7 +14,7 @@ import utils
 #    automatically load empty_document.odt. This uses the FreeSerif 
 #    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("empty_document - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("empty_document(.odt|) - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=1",
      "SPEECH OUTPUT: 'Bold Italic Normal'"]))
 
@@ -58,7 +58,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for bold word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'",
+     "SPEECH OUTPUT: 'family name FreeSerif'",
      "SPEECH OUTPUT: 'bold'"]))
 
 ######################################################################
@@ -72,11 +72,11 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for italic word",
-    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=6",
      "SPEECH OUTPUT: 'Italic '",
      "SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'",
+     "SPEECH OUTPUT: 'family name FreeSerif'",
      "SPEECH OUTPUT: 'style italic'"]))
 
 ######################################################################
@@ -90,11 +90,11 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for regular word",
-    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view Bold Italic Normal $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=13",
      "SPEECH OUTPUT: 'Normal'",
      "SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'"]))
+     "SPEECH OUTPUT: 'family name FreeSerif'"]))
 
 ######################################################################
 # 9. Enter Alt-f, Alt-c to close the Writer application.

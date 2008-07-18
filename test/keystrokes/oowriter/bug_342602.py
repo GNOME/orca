@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -26,7 +26,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -49,7 +49,7 @@ sequence.append(WaitForFocus("Name", acc_role=pyatspi.ROLE_TEXT))
 # 4. Enter Return (Insert a table with the default parameters - 2x2).
 #
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -61,16 +61,17 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move to cell B1",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
      "     VISIBLE:  'A Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",     
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'A'",
      "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B1'",
-     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell B1'",
+     "SPEECH OUTPUT: 'blank'"]))
 
 ######################################################################
 # 6. Enter Shift-Tab (Returns to cell A1).
@@ -80,15 +81,16 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move back to cell A1",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
      "     VISIBLE:  'A Paragraph', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell A1'",
+     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'A'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: ' not selected'",
+     "SPEECH OUTPUT: 'Cell A1'"]))
 
 ######################################################################
 # 7. Enter Alt-f, Alt-c to close the Writer application.
@@ -114,7 +116,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 9. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 

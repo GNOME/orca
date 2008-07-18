@@ -15,7 +15,7 @@ sequence = MacroSequence()
 #    automatically load empty_document.odt. This uses the FreeSerif
 #    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("empty_document - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("empty_document(.odt|) - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -47,7 +47,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view This is a test $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "This is a test \$l") + "'",
      "     VISIBLE:  'This is a test $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test'"]))
 
@@ -61,7 +61,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the underlined word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'",
+     "SPEECH OUTPUT: 'family name FreeSerif'",
      "SPEECH OUTPUT: 'underline single'"]))
 
 ######################################################################
@@ -82,7 +82,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the bold word",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'",
+     "SPEECH OUTPUT: 'family name FreeSerif'",
      "SPEECH OUTPUT: 'bold'"]))
 
 ######################################################################

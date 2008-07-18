@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -26,7 +26,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled2 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -51,9 +51,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to the start of the document",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
      "SPEECH OUTPUT: 'The quuuiick brown fox'"]))
 
@@ -65,41 +63,40 @@ sequence.append(KeyComboAction("F7"))
 sequence.append(WaitForFocus("Change", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Enter F7 to bring up the spell checking dialog",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=2",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=3",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=4",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=5",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=14",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=15",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=16",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=17",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=18",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=19",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=20",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=21",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=22",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view The quuuiick brown fox $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
      "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog'",
      "     VISIBLE:  'Spellcheck:  (English (USA)) Dia', cursor=1",
      "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog Spellcheck:  (English (USA)) OptionPane Change Button'",
      "     VISIBLE:  'Change Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Spellcheck:  (English (USA))'",
      "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
      "SPEECH OUTPUT: ''",
@@ -130,7 +127,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 9. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 

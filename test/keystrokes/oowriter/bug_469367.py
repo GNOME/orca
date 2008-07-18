@@ -15,7 +15,7 @@ sequence = MacroSequence()
 #    automatically load empty_document.odt. This uses the FreeSerif
 #    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("empty_document - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("empty_document(.odt|) - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -41,9 +41,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Enter up arrow to position the text caret on the first line",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Frame empty_document - OpenOffice.org Writer RootPane ScrollPane Document view 		   This is a test. $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "		   This is a test. \$l") + "'",
      "     VISIBLE:  '		   This is a test. $l', cursor=1",
      "SPEECH OUTPUT: '		   This is a test.'"]))
 
@@ -57,7 +55,7 @@ sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family-name FreeSerif'"]))
+     "SPEECH OUTPUT: 'family name FreeSerif'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close the Writer application.

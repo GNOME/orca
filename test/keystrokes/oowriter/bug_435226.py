@@ -18,7 +18,7 @@ sequence = MacroSequence()
 # 1. Start oowriter. There is a bug_435226.params file that will
 #    automatically load spanish.odt.
 #
-sequence.append(WaitForWindowActivate("spanish - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("spanish(.odt|) - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -72,7 +72,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Type KP-Enter once to do a 'single-click' where-am-I operation",
-    ["BRAILLE LINE:  'soffice Application spanish - OpenOffice.org Writer Frame spanish - OpenOffice.org Writer RootPane ScrollPane Document view Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",
@@ -89,9 +89,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Type KP-Enter twice to do a 'double-click' where-am-I operation",
-    ["BRAILLE LINE:  'soffice Application spanish - OpenOffice.org Writer Frame spanish - OpenOffice.org Writer RootPane ScrollPane Document view Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! $l'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
-     "BRAILLE LINE:  'soffice Application spanish - OpenOffice.org Writer Frame spanish - OpenOffice.org Writer RootPane ScrollPane Document view Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! $l'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",

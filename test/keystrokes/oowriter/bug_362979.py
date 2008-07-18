@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -79,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move cursor to start of document",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 1 $l'",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 1 \$l'",
      "     VISIBLE:  '•Line 1 $l', cursor=2",
      "SPEECH OUTPUT: '•Line 1'"]))
 
@@ -93,7 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to second bulleted line",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Writer Frame Untitled2 - OpenOffice.org Writer RootPane ScrollPane Document view •Line 2 $l'",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 2 \$l'",
      "     VISIBLE:  '•Line 2 $l', cursor=2",
      "SPEECH OUTPUT: '•Line 2'"]))
 
@@ -118,7 +118,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 12. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer", None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 

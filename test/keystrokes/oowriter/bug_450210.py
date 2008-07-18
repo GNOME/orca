@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -29,13 +29,13 @@ sequence.append(TypeAction("o"))
 sequence.append(WaitAction("focus:",
                            None,
                            None,
-                           pyatspi.ROLE_TABLE,
+                           pyatspi.ROLE_LIST,
                            30000))
 sequence.append(utils.AssertPresentationAction(
     "Press 'o' to open the Open File Chooser",
     ["BRAILLE LINE:  'soffice Application Open Dialog'",
      "     VISIBLE:  'soffice Application Open Dialog', cursor=21",
-     "BRAILLE LINE:  'soffice Application Open Dialog File name: File name: List'",
+     "BRAILLE LINE:  'soffice Application Open Dialog Open OptionPane File name: File name: List'",
      "     VISIBLE:  'File name: File name: List', cursor=1",
      "SPEECH OUTPUT: 'Open'",
      "SPEECH OUTPUT: 'File name: combo box'",

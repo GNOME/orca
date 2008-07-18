@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -32,18 +32,18 @@ sequence.append(WaitForFocus("Letter...", acc_role=pyatspi.ROLE_MENU_ITEM))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("a"))
-sequence.append(WaitForWindowActivate("aw-5blue (read-only) - OpenOffice.org Writer",None))
+sequence.append(WaitForWindowActivate("aw-5blue (read-only) - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("Page design", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "Press 'a' to bring up the Agenda... wizard",
-    ["BRAILLE LINE:  'soffice Application aw-5blue (read-only) - OpenOffice.org Writer Frame'",
-     "     VISIBLE:  'aw-5blue (read-only) - OpenOffic', cursor=1",
+    ["BRAILLE LINE:  'soffice Application aw-5blue (read-only) - " + utils.getOOoName("Writer") + " Frame (1 dialog)'",
+     "     VISIBLE:  'aw-5blue \(read-only\) - " + utils.getOOoName("Writer")[0:9] + "', cursor=1",
      "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog'",
      "     VISIBLE:  'Agenda Wizard Dialog', cursor=1",
-     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog Steps Panel  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'aw-5blue (read-only) - OpenOffice.org Writer frame'",
-     "SPEECH OUTPUT: 'Agenda Wizard'",
+     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog Agenda Wizard OptionPane Steps Panel  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: 'aw-5blue (read-only) - " + utils.getOOoName("Writer") + " frame 1 unfocused dialog'",
+     "SPEECH OUTPUT: 'Agenda Wizard Please choose the page design for the agenda 1. Page design 2. General information 3. Headings to include 4. Names 5. Agenda items 6. Name and location'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page design label'"]))
 
