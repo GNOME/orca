@@ -84,9 +84,33 @@ __keynames["Scroll_Lock"]  = _("scroll lock")
 #
 __keynames["Page_Up"]      = _("page up")
 
+# Translators: this is how someone would speak the name of the page up key
+#
+__keynames["KP_Page_Up"]      = _("page up")
+
+# Translators: this is how someone would speak the name of the page up key
+#
+__keynames["Prior"]      = _("page up")
+
+# Translators: this is how someone would speak the name of the page up key
+#
+__keynames["KP_Prior"]      = _("page up")
+
 # Translators: this is how someone would speak the name of the page down key
 #
 __keynames["Page_Down"]    = _("page down")
+
+# Translators: this is how someone would speak the name of the page down key
+#
+__keynames["KP_Page_Down"]    = _("page down")
+
+# Translators: this is how someone would speak the name of the page down key
+#
+__keynames["Next"]    = _("page down")
+
+# Translators: this is how someone would speak the name of the page down key
+#
+__keynames["KP_Next"]    = _("page down")
 
 # Translators: this is how someone would speak the name of the tab key
 #
@@ -116,21 +140,41 @@ __keynames["BackSpace"] = _("backspace")
 #
 __keynames["Return"] = _("return")
 
+# Translators: this is how someone would speak the name of the enter key
+#
+__keynames["KP_Enter"] = _("enter")
+
 # Translators: this is how someone would speak the name of the up arrow key 
 #
 __keynames["Up"] = _("up")
+
+# Translators: this is how someone would speak the name of the up arrow key 
+#
+__keynames["KP_Up"] = _("up")
 
 # Translators: this is how someone would speak the name of the down arrow key 
 #
 __keynames["Down"] = _("down")
 
+# Translators: this is how someone would speak the name of the down arrow key 
+#
+__keynames["KP_Down"] = _("down")
+
 # Translators: this is how someone would speak the name of the left arrow key 
 #
 __keynames["Left"] = _("left")
 
+# Translators: this is how someone would speak the name of the left arrow key 
+#
+__keynames["KP_Left"] = _("left")
+
 # Translators: this is how someone would speak the name of the right arrow key 
 #
 __keynames["Right"] = _("right")
+
+# Translators: this is how someone would speak the name of the right arrow key 
+#
+__keynames["KP_Right"] = _("right")
 
 # Translators: this is how someone would speak the name of the left super key 
 #
@@ -163,6 +207,42 @@ __keynames["Mode_switch"] = _("mode switch")
 # Translators: this is how someone would speak the name of the escape key 
 #
 __keynames["Escape"] = _("escape")
+
+# Translators: this is how someone would speak the name of the insert key
+#
+__keynames["Insert"] = _("insert")
+
+# Translators: this is how someone would speak the name of the insert key
+#
+__keynames["KP_Insert"] = _("insert")
+
+# Translators: this is how someone would speak the name of the delete key
+#
+__keynames["Delete"] = _("delete")
+
+# Translators: this is how someone would speak the name of the delete key
+#
+__keynames["KP_Delete"] = _("delete")
+
+# Translators: this is how someone would speak the name of the home key
+#
+__keynames["Home"] = _("home")
+
+# Translators: this is how someone would speak the name of the home key
+#
+__keynames["KP_Home"] = _("home")
+
+# Translators: this is how someone would speak the name of the end key
+#
+__keynames["End"] = _("end")
+
+# Translators: this is how someone would speak the name of the end key
+#
+__keynames["KP_End"] = _("end")
+
+# Translators: this is how someone would speak the name of the begin key
+#
+__keynames["KP_Begin"] = _("begin")
 
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it

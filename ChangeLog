@@ -1,5 +1,11 @@
 2008-07-18  Willie Walker <william.walker@sun.com>
 
+        * src/orca/keynames.py:
+          test/keystrokes/gtk-demo/learn_mode.py:
+          More fix for bug #542367 - Some key names not marked for translation.
+
+2008-07-18  Willie Walker <william.walker@sun.com>
+
         * src/orca/settings.py:
           src/orca/speechgenerator.py:
           src/orca/where_am_I.py:
