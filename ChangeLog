@@ -1,3 +1,9 @@
+2008-07-18  Halim Sahin <via william.walker@sun.com>
+
+        * src/orca/orca_console_prefs.py:
+          Fix for bug #543775 - Orca uses incorrect voice sometimes
+          in text setup
+
 2008-07-18  Willie Walker <william.walker@sun.com>
 
         * test/harness/utils.py:

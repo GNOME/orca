@@ -387,18 +387,21 @@ def setupSpeech(prefsDict):
     # has a numeric keypad) and laptop (i.e., small and compact) keyboard
     # layouts for how they might control Orca.
     #
-    sayAndPrint(_("1. Desktop"))
+    sayAndPrint(_("1. Desktop"),
+                False, False, speechServerChoice, speechVoiceChoice)
 
     # Translators: we allow the user to choose between the desktop (i.e.,
     # has a numeric keypad) and laptop (i.e., small and compact) keyboard
     # layouts for how they might control Orca.
     #
-    sayAndPrint(_("2. Laptop"))
+    sayAndPrint(_("2. Laptop"),
+                False, False, speechServerChoice, speechVoiceChoice)
 
     try:
         # Translators: this is prompting for a numerical choice.
         #
-        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        choice = int(sayAndPrint(_("Enter choice: "),
+                     False, True, speechServerChoice, speechVoiceChoice))
     except:
         choice = -1
     if choice == 2:
