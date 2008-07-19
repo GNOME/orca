@@ -47,7 +47,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "This is a test \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "This is a test \$l") + "'",
      "     VISIBLE:  'This is a test $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test'"]))
 

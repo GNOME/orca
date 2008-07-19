@@ -27,25 +27,25 @@ htmlURLPrefix = "file://" + htmlDir + "/"
 #
 OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
 
-#OOO_VERSION="OOo2.4"
-#OOO_VERSION="OOo-dev 3.0 Beta"
-OOO_VERSION="StarOffice 8"
+#OOO_VERSION="OpenOffice 2.4"
+#OOO_VERSION="StarOffice 8"
+OOO_VERSION="DEV300_m25"
 
 def getOOoName(app):
-    if OOO_VERSION == "OOo2.4":
+    if OOO_VERSION == "OpenOffice 2.4":
         return "OpenOffice.org %s" % app
-    elif OOO_VERSION == "OOo-dev 3.0 Beta":
-        return "OOo-dev %s Beta" % app
     elif OOO_VERSION == "StarOffice 8":
         return "StarOffice %s" % app
+    elif OOO_VERSION == "DEV300_m25":
+        return "OOo-dev %s Beta" % app
         
 def getOOoBrailleLine(app, title, remainder):
-    if OOO_VERSION == "OOo2.4":
+    if OOO_VERSION == "OpenOffice 2.4":
         return "soffice Application " + title + " - OpenOffice.org " + app + " Frame " +  title + " - OpenOffice.org " + app + " RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "OOo-dev 3.0 Beta":
-        return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
     elif OOO_VERSION == "StarOffice 8":
         return "soffice Application " + title + " - StarOffice " + app + " Frame " +  title + " - StarOffice " + app + " RootPane ScrollPane Document view " + remainder
+    elif OOO_VERSION == "DEV300_m25":
+        return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
 
 createDiffs = True
 try:
@@ -117,7 +117,6 @@ def assertListEquality(rawOrcaResults, expectedList):
             if expectedResultRE.match(results[i]):
                 continue
             else:
-                print "NO MATCH", results[i], expectedList[i]
                 return results
     return None
 

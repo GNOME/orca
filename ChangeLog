@@ -1,6 +1,27 @@
 2008-07-18  Willie Walker <william.walker@sun.com>
 
         * test/harness/utils.py:
+          test/keystrokes/oowriter/bug_435226.py:
+          test/keystrokes/oowriter/bug_382415.py:
+          test/keystrokes/oowriter/bug_413909.py:
+          test/keystrokes/oowriter/bug_384893.py:
+          test/keystrokes/oowriter/bug_342602.py:
+          test/keystrokes/oowriter/bug_361624.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_382880.py:
+          test/keystrokes/oowriter/bug_469367.py:
+          test/keystrokes/oowriter/bug_382888.py:
+          Get the oowriter tests working well with OOo DEV300_m25.
+	  They still don't succeed without unexpected failures, but
+	  they get along OK.  Still some work to do, and I think we
+	  also need to do a UI analysis -- some of the output seems
+	  a little cumbersome.
+
+2008-07-18  Willie Walker <william.walker@sun.com>
+
+        * test/harness/utils.py:
           test/keystrokes/oowriter/bug_450210.py:
           test/keystrokes/oowriter/bug_430402.py:
           test/keystrokes/oowriter/bug_435226.py:

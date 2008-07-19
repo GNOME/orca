@@ -72,7 +72,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Type KP-Enter once to do a 'single-click' where-am-I operation",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",
@@ -89,9 +89,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Type KP-Enter twice to do a 'double-click' where-am-I operation",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=17",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'paragraph'",

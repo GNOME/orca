@@ -41,7 +41,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Enter up arrow to position the text caret on the first line",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "		   This is a test. \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "		   This is a test. \$l") + "'",
      "     VISIBLE:  '		   This is a test. $l', cursor=1",
      "SPEECH OUTPUT: '		   This is a test.'"]))
 

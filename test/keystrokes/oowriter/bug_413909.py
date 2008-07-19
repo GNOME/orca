@@ -97,8 +97,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Spellcheck:  (English (USA)) Dia', cursor=1",
      "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog Spellcheck:  (English (USA)) OptionPane Change Button'",
      "     VISIBLE:  'Change Button', cursor=1",
-     "SPEECH OUTPUT: 'Spellcheck:  (English (USA))'",
+# [[[TODO: WDW - StarOffice 8 doesn't give us this.  DEV300_m25 does.]]]
+#
      "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
+     "SPEECH OUTPUT: 'Spellcheck:  (English (USA))'",
+# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
+#
+#     "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Change button'"]))
 

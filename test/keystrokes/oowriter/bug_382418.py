@@ -69,7 +69,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'leaving table.'",
+# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
+#
+#     "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'Line 1'"]))
 
 ######################################################################
@@ -80,7 +82,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to enter the table",
-    ["SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
+# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
+#
+    [#"SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'Cell A1'"]))
 
 ######################################################################

@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Control-Home to move to start of document",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=1",
      "SPEECH OUTPUT: 'Bold Italic Normal'"]))
 
@@ -72,7 +72,7 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for italic word",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=6",
      "SPEECH OUTPUT: 'Italic '",
      "SPEECH OUTPUT: 'size 12'",
@@ -90,7 +90,7 @@ sequence.append(TypeAction ("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Text information for regular word",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document", "Bold Italic Normal \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "Bold Italic Normal \$l") + "'",
      "     VISIBLE:  'Bold Italic Normal $l', cursor=13",
      "SPEECH OUTPUT: 'Normal'",
      "SPEECH OUTPUT: 'size 12'",
