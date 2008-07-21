@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'KP_Insert', cursor=0",
      "BRAILLE LINE:  'Reads the attributes associated with the current text character.'",
      "     VISIBLE:  'Reads the attributes associated ', cursor=0",
-     "SPEECH OUTPUT: 'KP_Insert'",
+     "SPEECH OUTPUT: 'insert'",
      "SPEECH OUTPUT: 'Reads the attributes associated with the current text character.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'KP_Insert', cursor=0",
      "BRAILLE LINE:  'Displays the preferences configuration dialog.'",
      "     VISIBLE:  'Displays the preferences configu', cursor=0",
-     "SPEECH OUTPUT: 'KP_Insert'",
+     "SPEECH OUTPUT: 'insert'",
      "SPEECH OUTPUT: 'Displays the preferences configuration dialog.'"]))
 
 sequence.append(utils.StartRecordingAction())
