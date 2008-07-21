@@ -1277,7 +1277,8 @@ class Script(default.Script):
                         return
                 elif event.detail1 == 0 \
                      and eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
-                                             pyatspi.ROLE_LIST_ITEM]:
+                                             pyatspi.ROLE_LIST_ITEM,
+                                             pyatspi.ROLE_MENU_ITEM]:
                     return
 
             elif eventSourceInDocument and not self.inDocumentContent() \
@@ -1478,8 +1479,10 @@ class Script(default.Script):
             and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
             try:
                 [obj, characterOffset] = self.getCaretContext()
-                if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                    orca.setLocusOfFocus(event, obj)
+                state = obj.getState()
+                if not state.contains(pyatspi.STATE_FOCUSED):
+                    if not state.contains(pyatspi.STATE_FOCUSABLE):
+                        orca.setLocusOfFocus(event, obj)
                     return
             except:
                 pass
@@ -2216,7 +2219,8 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
 
-        self.speakCharacterAtOffset(obj, characterOffset)
+        if characterOffset >= 0:
+            self.speakCharacterAtOffset(obj, characterOffset)
 
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""

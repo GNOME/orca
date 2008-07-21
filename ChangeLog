@@ -1,3 +1,9 @@
+2008-07-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #539075 - Navigation problems with Firefox 3 & Aria
+          example.
+
 2008-07-18  Halim Sahin <via william.walker@sun.com>
 
         * src/orca/orca_console_prefs.py:
