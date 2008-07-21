@@ -1409,39 +1409,31 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        try:
+            eventSourceRole = event.source.getRole()
+        except:
+            return
+
+        # Ignore events on the frame as they are often intermingled
+        # with menu activity, wreaking havoc on the context. We will
+        # ignore autocompletes because we get focus events for the
+        # entry, which is the thing that really has focus anyway.
+        #
+        if eventSourceRole in [pyatspi.ROLE_FRAME,
+                               pyatspi.ROLE_AUTOCOMPLETE]:
+            return
+
         # If this event is the result of our calling grabFocus() on
         # this object in setCaretPosition(), we want to ignore it.
         # See bug #471537.  But we don't want to do this for entries.
         # See bug #501447. Or links.  See bug #511389.
         #
         if self.isSameObject(event.source, self._objectForFocusGrab) \
-           and not event.source.getRole() in [pyatspi.ROLE_ENTRY,
-                                              pyatspi.ROLE_LINK,
-                                              pyatspi.ROLE_DOCUMENT_FRAME]:
+           and not eventSourceRole in [pyatspi.ROLE_ENTRY,
+                                       pyatspi.ROLE_LINK,
+                                       pyatspi.ROLE_DOCUMENT_FRAME]:
             orca.setLocusOfFocus(event, event.source, False)
-            return
-
-        # We're going to ignore focus events on the frame.  They
-        # are often intermingled with menu activity, wreaking havoc
-        # on the context.
-        #
-        if (event.source.getRole() == pyatspi.ROLE_FRAME) \
-           or (not event.source.getRole()):
-            return
-
-        # If {overflow:hidden} is in the document's style sheet, we seem
-        # to get an additional item in the hierarchy:  An object of role
-        # ROLE_UNKNOWN which is the single child of the document frame and
-        # contains all the items which we'd expect to find in the document
-        # frame.  Under these conditions, we will get a caret-moved event
-        # for the document frame with detail1 == 0 after a focus: event for
-        # the object.  We need to ignore both of these events else we will
-        # jump to the top of the document.
-        #
-        # http://bugzilla.gnome.org/show_bug.cgi?id=412677
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=371955
-        #
-        if event.source.getRole() == pyatspi.ROLE_UNKNOWN:
             return
 
         # We also ignore focus events on the panel that holds the document
@@ -1450,7 +1442,7 @@ class Script(default.Script):
         # those cases, we want the locus of focus to be the subcomponent
         # that really holds the caret.
         #
-        if event.source.getRole() == pyatspi.ROLE_PANEL:
+        if eventSourceRole == pyatspi.ROLE_PANEL:
             documentFrame = self.getDocumentFrame()
             if documentFrame and (documentFrame.parent == event.source):
                 return
@@ -1475,8 +1467,7 @@ class Script(default.Script):
         # caret context for the document frame.  If we succeed, then
         # we set the focus on the object that's holding the caret.
         #
-        if event.source \
-            and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
+        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME:
             try:
                 [obj, characterOffset] = self.getCaretContext()
                 state = obj.getState()
@@ -1487,46 +1478,11 @@ class Script(default.Script):
             except:
                 pass
 
-        # We're also going to ignore menus that are children of menu
-        # bars.  They never really get focus themselves - it's always
-        # a transient event and one of the menu items or submenus will
-        # get focus immediately after the menu gets focus.  So...we
-        # compress the events.
-        #
-        # [[[WDW - commented this out on 27-Jul-2006 based upon feedback
-        # from Lynn Monsanto that it was getting in the way for Firefox
-        # and Yelp.]]]
-        #
-        #if (event.source.getRole() == pyatspi.ROLE_MENU) \
-        #   and event.source.parent \
-        #   and (event.source.parent.getRole() == pyatspi.ROLE_MENU_BAR):
-        #    return
-
-        # Autocomplete widgets are a complex beast as well.  When they
-        # get focus, their child (which is an entry) really has focus.
-        # Their child also issues a focus: event, so we just ignore
-        # the autocomplete focus: event.
-        #
-        if event.source.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-            # [[[WDW - we used to force the locus of focus to the
-            # entry.  The idea was that even if the entry issued
-            # a focus: event, the locus of focus would not change.
-            # The problem, however, is that Gecko often gives us
-            # a *different* child whenever we ask for the entry.
-            # So...we end up just depending upon the entry to issue
-            # us a focus: event.  The focus: event usually
-            # occurs immediately after the autocomplete gets
-            # focus.]]]
-            #
-            #entry = self.getAutocompleteEntry(event.source)
-            #orca.setLocusOfFocus(event, entry)
-            return
-
         # If a link gets focus, it might be a link that contains just an
         # image, as we often see in web pages.  In these cases, we give
         # the image focus and announce it.
         #
-        if event.source.getRole() == pyatspi.ROLE_LINK:
+        if eventSourceRole == pyatspi.ROLE_LINK:
             containingLink = self.getAncestor(orca_state.locusOfFocus,
                                               [pyatspi.ROLE_LINK],
                                               [pyatspi.ROLE_DOCUMENT_FRAME])

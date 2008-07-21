@@ -4,6 +4,11 @@
           Fix for bug #539075 - Navigation problems with Firefox 3 & Aria
           example.
 
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #543024 - Important header fields for received
+          messages not spoken when tabbing through headers in Thunderbird
+          message view.
+
 2008-07-18  Halim Sahin <via william.walker@sun.com>
 
         * src/orca/orca_console_prefs.py:
