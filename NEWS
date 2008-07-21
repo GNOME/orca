@@ -1,3 +1,176 @@
+2.23.5 - 21-Jul-2008
+
+General:
+
+* Fix for bug #520596 - Orca should implement echo by sentence.
+
+* Additional fix for bug #525656 - Orca needs to handle the new
+  Pidgin typing status updates. This was needed due to a change
+  in Pidgin.
+
+* Fix for bug #533095 - Magnifier should turn off the system
+  sprite/cursor/mouse when using full screen magnification.
+  This requires a new gnome-mag release as well.
+
+* Fix for bug #534022 - The Line-end symbol (46 123) should be
+  configurable per application.
+
+* Fix for bug #536825 - Allow bypass of Orca's keyboard commands.
+  (The default keybinding is Orca+Backspace, but you can change
+  that by specifying a new binding in the Orca Preferences dialog.)
+
+* Fix for bug #536985 - Orca no longer reads applets on the panel.
+
+* Fix for bug #538058 - The role for accessibles of ROLE_LIST_ITEM
+  should not be spoken when the accessible is given focus.
+
+* Fix for bug #538729 - In Orca preferences window /text attributes 
+  page the text attribute names not marked for translation.
+
+* Fix for bug #538773 - Enable a quick 'smoke test' for whether Orca
+  can see things via the AT-SPI.  Added a --list-apps option to print
+  the list of known applications.
+
+* Fix for bug #540937 - Orca doesn't check if the wnck python bindings
+  are installed.
+
+* Fix for bug #541094 - Back out 'silent focus' code.
+
+* Fix for bug #541437 - Trying to quit Orca with the mouse doesn't
+  give focus to the Quit dialog.
+
+* Fix for bug #542260 - Orca should only keep track of
+  active/non-defunct progress bars.
+
+* Fix for bug #542262 - Orca should only echo words once when word
+  echo is enabled.
+
+* Fix for bug #542367 - Some key names not marked for translation.
+
+* Fix for bug #542714 - Orca should indicate read-only text boxes.
+
+* Fix for bug #542719 - Modified column header does not appear
+  translated in Preferences - Key bindings page.
+	
+* Fix for bug #543775 - Orca uses incorrect voice sometimes in text
+  setup.
+
+Java:
+
+* Much work on bug #435623 - Java Platform Metabug (see comment #6 in
+  the bug for more information).
+
+StarOffice/OpenOffice:
+
+* Fix for bug #538053 - Word echo is not echoing the word typed 
+  when return is pressed while editing an Impress slide.
+
+* Fix for bug #538056 - Orca should announce the "view" as part of 
+  the scroll pane context in Impress.
+
+* Fix for bug #538064 - Orca should speak placeholder contents when
+  that placeholder is given focus on an Impress slide.
+
+* Fix for bug #538835 - Word echo is not echoing the word typed when
+  return is pressed while creating an oowriter text document.
+
+Firefox:
+
+* Fix for bug #519515 - Support ARIA "required" state.  This adds
+  support for presenting the fact that the required state has been
+  set for the following types of ARIA widgets: 
+
+      - checkbox
+      - gridcell
+      - radiogroup
+      - slider
+      - spinbutton
+
+  We'll add support for additional widgets over time.  In order to
+  minimize verbosity, this state is not presented by default. To
+  change this setting, set orca.settings.presentRequiredState to
+  True in your user-settings.py or orca-customizations.py. In
+  addition, we've added in support for customizing the strings
+  used to present the required state. By default, "required" (or
+  the localized form of it) will be used for both speech and
+  braille.  Modify orca.settings.brailleRequiredStateString and/or
+  orca.settings.speechRequiredStateString if you would prefer a
+  different string.
+
+* Fix for bug #530783 - Orca speaks an image map link's shape as part
+  of the whereAmI info in FF3.
+
+* Fix for bug #533109 - Orca doesn't speak alerts in Firefox.
+
+* Fix for bug #535023 - Structural Navigation should be pulled out of
+  Gecko and include more objects.
+
+* Fix for bug #536455 - Contents of "Save In Folder" combo box not
+  indicated in speech/braille in Firefox/Thunderbird.
+
+* Fix for bug #537839 - Orca does not remember the last position
+  on a webpage in firefox when using the back command.
+
+* Fix for bug #539075 - Navigation problems with Firefox 3 & Aria
+  example.
+
+* Fix for bug #540187 - Wrapped structural navigation toggle. There
+  is a new setting (wrappedStructuralNavigation) which controls
+  whether or not we wrap around the document when structural 
+  navigation is used. The default value is True (i.e. do wrap). If
+  you would prefer Orca not wrap, you can set it to False in your
+  user-settings.py or your orca-customizations.py.
+
+* Fix for bug #542324 - When launch Firefox 3.0 and pressing
+  CTRL+Orca+space key, In Orca application preferences/keybindings
+  page some structural navigation description not marked for
+  translation.
+
+* Fix for bug #542927 - Live region commands should be treated as
+  structural navigation commands when in form fields in Firefox 3.
+
+* Fix for bug #543496 - Problems with performing mouse clicks in
+  Firefox.
+
+Thunderbird:
+
+* Fix for bug #533042 - Orca should be less verbose when reading
+  autocompletes in Thunderbird.
+
+* Fix for bug #536451 - Newly focused message not spoken after message
+  deletion in Thunderbird.
+
+* Fix for bug #536455 - Contents of "Save In Folder" combo box not
+  indicated in speech/braille in Firefox/Thunderbird.
+
+* Fix for bug #540039 - Newly focused message not spoken after message
+  deletion in Thunderbird if a message is open.
+
+* Fix for bug #540407 - Problems reading messages in Thunderbird
+  when arrowToLineBeginning is False.
+
+* Fix for bug #540833 - Word echo not working in Thunderbird address
+  fields if autocompletion is not active.
+
+* Fix for bug #541018 - Mail messages not automatically read when
+  opened in Thunderbird.
+
+* Fix for bug #543024 - Important header fields for received
+  messages not spoken when tabbing through headers in Thunderbird
+  message view.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    gl      Galician             Ignacio Casal Quinteiro
+    hu      Hungarian            Atilla Hammer and Gabor Kelemen
+    nb      Norwegian Bokmål     Kjartan Maraas
+    oc      Occitan              Yannig Marchegay
+    ru      Russian              Nickolay V. Shmyrev and Anatol Kamynin
+
+==========
+
 2.23.4 - 16-Jun-2008
 
 General:
