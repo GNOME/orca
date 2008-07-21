@@ -118,7 +118,8 @@ class WhereAmI:
         elif role == pyatspi.ROLE_PAGE_TAB:
             self._speakPageTab(obj, basicOnly)
 
-        elif role in [pyatspi.ROLE_TEXT,
+        elif role in [pyatspi.ROLE_ENTRY,
+                      pyatspi.ROLE_TEXT,
                       pyatspi.ROLE_TERMINAL]:
             self._speakText(obj, basicOnly)
 
@@ -484,8 +485,16 @@ class WhereAmI:
         cell = self._script.getAncestor(obj,
                                         [pyatspi.ROLE_TABLE_CELL],
                                         [pyatspi.ROLE_FRAME])
-        if cell:
-            return self._speakTableCell(cell, basicOnly)
+        if cell and not self._script.isLayoutOnly(cell.parent):
+            # [[[TODO: WDW - we handle ROLE_ENTRY specially here because
+            # there is a bug in getRealActiveDescendant: it doesn't dive
+            # deep enough into the hierarchy (see comment #12 of bug
+            # #542714).  So, we'll do this nasty hack until we can feel
+            # more comfortable with mucking around with
+            # getRealActiveDescendant.]]]
+            #
+            if obj.getRole() != pyatspi.ROLE_ENTRY:
+                return self._speakTableCell(cell, basicOnly)
 
         utterances = []
         text = self._getObjLabel(obj)

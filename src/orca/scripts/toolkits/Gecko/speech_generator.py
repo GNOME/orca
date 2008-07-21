@@ -33,6 +33,7 @@ import math
 import pyatspi
 
 import orca.rolenames as rolenames
+import orca.settings as settings
 import orca.speechgenerator as speechgenerator
 
 from orca.orca_i18n import _
@@ -141,6 +142,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         else:
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
+
+        if settings.presentReadOnlyText \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            utterances.append(settings.speechReadOnlyString)
 
         utterances.extend(self.getSpeechForObjectRole(obj))
 

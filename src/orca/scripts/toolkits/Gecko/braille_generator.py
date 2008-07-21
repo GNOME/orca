@@ -248,6 +248,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         textRegion = braille.Text(obj, label, settings.brailleEOLIndicator)
         regions.append(textRegion)
+
+        if settings.presentReadOnlyText \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            regions.append(braille.Region(" " \
+                                          + settings.brailleReadOnlyString))
+
         return [regions, textRegion]
 
     def _getBrailleRegionsForComboBox(self, obj):
