@@ -1564,8 +1564,9 @@ class Context:
             # handle toolkits that will offset the caret position to
             # the right if you click dead on center of a character.
             #
+            x = max(x, x + (width / 2) - 1)
             eventsynthesizer.clickPoint(x,
-                                        y + height/ 2,
+                                        y + height / 2,
                                         button)
         except:
             debug.printException(debug.LEVEL_SEVERE)

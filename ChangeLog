@@ -9,6 +9,10 @@
           messages not spoken when tabbing through headers in Thunderbird
           message view.
 
+        * src/orca/flat_review.py:
+          Fix for bug #543496 - Problems with performing mouse clicks in
+          Firefox.
+
 2008-07-18  Halim Sahin <via william.walker@sun.com>
 
         * src/orca/orca_console_prefs.py:
