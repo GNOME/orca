@@ -113,11 +113,14 @@ def assertListEquality(rawOrcaResults, expectedList):
 	if results[i] == expectedList[i]:
             continue
         else:
-            expectedResultRE = re.compile(expectedList[i])
-            if expectedResultRE.match(results[i]):
+            expectedResultRE = re.compile(expectedList[i].decode("UTF-8",
+                                                                 "replace"))
+            if expectedResultRE.match(results[i].decode("UTF-8",
+                                                        "replace")):
                 continue
             else:
                 return results
+
     return None
 
 class AssertPresentationAction(AtomicAction):
@@ -179,6 +182,18 @@ class AssertPresentationAction(AtomicAction):
             print >> myErr, '\n'.join(list(diffs))
         except:
             print "(ERROR COMPUTING DIFFERENCES!!!)"
+            for i in range(0, max(len(results), len(self._expectedResults))):
+                try:
+                    print "  EXPECTED: %s" \
+                          % self._expectedResults[i].decode("UTF-8", "replace")
+                except:
+                    pass
+                try:
+                    print "  ACTUAL:   %s" \
+                          % results[i].decode("UTF-8", "replace")
+                except:
+                    pass
+
         return expectedToFail
 
     def printResults(self, results):
