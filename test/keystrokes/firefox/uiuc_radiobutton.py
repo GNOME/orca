@@ -59,9 +59,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "move to second radio button", 
-    ["BRAILLE LINE:  '&=y Subway RadioButton'",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Subway RadioButton'",
+     "     VISIBLE:  '&=y Subway RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Subway RadioButton'",
      "     VISIBLE:  '&=y Subway RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Subway selected radio button'",
      "SPEECH OUTPUT: 'Subway selected radio button'"]))
 
 ########################################################################
@@ -71,10 +75,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "move to third radio button", 
-    ["BRAILLE LINE:  '&=y Jimmy Johns RadioButton'",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Jimmy Johns RadioButton'",
+     "     VISIBLE:  '&=y Jimmy Johns RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Jimmy Johns RadioButton'",
      "     VISIBLE:  '&=y Jimmy Johns RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Jimmy Johns selected radio button'",
      "SPEECH OUTPUT: 'Jimmy Johns selected radio button'"]))
+
 ########################################################################
 # Move to the fourth radio button.
 #
@@ -82,10 +91,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "move to fourth radio button", 
-    ["BRAILLE LINE:  '&=y Radio Maria RadioButton'",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Radio Maria RadioButton'",
+     "     VISIBLE:  '&=y Radio Maria RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Radio Maria RadioButton'",
      "     VISIBLE:  '&=y Radio Maria RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Radio Maria selected radio button'",
      "SPEECH OUTPUT: 'Radio Maria selected radio button'"]))
+
 ########################################################################
 # Move to the fifth radio button.
 #
@@ -93,10 +107,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "move to fifth radio button", 
-    ["BRAILLE LINE:  '&=y Rainbow Gardens RadioButton'",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Rainbow Gardens RadioButton'",
+     "     VISIBLE:  '&=y Rainbow Gardens RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Rainbow Gardens RadioButton'",
      "     VISIBLE:  '&=y Rainbow Gardens RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Rainbow Gardens selected radio button'",
      "SPEECH OUTPUT: 'Rainbow Gardens selected radio button'"]))
+
 ########################################################################
 # Move to the second radio button group (panel).  Contrast to the first group
 # where the "Water" radio button already has been selected.
@@ -117,22 +136,32 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "move to second radio button grp2", 
-    ["BRAILLE LINE:  '&=y Cola RadioButton'",
+    "move to second radio button grp2",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Cola RadioButton'",
+     "     VISIBLE:  '&=y Cola RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Cola RadioButton'",
      "     VISIBLE:  '&=y Cola RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Cola selected radio button'",
      "SPEECH OUTPUT: 'Cola selected radio button'"]))
+
 ########################################################################
 # Move back to the first radio button.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "move back to first radio button grp2", 
-    ["BRAILLE LINE:  '&=y Coffee RadioButton'",
+    "move back to first radio button grp2",
+    ["BUG? - We're repeating ourselves",
+     "BRAILLE LINE:  '&=y Coffee RadioButton'",
+     "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
+     "BRAILLE LINE:  '&=y Coffee RadioButton'",
      "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Coffee selected radio button'",
      "SPEECH OUTPUT: 'Coffee selected radio button'"]))
+
 ########################################################################
 # Close the demo
 #

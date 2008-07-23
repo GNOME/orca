@@ -154,7 +154,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. line Down",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker Image'",
      "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
-     "SPEECH OUTPUT: 'Dashing picture of Willie Walker image'"]))
+     "SPEECH OUTPUT: 'Dashing picture of Willie Walker image ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -173,7 +174,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. line Up",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker Image'",
      "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
-     "SPEECH OUTPUT: 'Dashing picture of Willie Walker image'"]))
+     "SPEECH OUTPUT: 'Dashing picture of Willie Walker image ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

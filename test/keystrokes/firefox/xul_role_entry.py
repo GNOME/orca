@@ -44,60 +44,32 @@ sequence.append(utils.AssertPresentationAction(
     "Type 'this is a test'",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog t $l'",
      "     VISIBLE:  't $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog t $l'",
-     "     VISIBLE:  't $l', cursor=2",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog th $l'",
      "     VISIBLE:  'th $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog th $l'",
-     "     VISIBLE:  'th $l', cursor=3",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog thi $l'",
      "     VISIBLE:  'thi $l', cursor=3",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog thi $l'",
-     "     VISIBLE:  'thi $l', cursor=4",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this $l'",
      "     VISIBLE:  'this $l', cursor=4",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this $l'",
-     "     VISIBLE:  'this $l', cursor=5",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this  $l'",
      "     VISIBLE:  'this  $l', cursor=5",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this  $l'",
-     "     VISIBLE:  'this  $l', cursor=6",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this i $l'",
      "     VISIBLE:  'this i $l', cursor=6",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this i $l'",
-     "     VISIBLE:  'this i $l', cursor=7",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is $l'",
      "     VISIBLE:  'this is $l', cursor=7",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is $l'",
-     "     VISIBLE:  'this is $l', cursor=8",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is  $l'",
      "     VISIBLE:  'this is  $l', cursor=8",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is  $l'",
-     "     VISIBLE:  'this is  $l', cursor=9",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a $l'",
      "     VISIBLE:  'this is a $l', cursor=9",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a $l'",
-     "     VISIBLE:  'this is a $l', cursor=10",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a  $l'",
      "     VISIBLE:  'this is a  $l', cursor=10",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a  $l'",
-     "     VISIBLE:  'this is a  $l', cursor=11",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a t $l'",
      "     VISIBLE:  'this is a t $l', cursor=11",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a t $l'",
-     "     VISIBLE:  'this is a t $l', cursor=12",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a te $l'",
      "     VISIBLE:  'this is a te $l', cursor=12",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a te $l'",
-     "     VISIBLE:  'this is a te $l', cursor=13",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a tes $l'",
      "     VISIBLE:  'this is a tes $l', cursor=13",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a tes $l'",
-     "     VISIBLE:  'this is a tes $l', cursor=14",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a test $l'",
-     "     VISIBLE:  'this is a test $l', cursor=14",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a test $l'",
-     "     VISIBLE:  'this is a test $l', cursor=15"]))
+     "     VISIBLE:  'this is a test $l', cursor=14"]))
 
 ########################################################################
 # Backspace 5 times (thus removing "<space>test" from the right)
@@ -108,8 +80,6 @@ sequence.append(utils.AssertPresentationAction(
     "Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a test $l'",
      "     VISIBLE:  'this is a test $l', cursor=15",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a test $l'",
-     "     VISIBLE:  'this is a test $l', cursor=14",
      "SPEECH OUTPUT: 't'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -118,8 +88,6 @@ sequence.append(utils.AssertPresentationAction(
     "Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a tes $l'",
      "     VISIBLE:  'this is a tes $l', cursor=14",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a tes $l'",
-     "     VISIBLE:  'this is a tes $l', cursor=13",
      "SPEECH OUTPUT: 's'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -128,8 +96,6 @@ sequence.append(utils.AssertPresentationAction(
     "Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a te $l'",
      "     VISIBLE:  'this is a te $l', cursor=13",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a te $l'",
-     "     VISIBLE:  'this is a te $l', cursor=12",
      "SPEECH OUTPUT: 'e'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -138,8 +104,6 @@ sequence.append(utils.AssertPresentationAction(
     "Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a t $l'",
      "     VISIBLE:  'this is a t $l', cursor=12",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a t $l'",
-     "     VISIBLE:  'this is a t $l', cursor=11",
      "SPEECH OUTPUT: 't'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -148,8 +112,6 @@ sequence.append(utils.AssertPresentationAction(
     "Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a  $l'",
      "     VISIBLE:  'this is a  $l', cursor=11",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a  $l'",
-     "     VISIBLE:  'this is a  $l', cursor=10",
      "SPEECH OUTPUT: 'space'"]))
 
 ########################################################################
@@ -162,8 +124,6 @@ sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a $l'",
      "     VISIBLE:  'this is a $l', cursor=9",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is a $l'",
-     "     VISIBLE:  'this is a $l', cursor=9",
      "SPEECH OUTPUT: 'a'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -172,8 +132,6 @@ sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is  $l'",
      "     VISIBLE:  'this is  $l', cursor=6",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this is  $l'",
-     "     VISIBLE:  'this is  $l', cursor=6",
      "SPEECH OUTPUT: 'is '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -181,8 +139,6 @@ sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this  $l'",
-     "     VISIBLE:  'this  $l', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog this  $l'",
      "     VISIBLE:  'this  $l', cursor=1",
      "SPEECH OUTPUT: 'this '"]))
 
@@ -195,44 +151,24 @@ sequence.append(utils.AssertPresentationAction(
     "Type 'so is this'",
     ["BRAILLE LINE:  'Minefield Application Add Bookmark Dialog s $l'",
      "     VISIBLE:  's $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog s $l'",
-     "     VISIBLE:  's $l', cursor=2",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so $l'",
      "     VISIBLE:  'so $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so $l'",
-     "     VISIBLE:  'so $l', cursor=3",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so  $l'",
      "     VISIBLE:  'so  $l', cursor=3",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so  $l'",
-     "     VISIBLE:  'so  $l', cursor=4",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so i $l'",
      "     VISIBLE:  'so i $l', cursor=4",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so i $l'",
-     "     VISIBLE:  'so i $l', cursor=5",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is $l'",
      "     VISIBLE:  'so is $l', cursor=5",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is $l'",
-     "     VISIBLE:  'so is $l', cursor=6",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is  $l'",
      "     VISIBLE:  'so is  $l', cursor=6",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is  $l'",
-     "     VISIBLE:  'so is  $l', cursor=7",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is t $l'",
      "     VISIBLE:  'so is t $l', cursor=7",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is t $l'",
-     "     VISIBLE:  'so is t $l', cursor=8",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is th $l'",
      "     VISIBLE:  'so is th $l', cursor=8",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is th $l'",
-     "     VISIBLE:  'so is th $l', cursor=9",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is thi $l'",
      "     VISIBLE:  'so is thi $l', cursor=9",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is thi $l'",
-     "     VISIBLE:  'so is thi $l', cursor=10",
      "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is this $l'",
-     "     VISIBLE:  'so is this $l', cursor=10",
-     "BRAILLE LINE:  'Minefield Application Add Bookmark Dialog so is this $l'",
-     "     VISIBLE:  'so is this $l', cursor=11"]))
+     "     VISIBLE:  'so is this $l', cursor=10"]))
 
 ########################################################################
 # Press Left Arrow 4 times to get to the beginning of "this"

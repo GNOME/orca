@@ -92,6 +92,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to the blues", 
     ["BRAILLE LINE:  'The Blues'",
      "     VISIBLE:  'The Blues', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'The Blues'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -100,6 +101,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to garden", 
     ["BRAILLE LINE:  'Garden'",
      "     VISIBLE:  'Garden', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Garden'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -108,6 +110,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to in the pink", 
     ["BRAILLE LINE:  'In the Pink grayed'",
      "     VISIBLE:  'In the Pink grayed', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'In the Pink grayed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -116,6 +119,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to rose", 
     ["BRAILLE LINE:  'Rose'",
      "     VISIBLE:  'Rose', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Rose'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -133,6 +137,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to hide", 
     ["BRAILLE LINE:  'Hide'",
      "     VISIBLE:  'Hide', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Hide'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -141,6 +146,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to show", 
     ["BRAILLE LINE:  'Show'",
      "     VISIBLE:  'Show', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -149,6 +155,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to more", 
     ["BRAILLE LINE:  'More                >'",
      "     VISIBLE:  'More                >', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'More                >'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -169,6 +176,7 @@ sequence.append(utils.AssertPresentationAction(
     "Move to two", 
     ["BRAILLE LINE:  'two'",
      "     VISIBLE:  'two', cursor=1",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'two'"]))
 
 sequence.append(utils.StartRecordingAction())

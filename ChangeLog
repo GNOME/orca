@@ -1,3 +1,31 @@
+2008-07-23  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/harness/utils.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/uiuc_radiobutton.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/dojo_checkbox.py:
+          test/keystrokes/firefox/line_nav_empty_anchor.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          Get the firefox tests working well with Firefox 3.1a1pre
+          (currently build 2008072222). There are still expected
+          "unexpected failures" (i.e. issues we're working on, things
+          changed on the Firefox side of things which we need to deal
+          with, etc.). However, we need tests that indicate the current
+          state of affairs so that we can continue to check for regressions
+          on our end and detect changes on the Firefox end. This also gets
+          us testing with the 7-22 archive of the dojo toolkit. Changes in
+          Firefox 3.1 seem to break old dojo pages (e.g. spin buttons no 
+          longer spin).
+
 2008-07-21  Willie Walker <william.walker@sun.com>
 
         * test/harness/utils.py:

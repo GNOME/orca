@@ -12,7 +12,8 @@ dbusOrcaLogging = dbus.Interface(dbusOrca, 'org.gnome.Orca.Logging')
 #
 #DojoURLPrefix="http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/"
 #DojoURLPrefix="http://localhost/apache2-default/dojo-release-1.1.0b2/dijit/tests/"
-DojoURLPrefix="http://bashautomation.com/dojo-release-1.1.0b2/dijit/tests/"
+#DojoURLPrefix="http://bashautomation.com/dojo-release-1.1.0b2/dijit/tests/"
+DojoURLPrefix="http://archive.dojotoolkit.org/dojo-2008-07-22/dojotoolkit/dijit/tests/"
 # Where to find our local HTML tests.
 #
 import sys, os, re

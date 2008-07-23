@@ -37,7 +37,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb0 checkbox", 
-    [ "BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
+    ["BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
      "     VISIBLE:  '< > CheckBox cb0: Vanilla (non-d', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box not checked'"]))
@@ -60,7 +60,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb1 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages'",
+    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages getValue()'",
      "     VISIBLE:  '< > CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb1: normal checkbox, with value=foo, clicking generates console log messages check box not checked'"]))
@@ -72,37 +72,40 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state on cb1 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages'",
+    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages getValue()'",
      "     VISIBLE:  '<x> CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
 # Tab to the cb2 checkbox.  
 #
+sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb2 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb2: normal checkbox, initially turned on.  \"onChange\" handler updates: []'",
+    ["BRAILLE LINE:  '<x> CheckBox cb2: normal checkbox, with default value, initially turned on.  \"onChange\" handler updates: [] getValue()'",
      "     VISIBLE:  '<x> CheckBox cb2: normal checkbo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'cb2: normal checkbox, initially turned on. check box checked'"]))
+     "SPEECH OUTPUT: 'cb2: normal checkbox, with default value, initially turned on. check box checked'"]))
 
 ########################################################################
 # Tab to the cb5 checkbox.  Note: cb3 and cb4 are disabled.
 #
+sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb5 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb5: Vanilla (non-dojo) checkbox (for comparison purposes)'",
-     "     VISIBLE:  '< > CheckBox cb5: Vanilla (non-d', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox cb5: normal checkbox, with specified value=\"\", clicking generates console log messages getValue()'",
+     "     VISIBLE:  '< > CheckBox cb5: normal checkbo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'cb5: Vanilla (non-dojo) checkbox (for comparison purposes) check box not checked'"]))
+     "SPEECH OUTPUT: 'cb5: normal checkbox, with specified value=\"\", clicking generates console log messages check box not checked'"]))
 
 ########################################################################
 # Tab to the cb6 checkbox.
 #
+sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
@@ -125,14 +128,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech and braille:
-#
-# BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to "fish" Button "onChange" handler updates: [false]'
-#     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1
-# SPEECH OUTPUT: 'cb7: normal checkbox. check box'
-# SPEECH OUTPUT: 'not checked'
-# SPEECH OUTPUT: ''
+# Do a basic "Where Am I" via KP_Enter.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

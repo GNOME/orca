@@ -767,9 +767,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'More Actions: Combo'",
-     "     VISIBLE:  'More Actions: Combo', cursor=0",
-     "SPEECH OUTPUT: 'More Actions: combo box'"]))
+    ["BUG? - In 3.1 we aren't presenting More Actions at times; other times we are",
+     "BRAILLE LINE:  ' Combo'",
+     "     VISIBLE:  ' Combo', cursor=0",
+     "SPEECH OUTPUT: 'combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -787,9 +788,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'More Actions: Combo'",
-     "     VISIBLE:  'More Actions: Combo', cursor=0",
-     "SPEECH OUTPUT: 'More Actions: combo box'"]))
+    ["BUG? - In 3.1 we aren't presenting More Actions at times; other times we are",
+     "BRAILLE LINE:  ' Combo'",
+     "     VISIBLE:  ' Combo', cursor=0",
+     "SPEECH OUTPUT: 'combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1468,18 +1470,18 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up", 
-    ["BRAILLE LINE:  'DocIndex Link'",
-     "     VISIBLE:  'DocIndex Link', cursor=1",
-     "SPEECH OUTPUT: 'DocIndex link'"]))
+    "Line Down", 
+    ["BRAILLE LINE:  'FAQ Link | DocIndex Link'",
+     "     VISIBLE:  'FAQ Link | DocIndex Link', cursor=1",
+     "SPEECH OUTPUT: 'FAQ link | DocIndex link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Home Link  | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link  ( Archives Link ) | FAQ Link'",
-     "     VISIBLE:  'Home Link  | Download/Installati', cursor=1",
-     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  ( Archives link ) | FAQ link'"]))
+    ["BRAILLE LINE:  'Home Link | Download/Installation Link  | Configuration/Use Link  | Accessible Applications Link  | Mailing List Link  ( Archives Link ) |'",
+     "     VISIBLE:  'Home Link | Download/Installatio', cursor=1",
+     "SPEECH OUTPUT: 'Home link | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  ( Archives link ) |'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

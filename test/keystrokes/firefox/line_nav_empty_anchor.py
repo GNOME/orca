@@ -77,7 +77,18 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page? Link'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link'"]))
+     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link ",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: '",
+     " heading  '",
+     "SPEECH OUTPUT: 'level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -95,7 +106,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Q. Why would someone put a line break in a heading? Link'",
      "     VISIBLE:  'Q. Why would someone put a line ', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why would someone put a line break in a heading? link'"]))
+     "SPEECH OUTPUT: 'Q. Why would someone put a line break in a heading? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -103,7 +115,18 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow? Link'",
      "     VISIBLE:  'Q. What is the airspeed velocity', cursor=1",
-     "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link'"]))
+     "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link ",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: '",
+     " heading  '",
+     "SPEECH OUTPUT: 'level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -223,10 +246,21 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: '",
+     " heading  '",
+     "SPEECH OUTPUT: 'level 2'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow? Link'",
      "     VISIBLE:  'Q. What is the airspeed velocity', cursor=1",
-     "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link'"]))
+     "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -234,7 +268,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Q. Why would someone put a line break in a heading? Link'",
      "     VISIBLE:  'Q. Why would someone put a line ', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why would someone put a line break in a heading? link'"]))
+     "SPEECH OUTPUT: 'Q. Why would someone put a line break in a heading? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -249,10 +284,21 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: '",
+     " heading  '",
+     "SPEECH OUTPUT: 'level 2'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page? Link'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link'"]))
+     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

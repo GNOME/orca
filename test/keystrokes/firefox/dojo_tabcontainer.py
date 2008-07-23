@@ -36,8 +36,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to tab 2", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page Inlined Su', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 2 page'"]))
 
@@ -49,11 +49,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Tab 2 Page Tab 3 Page Programmat', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
+     "     VISIBLE:  'Tab 2 Page Tab 3 Page Inlined Su', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Tab 2 page'",
-     "SPEECH OUTPUT: 'item 2 of 7'",
+     "SPEECH OUTPUT: 'item 2 of 6'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################
@@ -63,8 +63,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Tab 3 Page Programmatically crea', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page Panel'",
+     "     VISIBLE:  'Tab 3 Page Inlined Sub TabContai', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
 ########################################################################
@@ -74,10 +74,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Programmatically created tab Pag', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page Panel'",
+     "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Programmatically created tab page'"]))
+     "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'Sub TabContainer'.  The following will be presented.
@@ -86,10 +86,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to sub tab container", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Programmatically created tab Page Inlined Sub TabContainer Page Sub TabContainer from href Page'",
-     "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
+     "     VISIBLE:  'Sub TabContainer from href Page ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
+     "SPEECH OUTPUT: 'Sub TabContainer from href page'"]))
 ########################################################################
 # Tab to 'SubTab2'.  The following will be presented.
 #
@@ -97,39 +97,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to tab 2 contents", 
-    ["BRAILLE LINE:  'TabList SubTab 1 Page SubTab 2 Page'",
-     "     VISIBLE:  'SubTab 2 Page', cursor=1",
+    ["BRAILLE LINE:  'TabList Subtab #1 Page Subtab #2 Page'",
+     "     VISIBLE:  'Subtab #1 Page Subtab #2 Page', cursor=1",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer scroll pane'",
-     "SPEECH OUTPUT: 'SubTab 2 page'"]))
-    
-########################################################################
-# Tab to next tab container
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "tab to next tab container", 
-    ["BRAILLE LINE:  'TabList First Page  $l Second Page Third Page  $l'",
-     "     VISIBLE:  'First Page  $l Second Page Third', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'First page'"]))
-
-########################################################################
-# Use arrows to move between tabs: 'SubTab1'.  The following will be presented
-#
-# BRAILLE LINE:  'SubTab 1 SubTab 2'
-#      VISIBLE:  'SubTab 1 SubTab 2', cursor=1
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'SubTab 1 page'
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Left"))
-sequence.append(utils.AssertPresentationAction(
-    "arrow to tab 3", 
-    ["BRAILLE LINE:  'First Page TabList  $l Second Page Third Page  $l'",
-     "     VISIBLE:  'Third Page  $l', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Third page'"]))
+     "SPEECH OUTPUT: 'Subtab #1 page'"]))
 
 ########################################################################
 # Close the demo

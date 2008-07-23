@@ -41,6 +41,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'E-mail List Sorted by Date table'",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Status column header'",
      "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel'"]))
     
 ########################################################################
@@ -66,8 +67,12 @@ sequence.append(utils.AssertPresentationAction(
     "Move down grid", 
     ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  '< > Email 1 Selected CheckBox 2 ', cursor=1",
+     "BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+     "     VISIBLE:  '< > Email 1 Selected CheckBox 2 ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '2 New message Attachment Low priority From Fred Jones Subject Lunch on Friday panel'"]))
+     "SPEECH OUTPUT: 'Att column header'",
+     "SPEECH OUTPUT: '2 New message Attachment Low priority From Fred Jones Subject Lunch on Friday panel'",
+     "SPEECH OUTPUT: 'check box not checked 2 New message image Attachment image Low priority image Fred Jones Lunch on Friday 2007-12-03 1K'"]))
     
 ########################################################################
 # Move right on second row 1
@@ -77,6 +82,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move right on second row 1", 
     ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+     "     VISIBLE:  '< > Email 1 Selected CheckBox 2 ', cursor=1",
+     "BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  '< > Email 1 Selected CheckBox 2 ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Email 1 Selected'"]))
@@ -90,7 +97,10 @@ sequence.append(utils.AssertPresentationAction(
     "Move right on second row 2", 
     ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  '2 Cell New message Image Attachm', cursor=1",
+     "BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+     "     VISIBLE:  '2 Cell New message Image Attachm', cursor=1",
      "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: '2'",
      "SPEECH OUTPUT: '2'"]))
      
 ########################################################################
@@ -101,6 +111,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move right on second row 3", 
     ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+     "     VISIBLE:  'New message Image Attachment Ima', cursor=1",
+     "BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  'New message Image Attachment Ima', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New message'"]))
@@ -114,9 +126,11 @@ sequence.append(utils.AssertPresentationAction(
     "Move down to third row", 
     ["BRAILLE LINE:  '< > Email 2 Selected CheckBox 3 Cell New message Image None Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
      "     VISIBLE:  'New message Image None Image Jan', cursor=1",
+     "BRAILLE LINE:  '< > Email 2 Selected CheckBox 3 Cell New message Image None Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
+     "     VISIBLE:  'New message Image None Image Jan', cursor=1",
      "SPEECH OUTPUT: '3 New message None From Jane Johnson Subject Proposal for you to review panel'",
-     "SPEECH OUTPUT: 'New message'"]))
-    
+     "SPEECH OUTPUT: 'New message'",
+     "SPEECH OUTPUT: 'check box not checked 3 New message image None image Jane Johnson Proposal for you to review 2007-16-03 12K'"]))
 
 ########################################################################
 # Close the demo

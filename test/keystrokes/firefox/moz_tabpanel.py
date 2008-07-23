@@ -76,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 3 contents", 
     ["BRAILLE LINE:  '&=y RadioButton Internal Portal Bookmark & y RadioButton External URL'",
      "     VISIBLE:  '&=y RadioButton Internal Portal ', cursor=1",
-     "SPEECH OUTPUT: 'Tab Two  Tab Two scroll pane'",
+     "SPEECH OUTPUT: 'Tab Two scroll pane'",
      "SPEECH OUTPUT: 'Internal Portal Bookmark'",
      "SPEECH OUTPUT: 'selected radio button'"]))
 ########################################################################
