@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-01 09:56+0200\n"
-"PO-Revision-Date: 2008-07-05 20:38+0200\n"
+"POT-Creation-Date: 2008-07-07 10:48+0200\n"
+"PO-Revision-Date: 2008-07-25 01:09+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2087,7 +2087,7 @@ msgstr "Añadir marcador."
 #.
 #: ../src/orca/default.py:857
 msgid "Save bookmarks."
-msgstr "Guardar marcasdores."
+msgstr "Guardar marcadores."
 
 #. Translators: this event handler cycles through the registered
 #. bookmarks and takes the user to the next bookmark location.
@@ -4137,9 +4137,8 @@ msgid "Enable cross-hair cl_ip"
 msgstr "Activar cl_ip de la cruz"
 
 #: ../src/orca/orca-setup.glade.h:69
-#, fuzzy
 msgid "Enable echo by _sentence"
-msgstr "Activar eco por _palabras"
+msgstr "Activar eco por _frases"
 
 #: ../src/orca/orca-setup.glade.h:70
 msgid "Enable echo by _word"
@@ -6246,9 +6245,9 @@ msgstr "Pulse tab e intro para terminar."
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:475
-#: ../src/orca/scripts/apps/Thunderbird/script.py:109
-#: ../src/orca/scripts/apps/Thunderbird/script.py:190
-#: ../src/orca/scripts/apps/Thunderbird/script.py:378
+#: ../src/orca/scripts/apps/Thunderbird/script.py:152
+#: ../src/orca/scripts/apps/Thunderbird/script.py:233
+#: ../src/orca/scripts/apps/Thunderbird/script.py:431
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:81
 msgid "Check Spelling"
 msgstr "Corregir ortografía"
@@ -6719,8 +6718,8 @@ msgstr "fila %d"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:416
-#: ../src/orca/scripts/apps/Thunderbird/script.py:433
+#: ../src/orca/scripts/apps/Thunderbird/script.py:469
+#: ../src/orca/scripts/apps/Thunderbird/script.py:486
 #, python-format
 msgid "%s panel"
 msgstr "panel %s"
@@ -7234,31 +7233,39 @@ msgstr "Bon Echo"
 msgid "Minefield"
 msgstr "Minefield"
 
+#. Translators: see the regular expression note above.  This is for a
+#. version of Thunderbird, which chooses to now call itself by a different
+#. name.
+#.
+#: ../src/orca/settings.py:957
+msgid "Shredder"
+msgstr "Shredder"
+
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:956
+#: ../src/orca/settings.py:962
 msgid "Mail/News"
 msgstr "Correo/Noticias"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:961
+#: ../src/orca/settings.py:967
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:966
+#: ../src/orca/settings.py:972
 msgid "vte"
 msgstr "etv"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:971
+#: ../src/orca/settings.py:977
 msgid "gaim"
 msgstr "gaim"
 
@@ -7456,17 +7463,15 @@ msgstr "Celda con %d filas"
 #. An anchor is a named spot that one can jump to.
 #.
 #: ../src/orca/structural_navigation.py:1818
-#, fuzzy
 msgid "Goes to previous anchor."
-msgstr "Va a la palabra anterior."
+msgstr "Va al anterior ancla."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
 #: ../src/orca/structural_navigation.py:1823
-#, fuzzy
 msgid "Goes to next anchor."
-msgstr "Va a la siguiente palabra."
+msgstr "Va al siguiente ancla."
 
 #. Translators: this is for navigating document content by
 #. moving from anchor to anchor. (An anchor is a named spot
@@ -7474,9 +7479,8 @@ msgstr "Va a la siguiente palabra."
 #. if there are no more anchors found.
 #.
 #: ../src/orca/structural_navigation.py:1880
-#, fuzzy
 msgid "No more anchors."
-msgstr "No hay más encabezados."
+msgstr "No hay más ancla."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -7504,17 +7508,15 @@ msgstr "No hay más citas."
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:1979
-#, fuzzy
 msgid "Goes to previous button."
-msgstr "Va a la palabra anterior."
+msgstr "Va al botón anterior."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:1984
-#, fuzzy
 msgid "Goes to next button."
-msgstr "Va a la siguiente palabra."
+msgstr "Va al siguiente botón."
 
 #. Translators: this is for navigating in document content
 #. by moving from push button to push button in a form. This
@@ -7522,25 +7524,22 @@ msgstr "Va a la siguiente palabra."
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:2041
-#, fuzzy
 msgid "No more buttons."
-msgstr "No hay más listas."
+msgstr "No hay más botones."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2058
-#, fuzzy
 msgid "Goes to previous check box."
-msgstr "Va al carácter anterior."
+msgstr "Va a la casilla anterior."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2063
-#, fuzzy
 msgid "Goes to next check box."
-msgstr "Va al siguiente carácter."
+msgstr "Va a la siguiente casilla."
 
 #. Translators: this is for navigating in document content
 #. by moving from checkbox to checkbox in a form. This
@@ -7548,9 +7547,8 @@ msgstr "Va al siguiente carácter."
 #. boxes found.
 #.
 #: ../src/orca/structural_navigation.py:2120
-#, fuzzy
 msgid "No more check boxes."
-msgstr "No hay más citas."
+msgstr "No hay más casillas."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
@@ -7558,7 +7556,7 @@ msgstr "No hay más citas."
 #.
 #: ../src/orca/structural_navigation.py:2138
 msgid "Goes to previous large object."
-msgstr "Va al anterior gran objeto."
+msgstr "Va al gran objeto anterior."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
@@ -7582,17 +7580,15 @@ msgstr "No hay más objetos grandes."
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2230
-#, fuzzy
 msgid "Goes to previous combo box."
-msgstr "Va a la palabra anterior."
+msgstr "Va al cuadro combinado anterior."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2235
-#, fuzzy
 msgid "Goes to next combo box."
-msgstr "Va a la siguiente palabra."
+msgstr "Va al siguiente cuadro combinado."
 
 #. Translators: this is for navigating in document content
 #. by moving from combo box to combo box in a form. This
@@ -7600,25 +7596,22 @@ msgstr "Va a la siguiente palabra."
 #. boxes found.
 #.
 #: ../src/orca/structural_navigation.py:2292
-#, fuzzy
 msgid "No more combo boxes."
-msgstr "No hay más citas."
+msgstr "No hay más cuadros combinados."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2309
-#, fuzzy
 msgid "Goes to previous entry."
-msgstr "Va a la palabra anterior."
+msgstr "Va a la entrada anterior."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
 #: ../src/orca/structural_navigation.py:2314
-#, fuzzy
 msgid "Goes to next entry."
-msgstr "Va a la siguiente palabra."
+msgstr "Va a la siguiente entrada."
 
 #. Translators: this is for navigating in document content
 #. by moving from text entry to text entry in a form. This
@@ -7626,9 +7619,8 @@ msgstr "Va a la siguiente palabra."
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:2380
-#, fuzzy
 msgid "No more entries."
-msgstr "No hay más tablas."
+msgstr "No hay más entradas."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
@@ -7835,17 +7827,15 @@ msgstr "No hay más párrafos."
 #. form within a document.
 #.
 #: ../src/orca/structural_navigation.py:3041
-#, fuzzy
 msgid "Goes to previous radio button."
-msgstr "Va al encabezado anterior."
+msgstr "Va al botón de radio anterior."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
 #: ../src/orca/structural_navigation.py:3046
-#, fuzzy
 msgid "Goes to next radio button."
-msgstr "Va al encabezado siguiente."
+msgstr "Va al siguiente botón de radio."
 
 #. Translators: this is for navigating in document content
 #. by moving from radio button to radio button in a form.
@@ -7853,9 +7843,8 @@ msgstr "Va al encabezado siguiente."
 #. radio buttons found.
 #.
 #: ../src/orca/structural_navigation.py:3103
-#, fuzzy
 msgid "No more radio buttons."
-msgstr "No hay más encabezados."
+msgstr "No hay más botones de radio."
 
 #. Translators: this is for navigating among tables in a document.
 #.
@@ -8336,7 +8325,7 @@ msgstr "ninguno"
 #.
 #: ../src/orca/text_attribute_names.py:349
 msgid "textattr|engrave"
-msgstr ""
+msgstr "grabar"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8345,7 +8334,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:356
 msgid "textattr|emboss"
-msgstr ""
+msgstr "membrete"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8354,7 +8343,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:363
 msgid "textattr|outline"
-msgstr ""
+msgstr "resumen"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8363,7 +8352,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:370
 msgid "textattr|overline"
-msgstr ""
+msgstr "suprarayado"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8372,7 +8361,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:377
 msgid "textattr|line through"
-msgstr ""
+msgstr "tachado"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8716,7 +8705,7 @@ msgstr "heredar"
 #.
 #: ../src/orca/text_attribute_names.py:645
 msgid "textattr|lr-tb"
-msgstr ""
+msgstr "izde-arab"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8725,7 +8714,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:652
 msgid "textattr|rl-tb"
-msgstr ""
+msgstr "deiz-arab"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8734,7 +8723,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:659
 msgid "textattr|tb-rl"
-msgstr ""
+msgstr "arab-deiz"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8743,7 +8732,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:666
 msgid "textattr|tb-lr"
-msgstr ""
+msgstr "arab-izde"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8752,7 +8741,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:673
 msgid "textattr|bt-rl"
-msgstr ""
+msgstr "abar-deiz"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8761,7 +8750,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:680
 msgid "textattr|bt-lr"
-msgstr ""
+msgstr "abar-izde"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8770,7 +8759,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:687
 msgid "textattr|lr"
-msgstr ""
+msgstr "izde"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8779,7 +8768,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:694
 msgid "textattr|rl"
-msgstr ""
+msgstr "deiz"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8788,7 +8777,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:701
 msgid "textattr|tb"
-msgstr ""
+msgstr "arab"
 
 #. Translators: this is the percentage value of a slider.
 #.
