@@ -13,7 +13,7 @@ sequence = MacroSequence()
 # 1. Start oocalc. There is a bug_356334.params file that will
 #    automatically load fruit.ods.
 #
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(WaitForWindowActivate("fruit(.ods|) - OpenOffice.org Calc",None))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret in cell A1.
@@ -27,7 +27,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Press the down arrow to move to cell A2",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - OpenOffice.org Calc Frame fruit(.ods|) - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
      "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
      "SPEECH OUTPUT: 'Good in Pies A2'"]))
 
@@ -40,30 +40,24 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-f to get text attributes on the current cell (A2)",
-    ["BUG: not speaking anything"]))
+    ["SPEECH OUTPUT: 'size 16'",
+     "SPEECH OUTPUT: 'family name Arial'",
+     "SPEECH OUTPUT: 'bold'",
+     "SPEECH OUTPUT: 'style italic'"]))
 
 ######################################################################
 # 5. Press the right arrow to move to cell B2.
-#
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table  Apples Yes Cell B2 '
-# VISIBLE:  'Yes Cell B2 ', cursor=1
-# SPEECH OUTPUT: 'Yes B2'
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Press the right arrow to move to cell B2",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - OpenOffice.org Calc Frame fruit(.ods|) - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
      "SPEECH OUTPUT: 'Yes B2'"]))
 
 ######################################################################
 # 6. Type Insert-f to get text attributes on the current cell (B2).
-#
-# BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table  Apples Yes Cell B2 '
-# VISIBLE:  'Yes Cell B2 ', cursor=1
-# SPEECH OUTPUT: 'size 10'
-# SPEECH OUTPUT: 'family-name Arial'
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
@@ -71,7 +65,8 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-f to get text attributes on the current cell (B2)",
-    ["BUG: not speaking anything"]))
+    ["SPEECH OUTPUT: 'size 10'",
+     "SPEECH OUTPUT: 'family name Arial'"]))
 
 ######################################################################
 # 7. Enter Alt-f, Alt-c to close the Calc spreadsheet window.
