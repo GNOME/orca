@@ -696,7 +696,7 @@ msgstr "registrado"
 #.
 #: ../src/orca/chnames.py:235
 msgid "macron"
-msgstr "macron"
+msgstr "sobrerayado"
 
 #. Translators: this is the spoken word for the character '°' (U+00b0)
 #.
