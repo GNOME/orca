@@ -406,12 +406,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             link = self._script.getAncestor(obj,
                                             [pyatspi.ROLE_LINK],
                                             [pyatspi.ROLE_DOCUMENT_FRAME])
-            if not len(utterances):
-                if link:
-                    utterances.extend(self._getSpeechForLink(link,
-                                                             already_focused))
-            elif link:
-                utterances.extend(self.getSpeechForObjectRole(link))
+            if link:
+                if not len(utterances):
+                    return self._getSpeechForLink(link, already_focused)
+                else:
+                    utterances.extend(self.getSpeechForObjectRole(link))
 
             utterances.extend(self.getSpeechForObjectRole(obj))
 
@@ -463,6 +462,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.append(basename)
 
             utterances.extend(self.getSpeechForObjectRole(obj))
+
+            # If the link has a child which is an image, we want
+            # to indicate that.
+            #
+            if obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+                utterances.extend(self.getSpeechForObjectRole(obj[0]))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 

@@ -1425,16 +1425,16 @@ class Script(default.Script):
             return
 
         # If this event is the result of our calling grabFocus() on
-        # this object in setCaretPosition(), we want to ignore it.
-        # See bug #471537.  But we don't want to do this for entries.
-        # See bug #501447. Or links.  See bug #511389.
+        # this object in setCaretPosition(), we want to ignore it
+        # unless it happens to be the same object as our current
+        # caret context.
         #
-        if self.isSameObject(event.source, self._objectForFocusGrab) \
-           and not eventSourceRole in [pyatspi.ROLE_ENTRY,
-                                       pyatspi.ROLE_LINK,
-                                       pyatspi.ROLE_DOCUMENT_FRAME]:
-            orca.setLocusOfFocus(event, event.source, False)
-            return
+        if self.isSameObject(event.source, self._objectForFocusGrab):
+            [obj, characterOffset] = self.getCaretContext()
+            if not self.isSameObject(event.source, obj):
+                return
+
+        self._objectForFocusGrab = None
 
         # We also ignore focus events on the panel that holds the document
         # frame.  We end up getting these typically because we've called
@@ -1477,21 +1477,6 @@ class Script(default.Script):
                     return
             except:
                 pass
-
-        # If a link gets focus, it might be a link that contains just an
-        # image, as we often see in web pages.  In these cases, we give
-        # the image focus and announce it.
-        #
-        if eventSourceRole == pyatspi.ROLE_LINK:
-            containingLink = self.getAncestor(orca_state.locusOfFocus,
-                                              [pyatspi.ROLE_LINK],
-                                              [pyatspi.ROLE_DOCUMENT_FRAME])
-            if containingLink == event.source:
-                return
-            elif event.source.childCount == 1:
-                child = event.source[0]
-                orca.setLocusOfFocus(event, child)
-                return
 
         default.Script.onFocus(self, event)
 
@@ -1803,23 +1788,24 @@ class Script(default.Script):
 
         # We'll ignore focus changes when the document frame is busy.
         # This will keep Orca from chatting too much while a page is
-        # loading.
+        # loading. But we should check to be sure the document frame
+        # is really busy first and also that the event is not coming
+        # from an object within a dialog box or alert.
         #
-        if event:
-            inDialog = self.getAncestor(event.source,
-                                        [pyatspi.ROLE_DIALOG],
-                                        [pyatspi.ROLE_DOCUMENT_FRAME])
-            if not inDialog:
-                inDialog = self.getAncestor(event.source,
-                                            [pyatspi.ROLE_ALERT],
-                                            [pyatspi.ROLE_DOCUMENT_FRAME])
+        documentFrame = self.getDocumentFrame()
+        if documentFrame:
+            self._loadingDocumentContent = \
+                documentFrame.getState().contains(pyatspi.STATE_BUSY)
 
-        if self._loadingDocumentContent \
-           and event and event.source \
-           and not event.source.getRole() in [pyatspi.ROLE_DIALOG,
-                                              pyatspi.ROLE_ALERT] \
-           and not inDialog:
-            return
+            if self._loadingDocumentContent and event and event.source:
+                dialogRoles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]
+                inDialog = event.source.getRole() in dialogRoles \
+                    or self.getAncestor(event.source,
+                                        dialogRoles,
+                                        [pyatspi.ROLE_DOCUMENT_FRAME])
+
+                if not inDialog:
+                    return
 
         # Don't bother speaking all the information about the HTML
         # container - it's duplicated all over the place.  So, we
@@ -1836,25 +1822,6 @@ class Script(default.Script):
             speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
             return
 
-        # [[[TODO: WDW - I commented this out because we all of a sudden
-        # started losing the presentation of links when we tabbed to them
-        # sometime around 21-Dec-2006.  It was a hack to begin with, so
-        # it might be something to completely remove at some time in the
-        # future.]]]
-        #
-        #elif newLocusOfFocus \
-        #    and newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
-        #    # Gecko issues focus: events for a link when you move the
-        #    # caret to or tab to a link.  By the time we've gotten here,
-        #    # though, we've already presented the link via a caret moved
-        #    # event or some other event.  So...we don't anything.
-        #    #
-        #    try:
-        #        [obj, characterOffset] = self.getCaretContext()
-        #        if newLocusOfFocus == obj:
-        #            return
-        #    except:
-        #        pass
         default.Script.locusOfFocusChanged(self,
                                            event,
                                            oldLocusOfFocus,
@@ -5109,16 +5076,6 @@ class Script(default.Script):
                 role = self._objectForFocusGrab.getRole()
                 if self._objectForFocusGrab.getState().contains(\
                     pyatspi.STATE_FOCUSABLE):
-                    # If we're on an image that's in a link and the link
-                    # contains more text than the EOC that represents the
-                    # image, we are in danger of getting stuck on the link
-                    # should we grab focus on it.
-                    #
-                    if role == pyatspi.ROLE_LINK \
-                       and obj.getRole() == pyatspi.ROLE_IMAGE:
-                        text = self.queryNonEmptyText(self._objectForFocusGrab)
-                        if text and text.characterCount > 1:
-                            self._objectForFocusGrab = None
                     break
                 # Links in image maps seem to lack state focusable. If we're
                 # on such an object, we still want to grab focus on it.

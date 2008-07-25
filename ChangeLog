@@ -1,3 +1,10 @@
+2008-07-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          Fix for bug #544122 - Problems with downloading files with Firefox
+          3.
+
 2008-07-24  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/oocalc/bug_356334.py:
