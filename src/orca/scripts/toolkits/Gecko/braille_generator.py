@@ -250,7 +250,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions.append(textRegion)
 
         if settings.presentReadOnlyText \
-           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+           and self._script.isReadOnlyTextArea(obj):
             regions.append(braille.Region(" " \
                                           + settings.brailleReadOnlyString))
 

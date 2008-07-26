@@ -331,6 +331,17 @@ class Script(default.Script):
         except:
             debug.printException(debug.LEVEL_WARNING)
 
+    def isReadOnlyTextArea(self, obj):
+        """Returns True if obj is a text entry area that is read only."""
+        state = obj.getState()
+        readOnly = obj.getRole() == pyatspi.ROLE_TEXT \
+                   and state.contains(pyatspi.STATE_FOCUSABLE) \
+                   and not state.contains(pyatspi.STATE_EDITABLE)
+        debug.println(debug.LEVEL_ALL,
+                      "soffice.script.py:isReadOnlyTextArea=%s for %s" \
+                      % (readOnly, debug.getAccessibleDetails(obj)))
+        return readOnly
+
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
         is a paragraph, and the parent is the table cell. If it is, then,

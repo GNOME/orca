@@ -1,3 +1,15 @@
+2008-07-26  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/braille_generator.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+	  src/orca/scripts/apps/soffice/script.py:
+          src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+	  More work on bug #542714 - Orca should indicate read-only text boxes.
+
 2008-07-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

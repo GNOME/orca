@@ -501,7 +501,7 @@ class WhereAmI:
         utterances.append(text)
 
         if settings.presentReadOnlyText \
-           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+           and self._script.isReadOnlyTextArea(obj):
             utterances.append(settings.speechReadOnlyString)
 
         text = rolenames.getSpeechForRoleName(obj)

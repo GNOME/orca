@@ -4440,6 +4440,17 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
+    def isReadOnlyTextArea(self, obj):
+        """Returns True if obj is a text entry area that is read only."""
+        state = obj.getState()
+        readOnly = obj.getRole() == pyatspi.ROLE_ENTRY \
+                   and state.contains(pyatspi.STATE_FOCUSABLE) \
+                   and not state.contains(pyatspi.STATE_EDITABLE)
+        debug.println(debug.LEVEL_ALL,
+                      "Gecko.script.py:isReadOnlyTextArea=%s for %s" \
+                      % (readOnly, debug.getAccessibleDetails(obj)))
+        return readOnly
+
     def clearCaretContext(self):
         """Deletes all knowledge of a character context for the current
         document frame."""

@@ -2041,6 +2041,17 @@ class Script(script.Script):
                               pyatspi.ROLE_PARAGRAPH,
                               pyatspi.ROLE_TERMINAL)
 
+    def isReadOnlyTextArea(self, obj):
+        """Returns True if obj is a text entry area that is read only."""
+        state = obj.getState()
+        readOnly = self.isTextArea(obj) \
+                   and state.contains(pyatspi.STATE_FOCUSABLE) \
+                   and not state.contains(pyatspi.STATE_EDITABLE)
+        debug.println(debug.LEVEL_ALL,
+                      "default.py:isReadOnlyTextArea=%s for %s" \
+                      % (readOnly, debug.getAccessibleDetails(obj)))
+        return readOnly
+
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
 

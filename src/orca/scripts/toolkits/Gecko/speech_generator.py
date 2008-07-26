@@ -144,7 +144,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 self, obj, already_focused)
 
         if settings.presentReadOnlyText \
-           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+           and self._script.isReadOnlyTextArea(obj):
             utterances.append(settings.speechReadOnlyString)
 
         utterances.extend(self.getSpeechForObjectRole(obj))
