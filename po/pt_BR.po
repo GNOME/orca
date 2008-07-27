@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-25 21:50-0300\n"
-"PO-Revision-Date: 2008-07-22 12:40-0300\n"
+"PO-Revision-Date: 2008-07-26 20:58-0300\n"
 "Last-Translator: Vladimir Melo <vladimirmelo.psi@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -3888,7 +3888,7 @@ msgstr "Usar teclas modificadoras? Aperte s ou n: "
 #.
 #: ../src/orca/orca_console_prefs.py:338
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Habilitar teclas de travamento? Digite s ou n: "
+msgstr "Habilitar teclas de bloqueio? Digite s ou n: "
 
 #. Translators: this is in reference to key echo for
 #. the keys at the top of the keyboard.
