@@ -1260,8 +1260,12 @@ class Script(default.Script):
                 # 1. If the object is an entry and useCaretNavigationModel is
                 #    true, then we must be at the edge of the entry and about
                 #    to exit it (returning to the document).
+                # 2. If the locusOfFocus was a same-page link, we will get a
+                #    caret moved event for some object within the document
+                #    frame.
                 #
-                if eventSourceRole != pyatspi.ROLE_ENTRY:
+                if eventSourceRole != pyatspi.ROLE_ENTRY \
+                   and self.isSameObject(event.source, orca_state.locusOfFocus):
                     return
 
             elif self.isAriaWidget(event.source):
@@ -1472,7 +1476,8 @@ class Script(default.Script):
                 [obj, characterOffset] = self.getCaretContext()
                 state = obj.getState()
                 if not state.contains(pyatspi.STATE_FOCUSED):
-                    if not state.contains(pyatspi.STATE_FOCUSABLE):
+                    if not state.contains(pyatspi.STATE_FOCUSABLE) \
+                       or not self.inDocumentContent():
                         orca.setLocusOfFocus(event, obj)
                     return
             except:

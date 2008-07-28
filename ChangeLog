@@ -1,3 +1,13 @@
+2008-07-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #544197 - Orca speaks nothing when first tabbing into
+          the document frame in firefox.
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #544771 - Orca no longer moving the cursor on same page
+          links.
+
 2008-07-26  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/toolkits/Gecko/speech_generator.py:
