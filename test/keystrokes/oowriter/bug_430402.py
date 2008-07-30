@@ -63,6 +63,8 @@ sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
      "     VISIBLE:  'The quick $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
+     "     VISIBLE:  'The quick $l', cursor=1",
      "SPEECH OUTPUT: 'The quick'"]))
 
 ######################################################################

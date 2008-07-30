@@ -1758,11 +1758,15 @@ class Script(default.Script):
             self.lastCell = event.source.parent
             return
 
-        # Two events are received when the caret moves
-        # to a new paragraph in oowriter. The first is a focus event
-        # (in the form of object:state-changed:focused
-        # instead of focus:). The second is a caret-moved
-        # event. Just set the locusOfFocus for the first event.
+        # When a new paragraph receives focus, we get a caret-moved event and
+        # two focus events (the first being object:state-changed:focused).
+        # The caret-moved event will cause us to present the text at the new
+        # location, so it is safe to set the locusOfFocus silently here.
+        # However, if we just created a new paragraph by pressing Return at
+        # the end of the current paragraph, we will only get a caret-moved
+        # event for the paragraph that just gave up focus (detail1 == -1).
+        # In this case, we will keep displaying the previous line of text,
+        # so we'll do an updateBraille() just in case.
         #
         if event.type.startswith("object:state-changed:focused"):
             rolesList = [pyatspi.ROLE_PARAGRAPH, \
@@ -1771,10 +1775,12 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL, \
                          pyatspi.ROLE_ROOT_PANE, \
                          pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList) and \
-               event.source != self.currentParagraph:
+            if self.isDesiredFocusedItem(event.source, rolesList) \
+               and event.source != self.currentParagraph \
+               and event.detail1 == 1:
                 self.currentParagraph = event.source
                 orca.setLocusOfFocus(event, event.source, False)
+                self.updateBraille(event.source)
                 return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous

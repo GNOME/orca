@@ -34,6 +34,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Untitled[ ]*2 - *",
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Panel'",
      "     VISIBLE:  'Panel', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Untitled[ ]*2 - " + utils.getOOoName("Writer") + " frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'panel'"]))

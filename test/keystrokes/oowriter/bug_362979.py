@@ -79,6 +79,8 @@ sequence.append(utils.AssertPresentationAction(
     "Move cursor to start of document",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 1 \$l'",
      "     VISIBLE:  '•Line 1 \$l', cursor=2",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 1 \$l'",
+     "     VISIBLE:  '•Line 1 \$l', cursor=2",
      "SPEECH OUTPUT: '•Line 1'"]))
 
 ######################################################################
@@ -90,6 +92,8 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move to second bulleted line",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 2 \$l'",
+     "     VISIBLE:  '•Line 2 \$l', cursor=2",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view •Line 2 \$l'",
      "     VISIBLE:  '•Line 2 \$l', cursor=2",
      "SPEECH OUTPUT: '•Line 2'"]))
 

@@ -30,6 +30,8 @@ sequence.append(utils.AssertPresentationAction(
     "Down arrow to next line",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "This is a test. \$l") + "'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "This is a test. \$l") + "'",
+     "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
 ######################################################################

@@ -49,6 +49,8 @@ sequence.append(utils.AssertPresentationAction(
     "Return to top of document",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
 
 ######################################################################
@@ -61,6 +63,8 @@ sequence.append(utils.AssertPresentationAction(
     "Arrow down over first line of text",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 2 \$l'",
      "     VISIBLE:  'Line 2 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 2 \$l'",
+     "     VISIBLE:  'Line 2 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 2'"]))
 
 ######################################################################
@@ -72,6 +76,8 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Arrow down over second line of text",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 

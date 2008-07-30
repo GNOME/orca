@@ -67,6 +67,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Paragraph', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
 # [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]

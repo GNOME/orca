@@ -53,6 +53,8 @@ sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to the start of the document",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
      "SPEECH OUTPUT: 'The quuuiick brown fox'"]))
 
 ######################################################################

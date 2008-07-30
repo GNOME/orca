@@ -3,6 +3,23 @@
         * src/orca/default.py:
           Fix for bug #545342 - Can no longer shift+click using Orca.
 
+        * test/keystrokes/oowriter/bug_430402.py:
+          test/keystrokes/oowriter/bug_382415.py:
+          test/keystrokes/oowriter/bug_413909.py:
+          test/keystrokes/oowriter/bug_355733.py:
+          test/keystrokes/oowriter/bug_353268.py:
+          test/keystrokes/oowriter/bug_350219.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_382880.py:
+          test/keystrokes/oowriter/bug_469367.py:
+          test/keystrokes/oowriter/bug_362979.py:
+          test/keystrokes/oowriter/bug_382888.py:
+          src/orca/scripts/apps/soffice/script.py:
+          Fix for bug #429390 - Braille stays on current line after
+          pressing return at end of line in OOo Writer. (Thanks for
+          your help with this Will!)
+
 2008-07-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
