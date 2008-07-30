@@ -1019,17 +1019,21 @@ class Script(script.Script):
 
         keyBindings = keybindings.KeyBindings()
 
+        # We want the user to be able to combine modifiers with the
+        # mouse click (e.g. to Shift+Click and select), therefore we
+        # do not "care" about the modifiers.
+        #
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Divide",
-                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["leftClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Multiply",
-                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["rightClickReviewItemHandler"]))
 
@@ -1405,17 +1409,22 @@ class Script(script.Script):
 
         keyBindings = keybindings.KeyBindings()
 
+        # We want the user to be able to combine modifiers with the
+        # mouse click (e.g. to Shift+Click and select), therefore we
+        # do not "care" about the modifiers (other than the Orca
+        # modifier).
+        #
         keyBindings.add(
             keybindings.KeyBinding(
                 "7",
-                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["leftClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "8",
-                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
                 settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["rightClickReviewItemHandler"]))
 
