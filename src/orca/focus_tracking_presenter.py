@@ -596,6 +596,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             try:
                 state = event.source.getState()
                 if not state.contains(pyatspi.STATE_ICONIFIED):
+                    eType = event.type
+                    setNewActiveScript = eType == "window:activate"
 
                     # [[[TODO: WDW - HACK we look for frame that get
                     # focus: as a means to detect active scripts
@@ -605,24 +607,45 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # in use, and then issues a focus: event on the
                     # main window, which is a frame.]]]
                     #
+                    setNewActiveScript = setNewActiveScript \
+                        or (eType.startswith("focus") \
+                            and (event.source.getRole() == pyatspi.ROLE_FRAME))
+
                     # Added in a further check. We look for modal panels
                     # that are now showing (such as gnome-screensaver-dialog).
                     # See bug #530368 for more details.
                     #
+                    setNewActiveScript = setNewActiveScript \
+                        or (eType.startswith("object:state-changed:showing")
+                            and (event.source.getRole() == pyatspi.ROLE_PANEL)
+                            and state.contains(pyatspi.STATE_MODAL))
+
                     # Also, we might be running into a gnome-panel
                     # applet, which is indicated by a host application
                     # with no children.  See bug #536985.
                     #
-                    eType = event.type
-                    if (eType == "window:activate") \
-                       or ((eType.startswith("focus")) 
-                         and (event.source.getRole() == pyatspi.ROLE_FRAME)) \
-                       or (eType.startswith("object:state-changed:showing")
-                         and (event.source.getRole() == pyatspi.ROLE_PANEL)
-                         and state.contains(pyatspi.STATE_MODAL)) \
-                       or (event.host_application \
-                           and len(event.host_application) == 0):
+                    setNewActiveScript = setNewActiveScript \
+                        or (event.host_application \
+                            and len(event.host_application) == 0 \
+                            and orca_state.activeScript \
+                            and (orca_state.activeScript.app \
+                                 != event.host_application))
 
+                    # Or, we might just be getting a focus event.  In this
+                    # case, assume the window has focus and we missed an
+                    # event for it somehow.
+                    #
+                    if not setNewActiveScript:
+                        if eType.startswith("focus") \
+                           or (eType.startswith("object:state-changed:focused")\
+                               and event.detail1):
+                            setNewActiveScript = \
+                                orca_state.activeScript \
+                                and event.host_application \
+                                and (orca_state.activeScript.app \
+                                     != event.host_application)
+
+                    if setNewActiveScript:
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()

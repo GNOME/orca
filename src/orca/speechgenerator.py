@@ -78,6 +78,8 @@ class SpeechGenerator:
              self._getSpeechForDialog
         self.speechGenerators[pyatspi.ROLE_DIRECTORY_PANE]      = \
              self._getSpeechForDirectoryPane
+        self.speechGenerators[pyatspi.ROLE_EMBEDDED]            = \
+             self._getSpeechForEmbedded
         self.speechGenerators[pyatspi.ROLE_FRAME]               = \
              self._getSpeechForFrame
         self.speechGenerators[pyatspi.ROLE_HTML_CONTAINER]      = \
@@ -610,6 +612,39 @@ class SpeechGenerator:
         utterances = self._getDefaultSpeech(obj, already_focused)
 
         self._debugGenerator("_getSpeechForDirectoryPane",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForEmbedded(self, obj, already_focused, role=None):
+        """Gets a list of utterances to be spoken for the current
+        embedded component (i.e., something in a panel).
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+        - role: A role that should be used instead of the Accessible's 
+          possible role.
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
+        if not utterances:
+            try:
+                utterances.append(obj.getApplication().name)
+            except:
+                pass
+
+        self._debugGenerator("_getSpeechForEmbedded",
                              obj,
                              already_focused,
                              utterances)

@@ -80,6 +80,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForDialog
         self.brailleGenerators[pyatspi.ROLE_DIRECTORY_PANE]      = \
              self._getBrailleRegionsForDirectoryPane
+        self.brailleGenerators[pyatspi.ROLE_EMBEDDED]            = \
+             self._getBrailleRegionsForEmbedded
         self.brailleGenerators[pyatspi.ROLE_FRAME]               = \
              self._getBrailleRegionsForFrame
         self.brailleGenerators[pyatspi.ROLE_HTML_CONTAINER]      = \
@@ -547,6 +549,39 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForDirectoryPane", obj)
 
         return self._getDefaultBrailleRegions(obj)
+
+    def _getBrailleRegionsForEmbedded(self, obj, role=None):
+        """Gets text to be displayed for the current embedded object.
+
+        Arguments:
+        - obj: an Accessible
+        - role: Role to use as an override.
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("_getBrailleRegionsForEmbedded", obj)
+
+        regions = []
+
+        text = ""
+        text = self._script.appendString(
+            text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(
+            text, self._script.getDisplayedText(obj))
+        if not text:
+            try:
+                text = obj.getApplication().name
+            except:
+                pass
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
     def _getBrailleRegionsForFrame(self, obj):
         """Get the braille for a frame.
