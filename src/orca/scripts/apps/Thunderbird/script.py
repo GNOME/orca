@@ -499,14 +499,6 @@ class Script(Gecko.Script):
             self.sayAll(None)
         self._messageLoaded = False
 
-    def isLineBreakChar(self, obj, offset):
-        """Returns True of the character at the given offset within
-        obj is a newline.
-        """
-
-        char = self.getCharacterAtOffset(obj, offset)
-        return char == "\n"
-
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown.
         Overridden here because multiple open messages are not arranged

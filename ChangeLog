@@ -1,3 +1,23 @@
+2008-08-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/uiuc_button.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/moz_slider.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/page_summary.py:
+          test/keystrokes/firefox/line_nav_table_cell_links.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py:
+          Fix for bug #545623 - Revert to checking extents for navigating
+          amongst line breaks. This also seems to improve -- and may fix --
+          bug #534431 (Orca does not recognize blank lines when writing a
+          message in Thunderbird).
+
 2008-08-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py:

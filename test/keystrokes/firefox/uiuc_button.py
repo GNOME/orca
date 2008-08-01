@@ -24,6 +24,8 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("class: Button Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
+sequence.append(PauseAction(3000))
+
 ########################################################################
 # Tab to the first button.  The following will be presented.
 #
@@ -32,6 +34,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
+     "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
+     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
      "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
      "SPEECH OUTPUT: 'Font Larger + button'"]))

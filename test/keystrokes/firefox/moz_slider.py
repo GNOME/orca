@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' Move slider left Button 10 Slider Move slider right Button'",
      "     VISIBLE:  '10 Slider Move slider right Butt', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'slider 10'"]))
+     "SPEECH OUTPUT: 'My slider slider 10'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  

@@ -56,9 +56,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down",
     ["BRAILLE LINE:  '<!--> Link'",
      "     VISIBLE:  '<!--> Link', cursor=1",
-     "SPEECH OUTPUT: '<!--> link'"]))
+     "SPEECH OUTPUT: '<!--> link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -66,7 +75,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '<!DOCTYPE> Link'",
      "     VISIBLE:  '<!DOCTYPE> Link', cursor=1",
-     "SPEECH OUTPUT: '<!DOCTYPE> link'"]))
+     "SPEECH OUTPUT: '<!DOCTYPE> link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -92,7 +102,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '<acronym> Link'",
      "     VISIBLE:  '<acronym> Link', cursor=1",
-     "SPEECH OUTPUT: '<acronym> link'"]))
+     "SPEECH OUTPUT: '<acronym> link ",
+     "'"]))
 
 ########################################################################
 # Up Arrow.
@@ -121,7 +132,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '<!DOCTYPE> Link'",
      "     VISIBLE:  '<!DOCTYPE> Link', cursor=1",
-     "SPEECH OUTPUT: '<!DOCTYPE> link'"]))
+     "SPEECH OUTPUT: '<!DOCTYPE> link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -129,7 +141,16 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '<!--> Link'",
      "     VISIBLE:  '<!--> Link', cursor=1",
-     "SPEECH OUTPUT: '<!--> link'"]))
+     "SPEECH OUTPUT: '<!--> link ",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Up",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

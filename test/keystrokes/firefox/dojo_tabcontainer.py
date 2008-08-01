@@ -99,7 +99,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 2 contents", 
     ["BRAILLE LINE:  'TabList Subtab #1 Page Subtab #2 Page'",
      "     VISIBLE:  'Subtab #1 Page Subtab #2 Page', cursor=1",
-     "SPEECH OUTPUT: 'Inlined Sub TabContainer scroll pane'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Subtab #1 page'"]))
 

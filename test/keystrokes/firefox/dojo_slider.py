@@ -206,7 +206,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider1 Value: 10.0% $l', cursor=21",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'initial value=10, min=0, max=100, pageIncrement=100, onChange event triggers input box value change immediately",
-     "Horizontal Slider Example Slider1 Value: text 10.0%'"]))
+     "Horizontal Slider Example Slider1 Value: read only text 10.0%'"]))
 
 ########################################################################
 # Tab to the button between the sliders.  

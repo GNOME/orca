@@ -71,7 +71,12 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
     ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=0",
+     "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Themes          >'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -80,6 +85,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
     ["BRAILLE LINE:  'Basic Grey'",
+     "     VISIBLE:  'Basic Grey', cursor=0",
+     "BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
@@ -164,6 +171,8 @@ sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
     ["BRAILLE LINE:  'one'",
+     "     VISIBLE:  'one', cursor=0",
+     "BRAILLE LINE:  'one'",
      "     VISIBLE:  'one', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",

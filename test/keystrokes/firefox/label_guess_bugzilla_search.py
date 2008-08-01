@@ -436,8 +436,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=9",
+    ["BRAILLE LINE:  ' $l  and Now $l'",
+     "     VISIBLE:  ' $l  and Now $l', cursor=10",
      "SPEECH OUTPUT: 'and text Now'"]))
 
 sequence.append(utils.StartRecordingAction())

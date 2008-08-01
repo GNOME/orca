@@ -1866,7 +1866,7 @@ class Script(default.Script):
                 candidate = candidate.parent
 
             if self.isSameObject(obj, candidate) \
-               and start <= offset <= end:
+               and start <= offset < end:
                 index = contents.index(content)
                 break
 
@@ -3051,29 +3051,6 @@ class Script(default.Script):
                   and state.contains(pyatspi.STATE_SENSITIVE)
 
         return isField
-
-    def isLineBreakChar(self, obj, offset):
-        """Returns True of the character at the given offset within
-        obj is a line break character (i.e. <br />) or is a newline
-        character within preformatted text.
-        """
-
-        isBreak = False
-
-        text = self.queryNonEmptyText(obj)
-        if text:
-            char = text.getText(offset, offset + 1)
-            [attributeSet, start, end] = text.getAttributeRun(offset, True)
-            isBreak = 'tag:BR' in attributeSet
-            if not isBreak and char == "\n":
-                attributes = obj.getAttributes()
-                if attributes:
-                    for attribute in attributes:
-                        if attribute == "tag:PRE":
-                            isBreak = True
-                            break
-
-        return isBreak
 
     def isUselessObject(self, obj):
         """Returns true if the given object is an obj that doesn't
@@ -5252,12 +5229,13 @@ class Script(default.Script):
 
         prevObj = currentLine[0][0]
         prevOffset = currentLine[0][1]
-        [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj,
-                                                              prevOffset)
 
-        if self.isLineBreakChar(prevObj, prevOffset):
-            [prevObj, prevOffset] = self.findPreviousCaretInOrder(prevObj,
-                                                                  prevOffset)
+        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
+        while self.onSameLine(extents, prevExtents):
+            [prevObj, prevOffset] = \
+                self.findPreviousCaretInOrder(prevObj, prevOffset)
+            prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
@@ -5346,14 +5324,12 @@ class Script(default.Script):
         nextObj = currentLine[-1][0]
         nextOffset = currentLine[-1][2] - 1
 
-        [nextObj, nextOffset] = self.findNextCaretInOrder(nextObj, nextOffset)
-
-        if self.getCharacterAtOffset(nextObj, nextOffset) == " ":
-            nextOffset += 1
-
-        if self.isLineBreakChar(nextObj, nextOffset):
-            [nextObj, nextOffset] = self.findNextCaretInOrder(nextObj,
-                                                              nextOffset)
+        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
+        while self.onSameLine(extents, nextExtents):
+            [nextObj, nextOffset] = \
+                self.findNextCaretInOrder(nextObj, nextOffset)
+            nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
 
         # If the user did some back-to-back arrowing, we might already have
         # the line contents.
@@ -5374,8 +5350,10 @@ class Script(default.Script):
             #print "find next line failed", nextObj, nextOffset
             [nextObj, nextOffset] = \
                       self.findNextCaretInOrder(nextObj, nextOffset)
-            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
-            failureCount += 1
+            if nextObj:
+                nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
+                failureCount += 1
+
         if currentLine == nextLine:
             #print "find next line still stuck", nextObj, nextOffset
             documentFrame = self.getDocumentFrame()
