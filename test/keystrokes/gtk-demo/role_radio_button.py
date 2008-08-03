@@ -23,20 +23,20 @@ sequence.append(TypeAction("Printing", 1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
-# When the Printing demo window appears, navigate to the "All" radio
+# When the Printing demo window appears, navigate to the "All Pages" radio
 # button.
 # 
 #sequence.append(WaitForWindowActivate("Print",None))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>a", 500))
-sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
-    "All radio button",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler &=y All RadioButton'",
-     "     VISIBLE:  '&=y All RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Print Pages'",
-     "SPEECH OUTPUT: 'All selected radio button'"]))
+    "All Pages radio button",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+     "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
+     "SPEECH OUTPUT: 'Range'",
+     "SPEECH OUTPUT: 'All Pages selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -45,17 +45,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "All radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler &=y All RadioButton'",
-     "     VISIBLE:  '&=y All RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Print Pages'",
-     "SPEECH OUTPUT: 'All radio button'",
+    "All Pages radio button Where Am I",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+     "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
+     "SPEECH OUTPUT: 'Range'",
+     "SPEECH OUTPUT: 'All Pages radio button'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'item 1 of 3'",
      "SPEECH OUTPUT: 'Alt a'"]))
 
 ########################################################################
-# Down arrow to the "Range" radio button.
+# Down arrow to the "Pages:" radio button.
 # 
 # presented [[[BUG?: when you first arrow to a radio button, we present
 # it as not selected in the tests, but manual testing presents it as
@@ -67,14 +67,14 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Range", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(WaitForFocus("Pages:", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Range radio button",
     ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler & y Range RadioButton'",
-     "     VISIBLE:  '& y Range RadioButton', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y Pages: RadioButton'",
+     "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Range not selected radio button'"]))
+     "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -84,27 +84,27 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Range radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler &=y Range RadioButton'",
-     "     VISIBLE:  '&=y Range RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Print Pages'",
-     "SPEECH OUTPUT: 'Range radio button'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
+     "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
+     "SPEECH OUTPUT: 'Range'",
+     "SPEECH OUTPUT: 'Pages: radio button'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'item 3 of 3'",
-     "SPEECH OUTPUT: 'Alt n'"]))
+     "SPEECH OUTPUT: 'Alt e'"]))
 
 ########################################################################
 # Put everything back and close the demo.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("All", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
-    "All radio button",
+    "All Pages radio button",
     ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Print Pages Filler & y All RadioButton'",
-     "     VISIBLE:  '& y All RadioButton', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y All Pages RadioButton'",
+     "     VISIBLE:  '& y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All not selected radio button'"]))
+     "SPEECH OUTPUT: 'All Pages not selected radio button'"]))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
