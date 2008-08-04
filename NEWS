@@ -1,3 +1,46 @@
+2.23.6 - 04-Aug-2008
+
+General:
+
+* Fix for bug #536985 - Orca no longer reads applets on the panel.
+
+* More work on bug #542714 - Orca should indicate read-only text boxes.
+
+* Fix for bug #545342 - Can no longer shift+click using Orca.
+
+StarOffice/OpenOffice:
+
+* Fix for bug #429390 - Braille stays on current line after pressing
+  return at end of line in OOo Writer.
+
+Firefox:
+
+* Fix for bug #544122 - Problems with downloading files with Firefox 3.
+
+* Fix for bug #544197 - Orca speaks nothing when first tabbing into
+  the document frame in firefox.
+
+* Fix for bug #544771 - Orca no longer moving the cursor on same page
+  links.
+
+* Fix for bug #545623 - Revert to checking extents for navigating
+  amongst line breaks. This also seems to improve -- and may fix --
+  bug #534431 (Orca does not recognize blank lines when writing a
+  message in Thunderbird).
+
+* Fix for bug #545946 - WhereAmI fails on Gecko Trees.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    pt_BR   Brazilian Portuguese Vladimir Melo and
+                                 Leonardo Ferreira Fontenelle
+    ru      Russian              Nickolay V. Shmyrev and Anatol Kamynin
+
+==========
+
 2.23.5 - 21-Jul-2008
 
 General:
@@ -51,7 +94,7 @@ General:
 
 * Fix for bug #542719 - Modified column header does not appear
   translated in Preferences - Key bindings page.
-	
+        
 * Fix for bug #543775 - Orca uses incorrect voice sometimes in text
   setup.
 
