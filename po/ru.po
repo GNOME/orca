@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-04 11:42+0400\n"
+"POT-Creation-Date: 2008-08-04 11:43+0400\n"
 "PO-Revision-Date: 2008-02-18 15:03+0200\n"
 "Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -4196,7 +4196,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Disable _end of line symbol"
-msgstr "Включить символ _конца строки"
+msgstr "Выключить символ _конца строки"
 
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Disable gksu _keyboard grab"
