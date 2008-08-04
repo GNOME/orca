@@ -566,7 +566,7 @@ msgstr "правая квадратная скобка"
 #.
 #: ../src/orca/chnames.py:151
 msgid "caret"
-msgstr "перевод каретки"
+msgstr "крышка"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
