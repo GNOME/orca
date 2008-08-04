@@ -1347,13 +1347,16 @@ class BrailleGenerator:
                         self._script.getRealActiveDescendant(obj))
 
                     if label == None or len(label) == 0:
-                        table = obj.parent.queryTable()
-                        index = self._script.getCellIndex(obj)
-                        n = table.getColumnAtIndex(index)
-                        accHeader = table.getColumnHeader(n)
-                        regions[0].append(braille.Region(" "))
-                        label = accHeader.name
-                        regions[0].append(braille.Region(label))
+                        try:
+                            table = obj.parent.queryTable()
+                            index = self._script.getCellIndex(obj)
+                            n = table.getColumnAtIndex(index)
+                            accHeader = table.getColumnHeader(n)
+                            regions[0].append(braille.Region(" "))
+                            label = accHeader.name
+                            regions[0].append(braille.Region(label))
+                        except:
+                            pass
 
                     break
 
