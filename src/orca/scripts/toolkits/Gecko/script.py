@@ -4554,7 +4554,7 @@ class Script(default.Script):
         except:
             return None
 
-    def getWordContentsAtOffset(self, obj, characterOffset):
+    def getWordContentsAtOffset(self, obj, characterOffset, boundary=None):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
         via an in-order traversal of the document contents starting at
@@ -4566,58 +4566,23 @@ class Script(default.Script):
         Arguments:
         -obj: the object to start at
         -characterOffset: the characterOffset in the object
+        -boundary: the pyatsi word boundary to use
         """
 
         if not obj:
             return []
 
-        # If we're looking for the current word, we'll search
-        # backwards to the beginning the current word and then
-        # forwards to the beginning of the next word.  Objects that do
-        # not implement text are treated as a word.
-        #
-        contents = []
+        boundary = boundary or pyatspi.TEXT_BOUNDARY_WORD_START
+        text = self.queryNonEmptyText(obj)
+        if text:
+            word = text.getTextAtOffset(characterOffset, boundary)
+            if word[1] < characterOffset <= word[2]:
+                characterOffset = word[1]
 
-        encounteredText = False
-        [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        while obj == lastObj:
-            if not self.queryNonEmptyText(obj):
-                break
-            else:
-                character = self.getCharacterAtOffset(obj, characterOffset)
-                if self.isWordDelimiter(character):
-                    if encounteredText:
-                        break
-                else:
-                    encounteredText = True
-
-            [lastObj, lastCharacterOffset] = [obj, characterOffset]
-            [obj, characterOffset] = \
-                  self.findPreviousCaretInOrder(obj, characterOffset)
-
-        contents.append([lastObj,
-                         lastCharacterOffset,
-                         lastCharacterOffset + 1])
-
-        encounteredText = False
-        encounteredDelimiter = False
-        [obj, characterOffset] = [lastObj, lastCharacterOffset]
-        while obj and (obj == lastObj):
-            if not self.queryNonEmptyText(obj):
-                break
-            else:
-                character = self.getCharacterAtOffset(obj, characterOffset)
-                if not self.isWordDelimiter(character):
-                    if encounteredText and encounteredDelimiter:
-                        break
-                    encounteredText = True
-                else:
-                    encounteredDelimiter = True
-
-            [lastObj, lastCharacterOffset] = [obj, characterOffset]
-            [obj, characterOffset] = \
-                  self.findNextCaretInOrder(obj, characterOffset)
-            contents[-1][2] = lastCharacterOffset + 1
+        contents = self.getObjectsFromEOCs(obj, characterOffset, boundary)
+        if len(contents) > 1 \
+           and contents[0][0].getRole() == pyatspi.ROLE_LIST_ITEM:
+            contents = [contents[0]]
 
         return contents
 
@@ -5119,18 +5084,11 @@ class Script(default.Script):
                 #    objectForFocus = objectForFocus.parent
                 self._objectForFocusGrab.queryComponent().grabFocus()
 
-        # If there is a character there, we'd like to position the
-        # caret the right spot.  [[[TODO: WDW - numbered lists are
-        # whacked in that setting the caret offset somewhere in
-        # the number will end up positioning the caret at the end
-        # of the list.]]]
-        #
-        character = self.getCharacterAtOffset(obj, characterOffset)
-        if character:
-            if self.isAriaWidget() \
-               or not (obj.getRole() == pyatspi.ROLE_LIST_ITEM \
-                     and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)):
-                obj.queryText().setCaretOffset(characterOffset)
+        text = self.queryNonEmptyText(obj)
+        if text:
+            text.setCaretOffset(characterOffset)
+            if characterOffset == text.characterCount:
+                characterOffset -= 1
                 mag.magnifyAccessible(None,
                                       obj,
                                       self.getExtents(obj,
@@ -5180,54 +5138,65 @@ class Script(default.Script):
         word or object in the document window.
         """
 
-        # Find the beginning of the current word
-        #
         [obj, characterOffset] = self.getCaretContext()
-        contents = self.getWordContentsAtOffset(obj, characterOffset)
-        [obj, startOffset, endOffset] = contents[0]
 
-        # Now go to the beginning of the previous word
+        # Make sure we have a word.
         #
-        [obj, characterOffset] = self.findPreviousCaretInOrder(obj,
-                                                               startOffset)
-        contents = self.getWordContentsAtOffset(obj, characterOffset)
+        [obj, characterOffset] = \
+            self.findPreviousCaretInOrder(obj, characterOffset)
 
+        # To be consistent with Gecko's native navigation, we want to move
+        # to the next (or technically the previous) word start boundary.
+        #
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        contents = self.getWordContentsAtOffset(obj, characterOffset, boundary)
         if not len(contents):
             return
 
         [obj, startOffset, endOffset] = contents[0]
+        if len(contents) == 1 \
+           and endOffset - startOffset == 1 \
+           and self.getCharacterAtOffset(obj, startOffset) == " ":
+            # Our "word" is just a space. This can happen if the previous
+            # word was a mark of punctuation surrounded by whitespace (e.g.
+            # " | ").
+            #
+            [obj, characterOffset] = \
+                self.findPreviousCaretInOrder(obj, startOffset)
+            contents = \
+                self.getWordContentsAtOffset(obj, characterOffset, boundary)
+            if len(contents):
+                [obj, startOffset, endOffset] = contents[0]
 
-        self.setCaretPosition(obj,  startOffset)
+        self.setCaretPosition(obj, startOffset)
         self.updateBraille(obj)
-        self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
+        self.speakContents(contents)
 
     def goNextWord(self, inputEvent):
         """Positions the caret offset to the end of next word or object
         in the document window.
         """
 
-        # Find the beginning of the current word
-        #
         [obj, characterOffset] = self.getCaretContext()
-        contents = self.getWordContentsAtOffset(obj, characterOffset)
-        [obj, startOffset, endOffset] = contents[0]
 
-        # Now go to the beginning of the next word.
+        # Make sure we have a word.
         #
-        [obj, characterOffset] = self.findNextCaretInOrder(obj, endOffset - 1)
-        contents = self.getWordContentsAtOffset(obj, characterOffset)
+        characterOffset = max(0, characterOffset - 1)
+        [obj, characterOffset] = \
+            self.findNextCaretInOrder(obj, characterOffset)
 
-        if not len(contents):
+        # To be consistent with Gecko's native navigation, we want to
+        # move to the next word end boundary.
+        #
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_END
+        contents = self.getWordContentsAtOffset(obj, characterOffset, boundary)
+        if not (len(contents) and contents[-1][2]):
             return
 
-        [obj, startOffset, endOffset] = contents[0]
-
-        # [[[TODO: WDW - to be more like gedit, we should position the
-        # caret just after the last character of the word.]]]
-        #
-        self.setCaretPosition(obj,  startOffset)
+        [obj, startOffset, endOffset] = contents[-1]
+        self.setCaretPosition(obj, endOffset)
         self.updateBraille(obj)
-        self.speakContents(self.getWordContentsAtOffset(obj, startOffset))
+        self.speakContents(contents)
 
     def findPreviousLine(self, obj, characterOffset, updateCache=True):
         """Locates the caret offset at the previous line in the document

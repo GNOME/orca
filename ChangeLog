@@ -13,6 +13,10 @@
           the first small step in making it usable. There are still a fair
           number of known issues/bugs which we hope to address soon.
 
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #535183 - Word navigation is inconsistent in 
+          Thunderbird and Firefox.
+
 2008-08-04  Willie Walker <william.walker@sun.com>
 
         * src/orca/braillegenerator.py:
