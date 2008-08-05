@@ -32,8 +32,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to grid", 
-    ["BRAILLE LINE:  'E-mail List Sorted by Date Caption Sel $l'",
-     "     VISIBLE:  'E-mail List Sorted by Date Capti', cursor=0",
+    ["BRAILLE LINE:  'Sel $l'",
+     "     VISIBLE:  'Sel $l', cursor=0",
      "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
      "     VISIBLE:  '< > Email 0 Selected CheckBox 1 ', cursor=1",
      "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
@@ -110,9 +110,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move right on second row 3", 
-    ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+    ["BRAILLE LINE:  'New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  'New message Image Attachment Ima', cursor=1",
-     "BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+     "BRAILLE LINE:  'New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  'New message Image Attachment Ima', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New message'"]))
@@ -124,13 +124,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move down to third row", 
-    ["BRAILLE LINE:  '< > Email 2 Selected CheckBox 3 Cell New message Image None Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
-     "     VISIBLE:  'New message Image None Image Jan', cursor=1",
-     "BRAILLE LINE:  '< > Email 2 Selected CheckBox 3 Cell New message Image None Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
-     "     VISIBLE:  'New message Image None Image Jan', cursor=1",
+    ["BRAILLE LINE:  'New message Image None Image Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
+     "     VISIBLE:  'New message Image None Image Ima', cursor=1",
+     "BRAILLE LINE:  'New message Image None Image Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
+     "     VISIBLE:  'New message Image None Image Ima', cursor=1",
      "SPEECH OUTPUT: '3 New message None From Jane Johnson Subject Proposal for you to review panel'",
      "SPEECH OUTPUT: 'New message'",
-     "SPEECH OUTPUT: 'check box not checked 3 New message image None image Jane Johnson Proposal for you to review 2007-16-03 12K'"]))
+     "SPEECH OUTPUT: 'New message image None image Jane Johnson Proposal for you to review 2007-16-03 12K'"]))
 
 ########################################################################
 # Close the demo

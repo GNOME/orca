@@ -1,3 +1,18 @@
+2008-08-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/braille_generator.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          Fix for bug #546355 - The ARIA gmail interface is largely unusable
+          with Orca. Note that this "fix" doesn't fix everything; it is just
+          the first small step in making it usable. There are still a fair
+          number of known issues/bugs which we hope to address soon.
+
 2008-08-04  Willie Walker <william.walker@sun.com>
 
         * src/orca/braillegenerator.py:

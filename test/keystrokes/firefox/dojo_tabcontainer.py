@@ -63,7 +63,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page Panel'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page'",
      "     VISIBLE:  'Tab 3 Page Inlined Sub TabContai', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
@@ -74,7 +74,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
-    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page Panel'",
+    ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page'",
      "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
@@ -84,12 +84,15 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "arrow to sub tab container", 
     ["BRAILLE LINE:  'TabList Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Sub TabContainer from href Page ', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Sub TabContainer from href page'"]))
+     "SPEECH OUTPUT: 'Sub TabContainer from href page'",
+     "SPEECH OUTPUT: 'Subtab #1  This is a nested tab container BUT loaded via an href.'"]))
+
 ########################################################################
 # Tab to 'SubTab2'.  The following will be presented.
 #

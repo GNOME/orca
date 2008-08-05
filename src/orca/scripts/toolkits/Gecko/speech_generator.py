@@ -433,12 +433,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return speechgenerator.SpeechGenerator.getSpeech(obj,
-                                                             already_focused)
-        
         utterances = []
 
         if not already_focused:

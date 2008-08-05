@@ -499,12 +499,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForLink", obj)
 
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getDefaultBrailleRegions(self, obj)
-        
         regions = []
 
         text = ""

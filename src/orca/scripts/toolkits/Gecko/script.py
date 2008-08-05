@@ -1175,6 +1175,16 @@ class Script(default.Script):
                     or obj.getRole() in [pyatspi.ROLE_ENTRY,
                                          pyatspi.ROLE_PASSWORD_TEXT]):
             displayedText = displayedText.strip()
+            # Some ARIA widgets (e.g. the list items in the chat box
+            # in gmail) implement the accessible text interface but
+            # only contain whitespace. Ultimately we should probably
+            # identify all of these instances, but for now, let's
+            # make gmail work.
+            #
+            if not displayedText \
+               and obj.getRole() == pyatspi.ROLE_LIST_ITEM \
+               and obj.getState().contains(pyatspi.STATE_FOCUSED):
+                displayedText = obj.name
 
         return displayedText
 
@@ -2636,6 +2646,14 @@ class Script(default.Script):
            we want to provide Orca keyboard navigation.  Returning False
            indicates that we want Firefox to handle key commands.
         """
+
+        # If the current object isn't even showing, we don't want to hand
+        # this off to Firefox's native caret navigation because who knows
+        # where we'll wind up....
+        #
+        if obj and not obj.getState().contains(pyatspi.STATE_SHOWING):
+            return True
+
         attrs = self._getAttrDictionary(orca_state.locusOfFocus)
         try:
             # ARIA landmark widgets
@@ -2643,6 +2661,12 @@ class Script(default.Script):
                 return True
             # ARIA live region
             elif 'container-live' in attrs:
+                return True
+            # Don't treat links as ARIA widgets. And we should be able to
+            # escape/exit ARIA entries just like we do HTML entries (How
+            # is the user supposed to know which he/she happens to be in?)
+            #
+            elif obj.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_LINK]:
                 return True
             # All other ARIA widgets
             else:
@@ -4681,7 +4705,7 @@ class Script(default.Script):
         done = False
         while not done:
             [firstObj, start, end] = objects[0]
-            isAria = self.isAriaWidget(firstObj)
+            isAria = not self.isNavigableAria(firstObj)
 
             text = self.queryNonEmptyText(firstObj)
             if text and start > 0 and not isAria:
@@ -4720,7 +4744,7 @@ class Script(default.Script):
         done = False
         while not done:
             [lastObj, start, end] = objects[-1]
-            isAria = self.isAriaWidget(lastObj)
+            isAria = not self.isNavigableAria(lastObj)
 
             text = self.queryNonEmptyText(lastObj)
             if text and end < text.characterCount - 1 and not isAria:
