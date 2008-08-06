@@ -73,7 +73,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._gidleLock      = threading.Lock()
         self.noFocusTimestamp = 0.0
 
-        self.setActiveScript(None)
+        self.setActiveScript(None, "__init__")
 
         # Initialize variable to make pylint happy.
         #
@@ -298,7 +298,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         return script
 
-    def setActiveScript(self, newScript):
+    def setActiveScript(self, newScript, reason=None):
         """Set the new active script.
 
         Arguments:
@@ -326,6 +326,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             orca_state.activeScript.activate()
         except:
             pass
+
+        if orca_state.activeScript:
+            debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: %s (reason=%s)" \
+                          % (orca_state.activeScript.name, reason))
 
     def _cleanupCache(self):
         """Looks for defunct accessible objects in the cache and removes them.
@@ -599,6 +603,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     eType = event.type
                     setNewActiveScript = eType == "window:activate"
 
+                    reason = None
+                    if not reason and setNewActiveScript:
+                        reason = "window:activate event"
+
                     # [[[TODO: WDW - HACK we look for frame that get
                     # focus: as a means to detect active scripts
                     # because yelp does this.  Actually, yelp is a bit
@@ -611,6 +619,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         or (eType.startswith("focus") \
                             and (event.source.getRole() == pyatspi.ROLE_FRAME))
 
+                    if not reason and setNewActiveScript:
+                        reason = "frame received focus"
+
                     # Added in a further check. We look for modal panels
                     # that are now showing (such as gnome-screensaver-dialog).
                     # See bug #530368 for more details.
@@ -620,16 +631,22 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                             and (event.source.getRole() == pyatspi.ROLE_PANEL)
                             and state.contains(pyatspi.STATE_MODAL))
 
+                    if not reason and setNewActiveScript:
+                        reason = "modal panel is showing"
+
                     # Also, we might be running into a gnome-panel
                     # applet, which is indicated by a host application
                     # with no children.  See bug #536985.
                     #
-                    setNewActiveScript = setNewActiveScript \
-                        or (event.host_application \
-                            and len(event.host_application) == 0 \
-                            and orca_state.activeScript \
-                            and (orca_state.activeScript.app \
-                                 != event.host_application))
+                    #setNewActiveScript = setNewActiveScript \
+                    #    or (event.host_application \
+                    #        and len(event.host_application) == 0 \
+                    #        and orca_state.activeScript \
+                    #        and (orca_state.activeScript.app \
+                    #             != event.host_application))
+                    #
+                    #if not reason and setNewActiveScript:
+                    #    reason = "bizarre applet behavior"
 
                     # Or, we might just be getting a focus event.  In this
                     # case, assume the window has focus and we missed an
@@ -645,6 +662,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                 and (orca_state.activeScript.app \
                                      != event.host_application)
 
+                    if not reason and setNewActiveScript:
+                        reason = "object received focus"
+
                     if setNewActiveScript:
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
@@ -652,9 +672,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
                         self.setActiveScript(
                             self.getScript(event.host_application or \
-                                              event.source.getApplication()))
-                        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                                      + orca_state.activeScript.name)
+                                              event.source.getApplication()),
+                            reason)
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
@@ -1036,7 +1055,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         self._restoreAppStates()
 
-        self.setActiveScript(self.getScript(None))
+        self.setActiveScript(self.getScript(None), "activate")
 
         # Tell BrlTTY which commands we care about.
         #
@@ -1084,4 +1103,4 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._oldAppSettings = None
         self._defaultScript  = None
 
-        self.setActiveScript(None)
+        self.setActiveScript(None, "deactivate")
