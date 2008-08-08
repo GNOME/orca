@@ -4694,6 +4694,7 @@ class Script(default.Script):
 
             prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
             if self.onSameLine(extents, prevExtents) \
+               and extents != prevExtents \
                and lastExtents != prevExtents \
                or prevExtents == (0, 0, 0, 0):
                 toAdd = self.getObjectsFromEOCs(prevObj, pOffset, boundary)
@@ -4737,6 +4738,7 @@ class Script(default.Script):
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
 
             if self.onSameLine(extents, nextExtents) \
+               and extents != nextExtents \
                and lastExtents != nextExtents \
                or nextExtents == (0, 0, 0, 0):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)

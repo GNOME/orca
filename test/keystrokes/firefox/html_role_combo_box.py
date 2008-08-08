@@ -95,9 +95,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Down: Low",
-    ["BUG? - We're picking up the previous menu item in the braille context",
-     "BRAILLE LINE:  'Normal Combo Low'",
-     "     VISIBLE:  'Normal Combo Low', cursor=14",
+    ["BRAILLE LINE:  'Low'",
+     "     VISIBLE:  'Low', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Low'"]))
 
@@ -108,9 +107,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Change selection Up: Normal",
-    ["BUG? - We're picking up the previous menu item in the braille context",
-     "BRAILLE LINE:  'High Combo Normal'",
-     "     VISIBLE:  'High Combo Normal', cursor=12",
+    ["BRAILLE LINE:  'Normal'",
+     "     VISIBLE:  'Normal', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Normal'"]))
 
