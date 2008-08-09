@@ -5,6 +5,29 @@
           Fix for bug #546895 - Braille context includes previous menu item
           in HTML combo boxes.
 
+        * test/keystrokes/firefox/sayAll_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_html_test_page.py:
+          test/keystrokes/firefox/sayAll_enter_bug.py:
+          test/keystrokes/firefox/sayAll_nested_tables.py:
+          test/keystrokes/firefox/sayAll_simple_form.py:
+          test/keystrokes/firefox/sayAll_imagemap.py:
+          test/keystrokes/firefox/sayAll_multi_line_text.py:
+          test/keystrokes/firefox/sayAll_entries.py:
+          test/keystrokes/firefox/sayAll_heading_section.py:
+          test/keystrokes/firefox/sayAll_table_cell_links.py:
+          test/keystrokes/firefox/sayAll_empty_anchor.py:
+          test/keystrokes/firefox/sayAll_role_links.py:
+          test/keystrokes/firefox/sayAll_role_combo_box.py:
+          test/keystrokes/firefox/sayAll_bug_512303.py:
+          test/keystrokes/firefox/sayAll_wiki.py:
+          test/keystrokes/firefox/sayAll_bug_511389.py:
+          test/keystrokes/firefox/sayAll_blockquote.py:
+          test/keystrokes/firefox/sayAll_role_lists.py:
+          New regression tests for sayAll in Firefox. Thanks to the way the
+          test harness works, each sayAll tests each only take 20 seconds.
+          So this should give us some decent sayAll coverage without making
+          running the entire suite take forever.
+
 2008-08-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/focus_tracking_presenter.py:
