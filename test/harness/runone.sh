@@ -22,6 +22,7 @@ export PS1='$ '
 foo=`dirname $0`
 harnessDir=`cd $foo; pwd`
 export PYTHONPATH=$harnessDir:$PYTHONPATH
+export PATH=$harnessDir/bin:$PATH
 
 #echo runone.sh: $*
 
