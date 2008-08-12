@@ -1712,6 +1712,16 @@ class Script(default.Script):
             #
             self.presentLine(obj, characterOffset)
 
+    def onWindowDeactivated(self, event):
+        """Called whenever a toplevel window is deactivated.
+
+        Arguments:
+        - event: the Event
+        """
+
+        self._objectForFocusGrab = None
+        default.Script.onWindowDeactivated(self, event)
+
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
         For Firefox, we don't want to speak the small "page load" progress
@@ -5028,7 +5038,7 @@ class Script(default.Script):
         #
         documentFrame = self.getDocumentFrame()
         if documentFrame:
-            self._documentFrameCaretContext[documentFrame] = caretContext
+            self._documentFrameCaretContext[hash(documentFrame)] = caretContext
 
         if caretContext == [obj, characterOffset]:
             return

@@ -1,3 +1,10 @@
+2008-08-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #547345 - Can't always "Alt+Tab" back into Thunderbird
+          or Firefox.
+
 2008-08-11  Willie Walker <william.walker@sun.com>
 
         * test/harness/runone.sh:

@@ -250,10 +250,31 @@ class Script(Gecko.Script):
         # Handle a newly-opened message.
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_FRAME \
-           and self._messageLoaded:
-            consume = True
-            self._presentMessage(event.source)
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_FRAME:
+            if self._messageLoaded:
+                consume = True
+                self._presentMessage(event.source)
+
+            # If the user just gave focus to the message window (e.g. by
+            # Alt+Tabbing back into it), we might have an existing caret
+            # context. But we'll need the document frame in order to verify
+            # this. Therefore try to find the document frame.
+            #
+            elif self.getCaretContext() == [None, -1]:
+                documentFrame = None
+                for child in orca_state.locusOfFocus:
+                    if child.getRole() == pyatspi.ROLE_INTERNAL_FRAME \
+                       and child.childCount \
+                       and child[0].getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+                        documentFrame = child[0]
+                        break
+                try:
+                    contextObj, contextOffset = \
+                        self._documentFrameCaretContext[hash(documentFrame)]
+                    if contextObj:
+                        orca.setLocusOfFocus(event, contextObj)
+                except:
+                    pass
 
         if not consume:
             Gecko.Script.onFocus(self, event)
