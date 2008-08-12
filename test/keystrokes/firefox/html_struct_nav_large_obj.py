@@ -34,8 +34,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Text Attributes h1'",
      "     VISIBLE:  'Text Attributes h1', cursor=1",
-     "SPEECH OUTPUT: 'Text Attributes heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'Text Attributes heading level 1'"]))
 
 ########################################################################
 # Navigate to the first 'large chunk'.  It is the 1st paragraph under 'From 

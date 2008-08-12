@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Check one or more: Red check box not checked Blue check box not checked Green check box not checked'",
      "SPEECH OUTPUT: 'Make a selection: Water combo box'",
      "SPEECH OUTPUT: 'Which sports do you like?",
-     " multi-select List with 4 items'",
+     " Hockey multi-select List with 4 items'",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker image'",
      "SPEECH OUTPUT: '",
      "Ain't he handsome (please say yes)? not selected radio button Yes not selected radio button No'"]))

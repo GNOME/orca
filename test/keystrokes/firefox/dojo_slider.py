@@ -25,9 +25,9 @@ sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Dojo Slider Widget Demo", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Give the widget a moment to construct itself
+# Give the widget plenty of time to construct itself. 
 #
-sequence.append(PauseAction(5000))
+sequence.append(PauseAction(7000))
 
 ########################################################################
 # Tab to the first slider.  The following will be presented.

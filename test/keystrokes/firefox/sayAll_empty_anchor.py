@@ -37,8 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'FAQ h1'",
      "     VISIBLE:  'FAQ h1', cursor=1",
      "SPEECH OUTPUT: 'FAQ '",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'heading level 1'"]))
 
 ########################################################################
 # SayAll to the End.
@@ -48,10 +47,8 @@ sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'FAQ '",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'Battery heading level 2'",
      "SPEECH OUTPUT: 'Q. What's a battery? link'",
      "SPEECH OUTPUT: 'Q. Which way is up? link'",
      "SPEECH OUTPUT: 'blank'",
@@ -59,15 +56,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: '",
      "FOO'",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 2'",
+     "SPEECH OUTPUT: 'heading level 2'",
      "SPEECH OUTPUT: 'Q. Why would someone put a line break in a heading? link'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: '",
-     "Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'",
+     "Battery heading level 2'",
      "SPEECH OUTPUT: 'Q. What is a battery?",
      "A. Look it up.'",
      "SPEECH OUTPUT: 'Q. Which way is up?",

@@ -1017,7 +1017,6 @@ class Script(default.Script):
                 [line, startOffset, endOffset] = \
                     text.getTextAtOffset(characterOffset,
                                          pyatspi.TEXT_BOUNDARY_LINE_START)
-
                 beginAt = 0
                 if line.strip():
                     terminators = ['. ', '? ', '! ']
@@ -1044,15 +1043,8 @@ class Script(default.Script):
             utterances = self.getUtterancesFromContents(contents)
             clumped = self.clumpUtterances(utterances)
             for i in xrange(len(clumped)):
-                [obj, startOffset, endOffset] = \
+                [obj, startOffset, endOffset, text] = \
                                              contents[min(i, len(contents)-1)]
-                if obj.getRole() == pyatspi.ROLE_LABEL \
-                   and len(obj.getRelationSet()):
-                    # This label is labelling something and will be spoken
-                    # in conjunction with the object with which it is
-                    # associated.
-                    #
-                    continue
                 [string, voice] = clumped[i]
                 string = self.adjustForRepeats(string)
                 yield [speechserver.SayAllContext(obj, string,
@@ -1859,7 +1851,7 @@ class Script(default.Script):
         Arguments:
         - obj: the Accessible
         - offset: the character offset within obj
-        - contents: a list of (obj, startOffset, endOffset) tuples
+        - contents: a list of (obj, startOffset, endOffset, string) tuples
 
         Returns the index of the item if found; -1 if not found.
         """
@@ -1869,7 +1861,7 @@ class Script(default.Script):
 
         index = -1
         for content in contents:
-            [candidate, start, end] = content
+            [candidate, start, end, string] = content
 
             # When we get the line contents, we include a focusable list
             # as a list and combo box as a combo box because that is what
@@ -1940,7 +1932,7 @@ class Script(default.Script):
         index = self.findObjectOnLine(obj, offset, contents)
         if index < 0:
             self.currentLineContents = self.getLineContentsAtOffset(obj,
-                                                                     offset)
+                                                                    offset)
         self.speakContents(self.currentLineContents)
         self.updateBraille(obj)
 
@@ -2000,7 +1992,7 @@ class Script(default.Script):
 
         focusedRegion = None
         for content in contents:
-            [obj, startOffset, endOffset] = content
+            [obj, startOffset, endOffset, string] = content
             if not obj:
                 continue
 
@@ -2205,7 +2197,7 @@ class Script(default.Script):
         if obj.getRole() != pyatspi.ROLE_ENTRY:
             self.speakContents(wordContents)
         else:
-            [textObj, startOffset, endOffset] = wordContents[0]
+            [textObj, startOffset, endOffset, word] = wordContents[0]
             word = textObj.queryText().getText(startOffset, endOffset)
             speech.speakUtterances([word], self.getACSS(textObj, word))
 
@@ -3321,9 +3313,9 @@ class Script(default.Script):
 
         return string
 
-    def getObjectsFromEOCs(self, obj, offset, boundary):
+    def getObjectsFromEOCs(self, obj, offset, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
-        with [obj, startOffset, endOffset] tuples.
+        with [obj, startOffset, endOffset, string] tuples.
 
         Arguments
         - obj: the object whose EOCs we need to expand into tuples
@@ -3336,7 +3328,7 @@ class Script(default.Script):
         if not obj:
             return []
 
-        elif obj.getRole() == pyatspi.ROLE_TABLE:
+        elif boundary and obj.getRole() == pyatspi.ROLE_TABLE:
             # If this is a table, move to the first cell -- or the caption,
             # if present.
             # [[[TODOS - JD:
@@ -3354,29 +3346,45 @@ class Script(default.Script):
         objects = []
         text = self.queryNonEmptyText(obj)
         if text:
-            [string, start, end] = text.getTextAfterOffset(offset, boundary)
+            if boundary:
+                [string, start, end] = \
+                    text.getTextAfterOffset(offset, boundary)
+            else:
+                start = offset
+                end = text.characterCount
+                string = text.getText(start, end)
         else:
             string = ""
             start = 0
             end = 1
-        objects.append([obj, start, end])
+
+        unicodeText = string.decode("UTF-8")
+        objects.append([obj, start, end, unicodeText])
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
-        unicodeText = string.decode("UTF-8")
         matches = re.finditer(pattern, unicodeText)
+
+        offset = 0
         for m in matches:
             # Adjust the last object's endOffset to the last character
             # before the EOC.
             #
             childOffset = m.start(0) + start
-            objects[-1][2] = childOffset
-            if objects[-1][1] == objects[-1][2]:
+            lastObj = objects[-1]
+            lastObj[2] = childOffset
+            if lastObj[1] == lastObj[2]:
                 # A zero-length object is an indication of something
                 # whose sole contents was an EOC.  Delete it from the
                 # list.
                 #
                 objects.pop()
+            else:
+                # Adjust the string to reflect just this segment.
+                #
+                lastObj[3] = unicodeText[offset:m.start(0)]
 
+            offset = m.start(0) + 1
+ 
             # Recursively tack on the child's objects.
             #
             childIndex = self.getChildIndex(obj, childOffset)
@@ -3386,12 +3394,13 @@ class Script(default.Script):
             # Tack on the remainder of the original object, if any.
             #
             if end > childOffset + 1:
-                objects.append([obj, childOffset + 1, end])
-
-        if obj.getRole() == pyatspi.ROLE_IMAGE and obj.childCount:
+                restOfText = unicodeText[offset:len(unicodeText)]
+                objects.append([obj, childOffset + 1, end, restOfText])                
+ 
+        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
             # Imagemaps that don't have alternative text won't implement
             # the text interface, but they will have children (essentially
-            # EOCs) that we need to get.
+            # EOCs) that we need to get. The same is true for tables.
             #
             toAdd = []
             for child in obj:
@@ -4565,8 +4574,8 @@ class Script(default.Script):
             return None
 
     def getWordContentsAtOffset(self, obj, characterOffset, boundary=None):
-        """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
+        """Returns an ordered list where each element is composed of an
+        [obj, startOffset, endOffset, string] tuple.  The list is created
         via an in-order traversal of the document contents starting at
         the given object and characterOffset.  The first element in
         the list represents the beginning of the word.  The last
@@ -4597,8 +4606,8 @@ class Script(default.Script):
         return contents
 
     def getLineContentsAtOffset(self, obj, offset):
-        """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
+        """Returns an ordered list where each element is composed of an
+        [obj, startOffset, endOffset, string] tuple.  The list is created
         via an in-order traversal of the document contents starting at
         the given object and characterOffset.  The first element in
         the list represents the beginning of the line.  The last
@@ -4679,7 +4688,7 @@ class Script(default.Script):
         lastExtents = (0, 0, 0, 0)
         done = False
         while not done:
-            [firstObj, start, end] = objects[0]
+            [firstObj, start, end, string] = objects[0]
             isAria = not self.isNavigableAria(firstObj)
 
             text = self.queryNonEmptyText(firstObj)
@@ -4719,7 +4728,7 @@ class Script(default.Script):
         lastExtents = (0, 0, 0, 0)
         done = False
         while not done:
-            [lastObj, start, end] = objects[-1]
+            [lastObj, start, end, string] = objects[-1]
             isAria = not self.isNavigableAria(lastObj)
 
             text = self.queryNonEmptyText(lastObj)
@@ -4788,38 +4797,12 @@ class Script(default.Script):
 
     def getObjectContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
-        via an in-order traversal of the document contents starting and
-        stopping at the given object.
+        an [obj, startOffset, endOffset, string] tuple.  The list is 
+        created via an in-order traversal of the document contents 
+        starting and stopping at the given object.
         """
 
-        #if not obj.getState().contains(pyatspi.STATE_SHOWING):
-        #    return [[None, -1, -1]]
-        contents = []
-        if obj.getRole() == pyatspi.ROLE_TABLE:
-            for child in obj:
-                contents.extend(self.getObjectContentsAtOffset(child, 0))
-            return contents
-
-        elif not self.queryNonEmptyText(obj):
-            return [[obj, -1, -1]]
-
-        text = self.getUnicodeText(obj)
-        for offset in range(characterOffset, len(text)):
-            if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
-                child = obj[self.getChildIndex(obj, offset)]
-                if child:
-                    contents.extend(self.getObjectContentsAtOffset(child, 0))
-            elif len(contents):
-                [currentObj, startOffset, endOffset] = contents[-1]
-                if obj == currentObj:
-                    contents[-1] = [obj, startOffset, offset + 1]
-                else:
-                    contents.append([obj, offset, offset + 1])
-            else:
-                contents.append([obj, offset, offset + 1])
-
-        return contents
+        return self.getObjectsFromEOCs(obj, characterOffset)
 
     ####################################################################
     #                                                                  #
@@ -4839,30 +4822,43 @@ class Script(default.Script):
         return acss
 
     def getUtterancesFromContents(self, contents, speakRole=True):
-        """Returns a list of [text, acss] tuples based upon the
-        list of [obj, startOffset, endOffset] tuples passed in.
+        """Returns a list of [text, acss] tuples based upon the list
+        of [obj, startOffset, endOffset, string] tuples passed in.
 
         Arguments:
-        -contents: a list of [obj, startOffset, endOffset] tuples
+        -contents: a list of [obj, startOffset, endOffset, string] tuples
         -speakRole: if True, speak the roles of objects
         """
 
         if not len(contents):
             return []
 
+        # Even if we want to speakRole, we don't want to do that for the
+        # document frame.  And we're going to special-case headings so that
+        # that we don't overspeak heading role info, which we're in danger
+        # of doing if a heading includes links or images.
+        #
+        doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_HEADING]
+
         utterances = []
         for content in contents:
-            [obj, startOffset, endOffset] = content
-            if not obj:
+            [obj, startOffset, endOffset, string] = content
+            role = obj.getRole()
+
+            # If we don't have an object, there's nothing to do. If we have
+            # a string, but it consists solely of spaces, we have nothing to
+            # say. If it's a label for an object in our contents, we'll get
+            # that label via the speech generator for the object.
+            #
+            if not obj \
+               or len(string) and not len(string.strip(" ")) \
+               or self.isLabellingContents(obj, contents):
                 continue
 
-            # If this is a label that's labelling something else, we'll
-            # get the label via a speech generator -- unless it's a
-            # focusable list that doesn't have focus.
+            # If it is a "useless" image (i.e. not a link, no associated
+            # text), ignore it.
             #
-            labelledContent = self.isLabellingContents(obj, contents)
-            if labelledContent \
-               and labelledContent.getRole() != pyatspi.ROLE_LIST:
+            elif role == pyatspi.ROLE_IMAGE and self.isUselessObject(obj):
                 continue
 
             # The radio button's label gets added to the context in
@@ -4877,83 +4873,39 @@ class Script(default.Script):
                 if label:
                     utterances.append([label, self.getACSS(obj, label)])
 
-            # We only want to announce the heading role and level if we
-            # have found the final item in that heading, or if that
-            # heading contains no children.
+            # If we don't have a string, then use the speech generator.
+            # Otherwise, we'll want to speak the string and possibly the
+            # role.
             #
-            containingHeading = \
-                self.getAncestor(obj,
-                                 [pyatspi.ROLE_HEADING],
-                                 [pyatspi.ROLE_DOCUMENT_FRAME])
-            isLastObject = contents.index(content) == (len(contents) - 1)
-            if obj.getRole() == pyatspi.ROLE_HEADING:
-                speakThisRole = isLastObject or not obj.childCount
+            if not len(string) \
+               or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
+                utterance = self.speechGenerator.getSpeech(obj, False)
             else:
-                # We also don't want to speak the role if it's a documement
-                # frame or a table cell.  In addition, if the object is an
-                # entry or password_text, _getSpeechForText() will add the
-                # role after the label and before any text that is present
-                # in that field.  We don't want to repeat the role.
-                #
-                speakThisRole = \
-                    not obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                          pyatspi.ROLE_TABLE_CELL,
-                                          pyatspi.ROLE_ENTRY,
-                                          pyatspi.ROLE_PASSWORD_TEXT]
-            text = self.queryNonEmptyText(obj)
-            if self.isAriaWidget(obj):
-                # Treat ARIA widgets like normal default.py widgets
-                #
-                speakThisRole = False
-                strings = self.speechGenerator.getSpeech(obj, False)
-            elif text \
-               and not obj.getRole() in [pyatspi.ROLE_ENTRY,
-                                         pyatspi.ROLE_PASSWORD_TEXT,
-                                         pyatspi.ROLE_RADIO_BUTTON,
-                                         pyatspi.ROLE_MENU_ITEM]:
-                strings = [text.getText(startOffset, endOffset)]
-                if strings == [' '] and len(contents) > 1:
-                    strings = []
-            elif self.isLayoutOnly(obj):
-                continue
-            else:
-                strings = self.speechGenerator.getSpeech(obj, False)
-
-        # Pylint is confused and flags these errors:
-        #
-        # E1101:6957:Script.getUtterancesFromContents: Instance of
-        # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
-        # E1101:6962:Script.getUtterancesFromContents: Instance of
-        # 'SpeechGenerator' has no 'getSpeechForObjectRole' member
-        #
-        # So for now, we just disable these errors in this method.
-        #
-        # pylint: disable-msg=E1101
-
-            if speakRole and speakThisRole:
-                if text:
-                    strings.extend(\
-                       self.speechGenerator.getSpeechForObjectRole(obj))
-
-                if containingHeading and isLastObject:
-                    obj = containingHeading
-                    strings.extend(\
+                utterance = [string]
+                if speakRole and not role in doNotSpeakRoles:
+                    utterance.extend(\
                         self.speechGenerator.getSpeechForObjectRole(obj))
+  
+            # If the object is a heading, or is contained within a heading,
+            # speak that role information at the end of the object.
+            #
+            isLastObject = (contents.index(content) == (len(contents) - 1))
+            isHeading = (role == pyatspi.ROLE_HEADING)
+            if speakRole and (isLastObject or isHeading):
+                if isHeading:
+                    heading = obj
+                else:
+                    heading = self.getAncestor(obj,
+                                               [pyatspi.ROLE_HEADING],
+                                               [pyatspi.ROLE_DOCUMENT_FRAME])
 
-            for string in strings:
-                utterances.append([string, self.getACSS(obj, string)])
+                if heading:
+                    utterance.extend(\
+                        self.speechGenerator.getSpeechForObjectRole(heading))
 
-            if speakRole and \
-               speakThisRole and \
-               obj.getRole() == pyatspi.ROLE_HEADING:
-                level = self.getHeadingLevel(obj)
-                if level:
-                    utterances.append([" ", self.getACSS(obj, " ")])
-                    # Translators: this is in reference to a heading level
-                    # in HTML (e.g., For <h3>, the level is 3).
-                    #
-                    utterances.append([_("level %d") % level, None])
-
+            for item in utterance:
+                utterances.append([item, self.getACSS(obj, item)])
+  
         return utterances
 
     def clumpUtterances(self, utterances):
@@ -5165,7 +5117,7 @@ class Script(default.Script):
         if not len(contents):
             return
 
-        [obj, startOffset, endOffset] = contents[0]
+        [obj, startOffset, endOffset, string] = contents[0]
         if len(contents) == 1 \
            and endOffset - startOffset == 1 \
            and self.getCharacterAtOffset(obj, startOffset) == " ":
@@ -5178,7 +5130,7 @@ class Script(default.Script):
             contents = \
                 self.getWordContentsAtOffset(obj, characterOffset, boundary)
             if len(contents):
-                [obj, startOffset, endOffset] = contents[0]
+                [obj, startOffset, endOffset, string] = contents[0]
 
         self.setCaretPosition(obj, startOffset)
         self.updateBraille(obj)
@@ -5205,7 +5157,7 @@ class Script(default.Script):
         if not (len(contents) and contents[-1][2]):
             return
 
-        [obj, startOffset, endOffset] = contents[-1]
+        [obj, startOffset, endOffset, string] = contents[-1]
         self.setCaretPosition(obj, endOffset)
         self.updateBraille(obj)
         self.speakContents(contents)

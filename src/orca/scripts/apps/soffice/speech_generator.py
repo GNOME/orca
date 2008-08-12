@@ -80,7 +80,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.extend(name)
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 

@@ -36,8 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Heading 1. h1'",
      "     VISIBLE:  'Heading 1. h1', cursor=1",
-     "SPEECH OUTPUT: 'Heading 1. heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'Heading 1. heading level 1'"]))
 
 ########################################################################
 # SayAll to the End.
@@ -46,18 +45,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
-    ["SPEECH OUTPUT: 'Heading 1. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'Heading 2. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'sect 1 Heading 3. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'sect 2 Heading 4. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'sect 3 Heading 5. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
-     "SPEECH OUTPUT: 'Heading 6. heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+    ["SPEECH OUTPUT: 'Heading 1. heading level 1'",
+     "SPEECH OUTPUT: 'Heading 2. heading level 1'",
+     "SPEECH OUTPUT: 'sect 1 Heading 3. heading level 1'",
+     "SPEECH OUTPUT: 'sect 2 Heading 4. heading level 1 sect 3 Heading 5. heading level 1",
+     "SPEECH OUTPUT: 'Heading 6. heading level 1'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

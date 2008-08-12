@@ -62,11 +62,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Enter Bug: orca', cursor=0",
      "BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. h1'",
      "     VISIBLE:  'Enter Bug: orca – This page le', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading  '",
-     "SPEECH OUTPUT: 'level 1'",
+     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'",
      "SPEECH OUTPUT: 'Enter Bug: orca page'",
-     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -115,7 +113,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Version: List Component Link : List'",
      "     VISIBLE:  'Version: List Component Link : L', cursor=1",
-     "SPEECH OUTPUT: 'Version: List with 9 items Component link : List with 5 items'"]))
+     "SPEECH OUTPUT: 'Version: 2.21.x List with 9 items Component link : braille List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -423,7 +421,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Version: List Component Link : List'",
      "     VISIBLE:  'Version: List Component Link : L', cursor=1",
-     "SPEECH OUTPUT: 'Version: List with 9 items Component link : List with 5 items'"]))
+     "SPEECH OUTPUT: 'Version: 2.21.x List with 9 items Component link : braille List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -472,8 +470,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. h1'",
      "     VISIBLE:  'Enter Bug: orca – This page le', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -65,16 +65,31 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
     def getSpeechForObjectRole(self, obj, role=None):
         """Prevents some roles from being spoken."""
-        if obj.getRole() in [pyatspi.ROLE_PARAGRAPH,
-                             pyatspi.ROLE_SECTION,
-                             pyatspi.ROLE_LABEL,
-                             pyatspi.ROLE_FORM,
-                             pyatspi.ROLE_LIST_ITEM,
-                             pyatspi.ROLE_MENU_ITEM,
-                             pyatspi.ROLE_UNKNOWN]:
-            return []
-        else:
-            return [rolenames.getSpeechForRoleName(obj, role)]
+        doNotSpeak = [pyatspi.ROLE_FORM,
+                      pyatspi.ROLE_LABEL,
+                      pyatspi.ROLE_MENU_ITEM,
+                      pyatspi.ROLE_PARAGRAPH,
+                      pyatspi.ROLE_SECTION,
+                      pyatspi.ROLE_UNKNOWN]
+
+        if self._script.inDocumentContent(obj):
+            doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
+            if not self._script.isAriaWidget(obj):
+                doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
+                doNotSpeak.append(pyatspi.ROLE_LIST)
+
+        utterances = []
+        if not obj.getRole() in doNotSpeak:
+            utterances.append(rolenames.getSpeechForRoleName(obj, role))
+            if obj.getRole() == pyatspi.ROLE_HEADING:
+                level = self._script.getHeadingLevel(obj)
+                if level:
+                    # Translators: this is in reference to a heading level
+                    # in HTML (e.g., For <h3>, the level is 3).
+                    #
+                    utterances.append(_("level %d") % level)
+
+        return utterances
 
     def _getSpeechForDocumentFrame(self, obj, already_focused):
         """Gets the speech for a document frame.
@@ -327,28 +342,27 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
 
-        if obj.getState().contains(pyatspi.STATE_FOCUSED):
-            label = self._script.getDisplayedLabel(obj)
-            if not label:
-                if not self._script.inDocumentContent():
-                    label = obj.name
-                else:
-                    label = self._script.guessTheLabel(obj)
+        label = self._script.getDisplayedLabel(obj)
+        if not label:
+            if not self._script.inDocumentContent():
+                label = obj.name
+            else:
+                label = self._script.guessTheLabel(obj)
 
-            if not already_focused and label:
-                utterances.append(label)
+        if not already_focused and label:
+            utterances.append(label)
 
-            item = None
-            selection = obj.querySelection()
-            for i in xrange(obj.childCount):
-                if selection.isChildSelected(i):
-                    item = obj[i]
-                    break
-            item = item or obj[0]
-            if item:
-                name = self._getSpeechForObjectName(item)
-                if name != label:
-                    utterances.extend(name)
+        item = None
+        selection = obj.querySelection()
+        for i in xrange(obj.childCount):
+            if selection.isChildSelected(i):
+                item = obj[i]
+                break
+        item = item or obj[0]
+        if item:
+            name = self._getSpeechForObjectName(item)
+            if name != label:
+                utterances.extend(name)
 
         if not already_focused:
             if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):

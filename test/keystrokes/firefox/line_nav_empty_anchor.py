@@ -39,8 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'FAQ h1'",
      "     VISIBLE:  'FAQ h1', cursor=1",
      "SPEECH OUTPUT: 'FAQ '",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'heading level 1'"]))
 
 ########################################################################
 # Down Arrow.
@@ -51,8 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -87,8 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -97,8 +94,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'FOO h2'",
      "     VISIBLE:  'FOO h2', cursor=1",
      "SPEECH OUTPUT: 'FOO'",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -125,8 +121,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -134,8 +129,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -240,8 +234,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -250,8 +243,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -278,8 +270,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'FOO h2'",
      "     VISIBLE:  'FOO h2', cursor=1",
      "SPEECH OUTPUT: 'FOO'",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -288,8 +279,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
-     " heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -323,8 +313,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -333,8 +322,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'FAQ h1'",
      "     VISIBLE:  'FAQ h1', cursor=1",
      "SPEECH OUTPUT: 'FAQ '",
-     "SPEECH OUTPUT: 'heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'heading level 1'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

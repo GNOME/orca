@@ -5,6 +5,40 @@
           Fix for bug #547345 - Can't always "Alt+Tab" back into Thunderbird
           or Firefox.
 
+        * src/orca/scripts/apps/gnome-window-properties/speech_generator.py:
+          src/orca/scripts/apps/soffice/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/speechgenerator.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/sayAll_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_html_test_page.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/sayAll_enter_bug.py:
+          test/keystrokes/firefox/html_struct_nav_large_obj.py:
+          test/keystrokes/firefox/line_nav_multi_line_text.py:
+          test/keystrokes/firefox/sayAll_simple_form.py:
+          test/keystrokes/firefox/html_struct_nav_lists.py:
+          test/keystrokes/firefox/line_nav_heading_section.py:
+          test/keystrokes/firefox/html_role_lists.py:
+          test/keystrokes/firefox/sayAll_multi_line_text.py:
+          test/keystrokes/firefox/sayAll_entries.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/sayAll_heading_section.py:
+          test/keystrokes/firefox/sayAll_empty_anchor.py:
+          test/keystrokes/firefox/html_struct_nav_list_item.py:
+          test/keystrokes/firefox/page_summary.py:
+          test/keystrokes/firefox/line_nav_empty_anchor.py:
+          test/keystrokes/firefox/sayAll_wiki.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_role_lists.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          Work on bug #535178 - In Gecko, we should get the needed text for
+          the speech and braille contexts while building up the line. Also
+          fixes bug #527819 – Orca sometimes says "list" between items when
+          the list is on a single line in FF3.
+
 2008-08-11  Willie Walker <william.walker@sun.com>
 
         * test/harness/runone.sh:

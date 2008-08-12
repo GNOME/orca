@@ -40,8 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Here are some entries h2'",
      "     VISIBLE:  'Here are some entries h2', cursor=1",
-     "SPEECH OUTPUT: 'Here are some entries heading  '",
-     "SPEECH OUTPUT: 'level 2'"]))
+     "SPEECH OUTPUT: 'Here are some entries heading level 2'"]))
 
 ########################################################################
 # Press Insert+Tab to move from form field to form field.

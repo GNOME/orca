@@ -91,8 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Hello h3'",
      "     VISIBLE:  'Hello h3', cursor=1",
-     "SPEECH OUTPUT: 'Hello heading  '",
-     "SPEECH OUTPUT: 'level 3'"]))
+     "SPEECH OUTPUT: 'Hello heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -132,8 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'World h3'",
      "     VISIBLE:  'World h3', cursor=1",
-     "SPEECH OUTPUT: 'World heading  '",
-     "SPEECH OUTPUT: 'level 3'"]))
+     "SPEECH OUTPUT: 'World heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -200,8 +198,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'World h3'",
      "     VISIBLE:  'World h3', cursor=1",
-     "SPEECH OUTPUT: 'World heading  '",
-     "SPEECH OUTPUT: 'level 3'"]))
+     "SPEECH OUTPUT: 'World heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -241,8 +238,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Hello h3'",
      "     VISIBLE:  'Hello h3', cursor=1",
-     "SPEECH OUTPUT: 'Hello heading  '",
-     "SPEECH OUTPUT: 'level 3'"]))
+     "SPEECH OUTPUT: 'Hello heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

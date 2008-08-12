@@ -209,7 +209,7 @@ class SpeechGenerator:
         else:
             return []
 
-    def _getSpeechForObjectRole(self, obj, role=None):
+    def getSpeechForObjectRole(self, obj, role=None):
         if (obj.getRole() != pyatspi.ROLE_UNKNOWN):
             return [rolenames.getSpeechForRoleName(obj, role)]
         else:
@@ -314,7 +314,7 @@ class SpeechGenerator:
             if name != label:
                 utterances.extend(name)
             utterances.extend(self._getSpeechForAllTextSelection(obj))
-            utterances.extend(self._getSpeechForObjectRole(obj, role))
+            utterances.extend(self.getSpeechForObjectRole(obj, role))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -440,10 +440,10 @@ class SpeechGenerator:
                 utterances.extend(name)
             if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                 utterances.extend(
-                  self._getSpeechForObjectRole(
+                  self.getSpeechForObjectRole(
                     obj, pyatspi.ROLE_CHECK_BOX))
             else:
-                utterances.extend(self._getSpeechForObjectRole(obj))
+                utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForRequiredObject(obj))
@@ -524,7 +524,7 @@ class SpeechGenerator:
             utterances.extend(name)
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -670,7 +670,7 @@ class SpeechGenerator:
             if name != label:
                 utterances.extend(name)
             utterances.extend(self._getSpeechForAllTextSelection(obj))
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
             # If this application has more than one unfocused alert or
             # dialog window, then speak '<m> unfocused dialogs'
@@ -1001,7 +1001,7 @@ class SpeechGenerator:
             utterances.append(settings.speechReadOnlyString)
 
         if obj.getRole() != pyatspi.ROLE_PARAGRAPH:
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         utterances.append(text)
@@ -1104,7 +1104,7 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
 
         utterances.append(percentage)
 
@@ -1170,7 +1170,7 @@ class SpeechGenerator:
             #utterances.extend(self._getSpeechForObjectLabel(obj))
             utterances.extend(self._getSpeechForObjectName(obj))
             utterances.append(selectionState)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:
             utterances.append(selectionState)
@@ -1278,7 +1278,7 @@ class SpeechGenerator:
             #
             if not utterances:
                 utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForRequiredObject(obj))
@@ -1333,7 +1333,7 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectLabel(obj))
             if not utterances:
                 utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -1719,7 +1719,7 @@ class SpeechGenerator:
             name = self._getSpeechForObjectName(obj)
             if name != label:
                 utterances.extend(name)
-            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:

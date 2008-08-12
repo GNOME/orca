@@ -37,8 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
      "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
-     "SPEECH OUTPUT: 'Welcome to a List of Lists heading  '",
-     "SPEECH OUTPUT: 'level 1'"]))
+     "SPEECH OUTPUT: 'Welcome to a List of Lists heading level 1'"]))
 
 ########################################################################
 # Press Down Arrow to move through the lists.

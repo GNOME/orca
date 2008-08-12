@@ -62,7 +62,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. line Down",
-    [     "BRAILLE LINE:  'Tell me a little more about yourself:'",
+    ["BRAILLE LINE:  'Tell me a little more about yourself:'",
      "     VISIBLE:  'Tell me a little more about your', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself:",
      "'"]))
@@ -146,7 +146,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. line Down",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -199,7 +199,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. line Up",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

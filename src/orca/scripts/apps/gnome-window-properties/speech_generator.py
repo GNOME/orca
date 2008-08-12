@@ -49,7 +49,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
         utterances.extend(self._getSpeechForObjectLabel(obj))
         utterances.extend(self._getSpeechForObjectName(obj))
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        utterances.extend(self.getSpeechForObjectRole(obj))
 
         self._debugGenerator("gnome-window-properties._getSpeechForAlert",
                              obj,
