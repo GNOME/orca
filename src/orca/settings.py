@@ -592,7 +592,7 @@ readTableCellRow    = True
 
 # If True, enable speaking of progress bar updates.
 #
-enableProgressBarUpdates = False
+enableProgressBarUpdates = True
 
 # The interval (in seconds) between speaking progress bar updates. A value
 # of zero means that progress bar updates should not be spoken at all.

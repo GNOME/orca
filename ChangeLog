@@ -1,3 +1,8 @@
+2008-08-14  Mike Pedersen <michael.pedersen@sun.com>
+
+        * src/orca/settings.py
+          enable the speaking of progressbars by default
+
 2008-08-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
