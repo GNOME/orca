@@ -1,3 +1,9 @@
+2008-08-15  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
+          Makefile.am:
+          Fix for bug #547895: make distcheck fails with intltools 0.40.0
+
 2008-08-14  Mike Pedersen <michael.pedersen@sun.com>
 
         * src/orca/settings.py

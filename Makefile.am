@@ -3,9 +3,6 @@ SUBDIRS = docs icons po src
 DISTCHECK_CONFIGURE_FLAGS = --enable-pydoc
 
 DISTCLEANFILES =                \
-	intltool-extract        \
-	intltool-merge          \
-	intltool-update		\
 	gnome-doc-utils.make	\
 	orca.desktop
 
@@ -33,7 +30,4 @@ EXTRA_DIST =                \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
 	ChangeLog           \
-	MAINTAINERS         \
-	intltool-extract.in \
-	intltool-merge.in   \
-	intltool-update.in
+	MAINTAINERS
