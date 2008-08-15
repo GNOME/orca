@@ -40,6 +40,7 @@ except:
 
 import locale
 import math
+import sys
 import time
 
 import pyatspi
@@ -4517,7 +4518,135 @@ class Script(script.Script):
     def pursueForFlatReview(self, obj):
         """Determines if we should look any further at the object
         for flat review."""
-        return obj.getState().contains(pyatspi.STATE_SHOWING)
+
+        try:
+            state = obj.getState()
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            return False
+        else:
+            return state.contains(pyatspi.STATE_SHOWING)
+
+    def getShowingDescendants(self, parent):
+        """Given a parent that manages its descendants, return a list of
+        Accessible children that are actually showing.  This algorithm
+        was inspired a little by the srw_elements_from_accessible logic
+        in Gnopernicus, and makes the assumption that the children of
+        an object that manages its descendants are arranged in a row
+        and column format.
+
+        Arguments:
+        - parent: The accessible which manages its descendants
+
+        Returns a list of Accessible descendants which are showing.
+        """
+
+        if not parent:
+            return []
+
+        if not parent.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+           or parent.childCount <= 50:
+            return []
+
+        try:
+            icomponent = parent.queryComponent()
+        except NotImplementedError:
+            return []
+
+        descendants = []
+
+        parentExtents = icomponent.getExtents(0)
+
+        # [[[TODO: WDW - HACK related to GAIL bug where table column
+        # headers seem to be ignored:
+        # http://bugzilla.gnome.org/show_bug.cgi?id=325809.  The
+        # problem is that this causes getAccessibleAtPoint to return
+        # the cell effectively below the real cell at a given point,
+        # making a mess of everything.  So...we just manually add in
+        # showing headers for now.  The remainder of the logic below
+        # accidentally accounts for this offset, yet it should also
+        # work when bug 325809 is fixed.]]]
+        #
+        try:
+            table = parent.queryTable()
+        except NotImplementedError:
+            table = None
+            
+        if table:
+            for i in range(0, table.nColumns):
+                header = table.getColumnHeader(i)
+                if header:
+                    extents = header.queryComponent().getExtents(0)
+                    stateset = header.getState()
+                    if stateset.contains(pyatspi.STATE_SHOWING) \
+                       and (extents.x >= 0) and (extents.y >= 0) \
+                       and (extents.width > 0) and (extents.height > 0) \
+                       and self.visible(extents.x, extents.y,
+                                        extents.width, extents.height,
+                                        parentExtents.x, parentExtents.y,
+                                        parentExtents.width,
+                                        parentExtents.height):
+                        descendants.append(header)
+
+        # This algorithm goes left to right, top to bottom while attempting
+        # to do *some* optimization over queries.  It could definitely be
+        # improved. The gridSize is a minimal chunk to jump around in the
+        # table.
+        #
+        gridSize = 7
+        currentY = parentExtents.y
+        while currentY < (parentExtents.y + parentExtents.height):
+            currentX = parentExtents.x
+            minHeight = sys.maxint
+            while currentX < (parentExtents.x + parentExtents.width):
+                child = icomponent.getAccessibleAtPoint(currentX, currentY, 0)
+                if child:
+                    extents = child.queryComponent().getExtents(0)
+                    if extents.x >= 0 and extents.y >= 0:
+                        newX = extents.x + extents.width
+                        minHeight = min(minHeight, extents.height)
+                        if not descendants.count(child):
+                            descendants.append(child)
+                    else:
+                        newX = currentX + gridSize
+                else:
+                    newX = currentX + gridSize
+                if newX <= currentX:
+                    currentX += gridSize
+                else:
+                    currentX = newX
+            if minHeight == sys.maxint:
+                minHeight = gridSize
+            currentY += minHeight
+
+        return descendants
+
+    def visible(self,
+                ax, ay, awidth, aheight,
+                bx, by, bwidth, bheight):
+        """Returns true if any portion of region 'a' is in region 'b'
+        """
+        highestBottom = min(ay + aheight, by + bheight)
+        lowestTop = max(ay, by)
+
+        leftMostRightEdge = min(ax + awidth, bx + bwidth)
+        rightMostLeftEdge = max(ax, bx)
+
+        visible = False
+
+        if (lowestTop <= highestBottom) \
+           and (rightMostLeftEdge <= leftMostRightEdge):
+            visible = True
+        elif (aheight == 0):
+            if (awidth == 0):
+                visible = (lowestTop == highestBottom) \
+                          and (leftMostRightEdge == rightMostLeftEdge)
+            else:
+                visible = leftMostRightEdge <= rightMostLeftEdge
+        elif (awidth == 0):
+            visible = (lowestTop <= highestBottom)
+
+        return visible
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""

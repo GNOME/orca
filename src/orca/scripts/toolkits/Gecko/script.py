@@ -3126,23 +3126,122 @@ class Script(default.Script):
         """Determines if we should look any further at the object
         for flat review."""
 
-        # [[[TODO: HACK - WDW Gecko has issues about the SHOWING
-        # state of objects, especially those in document frames.
-        # It tells us the content in tabs that are not showing
-        # is actually showing.  See:
+        # It should be enough to check for STATE_SHOWING, but Gecko seems
+        # to reverse STATE_SHOWING and STATE_VISIBLE, exposing STATE_SHOWING
+        # for objects which are offscreen. So, we'll check for both. See
+        # bug #542833. [[[TODO - JD: We're putting this check in just this
+        # script for now to be on the safe side. Consider for the default
+        # script as well?]]]
         #
-        # http://bugzilla.gnome.org/show_bug.cgi?id=408071
-        #
-        # To work around this, we do a little extra check.  If
-        # the obj is a document, and it's not the one that
-        # Firefox is currently showing the user, we skip it.
-        #
-        pursue = default.Script.pursueForFlatReview(self, obj)
-        if pursue and (obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
-            documentFrame = self.getDocumentFrame()
-            pursue = obj == documentFrame
+        try:
+            state = obj.getState()
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            return False
+        else:
+            return state.contains(pyatspi.STATE_SHOWING) \
+                   and state.contains(pyatspi.STATE_VISIBLE)
+ 
+    def getShowingDescendants(self, parent):
+        """Given an accessible object, returns a list of accessible children
+        that are actually showing/visible/pursable for flat review. We're
+        overriding the default method here primarily to handle enormous
+        tree tables (such as the Thunderbird message list) which do not
+        manage their descendants.
 
-        return pursue
+        Arguments:
+        - parent: The accessible which manages its descendants
+
+        Returns a list of Accessible descendants which are showing.
+        """
+
+        if not parent:
+            return []
+
+        # If this object is not a tree table, if it manages its descendants,
+        # or if it doesn't have very many children, let the default script
+        # handle it.
+        #
+        if parent.getRole() != pyatspi.ROLE_TREE_TABLE \
+           or parent.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+           or parent.childCount <= 50:
+            return default.Script.getShowingDescendants(self, parent)
+
+        try:
+            table = parent.queryTable()
+        except NotImplementedError:
+            return []
+
+        descendants = []
+
+        # First figure out what columns are visible as there's no point
+        # in examining cells which we know won't be visible.
+        # 
+        visibleColumns = []
+        for i in range(table.nColumns):
+            header = table.getColumnHeader(i)
+            if self.pursueForFlatReview(header):
+                visibleColumns.append(i)
+                descendants.append(header)
+
+        if not len(visibleColumns):
+            return []
+
+        # Now that we know in which columns we can expect to find visible
+        # cells, try to quickly locate a visible row.
+        #
+        startingRow = 0
+
+        # If we have one or more selected items, odds are fairly good
+        # (although not guaranteed) that one of those items happens to
+        # be showing. Failing that, calculate how many rows can fit in
+        # the exposed portion of the tree table and scroll down.
+        #
+        selectedRows = table.getSelectedRows()
+        for row in selectedRows:
+            acc = table.getAccessibleAt(row, visibleColumns[0])
+            if self.pursueForFlatReview(acc):
+                startingRow = row
+                break
+        else:
+            try:
+                tableExtents = parent.queryComponent().getExtents(0)
+                acc = table.getAccessibleAt(0, visibleColumns[0])
+                cellExtents = acc.queryComponent().getExtents(0)
+            except:
+                pass
+            else:
+                rowIncrement = max(1, tableExtents.height / cellExtents.height)
+                for row in range(0, table.nRows, rowIncrement):
+                    acc = table.getAccessibleAt(row, visibleColumns[0])
+                    if acc and self.pursueForFlatReview(acc):
+                        startingRow = row
+                        break
+
+        # Get everything after this point which is visible.
+        #
+        for row in range(startingRow, table.nRows):
+            acc = table.getAccessibleAt(row, visibleColumns[0])
+            if self.pursueForFlatReview(acc):
+                descendants.append(acc)
+                for col in visibleColumns[1:len(visibleColumns)]:
+                    descendants.append(table.getAccessibleAt(row, col))
+            else:
+                break
+
+        # Get everything before this point which is visible.
+        #
+        for row in range(startingRow - 1, -1, -1):
+            acc = table.getAccessibleAt(row, visibleColumns[0])
+            if self.pursueForFlatReview(acc):
+                thisRow = [acc]
+                for col in visibleColumns[1:len(visibleColumns)]:
+                    thisRow.append(table.getAccessibleAt(row, col))
+                descendants[0:0] = thisRow
+            else:
+                break
+
+        return descendants
 
     def getHeadingLevel(self, obj):
         """Determines the heading level of the given object.  A value

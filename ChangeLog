@@ -1,3 +1,15 @@
+2008-08-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/default.py:
+          src/orca/flat_review.py:
+          Work on bug #542833 - Flat review in Thunderbird is largely
+          broken.  This part of the fix should stop us from hanging if
+          flat review is invoked with a message list with thousands of
+          messages and should ensure that we don't review things that
+          are not actually on the screen. There is still more work that
+          needs to be done on this bug.
+
 2008-08-15  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/settings.py:
