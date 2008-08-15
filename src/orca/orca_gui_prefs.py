@@ -1461,6 +1461,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         self.get_widget("speakBlankLinesCheckButton").set_active(\
             prefs["speakBlankLines"])
+        self.get_widget("speakTutorialMessagesCheckButton").set_active(\
+            prefs["enableTutorialMessages"])
 
         self.get_widget("sayAllStyle").set_active(prefs["sayAllStyle"])
 
@@ -2441,6 +2443,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["speakBlankLines"] = widget.get_active()
+
+    def speakTutorialMessagesToggled(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakTutorialMessagesCheckButton GtkCheckButton widget.
+           Set the 'enableTutorialMessages' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enableTutorialMessages"] = widget.get_active()
 
     def brailleSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the

@@ -49,6 +49,7 @@ import speechgenerator
 import structural_navigation
 import where_am_I
 import bookmarks
+import tutorialgenerator
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -90,6 +91,7 @@ class Script:
         self.whereAmI = self.getWhereAmI()
         self.bookmarks = self.getBookmarks()
         self.voices = settings.voices
+        self.tutorialGenerator = self.getTutorialGenerator()
 
         self.flatReviewContextClass = flat_review.Context
 
@@ -185,6 +187,11 @@ class Script:
         """Returns the speech generator for this script.
         """
         return speechgenerator.SpeechGenerator(self)
+
+    def getTutorialGenerator(self):
+        """Returns the tutorial generator for this script.
+        """
+        return tutorialgenerator.TutorialGenerator(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

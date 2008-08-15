@@ -2028,9 +2028,11 @@ class Script(script.Script):
             try:
                 orca_state.locusOfFocus.queryText()
             except NotImplementedError:
-                speech.speakUtterances(
-                    self.speechGenerator.getSpeech(orca_state.locusOfFocus,
-                                                   False))
+                utterances = self.speechGenerator.getSpeech(
+                             orca_state.locusOfFocus, False)
+                utterances.extend(self.tutorialGenerator.getTutorial(
+                           orca_state.locusOfFocus, False))
+                speech.speakUtterances(utterances)
             except AttributeError:
                 pass
             else:
@@ -2935,7 +2937,8 @@ class Script(script.Script):
             #
             utterances.extend(
                 self.speechGenerator.getSpeech(newLocusOfFocus, False))
-
+            utterances.extend(
+                self.tutorialGenerator.getTutorial(newLocusOfFocus, False))
             # Now speak the new tree node level if it has changed.
             #
             if (oldNodeLevel != newNodeLevel) \
@@ -3105,8 +3108,10 @@ class Script(script.Script):
                 target = relation.getTarget(0)
                 if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
-                    speech.speakUtterances(
-                        self.speechGenerator.getSpeech(target, True))
+                    utterances = self.speechGenerator.getSpeech(target, True)
+                    utterances.extend(self.tutorialGenerator.getTutorial(
+                               target, True))
+                    speech.speakUtterances(utterances)
                     return
 
         # If this object is a label, and if it has a LABEL_FOR relation
@@ -3121,8 +3126,11 @@ class Script(script.Script):
                     target = relation.getTarget(0)
                     if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
-                        speech.speakUtterances(
-                            self.speechGenerator.getSpeech(target, True))
+                        utterances = self.speechGenerator.getSpeech(
+                                     target, True)
+                        utterances.extend(self.tutorialGenerator.getTutorial(
+                                          target, True))
+                        speech.speakUtterances(utterances)
                         return
 
         if not self.isSameObject(obj, orca_state.locusOfFocus):
@@ -3139,7 +3147,9 @@ class Script(script.Script):
 
         mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
-        speech.speakUtterances(self.speechGenerator.getSpeech(obj, True))
+        utterances = self.speechGenerator.getSpeech(obj, True)
+        utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
+        speech.speakUtterances(utterances)
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
@@ -3914,10 +3924,11 @@ class Script(script.Script):
                     and (orca_state.lastNonModifierKeyEvent.event_string \
                                                                   == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
-                    speech.speakUtterances(self.speechGenerator.getSpeech(
-                        orca_state.locusOfFocus,
-                        False))
-
+                    utterances = self.speechGenerator.getSpeech(orca_state.locusOfFocus,
+                        False)
+                    utterances.extend(self.tutorialGenerator.getTutorial(
+                                      orca_state.locusOfFocus, False))
+                    speech.speakUtterances(utterances)
             return
 
         if event.source.getRole() in state_change_notifiers:
@@ -4990,10 +5001,11 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            speech.speakUtterances(
-                self.speechGenerator.getSpeech(
+            utterances = self.speechGenerator.getSpeech(
+                    context.getCurrentAccessible(), False)
+            utterances.extend(self.tutorialGenerator.getTutorial(
                     context.getCurrentAccessible(), False))
-
+            speech.speakUtterances(utterances)
         return True
 
     def reviewPreviousItem(self, inputEvent):

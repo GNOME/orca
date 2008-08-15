@@ -107,6 +107,7 @@ userCustomizableSettings = [
     "enableFunctionKeys",
     "enableActionKeys",
     "enableNavigationKeys",
+    "enableTutorialMessages",
     "enableBraille",
     "enableBrailleGrouping",
     "disableBrailleEOL",
@@ -561,6 +562,9 @@ enableActionKeys        = True
 # If True and key echo is enabled, echo Navigation keys.
 #
 enableNavigationKeys    = False
+
+# If True, roles that have tutorial strings defined will be spoken.
+enableTutorialMessages = False
 
 # If True, show the main Orca window.
 #

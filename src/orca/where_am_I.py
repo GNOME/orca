@@ -168,6 +168,7 @@ class WhereAmI:
         2. role
         3. state
         4. accelerator (i.e. Alt plus the underlined letter), if any
+        5. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -183,6 +184,9 @@ class WhereAmI:
         if text:
             utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "check box utterances=%s" \
                       % utterances)
         speech.speakUtterances(utterances)
@@ -197,6 +201,7 @@ class WhereAmI:
         4. state
         5. relative position
         6. accelerator (i.e. Alt plus the underlined letter), if any
+        7. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -235,6 +240,9 @@ class WhereAmI:
         text = self._getObjAccelerator(obj)
         utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "radio button utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -248,6 +256,7 @@ class WhereAmI:
         3. current value
         4. relative position
         5. accelerator (i.e. Alt plus the underlined letter), if any
+        6. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -267,6 +276,9 @@ class WhereAmI:
         accelerator = self._getObjAccelerator(obj)
         utterances.append(accelerator)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "combo box utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -280,6 +292,7 @@ class WhereAmI:
         3. current value
         4. selected (if True).
         5. accelerator (i.e. Alt plus the underlined letter), if any
+        6. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -302,6 +315,9 @@ class WhereAmI:
         if text:
             utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "spin button utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -313,6 +329,7 @@ class WhereAmI:
         1. label
         2. role
         3. accelerator (i.e. Alt plus the underlined letter), if any
+        4. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -324,6 +341,9 @@ class WhereAmI:
 
         text = self._getObjAccelerator(obj)
         utterances.append(text)
+
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
 
         debug.println(self._debugLevel, "push button utterances=%s" % \
                       utterances)
@@ -338,6 +358,7 @@ class WhereAmI:
         3. value
         4. percentage (if possible)
         5. accelerator (i.e. Alt plus the underlined letter), if any
+        6. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -360,6 +381,9 @@ class WhereAmI:
         if text:
             utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "slider utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -374,6 +398,7 @@ class WhereAmI:
         accelerator key binding, if any
         3. relative position
         4. mnemonic (i.e. the underlined letter), if any
+        5. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -431,6 +456,9 @@ class WhereAmI:
             text = self._getObjMnemonic(obj)
             utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "menu item utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -443,6 +471,7 @@ class WhereAmI:
         2. label + 'page'
         3. relative position
         4. accelerator (i.e. Alt plus the underlined letter), if any
+        5. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -461,6 +490,9 @@ class WhereAmI:
         text = self._getObjAccelerator(obj)
         utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "page utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -478,6 +510,7 @@ class WhereAmI:
             by 'selected' (single press)
             C. if the current line is blank/empty, 'blank'
         4. accelerator (i.e. Alt plus the underlined letter), if any
+        5. tutorial string if enableTutorialMessages is set.
 
         Gaim, gedit, OpenOffice Writer and Terminal
         """
@@ -539,6 +572,9 @@ class WhereAmI:
         text = self._getObjAccelerator(obj)
         utterances.append(text)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "text utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -557,6 +593,7 @@ class WhereAmI:
            performing a detailed whereAmI.
         8. if expandable/collapsible: expanded/collapsed
         9. if applicable, the level
+        10. tutorial string if enableTutorialMessages is set.
 
         Nautilus and Gaim
         """
@@ -650,6 +687,9 @@ class WhereAmI:
             #
             utterances.append(_("tree level %d") % (level + 1))
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "third table cell utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -663,6 +703,7 @@ class WhereAmI:
         4. relative position
         5. if expandable/collapsible: expanded/collapsed
         6. if applicable, the level
+        7. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -711,6 +752,9 @@ class WhereAmI:
             #
             utterances.append(_("tree level %d") % (level + 1))
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         debug.println(self._debugLevel, "list item utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)
@@ -722,8 +766,10 @@ class WhereAmI:
 
     def _speakIconPanel(self, obj, basicOnly):
         """Speak the contents of the pane containing this icon. The
-        number of icons in the pane is spoken. Plus the total number of
-        selected icons. Plus the name of each of the selected icons.
+        1. Number of icons in the pane is spoken.
+        2. The total number of selected icons.
+        3. The name of each of the selected icons.
+        4. tutorial string if enableTutorialMessages is set.
 
         Arguments:
         - obj: the icon object that currently has focus.
@@ -737,12 +783,20 @@ class WhereAmI:
         utterances.append(self.getObjLabelAndName(obj))
         utterances.extend(self._getSelectedItemCount(panel, basicOnly))
 
+        # get our tutorial.
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+        # get the frames tutorial.
+        [frame, dialogue] = self._getFrameAndDialog(obj)
+        utterances.extend(getTutorial(frame, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
         
     def _speakLink(self, obj, basicOnly):
         """Speaks information about a link including protocol, domain 
-        comparisons and size of file if possible
-        
+        comparisons and size of file if possible.
+        Also tutorial string if enableTutorialMessages is set.
+
         Arguments:
         - obj: the icon object that currently has focus.
         - basicOnly: True if the user is performing a standard/basic whereAmI.
@@ -804,13 +858,18 @@ class WhereAmI:
                 else:
                     domainoutput = _('different site')
 
-        speech.speakUtterances([linkoutput, domainoutput, sizeoutput])
+        utterances = [linkoutput, domainoutput, sizeoutput]
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
+        speech.speakUtterances(utterances)
 
     def _speakToggleButton(self, obj, basicOnly):
         """Speak toggle button information:
            1. Name/Label
            2. Role
            3. State (pressed/not pressed)
+           4. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -830,6 +889,9 @@ class WhereAmI:
             checkedState = _("not pressed")
         utterances.append(checkedState)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
       
     def _speakSplitPane(self, obj, basicOnly):
@@ -837,6 +899,7 @@ class WhereAmI:
            1. Name/Label
            2. Role
            3. Value
+           4. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -849,6 +912,9 @@ class WhereAmI:
         valueString = self._script.getTextForValue(obj)
         utterances.append(valueString)
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
 
     def _speakLabel(self, obj, basicOnly):
@@ -856,6 +922,7 @@ class WhereAmI:
            1. Name/Label
            2. selected (if True).
            3. Role
+           4. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -866,13 +933,19 @@ class WhereAmI:
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
+
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
+
 
     def _speakLayeredPane(self, obj, basicOnly):
         """Speak layered pane information:
            1. Name/Label
            2. Role
            3. Number of selected items and total number of items.
+           4. tutorial string if enableTutorialMessages is set.
         """
 
         utterances = []
@@ -883,7 +956,11 @@ class WhereAmI:
         utterances.append(text)
         utterances.extend(self._getSelectedItemCount(obj, basicOnly))
 
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
+
 
     def _getSpeechForAllTextSelection(self, obj):
         """Check if this object has text associated with it and it's
@@ -1004,7 +1081,12 @@ class WhereAmI:
 
         text = rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
+
+        getTutorial = self._script.tutorialGenerator.getTutorial
+        utterances.extend(getTutorial(obj, False, forceMessage=True))
+
         speech.speakUtterances(utterances)
+
 
     def _getObjName(self, obj):
         """Returns the name to speak for an object.
@@ -1208,6 +1290,7 @@ class WhereAmI:
     def _getTableRow(self, obj):
         """Get the speech for a table cell row or a single table cell
         if settings.readTableCellRow is False.
+        Also return a tutorial string if enableTutorialMessages is set.
 
         Arguments:
         - obj: the table
@@ -1233,6 +1316,8 @@ class WhereAmI:
 
             debug.println(self._debugLevel, "row=<%s>" % utterances)
 
+            getTutorial = self._script.tutorialGenerator.getTutorial
+            utterances.extend(getTutorial(obj, False, forceMessage=True))
             return utterances
 
     def _getTableCell(self, obj):
@@ -1262,7 +1347,6 @@ class WhereAmI:
             text = self._script.getDisplayedText(descendant)
 
         debug.println(self._debugLevel, "cell=<%s>" % text)
-
         return text
 
     def _getCheckBoxState(self, obj):

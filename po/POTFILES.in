@@ -69,4 +69,5 @@ src/orca/speechserver.py
 src/orca/speech.py
 src/orca/structural_navigation.py
 src/orca/text_attribute_names.py
+src/orca/tutorialgenerator.py
 src/orca/where_am_I.py

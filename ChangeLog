@@ -1,3 +1,18 @@
+2008-08-15  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/tutorialgenerator.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/script.py:
+          src/orca/Makefile.am:
+          src/orca/orca_gui_prefs.py:
+          po/POTFILES.in:
+          Fix for bug #540123 – Tutor help messages with orca.
+          (Many many thanks to Mesar for his hard work here and
+          to Hammer Attila for testing)
+
 2008-08-15  Willie Walker <william.walker@sun.com>
 
         * configure.in:
