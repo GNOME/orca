@@ -296,6 +296,13 @@ httpServerPort          = 0
 #
 maxHttpServerRetries    = 20
 
+# Whether or not to use DBUS.
+#
+if os.getenv("DBUS_SESSION_BUS_ADDRESS"):
+    useDBus = True
+else:
+    useDBus = False
+
 # Whether or not recording is enabled via the HTTP server. 
 #
 enableRemoteLogging     = False

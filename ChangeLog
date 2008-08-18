@@ -1,5 +1,12 @@
 2008-08-18  Willie Walker <william.walker@sun.com>
 
+        * src/orca/orca.py:
+          src/orca/settings.py:
+          Make use of DBus conditional upon DBUS_SESSION_BUS_ADDRESS
+          so as to avoid unexpected launching of a DBus daemon.
+
+2008-08-18  Willie Walker <william.walker@sun.com>
+
         * src/orca/scripts/apps/metacity.py: 
           Fix for bug #547938 - Magnifier should follow Alt+Tab
 

@@ -60,7 +60,6 @@ import unicodedata
 import pyatspi
 import braille
 import debug
-import dbusserver
 import httpserver
 import keynames
 import keybindings
@@ -74,6 +73,9 @@ from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
 from input_event import keyEventToString
+
+if settings.useDBus:
+    import dbusserver
 
 from orca_i18n import _           # for gettext support
 
@@ -879,8 +881,14 @@ def loadUserSettings(script=None, inputEvent=None):
     global _userSettings
 
     # Shutdown the output drivers and give them a chance to die.
+
+    # Only exit the D-Bus server if we're in an environment where there 
+    # is a D-Bus session bus already running.  This helps prevent nastiness
+    # on the login screen.
     #
-    dbusserver.shutdown()
+    if settings.useDBus:
+        dbusserver.shutdown()
+
     httpserver.shutdown()
     speech.shutdown()
     braille.shutdown()
@@ -991,7 +999,12 @@ def loadUserSettings(script=None, inputEvent=None):
 
     showMainWindowGUI()
 
-    dbusserver.init()
+    # Only start the D-Bus server if we're in an environment where there 
+    # is a D-Bus session bus already running.  This helps prevent nastiness
+    # on the login screen.
+    #
+    if settings.useDBus:
+        dbusserver.init()
     httpserver.init()
 
     return True
