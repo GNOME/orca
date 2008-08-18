@@ -1,3 +1,67 @@
+2.23.90 - 18-Aug-2008
+
+General:
+
+* Use DBus only if DBUS_SESSION_BUS_ADDRESS is defined so as to avoid
+  unexpected launching of a DBus daemon
+
+* Fix for bug #536985 - Orca no longer reads applets on the panel
+
+* Fix for bug #540123 – Tutor help messages with orca.  (Many many
+  thanks to Mesar Hameed for his hard work here and to Hammer Attila
+  for testing)
+
+* Fix for bug #540187 - Wrapped structural navigation toggle.  (Thanks
+  Mesar!)
+
+* Fix for bug #546277 - Traceback when accessing "User Privileges" tab
+  of "Account Properties" dialog of "User Settings".
+
+* Fix for bug #546660 - The speaking of progress bars should be turned
+  on by default
+
+* Fix for bug #547938 - Magnifier should follow Alt+Tab
+
+* Fix for bug #547895 - make distcheck fails with intltools 0.40.0
+
+Firefox/Thunderbird:
+
+* Work on bug #535178 - In Gecko, we should get the needed text for
+  the speech and braille contexts while building up the line.  Also
+  fixes bug #527819 – Orca sometimes says "list" between items when
+  the list is on a single line in FF3.
+
+* Fix for bug #535183 - Word navigation is inconsistent in Thunderbird
+  and Firefox.
+
+* Work on bug #542833 - Flat review in Thunderbird is largely broken.
+ This part of the fix should stop us from hanging if flat review is
+ invoked with a message list with thousands of messages and should
+ ensure that we don't review things that are not actually on the
+ screen. There is still more work that needs to be done on this bug.
+
+* Fix for bug #546355 - The ARIA gmail interface is largely unusable
+  with Orca
+
+* Fix for bug #546895 - Braille context includes previous menu item in
+  HTML combo boxes.
+
+* Fix for bug #547345 - Can't always "Alt+Tab" back into Thunderbird
+  or Firefox
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    es      Spanish              Francisco Javier Dorado Martinez and
+                                 Jorge Gonzalez
+    fi      Finnish              Ilkka Tuohela
+    gl      Galician             Ignacio Casal Quinteiro
+    pt      Portuguese           Duarte Loreto
+    ru      Russian              Nickolay V. Shmyrev and Anatol Kamynin
+    th      Thai                 Theppitak Karoonboonyanan
+
+==========
+
 2.23.6 - 04-Aug-2008
 
 General:
