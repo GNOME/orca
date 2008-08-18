@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import orca.braille as braille
 import orca.default as default
+import orca.mag as mag
 import orca.speech as speech
 import pyatspi
 
@@ -112,6 +113,7 @@ class Script(default.Script):
 
         braille.displayMessage(text)
         speech.speak(text)
+        mag.magnifyAccessible(None, obj)
 
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window
