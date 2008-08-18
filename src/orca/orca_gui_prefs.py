@@ -170,8 +170,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             gobject.TYPE_STRING,  # Text of the Key Binding Shown 2
             gobject.TYPE_BOOLEAN, # Key Modified by User
             gobject.TYPE_BOOLEAN) # Row with fields editable or not
-        self.keyBindView.set_model(self.keyBindingsModel)
-        self.keyBindView.set_headers_visible(True)
 
         # HANDLER - invisble column
         #
@@ -388,15 +386,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         column.set_resizable(True)
         column.set_sort_column_id(EDITABLE)
         self.keyBindView.append_column(column)
-
+        
         # Populates the treeview with all the keybindings:
         #
         self._populateKeyBindings()
 
-        self.keyBindView.show()
-
         self.window = self.widgets.get_widget("orcaSetupWindow")
         self.window.resize(790, 580)
+
+        self.keyBindView.set_model(self.keyBindingsModel)
+        self.keyBindView.set_headers_visible(True)
+        self.keyBindView.expand_all()
+        self.keyBindView.show()
 
         self._setKeyEchoItems()
 
