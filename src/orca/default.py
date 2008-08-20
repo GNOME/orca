@@ -6286,9 +6286,11 @@ class Script(script.Script):
                 # space characters".  The %d is the number and the %s
                 # is the spoken word for the character.
                 #
-                line += " " + ngettext("%d %s character",
-                                       "%d %s characters",
-                                       count) % (count, repeatChar)
+                line += " " \
+                     + ngettext("%(count)d %(repeatChar)s character",
+                                "%(count)d %(repeatChar)s characters",
+                                count) \
+                       % {"count" : count, "repeatChar": repeatChar}
             else:
                 line += segment
         else:

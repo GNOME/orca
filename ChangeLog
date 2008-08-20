@@ -1,5 +1,11 @@
 2008-08-19  Theppitak Karoonboonyanan <via william.walker@sun.com>
 
+        * src/orca/default.py:
+          Fix for bug #548380 - Character count message needs 
+          reordering in translation
+
+2008-08-19  Theppitak Karoonboonyanan <via william.walker@sun.com>
+
         * src/orca/scripts/apps/evolution/script.py:
           Fix for bug #548382 - Unreliable check for Evolution
           Setup Assistant
