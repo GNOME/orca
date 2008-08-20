@@ -1327,7 +1327,8 @@ class Script(default.Script):
             # so in this case.
             #
             if obj.getRole() == pyatspi.ROLE_FRAME and \
-                obj.name.endswith(_("Assistant")):
+                (obj.name.endswith(_("Assistant")) or \
+                obj.name.startswith(_("Assistant"))):
                 debug.println(self.debugLevel,
                               "evolution.locusOfFocusChanged - " \
                               + "setup assistant.")
@@ -1398,7 +1399,8 @@ class Script(default.Script):
                 # so in this case.
                 #
                 if obj.getRole() == pyatspi.ROLE_FRAME and \
-                    obj.name.endswith(_("Assistant")):
+                    (obj.name.endswith(_("Assistant")) or \
+                    obj.name.startswith(_("Assistant"))):
                     debug.println(self.debugLevel,
                                   "evolution.onStateChanged - " \
                                   + "setup assistant.")
