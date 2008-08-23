@@ -5344,7 +5344,7 @@ class Script(default.Script):
                     if text:
                         newY = extents[1] + extents[3] / 2
                         newOffset = text.getOffsetAtPoint(oldX, newY, 0)
-                        if newOffset >= 0:
+                        if 0 <= newOffset <= characterOffset:
                             prevOffset = newOffset
                             prevObj = newObj
                     break
