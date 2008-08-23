@@ -1,3 +1,9 @@
+2008-08-23   Willie Walker <william.walker@sun.com>
+
+       * configure.in: Unfix for bug #540937 - Orca doesn't check if the
+         wnck python bindings are installed.  Back out the check since
+         it was causing a number of issues.
+
 2008-08-23  Willie Walker <william.walker@sun.com>
 
         * src/orca/text_attribute_names.py:

@@ -101,7 +101,6 @@ AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find python headers needed to b
 
 AM_CHECK_PYMOD(gettext,,,[AC_MSG_ERROR(Could not find python module gettext)])
 AM_CHECK_PYMOD(getopt,,,[AC_MSG_ERROR(Could not find python module getopt)])
-AM_CHECK_PYMOD(wnck,,,[AC_MSG_ERROR(Could not find python module wnck)])
 AM_CHECK_PYMOD(bonobo,,,[AC_MSG_ERROR(Could not find python module bonobo - make sure you have gnome-python with support for libbonobo-2.0 >= 2.14.0 installed)])
 AM_CHECK_PYMOD(ORBit,,,[AC_MSG_ERROR(Could not find python module ORBit - make sure you have pyorbit >= 2.14.0 installed)])
 AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.CORBA - make sure you have pyorbit >= 2.14.0 installed)])
