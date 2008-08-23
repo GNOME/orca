@@ -1,3 +1,9 @@
+2008-08-23  Willie Walker <william.walker@sun.com>
+
+        * src/orca/text_attribute_names.py:
+          Add "ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER"
+          comments for translators.
+
 2008-08-19  Theppitak Karoonboonyanan <via william.walker@sun.com>
 
         * src/orca/default.py:
