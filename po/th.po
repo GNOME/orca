@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-23 21:44+0700\n"
-"PO-Revision-Date: 2008-08-23 21:46+0700\n"
+"PO-Revision-Date: 2008-08-23 21:48+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -6277,7 +6277,6 @@ msgstr "ไม่มีนัดหมาย"
 msgid "Directories button"
 msgstr "ปุ่มไดเรกทอรี"
 
-# Translator TODO: File bug against this. It must be "begining" not "ending"
 # for Thai.
 #. Translators: this is the ending of the name of the
 #. Evolution Setup Assistant window.  The translated
@@ -6289,7 +6288,6 @@ msgstr "ปุ่มไดเรกทอรี"
 #: ../src/orca/scripts/apps/evolution/script.py:1331
 #: ../src/orca/scripts/apps/evolution/script.py:1402
 #: ../src/orca/scripts/apps/evolution/script.py:1403
-#, fuzzy
 msgid "Assistant"
 msgstr "เครื่องมือช่วย"
 
