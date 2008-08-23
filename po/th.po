@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-17 17:47+0700\n"
-"PO-Revision-Date: 2008-08-17 21:32+0700\n"
+"POT-Creation-Date: 2008-08-23 21:44+0700\n"
+"PO-Revision-Date: 2008-08-23 21:46+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -173,14 +173,14 @@ msgid "Orca Preferences for %s"
 msgstr "ค่าปรับแต่ง Orca สำหรับ %s"
 
 #: ../src/orca/app_gui_prefs.py:189 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2109 ../src/orca/orca_gui_prefs.py:2210
+#: ../src/orca/orca_gui_prefs.py:2110 ../src/orca/orca_gui_prefs.py:2211
 msgid "Orca"
 msgstr "Orca"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2216
+#: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2217
 msgid "Unbound"
 msgstr "ไม่มีปุ่มเรียก"
 
@@ -393,8 +393,8 @@ msgstr "ตำแหน่งเคอร์เซอร์"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6794
-#: ../src/orca/default.py:6801 ../src/orca/keynames.py:133
+#: ../src/orca/chnames.py:39 ../src/orca/default.py:6796
+#: ../src/orca/default.py:6803 ../src/orca/keynames.py:133
 msgid "space"
 msgstr "เว้นวรรค"
 
@@ -2259,7 +2259,7 @@ msgstr "ไม่ได้เลือก"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3883 ../src/orca/default.py:4221
-#: ../src/orca/default.py:7501
+#: ../src/orca/default.py:7503
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:159
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:989
@@ -2278,7 +2278,7 @@ msgstr "เลือกอยู่"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3891 ../src/orca/default.py:7509
+#: ../src/orca/default.py:3891 ../src/orca/default.py:7511
 msgid "text|unselected"
 msgstr "ไม่ได้เลือก"
 
@@ -2325,7 +2325,7 @@ msgstr[0] "%s %s พิกเซล"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:4432 ../src/orca/default.py:6331
+#: ../src/orca/default.py:4432 ../src/orca/default.py:6333
 #: ../src/orca/rolenames.py:604
 #: ../src/orca/scripts/apps/soffice/script.py:1017
 #: ../src/orca/where_am_I.py:1693
@@ -2403,23 +2403,22 @@ msgstr "คำที่สะกดผิด: %s"
 msgid "Context is %s"
 msgstr "บริบทคือ %s"
 
-# Translator TODO: File bug against this. We need reordering.
 #. Translators: Orca will tell you how many characters
 #. are repeated on a line of text.  For example: "22
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:6289
-#, fuzzy, python-format
-msgid "%d %s character"
-msgid_plural "%d %s characters"
+#: ../src/orca/default.py:6290
+#, python-format
+msgid "%(count)d %(repeatChar)s character"
+msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "อักขระ %(repeatChar)s %(count)d ตัว"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7345
+#: ../src/orca/default.py:7347
 msgid "line selected to end from previous cursor position"
 msgstr "เลือกบรรทัดจากตำแหน่งเคอร์เซอร์ที่แล้วจนจบบรรทัด"
 
@@ -2427,7 +2426,7 @@ msgstr "เลือกบรรทัดจากตำแหน่งเคอ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7353
+#: ../src/orca/default.py:7355
 msgid "line selected from start to previous cursor position"
 msgstr "เลือกบรรทัดจากต้นบรรทัดถึงตำแหน่งเคอร์เซอร์ที่แล้ว"
 
@@ -2435,14 +2434,14 @@ msgstr "เลือกบรรทัดจากต้นบรรทัดถ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7362
+#: ../src/orca/default.py:7364
 msgid "page selected from cursor position"
 msgstr "เลือกหน้าลงมาจากตำแหน่งเคอร์เซอร์"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7367
+#: ../src/orca/default.py:7369
 msgid "page unselected from cursor position"
 msgstr "เลิกเลือกหน้าลงมาจากตำแหน่งเคอร์เซอร์"
 
@@ -2450,14 +2449,14 @@ msgstr "เลิกเลือกหน้าลงมาจากตำแห
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7376
+#: ../src/orca/default.py:7378
 msgid "page selected to cursor position"
 msgstr "เลือกหน้าขึ้นไปจากตำแหน่งเคอร์เซอร์"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7381
+#: ../src/orca/default.py:7383
 msgid "page unselected to cursor position"
 msgstr "เลิกเลือกหน้าขึ้นไปจากตำแหน่งเคอร์เซอร์"
 
@@ -2465,14 +2464,14 @@ msgstr "เลิกเลือกหน้าขึ้นไปจากตำ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7390
+#: ../src/orca/default.py:7392
 msgid "line selected down from cursor position"
 msgstr "เลือกบรรทัดลงมาจากตำแหน่งเคอร์เซอร์"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7395
+#: ../src/orca/default.py:7397
 msgid "line unselected down from cursor position"
 msgstr "เลิกเลือกบรรทัดลงมาจากตำแหน่งเคอร์เซอร์"
 
@@ -2480,14 +2479,14 @@ msgstr "เลิกเลือกบรรทัดลงมาจากตำ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7404
+#: ../src/orca/default.py:7406
 msgid "line selected up from cursor position"
 msgstr "เลือกบรรทัดขึ้นไปจากตำแหน่งเคอร์เซอร์"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7409
+#: ../src/orca/default.py:7411
 msgid "line unselected up from cursor position"
 msgstr "เลิกเลือกบรรทัดขึ้นไปจากตำแหน่งเคอร์เซอร์"
 
@@ -2495,14 +2494,14 @@ msgstr "เลิกเลือกบรรทัดขึ้นไปจาก
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7418
+#: ../src/orca/default.py:7420
 msgid "document selected to cursor position"
 msgstr "เลือกขึ้นไปจากตำแหน่งเคอร์เซอร์ถึงต้นเอกสาร"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7423
+#: ../src/orca/default.py:7425
 msgid "document unselected to cursor position"
 msgstr "เลิกเลือกขึ้นไปจากตำแหน่งเคอร์เซอร์ถึงต้นเอกสาร"
 
@@ -2510,21 +2509,21 @@ msgstr "เลิกเลือกขึ้นไปจากตำแหน่
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7432
+#: ../src/orca/default.py:7434
 msgid "document selected from cursor position"
 msgstr "เลือกลงมาจากตำแหน่งเคอร์เซอร์ถึงท้ายเอกสาร"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7437
+#: ../src/orca/default.py:7439
 msgid "document unselected from cursor position"
 msgstr "เลิกเลือกลงมาจากตำแหน่งเคอร์เซอร์ถึงท้ายเอกสาร"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:7454
+#: ../src/orca/default.py:7456
 msgid "entire document selected"
 msgstr "เลือกทั้งเอกสารอยู่"
 
@@ -3088,8 +3087,8 @@ msgstr "ปิดแว่นขยายแล้ว"
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1711
-#: ../src/orca/orca_gui_prefs.py:1737
+#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1712
+#: ../src/orca/orca_gui_prefs.py:1738
 msgid "Full Screen"
 msgstr "เต็มจอ"
 
@@ -3102,32 +3101,32 @@ msgstr "โหมดเต็มจอไม่สามารถใช้งา
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1715
+#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1716
 msgid "Top Half"
 msgstr "ครึ่งบน"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1719
+#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1720
 msgid "Bottom Half"
 msgstr "ครึ่งล่าง"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1723
+#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1724
 msgid "Left Half"
 msgstr "ครึ่งซ้าย"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1727
+#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1728
 msgid "Right Half"
 msgstr "ครึ่งขวา"
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1732
+#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1733
 msgid "Custom"
 msgstr "กำหนดเอง"
 
@@ -3312,11 +3311,11 @@ msgstr "เปิดใช้งานอักษรเบรลล์หรื
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "เปิดใช้งานเครื่องแสดงอักษรเบรลล์หรือไม่?  กด y หรือ n:"
 
-#: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:453
+#: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:454
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "การรองรับเทคโนโลยีสิ่งอำนวยความสะดวกสำหรับ GNOME เพิ่งถูกเปิดใช้"
 
-#: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:455
+#: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:456
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "คุณจะต้องออกจากระบบและกลับเข้าระบบใหม่เพื่อให้การเปลี่ยนแปลงมีผล"
 
@@ -3418,9 +3417,9 @@ msgstr "ตรงกลาง"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:81 ../src/orca/orca_gui_prefs.py:4168
-#: ../src/orca/orca_gui_prefs.py:4197 ../src/orca/orca_gui_prefs.py:4370
-#: ../src/orca/orca_gui_prefs.py:4437 ../src/orca/orca_gui_prefs.py:4460
+#: ../src/orca/orca_gui_prefs.py:81 ../src/orca/orca_gui_prefs.py:4169
+#: ../src/orca/orca_gui_prefs.py:4198 ../src/orca/orca_gui_prefs.py:4371
+#: ../src/orca/orca_gui_prefs.py:4438 ../src/orca/orca_gui_prefs.py:4461
 msgid "None"
 msgstr "ไม่มี"
 
@@ -3450,7 +3449,7 @@ msgstr "ผลัก"
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:196
+#: ../src/orca/orca_gui_prefs.py:194
 msgid "Function"
 msgstr "ฟังก์ชัน"
 
@@ -3458,7 +3457,7 @@ msgstr "ฟังก์ชัน"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:272
+#: ../src/orca/orca_gui_prefs.py:270
 msgid "Key Binding"
 msgstr "ปุ่มลัด"
 
@@ -3469,7 +3468,7 @@ msgstr "ปุ่มลัด"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:351
+#: ../src/orca/orca_gui_prefs.py:349
 msgid "Alternate"
 msgstr "อีกแบบ"
 
@@ -3477,28 +3476,28 @@ msgstr "อีกแบบ"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:371
+#: ../src/orca/orca_gui_prefs.py:369
 msgid "Modified"
 msgstr "มีการแก้ไข"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:426 ../src/orca/orca_gui_prefs.py:475
+#: ../src/orca/orca_gui_prefs.py:427 ../src/orca/orca_gui_prefs.py:476
 msgid "Default"
 msgstr "ค่าปริยาย"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:432 ../src/orca/orca_gui_prefs.py:481
+#: ../src/orca/orca_gui_prefs.py:433 ../src/orca/orca_gui_prefs.py:482
 msgid "Uppercase"
 msgstr "ตัวพิมพ์ใหญ่"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:438 ../src/orca/orca_gui_prefs.py:491
+#: ../src/orca/orca_gui_prefs.py:439 ../src/orca/orca_gui_prefs.py:492
 msgid "Hyperlink"
 msgstr "ไฮเพอร์ลิงก์"
 
@@ -3507,7 +3506,7 @@ msgstr "ไฮเพอร์ลิงก์"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1103
+#: ../src/orca/orca_gui_prefs.py:1104
 msgid "Attribute Name"
 msgstr "ชื่อคุณลักษณะ"
 
@@ -3518,7 +3517,7 @@ msgstr "ชื่อคุณลักษณะ"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1118
+#: ../src/orca/orca_gui_prefs.py:1119
 msgid "Speak"
 msgstr "อ่านออกเสียง"
 
@@ -3529,7 +3528,7 @@ msgstr "อ่านออกเสียง"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1136
+#: ../src/orca/orca_gui_prefs.py:1137
 msgid "Mark in braille"
 msgstr "เน้นในอักษรเบรลล์"
 
@@ -3548,7 +3547,7 @@ msgstr "เน้นในอักษรเบรลล์"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1162
+#: ../src/orca/orca_gui_prefs.py:1163
 msgid "Present Unless"
 msgstr "นำเสนอนอกจาก"
 
@@ -3559,7 +3558,7 @@ msgstr "นำเสนอนอกจาก"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1277
+#: ../src/orca/orca_gui_prefs.py:1278
 msgid "Actual String"
 msgstr "ข้อความจริง"
 
@@ -3570,7 +3569,7 @@ msgstr "ข้อความจริง"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1294
+#: ../src/orca/orca_gui_prefs.py:1295
 msgid "Replacement String"
 msgstr "ข้อความสำหรับอ่าน"
 
@@ -3578,7 +3577,7 @@ msgstr "ข้อความสำหรับอ่าน"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2047
+#: ../src/orca/orca_gui_prefs.py:2048
 msgid "(double click)"
 msgstr "(คลิกซ้อนสองครั้ง)"
 
@@ -3586,7 +3585,7 @@ msgstr "(คลิกซ้อนสองครั้ง)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2053
+#: ../src/orca/orca_gui_prefs.py:2054
 msgid "(triple click)"
 msgstr "(คลิกซ้อนสามครั้ง)"
 
@@ -3595,7 +3594,7 @@ msgstr "(คลิกซ้อนสามครั้ง)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2157 ../src/orca/orca_gui_prefs.py:2251
+#: ../src/orca/orca_gui_prefs.py:2158 ../src/orca/orca_gui_prefs.py:2252
 msgid "Braille Bindings"
 msgstr "ปุ่มลัดเบรลล์"
 
@@ -3604,8 +3603,8 @@ msgstr "ปุ่มลัดเบรลล์"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2612 ../src/orca/orca_gui_prefs.py:2653
-#: ../src/orca/orca_gui_prefs.py:2693 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca_gui_prefs.py:2654
+#: ../src/orca/orca_gui_prefs.py:2694 ../src/orca/orca-setup.glade.h:52
 msgid "Dot _7"
 msgstr "จุด _7"
 
@@ -3613,8 +3612,8 @@ msgstr "จุด _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2619 ../src/orca/orca_gui_prefs.py:2660
-#: ../src/orca/orca_gui_prefs.py:2700 ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca_gui_prefs.py:2620 ../src/orca/orca_gui_prefs.py:2661
+#: ../src/orca/orca_gui_prefs.py:2701 ../src/orca/orca-setup.glade.h:53
 msgid "Dot _8"
 msgstr "จุด _8"
 
@@ -3622,15 +3621,15 @@ msgstr "จุด _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2626 ../src/orca/orca_gui_prefs.py:2667
-#: ../src/orca/orca_gui_prefs.py:2707 ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca_gui_prefs.py:2627 ../src/orca/orca_gui_prefs.py:2668
+#: ../src/orca/orca_gui_prefs.py:2708 ../src/orca/orca-setup.glade.h:54
 msgid "Dots 7 an_d 8"
 msgstr "จุด 7 แ_ละ 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2730 ../src/orca/orca-setup.glade.h:163
+#: ../src/orca/orca_gui_prefs.py:2731 ../src/orca/orca-setup.glade.h:163
 msgid "_None"
 msgstr "_ไม่"
 
@@ -3639,7 +3638,7 @@ msgstr "_ไม่"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2738 ../src/orca/orca-setup.glade.h:126
+#: ../src/orca/orca_gui_prefs.py:2739 ../src/orca/orca-setup.glade.h:126
 msgid "So_me"
 msgstr "ออกเสียงบ้_าง"
 
@@ -3647,7 +3646,7 @@ msgstr "ออกเสียงบ้_าง"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2745 ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca_gui_prefs.py:2746 ../src/orca/orca-setup.glade.h:88
 msgid "M_ost"
 msgstr "ออกเสียงเ_กือบทั้งหมด"
 
@@ -3655,7 +3654,7 @@ msgstr "ออกเสียงเ_กือบทั้งหมด"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2766
+#: ../src/orca/orca_gui_prefs.py:2767
 msgid "Line"
 msgstr "บรรทัด"
 
@@ -3663,7 +3662,7 @@ msgstr "บรรทัด"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2772
+#: ../src/orca/orca_gui_prefs.py:2773
 msgid "Sentence"
 msgstr "ประโยค"
 
@@ -3671,7 +3670,7 @@ msgstr "ประโยค"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2792 ../src/orca/orca_gui_prefs.py:2922
+#: ../src/orca/orca_gui_prefs.py:2793 ../src/orca/orca_gui_prefs.py:2923
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brie_f"
 msgstr "โดยย่_อ"
@@ -3680,7 +3679,7 @@ msgstr "โดยย่_อ"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2816 ../src/orca/orca-setup.glade.h:130
+#: ../src/orca/orca_gui_prefs.py:2817 ../src/orca/orca-setup.glade.h:130
 msgid "Speak current _cell"
 msgstr "อ่านออกเสียงช่องตารางปั_จจุบัน"
 
@@ -3688,7 +3687,7 @@ msgstr "อ่านออกเสียงช่องตารางปั_�
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3569
+#: ../src/orca/orca_gui_prefs.py:3570
 msgid "enter new key"
 msgstr "กดเพื่อป้อนปุ่มใหม่"
 
@@ -3696,7 +3695,7 @@ msgstr "กดเพื่อป้อนปุ่มใหม่"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3598
+#: ../src/orca/orca_gui_prefs.py:3599
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "ปุ่มลัดถูกลบแล้ว กรุณากด enter เพื่อยืนยัน"
 
@@ -3704,7 +3703,7 @@ msgstr "ปุ่มลัดถูกลบแล้ว กรุณากด e
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3622
+#: ../src/orca/orca_gui_prefs.py:3623
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "ปุ่มลัดที่กดได้เชื่อมโยงกับ %s อยู่ก่อนแล้ว"
@@ -3713,7 +3712,7 @@ msgstr "ปุ่มลัดที่กดได้เชื่อมโยง
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3629
+#: ../src/orca/orca_gui_prefs.py:3630
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "ปุ่มที่จับได้: %s กรุณากด enter เพื่อยืนยัน"
@@ -3722,7 +3721,7 @@ msgstr "ปุ่มที่จับได้: %s กรุณากด enter 
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3668
+#: ../src/orca/orca_gui_prefs.py:3669
 #, python-format
 msgid "The new key is: %s"
 msgstr "ปุ่มใหม่คือ: %s"
@@ -3731,22 +3730,22 @@ msgstr "ปุ่มใหม่คือ: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3676
+#: ../src/orca/orca_gui_prefs.py:3677
 msgid "The keybinding has been removed."
 msgstr "ปุ่มลัดถูกลบแล้ว"
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3754 ../src/orca/orca-setup.glade.h:156
+#: ../src/orca/orca_gui_prefs.py:3755 ../src/orca/orca-setup.glade.h:156
 msgid "_Desktop"
 msgstr "เ_ดสก์ท็อป"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:4162 ../src/orca/orca_gui_prefs.py:4173
-#: ../src/orca/orca_gui_prefs.py:4195
+#: ../src/orca/orca_gui_prefs.py:4163 ../src/orca/orca_gui_prefs.py:4174
+#: ../src/orca/orca_gui_prefs.py:4196
 msgid "Bilinear"
 msgstr "ไบลิเนียร์"
 
@@ -3755,7 +3754,7 @@ msgstr "ไบลิเนียร์"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4378 ../src/orca/orca_gui_prefs.py:4468
+#: ../src/orca/orca_gui_prefs.py:4379 ../src/orca/orca_gui_prefs.py:4469
 msgid "Saturate red"
 msgstr "เพิ่มสีแดง"
 
@@ -3764,7 +3763,7 @@ msgstr "เพิ่มสีแดง"
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4386 ../src/orca/orca_gui_prefs.py:4476
+#: ../src/orca/orca_gui_prefs.py:4387 ../src/orca/orca_gui_prefs.py:4477
 msgid "Saturate green"
 msgstr "เพิ่มสีเขียว"
 
@@ -3773,7 +3772,7 @@ msgstr "เพิ่มสีเขียว"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:4394 ../src/orca/orca_gui_prefs.py:4484
+#: ../src/orca/orca_gui_prefs.py:4395 ../src/orca/orca_gui_prefs.py:4485
 msgid "Saturate blue"
 msgstr "เพิ่มสีน้ำเงิน"
 
@@ -3782,7 +3781,7 @@ msgstr "เพิ่มสีน้ำเงิน"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4402 ../src/orca/orca_gui_prefs.py:4492
+#: ../src/orca/orca_gui_prefs.py:4403 ../src/orca/orca_gui_prefs.py:4493
 msgid "Desaturate red"
 msgstr "ลดสีแดง"
 
@@ -3791,7 +3790,7 @@ msgstr "ลดสีแดง"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4410 ../src/orca/orca_gui_prefs.py:4500
+#: ../src/orca/orca_gui_prefs.py:4411 ../src/orca/orca_gui_prefs.py:4501
 msgid "Desaturate green"
 msgstr "ลดสีเขียว"
 
@@ -3800,7 +3799,7 @@ msgstr "ลดสีเขียว"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4418 ../src/orca/orca_gui_prefs.py:4508
+#: ../src/orca/orca_gui_prefs.py:4419 ../src/orca/orca_gui_prefs.py:4509
 msgid "Desaturate blue"
 msgstr "ลดสีน้ำเงิน"
 
@@ -3809,7 +3808,7 @@ msgstr "ลดสีน้ำเงิน"
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4426 ../src/orca/orca_gui_prefs.py:4516
+#: ../src/orca/orca_gui_prefs.py:4427 ../src/orca/orca_gui_prefs.py:4517
 msgid "Positive hue shift"
 msgstr "เวียนแม่สีทางบวก"
 
@@ -3818,13 +3817,13 @@ msgstr "เวียนแม่สีทางบวก"
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4434 ../src/orca/orca_gui_prefs.py:4524
+#: ../src/orca/orca_gui_prefs.py:4435 ../src/orca/orca_gui_prefs.py:4525
 msgid "Negative hue shift"
 msgstr "เวียนแม่สีทางลบ"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4761
+#: ../src/orca/orca_gui_prefs.py:4762
 msgid "Starting Orca Preferences."
 msgstr "กำลังเริ่มการปรับแต่ง Orca"
 
@@ -3834,7 +3833,7 @@ msgstr "โปรแกรมอ่านหน้าจอและแว่น
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:274 ../src/orca/orca.py:1250 ../src/orca/orca.py:1251
+#: ../src/orca/orca.py:276 ../src/orca/orca.py:1263 ../src/orca/orca.py:1264
 msgid "Goodbye."
 msgstr "สวัสดี"
 
@@ -3847,21 +3846,21 @@ msgstr "สวัสดี"
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:346
+#: ../src/orca/orca.py:348
 msgid "Exiting learn mode."
 msgstr "กำลังออกจากโหมดเรียนรู้"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:863
+#: ../src/orca/orca.py:865
 msgid "Speech enabled."
 msgstr "เปิดใช้งานเสียงพูด"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:868
+#: ../src/orca/orca.py:870
 msgid "Speech disabled."
 msgstr "ปิดใช้งานเสียงพูด"
 
@@ -3869,18 +3868,18 @@ msgstr "ปิดใช้งานเสียงพูด"
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:925
+#: ../src/orca/orca.py:933
 msgid "Orca user settings reloaded."
 msgstr "อ่านค่าตั้งผู้ใช้ Orca ใหม่เรียบร้อยแล้ว"
 
-#: ../src/orca/orca.py:1332
+#: ../src/orca/orca.py:1345
 msgid "Usage: orca [OPTION...]"
 msgstr "วิธีใช้: orca [OPTION...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:1338
+#: ../src/orca/orca.py:1351
 msgid "Show this help message"
 msgstr "แสดงข้อความวิธีใช้นี้"
 
@@ -3888,7 +3887,7 @@ msgstr "แสดงข้อความวิธีใช้นี้"
 #. the names of the applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:1347
+#: ../src/orca/orca.py:1360
 msgid "Print the known running applications"
 msgstr "พิมพ์โปรแกรมที่รู้จักที่ทำงานอยู่"
 
@@ -3896,7 +3895,7 @@ msgstr "พิมพ์โปรแกรมที่รู้จักที่
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:1353
+#: ../src/orca/orca.py:1366
 msgid "Set up user preferences"
 msgstr "ตั้งค่าปรับแต่งสำหรับผู้ใช้"
 
@@ -3906,7 +3905,7 @@ msgstr "ตั้งค่าปรับแต่งสำหรับผู้
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:1362
+#: ../src/orca/orca.py:1375
 msgid "Set up user preferences (text version)"
 msgstr "ตั้งค่าปรับแต่งสำหรับผู้ใช้ (ฉบับข้อความ)"
 
@@ -3914,7 +3913,7 @@ msgstr "ตั้งค่าปรับแต่งสำหรับผู้
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:1369
+#: ../src/orca/orca.py:1382
 msgid "Skip set up of user preferences"
 msgstr "ข้ามการตั้งค่าปรับแต่งสำหรับผู้ใช้"
 
@@ -3924,7 +3923,7 @@ msgstr "ข้ามการตั้งค่าปรับแต่งสำ
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for those user preferences.
 #.
-#: ../src/orca/orca.py:1378
+#: ../src/orca/orca.py:1391
 msgid "Use alternate directory for user preferences"
 msgstr "ใช้ค่าปรับแต่งสำหรับผู้ใช้จากไดเรกทอรีที่กำหนด"
 
@@ -3932,7 +3931,7 @@ msgstr "ใช้ค่าปรับแต่งสำหรับผู้ใ
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1391
+#: ../src/orca/orca.py:1404
 msgid "Force use of option"
 msgstr "บังคับใช้ตัวเลือก"
 
@@ -3940,7 +3939,7 @@ msgstr "บังคับใช้ตัวเลือก"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1404
+#: ../src/orca/orca.py:1417
 msgid "Prevent use of option"
 msgstr "ป้องกันการใช้ตัวเลือก"
 
@@ -3949,14 +3948,14 @@ msgstr "ป้องกันการใช้ตัวเลือก"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:1412
+#: ../src/orca/orca.py:1425
 msgid "Quits Orca (if shell script used)"
 msgstr "จบการทำงาน Orca (ถ้าใช้ในเชลล์สคริปต์)"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:1419
+#: ../src/orca/orca.py:1432
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3965,7 +3964,7 @@ msgstr ""
 "ถ้าผู้ใช้ยังเคยตั้งค่า Orca มาก่อน Orca จะเรียกใช้การตั้งค่าปรับแต่ง\n"
 "ยกเว้นถ้ามีการใช้ตัวเลือก -n หรือ --no-setup"
 
-#: ../src/orca/orca.py:1427
+#: ../src/orca/orca.py:1440
 msgid ""
 "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -3975,11 +3974,11 @@ msgstr ""
 "AT-SPI (เช่น gnome-terminal) อาจทำให้พื้นโต๊ะทั้งหมดหยุดค้างจนกว่า\n"
 "Orca จะถูกฆ่าได้"
 
-#: ../src/orca/orca.py:1432
+#: ../src/orca/orca.py:1445
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "รายงานข้อผิดพลาดไปยัง orca-list@gnome.org."
 
-#: ../src/orca/orca.py:1603
+#: ../src/orca/orca.py:1616
 msgid "Welcome to Orca."
 msgstr "ยินดีต้อนรับสู่ Orca "
 
@@ -6287,7 +6286,9 @@ msgstr "ปุ่มไดเรกทอรี"
 #. so in this case.
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:1330
-#: ../src/orca/scripts/apps/evolution/script.py:1401
+#: ../src/orca/scripts/apps/evolution/script.py:1331
+#: ../src/orca/scripts/apps/evolution/script.py:1402
+#: ../src/orca/scripts/apps/evolution/script.py:1403
 #, fuzzy
 msgid "Assistant"
 msgstr "เครื่องมือช่วย"
@@ -6433,11 +6434,11 @@ msgstr "ทำงานออนไลน์/ออฟไลน์"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity.py:104
+#: ../src/orca/scripts/apps/metacity.py:105
 msgid "Workspace "
 msgstr "พื้นที่ทำงาน "
 
-#: ../src/orca/scripts/apps/metacity.py:104
+#: ../src/orca/scripts/apps/metacity.py:105
 msgid "Desk "
 msgstr "โต๊ะ "
 
@@ -6445,7 +6446,7 @@ msgstr "โต๊ะ "
 #. be read by Orca.  This usually means the application is not
 #. friendly to the assistive technology infrastructure.
 #.
-#: ../src/orca/scripts/apps/metacity.py:111
+#: ../src/orca/scripts/apps/metacity.py:112
 msgid "inaccessible"
 msgstr "ไม่มีสิ่งอำนวยความสะดวก"
 
@@ -7262,7 +7263,7 @@ msgstr "อ่านเอกสารแล้ว %d เปอร์เซ็�
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/settings.py:616
+#: ../src/orca/settings.py:623
 msgid "text|read only"
 msgstr "อ่านได้อย่างเดียว"
 
@@ -7272,7 +7273,7 @@ msgstr "อ่านได้อย่างเดียว"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/settings.py:624
+#: ../src/orca/settings.py:631
 msgid "text|rdonly"
 msgstr "อ่านเท่านั้น"
 
@@ -7285,35 +7286,35 @@ msgstr "อ่านเท่านั้น"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:954
+#: ../src/orca/settings.py:961
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:959
+#: ../src/orca/settings.py:966
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:964
+#: ../src/orca/settings.py:971
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:969
+#: ../src/orca/settings.py:976
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #. Translators: see the regular expression note above.  This is for the
 #. help application (yelp).
 #.
-#: ../src/orca/settings.py:974
+#: ../src/orca/settings.py:981
 msgid "yelp"
 msgstr "yelp"
 
@@ -7321,7 +7322,7 @@ msgstr "yelp"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:980
+#: ../src/orca/settings.py:987
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7329,7 +7330,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:986
+#: ../src/orca/settings.py:993
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -7337,7 +7338,7 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:992
+#: ../src/orca/settings.py:999
 msgid "Minefield"
 msgstr "Minefield"
 
@@ -7345,35 +7346,35 @@ msgstr "Minefield"
 #. version of Thunderbird, which chooses to now call itself by a different
 #. name.
 #.
-#: ../src/orca/settings.py:998
+#: ../src/orca/settings.py:1005
 msgid "Shredder"
 msgstr "Shredder"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1003
+#: ../src/orca/settings.py:1010
 msgid "Mail/News"
 msgstr "เมล/ข่าว"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1008
+#: ../src/orca/settings.py:1015
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1013
+#: ../src/orca/settings.py:1020
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1018
+#: ../src/orca/settings.py:1025
 msgid "gaim"
 msgstr "gaim"
 
@@ -7383,7 +7384,7 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1153 ../src/orca/settings.py:1161
+#: ../src/orca/settings.py:1160 ../src/orca/settings.py:1168
 msgid "required"
 msgstr "จำเป็น"
 
@@ -8913,8 +8914,8 @@ msgid ""
 "To move to items, use either the arrow keys, or type ahead searching. To get "
 "to the system menues press the alt+f1 key."
 msgstr ""
-"เลื่อนไปยังรายการต่างๆ ด้วยปุ่มลูกศร หรือใช้วิธีค้นขณะป้อนก็ได้ หากต้องการเปิดเมนูระบบ กดปุ่ม "
-"alt+f1"
+"เลื่อนไปยังรายการต่างๆ ด้วยปุ่มลูกศร หรือใช้วิธีค้นขณะป้อนก็ได้ หากต้องการเปิดเมนูระบบ กดปุ่ม alt"
+"+f1"
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
