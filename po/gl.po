@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-23 19:23+0200\n"
-"PO-Revision-Date: 2008-08-23 19:26+0200\n"
+"PO-Revision-Date: 2008-08-23 21:01+0200\n"
 "Last-Translator: Ignacio Casal Quinteiro <nacho.resa@gmail.com>\n"
 "Language-Team: Galego <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -8590,7 +8590,7 @@ msgstr "membrete"
 #.
 #: ../src/orca/text_attribute_names.py:445
 msgid "textattr|outline"
-msgstr ""
+msgstr "contorna"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8601,7 +8601,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:454
 msgid "textattr|overline"
-msgstr ""
+msgstr "liña enriba"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
