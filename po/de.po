@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-23 15:59+0200\n"
+"POT-Creation-Date: 2008-08-23 16:08+0200\n"
 "PO-Revision-Date: 2008-08-23 14:06+0100\n"
 "Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1688,7 +1688,8 @@ msgstr "Die Übersicht zum Wort, das über dem aktuellen liegt, bewegen."
 #.
 #: ../src/orca/default.py:424
 msgid "Speaks the current flat review item or word."
-msgstr "Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
+msgstr ""
+"Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1702,7 +1703,8 @@ msgstr "Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen.
 #.
 #: ../src/orca/default.py:439
 msgid "Spells the current flat review item or word."
-msgstr "Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
+msgstr ""
+"Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1717,7 +1719,8 @@ msgstr "Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen.
 #.
 #: ../src/orca/default.py:455
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
+msgstr ""
+"Den aktuellen Eintrag oder das aktuelle Wort in der Übersicht vorlesen."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2005,8 +2008,8 @@ msgstr "Sprachausgabe stumm schalten."
 #.
 #: ../src/orca/default.py:768
 msgid ""
-"Prints a debug listing of all known applications to the console where Orca is "
-"running."
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
 msgstr ""
 "Gibt auf dem Terminal eine Liste mit allen Anwendungen die aktuell Orca "
 "nutzen."
@@ -2193,7 +2196,8 @@ msgstr "Nächsten Befehl an das momentane Programm weiterleiten."
 #: ../src/orca/default.py:2147 ../src/orca/default.py:2459
 #: ../src/orca/default.py:4939 ../src/orca/default.py:5094
 #: ../src/orca/default.py:5102 ../src/orca/default.py:5210
-#: ../src/orca/default.py:5218 ../src/orca/scripts/apps/evolution/script.py:531
+#: ../src/orca/default.py:5218
+#: ../src/orca/scripts/apps/evolution/script.py:531
 #: ../src/orca/scripts/apps/soffice/script.py:2041
 #: ../src/orca/scripts/apps/soffice/script.py:2055
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:264
@@ -2345,7 +2349,8 @@ msgstr[1] "%s %s Pixel"
 #. text is a hypertext link.
 #.
 #: ../src/orca/default.py:4432 ../src/orca/default.py:6333
-#: ../src/orca/rolenames.py:604 ../src/orca/scripts/apps/soffice/script.py:1017
+#: ../src/orca/rolenames.py:604
+#: ../src/orca/scripts/apps/soffice/script.py:1017
 #: ../src/orca/where_am_I.py:1693
 msgid "link"
 msgstr "Verknüpfung"
@@ -2374,8 +2379,8 @@ msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
 msgstr ""
-"Lernmodus wird eingeschaltet. Bitte drücken Sie eine beliebige Taste um seine "
-"Funktion zu hören. Drücken Sie die Escape-Taste, um den Lernmodus zu "
+"Lernmodus wird eingeschaltet. Bitte drücken Sie eine beliebige Taste um "
+"seine Funktion zu hören. Drücken Sie die Escape-Taste, um den Lernmodus zu "
 "verlassen."
 
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -2432,8 +2437,8 @@ msgstr "Kontext ist %s"
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
-msgstr[0] "%(count)d mal das Zeichen %(repeatChar)"
-msgstr[1] "%(count)d mal das Zeichen %(repeatChar)"
+msgstr[0] "%(count)d mal das Zeichen %(repeatChar)s"
+msgstr[1] "%(count)d mal das Zeichen %(repeatChar)s"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -3258,8 +3263,8 @@ msgstr "Soll die Tastaturglocke benutzt werden? Geben Sie »j« oder »n« ein: 
 #: ../src/orca/orca_console_prefs.py:318
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr ""
-"Sollen die alphanumerischen und Interpunktions-Tasten aktiviert werden? Geben "
-"Sie »j« oder »n« ein: "
+"Sollen die alphanumerischen und Interpunktions-Tasten aktiviert werden? "
+"Geben Sie »j« oder »n« ein: "
 
 #. Translators: this is in reference to key echo for
 #. CTRL, ALT, Shift, Insert, and "Fn" on laptops.
@@ -3281,7 +3286,8 @@ msgstr "Sollen die Sperrtasten aktiviert werden? Geben Sie »j« oder »n« ein:
 #.
 #: ../src/orca/orca_console_prefs.py:348
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Sollen die Funktionstasten aktiviert werden? Geben Sie »j« oder »n« ein: "
+msgstr ""
+"Sollen die Funktionstasten aktiviert werden? Geben Sie »j« oder »n« ein: "
 
 #. Translators: this is in reference to key echo for
 #. space, enter, escape, tab, backspace, delete, arrow
@@ -3333,7 +3339,8 @@ msgstr "Möchten Sie Braille einschalten? Geben Sie »j« oder »n« ein: "
 #.
 #: ../src/orca/orca_console_prefs.py:460
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Möchten Sie den Braillemonitor einschalten?  Geben Sie »j« oder »n« ein: "
+msgstr ""
+"Möchten Sie den Braillemonitor einschalten?  Geben Sie »j« oder »n« ein: "
 
 #: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:454
 msgid "Accessibility support for GNOME has just been enabled."
@@ -3378,7 +3385,8 @@ msgstr "Schließen"
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.glade.h:4 ../src/orca/scripts/apps/gedit/script.py:318
+#: ../src/orca/orca-find.glade.h:4
+#: ../src/orca/scripts/apps/gedit/script.py:318
 #: ../src/orca/scripts/apps/gedit/script.py:320
 #: ../src/orca/scripts/apps/gnome-search-tool.py:165
 msgid "Find"
@@ -6207,7 +6215,8 @@ msgstr "Kalendereintrag"
 #: ../src/orca/scripts/apps/evolution/script.py:165
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr ""
-"Legt fest, ob Nachrichten dargestellt werden, wenn das Skript nicht aktiv ist."
+"Legt fest, ob Nachrichten dargestellt werden, wenn das Skript nicht aktiv "
+"ist."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -6751,8 +6760,8 @@ msgstr "Rechtschreibprüfung:"
 #: ../src/orca/scripts/apps/soffice/script.py:1305
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
-"Beachten Sie, dass die Schaltfläche zum Runterrollen mehrmals gedrückt werden "
-"muss."
+"Beachten Sie, dass die Schaltfläche zum Runterrollen mehrmals gedrückt "
+"werden muss."
 
 #: ../src/orca/scripts/apps/soffice/script.py:1321
 msgid "License Agreement Accept button now has focus."
@@ -9050,8 +9059,8 @@ msgstr "Um ein Untermenü zu betreten, »Rechts«-Pfeiltaste betätigen."
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:645
 msgid ""
-"To decrease press left arrow, to increase press right arrow. To go to minimum "
-"press home, and for maximum press end."
+"To decrease press left arrow, to increase press right arrow. To go to "
+"minimum press home, and for maximum press end."
 msgstr ""
 "Zum Verringern »Links«-Pfeiltaste oder zum Erhöhen »Rechts«-Pfeiltaste "
 "benutzen. Mit »Pos1« wird zum Minimum und mjt »Ende« zum Maximum gewechselt."
@@ -9365,7 +9374,8 @@ msgstr "Standardknopf ist %s"
 #~ msgstr "Das Aufzeichnen der Tastenanschläge ein- und ausschalten."
 
 #~ msgid "Reloads user settings and reinitializes services as necessary."
-#~ msgstr "Die Benutzereinstellungen und gegebenenfalls auch Dienste neu laden."
+#~ msgstr ""
+#~ "Die Benutzereinstellungen und gegebenenfalls auch Dienste neu laden."
 
 #~ msgid "Switches to the next presentation manager."
 #~ msgstr "Wechselt zum nächsten Präsentations-Manager."
@@ -9547,5 +9557,6 @@ msgstr "Standardknopf ist %s"
 #~ "You will have to log out for the change to take effect.\n"
 #~ "Do you want to log out now? "
 #~ msgstr ""
-#~ "Sie müssen sich ab -und anmelden, damit die Änderungen übernommen werden.\n"
+#~ "Sie müssen sich ab -und anmelden, damit die Änderungen übernommen "
+#~ "werden.\n"
 #~ "Möchten Sie sich jetzt abmelden?"
