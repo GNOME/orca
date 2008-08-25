@@ -620,12 +620,12 @@ msgstr ""
 #: src/orca/orca-setup.glade:1058
 #, fuzzy
 msgid "Enable Braille _support"
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca-setup.glade:1078
 #, fuzzy
 msgid "Enable Braille _monitor"
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca-setup.glade:1098
 msgid "_Abbreviated role names"
@@ -638,7 +638,7 @@ msgstr ""
 #: src/orca/orca-setup.glade:1272
 #, fuzzy
 msgid "Enable _key echo"
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca-setup.glade:1304
 msgid "Enable _alphanumeric and punctuation keys"
@@ -647,27 +647,27 @@ msgstr ""
 #: src/orca/orca-setup.glade:1338
 #, fuzzy
 msgid "Enable _modifier keys"
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca-setup.glade:1372
 #, fuzzy
 msgid "Enable lockin_g keys"
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca-setup.glade:1406
 #, fuzzy
 msgid "Enable _function keys"
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca-setup.glade:1440
 #, fuzzy
 msgid "Enable ac_tion keys"
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca-setup.glade:1462
 #, fuzzy
 msgid "Enable echo by _word"
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca-setup.glade:1487
 msgid "Key Echo"
@@ -957,7 +957,7 @@ msgstr "Izaberite %s glas: "
 #: src/orca/orca_console_prefs.py:209
 #, fuzzy
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #. Ask the user if they would like to enable key echo. If they say
 #. yes, then for each of the five different types of keys, ask the
@@ -979,7 +979,7 @@ msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
 #: src/orca/orca_console_prefs.py:234
 #, fuzzy
 msgid "Enable key echo?  Enter y or n: "
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
@@ -988,32 +988,32 @@ msgstr ""
 #: src/orca/orca_console_prefs.py:249
 #, fuzzy
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca_console_prefs.py:257
 #, fuzzy
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca_console_prefs.py:265
 #, fuzzy
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca_console_prefs.py:273
 #, fuzzy
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
+msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
 
 #: src/orca/orca_console_prefs.py:301
 #, fuzzy
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca_console_prefs.py:309
 #, fuzzy
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
+msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
 
 #: src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
