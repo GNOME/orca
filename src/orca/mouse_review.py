@@ -25,7 +25,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Eitan Isaacson"
 __license__   = "LGPL"
 
-import wnck
+import debug
+
+try:
+    import wnck
+    _mouseReviewCapable = True
+except:
+    debug.println(debug.LEVEL_WARNING, \
+                  "Python module wnck not found, mouse review not available.")
+    _mouseReviewCapable = False
+
 import gtk
 import gobject
 
@@ -134,6 +143,9 @@ class MouseReviewer:
     def __init__(self):
         """Initalize a mouse reviewer class.
         """
+        if not _mouseReviewCapable:
+            return
+
         # Need to do this and allow the main loop to cycle once to get any info
         wnck_screen = wnck.screen_get_default()
         self.active = False
@@ -147,6 +159,9 @@ class MouseReviewer:
         Arguments:
         - on: If set to True or False, explicitly toggles reviewing on or off.
         """
+        if not _mouseReviewCapable:
+            return
+
         if on is None:
             on = not self.active
         if on and not self.active:
