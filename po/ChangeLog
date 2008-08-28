@@ -1,23 +1,27 @@
+2008-08-28  Timo Jyrinki  <timo.jyrinki@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+	* ChangeLog: Fixed some indentations to proper tabs instead of spaces.
+	
 2008-08-25  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Javier Dorado
-          Martine
+	* es.po: Updated Spanish translation by Francisco Javier Dorado Martine.
 
 2008-08-25  Goran Rakic  <grakic@devbase.net>
 
-        * LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
+	* LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
 
 2008-08-25  Priit Laes  <plaes at svn dot gnome dot org>
 
-	* et.po: Translation updated by Ivar Smolin
+	* et.po: Translation updated by Ivar Smolin.
 
 2008-08-23  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
-	 gl.po: Updated Galician translation
+	* gl.po: Updated Galician translation.
 
 2008-08-23  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
-	 gl.po: Updated Galician translation
+	* gl.po: Updated Galician translation.
 
 2008-08-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
@@ -53,15 +57,15 @@
 
 2008-08-11  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
-	 gl.po: Updated Galician translation
+	* gl.po: Updated Galician translation
 
 2008-08-10  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
-	 gl.po: Updated Galician translation
+	* gl.po: Updated Galician translation
 
 2008-08-08  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
-	 gl.po: Updated Galician translation
+	* gl.po: Updated Galician translation
 
 2008-08-6  Djihed Afifi <djihed@gmail.com> 
 
