@@ -29,6 +29,10 @@
           when Gecko is controlling the caret. Note: This doesn't fix all
           of the issues; merely improves some of them.
 
+        * src/orca/scripts/apps/soffice/script.py:
+          Fix for bug #523416 - Cannot access Impress panes via the
+          keyboard. (Note: Requires OOo 3.0)
+
 2008-08-26   Willie Walker <william.walker@sun.com>
 
         * src/orca/mouse_review.py:

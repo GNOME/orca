@@ -1636,6 +1636,44 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            # Sometimes the items in the OOo Task Pane give up focus (e.g.
+            # to a context menu) and never reclaim it. In this case, we
+            # still get object:active-descendant-changed events, but the
+            # event.source lacks STATE_FOCUSED. This causes the default
+            # script to ignore the event. See bug #523416. [[[TODO - JD:
+            # If the OOo guys fix this on their end, this hack should be
+            # removed. The OOo issue can be found here: 
+            # http://www.openoffice.org/issues/show_bug.cgi?id=93083]]]
+            #
+            rolesList = [pyatspi.ROLE_LIST,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_LIST_ITEM]
+            if self.isDesiredFocusedItem(event.source, rolesList) \
+               and event.any_data:
+                speech.stop()
+                orca.setLocusOfFocus(event, event.any_data)
+
+                # We'll tuck away the activeDescendant information for future
+                # reference since the AT-SPI gives us little help in finding
+                # this.
+                #
+                self.pointOfReference['activeDescendantInfo'] = \
+                    [orca_state.locusOfFocus.parent,
+                     orca_state.locusOfFocus.getIndexInParent()]
+                return
+
+        default.Script.onActiveDescendantChanged(self, event)
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 
