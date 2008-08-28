@@ -17,6 +17,18 @@
           Fix for bug #523452 - OOo spell check not working (oowriter/
           bug_413909.py regression test #2 produces the wrong results)
 
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/uiuc_button.py:
+          test/keystrokes/firefox/uiuc_radiobutton.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/moz_checkbox.py:
+          test/keystrokes/firefox/moz_slider.py:
+          test/keystrokes/firefox/uiuc_tabpanel.py:
+          Fix for bug #549529 - Improve our handling of caret-moved events
+          when Gecko is controlling the caret. Note: This doesn't fix all
+          of the issues; merely improves some of them.
+
 2008-08-26   Willie Walker <william.walker@sun.com>
 
         * src/orca/mouse_review.py:

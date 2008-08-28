@@ -41,6 +41,8 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the first spinner", 
     ["BRAILLE LINE:  'Spinbox #1: 900 $l not fired yet! $l '",
      "     VISIBLE:  'Spinbox #1: 900 $l not fired yet', cursor=16",
+     "BRAILLE LINE:  'Spinbox #1: 900 $l not fired yet! $l '",
+     "     VISIBLE:  'Spinbox #1: 900 $l not fired yet', cursor=16",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button'"]))
 

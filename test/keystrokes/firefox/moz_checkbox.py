@@ -33,8 +33,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to first checkbox", 
     ["BRAILLE LINE:  '<x> Include decorative fruit basket CheckBox'",
      "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
-     "BRAILLE LINE:  '<x> Include decorative fruit basket CheckBox'",
-     "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Include decorative fruit basket check box checked'"]))
 
@@ -58,8 +56,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to second checkbox", 
     ["BRAILLE LINE:  '<x> Invalid checkbox CheckBox'",
      "     VISIBLE:  '<x> Invalid checkbox CheckBox', cursor=1",
-     "BRAILLE LINE:  '<x> Invalid checkbox CheckBox'",
-     "     VISIBLE:  '<x> Invalid checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Invalid checkbox check box checked'"]))
 ########################################################################
@@ -81,8 +77,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to third checkbox", 
     ["BRAILLE LINE:  '<x> Required checkbox CheckBox'",
-     "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
-     "BRAILLE LINE:  '<x> Required checkbox CheckBox'",
      "     VISIBLE:  '<x> Required checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Required checkbox check box checked'"]))
@@ -130,8 +124,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to checkbox tristate", 
     ["BRAILLE LINE:  '<x> Tri-state checkbox CheckBox'",
-     "     VISIBLE:  '<x> Tri-state checkbox CheckBox', cursor=1",
-     "BRAILLE LINE:  '<x> Tri-state checkbox CheckBox'",
      "     VISIBLE:  '<x> Tri-state checkbox CheckBox', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tri-state checkbox check box checked'"]))

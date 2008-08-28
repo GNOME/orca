@@ -1277,15 +1277,21 @@ class Script(default.Script):
                 # example.
                 #
                 orca.setLocusOfFocus(event, event.source, False)
-                if eventSourceRole == pyatspi.ROLE_SPIN_BUTTON:
-                    text = self.queryNonEmptyText(event.source)
-                    if text and text.characterCount == event.detail1:
-                        return
-                elif event.detail1 == 0 \
-                     and eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
-                                             pyatspi.ROLE_LIST_ITEM,
-                                             pyatspi.ROLE_MENU_ITEM]:
+                if event.detail1 == 0 and not string in ["Left", "Home"] \
+                   or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
+                                          pyatspi.ROLE_LIST_ITEM,
+                                          pyatspi.ROLE_MENU_ITEM]:
+                    # A focus:/object:state-changed:focused event should
+                    # pick up this case.
+                    #
                     return
+                elif eventSourceRole == pyatspi.ROLE_SPIN_BUTTON \
+                    and string in ["Up", "Down"]:
+                    # Ignore this bogus event.
+                    #
+                    return
+                else:
+                    self.setCaretContext(event.source, event.detail1)
 
             elif eventSourceInDocument and not self.inDocumentContent() \
                  and orca_state.locusOfFocus:
@@ -1304,18 +1310,14 @@ class Script(default.Script):
                 return
 
         # If we're still here, and in document content, update the caret
-        # context.
+        # context and set the locusOfFocus so that the default script's
+        # onCaretMoved will handle.
         #
-        if eventSourceInDocument:
-            text = self.queryNonEmptyText(event.source)
-            if text:
-                caretOffset = text.caretOffset
-            else:
-                caretOffset = 0
-
+        if eventSourceInDocument and not self.isAriaWidget():
             [obj, characterOffset] = \
-                self.findFirstCaretContext(event.source, caretOffset)
+                self.findFirstCaretContext(event.source, event.detail1)
             self.setCaretContext(obj, characterOffset)
+            orca.setLocusOfFocus(event, obj, False)
 
         # Pass the event along to the default script for processing.
         #
@@ -2688,6 +2690,9 @@ class Script(default.Script):
         return ('xml-roles' in attrs and 'live' not in attrs)
 
     def _getAttrDictionary(self, obj):
+        if not obj:
+            return {}
+
         return dict([attr.split(':', 1) for attr in obj.getAttributes()])
 
     def handleAsLiveRegion(self, event):

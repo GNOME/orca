@@ -23,8 +23,6 @@ sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tabpanel/view_inline.
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 
-
-
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
 #

@@ -35,8 +35,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
-     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
-     "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
      "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
      "SPEECH OUTPUT: 'Font Larger + button'"]))
 
@@ -74,8 +72,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to second button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Smaller - Button & y Italic', cursor=1",
-     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
-     "     VISIBLE:  'Font Smaller - Button & y Italic', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Font Smaller - button'"]))
 
@@ -97,8 +93,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to third button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  '& y Italic i ToggleButton Bold B', cursor=1",
-     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
-     "     VISIBLE:  '& y Italic i ToggleButton Bold B', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Italic i toggle button not pressed'"]))
 
@@ -119,8 +113,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to fourth button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
-     "     VISIBLE:  'Bold B Button', cursor=1",
-     "BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Bold B Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bold B button'"]))
