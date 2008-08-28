@@ -1,3 +1,22 @@
+2008-08-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/harness/utils.py:
+          test/keystrokes/oowriter/bug_413909.py:
+          test/keystrokes/oowriter/bug_384893.py:
+          test/keystrokes/oowriter/bug_435201.py:
+          test/keystrokes/oowriter/bug_342602.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_469367.py:
+          src/orca/scripts/apps/soffice/braille_generator.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/default.py:
+          Fix for bug #549664 - isDesiredFocusedItem() needs to be more
+          flexible.
+          Fix for bug #523452 - OOo spell check not working (oowriter/
+          bug_413909.py regression test #2 produces the wrong results)
+
 2008-08-26   Willie Walker <william.walker@sun.com>
 
         * src/orca/mouse_review.py:

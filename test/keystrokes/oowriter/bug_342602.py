@@ -67,9 +67,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'A'",
      "SPEECH OUTPUT: ' not selected'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
+     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell B1'",
@@ -89,9 +87,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'A Paragraph', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: ' not selected'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
+     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'A'",
      "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell A1'"]))

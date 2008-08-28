@@ -51,9 +51,9 @@ sequence.append(utils.AssertPresentationAction(
 # 5. Enter Insert-f to get text information.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information",
     ["SPEECH OUTPUT: 'size 12'",

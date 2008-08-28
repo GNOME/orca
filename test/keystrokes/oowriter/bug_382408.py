@@ -23,9 +23,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 ######################################################################
 # 3. Type Insert-F11 to switch to read table cells by row.
 #
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("F11"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 
 ######################################################################
 # 4. Type a down arrow to move to the next line.

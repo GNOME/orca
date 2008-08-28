@@ -6103,12 +6103,15 @@ class Script(script.Script):
             if current is None:
                 return False
 
-            if isinstance(role, str):
+            if not isinstance(role, list):
+                role = [role]
+
+            if isinstance(role[0], str):
                 current_role = current.getRoleName()
             else:
                 current_role = current.getRole()
 
-            if current_role != role:
+            if not current_role in role:
                 return False
             current = current.parent
 

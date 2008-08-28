@@ -86,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to enter the table",
 # [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
 #
-    [#"SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
+    ["SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'Cell A1'"]))
 
 ######################################################################

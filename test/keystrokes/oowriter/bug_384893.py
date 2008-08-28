@@ -55,9 +55,9 @@ sequence.append(utils.AssertPresentationAction(
 # 5. Enter Insert-f to get text information on the underlined word.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the underlined word",
     ["SPEECH OUTPUT: 'size 12'",
@@ -76,9 +76,9 @@ sequence.append(KeyComboAction("<Control>Right"))
 # 7. Enter Insert-f to get text information on the bold word. 
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the bold word",
     ["SPEECH OUTPUT: 'size 12'",

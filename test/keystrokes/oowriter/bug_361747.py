@@ -52,9 +52,9 @@ sequence.append(utils.AssertPresentationAction(
 # 6. Type Insert-f to get the text information for the bold word.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Text information for bold word",
     ["SPEECH OUTPUT: 'size 12'",
@@ -67,9 +67,9 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Text information for italic word",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "Bold Italic Normal \$l") + "'",
@@ -85,9 +85,9 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(TypeAction ("f"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Text information for regular word",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "empty_document(.odt|)", "Bold Italic Normal \$l") + "'",

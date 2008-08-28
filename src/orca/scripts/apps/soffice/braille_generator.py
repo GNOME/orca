@@ -43,6 +43,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
     def __init__(self, script):
         braillegenerator.BrailleGenerator.__init__(self, script)
 
+    def _getTextForRole(self, obj, role=None):
+        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           or role == pyatspi.ROLE_DOCUMENT_FRAME:
+            return None
+
+        return braillegenerator.BrailleGenerator.\
+            _getTextForRole(self, obj, role)
+
     def _getBrailleRegionsForTableCellRow(self, obj):
         """Get the braille for a table cell row or a single table cell
         if settings.readTableCellRow is False.

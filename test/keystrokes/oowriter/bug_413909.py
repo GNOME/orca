@@ -95,17 +95,12 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=22",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
-     "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog'",
-     "     VISIBLE:  'Spellcheck:  (English (USA)) Dia', cursor=1",
-     "BRAILLE LINE:  'soffice Application Spellcheck:  (English (USA)) Dialog Spellcheck:  (English (USA)) OptionPane Change Button'",
+     "BRAILLE LINE:  'soffice Application Spell(ing|check): [ \(]*English \(USA\)[\)]* Dialog'",
+     "     VISIBLE:  'Spell(ing|check): [ \(]*English \(USA\)[\)]* Dia(log|)', cursor=1",
+     "BRAILLE LINE:  'soffice Application Spell(ing|check): [ \(]*English \(USA\)[\)]* Dialog Spell(ing|check): [ \(]*English \(USA\)[\)]* OptionPane Change Button'",
      "     VISIBLE:  'Change Button', cursor=1",
-# [[[TODO: WDW - StarOffice 8 doesn't give us this.  DEV300_m25 does.]]]
-#
+     "SPEECH OUTPUT: 'Spell(ing|check): [ \(]*English \(USA\)[\)]*'",
      "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
-     "SPEECH OUTPUT: 'Spellcheck:  (English (USA))'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Change button'"]))
 
