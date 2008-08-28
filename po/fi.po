@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-28 14:27+0300\n"
-"PO-Revision-Date: 2008-08-28 15:13+0300\n"
+"POT-Creation-Date: 2008-08-28 15:22+0300\n"
+"PO-Revision-Date: 2008-08-28 15:22+0300\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -7446,8 +7446,8 @@ msgstr "%s oletusääni"
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d kohdistamaton valintaikkuna"
+msgstr[1] "%d kohdistamatonta valintaikkunaa"
 
 #. Translators: brief spoken words for the rolename of a tear off
 #. menu item.
