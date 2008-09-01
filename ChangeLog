@@ -1,5 +1,10 @@
 2008-09-01  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README:
+          Mark as Orca v2.23.92pre.
+
+2008-09-01  Willie Walker <william.walker@sun.com>
+
         * configure.in, README, NEWS:
           Prep for Orca v2.23.91.
 
