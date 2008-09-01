@@ -1,3 +1,53 @@
+2.23.91 - 01-Sep-2008
+
+General:
+
+* Refix for bug #540937 - Orca doesn't check if the wnck python
+  bindings are installed.
+
+* Fix for bug #547774 - Possible small performance improvement for
+  starting preferences
+
+* Fix for bug #548380 - Character count message needs reordering in
+  translation
+
+* Fix for bug #548382 - Unreliable check for Evolution Setup Assistant
+
+StarOffice/OpenOffice:
+
+* Fix for bug #523416 - Cannot access Impress panes via the
+  keyboard (Note: Requires OOo 3.0)
+
+* Fix for bug #523452 - OOo spell check not working
+
+* Fix for bug #549664 - isDesiredFocusedItem() needs to be more
+ flexible
+
+Firefox:
+
+* Fix for bug #547477 - Cursor navigation cycles through same text
+  in Firefox--bugzilla page
+
+* Fix for bug #549529 - Improve our handling of caret-moved events
+  when Gecko is controlling the caret (Note: This doesn't fix all of
+  the issues; merely improves some of them)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de       German               Jochen Skulj
+    eu       Basque               Iñaki Larrañaga Murgoitio
+    es       Spanish              Francisco Javier Dorado Martinez and
+                                  Jorge Gonzalez
+    et       Estonian             Ivar Smolin and Priit Laes
+    fi       Finnish              Timo Jyrinki
+    fr       French               Robert-André Mauchin
+    gl       Galician             Ignacio Casal Quinteiro
+    sr@latin Serbian              Danilo Šegan
+    sv       Swedish              Daniel Nylander
+    th       Thai                 Theppitak Karoonboonyanan
+
+==========
+
 2.23.90 - 18-Aug-2008
 
 General:
