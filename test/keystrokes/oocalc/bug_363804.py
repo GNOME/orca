@@ -28,6 +28,13 @@ sequence.append(WaitAction("object:active-descendant-changed",
 ######################################################################
 # Press the down arrow to move to cell A2.
 #
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(WaitAction("object:active-descendant-changed",
+                           None,
+                           None,
+                           pyatspi.ROLE_TABLE,
+                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Down to A2 - speak cell coordinates",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
