@@ -197,7 +197,7 @@ sequence.append(WaitAction("object:state-changed:checked",
 # Type Alt-o to press the OK button and reload the Orca user settings.
 #
 sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # Enter Alt-f, Alt-c to close the Calc spreadsheet window.
