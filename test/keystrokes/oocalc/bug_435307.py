@@ -14,7 +14,7 @@ sequence = MacroSequence()
 # 1. Start oocalc. There is a bug_435307.params file that will
 #    automatically load fruit.ods.
 #
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret in cell A1.
@@ -40,9 +40,9 @@ sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Type Alt-f to select the Freeze menu item [1]",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
+     "BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
      "SPEECH OUTPUT: 'Apples B1'"]))
@@ -60,12 +60,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(utils.AssertPresentationAction(
     "Type Alt-f to select the Freeze menu item [2]",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
+     "BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
      "SPEECH OUTPUT: 'Apples B1'"]))
+
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close the Calc spreadsheet window.

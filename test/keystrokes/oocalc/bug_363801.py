@@ -13,7 +13,7 @@ sequence = MacroSequence()
 # 1. Start oocalc. There is a bug_361167.params file that will
 #    automatically load fruit.ods.
 #
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret in cell A1.
@@ -24,9 +24,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 # 3. Type Insert-r to set the dynamical column headers to the first column.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("r"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-r to set the dynamical column headers to the first column",
     ["BRAILLE LINE:  'Dynamic column header set for row 1'",
@@ -37,9 +37,9 @@ sequence.append(utils.AssertPresentationAction(
 # 4. Type Insert-c to set the dynamical row headers to the first row.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction (0, 106,"Insert"))      # Press Insert
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("c"))
-sequence.append(KeyReleaseAction(150, 106,"Insert"))   # Release Insert
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-c to set the dynamical row headers to the first row.",
     ["BRAILLE LINE:  'Dynamic row header set for column A'",

@@ -9,24 +9,11 @@ import utils
 
 sequence = MacroSequence()
 
-
-######################################################################
-# Redefine this if you're working with a nightly build of OOo.  It is
-# the string that appears in the window title.  For example, instead of
-#"OpenOffice.org" you might have "OOo-dev".  
-#
-OO_NAME="OpenOffice.org"
-
 ######################################################################
 # Start oocalc. There is a bug_361167.params file that will
 # automatically load fruit.ods.
 #
-#sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
-sequence.append(WaitAction("focus:",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           30000))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # Type Control-Home to position the text caret in cell A1.
@@ -41,16 +28,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
 ######################################################################
 # Press the down arrow to move to cell A2.
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Down to A2 - speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
      "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
      "SPEECH OUTPUT: 'Good in Pies A2'"]))
 
@@ -66,7 +46,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Right to B2 - speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
      "SPEECH OUTPUT: 'Yes B2'"]))
 
@@ -82,7 +62,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Control Home to A1 - speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
      "SPEECH OUTPUT: ' A1'"]))
 
@@ -124,7 +104,7 @@ sequence.append(WaitAction("object:state-changed:checked",
 # Type Alt-o to press the OK button and reload the Orca user settings.
 #
 sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(WaitForWindowActivate("fruit - " + OO_NAME + " Calc",None))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # Type Control-Home to position the text caret in cell A1.
@@ -143,7 +123,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Down to A2 - don't speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Cell A2 '",
      "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
      "SPEECH OUTPUT: 'Good in Pies'"]))
 
@@ -159,7 +139,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Right to B2 - don't speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
      "SPEECH OUTPUT: 'Yes'"]))
 
@@ -175,7 +155,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Control+Home to A1 - don't speak cell coordinates",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 

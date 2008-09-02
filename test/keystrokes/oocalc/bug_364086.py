@@ -13,8 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oocalc.
 #
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Calc",None))
-sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # 2. Enter Alt-f, right arrow, down arrow and Return.
@@ -34,19 +33,13 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "File->New->Spreadsheet",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame'",
-     "     VISIBLE:  'Untitled2 - OpenOffice.org Calc ', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane Panel'",
-     "     VISIBLE:  'Panel', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+    ["BUG? - Shouldn't we also be saying the cell? And the 'grayed' bit is probably not desirable.",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame'",
+     "     VISIBLE:  'Untitled[ ]*2 - OpenOffice.org Calc ', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
-     "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: 'Untitled2 - OpenOffice.org Calc frame'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
-     "SPEECH OUTPUT: ' A1'"]))
+     "SPEECH OUTPUT: 'Untitled[ ]*2 - " + utils.getOOoName("Calc") + " frame'",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'"]))
 
 ######################################################################
 # 3. Type "hello" (without the quotes), followed by Return.
@@ -57,10 +50,13 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Type 'hello' (without the quotes), followed by Return",
-    ["BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+     "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled2 - OpenOffice.org Calc Frame Untitled2 - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A2 '",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A2 '",
      "     VISIBLE:  'Cell A2 ', cursor=1",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
      "SPEECH OUTPUT: ' A1'",
      "SPEECH OUTPUT: ' A2'"]))
 

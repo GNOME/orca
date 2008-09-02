@@ -13,7 +13,7 @@ sequence = MacroSequence()
 # 1. Start oocalc. There is a bug_361167.params file that will
 #    automatically load fruit.ods.
 #
-sequence.append(WaitForWindowActivate("fruit - OpenOffice.org Calc",None))
+sequence.append(PauseAction(3000))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret in cell A1.
@@ -40,7 +40,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Type down arrow to get to the Freeze menu item [1]",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar Freeze'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane MenuBar Freeze'",
      "     VISIBLE:  'Freeze', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Freeze'"]))
@@ -52,9 +52,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Type Return to check it",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
+     "BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
      "SPEECH OUTPUT: 'Apples B1'"]))
@@ -75,7 +75,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Type down arrow to get to the Freeze menu item [2]",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane MenuBar <x> Freeze'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane MenuBar <x> Freeze'",
      "     VISIBLE:  '<x> Freeze', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Freeze checked'"]))
@@ -91,9 +91,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Type Return to uncheck it",
-    ["BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application fruit - OpenOffice.org Calc Frame fruit - OpenOffice.org Calc RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
+     "BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
      "SPEECH OUTPUT: 'Apples B1'"]))
