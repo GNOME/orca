@@ -34,6 +34,11 @@ __license__   = "LGPL"
 import sys
 sys.argv[0] = "orca"
 
+# Tell Orca to find/use the right version of pygtk.
+#
+import pygtk
+pygtk.require('2.0')
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver

@@ -1,3 +1,10 @@
+2008-09-03  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
+	  acinclude.m4:
+          src/orca/orca.py:
+	  Fix for bug #550249 - configure doesn't use find bonobo python
+
 2008-09-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/oocalc/bug_363801.py:
