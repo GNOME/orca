@@ -577,7 +577,9 @@ class Text(Region):
             n = 0
             while n < nLinks:
                 link = hyperText.getLink(n)
-                if self.lineOffset <= link.startIndex:
+                if link.startIndex > lineEndOffset:
+                    break
+                elif self.lineOffset <= link.startIndex:
                     for i in xrange(link.startIndex, link.endIndex):
                         try:
                             regionMask[i] |= linkIndicator

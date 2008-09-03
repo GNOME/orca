@@ -179,6 +179,12 @@ class Script(default.Script):
         self.currentLineContents = None
         self._nextLineContents = None
 
+        # For really large objects, a call to getAttributes can take up to
+        # two seconds! This is a Firefox bug. We'll try to improve things
+        # by storing attributes.
+        #
+        self._currentAttrs = {}
+
         # Last focused frame. We are only interested in frame focused events
         # when it is a different frame, so here we store the last frame
         # that recieved state-changed:focused.
@@ -1921,6 +1927,7 @@ class Script(default.Script):
         self._previousLineContents = None
         self.currentLineContents = None
         self._nextLineContents = None
+        self._currentAttrs = {}
 
     def presentLine(self, obj, offset):
         """Presents the current line in speech and in braille.
@@ -4640,6 +4647,35 @@ class Script(default.Script):
 
 
         return string, caretOffset, startOffset
+
+    def getTextAttributes(self, acc, offset, get_defaults=False):
+        """Get the text attributes run for a given offset in a given accessible
+
+        Arguments:
+        - acc: An accessible.
+        - offset: Offset in the accessible's text for which to retrieve the
+        attributes.
+        - get_defaults: Get the default attributes as well as the unique ones.
+        Default is True
+
+        Returns a dictionary of attributes, a start offset where the attributes
+        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
+        supprt the text attribute.
+        """
+
+        # For really large objects, a call to getAttributes can take up to
+        # two seconds! This is a Firefox bug. We'll try to improve things
+        # by storing attributes.
+        #
+        attrsForObj = self._currentAttrs.get(hash(acc)) or {}
+        if attrsForObj.has_key(offset):
+            return attrsForObj.get(offset)
+
+        attrs = \
+            default.Script.getTextAttributes(self, acc, offset, get_defaults)
+        self._currentAttrs[hash(acc)] = {offset:attrs}
+
+        return attrs
 
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
