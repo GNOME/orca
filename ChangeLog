@@ -1,3 +1,12 @@
+2008-09-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/braille.py:
+          The rest of the fix for bug #541605 - updateBraille() can take
+          an unreasonable amount of time with certain pages in Firefox 3.
+          (The remaining updateBraille() issues are either being addressed
+          by other GNOME bugs and/or Mozilla bugs.)
+
 2008-09-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

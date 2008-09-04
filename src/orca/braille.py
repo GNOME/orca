@@ -310,10 +310,17 @@ class Region:
         been scrolled off the display."""
         pass
 
-    def getAttributeMask(self):
+    def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
-        write structure for the purpose of indicating text attributes and
-        selection."""
+        write structure for the purpose of indicating text attributes, links,
+        and selection.
+
+        Arguments:
+        - getLinkMask: Whether or not we should take the time to get
+          the attributeMask for links. Reasons we might not want to
+          include knowning that we will fail and/or it taking an
+          unreasonable amount of time (AKA Gecko).
+        """
 
         # Create an empty mask.
         #
@@ -546,10 +553,17 @@ class Text(Region):
         orca_state.activeScript.setCaretOffset(
             self.accessible, newCaretOffset)
 
-    def getAttributeMask(self):
+    def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
-        write structure for the purpose of indicating text attributes and
-        selection."""
+        write structure for the purpose of indicating text attributes, links,
+        and selection.
+
+        Arguments:
+        - getLinkMask: Whether or not we should take the time to get
+          the attributeMask for links. Reasons we might not want to
+          include knowning that we will fail and/or it taking an
+          unreasonable amount of time (AKA Gecko).
+        """
 
         try:
             text = self.accessible.queryText()
@@ -567,7 +581,7 @@ class Text(Region):
         linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript
 
-        if linkIndicator != settings.BRAILLE_LINK_NONE:
+        if getLinkMask and linkIndicator != settings.BRAILLE_LINK_NONE:
             try:
                 hyperText = self.accessible.queryHypertext()
                 nLinks = hyperText.getNLinks()
@@ -577,9 +591,7 @@ class Text(Region):
             n = 0
             while n < nLinks:
                 link = hyperText.getLink(n)
-                if link.startIndex > lineEndOffset:
-                    break
-                elif self.lineOffset <= link.startIndex:
+                if self.lineOffset <= link.startIndex:
                     for i in xrange(link.startIndex, link.endIndex):
                         try:
                             regionMask[i] |= linkIndicator
@@ -725,11 +737,17 @@ class Line:
     def addRegions(self, regions):
         self.regions.extend(regions)
 
-    def getLineInfo(self):
+    def getLineInfo(self, getLinkMask=True):
         """Computes the complete string for this line as well as a
         0-based index where the focused region starts on this line.
         If the region with focus is not on this line, then the index
         will be -1.
+
+        Arguments:
+        - getLinkMask: Whether or not we should take the time to get
+          the attributeMask for links. Reasons we might not want to
+          include knowning that we will fail and/or it taking an
+          unreasonable amount of time (AKA Gecko).
 
         Returns [string, offsetIndex, attributeMask]
         """
@@ -746,7 +764,7 @@ class Line:
                 # BrlTTY.]]]
                 #
                 string += region.string.replace("\342\200\246", "...")
-            mask = region.getAttributeMask()
+            mask = region.getAttributeMask(getLinkMask)
             attributeMask += mask
 
         return [string, focusOffset, attributeMask]
@@ -842,13 +860,19 @@ def getShowingLine():
     """
     return _lines[viewport[1]]
 
-def setFocus(region, panToFocus=True):
+def setFocus(region, panToFocus=True, getLinkMask=True):
     """Specififes the region with focus.  This region will be positioned
     at the home position if panToFocus is True.
 
     Arguments:
     - region: the given region, which much be in a line that has been
-              added to the logical display
+      added to the logical display
+    - panToFocus: whether or not to position the region at the home
+      position
+    - getLinkMask: Whether or not we should take the time to get the
+      attributeMask for links. Reasons we might not want to include
+      knowning that we will fail and/or it taking an unreasonable
+      amount of time (AKA Gecko).
     """
 
     global _regionWithFocus
@@ -879,7 +903,7 @@ def setFocus(region, panToFocus=True):
             lineNum += 1
 
     line = _lines[viewport[1]]
-    [string, offset, attributeMask] = line.getLineInfo()
+    [string, offset, attributeMask] = line.getLineInfo(getLinkMask)
 
     # If the cursor is too far right, we scroll the viewport
     # so the cursor will be on the last cell of the display.
@@ -889,7 +913,7 @@ def setFocus(region, panToFocus=True):
 
     viewport[0] = max(0, offset)
 
-def refresh(panToCursor=True, targetCursorCell=0):
+def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     """Repaints the Braille on the physical display.  This clips the entire
     logical structure by the viewport and also sets the cursor to the
     appropriate location.  [[[TODO: WDW - I'm not sure how BrlTTY handles
@@ -899,14 +923,17 @@ def refresh(panToCursor=True, targetCursorCell=0):
     Arguments:
 
     - panToCursor: if True, will adjust the viewport so the cursor is
-                   showing.
+      showing.
     - targetCursorCell: Only effective if panToCursor is True.
-                        0 means automatically place the cursor somewhere
-                        on the display so as to minimize movement but
-                        show as much of the line as possible.  A positive
-                        value is a 1-based target cell from the left side
-                        of the display and a negative value is a 1-based
-                        target cell from the right side of the display.
+      0 means automatically place the cursor somewhere on the display so
+      as to minimize movement but show as much of the line as possible.
+      A positive value is a 1-based target cell from the left side of
+      the display and a negative value is a 1-based target cell from the
+      right side of the display.
+    - getLinkMask: Whether or not we should take the time to get the
+      attributeMask for links. Reasons we might not want to include
+      knowning that we will fail and/or it taking an unreasonable
+      amount of time (AKA Gecko).
     """
 
     global endIsShowing
@@ -934,7 +961,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     # actually is in the string.
     #
     line = _lines[viewport[1]]
-    [string, focusOffset, attributeMask] = line.getLineInfo()
+    [string, focusOffset, attributeMask] = line.getLineInfo(getLinkMask)
     cursorOffset = -1
     if focusOffset >= 0:
         cursorOffset = focusOffset + _regionWithFocus.cursorOffset

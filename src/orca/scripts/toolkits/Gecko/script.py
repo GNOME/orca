@@ -2140,8 +2140,8 @@ class Script(default.Script):
         if len(line.regions):
             line.regions[-1].string.rstrip(" ")
 
-        braille.setFocus(focusedRegion)
-        braille.refresh(True)
+        braille.setFocus(focusedRegion, getLinkMask=False)
+        braille.refresh(panToCursor=True, getLinkMask=False)
 
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
