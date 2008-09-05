@@ -2782,7 +2782,23 @@ class Script(default.Script):
             # This eliminates all ARIA widgets that are not considered live
             if 'xml-roles' in attrs:
                 return False
-        else: # object:text-inserted events
+        elif event.type.startswith('object:text-changed:insert'):
+            # We do this since we sometimes get text inserted events
+            # without the ":system" suffix for live regions (see bug
+            # 550873).  [[[WDW - this probably could be conflated into
+            # the block above, making that block check for just
+            # object:text-changed:insert" events, but I wanted to be a
+            # little more conservative since the live region stuff was
+            # done long ago and I've forgotten many of the details.]]]
+            #
+            stateset = event.source.getState()
+            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
+                   or stateset.contains(pyatspi.STATE_SELECTABLE) \
+                   or not stateset.contains(pyatspi.STATE_VISIBLE):
+                return False
+            attrs = self._getAttrDictionary(event.source)
+            return 'container-live' in attrs
+        else:
             return False
 
         # This last filter gets rid of some events that come in after
