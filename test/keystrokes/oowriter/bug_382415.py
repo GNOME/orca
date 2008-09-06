@@ -44,9 +44,9 @@ sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the Mon table column header",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Mon Paragraph") + "'",
      "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Cell B1'",
+     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.",
      "SPEECH OUTPUT: 'Mon'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell B1'"]))
 
 ######################################################################
 # 5. Type a down arrow to move to the blank table cell on the next row.
@@ -56,15 +56,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the blank table cell on the next row",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Mon Paragraph") + "'",
-     "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Mon'",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B2'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: 'Cell B2'"]))
 
 ######################################################################
 # 6. Type a down arrow to move to the "4" table cell on the next row.
@@ -74,15 +69,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the '4' table cell on the next row",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
-     "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B3'",
      "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell B3'"]))
 
 ######################################################################
 # 7. Type a down arrow to move to the "11" table cell on the next row.
@@ -92,15 +82,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the '11' table cell on the next row",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
-     "     VISIBLE:  '4 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 11 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 11 Paragraph") + "'",
      "     VISIBLE:  '11 Paragraph', cursor=1",
-     "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B4'",
      "SPEECH OUTPUT: '11'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell B4'"]))
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close this Writer application.

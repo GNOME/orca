@@ -30,15 +30,14 @@ sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Wri
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "New text document",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame'",
+    ["BUG? - The braille context doesn't include the Frame",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame'",
      "     VISIBLE:  'Untitled[ ]*2 - *",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Panel'",
-     "     VISIBLE:  'Panel', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Untitled[ ]*2 - " + utils.getOOoName("Writer") + " frame'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'panel'"]))
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: ''"]))
 
 ######################################################################
 # 3. Enter Alt-f, Alt-c to close the Writer application.

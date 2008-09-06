@@ -7,6 +7,22 @@
           Fix for bug #515923 - 'Area' labels of Calc Headers/Footers
           dialog not always announced.
 
+        * src/orca/scripts/apps/soffice/script.py:
+          test/keystrokes/oowriter/bug_382415.py:
+          test/keystrokes/oowriter/bug_435201.py:
+          test/keystrokes/oowriter/bug_342602.py:
+          test/keystrokes/oowriter/bug_350219.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_382418.py:
+          test/keystrokes/oowriter/bug_382880.py:
+          test/keystrokes/oowriter/bug_364765.py:
+          test/keystrokes/oowriter/bug_362979.py:
+          test/keystrokes/oowriter/bug_382888.py:
+          Fix for bug #550137 - Presentation of table content in OOo
+          Writer is largely hosed and we're double-speaking paragraphs
+          in OOo Writer docs. (There's one more "tweak" needed. It'll
+          hopefully be in soon. :-) )
+
 2008-09-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:

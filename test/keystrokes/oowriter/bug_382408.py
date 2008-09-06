@@ -51,8 +51,8 @@ sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the Mon table column header",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Sun Mon Tue Wed Thu Fri Sat") + "'",
      "     VISIBLE:  'Mon Tue Wed Thu Fri Sat', cursor=1",
-     "SPEECH OUTPUT: 'Sun Mon Tue Wed Thu Fri Sat'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'table with 7 rows and 7 columns",
+     "SPEECH OUTPUT: 'Sun Mon Tue Wed Thu Fri Sat'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close this Writer application.

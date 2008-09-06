@@ -17,118 +17,83 @@ sequence.append(WaitForWindowActivate("spanish - " + utils.getOOoName("Writer"),
 
 ######################################################################
 # 2. Type Control-Home to position the text caret to the left of the
-#    first character on the first line.
+#    first character on the first line. Then Down Arrow and Up Arrow
+#    once because our caret-moved events seem to initially be AWOL in
+#    m29 and m30.
 #
 sequence.append(KeyComboAction("<Control>Home"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Up"))
 
 ######################################################################
 # 3. Type Control-down to move to the next paragraph.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-down to move to the next paragraph [1]",
-    ["BUG: speaks the paragraph three times",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and  \$l") + "'",
-     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=2",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and  \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  \$l") + "'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and  $l'",
+     "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  \$l",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  \$l") + "'",
-     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and '",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and '",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse '"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn!'"]))
 
 ######################################################################
 # 4. Type Control-down to move to the next paragraph.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-down to move to the next paragraph [2]",
-    ["BUG: speaks the paragraph two times",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  \$l") + "'",
-     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=2",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  \$l") + "'",
-     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse  $l'",
-     "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse '",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse '",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
+     "     VISIBLE:  ' \$l', cursor=1",
+     "BRAILLE LINE:  ' \$l'",
+     "     VISIBLE:  ' \$l', cursor=1",
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: ''"]))
 
 ######################################################################
 # 5. Type Control-down to move to the next paragraph.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-down to move to the next paragraph [3]",
-    ["BUG: speaks the paragraph two times",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Now old lady, you have one last chance.  Confess the heinous sin of heresy, reject  \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Now old lady, you have one last chance. Confess the heinous sin of heresy, reject  \$l") + "'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject  $l'",
+     "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject  \$l'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Now old lady, you have one last chance.  Confess the heinous sin of heresy, reject  \$l") + "'",
-     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject '",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject '"]))
+     "     VISIBLE:  ' \$l', cursor=1",
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.'"]))
 
 ######################################################################
 # 6. Type Control-down to move to the next paragraph.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-down to move to the next paragraph [4]",
-    ["BUG: speaks the paragraph two times",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Now old lady, you have one last chance.  Confess the heinous sin of heresy, reject  \$l") + "'",
-     "     VISIBLE:  'Now old lady, you have one last ', cursor=2",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Now old lady, you have one last chance.  Confess the heinous sin of heresy, reject  \$l") + "'",
-     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject  $l'",
-     "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject '",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject '",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
+     "     VISIBLE:  ' \$l', cursor=1",
+     "BRAILLE LINE:  ' \$l'",
+     "     VISIBLE:  ' \$l', cursor=1",
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: ''"]))
 
 ######################################################################
 # 7. Type Control-down to move to the next paragraph.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-down to move to the next paragraph [5]",
-    ["BUG: speaks the paragraph two times",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
-     "BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! $l'",
+     "BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", " \$l") + "'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "spanish(.odt|)", "Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l") + "'",
-     "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
-     "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'",
-     "SPEECH OUTPUT: 'blank'",
+     "     VISIBLE:  ' \$l', cursor=1",
      "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'"]))
 
 ######################################################################

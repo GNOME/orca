@@ -44,9 +44,9 @@ sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the Mon table column header",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Mon Paragraph") + "'",
      "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Cell B1'",
+     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.",
      "SPEECH OUTPUT: 'Mon'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell B1'"]))
 
 ######################################################################
 # 5. Type a Tab to move to the Tue table column header.
@@ -56,17 +56,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a Tab to move to the Tue table column header",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Mon Paragraph") + "'",
-     "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Tue Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Tue Paragraph") + "'",
      "     VISIBLE:  'Tue Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Mon'",
-     "SPEECH OUTPUT: ' not selected'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.'",
      "SPEECH OUTPUT: 'Tue'",
-     "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell C1'"]))
 
 ######################################################################
@@ -77,15 +69,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the blank cell C2",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Tue Paragraph") + "'",
-     "     VISIBLE:  'Tue Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Tue'",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell C2'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: 'Cell C2'"]))
 
 ######################################################################
 # 7. Type a down arrow to move to cell C3 containing "5".
@@ -95,15 +82,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to cell C3 containing '5'",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
-     "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 5 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 5 Paragraph") + "'",
      "     VISIBLE:  '5 Paragraph', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell C3'",
      "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell C3'"]))
 
 ######################################################################
 # 8. Type a Shift-Tab to move to cell B3 containing "4".
@@ -113,17 +95,9 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a Shift-Tab to move to cell B3 containing '4'",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 5 Paragraph") + "'",
-     "     VISIBLE:  '5 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
-     "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: ' not selected'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.'",
      "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell B3'"]))
 
 ######################################################################
@@ -134,15 +108,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to cell B4 containing '11'",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
-     "     VISIBLE:  '4 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 11 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 11 Paragraph") + "'",
      "     VISIBLE:  '11 Paragraph', cursor=1",
-     "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B4'",
      "SPEECH OUTPUT: '11'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Cell B4'"]))
 
 ######################################################################
 # 10. Type an up arrow to move to cell B3 containing "4".
@@ -152,17 +121,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type an up arrow to move to cell B3 containing '4'",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 11 Paragraph") + "'",
-     "     VISIBLE:  '11 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
-     "SPEECH OUTPUT: '11'",
-     "SPEECH OUTPUT: ' not selected'",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.'",
      "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell B3'"]))
 
 ######################################################################

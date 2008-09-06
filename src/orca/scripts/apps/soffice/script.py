@@ -17,6 +17,18 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# [[[TODO: JD - Pylint is giving us a number of errors along these
+# lines throughout this file:
+#
+# E1103:690:Script.presentTableInfo: Instance of 'list' has no
+# 'queryTable' member (but some types could not be inferred)
+#
+# In each case, we're not querying the table interface (or asking
+# for the name) of a list, but rather of an accessible. Pylint is
+# correct about it's suggestion that it cannot infer types.]]]
+#
+# pylint: disable-msg=E1103
+
 """Custom script for StarOffice and OpenOffice."""
 
 __id__        = "$Id$"
@@ -67,9 +79,10 @@ class Script(default.Script):
         #
         self.debugLevel = debug.LEVEL_FINEST
 
-        # A handle to the last spread sheet cell encountered.
+        # A handle to the last Writer table or Calc spread sheet cell
+        # encountered and its caret offset.
         #
-        self.lastCell = None
+        self.lastCell = [None, -1]
 
         # The spreadsheet input line.
         #
@@ -648,44 +661,117 @@ class Script(default.Script):
                     return root_pane
         return parent
 
-    def checkForTableBoundry(self, oldFocus, newFocus):
-        """Check to see if we've entered or left a table.
-        When entering a table, announce the table dimensions.
-        When leaving a table, announce that the table has been exited.
+    def presentTableInfo(self, oldFocus, newFocus):
+        """Presents information relevant to a table that was just entered
+        (primarily) or exited.
 
         Arguments:
-        - oldFocus: Accessible that is the old locus of focus
-        - newFocus: Accessible that is the new locus of focus
+        - oldFocus: the first accessible to check (usually the previous
+          locusOfFocus)
+        - newFocus: the second accessible to check (usually the current
+          locusOfFocus)
+
+        Returns True if table info was presented.
         """
 
-        if oldFocus == None or newFocus == None:
-            return
+        oldAncestor = self.getAncestor(oldFocus,
+                                       [pyatspi.ROLE_TABLE,
+                                        pyatspi.ROLE_UNKNOWN,
+                                        pyatspi.ROLE_DOCUMENT_FRAME],
+                                       [pyatspi.ROLE_FRAME])
+        newAncestor = self.getAncestor(newFocus,
+                                       [pyatspi.ROLE_TABLE,
+                                        pyatspi.ROLE_UNKNOWN,
+                                        pyatspi.ROLE_DOCUMENT_FRAME],
+                                       [pyatspi.ROLE_FRAME])
 
-        oldFocusIsTable = None
-        while oldFocus.getRole() != pyatspi.ROLE_APPLICATION:
-            if oldFocus.getRole() == pyatspi.ROLE_TABLE:
-                oldFocusIsTable = oldFocus
-                break
-            oldFocus = oldFocus.parent
-
-        newFocusIsTable = None
-        while newFocus.getRole() != pyatspi.ROLE_APPLICATION:
-            if newFocus.getRole() == pyatspi.ROLE_TABLE:
-                newFocusIsTable = newFocus
-                break
-            newFocus = newFocus.parent
-
-        if oldFocusIsTable == None and newFocusIsTable != None:
-            rows = newFocusIsTable.queryTable().nRows
-            columns = newFocusIsTable.queryTable().nColumns
-            # We've entered a table.  Announce the dimensions.
+        if not (oldAncestor and newAncestor):
+            # At least one of the objects not only is not in a table, but is
+            # is not in a document either.
             #
-            line = _("table with %d rows and %d columns.") % (rows, columns)
-            speech.speak(line)
-        elif oldFocusIsTable != None and newFocusIsTable == None:
-            # We've left a table.  Announce this fact.
+            return False
+        elif self.isSpreadSheetCell(oldAncestor, True) \
+             or self.isSpreadSheetCell(newAncestor, True):
+            # One or both objects is a table in a spreadsheet; we just want
+            # to handle tables in documents (definitely Writer; maybe also
+            # Impress).
             #
-            speech.speak(_("leaving table."))
+            return False
+
+        try:
+            oldTable = oldAncestor.queryTable()
+        except:
+            oldTable = None
+
+        try:
+            newTable = newAncestor.queryTable()
+        except:
+            newTable = None
+
+        if oldTable == newTable == None:
+            # We're in a document, but apparently have not entered or left
+            # a table.
+            #
+            return False
+
+        if not self.isSameObject(oldAncestor, newAncestor):
+            if oldTable:
+                # We've left a table.  Announce this fact.
+                #
+                speech.speak(_("leaving table."))
+            if newTable:
+                # We've entered a table.  Announce the dimensions.
+                #
+                line = _("table with %d rows and %d columns.") % \
+                        (newTable.nRows, newTable.nColumns)
+                speech.speak(line)
+
+        if not newTable:
+            self.lastCell = [None, -1]
+            return True
+
+        cell = self.getAncestor(newFocus,
+                                [pyatspi.ROLE_TABLE_CELL],
+                                [pyatspi.ROLE_TABLE])
+        if not cell or self.lastCell[0] == cell:
+            # If we haven't found a cell, who knows what's going on? If
+            # the cell is the same as our last location, odds are that
+            # there are multiple paragraphs in this cell and a focus:
+            # and/or object:state-changed:focused event was emitted.
+            # If we haven't changed cells, we'll just treat this as any
+            # other paragraph and let the caret-moved events do their
+            # thing.
+            #
+            return False
+
+        self.updateBraille(cell)
+        utterances = self.speechGenerator.getSpeech(cell, False)
+        if not len(utterances[0]) and self.speakBlankLine(newFocus):
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            speech.speak(_("blank"), None, False)
+        else:
+            speech.speakUtterances(utterances)
+
+        if not settings.readTableCellRow:
+            self.speakCellName(cell.name)
+
+        try:
+            text = newFocus.queryText()
+        except:
+            offset = -1
+        else:
+            offset = text.caretOffset
+
+        self.lastCell = [cell, offset]
+        index = self.getCellIndex(cell)
+        column = newTable.getColumnAtIndex(index)
+        self.pointOfReference['lastColumn'] = column
+        row = newTable.getRowAtIndex(index)
+        self.pointOfReference['lastRow'] = row
+
+        return True
 
     def speakInputLine(self, inputEvent):
         """Speak the contents of the spread sheet input line (assuming we
@@ -1165,6 +1251,12 @@ class Script(default.Script):
         - textToSpeak: the text to speak
         """
 
+        if not textToSpeak and event and self.speakBlankLine(event.source):
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            speech.speak(_("blank"), None, False)
+
         # Check to see if there are any hypertext links in this paragraph.
         # If no, then just speak the whole line. Otherwise, split the text
         # to speak into words and call sayWriterWord() to speak that token
@@ -1204,16 +1296,6 @@ class Script(default.Script):
                     textToSpeak[startOffset:endOffset].encode("UTF-8"),
                     startOffset, endOffset)
 
-    # This method tries to detect and handle the following cases:
-    # 0) Writer: find command.
-    # 1) Writer: text paragraph.
-    # 2) Welcome to StarOffice dialog.
-    # 3) Calc: cell editor.
-    # 4) Calc: name box.
-    # 5) Calc: spreadsheet cell.
-    # 6) Impress: scroll pane.
-    # 7) Presentation: scroll pane: place holder
-
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -1231,8 +1313,6 @@ class Script(default.Script):
 
         # self.printAncestry(event.source)
 
-        # 0) Writer: find command
-        #
         # Check to see if this is this is for the find command. See
         # comment #18 of bug #354463.
         #
@@ -1242,57 +1322,37 @@ class Script(default.Script):
             self.find()
             return
 
-        # 1) Writer: text paragraph.
+        # If we are inside a paragraph inside a table cell (in Writer),
+        # then speak/braille that parent table cell (see bug #382415).
+        # Also announce that a table has been entered or left.
         #
-        # We need to handle two things here:
-        #
-        # If the old locus of focus was on the File->New->Text Document
-        # menu item and we are currently have focus on an empty text
-        # paragraph, then we've just created the first new text document
-        # in Writer. Announce it by doing a "where am I".
-        #
-        # Also, when the focus is on a paragraph in the Document view of
-        # the Writer, then just speak/braille the current line (rather than
-        # speaking a bogus initial "paragraph" utterance as well).
+        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
+            if self.presentTableInfo(oldLocusOfFocus, newLocusOfFocus):
+                return
 
-        rolesList = [pyatspi.ROLE_PARAGRAPH,
-                     [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_DOCUMENT_FRAME],
-                     pyatspi.ROLE_SCROLL_PANE,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_ROOT_PANE,
-                     pyatspi.ROLE_FRAME]
-        if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(self.debugLevel,
-                  "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
+            rolesList = [pyatspi.ROLE_PARAGRAPH,
+                         [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_DOCUMENT_FRAME],
+                         pyatspi.ROLE_SCROLL_PANE,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_ROOT_PANE,
+                         pyatspi.ROLE_FRAME]
+            if self.isDesiredFocusedItem(event.source, rolesList):
+                debug.println(self.debugLevel,
+                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
-            result = self.getTextLineAtCaret(event.source)
-            textToSpeak = result[0].decode("UTF-8")
+                result = self.getTextLineAtCaret(event.source)
+                textToSpeak = result[0].decode("UTF-8")
+                self._speakWriterText(event, textToSpeak)
+                braille.displayRegions(\
+                    brailleGen.getBrailleRegions(event.source))
+                return
 
-            # Translators: this is the name of the menu item people
-            # use in StarOffice to create a new text document.  It's
-            # at File->New->Text Document.  The translated form has to
-            # match what StarOffice/OpenOffice is using. We hate
-            # keying off stuff like this, but we're forced to do so in
-            # this case.
-            #
-            if oldLocusOfFocus and \
-               oldLocusOfFocus.getRole() == pyatspi.ROLE_MENU_ITEM and \
-               oldLocusOfFocus.name == _("Text Document") and \
-               len(textToSpeak) == 0:
-                self.whereAmI.whereAmI(None)
-
-            self._speakWriterText(event, textToSpeak)
-            braille.displayRegions(brailleGen.getBrailleRegions(event.source))
-            return
-
-        # 2) Welcome to StarOffice dialog.
-        #
         # Check to see if the object that just got focus is in the Setup
         # dialog. If it is, then check for a variety of scenerios.
-
+        #
         if self.isSetupDialog(event.source):
 
-            # Check for 2. License Agreement: Scroll Down button.
+            # Check for 1. License Agreement: Scroll Down button.
             #
             rolesList = [pyatspi.ROLE_PUSH_BUTTON,
                          pyatspi.ROLE_PANEL,
@@ -1382,8 +1442,6 @@ class Script(default.Script):
                     + "Registration: Register Now radio button.")
                 self.handleSetupPanel(event.source.parent)
 
-        # 3) Calc: cell editor.
-        #
         # Check to see if we are editing a spread sheet cell. If so, just
         # return to avoid uttering something like "Paragraph 0 paragraph".
         #
@@ -1400,8 +1458,6 @@ class Script(default.Script):
                           + "Calc: cell editor.")
             return
 
-        # 4) Calc: name box
-        #
         # Check to see if the focus has just moved to the Name Box combo
         # box in Calc. If so, then replace the non-existent name with a
         # simple one before falling through and calling the default
@@ -1430,8 +1486,6 @@ class Script(default.Script):
             speech.speak(_("Move to cell"))
             return
 
-        # 5) Calc: spreadsheet cell.
-        #
         # Check to see if this is a Calc: spread sheet cell. If it is then
         # we don't want to speak "not selected" after giving the cell
         # location and contents (which is what the default locusOfFocusChanged
@@ -1459,8 +1513,6 @@ class Script(default.Script):
                     self.pointOfReference['lastRow'] = row
                 return
 
-        # 6) Impress: scroll pane.
-        #
         # If we are in the slide presentation scroll pane, also announce
         # the current page tab. See bug #538056 for more details.
         #
@@ -1485,8 +1537,6 @@ class Script(default.Script):
                             speech.speakUtterances(utterances)
             # Fall-thru to process the event with the default handler.
 
-        # 7) Presentation: scroll pane: place holder
-        #
         # If we are focused on a place holder element in the slide
         # presentation scroll pane, first present the object, then
         # try to present each of its children. See bug #538064 for
@@ -1512,9 +1562,6 @@ class Script(default.Script):
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-    # This method tries to detect and handle the following cases:
-    # 1) Setup dialog.
-
     def onWindowActivated(self, event):
         """Called whenever a property on an object changes.
 
@@ -1528,8 +1575,6 @@ class Script(default.Script):
 
         # self.printAncestry(event.source)
 
-        # 1) Setup dialog.
-        #
         # Check to see if the Setup dialog window has just been activated.
         # If it has, then find the panel within it that has no name and
         # speak all the labels within that panel.
@@ -1566,9 +1611,6 @@ class Script(default.Script):
                and event.source[0].getRole() == pyatspi.ROLE_OPTION_PANE:
                 self.readMisspeltWord(event, event.source)
 
-    # This method tries to detect and handle the following cases:
-    # 1) Writer: spell checking dialog.
-
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -1582,8 +1624,6 @@ class Script(default.Script):
 
         # self.printAncestry(event.source)
 
-        # 1) Writer: spell checking dialog.
-        #
         # Check to see if if we've had a property-change event for the
         # accessible name for the option pane in the spell check dialog.
         # This (hopefully) means that the user has just corrected a
@@ -1620,18 +1660,6 @@ class Script(default.Script):
             debug.println(self.debugLevel, "StarOffice.onFocus - " \
                           + "Calc: Name combo box.")
             orca.setLocusOfFocus(event, event.source, True)
-            return
-
-        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
-        # then speak/braille that parent table cell (see bug #382415).
-        #
-        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
-           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
-           event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            if self.lastCell != event.source.parent:
-                default.Script.locusOfFocusChanged(self, event,
-                                                   None, event.source.parent)
-                self.lastCell = event.source.parent
             return
 
         default.Script.onFocus(self, event)
@@ -1684,8 +1712,9 @@ class Script(default.Script):
         # If this is state change "focused" event and event.source isn't a
         # focused object, then just return. See bug #517502 for more details.
         #
-        if event.type.startswith("object:state-changed:focused") and \
-           not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+        if event.type.startswith("object:state-changed:focused") \
+           and (not event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+                or event.detail1 == 0):
             return
 
         # Check to see if we are in the Presentation startup wizard. If so,
@@ -1708,27 +1737,6 @@ class Script(default.Script):
                     current.name.startswith(_("Presentation Wizard"))):
                     self.locusOfFocusChanged(event, None,
                                              orca_state.locusOfFocus)
-                    break
-                current = current.parent
-
-        # If this is a state change "focused" event that we care about, and
-        # we are in Writer, check to see if we are entering or leaving a table.
-        #
-        if event.type.startswith("object:state-changed:focused") and \
-           event.detail1 == 1:
-            current = event.source.parent
-            while current.getRole() != pyatspi.ROLE_APPLICATION:
-                # Translators: this is the title of the window that
-                # you get when using StarOffice Writer.  The
-                # translated form has to match what
-                # StarOffice/OpenOffice is using.  We hate keying off
-                # stuff like this, but we're forced to do so in this
-                # case.
-                #
-                if current.getRole() == pyatspi.ROLE_FRAME and \
-                   (current.name and current.name.endswith(_("Writer"))):
-                    self.checkForTableBoundry(orca_state.locusOfFocus,
-                                              event.source)
                     break
                 current = current.parent
 
@@ -1764,35 +1772,6 @@ class Script(default.Script):
                 speech.speakUtterances(self.speechGenerator.getSpeech( \
                                        event.source, False))
 
-        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
-        # then speak/braille that parent table cell (see bug #382415).
-        #
-        if event.type.startswith("object:state-changed:focused") and \
-           event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
-           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
-           event.detail1 == 0 and \
-           event.source.getState().contains(pyatspi.STATE_FOCUSED):
-
-            # Check to see if the last input event was "Up" or "Down".
-            # If it was, and we are in the same table cell as last time,
-            # and if that table cell has more than one child, then just
-            # get the speech for that single child, otherwise speak/braille
-            # the parent table cell.
-            #
-            event_string = None
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                event_string = orca_state.lastNonModifierKeyEvent.event_string
-            if (event_string == "Up" or event_string == "Down") and \
-               event.source.parent == self.lastCell and \
-               event.source.parent.childCount > 1:
-                default.Script.locusOfFocusChanged(self, event,
-                                                   None, event.source)
-            else:
-                default.Script.locusOfFocusChanged(self, event,
-                                                   None, event.source.parent)
-            self.lastCell = event.source.parent
-            return
-
         # When a new paragraph receives focus, we get a caret-moved event and
         # two focus events (the first being object:state-changed:focused).
         # The caret-moved event will cause us to present the text at the new
@@ -1810,12 +1789,10 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL,
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList) \
-               and event.source != self.currentParagraph \
-               and event.detail1 == 1:
-                self.currentParagraph = event.source
+            if self.isDesiredFocusedItem(event.source, rolesList):
                 orca.setLocusOfFocus(event, event.source, False)
-                self.updateBraille(event.source)
+                if event.source != self.currentParagraph:
+                    self.updateBraille(event.source)
                 return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous
@@ -1837,9 +1814,6 @@ class Script(default.Script):
 
         default.Script.onStateChanged(self, event)
 
-    # This method tries to detect and handle the following cases:
-    # 1) Calc: spread sheet Name Box line.
-
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
 
@@ -1853,8 +1827,6 @@ class Script(default.Script):
 
         # self.printAncestry(event.source)
 
-        # 1) Calc: spread sheet input line.
-        #
         # If this "object:selection-changed" is for the spread sheet Name
         # Box, then check to see if the current locus of focus is a spread
         # sheet cell. If it is, and the contents of the input line are
@@ -1878,8 +1850,8 @@ class Script(default.Script):
                 # appending "has formula" twice, we only do it if the last
                 # cell is different from this one.
                 #
-                if cell != self.lastCell:
-                    self.lastCell = cell
+                if cell != self.lastCell[0]:
+                    self.lastCell[0] = cell
 
                     try:
                         if cell.queryText():
@@ -2007,6 +1979,19 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
+        if self.lastCell[0] == event.source.parent:
+            if self.lastCell[1] == event.detail1:
+                # We took care of this in a focus event (our position has not
+                # changed within the cell)
+                #
+                return
+            else:
+                # We're in the same cell, but at a different position. Update
+                # our stored location and then let the normal caret-moved
+                # processing take place.
+                #
+                self.lastCell[1] = event.detail1
+
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
            and orca_state.lastNonModifierKeyEvent:
             event_string = orca_state.lastNonModifierKeyEvent.event_string
@@ -2017,91 +2002,46 @@ class Script(default.Script):
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
         isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
 
-        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
-        # then just return (modulo the special cases below). Speaking and
-        # brailling will have been done in the onStateChanged() routine
-        # (see bug #382415).
-        #
-        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH and \
-           event.source.parent.getRole() == pyatspi.ROLE_TABLE_CELL and \
-           event.source.getState().contains(pyatspi.STATE_FOCUSED):
-
-            # If we are moving up and down, and we are speaking-by-cell
-            # (as opposed to by-row), then speak the cell name. Otherwise
-            # just return.
-            #
-            if (event_string == "Up" or event_string == "Down"):
-                if not settings.readTableCellRow:
-                    if event.detail1 != -1:
-                        self.speakCellName(event.source.parent.name)
-                return
-
-            # If we are moving left or right and we are in a new cell, just
-            # return.
-            #
-            if (event_string == "Left" or event_string == "Right") and \
-               self.lastCell != event.source.parent:
-                return
-
-            caretOffset = event.source.queryText().caretOffset
-            charLen = event.source.queryText().characterCount
-
-            # If you are in a table cell and you arrow Right, the caret
-            # will focus at the end of the current paragraph before moving
-            # into the next cell. To be similar to the way that caret
-            # navigation works in other paragraphs in OOo, just return.
-            #
-            if event_string == "Right" and caretOffset == charLen:
-                return
-
-            # If we have moved left and the caret position is at the end of
-            # the paragraph or if we have moved right and the caret position
-            # is at the start of the text string, or the last key input was
-            # Tab or Shift-Tab, and if we are speaking-by-cell (as opposed
-            # to by-row), then speak the cell name, otherwise just return
-            # (see bug #382418).
-            #
-            if (event_string == "Left" and caretOffset == charLen) or \
-               (event_string == "Right" and caretOffset == 0) or \
-               (event_string == "Tab" or event_string == "ISO_Left_Tab"):
-                if not settings.readTableCellRow:
-                    if event.detail1 != -1:
-                        self.speakCellName(event.source.parent.name)
-
-                # Speak a blank line, if appropriate.
-                if self.speakBlankLine(event.source):
-                    # Translators: "blank" is a short word to mean the
-                    # user has navigated to an empty line.
-                    #
-                    speech.speak(_("blank"), None, False)
-                return
-
-        # Remove possible extra utterances of the current paragraph by
-        # stopping any pending speech. See bug #435201 for more details.
-        #
-        if (event_string == "Up" or event_string == "Down") and not isShiftKey:
-            speech.stop()
-
-        # Speak a blank line, if appropriate.
-        if self.speakBlankLine(event.source):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
-
         # If the last input event was a keyboard event of Control-Up or
         # Control-Down, we want to speak the whole paragraph rather than
-        # just the current line.
+        # just the current line. In addition, we need to filter out some
+        # creative uses of the caret-moved event on the part of the OOo
+        # guys.
         #
-        if (event_string == "Up" or event_string == "Down") and \
-            isControlKey and not isShiftKey:
+        if event_string in ["Up", "Down"] and isControlKey and not isShiftKey:
+            # If we moved to the next paragraph, the event.source index should
+            # be larger than the current paragraph's index. If we moved to the
+            # previous paragraph it should be smaller. Otherwise, it's bogus.
+            #
+            eventIndex = event.source.getIndexInParent()
+            if self.currentParagraph:
+                paraIndex = self.currentParagraph.getIndexInParent()
+            else:
+                paraIndex = eventIndex
+
+            if (event_string == "Down" and (eventIndex - paraIndex <= 0)) \
+               or (event_string == "Up" and (eventIndex - paraIndex >= 0)):
+                return
+
             result = self.getText(event.source, 0, -1)
             textToSpeak = result.decode("UTF-8")
             self._speakWriterText(event, textToSpeak)
             braille.displayRegions( \
                 self.brailleGenerator.getBrailleRegions(event.source))
         else:
+            # Speak a blank line, if appropriate.
+            if self.speakBlankLine(event.source):
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
+                speech.speak(_("blank"), None, False)
+
             default.Script.onCaretMoved(self, event)
+
+        # If we're still here, we must be convinced that this paragraph
+        # coincides with our actual location.
+        #
+        self.currentParagraph = event.source
 
     def speakBlankLine(self, obj):
         """Returns True if a blank line should be spoken.

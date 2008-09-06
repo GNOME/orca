@@ -61,17 +61,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move to cell B1",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
-     "     VISIBLE:  'A Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",     
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",     
      "     VISIBLE:  'Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'A'",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'Cell B1'",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'blank'",
+     "SPEECH OUTPUT: 'Cell B1'"]))
 
 ######################################################################
 # 6. Enter Shift-Tab (Returns to cell A1).
@@ -81,15 +74,9 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Move back to cell A1",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
-     "     VISIBLE:  'Paragraph', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table A Paragraph'",
      "     VISIBLE:  'A Paragraph', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ' not selected'",
-     "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'A'",
-     "SPEECH OUTPUT: ' not selected'",
      "SPEECH OUTPUT: 'Cell A1'"]))
 
 ######################################################################
