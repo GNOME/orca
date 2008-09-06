@@ -1143,11 +1143,12 @@ class WhereAmI:
 
         return text.strip()
 
-    def _getSpeechForRoleName(self, obj):
+    def _getSpeechForRoleName(self, obj, role=None):
         """Returns the rolename to be spoken for the object.
         """
 
-        return self._script.speechGenerator.getSpeechForObjectRole(obj)[0]
+        return self._script.speechGenerator.\
+            getSpeechForObjectRole(obj, role)[0]
 
     def _getGroupLabel(self, obj):
         """Returns the label for a group of components.
