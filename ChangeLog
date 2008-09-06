@@ -1,5 +1,17 @@
 2008-09-06  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py:
+          Fix for bug #551077 - Traceback and loss of speech in OOo 
+          Writer docs with both links and multbyte characters on the 
+          same line
+
+        * src/orca/braille.py:
+          Partial fix for bug #527022 - Linked text should be 
+          "underlined" in braille in Firefox.  This fixes some
+          unicode vs. UTF-8 issues.
+
+2008-09-06  Willie Walker <william.walker@sun.com>
+
         * src/orca/scripts/apps/Mozilla.py:
           Fix bug left over from script refactor - Gecko is now
           a package under orca.scripts.toolkits and no longer the

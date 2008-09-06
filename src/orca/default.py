@@ -6311,6 +6311,8 @@ class Script(script.Script):
         Returns: a new line adjusted for repeat character counts (if enabled).
         """
 
+        line = line.decode("UTF-8")
+
         try:
             hyperText = obj.queryHypertext()
             nLinks = hyperText.getNLinks()
@@ -6338,7 +6340,7 @@ class Script(script.Script):
 
             n -= 1
 
-        return line
+        return line.encode("UTF-8")
 
     def adjustForRepeats(self, line):
         """Adjust line to include repeat character counts.

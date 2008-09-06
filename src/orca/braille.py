@@ -288,9 +288,9 @@ class Region:
         
         self.expandOnCursor = expandOnCursor
         
-        string = string.decode("UTF-8")
-        string = string.strip('\n')
-        self.rawLine = string.encode("UTF-8")
+        # The uncontracted string for the line.
+        #
+        self.rawLine = string.decode("UTF-8").strip("\n")
 
         if self.contracted:
             self.contractionTable = settings.brailleContractionTable or \
@@ -354,12 +354,12 @@ class Region:
         if not expandOnCursor or cursorOnSpace:
             contracted, inPos, outPos, cursorPos = \
                              louis.translate([self.contractionTable],
-                                             line.decode(),
+                                             line,
                                              cursorPos=cursorOffset)
         else:
             contracted, inPos, outPos, cursorPos = \
                              louis.translate([self.contractionTable],
-                                             line.decode(),
+                                             line,
                                              cursorPos=cursorOffset,
                                              mode=louis.MODE.compbrlAtCursor)
 
@@ -476,6 +476,10 @@ class Text(Region):
             string = ""
 
         string = string.decode("UTF-8")
+        if label:
+            label = label.decode("UTF-8")
+        if eol:
+            eol = eol.decode("UTF-8")
 
         try:
             endOffset = endOffset - self.lineOffset
@@ -493,7 +497,7 @@ class Text(Region):
 
         cursorOffset = min(self.caretOffset - self.lineOffset, len(string))
 
-        self._maxCaretOffset = self.lineOffset + len(string.decode("UTF-8"))
+        self._maxCaretOffset = self.lineOffset + len(string)
 
         self.eol = eol
 
@@ -520,6 +524,8 @@ class Text(Region):
 
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
+        string = string.decode("UTF-8")
+
         cursorOffset = min(caretOffset - lineOffset, len(string))
         
         if lineOffset != self.lineOffset:
@@ -757,13 +763,13 @@ class Line:
         attributeMask = ""
         for region in self.regions:
             if region == _regionWithFocus:
-                focusOffset = len(string.decode("UTF-8"))
+                focusOffset = len(string)
             if region.string:
-                # [[[TODO: WDW - HACK: Replace UTF-8 ellipses with "..."
+                # [[[TODO: WDW - HACK: Replace ellipses with "..."
                 # The ultimate solution is to get i18n support into
                 # BrlTTY.]]]
                 #
-                string += region.string.replace("\342\200\246", "...")
+                string += region.string.replace(u'\u2026', "...")
             mask = region.getAttributeMask(getLinkMask)
             attributeMask += mask
 
@@ -787,12 +793,12 @@ class Line:
         for region in self.regions:
             foundRegion = region
             string = string + region.string
-            if len(string.decode("UTF-8")) > offset:
+            if len(string) > offset:
                 break
             else:
-                pos = len(string.decode("UTF-8"))
+                pos = len(string)
 
-        if offset >= len(string.decode("UTF-8")):
+        if offset >= len(string):
             return [None, -1]
         else:
             return [foundRegion, offset - pos]
@@ -972,7 +978,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     # right of the display if we need to pan right.
     #
     if panToCursor and (cursorOffset >= 0):
-        if len(string.decode("UTF-8")) <= _displaySize[0]:
+        if len(string) <= _displaySize[0]:
             viewport[0] = 0
         elif targetCursorCell:
             viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
@@ -1001,13 +1007,12 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
 
-    string = string.decode("UTF-8")
-    substring = string[startPos:endPos].encode("UTF-8")
+    substring = string[startPos:endPos]
     if useBrlAPIBindings:
         if brlAPIRunning:
             writeStruct = brlapi.WriteStruct()
             writeStruct.regionBegin = 1
-            writeStruct.regionSize = len(substring.decode("UTF-8"))
+            writeStruct.regionSize = len(substring)
             while writeStruct.regionSize < _displaySize[0]:
                 substring += " "
                 if attributeMask:
@@ -1015,7 +1020,6 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
                 writeStruct.regionSize += 1
             writeStruct.text = substring
             writeStruct.cursor = cursorCell
-            writeStruct.charset = "UTF-8"
 
             # [[[WDW - if you want to muck around with the dots on the
             # display to do things such as add underlines, you can use
@@ -1133,7 +1137,7 @@ def panRight(panAmount=0):
         lineNum = viewport[1]
         newX = viewport[0] + panAmount
         [string, focusOffset, attributeMask] = _lines[lineNum].getLineInfo()
-        if newX < len(string.decode("UTF-8")):
+        if newX < len(string):
             viewport[0] = newX
 
     return oldX != viewport[0]
