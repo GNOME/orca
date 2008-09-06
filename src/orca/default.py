@@ -2123,7 +2123,7 @@ class Script(script.Script):
 
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(obj, line)
-            line = self.adjustForLinks(obj, line)
+            line = self.adjustForLinks(obj, line, startOffset)
             line = self.adjustForRepeats(line)
             speech.speak(line, voice)
 
@@ -6301,17 +6301,20 @@ class Script(script.Script):
 
         return line
 
-    def adjustForLinks(self, obj, line):
+    def adjustForLinks(self, obj, line, startOffset):
         """Adjust line to include the word "link" after any hypertext links.
 
         Arguments:
         - obj: the accessible object that this line came from.
         - line: the string to adjust for links.
+        - startOffset: the caret offset at the start of the line.
 
-        Returns: a new line adjusted for repeat character counts (if enabled).
+        Returns: a new line adjusted to add the speaking of "link" after
+        text which is also a link.
         """
 
         line = line.decode("UTF-8")
+        endOffset = startOffset + len(line)
 
         try:
             hyperText = obj.queryHypertext()
@@ -6319,28 +6322,34 @@ class Script(script.Script):
         except:
             nLinks = 0
 
-        n = nLinks
-        while n > 0:
-            link = hyperText.getLink(n-1)
+        adjustedLine = list(line)
+        for n in range(nLinks, 0, -1):
+            link = hyperText.getLink(n - 1)
 
-            # If the link was not followed by a whitespace or punctuation
-            # character, then add in a space to make it more presentable.
+            # We only care about links in the string, line:
             #
-            trailingChar = " "
-            if link.endIndex < len(line) and \
-               (line[link.endIndex] in self.whitespace or \
-                punctuation_settings.getPunctuationInfo(line[link.endIndex])):
-                trailingChar = ""
+            if startOffset < link.endIndex < endOffset:
+                index = link.endIndex - startOffset
+            elif startOffset <= link.startIndex < endOffset:
+                index = len(line) - 1
+            else:
+                continue
 
             # Translators: this indicates that this piece of
             # text is a hypertext link.
             #
-            line = line[0:link.endIndex] + " " + _("link") + \
-                   trailingChar + line[link.endIndex:]
+            linkString = " " + _("link")
 
-            n -= 1
+            # If the link was not followed by a whitespace or punctuation
+            # character, then add in a space to make it more presentable.
+            #
+            nextChar = adjustedLine[index]
+            if not (nextChar in self.whitespace \
+                    or punctuation_settings.getPunctuationInfo(nextChar)):
+                linkString += " "
+            adjustedLine[index:index] = linkString
 
-        return line.encode("UTF-8")
+        return "".join(adjustedLine).encode("UTF-8")
 
     def adjustForRepeats(self, line):
         """Adjust line to include repeat character counts.
