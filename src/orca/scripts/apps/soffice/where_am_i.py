@@ -136,6 +136,8 @@ class WhereAmI(where_am_I.WhereAmI):
             self._speakCalc(obj, basicOnly)
         elif top and top.name.endswith(" Writer"):
             self._speakText(obj, basicOnly)
+        else:
+            where_am_I.WhereAmI._speakParagraph(self, obj, basicOnly)
 
     def _speakCalc(self, obj, basicOnly):
         """Speak a OpenOffice Calc cell.
@@ -251,3 +253,36 @@ class WhereAmI(where_am_I.WhereAmI):
         debug.println(self._debugLevel,
                       "Calc status bar utterances=%s" % utterances)
         speech.speakUtterances(utterances)
+
+    def _getObjLabel(self, obj):
+        """Returns the label to speak for an object.
+        """
+
+        label = self._script.getDisplayedLabel(obj) or ""
+        if not label and obj.getRole() == pyatspi.ROLE_PARAGRAPH \
+           and self._script.getAncestor(obj,
+                                        [pyatspi.ROLE_DIALOG],
+                                        [pyatspi.ROLE_APPLICATION]):
+            label = self._script.getDisplayedLabel(obj.parent) or ""
+
+        return label.strip()
+
+    def _speakObjDescription(self, obj):
+        """Speaks the object's description if it is not the same as
+        the object's name and displayed contents.
+        """
+
+        if not obj.description:
+            return
+
+        # The descriptions of some OOo paragraphs consists of the name and
+        # the displayed text, with punctuation added. Try to spot this and,
+        # if found, ignore the description.
+        #
+        text = self._script.getDisplayedText(obj) or ""
+        desc = obj.description.replace(text, "")
+        for item in obj.name.split():
+            desc = desc.replace(item, "")
+        for char in desc.decode("UTF-8").strip():
+            if char.isalnum():
+                return where_am_I.WhereAmI._speakObjDescription(self, obj)

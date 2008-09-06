@@ -1867,12 +1867,11 @@ class SpeechGenerator:
                     #
                     if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
                                                 pyatspi.ROLE_FILLER]:
-                        utterances.append(\
-                            rolenames.getSpeechForRoleName(parent))
+                        utterances.extend(self.getSpeechForObjectRole(parent))
                     utterances.append(text)
                     if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
-                        utterances.append(\
-                            rolenames.getSpeechForRoleName(parent))
+                        utterances.extend(self.getSpeechForObjectRole(parent))
+
             parent = parent.parent
 
         utterances.reverse()

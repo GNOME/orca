@@ -1,3 +1,12 @@
+2008-09-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/soffice/speech_generator.py:
+          src/orca/scripts/apps/soffice/where_am_i.py:
+          src/orca/speechgenerator.py:
+          src/orca/where_am_I.py:
+          Fix for bug #515923 - 'Area' labels of Calc Headers/Footers
+          dialog not always announced.
+
 2008-09-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:

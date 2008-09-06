@@ -52,6 +52,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
+    def getSpeechForObjectRole(self, obj, role=None):
+        if obj.getRoleName() == "text frame" \
+           or (obj.getRole() == pyatspi.ROLE_PARAGRAPH \
+               and self._script.getAncestor(obj,
+                                            [pyatspi.ROLE_DIALOG],
+                                            [pyatspi.ROLE_APPLICATION])):
+            role = pyatspi.ROLE_TEXT
+            
+        return speechgenerator.SpeechGenerator.\
+            getSpeechForObjectRole(self, obj, role)
+
     def _getSpeechForComboBox(self, obj, already_focused):
         """Get the speech for a combo box. If the combo box already has focus,
         then only the selection is spoken.
@@ -286,6 +297,49 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 for child in obj:
                     utterances.extend(self._getSpeechForTableCell(child,
                                                         already_focused))
+
+        return utterances
+
+    def _getSpeechForText(self, obj, already_focused):
+        """Get the speech for a paragraph which is serving as a text object
+        in a dialog.
+
+        Arguments:
+        - obj: the text component
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+        if obj.getRole() == pyatspi.ROLE_PARAGRAPH \
+           and self._script.getAncestor(obj,
+                                        [pyatspi.ROLE_DIALOG],
+                                        [pyatspi.ROLE_APPLICATION]):
+            utterances.extend(self._getSpeechForObjectLabel(obj))
+            if len(utterances) == 0 and obj.parent:
+                parentLabel = self._getSpeechForObjectLabel(obj.parent)
+                # If we aren't already focused, we will have spoken the
+                # parent as part of the speech context and do not want
+                # to repeat it.
+                #
+                if already_focused:
+                    utterances.extend(parentLabel)
+                # If we still don't have a label, look to the name.
+                #
+                if not parentLabel and obj.name and len(obj.name):
+                    utterances.append(obj.name)
+
+            utterances.append(self._script.getTextLineAtCaret(obj)[0])
+            utterances.extend(self._getSpeechForAllTextSelection(obj))
+
+            self._debugGenerator("soffice _getSpeechForText",
+                                 obj,
+                                 already_focused,
+                                 utterances)
+        else:
+            utterances.extend(speechgenerator.SpeechGenerator.\
+                _getSpeechForText(self, obj, already_focused))
 
         return utterances
 

@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import pyatspi
 import debug
 import orca_state
-import rolenames
 import settings
 import speech
 import text_attribute_names
@@ -173,7 +172,7 @@ class WhereAmI:
 
         utterances = []
         text = self.getObjLabelAndName(obj) + " " + \
-               rolenames.getSpeechForRoleName(obj)
+               self._getSpeechForRoleName(obj)
         text = text + " " + self._getCheckBoxState(obj)
         utterances.append(text)
 
@@ -213,7 +212,7 @@ class WhereAmI:
             utterances.append(text)
 
         text = self.getObjLabelAndName(obj) + " " + \
-               rolenames.getSpeechForRoleName(obj)
+               self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         state = obj.getState()
@@ -263,7 +262,7 @@ class WhereAmI:
         text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         name = self._getObjName(obj)
@@ -299,7 +298,7 @@ class WhereAmI:
         label = self._getObjLabel(obj)
         utterances.append(label)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         name = self._getObjName(obj)
@@ -336,7 +335,7 @@ class WhereAmI:
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         text = self._getObjAccelerator(obj)
@@ -365,7 +364,7 @@ class WhereAmI:
         text = self._getObjLabel(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         values = self._getSliderValues(obj)
@@ -403,7 +402,7 @@ class WhereAmI:
 
         utterances = []
         text = self.getObjLabelAndName(obj.parent) + " " + \
-               rolenames.getSpeechForRoleName(obj.parent)
+               self._getSpeechForRoleName(obj.parent)
         utterances.append(text.strip())
 
         text = self.getObjLabelAndName(obj)
@@ -412,7 +411,7 @@ class WhereAmI:
         state = obj.getState()
 
         if obj.getRole() != pyatspi.ROLE_MENU_ITEM:
-            text = rolenames.getSpeechForRoleName(obj)
+            text = self._getSpeechForRoleName(obj)
             utterances.append(text)
 
         if obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
@@ -475,7 +474,7 @@ class WhereAmI:
         """
 
         utterances = []
-        text = rolenames.getSpeechForRoleName(obj.parent)
+        text = self._getSpeechForRoleName(obj.parent)
         utterances.append(text)
 
         # Translators: "page" is the word for a page tab in a tab list.
@@ -537,7 +536,7 @@ class WhereAmI:
            and self._script.isReadOnlyTextArea(obj):
             utterances.append(settings.speechReadOnlyString)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         [textContents, startOffset, endOffset, selected] = \
@@ -554,6 +553,7 @@ class WhereAmI:
         utterances.append(text)
         debug.println(self._debugLevel, "first text utterances=%s" % \
                       utterances)
+
         speech.speakUtterances(utterances)
 
         if not basicOnly:
@@ -603,7 +603,7 @@ class WhereAmI:
             obj = obj.parent
         parent = obj.parent
 
-        text = rolenames.getSpeechForRoleName(parent)
+        text = self._getSpeechForRoleName(parent)
         utterances.append(text)
 
         try:
@@ -626,7 +626,7 @@ class WhereAmI:
                 text = self._getObjName(header)
                 utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         if nColumns:
@@ -712,7 +712,7 @@ class WhereAmI:
         if text:
             utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         text = self._getObjName(obj)
@@ -762,6 +762,7 @@ class WhereAmI:
     def _speakParagraph(self, obj, basicOnly):
         """Speak a paragraph object.
         """
+
         self._speakText(obj, basicOnly)
 
     def _speakIconPanel(self, obj, basicOnly):
@@ -876,7 +877,7 @@ class WhereAmI:
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         if obj.getState().contains(pyatspi.STATE_CHECKED):
@@ -906,7 +907,7 @@ class WhereAmI:
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         valueString = self._script.getTextForValue(obj)
@@ -931,7 +932,7 @@ class WhereAmI:
 
         utterances.extend(self._getSpeechForAllTextSelection(obj))
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         getTutorial = self._script.tutorialGenerator.getTutorial
@@ -952,7 +953,7 @@ class WhereAmI:
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
         utterances.extend(self._getSelectedItemCount(obj, basicOnly))
 
@@ -1079,7 +1080,7 @@ class WhereAmI:
         text = self.getObjLabelAndName(obj)
         utterances.append(text)
 
-        text = rolenames.getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj)
         utterances.append(text)
 
         getTutorial = self._script.tutorialGenerator.getTutorial
@@ -1141,6 +1142,12 @@ class WhereAmI:
                             (obj.getRoleName(), string))
 
         return text.strip()
+
+    def _getSpeechForRoleName(self, obj):
+        """Returns the rolename to be spoken for the object.
+        """
+
+        return self._script.speechGenerator.getSpeechForObjectRole(obj)[0]
 
     def _getGroupLabel(self, obj):
         """Returns the label for a group of components.
@@ -1340,7 +1347,7 @@ class WhereAmI:
                     break
 
         if isToggle:
-            text = rolenames.getSpeechForRoleName(obj, pyatspi.ROLE_CHECK_BOX)
+            text = self._getSpeechForRoleName(obj, pyatspi.ROLE_CHECK_BOX)
             text = text + " " + self._getCheckBoxState(obj)
         else:
             descendant = self._script.getRealActiveDescendant(obj)
@@ -1930,7 +1937,7 @@ class WhereAmI:
 
         utterances = []
         text = self.getObjLabelAndName(obj) + " " + \
-               rolenames.getSpeechForRoleName(obj)
+               self._getSpeechForRoleName(obj)
         utterances.append(text.strip())
 
         debug.println(self._debugLevel, "toolbar utterances=%s" \
