@@ -742,7 +742,7 @@ class Script(default.Script):
             # other paragraph and let the caret-moved events do their
             # thing.
             #
-            return False
+            return (cell != None)
 
         self.updateBraille(cell)
         utterances = self.speechGenerator.getSpeech(cell, False)

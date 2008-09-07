@@ -1,3 +1,10 @@
+2008-09-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          The rest of the fix for for bug #550137 - Presentation of table
+          content in OOo Writer is largely hosed and we're double-speaking
+          paragraphs in OOo Writer docs. 
+
 2008-09-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/speech_generator.py:
