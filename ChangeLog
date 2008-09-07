@@ -27,6 +27,12 @@
           Fix for bug #551159 - Orca says "link" when it shouldn't and
           sometimes fails to say it when it should in OOo Writer documents.
 
+        * src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/where_am_i.py:
+          src/orca/where_am_I.py:
+          Bit more work on the fix for bug #515923 - 'Area' labels of Calc
+          Headers/Footers dialog not always announced.
+
 2008-09-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:

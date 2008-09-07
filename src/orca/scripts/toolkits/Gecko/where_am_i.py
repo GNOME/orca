@@ -83,6 +83,26 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                 and not self._script.isAriaWidget(orca_state.locusOfFocus)):
             where_am_I.WhereAmI._speakDefaultButton(self, obj)
 
+    def _getSpeechForRoleName(self, obj, role=None):
+        """Returns the rolename to be spoken for the object. Overridden
+        here because there are times when we do not want the speech
+        generator returning a role to speak (e.g. navigating within
+        a document), but other times when we would (e.g. during a 
+        whereAmI).
+        """
+
+        objRole = obj.getRole()
+        if not role and objRole in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                    pyatspi.ROLE_FORM,
+                                    pyatspi.ROLE_LIST_ITEM,
+                                    pyatspi.ROLE_LIST,
+                                    pyatspi.ROLE_PARAGRAPH,
+                                    pyatspi.ROLE_SECTION,
+                                    pyatspi.ROLE_TABLE_CELL]:
+            role = objRole
+
+        return where_am_I.WhereAmI._getSpeechForRoleName(self, obj, role)
+
     def _speakObjDescription(self, obj):
         """Speaks the object's description if it is not the same as the
         object's name or label. Overridden here because Gecko tacks on

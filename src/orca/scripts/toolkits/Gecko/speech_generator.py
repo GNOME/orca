@@ -79,7 +79,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 doNotSpeak.append(pyatspi.ROLE_LIST)
 
         utterances = []
-        if not obj.getRole() in doNotSpeak:
+        if role or not obj.getRole() in doNotSpeak:
             utterances.append(rolenames.getSpeechForRoleName(obj, role))
             if obj.getRole() == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
