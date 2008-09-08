@@ -141,7 +141,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
-     "     VISIBLE:  ' contains the string Combo  $l', cursor=1",
+     "     VISIBLE:  'contains the string Combo  $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'A Comment: contains the string combo box'"]))
 
@@ -152,7 +152,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
-     "     VISIBLE:  '  $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())

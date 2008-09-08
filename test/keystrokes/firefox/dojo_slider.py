@@ -27,7 +27,7 @@ sequence.append(WaitForFocus("Dojo Slider Widget Demo", acc_role=pyatspi.ROLE_DO
 ########################################################################
 # Give the widget plenty of time to construct itself. 
 #
-sequence.append(PauseAction(7000))
+sequence.append(PauseAction(10000))
 
 ########################################################################
 # Tab to the first slider.  The following will be presented.

@@ -127,7 +127,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  '• But discs belong to unordered lists'",
-     "     VISIBLE:  '• But discs belong to unordere', cursor=1",
+     "     VISIBLE:  '• But discs belong to unordered ', cursor=1",
      "SPEECH OUTPUT: '• But discs belong to unordered lists'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -143,7 +143,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BRAILLE LINE:  '• But discs belong to unordered lists'",
-     "     VISIBLE:  '• But discs belong to unordere', cursor=1",
+     "     VISIBLE:  '• But discs belong to unordered ', cursor=1",
      "SPEECH OUTPUT: '• But discs belong to unordered lists'"]))
 
 sequence.append(utils.StartRecordingAction())

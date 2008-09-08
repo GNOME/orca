@@ -138,7 +138,7 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to next sub list in the third list", 
     ["BRAILLE LINE:  '• was a composer who was not square'",
-     "     VISIBLE:  '• was a composer who was not s', cursor=1",
+     "     VISIBLE:  '• was a composer who was not squ', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
      "SPEECH OUTPUT: '• was a composer who was not square'"]))
@@ -191,7 +191,7 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  '• was a composer who was not square'",
-     "     VISIBLE:  '• was a composer who was not s', cursor=1",
+     "     VISIBLE:  '• was a composer who was not squ', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
      "SPEECH OUTPUT: '• was a composer who was not square'"]))

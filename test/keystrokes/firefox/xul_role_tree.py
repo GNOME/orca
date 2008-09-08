@@ -146,7 +146,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Recently Bookmarked'",
-     "SPEECH OUTPUT: 'item 1 of 7'",
+     "SPEECH OUTPUT: 'item 1 of 4'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 ########################################################################

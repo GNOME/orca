@@ -300,7 +300,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link has cre', cursor=1",
+     "     VISIBLE:  'Darragh Ó Héiligh Link has creat', cursor=1",
      "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -324,7 +324,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial Link'",
-     "     VISIBLE:  '• Walk through of the installa', cursor=1",
+     "     VISIBLE:  '• Walk through of the installati', cursor=1",
      "SPEECH OUTPUT: '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -332,7 +332,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop Link'",
-     "     VISIBLE:  '• Review of Fedora 7 and the O', cursor=1",
+     "     VISIBLE:  '• Review of Fedora 7 and the Orc', cursor=1",
      "SPEECH OUTPUT: '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -340,7 +340,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  '• Guide to installing the latest versions of Firefox and Orca Link'",
-     "     VISIBLE:  '• Guide to installing the late', cursor=1",
+     "     VISIBLE:  '• Guide to installing the latest', cursor=1",
      "SPEECH OUTPUT: '• Guide to installing the latest versions of Firefox and Orca link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -596,7 +596,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Frequently Asked Questions: FAQ Link'",
-     "     VISIBLE:  '• Frequently Asked Questions: ', cursor=1",
+     "     VISIBLE:  '• Frequently Asked Questions: FA', cursor=1",
      "SPEECH OUTPUT: '• Frequently Asked Questions: FAQ link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -604,7 +604,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org Link  ( Archives Link )'",
-     "     VISIBLE:  '• Mailing list: orca-list@gnom', cursor=1",
+     "     VISIBLE:  '• Mailing list: orca-list@gnome.', cursor=1",
      "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  ( Archives link )'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -612,7 +612,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System (Bugzilla) Link  ( current bug list Link )'",
-     "     VISIBLE:  '• Bug database: GNOME Bug Trac', cursor=1",
+     "     VISIBLE:  '• Bug database: GNOME Bug Tracki', cursor=1",
      "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System (Bugzilla) link  ( current bug list link )'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -620,7 +620,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Design documents: Orca Documentation Series Link'",
-     "     VISIBLE:  '• Design documents: Orca Docum', cursor=1",
+     "     VISIBLE:  '• Design documents: Orca Documen', cursor=1",
      "SPEECH OUTPUT: '• Design documents: Orca Documentation Series link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -628,7 +628,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Dive Into Python, Mark Pilgrim Link'",
-     "     VISIBLE:  '• Dive Into Python, Mark Pilgr', cursor=1",
+     "     VISIBLE:  '• Dive Into Python, Mark Pilgrim', cursor=1",
      "SPEECH OUTPUT: '• Dive Into Python, Mark Pilgrim link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -636,7 +636,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Python in a Nutshell, Alex Martelli Link'",
-     "     VISIBLE:  '• Python in a Nutshell, Alex M', cursor=1",
+     "     VISIBLE:  '• Python in a Nutshell, Alex Mar', cursor=1",
      "SPEECH OUTPUT: '• Python in a Nutshell, Alex Martelli link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -644,7 +644,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Python Pocket Reference, Mark Lutz Link'",
-     "     VISIBLE:  '• Python Pocket Reference, Mar', cursor=1",
+     "     VISIBLE:  '• Python Pocket Reference, Mark ', cursor=1",
      "SPEECH OUTPUT: '• Python Pocket Reference, Mark Lutz link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -889,7 +889,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Python Pocket Reference, Mark Lutz Link'",
-     "     VISIBLE:  '• Python Pocket Reference, Mar', cursor=1",
+     "     VISIBLE:  '• Python Pocket Reference, Mark ', cursor=1",
      "SPEECH OUTPUT: '• Python Pocket Reference, Mark Lutz link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -897,7 +897,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Python in a Nutshell, Alex Martelli Link'",
-     "     VISIBLE:  '• Python in a Nutshell, Alex M', cursor=1",
+     "     VISIBLE:  '• Python in a Nutshell, Alex Mar', cursor=1",
      "SPEECH OUTPUT: '• Python in a Nutshell, Alex Martelli link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -905,7 +905,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Dive Into Python, Mark Pilgrim Link'",
-     "     VISIBLE:  '• Dive Into Python, Mark Pilgr', cursor=1",
+     "     VISIBLE:  '• Dive Into Python, Mark Pilgrim', cursor=1",
      "SPEECH OUTPUT: '• Dive Into Python, Mark Pilgrim link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -913,7 +913,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Design documents: Orca Documentation Series Link'",
-     "     VISIBLE:  '• Design documents: Orca Docum', cursor=1",
+     "     VISIBLE:  '• Design documents: Orca Documen', cursor=1",
      "SPEECH OUTPUT: '• Design documents: Orca Documentation Series link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -921,7 +921,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System (Bugzilla) Link  ( current bug list Link )'",
-     "     VISIBLE:  '• Bug database: GNOME Bug Trac', cursor=1",
+     "     VISIBLE:  '• Bug database: GNOME Bug Tracki', cursor=1",
      "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System (Bugzilla) link  ( current bug list link )'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -929,7 +929,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org Link  ( Archives Link )'",
-     "     VISIBLE:  '• Mailing list: orca-list@gnom', cursor=1",
+     "     VISIBLE:  '• Mailing list: orca-list@gnome.', cursor=1",
      "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  ( Archives link )'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -937,7 +937,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Frequently Asked Questions: FAQ Link'",
-     "     VISIBLE:  '• Frequently Asked Questions: ', cursor=1",
+     "     VISIBLE:  '• Frequently Asked Questions: FA', cursor=1",
      "SPEECH OUTPUT: '• Frequently Asked Questions: FAQ link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1193,7 +1193,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BRAILLE LINE:  '• Guide to installing the latest versions of Firefox and Orca Link'",
-     "     VISIBLE:  '• Guide to installing the late', cursor=1",
+     "     VISIBLE:  '• Guide to installing the latest', cursor=1",
      "SPEECH OUTPUT: '• Guide to installing the latest versions of Firefox and Orca link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1201,7 +1201,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BRAILLE LINE:  '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop Link'",
-     "     VISIBLE:  '• Review of Fedora 7 and the O', cursor=1",
+     "     VISIBLE:  '• Review of Fedora 7 and the Orc', cursor=1",
      "SPEECH OUTPUT: '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1209,7 +1209,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BRAILLE LINE:  '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial Link'",
-     "     VISIBLE:  '• Walk through of the installa', cursor=1",
+     "     VISIBLE:  '• Walk through of the installati', cursor=1",
      "SPEECH OUTPUT: '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1233,7 +1233,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
     ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link has cre', cursor=1",
+     "     VISIBLE:  'Darragh Ó Héiligh Link has creat', cursor=1",
      "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())

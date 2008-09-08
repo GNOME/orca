@@ -1001,11 +1001,11 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
 
     logLine = "BRAILLE LINE:  '%s'" % string
     debug.println(debug.LEVEL_INFO, logLine)
-    log.info(logLine)
+    log.info(logLine.encode("UTF-8"))
     logLine = "     VISIBLE:  '%s', cursor=%d" % \
                     (string[startPos:endPos], cursorCell)
     debug.println(debug.LEVEL_INFO, logLine)
-    log.info(logLine)
+    log.info(logLine.encode("UTF-8"))
 
     substring = string[startPos:endPos]
     if useBrlAPIBindings:

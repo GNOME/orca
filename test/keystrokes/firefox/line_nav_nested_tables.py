@@ -37,7 +37,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
     ["BRAILLE LINE:  'Campus Link   . Classroom Link   . Communicate Link   . Reports Link'",
-     "     VISIBLE:  'Campus Link   . Classroom Link', cursor=1",
+     "     VISIBLE:  'Campus Link   . Classroom Link  ', cursor=1",
      "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -216,7 +216,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Up",
     ["BRAILLE LINE:  'Campus Link   . Classroom Link   . Communicate Link   . Reports Link'",
-     "     VISIBLE:  'Campus Link   . Classroom Link', cursor=1",
+     "     VISIBLE:  'Campus Link   . Classroom Link  ', cursor=1",
      "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 sequence.append(utils.StartRecordingAction())

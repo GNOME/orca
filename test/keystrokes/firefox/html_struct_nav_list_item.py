@@ -108,7 +108,7 @@ sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "i in third list", 
     ["BRAILLE LINE:  '• they should all be different, except here.'",
-     "     VISIBLE:  '• they should all be different', cursor=1",
+     "     VISIBLE:  '• they should all be different, ', cursor=1",
      "SPEECH OUTPUT: '• they should all be different, except here.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -156,7 +156,7 @@ sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "i in third list", 
     ["BRAILLE LINE:  '• was a composer who was not square'",
-     "     VISIBLE:  '• was a composer who was not s', cursor=1",
+     "     VISIBLE:  '• was a composer who was not squ', cursor=1",
      "SPEECH OUTPUT: '• was a composer who was not square'"]))
 
 sequence.append(utils.StartRecordingAction())

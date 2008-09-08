@@ -51,7 +51,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'New bug Link · Browse Link  · ', cursor=1",
+     "     VISIBLE:  'New bug Link · Browse Link  · Se', cursor=1",
      "SPEECH OUTPUT: 'New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -170,7 +170,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
-     "     VISIBLE:  'A Comment: contains the string ', cursor=1",
+     "     VISIBLE:  'A Comment: contains the string C', cursor=1",
      "SPEECH OUTPUT: 'A Comment: contains the string combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -611,7 +611,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Saved Searches: My Bugs and Patches Link | All Orca Link  | Firefox Link  | open orca Link  | Open RFEs Link'",
-     "     VISIBLE:  'Saved Searches: My Bugs and Pa', cursor=1",
+     "     VISIBLE:  'Saved Searches: My Bugs and Patc', cursor=1",
      "SPEECH OUTPUT: 'Saved Searches: My Bugs and Patches link | All Orca link  | Firefox link  | open orca link  | Open RFEs link'"]))
 
 ########################################################################
@@ -1055,7 +1055,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
-     "     VISIBLE:  'A Comment: contains the string ', cursor=1",
+     "     VISIBLE:  'A Comment: contains the string C', cursor=1",
      "SPEECH OUTPUT: 'A Comment: contains the string combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1167,7 +1167,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'New bug Link  · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'New bug Link  · Browse Link  ·', cursor=1",
+     "     VISIBLE:  'New bug Link  · Browse Link  · S', cursor=1",
      "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
