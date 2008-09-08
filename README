@@ -1,4 +1,4 @@
-Orca v2.23.92pre
+Orca v2.23.92
 
 Introduction
 ========================================================================
@@ -34,14 +34,14 @@ infrastructure and application bug fixes that help Orca work better.
 Building Orca also requires the development modules for the following
 to be installed:
 
-* Python >= 2.4              - Python platform
-* pyorbit >= 2.14.0          - Python bindings for ORBit2
-* pygtk >= 2.8.4             - GTK+ Python bindings
-* gnome-python >= 2.6.2      - Python bindings for various GNOME libraries
-* gnome-speech-1.0 >= 0.3.10 - Python bindings for gnome-speech
-* gnome-mag-1.0 >= 0.12.5    - Python bindings for gnome-mag (optional) 
-* BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
-* BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
+* Python           - Python platform
+* pyorbit          - Python bindings for ORBit2
+* pygtk            - GTK+ Python bindings
+* gnome-python     - Python bindings for various GNOME libraries
+* gnome-speech-1.0 - Python bindings for gnome-speech
+* gnome-mag-1.0    - Python bindings for gnome-mag (optional) 
+* BrlTTY           - BrlTTY support for braille (optional)
+* BrlAPI           - BrlAPI support for braille (optional)
 
 YOU ALSO NEED THE LATEST AT-SPI, ATK, AND GAIL FOR THE GNOME 2.23.x
 DEVELOPMENT RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!

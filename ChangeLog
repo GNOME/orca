@@ -1,3 +1,8 @@
+2008-09-08  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS:
+          Prep for Orca v2.23.92.
+
 2008-09-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/yelp.py: (new)

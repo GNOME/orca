@@ -1,3 +1,64 @@
+2.23.92 - 08-Sep-2008
+
+General:
+
+* Partial fix for bug #527022 - Linked text should be "underlined" in
+  braille in Firefox.  The complexity of this space, however, has
+  caused us to table the braille underlining of links until the 2.26 
+  release of GNOME.
+
+* Fix for bug #550249 - configure doesn't use find bonobo python
+
+
+Yelp:
+
+* Much work toward the fix for bug #356041 - GNOME Help (yelp) is
+  inaccessible. Please note that access to Yelp is a work in
+  progress: on our end, and on the Yelp end, and may also require
+  the Mozilla guys to fix something on their end. As of today, in
+  order for the yelp script to work, you will need to build yelp --
+  after applying the patch attached to bug #545162. Many, many,
+  many thanks to Ginn Chen for that patch and for getting to the
+  bottom of a rather odd accesibility hierarchy.
+
+StarOffice/OpenOffice:
+
+* Fix for bug #515923 - 'Area' labels of Calc Headers/Footers dialog
+  not always announced.
+
+* Fix for for bug #550137 - Presentation of table content in OOo
+  Writer is largely hosed and we're double-speaking paragraphs in OOo
+  Writer docs.
+
+* Fix for bug #551077 - Traceback and loss of speech in OOo 
+  Writer docs with both links and multbyte characters on the 
+  same line
+
+* Fix for bug #551159 - Orca says "link" when it shouldn't and
+  sometimes fails to say it when it should in OOo Writer documents.
+
+Firefox:
+
+* Fix for bug #541605 - updateBraille() can take an unreasonable
+  amount of time with certain pages in Firefox 3.
+
+* Fix for bug #550873 - Some live region text updates are not
+  presented
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    en_GB   English/British      David Lodge
+    hi      Hindi                Rajesh Ranjan
+    ja      Japanese             Takeshi Aihana
+    mai     Maithili             Sangeeta Kumari
+    pl      Polish               Piotr Leszczyński
+    pt      Portuguese           Duarte Loreto
+    sv      Swedish              Daniel Nylander
+    ta      Tamil                Tirumurthi Vasudevan
+    tr      Turkish              Baris Cicek
+
+==========
+
 2.23.91 - 01-Sep-2008
 
 General:
