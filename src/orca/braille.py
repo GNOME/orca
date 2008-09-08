@@ -322,9 +322,13 @@ class Region:
           unreasonable amount of time (AKA Gecko).
         """
 
+        # Double check for ellipses.
+        #
+        maskSize = len(self.string) + (2 * self.string.count(u'\u2026'))
+
         # Create an empty mask.
         #
-        mask = ['\x00'] * len(self.string)
+        mask = ['\x00'] * maskSize
         return "".join(mask)
     
     def repositionCursor(self):

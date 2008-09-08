@@ -20,6 +20,10 @@
           src/orca/braille.py:
           Updated tests to reflect changes from the fix for bug #527022.
 
+        * src/orca/braille.py:
+          One more tweak to the fix for bug #527022 (fixes a braille
+          monitor attribute mask issue).
+
 2008-09-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/speech_generator.py:
