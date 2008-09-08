@@ -98,6 +98,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Orca - GNOME Live!', cursor=0",
      "BRAILLE LINE:  'Welcome to Orca! h1'",
      "     VISIBLE:  'Welcome to Orca! h1', cursor=1",
+     "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'",
      "SPEECH OUTPUT: 'Orca - GNOME Live! page'",
      "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'"]))
 
