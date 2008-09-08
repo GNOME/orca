@@ -1021,7 +1021,10 @@ setScriptMapping(re.compile(_('gaim')), "pidgin")
 
 # Translators: see the regular expression note above.  This is for
 # supporting yelp, which sometimes identifies itself as gnome-help.
-# [[[TODO - JD: Not marked for translation due to string freeze.]]]
+# [[[TODO - JD: Not marked for translation due to string freeze,
+# plus gnome-help doesn't translate its app name as far as we can
+# determine.  So, translating this string really seems like extra
+# busy work for our translators.]]]
 #
 #setScriptMapping(re.compile(_('gnome-help')), "yelp")
 setScriptMapping(re.compile('gnome-help'), "yelp")
