@@ -783,6 +783,20 @@ class StructuralNavigation:
         """
 
         obj = obj or self.getCurrentObject()
+
+        # Yelp is seemingly fond of killing children for sport. Better
+        # check for that.
+        #
+        try:
+            state = obj.getState()
+        except:
+            return [None, False]
+        else:
+            if state.contains(pyatspi.STATE_DEFUNCT):
+                #print "goObject: defunct object", obj
+                debug.printException(debug.LEVEL_SEVERE)
+                return [None, False]
+
         success = False
         wrap = settings.wrappedStructuralNavigation
         # Try to find it using Collection first.  But don't do this with form

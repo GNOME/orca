@@ -1079,7 +1079,8 @@ class Script(default.Script):
             if context.currentOffset == 0 and \
                context.obj.getRole() in [pyatspi.ROLE_HEADING,
                                          pyatspi.ROLE_SECTION,
-                                         pyatspi.ROLE_PARAGRAPH]:
+                                         pyatspi.ROLE_PARAGRAPH] \
+               and context.obj.parent.getRole() != pyatspi.ROLE_LINK:
                 characterCount = context.obj.queryText().characterCount
                 self.setCaretPosition(context.obj, characterCount-1)
         elif callbackType == speechserver.SayAllContext.INTERRUPTED:
@@ -3299,6 +3300,19 @@ class Script(default.Script):
         if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
             return -1
 
+        try:
+            state = obj.getState()
+        except:
+            return -1
+        else:
+            if state.contains(pyatspi.STATE_DEFUNCT):
+                # Yelp (or perhaps the work-in-progress a11y patch)
+                # seems to be guilty of this.
+                #
+                #print "getNodeLevel - obj is defunct", obj
+                debug.printException(debug.LEVEL_SEVERE)
+                return -1
+
         attrs = obj.getAttributes()
         if attrs is None:
             return -1
@@ -3464,11 +3478,23 @@ class Script(default.Script):
             #    2) It seems that down arrow moves us to the table, but up
             #       arrow moves us to the last row.  Possible side effect
             #       of our existing caret browsing implementation??]]]
-            #
-            if obj[0] and obj[0].getRole == pyatspi.ROLE_CAPTION:
+            #    3) Figure out why the heck the table of contents for at
+            #       least some Yelp content consists of a table whose sole
+            #       child is a list!!!
+            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
+                                               pyatspi.ROLE_LIST]:
                 obj = obj[0]
             else:
                 obj = obj.queryTable().getAccessibleAt(0, 0)
+
+            if not obj:
+                # Yelp (or perhaps the work-in-progress a11y patch) seems
+                # to be guilty of this. Although that may have been the
+                # table of contents thing (see #3 above).
+                #
+                #print "getObjectsFromEOCs - in Table, missing an accessible"
+                debug.printException(debug.LEVEL_SEVERE)
+                return []
 
         objects = []
         text = self.queryNonEmptyText(obj)
@@ -4407,6 +4433,9 @@ class Script(default.Script):
         if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
 
+        if not obj:
+            return None
+
         index = obj.getIndexInParent() - 1
         if (index < 0):
             if not self.isSameObject(obj, documentFrame):
@@ -4501,6 +4530,9 @@ class Script(default.Script):
         #
         if self.isSameObject(obj, documentFrame):
             [obj, characterOffset] = self.getCaretContext()
+
+        if not obj:
+            return None
 
         # If the object has children, we'll choose the first one,
         # unless it's a combo box or a focusable HTML list.
@@ -4715,7 +4747,23 @@ class Script(default.Script):
                                           -1,
                                           includeNonText)
 
-        return self._documentFrameCaretContext[hash(documentFrame)]
+        [obj, caretOffset] = \
+            self._documentFrameCaretContext[hash(documentFrame)]
+
+        # Yelp is seemingly fond of killing children for sport. Better
+        # check for that.
+        #
+        try:
+            state = obj.getState()
+        except:
+            return [None, -1]
+        else:
+            if state.contains(pyatspi.STATE_DEFUNCT):
+                #print "getCaretContext: defunct object", obj
+                debug.printException(debug.LEVEL_SEVERE)
+                [obj, caretOffset] = [None, -1]
+
+        return [obj, caretOffset]
 
     def getCharacterAtOffset(self, obj, characterOffset):
         """Returns the character at the given characterOffset in the
@@ -5441,7 +5489,8 @@ class Script(default.Script):
 
         extents = self.getExtents(obj, characterOffset, characterOffset + 1)
         nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
-        while self.onSameLine(extents, nextExtents):
+        while self.onSameLine(extents, nextExtents) \
+              and (extents != nextExtents):
             [nextObj, nextOffset] = \
                 self.findNextCaretInOrder(nextObj, nextOffset)
             nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)

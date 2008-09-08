@@ -975,11 +975,6 @@ setScriptMapping(re.compile(_('soffice')), "soffice")
 #
 setScriptMapping(re.compile(_('[Ee]volution')), "evolution")
 
-# Translators: see the regular expression note above.  This is for the
-# help application (yelp).
-#
-setScriptMapping(re.compile(_('yelp')), "Mozilla")
-
 # Translators: see the regular expression note above.  This is for a
 # version of Mozilla Firefox, which chooses to create strange names
 # for itself at the drop of a hat.
@@ -1023,6 +1018,13 @@ setScriptMapping(re.compile(_('vte')), "gnome-terminal")
 # supporting gaim, which has recently be renamed to pidgin.
 #
 setScriptMapping(re.compile(_('gaim')), "pidgin")
+
+# Translators: see the regular expression note above.  This is for
+# supporting yelp, which sometimes identifies itself as gnome-help.
+# [[[TODO - JD: Not marked for translation due to string freeze.]]]
+#
+#setScriptMapping(re.compile(_('gnome-help')), "yelp")
+setScriptMapping(re.compile('gnome-help'), "yelp")
 
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems

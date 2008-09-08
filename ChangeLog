@@ -1,3 +1,19 @@
+2008-09-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/yelp.py: (new)
+          src/orca/scripts/apps/Makefile.am:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/settings.py:
+          src/orca/structural_navigation.py:
+          Much work toward the fix for bug #356041 - GNOME Help (yelp) is
+          inaccessible. Please note that access to Yelp is a work in 
+          progress: on our end, and on the Yelp end, and may also require
+          the Mozilla guys to fix something on their end. As of today, in
+          order for the yelp script to work, you will need to build yelp --
+          after applying the patch attached to bug #545162. Many, many,
+          many thanks to Ginn Chen for that patch and for getting to the
+          bottom of a rather odd accesibility hierarchy.
+
 2008-09-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/script.py:
