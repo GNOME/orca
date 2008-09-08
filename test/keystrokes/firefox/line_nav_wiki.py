@@ -91,8 +91,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Welcome to Orca! h1'",
+    ["BUG? - Something is causing the page information to be presented when it shouldn't be. But it doesn't always happen.",
+     "BRAILLE LINE:  'Welcome to Orca! h1'",
      "     VISIBLE:  'Welcome to Orca! h1', cursor=1",
+     "BRAILLE LINE:  'Orca - GNOME Live!'",
+     "     VISIBLE:  'Orca - GNOME Live!', cursor=0",
+     "BRAILLE LINE:  'Welcome to Orca! h1'",
+     "     VISIBLE:  'Welcome to Orca! h1', cursor=1",
+     "SPEECH OUTPUT: 'Orca - GNOME Live! page'",
      "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
