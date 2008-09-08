@@ -150,6 +150,7 @@ class SpeechServer(speechserver.SpeechServer):
         for key in SpeechServer.__activeServers.keys():
             server = SpeechServer.__activeServers[key]
             server.shutdown()
+        SpeechServer.__getSpeechServersCalled = False
 
     shutdownActiveServers = staticmethod(shutdownActiveServers)
 
