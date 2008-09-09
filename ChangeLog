@@ -28,7 +28,7 @@
           order for the yelp script to work, you will need to build yelp --
           after applying the patch attached to bug #545162. Many, many,
           many thanks to Ginn Chen for that patch and for getting to the
-          bottom of a rather odd accesibility hierarchy.
+          bottom of a rather odd accessibility hierarchy.
 
 2008-09-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
