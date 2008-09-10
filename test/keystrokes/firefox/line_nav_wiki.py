@@ -1454,7 +1454,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
+    "Line Up", 
     ["BRAILLE LINE:  'FAQ Link | DocIndex Link'",
      "     VISIBLE:  'FAQ Link | DocIndex Link', cursor=1",
      "SPEECH OUTPUT: 'FAQ link | DocIndex link'"]))

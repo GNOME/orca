@@ -4828,58 +4828,54 @@ class Script(default.Script):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
-        if obj.getRole() == pyatspi.ROLE_IMAGE \
-           and obj.parent.getRole() == pyatspi.ROLE_LINK:
-            offset = obj.getIndexInParent()
-            obj = obj.parent
-
         # Find the beginning of this line w.r.t. this object.
         #
         text = self.queryNonEmptyText(obj)
-        if text:
-            [line, start, end] = text.getTextAtOffset(offset, boundary)
-            unicodeText = line.decode("UTF-8")
-            if unicodeText.startswith(self.EMBEDDED_OBJECT_CHARACTER):
-                childIndex = self.getChildIndex(obj, start)
-                if childIndex >= 0:
-                    child = obj[childIndex]
-                    childText = self.queryNonEmptyText(child)
-                    childRole = child.getRole()
-                    # If the object represented by the EOC at the beginning
-                    # of this line is a section, it is functionally not part
-                    # of this line and should not be included here.
-                    #
-                    if childText and childRole != pyatspi.ROLE_SECTION:
-                        noChars = childText.characterCount
-                        [cLine, cStart, cEnd] = \
-                               childText.getTextAtOffset(noChars - 1, boundary)
-                        if cEnd - cStart > 1:
-                            obj = child
-                            start = cStart
-                        else:
-                            start += 1
-                    elif not childRole in [pyatspi.ROLE_LINK,
-                                           pyatspi.ROLE_IMAGE,
-                                           pyatspi.ROLE_SECTION]:
-                        text = None
-                        obj = child
-                    else:
-                        [line, start, end] = \
-                               text.getTextAfterOffset(start + 1, boundary)
-            elif offset > end and start < end:
-                # Line break characters might be messing us up. If the
-                # difference is 1, then we're moving down and want the
-                # text that comes after this offset.  Otherwise, we're
-                # moving up and want the text that comes after the end.
-                #
-                if offset - end > 1:
-                    offset = end + 1
-                [line, start, end] = text.getTextAfterOffset(end + 1, boundary)
-
-        if text:
-            offset = start
-        else:
+        if not text:
             offset = 0
+        else:            
+            [line, start, end] = text.getTextAtOffset(offset, boundary)
+
+            # Unfortunately, we sometimes get bogus results from Gecko when
+            # we ask for this line. If the offset is not within the range of
+            # characters on this line, try the character reported as the end.
+            #
+            if not (start <= offset < end):
+                [line, start, end] = text.getTextAfterOffset(end, boundary)
+
+            if start <= offset < end:
+                # So far so good. If the line doesn't begin with an EOC, we
+                # have our first character for this object.
+                #
+                if not line.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+                    offset = start
+                else:
+                    # The line may begin with a link, or it may begin with
+                    # an anchor which makes this text something one can jump
+                    # to via a link. Anchors are bad.
+                    #
+                    childIndex = self.getChildIndex(obj, start)
+                    if childIndex >= 0:
+                        child = obj[childIndex]
+                        childText = self.queryNonEmptyText(child)
+                        if not childText:
+                            # It's probably an anchor. It might be something
+                            # else, but that's okay because we do another
+                            # check later to make sure we have everything on
+                            # the left. Set the offset to just after the
+                            # assumed anchor.
+                            #
+                            offset = start + 1
+                        else:
+                            # It's a link that ends on our left. Who knows
+                            # where it starts. Might be on the previous
+                            # line.
+                            #
+                            obj = child
+                            offset = childText.characterCount - 1
+                            [line, start, end] = \
+                                childText.getTextAtOffset(offset, boundary)
+                            offset = start
 
         extents = self.getExtents(obj, offset, offset + 1)
 
@@ -4894,11 +4890,6 @@ class Script(default.Script):
         while not done:
             [firstObj, start, end, string] = objects[0]
             isAria = not self.isNavigableAria(firstObj)
-
-            text = self.queryNonEmptyText(firstObj)
-            if text and start > 0 and not isAria:
-                break
-
             if isAria:
                 documentFrame = self.getDocumentFrame()
                 prevObj = self.findPreviousObject(firstObj, documentFrame)
@@ -4934,10 +4925,6 @@ class Script(default.Script):
         while not done:
             [lastObj, start, end, string] = objects[-1]
             isAria = not self.isNavigableAria(lastObj)
-
-            text = self.queryNonEmptyText(lastObj)
-            if text and end < text.characterCount - 1 and not isAria:
-                break
 
             if isAria:
                 documentFrame = self.getDocumentFrame()
@@ -5392,10 +5379,13 @@ class Script(default.Script):
 
         prevObj = currentLine[0][0]
         prevOffset = currentLine[0][1]
+        [prevObj, prevOffset] = \
+            self.findPreviousCaretInOrder(currentLine[0][0], currentLine[0][1])
 
         extents = self.getExtents(obj, characterOffset, characterOffset + 1)
         prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
-        while self.onSameLine(extents, prevExtents):
+        while self.onSameLine(extents, prevExtents) \
+              and (extents != prevExtents):
             [prevObj, prevOffset] = \
                 self.findPreviousCaretInOrder(prevObj, prevOffset)
             prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
@@ -5484,8 +5474,9 @@ class Script(default.Script):
         if index < 0:
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
 
-        nextObj = currentLine[-1][0]
-        nextOffset = currentLine[-1][2] - 1
+        [nextObj, nextOffset] = \
+            self.findNextCaretInOrder(currentLine[-1][0],
+                                      currentLine[-1][2] - 1)
 
         extents = self.getExtents(obj, characterOffset, characterOffset + 1)
         nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)

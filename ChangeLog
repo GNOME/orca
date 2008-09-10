@@ -1,3 +1,16 @@
+2008-09-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/line_nav_multi_line_text.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #547573 - Orca has problems navigating past a couple
+          of links on java.sun.com. And fix for bug #549128 - Orca should
+          not get stuck on omahasteaks.com.
+
 2008-09-08  Willie Walker <william.walker@sun.com>
 
         * src/orca/espeechfactory.py:

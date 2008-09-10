@@ -161,14 +161,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "15. line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "16. line Down",
     ["BRAILLE LINE:  'Ain't he handsome (please say yes)? & y RadioButton Yes & y RadioButton No'",
      "     VISIBLE:  'Ain't he handsome (please say ye', cursor=1",
      "SPEECH OUTPUT: 'Ain't he handsome (please say yes)? not selected radio button Yes not selected radio button No'"]))
@@ -180,14 +172,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "2. line Up",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker Image'",
      "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker image ",
@@ -196,7 +180,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "3. line Up",
+    "2. line Up",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
      "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
@@ -204,7 +188,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "4. line Up",
+    "3. line Up",
     ["BRAILLE LINE:  'Which sports do you like?'",
      "     VISIBLE:  'Which sports do you like?', cursor=1",
      "SPEECH OUTPUT: 'Which sports do you like?",
@@ -213,7 +197,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "5. line Up",
+    "4. line Up",
     ["BRAILLE LINE:  'Make a selection: Water Combo'",
      "     VISIBLE:  'Make a selection: Water Combo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection: Water combo box'"]))
@@ -221,7 +205,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "6. line Up",
+    "5. line Up",
     ["BRAILLE LINE:  'Check one or more: < > CheckBox Red < > CheckBox Blue < > CheckBox Green'",
      "     VISIBLE:  'Check one or more: < > CheckBox ', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: Red check box not checked Blue check box not checked Green check box not checked'"]))
@@ -229,7 +213,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "7. line Up",
+    "6. line Up",
     ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself: text'"]))
@@ -237,7 +221,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "8. line Up",
+    "7. line Up",
     ["BRAILLE LINE:  'write my memoirs. $l'",
      "     VISIBLE:  'write my memoirs. $l', cursor=1",
      "SPEECH OUTPUT: 'write my memoirs.'"]))
@@ -245,7 +229,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "9. line Up",
+    "8. line Up",
     ["BRAILLE LINE:  'I've recently taken up typing and plan to  $l'",
      "     VISIBLE:  'I've recently taken up typing an', cursor=1",
      "SPEECH OUTPUT: 'I've recently taken up typing and plan to '"]))
@@ -253,7 +237,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "10. line Up",
+    "9. line Up",
     ["BRAILLE LINE:  'to swing from trees and eat bananas.   $l'",
      "     VISIBLE:  'to swing from trees and eat bana', cursor=1",
      "SPEECH OUTPUT: 'to swing from trees and eat bananas.  '"]))
@@ -261,7 +245,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "11. line Up",
+    "10. line Up",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
      "SPEECH OUTPUT: 'I am a monkey with a long tail.  I like '"]))
@@ -269,7 +253,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "12. line Up",
+    "11. line Up",
     ["BRAILLE LINE:  'Tell me a little more about yourself:'",
      "     VISIBLE:  'Tell me a little more about your', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself:",
@@ -278,7 +262,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "13. line Up",
+    "12. line Up",
     ["BRAILLE LINE:  'Tell me a secret:  $l'",
      "     VISIBLE:  'Tell me a secret:  $l', cursor=1",
      "SPEECH OUTPUT: 'Tell me a secret: password'"]))
@@ -286,7 +270,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "14. line Up",
+    "13. line Up",
     ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
      "     VISIBLE:  'Magic disappearing text trick: t', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text tab to me and I disappear'"]))
@@ -294,7 +278,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "15. line Up",
+    "14. line Up",
     ["BRAILLE LINE:  'Type something here:  $l'",
      "     VISIBLE:  'Type something here:  $l', cursor=1",
      "SPEECH OUTPUT: 'Type something here: text'"]))
