@@ -179,6 +179,13 @@ class Script(default.Script):
         self.currentLineContents = None
         self._nextLineContents = None
 
+        # guessTheLabel() is an expensive method. If we cache the guessed
+        # labels, we'll see a performance improvement when a form field
+        # is Tab/Shift+Tab'ed/Arrowed back to. In addition, we can check
+        # for non-label labels when looking at line content.
+        #
+        self._guessedLabels = {}
+
         # For really large objects, a call to getAttributes can take up to
         # two seconds! This is a Firefox bug. We'll try to improve things
         # by storing attributes.
@@ -1338,6 +1345,13 @@ class Script(default.Script):
         """
 
         self._destroyLineCache()
+
+        # If text is removed from something which is not editable, trash our
+        # saved guessed labels to be on the safe side.
+        #
+        if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+            self._guessedLabels = {}
+
         default.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
@@ -1347,6 +1361,12 @@ class Script(default.Script):
         - event: the Event
         """
         self._destroyLineCache()
+
+        # If text is inserted into something which is not editable, trash our
+        # saved guessed labels to be on the safe side.
+        #
+        if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+            self._guessedLabels = {}
 
         # handle live region events
         if self.handleAsLiveRegion(event):
@@ -1360,6 +1380,12 @@ class Script(default.Script):
         for addition events often associated with Javascipt insertion.  One such
         such example would be the programmatic insertion of a tooltip or alert
         dialog."""
+
+        # If children are being added or removed, trash our saved guessed
+        # labels to be on the safe side.
+        #
+        self._guessedLabels = {}
+
         # no need moving forward if we don't have our target.
         if event.any_data is None:
             return
@@ -1591,6 +1617,11 @@ class Script(default.Script):
         if event.type.startswith("object:state-changed:busy"):
             if event.source \
                 and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
+
+                # If content is changing, trash our saved guessed labels.
+                #
+                self._guessedLabels = {}
+
                 finishedLoading = False
                 if orca_state.locusOfFocus \
                     and (orca_state.locusOfFocus.getRole() \
@@ -1803,6 +1834,16 @@ class Script(default.Script):
             [obj, characterOffset] = \
                   self.findFirstCaretContext(newLocusOfFocus, caretOffset)
             self.setCaretContext(obj, characterOffset)
+
+        else:
+            # If the newLocusOfFocus is not in document content, trash
+            # our stored guessed labels. This will hopefully maximize
+            # performance and accuracy when navigating amongst form 
+            # fields while minimizing the cache size (Gecko creates and
+            # destroys accessibles so frequently that hashing is of no
+            # use).
+            #
+            self._guessedLabels = {}
 
         # If we've just landed in the Find toolbar, reset
         # self.madeFindAnnouncement.
@@ -4101,6 +4142,12 @@ class Script(default.Script):
            or self.isAriaWidget(obj):
             return guess
 
+        # Maybe we've already made a guess and saved it.
+        #
+        for field, label in self._guessedLabels.items():
+            if self.isSameObject(field, obj):
+                return label
+
         # Because the guesswork is based upon spatial relations, if we're
         # in a list, look from the perspective of the first list item rather
         # than from the list as a whole.
@@ -4129,6 +4176,12 @@ class Script(default.Script):
             #
             guess = obj.name
             #print "Guessing the name: ", guess
+
+        if obj.parent.getRole() == pyatspi.ROLE_LIST:
+            obj = obj.parent
+
+        guess = guess.strip()
+        self._guessedLabels[obj] = guess
 
         return guess.strip()
 
@@ -5032,6 +5085,7 @@ class Script(default.Script):
         doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_HEADING]
 
         utterances = []
+        prevObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content
             role = obj.getRole()
@@ -5052,13 +5106,28 @@ class Script(default.Script):
             elif role == pyatspi.ROLE_IMAGE and self.isUselessObject(obj):
                 continue
 
+            # If the focused item is a checkbox or a radio button for which
+            # we had to guess the label, odds are that the guessed label is
+            # immediately to the right. Under these circumstances, we'll
+            # double speak the "label". It would be nice to avoid that.
+            # [[[TODO - JD: This is the simple version. It does not handle
+            # the possibility of the fake label being comprised of multiple
+            # objects.]]]
+            #
+            if prevObj \
+               and prevObj.getRole() in [pyatspi.ROLE_CHECK_BOX,
+                                         pyatspi.ROLE_RADIO_BUTTON] \
+               and prevObj.getState().contains(pyatspi.STATE_FOCUSED):
+                if self.guessTheLabel(prevObj) == string.strip():
+                    continue
+
             # The radio button's label gets added to the context in
             # default.locusOfFocusChanged() and not through the speech
             # generator -- unless we wind up having to guess the label.
             # Therefore, if we have a valid label for a radio button,
             # we need to add it here.
             #
-            if (obj.getRole() == pyatspi.ROLE_RADIO_BUTTON) \
+            if (role == pyatspi.ROLE_RADIO_BUTTON) \
                 and not self.isAriaWidget(obj):
                 label = self.getDisplayedLabel(obj)
                 if label:
@@ -5097,6 +5166,8 @@ class Script(default.Script):
             for item in utterance:
                 utterances.append([item, self.getACSS(obj, item)])
   
+            prevObj = obj
+
         return utterances
 
     def clumpUtterances(self, utterances):
