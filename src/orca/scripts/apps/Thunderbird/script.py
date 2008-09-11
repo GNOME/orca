@@ -156,6 +156,55 @@ class Script(Gecko.Script):
 
         return False
 
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Page_Up/Page_Down are not used by Orca. However, users report
+        # using these keys in Thunderbird without success. The default
+        # script is sometimes rejecting the resulting caret-moved events
+        # based on the locusOfFocus other times Gecko is because of the
+        # caret context.
+        #
+        updatePosition = False
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            string = orca_state.lastNonModifierKeyEvent.event_string
+            updatePosition = string in ["Page_Up", "Page_Down"]
+
+        # Unlike the unpredictable wild, wild web, odds are good that a
+        # caret-moved event in a message composition window is valid. But
+        # depending upon the locusOfFocus at the time this event is issued
+        # the default Gecko toolkit script might not do the right thing.
+        #
+        if not updatePosition and event.detail1 >= 0:
+            updatePosition = \
+                event.source.getState().contains(pyatspi.STATE_EDITABLE)
+
+        if updatePosition:
+            orca.setLocusOfFocus(event, event.source, False)
+            self.setCaretContext(event.source, event.detail1)
+
+            # The Gecko script, should it be about to pass along this
+            # event to the default script, will set the locusOfFocus to
+            # the object returned by findFirstCaretContext(). If that
+            # object is not the same as the event source or the event
+            # source's parent, the default script will reject the event.
+            # As a result, if the user presses Page_Up or Page_Down and
+            # just so happens to land on an object whose sole contents
+            # is an image, we'll say nothing. Ultimately this should
+            # probably be handled elsewhere, but this close to the next
+            # major (2.24) release, I (JD) am not risking it. :-)
+            #
+            [obj, offset] = \
+                self.findFirstCaretContext(event.source, event.detail1)
+            if obj.getRole() == pyatspi.ROLE_IMAGE:
+                return default.Script.onCaretMoved(self, event)
+
+        return Gecko.Script.onCaretMoved(self, event)
+
     def onFocus(self, event):
         """ Called whenever an object gets focus.
 

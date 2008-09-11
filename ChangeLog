@@ -5,6 +5,13 @@
           More work on bug #542833 - Flat review in Thunderbird is largely
           broken. This fix addresses some combo box related issues.
 
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #535188 - Page-up and page-down not functioning when
+          reading messages in Thunderbird.
+          Fix for bug #547496 - Cursor navigation does not start from
+          insertion carat location in Thunderbird Write window.
+
 2008-09-11  Willie Walker <william.walker@sun.com>
 
         * src/orca/settings.py:
@@ -26,8 +33,8 @@
           test/keystrokes/firefox/line_nav_simple_form.py:
           src/orca/scripts/toolkits/Gecko/script.py:
           Fix for bug #547573 - Orca has problems navigating past a couple
-          of links on java.sun.com. And fix for bug #549128 - Orca should
-          not get stuck on omahasteaks.com.
+          of links on java.sun.com.
+          Fix for bug #549128 - Orca should not get stuck on omahasteaks.com
 
         * test/keystrokes/firefox/line_nav_bugzilla_search.py:
           src/orca/scripts/toolkits/Gecko/script.py:

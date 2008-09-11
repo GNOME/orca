@@ -2566,6 +2566,9 @@ class Script(default.Script):
         if not self.isNavigableAria(orca_state.locusOfFocus):
             return False
 
+        if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
+            return False
+
         weHandleIt = True
         obj = orca_state.locusOfFocus
         if obj and (obj.getRole() == pyatspi.ROLE_ENTRY):
@@ -5101,9 +5104,10 @@ class Script(default.Script):
                 continue
 
             # If it is a "useless" image (i.e. not a link, no associated
-            # text), ignore it.
+            # text), ignore it, unless it's the only thing here.
             #
-            elif role == pyatspi.ROLE_IMAGE and self.isUselessObject(obj):
+            elif role == pyatspi.ROLE_IMAGE and self.isUselessObject(obj) \
+                 and len(contents) > 1:
                 continue
 
             # If the focused item is a checkbox or a radio button for which
