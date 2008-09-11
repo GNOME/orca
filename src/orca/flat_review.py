@@ -1159,12 +1159,21 @@ class Context:
             and accessible.childCount > 0:
             pass
         elif len(zones) == 0:
-            if accessible.name and len(accessible.name):
+            string = ""
+            if role == pyatspi.ROLE_COMBO_BOX:
+                try:
+                    selection = accessible[0].querySelection()
+                except:
+                    string = self.script.getDisplayedText(accessible[0])
+                else:
+                    item = selection.getSelectedChild(0)
+                    if item:
+                        string = item.name
+
+            if not string and accessible.name and len(accessible.name):
                 string = accessible.name
             elif accessible.description and len(accessible.description):
                 string = accessible.description
-            else:
-                string = ""
 
             if (string == "") \
                 and (role != pyatspi.ROLE_TABLE_CELL):

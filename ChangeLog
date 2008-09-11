@@ -1,3 +1,10 @@
+2008-09-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/flat_review_combo_box.py: (new)
+          src/orca/flat_review.py:
+          More work on bug #542833 - Flat review in Thunderbird is largely
+          broken. This fix addresses some combo box related issues.
+
 2008-09-11  Willie Walker <william.walker@sun.com>
 
         * src/orca/settings.py:
