@@ -1,3 +1,14 @@
+2008-09-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/default.py:
+          src/orca/outline.py:
+          src/orca/Makefile.am:
+          Fix for bug #363793 - Add the ability to change the color 
+          of the flat review rectangle.  This support is 'under the
+          covers' for now and requires hand-editing of 
+          ~/.orca/user-settings.py or ~/.orca/orca-customizations.py.
+
 2008-09-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/dojo_spinner.py:

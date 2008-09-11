@@ -28,16 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    import gtk
-except:
-    pass
-
 import locale
 import math
 import sys
@@ -52,6 +42,7 @@ import flat_review
 import input_event
 import keybindings
 import mag
+import outline
 import orca
 import orca_prefs
 import orca_state
@@ -114,11 +105,6 @@ class Script(script.Script):
         # getUnicodeCurrencySymbols() routine).
         #
         self._unicodeCurrencySymbols = []
-
-        # Used by the drawOutline routine.
-        #
-        self._display = None
-        self._visibleRectangle = None
 
         # Used by the visualAppearanceChanged routine for updating whether
         # progress bars are spoken.
@@ -3925,7 +3911,8 @@ class Script(script.Script):
                     and (orca_state.lastNonModifierKeyEvent.event_string \
                                                                   == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
-                    utterances = self.speechGenerator.getSpeech(orca_state.locusOfFocus,
+                    utterances = self.speechGenerator.getSpeech(\
+                        orca_state.locusOfFocus,
                         False)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                       orca_state.locusOfFocus, False))
@@ -4177,6 +4164,11 @@ class Script(script.Script):
             # more details.
             #
             braille.clear()
+
+            # Hide the flat review window and reset it so that it will be
+            # recreated.
+            #
+            self.drawOutline(-1, 0, 0, 0)
 
         # Because window activated and deactivated events may be
         # received in any order when switching from one application to
@@ -5313,8 +5305,6 @@ class Script(script.Script):
             for zone in line.zones:
                 lineString += " '%s' [%s]" % \
                           (zone.string, zone.accessible.getRoleName())
-                self.drawOutline(zone.x, zone.y, zone.width, zone.height,
-                                 False)
             debug.println(debug.LEVEL_OFF, lineString)
         self.flatReviewContext = None
 
@@ -7167,77 +7157,30 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def drawOutline(self, x, y, width, height, erasePrevious=True):
-        """Draws a rectangular outline around the accessible, erasing the
-        last drawn rectangle in the process."""
+    def drawOutline(self, x, y, width, height):
+        """Draws an outline around the accessible, erasing the
+        last drawn outline in the process."""
 
-        if not self._display:
-            try:
-                self._display = gtk.gdk.display_get_default()
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                self._display = gtk.gdk.display(":0")
+        if (x == -1) and (y == 0) and (width == 0) and (height == 0):
+            outline.erase()
+        else:
+            outline.draw(x, y, width, height)
 
-            if not self._display:
-                debug.println(debug.LEVEL_SEVERE,
-                              "Script.drawOutline could not open display.")
-                return
-
-        screen = self._display.get_default_screen()
-        root_window = screen.get_root_window()
-        graphics_context = root_window.new_gc()
-        graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
-        graphics_context.set_function(gtk.gdk.INVERT)
-        graphics_context.set_line_attributes(3,                  # width
-                                             gtk.gdk.LINE_SOLID, # style
-                                             gtk.gdk.CAP_BUTT,   # end style
-                                             gtk.gdk.JOIN_MITER) # join style
-
-        # Erase the old rectangle.
-        #
-        if self._visibleRectangle and erasePrevious:
-            self.drawOutline(self._visibleRectangle[0],
-                             self._visibleRectangle[1],
-                             self._visibleRectangle[2],
-                             self._visibleRectangle[3],
-                             False)
-            self._visibleRectangle = None
-
-        # We'll use an invalid x value to indicate nothing should be
-        # drawn.
-        #
-        if x < 0:
-            self._visibleRectangle = None
-            return
-
-        # The +1 and -2 stuff here is an attempt to stay within the
-        # bounding box of the object.
-        #
-        root_window.draw_rectangle(graphics_context,
-                                   False, # Fill
-                                   x + 1,
-                                   y + 1,
-                                   max(1, width - 2),
-                                   max(1, height - 2))
-
-        self._visibleRectangle = [x, y, width, height]
-
-    def outlineAccessible(self, accessible, erasePrevious=True):
+    def outlineAccessible(self, accessible):
         """Draws a rectangular outline around the accessible, erasing the
         last drawn rectangle in the process."""
 
         try:
             component = accessible.queryComponent()
         except AttributeError:
-            self.drawOutline(-1, 0, 0, 0, erasePrevious)
+            self.drawOutline(-1, 0, 0, 0)
         except NotImplementedError:
             pass
         else:
             visibleRectangle = \
                 component.getExtents(pyatspi.DESKTOP_COORDS)
             self.drawOutline(visibleRectangle.x, visibleRectangle.y,
-                             visibleRectangle.width, visibleRectangle.height,
-                             erasePrevious)
+                             visibleRectangle.width, visibleRectangle.height)
 
     def isTextSelected(self, obj, startOffset, endOffset):
         """Returns an indication of whether the text is selected by

@@ -43,6 +43,7 @@ orca_python_PYTHON = \
 	orca_prefs.py \
 	orca_quit.py \
 	orca_state.py \
+	outline.py \
 	outloud.py \
 	phonnames.py \
 	platform.py \
