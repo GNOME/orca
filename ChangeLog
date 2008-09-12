@@ -1,3 +1,10 @@
+2008-09-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/imagemap.py: (new)
+          Fix for bug #518945 - Orca has problems with certain imagemaps
+          in FF3.
+
 2008-09-12  Willie Walker
 
         * Add to the 'svn propedit svn:ignore' values of various directories.
