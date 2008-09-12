@@ -1,3 +1,8 @@
+2008-09-12  Willie Walker
+
+        * Add to the 'svn propedit svn:ignore' values of various directories.
+          This helps eliminate spurious '?' entries in 'svn stat' output.
+
 2008-09-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/flat_review_combo_box.py: (new)
