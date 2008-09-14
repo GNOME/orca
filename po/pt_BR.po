@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-08 06:47+0000\n"
-"PO-Revision-Date: 2008-09-06 17:43-0300\n"
+"PO-Revision-Date: 2008-09-13 23:37-0300\n"
 "Last-Translator: Michel Recondo <mrecondo@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -3342,8 +3342,7 @@ msgstr "O suporte a acessibilidade do GNOME acabou de ser habilitado."
 #: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:456
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
-"Você precisa sair da sua sessão GNOME e entrar novamente para as mudanças "
-"terem efeito."
+"Você precisa reiniciar sua sessão GNOME para que as mudanças tenham efeito."
 
 #: ../src/orca/orca_console_prefs.py:483
 msgid "Do you want to logout now?  Enter y or n: "
@@ -3351,7 +3350,7 @@ msgstr "Deseja encerrar a sessão agora? Digite s ou n: "
 
 #: ../src/orca/orca_console_prefs.py:489
 msgid "Setup complete. Logging out now."
-msgstr "Instalação completa. Efetuando logout agora."
+msgstr "Instalação completa. Encerrando sessão agora."
 
 #: ../src/orca/orca_console_prefs.py:503
 msgid "Setup complete.  Press Return to continue."
@@ -9454,8 +9453,7 @@ msgstr "Botão padrão é %s"
 
 #~ msgid "You need to log out and log back in for the change to take effect. "
 #~ msgstr ""
-#~ "Você precisa sair da sua sessão GNOME e entrar novamente para as mudanças "
-#~ "terem efeito."
+#~ "Você precisa reiniciar sua sessão GNOME para as mudanças terem efeito."
 
 #~ msgid "ASAP"
 #~ msgstr "ASAP"
