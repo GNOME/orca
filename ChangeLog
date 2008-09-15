@@ -1,3 +1,12 @@
+2008-09-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/yelp.py:
+          More work toward the fix for bug #356041 - GNOME Help (yelp) is
+          inaccessible. Ginn Chen created another patch for Yelp which 
+          makes things work even better. Thanks Ginn! To use Orca with
+          Yelp, you just need the latest Orca and Yelp from trunk -- or
+          wait for the GNOME 2.24 release. 
+
 2008-09-15  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/tutorialgenerator.py:

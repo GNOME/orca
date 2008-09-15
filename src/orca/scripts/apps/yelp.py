@@ -19,9 +19,9 @@
 
 """Custom script for Yelp."""
 
-__id__        = "$Id:$"
-__version__   = "$Revision:$"
-__date__      = "$Date:$"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
@@ -43,21 +43,13 @@ class Script(Gecko.Script):
         #
         self.presentIfInactive = False
 
-    def onDocumentLoadComplete(self, event):
-        """Called when a web page load is completed."""
-
-        # We can't count on this event, but often when the first Yelp
-        # window is opened, this event is emitted. If we silently set
-        # the locusOfFocus here, the frame won't be the locusOfFocus
-        # for the initial call to getDocumentFrame(). As an added
-        # bonus, when we detect this condition, we can place the user
-        # at the top of the content. Yelp seems to prefer the end,
-        # which is confusing non-visually.
+        # Each time the user presses Return on a link, we get all the events
+        # associated with a page loading -- even if the link is to an anchor
+        # on the same page. We don't want to move to the top of the page and
+        # do a SayAll unless we have a new page. We'll use the frame name as
+        # a way to identify this condition.
         #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            orca.setLocusOfFocus(event, event.source, False)
-
-        return Gecko.Script.onDocumentLoadComplete(self, event)
+        self._currentFrameName = ""
 
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown."""
@@ -103,33 +95,71 @@ class Script(Gecko.Script):
         # the locusOfFocus here before sending this event on.
         #
         if self.inDocumentContent(event.source):
-            orca.setLocusOfFocus(event, event.source)
+            obj = event.source
+            characterOffset = event.detail1
+
+            # If the event is for an anchor with no text, try to find
+            # something more meaningful.
+            #
+            while obj and obj.getRole() == pyatspi.ROLE_LINK \
+                  and not self.queryNonEmptyText(obj):
+                [obj, characterOffset] = \
+                    self.findNextCaretInOrder(obj, characterOffset)
+
+            # We need to notify the presentation managers because we don't
+            # seem to get any focus/focused events for links. We seem to
+            # get caret-moved events for anchors only when the user has
+            # followed a link. Changes in the content being displayed is
+            # handled by onStateChanged(). Therefore, we need to notify the
+            # presentation managers if this event is not for an empty anchor.
+            #
+            notify = self.isSameObject(event.source, obj)
+            orca.setLocusOfFocus(event, obj, notify)
+            self.setCaretPosition(obj, characterOffset)
 
         return Gecko.Script.onCaretMoved(self, event)
 
     def onChildrenChanged(self, event):
-        """Called when a child node has changed. When the user follows a
-        link in an open Yelp window, the document frame content changes,
-        but we don't get any events to tell us something has loaded.
-        STILL INVESTIGATING, but it seems like we get a reliable
-        object:children-changed:add event for detail1 == -1 for the
-        document frame. Let's go with that for now....
+        """Called when a child node has changed.  The document frame emits
+        these events quite a bit, each time the page changes. We want to
+        ignore those events.
         """
 
-        if event.type.startswith("object:children-changed:add") \
-           and event.detail1 == -1 and event.source \
-           and event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+            Gecko.Script.onChildrenChanged(self, event)
 
-            #print "Yelp object:children-changed:add", obj, characterOffset
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
 
-            # If the frame is the locusOfFocus, getCaretContext() will fail
-            # because we don't want to look from the top down to find the
-            # document frame and cause Yelp to have an identity crisis. So
-            # let's just set it here and avoid that whole mess.
+        Arguments:
+        - event: the Event
+        """
+
+        if event.type.startswith("object:state-changed:busy") \
+           and event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           and not event.detail1:
+
+            # We need to set the locusOfFocus to the document frame in
+            # order to reliably get the caret context.
             #
             orca.setLocusOfFocus(event, event.source, False)
             [obj, characterOffset] = self.getCaretContext()
-            if obj:
+
+            # Often the first object is an anchor with no text. Try to
+            # find something more meaningful and set the caret there.
+            #
+            while obj and obj.getRole() == pyatspi.ROLE_LINK \
+                  and not self.queryNonEmptyText(obj):
+                [obj, characterOffset] = \
+                    self.findNextCaretInOrder(obj, characterOffset)
+
+            if not obj:
+                return
+
+            if event.source.name == self._currentFrameName:
+                orca.setLocusOfFocus(event, obj)
+            else:
+                self._currentFrameName = event.source.name
                 self.setCaretPosition(obj, characterOffset)
                 if obj.getState().contains(pyatspi.STATE_FOCUSED):
                     speech.speakUtterances(\
@@ -140,5 +170,6 @@ class Script(Gecko.Script):
                 elif settings.enableSpeech:
                     self.sayAll(None)
 
-        else:
-            Gecko.Script.onChildrenChanged(self, event)
+            return
+
+        Gecko.Script.onStateChanged(self, event)
