@@ -21,6 +21,10 @@
           is on other lines in FF3. Plus a couple of tests I forgot to
           update.
 
+        * src/orca/scripts/apps/soffice/script.py:
+          Fix for bug #552350 - Orca doesn't recognize it is in a
+          spreadsheet cell in certain builds of OOo Dev 3.
+
 2008-09-15  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/tutorialgenerator.py:

@@ -528,37 +528,15 @@ class Script(default.Script):
         Returns True if this is a table cell, False otherwise.
         """
 
-        found = False
-        rolesList = [pyatspi.ROLE_TABLE_CELL,
-                     pyatspi.ROLE_TABLE,
-                     [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_DOCUMENT_FRAME],
-                     pyatspi.ROLE_SCROLL_PANE,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_ROOT_PANE,
-                     pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_APPLICATION]
-        if startFromTable:
-            rolesList = rolesList[1:]
-        if self.isDesiredFocusedItem(obj, rolesList):
-            # We've found a table cell with the correct hierarchy. Now check
-            # that we are in a spreadsheet as opposed to the writer application.
-            # See bug #382408.
-            #
-            current = obj.parent
-            while current.getRole() != pyatspi.ROLE_APPLICATION:
-                # Translators: this represents a match on a window title.
-                # We're looking for frame that ends in "Calc", representing
-                # an OpenOffice or StarOffice spreadsheet window.  We
-                # really try to avoid doing this kind of thing, but sometimes
-                # it is necessary and we apologize.
-                #
-                if current.getRole() in [pyatspi.ROLE_FRAME,
-                                         pyatspi.ROLE_ROOT_PANE] and \
-                   (current.name and current.name.endswith(_("Calc"))):
-                    found = True
-                current = current.parent
+        if not startFromTable:
+            obj = obj.parent
 
-        return found
+        try:
+            table = obj.queryTable()
+        except:
+            return False
+        else:
+            return table.nRows == 65536
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
