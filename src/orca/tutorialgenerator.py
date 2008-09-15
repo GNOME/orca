@@ -23,9 +23,9 @@ class.  For those wishing to override the generators, however,
 one can create a new instance and replace/extend the tutorial generators
 as they see fit."""
 
-__id__        = "$Id:$"
-__version__   = "$Revision:$"
-__date__      = "$Date:$"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
@@ -215,8 +215,8 @@ class TutorialGenerator:
         # Translators: If this application has more than one unfocused alert or
         # dialog window, inform user of how to refocus these.
         childWindowsMsg = _("Press alt+f6 to give focus to child windows.")
-        
-        if name == 'Desktop':
+
+        if 'Desktop' in name or 'desktop' in name:
             utterances.append(desktopMsg)
 
         # If this application has more than one unfocused alert or

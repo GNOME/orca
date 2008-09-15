@@ -1,3 +1,9 @@
+2008-09-15  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/tutorialgenerator.py:
+          Fix for bug #552344 - tutorial message for desktop not spoken 
+          in ibex
+
 2008-09-15  Willie Walker
 
         * Make sure the 'svn propedit svn:keywords' values for each 
