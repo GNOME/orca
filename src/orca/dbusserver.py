@@ -19,9 +19,9 @@
 
 """Exposes Orca as a DBus service for testing and watchdog purposes."""
 
-__id__        = "$Id: httpserver.py 3445 2008-01-11 17:05:52Z wwalker $"
-__version__   = "$Revision: 3445 $"
-__date__      = "$Date: 2008-01-11 12:05:52 -0500 (Fri, 11 Jan 2008) $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 

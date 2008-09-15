@@ -17,9 +17,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-__id__        = "$Id: J2SE-access-bridge.py 3882 2008-05-07 18:22:10Z richb $"
-__version__   = "$Revision: 3882 $"
-__date__      = "$Date: 2008-05-07 14:22:10 -0400 (Wed, 07 May 2008) $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 

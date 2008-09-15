@@ -20,9 +20,9 @@
 """ Custom script for gnome-panel
 """
 
-__id__        = "$Id: gnome-panel.py 2251 2007-04-05 01:42:41Z lmonsanto $"
-__version__   = "$Revision: 2251 $"
-__date__      = "$Date: 2007-04-04 18:42:41 -0700 (Wed, 04 Apr 2007) $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 

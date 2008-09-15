@@ -19,9 +19,9 @@
 """Provides a simple utility to draw outlines on the screen.
 [[[TODO: WDW - The Wedge support is experimental and not perfect.]]]"""
 
-__id__        = "$Id: $"
-__version__   = "$Revision: $"
-__date__      = "$Date: $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 

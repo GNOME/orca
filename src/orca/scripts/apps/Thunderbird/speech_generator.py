@@ -20,9 +20,9 @@
 """ Custom script for Thunderbird 3.
 """
 
-__id__        = "$Id: $"
-__version__   = "$Revision: $"
-__date__      = "$Date: $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 

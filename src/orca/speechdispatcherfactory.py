@@ -31,9 +31,9 @@
 NOTE: THIS IS EXPERIMENTAL ONLY AND IS NOT A SUPPORTED COMPONENT OF ORCA.
 """
 
-__id__        = "$Id: $"
-__version__   = "$Revision: $"
-__date__      = "$Date: 2007-02-28 $"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __author__    = "Tomas Cerha <cerha@brailcom.org>"
 __copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
