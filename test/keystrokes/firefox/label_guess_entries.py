@@ -122,7 +122,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l'",
+    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'First Name text'"]))
 
@@ -132,7 +133,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l'",
+    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'M.I. text'"]))
 
@@ -142,7 +144,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l'",
+    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Last Name text'"]))
 

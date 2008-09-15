@@ -5,7 +5,21 @@
           inaccessible. Ginn Chen created another patch for Yelp which 
           makes things work even better. Thanks Ginn! To use Orca with
           Yelp, you just need the latest Orca and Yelp from trunk -- or
-          wait for the GNOME 2.24 release. 
+          wait for the GNOME 2.24 release.
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/label_guess_bug_509809.py: (new)
+          test/keystrokes/firefox/label_guess_bug_546815.py: (new)
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/sayAll_imagemap.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/uiuc_slider.py:        
+          Fix for bug #546815 - guessLabelFromLine() is guessing text that
+          is on other lines in FF3. Plus a couple of tests I forgot to
+          update.
 
 2008-09-15  Mesar Hameed <via william.walker@sun.com>
 

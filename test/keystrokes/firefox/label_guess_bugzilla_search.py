@@ -494,7 +494,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
      "     VISIBLE:  'Reuse same sort as last time Com', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Reuse same sort as last time combo box'"]))
+     "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

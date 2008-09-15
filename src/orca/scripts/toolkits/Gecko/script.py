@@ -1922,7 +1922,8 @@ class Script(default.Script):
             #
             if candidate.getRole() in [pyatspi.ROLE_LIST,
                                        pyatspi.ROLE_COMBO_BOX] \
-               and candidate.getState().contains(pyatspi.STATE_FOCUSABLE):
+               and candidate.getState().contains(pyatspi.STATE_FOCUSABLE) \
+               and not self.isSameObject(obj, candidate):
                 start = self.getCharacterOffsetInParent(candidate)
                 end = start + 1
                 candidate = candidate.parent
@@ -3703,29 +3704,29 @@ class Script(default.Script):
         #
         # Reverse this order for radio buttons and check boxes
         #
-        guess = None
-        extents = obj.queryComponent().getExtents(0)
-        objExtents = [extents.x, extents.y, extents.width, extents.height]
-
         lineContents = self.currentLineContents
         ourIndex = self.findObjectOnLine(obj, 0, lineContents)
         if ourIndex < 0:
             lineContents = self.getLineContentsAtOffset(obj, 0)
             ourIndex = self.findObjectOnLine(obj, 0, lineContents)
 
-        objectsOnLine = []
-        for content in lineContents:
-            objectsOnLine.append(content[0])
+        thisObj = lineContents[ourIndex]
+        objExtents = self.getExtents(thisObj[0], thisObj[1], thisObj[2])
 
-        # Now that we know where we are, let's see who are neighbors are
-        # and where they are.
-        #
-        onLeft = None
-        onRight = None
-        if ourIndex > 0:
-            onLeft = objectsOnLine[ourIndex - 1]
-        if 0 <= ourIndex < len(objectsOnLine) - 1:
-            onRight = objectsOnLine[ourIndex + 1]
+        leftGuess = ""
+        extents = objExtents
+        for i in range (ourIndex - 1, -1, -1):
+            candidate, start, end, string = lineContents[i]
+            if self.isFormField(candidate):
+                break
+
+            prevExtents = self.getExtents(candidate, start, end)
+            if -1 <= extents[0] - (prevExtents[0] + prevExtents[2]) < 75:
+                # The candidate might be an image with alternative text.
+                #
+                string = string or candidate.name
+                leftGuess = string + leftGuess
+                extents = prevExtents
 
         # Normally we prefer what's on the left given a choice.  Reasons
         # to prefer what's on the right include looking at a radio button
@@ -3735,105 +3736,38 @@ class Script(default.Script):
         preferRight = obj.getRole() in [pyatspi.ROLE_CHECK_BOX,
                                         pyatspi.ROLE_RADIO_BUTTON]
 
-        # [[[TODO: JD: Nearby text that's not actually in the form may need
-        # to be ignored.  Let's try that for now and adjust based on feedback
-        # and testing.]]]
+        # Sometimes we don't want the text on the right -- at least not
+        # until we are able to present labels on the right after the
+        # object we believe they are labeling, rather than before.
         #
-        leftIsInForm = (onLeft and onLeft.getRole() == pyatspi.ROLE_FORM)
-        if not leftIsInForm:
-            leftIsInForm = self.getAncestor(onLeft,
-                                            [pyatspi.ROLE_FORM],
-                                            [pyatspi.ROLE_DOCUMENT_FRAME])
-        rightIsInForm = (onRight and onRight.getRole() == pyatspi.ROLE_FORM)
-        if not rightIsInForm:
-            rightIsInForm = self.getAncestor(onRight,
-                                             [pyatspi.ROLE_FORM],
-                                             [pyatspi.ROLE_DOCUMENT_FRAME])
-        # If it's a radio button, we'll waive the requirement of the text
-        # on the right being within the form (or rather, we'll just act as
-        # if it were even if it's not).
-        #
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
-            rightIsInForm = True
+        preventRight = obj.getRole() == pyatspi.ROLE_COMBO_BOX
 
-        # [[[TODO: Grayed out buttons don't pass the isFormField() test
-        # because they are neither focusable nor showing -- and thus
-        # something we don't want to navigate to via structural navigation.
-        # We may need to rethink our definition of isFormField().  In the
-        # meantime, let's not used grayed out buttons as labels. As an
-        # example, see the Search entry on live.gnome.org.]]]
-        #
-        if onLeft:
-            leftIsFormField = self.isFormField(onLeft) \
-                              or onLeft.getRole() == pyatspi.ROLE_PUSH_BUTTON
-        if onRight:
-            rightIsFormField = self.isFormField(onRight) \
-                               or onRight.getRole() == pyatspi.ROLE_PUSH_BUTTON
-
-        if onLeft and leftIsInForm and not leftIsFormField:
-            # We want to get the text on the left including embedded objects
-            # that are NOT form fields. If we find a form field on the left,
-            # that will be the starting point of the text we want.
-            #
-            startOffset = 0
-            endOffset = -1
-            if self.isSameObject(obj.parent, onLeft):
-                endOffset = self.getCharacterOffsetInParent(obj)
-                index = obj.getIndexInParent()
-                if index > 0:
-                    prevSibling = onLeft[index - 1]
-                    if self.isFormField(prevSibling):
-                        startOffset = \
-                                  self.getCharacterOffsetInParent(prevSibling)
-
-            guess = self.expandEOCs(onLeft, startOffset, endOffset)
-            if guess:
-                guess = guess.decode("UTF-8").strip()
-            if not guess and onLeft.getRole() == pyatspi.ROLE_IMAGE:
-                guess = onLeft.name
-
-        if (preferRight or not guess) \
-           and onRight and rightIsInForm and not rightIsFormField:
-            # The object's horizontal position plus its width tells us
-            # where the text on the right can begin.  For now, define
-            # "immediately after" as  within 50 pixels.
-            #
-            canStartAt = objExtents[0] + objExtents[2]
-            onRightExtents = onRight.queryComponent().getExtents(0)
-            onRightExtents = [onRightExtents.x, onRightExtents.y,
-                              onRightExtents.width, onRightExtents.height]
-
-            if (onRightExtents[0] - canStartAt) <= 50:
-                # We want to get the text on the right including embedded
-                # objects that are NOT form fields.  If we find a form field
-                # on the right, that will be the ending point of the text we
-                # want.  However, if we have a form field on the right and
-                # do not have a reason to prefer the text on the right, our
-                # label may be on the line above.  As an example, see the
-                # bugzilla Advanced search... Bug Changes section.
+        rightGuess = ""
+        extents = objExtents
+        if not preventRight and (preferRight or not leftGuess):
+            for i in range (ourIndex + 1, len(lineContents)):
+                candidate, start, end, string = lineContents[i]
+                # If we're looking on the right and find text, and then
+                # find another nearby form field, the text we've found
+                # might be the label for that field rather than for this
+                # one. We'll assume that for now and bail under these
+                # conditions.
                 #
-                startOffset = 0
-                endOffset = -1
-                if self.isSameObject(obj.parent, onRight):
-                    startOffset = self.getCharacterOffsetInParent(obj)
-                    index = obj.getIndexInParent()
-                    if index < onRight.childCount - 1:
-                        nextSibling = onRight[index + 1]
-                        nextRole = nextSibling.getRole()
-                        if self.isFormField(nextSibling) \
-                           or nextRole == pyatspi.ROLE_RADIO_BUTTON:
-                            endOffset = \
-                                  self.getCharacterOffsetInParent(nextSibling)
-                            if not preferRight:
-                                return None
+                if self.isFormField(candidate):
+                    if not preferRight:
+                        rightGuess = ""
+                    break
 
-                guess = self.expandEOCs(onRight, startOffset, endOffset)
-                if guess:
-                    guess = guess.decode("UTF-8").strip()
-                if not guess and onRight.getRole() == pyatspi.ROLE_IMAGE:
-                    guess = onRight.name
+                nextExtents = self.getExtents(candidate, start, end)
+                if -1 <= nextExtents[0] - (extents[0] + extents[2]) < 75:
+                    # The candidate might be an image with alternative text.
+                    #
+                    string = string or candidate.name
+                    rightGuess += string
+                    extents = nextExtents
 
-        return guess
+        guess = rightGuess or leftGuess
+        return guess.strip()
 
     def guessLabelFromOtherLines(self, obj):
         """Attempts to guess what the label of an unlabeled form control
@@ -4192,7 +4126,7 @@ class Script(default.Script):
             # cell.
             #
             guess = self.guessLabelFromOtherLines(obj)
-            #print "guess form other lines: ", guess
+            #print "guess from other lines: ", guess
         if not guess:
             # We've pretty much run out of options.  From Tom's overview
             # of the approach for all controls:

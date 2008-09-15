@@ -86,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Priority Link : Normal Combo'",
      "     VISIBLE:  'Priority Link : Normal Combo', cursor=17",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Normal combo box'"]))
+     "SPEECH OUTPUT: 'Priority: Normal combo box'"]))
 
 ########################################################################
 # Press Down Arrow to change the selection to Low.  
@@ -150,7 +150,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Priority Link : Low Combo'",
      "     VISIBLE:  'Priority Link : Low Combo', cursor=17",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Low combo box'"]))
+     "SPEECH OUTPUT: 'Priority: Low combo box'"]))
 
 ########################################################################
 # Press Tab once to get to the Resolution combo box.

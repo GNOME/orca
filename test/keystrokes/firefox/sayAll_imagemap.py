@@ -72,7 +72,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'c link'",
      "SPEECH OUTPUT: 'b link'",
      "SPEECH OUTPUT: 'a link'",
-     "SPEECH OUTPUT: 'Here is some text.'"]))
+     "SPEECH OUTPUT: 'Here is some text.'",
+     "SPEECH OUTPUT: 'Safeway had some interesting (and problematic) image maps. I didn't steal the images, but if you tab and look at the status bar, you should be able to see the URI for each region. We should also be speaking and brailling it correctly now -- at least as best as we can given what they gave us.'",
+     "SPEECH OUTPUT: 'wk09_frozenmovie link image'",
+     "SPEECH OUTPUT: 'www.vons.com link www.dominicks.com link www.randalls.com link www.tomthumb.com link www.genuardis.com link www.pavilions.com link www.carrsqc.com link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

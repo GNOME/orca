@@ -63,6 +63,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider Control 1 51 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 1 51 Slider'",
      "     VISIBLE:  'Slider Control 1 51 Slider', cursor=1",
+     "BRAILLE LINE:  'Slider Control 1 51 Slider'",
+     "     VISIBLE:  'Slider Control 1 51 Slider', cursor=1",
      "SPEECH OUTPUT: '51'"]))
     
 sequence.append(utils.StartRecordingAction())
@@ -114,13 +116,15 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Slider Control 2 slider 100'"]))
     
 ########################################################################
-# Decrement slider 2 several times
+# Increment slider 2 several times
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "1 Decrement slider 2", 
+    "1 Increment slider 2", 
     ["BRAILLE LINE:  'Slider Control 2 101 Slider'",
+     "     VISIBLE:  'Slider Control 2 101 Slider', cursor=1",
+     "BRAILLE LINE:  'Slider Control 2 101 Slider'",
      "     VISIBLE:  'Slider Control 2 101 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 101 Slider'",
      "     VISIBLE:  'Slider Control 2 101 Slider', cursor=1",
@@ -129,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "2 Decrement slider 2", 
+    "2 Increment slider 2", 
     ["BRAILLE LINE:  'Slider Control 2 102 Slider'",
      "     VISIBLE:  'Slider Control 2 102 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 102 Slider'",
@@ -141,7 +145,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "3 Decrement slider 2", 
+    "3 Increment slider 2", 
     ["BRAILLE LINE:  'Slider Control 2 103 Slider'",
      "     VISIBLE:  'Slider Control 2 103 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 103 Slider'",
@@ -153,7 +157,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "4 Decrement slider 2", 
+    "4 Increment slider 2", 
     ["BRAILLE LINE:  'Slider Control 2 104 Slider'",
      "     VISIBLE:  'Slider Control 2 104 Slider', cursor=1",
      "BRAILLE LINE:  'Slider Control 2 104 Slider'",
