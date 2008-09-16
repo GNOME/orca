@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-11 20:44+0000\n"
-"PO-Revision-Date: 2008-09-12 10:22+0200\n"
+"POT-Creation-Date: 2008-09-15 19:18+0200\n"
+"PO-Revision-Date: 2008-09-16 11:06+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Spanyol"
 
 #: ../src/louis/constants.py.in:30
 msgid "Canada French Grade 2"
-msgstr "Kanadai Francia"
+msgstr "Kanadai francia 2"
 
 #: ../src/louis/constants.py.in:31
 msgid "France French Grade 2"
@@ -111,11 +111,11 @@ msgstr "Arab"
 
 #: ../src/louis/constants.py.in:42
 msgid "Welsh Grade 1"
-msgstr "Welsz 1"
+msgstr "Walesi 1"
 
 #: ../src/louis/constants.py.in:43
 msgid "Welsh Grade 2"
-msgstr "Welsz 2"
+msgstr "Walesi 2"
 
 #: ../src/louis/constants.py.in:44
 msgid "German Grade 0"
@@ -167,7 +167,7 @@ msgstr "Olasz"
 
 #: ../src/louis/constants.py.in:56
 msgid "Belgium Dutch Grade 1"
-msgstr "Belgiumi Német"
+msgstr "Belgiumi német 1"
 
 #: ../src/orca/app_gui_prefs.py:123
 #, python-format
@@ -2191,7 +2191,7 @@ msgstr "A következő billentyűparancs átadása az aktuális alkalmazásnak."
 #: ../src/orca/scripts/apps/soffice/script.py:1258
 #: ../src/orca/scripts/apps/soffice/script.py:2037
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5201
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5223
 #: ../src/orca/structural_navigation.py:3281 ../src/orca/where_am_I.py:1625
 msgid "blank"
 msgstr "üres"
@@ -6559,7 +6559,7 @@ msgstr "Nincs értesítés, ha a partnerek gépelnek."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:492
 msgid "Provide chat room specific message histories."
-msgstr "A csevegőszoba ü_zenetelőzményeinek megjelenítése."
+msgstr "A csevegőszoba üzenetelőzményeinek megjelenítése."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:496
 msgid "Do not provide chat room specific message histories."
@@ -7094,7 +7094,7 @@ msgstr "f%d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5730
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5752
 msgid "open"
 msgstr "megnyitás"
 
@@ -7104,7 +7104,7 @@ msgstr "megnyitás"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5803
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5825
 #: ../src/orca/structural_navigation.py:881
 msgid "Wrapping to bottom."
 msgstr "Vissza a lap aljára."
@@ -7115,7 +7115,7 @@ msgstr "Vissza a lap aljára."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5871
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5893
 #: ../src/orca/structural_navigation.py:889
 msgid "Wrapping to top."
 msgstr "Vissza a lap tetejére."
@@ -7123,9 +7123,9 @@ msgstr "Vissza a lap tetejére."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5897
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5921
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5931
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5919
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5943
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5953
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Az élő régiók támogatása kikapcsolva"
@@ -7133,11 +7133,11 @@ msgstr "Az élő régiók támogatása kikapcsolva"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5905
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5927
 msgid "Live regions monitoring on"
 msgstr "Az élő régiók figyelése bekapcsolva"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5912
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5934
 msgid "Live regions monitoring off"
 msgstr "Az élő régiók figyelése kikapcsolva"
 
@@ -7148,7 +7148,7 @@ msgstr "Az élő régiók figyelése kikapcsolva"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5947
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5969
 msgid "Gecko is controlling the caret."
 msgstr "A Gecko vezérli a mutatót."
 
@@ -7159,7 +7159,7 @@ msgstr "A Gecko vezérli a mutatót."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5959
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5981
 msgid "Orca is controlling the caret."
 msgstr "Az Orka vezérli a mutatót."
 
@@ -7433,7 +7433,7 @@ msgstr "leválasztás"
 #.
 #: ../src/orca/structural_navigation.py:595
 msgid "Toggles structural navigation keys."
-msgstr "Be- vagy kikapcsolja a _strukturált navigációs billentyűket."
+msgstr "Be- vagy kikapcsolja a strukturált navigációs billentyűket."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around document content by object type.
@@ -7447,7 +7447,7 @@ msgstr "Be- vagy kikapcsolja a _strukturált navigációs billentyűket."
 #.
 #: ../src/orca/structural_navigation.py:649
 msgid "Structural navigation keys on."
-msgstr "Strukturált navigá_ciós billentyűk engedélyezve."
+msgstr "Strukturált navigációs billentyűk engedélyezve."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around document content by object type.
@@ -7461,7 +7461,7 @@ msgstr "Strukturált navigá_ciós billentyűk engedélyezve."
 #.
 #: ../src/orca/structural_navigation.py:661
 msgid "Structural navigation keys off."
-msgstr "Strukturált navigá_ciós billentyűk kikapcsolva."
+msgstr "Strukturált navigációs billentyűk kikapcsolva."
 
 #. Translators: this is for navigating document content by
 #. moving from table cell to table cell. If the user gives a
