@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-10 22:28+0200\n"
-"PO-Revision-Date: 2008-09-10 23:12+0200\n"
+"PO-Revision-Date: 2008-09-17 22:17+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -355,6 +355,8 @@ msgstr "contratto"
 msgid "LEVEL %d"
 msgstr "LIVELLO %d"
 
+# GNOME-2-24
+# in gail non c'è alcun toggle...
 #. Translators: this is the action name for
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
@@ -367,9 +369,8 @@ msgstr "LIVELLO %d"
 #: ../src/orca/speechgenerator.py:1581 ../src/orca/tutorialgenerator.py:456
 #: ../src/orca/tutorialgenerator.py:496 ../src/orca/where_am_I.py:1349
 #: ../src/orca/where_am_I.py:1379
-#, fuzzy
 msgid "toggle"
-msgstr "pulsante di commutazione"
+msgstr "commuta"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -2118,6 +2119,7 @@ msgid ""
 "console where Orca is running."
 msgstr "Stampa informazioni di debug sull'applicazione attualmente attiva sulla console in cui Orca è in esecuzione."
 
+# GNOME-2-24
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
 #. that will take the component in the currently running
@@ -2127,8 +2129,9 @@ msgstr "Stampa informazioni di debug sull'applicazione attualmente attiva sulla 
 #. tree).
 #.
 #: ../src/orca/default.py:803
+#, fuzzy
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr ""
+msgstr "Stampa informazioni di debug su XXXXXXXXX dell'oggetto con focus."
 
 # GNOME-2-24
 #. Translators: this is a debug message that Orca users
@@ -2635,7 +2638,7 @@ msgstr "documento selezionato alla posizione del cursore"
 #: ../src/orca/default.py:7439
 #, fuzzy
 msgid "document unselected to cursor position"
-msgstr "documento selezionato alla posizione del cursore"
+msgstr "documento deselezionato alla posizione del cursore"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -2651,7 +2654,7 @@ msgstr "documento selezionato dalla posizione del cursore"
 #: ../src/orca/default.py:7453
 #, fuzzy
 msgid "document unselected from cursor position"
-msgstr "documento selezionato dalla posizione del cursore"
+msgstr "documento deselezionato dalla posizione del cursore"
 
 # o "selezionato intero documento" come notifica a seguito di 
 #   Edit -> Select All
@@ -3098,9 +3101,8 @@ msgstr ""
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: ../src/orca/keynames.py:209
-#, fuzzy
 msgid "escape"
-msgstr "E S C"
+msgstr "esc"
 
 # GNOME-2-24
 #. Translators: this is how someone would speak the name of the insert key
@@ -3130,11 +3132,12 @@ msgstr "home"
 msgid "end"
 msgstr "fine"
 
+# GNOME-2-24
 #. Translators: this is how someone would speak the name of the begin key
 #.
 #: ../src/orca/keynames.py:245
 msgid "begin"
-msgstr ""
+msgstr "inizio"
 
 # GNOME-2-22
 #. Translators:  sets the live region politeness level to polite
@@ -6750,33 +6753,34 @@ msgstr "inaccessibile"
 msgid "Notification %s"
 msgstr "Notifica %s"
 
+# GNOME-2-4
 #: ../src/orca/scripts/apps/pidgin/script.py:192
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"Controlla se mettere oppure no il nome della chat room come prefisso dei "
-"messaggi dalla chat room stessa."
+msgstr "Controlla se mettere oppure no il nome del canale di chat come prefisso dei messaggi dal canale stesso."
 
 # GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:198
 msgid "Toggle whether we announce when our buddies are typing."
 msgstr "Controlla se annunciare quando i propri conoscenti stanno digitando."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:203
-#, fuzzy
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Controlla se mettere oppure no il nome della chat room come prefisso dei messaggi dalla chat room stessa."
+msgstr "Controlla se è possibile fornire cronologie di messaggi specifici del canale di chat."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:211
 msgid "Speak and braille a previous chat room message."
-msgstr "Leggi e metti su braille un precedente messaggio della chat room."
+msgstr "Leggi e metti su braille un precedente messaggio del canale di chat."
 
+# GNOME-2-24
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room.
 #.
 #: ../src/orca/scripts/apps/pidgin/script.py:282
 msgid "_Speak Chat Room name"
-msgstr "_Leggere il nome della chat room"
+msgstr "_Leggere il nome del canale di chat"
 
 # GNOME-2-24
 # controllare acceleratore
@@ -6787,6 +6791,7 @@ msgstr "_Leggere il nome della chat room"
 msgid "Announce when your _buddies are typing"
 msgstr "Annuncia quando i propri conoscenti stanno _digitando"
 
+# GNOME-2-24
 #. Translators: If this checkbox is checked, then Orca will provide
 #. the user with chat room specific message histories rather than just
 #. a single history which contains the latest messages from all the
@@ -6794,7 +6799,7 @@ msgstr "Annuncia quando i propri conoscenti stanno _digitando"
 #.
 #: ../src/orca/scripts/apps/pidgin/script.py:304
 msgid "Provide chat room specific _message histories"
-msgstr ""
+msgstr "Fornire cronologie dei _messaggi specifici dei canali di chat"
 
 #. Translators: Orca will speak all new chat messages as they appear
 #. irrespective of whether the pidgin application currently has focus.
@@ -6823,13 +6828,15 @@ msgstr "Tutti i canali quando una _qualsiasi finestra di Pidgin è attiva"
 msgid "Speak messages from"
 msgstr "Leggere i messaggi da"
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:454
 msgid "speak chat room name."
-msgstr "leggere il nome della chat room."
+msgstr "leggere il nome del canale di chat."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:458
 msgid "Do not speak chat room name."
-msgstr "Non leggere il nome della chat room."
+msgstr "Non leggere il nome del canale di chat."
 
 # GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:473
@@ -6841,18 +6848,21 @@ msgstr "annuncia quando i propri conoscenti stanno digitando."
 msgid "Do not announce when your buddies are typing."
 msgstr "Non annuncia quando i propri conoscenti stanno digitando."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:492
 msgid "Provide chat room specific message histories."
-msgstr ""
+msgstr "Fornisce cronologie di messaggi specifici dei canali di chat."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:496
 msgid "Do not provide chat room specific message histories."
-msgstr ""
+msgstr "Non fornisce cronologie di messaggi specifici dei canali di chat."
 
+# GNOME-2-24
 #: ../src/orca/scripts/apps/pidgin/script.py:525
 #, python-format
 msgid "Message from chat room %s"
-msgstr "Messaggio dalla chat room %s"
+msgstr "Messaggio dal canale di chat %s"
 
 #: ../src/orca/scripts/apps/pidgin/script.py:614
 #, python-format
@@ -8421,7 +8431,6 @@ msgstr "Nessun altro collegamento visitato."
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:63
-#, fuzzy
 msgid "textattr|background color"
 msgstr "colore di sfondo"
 
@@ -8470,7 +8479,6 @@ msgstr "direzione"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:101
-#, fuzzy
 msgid "textattr|editable"
 msgstr "modificabile"
 
@@ -8482,7 +8490,6 @@ msgstr "modificabile"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:109
-#, fuzzy
 msgid "textattr|family name"
 msgstr "nome della famiglia"
 
@@ -8495,7 +8502,6 @@ msgstr "nome della famiglia"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:118
-#, fuzzy
 msgid "textattr|foreground color"
 msgstr "colore del primo piano"
 
@@ -8520,10 +8526,10 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:137
-#, fuzzy
 msgid "textattr|font effect"
 msgstr "effetto tipo di carattere"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
 #. See:
@@ -8533,7 +8539,7 @@ msgstr "effetto tipo di carattere"
 #.
 #: ../src/orca/text_attribute_names.py:146
 msgid "textattr|indent"
-msgstr ""
+msgstr "rientro"
 
 # GNOME-2-24
 #. Translators: this attribute specifies whether the text is invisible.
@@ -8547,6 +8553,7 @@ msgstr ""
 msgid "textattr|invisible"
 msgstr "invisibile"
 
+# GNOME-2-24
 #. Translators: this attribute specifies how the justification of the text.
 #. Values are "left", "right", "center" or "fill".
 #. See:
@@ -8556,7 +8563,7 @@ msgstr "invisibile"
 #.
 #: ../src/orca/text_attribute_names.py:164
 msgid "textattr|justification"
-msgstr ""
+msgstr "allineamento"
 
 # GNOME-2-24
 #. Translators: this attribute specifies the language that the text is
@@ -8567,7 +8574,6 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:173
-#, fuzzy
 msgid "textattr|language"
 msgstr "lingua"
 
@@ -8579,10 +8585,10 @@ msgstr "lingua"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:181
-#, fuzzy
 msgid "textattr|left margin"
 msgstr "margine sinistro"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the height of the line of text.
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
@@ -8592,7 +8598,7 @@ msgstr "margine sinistro"
 #.
 #: ../src/orca/text_attribute_names.py:190
 msgid "textattr|line height"
-msgstr ""
+msgstr "altezza riga"
 
 # GNOME-2-24
 #. Translators: this attribute refers to the named style which is associated
@@ -8609,6 +8615,7 @@ msgstr ""
 msgid "textattr|paragraph style"
 msgstr "stile del paragrafo"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave above each newline-terminated line.
 #. See:
@@ -8618,8 +8625,9 @@ msgstr "stile del paragrafo"
 #.
 #: ../src/orca/text_attribute_names.py:211
 msgid "textattr|pixels above lines"
-msgstr ""
+msgstr "pixel sopra la riga"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave below each newline-terminated line.
 #. See:
@@ -8629,7 +8637,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:220
 msgid "textattr|pixels below lines"
-msgstr ""
+msgstr "pixel sotto la riga"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave between wrapped lines inside the same newline-terminated line
@@ -8643,6 +8651,7 @@ msgstr ""
 msgid "textattr|pixels inside wrap"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this attribute specifies the pixel width of the right margin.
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
@@ -8651,7 +8660,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:238
 msgid "textattr|right margin"
-msgstr ""
+msgstr "margine destro"
 
 #. Translators: this attribute specifies the number of pixels that the
 #. text characters are risen above the baseline.
@@ -8661,8 +8670,9 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:247
+#, fuzzy
 msgid "textattr|rise"
-msgstr ""
+msgstr "elevazione"
 
 #. Translators: this attribute specifies the scale of the characters. The
 #. value is a string representation of a double.
@@ -8672,9 +8682,11 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:256
+#, fuzzy
 msgid "textattr|scale"
-msgstr ""
+msgstr "scala"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the size of the text.
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
@@ -8683,7 +8695,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:264
 msgid "textattr|size"
-msgstr ""
+msgstr "dimensione"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
 #. Values are "ultra_condensed", "extra_condensed", "condensed",
@@ -8710,6 +8722,7 @@ msgstr ""
 msgid "textattr|strike through"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this attribute specifies the slant style of the text,
 #. if set. Values are "normal", "oblique" or "italic".
 #. See:
@@ -8719,8 +8732,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:294
 msgid "textattr|style"
-msgstr ""
+msgstr "stile"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
@@ -8730,8 +8744,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:303
 msgid "textattr|text decoration"
-msgstr ""
+msgstr "decorazione testo"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the angle at which the text is
 #. displayed (i.e. rotated from the norm) and is represented in degrees
 #. of rotation.
@@ -8743,8 +8758,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:314
 msgid "textattr|text rotation"
-msgstr ""
+msgstr "rotazione testo"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the shadow effects applied to the text.
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
@@ -8754,8 +8770,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:323
 msgid "textattr|text shadow"
-msgstr ""
+msgstr "ombra testo"
 
+# GNOME-2-24
 #. Translators: this attributes specifies whether the text is underlined.
 #. Values are "none", "single", "double" or "low".
 #. See:
@@ -8765,8 +8782,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:332
 msgid "textattr|underline"
-msgstr ""
+msgstr "sottolineatura"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the capitalization variant of
 #. the text, if set. Values are "normal" or "small_caps".
 #. See:
@@ -8776,8 +8794,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:341
 msgid "textattr|variant"
-msgstr ""
+msgstr "variante"
 
+# GNOME-2-24
 #. Translators: this attributes specifies what vertical alignment property
 #. has been applied to the text.
 #. See:
@@ -8787,7 +8806,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:350
 msgid "textattr|vertical align"
-msgstr ""
+msgstr "allineamento verticale"
 
 #. Translators: this attribute specifies the weight of the text.
 #. See:
@@ -8797,8 +8816,9 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:359
+#, fuzzy
 msgid "textattr|weight"
-msgstr ""
+msgstr "peso"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
 #. Values are "none", "char" or "word".
@@ -8811,6 +8831,7 @@ msgstr ""
 msgid "textattr|wrap mode"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this attribute specifies the way the text is written.
 #. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
 #. "rl" and "tb".
@@ -8822,8 +8843,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:379
 msgid "textattr|writing mode"
-msgstr ""
+msgstr "modalità di scrittura"
 
+# GNOME-2-24
 #. The following are the known values of some of these text attributes.
 #. These values were found in the Atk documentation at:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
@@ -8840,8 +8862,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:397
 msgid "textattr|true"
-msgstr ""
+msgstr "vero"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
 #. "bg-stipple" and "fg-stipple".
@@ -8852,8 +8875,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:407
 msgid "textattr|false"
-msgstr ""
+msgstr "falso"
 
+# GNOME-2-24
+# 4 a 1 vince il femminile
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
 #. and "direction".
@@ -8865,8 +8890,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:418
 msgid "textattr|none"
-msgstr ""
+msgstr "nessuna"
 
+# In rilievo o Incavato....
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
 #. See:
@@ -8878,6 +8904,7 @@ msgstr ""
 msgid "textattr|engrave"
 msgstr ""
 
+# In rilievo o Incavato....
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
 #. See:
@@ -8889,6 +8916,8 @@ msgstr ""
 msgid "textattr|emboss"
 msgstr ""
 
+# GNOME-2-24
+# come da traduzione OO.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
 #. See:
@@ -8898,7 +8927,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:445
 msgid "textattr|outline"
-msgstr ""
+msgstr "contorno"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8922,6 +8951,8 @@ msgstr ""
 msgid "textattr|line through"
 msgstr ""
 
+# GNOME-2-24
+# come da traduzione oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
 #. See:
@@ -8931,8 +8962,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:472
 msgid "textattr|blink"
-msgstr ""
+msgstr "lampeggiante"
 
+# GNOME-2-24
+# FIXME da controllare su oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-shadow".
 #. See:
@@ -8941,9 +8974,12 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:481
+#, fuzzy
 msgid "textattr|black"
-msgstr ""
+msgstr "nera"
 
+# GNOME-2-24
+# da controllare su oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
 #. See:
@@ -8953,8 +8989,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:490
 msgid "textattr|single"
-msgstr ""
+msgstr "singola"
 
+# GNOME-2-24
+# da controllare su oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
 #. See:
@@ -8964,7 +9002,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:499
 msgid "textattr|double"
-msgstr ""
+msgstr "doppia"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
@@ -8977,6 +9015,8 @@ msgstr ""
 msgid "textattr|low"
 msgstr ""
 
+# GNOME-2-24
+# da controllare su oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
 #. See:
@@ -8986,8 +9026,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:517
 msgid "textattr|char"
-msgstr ""
+msgstr "carattere"
 
+# GNOME-2-24
+# da controllare su oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
 #. See:
@@ -8997,7 +9039,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:526
 msgid "textattr|word"
-msgstr ""
+msgstr "parola"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -9021,6 +9063,8 @@ msgstr ""
 msgid "textattr|rtl"
 msgstr ""
 
+# GNOME-2-24
+# allineamento
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
 #. See:
@@ -9030,8 +9074,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:553
 msgid "textattr|left"
-msgstr ""
+msgstr "a destra"
 
+# GNOME-2-24
+# allineamento
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
 #. See:
@@ -9041,8 +9087,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:562
 msgid "textattr|right"
-msgstr ""
+msgstr "a sinistra"
 
+# GNOME-2-24
+# allineamento
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
 #. See:
@@ -9052,7 +9100,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:571
 msgid "textattr|center"
-msgstr ""
+msgstr "centrato"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -9065,6 +9113,7 @@ msgstr ""
 msgid "textattr|fill"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9074,8 +9123,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:589
 msgid "textattr|ultra condensed"
-msgstr ""
+msgstr "ultra condensato"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9085,8 +9135,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:598
 msgid "textattr|extra condensed"
-msgstr ""
+msgstr "extra condensato"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9096,8 +9147,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:607
 msgid "textattr|condensed"
-msgstr ""
+msgstr "condensato"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9107,8 +9159,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:616
 msgid "textattr|semi condensed"
-msgstr ""
+msgstr "semi condensato"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
 #. See:
@@ -9118,8 +9171,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:625
 msgid "textattr|normal"
-msgstr ""
+msgstr "normale"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9129,8 +9183,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:634
 msgid "textattr|semi expanded"
-msgstr ""
+msgstr "semi espanso"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9140,8 +9195,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:643
 msgid "textattr|expanded"
-msgstr ""
+msgstr "espanso"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9151,8 +9207,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:652
 msgid "textattr|extra expanded"
-msgstr ""
+msgstr "extra espanso"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
 #. See:
@@ -9162,7 +9219,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:661
 msgid "textattr|ultra expanded"
-msgstr ""
+msgstr "ultra espanso"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
@@ -9175,6 +9232,7 @@ msgstr ""
 msgid "textattr|small caps"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
 #. See:
@@ -9184,8 +9242,9 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:679
 msgid "textattr|oblique"
-msgstr ""
+msgstr "obliquo"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
 #. See:
@@ -9195,8 +9254,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:688
 msgid "textattr|italic"
-msgstr ""
+msgstr "corsivo"
 
+# GNOME-2-24
+# come da traduzione oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
 #. See:
@@ -9206,8 +9267,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:697
 msgid "textattr|Default"
-msgstr ""
+msgstr "Standard"
 
+# GNOME-2-24
+# come da traduzione oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
 #. See:
@@ -9217,8 +9280,10 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:706
 msgid "textattr|Text body"
-msgstr ""
+msgstr "Corpo testo"
 
+# GNOME-2-24
+# come da traduzione oo.o
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
 #. See:
@@ -9228,7 +9293,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:715
 msgid "textattr|Heading"
-msgstr ""
+msgstr "Intestazione"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9430,52 +9495,59 @@ msgstr ""
 msgid "textattr|tb"
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:154
 msgid "Press space to toggle."
-msgstr ""
+msgstr "Premere spazio per commutare."
 
+# GNOME-2-24
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:180
 msgid "Press space to expand, and use up and down to select an item."
-msgstr ""
+msgstr "Premere spazio per espandere e usare su e giù per selezionare una voce."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, giving tips on how to navigate.
 #. Also describing how to access the menues.
 #: ../src/orca/tutorialgenerator.py:211
+#, fuzzy
 msgid ""
 "To move to items, use either the arrow keys, or type ahead searching. To get "
 "to the system menues press the alt+f1 key."
-msgstr ""
+msgstr "Per spostarsi su una voce, usare i tasti freccia oppure digitare XXXX. Per ottenere i menù di sistema premere i tasti alt+f1."
 
+# GNOME-2-24
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:217
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
+msgstr "Premere alt+f6 per dare il focus alle finestre figlie."
 
+# GNOME-2-24
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:250
 msgid "Use up and down to select an item."
-msgstr ""
+msgstr "Usare su e giù per selezionare una voce."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:279 ../src/orca/tutorialgenerator.py:427
+#, fuzzy
 msgid "To collapse, press shift plus left."
-msgstr ""
+msgstr "Per xxxx, premere maiusc più sinistra."
 
+# GNOME-2-24
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:285 ../src/orca/tutorialgenerator.py:433
 msgid "To expand, press shift plus right."
-msgstr ""
+msgstr "Per espandere, premere maiusc più destra."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
@@ -9483,50 +9555,57 @@ msgstr ""
 msgid "Type in text."
 msgstr ""
 
+# GNOME-2-24
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:345
 msgid "Use left and right to view other tabs."
-msgstr ""
+msgstr "Usare destra e sinistra per visualizzare le altre schede."
 
+# GNOME-2-24
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:370
 msgid "To activate press space."
-msgstr ""
+msgstr "Per attivare premere spazio."
 
+# GNOME-2-24
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:397
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr ""
+msgstr "Usare freccia su o giù per selezionare il valore oppure digicare il valore numerico desiderato."
 
+# GNOME-2-24
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:584
 msgid "Use arrow keys to change."
-msgstr ""
+msgstr "Usare i tasti freccia per cambiare."
 
+# GNOME-2-24
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:608
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
-msgstr ""
+msgstr "Per spostarsi, premere le frecce sinistra o destra. Per muoversi tra le voci, prere le frecce su o giù."
 
+# GNOME-2-24
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
 #: ../src/orca/tutorialgenerator.py:613
 msgid "To enter sub menu, press right arrow."
-msgstr ""
+msgstr "Per entrare in un sottomenù, premere la freccia destra."
 
+# GNOME-2-24
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:645
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
-msgstr ""
+msgstr "Per decrementare premere la freccia sinistra, per incrementare premere la freccia destra. Per andare al minimo premere home, per il massimo premere fine."
 
 #. Translators: this is the percentage value of a slider.
 #.
