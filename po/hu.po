@@ -1215,13 +1215,13 @@ msgstr "jobb oldali idézőjel"
 #.
 #: ../src/orca/chnames.py:581
 msgid "left double quote"
-msgstr "bal oldali dupla idézőjel"
+msgstr "idézőjel"
 
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:585
 msgid "right double quote"
-msgstr "jobb oldali dupla idézőjel"
+msgstr "idézőjel"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
