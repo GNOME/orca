@@ -121,7 +121,11 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             if name:
                 speech.speak(name)
             # Translators: The following string is spoken to let the user
-            # know that he/she is on a link within an image map.
+            # know that he/she is on a link within an image map. An image
+            # map is an image/graphic which has been divided into regions.
+            # Each region can be clicked on and has an associated link.
+            # Please see http://en.wikipedia.org/wiki/Imagemap for more
+            # information and examples.
             #
             speech.speak(_("image map link"))
 
