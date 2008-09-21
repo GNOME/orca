@@ -1,3 +1,80 @@
+2.24.0 - 21-Sep-2008
+
+These are the details for changes from the 2.23.92 release.  See the
+release notes for the differences from 2.22:
+http://live.gnome.org/TwoPointTwentythree/ReleaseNotes
+
+General:
+
+* Fix for bug #363793 - Add the ability to change the color of the
+  flat review rectangle.  This support is 'under the covers' for now
+  and requires hand-editing of ~/.orca/user-settings.py or
+  ~/.orca/orca-customizations.py.
+
+* Fix for bug #403760 - Emacspeak speech factory doesn't always
+  shutdown/restart correctly
+
+* Fix for bug #552344 - tutorial message for desktop not spoken in
+  ibex
+
+Yelp:
+
+* More work toward the fix for bug #356041 - GNOME Help (yelp) is
+  inaccessible. Ginn Chen created another patch for Yelp which makes
+  things work even better. Thanks Ginn!
+
+StarOffice/OpenOffice:
+
+* Fix for bug #552350 - Orca doesn't recognize it is in a spreadsheet
+  cell in certain builds of OOo Dev 3
+
+Firefox/Thunderbird:
+
+* Fix for bug #518945 - Orca has problems with certain imagemaps in
+  FF3
+
+* Fix for bug #535188 - Page-up and page-down not functioning when
+  reading messages in Thunderbird
+
+* More work on bug #542833 - Flat review in Thunderbird is largely
+  broken. This fix addresses some combo box related issues.
+
+* Fix for bug #546815 - guessLabelFromLine() is guessing text that is
+  on other lines in FF3
+
+* Fix for bug #547496 - Cursor navigation does not start from
+  insertion carat location in Thunderbird Write window
+
+* Fix for bug #547573 - Orca has problems navigating past a couple of
+  links on java.sun.com
+
+* Fix for bug #549128 - Orca should not get stuck on omahasteaks.com
+
+* Fix for bug #551626 - Storing guessed labels would increase
+  performance and decrease repeated speech
+
+* Fix for bug #553075 - Please add comment for string
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ar      Arabic               Youssef Chahibi and Djihed Afifi
+    cs      Czech                Lucas Lommer and Petr Kovar
+    et      Estonian             Ivar Smolin and Priit Laes
+    fr	    French		 Bruno Brouard and Claude Paroz
+    hi      Hindi                Rajesh Ranjan
+    hu      Hungarian            Atilla Hammer and Gabor Kelemen
+    it      Italian              Luca Ferretti
+    nb      Norwegian Bokmål     Kjartan Maraas
+    nl      Dutch                Wouter Bolsterlee
+    pt_BR   Brazilian Portuguese Michel Recondo and 
+                                 Leonardo Ferreira Fontenelle
+    ta      Tamil                I. Felix
+
+==========
+
 2.23.92 - 08-Sep-2008
 
 General:
