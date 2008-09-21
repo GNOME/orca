@@ -117,12 +117,12 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                 and obj.parent.getRole() == pyatspi.ROLE_IMAGE):
             where_am_I.WhereAmI._speakObjDescription(self, obj)
         else:
-            # Translators: The following string is spoken to let the user
-            # know that he/she is on a link within an image map.
-            #
             name = self._getObjName(obj)
             if name:
                 speech.speak(name)
+            # Translators: The following string is spoken to let the user
+            # know that he/she is on a link within an image map.
+            #
             speech.speak(_("image map link"))
 
     def _collectionPageSummary(self):

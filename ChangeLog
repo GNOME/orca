@@ -1,3 +1,8 @@
+2008-09-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/where_am_i.py:
+          Fix for bug #553075 - Please add comment for string.
+
 2008-09-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/yelp.py:
