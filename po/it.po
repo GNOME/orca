@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-22 14:42+0200\n"
-"PO-Revision-Date: 2008-09-22 14:47+0200\n"
+"PO-Revision-Date: 2008-09-22 15:48+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -2450,6 +2450,8 @@ msgstr[1] "%s %s pixel"
 msgid "link"
 msgstr "collegamento"
 
+# GNOME-2-24
+# credo che bypass sia difficilmente traducibile.
 #. Translators: Orca normally intercepts all keyboard
 #. commands and only passes them along to the current
 #. application when they are not Orca commands.  This
@@ -2459,7 +2461,7 @@ msgstr "collegamento"
 #.
 #: ../src/orca/default.py:4471
 msgid "Bypass mode enabled."
-msgstr ""
+msgstr "Modalità bypass abilitata."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2536,22 +2538,21 @@ msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] " %(count)d carattere %(repeatChar)s"
 msgstr[1] " %(count)d caratteri %(repeatChar)s"
 
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7304
-#, fuzzy
 msgid "line selected to end from previous cursor position"
 msgstr "riga selezionata dalla posizione precedente del cursore fino alla fine"
 
-# o verso l'alto ?  -Luca
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7312
-#, fuzzy
 msgid "line selected from start to previous cursor position"
 msgstr "riga selezionata dall'inizio fino all posizione precedente del cursore"
 
@@ -2571,12 +2572,12 @@ msgstr "pagina selezionata dalla posizione del cursore"
 msgid "page unselected from cursor position"
 msgstr "pagina deselezionata dalla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7335
-#, fuzzy
 msgid "page selected to cursor position"
 msgstr "pagina selezionata fino alla posizione del cursore"
 
@@ -2585,58 +2586,57 @@ msgstr "pagina selezionata fino alla posizione del cursore"
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/default.py:7340
-#, fuzzy
 msgid "page unselected to cursor position"
 msgstr "pagina deselezionata fino alla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7349
-#, fuzzy
 msgid "line selected down from cursor position"
 msgstr "riga selezionata verso il basso dalla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/default.py:7354
-#, fuzzy
 msgid "line unselected down from cursor position"
 msgstr "riga deselezionata verso il basso dalla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7363
-#, fuzzy
 msgid "line selected up from cursor position"
 msgstr "riga selezionata verso l'alto dalla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/default.py:7368
-#, fuzzy
 msgid "line unselected up from cursor position"
 msgstr "riga deselezionata verso l'alto dalla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/default.py:7377
-#, fuzzy
 msgid "document selected to cursor position"
 msgstr "documento selezionato fino alla posizione del cursore"
 
+# GNOME-2-24
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/default.py:7382
-#, fuzzy
 msgid "document unselected to cursor position"
 msgstr "documento deselezionato fino alla posizione del cursore"
 
@@ -4698,9 +4698,10 @@ msgstr "Leggere l'oggetto sotto il mo_use"
 msgid "Speak progress bar _updates"
 msgstr "Leggere aggiornamenti di barra di a_vanzamento"
 
+# GNOME-2-24
 #: ../src/orca/orca-setup.glade.h:134
 msgid "Speak tutorial messages"
-msgstr ""
+msgstr "Leggere i messaggi di suggerimenti d'uso"
 
 #: ../src/orca/orca-setup.glade.h:135
 msgid "Speech"
@@ -8454,6 +8455,8 @@ msgstr "colore di sfondo"
 msgid "textattr|background full height"
 msgstr ""
 
+# GNOME-2-24
+# non sono convinto, ma...
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the background color. It will be a "true" or "false" value.
 #. See
@@ -8463,7 +8466,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:83
 msgid "textattr|background stipple"
-msgstr ""
+msgstr "retinatura sfondo"
 
 # GNOME-2-24
 #. Translators: this attribute specifies the direction of the text.
@@ -8512,6 +8515,8 @@ msgstr "nome della famiglia"
 msgid "textattr|foreground color"
 msgstr "colore del primo piano"
 
+# GNOME-2-24
+# non sono convinto, ma...
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the foreground color. It will be a "true" or "false" value.
 #. See
@@ -8521,7 +8526,7 @@ msgstr "colore del primo piano"
 #.
 #: ../src/orca/text_attribute_names.py:127
 msgid "textattr|foreground stipple"
-msgstr ""
+msgstr "retinatura primo piano"
 
 # GNOME-2-24
 #. Translators: this attribute specifies the effect applied to the font
@@ -8669,6 +8674,7 @@ msgstr ""
 msgid "textattr|right margin"
 msgstr "margine destro"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the number of pixels that the
 #. text characters are risen above the baseline.
 #. See:
@@ -8677,7 +8683,6 @@ msgstr "margine destro"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:247
-#, fuzzy
 msgid "textattr|rise"
 msgstr "elevazione"
 
@@ -8704,6 +8709,8 @@ msgstr "scala"
 msgid "textattr|size"
 msgstr "dimensione"
 
+# GNOME-2-24
+# non sono sicuro sia la traduzione corretta in tipografia
 #. Translators: this attribute specifies the stretch of he text, if set.
 #. Values are "ultra_condensed", "extra_condensed", "condensed",
 #. "semi_condensed", "normal", "semi_expanded", "expanded",
@@ -8715,8 +8722,9 @@ msgstr "dimensione"
 #.
 #: ../src/orca/text_attribute_names.py:275
 msgid "textattr|stretch"
-msgstr ""
+msgstr "estensione"
 
+# GNOME-2-24
 #. Translators: this attribute specifies whether the text is strike though
 #. (in other words, whether there is a line drawn through it). Values are
 #. "true" or "false".
@@ -8727,7 +8735,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:285
 msgid "textattr|strike through"
-msgstr ""
+msgstr "barrato"
 
 # GNOME-2-24
 #. Translators: this attribute specifies the slant style of the text,
@@ -8815,6 +8823,8 @@ msgstr "variante"
 msgid "textattr|vertical align"
 msgstr "allineamento verticale"
 
+# GNOME-2-24
+# http://en.it.open-tran.eu/suggest/weight
 #. Translators: this attribute specifies the weight of the text.
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
@@ -8823,10 +8833,10 @@ msgstr "allineamento verticale"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:359
-#, fuzzy
 msgid "textattr|weight"
-msgstr "peso"
+msgstr "spessore"
 
+# GNOME-2-24
 #. Translators: this attribute specifies the wrap mode of the text, if any.
 #. Values are "none", "char" or "word".
 #. See:
@@ -8836,7 +8846,7 @@ msgstr "peso"
 #.
 #: ../src/orca/text_attribute_names.py:368
 msgid "textattr|wrap mode"
-msgstr ""
+msgstr "modalità a capo"
 
 # GNOME-2-24
 #. Translators: this attribute specifies the way the text is written.
@@ -8899,7 +8909,8 @@ msgstr "falso"
 msgid "textattr|none"
 msgstr "nessuna"
 
-# In rilievo o Incavato....
+# GNOME-2-24
+# come da OO.o writer
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
 #. See:
@@ -8909,9 +8920,10 @@ msgstr "nessuna"
 #.
 #: ../src/orca/text_attribute_names.py:427
 msgid "textattr|engrave"
-msgstr ""
+msgstr "incavato"
 
-# In rilievo o Incavato....
+# GNOME-2-24
+# come da OO.o writer
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
 #. See:
@@ -8921,7 +8933,7 @@ msgstr ""
 #.
 #: ../src/orca/text_attribute_names.py:436
 msgid "textattr|emboss"
-msgstr ""
+msgstr "in rilievo"
 
 # GNOME-2-24
 # come da traduzione OO.o
@@ -9109,6 +9121,7 @@ msgstr "a sinistra"
 msgid "textattr|center"
 msgstr "centrato"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
 #. See:
@@ -9118,7 +9131,7 @@ msgstr "centrato"
 #.
 #: ../src/orca/text_attribute_names.py:580
 msgid "textattr|fill"
-msgstr ""
+msgstr "giustificato"
 
 # GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
@@ -9228,6 +9241,7 @@ msgstr "extra espanso"
 msgid "textattr|ultra expanded"
 msgstr "ultra espanso"
 
+# GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
 #. See:
@@ -9237,7 +9251,7 @@ msgstr "ultra espanso"
 #.
 #: ../src/orca/text_attribute_names.py:670
 msgid "textattr|small caps"
-msgstr ""
+msgstr "maiuscoletto"
 
 # GNOME-2-24
 #. Translators: this is one of the text attribute values for the following
@@ -9516,17 +9530,18 @@ msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
 "Premere spazio per espandere e usare su e giù per selezionare una voce."
 
+# GNOME-2-24
+# http://en.wikipedia.org/wiki/Typeahead
+# http://www.mozilla.org/access/type-ahead/
+# (thanks to Milo Casagrande)
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, giving tips on how to navigate.
 #. Also describing how to access the menues.
 #: ../src/orca/tutorialgenerator.py:211
-#, fuzzy
 msgid ""
 "To move to items, use either the arrow keys, or type ahead searching. To get "
 "to the system menues press the alt+f1 key."
-msgstr ""
-"Per spostarsi su una voce, usare i tasti freccia oppure digitare XXXX. Per "
-"ottenere i menù di sistema premere i tasti alt+f1."
+msgstr "Per spostarsi su una voce, usare i tasti freccia oppure la ricerca incrementale. Per ottenere i menù di sistema premere i tasti alt+f1."
 
 # GNOME-2-24
 #. Translators: If this application has more than one unfocused alert or
