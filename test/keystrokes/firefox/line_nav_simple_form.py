@@ -73,6 +73,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. line Down",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
+     "BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
+     "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself: text I am a monkey with a long tail.  I like'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -215,6 +217,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Up",
     ["BRAILLE LINE:  '      $l'",
+     "     VISIBLE:  '      $l', cursor=1",
+     "BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself: text'"]))
 

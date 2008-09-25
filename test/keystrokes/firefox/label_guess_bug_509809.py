@@ -49,6 +49,8 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'search mozilla: search mozilla:  $l Go Button'",
      "     VISIBLE:  'search mozilla:  $l Go Button', cursor=17",
+     "BRAILLE LINE:  'search mozilla: search mozilla:  $l Go Button'",
+     "     VISIBLE:  'search mozilla:  $l Go Button', cursor=17",
      "SPEECH OUTPUT: 'search mozilla: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -69,6 +71,8 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field",
     ["BRAILLE LINE:  'Your email address:  $l'",
      "     VISIBLE:  'Your email address:  $l', cursor=21",
+     "BRAILLE LINE:  'Your email address:  $l'",
+     "     VISIBLE:  'Your email address:  $l', cursor=21",
      "SPEECH OUTPUT: 'Your email address: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -78,6 +82,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Your name (optional):  $l'",
+     "     VISIBLE:  'Your name (optional):  $l', cursor=23",
+     "BRAILLE LINE:  'Your name (optional):  $l'",
      "     VISIBLE:  'Your name (optional):  $l', cursor=23",
      "SPEECH OUTPUT: 'Your name (optional): text'"]))
 
@@ -149,6 +155,8 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
      "     VISIBLE:  ' $l Visit Subscriber List Button', cursor=1",
+     "BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
+     "     VISIBLE:  ' $l Visit Subscriber List Button', cursor=1",
      "SPEECH OUTPUT: 'Password: password'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -168,6 +176,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
     ["BRAILLE LINE:  ' $l Unsubscribe or edit options Button'",
+     "     VISIBLE:  ' $l Unsubscribe or edit options ', cursor=1",
+     "BRAILLE LINE:  ' $l Unsubscribe or edit options Button'",
      "     VISIBLE:  ' $l Unsubscribe or edit options ', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
