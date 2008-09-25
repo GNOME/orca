@@ -208,12 +208,14 @@ sequence.append(utils.AssertPresentationAction(
 
 ########################################################################
 # Tab to the button between the sliders.  
-# [[[Bug?: whitespace.  below are expected results]]]
+# 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move to button", 
     ["BRAILLE LINE:  'Disable previous slider Button'",
+     "     VISIBLE:  'Disable previous slider Button', cursor=1",
+     "BRAILLE LINE:  'Disable previous slider Button'",
      "     VISIBLE:  'Disable previous slider Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Disable previous slider button'"]))

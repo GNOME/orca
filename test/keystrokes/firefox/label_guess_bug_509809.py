@@ -145,6 +145,8 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
      "     VISIBLE:  ' $l Password:  $l Visit Subscrib', cursor=1",
+     "BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
+     "     VISIBLE:  ' $l Password:  $l Visit Subscrib', cursor=1",
      "SPEECH OUTPUT: 'Admin address: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -154,8 +156,6 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
-     "     VISIBLE:  ' $l Visit Subscriber List Button', cursor=1",
-     "BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List Button'",
      "     VISIBLE:  ' $l Visit Subscriber List Button', cursor=1",
      "SPEECH OUTPUT: 'Password: password'"]))
 

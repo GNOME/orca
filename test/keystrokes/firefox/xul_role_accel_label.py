@@ -69,10 +69,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Close(Control W)'",
-     "     VISIBLE:  'Close(Control W)', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Close Window(Control Shift W)'",
+     "     VISIBLE:  'Close Window(Control Shift W)', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Close Control W'"]))
+     "SPEECH OUTPUT: 'Close Window Control Shift W'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in File menu",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Close Tab(Control W)'",
+     "     VISIBLE:  'Close Tab(Control W)', cursor=1",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Close Tab Control W'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -92,15 +101,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Send Link…'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Down Arrow in File menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Setup...'",
-     "     VISIBLE:  'Page Setup...', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Page Setup…'"]))
-
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
 #
@@ -109,13 +109,13 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Setup...'",
-     "     VISIBLE:  'Page Setup...', cursor=1",
+    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Send Link...'",
+     "     VISIBLE:  'Send Link...', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'Page Setup…'",
+     "SPEECH OUTPUT: 'Send Link…'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'item 8 of 13'",
+     "SPEECH OUTPUT: 'item 8 of 14'",
      "SPEECH OUTPUT: ''"]))
 
 ########################################################################
