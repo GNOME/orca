@@ -252,7 +252,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
-    ["BRAILLE LINE:  'Link  • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
+    ["BUG? - We're getting more than one line's worth",
+     "BRAILLE LINE:  'Link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
      "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
      "SPEECH OUTPUT: 'link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 
@@ -756,7 +757,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "87. Line Down",
-    ["BRAILLE LINE:  'Link  The RPM packages creates two links /usr/java/latest and /usr/java/default.'",
+    ["BRAILLE LINE:  'Link 5. Exit the root shell. The RPM packages creates two links /usr/java/latest and /usr/java/default.'",
      "     VISIBLE:  'The RPM packages creates two lin', cursor=1",
      "SPEECH OUTPUT: 'link 5. Exit the root shell.",
      " The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
@@ -963,8 +964,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
-    ["BRAILLE LINE:  'Link 5. Exit the root shell. '",
-     "     VISIBLE:  'Link 5. Exit the root shell. ', cursor=6",
+    ["BRAILLE LINE:  'Link 5. Exit the root shell. The RPM packages creates two links /usr/java/latest and /usr/java/default.'",
+     "     VISIBLE:  '5. Exit the root shell. The RPM ', cursor=1",
      "SPEECH OUTPUT: 'link 5. Exit the root shell.",
      " The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
      "'"]))
@@ -1054,7 +1055,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
-    ["BRAILLE LINE:  'Link 2. Become root by running the su command and entering the super-user password. Link 3. Extract and install the contents of the downloaded file. '",
+    ["BUG? - We're getting more than one line's worth",
+     "BRAILLE LINE:  'Link 2. Become root by running the su command and entering the super-user password. Link 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'",
      "     VISIBLE:  '2. Become root by running the su', cursor=1",
      "SPEECH OUTPUT: 'link 2. Become root by running the su command and entering the super-user password. link 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'"]))
 
@@ -1078,7 +1080,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Up",
-    ["BRAILLE LINE:  'Link 1. Download and check the file size. '",
+    ["BRAILLE LINE:  'Link 1. Download and check the file size. You can download to any directory you choose.'",
      "     VISIBLE:  '1. Download and check the file s', cursor=1",
      "SPEECH OUTPUT: 'link 1. Download and check the file size. You can download to any directory you choose.'"]))
 
@@ -1433,7 +1435,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "70. Line Up",
-    ["BRAILLE LINE:  'Link Install formats - This version of the JDK is available in two installation formats. '",
+    ["BUG? - We're getting more than one line's worth",
+     "BRAILLE LINE:  'Link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
      "     VISIBLE:  'Install formats - This version o', cursor=1",
      "SPEECH OUTPUT: 'link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 

@@ -1,3 +1,15 @@
+2008-09-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/braille.py:
+          src/orca/default.py:
+          src/orca/scripts/apps/gnome-terminal.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/line_nav_bug_549128.py:
+          test/keystrokes/firefox/line_nav_bug_547573.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          More work on bug #535178 - In Gecko, we should get the needed text
+          for the speech and braille contexts while building up the line.
+
 2008-09-27  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/rhythmbox/speech_generator.py:

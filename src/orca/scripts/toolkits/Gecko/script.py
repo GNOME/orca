@@ -4677,36 +4677,69 @@ class Script(default.Script):
 
         self._updateLineCache(obj, characterOffset)
 
-    def getTextLineAtCaret(self, obj):
-        """Gets the line of text where the caret is. This is an override to
-        accomodate the intricities of our caret navigation management.
+    def getTextLineAtCaret(self, obj, offset=None):
+        """Gets the portion of the line of text where the caret (or optional
+        offset) is. This is an override to accomodate the intricities of our
+        caret navigation management and to deal with bogus line information
+        being returned by Gecko when using getTextAtOffset.
 
         Argument:
         - obj: an Accessible object that implements the AccessibleText
-               interface
+          interface
+        - offset: an optional caret offset to use.
 
         Returns the [string, caretOffset, startOffset] for the line of text
         where the caret is.
         """
 
-        contextObj, contextCaret = self.getCaretContext()
+        # We'll let the default script handle entries and other entry-like
+        # things (e.g. the text portion of a dojo spin button).
+        #
+        isEntry = obj.getState().contains(pyatspi.STATE_EDITABLE) \
+                  or obj.getRole() in [pyatspi.ROLE_ENTRY,
+                                       pyatspi.ROLE_TEXT,
+                                       pyatspi.ROLE_PASSWORD_TEXT]
 
-        if contextObj == obj and \
-                not obj.getState().contains(pyatspi.STATE_EDITABLE):
-            try:
-                ti = obj.queryText()
-            except NotImplementedError:
-                return ["", 0, 0]
-            else:
-                string, startOffset, endOffset = ti.getTextAtOffset(
-                    contextCaret, pyatspi.TEXT_BOUNDARY_LINE_START)
-                caretOffset = contextCaret
+        if not self.inDocumentContent(obj) or isEntry:
+            return default.Script.getTextLineAtCaret(self, obj, offset)
+
+        # Find the current line.
+        #
+        contents = self.currentLineContents
+        contextObj, contextOffset = self.getCaretContext()
+        if self.findObjectOnLine(contextObj, contextOffset, contents) < 0:
+            contents = self.getLineContentsAtOffset(contextObj, contextOffset)
+
+        # Determine the caretOffset.
+        #
+        if self.isSameObject(obj, contextObj):
+            caretOffset = contextOffset
         else:
-            string, caretOffset, startOffset = \
-                default.Script.getTextLineAtCaret(self, obj)
+            try:
+                text = obj.queryText()
+            except:
+                caretOffset = 0
+            else:
+                caretOffset = text.caretOffset
 
+        # The reason we typically use this method is to present the contents
+        # of the current line, so our initial assumption is that the obj
+        # being passed in is also on this line. We'll try that first. We
+        # might have multiple instances of obj, in which case we'll have
+        # to consider the offset as well.
+        #
+        for content in contents:
+            candidate, startOffset, endOffset, string = content
+            if self.isSameObject(candidate, obj) \
+               and (offset is None or (startOffset <= offset <= endOffset)):
+                return string, caretOffset, startOffset
 
-        return string, caretOffset, startOffset
+        # If we're still here, obj presumably is not on this line. This
+        # shouldn't happen, but if it does we'll let the default script
+        # handle it for now.
+        #
+        #print "getTextLineAtCaret failed"
+        return default.Script.getTextLineAtCaret(self, obj, offset)
 
     def getTextAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible

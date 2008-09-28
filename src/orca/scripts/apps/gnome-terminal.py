@@ -269,12 +269,13 @@ class Script(default.Script):
             if matchFound:
                 self.echoPreviousWord(event.source)
 
-    def getTextLineAtCaret(self, acc):
+    def getTextLineAtCaret(self, acc, offset=None):
         """Gets the line of text where the caret is.
 
         Argument:
         - obj: an Accessible object that implements the AccessibleText
-               interface
+          interface
+        - offset: an optional caret offset to use.
 
         Returns the [string, caretOffset, startOffset] for the line of text
         where the caret is.

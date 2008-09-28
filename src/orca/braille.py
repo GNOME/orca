@@ -475,7 +475,8 @@ class Text(Region):
         self.accessible = accessible
         if orca_state.activeScript:
             [string, self.caretOffset, self.lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible,
+                                                            startOffset)
         else:
             string = ""
 
@@ -527,7 +528,8 @@ class Text(Region):
         """
 
         [string, caretOffset, lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible,
+                                                            self.startOffset)
         string = string.decode("UTF-8")
 
         cursorOffset = min(caretOffset - lineOffset, len(string))

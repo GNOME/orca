@@ -6591,12 +6591,14 @@ class Script(script.Script):
         else:
             return top.name
 
-    def getTextLineAtCaret(self, obj):
+    def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is.
 
         Argument:
         - obj: an Accessible object that implements the AccessibleText
-               interface
+          interface
+        - offset: an optional caret offset to use. (Not used here at the
+          moment, but needed in the Gecko script)
 
         Returns the [string, caretOffset, startOffset] for the line of text
         where the caret is.
