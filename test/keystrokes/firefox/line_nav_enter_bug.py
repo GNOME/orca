@@ -47,9 +47,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'New bug Link · Browse Link  · Se', cursor=1",
-     "SPEECH OUTPUT: 'New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+    ["BRAILLE LINE:  'New bug Link  · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
+     "     VISIBLE:  'New bug Link  · Browse Link  · S', cursor=1",
+     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -249,7 +249,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Commit Button Remember values as bookmarkable template Button'",
      "     VISIBLE:  'Commit Button Remember values as', cursor=1",
-     "SPEECH OUTPUT: 'Commit button      Remember values as bookmarkable template button'"]))
+     "SPEECH OUTPUT: 'Commit button       Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

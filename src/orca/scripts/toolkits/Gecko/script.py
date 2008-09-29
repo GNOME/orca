@@ -4916,11 +4916,16 @@ class Script(default.Script):
                             # where it starts. Might be on the previous
                             # line.
                             #
-                            obj = child
-                            offset = childText.characterCount - 1
-                            [line, start, end] = \
-                                childText.getTextAtOffset(offset, boundary)
-                            offset = start
+                            cOffset = childText.characterCount - 1
+                            [cLine, cStart, cEnd] = \
+                                childText.getTextAtOffset(cOffset, boundary)
+                            if cStart == 0:
+                                # It starts on this line.
+                                #
+                                obj = child
+                                offset = cStart
+                            else:
+                                offset = start + 1
 
         extents = self.getExtents(obj, offset, offset + 1)
 
@@ -4985,10 +4990,6 @@ class Script(default.Script):
             if text:
                 line = text.getTextAfterOffset(nOffset, boundary)
                 nOffset = line[1]
-
-            char = self.getCharacterAtOffset(nextObj, nOffset)
-            if char == " ":
-                nOffset += 1
 
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
 

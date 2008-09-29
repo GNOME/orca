@@ -63,11 +63,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - We're getting an extra and in braille",
-     "BRAILLE LINE:  'Amusing numbers fall between  and  $l and  $l .'",
-     "     VISIBLE:  ' $l and  $l .', cursor=1",
-     "BRAILLE LINE:  'Amusing numbers fall between  and  $l and  $l .'",
-     "     VISIBLE:  ' $l and  $l .', cursor=1",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l  and  $l .'",
+     "     VISIBLE:  ' $l  and  $l .', cursor=1",
+     "BRAILLE LINE:  'Amusing numbers fall between  $l  and  $l .'",
+     "     VISIBLE:  ' $l  and  $l .', cursor=1",
      "SPEECH OUTPUT: 'Amusing numbers fall between text'"]))
 
 sequence.append(utils.StartRecordingAction())

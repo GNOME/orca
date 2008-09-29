@@ -269,9 +269,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "27. Line Down",
-    ["BRAILLE LINE:  'Installation of Self-Extracting Binary Link below.'",
+    ["BRAILLE LINE:  'Installation of Self-Extracting Binary Link  below.'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link below.'"]))
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link  below.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1419,9 +1419,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "68. Line Up",
-    ["BRAILLE LINE:  'Installation of Self-Extracting Binary Link below.'",
+    ["BRAILLE LINE:  'Installation of Self-Extracting Binary Link  below.'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link below.'"]))
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link  below.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

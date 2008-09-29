@@ -50,9 +50,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'New bug Link · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
-     "     VISIBLE:  'New bug Link · Browse Link  · Se', cursor=1",
-     "SPEECH OUTPUT: 'New bug link · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+    ["BRAILLE LINE:  'New bug Link  · Browse Link  · Search Link  · Reports Link  · Account Link  · Admin Link  · Help Link Logged In joanmarie.diggs@gmail.com | Log Out Link'",
+     "     VISIBLE:  'New bug Link  · Browse Link  · S', cursor=1",
+     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -73,9 +73,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Give me some help Link (reloads page.)'",
-     "     VISIBLE:  'Give me some help Link (reloads ', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link (reloads page.)'"]))
+    ["BRAILLE LINE:  'Give me some help Link  (reloads page.)'",
+     "     VISIBLE:  'Give me some help Link  (reloads', cursor=1",
+     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -297,40 +297,40 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox the reporter'",
-     "     VISIBLE:  '< > CheckBox the reporter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  the reporter'",
+     "     VISIBLE:  '< > CheckBox  the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox the QA contact'",
-     "     VISIBLE:  '< > CheckBox the QA contact', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  the QA contact'",
+     "     VISIBLE:  '< > CheckBox  the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox a CC list member'",
-     "     VISIBLE:  '< > CheckBox a CC list member', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a CC list member'",
+     "     VISIBLE:  '< > CheckBox  a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox a commenter'",
-     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
+     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -363,40 +363,40 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '<x> CheckBox the reporter'",
-     "     VISIBLE:  '<x> CheckBox the reporter', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the reporter'",
+     "     VISIBLE:  '<x> CheckBox  the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '<x> CheckBox the QA contact'",
-     "     VISIBLE:  '<x> CheckBox the QA contact', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the QA contact'",
+     "     VISIBLE:  '<x> CheckBox  the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '<x> CheckBox a CC list member'",
-     "     VISIBLE:  '<x> CheckBox a CC list member', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  a CC list member'",
+     "     VISIBLE:  '<x> CheckBox  a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox a commenter'",
-     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
+     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -461,11 +461,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: text and text Now",
+    ["BRAILLE LINE:  ' $l  and Now $l'",
+     "     VISIBLE:  ' $l  and Now $l', cursor=1",
+     "BRAILLE LINE:  ' $l  and Now $l'",
+     "     VISIBLE:  ' $l  and Now $l', cursor=1",
+     "SPEECH OUTPUT: 'Only bugs changed between: text  and text Now  ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -586,8 +586,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox Not (negate this whole chart)'",
-     "     VISIBLE:  '< > CheckBox Not (negate this wh', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  Not (negate this whole chart)'",
+     "     VISIBLE:  '< > CheckBox  Not (negate this w', cursor=1",
      "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -604,7 +604,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'And Button Add another boolean chart Button'",
      "     VISIBLE:  'And Button Add another boolean c', cursor=1",
-     "SPEECH OUTPUT: 'And button       Add another boolean chart button       '"]))
+     "SPEECH OUTPUT: 'And button        Add another boolean chart button       '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1166,9 +1166,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Give me some help Link (reloads page.)'",
-     "     VISIBLE:  'Give me some help Link (reloads ', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link (reloads page.)'"]))
+    ["BRAILLE LINE:  'Give me some help Link  (reloads page.)'",
+     "     VISIBLE:  'Give me some help Link  (reloads', cursor=1",
+     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

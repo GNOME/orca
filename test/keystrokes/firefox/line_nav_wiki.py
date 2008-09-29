@@ -274,9 +274,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Bugzilla Link (please see our notes on how we use Bugzilla Link ).'",
-     "     VISIBLE:  'Bugzilla Link (please see our no', cursor=1",
-     "SPEECH OUTPUT: 'Bugzilla link (please see our notes on how we use Bugzilla link ).'"]))
+    ["BRAILLE LINE:  'Bugzilla Link  (please see our notes on how we use Bugzilla Link ).'",
+     "     VISIBLE:  'Bugzilla Link  (please see our n', cursor=1",
+     "SPEECH OUTPUT: 'Bugzilla link  (please see our notes on how we use Bugzilla link ).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -306,9 +306,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link has creat', cursor=1",
-     "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
+    ["BRAILLE LINE:  'Darragh Ó Héiligh Link  has created several audio guides for Orca. This is a fantastic contribution'",
+     "     VISIBLE:  'Darragh Ó Héiligh Link  has crea', cursor=1",
+     "SPEECH OUTPUT: 'Darragh Ó Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1239,9 +1239,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Darragh Ó Héiligh Link has created several audio guides for Orca. This is a fantastic contribution'",
-     "     VISIBLE:  'Darragh Ó Héiligh Link has creat', cursor=1",
-     "SPEECH OUTPUT: 'Darragh Ó Héiligh link has created several audio guides for Orca. This is a fantastic contribution'"]))
+    ["BRAILLE LINE:  'Darragh Ó Héiligh Link  has created several audio guides for Orca. This is a fantastic contribution'",
+     "     VISIBLE:  'Darragh Ó Héiligh Link  has crea', cursor=1",
+     "SPEECH OUTPUT: 'Darragh Ó Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1271,9 +1271,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Bugzilla Link (please see our notes on how we use Bugzilla Link ).'",
-     "     VISIBLE:  'Bugzilla Link (please see our no', cursor=1",
-     "SPEECH OUTPUT: 'Bugzilla link (please see our notes on how we use Bugzilla link ).'"]))
+    ["BRAILLE LINE:  'Bugzilla Link  (please see our notes on how we use Bugzilla Link ).'",
+     "     VISIBLE:  'Bugzilla Link  (please see our n', cursor=1",
+     "SPEECH OUTPUT: 'Bugzilla link  (please see our notes on how we use Bugzilla link ).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

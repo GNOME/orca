@@ -113,8 +113,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'a daily digest? &=y RadioButton No & y RadioButton  Yes'",
-     "     VISIBLE:  '&=y RadioButton No & y RadioButt', cursor=1",
+    ["BRAILLE LINE:  'a daily digest? &=y RadioButton  No & y RadioButton  Yes'",
+     "     VISIBLE:  '&=y RadioButton  No & y RadioBut', cursor=1",
      "SPEECH OUTPUT: 'No selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -123,8 +123,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'a daily digest? &=y RadioButton  No  Yes & y RadioButton Yes'",
-     "     VISIBLE:  '& y RadioButton Yes', cursor=1",
+    ["BRAILLE LINE:  'a daily digest? &=y RadioButton  No & y RadioButton  Yes'",
+     "     VISIBLE:  '& y RadioButton  Yes', cursor=1",
      "SPEECH OUTPUT: 'Yes not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -267,8 +267,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -277,8 +277,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox the reporter'",
-     "     VISIBLE:  '< > CheckBox the reporter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  the reporter'",
+     "     VISIBLE:  '< > CheckBox  the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -287,8 +287,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox the QA contact'",
-     "     VISIBLE:  '< > CheckBox the QA contact', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  the QA contact'",
+     "     VISIBLE:  '< > CheckBox  the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -297,8 +297,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox a CC list member'",
-     "     VISIBLE:  '< > CheckBox a CC list member', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a CC list member'",
+     "     VISIBLE:  '< > CheckBox  a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -307,8 +307,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox a commenter'",
-     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
+     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -340,8 +340,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -350,8 +350,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox the reporter'",
-     "     VISIBLE:  '<x> CheckBox the reporter', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the reporter'",
+     "     VISIBLE:  '<x> CheckBox  the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -360,8 +360,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox the QA contact'",
-     "     VISIBLE:  '<x> CheckBox the QA contact', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  the QA contact'",
+     "     VISIBLE:  '<x> CheckBox  the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -370,8 +370,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox a CC list member'",
-     "     VISIBLE:  '<x> CheckBox a CC list member', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox  a CC list member'",
+     "     VISIBLE:  '<x> CheckBox  a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -380,8 +380,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox a commenter'",
-     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
+     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -439,10 +439,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
+    ["BRAILLE LINE:  ' $l  and Now $l'",
+     "     VISIBLE:  ' $l  and Now $l', cursor=1",
+     "BRAILLE LINE:  ' $l  and Now $l'",
+     "     VISIBLE:  ' $l  and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -532,8 +532,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' and remember these as my default search options < > CheckBox and remember these as my default search options'",
-     "     VISIBLE:  '< > CheckBox and remember these ', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  and remember these as my default search options'",
+     "     VISIBLE:  '< > CheckBox  and remember these', cursor=1",
      "SPEECH OUTPUT: 'and remember these as my default search options check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -542,8 +542,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox Not (negate this whole chart)'",
-     "     VISIBLE:  '< > CheckBox Not (negate this wh', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox  Not (negate this whole chart)'",
+     "     VISIBLE:  '< > CheckBox  Not (negate this w', cursor=1",
      "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
