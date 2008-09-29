@@ -1,3 +1,11 @@
+2008-09-29  Willie Walker <william.walker@sun.com>
+
+        * src/orca/settings.py:
+          For for bug #553413 - Orca can be double-started on login.
+          This patch uses the gconf way of autostarting Orca rather 
+          than the ~/.config method, tying it in better with the
+          preferred applications dialog.
+
 2008-09-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/braille.py:
@@ -53,7 +61,7 @@
           Fix for bug #552344 - tutorial message for desktop not spoken 
           in ibex
 
-2008-09-15  Willie Walker
+2008-09-15  Willie Walker <william.walker@sun.com>
 
         * Make sure the 'svn propedit svn:keywords' values for each 
           Python source file has the "Author Date Id Revision" keywords
@@ -66,7 +74,7 @@
           Fix for bug #518945 - Orca has problems with certain imagemaps
           in FF3.
 
-2008-09-12  Willie Walker
+2008-09-12  Willie Walker <william.walker@sun.com>
 
         * Add to the 'svn propedit svn:ignore' values of various directories.
           This helps eliminate spurious '?' entries in 'svn stat' output.

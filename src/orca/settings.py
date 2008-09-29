@@ -840,10 +840,12 @@ def setAccessibilityEnabled(enable):
 def isOrcaAutostarted():
     """Return an indication of whether Orca autostart at login time is enabled.
     """
-
-    userDesktopFile = os.path.join(os.environ["HOME"], ".config", \
-                                   "autostart", "orca.desktop")
-    return os.path.exists(userDesktopFile)
+    prefix = "/desktop/gnome/applications/at/visual/"
+    try:
+	return ("orca" in gconfClient.get_string(prefix + "exec")) \
+           and gconfClient.get_bool(prefix + "startup")
+    except:
+        return False
 
 def setOrcaAutostart(enable):
     """Enable or disable the autostart of Orca at login time.
@@ -853,34 +855,12 @@ def setOrcaAutostart(enable):
 
     Returns an indication of whether the operation was successful.
     """
-
-    status = True
-    systemDesktopFile = os.path.join(platform.prefix, platform.datadirname, \
-                                     "applications", "orca.desktop")
-    autostartDir = os.path.join(os.environ["HOME"], ".config", "autostart")
-    userDesktopFile = os.path.join(os.environ["HOME"], ".config", \
-                                   "autostart", "orca.desktop")
-
+    prefix = "/desktop/gnome/applications/at/visual/"
     try:
-        # If the user wants to enable Orca autostart, then copy the
-        # orca.desktop file from /usr/share/applications to
-        # ~/.config/autostart directory (creating the autostart directory
-        # if neccessary).
-        #
-        # If the user wants to disable this feature, then just remove 
-        # ~/.config/autostart/orca.desktop (if it exists).
-        #
-        if enable:
-            try:
-                os.chdir(autostartDir)
-            except:
-                os.mkdir(autostartDir)
-            shutil.copy(systemDesktopFile, userDesktopFile)
-        else:
-            os.remove(userDesktopFile)
+        return gconfClient.set_string(prefix + "exec", "orca") \
+           and gconfClient.set_bool(prefix + "startup", enable)
     except:
-        status = False
-    return status
+        return False
 
 # Obtain/set information regarding whether the gksu keyboard grab is enabled
 # or not.
