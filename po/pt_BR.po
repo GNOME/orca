@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-15 23:01+0000\n"
+"POT-Creation-Date: 2008-09-30 23:47-0400\n"
 "PO-Revision-Date: 2008-09-21 14:52-0300\n"
 "Last-Translator: Michel Recondo <mrecondo@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -401,8 +401,8 @@ msgstr "Posição do cursor"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6800
-#: ../src/orca/default.py:6807 ../src/orca/keynames.py:133
+#: ../src/orca/chnames.py:39 ../src/orca/default.py:6802
+#: ../src/orca/default.py:6809 ../src/orca/keynames.py:133
 msgid "space"
 msgstr "espaço"
 
@@ -2198,7 +2198,7 @@ msgstr "Passa o próximo comando para o aplicativo atual."
 #: ../src/orca/scripts/apps/soffice/script.py:1236
 #: ../src/orca/scripts/apps/soffice/script.py:2015
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5157
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5191
 #: ../src/orca/structural_navigation.py:3281 ../src/orca/where_am_I.py:1625
 msgid "blank"
 msgstr "em branco"
@@ -2278,7 +2278,7 @@ msgstr "não selecionada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3869 ../src/orca/default.py:4213
-#: ../src/orca/default.py:7460
+#: ../src/orca/default.py:7462
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
@@ -2297,7 +2297,7 @@ msgstr "selecionado"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3877 ../src/orca/default.py:7468
+#: ../src/orca/default.py:3877 ../src/orca/default.py:7470
 msgid "text|unselected"
 msgstr "desmarcado"
 
@@ -2407,7 +2407,7 @@ msgstr "espaço em branco"
 #.
 #: ../src/orca/default.py:5331
 msgid "string not found"
-msgstr "trecho não encontrado"
+msgstr "trecho não localizado"
 
 #. Translators: Orca will provide more compelling output of
 #. the spell checking dialog in some applications.  The first
@@ -2440,7 +2440,7 @@ msgstr[1] "%(count)d caracteres %(repeatChar)s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7304
+#: ../src/orca/default.py:7306
 msgid "line selected to end from previous cursor position"
 msgstr "linha selecionada até o fim a partir da posição anterior do cursor"
 
@@ -2448,7 +2448,7 @@ msgstr "linha selecionada até o fim a partir da posição anterior do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7312
+#: ../src/orca/default.py:7314
 msgid "line selected from start to previous cursor position"
 msgstr "linha selecionada do começo até a posição anterior do cursor"
 
@@ -2456,7 +2456,7 @@ msgstr "linha selecionada do começo até a posição anterior do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7321
+#: ../src/orca/default.py:7323
 msgid "page selected from cursor position"
 msgstr "página selecionada a partir da posição do cursor"
 
@@ -2464,7 +2464,7 @@ msgstr "página selecionada a partir da posição do cursor"
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7326
+#: ../src/orca/default.py:7328
 msgid "page unselected from cursor position"
 msgstr "página desselecionada a partir da posição do cursor"
 
@@ -2472,14 +2472,14 @@ msgstr "página desselecionada a partir da posição do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7335
+#: ../src/orca/default.py:7337
 msgid "page selected to cursor position"
 msgstr "página selecionada até a posição do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7340
+#: ../src/orca/default.py:7342
 msgid "page unselected to cursor position"
 msgstr "página desselecionada até a posição do cursor"
 
@@ -2487,14 +2487,14 @@ msgstr "página desselecionada até a posição do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7349
+#: ../src/orca/default.py:7351
 msgid "line selected down from cursor position"
 msgstr "linha selecionada a partir da posição do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7354
+#: ../src/orca/default.py:7356
 msgid "line unselected down from cursor position"
 msgstr "linha desselecionada a partir da posição do cursor"
 
@@ -2502,14 +2502,14 @@ msgstr "linha desselecionada a partir da posição do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7363
+#: ../src/orca/default.py:7365
 msgid "line selected up from cursor position"
 msgstr "linha selecionada até a posição do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7368
+#: ../src/orca/default.py:7370
 msgid "line unselected up from cursor position"
 msgstr "linha desselecionada até a posição do cursor"
 
@@ -2517,14 +2517,14 @@ msgstr "linha desselecionada até a posição do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7377
+#: ../src/orca/default.py:7379
 msgid "document selected to cursor position"
 msgstr "documento selecionado até a posição do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7382
+#: ../src/orca/default.py:7384
 msgid "document unselected to cursor position"
 msgstr "documento desselecionado até a posição do cursor"
 
@@ -2532,21 +2532,21 @@ msgstr "documento desselecionado até a posição do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7391
+#: ../src/orca/default.py:7393
 msgid "document selected from cursor position"
 msgstr "documento selecionado a partir da posição do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7396
+#: ../src/orca/default.py:7398
 msgid "document unselected from cursor position"
 msgstr "documento desselecionado a partir da posição do cursor"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:7413
+#: ../src/orca/default.py:7415
 msgid "entire document selected"
 msgstr "documento todo selecionado"
 
@@ -6419,14 +6419,14 @@ msgstr "Verificação ortográfica"
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:502
 msgid "Phrase not found"
-msgstr "Expressão não encontrada"
+msgstr "Expressão não localizada"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:568
 msgid "Phrase found."
-msgstr "Expressão encontrada."
+msgstr "Expressão localizada."
 
 #: ../src/orca/scripts/apps/gnome-mud.py:119
 msgid "Read the latest n messages in the incoming messages text area."
@@ -6458,12 +6458,12 @@ msgstr "Pesquisa completa."
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d arquivo encontrado"
-msgstr[1] "%d arquivos encontrados"
+msgstr[0] "%d arquivo localizado"
+msgstr[1] "%d arquivos localizados"
 
 #: ../src/orca/scripts/apps/gnome-search-tool.py:184
 msgid "No files found."
-msgstr "Nenhum arquivo encontrado."
+msgstr "Nenhum arquivo localizado."
 
 #: ../src/orca/scripts/apps/liferea.py:117
 msgid "Work online / offline"
@@ -7083,7 +7083,7 @@ msgstr "Falar _somente as linhas modificadas durante a busca"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:840
 msgid "Minimum length of matched text:"
-msgstr "Comprimento mínimo do texto encontrado:"
+msgstr "Comprimento mínimo do texto correspondente:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
@@ -7126,7 +7126,7 @@ msgstr "h%d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5686
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5720
 msgid "open"
 msgstr "abrir"
 
@@ -7136,7 +7136,7 @@ msgstr "abrir"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5759
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5793
 #: ../src/orca/structural_navigation.py:881
 msgid "Wrapping to bottom."
 msgstr "Saltando para o fim."
@@ -7147,7 +7147,7 @@ msgstr "Saltando para o fim."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5827
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5861
 #: ../src/orca/structural_navigation.py:889
 msgid "Wrapping to top."
 msgstr "Voltando ao início."
@@ -7155,9 +7155,9 @@ msgstr "Voltando ao início."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5853
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5877
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5887
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5911
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5921
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Suporte a região dinâmica está desligado"
@@ -7165,11 +7165,11 @@ msgstr "Suporte a região dinâmica está desligado"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5861
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5895
 msgid "Live regions monitoring on"
 msgstr "Monitoração de região dinâmica ligada"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5868
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5902
 msgid "Live regions monitoring off"
 msgstr "Monitoração de região dinâmica desligada"
 
@@ -7180,7 +7180,7 @@ msgstr "Monitoração de região dinâmica desligada"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5903
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5937
 msgid "Gecko is controlling the caret."
 msgstr "Gecko está controlando o cursor."
 
@@ -7191,7 +7191,7 @@ msgstr "Gecko está controlando o cursor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5915
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5949
 msgid "Orca is controlling the caret."
 msgstr "Orca está controlando o cursor."
 
@@ -7220,14 +7220,21 @@ msgid_plural "List with %d items"
 msgstr[0] "Lista com %d item"
 msgstr[1] "Lista com %d itens"
 
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:126
+#. Translators: The following string is spoken to let the user
+#. know that he/she is on a link within an image map. An image
+#. map is an image/graphic which has been divided into regions.
+#. Each region can be clicked on and has an associated link.
+#. Please see http://en.wikipedia.org/wiki/Imagemap for more
+#. information and examples.
+#.
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:130
 msgid "image map link"
 msgstr "link de mapa de imagens"
 
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:224
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:228
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -7237,7 +7244,7 @@ msgstr[1] "%d cabeçalhos"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:230
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:234
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -7247,7 +7254,7 @@ msgstr[1] "%d formulários"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:236
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:240
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -7257,7 +7264,7 @@ msgstr[1] "%d tabelas"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:242
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:246
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -7267,7 +7274,7 @@ msgstr[1] "%d links visitados"
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:248
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:252
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -7279,7 +7286,7 @@ msgstr[1] "%d links não visitados"
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:255
+#: ../src/orca/scripts/toolkits/Gecko/where_am_i.py:259
 #, python-format
 msgid "%d percent of document read"
 msgstr "%d porcento do documento lido"
@@ -7312,28 +7319,28 @@ msgstr "apleit"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:984
+#: ../src/orca/settings.py:964
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:989
+#: ../src/orca/settings.py:969
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:994
+#: ../src/orca/settings.py:974
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:999
+#: ../src/orca/settings.py:979
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
@@ -7341,7 +7348,7 @@ msgstr "[Ee]volution"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1005
+#: ../src/orca/settings.py:985
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7349,7 +7356,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1011
+#: ../src/orca/settings.py:991
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -7357,7 +7364,7 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1017
+#: ../src/orca/settings.py:997
 msgid "Minefield"
 msgstr "CampoMinado"
 
@@ -7365,35 +7372,35 @@ msgstr "CampoMinado"
 #. version of Thunderbird, which chooses to now call itself by a different
 #. name.
 #.
-#: ../src/orca/settings.py:1023
+#: ../src/orca/settings.py:1003
 msgid "Shredder"
 msgstr "Shredder"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1028
+#: ../src/orca/settings.py:1008
 msgid "Mail/News"
 msgstr "E-mail/Notícias"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1033
+#: ../src/orca/settings.py:1013
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1038
+#: ../src/orca/settings.py:1018
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1043
+#: ../src/orca/settings.py:1023
 msgid "gaim"
 msgstr "gaim"
 
@@ -7403,7 +7410,7 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1188 ../src/orca/settings.py:1196
+#: ../src/orca/settings.py:1168 ../src/orca/settings.py:1176
 msgid "required"
 msgstr "obrigatório"
 
@@ -7857,7 +7864,7 @@ msgstr "Vai para o próximo marco."
 #.
 #: ../src/orca/structural_navigation.py:2694
 msgid "No landmark found."
-msgstr "Nenhum marco encontrado."
+msgstr "Nenhum marco localizado."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
