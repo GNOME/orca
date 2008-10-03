@@ -31,8 +31,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Hello world Link , this is a test.'",
-     "     VISIBLE:  'Hello world Link , this is a tes', cursor=1",
+    ["BRAILLE LINE:  'Hello world, this is a test.'",
+     "     VISIBLE:  'Hello world, this is a test.', cursor=1",
      "SPEECH OUTPUT: 'Hello world link , this is a test.'"]))
 
 ########################################################################
@@ -42,8 +42,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Foo Link'",
-     "     VISIBLE:  'Foo Link', cursor=1",
+    ["BRAILLE LINE:  'Foo'",
+     "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo link ",
      "'"]))
 
@@ -54,8 +54,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab",
-    ["BRAILLE LINE:  'Bar Link'",
-     "     VISIBLE:  'Bar Link', cursor=1",
+    ["BRAILLE LINE:  'Bar'",
+     "     VISIBLE:  'Bar', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bar link'"]))
 
@@ -67,8 +67,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab",
-    ["BRAILLE LINE:  'Foo Link'",
-     "     VISIBLE:  'Foo Link', cursor=1",
+    ["BRAILLE LINE:  'Foo'",
+     "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foo link'"]))
 

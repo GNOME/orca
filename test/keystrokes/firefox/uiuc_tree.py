@@ -193,13 +193,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Vegetables expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
-# [[[Bug?: "Panel list" addition.  below are expected results]]]
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "collapse vegetables", 
-    ["BRAILLE LINE:  'Vegetables ListItem'",
-     "     VISIBLE:  'Vegetables ListItem', cursor=1",
+    ["BUG? - If Panel shouldn't be in the context, perhaps a braille generator should be preventing it??",
+     "BRAILLE LINE:  'Vegetables ListItem Panel'",
+     "     VISIBLE:  'Vegetables ListItem Panel', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################

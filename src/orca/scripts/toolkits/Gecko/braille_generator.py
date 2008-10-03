@@ -329,10 +329,15 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if focusedRegionIndex >= len(regions):
             focusedRegionIndex = 0
 
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
+            focusedRegion = regions[focusedRegionIndex]
+        else:
+            focusedRegion = None
+
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #
-        return [regions, regions[focusedRegionIndex]]
+        return [regions, focusedRegion]
 
     def _getBrailleRegionsForMenuItem(self, obj):
         """Get the braille for a menu item.
@@ -427,12 +432,19 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if not item:
                 item = obj[0]
             regions.append(braille.Region(item.name + " "))
+        elif obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            focusedRegionIndex = -1
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
                 rolenames.getBrailleForRoleName(obj)))
 
-        return [regions, regions[focusedRegionIndex]]
+        if focusedRegionIndex > -1:
+            focusedRegion = regions[focusedRegionIndex]
+        else:
+            focusedRegion = None
+
+        return [regions, focusedRegion]
 
     def _getBrailleRegionsForImage(self, obj):
         """Get the braille regions for an image.
@@ -453,38 +465,35 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             return braillegenerator.BrailleGenerator.\
                        _getBrailleRegionsForImage(self, obj)
         
-        regions = []
-
         text = ""
         text = self._script.appendString(text, 
                                          self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, 
+        text = self._script.appendString(text,
                                          self._script.getDisplayedText(obj))
-
-        # If there's no text for the link, expose part of the
-        # link to the user if the image is in a link.
-        #
         link = self._script.getAncestor(obj, 
-                                        [pyatspi.ROLE_LINK], 
+                                        [pyatspi.ROLE_LINK],
                                         [pyatspi.ROLE_DOCUMENT_FRAME])
-        if len(text) == 0:
-            if link:
-                [linkRegions, focusedRegion] = \
-                    self._getBrailleRegionsForLink(link)
-                for region in linkRegions:
-                    text += region.string
-        elif link:
-            text = self._script.appendString(text, self._getTextForRole(link))
+        if link:
+            if len(text) == 0:
+                # If there's no text for the link, expose part of the
+                # link to the user if the image is in a link.
+                #
+                basename = self._script.getLinkBasename(link)
+                if basename:
+                    text = basename
 
         text = self._script.appendString(text,
                                          self._script.getTextForValue(obj))
         text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
-        componentRegion = braille.Component(obj, text)
-        regions.append(componentRegion)
+        if link:
+            region = braille.Link(obj, text)
+        else:
+            region = braille.Component(obj, text)
+        regions.append(region)
 
-        return [regions, componentRegion]
+        return [regions, region]
 
     def _getBrailleRegionsForLink(self, obj):
         """Gets text to be displayed for a link.
@@ -499,13 +508,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForLink", obj)
 
-        regions = []
-
-        text = ""
-        text = self._script.appendString(text, 
-                                         self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, 
-                                         self._script.getDisplayedText(obj))
+        text, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
+        if not len(text):
+            text = self._script.getDisplayedText(obj)
 
         # If there's no text for the link, expose part of the
         # URI to the user.
@@ -515,12 +520,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if basename:
                 text = basename
 
-        text = self._script.appendString(text,
-                                         self._script.getTextForValue(obj))
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
         regions = []
-        componentRegion = braille.Component(obj, text)
-        regions.append(componentRegion)
+        linkRegion = braille.Link(obj, text, caretOffset - startOffset)
+        regions.append(linkRegion)
 
-        return [regions, componentRegion]
+        return [regions, linkRegion]

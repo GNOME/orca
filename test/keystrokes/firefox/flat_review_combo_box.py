@@ -35,8 +35,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file", 
-    ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
-     "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
+    ["BRAILLE LINE:  'Severity: Severity normal Combo'",
+     "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
      "SPEECH OUTPUT: 'Severity link : Severity normal combo box'"]))
 
 ########################################################################
@@ -46,8 +46,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
-    ["BRAILLE LINE:  'Severity Link : Severity normal Combo'",
-     "     VISIBLE:  'Severity Link : Severity normal ', cursor=1",
+    ["BRAILLE LINE:  'Severity: Severity normal Combo'",
+     "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity link'"]))
 

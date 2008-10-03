@@ -61,23 +61,23 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  'Science Link h4'",
-     "     VISIBLE:  'Science Link h4', cursor=1",
+    ["BRAILLE LINE:  'Science h4'",
+     "     VISIBLE:  'Science h4', cursor=1",
      "SPEECH OUTPUT: 'Science link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  'Recent Tags Link h4'",
-     "     VISIBLE:  'Recent Tags Link h4', cursor=1",
+    ["BRAILLE LINE:  'Recent Tags h4'",
+     "     VISIBLE:  'Recent Tags h4', cursor=1",
      "SPEECH OUTPUT: 'Recent Tags link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'Recent Tags Link Slashdot Login h4'",
+    ["BRAILLE LINE:  'Recent Tags Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
      "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
 
@@ -118,16 +118,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
-    ["BRAILLE LINE:  'Book Reviews Link h4'",
-     "     VISIBLE:  'Book Reviews Link h4', cursor=1",
+    ["BRAILLE LINE:  'Book Reviews h4'",
+     "     VISIBLE:  'Book Reviews h4', cursor=1",
      "SPEECH OUTPUT: 'Book Reviews link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
-    ["BRAILLE LINE:  'Book Reviews Link Older Stuff h4'",
-     "     VISIBLE:  'Book Reviews Link Older Stuff h4', cursor=19",
+    ["BRAILLE LINE:  'Book Reviews Older Stuff h4'",
+     "     VISIBLE:  'Book Reviews Older Stuff h4', cursor=19",
      "SPEECH OUTPUT: 'Older Stuff heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -143,8 +143,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
-    ["BRAILLE LINE:  'Book Reviews Link h4'",
-     "     VISIBLE:  'Book Reviews Link h4', cursor=1",
+    ["BRAILLE LINE:  'Book Reviews h4'",
+     "     VISIBLE:  'Book Reviews h4', cursor=1",
      "SPEECH OUTPUT: 'Book Reviews link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -176,8 +176,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
-    ["BRAILLE LINE:  'Nickname  $l Password  $l Log in Button'",
-     "     VISIBLE:  'Nickname  $l Password  $l Log in', cursor=1",
+    ["BRAILLE LINE:  'Nickname  $l Password  $l  Log in Button'",
+     "     VISIBLE:  'Nickname  $l Password  $l  Log i', cursor=1",
      "SPEECH OUTPUT: 'Nickname text Password password Log in button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -192,24 +192,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BRAILLE LINE:  'Recent Tags Link h4'",
-     "     VISIBLE:  'Recent Tags Link h4', cursor=1",
+    ["BRAILLE LINE:  'Recent Tags h4'",
+     "     VISIBLE:  'Recent Tags h4', cursor=1",
      "SPEECH OUTPUT: 'Recent Tags link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
-    ["BRAILLE LINE:  'Science Link h4'",
-     "     VISIBLE:  'Science Link h4', cursor=1",
+    ["BRAILLE LINE:  'Science h4'",
+     "     VISIBLE:  'Science h4', cursor=1",
      "SPEECH OUTPUT: 'Science link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Up",
-    ["BRAILLE LINE:  'Services h4 Science Link h4'",
-     "     VISIBLE:  'Services h4 Science Link h4', cursor=1",
+    ["BRAILLE LINE:  'Services h4 Science h4'",
+     "     VISIBLE:  'Services h4 Science h4', cursor=1",
      "SPEECH OUTPUT: 'Services heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())

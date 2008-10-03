@@ -47,9 +47,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
      "     VISIBLE:  ' $l text field using default typ', cursor=1",
-     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
      "     VISIBLE:  ' $l text field using default typ', cursor=1",
      "SPEECH OUTPUT: 'Enter your Name: text'"]))
 
@@ -59,9 +59,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and MAXLENGTH'",
+    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and MAXLENGTH'",
      "     VISIBLE:  ' $l text field using SIZE and MA', cursor=1",
-     "BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and MAXLENGTH'",
+     "BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and MAXLENGTH'",
      "     VISIBLE:  ' $l text field using SIZE and MA', cursor=1",
      "SPEECH OUTPUT: '1. Enter your Address: text'"]))
 
@@ -71,10 +71,11 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
-     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
-     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
+    ["BUG? - Should have a space between the EOL indicator and Image",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -83,10 +84,11 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
-     "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
-     "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
+    ["BUG? - Should have a space between the EOL indicator and Image",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+     "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+     "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
      "SPEECH OUTPUT: '3. Enter your State: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -95,9 +97,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
+    ["BUG? - Should have a space between the EOL indicator and Image",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: Image US $l text field using value'",
      "     VISIBLE:  'US $l text field using value', cursor=1",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: Image US $l text field using value'",
      "     VISIBLE:  'US $l text field using value', cursor=1",
      "SPEECH OUTPUT: '4. Enter your Country: text US'"]))
 
@@ -107,10 +110,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
-     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=20",
-     "BRAILLE LINE:  '5. Enter your Zip:  $l'",
-     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=20",
+    ["BRAILLE LINE:  '5. Enter your Zip:   $l'",
+     "     VISIBLE:  '5. Enter your Zip:   $l', cursor=21",
+     "BRAILLE LINE:  '5. Enter your Zip:   $l'",
+     "     VISIBLE:  '5. Enter your Zip:   $l', cursor=21",
      "SPEECH OUTPUT: '5. Enter your Zip: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -119,9 +122,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
-    ["BRAILLE LINE:  '6. What happens when a fixed-width font(the default) is used for a one-byte text input area, let's try it.. Enter one character:  $l'",
+    ["BRAILLE LINE:  '6. What happens when a fixed-width font(the default) is used for a one-byte text input area, let's try it.. Enter one character:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '6. What happens when a fixed-width font(the default) is used for a one-byte text input area, let's try it.. Enter one character:  $l'",
+     "BRAILLE LINE:  '6. What happens when a fixed-width font(the default) is used for a one-byte text input area, let's try it.. Enter one character:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: '6. What happens when a fixed-width font(the default) is used for a one-byte text input area, let's try it.. Enter one character: text'"]))
 
@@ -211,9 +214,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
      "     VISIBLE:  ' $l text field using default typ', cursor=1",
-     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
      "     VISIBLE:  ' $l text field using default typ', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'Enter your Name: text'"]))

@@ -31,8 +31,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Hello world Link , this is a test.'",
-     "     VISIBLE:  'Hello world Link , this is a tes', cursor=1",
+    ["BRAILLE LINE:  'Hello world, this is a test.'",
+     "     VISIBLE:  'Hello world, this is a test.', cursor=1",
      "SPEECH OUTPUT: 'Hello world link , this is a test.'"]))
 
 ########################################################################

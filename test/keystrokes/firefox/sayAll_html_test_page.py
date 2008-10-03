@@ -26,8 +26,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Test Formats Link'",
-     "     VISIBLE:  'Test Formats Link', cursor=1",
+    ["BRAILLE LINE:  'Test Formats'",
+     "     VISIBLE:  'Test Formats', cursor=1",
      "SPEECH OUTPUT: 'Test Formats link ",
      "'"]))
 

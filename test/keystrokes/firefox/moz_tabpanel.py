@@ -38,7 +38,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    [ "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Zero Page Tab One Page Tab T', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Tab Zero page'",
@@ -52,7 +52,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 2", 
-    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab Zero Page'",
      "     VISIBLE:  'Tab One Page Tab Two Page Tab Th', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab One page'"]))
@@ -63,7 +63,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    [ "BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab One Page'",
      "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Two page'"]))
@@ -97,8 +97,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 4", 
-    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
-     "     VISIBLE:  'Tab Three Page Tab Four Page', cursor=1",
+    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page Tab Two Page'",
+     "     VISIBLE:  'Tab Three Page Tab Four Page Tab', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Three page'"]))
 ########################################################################

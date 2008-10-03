@@ -33,8 +33,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to button", 
-    ["BRAILLE LINE:  'Load schedule Cancel'",
-     "     VISIBLE:  'Load schedule Cancel', cursor=0",
+    ["BRAILLE LINE:  'Load schedule  Cancel'",
+     "     VISIBLE:  'Load schedule  Cancel', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Load schedule button'"]))
 

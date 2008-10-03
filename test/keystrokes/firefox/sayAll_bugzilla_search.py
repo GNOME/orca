@@ -39,8 +39,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Link Image Bugzilla'",
-     "     VISIBLE:  'Home Link Image Bugzilla', cursor=1",
+    ["BRAILLE LINE:  'Home Image Bugzilla'",
+     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
 
 ########################################################################

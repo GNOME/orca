@@ -192,7 +192,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "leave menu", 
-    ["BRAILLE LINE:  'Entry # $l Date $l Expense $l Amount $l Merchant $l Type ColumnHeader'",
+    ["BUG? - Missing a space before Type",
+     "BRAILLE LINE:  'Entry # $l Date $l Expense $l Amount $l Merchant $lType ColumnHeader'",
      "     VISIBLE:  'Entry # $l Date $l Expense $l Am', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'"]))

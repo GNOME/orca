@@ -455,6 +455,32 @@ class Component(Region):
         else:
             action.doAction(0)
 
+class Link(Component):
+    """A subclass of Component backed by an accessible.  This Region will be
+    marked as a link by dots 7 or 8, depending on the user's preferences.
+    """
+
+    def __init__(self, accessible, string, cursorOffset=0):
+        """Initialize a Link region. similar to Component, but here we always
+        have the region expand on cursor."""
+        Component.__init__(self, accessible, string, cursorOffset, '', True)
+
+    def getAttributeMask(self, getLinkMask=True):
+        """Creates a string which can be used as the attrOr field of brltty's
+        write structure for the purpose of indicating text attributes and
+        selection.
+        Arguments:
+
+        - getLinkMask: Whether or not we should take the time to get
+          the attributeMask for links. Reasons we might not want to
+          include knowning that we will fail and/or it taking an
+          unreasonable amount of time (AKA Gecko).
+        """
+
+        # Create an link indicator mask.
+        #
+        return chr(settings.brailleLinkIndicator) * len(self.string)
+
 class Text(Region):
     """A subclass of Region backed by a Text object.  This Region will
     react to any cursor routing key events by positioning the caret in
@@ -655,7 +681,7 @@ class Text(Region):
                     contractedMask[outPos[i]] |= m
                 except IndexError:
                     continue
-            regionMask = contractedMask
+            regionMask = contractedMask[:len(self.string)]
 
         # Add empty mask characters for the EOL character as well as for
         # any label that might be present.

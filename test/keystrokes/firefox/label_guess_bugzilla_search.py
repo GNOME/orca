@@ -41,8 +41,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Link Image Bugzilla'",
-     "     VISIBLE:  'Home Link Image Bugzilla', cursor=1",
+    ["BRAILLE LINE:  'Home Image Bugzilla'",
+     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
 
 ########################################################################
@@ -54,7 +54,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo  $l Search Button'",
+    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  'contains all of the words/string', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box'"]))
@@ -65,9 +65,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo  $l Search Button'",
+    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  ' $l Search Button', cursor=1",
-     "BRAILLE LINE:  'Summary: contains all of the words/strings Combo  $l Search Button'",
+     "BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  ' $l Search Button', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -77,7 +77,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo  $l Search Button'",
+    ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  'Search Button', cursor=1",
      "SPEECH OUTPUT: 'Search button'"]))
 
@@ -142,8 +142,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
-     "     VISIBLE:  'contains the string Combo  $l', cursor=1",
+    ["BRAILLE LINE:  'A Comment: contains the string Combo $l'",
+     "     VISIBLE:  'contains the string Combo $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'A Comment: contains the string combo box'"]))
 
@@ -153,9 +153,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
+    ["BRAILLE LINE:  'A Comment: contains the string Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'A Comment: contains the string Combo  $l'",
+     "BRAILLE LINE:  'A Comment: contains the string Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -165,7 +165,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo  $l'",
+    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  'contains all of the words/string', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box'"]))
@@ -176,9 +176,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo  $l'",
+    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo  $l'",
+     "BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -188,7 +188,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Keywords Link : contains all of the keywords Combo  $l'",
+    ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  'contains all of the keywords Com', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Keywords contains all of the keywords combo box'"]))
@@ -200,9 +200,9 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Keywords Link : contains all of the keywords Combo  $l'",
+    ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'Keywords Link : contains all of the keywords Combo  $l'",
+     "BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -267,8 +267,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -277,8 +277,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  the reporter'",
-     "     VISIBLE:  '< > CheckBox  the reporter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox the reporter'",
+     "     VISIBLE:  '< > CheckBox the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -287,8 +287,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  the QA contact'",
-     "     VISIBLE:  '< > CheckBox  the QA contact', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox the QA contact'",
+     "     VISIBLE:  '< > CheckBox the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -297,8 +297,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  a CC list member'",
-     "     VISIBLE:  '< > CheckBox  a CC list member', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox a CC list member'",
+     "     VISIBLE:  '< > CheckBox a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -307,8 +307,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
-     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox a commenter'",
+     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -340,8 +340,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox  the bug assignee'",
-     "     VISIBLE:  '<x> CheckBox  the bug assignee', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox the bug assignee'",
+     "     VISIBLE:  '<x> CheckBox the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'the bug assignee check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -350,8 +350,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox  the reporter'",
-     "     VISIBLE:  '<x> CheckBox  the reporter', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox the reporter'",
+     "     VISIBLE:  '<x> CheckBox the reporter', cursor=1",
      "SPEECH OUTPUT: 'the reporter check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -360,8 +360,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox  the QA contact'",
-     "     VISIBLE:  '<x> CheckBox  the QA contact', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox the QA contact'",
+     "     VISIBLE:  '<x> CheckBox the QA contact', cursor=1",
      "SPEECH OUTPUT: 'the QA contact check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -370,8 +370,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '<x> CheckBox  a CC list member'",
-     "     VISIBLE:  '<x> CheckBox  a CC list member', cursor=1",
+    ["BRAILLE LINE:  '<x> CheckBox a CC list member'",
+     "     VISIBLE:  '<x> CheckBox a CC list member', cursor=1",
      "SPEECH OUTPUT: 'a CC list member check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -380,8 +380,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  a commenter'",
-     "     VISIBLE:  '< > CheckBox  a commenter', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox a commenter'",
+     "     VISIBLE:  '< > CheckBox a commenter', cursor=1",
      "SPEECH OUTPUT: 'a commenter check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -439,10 +439,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=1",
-     "BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=1",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=1",
+     "BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -452,10 +452,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=10",
-     "BRAILLE LINE:  ' $l  and Now $l'",
-     "     VISIBLE:  ' $l  and Now $l', cursor=10",
+    ["BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=9",
+     "BRAILLE LINE:  ' $l and Now $l'",
+     "     VISIBLE:  ' $l and Now $l', cursor=9",
      "SPEECH OUTPUT: 'and text Now'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -511,7 +511,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
+    ["BUG? - extra space between by: and Reuse",
+     "BRAILLE LINE:  'Sort results by:  Reuse same sort as last time Combo'",
      "     VISIBLE:  'Reuse same sort as last time Com', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
@@ -532,8 +533,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  and remember these as my default search options'",
-     "     VISIBLE:  '< > CheckBox  and remember these', cursor=1",
+    ["BRAILLE LINE:  '    < > CheckBox and remember these as my default search options'",
+     "     VISIBLE:  '< > CheckBox and remember these ', cursor=1",
      "SPEECH OUTPUT: 'and remember these as my default search options check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -542,8 +543,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '< > CheckBox  Not (negate this whole chart)'",
-     "     VISIBLE:  '< > CheckBox  Not (negate this w', cursor=1",
+    ["BRAILLE LINE:  '< > CheckBox Not (negate this whole chart)'",
+     "     VISIBLE:  '< > CheckBox Not \(negate this wh', cursor=1",
      "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())

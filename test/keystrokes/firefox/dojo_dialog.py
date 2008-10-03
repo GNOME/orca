@@ -36,10 +36,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to show dialog button", 
-    ["BRAILLE LINE:  'Show Dialog Button'",
-     "     VISIBLE:  'Show Dialog Button', cursor=1",
+    ["BUG? - Where should the cursor be winding up? It starts at 1 and then lands at 0",
      "BRAILLE LINE:  'Show Dialog Button'",
      "     VISIBLE:  'Show Dialog Button', cursor=1",
+     "BRAILLE LINE:  'Show Dialog Button'",
+     "     VISIBLE:  'Show Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show Dialog button'"]))
      
@@ -50,12 +51,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to programatic dialog button", 
-    ["BRAILLE LINE:  'Programatic Dialog (3 second delay) Button'",
-     "     VISIBLE:  'Programatic Dialog (3 second del', cursor=1",
-     "BRAILLE LINE:  'Programatic Dialog (3 second delay) Button'",
-     "     VISIBLE:  'Programatic Dialog (3 second del', cursor=1",
+    ["BRAILLE LINE:  'Programatic Dialog \(3 second delay\) Button'",
+     "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=1",
+     "BRAILLE LINE:  'Programatic Dialog \(3 second delay\) Button'",
+     "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Programatic Dialog (3 second delay) button'"]))
+     "SPEECH OUTPUT: 'Programatic Dialog \(3 second delay\) button'"]))
      
 ########################################################################
 # Tab to the show dialog button.  
@@ -67,7 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
      "BRAILLE LINE:  'Show TabContainer Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
@@ -111,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
      "BRAILLE LINE:  'Show TabContainer Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 

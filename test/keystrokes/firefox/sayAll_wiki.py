@@ -35,8 +35,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file", 
-    ["BRAILLE LINE:  'Home Link News Link Projects Link Art Link Support Link Development Link Community Link'",
-     "     VISIBLE:  'Home Link News Link Projects Lin', cursor=1",
+    ["BRAILLE LINE:  'Home News Projects Art Support Development Community'",
+     "     VISIBLE:  'Home News Projects Art Support D', cursor=1",
      "SPEECH OUTPUT: 'Home link News link Projects link Art link Support link Development link Community link'"]))
 
 ########################################################################

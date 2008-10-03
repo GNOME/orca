@@ -36,8 +36,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
-    ["BRAILLE LINE:  'Campus Link   . Classroom Link   . Communicate Link   . Reports Link'",
-     "     VISIBLE:  'Campus Link   . Classroom Link  ', cursor=1",
+    ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports '",
+     "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
      "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -60,8 +60,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  ' '",
+     "     VISIBLE:  ' ', cursor=1",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -76,8 +76,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Down",
-    ["BRAILLE LINE:  'Take Course Link'",
-     "     VISIBLE:  'Take Course Link', cursor=0",
+    ["BRAILLE LINE:  ' Take Course'",
+     "     VISIBLE:  ' Take Course', cursor=1",
      "SPEECH OUTPUT: '  Take Course link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -108,8 +108,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. line Down",
-    ["BRAILLE LINE:  'Take Course Link'",
-     "     VISIBLE:  'Take Course Link', cursor=0",
+    ["BRAILLE LINE:  ' Take Course'",
+     "     VISIBLE:  ' Take Course', cursor=1",
      "SPEECH OUTPUT: '  Take Course link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -143,8 +143,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Up",
-    ["BRAILLE LINE:  'Take Course Link'",
-     "     VISIBLE:  'Take Course Link', cursor=0",
+    ["BRAILLE LINE:  ' Take Course'",
+     "     VISIBLE:  ' Take Course', cursor=1",
      "SPEECH OUTPUT: '  Take Course link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -175,8 +175,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Up",
-    ["BRAILLE LINE:  'Take Course Link'",
-     "     VISIBLE:  'Take Course Link', cursor=0",
+    ["BRAILLE LINE:  ' Take Course'",
+     "     VISIBLE:  ' Take Course', cursor=1",
      "SPEECH OUTPUT: '  Take Course link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -191,8 +191,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  ' '",
+     "     VISIBLE:  ' ', cursor=1",
      "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -215,16 +215,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Up",
-    ["BRAILLE LINE:  'Campus Link   . Classroom Link   . Communicate Link   . Reports Link'",
-     "     VISIBLE:  'Campus Link   . Classroom Link  ', cursor=1",
+    ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports '",
+     "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
      "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Up",
-    ["BRAILLE LINE:  'nested-tables Link Image'",
-     "     VISIBLE:  'nested-tables Link Image', cursor=1",
+    ["BRAILLE LINE:  'nested-tables Image'",
+     "     VISIBLE:  'nested-tables Image', cursor=1",
      "SPEECH OUTPUT: 'nested-tables link image'"]))
 
 ########################################################################

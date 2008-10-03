@@ -63,8 +63,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  'The Ideal Gift Collection Link'",
-     "     VISIBLE:  'The Ideal Gift Collection Link', cursor=1",
+    ["BRAILLE LINE:  'The Ideal Gift Collection'",
+     "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
      "SPEECH OUTPUT: 'The Ideal Gift Collection link ",
      "'"]))
 
@@ -136,7 +136,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -215,8 +215,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
-    ["BRAILLE LINE:  'The Ideal Gift Collection Link'",
-     "     VISIBLE:  'The Ideal Gift Collection Link', cursor=1",
+    ["BRAILLE LINE:  'The Ideal Gift Collection'",
+     "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
      "SPEECH OUTPUT: 'The Ideal Gift Collection link ",
      "'"]))
 

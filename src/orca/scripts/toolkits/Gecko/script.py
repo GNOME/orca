@@ -2038,123 +2038,63 @@ class Script(default.Script):
             contents = self.getLineContentsAtOffset(focusedObj,
                                                     max(0, lineContentsOffset))
             self.currentLineContents = contents
+            index = self.findObjectOnLine(focusedObj,
+                                          max(0, lineContentsOffset),
+                                          contents)
 
         if not len(contents):
             return
 
+        whitespace = [" ", "\n", self.NO_BREAK_SPACE_CHARACTER]
+
         focusedRegion = None
-        for content in contents:
+        for i, content in enumerate(contents):
+            isFocusedObj = (i == index)
             [obj, startOffset, endOffset, string] = content
             if not obj:
                 continue
 
-            # If this is a label that's labelling something else, we'll
-            # get the label via a braille generator. [[[TODO: WDW - this is
-            # all to hack around the way checkboxes and their labels
-            # are handled in document content.  For now, we will display
-            # the label so we can track the caret in it on the braille
-            # display.  So...we'll comment this section out.]]]
-            #
-            #if self.isLabellingContents(obj, contents):
-            #    continue
-
-            # Treat the focused combo box and its selected menu item
-            # as the same object for the purposes of displaying the
-            # item in braille.
-            #
-            if focusedObj.getRole() == pyatspi.ROLE_COMBO_BOX \
-               and obj.getRole() == pyatspi.ROLE_MENU_ITEM:
-                comboBox = self.getAncestor(obj,
-                                            [pyatspi.ROLE_COMBO_BOX],
-                                            [pyatspi.ROLE_DOCUMENT_FRAME])
-                isFocusedObj = self.isSameObject(comboBox, focusedObj)
-            else:
-                isFocusedObj = self.isSameObject(obj, focusedObj)
-
-            text = self.queryNonEmptyText(obj)
-            if text and text.getText(startOffset, endOffset) == " " \
-               and not obj.getRole() in [pyatspi.ROLE_PAGE_TAB_LIST,
-                                         pyatspi.ROLE_ENTRY]:
-                continue
-
-            if not self.isNavigableAria(obj):
-                # Treat unnavigable ARIA widgets like normal default.py widgets
-                #
+            role = obj.getRole()
+            if not len(string) \
+               or not self.isNavigableAria(obj) \
+               or role in [pyatspi.ROLE_ENTRY,
+                           pyatspi.ROLE_PASSWORD_TEXT,
+                           pyatspi.ROLE_LINK]:
                 [regions, fRegion] = \
                           self.brailleGenerator.getBrailleRegions(obj)
+
                 if isFocusedObj:
                     focusedRegion = fRegion
-            elif obj.getRole() in [pyatspi.ROLE_ENTRY,
-                                   pyatspi.ROLE_PASSWORD_TEXT] \
-                or ((obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME) \
-                    and obj.getState().contains(pyatspi.STATE_EDITABLE)):
-                label = self.getDisplayedLabel(obj)
+
+            else:
                 regions = [braille.Text(obj,
-                                        label,
-                                        settings.brailleEOLIndicator)]
-                if isFocusedObj:
-                    focusedRegion = regions[0]
-            elif text and (obj.getRole() != pyatspi.ROLE_MENU_ITEM):
-                string = text.getText(startOffset, endOffset).decode('utf-8')
-                string = string.rstrip()
-                endOffset = startOffset + len(string)
+                                        startOffset=startOffset,
+                                        endOffset=endOffset)]
 
-                if endOffset == startOffset:
-                    continue
-
-                if obj.getRole() == pyatspi.ROLE_LINK:
-                    link = obj
-                else:
-                    link = self.getAncestor(obj,
-                                            [pyatspi.ROLE_LINK],
-                                            [pyatspi.ROLE_DOCUMENT_FRAME])
-
-                if not link:
-                    regions = [braille.Text(obj,
-                                            startOffset=startOffset,
-                                            endOffset=endOffset)]
-
-                if link:
-                    regions = [braille.Component(
-                            link,
-                            string + " " + \
-                                rolenames.getBrailleForRoleName(link),
-                            focusedCharacterOffset - startOffset,
-                            expandOnCursor=True)]
-                elif obj.getRole() == pyatspi.ROLE_CAPTION:
+                if role == pyatspi.ROLE_CAPTION:
                     regions.append(braille.Region(
                         " " + rolenames.getBrailleForRoleName(obj)))
 
-                if isFocusedObj \
-                   and (focusedCharacterOffset >= startOffset) \
-                   and (focusedCharacterOffset < endOffset):
-                    focusedRegion = regions[0]
-
-            elif self.isLayoutOnly(obj):
-                continue
-            else:
-                [regions, fRegion] = \
-                          self.brailleGenerator.getBrailleRegions(obj)
                 if isFocusedObj:
-                    focusedRegion = fRegion
+                    focusedRegion = regions[0]
 
             # We only want to display the heading role and level if we
             # have found the final item in that heading, or if that
             # heading contains no children.
             #
-            containingHeading = \
-                self.getAncestor(obj,
-                                 [pyatspi.ROLE_HEADING],
-                                 [pyatspi.ROLE_DOCUMENT_FRAME])
-            isLastObject = contents.index(content) == (len(contents) - 1)
-            if obj.getRole() == pyatspi.ROLE_HEADING:
-                appendRole = isLastObject or not obj.childCount
-            elif containingHeading and isLastObject:
-                obj = containingHeading
-                appendRole = True
+            isLastObject = (i == len(contents) - 1)
+            if role == pyatspi.ROLE_HEADING \
+               and (isLastObject or not obj.childCount):
+                heading = obj
+            elif isLastObject:
+                heading = self.getAncestor(obj,
+                                           [pyatspi.ROLE_HEADING],
+                                           [pyatspi.ROLE_DOCUMENT_FRAME])
+            else:
+                heading = None
 
-            if obj.getRole() == pyatspi.ROLE_HEADING and appendRole:
-                level = self.getHeadingLevel(obj)
+            if heading:
+                level = self.getHeadingLevel(heading)
                 # Translators: the 'h' below represents a heading level
                 # attribute for content that you might find in something
                 # such as HTML content (e.g., <h1>). The translated form
@@ -2162,13 +2102,67 @@ class Script(default.Script):
                 # heading level, where the single character is to indicate
                 # 'heading'.
                 #
-                regions.append(braille.Region(" " + _("h%d" % level)))
+                headingString = _("h%d" % level)
+                if not string.endswith(" "):
+                    headingString = " " + headingString
+                if not isLastObject:
+                    headingString += " "
+                regions.append(braille.Region(headingString))
 
-            if len(line.regions):
-                line.regions[-1].string.rstrip(" ")
-                line.addRegion(braille.Region(" "))
+            # Add whitespace if we need it. [[[TODO: JD - But should we be
+            # doing this in the braille generators rather than here??]]]
+            #
+            if len(line.regions) \
+               and regions[0].string and line.regions[-1].string \
+               and not regions[0].string[0] in whitespace \
+               and not line.regions[-1].string[-1] in whitespace:
+
+                # There is nothing separating the previous braille region from
+                # this one. We might or might not want to add some whitespace
+                # for readability.
+                #
+                lastObj = contents[i - 1][0]
+
+                # If we have two of the same braille class, or if the previous
+                # region is a component or a generic region, or an image link,
+                # we should add some space.
+                #
+                if line.regions[-1].__class__ == regions[0].__class__ \
+                   or line.regions[-1].__class__ in [braille.Component,
+                                                     braille.Region] \
+                   or lastObj.getRole() == pyatspi.ROLE_IMAGE:
+                    line.addRegion(braille.Region(" "))
+
+                # The above check will catch table cells with uniform
+                # contents and form fields -- and do so more efficiently
+                # than walking up the hierarchy. But if we have a cell
+                # with text next to a cell with a link.... Ditto for
+                # sections on the same line.
+                #
+                else:
+                    layoutRoles = [pyatspi.ROLE_TABLE_CELL,
+                                   pyatspi.ROLE_SECTION,
+                                   pyatspi.ROLE_LIST_ITEM]
+                    if role in layoutRoles:
+                        acc1 = obj
+                    else:
+                        acc1 = self.getAncestor(obj,
+                                                layoutRoles,
+                                                [pyatspi.ROLE_DOCUMENT_FRAME])
+                    if acc1:
+                        if lastObj.getRole() == acc1.getRole():
+                            acc2 = lastObj
+                        else:
+                            acc2 = self.getAncestor(lastObj,
+                                                layoutRoles,
+                                                [pyatspi.ROLE_DOCUMENT_FRAME])
+                        if not self.isSameObject(acc1, acc2):
+                            line.addRegion(braille.Region(" "))
 
             line.addRegions(regions)
+
+            if isLastObject:
+                line.regions[-1].string = line.regions[-1].string.rstrip(" ")
 
             # If we're inside of a combo box, we only want to display
             # the selected menu item.
@@ -2179,9 +2173,6 @@ class Script(default.Script):
 
         if extraRegion:
             line.addRegion(extraRegion)
-
-        if len(line.regions):
-            line.regions[-1].string.rstrip(" ")
 
         braille.setFocus(focusedRegion, getLinkMask=False)
         braille.refresh(panToCursor=True, getLinkMask=False)
@@ -4705,8 +4696,9 @@ class Script(default.Script):
 
         # Find the current line.
         #
-        contents = self.currentLineContents
         contextObj, contextOffset = self.getCaretContext()
+        contextOffset = max(0, contextOffset)
+        contents = self.currentLineContents
         if self.findObjectOnLine(contextObj, contextOffset, contents) < 0:
             contents = self.getLineContentsAtOffset(contextObj, contextOffset)
 

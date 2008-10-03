@@ -1,3 +1,51 @@
+2008-10-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/flat_review_combo_box.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_html_test_page.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/moz_progressbar.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/sayAll_enter_bug.py:
+          test/keystrokes/firefox/line_nav_multi_line_text.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/line_nav_bug_549128.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/dojo_dialog.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/label_guess_bug_509809.py:
+          test/keystrokes/firefox/imagemap.py:
+          test/keystrokes/firefox/line_nav_bug_547573.py:
+          test/keystrokes/firefox/line_nav_imagemap.py:
+          test/keystrokes/firefox/bug_511389.py:
+          test/keystrokes/firefox/moz_slider.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/sayAll_role_combo_box.py:
+          test/keystrokes/firefox/line_nav_table_cell_links.py:
+          test/keystrokes/firefox/dojo_checkbox.py:
+          test/keystrokes/firefox/line_nav_empty_anchor.py:
+          test/keystrokes/firefox/sayAll_wiki.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/sayAll_bug_511389.py:
+          test/keystrokes/firefox/html_struct_nav_links.py:
+          test/keystrokes/firefox/label_guess_bug_546815.py:
+          test/keystrokes/firefox/line_nav_slash_test.py:
+          test/keystrokes/firefox/html_role_links.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          test/keystrokes/firefox/line_nav_nested_tables.py:
+          src/orca/scripts/toolkits/Gecko/braille_generator.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/braille.py:
+          Fix for bug #527022 - updateBraille() has significant whitespace
+          issues, should use braille generators when possible, and fails to
+          underline links.
+
 2008-09-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
