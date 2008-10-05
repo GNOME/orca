@@ -1732,6 +1732,9 @@ class BrailleGenerator:
         brailleRolenameStyle = settings.brailleRolenameStyle
 
         regions = []
+        if not settings.enableBrailleContext:
+            return regions
+
         parent = obj.parent
         if parent and (parent.getRole() in self.SKIP_CONTEXT_ROLES):
             parent = parent.parent

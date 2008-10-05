@@ -109,6 +109,7 @@ userCustomizableSettings = [
     "enableNavigationKeys",
     "enableTutorialMessages",
     "enableBraille",
+    "enableBrailleContext",
     "enableBrailleGrouping",
     "disableBrailleEOL",
     "brailleEOLIndicator",
@@ -342,6 +343,12 @@ enableSpeechIndentation = False
 # If True, enable braille.
 #
 enableBraille           = True
+
+# If True, add the hierarchical context of an object to the braille
+# line.  People with very large braille displays may want to set this
+# to False.
+#
+enableBrailleContext    = True
 
 # If True, enable the grouping of children on the braille display.
 # This is for things like displaying all items of a menu, tab list,

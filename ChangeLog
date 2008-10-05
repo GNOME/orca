@@ -1,3 +1,13 @@
+2008-10-05  Halim Sahin <via william.walker@sun.com>
+
+	* src/orca/settings.py:
+	  src/orca/braillegenerator.py:
+	  Fix for bug #554673 - 80 cells Brailledisplay not usable 
+          because of contextual braille Information.  This adds a
+	  latent "settings.enableBrailleContext" setting with a 
+	  default value of True.  Set it to False to get rid of
+	  braille context.
+
 2008-10-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/moz_menu.py:
