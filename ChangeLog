@@ -1,3 +1,16 @@
+2008-10-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/settings.py:
+          Fix (I hope) for bug #555466 - Orca should attempt to correct
+          the Firefox breakage introduced by bug 535827 via script mapping.
+          If you were suffering from the broken Firefox 3.0 accessibility
+          as a result of the recent changes to AT-SPI and if you dealt
+          with this breakage by keeping the new AT-SPI and getting Firefox
+          3.1 (aka "Minefield"), please test Orca trunk with Firefox 3.0.
+          We could really use your feedback regarding whether or not this
+          solution solves things while the kinks are being worked out.
+          Thanks much in advance!
+
 2008-10-05  Halim Sahin <via william.walker@sun.com>
 
 	* src/orca/settings.py:

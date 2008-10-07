@@ -1003,6 +1003,11 @@ setScriptMapping(re.compile(_('Bon Echo')), "Mozilla")
 #
 setScriptMapping(re.compile(_('Minefield')), "Mozilla")
 
+# This is a temporary fix for the schema/FF 3.0 not being accessible
+# issue. (See GNOME bugs #535827 and #555466.)
+#
+setScriptMapping(re.compile('[Ff]irefox'), "Mozilla")
+
 # Translators: see the regular expression note above.  This is for a
 # version of Thunderbird, which chooses to now call itself by a different
 # name.
