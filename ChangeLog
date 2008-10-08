@@ -1,3 +1,9 @@
+2008-10-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Rest of the fix for bug #552887 - Orca gets stuck in graphical
+          boxes on websites.
+
 2008-10-08  Dmitri Paduchikh <via William.Walker@sun.com>
 
         * src/orca/dectalk.py:

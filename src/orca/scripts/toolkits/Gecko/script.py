@@ -1284,6 +1284,24 @@ class Script(default.Script):
                    and self.isSameObject(event.source, orca_state.locusOfFocus):
                     return
 
+                # We are getting extraneous events that are not being caught
+                # by the above, and which are causing us to loop. See bug
+                # #552887. This is admittedly a rather broad check. However,
+                # if we're here it's because we're controlling the caret in
+                # which case we don't expect to get caret moved events of
+                # interest other than those mentioned above.
+                #
+                if locusOfFocusRole == pyatspi.ROLE_IMAGE:
+                    return
+                elif locusOfFocusRole == pyatspi.ROLE_LINK:
+                    # Be sure it's not a same-page link. We can detect them
+                    # because the anchor being moved to (and issuing the
+                    # event) is also of ROLE_LINK and has no text.
+                    #
+                    if eventSourceRole != pyatspi.ROLE_LINK \
+                       or self.queryNonEmptyText(event.source):
+                        return
+
             elif self.isAriaWidget(event.source):
                 # Sometimes we get extra caret-moved events. See bug #471878
                 # and Mozilla bug #394318. However, we cannot do a blanket
