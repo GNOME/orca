@@ -1,3 +1,8 @@
+2008-10-08  Patryk Zawadzki <via william.walker@sun.com>
+
+	* orca.desktop.in:
+          Fix for bug #552088 - Add Utility to desktop categories.
+
 2008-10-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/settings.py:
