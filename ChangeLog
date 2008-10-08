@@ -1,3 +1,11 @@
+2008-10-08  Dmitri Paduchikh <via William.Walker@sun.com>
+
+        * src/orca/dectalk.py:
+          src/orca/outloud.py:
+          src/orca/espeechfactory.py:
+          Fix for bug #552343 - Quoting special characters in 
+          espeechfactory.py and other changes
+ 
 2008-10-08  Patryk Zawadzki <via william.walker@sun.com>
 
 	* orca.desktop.in:

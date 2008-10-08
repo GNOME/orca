@@ -32,6 +32,27 @@ __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Google Inc."
 __license__ = "LGPL"
 
+import chnames
+
+# Handling of special characters
+#
+# Emacspeak uses Tcl syntax to communicate with its speech servers.  It
+# embraces text in curly braces, so that at least {, }, and \ must be quoted
+# when sending text to speech server.  But individual speech engines have
+# their own special characters in addition to those of Tcl.  Dectalk
+# perceives speech parameters enclosed in square brackets, and Emacspeak
+# exploits this to transmit speech settings to Dectalk.  Thus we must quote
+# [ and ] too.
+
+def makeSpecialCharMap():
+    """Returns list of pairs mapping characters which are special for
+    Dectalk speech server to their replacements.
+    """
+    chars = r'{\}[]'
+    return [(ch, ' '+chnames.getCharacterName(ch)+' ') for ch in chars]
+
+
+# Speech parameters
 
 _defined_voices = {}
 

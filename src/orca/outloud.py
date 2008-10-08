@@ -32,6 +32,28 @@ __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Google Inc."
 __license__ = "LGPL"
 
+import chnames
+
+# Handling of special characters
+#
+# Emacspeak uses Tcl syntax to communicate with its speech servers.  It
+# embraces text in curly braces, so that at least {, }, and \ must be quoted
+# when sending text to speech server.  But individual speech engines have
+# their own special characters in addition to those of Tcl.  Outloud
+# perceives speech commands starting with backquote, and Emacspeak exploits
+# this to transmit speech settings to Outloud.  Thus we must quote `
+# (backquote) too.
+
+def makeSpecialCharMap():
+    """Returns list of pairs mapping characters which are special for
+    Outloud speech server to their replacements.
+    """
+    chars = r'{\}`'
+    return [(ch, ' '+chnames.getCharacterName(ch)+' ') for ch in chars]
+
+
+# Speech parameters
+
 _defined_voices = {}
 
 # Map from ACSS dimensions to Outloud settings:

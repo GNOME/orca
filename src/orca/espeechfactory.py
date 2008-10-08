@@ -47,6 +47,7 @@ __license__ = "LGPL"
 __all__ = ['Speaker']
 
 import os
+import re
 
 import debug
 import settings
@@ -87,7 +88,12 @@ class SpeechServer(speechserver.SpeechServer):
     # singleton instance of any given server.
     #
     __activeServers = {}
-    __getSpeechServersCalled = False
+
+    # A regexp to match chunks of text which will be sent to speech server
+    # NB: this must always match, the question is how many characters.
+    _speechChunkRegexp = ('.{0,120}?[\n,.;:!?)][]}"]?\\s+'
+                          '|.{1,120}(?:\\Z|\\s+)'
+                          '|.{1,120}')
 
     def getFactoryName():
         """Returns a localized name describing this factory."""
@@ -100,30 +106,32 @@ class SpeechServer(speechserver.SpeechServer):
     getFactoryName = staticmethod(getFactoryName)
 
     def getSpeechServers():
-        """Enumerate available speech servers.
-
-        Returns a list of [name, id] values identifying the available
-        speech servers.  The name is a human consumable string and the
-        id is an object that can be used to create a speech server
-        via the getSpeechServer method.
+        """Gets available speech servers as a list.  The caller
+        is responsible for calling the shutdown() method of each
+        speech server returned.
         """
 
-        if SpeechServer.__getSpeechServersCalled:
-            return SpeechServer.__activeServers.values()
-        else:
-            SpeechServer.__getSpeechServersCalled = True
-
-        f = open(os.path.join(SpeechServer.location, '.servers'))
-        for line in f:
-            if line[0] == '#' or line.strip() == '':
+        haveNewServers = False
+        serversConf = file(os.path.join(SpeechServer.location, '.servers'))
+        for name in serversConf:
+            name = name.strip()
+            if name == '' or name[0] == '#':
                 continue
-            name = line.strip()
             if name not in SpeechServer.__activeServers:
                 try:
                     SpeechServer.__activeServers[name] = SpeechServer(name)
+                    haveNewServers = True
                 except:
-                    pass
-        f.close()
+                    debug.printException(debug.LEVEL_WARNING)
+        serversConf.close()
+
+        # Check whether some servers have died and remove those from the list
+        if haveNewServers:
+            from time import sleep
+            sleep(1)
+        for server in SpeechServer.__activeServers.values():
+            if not server._process or server._process.poll() is not None:
+                server.shutdown()
 
         return SpeechServer.__activeServers.values()
 
@@ -147,10 +155,8 @@ class SpeechServer(speechserver.SpeechServer):
     def shutdownActiveServers():
         """Cleans up and shuts down this factory.
         """
-        for key in SpeechServer.__activeServers.keys():
-            server = SpeechServer.__activeServers[key]
+        for server in SpeechServer.__activeServers.values():
             server.shutdown()
-        SpeechServer.__getSpeechServersCalled = False
 
     shutdownActiveServers = staticmethod(shutdownActiveServers)
 
@@ -163,6 +169,9 @@ class SpeechServer(speechserver.SpeechServer):
         speechserver.SpeechServer.__init__(self)
 
         self._engine = engine
+        self._process = None
+        self._output = None
+
         e = __import__(_getcodes(engine),
                        globals(),
                        locals(),
@@ -170,15 +179,25 @@ class SpeechServer(speechserver.SpeechServer):
         self.getvoice     = e.getvoice
         self.getrate      = e.getrate
         self.getvoicelist = e.getvoicelist
+        self._specialChars = e.makeSpecialCharMap()
         if host == 'localhost':
             self._server = os.path.join(SpeechServer.location, self._engine)
         else:
             self._server = os.path.join(SpeechServer.location,
                                          "ssh-%s" % self._engine)
-        cmd = '{ ' + self._server + '; } 2>&1'
-        #print "Command = ", cmd
-        #self._output = os.popen(cmd, "w", 1)
-        [self._output, stdout, stderr] = os.popen3(cmd, "w", 1)
+
+        # Start the process and close its output channels since they were
+        # closed implicitly in previous version of espeechfactory.py.
+        from subprocess import (Popen, PIPE)
+        proc = Popen(self._server, close_fds=True,
+                     stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        proc.stdout.close()
+        proc.stderr.close()
+        proc.stdout = proc.stderr = None
+        self._output = proc.stdin
+        self._process = proc
+
+        self._speechChunk = re.compile(self._speechChunkRegexp, re.DOTALL)
         self._settings = {}
         if initial:
             self._settings.update(initial)
@@ -215,87 +234,161 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
+    def _quoteSpecialChars(self, text):
+        """Replaces all special characters in text by their replacements
+        according to self._specialChars.
+        """
+        for char, name in self._specialChars:
+            text = text.replace(char, name)
+        return text
+
     def queueText(self, text="", acss=None):
-        """Queue text to be spoken.
-        Output is produced by next call to say() or speak()."""
+        """Adds the text to the queue.
+
+        Arguments:
+        - text: text to be spoken
+        - acss: acss.ACSS instance; if None,
+                the default voice settings will be used.
+                Otherwise, the acss settings will be
+                used to augment/override the default
+                voice settings.
+
+        Output is produced by the next call to speak.
+        """
+        if not settings.enableSpeech:
+            return
+
+        # A command to send to the speech server queueing text
+        cmd = "q { %s }\n"
         if acss:
-            code = self.getvoice(acss)
-            self._output.write("q {%s %s %s}\n" %(code[0], text,
-        code[1]))
-        else:
-            self._output.write("q {%s}\n" %text)
+            try:
+                code = self.getvoice(acss)
+                cmd = "q {%s %%s %s}\n" % (code[0], code[1])
+            except:
+                debug.printException(debug.LEVEL_WARNING)
+
+        # Split text into chunks and each chunk queue separately
+        for chunk in (t.group() for t in self._speechChunk.finditer(text)):
+            self._output.write(cmd % self._quoteSpecialChars(chunk))
 
     def queueTone(self, pitch=440, duration=50):
-        """Queue specified tone."""
+        """Adds a tone to the queue.
+
+        Output is produced by the next call to speak.
+        """
         self._output.write("t %s %s\n " % (pitch, duration))
 
     def queueSilence( self, duration=50):
-        """Queue specified silence."""
+        """Adds silence to the queue.
+
+        Output is produced by the next call to speak.
+        """
         self._output.write("sh  %s" %  duration)
 
     def speakCharacter(self, character, acss=None):
-        """Speak single character."""
+        """Speaks a single character immediately.
+
+        Arguments:
+        - character: text to be spoken
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        """
+        if character in '{\\}':
+            character = self._quoteSpecialChars(character)
         self._output.write("l {%s}\n" % character)
+        self._output.flush()
 
     def speakUtterances(self, utteranceList, acss=None, interrupt=True):
-        """Speak list of utterances."""
-        if acss:
-            code = self.getvoice(acss)
-            for t in utteranceList:
-                self._output.write("q { %s %s %s }\n" % \
-                                   (code[0], str(t), code[1]))
-        else:
-            for t in utteranceList:
-                self._output.write("q { %s }\n" % str(t))
+        """Speaks the given list of utterances immediately.
+
+        Arguments:
+        - utteranceList: list of strings to be spoken
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        - interrupt: if True, stop any speech currently in progress.
+        """
+        for utt in utteranceList:
+            self.queueText(str(utt), acss)
         self._output.write("d\n")
+        self._output.flush()
 
     def speak(self, text="", acss=None, interrupt=True):
-        """Speaks specified text. All queued text is spoken immediately."""
+        """Speaks all queued text immediately.  If text is not None,
+        it is added to the queue before speaking.
+
+        Arguments:
+        - text:      optional text to add to the queue before speaking
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        - interrupt: if True, stops any speech in progress before
+                     speaking the text
+        """
 
         # If the user has speech turned off, just return.
         #
         if not settings.enableSpeech:
             return
 
-        if acss:
-            code = self.getvoice(acss)
-            self._output.write("q {%s %s %s}\nd\n" %(code[0], text, code[1]))
-        else:
-            self._output.write("q {%s}\nd\n" %text)
+        self.queueText(text, acss)
+        self._output.write("d\n")
+        self._output.flush()
 
     def increaseSpeechPitch(self, step=0.5):
-        """Increase speech pitch."""
+        """Increases the speech pitch."""
         self._settings['average-pitch'] += step
 
     def decreaseSpeechPitch(self, step=0.5):
-        """Decrease speech pitch."""
+        """Decreases the speech pitch."""
         self._settings['average-pitch'] -= step
 
     def increaseSpeechRate(self, step=5):
-        """Set speech rate."""
+        """Increases the speech rate.
+        """
         self._settings['rate'] += step
         self._output.write("tts_set_speech_rate %s\n" \
                             % self.getrate(self._settings['rate']))
+        self._output.flush()
 
     def decreaseSpeechRate(self, step=5):
-        """Set speech rate."""
+        """Decreases the speech rate.
+        """
         self._settings['rate'] -= step
         self._output.write("tts_set_speech_rate %s\n" \
                             % self.getrate(self._settings['rate']))
+        self._output.flush()
 
     def stop(self):
-        """Silence ongoing speech."""
+        """Stops ongoing speech and flushes the queue."""
         self._output.write("s\n")
+        self._output.flush()
 
     def shutdown(self):
-        """Shutdown speech engine."""
-        if self._engine in SpeechServer.__activeServers:
-            self._output.close()
+        """Shuts down the speech engine."""
+        if self._process is None:
+            return
+
+        if self._process.poll() is None:
+            from signal import SIGKILL
+            os.kill(self._process.pid, SIGKILL)
+            self._process.wait()
+        self._output.close()
+        self._output = self._process = None
+        if self is SpeechServer.__activeServers.get(self._engine, None):
             del SpeechServer.__activeServers[self._engine]
 
     def reset(self, text=None, acss=None):
-        """Reset TTS engine."""
+        """Resets the speech engine."""
         self._output.write("tts_reset\n")
+        self._output.flush()
 
     def version(self):
         """Speak TTS version info."""
@@ -306,35 +399,38 @@ class SpeechServer(speechserver.SpeechServer):
         if mode in ['all', 'some', 'none']:
             self._settings['punctuations'] = mode
             self._output.write("tts_set_punctuations %s\n" % mode)
+            self._output.flush()
 
     def rate(self, r):
         """Set speech rate."""
         self._settings['rate'] = r
         self._output.write("tts_set_speech_rate %s\n" % self.getrate(r))
+        self._output.flush()
 
     def splitcaps(self, flag):
         """Set splitcaps mode. 1  turns on, 0 turns off"""
         flag = bool(flag) and 1 or 0
         self._settings['splitcaps'] = flag
         self._output.write("tts_split_caps %s\n" % flag)
+        self._output.flush()
 
     def capitalize(self, flag):
         """Set capitalization  mode. 1  turns on, 0 turns off"""
         flag = bool(flag) and 1 or 0
         self._settings['capitalize'] = flag
         self._output.write("tts_capitalize %s\n" % flag)
+        self._output.flush()
 
     def allcaps(self, flag):
         """Set allcaps  mode. 1  turns on, 0 turns off"""
         flag = bool(flag) and 1 or 0
         self._settings['allcaps'] = flag
         self._output.write("tts_allcaps_beep %s\n" % flag)
+        self._output.flush()
 
     def __del__(self):
-        "Shutdown speech engine."
-        if hasattr(self, "_output") \
-           and not self._output.closed:
-            self.shutdown()
+        "Shuts down the speech engine."
+        self.shutdown()
 
 def _getcodes(engine):
     """Helper function that fetches synthesizer codes for a
