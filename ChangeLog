@@ -1,5 +1,13 @@
 2008-10-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/apps/rhythmbox/speech_generator.py:
+          Fix for bug #554111 - Orca doesn't speak the Rhythmbox rating
+          widget. Please note: At the moment, this functionality requires
+          getting the latest patch by Jonathan Matthew on bug #368641 and
+          building Rhythmbox from svn trunk. Because Jonathan has indicated
+          that he anticipates committing his patch, I've committed ours.
+          Many thanks Jonathan!!
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           Started work on bug #554831 - Google calendar unusable with orca.
           Please note that Google calendar is still unusable with Orca. This

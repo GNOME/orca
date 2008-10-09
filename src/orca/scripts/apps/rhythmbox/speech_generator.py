@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
 import orca.speechgenerator as speechgenerator
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
@@ -53,3 +54,40 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             obj = obj[3]
         return speechgenerator.SpeechGenerator.\
                     _getSpeechForTableCell(self, obj, already_focused)
+
+    def _getDefaultSpeech(self, obj, already_focused, role=None):
+        """Gets a list of utterances to be spoken for the current
+        object's name, role, and any accelerators.  This is usually the
+        fallback speech generator should no other specialized speech
+        generator exist for this object.
+
+        The default speech will be of the following form:
+
+        label name role availability
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+        - role: A role that should be used instead of the Accessible's 
+          possible role.
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        # When the rating widget changes values, it emits an accessible
+        # name changed event. Because it is of ROLE_UNKNOWN, the default
+        # speechgenerator's _getDefaultSpeech handles it. And because
+        # the widget is already focused, it doesn't speak anything. We
+        # want to speak the widget's name as it contains the number of
+        # stars being displayed.
+        #
+        if obj.getRole() == pyatspi.ROLE_UNKNOWN and already_focused:
+            utterances = self._getSpeechForObjectName(obj)
+            self._debugGenerator("rhythmbox _getDefaultSpeech",
+                                 obj,
+                                 already_focused,
+                                 utterances)
+            return utterances
+
+        return speechgenerator.SpeechGenerator.\
+                        _getDefaultSpeech(self, obj, already_focused, role)
