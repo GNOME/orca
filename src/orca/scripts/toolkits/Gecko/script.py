@@ -1538,6 +1538,18 @@ class Script(default.Script):
             except:
                 pass
 
+        elif eventSourceRole != pyatspi.ROLE_LINK \
+             and self.inDocumentContent(event.source) \
+             and not self.isAriaWidget():
+            [obj, characterOffset] = \
+                self.findFirstCaretContext(event.source, 0)
+            self.setCaretContext(obj, characterOffset)
+            if not self.isSameObject(event.source, obj):
+                if not self.isSameObject(obj, orca_state.locusOfFocus):
+                    orca.setLocusOfFocus(event, obj, False)
+                    self.presentLine(obj, characterOffset)
+                return
+
         default.Script.onFocus(self, event)
 
     def onLinkSelected(self, event):
@@ -4213,6 +4225,13 @@ class Script(default.Script):
                     return self.findFirstCaretContext(obj, characterOffset + 1)
                 else:
                     return [obj, characterOffset]
+        elif obj.getRole() == pyatspi.ROLE_TABLE:
+            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
+                                               pyatspi.ROLE_LIST]:
+                obj = obj[0]
+            else:
+                obj = obj.queryTable().getAccessibleAt(0, 0)
+            return self.findFirstCaretContext(obj, 0)
         else:
             return [obj, -1]
 

@@ -1,3 +1,10 @@
+2008-10-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Started work on bug #554831 - Google calendar unusable with orca.
+          Please note that Google calendar is still unusable with Orca. This
+          part of the fix just prevents a hang.
+
 2008-10-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
