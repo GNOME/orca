@@ -1228,7 +1228,7 @@ def start(registry):
 
     registry.start()
 
-def abort(exitCode=1):
+def die(exitCode=1):
 
     # We know what we are doing here, so tell pylint not to flag
     # the _exit method call as a warning.  The disable-msg is
@@ -1242,7 +1242,7 @@ def timeout(signum=None, frame=None):
     debug.println(debug.LEVEL_SEVERE,
                   "TIMEOUT: something has hung.  Aborting.")
     debug.printStack(debug.LEVEL_ALL)
-    abort(50)
+    die(50)
 
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
@@ -1310,7 +1310,7 @@ def shutdownOnSignal(signum, frame):
     # something bad is happening, so just quit.
     #
     if exitCount:
-        abort(signum)
+        die(signum)
     else:
         exitCount += 1
 
@@ -1337,13 +1337,13 @@ def shutdownOnSignal(signum, frame):
         signal.alarm(0)
 
     if not cleanExit:
-        abort(signum)
+        die(signum)
 
 def abortOnSignal(signum, frame):
     debug.println(debug.LEVEL_ALL,
                   "Aborting due to signal = %d" \
                   % signum)
-    abort(signum)
+    die(signum)
 
 def usage():
     """Prints out usage information."""
@@ -1546,7 +1546,7 @@ def main():
                     _commandLineSettings["showMainWindow"] = True
                 else:
                     usage()
-                    abort(2)
+                    die(2)
 
             if opt in ("-d", "--disable"):
                 feature = val.strip()
@@ -1562,7 +1562,7 @@ def main():
                     _commandLineSettings["showMainWindow"] = False
                 else:
                     usage()
-                    abort(2)
+                    die(2)
 
             if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
@@ -1574,21 +1574,21 @@ def main():
                 bypassSetup = True
             if opt in ("-?", "--help"):
                 usage()
-                abort(0)
+                die(0)
             if opt in ("-v", "--version"):
                 print "Orca %s" % platform.version
-                abort(0)
+                die(0)
             if opt in ("-l", "--list-apps"):
                 apps = filter(lambda x: x is not None,
                               pyatspi.Registry.getDesktop(0))
                 for app in apps:
                     print app.name
-                abort(0)
+                die(0)
 
     except:
         debug.printException(debug.LEVEL_OFF)
         usage()
-        abort(2)
+        die(2)
 
     # Do not run Orca if accessibility has not been enabled.
     # We do allow, however, one to force Orca to run via the
@@ -1600,7 +1600,7 @@ def main():
     a11yEnabled = settings.isAccessibilityEnabled()
     if (not bypassSetup) and (not a11yEnabled):
         _showPreferencesConsole()
-        abort()
+        die()
 
     if setupRequested and (not bypassSetup) and (not showGUI):
         _showPreferencesConsole()

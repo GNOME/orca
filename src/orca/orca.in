@@ -32,78 +32,14 @@
 #
 export PATH="${PATH}:/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/usr/openwin/bin:/usr/X11R6/bin"
 
-# If you set RUNONCE to "true", then this will just run Orca once and quit.
-#
-RUNONCE="false"
-
-# A value of 1 means to run Orca.  A value of 0 means quit.
-#
-RUN=1
-
-# Initially there will be no watchdog process id.
-#
-watchdog_pid=0
-
 # Save the arguments away.
 #
 ARGS="$*"
 
-# The watchdog will periodically ping Orca to see if it is responding.
-# If orca isn't responding, the watchdog will kill the Orca process.
-# The watchdog logic requires 'dbus-send', so we won't do it if we can't
-# find dbus-send in the path.  Note also that you can force WATCHDOG=0 if you
-# do not want a background process that periodically pings Orca to see
-# if it is responding.  We only do this if we can get to the DBus Session
-# bus.  Otherwise, we have no hope of being able to monitor Orca.
+# Save away XMODMAP settings we might change.
 #
-IFS=:
-DBUSSENDCMD=
-WATCHDOG=0
-if [ "x$DBUS_SESSION_BUS_ADDRESS" != "x" ]
-then
-    for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
-        test -x "$dir/dbus-send" && {
-            DBUSSENDCMD="$dir/dbus-send"
-            WATCHDOG=1
-            break
-        }
-    done
-fi
-# [[WDW - disabled the watchdog by default since it is problematic.]]
-WATCHDOG=0
-
-# Cleans up any orca-related processes that might be running,
-# restricting it to those processes owned by the user. These include
-# orca itself, any gnome-speech synthesis drivers, and festival
-# processes running in server mode.
-#
-cleanup()
+saveXmodmap() 
 {
-    USERID=`id | cut -f2 -d= | cut -f1 -d\(`
-    PIDS=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca|synthesis-driver|festival [-][-]server" | grep -v grep | awk '{ print $1 }'`
-
-    IFS='
-    '
-    PIDS=`echo $PIDS`
-
-    if [ "x$PIDS" != "x" ]
-    then
-        kill -9 $PIDS > /dev/null 2>&1
-    fi
-}
-
-# Runs orca.
-#
-runOrca()
-{
-    if [ -z "$1" ]
-    then
-        cleanup
-    fi
-    exec_prefix=@prefix@
-    PYTHONPATH=${PYTHONPATH}:@pyexecdir@
-    export PYTHONPATH
-
     # We'll save and restore the Caps_Lock as a modifier just in case
     # the user is using the Caps_Lock as the Orca modifier key.  We
     # will also do so with the KP_Insert key since we want to make
@@ -117,119 +53,61 @@ runOrca()
     # turning it on/off is easy, but getting the current state is not
     # straightforward.]]]
     #
-    if [ "x$DISPLAY" != "x" ]
-    then
+    if [ "x$DISPLAY" != "x" ] ; then
         CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
         KPINSERTSETTING=`xmodmap -pke | grep KP_Insert`
         INSERTSETTING=`xmodmap -pke | grep Insert | grep -v KP_`
     fi
-    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
-    if [ "x$CAPSLOCKSETTING" != "x" ]
-    then
+}
+
+# Restore XMODMAP settings we may have changed.
+#
+restoreXmodmap()
+{
+    if [ "x$CAPSLOCKSETTING" != "x" ] ; then
         xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock" > /dev/null 2>&1
     fi
-    if [ "x$KPINSERTSETTING" != "x" ]
-    then
+    if [ "x$KPINSERTSETTING" != "x" ] ; then
         xmodmap -e "$KPINSERTSETTING" > /dev/null 2>&1
     fi
-    if [ "x$INSERTSETTING" != "x" ]
-    then
+    if [ "x$INSERTSETTING" != "x" ] ; then
         xmodmap -e "$INSERTSETTING" > /dev/null 2>&1
     fi
 }
 
-# Runs a watchdog process in the background.  It merely attempts to
-# get to Orca via some other means than the AT-SPI.  Here we use
-# a Ping on the Orca DBus service.  If it doesn't respond, then
-# we assume Orca is dead.
+# Cleans up any orca-related processes that might be running,
+# restricting it to those processes owned by the user. These include
+# orca itself, any gnome-speech synthesis drivers, and festival
+# processes running in server mode.
 #
-watchdog()
+cleanup()
 {
-    (
-        sleep 30 # Give orca a chance to start.
-        while [ "$WATCHDOG" -gt 0 ]
-        do
-            sleep 5
-            USERID=`id | cut -f2 -d= | cut -f1 -d\(`
-            PID=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca" | grep -v grep | awk '{ print $1 }'`
-
-            if [ "x$PID" = "x" ]
-            then
-                exit
-            else
-                $DBUSSENDCMD --reply-timeout=30000 --print-reply --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1 
-                if [ "$?" -ne 0 ] 
-                then
-                    echo Orca watchdog detected something bad.  Cleaning up.
-                    cleanup
-                fi
-            fi
-        done
-    ) &
-}
-
-kill_watchdog()
-{
-    if [ "x$watchdog_pid" != x0 ]
-    then
-        kill -9 $watchdog_pid > /dev/null 2>&1
+    USERID=`id | cut -f2 -d= | cut -f1 -d\(`
+    PIDS=`ps -eo pid,ruid,args | grep $USERID | \
+	egrep "orca[.]orca|synthesis-driver|festival [-][-]server" | \
+	grep -v grep | awk '{ print $1 }'`
+    IFS='
+    '
+    PIDS=`echo $PIDS`
+    if [ "x$PIDS" != "x" ] ; then
+        kill -9 $PIDS > /dev/null 2>&1
     fi
+    restoreXmodmap
 }
 
-kill_orca()
+trap cleanup HUP QUIT TERM INT ABRT
+
+# Runs orca.
+#
+runOrca()
 {
-    kill_watchdog
-    cleanup
-    exit
+    exec_prefix=@prefix@
+    PYTHONPATH=${PYTHONPATH}:@pyexecdir@
+    export PYTHONPATH
+    saveXmodmap
+    exec @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
+    restoreXmodmap
 }
-
-hup_orca()
-{
-    cleanup
-}
-
-main()
-{
-    if [ "$WATCHDOG" -gt 0 ]
-    then
-        watchdog
-        watchdog_pid=$!
-    fi
-    while [ "$RUN" -gt 0 ]
-    do
-        runOrca &
-        orca_pid=$!
-        wait $orca_pid
-
-        RUN=$?  # quit on a normal exit status from Orca
-
-        # We will stop re-running Orca on SEGV's (139 = SEGV + 128).
-        # The reason for this is that there are cases where Python
-        # will SEGV when Orca attempts to exit normally.  This happens
-        # because of something going on in pyorbit.  This should be
-        # fixed in pyorbit 2.14.1, but not everyone has that.
-        # So...we'll check for it.
-        #
-        if [ "$RUN" -eq 139 ]
-        then
-            RUN=0
-        fi
-
-        # We will also stop re-running Orca on KILL's (137 = KILL + 128).
-        # The reason for this is that if someone has done a "kill -KILL"
-        # on the Python process, it was probably on purpose and they want
-        # everything to die.
-        #
-        if [ "$RUN" -eq 137 ]
-        then
-            RUN=0
-        fi
-    done
-    kill_watchdog
-}
-
-trap kill_orca QUIT TERM INT ABRT
-trap hup_orca HUP
 
 # Orca will fall into a text-based question and answer session if the
 # user has not configured orca and/or accessibility yet.  We will
@@ -242,54 +120,52 @@ trap hup_orca HUP
 # accessible login.  If we're running as gdm, we assume everything is
 # all set and we don't need to muck around.
 #
-if [ "x$LOGNAME" != "xgdm" ]
-then
-    ACCESSIBILITY_ENABLED=`gconftool-2 --get /desktop/gnome/interface/accessibility`
-    if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ]
-    then
+if [ "x$LOGNAME" != "xgdm" ] ; then
+    ACCESSIBILITY_ENABLED=`gconftool-2 \
+	--get /desktop/gnome/interface/accessibility`
+    if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ] ; then
         # Because we will be running Orca in text-setup mode, we want to
         # make sure it is run in a terminal window.  If we're already in
         # a terminal, this is great.  If not, we spawn a gnome-terminal
         # and run orca in it.
         #
         tty -s && IN_TTY="true" || IN_TTY="false"
-        if [ "x$IN_TTY" = "xtrue" ]
-        then
-            RUNONCE="true"
-        else
+        if [ "x$IN_TTY" = "xfalse" ] ; then
             exec gnome-terminal -x $0 $ARGS
+	    exit
         fi
     fi
 fi
 
-if [ "x$RUNONCE" = "xfalse" -a "x$ARGS" = "x" ]
-then
-    main
+if [ `grep -c "\-q" <<< $ARGS` -gt 0 ] ; then
+    # If the user has done -q or --quit, that means to tell any
+    # existing orca process to quit.  So, we just do a cleanup.
+    #
+    cleanup
 else
-    if [ `grep -c "\-q" <<< $ARGS` -gt 0 ]
-    then
-        cleanup
-    else
-        # If the user passed in a flag that results in orca only
-        # outputting data to the console, don't kill any other orca
-        # process.  We do this by looking for flags that *should*
-        # result in a cleanup (i.e., every legal command except
-        # -?, --help, -v, and --version).  This way, if the user
-        # erroneously types an illegal command line argument, the
-        # help text is emitted and the other orca is not killed.
-        #
-        if [ `egrep -c "\-s|\-g|\-n|\-u|\-e|\-d" <<< $ARGS` -eq 0 ]
-        then
-            if [ `egrep -c "\-t" <<< $ARGS` -eq 0 ]
-            then
-                runOrca "NO_CLEANUP"
-            else
-                runOrca
-            fi
-        else
-            runOrca &
-            orca_pid=$!
-            wait $orca_pid
-        fi
+    # If the user passed in a flag that results in orca only
+    # outputting data to the console, don't kill any other orca
+    # process.  We do this by looking for flags that *should* result
+    # in a cleanup (i.e., every legal command except -?, --help, -v,
+    # --version, -l, and --list-apps).  This way, if the user
+    # erroneously types an illegal command line argument, the help
+    # text is emitted and the other orca is not killed.
+    #
+    CLEANUP=`egrep -c "\-s|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
+
+    # Clean up before running orca to get anything that might
+    # be laying around.
+    #
+    if [ $CLEANUP -gt 0 ] ; then
+	cleanup
+    fi
+
+    runOrca
+
+    # Clean up after running orca in case things were not 
+    # shutdown cleanly (e.g., speech).
+    #
+    if [ $CLEANUP -gt 0 ] ; then
+	cleanup
     fi
 fi
