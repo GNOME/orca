@@ -1334,8 +1334,7 @@ class Script(default.Script):
                 # If we're in the Find toolbar, we also want to present
                 # the results.
                 #
-                parent = orca_state.locusOfFocus.parent
-                if parent and parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+                if self.inFindToolbar():
                     self.presentFindResults(event.source, event.detail1)
                 else:
                     self.setCaretContext(event.source, event.detail1)
@@ -1878,9 +1877,7 @@ class Script(default.Script):
         # If we've just landed in the Find toolbar, reset
         # self.madeFindAnnouncement.
         #
-        if newLocusOfFocus and \
-           newLocusOfFocus.getRole() == pyatspi.ROLE_ENTRY and \
-           newLocusOfFocus.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+        if newLocusOfFocus and self.inFindToolbar(newLocusOfFocus):
             self.madeFindAnnouncement = False
 
         # We'll ignore focus changes when the document frame is busy.
@@ -2490,6 +2487,22 @@ class Script(default.Script):
                 return text
 
         return None
+
+    def inFindToolbar(self, obj=None):
+        """Returns True if the given object is in the Find toolbar.
+
+        Arguments:
+        - obj: an accessible object
+        """
+
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        if obj and obj.getRole() == pyatspi.ROLE_ENTRY \
+           and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+            return True
+
+        return False
 
     def inDocumentContent(self, obj=None):
         """Returns True if the given object (defaults to the current

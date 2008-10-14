@@ -51,6 +51,29 @@ class Script(Gecko.Script):
         #
         self._currentFrameName = ""
 
+        # When the user presses Escape to leave the Find tool bar, we do not
+        # seem to get any events for the document frame reclaiming focus. If
+        # we try to get the caret context, getDocumentFrame() returns None.
+        # Store a copy of the context so that we can return it.
+        #
+        self._lastFindContext = [None, -1]
+
+    def inFindToolbar(self, obj=None):
+        """Returns True if the given object is in the Find toolbar.
+
+        Arguments:
+        - obj: an accessible object
+        """
+
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        if obj and obj.getRole() == pyatspi.ROLE_TEXT \
+           and obj.parent.getRole() == pyatspi.ROLE_FILLER:
+            return True
+
+        return False
+
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown."""
 
@@ -73,6 +96,9 @@ class Script(Gecko.Script):
             #
             return None
         else:
+            if self.inFindToolbar():
+                obj = self._lastFindContext[0]
+
             # We might be in some content. In this case, look up.
             #
             return self.getAncestor(obj,
@@ -87,6 +113,9 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
+        if self.inFindToolbar() and not self.inFindToolbar(event.source):
+            self._lastFindContext = [event.source, event.detail1]
+
         # Unlike the unpredictable wild, wild web, odds are good that a
         # caret-moved event from document content in Yelp is valid. But
         # depending upon the locusOfFocus at the time this event is issued
@@ -94,7 +123,7 @@ class Script(Gecko.Script):
         # Rather than risk breaking access to web content, we'll just set
         # the locusOfFocus here before sending this event on.
         #
-        if self.inDocumentContent(event.source):
+        elif self.inDocumentContent(event.source):
             obj = event.source
             characterOffset = event.detail1
 
@@ -134,6 +163,17 @@ class Script(Gecko.Script):
         Arguments:
         - event: the Event
         """
+
+        # When the Find toolbar gives up focus because the user closed
+        # it, Yelp's normal behavior is often to give focus to something
+        # not especially useful to a user who is blind, like the Back
+        # button. For now, let's stop that from happening.
+        #
+        if event.type.startswith("object:state-changed:showing") \
+           and not event.detail1 and self.inFindToolbar(event.source):
+            [obj, characterOffset] = self._lastFindContext
+            self._lastFindContext = [None, -1]
+            self.setCaretPosition(obj, characterOffset)
 
         if event.type.startswith("object:state-changed:busy") \
            and event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
