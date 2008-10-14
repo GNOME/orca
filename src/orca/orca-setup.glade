@@ -1290,7 +1290,7 @@ Hyperlink</property>
 				  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 				  <property name="snap_to_ticks">False</property>
 				  <property name="wrap">False</property>
-				  <property name="adjustment">10 1 9999 1 10 10</property>
+				  <property name="adjustment">10 1 9999 1 10 0</property>
 				  <accessibility>
 				    <atkrelation target="speakProgressBarUnitsLabel" type="labelled-by"/>
 				    <atkrelation target="speakProgressBarLabel" type="labelled-by"/>
@@ -2605,7 +2605,7 @@ Sentence</property>
 					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 					  <property name="snap_to_ticks">False</property>
 					  <property name="wrap">False</property>
-					  <property name="adjustment">1 1 16 0.25 1 10</property>
+					  <property name="adjustment">1 1 16 0.25 1 0</property>
 					  <accessibility>
 					    <atkrelation target="magZoomFactorLabel" type="labelled-by"/>
 					  </accessibility>
@@ -2688,7 +2688,7 @@ Sentence</property>
 						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						      <property name="snap_to_ticks">False</property>
 						      <property name="wrap">False</property>
-						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <property name="adjustment">1 1 9999 1 10 0</property>
 						      <accessibility>
 							<atkrelation target="magZoomerTopLabel" type="labelled-by"/>
 						      </accessibility>
@@ -2756,7 +2756,7 @@ Sentence</property>
 						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						      <property name="snap_to_ticks">False</property>
 						      <property name="wrap">False</property>
-						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <property name="adjustment">1 1 9999 1 10 0</property>
 						      <accessibility>
 							<atkrelation target="magZoomerBottomLabel" type="labelled-by"/>
 						      </accessibility>
@@ -2823,7 +2823,7 @@ Sentence</property>
 						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						      <property name="snap_to_ticks">False</property>
 						      <property name="wrap">False</property>
-						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <property name="adjustment">1 1 9999 1 10 0</property>
 						      <accessibility>
 							<atkrelation target="magZoomerRightLabel" type="labelled-by"/>
 						      </accessibility>
@@ -2914,7 +2914,7 @@ Sentence</property>
 						      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						      <property name="snap_to_ticks">False</property>
 						      <property name="wrap">False</property>
-						      <property name="adjustment">1 1 9999 1 10 10</property>
+						      <property name="adjustment">1 1 9999 1 10 0</property>
 						      <accessibility>
 							<atkrelation target="magZoomerLeftLabel" type="labelled-by"/>
 						      </accessibility>
@@ -3240,7 +3240,7 @@ Custom</property>
 						  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
-						  <property name="adjustment">1 0 20 1 10 10</property>
+						  <property name="adjustment">1 0 20 1 10 0</property>
 						  <accessibility>
 						    <atkrelation target="magBorderSizeLabel" type="labelled-by"/>
 						  </accessibility>
@@ -3490,7 +3490,7 @@ Custom</property>
 					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 					  <property name="snap_to_ticks">False</property>
 					  <property name="wrap">False</property>
-					  <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+					  <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 					  <accessibility>
 					    <atkrelation target="magColorBrightnessLabel" type="labelled-by"/>
 					  </accessibility>
@@ -3516,7 +3516,7 @@ Custom</property>
 					  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 					  <property name="snap_to_ticks">False</property>
 					  <property name="wrap">False</property>
-					  <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+					  <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 					  <accessibility>
 					    <atkrelation target="magColorContrastLabel" type="labelled-by"/>
 					  </accessibility>
@@ -3745,7 +3745,7 @@ Custom</property>
 							  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 							  <property name="snap_to_ticks">False</property>
 							  <property name="wrap">False</property>
-							  <property name="adjustment">1 24 256 1 10 10</property>
+							  <property name="adjustment">1 24 256 1 10 0</property>
 							  <accessibility>
 							    <atkrelation target="magCursorSizeLabel" type="labelled-by"/>
 							    <atkrelation target="magCursorSizeUnitsLabel" type="labelled-by"/>
@@ -4098,7 +4098,7 @@ Custom</property>
 							  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 							  <property name="snap_to_ticks">False</property>
 							  <property name="wrap">False</property>
-							  <property name="adjustment">1 1 256 1 10 10</property>
+							  <property name="adjustment">1 1 256 1 10 0</property>
 							  <accessibility>
 							    <atkrelation target="magCrossHairSizeLabel" type="labelled-by"/>
 							    <atkrelation target="magCrossHairSizeUnitsLabel" type="labelled-by"/>
@@ -4536,7 +4536,7 @@ None</property>
 						  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 						  <property name="snap_to_ticks">False</property>
 						  <property name="wrap">False</property>
-						  <property name="adjustment">0 0 100 1 10 10</property>
+						  <property name="adjustment">0 0 100 1 10 0</property>
 						  <accessibility>
 						    <atkrelation target="magEdgeMarginUnitsLabel" type="labelled-by"/>
 						    <atkrelation target="magEdgeMarginLabel" type="labelled-by"/>
@@ -5847,7 +5847,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magBrightnessRedLabel" type="labelled-by"/>
 			      </accessibility>
@@ -5915,7 +5915,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magBrightnessGreenLabel" type="labelled-by"/>
 			      </accessibility>
@@ -5983,7 +5983,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magBrightnessBlueLabel" type="labelled-by"/>
 			      </accessibility>
@@ -6127,7 +6127,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magContrastRedLabel" type="labelled-by"/>
 			      </accessibility>
@@ -6195,7 +6195,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magContrastGreenLabel" type="labelled-by"/>
 			      </accessibility>
@@ -6263,7 +6263,7 @@ Bilinear</property>
 			      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			      <property name="snap_to_ticks">False</property>
 			      <property name="wrap">False</property>
-			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0.25</property>
+			      <property name="adjustment">0 -1 1 0.0500000007451 0.25 0</property>
 			      <accessibility>
 				<atkrelation target="magContrastBlueLabel" type="labelled-by"/>
 			      </accessibility>

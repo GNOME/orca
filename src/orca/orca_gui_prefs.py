@@ -1345,7 +1345,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             min(topPosition, targetHeight), 
             0, targetHeight, 
             1,
-            targetHeight / 16, targetHeight)
+            targetHeight / 16, 0)
 
         if orca_state.appOS:
             spinButton = orca_state.appOS.get_widget("magZoomerTopSpinButton")
@@ -1366,7 +1366,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             min(leftPosition, targetWidth),
             0, targetWidth, 
             1,
-            targetWidth / 16, targetWidth)
+            targetWidth / 16, 0)
 
         if orca_state.appOS:
             spinButton = orca_state.appOS.get_widget("magZoomerLeftSpinButton")
@@ -1387,7 +1387,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             min(rightPosition, targetWidth),
             0, targetWidth, 
             1,
-            targetWidth / 16, targetWidth)
+            targetWidth / 16, 0)
 
         if orca_state.appOS:
             spinButton = \
@@ -1410,7 +1410,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             min(bottomPosition, targetHeight),
             0, targetHeight, 
             1,
-            targetHeight / 16, targetHeight)
+            targetHeight / 16, 0)
 
         if orca_state.appOS:
             spinButton = \
@@ -1836,7 +1836,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         edgeMargin = prefs["magEdgeMargin"]
         magEdgeMarginSpinButton = self.get_widget("magEdgeMarginSpinButton")
-        adjustment = gtk.Adjustment(edgeMargin, 0, 50, 1, 5, 50)
+        adjustment = gtk.Adjustment(edgeMargin, 0, 50, 1, 5, 0)
         self.get_widget("magEdgeMarginSpinButton").set_adjustment(adjustment)
 
         # Get the preferences for what the pointer "follows" and set the
