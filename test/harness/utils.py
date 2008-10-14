@@ -31,10 +31,11 @@ OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
 #OOO_VERSION="OpenOffice 2.4"
 #OOO_VERSION="StarOffice 8"
 #OOO_VERSION="DEV300_m25"
-OOO_VERSION="DEV300_m29"
+#OOO_VERSION="DEV300_m29"
+OOO_VERSION="OpenOffice 3.0"
 
 def getOOoName(app):
-    if OOO_VERSION == "OpenOffice 2.4":
+    if OOO_VERSION in ["OpenOffice 2.4", "OpenOffice 3.0"]:
         return "OpenOffice.org %s" % app
     elif OOO_VERSION == "StarOffice 8":
         return "StarOffice %s" % app
@@ -44,7 +45,7 @@ def getOOoName(app):
         return "OOo-dev %s" % app
         
 def getOOoBrailleLine(app, title, remainder):
-    if OOO_VERSION == "OpenOffice 2.4":
+    if OOO_VERSION in ["OpenOffice 2.4", "OpenOffice 3.0"]:
         return "soffice Application " + title + " - OpenOffice.org " + app + " Frame " +  title + " - OpenOffice.org " + app + " RootPane ScrollPane Document view " + remainder
     elif OOO_VERSION == "StarOffice 8":
         return "soffice Application " + title + " - StarOffice " + app + " Frame " +  title + " - StarOffice " + app + " RootPane ScrollPane Document view " + remainder
