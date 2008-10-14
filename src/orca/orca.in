@@ -151,7 +151,11 @@ else
     # erroneously types an illegal command line argument, the help
     # text is emitted and the other orca is not killed.
     #
-    CLEANUP=`egrep -c "\-s|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
+    if [ "x$ARGS" = "x" ] ; then
+        CLEANUP=1
+    else
+        CLEANUP=`egrep -c "\-s|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
+    fi
 
     # Clean up before running orca to get anything that might
     # be laying around.

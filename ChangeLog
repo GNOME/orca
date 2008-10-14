@@ -1,3 +1,9 @@
+2008-10-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in:
+	  More fix for bug #556049 - Orca restarts when user logs out from 
+          session.
+
 2008-10-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/orca-setup.glade:
