@@ -1640,6 +1640,14 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source, True)
             return
 
+        # OOo Writer gets rather enthusiastic with focus: events for lists.
+        # See bug 546941.
+        #
+        if event.source.getRole() == pyatspi.ROLE_LIST \
+           and orca_state.locusOfFocus \
+           and self.isSameObject(orca_state.locusOfFocus.parent, event.source):
+            return
+
         default.Script.onFocus(self, event)
 
     def onActiveDescendantChanged(self, event):

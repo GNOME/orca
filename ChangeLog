@@ -1,3 +1,12 @@
+2008-10-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/oowriter/bug_450210.py:
+          test/keystrokes/oowriter/bug_546941.py:
+          src/orca/scripts/apps/soffice/braille_generator.py:
+          src/orca/scripts/apps/soffice/script.py:
+          Fix for bug #546941 - Extraneous focus: events issued by OOo
+          Writer lists cause excessive chattiness and braille issues.
+
 2008-10-15  Willie Walker <william.walker@sun.com>
 
         * configure.in, README, NEWS:

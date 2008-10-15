@@ -51,6 +51,39 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         return braillegenerator.BrailleGenerator.\
             _getTextForRole(self, obj, role)
 
+    def _getBrailleRegionsForList(self, obj):
+        """Get the braille for a focused list.
+
+        Arguments:
+        - obj: the list
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("soffice: _getBrailleRegionsForList", obj)
+
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            return braillegenerator.BrailleGenerator.\
+                       _getBrailleRegionsForList(self, obj)
+
+        text = ""
+        label = self._script.getDisplayedLabel(obj)
+        if not label:
+            label = obj.name
+        if label and len(label):
+            text = self._script.appendString(text, label)
+
+        text = self._script.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text,
+                                         self._getTextForRequiredObject(obj))
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     def _getBrailleRegionsForTableCellRow(self, obj):
         """Get the braille for a table cell row or a single table cell
         if settings.readTableCellRow is False.
