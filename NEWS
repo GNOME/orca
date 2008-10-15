@@ -30,6 +30,11 @@ General:
 * Fix for bug #556321 - Setting an adjustment with non-zero page size
   is deprecated.
 
+OpenOffice/StarOffice:
+
+* Fix for bug #546941 - Extraneous focus: events issued by OOo Writer
+  lists cause excessive chattiness and braille issues.
+
 Yelp:
 
 * Fix for bug #553877 - Need to implement FF find functionality for
