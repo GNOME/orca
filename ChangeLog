@@ -1,3 +1,8 @@
+2008-10-15  Willie Walker <william.walker@sun.com>
+
+        * configure.in, README, NEWS:
+          Prep for Orca v2.24.1.
+
 2008-10-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/default.py:
@@ -165,6 +170,12 @@
 
         * src/orca/scripts/apps/rhythmbox/speech_generator.py:
           Updating the header because patches are spitting up.
+
+2008-09-22  Willie Walker <william.walker@sun.com>
+
+	* Release Orca v2.24.0.  Somehow I forgot to mark this.
+	  The svn version is 4292 and can be found at the tag
+	  of ORCA_24_0.
 
 2008-09-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

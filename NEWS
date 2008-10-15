@@ -1,3 +1,69 @@
+2.24.1 - 15-Oct-2008
+
+General:
+
+* Fix for bug #552088 - Add Utility to desktop categories.
+  Thanks Patryk Zawadzki!
+
+* Fix for bug #552343 - Quoting special characters in 
+  espeechfactory.py and other changes. Thanks Dmitri Paduchikh!
+
+* For for bug #553413 - Orca can be double-started on login.
+  NOTE: this method eliminates the ~/.config method for starting
+  Orca.  You might need to clean our your ~/.config directory
+  if you're currently autostarting Orca.
+
+* Partial fix for bug #554002 - Orca App-Preferences dialog page tabs
+  are "off" by one in speech and braille. (This fixes them for focus
+  tracking. It turns out they are "off" in flat review as well.)
+
+* Fix for bug #554111 - Orca doesn't speak the Rhythmbox rating
+  widget. Please note: At the moment, this functionality requires
+  getting the latest patch by Jonathan Matthew on bug #368641 and
+  building Rhythmbox from svn trunk. Many thanks Jonathan!!
+
+* Fix for bug #554673 - 80 cells Brailledisplay not usable because of
+  contextual braille Information.  Thanks Halim Sahin!
+
+* Fix for bug #556049 - Orca restarts when user logs out from session.
+
+* Fix for bug #556321 - Setting an adjustment with non-zero page size
+  is deprecated.
+
+Yelp:
+
+* Fix for bug #553877 - Need to implement FF find functionality for
+  Yelp.
+
+Firefox:
+
+* More work on bug #535178 - In Gecko, we should get the needed text
+  for the speech and braille contexts while building up the line.
+
+* Fix for bug #527022 - updateBraille() has significant whitespace
+  issues, should use braille generators when possible, and fails to
+  underline links.
+ 
+* Fix for bug #552887 - Orca gets stuck in graphical boxes on websites.
+
+* Started work on bug #554831 - Google calendar unusable with
+  orca. Please note that Google calendar is still unusable with
+  Orca. This part of the fix just prevents a hang.
+ 
+* Workaround for bug #555466 - Orca should attempt to correct
+  the Firefox breakage introduced by bug 535827 via script mapping.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    da	    Danish		 Kenneth Nielsen
+    it      Italian              Luca Ferretti
+    pt_BR   Brazilian Portuguese Vladimir Melo and Og Maciel
+
+==========
+
 2.24.0 - 21-Sep-2008
 
 These are the details for changes from the 2.23.92 release.  See the
