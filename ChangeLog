@@ -1,3 +1,11 @@
+2008-10-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          Partial fix for bug #554002 - Orca App-Preferences dialog page
+          tabs are "off" by one in speech and braille. (This fixes them
+          for focus tracking. It turns out they are "off" in flat review
+          as well.)
+
 2008-10-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in:
