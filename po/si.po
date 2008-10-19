@@ -1739,7 +1739,7 @@ msgstr "blank"
 msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d space"
-msgstr[1] ""
+msgstr[1] "%d spaces"
 
 #. Translators: this is the number of tab characters on a line
 #. of text.
@@ -1749,7 +1749,7 @@ msgstr[1] ""
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d tab"
-msgstr[1] ""
+msgstr[1] "%d tabs"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -1925,7 +1925,7 @@ msgstr "Context is %s"
 msgid "%d %s character"
 msgid_plural "%d %s characters"
 msgstr[0] "%d %s character"
-msgstr[1] ""
+msgstr[1] "%d %s characters"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -2096,7 +2096,7 @@ msgstr "multi-select"
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d heading"
-msgstr[1] ""
+msgstr[1] "%d headings"
 
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
@@ -2106,7 +2106,7 @@ msgstr[1] ""
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d form"
-msgstr[1] ""
+msgstr[1] "%d forms"
 
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
@@ -2116,7 +2116,7 @@ msgstr[1] ""
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "%d table"
-msgstr[1] ""
+msgstr[1] "%d tables"
 
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
@@ -2126,7 +2126,7 @@ msgstr[1] ""
 msgid "%d visited link"
 msgid_plural "%d visited links"
 msgstr[0] "%d visited link"
-msgstr[1] ""
+msgstr[1] "%d visited links"
 
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
@@ -2136,7 +2136,7 @@ msgstr[1] ""
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
 msgstr[0] "%d unvisited link"
-msgstr[1] ""
+msgstr[1] "%d unvisited links"
 
 #. Translators: Announces the percentage of the document that has
 #. been read.  This is calculated by knowing the index of the
@@ -2704,7 +2704,7 @@ msgstr "No more large objects."
 msgid "List with %d item"
 msgid_plural "List with %d items"
 msgstr[0] "List with %d item"
-msgstr[1] ""
+msgstr[1] "List with %d items"
 
 #. Translators: this represents a list item in HTML.
 #. The nesting level is how 'deep' the item is (e.g.,
@@ -2783,7 +2783,7 @@ msgstr "Non-uniform"
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
 msgstr[0] "Table with %d row"
-msgstr[1] ""
+msgstr[1] "Table with %d rows"
 
 #. Translators: this represents the number of cols in an HTML table.
 #.
@@ -2792,7 +2792,7 @@ msgstr[1] ""
 msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d column"
-msgstr[1] ""
+msgstr[1] "%d columns"
 
 #. Translators: this is for navigating HTML content by
 #. moving from table to table.
@@ -5972,7 +5972,7 @@ msgstr "Search complete."
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d file found"
-msgstr[1] ""
+msgstr[1] "%d files found"
 
 #: ../src/orca/scripts/gnome-search-tool.py:176
 msgid "No files found."
@@ -6009,7 +6009,7 @@ msgstr "inaccessible"
 msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] "%d item"
-msgstr[1] ""
+msgstr[1] "%d items"
 
 #. Translators: This denotes a notification to the user of some sort.
 #.
@@ -6395,7 +6395,7 @@ msgstr "Icon panel"
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
 msgstr[0] "%d of %d item selected"
-msgstr[1] ""
+msgstr[1] "%d of %d items selected"
 
 #. initialize our three outputs.  Output may change below for some
 #. protocols.
