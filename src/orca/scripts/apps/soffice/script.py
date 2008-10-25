@@ -2092,6 +2092,23 @@ class Script(default.Script):
             default.Script.getTextAttributes(self, acc, offset, get_defaults)
         return rv, start, end - 1
 
+    def getDisplayedText(self, obj):
+        """Returns the text being displayed for an object. Overridden here
+        because OpenOffice uses symbols (e.g. ">>" for buttons but exposes
+        more useful information via the accessible's name.
+
+        Arguments:
+        - obj: the object
+
+        Returns the text being displayed for an object or None if there isn't
+        any text being shown.
+        """
+
+        if obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and obj.name:
+            return obj.name
+        else:
+            return default.Script.getDisplayedText(self, obj)
+
     def isFunctionalDialog(self, obj):
         """Returns true if the window is functioning as a dialog."""
 
