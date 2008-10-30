@@ -191,6 +191,12 @@ command_name[CMD_LNDN]     = _("Line Down")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
+# When pressing the button, it instructs the braille display to freeze.
+#
+command_name[CMD_FREEZE]     = _("Freeze")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to the top left of the
 # window.
 #

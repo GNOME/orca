@@ -1941,6 +1941,8 @@ class Script(script.Script):
             self.inputEventHandlers["reviewAboveHandler"]
         brailleBindings[braille.CMD_LNDN]     = \
             self.inputEventHandlers["reviewBelowHandler"]
+        brailleBindings[braille.CMD_FREEZE]   = \
+            self.inputEventHandlers["toggleFlatReviewModeHandler"]
         brailleBindings[braille.CMD_TOP_LEFT] = \
             self.inputEventHandlers["reviewHomeHandler"]
         brailleBindings[braille.CMD_BOT_LEFT] = \
