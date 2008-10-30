@@ -27,6 +27,7 @@ __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from orca_i18n import Q_        # to provide qualified translatable strings
+import orca_state
 
 # Translators: this is a structure to assist in the generation of
 # localized strings for the various text attributes. 
@@ -144,6 +145,14 @@ _textAttributeTable["font-effect"] = Q_("textattr|font effect")
 # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #
 _textAttributeTable["indent"] = Q_("textattr|indent")
+
+# Translators: this attribute specifies there is something "wrong" with
+# the text, such as it being a misspelled word. See:
+# https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#
+# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#
+_textAttributeTable["invalid"] = Q_("textattr|invalid")
 
 # Translators: this attribute specifies whether the text is invisible.
 # It will be a "true" or "false" value.
@@ -571,6 +580,14 @@ _textAttributeTable["right"] = Q_("textattr|right")
 _textAttributeTable["center"] = Q_("textattr|center")
 
 # Translators: this is one of the text attribute values for the following
+# text attributes: "justification". In Gecko, when no justification has
+# be explicitly set, they report a justification of "start".
+#
+# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#
+_textAttributeTable["start"] = Q_("textattr|no justification")
+
+# Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
@@ -878,6 +895,21 @@ _textAttributeTable["rl"] = Q_("textattr|rl")
 #
 _textAttributeTable["tb"] = Q_("textattr|tb")
 
+# Translators: this is one of the text attribute values for the following
+# text attributes: "strikethrough." It refers to the line style.
+#
+# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#
+_textAttributeTable["solid"] = Q_("textattr|solid")
+
+# Translators: this is one of the text attribute values for the following
+# text attributes: "invalid". It is an indication that the text is not
+# spelled correctly. See:
+# https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#
+# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
+#
+_textAttributeTable["spelling"] = Q_("textattr|spelling")
 
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 
@@ -911,6 +943,11 @@ def getTextAttributeName(textAttr):
 
     if isinstance(textAttr, unicode):
         textAttr = textAttr.encode("UTF-8")
+
+    # Normalize the name to an Atk name before attempting to look it up.
+    #
+    if orca_state.activeScript:
+        textAttr = orca_state.activeScript.getAtkNameForAttribute(textAttr)
 
     try:
         return _textAttributeTable[textAttr]

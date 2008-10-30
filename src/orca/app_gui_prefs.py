@@ -135,6 +135,21 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         ftp = focus_tracking_presenter.FocusTrackingPresenter()
         ftp.loadAppSettings(self.appScript)
 
+    def _getAppNameForAttribute(self, attributeName):
+        """Converts the given Atk attribute name into the application's
+        equivalent. This is necessary because an application or toolkit
+        (e.g. Gecko) might invent entirely new names for the same text
+        attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the application's equivalent name if found or attribName
+        otherwise.
+        """
+
+        return self.appScript.getAppNameForAttribute(attributeName)
+
     def _markModified(self):
         """ Mark as modified the user application specific custom key bindings:
         """

@@ -960,6 +960,21 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         view.set_model(model)
 
+    def _getAppNameForAttribute(self, attributeName):
+        """Converts the given Atk attribute name into the application's
+        equivalent. This is necessary because an application or toolkit
+        (e.g. Gecko) might invent entirely new names for the same text
+        attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the application's equivalent name if found or attribName
+        otherwise.
+        """
+
+        return attributeName
+
     def _updateTextDictEntry(self):
         """The user has updated the text attribute list in some way. Update
         the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
@@ -974,6 +989,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         for path in range(0, noRows):
             localizedKey = model[path][NAME]
             key = text_attribute_names.getTextAttributeKey(localizedKey)
+
+            # Convert the normalized, Atk attribute name back into what
+            # the app/toolkit uses.
+            #
+            key = self._getAppNameForAttribute(key)
+
             localizedValue = model[path][VALUE]
             value = text_attribute_names.getTextAttributeKey(localizedValue)
 

@@ -114,6 +114,11 @@ class Script(script.Script):
 
         self.lastSelectedMenu = None
 
+        # A dictionary of non-standardly-named text attributes and their
+        # Atk equivalents.
+        #
+        self.attributeNamesDict = {}
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -4279,6 +4284,38 @@ class Script(script.Script):
 
         return True
 
+    def getAtkNameForAttribute(self, attribName):
+        """Converts the given attribute name into the Atk equivalent. This
+        is necessary because an application or toolkit (e.g. Gecko) might
+        invent entirely new names for the same attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the Atk equivalent name if found or attribName otherwise.
+        """
+
+        return self.attributeNamesDict.get(attribName, attribName)
+
+    def getAppNameForAttribute(self, attribName):
+        """Converts the given Atk attribute name into the application's
+        equivalent. This is necessary because an application or toolkit
+        (e.g. Gecko) might invent entirely new names for the same text
+        attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the application's equivalent name if found or attribName
+        otherwise.
+        """
+
+        for key, value in self.attributeNamesDict.items():
+            if value == attribName:
+                return key
+
+        return attribName
+
     def textAttrsToDictionary(self, tokenString):
         """Converts a string of text attribute tokens of the form
         <key>:<value>; into a dictionary of keys and values.
@@ -4316,18 +4353,21 @@ class Script(script.Script):
         for key in keys:
             localizedKey = text_attribute_names.getTextAttributeName(key)
             if key in attributes:
+                line = ""
                 attribute = attributes[key]
                 localizedValue = \
                     text_attribute_names.getTextAttributeName(attribute)
                 if attribute:
+                    key = self.getAtkNameForAttribute(key)
                     # If it's the 'weight' attribute and greater than 400, just
                     # speak it as bold, otherwise speak the weight.
                     #
-                    if key == "weight" and int(attribute) > 400:
+                    if key == "weight" \
+                       and (attribute == "bold" or int(attribute) > 400):
                         # Translators: bold as in the font sense.
                         #
                         line = _("bold")
-                    elif key == "left-margin" or key == "right-margin":
+                    elif key in ["left-margin", "right-margin"]:
                         # We need to test if we are getting a margin value
                         # that includes unit information (OOo now provides
                         # this). If not, then we will assume it's pixels.
@@ -4347,10 +4387,19 @@ class Script(script.Script):
                                             "%s %s pixels",
                                             int(attribute)) % \
                                                 (localizedKey, localizedValue)
-                        else:
-                            line = localizedKey + " " + localizedValue
-                    else:
-                        line = localizedKey + " " + localizedValue
+                    elif key in ["indent", "size"]:
+                        # In Gecko, we seem to get these values as a number
+                        # immediately followed by "px". But we'll hedge our
+                        # bet.
+                        #
+                        value = attribute.split("px")
+                        if len(value) > 1:
+                            line = ngettext("%s %s pixel",
+                                            "%s %s pixels",
+                                            float(value[0])) % \
+                                            (localizedKey, value[0])
+
+                    line = line or (localizedKey + " " + localizedValue)
                     speech.speak(line)
 
     def readCharAttributes(self, inputEvent=None):
@@ -7528,7 +7577,7 @@ class Script(script.Script):
         try:
             return dict(
                 map(lambda pair: pair.strip().split(':'),
-                    dict_string.strip(';').split(';')))
+                    dict_string.strip('; ').split(';')))
         except ValueError:
             return {}
 

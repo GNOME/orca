@@ -1,3 +1,13 @@
+2008-10-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/app_gui_prefs.py:
+          src/orca/default.py:
+          src/orca/text_attribute_names.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #434780 - Orca does not provide access to text
+          attributes in Firefox.
+
 2008-10-27  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/gcalctool:

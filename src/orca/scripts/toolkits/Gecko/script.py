@@ -198,6 +198,93 @@ class Script(default.Script):
         #
         self._currentFrame = None
 
+        # All of the text attributes available for presentation to the
+        # user. This is necessary because the attributes used by Gecko
+        # are different from the default set.
+        #
+        self.allTextAttributes = \
+            "background-color:; color:; font-family:; font-size:; " \
+            "font-style:normal; font-weight:400; language:none; " \
+            "text-line-through-style:; text-align:start; text-indent:0px; " \
+            "text-underline-style:; text-position:baseline; " \
+            "invalid:none; writing-mode:lr;"
+
+        # The default set of text attributes to present to the user. This
+        # is necessary because the attributes used by Gecko are different
+        # from the default set.
+        #
+        self.enabledBrailledTextAttributes = \
+          "font-size:; font-family:; font-weight:400; text-indent:0px; " \
+          "text-underline-style:none; text-align:start; " \
+          "text-line-through-style:none; font-style:normal; invalid:none;"
+        self.enabledSpokenTextAttributes = \
+          "font-size:; font-family:; font-weight:400; text-indent:0px; " \
+          "text-underline-style:none; text-align:start; " \
+          "text-line-through-style:none; font-style:normal; invalid:none;"
+
+        # A dictionary of Gecko-style attribute names and their equivalent/
+        # expected names. This is necessary so that we can present the
+        # attributes to the user in a consistent fashion across apps and
+        # toolkits. Note that underlinesolid and line-throughsolid are
+        # temporary fixes: text_attribute_names.py assumes a one-to-one
+        # correspondence. This is not a problem when going from attribute
+        # name to localized name; in the reverse direction, we need more
+        # context (i.e. we can't safely make them both be "solid"). A
+        # similar issue exists with "start" which means no justification
+        # has explicitly been set. If we set that to "none", "none" will
+        # no longer have a single reverse translation.
+        #
+        self.attributeNamesDict = {
+            "font-weight"             : "weight",
+            "font-family"             : "family-name",
+            "font-style"              : "style",
+            "text-align"              : "justification",
+            "text-indent"             : "indent",
+            "font-size"               : "size",
+            "background-color"        : "bg-color",
+            "color"                   : "fg-color",
+            "text-line-through-style" : "strikethrough",
+            "text-underline-style"    : "underline",
+            "text-position"           : "vertical-align",
+            "writing-mode"            : "direction",
+            "-moz-left"               : "left",
+            "-moz-right"              : "right",
+            "-moz-center"             : "center",
+            "start"                   : "no justification",
+            "underlinesolid"          : "single",
+            "line-throughsolid"       : "solid"}
+
+        # We need to save our special attributes so that we can revert to
+        # the default text attributes when giving up focus to another app
+        # and restore them upon return.
+        #
+        self.savedEnabledBrailledTextAttributes = None
+        self.savedEnabledSpokenTextAttributes = None
+        self.savedAllTextAttributes = None
+
+    def activate(self):
+        """Called when this script is activated."""
+        self.savedEnabledBrailledTextAttributes = \
+            settings.enabledBrailledTextAttributes
+        settings.enabledBrailledTextAttributes = \
+            self.enabledBrailledTextAttributes
+
+        self.savedEnabledSpokenTextAttributes = \
+            settings.enabledSpokenTextAttributes
+        settings.enabledSpokenTextAttributes = \
+            self.enabledSpokenTextAttributes
+
+        self.savedAllTextAttributes = settings.allTextAttributes
+        settings.allTextAttributes = self.allTextAttributes
+
+    def deactivate(self):
+        """Called when this script is deactivated."""
+        settings.enabledBrailledTextAttributes = \
+            self.savedEnabledBrailledTextAttributes
+        settings.enabledSpokenTextAttributes = \
+            self.savedEnabledSpokenTextAttributes
+        settings.allTextAttributes = self.savedAllTextAttributes
+
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
