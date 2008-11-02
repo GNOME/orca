@@ -216,7 +216,9 @@ class TutorialGenerator:
         # dialog window, inform user of how to refocus these.
         childWindowsMsg = _("Press alt+f6 to give focus to child windows.")
 
-        if 'Desktop' in name or 'desktop' in name:
+        scriptName = self._script.name
+        sibling = obj.parent.getChildAtIndex(0)
+        if 'nautilus' in scriptName and obj == sibling:
             utterances.append(desktopMsg)
 
         # If this application has more than one unfocused alert or
