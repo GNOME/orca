@@ -1,3 +1,9 @@
+2008-11-01  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/tutorialgenerator.py:
+          Refix for bug #552344 - tutorial message for desktop not spoken 
+          in ibex
+
 2008-10-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py:
