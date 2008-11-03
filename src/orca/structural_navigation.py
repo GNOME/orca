@@ -21,7 +21,7 @@
 being implemented by Gecko; however it can be used in any
 script providing access to document content."""
 
-__id__        = "$Id$"
+__id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."

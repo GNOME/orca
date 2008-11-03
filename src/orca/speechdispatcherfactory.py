@@ -31,7 +31,7 @@
 NOTE: THIS IS EXPERIMENTAL ONLY AND IS NOT A SUPPORTED COMPONENT OF ORCA.
 """
 
-__id__        = "$Id$"
+__id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __author__    = "Tomas Cerha <cerha@brailcom.org>"
