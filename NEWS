@@ -1,3 +1,35 @@
+2.25.1 - 03-Nov-2008
+
+Changes since 2.24.1
+
+General: 
+
+* Refix for bug #552344 - tutorial message for desktop not spoken.
+  This is a much safer fix that doesn't depend upon human consumable
+  strings.
+
+* Fix for bug #554999 - add a new keybinding for toggling flat review.
+
+OpenOffice:
+
+* Fix for bug #357545 - Orca does not speak all buttons in OpenOffice
+  database table creation wizard.
+
+Firefox:
+
+* Fix for bug #434780 - Orca does not provide access to text
+  attributes in Firefox.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    hu      Hungarian            Atilla Hammer and Gabor Kelemen
+    ca      Catalan              Gil Forcada
+
+==========
+
 2.24.1 - 15-Oct-2008
 
 General:
