@@ -39,4 +39,6 @@ user_pref("signon.rememberSignons", false);
 user_pref("spellchecker.dictionary", "en-US");
 user_pref("font.name.sans-serif.x-western", "FreeSans");
 user_pref("font.name.serif.x-western", "FreeSerif");
+user_pref("xxx.legal.rights.seen", "0.0");
+user_pref("browser.rights.3.shown", true);
 
