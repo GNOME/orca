@@ -3149,7 +3149,7 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_TABLE]
-        return MatchCriteria(collection, roles=role)
+        return MatchCriteria(collection, roles=role, applyPredicate=True)
 
     def _tablePredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
@@ -3161,7 +3161,13 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return (obj and obj.getRole() == pyatspi.ROLE_TABLE)
+        if obj and obj.childCount and obj.getRole() == pyatspi.ROLE_TABLE:
+            try:
+                return obj.queryTable().nRows > 0
+            except:
+                pass
+
+        return False
 
     def _tablePresentation(self, obj, arg=None):
         """Presents the table or indicates that one was not found.
