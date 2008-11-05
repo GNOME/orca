@@ -36,7 +36,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Holiday Gift Giving'",
-     "     VISIBLE:  'Holiday Gift Giving', cursor=0",
+     "     VISIBLE:  'Holiday Gift Giving', cursor=1",
      "SPEECH OUTPUT: 'Holiday Gift Giving'"]))
 
 ########################################################################

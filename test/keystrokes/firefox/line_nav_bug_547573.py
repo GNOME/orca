@@ -506,17 +506,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "56. Line Down",
-    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK'",
+    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK documentation'",
      "     VISIBLE:  'The JDK files are installed in a', cursor=1",
-     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK'"]))
+     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK documentation'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "57. Line Down",
-    ["BRAILLE LINE:  'documentation is a separate download.'",
-     "     VISIBLE:  'documentation is a separate down', cursor=1",
-     "SPEECH OUTPUT: 'documentation is a separate download.'"]))
+    ["BRAILLE LINE:  'is a separate download.'",
+     "     VISIBLE:  'is a separate downoad', cursor=1",
+     "SPEECH OUTPUT: 'is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1178,17 +1178,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
-    ["BRAILLE LINE:  'documentation is a separate download.'",
-     "     VISIBLE:  'documentation is a separate down', cursor=1",
-     "SPEECH OUTPUT: 'documentation is a separate download.'"]))
+    ["BRAILLE LINE:  'is a separate download.'",
+     "     VISIBLE:  'is a separate download', cursor=1",
+     "SPEECH OUTPUT: 'is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
-    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK'",
+    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK documentation'",
      "     VISIBLE:  'The JDK files are installed in a', cursor=1",
-     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK'"]))
+     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK documentation'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1540,15 +1540,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Installation of Self-Extracting Binary'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "83. Line Up",
-    ["BRAILLE LINE:  ' Installation of Self-Extracting Binary'",
-     "     VISIBLE:  ' Installation of Self-Extracting', cursor=1",
-     "SPEECH OUTPUT: '  Installation of Self-Extracting Binary link ",
-     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

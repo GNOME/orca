@@ -96,7 +96,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'This text comes before the box section'",
-     "     VISIBLE:  'xt comes before the box section', cursor=32",
+     "     VISIBLE:  'This text comes before the box s', cursor=1",
      "SPEECH OUTPUT: 'This text comes before the box section",
      "'"]))
 
@@ -136,17 +136,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
-    ["BRAILLE LINE:  'This text comes after'",
-     "     VISIBLE:  'This text comes after', cursor=1",
-     "SPEECH OUTPUT: 'This text comes after'"]))
+    ["BRAILLE LINE:  'This text comes after the'",
+     "     VISIBLE:  'This text comes after the', cursor=1",
+     "SPEECH OUTPUT: 'This text comes after the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
-    ["BRAILLE LINE:  'the box section.'",
-     "     VISIBLE:  'the box section.', cursor=1",
-     "SPEECH OUTPUT: 'the box section.",
+    ["BRAILLE LINE:  'box section.'",
+     "     VISIBLE:  'box section.', cursor=1",
+     "SPEECH OUTPUT: 'box section.",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -170,18 +170,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
-    ["BRAILLE LINE:  'the box section.'",
-     "     VISIBLE:  'the box section.', cursor=1",
-     "SPEECH OUTPUT: 'the box section.",
+    ["BRAILLE LINE:  'box section.'",
+     "     VISIBLE:  'box section.', cursor=1",
+     "SPEECH OUTPUT: 'box section.",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
-    ["BRAILLE LINE:  'This text comes after'",
-     "     VISIBLE:  'This text comes after', cursor=1",
-     "SPEECH OUTPUT: 'This text comes after'"]))
+    ["BRAILLE LINE:  'This text comes after the'",
+     "     VISIBLE:  'This text comes after the', cursor=1",
+     "SPEECH OUTPUT: 'This text comes after the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
