@@ -1,5 +1,13 @@
 2008-11-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/line_nav_bug_554616.py: (new)
+          test/keystrokes/firefox/bug_544771.py: (new)
+          test/keystrokes/firefox/html_struct_nav_bug_556470.py: (new)
+          test/html/bug-554616.html: (new)
+          test/html/bug-556470.html: (new)
+          test/html/bug-544771.html: (new)
+          New regression tests.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           Fix for bug #554616 - Problems accessing subsequent lines of cells
           which contain line break tags in FF3 tables.
