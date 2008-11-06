@@ -1,3 +1,10 @@
+2008-11-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/structural_navigation.py:
+          test/keystrokes/firefox/html_struct_nav_bug_554616.py: (new)
+          Rest of the fix for bug #554616 - Problems accessing subsequent
+          lines of cells which contain line break tags in FF3 tables.
+
 2008-11-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/line_nav_bug_554616.py: (new)

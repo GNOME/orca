@@ -3279,7 +3279,7 @@ class StructuralNavigation:
 
         blank = self._isBlankCell(cell)
         if not blank:
-            self._presentObject(obj, characterOffset)
+            self._presentObject(cell, 0)
         else:
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.
