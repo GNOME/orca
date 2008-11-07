@@ -5713,6 +5713,20 @@ class Script(default.Script):
             nextObj = self.findNextObject(nextObj, documentFrame)
             nextOffset = 0
 
+        # On a page which contains tables which are not only nested, but
+        # are surrounded by line break characters and/or embedded within
+        # a paragraph or span, there's an excellent chance that we'll skip
+        # right over the nested content. See bug #555055. If we can detect
+        # this condition, we should set the nextOffset to the EOC which
+        # represents the nested content before findNextCaretInOrder does
+        # its thing.
+        #
+        if nextOffset == 0 \
+           and self.getCharacterAtOffset(nextObj, nextOffset) == "\n" \
+           and self.getCharacterAtOffset(nextObj, nextOffset + 1) == \
+               self.EMBEDDED_OBJECT_CHARACTER:
+            nextOffset += 1
+
         [nextObj, nextOffset] = \
                   self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
 
