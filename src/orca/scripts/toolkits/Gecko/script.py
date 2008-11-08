@@ -5084,12 +5084,17 @@ class Script(default.Script):
             if text:
                 line = text.getTextAtOffset(pOffset, boundary)
                 pOffset = line[1]
+                # If a line begins with a link, getTextAtOffset might
+                # return a zero-length string. If we have a valid offset
+                # increment the pOffset by 1 before getting the extents.
+                #
+                if line[1] > 0 and line[1] == line[2]:
+                    pOffset += 1
 
             prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
             if self.onSameLine(extents, prevExtents) \
                and extents != prevExtents \
-               and lastExtents != prevExtents \
-               or prevExtents == (0, 0, 0, 0):
+               and lastExtents != prevExtents:
                 toAdd = self.getObjectsFromEOCs(prevObj, pOffset, boundary)
                 objects[0:0] = toAdd
             else:

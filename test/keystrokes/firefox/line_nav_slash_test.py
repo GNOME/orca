@@ -77,7 +77,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'Recent Tags Slashdot Login h4'",
+    ["BRAILLE LINE:  'Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
      "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
 
@@ -126,8 +126,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
-    ["BRAILLE LINE:  'Book Reviews Older Stuff h4'",
-     "     VISIBLE:  'Book Reviews Older Stuff h4', cursor=19",
+    ["BRAILLE LINE:  'Older Stuff h4'",
+     "     VISIBLE:  'Older Stuff h4', cursor=1",
      "SPEECH OUTPUT: 'Older Stuff heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())

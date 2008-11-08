@@ -252,10 +252,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
-    ["BUG? - We're getting more than one line's worth",
-     "BRAILLE LINE:  'Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
+    ["BRAILLE LINE:  '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
      "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
-     "SPEECH OUTPUT: 'link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+     "SPEECH OUTPUT: '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -515,7 +514,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "57. Line Down",
     ["BRAILLE LINE:  'is a separate download.'",
-     "     VISIBLE:  'is a separate downoad', cursor=1",
+     "     VISIBLE:  'is a separate download.', cursor=1",
      "SPEECH OUTPUT: 'is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -619,9 +618,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "70. Line Down",
-    ["BRAILLE LINE:  '1. Download and check the file size. You can download to any directory you choose.'",
+    ["BRAILLE LINE:  'You can download to any directory you choose.'",
      "     VISIBLE:  'You can download to any director', cursor=1",
-     "SPEECH OUTPUT: 'link 1. Download and check the file size. You can download to any directory you choose.'"]))
+     "SPEECH OUTPUT: 'You can download to any directory you choose.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -651,17 +650,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "74. Line Down",
-    ["BRAILLE LINE:  '2. Become root by running the su command and entering the super-user password. 3. Extract and install the contents of the downloaded file.'",
+    ["BRAILLE LINE:  '3. Extract and install the contents of the downloaded file.'",
      "     VISIBLE:  '3. Extract and install the conte', cursor=1",
-     "SPEECH OUTPUT: 'link 2. Become root by running the su command and entering the super-user password. 3. Extract and install the contents of the downloaded file.'"]))
+     "SPEECH OUTPUT: '3. Extract and install the contents of the downloaded file.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "75. Line Down",
-    ["BRAILLE LINE:  '2. Become root by running the su command and entering the super-user password. 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'",
+    ["BRAILLE LINE:  'Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'",
      "     VISIBLE:  'Change directory to where the do', cursor=1",
-     "SPEECH OUTPUT: 'link 2. Become root by running the su command and entering the super-user password. link 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'"]))
+     "SPEECH OUTPUT: 'Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -757,10 +756,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "87. Line Down",
-    ["BRAILLE LINE:  '5. Exit the root shell. The RPM packages creates two links /usr/java/latest and /usr/java/default. '",
+    ["BRAILLE LINE:  'The RPM packages creates two links /usr/java/latest and /usr/java/default. '",
      "     VISIBLE:  'The RPM packages creates two lin', cursor=1",
-     "SPEECH OUTPUT: 'link 5. Exit the root shell.",
-     " The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
+     "SPEECH OUTPUT: 'The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -963,12 +961,20 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Line Up",
+    "12a. Line Up",
     ["BUG? - We should lose the final space in the braille line.",
-     "BRAILLE LINE:  '5. Exit the root shell. The RPM packages creates two links /usr/java/latest and /usr/java/default. '",
-     "     VISIBLE:  '5. Exit the root shell. The RPM ', cursor=1",
-     "SPEECH OUTPUT: 'link 5. Exit the root shell.",
-     " The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
+     "BRAILLE LINE:  'The RPM packages creates two links /usr/java/latest and /usr/java/default. '",
+     "     VISIBLE:  'The RPM packages creates two lin', cursor=1",
+     "SPEECH OUTPUT: 'The RPM packages creates two links /usr/java/latest and /usr/java/default.  ",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "12b. Line Up",
+    ["BRAILLE LINE:  '5. Exit the root shell.'",
+     "     VISIBLE:  '5. Exit the root shell.', cursor=1",
+     "SPEECH OUTPUT: '5. Exit the root shell.", 
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1055,11 +1061,26 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "23. Line Up",
-    ["BUG? - We're getting more than one line's worth",
-     "BRAILLE LINE:  '2. Become root by running the su command and entering the super-user password. 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'",
+    "23a. Line Up",
+    ["BRAILLE LINE:  'Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'",
+     "     VISIBLE:  'Change directory to where the do', cursor=1",
+     "SPEECH OUTPUT: 'Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "23b. Line Up",
+    ["BRAILLE LINE:  '3. Extract and install the contents of the downloaded file.'",
+     "     VISIBLE:  '3. Extract and install the conte', cursor=1",
+     "SPEECH OUTPUT: '3. Extract and install the contents of the downloaded file.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "23c. Line Up",
+    ["BRAILLE LINE:  '2. Become root by running the su command and entering the super-user password.'",
      "     VISIBLE:  '2. Become root by running the su', cursor=1",
-     "SPEECH OUTPUT: 'link 2. Become root by running the su command and entering the super-user password. link 3. Extract and install the contents of the downloaded file. Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract and'"]))
+     "SPEECH OUTPUT: '2. Become root by running the su command and entering the super-user password.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1080,10 +1101,18 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "26. Line Up",
-    ["BRAILLE LINE:  '1. Download and check the file size. You can download to any directory you choose.'",
+    "26a. Line Up",
+    ["BRAILLE LINE:  'You can download to any directory you choose.'",
+     "     VISIBLE:  'You can download to any director', cursor=1",
+     "SPEECH OUTPUT: 'You can download to any directory you choose.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "26b. Line Up",
+    ["BRAILLE LINE:  '1. Download and check the file size.'",
      "     VISIBLE:  '1. Download and check the file s', cursor=1",
-     "SPEECH OUTPUT: 'link 1. Download and check the file size. You can download to any directory you choose.'"]))
+     "SPEECH OUTPUT: '1. Download and check the file size.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1179,7 +1208,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["BRAILLE LINE:  'is a separate download.'",
-     "     VISIBLE:  'is a separate download', cursor=1",
+     "     VISIBLE:  'is a separate download.', cursor=1",
      "SPEECH OUTPUT: 'is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1435,11 +1464,18 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "70. Line Up",
-    ["BUG? - We're getting more than one line's worth",
-     "BRAILLE LINE:  'Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
+    "70a. Line Up",
+    ["BRAILLE LINE:  '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
+     "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
+     "SPEECH OUTPUT: '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "70b. Line Up",
+    ["BRAILLE LINE:  'Install formats - This version of the JDK is available in two installation formats.'",
      "     VISIBLE:  'Install formats - This version o', cursor=1",
-     "SPEECH OUTPUT: 'link Install formats - This version of the JDK is available in two installation formats. • Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+     "SPEECH OUTPUT: 'Install formats - This version of the JDK is available in two installation formats.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

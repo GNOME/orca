@@ -1,3 +1,11 @@
+2008-11-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/line_nav_slash_test.py:
+          test/keystrokes/firefox/line_nav_bug_547573.py:
+          Fix for bug #559839 - Orca sometimes includes content from other
+          lines when navigating via Up/Down Arrow in Firefox 3.
+
 2008-11-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
