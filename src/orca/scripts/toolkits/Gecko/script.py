@@ -5489,7 +5489,9 @@ class Script(default.Script):
         [prevObj, prevOffset] = \
             self.findPreviousCaretInOrder(currentLine[0][0], currentLine[0][1])
 
-        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        extents = self.getExtents(currentLine[0][0],
+                                  currentLine[0][1],
+                                  currentLine[0][2])
         prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
         while self.onSameLine(extents, prevExtents) \
               and (extents != prevExtents):
@@ -5585,7 +5587,9 @@ class Script(default.Script):
             self.findNextCaretInOrder(currentLine[-1][0],
                                       currentLine[-1][2] - 1)
 
-        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        extents = self.getExtents(currentLine[-1][0],
+                                  currentLine[-1][1],
+                                  currentLine[-1][2])
         nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
         while self.onSameLine(extents, nextExtents) \
               and (extents != nextExtents):
