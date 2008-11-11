@@ -1388,6 +1388,11 @@ class Script(default.Script):
                     if eventSourceRole != pyatspi.ROLE_LINK \
                        or self.queryNonEmptyText(event.source):
                         return
+                elif eventSourceRole == pyatspi.ROLE_SECTION:
+                    # Google Calendar's Day grid seems to issue these quite
+                    # a bit. If we don't ignore them, we'll loop.
+                    #
+                    return
 
             elif self.isAriaWidget(event.source):
                 # Sometimes we get extra caret-moved events. See bug #471878
