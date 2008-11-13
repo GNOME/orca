@@ -112,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'abiscan List'",
      "     VISIBLE:  'abiscan List', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Component abiscan multi-select List with 1248 items'"]))
+     "SPEECH OUTPUT: 'Component: abiscan multi-select List with 1248 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -320,7 +320,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'contains Combo'",
      "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'a commenter contains combo box'"]))
+     "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -393,7 +393,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'contains Combo'",
      "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'a commenter contains combo box'"]))
+     "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -467,7 +467,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '[Bug creation] List'",
      "     VISIBLE:  '[Bug creation] List', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Alias [Bug creation] multi-select List with 26 items'"]))
+     "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -556,7 +556,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
      "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Not (negate this whole chart) --- combo box'"]))
+     "SPEECH OUTPUT: '--- combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
