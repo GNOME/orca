@@ -1131,7 +1131,7 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_SEVERE,
                           "Something looks wrong with speech.  Aborting.")
             debug.printStack(debug.LEVEL_ALL)
-            orca.abort(50)
+            orca.die(50)
         else:
             self.__lastResetTime = time.time()
 

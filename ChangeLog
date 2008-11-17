@@ -1,3 +1,22 @@
+2008-11-17  Willie Walker <william.walker@sun.com>
+
+       * src/orca/settings.py:
+         src/orca/gnomespeechfactory.py:
+         Pylint fixes (now that I have a working OpenSolaris build
+         environment)
+
+2008-11-17  Willie Walker <william.walker@sun.com>
+
+       * src/orca/scripts/apps/gnome-mud.py:
+         src/orca/scripts/apps/rhythmbox/braille_generator.py:
+         src/orca/scripts/apps/rhythmbox/script.py:
+         src/orca/scripts/apps/nautilus.py:
+         src/orca/scripts/apps/liferea.py:
+         src/orca/scripts/apps/acroread.py:
+         src/orca/app_prefs.py:
+         Update headings for some strange reason.  This was due to 
+         svn actually making these mods, not me.  Bizarre.
+
 2008-11-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
