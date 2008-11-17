@@ -596,6 +596,12 @@ class Script(default.Script):
                                event,
                                debug.getAccessibleDetails(event.source))
 
+        # We always automatically go back to focus tracking mode when
+        # the focus changes.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
         # self.printAncestry(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.

@@ -638,7 +638,7 @@ class Context:
             currentZoneIndex = 0
             while currentZoneIndex < len(line.zones):
                 zone = line.zones[currentZoneIndex]
-                if zone.accessible == searchZone:
+                if self.script.isSameObject(zone.accessible, searchZone):
                     foundZoneWithFocus = True
                     break
                 else:

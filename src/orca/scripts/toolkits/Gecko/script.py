@@ -1925,6 +1925,12 @@ class Script(default.Script):
         if self.isSameObject(oldLocusOfFocus, newLocusOfFocus):
             return
 
+        # We always automatically go back to focus tracking mode when
+        # the focus changes.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
         # Try to handle the case where a spurious focus event was tossed
         # at us.
         #

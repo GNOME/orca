@@ -1300,6 +1300,12 @@ class Script(default.Script):
             self.find()
             return
 
+        # We always automatically go back to focus tracking mode when
+        # the focus changes.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
         # If we are inside a paragraph inside a table cell (in Writer),
         # then speak/braille that parent table cell (see bug #382415).
         # Also announce that a table has been entered or left.
