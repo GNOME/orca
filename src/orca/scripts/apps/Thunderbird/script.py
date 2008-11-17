@@ -228,18 +228,20 @@ class Script(Gecko.Script):
 
         # This is a better fix for bug #405541. Thunderbird gives
         # focus to the cell in the column that is being sorted
-        # (e.g., Date). Braille should show the row from the begining.
-        # This fix calls orca.setLocusOfFocus to give focus to the
-        # cell at the beginning of the row. It consume the event
-        # so Gecko.py doesn't reset the focus.
+        # (e.g., Date). Braille should show the row beginning with
+        # the first populated cell. Set the locusOfFocus to that
+        # cell and consume the event so that the Gecko script
+        # doesn't reset it.
         #
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = parent.queryTable()
-            index = self.getCellIndex(obj)
-            row = table.getRowAtIndex(index)
-            acc = table.getAccessibleAt(row, 0)
-            orca.setLocusOfFocus(event, acc)
-            consume = True
+            row = table.getRowAtIndex(self.getCellIndex(obj))
+            for i in range(0, table.nColumns):
+                acc = table.getAccessibleAt(row, i)
+                if acc.name:                
+                    orca.setLocusOfFocus(event, acc)
+                    consume = True
+                    break
 
         # Text area (for caching handle for spell checking purposes).
         #
