@@ -1,5 +1,9 @@
 2008-11-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/flat_review.py:
+          Fix for bug #495303 - Character flat review not working correctly
+          with generated texts in XUL.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           src/orca/scripts/apps/evolution/script.py:
           src/orca/scripts/apps/Thunderbird/script.py:
