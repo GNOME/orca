@@ -22,8 +22,8 @@ preferences files.
 """
 
 __id__        = "$Id$"
-__version__   = "$Revision:$"
-__date__      = "$Date:$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
