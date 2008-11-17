@@ -3498,8 +3498,8 @@ class Script(default.Script):
         """
 
         newCell = None
-        text = None
-        extents = ()
+        text = ""
+        extents = (0, 0, 0, 0)
         isField = False
         if not cell or cell.getRole() != pyatspi.ROLE_TABLE_CELL:
             return [newCell, text, extents, isField]
@@ -3521,13 +3521,22 @@ class Script(default.Script):
             nextCell = (row + rowspan, col)
         if nextCell:
             newCell = table.getAccessibleAt(nextCell[0], nextCell[1])
-            if newCell:
-                [obj, offset] = self.findFirstCaretContext(newCell, 0)
-                extents = self.getExtents(obj, offset, offset + 1)
-                isField = self.isFormField(obj)
-                if self.queryNonEmptyText(obj) \
-                   and not self.isBlankCell(newCell):
-                    text = self.getDisplayedText(obj)
+            objects = self.getObjectsFromEOCs(newCell, 0)
+            if len(objects):
+                extents = self.getExtents(objects[0][0], 
+                                          objects[0][1],
+                                          objects[0][2])
+            for obj in objects:
+                if obj[0].getRole() == pyatspi.ROLE_IMAGE:
+                    text += obj[0].name
+                elif not self.isFormField(obj[0]):
+                    text += obj[3]
+                else:
+                    isField = True
+                    text = ""
+                    exts = obj[0].queryComponent().getExtents(0)
+                    extents = [exts.x, exts.y, exts.width, exts.height]
+                    break
 
         return [newCell, text, extents, isField]
 
@@ -3843,35 +3852,31 @@ class Script(default.Script):
             [prevObj, prevOffset] = self.findPreviousLine(obj, 0, False)
             prevLineContents = self.getLineContentsAtOffset(prevObj,
                                                             prevOffset)
-            self._previousLineContents = prevLineContents
-
-        nextLineContents = self._nextLineContents
-        if index > 0 and nextLineContents:
-            nextObj = nextLineContents[0][0]
-            nextOffset = nextLineContents[0][1]
 
         # The labels for combo boxes won't be found below the combo box
         # because expanding the combo box will cover up the label. Labels
         # for lists probably won't be below the list either.
         #
-        if not nextLineContents and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
-                                                      pyatspi.ROLE_MENU,
-                                                      pyatspi.ROLE_MENU_ITEM,
-                                                      pyatspi.ROLE_LIST,
-                                                      pyatspi.ROLE_LIST_ITEM]:
-            [nextObj, nextOffset] = self.findNextLine(obj, 0, False)
-            nextLineContents = self.getLineContentsAtOffset(nextObj,
-                                                            nextOffset)
-            self._nextLineContents = nextLineContents
-        else:
+        if obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                             pyatspi.ROLE_MENU,
+                             pyatspi.ROLE_MENU_ITEM,
+                             pyatspi.ROLE_LIST,
+                             pyatspi.ROLE_LIST_ITEM]:
             [nextObj, nextOffset] = [None, 0]
             nextLineContents = []
-
+        else:
+            nextLineContents = self._nextLineContents
+            if index > 0 and nextLineContents:
+                nextObj = nextLineContents[0][0]
+                nextOffset = nextLineContents[0][1]
+            else:
+                [nextObj, nextOffset] = self.findNextLine(obj, 0, False)
+                nextLineContents = self.getLineContentsAtOffset(nextObj,
+                                                                nextOffset)
         above = None
+        lastExtents = (0, 0, 0, 0)
         for content in prevLineContents:
-            extents = content[0].queryComponent().getExtents(0)
-            aboveExtents = \
-                 [extents.x, extents.y, extents.width, extents.height]
+            aboveExtents = self.getExtents(content[0], content[1], content[2])
 
             # [[[TODO: Grayed out buttons don't pass the isFormField()
             # test because they are neither focusable nor showing -- and
@@ -3886,21 +3891,6 @@ class Script(default.Script):
                                                     pyatspi.ROLE_MENU_ITEM,
                                                     pyatspi.ROLE_LIST]
 
-            # [[[TODO - JD: Nearby text that's not actually in the form
-            # may need to be ignored.  Let's do so unless it's directly
-            # above the form field or the text above is contained in the
-            # form's parent and adjust based on feedback, testing.]]]
-            #
-            theForm = self.getAncestor(obj,
-                                       [pyatspi.ROLE_FORM],
-                                       [pyatspi.ROLE_DOCUMENT_FRAME])
-            aboveForm = self.getAncestor(obj,
-                                         [pyatspi.ROLE_FORM],
-                                         [pyatspi.ROLE_DOCUMENT_FRAME])
-            aboveIsInForm = self.isSameObject(theForm, aboveForm)
-            formIsInAbove = theForm \
-                            and self.isSameObject(theForm.parent, content[0])
-
             # If the horizontal starting point of the object is the
             # same as the horizontal starting point of the text
             # above it, the text above it is probably serving as the
@@ -3911,27 +3901,33 @@ class Script(default.Script):
             # For an example of the latter case, see Bugzilla's Advanced
             # search page, Bug Changes section.
             #
-            if (objExtents != aboveExtents) and not aboveIsFormField:
-                guessThis = (0 <= abs(objExtents[0] - aboveExtents[0]) <= 2)
-                if not guessThis:
-                    objEnd = objExtents[0] + objExtents[2]
-                    aboveEnd = aboveExtents[0] + aboveExtents[2]
-                    guessThis = (0 <= objExtents[0] - aboveExtents[0] <= 50) \
-                                 and (aboveEnd > objEnd) \
-                                 and (aboveIsInForm or formIsInAbove)
-
-                if guessThis:
-                    above = content[0]
-                    guessAbove = self.expandEOCs(content[0],
-                                                 content[1],
-                                                 content[2])
+            if not above:
+                if (objExtents != aboveExtents) and not aboveIsFormField:
+                    xDiff = objExtents[0] - aboveExtents[0]
+                    guessThis = (0 <= abs(xDiff) <= 2)
+                    if not guessThis and (0 <= xDiff <= 50):
+                        guessThis = \
+                            (aboveExtents[0] + aboveExtents[2] > objExtents[0])
+                    if guessThis:
+                        above = content[0]
+                        guessAbove = content[3]
+            else:
+                # The "label" might be comprised of several objects (e.g.
+                # text with links).
+                #
+                lastEnd = lastExtents[0] + lastExtents[2]
+                if lastEnd - aboveExtents[0] < 10 and not aboveIsFormField:
+                    guessAbove += content[3]
+                else:
                     break
 
+            lastExtents = aboveExtents
+
         below = None
+        lastExtents = (0, 0, 0, 0)
         for content in nextLineContents:
-            extents = content[0].queryComponent().getExtents(0)
-            belowExtents = \
-                 [extents.x, extents.y, extents.width, extents.height]
+            belowExtents = self.getExtents(content[0], content[1], content[2])
+
             # [[[TODO: Grayed out buttons don't pass the isFormField()
             # test because they are neither focusable nor showing -- and
             # thus something we don't want to navigate to via structural
@@ -3945,28 +3941,27 @@ class Script(default.Script):
                                                     pyatspi.ROLE_MENU_ITEM,
                                                     pyatspi.ROLE_LIST]
 
-            # [[[TODO - JD: Nearby text that's not actually in the form
-            # may need to be ignored.  Let's try that for now and adjust
-            # based on feedback and testing.]]]
-            #
-            belowIsInForm = self.getAncestor(content[0],
-                                             [pyatspi.ROLE_FORM],
-                                             [pyatspi.ROLE_DOCUMENT_FRAME])
-
             # If the horizontal starting point of the object is the
             # same as the horizontal starting point of the text
             # below it, the text below it is probably serving as the
             # label. We'll allow for a 2 pixel difference.
             #
-            if objExtents != belowExtents \
-               and not belowIsFormField \
-               and belowIsInForm \
-               and 0 <= abs(objExtents[0] - belowExtents[0]) <= 2:
-                below = content[0]
-                guessBelow = self.expandEOCs(content[0],
-                                             content[1],
-                                             content[2])
-                break
+            if not below:
+                if (objExtents != belowExtents) and not belowIsFormField \
+                   and 0 <= abs(objExtents[0] - belowExtents[0]) <= 2:
+                    below = content[0]
+                    guessBelow = content[3]
+            else:
+                # The "label" might be comprised of several objects (e.g.
+                # text with links).
+                #
+                lastEnd = lastExtents[0] + lastExtents[2]
+                if lastEnd - belowExtents[0] < 10 and not belowIsFormField:
+                    guessBelow += content[3]
+                else:
+                    break
+
+            lastExtents = aboveExtents
 
         if above:
             if not below:
@@ -4019,26 +4014,19 @@ class Script(default.Script):
         # testing "in the wild."
         #
         guess = None
+
+        # If we're not the sole occupant of a table cell, we're either
+        # not in a table at all or are in a more complex layout table
+        # than this approach can handle.
+        #
+        containingCell = self.getAncestor(obj,
+                                          [pyatspi.ROLE_TABLE_CELL],
+                                          [pyatspi.ROLE_DOCUMENT_FRAME])
+        if not containingCell or containingCell.childCount > 1:
+            return guess
+
         extents = obj.queryComponent().getExtents(0)
         objExtents = [extents.x, extents.y, extents.width, extents.height]
-        containingCell = \
-                       self.getAncestor(obj,
-                                        [pyatspi.ROLE_TABLE_CELL],
-                                        [pyatspi.ROLE_DOCUMENT_FRAME])
-
-        # If we're not in a table cell, pursuing this further is silly. If
-        # we're in a table cell but are not the sole occupant of that cell,
-        # we're likely in a more complex layout table than this approach
-        # can handle.
-        #
-        if not containingCell \
-           or (containingCell.childCount > 1):
-            return guess
-        elif self.getAncestor(obj,
-                              [pyatspi.ROLE_PARAGRAPH],
-                              [pyatspi.ROLE_TABLE,
-                               pyatspi.ROLE_DOCUMENT_FRAME]):
-            return guess
 
         [cellLeft, leftText, leftExtents, leftIsField] = \
                    self.getNextCellInfo(containingCell, "left")
@@ -4046,7 +4034,20 @@ class Script(default.Script):
                    self.getNextCellInfo(containingCell, "right")
         [cellAbove, aboveText, aboveExtents, aboveIsField] = \
                    self.getNextCellInfo(containingCell, "up")
-        [cellBelow, belowText, belowExtents, belowIsField] = \
+
+        # The labels for combo boxes won't be found below the combo box
+        # because expanding the combo box will cover up the label. Labels
+        # for lists probably won't be below the list either.
+        #
+        if obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                             pyatspi.ROLE_MENU,
+                             pyatspi.ROLE_MENU_ITEM,
+                             pyatspi.ROLE_LIST,
+                             pyatspi.ROLE_LIST_ITEM]:
+            [cellBelow, belowText, belowExtents, belowIsField] = \
+                    [None, "", (0, 0, 0, 0), False]
+        else:
+            [cellBelow, belowText, belowExtents, belowIsField] = \
                    self.getNextCellInfo(containingCell, "down")
 
         if rightText:
@@ -4087,31 +4088,19 @@ class Script(default.Script):
             # if the form fields above us are all of the same type
             # and size (say, within 1 pixel).
             #
-            grid = False
-            done = False
             nextCell = containingCell
-            while not done:
+            while nextCell:
                 [nextCell, text, extents, isField] = \
                         self.getNextCellInfo(nextCell, "up")
                 if nextCell:
                     dWidth = abs(objExtents[2] - extents[2])
                     dHeight = abs(objExtents[3] - extents[3])
-                    if dWidth > 1 or dHeight > 1:
-                        done = True
-                    if not isField:
-                        [row, col] = self.getCellCoordinates(nextCell)
-                        if row == 0:
-                            grid = True
-                            done = True
-                else:
-                    done = True
-
-            if grid:
-                topCol = nextCell.parent.queryTable().getAccessibleAt(0, col)
-                [objTop, offset] = self.findFirstCaretContext(topCol, 0)
-                if self.queryNonEmptyText(topCol) \
-                   and not self.isFormField(topCol):
-                    guess = self.expandEOCs(topCol)
+                    if (dWidth > 1 or dHeight > 1):
+                        if not isField:
+                            [row, col] = self.getCellCoordinates(nextCell)
+                            if row == 0:
+                                guess = text
+                        break
 
         return guess
 
@@ -4152,6 +4141,9 @@ class Script(default.Script):
             if self.isSameObject(field, obj):
                 return label
 
+        parent = obj.parent
+        text = self.queryNonEmptyText(parent)
+
         # Because the guesswork is based upon spatial relations, if we're
         # in a list, look from the perspective of the first list item rather
         # than from the list as a whole.
@@ -4168,10 +4160,14 @@ class Script(default.Script):
             # print "guess from table: ", guess
         if not guess:
             # Maybe the text is above or below us, but not in a table
-            # cell.
+            # cell -- or in a table cell which contains multiple items
+            # and/or line breaks.
             #
-            guess = self.guessLabelFromOtherLines(obj)
-            #print "guess from other lines: ", guess
+            if parent.getRole() != pyatspi.ROLE_TABLE_CELL \
+               or parent.childCount > 1 \
+               or (text and text.getText(0, -1).find("\n") >= 0):
+                guess = self.guessLabelFromOtherLines(obj)
+                #print "guess from other lines: ", guess
         if not guess:
             # We've pretty much run out of options.  From Tom's overview
             # of the approach for all controls:

@@ -115,7 +115,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
      "BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are. text'"]))
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -135,8 +135,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -148,8 +147,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -161,8 +159,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Below is what we should be getting. We were accidentally getting this from guessLabelFromLine, but the guessed label isn't on this line and should be guessed by getLabelFromOtherLines",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -199,12 +196,11 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - We're not guessing this correctly",
-     "BRAILLE LINE:  ' $l $l $l'",
+    ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=7",
      "BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=7",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'Last name text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -241,7 +237,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l $l $l', cursor=7",
      "BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=7",
-     "SPEECH OUTPUT: 'Last text'"]))
+     "SPEECH OUTPUT: 'Last name text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -364,7 +360,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
      "BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'patched image text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -413,7 +409,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
      "BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'patched image text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -463,7 +459,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
      "BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=10",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'patched image text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

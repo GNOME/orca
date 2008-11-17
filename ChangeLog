@@ -1,6 +1,12 @@
 2008-11-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          Fix for bug #560466 - Improve the accuracy of label guess for
+          Firefox 3.
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
           src/orca/scripts/apps/evolution/script.py:
           src/orca/scripts/apps/Thunderbird/script.py:
           src/orca/scripts/apps/soffice/script.py:
