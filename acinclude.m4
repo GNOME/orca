@@ -106,7 +106,8 @@ AC_CACHE_VAL(py_cv_mod_$py_mod_var, [
 prog="
 import sys
 try:
-	import bonobo 
+	import pygtk 
+	pygtk.require('2.0')
 	import ORBit
 	ORBit.load_typelib(\"$1\")
 	module_name = \"$1\".replace(\"_\",\".\")

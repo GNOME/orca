@@ -1,3 +1,9 @@
+2008-11-18  Frederic Peters <via william.walker@sun.com>
+
+        * acinclude.m4:
+          Additional fix for bug #560649 - configure doesn't detect 
+          Python modules installed in non-standard location.
+
 2008-11-18  Willie Walker <william.walker@sun.com>
 
         * acinclude.m4:
