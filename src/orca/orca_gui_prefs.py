@@ -394,11 +394,6 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.window = self.widgets.get_widget("orcaSetupWindow")
         self.window.resize(790, 580)
 
-        self.keyBindView.set_model(self.keyBindingsModel)
-        self.keyBindView.set_headers_visible(True)
-        self.keyBindView.expand_all()
-        self.keyBindView.show()
-
         self._setKeyEchoItems()
 
         self.speechSystemsModel  = \
@@ -960,6 +955,21 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         view.set_model(model)
 
+    def _getAppNameForAttribute(self, attributeName):
+        """Converts the given Atk attribute name into the application's
+        equivalent. This is necessary because an application or toolkit
+        (e.g. Gecko) might invent entirely new names for the same text
+        attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the application's equivalent name if found or attribName
+        otherwise.
+        """
+
+        return attributeName
+
     def _updateTextDictEntry(self):
         """The user has updated the text attribute list in some way. Update
         the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
@@ -974,6 +984,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         for path in range(0, noRows):
             localizedKey = model[path][NAME]
             key = text_attribute_names.getTextAttributeKey(localizedKey)
+
+            # Convert the normalized, Atk attribute name back into what
+            # the app/toolkit uses.
+            #
+            key = self._getAppNameForAttribute(key)
+
             localizedValue = model[path][VALUE]
             value = text_attribute_names.getTextAttributeKey(localizedValue)
 
@@ -2204,6 +2220,10 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - clearModel: if True, initially clear out the key bindings model.
         """
 
+        self.keyBindView.set_model(None)
+        self.keyBindView.set_headers_visible(False)
+        self.keyBindView.hide_all()
+        self.keyBindView.hide()
         if clearModel:
             self.keyBindingsModel.clear()
             self.kbindings = None
@@ -2255,8 +2275,11 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             handl = defScript.getInputEventHandlerKey(inputEvHand)
             self._insertRowBraille(handl, com, inputEvHand, iterBB)
 
+        self.keyBindView.set_model(self.keyBindingsModel)
+        self.keyBindView.set_headers_visible(True)
         self.keyBindView.expand_all()
         self.keyBindingsModel.set_sort_column_id(OLDTEXT1, gtk.SORT_ASCENDING)
+        self.keyBindView.show()
 
         # Keep track of new/unbound keybindings that have yet to be applied.
         #
