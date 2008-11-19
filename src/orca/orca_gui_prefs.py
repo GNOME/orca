@@ -4057,6 +4057,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
+        self.keyBindView.set_model(None)
+        self.getTextAttributesView.set_model(None)
+        self.pronunciationView.set_model(None)
+        self.keyBindView.set_headers_visible(False)
+        self.getTextAttributesView.set_headers_visible(False)
+        self.pronunciationView.set_headers_visible(False)
+        self.keyBindView.hide_all()
+        self.getTextAttributesView.hide_all()
+        self.pronunciationView.hide_all()
+        self.keyBindView.hide()
+        self.getTextAttributesView.hide()
+        self.pronunciationView.hide()
         mag.finishLiveUpdating()
         orca_state.orcaOS = None
 
