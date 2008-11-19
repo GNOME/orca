@@ -1,3 +1,8 @@
+2008-11-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          Fix for bug #561540 - Traceback in default.py onStateChanged.
+
 2008-11-19  Willie Walker <william.walker@sun.com>
 
         * src/orca/app_gui_prefs.py:
