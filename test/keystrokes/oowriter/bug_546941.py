@@ -60,16 +60,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LIST))
 sequence.append(utils.AssertPresentationAction(
     "Move to Strikethrough",
-    ["BUG? - 1. We're presenting both a combo box and a list for what amounts to the same object.",
-     "BUG? - 2. There should be a space between 'Combo' and 'Strikethrough' -- assuming we should be presenting the combo box in the first place.",
-     "BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page Strikethrough  Combo'",
-     "     VISIBLE:  ' Combo', cursor=1",
-     "BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page  ComboStrikethrough  Strikethrough List (Without) ListItem'",
-     "     VISIBLE:  '(Without) ListItem', cursor=1",
+    ["BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page Strikethrough (Without) Combo'",
+     "     VISIBLE:  '(Without) Combo', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Strikethrough Select a strikethrough style for the selected text. combo box'",
-     "SPEECH OUTPUT: 'Strikethrough list'",
-     "SPEECH OUTPUT: '(Without)'"]))
+     "SPEECH OUTPUT: 'Strikethrough (Without) combo box'"]))
 
 ######################################################################
 # 8. Press Escape to exit the dialog.

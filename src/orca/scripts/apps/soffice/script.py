@@ -1541,6 +1541,30 @@ class Script(default.Script):
                 speech.speak(self.getText(child, 0, -1), None, False)
             return
 
+        # Combo boxes in OOo typically have two children: a text object
+        # and a list. The combo box will often intially claim to have
+        # focus, but not always. The list inside of it, however, will
+        # claim focus quite regularly. In addition, the list will do
+        # this even if the text object is editable and functionally has
+        # focus, such as the File Name combo box in the Save As dialog.
+        # We need to minimize chattiness and maximize useful information.
+        #
+        if newLocusOfFocus and oldLocusOfFocus \
+           and newLocusOfFocus.getRole() == pyatspi.ROLE_LIST \
+           and newLocusOfFocus.parent.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not self.isSameObject(newLocusOfFocus.parent,
+                                     oldLocusOfFocus.parent):
+
+            # If the combo box contents cannot be edited, just present the
+            # combo box. Otherwise, present the text object. The combo
+            # box will be included as part of the speech context.
+            #
+            state = newLocusOfFocus.parent[0].getState()
+            if not state.contains(pyatspi.STATE_EDITABLE):
+                newLocusOfFocus = newLocusOfFocus.parent
+            else:
+                newLocusOfFocus = newLocusOfFocus.parent[0]
+
         # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.locusOfFocusChanged(self, event,
@@ -1664,6 +1688,8 @@ class Script(default.Script):
         - event: the Event
         """
 
+        handleEvent = False
+        presentEvent = True
         if not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             # Sometimes the items in the OOo Task Pane give up focus (e.g.
             # to a context menu) and never reclaim it. In this case, we
@@ -1680,17 +1706,39 @@ class Script(default.Script):
                          pyatspi.ROLE_LIST_ITEM]
             if self.isDesiredFocusedItem(event.source, rolesList) \
                and event.any_data:
-                speech.stop()
-                orca.setLocusOfFocus(event, event.any_data)
+                handleEvent = True
 
-                # We'll tuck away the activeDescendant information for future
-                # reference since the AT-SPI gives us little help in finding
-                # this.
-                #
-                self.pointOfReference['activeDescendantInfo'] = \
-                    [orca_state.locusOfFocus.parent,
-                     orca_state.locusOfFocus.getIndexInParent()]
-                return
+        elif self.isSameObject(orca_state.locusOfFocus, event.source.parent) \
+             and event.source.getRole() == pyatspi.ROLE_LIST \
+             and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_COMBO_BOX:
+            # Combo boxes which have been explicitly given focus by the user
+            # (as opposed to those which have been automatically given focus
+            # in a dialog or alert) issue an object:state-changed:focused
+            # event, then an object:active-descendant-changed event for the
+            # list inside the combo box, and finally a focus: event for the
+            # list itself. This leads to unnecessary chattiness. As these
+            # objects look and act like combo boxes, we'll let the first of
+            # the events cause the object to be presented. Quietly setting
+            # the locusOfFocus to the activeDescendant here will prevent
+            # this event's chattiness. The final focus: event for the list
+            # is already being handled by onFocus as part of bug 546941.
+            #
+            handleEvent = True
+            presentEvent = False
+
+        if handleEvent:
+            if presentEvent:
+                speech.stop()
+            orca.setLocusOfFocus(event, event.any_data, presentEvent)
+
+            # We'll tuck away the activeDescendant information for future
+            # reference since the AT-SPI gives us little help in finding
+            # this.
+            #
+            self.pointOfReference['activeDescendantInfo'] = \
+                [orca_state.locusOfFocus.parent,
+                 orca_state.locusOfFocus.getIndexInParent()]
+            return
 
         default.Script.onActiveDescendantChanged(self, event)
 
@@ -1787,21 +1835,21 @@ class Script(default.Script):
                     self.updateBraille(event.source)
                 return
 
+            # If we get "object:state-changed:focused" events for children of
+            # a combo-box, just set the focus to the combo box. This is needed
+            # to help reduce the verbosity of focusing on the Calc Name combo
+            # box (see bug #364407).
+            #
+            elif event.source.parent and \
+                event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+                orca.setLocusOfFocus(None, event.source.parent, False)
+                return
+
         # If we are in the sbase Table Wizard, try to reduce the numerous
         # utterances of "Available fields panel". See bug #465087 for
         # more details.
         #
         if self.__isAvailableFieldsPanel(event):
-            return
-
-        # If we get "object:state-changed:focused" events for children of
-        # a combo-box, just set the focus to the combo box. This is needed
-        # to help reduce the verbosity of focusing on the Calc Name combo
-        # box (see bug #364407).
-        #
-        if event.source.parent and \
-           event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-            orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
         default.Script.onStateChanged(self, event)
@@ -2114,6 +2162,41 @@ class Script(default.Script):
             return obj.name
         else:
             return default.Script.getDisplayedText(self, obj)
+
+    def getTextLineAtCaret(self, obj, offset=None):
+        """Gets the line of text where the caret is. Overridden here to
+        handle combo boxes who have a text object with a caret offset
+        of -1 as a child.
+
+        Argument:
+        - obj: an Accessible object that implements the AccessibleText
+          interface
+        - offset: an optional caret offset to use. (Not used here at the
+          moment, but needed in the Gecko script)
+
+        Returns the [string, caretOffset, startOffset] for the line of text
+        where the caret is.
+        """
+
+        if obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            try:
+                text = obj.queryText()
+            except NotImplementedError:
+                return ["", 0, 0]
+
+            if text.caretOffset < 0:
+                [lineString, startOffset, endOffset] = text.getTextAtOffset(
+                    0, pyatspi.TEXT_BOUNDARY_LINE_START)
+
+                # Sometimes we get the trailing line-feed -- remove it
+                #
+                content = lineString.decode("UTF-8")
+                if content[-1:] == "\n":
+                    content = content[:-1]
+
+                return [content.encode("UTF-8"), 0, startOffset]
+
+        return default.Script.getTextLineAtCaret(self, obj, offset)
 
     def isFunctionalDialog(self, obj):
         """Returns true if the window is functioning as a dialog."""

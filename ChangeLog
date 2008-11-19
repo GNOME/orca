@@ -1,3 +1,11 @@
+2008-11-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          test/keystrokes/oowriter/bug_450210.py:
+          test/keystrokes/oowriter/bug_546941.py:
+          Fix for bug #556657 - Orca is rather chatty when focus is given to
+          an OOo list whose parent is a combo box.
+
 2008-11-19  Mesar Hameed <via william.walker@sun.com>
 
 	* src/orca/orca_gui_prefs.py:

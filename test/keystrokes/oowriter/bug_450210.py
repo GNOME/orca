@@ -33,14 +33,14 @@ sequence.append(WaitAction("focus:",
                            30000))
 sequence.append(utils.AssertPresentationAction(
     "Press 'o' to open the Open File Chooser",
-    ["BUG? - We are presenting both a combo box and a list for what amounts to the same object.",
+    ["KNOWN ISSUE - When this test is manually performed, we include the combo box in the context",
      "BRAILLE LINE:  'soffice Application Open Dialog'",
      "     VISIBLE:  'soffice Application Open Dialog', cursor=21",
-     "BRAILLE LINE:  'soffice Application Open Dialog Open OptionPane File name: List'",
-     "     VISIBLE:  'File name: List', cursor=1",
+     "BRAILLE LINE:  'soffice Application Open Dialog Open OptionPane File name:  $l'",
+     "     VISIBLE:  'File name:  $l', cursor=12",
      "SPEECH OUTPUT: 'Open'",
-     "SPEECH OUTPUT: 'File name: combo box'",
-     "SPEECH OUTPUT: 'File name: list'"]))
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'File name: text '"]))
 
 ######################################################################
 # 4. Press Escape to dismiss the Open File Chooser.
