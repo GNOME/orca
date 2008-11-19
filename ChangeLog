@@ -1,3 +1,10 @@
+2008-11-19  Willie Walker <william.walker@sun.com>
+
+        * src/orca/app_gui_prefs.py:
+          src/orca/default.py:
+          Fix for bug #554002 - Orca App-Preferences dialog page tabs are
+          "off" by one in speech and braille.
+
 2008-11-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/script.py:
