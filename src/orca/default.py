@@ -3824,7 +3824,8 @@ class Script(script.Script):
                 self.find()
                 return
 
-        if event.type.startswith("object:state-changed:selected"):
+        if event.type.startswith("object:state-changed:selected") \
+           and orca_state.locusOfFocus:
             # If this selection state change is for the object which
             # currently has the locus of focus, and the last keyboard
             # event was Space, or we are a focused table cell and we
