@@ -19,9 +19,9 @@
 
 """Displays a GUI for the user to set Orca application-specific preferences."""
 
-__id__        = "$Id:$"
-__version__   = "$Revision:$"
-__date__      = "$Date:$"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
@@ -86,7 +86,13 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         #
         self.appScript = thisAppScript
 
-        self.get_widget("notebook").remove_page(0)
+        # Don't remove the page because this tickles some strange bug
+        # in gail or gtk+ (see bug #554002).  Instead, we'll just hide it.
+        #
+        # self.get_widget("notebook").remove_page(0)
+        generalTab = self.get_widget("notebook").get_children()[0]
+        generalTab.hide()
+
         self.get_widget("speechSystemsLabel").set_sensitive(False)
         self.get_widget("speechSystems").set_sensitive(False)
         self.get_widget("speechServersLabel").set_sensitive(False)

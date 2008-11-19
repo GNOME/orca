@@ -5891,15 +5891,6 @@ class Script(script.Script):
         if role == pyatspi.ROLE_COMBO_BOX:
             return self.__getDisplayedTextInComboBox(obj)
 
-        if role == pyatspi.ROLE_PAGE_TAB and obj.name:
-            # It seems that hiding a page tab can result in the accessible
-            # text being the text associated with the previous page tab.
-            # The accessible name, however, continues to be correct. For
-            # now, let's use the name -- until the Gtk+ bug is pinned down
-            # and fixed. See bug #554002.
-            #
-            return obj.name
-
         # The accessible text of an object is used to represent what is
         # drawn on the screen.
         #
