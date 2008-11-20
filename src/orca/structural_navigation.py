@@ -1284,11 +1284,7 @@ class StructuralNavigation:
         - obj: the accessible table whose caption we want.
         """
 
-        caption = None
-        for child in obj:
-            if child and (child.getRole() == pyatspi.ROLE_CAPTION):
-                caption = child
-
+        caption = obj.queryTable().caption
         try:
             caption.queryText()
         except:
