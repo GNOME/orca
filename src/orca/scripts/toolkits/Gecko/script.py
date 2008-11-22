@@ -2571,7 +2571,10 @@ class Script(default.Script):
         except:
             return None
         else:
-            return ihyperlink.getURI(0)
+            try:
+                return ihyperlink.getURI(0)
+            except:
+                return None
 
     def getDocumentFrameURI(self):
         """Returns the URI of the document frame that is active."""

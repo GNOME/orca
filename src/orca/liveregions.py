@@ -562,7 +562,10 @@ class LiveRegionManager:
         else: return 'unknown'
 
     def _getAttrDictionary(self, obj):
-        return dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        try:
+            return dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return {}
     
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object 
