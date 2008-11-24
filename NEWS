@@ -1,3 +1,68 @@
+2.24.2 - 24-Nov-2008
+
+General:
+
+* More work on bug #508675 - Applying change in Orca preference dialog 
+  is a little bit slow.  This fix makes things even faster.
+
+* Fix for bug #551891 - Flat review does not always start in
+  the correct place when focus is in a tree table.
+
+* Refix for bug #552344 - tutorial message for desktop not spoken.
+
+* Fix for bug #554002 - Orca App-Preferences dialog page tabs are
+  "off" by one in speech and braille.
+
+* Fix for bug #556470 - Orca should not land on empty (cell-less)
+  tables when using structural navigation by table.
+
+* Fix for bug #561540 - Traceback in default.py onStateChanged.
+
+OpenOffice:
+
+* Fix for bug #357545 - Orca does not speak all buttons in openoffice
+  database table creation wizard.
+
+* Fix for bug #556657 - Orca is rather chatty when focus is given to
+  an OOo list whose parent is a combo box.
+
+Firefox:
+
+* Fix for bug #495303 - Character flat review not working correctly
+  with generated texts in XUL.
+
+* Fix for bug #554616 - Problems accessing subsequent lines of cells
+  which contain line break tags in FF3 tables.
+
+* More work on bug #554831 - Google calendar unusable with orca.
+  You can now arrow into the day grid.
+
+* Fix for bug #555055 - Orca should be able to navigate
+  http://www.modernthaisf.com/gpage.html.
+
+* Fix for bug #558516 - Traceback when navigating on huge webpages.
+
+* Fix for bug #559839 - Orca sometimes includes content from other
+  lines when navigating via Up/Down Arrow in Firefox 3.
+
+* Fix for bug #560466 - Improve the accuracy of label guess for
+  Firefox 3.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ca       Catalan              Gil Forcada
+    de       German               Simon Bienlien and Jochen Skulj
+    et       Estonian             Ivar Smolin and Priit Laes
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    si       Sinhala              Danishka Navin
+    zh_HK    Traditional Chinese  Chao-Hsiung Liao
+    zh_TW    Traditional Chinese  Chao-Hsiung Liao
+
+==========
+
 2.24.1 - 15-Oct-2008
 
 General:
