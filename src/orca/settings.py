@@ -29,9 +29,6 @@ __license__   = "LGPL"
 
 import os
 import re
-import shutil
-
-import platform
 
 screenWidth = 640
 screenHeight = 480
@@ -849,7 +846,7 @@ def isOrcaAutostarted():
     """
     prefix = "/desktop/gnome/applications/at/visual/"
     try:
-	return ("orca" in gconfClient.get_string(prefix + "exec")) \
+        return ("orca" in gconfClient.get_string(prefix + "exec")) \
            and gconfClient.get_bool(prefix + "startup")
     except:
         return False

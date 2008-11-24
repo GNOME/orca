@@ -19,7 +19,7 @@
 
 """Custom structural navigation for the Gecko toolkit."""
 
-__id__        = "$Id$"
+__id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
