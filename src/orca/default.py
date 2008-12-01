@@ -4643,7 +4643,8 @@ class Script(script.Script):
             currentX = parentExtents.x
             minHeight = sys.maxint
             while currentX < (parentExtents.x + parentExtents.width):
-                child = icomponent.getAccessibleAtPoint(currentX, currentY, 0)
+                child = \
+                    icomponent.getAccessibleAtPoint(currentX, currentY + 1, 0)
                 if child:
                     extents = child.queryComponent().getExtents(0)
                     if extents.x >= 0 and extents.y >= 0:
