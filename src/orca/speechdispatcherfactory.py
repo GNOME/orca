@@ -44,6 +44,7 @@ import debug
 import speechserver
 import settings
 import orca
+import orca_state
 from acss import ACSS
 from orca_i18n import _
 
@@ -326,6 +327,8 @@ class SpeechServer(speechserver.SpeechServer):
     def speak(self, text=None, acss=None, interrupt=True):
         #if interrupt:
         #    self._cancel()
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+            text = orca_state.activeScript.adjustForPronunciation(text)
         if text:
             self._speak(text, acss)
 
