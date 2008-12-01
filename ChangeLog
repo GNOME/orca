@@ -1,3 +1,9 @@
+2008-12-01  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/speechdispatcherfactory.py:
+          Fix for bug #562877 - account for pronunciation dictionary 
+          when speech-dispatcher backend is used
+
 2008-12-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/speech_generator.py:
