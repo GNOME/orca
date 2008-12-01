@@ -1,3 +1,9 @@
+2008-12-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          The rest of the fix for bug #551891 - Flat review does not always
+          start in the correct place when focus is in a tree table.
+
 2008-11-24  Willie Walker <william.walker@sun.com>
 
         * NEWS:
