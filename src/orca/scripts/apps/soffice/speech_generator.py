@@ -280,7 +280,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             if script_settings.speakCellCoordinates:
                 nameList = obj.name.split()
-                utterances.append(nameList[1])
+                # We were assuming that the word for "cell" would always
+                # precede the coordinates. This is not the case for all
+                # languages (e.g. Hungarian). See bug #562532. Therefore
+                # examine each item and choose the one which contains a
+                # digit.
+                #
+                for name in nameList:                    
+                    for char in name.decode("UTF-8"):
+                        if char.isdigit():
+                            utterances.append(name)
+                            return utterances
         else:
             # Check to see how many children this table cell has. If it's
             # just one (or none), then pass it on to the superclass to be
