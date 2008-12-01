@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-21 13:31+0200\n"
-"PO-Revision-Date: 2008-10-21 21:00+0200\n"
+"PO-Revision-Date: 2008-12-01 22:00+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -5407,19 +5407,19 @@ msgstr "beállítás-ablaktábla"
 #.
 #: ../src/orca/rolenames.py:682
 msgid "pgt"
-msgstr "old"
+msgstr "lp"
 
 #. Translators: long braille for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:685
 msgid "Page"
-msgstr "Oldal"
+msgstr "Lap"
 
 #. Translators: spoken words for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:688
 msgid "page"
-msgstr "oldal"
+msgstr "lap"
 
 #. Translators: short braille for the rolename of a page tab list.
 #.
@@ -9231,7 +9231,7 @@ msgstr "nincs kijelölve"
 #: ../src/orca/where_am_I.py:482
 #, python-format
 msgid "%s page"
-msgstr "%s oldal"
+msgstr "%s lap"
 
 #. Translators: this is in references to a column in a
 #. table.
