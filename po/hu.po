@@ -5415,19 +5415,19 @@ msgstr "beállítás-ablaktábla"
 #.
 #: ../src/orca/rolenames.py:682
 msgid "pgt"
-msgstr "lp"
+msgstr "lpf"
 
 #. Translators: long braille for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:685
 msgid "Page"
-msgstr "Lap"
+msgstr "Lapfül"
 
 #. Translators: spoken words for the rolename of a page tab.
 #.
 #: ../src/orca/rolenames.py:688
 msgid "page"
-msgstr "lap"
+msgstr "lapfül"
 
 #. Translators: short braille for the rolename of a page tab list.
 #.
@@ -9279,7 +9279,7 @@ msgstr "nincs kijelölve"
 #: ../src/orca/where_am_I.py:482
 #, python-format
 msgid "%s page"
-msgstr "%s lap"
+msgstr "%s lapfül"
 
 #. Translators: this is in references to a column in a
 #. table.
