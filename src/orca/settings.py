@@ -1000,6 +1000,15 @@ setScriptMapping(re.compile(_('Bon Echo')), "Mozilla")
 #
 setScriptMapping(re.compile(_('Minefield')), "Mozilla")
 
+# Translators: see the regular expression note above.  This is for a
+# version of Mozilla Firefox, which chooses to create strange names
+# for itself at the drop of a hat. [[[TODO - JD: Not marked for
+# translation due to string freeze. I'm not convinced it needs to
+# be translated either.]]]
+#
+#setScriptMapping(re.compile(_('Shiretoko')), "Mozilla")
+setScriptMapping(re.compile('Shiretoko'), "Mozilla")
+
 # This is a temporary fix for the schema/FF 3.0 not being accessible
 # issue. (See GNOME bugs #535827 and #555466.)
 #
