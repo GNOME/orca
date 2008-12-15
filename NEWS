@@ -1,3 +1,19 @@
+2.25.3 - 15-Dec-2008
+
+Firefox:
+
+* Fix for bug #563502 - Need to map "Shiretoko" to the Mozilla script.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    hu      Hungarian            Atilla Hammer and Gabor Kelemen
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.25.2 - 01-Dec-2008
 
 General:
