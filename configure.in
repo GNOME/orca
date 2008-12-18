@@ -57,7 +57,6 @@ AM_PROG_LIBTOOL
 #	libbonobo-2.0 >= 2.14.0 \
 #	atk >= 1.11.3 \
 #	gail >= 1.8.11 \
-#	eel-2.0 >= 2.14.0 \
 #	libspi-1.0 >= 1.7.6 \
 #	cspi-1.0 >= 1.7.6 \
 #	gnome-speech-1.0 >= 0.3.10 \
