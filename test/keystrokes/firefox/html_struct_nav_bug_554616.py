@@ -12,13 +12,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "simple form" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "bug-554616.html"))
 sequence.append(KeyComboAction("Return"))
@@ -59,10 +59,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Alt Shift Down",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
-     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
+    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=1",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=1",
      "SPEECH OUTPUT: 'r2477'",
      "SPEECH OUTPUT: 'Row 2, column 1.'"]))
 
@@ -70,10 +70,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Alt Shift Right",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
-     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=7",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=7",
      "SPEECH OUTPUT: 'Date (UTC)'",
      "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
      "SPEECH OUTPUT: 'Row 2, column 2.'"]))
@@ -82,9 +82,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Right",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
+    ["BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
-     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
+     "BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer link  (10190 KB)",
@@ -95,9 +95,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Alt Shift Down",
-    ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
+    ["BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
-     "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
+     "BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "SPEECH OUTPUT: 'installer link  (10193 KB)",
      " portable archive link  (9149 KB)'",
@@ -107,10 +107,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "7. Alt Shift Left",
-    ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
-     "     VISIBLE:  'Tue Nov 4 16:39:02 2008 installe', cursor=1",
-     "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
-     "     VISIBLE:  'Tue Nov 4 16:39:02 2008 installe', cursor=1",
+    ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008'",
+     "     VISIBLE:  'r2468 Tue Nov 4 16:39:02 2008', cursor=7",
+     "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008'",
+     "     VISIBLE:  'r2468 Tue Nov 4 16:39:02 2008', cursor=7",
      "SPEECH OUTPUT: 'Date (UTC)'",
      "SPEECH OUTPUT: 'Tue Nov 4 16:39:02 2008'",
      "SPEECH OUTPUT: 'Row 3, column 2.'"]))
@@ -119,10 +119,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Alt Shift Up",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
-     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
-     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=7",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=7",
      "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
      "SPEECH OUTPUT: 'Row 2, column 2.'"]))
 
@@ -130,9 +130,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>End"))
 sequence.append(utils.AssertPresentationAction(
     "9. Alt Shift End",
-    ["BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
+    ["BRAILLE LINE:  'installer (10186 KB)'",
      "     VISIBLE:  'installer (10186 KB)', cursor=1",
-     "BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
+     "BRAILLE LINE:  'installer (10186 KB)'",
      "     VISIBLE:  'installer (10186 KB)', cursor=1",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer link  (10186 KB)",
@@ -156,7 +156,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

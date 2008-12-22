@@ -12,17 +12,19 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "inline: Radio Example 1" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the UIUC button demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/radio/view_inline.php?title=Radio%20Example%201&ginc=includes/radio1_inline.inc&gcss=css/radio1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/radio1_inline.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("inline: Radio Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+
+sequence.append(PauseAction(5000))
 
 ########################################################################
 # Move to the first radio button.
@@ -30,11 +32,12 @@ sequence.append(WaitForFocus("inline: Radio Example 1", acc_role=pyatspi.ROLE_DO
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "tab to first button again", 
+    "tab to first button", 
     ["BRAILLE LINE:  '& y Thai RadioButton'",
      "     VISIBLE:  '& y Thai RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Lunch Options panel'",
      "SPEECH OUTPUT: 'Thai not selected radio button'"]))
+
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech and braille:
@@ -139,7 +142,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

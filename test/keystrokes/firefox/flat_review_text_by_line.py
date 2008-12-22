@@ -11,13 +11,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local blockquote test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "blockquotes.html"))
 sequence.append(KeyComboAction("Return"))
@@ -211,7 +211,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

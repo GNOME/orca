@@ -13,13 +13,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "Accessible DHTML" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the Mozilla ARIA spreadsheet demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://www.mozilla.org/access/dhtml/spreadsheet"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -71,7 +71,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move to Themes", 
     ["BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=0",
+     "     VISIBLE:  'Themes          >', cursor=(0|1)",
      "BRAILLE LINE:  'Themes          >'",
      "     VISIBLE:  'Themes          >', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -192,21 +192,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "leave menu", 
-    ["BUG? - Missing a space before Type",
-     "BRAILLE LINE:  'Entry # $l Date $l Expense $l Amount $l Merchant $lType ColumnHeader'",
-     "     VISIBLE:  'Entry # $l Date $l Expense $l Am', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'table'"]))
-
-########################################################################
-# End menu navigation
-#
+    ["BRAILLE LINE:  'Entry # Date Expense Amount Merchant Type'",
+     "     VISIBLE:  'Entry # Date Expense Amount Merc', cursor=8",
+     "SPEECH OUTPUT: 'Entry # text Date text Expense text Amount text Merchant text Type column header'"]))
 
 ########################################################################
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

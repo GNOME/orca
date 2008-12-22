@@ -12,13 +12,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the textattributes.html test page.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction(utils.htmlURLPrefix + "textattributes.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -185,7 +185,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

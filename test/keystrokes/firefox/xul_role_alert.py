@@ -11,14 +11,14 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
 # type "javascript:alert('I am an alert') and press Return.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("javascript:alert('I am an alert')"))
 
@@ -32,9 +32,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'about:blank', cursor=0",
      "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
-     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application \[JavaScript Application\] Dialog'",
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
-     "BRAILLE LINE:  'Minefield Application [JavaScript Application] Dialog OK Button'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application \[JavaScript Application\] Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'",
@@ -51,12 +51,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to dismiss the alert",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame'",
-     "     VISIBLE:  'Minefield Frame', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame'",
+     "     VISIBLE:  '" + utils.firefoxFrameNames + " Frame', cursor=1",
      "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Minefield frame'",
+     "SPEECH OUTPUT: '" + utils.firefoxFrameNames + " frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'"]))
 
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

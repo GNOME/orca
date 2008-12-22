@@ -11,13 +11,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "dev-accessibility.html"))
 sequence.append(KeyComboAction("Return"))
@@ -49,8 +49,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'search mozilla: search mozilla:  $l Go Button'",
      "     VISIBLE:  'search mozilla:  $l Go Button', cursor=17",
-     "BRAILLE LINE:  'search mozilla: search mozilla:  $l Go Button'",
-     "     VISIBLE:  'search mozilla:  $l Go Button', cursor=17",
      "SPEECH OUTPUT: 'search mozilla: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -69,10 +67,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
-    ["BUG? - Trailing whitespace, or is it really there?",
-     "BRAILLE LINE:  'Your email address: $l '",
-     "     VISIBLE:  'Your email address: $l ', cursor=20",
-     "BRAILLE LINE:  'Your email address: $l '",
+    ["BRAILLE LINE:  'Your email address: $l '",
      "     VISIBLE:  'Your email address: $l ', cursor=20",
      "SPEECH OUTPUT: 'Your email address: text'"]))
 
@@ -83,8 +78,6 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Your name (optional): $l '",
-     "     VISIBLE:  'Your name (optional): $l ', cursor=22",
-     "BRAILLE LINE:  'Your name (optional): $l '",
      "     VISIBLE:  'Your name (optional): $l ', cursor=22",
      "SPEECH OUTPUT: 'Your name (optional): text'"]))
 
@@ -146,8 +139,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Admin address:  $l Password:  $l  Visit Subscriber List Button'",
      "     VISIBLE:  ' $l Password:  $l  Visit Subscri', cursor=1",
-     "BRAILLE LINE:  'Admin address:  $l Password:  $l  Visit Subscriber List Button'",
-     "     VISIBLE:  ' $l Password:  $l  Visit Subscri', cursor=1",
      "SPEECH OUTPUT: 'Admin address: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -178,8 +169,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field",
     ["BRAILLE LINE:  ' $l Unsubscribe or edit options Button'",
      "     VISIBLE:  ' $l Unsubscribe or edit options ', cursor=1",
-     "BRAILLE LINE:  ' $l Unsubscribe or edit options Button'",
-     "     VISIBLE:  ' $l Unsubscribe or edit options ', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -198,7 +187,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

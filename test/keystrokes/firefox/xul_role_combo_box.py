@@ -11,7 +11,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "Edit" menu and Up Arrow to Preferences, then press Return.
@@ -31,10 +31,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
      "     VISIBLE:  'Show a blank page Combo', cursor=1",
      "SPEECH OUTPUT: 'Main scroll pane Startup panel'",
-     "SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'"]))
+     "SPEECH OUTPUT: 'When " + utils.firefoxAppNames + " starts: Show a blank page combo box'"]))
 
 ########################################################################
 # Now that focus is on the combo box, arrow down to "Show my windows
@@ -44,9 +44,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'",
@@ -60,7 +60,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show my home page'",
      "     VISIBLE:  'Show my home page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show my home page'"]))
@@ -72,7 +72,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen Minefield starts:  Show my windows and tabs from last time'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
@@ -84,7 +84,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'"]))
@@ -106,7 +106,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in expanded combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show my windows and tabs from last time'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
@@ -118,7 +118,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in expanded combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'"]))
@@ -130,10 +130,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combobox",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel When Minefield starts: Show a blank page Combo'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
      "     VISIBLE:  'Show a blank page Combo', cursor=1",
-     "SPEECH OUTPUT: 'Minefield application Minefield Preferences frame Main scroll pane Startup panel'",
-     "SPEECH OUTPUT: 'When Minefield starts: Show a blank page combo box'"]))
+     "SPEECH OUTPUT: '" + utils.firefoxAppNames + " application " + utils.firefoxAppNames + " Preferences frame Main scroll pane Startup panel'",
+     "SPEECH OUTPUT: 'When " + utils.firefoxAppNames + " starts: Show a blank page combo box'"]))
 
 ########################################################################
 # Now try first letter navigation.  All of the items begin with S.
@@ -142,9 +142,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("s"))
 sequence.append(utils.AssertPresentationAction(
     "First letter navigation with s",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen Minefield starts:  Show my home page'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show my home page'",
      "     VISIBLE:  'Show my home page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'",
@@ -155,7 +155,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("s"))
 sequence.append(utils.AssertPresentationAction(
     "First letter navigation with s",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show a blank page'"]))
@@ -169,7 +169,7 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BUG? -  Techically the parent of the focused menu item (what combo boxes contain) is a menu, but in this case we presumably want to indicate that the focused item is a combo box.",
-     "BRAILLE LINE:  'Minefield Application Minefield Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen Minefield starts:  Show a blank page'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: 'Show a blank page menu'",
      "SPEECH OUTPUT: 'Show a blank page'",
@@ -184,7 +184,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to list item",
-    ["BRAILLE LINE:  'Minefield Application Minefield Preferences Frame List Main ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Main'"]))
@@ -194,7 +194,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

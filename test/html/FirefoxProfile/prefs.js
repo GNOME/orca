@@ -30,7 +30,8 @@ user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnOpen", false);
 user_pref("browser.warnOnQuit", false);
 user_pref("dom.disable_window_status_change", false);
-user_pref("extensions.lastAppVersion", "3.0a8pre");
+user_pref("extensions.lastAppVersion", "3.0.4");
+user_pref("extensions.update.enabled", false);
 user_pref("intl.charsetmenu.browser.cache", "UTF-8, ISO-8859-1");
 user_pref("network.cookie.prefsMigrated", true);
 user_pref("privacy.sanitize.promptOnSanitize", false);
@@ -41,4 +42,6 @@ user_pref("font.name.sans-serif.x-western", "FreeSans");
 user_pref("font.name.serif.x-western", "FreeSerif");
 user_pref("xxx.legal.rights.seen", "0.0");
 user_pref("browser.rights.3.shown", true);
+user_pref("beagle.autoindex.active", false);
+user_pref("beagle.first.run", false);
 

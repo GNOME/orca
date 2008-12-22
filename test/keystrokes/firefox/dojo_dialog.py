@@ -12,13 +12,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "Dialog Widget Dojo Test" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the dojo dialog demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction(utils.DojoURLPrefix + "test_Dialog.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -27,7 +27,7 @@ sequence.append(WaitForDocLoad())
 ########################################################################
 # Give the widget a moment to construct itself
 #
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(6000))
 
 ########################################################################
 # Tab to the show dialog button.  
@@ -36,11 +36,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to show dialog button", 
-    ["BUG? - Where should the cursor be winding up? It starts at 1 and then lands at 0",
-     "BRAILLE LINE:  'Show Dialog Button'",
+    ["BRAILLE LINE:  'Show Dialog Button'",
      "     VISIBLE:  'Show Dialog Button', cursor=1",
-     "BRAILLE LINE:  'Show Dialog Button'",
-     "     VISIBLE:  'Show Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show Dialog button'"]))
      
@@ -53,8 +50,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to programatic dialog button", 
     ["BRAILLE LINE:  'Programatic Dialog \(3 second delay\) Button'",
      "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=1",
-     "BRAILLE LINE:  'Programatic Dialog \(3 second delay\) Button'",
-     "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Programatic Dialog \(3 second delay\) button'"]))
      
@@ -67,8 +62,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to tabcontainer dialog button", 
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
-     "BRAILLE LINE:  'Show TabContainer Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
@@ -111,8 +104,6 @@ sequence.append(utils.AssertPresentationAction(
     "close dialog", 
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
-     "BRAILLE LINE:  'Show TabContainer Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
@@ -120,7 +111,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

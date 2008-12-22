@@ -11,13 +11,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "simple form" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "bug-552887a.html"))
 sequence.append(KeyComboAction("Return"))
@@ -43,8 +43,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'Line 1'",
-     "     VISIBLE:  'Line 1', cursor=1",
-     "SPEECH OUTPUT: 'Line 1",
+     "     VISIBLE:  'Line 1', cursor=7",
+     "SPEECH OUTPUT: '",
+     " Line 1",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -96,7 +97,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'This text comes before the box section'",
-     "     VISIBLE:  'This text comes before the box s', cursor=1",
+     "     VISIBLE:  'xt comes before the box section', cursor=32",
      "SPEECH OUTPUT: 'This text comes before the box section",
      "'"]))
 
@@ -228,6 +229,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
+    ["BRAILLE LINE:  'text?'",
+     "     VISIBLE:  'text?', cursor=1",
+     "SPEECH OUTPUT: 'text?",
+     "'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "9. Line Up",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: '",
+     " link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "10. Line Up",
     ["BRAILLE LINE:  'The Orca logo Image'",
      "     VISIBLE:  'The Orca logo Image', cursor=1",
      "SPEECH OUTPUT: 'The Orca logo link image ",
@@ -237,7 +256,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Line Up",
+    "11. Line Up",
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
@@ -245,7 +264,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Line Up",
+    "12. Line Up",
     ["BRAILLE LINE:  'Line 3'",
      "     VISIBLE:  'Line 3', cursor=1",
      "SPEECH OUTPUT: 'Line 3",
@@ -254,7 +273,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "11. Line Up",
+    "13. Line Up",
     ["BRAILLE LINE:  'Line 1 Line 2 h2'",
      "     VISIBLE:  'Line 1 Line 2 h2', cursor=1",
      "SPEECH OUTPUT: 'Line 1",
@@ -264,15 +283,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "13. Line Up",
+    "14. Line Up",
     [""]))
 
 ########################################################################
@@ -281,7 +292,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

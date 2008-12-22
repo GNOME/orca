@@ -11,7 +11,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "File" menu and press P for the Print dialog
@@ -29,7 +29,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to button",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Cancel Button'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Cancel Button'",
      "     VISIBLE:  'Cancel Button', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cancel button'"]))
@@ -42,7 +42,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Cancel Button'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Cancel Button'",
      "     VISIBLE:  'Cancel Button', cursor=1",
      "SPEECH OUTPUT: 'Cancel'",
      "SPEECH OUTPUT: 'button'",
@@ -53,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(TypeAction("Escape"))
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate("",None))
 
 # Just a little extra wait to let some events get through.
 #

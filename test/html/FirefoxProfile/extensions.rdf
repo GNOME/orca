@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:mozilla:item:{fda00e13-8c62-4f63-9d19-d168115b11ca}"
+                   NS1:installLocation="app-global"
+                   NS1:version="1.0.1"
+                   NS1:optionsURL="chrome://beagle/content/beaglePrefs.xul"
+                   NS1:iconURL="chrome://beagle/skin/beagle-big.png"
+                   NS1:name="Firefox Extension for Xesam search enginer(beagle,tracker)"
+                   NS1:description="Index webpages you visit using Beagle or Tracker"
+                   NS1:creator="Tao Fei (Filia.Tao@gmail.com)"
+                   NS1:homepageURL="http://beagle-project.org/Browser_Extension#Firefox_Extension"
+                   NS1:userDisabled="true">
+  </RDF:Description>
+  <RDF:Seq RDF:about="urn:mozilla:item:root">
+    <RDF:li RDF:resource="urn:mozilla:item:{fda00e13-8c62-4f63-9d19-d168115b11ca}"/>
+  </RDF:Seq>
+</RDF:RDF>

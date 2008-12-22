@@ -13,13 +13,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "simple form" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "bugzilla-advanced.html"))
 sequence.append(KeyComboAction("Return"))
@@ -347,8 +347,6 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -413,8 +411,6 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -463,8 +459,6 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text  and text Now  ",
      "'"]))
 
@@ -505,8 +499,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'and the new value was: text'"]))
 
@@ -735,8 +727,6 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'and the new value was: text'",]))
 
 sequence.append(utils.StartRecordingAction())
@@ -776,8 +766,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'Only bugs changed between: text  and text Now ",
      "'"]))
@@ -827,8 +815,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -893,8 +879,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'text'"]))
 
@@ -1200,7 +1184,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

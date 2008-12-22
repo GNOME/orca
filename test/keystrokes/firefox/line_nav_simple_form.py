@@ -12,13 +12,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "simple form" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "simpleform.html"))
 sequence.append(KeyComboAction("Return"))
@@ -73,10 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. line Down",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
-     "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: text I am a monkey with a long tail.  I like'",
-     "SPEECH OUTPUT: 'I am a monkey with a long tail.  I like '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: text I am a monkey with a long tail.  I like'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -221,10 +218,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Up",
     ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
-     "BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: text'",
-     "SPEECH OUTPUT: '     '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -298,7 +292,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

@@ -11,7 +11,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "File" menu and press P for the Print dialog
@@ -29,7 +29,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to Page Setup",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Page Setup Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Setup page'"]))
@@ -38,7 +38,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to Options",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Options Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Options Page'",
      "     VISIBLE:  'Options Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Options page'"]))
@@ -50,7 +50,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to checkbox",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked'"]))
@@ -63,7 +63,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
      "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked'",
      "SPEECH OUTPUT: 'Alt h'"]))
@@ -76,7 +76,7 @@ sequence.append(TypeAction(" "))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Toggle the state with space", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList Options Page < > Ignore Scaling and Shrink To Fit Page Width CheckBox'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page < > Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '< > Ignore Scaling and Shrink To', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
@@ -88,7 +88,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList Options Page < > Ignore Scaling and Shrink To Fit Page Width CheckBox'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page < > Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '< > Ignore Scaling and Shrink To', cursor=1",
      "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box not checked'",
      "SPEECH OUTPUT: 'Alt h'"]))
@@ -101,7 +101,7 @@ sequence.append(TypeAction(" "))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Toggle the state with space", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
@@ -110,7 +110,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

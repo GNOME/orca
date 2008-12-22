@@ -12,13 +12,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "TabContainer Demo" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the dojo tab container demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction(utils.DojoURLPrefix + "layout/test_TabContainer.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -111,7 +111,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

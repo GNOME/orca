@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
@@ -22,9 +22,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
 sequence.append(utils.AssertPresentationAction(
     "Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Bookmarks Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Bookmarks Menu'",
      "     VISIBLE:  'Bookmarks Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Bookmark This Page(Control D)'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
      "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks menu'",
@@ -35,7 +35,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks...'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
      "     VISIBLE:  'Organize Bookmarks...', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
@@ -51,7 +51,7 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
     ["BUG? - We are no longer speaking the Level",
-     "BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'All Bookmarks expanded'"]))
@@ -63,7 +63,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'",
@@ -73,7 +73,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Menu collapsed'"]))
@@ -86,7 +86,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
@@ -101,7 +101,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to expand folder", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
@@ -113,7 +113,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Bookmarks Menu'",
@@ -128,7 +128,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Recently Bookmarked ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Recently Bookmarked'",
@@ -142,7 +142,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Recently Bookmarked ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Recently Bookmarked'",
@@ -156,7 +156,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Menu expanded'",
@@ -169,7 +169,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to collapse folder", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Menu ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
@@ -180,7 +180,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree Bookmarks Toolbar ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'"]))
@@ -189,7 +189,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  'Minefield Application Library Frame Tree All Bookmarks ListItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'All Bookmarks expanded'",
@@ -202,7 +202,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Name column header'",
@@ -218,7 +218,7 @@ sequence.append(KeyComboAction("<Alt>F4"))
 ########################################################################
 # Wait for the focus to be back on the blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate("",None))
 
 # Just a little extra wait to let some events get through.
 #

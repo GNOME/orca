@@ -123,6 +123,7 @@ then
     cp $harnessDir/../html/FirefoxProfile/prefs.js $FF_PROFILE_DIR
     cp $harnessDir/../html/FirefoxProfile/localstore.rdf $FF_PROFILE_DIR
     cp $harnessDir/../html/FirefoxProfile/bookmarks.html $FF_PROFILE_DIR
+    cp $harnessDir/../html/FirefoxProfile/extensions.rdf $FF_PROFILE_DIR
     ARGS="-profile $FF_PROFILE_DIR"
 fi
 

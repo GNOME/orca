@@ -12,31 +12,18 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "inline: Tab Panel Example 1" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the UIUC Tab Panel demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tabpanel/view_inline.php?title=Tab%20Panel%20Example%201&ginc=includes/tabpanel1_inline.inc&gcss=css/tabpanel1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/tabpanel1_inline.js"))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tabpanel/tabpanel1.php"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "basic whereAmI", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
-     "     VISIBLE:  'Crust Page Veges Page Carnivore ', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Crust page'",
-     "SPEECH OUTPUT: 'item 1 of 4'",
-     "SPEECH OUTPUT: ''"]))
+sequence.append(PauseAction(5000))
 
 ########################################################################
 # Navigate to second tab
@@ -61,6 +48,21 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Carnivore page'"]))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "basic whereAmI", 
+    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+     "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'Carnivore page'",
+     "SPEECH OUTPUT: 'item 3 of 4'",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Navigate to fourth tab
@@ -116,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

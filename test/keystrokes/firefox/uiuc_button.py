@@ -12,19 +12,19 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "text/html: Button Example 1" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the UIUC button demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/button/view_class.php?title=Button%20Example%201&ginc=includes/button1_class.inc&gcss=css/button1_class.css&gjs=../js/globals.js,../js/widgets_class.js,js/button1_class.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("class: Button Example 1", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(6000))
 
 ########################################################################
 # Tab to the first button.  The following will be presented.
@@ -139,7 +139,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

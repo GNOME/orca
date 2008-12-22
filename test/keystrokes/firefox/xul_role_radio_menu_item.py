@@ -11,7 +11,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "View" menu then the Page Style menu. Focus should be on the
@@ -21,9 +21,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(utils.AssertPresentationAction(
     "View menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar View Menu'",
      "     VISIBLE:  'View Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
@@ -35,9 +35,9 @@ sequence.append(KeyComboAction("y"))
 sequence.append(utils.AssertPresentationAction(
     "y for Page Style menu",
     ["BUG? - We're speaking a tree level for a non tree item",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Page Style Menu'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Page Style Menu'",
      "     VISIBLE:  'Page Style Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
      "     VISIBLE:  '& y No Style RadioItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Style menu'",
@@ -53,7 +53,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
      "     VISIBLE:  '& y No Style RadioItem', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Page Style menu'",
@@ -71,7 +71,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
      "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Basic Page Style selected radio menu item'"]))
@@ -84,7 +84,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
      "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Page Style menu'",
@@ -106,7 +106,7 @@ sequence.append(WaitForFocus("Page Style", acc_role=pyatspi.ROLE_MENU))
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

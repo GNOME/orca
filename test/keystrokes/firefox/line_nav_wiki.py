@@ -17,13 +17,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "wiki" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "orca-wiki.html"))
 sequence.append(KeyComboAction("Return"))
@@ -32,6 +32,8 @@ sequence.append(WaitForDocLoad())
 
 sequence.append(WaitForFocus("Orca - GNOME Live!",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -266,17 +268,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'along with known problems in other components, is maintained in'",
+    ["BRAILLE LINE:  'along with known problems in other components, is maintained in Bugzilla \(please see our notes on'",
      "     VISIBLE:  'along with known problems in oth', cursor=1",
-     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in'"]))
+     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in Bugzilla link  \(please see our notes on link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Bugzilla (please see our notes on how we use Bugzilla).'",
-     "     VISIBLE:  'Bugzilla (please see our notes o', cursor=1",
-     "SPEECH OUTPUT: 'Bugzilla link  (please see our notes on how we use Bugzilla link ).'"]))
+    ["BRAILLE LINE:  'how we use Bugzilla\).'",
+     "     VISIBLE:  'how we use Bugzilla\).', cursor=1",
+     "SPEECH OUTPUT: 'how we use Bugzilla link \).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1275,17 +1277,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Bugzilla (please see our notes on how we use Bugzilla).'",
-     "     VISIBLE:  'Bugzilla (please see our notes o', cursor=1",
-     "SPEECH OUTPUT: 'Bugzilla link  (please see our notes on how we use Bugzilla link ).'"]))
+    ["BRAILLE LINE:  'how we use Bugzilla\).'",
+     "     VISIBLE:  'how we use Bugzilla\).', cursor=1",
+     "SPEECH OUTPUT: 'how we use Bugzilla link \).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'along with known problems in other components, is maintained in'",
+    ["BRAILLE LINE:  'along with known problems in other components, is maintained in Bugzilla \(please see our notes on'",
      "     VISIBLE:  'along with known problems in oth', cursor=1",
-     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in'"]))
+     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in Bugzilla link  \(please see our notes on link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1510,7 +1512,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

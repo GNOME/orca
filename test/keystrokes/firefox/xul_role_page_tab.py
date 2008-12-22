@@ -11,7 +11,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "File" menu and press P for the Print dialog
@@ -30,7 +30,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog General Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'General page'",
@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to second page tab",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Page Setup Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Setup page'"]))
@@ -57,7 +57,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog Page Setup Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Page Setup page'",
@@ -71,7 +71,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to first page tab",
-    ["BRAILLE LINE:  'Minefield Application Print Dialog General Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'General page'"]))
@@ -81,7 +81,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

@@ -12,13 +12,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the "inline: Tree Example 1" frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the UIUC button demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/tree/view_inline.php?title=Tree%20Example%201&ginc=includes/tree1_inline.inc&gcss=css/tree1_inline.css&gjs=../js/globals.js,../js/widgets_inline.js,js/tree1_inline.js"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -38,6 +38,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Fruits ListItem', cursor=1",
      "BRAILLE LINE:  'Fruits ListItem'",
      "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits ListItem'",
+     "     VISIBLE:  'Fruits ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Fruits list item'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
      "SPEECH OUTPUT: ''",
@@ -206,7 +209,7 @@ sequence.append(utils.AssertPresentationAction(
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())

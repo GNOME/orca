@@ -16,7 +16,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "File" menu.
@@ -25,9 +25,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(utils.AssertPresentationAction(
     "File menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar File Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar New Window(Control N)'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Window\(Control N\)'",
      "     VISIBLE:  'New Window(Control N)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'File menu'",
@@ -41,9 +41,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Undo grayed(Control Z)'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Undo grayed\(Control Z\)'",
      "     VISIBLE:  'Undo grayed(Control Z)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
@@ -54,9 +54,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar View Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar View Menu'",
      "     VISIBLE:  'View Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
@@ -68,7 +68,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
     ["BUG? - We're speaking the tree level for a non-tree",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
      "     VISIBLE:  '<x> Navigation Toolbar CheckItem', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Navigation Toolbar check item checked'",
@@ -81,9 +81,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar AutoComplete Location  $l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar AutoComplete Location  \$l'",
      "     VISIBLE:  'Location  $l', cursor=10",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Toolbars Menu'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Location text '",
@@ -94,9 +94,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Edit Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Paste(Control V)'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Paste\(Control V\)'",
      "     VISIBLE:  'Paste(Control V)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
@@ -108,7 +108,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

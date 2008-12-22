@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
@@ -22,9 +22,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
 sequence.append(utils.AssertPresentationAction(
     "Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Bookmarks Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Bookmarks Menu'",
      "     VISIBLE:  'Bookmarks Menu', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Bookmark This Page(Control D)'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
      "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks menu'",
@@ -35,7 +35,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  'Minefield Application Minefield Frame ToolBar Application MenuBar Organize Bookmarks...'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
      "     VISIBLE:  'Organize Bookmarks...', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
@@ -51,7 +51,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree table",
     ["BUG? - We're not speaking the tree level",
-     "BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Menu  '"]))
@@ -64,7 +64,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: 'tree table'",
      "SPEECH OUTPUT: 'Name'",
@@ -81,7 +81,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree table",
-    ["BRAILLE LINE:  'Minefield Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Toolbar  '"]))
@@ -94,7 +94,7 @@ sequence.append(KeyComboAction("<Alt>F4"))
 ########################################################################
 # Wait for the focus to be back on the blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate("",None))
 
 # Just a little extra wait to let some events get through.
 #

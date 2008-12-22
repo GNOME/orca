@@ -12,13 +12,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "wiki" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "orca-wiki.html"))
 sequence.append(KeyComboAction("Return"))
@@ -27,6 +27,8 @@ sequence.append(WaitForDocLoad())
 
 sequence.append(WaitForFocus("Orca - GNOME Live!",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -131,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

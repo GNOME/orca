@@ -11,13 +11,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local status bar test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "status-bar.html"))
 sequence.append(KeyComboAction("Return"))
@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
-     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'",
      "SPEECH OUTPUT: ''"]))
 
@@ -107,7 +107,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
      "BRAILLE LINE:  'Our chief weapon is... Button'",
      "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
-     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
      "SPEECH OUTPUT: 'Surprise. Surprise and fear. Fear and surprise... And ruthless efficiency... And an almost fanatical devotion to the Pope... And nice red uniforms.'",
      "SPEECH OUTPUT: ''"]))
 
@@ -144,7 +144,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
      "BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
      "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
-     "SPEECH OUTPUT: 'Status Bar Regression Test - Minefield'",
+     "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
      "SPEECH OUTPUT: 'Done'",
      "SPEECH OUTPUT: ''"]))
 
@@ -154,7 +154,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

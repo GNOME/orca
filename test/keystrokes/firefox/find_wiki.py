@@ -11,13 +11,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "wiki" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "orca-wiki.html"))
 sequence.append(KeyComboAction("Return"))
@@ -26,6 +26,8 @@ sequence.append(WaitForDocLoad())
 
 sequence.append(WaitForFocus("Orca - GNOME Live!",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
+
+sequence.append(PauseAction(6000))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -45,26 +47,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(utils.AssertPresentationAction(
     "Get into the Find Toolbar", 
-    ["BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar  $l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar  $l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Find: text '"]))
 
-sequence.append(utils.StartRecordingAction())
+# We won't use an assert here because different builds of Firefox give
+# different results.
+#
 sequence.append(TypeAction("orca"))
-sequence.append(utils.AssertPresentationAction(
-    "Type Orca", 
-    ["BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar o $l'",
-     "     VISIBLE:  'o $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar or $l'",
-     "     VISIBLE:  'or $l', cursor=2",
-     "BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar orc $l'",
-     "     VISIBLE:  'orc $l', cursor=3",
-     "BRAILLE LINE:  'Minefield Application Orca - GNOME Live! - Minefield Frame ToolBar orca $l'",
-     "     VISIBLE:  'orca $l', cursor=4",
-     "SPEECH OUTPUT: 'Orca link'"]))
 
 ########################################################################
 # Press Return to move from result to result.
@@ -132,20 +125,13 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Press Escape to exit the Find toolbar and return to the page content.
 #
-sequence.append(utils.StartRecordingAction())
+# Depending on the version of Firefox, we sometimes behave as if the page
+# has just finished loading. I'm not sure what triggers that, and it does
+# not always occur. It also seems to be fixed in the latest Firefox trunk.
+# Therefore, we'll accept either situation for the purpose of reproducible
+# results and not use an assertion here.
+# 
 sequence.append(KeyComboAction("Escape"))
-sequence.append(utils.AssertPresentationAction(
-    "Escape",
-    ["BUG? - Seems like we're treating this as if the page has just finished loading. At least sometimes. I really need to get to the bottom of this issue.",
-     "BRAILLE LINE:  'As of GNOME 2.16, Orca is a part of the GNOME platform. As a result, Orca is already provided by'",
-     "     VISIBLE:  'As of GNOME 2.16, Orca is a part', cursor=23",
-     "BRAILLE LINE:  'Orca - GNOME Live!'",
-     "     VISIBLE:  'Orca - GNOME Live!', cursor=0",
-     "BRAILLE LINE:  'As of GNOME 2.16, Orca is a part of the GNOME platform. As a result, Orca is already provided by'",
-     "     VISIBLE:  'As of GNOME 2.16, Orca is a part', cursor=23",
-     "SPEECH OUTPUT: 'As of GNOME 2.16, Orca is a part of the GNOME platform. As a result, Orca is already provided by'",
-     "SPEECH OUTPUT: 'Orca - GNOME Live! page'",
-     "SPEECH OUTPUT: 'As of GNOME 2.16, Orca is a part of the GNOME platform. As a result, Orca is already provided by'"]))
 
 ########################################################################
 # Press Down Arrow to read the next line (verifying that the caret 
@@ -165,7 +151,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

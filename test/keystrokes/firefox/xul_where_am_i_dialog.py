@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield", None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Open the "File" menu and press P for the Print dialog
@@ -33,7 +33,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Title Bar", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog General Page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
      "SPEECH OUTPUT: 'Print'"]))
 
@@ -55,9 +55,9 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Default button", 
-    ["BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
      "     VISIBLE:  ' Print to File  ', cursor=1",
-     "BRAILLE LINE:  'Minefield Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
      "     VISIBLE:  ' Print to File  ', cursor=1",
      "SPEECH OUTPUT: 'Print'",
      "SPEECH OUTPUT: 'Default button is Print'"]))
@@ -67,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(KeyComboAction("Escape"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 # Just a little extra wait to let some events get through.
 #

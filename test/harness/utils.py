@@ -22,6 +22,13 @@ fullPath = os.path.abspath(wd)
 htmlDir = os.path.abspath(fullPath + "/../../html")
 htmlURLPrefix = "file://" + htmlDir + "/"
 
+# Various Firefox names as a regex.  These are needed because they like
+# to do various things with the app and frame names from release to release. 
+# These regex's attempt to provide a way to manage those differences.
+#
+firefoxAppNames = "(Firefox|Minefield)"
+firefoxFrameNames = "(Mozilla Firefox|Minefield)"
+
 # Various OpenOffice names as a regex.  These are needed because OOo likes
 # to do various things with its window titles from release to release. 
 # These regex's attempt to provide a way to manage those differences.

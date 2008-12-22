@@ -13,13 +13,13 @@ sequence = MacroSequence()
 ########################################################################
 # We wait for the focus to be on a blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the local "simple form" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction(utils.htmlURLPrefix + "enter-bug-form.html"))
 sequence.append(KeyComboAction("Return"))
@@ -78,17 +78,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most frequently'",
+    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently link'"]))
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'reported bugs, and please search or browse for the bug.'",
-     "     VISIBLE:  'reported bugs, and please search', cursor=1",
-     "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
+    ["BRAILLE LINE:  'frequently reported bugs, and please search or browse for the bug.'",
+     "     VISIBLE:  'frequently reported bugs, and pl', cursor=1",
+     "SPEECH OUTPUT: 'frequently reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -459,17 +459,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'reported bugs, and please search or browse for the bug.'",
-     "     VISIBLE:  'reported bugs, and please search', cursor=1",
-     "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
+    ["BRAILLE LINE:  'frequently reported bugs, and please search or browse for the bug.'",
+     "     VISIBLE:  'frequently reported bugs, and pl', cursor=1",
+     "SPEECH OUTPUT: 'frequently reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most frequently'",
+    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently link'"]))
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -509,7 +509,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))

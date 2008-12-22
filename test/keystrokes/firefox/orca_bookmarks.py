@@ -12,13 +12,13 @@ sequence = MacroSequence()
 # We wait for the focus to be on the Firefox window as well as for focus
 # to move to the frame.
 #
-sequence.append(WaitForWindowActivate("Minefield",None))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the simpleform.html page.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus("Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction(utils.htmlURLPrefix + "simpleform.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -33,7 +33,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 # SPEECH OUTPUT: 'Type something here: text '
 #
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 ########################################################################
 # Set a bookmark at the entry.  The following will be presented.
@@ -51,11 +51,11 @@ sequence.append(KeyReleaseAction(150, None,"Alt_L"))
 # Tab to the first checkbox.  Irrelevant output ignored.
 #
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PASSWORD_TEXT))
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Red", acc_role=pyatspi.ROLE_CHECK_BOX))
 
@@ -81,7 +81,7 @@ sequence.append(KeyReleaseAction(150, None,"Alt_L"))
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("1"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-#sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
+#sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 ########################################################################
 # Go to bookmark number 2.  The following will be presented.
@@ -106,13 +106,13 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("B"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-#sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_ENTRY))
+#sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
 ########################################################################
 # Close the demo
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_name="Location", acc_role=pyatspi.ROLE_ENTRY))
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
