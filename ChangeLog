@@ -1,3 +1,9 @@
+2008-12-28  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/harness/utils.py:
+          More work on getting reproducible results out of the FF
+          regression tests. Still a work in progress.
+
 2008-12-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/harness/runone.sh:
