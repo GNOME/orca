@@ -2265,7 +2265,8 @@ class Script(default.Script):
                 if line.regions[-1].__class__ == regions[0].__class__ \
                    or line.regions[-1].__class__ in [braille.Component,
                                                      braille.Region] \
-                   or lastObj.getRole() == pyatspi.ROLE_IMAGE:
+                   or lastObj.getRole() == pyatspi.ROLE_IMAGE \
+                   or obj.getRole() == pyatspi.ROLE_IMAGE:
                     line.addRegion(braille.Region(" "))
 
                 # The above check will catch table cells with uniform

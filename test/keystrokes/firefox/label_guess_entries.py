@@ -410,9 +410,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Need a space between the EOL symbol and bandaid",
-     "BRAILLE LINE:  ' $lbandaid graphic redux Image'",
-     "     VISIBLE:  ' $lbandaid graphic redux Image', cursor=1",
+    ["BRAILLE LINE:  ' $l bandaid graphic redux Image'",
+     "     VISIBLE:  ' $l bandaid graphic redux Image', cursor=1",
      "SPEECH OUTPUT: 'bandaid graphic redux text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -423,8 +422,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Magic disappearing text trick:  tab to me and I disappear $l'",
      "     VISIBLE:  'tab to me and I disappear $l', cursor=26",
-     "BRAILLE LINE:  'Magic disappearing text trick:   $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Magic disappearing text trick:   $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text'"]))

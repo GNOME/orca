@@ -67,8 +67,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
-    ["BUG? - Should have a space between the EOL indicator and Image",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l Image text field using value'",
      "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City: text'"]))
 
@@ -78,8 +77,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Should have a space between the EOL indicator and Image",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $lImage text field using value'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l Image text field using value'",
      "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
      "SPEECH OUTPUT: '3. Enter your State: text'"]))
 
@@ -89,8 +87,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - Should have a space between the EOL indicator and Image",
-     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: Image US $l text field using value'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: Image US $l text field using value'",
      "     VISIBLE:  'US $l text field using value', cursor=1",
      "SPEECH OUTPUT: '4. Enter your Country: text US'"]))
 
