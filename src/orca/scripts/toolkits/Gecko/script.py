@@ -1353,6 +1353,16 @@ class Script(default.Script):
             locusOfFocusState = pyatspi.StateSet()
             locusOfFocusState = locusOfFocusState.raw()
 
+        # Find out if the caret really moved. Firefox 3.1 gives us caret-moved
+        # events when certain focusable objects first get focus. If we haven't
+        # really moved, there's no point in updating braille again -- which is
+        # what we'll wind up doing if this event reaches the default script.
+        #
+        [obj, characterOffset] = self.getCaretContext()
+        if max(0, characterOffset) == event.detail1 \
+           and self.isSameObject(obj, event.source):
+            return
+
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string
             if self.useCaretNavigationModel(orca_state.lastInputEvent):
