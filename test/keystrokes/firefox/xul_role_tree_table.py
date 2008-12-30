@@ -44,14 +44,36 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
 ########################################################################
+# Press Down Arrow to get to the first item in the tree and Up Arrow to
+# get back. We'll do this because in Firefox 3.1 we are not getting the
+# correct events until we Alt+Tab out of and then back into the window.
+# This does not seem to be an issue for Firefox 3.0
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Down Arrow in tree table",
+    ["KNOWN ISSUE - Firefox 3.1 is not giving us anything here, but Firefox 3.0 is. If we have output, the bug is not present."]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Up Arrow in tree table",
+    ["KNOWN ISSUE - Firefox 3.1 is not giving us anything here, but Firefox 3.0 is. If we have output, the bug is not present."]))
+
+sequence.append(KeyComboAction("<Alt>Tab"))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
+sequence.append(KeyComboAction("<Alt>Tab"))
+sequence.append(WaitForWindowActivate("Library", None))
+
+########################################################################
 # Press Down Arrow to get to the first item in the tree.  
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree table",
-    ["BUG? - We're not speaking the tree level",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Menu  '"]))

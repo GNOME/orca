@@ -28,6 +28,7 @@ htmlURLPrefix = "file://" + htmlDir + "/"
 #
 firefoxAppNames = "(Firefox|Minefield)"
 firefoxFrameNames = "(Mozilla Firefox|Mozilla Firefox 3.1 Beta 2|Minefield)"
+firefoxLocationBarNames = "(Location|Search Bookmarks and History)"
 
 # Various OpenOffice names as a regex.  These are needed because OOo likes
 # to do various things with its window titles from release to release. 

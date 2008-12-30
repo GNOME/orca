@@ -67,28 +67,40 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
-    ["BUG? - We're speaking the tree level for a non-tree",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
      "     VISIBLE:  '<x> Navigation Toolbar CheckItem', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Navigation Toolbar check item checked'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Navigation Toolbar check item checked'"]))
 
 ########################################################################
 # Press Left Arrow to move backward menu by menu
 #
+
+# The location bar has different names. Where the cursor is will depend
+# on the length of the name.
+#
+cursorPosition = utils.firefoxLocationBarNames
+for name in cursorPosition[1:-1].split("|"):
+    cursorPosition = cursorPosition.replace(name, "%s" % (len(name) + 2))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar AutoComplete Location  \$l'",
-     "     VISIBLE:  'Location  $l', cursor=10",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar AutoComplete " + utils.firefoxLocationBarNames + "  \$l'",
+     "     VISIBLE:  '" + utils.firefoxLocationBarNames + "  \$l', cursor=%s" % cursorPosition,
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Location text '",
+     "SPEECH OUTPUT: '" + utils.firefoxLocationBarNames + " text '",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Toolbars menu'",]))
+
+# This seems to vary depending on whether or not something is in the
+# clipboard. Therefore, we'll check for either.
+#
+menuItem = "(Paste|Select All)"
+itemShortcut = "(V|A)"
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -96,12 +108,12 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow on menu bar",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Paste\(Control V\)'",
-     "     VISIBLE:  'Paste(Control V)', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar " + menuItem + "\(Control " + itemShortcut + "\)'",
+     "     VISIBLE:  '" + menuItem + "\(Control " + itemShortcut + "\)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Paste Control V'"]))
+     "SPEECH OUTPUT: '" + menuItem + " Control " + itemShortcut + "'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

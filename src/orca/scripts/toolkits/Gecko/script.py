@@ -3510,7 +3510,8 @@ class Script(default.Script):
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
 
-        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
+        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING \
+           or obj.parent.getRole() == pyatspi.ROLE_MENU:
             return -1
 
         try:

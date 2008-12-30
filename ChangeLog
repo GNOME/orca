@@ -1,3 +1,13 @@
+2008-12-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/harness/utils.py:
+          test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/xul_role_radio_menu_item.py:
+          Fix for bug #566073 - Orca provides the "tree level" for items in
+          submenus within Firefox 3.x.
+
 2008-12-29  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
