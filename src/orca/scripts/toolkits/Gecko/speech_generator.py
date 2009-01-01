@@ -653,12 +653,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         # Skip items of unknown rolenames, menu bars, labels with 
         # children, and autocompletes.  (With autocompletes, we
-        # wind up speaking the text object)
+        # wind up speaking the text object). Beginning with Firefox
+        # 3.2, list items have names corresponding with their text.
+        # This results in getDisplayedText returning actual text
+        # and the parent list item being spoken when it should not
+        # be. So we'll take list items out of the context.
         #
         skipRoles = [pyatspi.ROLE_UNKNOWN,
                      pyatspi.ROLE_MENU_BAR,
                      pyatspi.ROLE_LABEL,
-                     pyatspi.ROLE_AUTOCOMPLETE]
+                     pyatspi.ROLE_AUTOCOMPLETE,
+                     pyatspi.ROLE_LIST_ITEM]
 
         # Stop if we get to a document frame or an internal frame.
         #

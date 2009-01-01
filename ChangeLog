@@ -1,5 +1,10 @@
 2008-12-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          Fix for bug #566180 - Orca inappropriately announces the name and
+          role of (un)ordered list items as part of the context in Firefox
+          3.2.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/harness/utils.py:
           test/keystrokes/firefox/xul_role_menu_bar.py:
