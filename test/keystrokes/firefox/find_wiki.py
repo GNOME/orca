@@ -114,7 +114,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "9. Return",
-    ["SPEECH OUTPUT: 'Guide to installing the latest versions of Firefox and Orca link'"]))
+    ["SPEECH OUTPUT: '(• |)Guide to installing the latest versions of Firefox and Orca link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
