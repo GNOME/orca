@@ -52,6 +52,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
@@ -63,6 +64,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
@@ -73,6 +75,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",

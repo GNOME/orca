@@ -14,7 +14,7 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
-# Load the local "simple form" test case.
+# Load the local "html page" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
@@ -23,6 +23,7 @@ sequence.append(TypeAction(utils.htmlURLPrefix + "htmlpage.html"))
 sequence.append(KeyComboAction("Return"))
 
 sequence.append(WaitForDocLoad())
+sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
 # Press Control+Home to move to the top.

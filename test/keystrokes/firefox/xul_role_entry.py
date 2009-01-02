@@ -39,6 +39,17 @@ sequence.append(KeyComboAction("Return", 1000))
 sequence.append(WaitForWindowActivate("", None))
 sequence.append(PauseAction(3000))
 
+# The dialog might be called Add Bookmark or it might be called New
+# Bookmark. Depends on the verison of Firefox being used/tested.
+#
+dialogName = "(Add Bookmark|New Bookmark)"
+
+# Depending on the version, there may also be text present in the entry
+# So we'll delete it for good meausre.
+#
+sequence.append(KeyComboAction("<Control>a"))
+sequence.append(KeyComboAction("BackSpace"))
+
 ########################################################################
 # Focus will be in the Name single-line entry.  Type "this is a test"
 #
@@ -51,9 +62,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a test \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a test \$l'",
      "     VISIBLE:  'this is a test $l', cursor=15",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a test \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a test \$l'",
      "     VISIBLE:  'this is a test $l', cursor=14",
      "SPEECH OUTPUT: 't'"]))
 
@@ -61,9 +72,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a tes \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a tes \$l'",
      "     VISIBLE:  'this is a tes $l', cursor=14",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a tes \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a tes \$l'",
      "     VISIBLE:  'this is a tes $l', cursor=13",
      "SPEECH OUTPUT: 's'"]))
 
@@ -71,9 +82,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a te \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a te \$l'",
      "     VISIBLE:  'this is a te $l', cursor=13",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a te \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a te \$l'",
      "     VISIBLE:  'this is a te $l', cursor=12",
      "SPEECH OUTPUT: 'e'"]))
 
@@ -81,9 +92,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a t \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a t \$l'",
      "     VISIBLE:  'this is a t $l', cursor=12",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a t \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a t \$l'",
      "     VISIBLE:  'this is a t $l', cursor=11",
      "SPEECH OUTPUT: 't'"]))
 
@@ -91,9 +102,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a  \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a  \$l'",
      "     VISIBLE:  'this is a  $l', cursor=11",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a  \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a  \$l'",
      "     VISIBLE:  'this is a  $l', cursor=10",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -105,9 +116,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a \$l'",
      "     VISIBLE:  'this is a $l', cursor=9",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is a \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a \$l'",
      "     VISIBLE:  'this is a $l', cursor=9",
      "SPEECH OUTPUT: 'a'"]))
 
@@ -115,9 +126,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is  \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is  \$l'",
      "     VISIBLE:  'this is  $l', cursor=6",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this is  \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is  \$l'",
      "     VISIBLE:  'this is  $l', cursor=6",
      "SPEECH OUTPUT: 'is '"]))
 
@@ -125,9 +136,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this  \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this  \$l'",
      "     VISIBLE:  'this  $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this  \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this  \$l'",
      "     VISIBLE:  'this  $l', cursor=1",
      "SPEECH OUTPUT: 'this '"]))
 
@@ -143,7 +154,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=10",
      "SPEECH OUTPUT: 's'"]))
 
@@ -151,7 +162,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=9",
      "SPEECH OUTPUT: 'i'"]))
 
@@ -159,7 +170,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=8",
      "SPEECH OUTPUT: 'h'"]))
 
@@ -167,7 +178,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=7",
      "SPEECH OUTPUT: 't'"]))
 
@@ -179,7 +190,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "Control Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=4",
      "SPEECH OUTPUT: 'is '"]))
 
@@ -187,7 +198,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "Control Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=1",
      "SPEECH OUTPUT: 'so '"]))
 
@@ -199,7 +210,7 @@ sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "Control Delete",
     ["BUG? - We are speaking the new caret location -- we land on a space -- rather than the word that was just deleted.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog so is this \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
      "     VISIBLE:  'so is this $l', cursor=3",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -208,7 +219,7 @@ sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "Control Delete",
     ["BUG? - We are speaking the new caret location -- we land on a space -- rather than the word that was just deleted.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  is this \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  is this \$l'",
      "     VISIBLE:  ' is this $l', cursor=4",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -219,7 +230,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  this \$l'",
      "     VISIBLE:  ' this $l', cursor=1",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -227,7 +238,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog this \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this \$l'",
      "     VISIBLE:  'this $l', cursor=1",
      "SPEECH OUTPUT: 't'"]))
 
@@ -235,7 +246,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog his \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog his \$l'",
      "     VISIBLE:  'his $l', cursor=1",
      "SPEECH OUTPUT: 'h'"]))
 
@@ -243,7 +254,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog is \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog is \$l'",
      "     VISIBLE:  'is $l', cursor=1",
      "SPEECH OUTPUT: 'i'"]))
 
@@ -251,46 +262,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog s \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog s \$l'",
      "     VISIBLE:  's $l', cursor=1",
      "SPEECH OUTPUT: 's'"]))
 
 ########################################################################
-# Press Tab to get to the Location entry.
+# Press Shift+Tab 3 times to get to the Description Entry.
 #
+sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "Tab to Location",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Location: text '"]))
-
-########################################################################
-# Press Tab to get to the Keyword entry.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "Tab to Keyword",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Keyword: text '"]))
-
-########################################################################
-# Press Tab to get to the Description entry.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "Tab to Description",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
+    "Shift+Tab to Description",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Description: text '"]))
@@ -303,9 +288,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return for new line'",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog  \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
      "     VISIBLE:  ' $l', cursor=1"]))
 
 ########################################################################
@@ -320,7 +305,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog Here is the first line. \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the first line. \$l'",
      "     VISIBLE:  'Here is the first line. $l', cursor=24",
      "SPEECH OUTPUT: 'Here is the first line.'"]))
 
@@ -331,7 +316,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog Here is the second line. \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the second line. \$l'",
      "     VISIBLE:  'Here is the second line. $l', cursor=25",
      "SPEECH OUTPUT: 'Here is the second line.'"]))
 
@@ -343,7 +328,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Add Bookmark Dialog Here is the second line. \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the second line. \$l'",
      "     VISIBLE:  'Here is the second line. $l', cursor=25",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'text'",

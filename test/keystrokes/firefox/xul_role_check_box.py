@@ -21,6 +21,7 @@ sequence.append(KeyComboAction("<Alt>f"))
 
 sequence.append(KeyComboAction("p"))
 sequence.append(WaitForWindowActivate("Print",None))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Right Arrow until we're at the Options tab 

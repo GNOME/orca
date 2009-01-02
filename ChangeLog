@@ -1,3 +1,16 @@
+2009-01-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_html_test_page.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/xul_role_check_box.py:
+          test/keystrokes/firefox/xul_role_page_tab.py
+          More work on getting reproducible results out of the FF
+          regression tests. Still a work in progress.
+
 2008-12-30  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

@@ -85,7 +85,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
     ["BRAILLE LINE:  'Basic Grey'",
-     "     VISIBLE:  'Basic Grey', cursor=0",
+     "     VISIBLE:  'Basic Grey', cursor=(0|1)",
      "BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -171,7 +171,7 @@ sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
     ["BRAILLE LINE:  'one'",
-     "     VISIBLE:  'one', cursor=0",
+     "     VISIBLE:  'one', cursor=(0|1)",
      "BRAILLE LINE:  'one'",
      "     VISIBLE:  'one', cursor=1",
      "SPEECH OUTPUT: ''",

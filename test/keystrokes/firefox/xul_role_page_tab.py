@@ -21,6 +21,7 @@ sequence.append(KeyComboAction("<Alt>f"))
 
 sequence.append(KeyComboAction("p"))
 sequence.append(WaitForWindowActivate("Print",None))
+sequence.append(PauseAction(3000))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
