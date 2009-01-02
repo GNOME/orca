@@ -1425,7 +1425,8 @@ class Script(default.Script):
                 if event.detail1 == 0 and not string in ["Left", "Home"] \
                    or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
                                           pyatspi.ROLE_LIST_ITEM,
-                                          pyatspi.ROLE_MENU_ITEM]:
+                                          pyatspi.ROLE_MENU_ITEM,
+                                          pyatspi.ROLE_PUSH_BUTTON]:
                     # A focus:/object:state-changed:focused event should
                     # pick up this case.
                     #
