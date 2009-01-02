@@ -1,5 +1,9 @@
 2009-01-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          Fix for bug #566361 - Orca inappropriately announces the name of
+          table cells as part of the context in Firefox 3.2.
+
         * test/keystrokes/firefox/moz_menu.py:
           test/keystrokes/firefox/xul_role_list_item.py:
           test/keystrokes/firefox/label_guess_bugzilla_search.py:

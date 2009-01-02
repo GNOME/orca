@@ -698,12 +698,21 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Also skip the parent if its accessible text is a single 
             # EMBEDDED_OBJECT_CHARACTER: Script.getDisplayedText will
             # end up coming back to the child of an object for the text
-            # if an object's text contains a single EOC.
+            # if an object's text contains a single EOC. In addition,
+            # beginning with Firefox 3.2, a table cell may derive its
+            # accessible name from focusable objects it contains (e.g.
+            # links, form fields). getDisplayedText will return the
+            # object's name in this case (because of the presence of
+            # the EOC and other characters). This causes us to be
+            # chatty. So if it's a table cell which contains an EOC,
+            # we will also skip the parent.
             #
             parentText = self._script.queryNonEmptyText(parent)
             if parentText:
                 unicodeText = parentText.getText(0, -1).decode("UTF-8")
-                if unicodeText == self._script.EMBEDDED_OBJECT_CHARACTER:
+                if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText \
+                   and (len(unicodeText) == 1 \
+                        or role == pyatspi.ROLE_TABLE_CELL):
                     parent = parent.parent
                     continue
 
