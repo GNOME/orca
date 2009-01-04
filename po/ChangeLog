@@ -1,3 +1,8 @@
+2009-01-04  Mark Krapivner  <mark125@gmail.com>
+
+	* he.po: Add Hebrew translation.
+	* LINGUAS: Add Hebrew translation.
+
 2008-12-02  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* hu.po: Translation updated.
