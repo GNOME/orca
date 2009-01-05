@@ -1117,37 +1117,48 @@ class Script(default.Script):
         -offset: The offset with obj where the caret should be positioned
         """
 
+        # At some point in Firefox 3.2 we started getting detail1 values of
+        # -1 for the caret-moved events for unfocused content during a find.
+        # We don't want to base the new caret offset -- or the current line
+        # on this value. We should be able to count on the selection range
+        # instead -- across FF 3.0, 3.1, and 3.2.
+        #
+        enoughSelected = False
+        text = self.queryNonEmptyText(obj)
+        if text and text.getNSelections():
+            [start, end] = text.getSelection(0)
+            offset = max(offset, start)
+            if end - start >= script_settings.minimumFindLength:
+                enoughSelected = True
+
+        # Haing done that, update the caretContext. If the user wants
+        # matches spoken, we also need to if we are on the same line
+        # as before.
+        #
         origObj, origOffset = self.getCaretContext()
         self.setCaretContext(obj, offset)
-        origExtents = self.getExtents(origObj, origOffset - 1, origOffset)
-        newExtents = self.getExtents(obj, offset - 1, offset)
-        text = self.queryNonEmptyText(obj)
-        if script_settings.speakResultsDuringFind and text:
-            nSelections = text.getNSelections()
-            if nSelections:
-                [start, end] = text.getSelection(0)
-                enoughSelected = (end - start) >= \
-                                  script_settings.minimumFindLength
-                lineChanged = not self.onSameLine(origExtents, newExtents)
+        if enoughSelected and script_settings.speakResultsDuringFind:
+            origExtents = self.getExtents(origObj, origOffset - 1, origOffset)
+            newExtents = self.getExtents(obj, offset - 1, offset)
+            lineChanged = not self.onSameLine(origExtents, newExtents)
 
-                # If the user starts backspacing over the text in the
-                # toolbar entry, he/she is indicating they want to perform
-                # a different search. Because madeFindAnnounement may
-                # be set to True, we should reset it -- but only if we
-                # detect the line has also changed.  We're not getting
-                # events from the Find entry, so we have to compare
-                # offsets.
-                #
-                if self.isSameObject(origObj, obj) and (origOffset > offset) \
-                   and lineChanged:
-                    self.madeFindAnnouncement = False
+            # If the user starts backspacing over the text in the
+            # toolbar entry, he/she is indicating they want to perform
+            # a different search. Because madeFindAnnounement may
+            # be set to True, we should reset it -- but only if we
+            # detect the line has also changed.  We're not getting
+            # events from the Find entry, so we have to compare
+            # offsets.
+            #
+            if self.isSameObject(origObj, obj) and (origOffset > offset) \
+               and lineChanged:
+                self.madeFindAnnouncement = False
 
-                if enoughSelected:
-                    if lineChanged or not self.madeFindAnnouncement or \
-                       not script_settings.onlySpeakChangedLinesDuringFind:
-                        line = self.getLineContentsAtOffset(obj, offset)
-                        self.speakContents(line)
-                        self.madeFindAnnouncement = True
+            if lineChanged or not self.madeFindAnnouncement or \
+               not script_settings.onlySpeakChangedLinesDuringFind:
+                line = self.getLineContentsAtOffset(obj, offset)
+                self.speakContents(line)
+                self.madeFindAnnouncement = True
 
     def sayAll(self, inputEvent):
         """Speaks the contents of the document beginning with the present
@@ -1266,6 +1277,16 @@ class Script(default.Script):
             locusOfFocusState = pyatspi.StateSet()
             locusOfFocusState = locusOfFocusState.raw()
 
+        # Find out if the caret really moved. Firefox 3.1 gives us caret-moved
+        # events when certain focusable objects first get focus. If we haven't
+        # really moved, there's no point in updating braille again -- which is
+        # what we'll wind up doing if this event reaches the default script.
+        #
+        [obj, characterOffset] = self.getCaretContext()
+        if max(0, characterOffset) == event.detail1 \
+           and self.isSameObject(obj, event.source):
+            return
+
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string = orca_state.lastNonModifierKeyEvent.event_string
             if self.useCaretNavigationModel(orca_state.lastInputEvent):
@@ -1317,7 +1338,8 @@ class Script(default.Script):
                 if event.detail1 == 0 and not string in ["Left", "Home"] \
                    or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
                                           pyatspi.ROLE_LIST_ITEM,
-                                          pyatspi.ROLE_MENU_ITEM]:
+                                          pyatspi.ROLE_MENU_ITEM,
+                                          pyatspi.ROLE_PUSH_BUTTON]:
                     # A focus:/object:state-changed:focused event should
                     # pick up this case.
                     #
@@ -2168,7 +2190,8 @@ class Script(default.Script):
                 if line.regions[-1].__class__ == regions[0].__class__ \
                    or line.regions[-1].__class__ in [braille.Component,
                                                      braille.Region] \
-                   or lastObj.getRole() == pyatspi.ROLE_IMAGE:
+                   or lastObj.getRole() == pyatspi.ROLE_IMAGE \
+                   or obj.getRole() == pyatspi.ROLE_IMAGE:
                     line.addRegion(braille.Region(" "))
 
                 # The above check will catch table cells with uniform
@@ -3412,7 +3435,8 @@ class Script(default.Script):
         object attribute 'level'.  To be consistent with default.getNodeLevel()
         this value is 0-based (Gecko return is 1-based) """
 
-        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING:
+        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING \
+           or obj.parent.getRole() == pyatspi.ROLE_MENU:
             return -1
 
         try:

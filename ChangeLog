@@ -1,3 +1,29 @@
+2009-01-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          Bulk commit of fixes which were committed to trunk last week:
+
+          - Fix for bug #566361 - Orca inappropriately announces the name
+            of table cells as part of the context in Firefox 3.2.
+
+          - Fix for bug #566181 - Changes made to Firefox 3.2 caret-moved
+            events cause Orca to provide unreliable access during the use
+            of the Find toolbar.
+
+          - Fix for bug #566180 - Orca inappropriately announces the name
+            and role of (un)ordered list items as part of the context in
+            Firefox 3.2.
+
+          - Fix for bug #566073 - Orca provides the "tree level" for items
+            in submenus within Firefox 3.x.
+
+          - Fix for bug #565944 - Missing whitespace when the end of line
+            braille indicator is followed by an image in FF 3.x.
+
+          - Fix for bug #565886 - Extraneous caret-moved events emitted by
+            FF 3.1 cause unnecessary braille updating.
+
 2009-01-05  Eitan Isaacson <via william.walker@sun.com>
 
         * src/orca/default.py:
