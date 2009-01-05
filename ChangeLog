@@ -1,5 +1,10 @@
 2009-01-05  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README, NEWS:
+          Prep for Orca v2.25.4.
+
+2009-01-05  Willie Walker <william.walker@sun.com>
+
         * test/harness/runone.sh:
         Adjust WAIT_TIME for Orca to start to make this work better on my
         OpenSolaris box.
@@ -106,8 +111,8 @@
 
 2008-12-01  Mesar Hameed <via william.walker@sun.com>
 
-	* src/orca/speechdispatcherfactory.py:
-	  Fix for bug #562877 - account for pronunciation dictionary 
+        * src/orca/speechdispatcherfactory.py:
+          Fix for bug #562877 - account for pronunciation dictionary
 
 2008-12-06  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -127,8 +132,8 @@
 
 2008-12-01  Mesar Hameed <via william.walker@sun.com>
 
-	* src/orca/speechdispatcherfactory.py:
-	  Fix for bug #562877 - account for pronunciation dictionary 
+        * src/orca/speechdispatcherfactory.py:
+          Fix for bug #562877 - account for pronunciation dictionary
           when speech-dispatcher backend is used
 
 2008-12-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -170,14 +175,14 @@
 
 2008-11-19  Mesar Hameed <via william.walker@sun.com>
 
-	* src/orca/orca_gui_prefs.py:
-	  More work on bug #508675 - Applying change in Orca preference dialog 
+        * src/orca/orca_gui_prefs.py:
+          More work on bug #508675 - Applying change in Orca preference dialog
           is a little bit slow.  This fix makes things even faster.
 
 2008-11-18  Frederic Peters <via william.walker@sun.com>
 
         * acinclude.m4:
-          Additional fix for bug #560649 - configure doesn't detect 
+          Additional fix for bug #560649 - configure doesn't detect
           Python modules installed in non-standard location.
 
 2008-11-18  Willie Walker <william.walker@sun.com>
@@ -188,8 +193,8 @@
 
 2008-11-18  Mesar Hameed <via william.walker@sun.com>
 
-	* src/orca/orca_gui_prefs.py:
-	  Work on bug #508675 - Applying change in Orca preference dialog 
+        * src/orca/orca_gui_prefs.py:
+          Work on bug #508675 - Applying change in Orca preference dialog
           is a little bit slow.  This fix makes things quite a bit faster.
 
 2008-11-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -222,7 +227,7 @@
          src/orca/scripts/apps/liferea.py:
          src/orca/scripts/apps/acroread.py:
          src/orca/app_prefs.py:
-         Update headings for some strange reason.  This was due to 
+         Update headings for some strange reason.  This was due to
          svn actually making these mods, not me.  Bizarre.
 
 2008-11-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -302,12 +307,12 @@
 2008-11-01  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/tutorialgenerator.py:
-          Refix for bug #552344 - tutorial message for desktop not spoken 
+          Refix for bug #552344 - tutorial message for desktop not spoken
           in ibex
 
 2008-10-30  Willie Walker <william.walker@sun.com>
 
-	* src/orca/braille.py:
+        * src/orca/braille.py:
           src/orca/default.py:
           Fix for bug 554999 - add a new keybinding for toggling flat review.
 
@@ -361,8 +366,8 @@
 
 2008-10-14  Willie Walker <william.walker@sun.com>
 
-	* src/orca/orca.in:
-	  More fix for bug #556049 - Orca restarts when user logs out from 
+        * src/orca/orca.in:
+          More fix for bug #556049 - Orca restarts when user logs out from
           session.
 
 2008-10-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -379,9 +384,9 @@
 
 2008-10-12  Willie Walker <william.walker@sun.com>
 
-	* src/orca/orca.in:
-	  src/orca/orca.py:
-	  Fix for bug #556049 - Orca restarts when user logs out from session.
+        * src/orca/orca.in:
+          src/orca/orca.py:
+          Fix for bug #556049 - Orca restarts when user logs out from session.
 
 2008-10-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -409,12 +414,12 @@
         * src/orca/dectalk.py:
           src/orca/outloud.py:
           src/orca/espeechfactory.py:
-          Fix for bug #552343 - Quoting special characters in 
+          Fix for bug #552343 - Quoting special characters in
           espeechfactory.py and other changes
- 
+
 2008-10-08  Patryk Zawadzki <via william.walker@sun.com>
 
-	* orca.desktop.in:
+        * orca.desktop.in:
           Fix for bug #552088 - Add Utility to desktop categories.
 
 2008-10-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -432,13 +437,13 @@
 
 2008-10-05  Halim Sahin <via william.walker@sun.com>
 
-	* src/orca/settings.py:
-	  src/orca/braillegenerator.py:
-	  Fix for bug #554673 - 80 cells Brailledisplay not usable 
+        * src/orca/settings.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #554673 - 80 cells Brailledisplay not usable
           because of contextual braille Information.  This adds a
-	  latent "settings.enableBrailleContext" setting with a 
-	  default value of True.  Set it to False to get rid of
-	  braille context.
+          latent "settings.enableBrailleContext" setting with a
+          default value of True.  Set it to False to get rid of
+          braille context.
 
 2008-10-03  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -498,7 +503,7 @@
 
         * src/orca/settings.py:
           For for bug #553413 - Orca can be double-started on login.
-          This patch uses the gconf way of autostarting Orca rather 
+          This patch uses the gconf way of autostarting Orca rather
           than the ~/.config method, tying it in better with the
           preferred applications dialog.
 
@@ -521,9 +526,9 @@
 
 2008-09-22  Willie Walker <william.walker@sun.com>
 
-	* Release Orca v2.24.0.  Somehow I forgot to mark this.
-	  The svn version is 4292 and can be found at the tag
-	  of ORCA_24_0.
+        * Release Orca v2.24.0.  Somehow I forgot to mark this.
+          The svn version is 4292 and can be found at the tag
+          of ORCA_24_0.
 
 2008-09-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -534,7 +539,7 @@
 
         * src/orca/scripts/apps/yelp.py:
           More work toward the fix for bug #356041 - GNOME Help (yelp) is
-          inaccessible. Ginn Chen created another patch for Yelp which 
+          inaccessible. Ginn Chen created another patch for Yelp which
           makes things work even better. Thanks Ginn! To use Orca with
           Yelp, you just need the latest Orca and Yelp from trunk -- or
           wait for the GNOME 2.24 release.
@@ -548,7 +553,7 @@
           test/keystrokes/firefox/sayAll_imagemap.py:
           test/keystrokes/firefox/dojo_slider.py:
           test/keystrokes/firefox/uiuc_grid.py:
-          test/keystrokes/firefox/uiuc_slider.py:        
+          test/keystrokes/firefox/uiuc_slider.py:
           Fix for bug #546815 - guessLabelFromLine() is guessing text that
           is on other lines in FF3. Plus a couple of tests I forgot to
           update.
@@ -560,12 +565,12 @@
 2008-09-15  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/tutorialgenerator.py:
-          Fix for bug #552344 - tutorial message for desktop not spoken 
+          Fix for bug #552344 - tutorial message for desktop not spoken
           in ibex
 
 2008-09-15  Willie Walker <william.walker@sun.com>
 
-        * Make sure the 'svn propedit svn:keywords' values for each 
+        * Make sure the 'svn propedit svn:keywords' values for each
           Python source file has the "Author Date Id Revision" keywords
           so that keywords will be expanded appropriately.
 
@@ -601,9 +606,9 @@
           src/orca/default.py:
           src/orca/outline.py:
           src/orca/Makefile.am:
-          Fix for bug #363793 - Add the ability to change the color 
+          Fix for bug #363793 - Add the ability to change the color
           of the flat review rectangle.  This support is 'under the
-          covers' for now and requires hand-editing of 
+          covers' for now and requires hand-editing of
           ~/.orca/user-settings.py or ~/.orca/orca-customizations.py.
 
 2008-09-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -648,7 +653,7 @@
           src/orca/settings.py:
           src/orca/structural_navigation.py:
           Much work toward the fix for bug #356041 - GNOME Help (yelp) is
-          inaccessible. Please note that access to Yelp is a work in 
+          inaccessible. Please note that access to Yelp is a work in
           progress: on our end, and on the Yelp end, and may also require
           the Mozilla guys to fix something on their end. As of today, in
           order for the yelp script to work, you will need to build yelp --
@@ -720,12 +725,12 @@
 2008-09-06  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:
-          Fix for bug #551077 - Traceback and loss of speech in OOo 
-          Writer docs with both links and multbyte characters on the 
+          Fix for bug #551077 - Traceback and loss of speech in OOo
+          Writer docs with both links and multbyte characters on the
           same line
 
         * src/orca/braille.py:
-          Partial fix for bug #527022 - Linked text should be 
+          Partial fix for bug #527022 - Linked text should be
           "underlined" in braille in Firefox.  This fixes some
           unicode vs. UTF-8 issues.
 
@@ -761,9 +766,9 @@
 2008-09-03  Willie Walker <william.walker@sun.com>
 
         * configure.in:
-	  acinclude.m4:
+          acinclude.m4:
           src/orca/orca.py:
-	  Fix for bug #550249 - configure doesn't use find bonobo python
+          Fix for bug #550249 - configure doesn't use find bonobo python
 
 2008-09-02  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -852,7 +857,7 @@
 2008-08-19  Theppitak Karoonboonyanan <via william.walker@sun.com>
 
         * src/orca/default.py:
-          Fix for bug #548380 - Character count message needs 
+          Fix for bug #548380 - Character count message needs
           reordering in translation
 
 2008-08-19  Theppitak Karoonboonyanan <via william.walker@sun.com>
@@ -864,7 +869,7 @@
 2008-08-18  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/orca_gui_prefs:
-          Fix for bug #547774 - Possible small performance 
+          Fix for bug #547774 - Possible small performance
           improvement for starting preferences
 
 2008-08-18  Willie Walker <william.walker@sun.com>
@@ -886,7 +891,7 @@
 
 2008-08-18  Willie Walker <william.walker@sun.com>
 
-        * src/orca/scripts/apps/metacity.py: 
+        * src/orca/scripts/apps/metacity.py:
           Fix for bug #547938 - Magnifier should follow Alt+Tab
 
 2008-08-15  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -1024,7 +1029,7 @@
           number of known issues/bugs which we hope to address soon.
 
         * src/orca/scripts/toolkits/Gecko/script.py:
-          Fix for bug #535183 - Word navigation is inconsistent in 
+          Fix for bug #535183 - Word navigation is inconsistent in
           Thunderbird and Firefox.
 
 2008-08-04  Willie Walker <william.walker@sun.com>
