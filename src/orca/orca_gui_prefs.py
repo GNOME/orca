@@ -113,6 +113,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # Initialize variables to None to keep pylint happy.
         #
         self.bbindings = None
+        self.cellRendererText = None
         self.defaultVoice = None
         self.defKeyBindings = None
         self.disableKeyGrabPref = None
@@ -126,6 +127,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.newBinding = None
         self.orcaModKeyEntry = None
         self.pendingKeyBindings = None
+        self.planeCellRendererText = None
         self.pronunciationModel = None
         self.pronunciationView = None
         self.screenHeight = None
@@ -171,10 +173,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             gobject.TYPE_BOOLEAN, # Key Modified by User
             gobject.TYPE_BOOLEAN) # Row with fields editable or not
 
+        self.planeCellRendererText = gtk.CellRendererText()
+
+        self.cellRendererText = gtk.CellRendererText()
+        self.cellRendererText.set_property("ellipsize", pango.ELLIPSIZE_END)
+
         # HANDLER - invisble column
         #
         column = gtk.TreeViewColumn("Handler",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=HANDLER)
         column.set_resizable(True)
         column.set_visible(False)
@@ -183,15 +190,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         # DESCRIP
         #
-        rendererText = gtk.CellRendererText()
-        rendererText.set_property("ellipsize", pango.ELLIPSIZE_END)
 
         # Translators: Function is a table column header where the
         # cells in the column are a sentence that briefly describes
         # what action Orca will take when the user invokes an Orca-specific
         # keyboard command.
         #
-        column = gtk.TreeViewColumn(_("Function"), rendererText, text=DESCRIP)
+        column = gtk.TreeViewColumn(_("Function"),
+                                    self.cellRendererText,
+                                    text=DESCRIP)
         column.set_resizable(True)
         column.set_min_width(380)
         column.set_sort_column_id(DESCRIP)
@@ -200,7 +207,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # MOD_MASK1 - invisble column
         #
         column = gtk.TreeViewColumn("Mod.Mask 1",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=MOD_MASK1)
         column.set_visible(False)
         column.set_resizable(True)
@@ -210,7 +217,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # MOD_USED1 - invisble column
         #
         column = gtk.TreeViewColumn("Use Mod.1",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=MOD_USED1)
         column.set_visible(False)
         column.set_resizable(True)
@@ -220,7 +227,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # KEY1 - invisble column
         #
         column = gtk.TreeViewColumn("Key1",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=KEY1)
         column.set_resizable(True)
         column.set_visible(False)
@@ -230,7 +237,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # CLICK_COUNT1 - invisble column
         #
         column = gtk.TreeViewColumn("ClickCount1",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=CLICK_COUNT1)
         column.set_resizable(True)
         column.set_visible(False)
@@ -243,7 +250,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # resorting each time a cell is edited.
         #
         column = gtk.TreeViewColumn("OldText1",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=OLDTEXT1)
         column.set_resizable(True)
         column.set_visible(False)
@@ -278,7 +285,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # MOD_MASK2 - invisble column
         #
         column = gtk.TreeViewColumn("Mod.Mask 2",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=MOD_MASK2)
         column.set_visible(False)
         column.set_resizable(True)
@@ -288,7 +295,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # MOD_USED2 - invisble column
         #
         column = gtk.TreeViewColumn("Use Mod.2",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=MOD_USED2)
         column.set_visible(False)
         column.set_resizable(True)
@@ -306,7 +313,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # CLICK_COUNT2 - invisble column
         #
         column = gtk.TreeViewColumn("ClickCount2",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=CLICK_COUNT2)
         column.set_resizable(True)
         column.set_visible(False)
@@ -319,7 +326,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # resorting each time a cell is edited.
         #
         column = gtk.TreeViewColumn("OldText2",
-                                    gtk.CellRendererText(),
+                                    self.planeCellRendererText,
                                     text=OLDTEXT2)
         column.set_resizable(True)
         column.set_visible(False)
@@ -1529,7 +1536,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                     it = tablesModel.append([name, fname])
                     if os.path.join(louis.TABLES_DIR, fname) == selectedTable:
                         selectedTableIter = it
-                cell = gtk.CellRendererText()
+                cell = self.planeCellRendererText
                 tablesCombo.pack_start(cell, True)
                 tablesCombo.add_attribute(cell, 'text', 0)
                 tablesCombo.set_model(tablesModel)

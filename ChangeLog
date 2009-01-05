@@ -1,3 +1,8 @@
+2009-01-05  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+        Fix for bug #565670 - recycling of gtk.CellRendererText()
+
 2009-01-05  Eitan Isaacson <via william.walker@sun.com>
 
         * src/orca/default.py:
