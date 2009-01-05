@@ -990,12 +990,14 @@ class Script(script.Script):
             self.onSelectionChanged
         listeners["object:property-change:accessible-value"] = \
             self.onValueChanged
-        listeners["object:value-changed"]                  = \
+        listeners["object:value-changed"]                   = \
             self.onValueChanged
         listeners["window:activate"]                        = \
             self.onWindowActivated
         listeners["window:deactivate"]                      = \
             self.onWindowDeactivated
+        listeners["window:create"]                          = \
+            self.noOp
 
         return listeners
 
