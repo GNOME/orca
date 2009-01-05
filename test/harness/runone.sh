@@ -30,7 +30,7 @@ debugFile=`basename $1 .py`
 
 # Number of seconds to wait for Orca and the application to start
 #
-WAIT_TIME=5
+WAIT_TIME=10
 
 # Set up the stuff we want to always be set for every test, regardless
 # if there is a *.params file for the test or not.

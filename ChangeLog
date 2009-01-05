@@ -1,3 +1,9 @@
+2009-01-05  Willie Walker <william.walker@sun.com>
+
+        * test/harness/runone.sh:
+        Adjust WAIT_TIME for Orca to start to make this work better on my
+        OpenSolaris box.
+
 2009-01-05  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/orca_gui_prefs.py:
