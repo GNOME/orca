@@ -32,7 +32,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to second tab", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+    ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Veges Page Carnivore Page Delive', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Veges page'"]))
@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to third tab", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+    ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Carnivore page'"]))
@@ -57,7 +57,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+    ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Carnivore page'",
@@ -71,7 +71,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to fourth tab", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+    ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Delivery Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Delivery page'"]))
@@ -83,7 +83,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to back to third tab", 
-    ["BRAILLE LINE:  'TabList TabList TabList TabList Crust Page Veges Page Carnivore Page Delivery Page'",
+    ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Carnivore page'"]))

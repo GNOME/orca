@@ -637,8 +637,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '--- Combo --- Combo   $l Or Button'",
-     "     VISIBLE:  '--- Combo --- Combo   $l Or Butt', cursor=0",
+    ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
+     "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=0",
      "SPEECH OUTPUT: '--- combo box --- combo box text Or button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -685,8 +685,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Sort results by:  Reuse same sort as last time Combo'",
-     "     VISIBLE:  'Sort results by:  Reuse same sor', cursor=1",
+    ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
+     "     VISIBLE:  'Sort results by: Reuse same sort', cursor=1",
      "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1166,7 +1166,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin ·  Help Logged In joanmarie.diggs@gmail.com |  Log Out'",
+    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
      "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 

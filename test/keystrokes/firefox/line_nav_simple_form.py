@@ -198,17 +198,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. line Up",
-    ["BUG? - Why is the extra space present before Water?",
-     "BRAILLE LINE:  'Make a selection:  Water Combo'",
-     "     VISIBLE:  'Make a selection:  Water Combo', cursor=1",
+    ["BRAILLE LINE:  'Make a selection: Water Combo'",
+     "     VISIBLE:  'Make a selection: Water Combo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection: Water combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "5. line Up",
-    ["BUG? - Extra space after Blue",
-     "BRAILLE LINE:  'Check one or more: < > CheckBox Red < > CheckBox Blue  < > CheckBox Green'",
+    ["BRAILLE LINE:  'Check one or more: < > CheckBox Red < > CheckBox Blue < > CheckBox Green'",
      "     VISIBLE:  'Check one or more: < > CheckBox ', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: Red check box not checked Blue check box not checked Green check box not checked'"]))
 
@@ -265,25 +263,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Up",
-    ["BRAILLE LINE:  'Tell me a secret:   $l'",
-     "     VISIBLE:  'Tell me a secret:   $l', cursor=1",
+    ["BRAILLE LINE:  'Tell me a secret:  $l'",
+     "     VISIBLE:  'Tell me a secret:  $l', cursor=1",
      "SPEECH OUTPUT: 'Tell me a secret: password'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. line Up",
-    ["BUG? - Extra space before the entry?",
-     "BRAILLE LINE:  'Magic disappearing text trick:  tab to me and I disappear $l'",
-     "     VISIBLE:  'Magic disappearing text trick:  ', cursor=1",
+    ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
+     "     VISIBLE:  'Magic disappearing text trick: t', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text tab to me and I disappear'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "14. line Up",
-    ["BRAILLE LINE:  'Type something here:   $l'",
-     "     VISIBLE:  'Type something here:   $l', cursor=1",
+    ["BRAILLE LINE:  'Type something here:  $l'",
+     "     VISIBLE:  'Type something here:  $l', cursor=1",
      "SPEECH OUTPUT: 'Type something here: text'"]))
 
 ########################################################################

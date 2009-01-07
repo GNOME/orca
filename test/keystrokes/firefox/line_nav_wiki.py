@@ -897,36 +897,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BUG? - There's an extra space here",
-     "BRAILLE LINE:  '•  Python Pocket Reference, Mark Lutz'",
-     "     VISIBLE:  '•  Python Pocket Reference, Mark', cursor=1",
+    ["BRAILLE LINE:  '• Python Pocket Reference, Mark Lutz'",
+     "     VISIBLE:  '• Python Pocket Reference, Mark ', cursor=1",
      "SPEECH OUTPUT: '• Python Pocket Reference, Mark Lutz link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BUG? - There's an extra space here",
-     "BRAILLE LINE:  '•  Python in a Nutshell, Alex Martelli'",
-     "     VISIBLE:  '•  Python in a Nutshell, Alex Ma', cursor=1",
+    ["BRAILLE LINE:  '• Python in a Nutshell, Alex Martelli'",
+     "     VISIBLE:  '• Python in a Nutshell, Alex Mar', cursor=1",
      "SPEECH OUTPUT: '• Python in a Nutshell, Alex Martelli link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BUG? - There's an extra space here",
-     "BRAILLE LINE:  '•  Dive Into Python, Mark Pilgrim'",
-     "     VISIBLE:  '•  Dive Into Python, Mark Pilgri', cursor=1",
+    ["BRAILLE LINE:  '• Dive Into Python, Mark Pilgrim'",
+     "     VISIBLE:  '• Dive Into Python, Mark Pilgrim', cursor=1",
      "SPEECH OUTPUT: '• Dive Into Python, Mark Pilgrim link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BUG? - There's an extra space here",
-     "BRAILLE LINE:  '• Design documents:  Orca Documentation Series'",
-     "     VISIBLE:  '• Design documents:  Orca Docume', cursor=1",
+    ["BRAILLE LINE:  '• Design documents: Orca Documentation Series'",
+     "     VISIBLE:  '• Design documents: Orca Documen', cursor=1",
      "SPEECH OUTPUT: '• Design documents: Orca Documentation Series link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -949,8 +945,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '• Frequently Asked Questions:  FAQ'",
-     "     VISIBLE:  '• Frequently Asked Questions:  F', cursor=1",
+    ["BRAILLE LINE:  '• Frequently Asked Questions: FAQ'",
+     "     VISIBLE:  '• Frequently Asked Questions: FA', cursor=1",
      "SPEECH OUTPUT: '• Frequently Asked Questions: FAQ link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1205,24 +1201,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  '•  Guide to installing the latest versions of Firefox and Orca'",
-     "     VISIBLE:  '•  Guide to installing the lates', cursor=1",
+    ["BRAILLE LINE:  '• Guide to installing the latest versions of Firefox and Orca'",
+     "     VISIBLE:  '• Guide to installing the latest', cursor=1",
      "SPEECH OUTPUT: '• Guide to installing the latest versions of Firefox and Orca link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  '•  Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop'",
-     "     VISIBLE:  '•  Review of Fedora 7 and the Or', cursor=1",
+    ["BRAILLE LINE:  '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop'",
+     "     VISIBLE:  '• Review of Fedora 7 and the Orc', cursor=1",
      "SPEECH OUTPUT: '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  '•  Walk through of the installation of Ubuntu 7.4. Very helpful tutorial'",
-     "     VISIBLE:  '•  Walk through of the installat', cursor=1",
+    ["BRAILLE LINE:  '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial'",
+     "     VISIBLE:  '• Walk through of the installati', cursor=1",
      "SPEECH OUTPUT: '• Walk through of the installation of Ubuntu 7.4. Very helpful tutorial link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1437,9 +1433,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BUG? - Extra space",
-     "BRAILLE LINE:  'HOT HOT HOT: Notes on  access to Firefox 3.0'",
-     "     VISIBLE:  'HOT HOT HOT: Notes on  access to', cursor=1",
+    ["BRAILLE LINE:  'HOT HOT HOT: Notes on access to Firefox 3.0'",
+     "     VISIBLE:  'HOT HOT HOT: Notes on access to ', cursor=1",
      "SPEECH OUTPUT: 'HOT HOT HOT: Notes on access to Firefox 3.0 link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1494,7 +1489,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button  Text Button'",
+    ["BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
      "     VISIBLE:  'live.gnome.org h1 Search $l Titl', cursor=1",
      "SPEECH OUTPUT: 'live.gnome.org heading level 1 text Search Titles button grayed Text button grayed'"]))
 

@@ -73,7 +73,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("First tab", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "Launch dialog", 
-    ["BRAILLE LINE:  'TabList First tab Page Second tab Page'",
+    ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
      "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
      "SPEECH OUTPUT: 'First tab page'"]))
@@ -87,7 +87,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
-    ["BRAILLE LINE:  'TabList First tab Page Second tab Page'",
+    ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'First tab page'",

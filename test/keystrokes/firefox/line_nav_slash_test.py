@@ -154,8 +154,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
-    ["BRAILLE LINE:  'Nickname  $l Password  $l  Log in Button'",
-     "     VISIBLE:  'Nickname  $l Password  $l  Log i', cursor=1",
+    ["BRAILLE LINE:  'Nickname  $l Password  $l Log in Button'",
+     "     VISIBLE:  'Nickname  $l Password  $l Log in', cursor=1",
      "SPEECH OUTPUT: 'Nickname text Password password Log in button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -186,8 +186,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
-    ["BRAILLE LINE:  'Services h4'",
-     "     VISIBLE:  'Services h4', cursor=1",
+    ["BUG? - We're picking up Science in the braille",
+     "BRAILLE LINE:  'Services h4 Science h4'",
+     "     VISIBLE:  'Services h4 Science h4', cursor=1",
      "SPEECH OUTPUT: 'Services heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())

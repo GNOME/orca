@@ -5130,7 +5130,15 @@ class Script(default.Script):
                and extents != prevExtents \
                and lastExtents != prevExtents:
                 toAdd = self.getObjectsFromEOCs(prevObj, pOffset, boundary)
-                objects[0:0] = toAdd
+                # Depending on the line, there's a chance that we got our
+                # current object as part of toAdd. Check for dupes and just
+                # add up to the current object if we find them.
+                #
+                try:
+                    index = toAdd.index(objects[0])
+                except:
+                    index = len(toAdd)
+                objects[0:0] = toAdd[0:index]
             else:
                 break
 
@@ -5183,20 +5191,6 @@ class Script(default.Script):
                 break
 
             lastExtents = nextExtents
-
-        # Get rid of duplicates (real and functional).
-        #
-        parentLink = None
-        for o in objects:
-            if objects.count(o) > 1:
-                objects.pop(objects.index(o))
-            elif o[0].parent.getRole() == pyatspi.ROLE_LINK:
-                if not parentLink:
-                    parentLink = o[0].parent
-                elif self.isSameObject(o[0].parent, parentLink):
-                    objects.pop(objects.index(o))
-                else:
-                    parentLink = o[0].parent
 
         return objects
 

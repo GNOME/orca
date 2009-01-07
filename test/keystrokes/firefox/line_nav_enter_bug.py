@@ -314,8 +314,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Commit Button       Remember values as bookmarkable template Button'",
-     "     VISIBLE:  'Commit Button       Remember val', cursor=1",
+    ["BRAILLE LINE:  'Commit Button      Remember values as bookmarkable template Button'",
+     "     VISIBLE:  'Commit Button      Remember valu', cursor=1",
      "SPEECH OUTPUT: 'Commit button       Remember values as bookmarkable template button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -491,7 +491,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin ·  Help Logged In joanmarie.diggs@gmail.com |  Log Out'",
+    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
      "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 

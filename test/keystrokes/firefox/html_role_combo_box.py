@@ -61,8 +61,8 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
     ["BUG? - Where should the cursor be? If we're not IN the combo box should it be as is with the label showing or not?",
-     "BRAILLE LINE:  'Severity:  Severity normal Combo'",
-     "     VISIBLE:  'Severity:  Severity normal Combo', cursor=21",
+     "BRAILLE LINE:  'Severity: Severity normal Combo'",
+     "     VISIBLE:  'Severity: Severity normal Combo', cursor=20",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity normal combo box'"]))
 
@@ -84,8 +84,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Priority combo box", 
-    ["BRAILLE LINE:  'Priority:  Normal Combo'",
-     "     VISIBLE:  'Priority:  Normal Combo', cursor=12",
+    ["BRAILLE LINE:  'Priority: Normal Combo'",
+     "     VISIBLE:  'Priority: Normal Combo', cursor=11",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority: Normal combo box'"]))
 
@@ -120,8 +120,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "Alt Down to Expand",
-    ["BRAILLE LINE:  'Priority:  Normal Combo'",
-     "     VISIBLE:  'Priority:  Normal Combo', cursor=0",
+    ["BRAILLE LINE:  'Priority: Normal Combo'",
+     "     VISIBLE:  'Priority: Normal Combo', cursor=0",
      "BRAILLE LINE:  'Normal'",
      "     VISIBLE:  'Normal', cursor=1",
      "SPEECH OUTPUT: ''",
@@ -148,8 +148,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
-    ["BRAILLE LINE:  'Priority:  Low Combo'",
-     "     VISIBLE:  'Priority:  Low Combo', cursor=12",
+    ["BRAILLE LINE:  'Priority: Low Combo'",
+     "     VISIBLE:  'Priority: Low Combo', cursor=11",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority: Low combo box'"]))
 

@@ -57,7 +57,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'search mozilla: search mozilla:  $l  Go Button'",
+    ["BRAILLE LINE:  'search mozilla: search mozilla:  $l Go Button'",
      "     VISIBLE:  'Go Button', cursor=1",
      "SPEECH OUTPUT: 'Go button'"]))
 

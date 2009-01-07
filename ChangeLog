@@ -1,3 +1,23 @@
+2009-01-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/dojo_dialog.py:
+          test/keystrokes/firefox/label_guess_entries.py:
+          test/keystrokes/firefox/label_guess_bug_509809.py:
+          test/keystrokes/firefox/line_nav_bug_547573.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/uiuc_tabpanel.py:
+          test/keystrokes/firefox/label_guess_bug_546815.py:
+          test/keystrokes/firefox/line_nav_slash_test.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #566955 - Need to remove extra whitespace from braille
+          output for Firefox 3.x.
+
 2009-01-05  Willie Walker <william.walker@sun.com>
 
         * configure.in, README:

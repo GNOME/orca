@@ -1481,16 +1481,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "71. Line Up",
-    ["BRAILLE LINE:  '•  Java Web Start Installation Notes'",
-     "     VISIBLE:  '•  Java Web Start Installation N', cursor=1",
+    ["BRAILLE LINE:  '• Java Web Start Installation Notes'",
+     "     VISIBLE:  '• Java Web Start Installation No', cursor=1",
      "SPEECH OUTPUT: '• Java Web Start Installation Notes link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "72. Line Up",
-    ["BRAILLE LINE:  '•  Java Plugin Browser Registration Instructions'",
-     "     VISIBLE:  '•  Java Plugin Browser Registrat', cursor=1",
+    ["BRAILLE LINE:  '• Java Plugin Browser Registration Instructions'",
+     "     VISIBLE:  '• Java Plugin Browser Registrati', cursor=1",
      "SPEECH OUTPUT: '• Java Plugin Browser Registration Instructions link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1655,15 +1655,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "93. Line Up",
-    ["BRAILLE LINE:  '» search tips  Search $l  Submit Search Button Home Page Image $l'",
-     "     VISIBLE:  '» search tips  Search $l  Submit', cursor=1",
+    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
+     "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
      "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "94. Line Up",
-    ["BRAILLE LINE:  'Skip to Content Sun Java Solaris Communities My SDN Account  Join SDN'",
+    ["BRAILLE LINE:  'Skip to Content Sun Java Solaris Communities My SDN Account Join SDN'",
      "     VISIBLE:  'Skip to Content Sun Java Solaris', cursor=1",
      "SPEECH OUTPUT: 'Skip to Content link Sun link Java link Solaris link Communities link My SDN Account link Join SDN link'"]))
 

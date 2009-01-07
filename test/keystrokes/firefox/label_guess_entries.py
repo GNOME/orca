@@ -420,9 +420,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Magic disappearing text trick:  tab to me and I disappear $l'",
+    ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
      "     VISIBLE:  'tab to me and I disappear $l', cursor=26",
-     "BRAILLE LINE:  'Magic disappearing text trick:   $l'",
+     "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text'"]))
 
@@ -432,8 +432,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Tell me a secret:   $l'",
-     "     VISIBLE:  'Tell me a secret:   $l', cursor=20",
+    ["BRAILLE LINE:  'Tell me a secret:  $l'",
+     "     VISIBLE:  'Tell me a secret:  $l', cursor=19",
      "SPEECH OUTPUT: 'Tell me a secret: password'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -494,8 +494,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - extra space between by: and Reuse",
-     "BRAILLE LINE:  'Sort results by:  Reuse same sort as last time Combo'",
+    ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
      "     VISIBLE:  'Reuse same sort as last time Com', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
