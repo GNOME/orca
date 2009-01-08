@@ -1,3 +1,11 @@
+2009-01-08  Willie Walker <william.walker@sun.com>
+
+        * src/orca/punctuation_settings.py:
+          src/orca/chnames.py:
+          Fix for bug #563200 - Orca not spoken the character code 
+          8222 character.  Added double low quote and single low quote
+          to the character names and punctuation table.
+
 2009-01-07  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/label_guess_bugzilla_search.py:

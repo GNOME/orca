@@ -576,6 +576,10 @@ chnames[u'\u2018'] = _("left single quote")
 #
 chnames[u'\u2019'] = _("right single quote")
 
+# Translators: this is the spoken word for the character '‚' (U+201a)
+#
+chnames[u'\u201a'] = _("single low quote")
+
 # Translators: this is the spoken word for the character '“' (U+201c)
 #
 chnames[u'\u201c'] = _("left double quote")
@@ -583,6 +587,10 @@ chnames[u'\u201c'] = _("left double quote")
 # Translators: this is the spoken word for the character '”' (U+201d)
 #
 chnames[u'\u201d'] = _("right double quote")
+
+# Translators: this is the spoken word for the character '„' (U+201e)
+#
+chnames[u'\u201e'] = _("double low quote")
 
 # Translators: this is the spoken word for the character '†' (U+2020)
 #
