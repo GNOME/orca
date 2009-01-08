@@ -859,10 +859,45 @@ class Context:
         else:
             zones = []
 
-        length = text.characterCount
-
         offset = 0
         lastEndOffset = -1
+        upperMax = lowerMax = text.characterCount
+        upperMid = lowerMid = upperMax /2
+        upperMin = lowerMin = 0
+        upperY = lowerY = 0
+        oldMid = 0
+
+        # performing binary search to locate first line inside clipped area
+        while oldMid != upperMid:
+            oldMid = upperMid
+            [x, y, width, height] = text.getRangeExtents(upperMid,
+                                                         upperMid+1,
+                                                         0)
+            upperY = y
+            if y > cliprect.y:
+                upperMax = upperMid
+            else:
+                upperMin = upperMid
+            upperMid = (upperMax - upperMin) /2 + upperMin
+
+        # performing binary search to locate last line inside clipped area
+        oldMid = 0
+        limit = cliprect.y+cliprect.height
+        while oldMid != lowerMid:
+            oldMid = lowerMid
+            [x, y, width, height] = text.getRangeExtents(lowerMid,
+                                                         lowerMid+1,
+                                                         0)
+            lowerY = y
+            if y > limit:
+                lowerMax = lowerMid
+            else:
+                lowerMin = lowerMid
+            lowerMid = (lowerMax - lowerMin) /2 + lowerMin
+
+        # finding out the zones
+        offset = upperMin
+        length = lowerMax
         while offset < length:
 
             [string, startOffset, endOffset] = text.getTextAtOffset(
