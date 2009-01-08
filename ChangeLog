@@ -1,3 +1,9 @@
+2009-01-08  Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/flat_review.py:
+          Fix for bug #563171 - src/orca/flat_review.py:getZonesFromText
+          should clip zones based on what text is visible
+
 2009-01-08  Willie Walker <william.walker@sun.com>
 
         * src/orca/punctuation_settings.py:
