@@ -1702,7 +1702,8 @@ class SpeechGenerator:
 
         utterances = []
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(pyatspi.STATE_CHECKED) \
+           or state.contains(pyatspi.STATE_PRESSED):
             # Translators: the state of a toggle button.
             #
             checkedState = _("pressed")
