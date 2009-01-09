@@ -1085,7 +1085,8 @@ class BrailleGenerator:
         componentRegion = braille.Component(
             obj, text,
             indicator=settings.brailleRadioButtonIndicators[ \
-            int(state.contains(pyatspi.STATE_CHECKED))])
+            int(state.contains(pyatspi.STATE_CHECKED) \
+                or state.contains(pyatspi.STATE_PRESSED))])
         regions.append(componentRegion)
 
         return [regions, componentRegion]

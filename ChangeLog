@@ -1,3 +1,12 @@
+2009-01-09  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/firefox/uiuc_button.py:
+          src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/braillegenerator.py:
+          Fix for bug #566954 - ARIA toggle button state not handled
+          correctly
+
 2009-01-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/line_nav_wiki.py:
