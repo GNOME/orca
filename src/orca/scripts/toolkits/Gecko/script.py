@@ -1714,6 +1714,13 @@ class Script(default.Script):
                 speech.speak(message)
 
                 if finishedLoading:
+                    # Store the document frame otherwise the first time it
+                    # gains focus (e.g. the first time the user arrows off
+                    # of a link into non-focusable text), onStateFocused
+                    # will start chatting unnecessarily.
+                    #
+                    self._currentFrame = event.source
+
                     # We first try to figure out where the caret is on
                     # the newly loaded page.  If it is on an editable
                     # object (e.g., a text entry), then we present just
