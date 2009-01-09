@@ -54,15 +54,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BUG? - For some reason we're acting as if the page had just loaded",
-     "BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
+    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
      "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
-     "BRAILLE LINE:  'Installation Notes'",
-     "     VISIBLE:  'Installation Notes', cursor=0",
-     "BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
-     "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
-     "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'",
-     "SPEECH OUTPUT: 'Installation Notes page'",
      "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
 
 sequence.append(utils.StartRecordingAction())

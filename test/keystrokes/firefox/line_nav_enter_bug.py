@@ -55,15 +55,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BUG? - For some reason we're acting as if the page has just finished loading",
-     "BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. h1'",
+    ["BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. h1'",
      "     VISIBLE:  'Enter Bug: orca – This page lets', cursor=1",
-     "BRAILLE LINE:  'Enter Bug: orca'",
-     "     VISIBLE:  'Enter Bug: orca', cursor=0",
-     "BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. h1'",
-     "     VISIBLE:  'Enter Bug: orca – This page lets', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'",
-     "SPEECH OUTPUT: 'Enter Bug: orca page'",
      "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())

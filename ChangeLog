@@ -1,3 +1,14 @@
+2009-01-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/line_nav_bug_547573.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #567167 - Orca sometimes (re)announces that the 
+          document frame has just received focus in Firefox 3.x.
+
 2009-01-08  Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/flat_review.py:

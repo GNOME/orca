@@ -19,7 +19,30 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 sequence.append(KeyComboAction("<Alt>e"))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Minefield Preferences",None))
+sequence.append(WaitForWindowActivate("",None))
+
+########################################################################
+# Press Right Arrow to get to the next list item and Left Arrow to
+# get back. We'll do this because in Firefox 3.1 we are not getting the
+# correct events until we Alt+Tab out of and then back into the window.
+# This does not seem to be an issue for Firefox 3.0
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "Right Arrow in list",
+    ["KNOWN ISSUE - Firefox 3.1 is not giving us anything here, but Firefox 3.0 is. If we have output, the bug is not present."]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "Left Arrow in list",
+    ["KNOWN ISSUE - Firefox 3.1 is not giving us anything here, but Firefox 3.0 is. If we have output, the bug is not present."]))
+
+sequence.append(KeyComboAction("<Alt>Tab"))
+sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
+sequence.append(KeyComboAction("<Alt>Tab"))
+sequence.append(WaitForWindowActivate(utils.firefoxAppNames + " Preferences", None))
 
 ########################################################################
 # Press Tab to move to the "When Minefield starts" combo box.  This combo
