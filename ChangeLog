@@ -1,5 +1,10 @@
 2009-01-12  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README, NEWS:
+          Prep for Orca v2.24.3.
+
+2009-01-12  Willie Walker <william.walker@sun.com>
+
         * orca.spec.in:
           configure.in:
           Fix for bug #564994 - Drop eel dependency
