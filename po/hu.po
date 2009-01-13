@@ -8,10 +8,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 11:15+0100\n"
-"PO-Revision-Date: 2008-11-01 22:00+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&component=general\n"
+"POT-Creation-Date: 2009-01-08 15:09+0000\n"
+"PO-Revision-Date: 2009-01-10 10:15+0200\n"
+"Last-Translator: Attila Hammer <hammera@pickup.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -176,14 +177,14 @@ msgid "Orca Preferences for %s"
 msgstr "Orka beállításai a(z) %s alkalmazáshoz"
 
 #: ../src/orca/app_gui_prefs.py:210 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2126 ../src/orca/orca_gui_prefs.py:2231
+#: ../src/orca/orca_gui_prefs.py:2133 ../src/orca/orca_gui_prefs.py:2238
 msgid "Orca"
 msgstr "Orka"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:215 ../src/orca/orca_gui_prefs.py:2237
+#: ../src/orca/app_gui_prefs.py:215 ../src/orca/orca_gui_prefs.py:2244
 msgid "Unbound"
 msgstr "Nincs kiosztva"
 
@@ -405,8 +406,8 @@ msgstr "Kurzorpozíció"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6854
-#: ../src/orca/default.py:6861 ../src/orca/keynames.py:133
+#: ../src/orca/chnames.py:39 ../src/orca/default.py:6857
+#: ../src/orca/default.py:6864 ../src/orca/keynames.py:133
 msgid "space"
 msgstr "szóköz"
 
@@ -1220,117 +1221,129 @@ msgstr "bal oldali idézőjel"
 msgid "right single quote"
 msgstr "jobb oldali idézőjel"
 
-#. Translators: this is the spoken word for the character '“' (U+201c)
+#. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: ../src/orca/chnames.py:581
+msgid "single low quote"
+msgstr "idézőjel"
+
+#. Translators: this is the spoken word for the character '“' (U+201c)
+#.
+#: ../src/orca/chnames.py:585
 msgid "left double quote"
 msgstr "idézőjel"
 
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
-#: ../src/orca/chnames.py:585
+#: ../src/orca/chnames.py:589
 msgid "right double quote"
+msgstr "idézőjel"
+
+#. Translators: this is the spoken word for the character '„' (U+201e)
+#.
+#: ../src/orca/chnames.py:593
+msgid "double low quote"
 msgstr "idézőjel"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
-#: ../src/orca/chnames.py:589
+#: ../src/orca/chnames.py:597
 msgid "dagger"
 msgstr "kereszt"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
-#: ../src/orca/chnames.py:593
+#: ../src/orca/chnames.py:601
 msgid "double dagger"
 msgstr "kettős kereszt"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
-#: ../src/orca/chnames.py:597
+#: ../src/orca/chnames.py:605
 msgid "bullet"
 msgstr "felsorolásjel"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
-#: ../src/orca/chnames.py:601
+#: ../src/orca/chnames.py:609
 msgid "triangular bullet"
 msgstr "háromszög felsorolásjel"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
-#: ../src/orca/chnames.py:605
+#: ../src/orca/chnames.py:613
 msgid "per mille"
 msgstr "ezrelék"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
-#: ../src/orca/chnames.py:609
+#: ../src/orca/chnames.py:617
 msgid "prime"
 msgstr "aposztróf"
 
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
-#: ../src/orca/chnames.py:613
+#: ../src/orca/chnames.py:621
 msgid "double prime"
 msgstr "dupla aposztróf"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
-#: ../src/orca/chnames.py:617
+#: ../src/orca/chnames.py:625
 msgid "hyphen bullet"
 msgstr "kötőjel felsorolásjel"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
-#: ../src/orca/chnames.py:621
+#: ../src/orca/chnames.py:629
 msgid "euro"
 msgstr "euró"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
-#: ../src/orca/chnames.py:625
+#: ../src/orca/chnames.py:633
 msgid "trademark"
 msgstr "védjegy"
 
 #. Translators: this is the spoken word for the character '≈' (U+2248)
 #.
-#: ../src/orca/chnames.py:629
+#: ../src/orca/chnames.py:637
 msgid "almost equal to"
 msgstr "körülbelül"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
-#: ../src/orca/chnames.py:633
+#: ../src/orca/chnames.py:641
 msgid "not equal to"
 msgstr "nem egyenlő"
 
 #. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
-#: ../src/orca/chnames.py:637
+#: ../src/orca/chnames.py:645
 msgid "less than or equal to"
 msgstr "kisebb vagy egyenlő"
 
 #. Translators: this is the spoken word for the character '≥' (U+2265)
 #.
-#: ../src/orca/chnames.py:641
+#: ../src/orca/chnames.py:649
 msgid "greater than or equal to"
 msgstr "nagyobb mint vagy egyenlő"
 
 #. Translators: this is the spoken word for the character '√' (U+221a)
 #.
-#: ../src/orca/chnames.py:645
+#: ../src/orca/chnames.py:653
 msgid "square root"
 msgstr "gyökjel"
 
 #. Translators: this is the spoken word for the character '∛' (U+221b)
 #.
-#: ../src/orca/chnames.py:649
+#: ../src/orca/chnames.py:657
 msgid "cube root"
 msgstr "köbgyök"
 
 #. Translators: this is the spoken word for the character '∞' (U+221e)
 #.
-#: ../src/orca/chnames.py:653
+#: ../src/orca/chnames.py:661
 msgid "infinity"
 msgstr "végtelen"
 
@@ -1341,14 +1354,14 @@ msgstr "végtelen"
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:658 ../src/orca/chnames.py:721
+#: ../src/orca/chnames.py:666 ../src/orca/chnames.py:729
 msgid "black square"
 msgstr "fekete négyzet"
 
 #. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:663
+#: ../src/orca/chnames.py:671
 msgid "white square"
 msgstr "üres négyzet"
 
@@ -1359,41 +1372,41 @@ msgstr "üres négyzet"
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:668 ../src/orca/chnames.py:727
+#: ../src/orca/chnames.py:676 ../src/orca/chnames.py:735
 msgid "black diamond"
 msgstr "fekete káró"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:673
+#: ../src/orca/chnames.py:681
 msgid "white circle"
 msgstr "üres kör"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:678
+#: ../src/orca/chnames.py:686
 msgid "black circle"
 msgstr "fekete kör"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
-#: ../src/orca/chnames.py:682
+#: ../src/orca/chnames.py:690
 msgid "white bullet"
 msgstr "üres felsorolásjel"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:687
+#: ../src/orca/chnames.py:695
 msgid "check mark"
 msgstr "pipa"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:692
+#: ../src/orca/chnames.py:700
 msgid "heavy check mark"
 msgstr "vastag pipa"
 
@@ -1404,7 +1417,7 @@ msgstr "vastag pipa"
 #. the typed letter 'x'.  "Ballot x" might confuse the user.  Hence the
 #. use of "x-shaped bullet".
 #.
-#: ../src/orca/chnames.py:701
+#: ../src/orca/chnames.py:709
 msgid "x-shaped bullet"
 msgstr "x formájú felsorolásjel"
 
@@ -1413,7 +1426,7 @@ msgstr "x formájú felsorolásjel"
 #. an OOo list. The goal is to inform the user of the appearance of
 #. the bullet without too much verbiage, hence simply "right-pointing arrow".
 #.
-#: ../src/orca/chnames.py:708
+#: ../src/orca/chnames.py:716
 msgid "right-pointing arrow"
 msgstr "jobbra mutató nyíl"
 
@@ -1422,7 +1435,7 @@ msgstr "jobbra mutató nyíl"
 #. OOo list. The goal is to inform the user of the appearance of the bullet
 #. without too much verbiage, hence simply "right-pointing arrowhead".
 #.
-#: ../src/orca/chnames.py:715
+#: ../src/orca/chnames.py:723
 msgid "right-pointing arrowhead"
 msgstr "jobbra mutató nyílhegy"
 
@@ -2194,16 +2207,16 @@ msgstr "A következő billentyűparancs átadása az aktuális alkalmazásnak."
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:2140 ../src/orca/default.py:2452
-#: ../src/orca/default.py:4983 ../src/orca/default.py:5138
-#: ../src/orca/default.py:5146 ../src/orca/default.py:5254
-#: ../src/orca/default.py:5262
+#: ../src/orca/default.py:2142 ../src/orca/default.py:2454
+#: ../src/orca/default.py:4986 ../src/orca/default.py:5141
+#: ../src/orca/default.py:5149 ../src/orca/default.py:5257
+#: ../src/orca/default.py:5265
 #: ../src/orca/scripts/apps/evolution/script.py:531
 #: ../src/orca/scripts/apps/soffice/script.py:731
 #: ../src/orca/scripts/apps/soffice/script.py:1236
 #: ../src/orca/scripts/apps/soffice/script.py:2077
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5335
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5353
 #: ../src/orca/structural_navigation.py:3283 ../src/orca/where_am_I.py:1625
 msgid "blank"
 msgstr "üres"
@@ -2211,7 +2224,7 @@ msgstr "üres"
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:2220
+#: ../src/orca/default.py:2222
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -2221,7 +2234,7 @@ msgstr[1] "%d szóköz"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/default.py:2227
+#: ../src/orca/default.py:2229
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -2232,7 +2245,7 @@ msgstr[1] "%d tabulátor"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:2686
+#: ../src/orca/default.py:2688
 #, python-format
 msgid "Progress bar %d."
 msgstr "folyamatjelző: %d."
@@ -2246,7 +2259,7 @@ msgstr "folyamatjelző: %d."
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2694 ../src/orca/flat_review.py:448
+#: ../src/orca/default.py:2696 ../src/orca/flat_review.py:448
 #: ../src/orca/speechgenerator.py:1097
 #, python-format
 msgid "%d percent."
@@ -2255,7 +2268,7 @@ msgstr "%d százalék."
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2943
+#: ../src/orca/default.py:2945
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:158
 #: ../src/orca/where_am_I.py:688 ../src/orca/where_am_I.py:753
 #, python-format
@@ -2267,7 +2280,7 @@ msgstr "%d. fa szint"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:2982
+#: ../src/orca/default.py:2984
 msgid "tablecell| not selected"
 msgstr "nincs kijelölve"
 
@@ -2282,8 +2295,8 @@ msgstr "nincs kijelölve"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3877 ../src/orca/default.py:4221
-#: ../src/orca/default.py:7514
+#: ../src/orca/default.py:3879 ../src/orca/default.py:4223
+#: ../src/orca/default.py:7517
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
@@ -2302,7 +2315,7 @@ msgstr "kijelölve"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3885 ../src/orca/default.py:7522
+#: ../src/orca/default.py:3887 ../src/orca/default.py:7525
 msgid "text|unselected"
 msgstr "nincs kijelölve"
 
@@ -2310,7 +2323,7 @@ msgstr "nincs kijelölve"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:4278
+#: ../src/orca/default.py:4280
 msgid "Speak row"
 msgstr "Sor felolvasása"
 
@@ -2318,13 +2331,13 @@ msgstr "Sor felolvasása"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:4284
+#: ../src/orca/default.py:4286
 msgid "Speak cell"
 msgstr "Cella felolvasása"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4372 ../src/orca/where_am_I.py:1682
+#: ../src/orca/default.py:4374 ../src/orca/where_am_I.py:1682
 msgid "bold"
 msgstr "félkövér"
 
@@ -2335,7 +2348,7 @@ msgstr "félkövér"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:4389 ../src/orca/default.py:4400
+#: ../src/orca/default.py:4391 ../src/orca/default.py:4402
 #, python-format
 msgid "%s %s pixel"
 msgid_plural "%s %s pixels"
@@ -2350,7 +2363,7 @@ msgstr[1] "%s %s képpont"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:4476 ../src/orca/default.py:6383
+#: ../src/orca/default.py:4478 ../src/orca/default.py:6386
 #: ../src/orca/rolenames.py:604
 #: ../src/orca/scripts/apps/soffice/script.py:1117
 #: ../src/orca/where_am_I.py:1704
@@ -2364,7 +2377,7 @@ msgstr "hivatkozás"
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/default.py:4523
+#: ../src/orca/default.py:4525
 msgid "Bypass mode enabled."
 msgstr "Átugró mód engedélyezve."
 
@@ -2376,7 +2389,7 @@ msgstr "Átugró mód engedélyezve."
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:4546
+#: ../src/orca/default.py:4548
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -2394,14 +2407,14 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:4558
+#: ../src/orca/default.py:4560
 msgid "Learn mode.  Press escape to exit."
 msgstr "Tanulómód. Kilépéshez nyomja meg az Esc billentyűt."
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:4988 ../src/orca/default.py:5151
+#: ../src/orca/default.py:4991 ../src/orca/default.py:5154
 msgid "white space"
 msgstr "üreshely"
 
@@ -2411,7 +2424,7 @@ msgstr "üreshely"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:5383
+#: ../src/orca/default.py:5386
 msgid "string not found"
 msgstr "a karakterlánc nem található"
 
@@ -2420,12 +2433,12 @@ msgstr "a karakterlánc nem található"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:6189
+#: ../src/orca/default.py:6192
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Elgépelt szó: %s"
 
-#: ../src/orca/default.py:6197
+#: ../src/orca/default.py:6200
 #, python-format
 msgid "Context is %s"
 msgstr "Kontextusa: %s"
@@ -2435,7 +2448,7 @@ msgstr "Kontextusa: %s"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:6335
+#: ../src/orca/default.py:6338
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -2446,7 +2459,7 @@ msgstr[1] "%(count)d %(repeatChar)s karakter"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7358
+#: ../src/orca/default.py:7361
 msgid "line selected to end from previous cursor position"
 msgstr "a sor kijelölve a kurzorpozíciótól a sor végéig"
 
@@ -2454,7 +2467,7 @@ msgstr "a sor kijelölve a kurzorpozíciótól a sor végéig"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7366
+#: ../src/orca/default.py:7369
 msgid "line selected from start to previous cursor position"
 msgstr "a sor kijelölve a kurzorpozíciótól a sor elejéig"
 
@@ -2462,14 +2475,14 @@ msgstr "a sor kijelölve a kurzorpozíciótól a sor elejéig"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7375
+#: ../src/orca/default.py:7378
 msgid "page selected from cursor position"
 msgstr "az oldal kijelölve a kurzorpozíciótól"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7380
+#: ../src/orca/default.py:7383
 msgid "page unselected from cursor position"
 msgstr "az oldal kijelölése megszüntetve a kurzorpozíciótól"
 
@@ -2477,14 +2490,14 @@ msgstr "az oldal kijelölése megszüntetve a kurzorpozíciótól"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7389
+#: ../src/orca/default.py:7392
 msgid "page selected to cursor position"
 msgstr "az oldal kijelölve a kurzorpozícióig"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7394
+#: ../src/orca/default.py:7397
 msgid "page unselected to cursor position"
 msgstr "az oldal kijelölése megszüntetve a kurzorpozícióig"
 
@@ -2492,14 +2505,14 @@ msgstr "az oldal kijelölése megszüntetve a kurzorpozícióig"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7403
+#: ../src/orca/default.py:7406
 msgid "line selected down from cursor position"
 msgstr "a kurzorpozíció alatti sor kijelölve"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7408
+#: ../src/orca/default.py:7411
 msgid "line unselected down from cursor position"
 msgstr "a kurzorpozíció alatti sor kijelölése megszüntetve"
 
@@ -2507,14 +2520,14 @@ msgstr "a kurzorpozíció alatti sor kijelölése megszüntetve"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7417
+#: ../src/orca/default.py:7420
 msgid "line selected up from cursor position"
 msgstr "a kurzorpozíció feletti sor kijelölve"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7422
+#: ../src/orca/default.py:7425
 msgid "line unselected up from cursor position"
 msgstr "a kurzorpozíció feletti sor kijelölése megszüntetve"
 
@@ -2522,14 +2535,14 @@ msgstr "a kurzorpozíció feletti sor kijelölése megszüntetve"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7431
+#: ../src/orca/default.py:7434
 msgid "document selected to cursor position"
 msgstr "a dokumentum kijelölve a kurzorpozícióig"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7436
+#: ../src/orca/default.py:7439
 msgid "document unselected to cursor position"
 msgstr "A dokumentum nincs kijelölve a kurzorpozícióig"
 
@@ -2537,21 +2550,21 @@ msgstr "A dokumentum nincs kijelölve a kurzorpozícióig"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7445
+#: ../src/orca/default.py:7448
 msgid "document selected from cursor position"
 msgstr "a dokumentum kijelölve a kurzorpozíciótól"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7450
+#: ../src/orca/default.py:7453
 msgid "document unselected from cursor position"
 msgstr "a dokumentum kijelölése megszüntetve a kurzorpozíciótól"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:7467
+#: ../src/orca/default.py:7470
 msgid "entire document selected"
 msgstr "az egész dokumentum kijelölve"
 
@@ -2709,7 +2722,7 @@ msgstr "mínusz"
 #. synthesis engine is now speaking in a higher pitch.
 #.
 #: ../src/orca/gnomespeechfactory.py:998
-#: ../src/orca/speechdispatcherfactory.py:297
+#: ../src/orca/speechdispatcherfactory.py:298
 msgid "higher."
 msgstr "magasabb."
 
@@ -2718,7 +2731,7 @@ msgstr "magasabb."
 #.
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/gnomespeechfactory.py:1029
-#: ../src/orca/speechdispatcherfactory.py:297
+#: ../src/orca/speechdispatcherfactory.py:298
 msgid "lower."
 msgstr "mélyebb."
 
@@ -2727,7 +2740,7 @@ msgstr "mélyebb."
 #. per minute).
 #.
 #: ../src/orca/gnomespeechfactory.py:1058
-#: ../src/orca/speechdispatcherfactory.py:287
+#: ../src/orca/speechdispatcherfactory.py:288
 msgid "faster."
 msgstr "gyorsabb."
 
@@ -2737,7 +2750,7 @@ msgstr "gyorsabb."
 #.
 #. Translators: This string announces speech rate change.
 #: ../src/orca/gnomespeechfactory.py:1092
-#: ../src/orca/speechdispatcherfactory.py:287
+#: ../src/orca/speechdispatcherfactory.py:288
 msgid "slower."
 msgstr "lassabb."
 
@@ -3115,8 +3128,8 @@ msgstr "Nagyító letiltva."
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1728
-#: ../src/orca/orca_gui_prefs.py:1754
+#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1735
+#: ../src/orca/orca_gui_prefs.py:1761
 msgid "Full Screen"
 msgstr "Teljes képernyő"
 
@@ -3129,32 +3142,32 @@ msgstr "A teljes képernyős mód nem érhető el"
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1732
+#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1739
 msgid "Top Half"
 msgstr "Felső fél"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1736
+#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1743
 msgid "Bottom Half"
 msgstr "Alsó fél"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1740
+#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1747
 msgid "Left Half"
 msgstr "Bal fél"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1744
+#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1751
 msgid "Right Half"
 msgstr "Jobb fél"
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1749
+#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1756
 msgid "Custom"
 msgstr "Egyéni"
 
@@ -3339,11 +3352,11 @@ msgstr "Engedélyezi a Braille-t? (i vagy n): "
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "Engedélyezi a Braille monitort? (i vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:449
+#: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:456
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "A GNOME akadálymentesítési támogatása engedélyezve."
 
-#: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:451
+#: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:458
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 "Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez."
@@ -3446,9 +3459,9 @@ msgstr "Középre helyezett"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:81 ../src/orca/orca_gui_prefs.py:4204
-#: ../src/orca/orca_gui_prefs.py:4233 ../src/orca/orca_gui_prefs.py:4406
-#: ../src/orca/orca_gui_prefs.py:4473 ../src/orca/orca_gui_prefs.py:4496
+#: ../src/orca/orca_gui_prefs.py:81 ../src/orca/orca_gui_prefs.py:4211
+#: ../src/orca/orca_gui_prefs.py:4240 ../src/orca/orca_gui_prefs.py:4413
+#: ../src/orca/orca_gui_prefs.py:4480 ../src/orca/orca_gui_prefs.py:4503
 msgid "None"
 msgstr "Nincs"
 
@@ -3473,12 +3486,14 @@ msgstr "Arányos"
 msgid "Push"
 msgstr "Görgetés"
 
+#. DESCRIP
+#.
 #. Translators: Function is a table column header where the
 #. cells in the column are a sentence that briefly describes
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:194
+#: ../src/orca/orca_gui_prefs.py:199
 msgid "Function"
 msgstr "Funkció"
 
@@ -3486,7 +3501,7 @@ msgstr "Funkció"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:270
+#: ../src/orca/orca_gui_prefs.py:277
 msgid "Key Binding"
 msgstr "Billentyűtársítás"
 
@@ -3497,7 +3512,7 @@ msgstr "Billentyűtársítás"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:349
+#: ../src/orca/orca_gui_prefs.py:356
 msgid "Alternate"
 msgstr "Tartalék"
 
@@ -3505,28 +3520,28 @@ msgstr "Tartalék"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:376
 msgid "Modified"
 msgstr "Módosítva"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:422 ../src/orca/orca_gui_prefs.py:471
+#: ../src/orca/orca_gui_prefs.py:429 ../src/orca/orca_gui_prefs.py:478
 msgid "Default"
 msgstr "Alapértelmezett"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:428 ../src/orca/orca_gui_prefs.py:477
+#: ../src/orca/orca_gui_prefs.py:435 ../src/orca/orca_gui_prefs.py:484
 msgid "Uppercase"
 msgstr "Nagybetűkké"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:434 ../src/orca/orca_gui_prefs.py:487
+#: ../src/orca/orca_gui_prefs.py:441 ../src/orca/orca_gui_prefs.py:494
 msgid "Hyperlink"
 msgstr "Hiperlink"
 
@@ -3535,7 +3550,7 @@ msgstr "Hiperlink"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1120
+#: ../src/orca/orca_gui_prefs.py:1127
 msgid "Attribute Name"
 msgstr "Attribútumnév"
 
@@ -3546,7 +3561,7 @@ msgstr "Attribútumnév"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1135
+#: ../src/orca/orca_gui_prefs.py:1142
 msgid "Speak"
 msgstr "Felolvasás"
 
@@ -3557,7 +3572,7 @@ msgstr "Felolvasás"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1153
+#: ../src/orca/orca_gui_prefs.py:1160
 msgid "Mark in braille"
 msgstr "Braille kijelzés"
 
@@ -3576,7 +3591,7 @@ msgstr "Braille kijelzés"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1179
+#: ../src/orca/orca_gui_prefs.py:1186
 msgid "Present Unless"
 msgstr "Csak ha nem"
 
@@ -3587,7 +3602,7 @@ msgstr "Csak ha nem"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1294
+#: ../src/orca/orca_gui_prefs.py:1301
 msgid "Actual String"
 msgstr "Tényleges karakterlánc"
 
@@ -3598,7 +3613,7 @@ msgstr "Tényleges karakterlánc"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1311
+#: ../src/orca/orca_gui_prefs.py:1318
 msgid "Replacement String"
 msgstr "Helyettesítő szó"
 
@@ -3606,7 +3621,7 @@ msgstr "Helyettesítő szó"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2064
+#: ../src/orca/orca_gui_prefs.py:2071
 msgid "(double click)"
 msgstr "(Kétszer gyorsan megnyomva)"
 
@@ -3614,7 +3629,7 @@ msgstr "(Kétszer gyorsan megnyomva)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2070
+#: ../src/orca/orca_gui_prefs.py:2077
 msgid "(triple click)"
 msgstr "(Háromszor gyorsan megnyomva)"
 
@@ -3623,7 +3638,7 @@ msgstr "(Háromszor gyorsan megnyomva)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2174 ../src/orca/orca_gui_prefs.py:2272
+#: ../src/orca/orca_gui_prefs.py:2181 ../src/orca/orca_gui_prefs.py:2279
 msgid "Braille Bindings"
 msgstr "Braille társítások"
 
@@ -3632,8 +3647,8 @@ msgstr "Braille társítások"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2636 ../src/orca/orca_gui_prefs.py:2677
-#: ../src/orca/orca_gui_prefs.py:2717 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:2643 ../src/orca/orca_gui_prefs.py:2684
+#: ../src/orca/orca_gui_prefs.py:2724 ../src/orca/orca-setup.glade.h:52
 msgid "Dot _7"
 msgstr "_7. pont"
 
@@ -3641,8 +3656,8 @@ msgstr "_7. pont"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2643 ../src/orca/orca_gui_prefs.py:2684
-#: ../src/orca/orca_gui_prefs.py:2724 ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca_gui_prefs.py:2650 ../src/orca/orca_gui_prefs.py:2691
+#: ../src/orca/orca_gui_prefs.py:2731 ../src/orca/orca-setup.glade.h:53
 msgid "Dot _8"
 msgstr "_8. pont"
 
@@ -3650,15 +3665,15 @@ msgstr "_8. pont"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2650 ../src/orca/orca_gui_prefs.py:2691
-#: ../src/orca/orca_gui_prefs.py:2731 ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca_gui_prefs.py:2657 ../src/orca/orca_gui_prefs.py:2698
+#: ../src/orca/orca_gui_prefs.py:2738 ../src/orca/orca-setup.glade.h:54
 msgid "Dots 7 an_d 8"
 msgstr "7. é_s 8. pont"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2754 ../src/orca/orca-setup.glade.h:163
+#: ../src/orca/orca_gui_prefs.py:2761 ../src/orca/orca-setup.glade.h:163
 msgid "_None"
 msgstr "_Nincs"
 
@@ -3667,7 +3682,7 @@ msgstr "_Nincs"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2762 ../src/orca/orca-setup.glade.h:126
+#: ../src/orca/orca_gui_prefs.py:2769 ../src/orca/orca-setup.glade.h:126
 msgid "So_me"
 msgstr "Né_hány"
 
@@ -3675,7 +3690,7 @@ msgstr "Né_hány"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2769 ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca_gui_prefs.py:2776 ../src/orca/orca-setup.glade.h:88
 msgid "M_ost"
 msgstr "_Legtöbb"
 
@@ -3683,7 +3698,7 @@ msgstr "_Legtöbb"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2790
+#: ../src/orca/orca_gui_prefs.py:2797
 msgid "Line"
 msgstr "Sor"
 
@@ -3691,7 +3706,7 @@ msgstr "Sor"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2796
+#: ../src/orca/orca_gui_prefs.py:2803
 msgid "Sentence"
 msgstr "Mondat"
 
@@ -3699,7 +3714,7 @@ msgstr "Mondat"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2816 ../src/orca/orca_gui_prefs.py:2946
+#: ../src/orca/orca_gui_prefs.py:2823 ../src/orca/orca_gui_prefs.py:2953
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brie_f"
 msgstr "_Tömör"
@@ -3708,7 +3723,7 @@ msgstr "_Tömör"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2840 ../src/orca/orca-setup.glade.h:130
+#: ../src/orca/orca_gui_prefs.py:2847 ../src/orca/orca-setup.glade.h:130
 msgid "Speak current _cell"
 msgstr "Aktuális _cella felolvasása"
 
@@ -3716,7 +3731,7 @@ msgstr "Aktuális _cella felolvasása"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3593
+#: ../src/orca/orca_gui_prefs.py:3600
 msgid "enter new key"
 msgstr "üsse le az új billentyűt"
 
@@ -3724,7 +3739,7 @@ msgstr "üsse le az új billentyűt"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3622
+#: ../src/orca/orca_gui_prefs.py:3629
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "A billentyűtársítás törölve. A megerősítéshez nyomja meg az Entert."
 
@@ -3732,7 +3747,7 @@ msgstr "A billentyűtársítás törölve. A megerősítéshez nyomja meg az Ent
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3646
+#: ../src/orca/orca_gui_prefs.py:3653
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "A megadott billentyű már ehhez van kötve: %s"
@@ -3741,7 +3756,7 @@ msgstr "A megadott billentyű már ehhez van kötve: %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3653
+#: ../src/orca/orca_gui_prefs.py:3660
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Billentyűütés: %s. A megerősítéshez nyomja meg az Entert."
@@ -3750,7 +3765,7 @@ msgstr "Billentyűütés: %s. A megerősítéshez nyomja meg az Entert."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3692
+#: ../src/orca/orca_gui_prefs.py:3699
 #, python-format
 msgid "The new key is: %s"
 msgstr "Az új billentyű: %s"
@@ -3759,22 +3774,22 @@ msgstr "Az új billentyű: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3700
+#: ../src/orca/orca_gui_prefs.py:3707
 msgid "The keybinding has been removed."
 msgstr "A billentyűtársítás törölve."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3778 ../src/orca/orca-setup.glade.h:156
+#: ../src/orca/orca_gui_prefs.py:3785 ../src/orca/orca-setup.glade.h:156
 msgid "_Desktop"
 msgstr "As_ztali"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:4198 ../src/orca/orca_gui_prefs.py:4209
-#: ../src/orca/orca_gui_prefs.py:4231
+#: ../src/orca/orca_gui_prefs.py:4205 ../src/orca/orca_gui_prefs.py:4216
+#: ../src/orca/orca_gui_prefs.py:4238
 msgid "Bilinear"
 msgstr "Bilineáris"
 
@@ -3783,7 +3798,7 @@ msgstr "Bilineáris"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4414 ../src/orca/orca_gui_prefs.py:4504
+#: ../src/orca/orca_gui_prefs.py:4421 ../src/orca/orca_gui_prefs.py:4511
 msgid "Saturate red"
 msgstr "Telített vörös"
 
@@ -3792,7 +3807,7 @@ msgstr "Telített vörös"
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4422 ../src/orca/orca_gui_prefs.py:4512
+#: ../src/orca/orca_gui_prefs.py:4429 ../src/orca/orca_gui_prefs.py:4519
 msgid "Saturate green"
 msgstr "Telített zöld"
 
@@ -3801,7 +3816,7 @@ msgstr "Telített zöld"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:4430 ../src/orca/orca_gui_prefs.py:4520
+#: ../src/orca/orca_gui_prefs.py:4437 ../src/orca/orca_gui_prefs.py:4527
 msgid "Saturate blue"
 msgstr "Telített kék"
 
@@ -3810,7 +3825,7 @@ msgstr "Telített kék"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4438 ../src/orca/orca_gui_prefs.py:4528
+#: ../src/orca/orca_gui_prefs.py:4445 ../src/orca/orca_gui_prefs.py:4535
 msgid "Desaturate red"
 msgstr "Telítetlen vörös"
 
@@ -3819,7 +3834,7 @@ msgstr "Telítetlen vörös"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4446 ../src/orca/orca_gui_prefs.py:4536
+#: ../src/orca/orca_gui_prefs.py:4453 ../src/orca/orca_gui_prefs.py:4543
 msgid "Desaturate green"
 msgstr "Telítetlen zöld"
 
@@ -3828,7 +3843,7 @@ msgstr "Telítetlen zöld"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4454 ../src/orca/orca_gui_prefs.py:4544
+#: ../src/orca/orca_gui_prefs.py:4461 ../src/orca/orca_gui_prefs.py:4551
 msgid "Desaturate blue"
 msgstr "Telítetlen kék"
 
@@ -3837,7 +3852,7 @@ msgstr "Telítetlen kék"
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4462 ../src/orca/orca_gui_prefs.py:4552
+#: ../src/orca/orca_gui_prefs.py:4469 ../src/orca/orca_gui_prefs.py:4559
 msgid "Positive hue shift"
 msgstr "Pozitív árnyalateltolás"
 
@@ -3846,13 +3861,13 @@ msgstr "Pozitív árnyalateltolás"
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4470 ../src/orca/orca_gui_prefs.py:4560
+#: ../src/orca/orca_gui_prefs.py:4477 ../src/orca/orca_gui_prefs.py:4567
 msgid "Negative hue shift"
 msgstr "Negatív árnyalateltolás"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4797
+#: ../src/orca/orca_gui_prefs.py:4804
 msgid "Starting Orca Preferences."
 msgstr "Orka beállítások indítása."
 
@@ -7075,20 +7090,20 @@ msgstr "Keresési feltételek"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1764
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1786
 msgid "Loading.  Please wait."
 msgstr "Betöltés, kis türelmet."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1769
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1791
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s betöltése befejeződött."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1775
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1797
 msgid "Finished loading."
 msgstr "A betöltés befejeződött."
 
@@ -7099,14 +7114,14 @@ msgstr "A betöltés befejeződött."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2230
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2252
 #, python-format
 msgid "h%d"
 msgstr "f%d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5882
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5900
 msgid "open"
 msgstr "megnyitás"
 
@@ -7116,7 +7131,7 @@ msgstr "megnyitás"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5955
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5973
 #: ../src/orca/structural_navigation.py:881
 msgid "Wrapping to bottom."
 msgstr "Vissza a lap aljára."
@@ -7127,7 +7142,7 @@ msgstr "Vissza a lap aljára."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6023
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6041
 #: ../src/orca/structural_navigation.py:889
 msgid "Wrapping to top."
 msgstr "Vissza a lap tetejére."
@@ -7135,9 +7150,9 @@ msgstr "Vissza a lap tetejére."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6049
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6073
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6083
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6067
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6091
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6101
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Az élő régiók támogatása kikapcsolva"
@@ -7145,11 +7160,11 @@ msgstr "Az élő régiók támogatása kikapcsolva"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6057
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6075
 msgid "Live regions monitoring on"
 msgstr "Az élő régiók figyelése bekapcsolva"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6064
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6082
 msgid "Live regions monitoring off"
 msgstr "Az élő régiók figyelése kikapcsolva"
 
@@ -7160,7 +7175,7 @@ msgstr "Az élő régiók figyelése kikapcsolva"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6099
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6117
 msgid "Gecko is controlling the caret."
 msgstr "A Gecko vezérli a mutatót."
 
@@ -7171,7 +7186,7 @@ msgstr "A Gecko vezérli a mutatót."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6111
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6129
 msgid "Orca is controlling the caret."
 msgstr "Az Orka vezérli a mutatót."
 
@@ -7353,35 +7368,35 @@ msgstr "Minefield"
 #. version of Thunderbird, which chooses to now call itself by a different
 #. name.
 #.
-#: ../src/orca/settings.py:1012
+#: ../src/orca/settings.py:1021
 msgid "Shredder"
 msgstr "fejléc"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1017
+#: ../src/orca/settings.py:1026
 msgid "Mail/News"
 msgstr "Levél/hírek"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1022
+#: ../src/orca/settings.py:1031
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1027
+#: ../src/orca/settings.py:1036
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1032
+#: ../src/orca/settings.py:1041
 msgid "gaim"
 msgstr "gaim"
 
@@ -7391,7 +7406,7 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1177 ../src/orca/settings.py:1185
+#: ../src/orca/settings.py:1186 ../src/orca/settings.py:1194
 msgid "required"
 msgstr "szükséges"
 
@@ -7401,14 +7416,14 @@ msgstr "szükséges"
 #. will have a chance to select a particular speech engine by its real
 #. name, such as Festival, IBMTTS, etc.
 #.
-#: ../src/orca/speechdispatcherfactory.py:76
+#: ../src/orca/speechdispatcherfactory.py:77
 msgid "Default Synthesizer"
 msgstr "Alapértelmezett beszédszintetizátor"
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
 #.
-#: ../src/orca/speechdispatcherfactory.py:89
+#: ../src/orca/speechdispatcherfactory.py:90
 msgid "Speech Dispatcher"
 msgstr "Felolvasás tiltása"
 
@@ -7421,7 +7436,7 @@ msgstr "Felolvasás tiltása"
 #. the list will contain the names of all available "real"
 #. voices provided by the speech engine.
 #.
-#: ../src/orca/speechdispatcherfactory.py:171
+#: ../src/orca/speechdispatcherfactory.py:172
 #, python-format
 msgid "%s default voice"
 msgstr "%s alapértelmezett hang"
