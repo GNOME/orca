@@ -60,6 +60,10 @@ class TutorialGenerator:
             self._getTutorialForComboBox
         self.tutorialGenerators[pyatspi.ROLE_FRAME] = \
             self._getTutorialForFrame
+        self.tutorialGenerators[pyatspi.ROLE_ICON] = \
+            self._getTutorialForIcon
+        self.tutorialGenerators[pyatspi.ROLE_LAYERED_PANE] = \
+            self._getTutorialForLayeredPane
         self.tutorialGenerators[pyatspi.ROLE_LIST] = \
             self._getTutorialForList
         self.tutorialGenerators[pyatspi.ROLE_LIST_ITEM] = \
@@ -205,21 +209,9 @@ class TutorialGenerator:
         if not name and obj.description:
             name = obj.description
 
-        # Translators: this is the tutorial string for when first landing 
-        # on the desktop, giving tips on how to navigate.
-        # Also describing how to access the menues.
-        desktopMsg = _("To move to items, use either " \
-                     "the arrow keys, or type ahead searching. " \
-                     "To get to the system menues press the alt+f1 key.")
-        
         # Translators: If this application has more than one unfocused alert or
         # dialog window, inform user of how to refocus these.
         childWindowsMsg = _("Press alt+f6 to give focus to child windows.")
-
-        scriptName = self._script.name
-        sibling = obj.parent.getChildAtIndex(0)
-        if 'nautilus' in scriptName and obj == sibling:
-            utterances.append(desktopMsg)
 
         # If this application has more than one unfocused alert or
         # dialog window, tell user how to give them focus.
@@ -229,6 +221,77 @@ class TutorialGenerator:
             utterances.append(childWindowsMsg)
 
         self._debugGenerator("_getTutorialForFrame",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getTutorialForIcon(self, obj, already_focused, forceMessage):
+        """Get the  tutorial string for an icon.
+
+        Arguments:
+        - obj: the icon
+        - already_focused: False if object just received focus
+        - forceMessage: used for when whereAmI really needs the tutorial string.
+
+        Returns a list of tutorial utterances to be spoken for the object.
+        """
+
+        if obj.parent.getRole() == pyatspi.ROLE_LAYERED_PANE:
+            utterances = self._getTutorialForLayeredPane(obj.parent,
+                                                         already_focused,
+                                                         forceMessage)
+        else:
+            utterances = self._getDefaultTutorial(obj,
+                                                  already_focused,
+                                                  forceMessage)
+
+        self._debugGenerator("_getTutorialForIcon",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getTutorialForLayeredPane(self, obj, already_focused, forceMessage):
+        """Get the  tutorial string for a layered pane.
+
+        Arguments:
+        - obj: the layered pane
+        - already_focused: False if object just received focus
+        - forceMessage: used for when whereAmI really needs the tutorial string.
+
+        Returns a list of tutorial utterances to be spoken for the object.
+        """
+
+        utterances = []
+        name = self._script.getDisplayedText(obj)
+        if not name and obj.description:
+            name = obj.description
+
+        # Translators: this gives tips on how to navigate items in a 
+        # layered pane.
+        msg = _("To move to items, use either " \
+                "the arrow keys or type ahead searching.")
+        utterances.append(msg)
+ 
+        # Translators: this is the tutorial string for when first landing 
+        # on the desktop, describing how to access the system menus.
+        desktopMsg = _("To get to the system menus press the alt+f1 key.")
+
+        scriptName = self._script.name
+        sibling = obj.parent.getChildAtIndex(0)
+        if 'nautilus' in scriptName and obj == sibling:
+            utterances.append(desktopMsg)
+
+        if (not already_focused and self.lastTutorial != utterances) \
+            or forceMessage:
+            pass
+        else:
+            utterances = []
+
+        self._debugGenerator("_getTutorialForLayeredPane",
                              obj,
                              already_focused,
                              utterances)
