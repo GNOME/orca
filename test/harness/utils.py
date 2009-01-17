@@ -145,7 +145,7 @@ class AssertPresentationAction(AtomicAction):
     totalCount = 0
     totalSucceed = 0
     totalFail = 0
-    totalExpectedToFail = 0
+    totalKnownIssues = 0
 
     def __init__(self, name, expectedResults, 
                  assertionPredicate=assertListEquality):
@@ -178,15 +178,17 @@ class AssertPresentationAction(AtomicAction):
         Returns an indication of whether this test was expected to fail.
         """
 
-        expectedToFail = False
+        knownIssue = False
         print >> myErr, "DIFFERENCES FOUND:"
         if isinstance(self._expectedResults, [].__class__):
             for result in self._expectedResults:
-                if result.startswith("KNOWN ISSUE"):
-                    expectedToFail = True
+                if result.startswith("KNOWN ISSUE") \
+                   or result.startswith("BUG?"):
+                    knownIssue = True
         else:
-            if self._expectedResults.startswith("KNOWN ISSUE"):
-                expectedToFail = True
+            if self._expectedResults.startswith("KNOWN ISSUE") \
+               or self._expectedResults.startswith("BUG?"):
+                knownIssue = True
 
         d = difflib.Differ()
         try:
@@ -209,7 +211,7 @@ class AssertPresentationAction(AtomicAction):
                 except:
                     pass
 
-        return expectedToFail
+        return knownIssue
 
     def printResults(self, results):
         """Print out the expected results and the actual results.
@@ -220,16 +222,18 @@ class AssertPresentationAction(AtomicAction):
         Returns an indication of whether this test was expected to fail.
         """
 
-        expectedToFail = False
+        knownIssue = False
         print >> myErr, "EXPECTED:"
         if isinstance(self._expectedResults, [].__class__):
             for result in self._expectedResults:
-                if result.startswith("KNOWN ISSUE"):
-                    expectedToFail = True
+                if result.startswith("KNOWN ISSUE") \
+                        or result.startswith("BUG?"):
+                    knownIssue = True
                 print >> myErr, '     "%s",' % result
         else:
-            if self._expectedResults.startswith("KNOWN ISSUE"):
-                expectedToFail = True
+            if self._expectedResults.startswith("KNOWN ISSUE") \
+               or self._expectedResults.startswith("BUG?"):
+                knownIssue = True
             print >> myErr, '     "%s"' % self._expectedResults
         print >> myErr, "ACTUAL:"
         if isinstance(results, [].__class__):
@@ -237,7 +241,7 @@ class AssertPresentationAction(AtomicAction):
                 print >> myErr, '     "%s",' % result
         else:
             print >> myErr, '     "%s"' % results
-        return expectedToFail
+        return knownIssue
 
     def _stopRecording(self):
         result = dbusOrcaLogging.stopRecording()
@@ -255,14 +259,15 @@ class AssertPresentationAction(AtomicAction):
                                AssertPresentationAction.totalCount, 
                                self._name)
             if createDiffs:
-                expectedToFail = self.printDiffs(results)
+                knownIssue = self.printDiffs(results)
             else:
-                expectedToFail = self.printResults(results)
+                knownIssue = self.printResults(results)
 
-            if expectedToFail:
-                AssertPresentationAction.totalExpectedToFail += 1
+            if knownIssue:
+                AssertPresentationAction.totalKnownIssues += 1
                 print >> myErr, '[FAILURE WAS EXPECTED - ' \
-                                'LOOK FOR KNOWN ISSUE IN EXPECTED RESULTS]'
+                                'LOOK FOR KNOWN ISSUE OR BUG? ' \
+                                'IN EXPECTED RESULTS]'
             else:
                 print >> myErr, '[FAILURE WAS UNEXPECTED]'
 
@@ -282,7 +287,7 @@ class AssertionSummaryAction(AtomicAction):
             % (AssertPresentationAction.totalSucceed,
                AssertPresentationAction.totalFail,
                (AssertPresentationAction.totalFail \
-               - AssertPresentationAction.totalExpectedToFail),
+               - AssertPresentationAction.totalKnownIssues),
                AssertPresentationAction.totalCount,
                sys.argv[0])
 

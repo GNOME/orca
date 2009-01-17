@@ -1,5 +1,11 @@
 2009-01-16  Willie Walker <william.walker@sun.com>
 
+        * test/harness/utils.py:
+        Allow assertions with BUG? in them to be treated the same
+        as KNOWN ISSUES.
+
+2009-01-16  Willie Walker <william.walker@sun.com>
+
         * src/orca/tutorialgenerator.py:
         Fix for bug #562327 - Desktop tutor message order problem
 
