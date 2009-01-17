@@ -1488,6 +1488,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("speakTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
 
+        self.get_widget("speakMnemonicsCheckButton").set_active(\
+            prefs["enableMnemonicSpeaking"])
+
         self.get_widget("sayAllStyle").set_active(prefs["sayAllStyle"])
 
         # Set the sensitivity of the "Update Interval" items, depending
@@ -2485,6 +2488,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["enableTutorialMessages"] = widget.get_active()
+
+    def mnemonicSpeakingChecked (self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakMnemonicsCheckButton GtkCheckButton widget.
+           Set the 'Speak mnemonics automaticaly' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enableMnemonicSpeaking"] = widget.get_active()
 
     def brailleSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the

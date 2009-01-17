@@ -105,6 +105,7 @@ userCustomizableSettings = [
     "enableActionKeys",
     "enableNavigationKeys",
     "enableTutorialMessages",
+    "enableMnemonicSpeaking",
     "enableBraille",
     "enableBrailleContext",
     "enableBrailleGrouping",
@@ -574,8 +575,13 @@ enableActionKeys        = True
 #
 enableNavigationKeys    = False
 
-# If True, roles that have tutorial strings defined will be spoken.
+# If True, tutorial strings defined will be spoken.
+#
 enableTutorialMessages = False
+
+# If True, mnemonics will be spoken.
+#
+enableMnemonicSpeaking = False
 
 # If True, show the main Orca window.
 #

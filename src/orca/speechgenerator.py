@@ -155,25 +155,53 @@ class SpeechGenerator:
         self.speechGenerators[pyatspi.ROLE_WINDOW]              = \
              self._getSpeechForWindow
 
-    def _getSpeechForObjectAccelerator(self, obj):
-        """Returns a list of utterances that describes the keyboard
-        accelerator (and possibly shortcut) for the given object.
+    def _addSpeechForObjectAccelerator(self, obj, utterances):
+        """Adds an utterance that describes the keyboard accelerator for the
+        given object to the list of utterances passed in.
 
         Arguments:
         - obj: the Accessible object
+        - utterances: the list of utterances to add to.
 
         Returns a list of utterances to be spoken.
         """
 
-        utterances = []
+        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+            if accelerator:
+                # Add punctuation for better prosody.
+                #
+                #if utterances:
+                #    utterances[-1] += "."
+                utterances.append(accelerator)
 
-        result = self._script.getKeyBinding(obj)
-        accelerator = result[2]
+    def _addSpeechForObjectMnemonic(self, obj, utterances):
+        """Adds an utterance that describes the mnemonic for the given object
+        to the utterances passed in.
 
-        if len(accelerator) > 0:
-            utterances.append(accelerator)
+        Arguments:
+        - obj: the Accessible object
+        - utterances: the list of utterances to add to.
+        """
 
-        return utterances
+        if settings.enableMnemonicSpeaking:
+            # The mnemonic is what we're really looking for.  But,
+            # some objects (e.g., menu items) only expose the mnemonic
+            # via the full shortcut (e.g., "Alt f c" for a "Close"
+            # menu item).  So, we fall back to the last character in
+            # the shortcut if the shortcut exists.
+            #
+            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+            if mnemonic:
+                mnemonic = mnemonic[-1] # we just want a single character
+            if not mnemonic and shortcut:
+                mnemonic = shortcut
+            if mnemonic:
+                # Add punctuation for better prosody.
+                #
+                #if utterances:
+                #    utterances[-1] += "."
+                utterances.append(mnemonic)
 
     def _getSpeechForObjectAvailability(self, obj):
         """Returns a list of utterances that describes the availability
@@ -294,7 +322,7 @@ class SpeechGenerator:
 
         The default speech will be of the following form:
 
-        label name role availability
+        label name role availability mnemonic
 
         Arguments:
         - obj: an Accessible
@@ -315,8 +343,9 @@ class SpeechGenerator:
                 utterances.extend(name)
             utterances.extend(self._getSpeechForAllTextSelection(obj))
             utterances.extend(self.getSpeechForObjectRole(obj, role))
-
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+            if obj == orca_state.locusOfFocus:
+                self._addSpeechForObjectMnemonic(obj, utterances)
 
         self._debugGenerator("_getDefaultSpeech",
                              obj,
@@ -416,6 +445,7 @@ class SpeechGenerator:
         """
 
         utterances = []
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_INDETERMINATE):
             # Translators: this represents the state of a checkbox.
@@ -445,8 +475,9 @@ class SpeechGenerator:
             else:
                 utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(checkedState)
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForRequiredObject(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
         else:
             utterances.append(checkedState)
 
@@ -470,9 +501,8 @@ class SpeechGenerator:
 
         utterances = self._getSpeechForCheckBox(obj, already_focused)
 
-        if (settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE)\
-           and not already_focused:
-            utterances.extend(self._getSpeechForObjectAccelerator(obj))
+        if not already_focused:
+            self._addSpeechForObjectAccelerator(obj, utterances)
 
         self._debugGenerator("_getSpeechForCheckMenuItem",
                              obj,
@@ -526,11 +556,12 @@ class SpeechGenerator:
         if not already_focused:
             utterances.extend(self.getSpeechForObjectRole(obj))
 
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
-
         for child in obj:
             if child.getRole() == pyatspi.ROLE_TEXT:
                 utterances.extend(self._getSpeechForAllTextSelection(child))
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+        self._addSpeechForObjectMnemonic(obj, utterances)
 
         self._debugGenerator("_getSpeechForComboBox",
                              obj,
@@ -687,7 +718,7 @@ class SpeechGenerator:
                                 alertAndDialogCount) % alertAndDialogCount
                 utterances.append(line)
 
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         self._debugGenerator("_getSpeechForFrame",
                              obj,
@@ -864,7 +895,7 @@ class SpeechGenerator:
         """
 
         utterances = []
- 
+
         if not already_focused:
             label = self._getSpeechForObjectLabel(obj)
             utterances.extend(label)
@@ -872,7 +903,6 @@ class SpeechGenerator:
             if name != label:
                 utterances.extend(name)
             utterances.extend(self._getSpeechForAllTextSelection(obj))
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         # If already in focus then the tree probably collapsed or expanded
         state = obj.getState()
@@ -890,6 +920,8 @@ class SpeechGenerator:
                 #
                 utterances.append(_("collapsed"))
                 
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+
         self._debugGenerator("_getSpeechForListItem",
                              obj,
                              already_focused,
@@ -906,12 +938,19 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getDefaultSpeech(obj, already_focused)
+        utterances = []
 
-        if (obj == orca_state.locusOfFocus) \
-               and (settings.speechVerbosityLevel \
-                    == settings.VERBOSITY_LEVEL_VERBOSE):
-            utterances.extend(self._getSpeechForObjectAccelerator(obj))
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+            utterances.extend(self._getSpeechForAllTextSelection(obj))
+            utterances.extend(self.getSpeechForObjectRole(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
+            self._addSpeechForObjectAccelerator(obj, utterances)
 
         self._debugGenerator("_getSpeechForMenu",
                              obj,
@@ -931,7 +970,6 @@ class SpeechGenerator:
         """
 
         utterances = self._getDefaultSpeech(obj, already_focused)
-
         self._debugGenerator("_getSpeechForMenuBar",
                              obj,
                              already_focused,
@@ -949,12 +987,11 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
+        utterances = []
+
         # No need to say "menu item" because we already know that.
         #
-        utterances = self._getSpeechForObjectName(obj)
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            utterances.extend(self._getSpeechForObjectAccelerator(obj))
+        utterances.extend(self._getSpeechForObjectName(obj))
 
         # OpenOffice check menu items currently have a role of "menu item"
         # rather then "check menu item", so we need to test if one of the
@@ -968,6 +1005,11 @@ class SpeechGenerator:
             # Translators: this represents the state of a checked menu item.
             #
             utterances.append(_("checked"))
+
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
+            self._addSpeechForObjectAccelerator(obj, utterances)
 
         self._debugGenerator("_getSpeechForMenuItem",
                              obj,
@@ -1007,6 +1049,8 @@ class SpeechGenerator:
         utterances.append(text)
 
         utterances.extend(self._getSpeechForAllTextSelection(obj))
+
+        self._addSpeechForObjectMnemonic(obj, utterances)
 
         self._debugGenerator("_getSpeechForText",
                              obj,
@@ -1146,6 +1190,7 @@ class SpeechGenerator:
         """
 
         utterances = []
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this is in reference to a radio button being
@@ -1172,6 +1217,7 @@ class SpeechGenerator:
             utterances.append(selectionState)
             utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
         else:
             utterances.append(selectionState)
 
@@ -1187,17 +1233,17 @@ class SpeechGenerator:
         already had focus, then only the state is spoken.
 
         Arguments:
-        - obj: the check menu item
+        - obj: the radio menu item
         - already_focused: False if object just received focus
 
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getSpeechForRadioButton(obj, False)
+        utterances = []
+        utterances.extend(self._getSpeechForRadioButton(obj, False))
 
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            utterances.extend(self._getSpeechForObjectAccelerator(obj))
+        if not already_focused:
+            self._addSpeechForObjectAccelerator(obj, utterances)
 
         self._debugGenerator("_getSpeechForRadioMenuItem",
                              obj,
@@ -1280,9 +1326,9 @@ class SpeechGenerator:
                 utterances.extend(self._getSpeechForObjectName(obj))
             utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(valueString)
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForRequiredObject(obj))
-
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
         self._debugGenerator("_getSpeechForSlider",
                              obj,
                              already_focused,
@@ -1336,6 +1382,7 @@ class SpeechGenerator:
             utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
 
         self._debugGenerator("_getSpeechForSplitPane",
                              obj,
@@ -1701,6 +1748,7 @@ class SpeechGenerator:
         """
 
         utterances = []
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED) \
            or state.contains(pyatspi.STATE_PRESSED):
@@ -1723,6 +1771,7 @@ class SpeechGenerator:
             utterances.extend(self.getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
+            self._addSpeechForObjectMnemonic(obj, utterances)
         else:
             utterances.append(checkedState)
 

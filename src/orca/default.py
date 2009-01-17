@@ -6813,7 +6813,7 @@ class Script(script.Script):
         Arguments:
         - obj: the Accessible object
 
-        Returns: list containing strings: [mnemonic, accelerator, shortcut]
+        Returns: list containing strings: [mnemonic, shortcut, accelerator]
         """
 
         try:
@@ -6828,7 +6828,7 @@ class Script(script.Script):
         #
         # The keybindings in <full-path> should be separated by ":"
         #
-        bindingStrings = action.getKeyBinding(0).split(';')
+        bindingStrings = action.getKeyBinding(0).decode("UTF-8").split(';')
 
         if len(bindingStrings) == 3:
             mnemonic       = bindingStrings[0]
