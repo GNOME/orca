@@ -4180,7 +4180,10 @@ class Script(script.Script):
             # Hide the flat review window and reset it so that it will be
             # recreated.
             #
-            self.drawOutline(-1, 0, 0, 0)
+            if self.flatReviewContext:
+                self.drawOutline(-1, 0, 0, 0)
+                self.flatReviewContext = None
+                self.updateBraille(orca_state.locusOfFocus)
 
         # Because window activated and deactivated events may be
         # received in any order when switching from one application to
