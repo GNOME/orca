@@ -1,9 +1,13 @@
 2009-01-19  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README:
+          Mark as Orca v2.25.6pre
+
+2009-01-19  Willie Walker <william.walker@sun.com>
+
         * NEWS:
           Final prep for Orca v2.25.5 (to include bug #567984 and
 	  bug #567428)
-
 
 2009-01-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
