@@ -84,7 +84,6 @@ class Script(default.Script):
 
         # The last locusOfFocusChanged roles hierarchy.
         #
-        self.lastRolesList = []
         self.rolesList = []
 
         # By default, don't present if Evolution is not the active application.
@@ -514,6 +513,20 @@ class Script(default.Script):
                     if text.getNSelections():
                         text.removeSelection(0)
 
+    def isMessageBodyText(self, obj):
+        """Returns True if obj is in the body of an email message.
+
+        Arguments:
+        - obj: the Accessible object of interest.
+        """
+
+        try:
+            obj.queryHypertext()
+        except:
+            return False
+        else:
+            return obj.getState().contains(pyatspi.STATE_MULTI_LINE)
+
     def presentMessageLine(self, obj, newLocusOfFocus):
         """Speak/braille the line at the current text caret offset.
         """
@@ -587,11 +600,6 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        # Save the previous role hierarchy list for possible comparison
-        # in section 8).
-        #
-        self.lastRolesList = self.rolesList
-
         debug.printObjectEvent(self.debugLevel,
                                event,
                                debug.getAccessibleDetails(event.source))
@@ -616,15 +624,8 @@ class Script(default.Script):
         # "text", "panel" and "unknown". If we find that, then (hopefully)
         # it's a line in the mail message and we get the utterances to
         # speak for that Text.
-
-        self.rolesList = [pyatspi.ROLE_TEXT, \
-                          pyatspi.ROLE_PANEL, \
-                          pyatspi.ROLE_UNKNOWN, \
-                          pyatspi.ROLE_PANEL, \
-                          pyatspi.ROLE_SCROLL_PANE, \
-                          pyatspi.ROLE_FILLER, \
-                          pyatspi.ROLE_SPLIT_PANE]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.isMessageBodyText(event.source) \
+           and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
@@ -1172,15 +1173,8 @@ class Script(default.Script):
         #
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
-
-        self.rolesList = [pyatspi.ROLE_TEXT, \
-                          pyatspi.ROLE_PANEL, \
-                          pyatspi.ROLE_UNKNOWN, \
-                          pyatspi.ROLE_PANEL, \
-                          pyatspi.ROLE_SCROLL_PANE, \
-                          pyatspi.ROLE_FILLER, \
-                          pyatspi.ROLE_PANEL]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.isMessageBodyText(event.source) \
+           and event.source.getState().contains(pyatspi.STATE_EDITABLE):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail " \
                           + "compose window: message area.")
@@ -1197,9 +1191,9 @@ class Script(default.Script):
                 if self.isSameObject(event.source.parent,
                                      orca_state.locusOfFocus.parent):
                     lastKey = orca_state.lastNonModifierKeyEvent.event_string
-                    if self.lastRolesList == self.rolesList and \
-                       lastKey not in ["Left", "Right", "Up", "Down", \
-                                       "Home", "End", "Return"]:
+                    if self.isMessageBodyText(orca_state.locusOfFocus) \
+                       and lastKey not in ["Left", "Right", "Up", "Down",
+                                           "Home", "End", "Return", "Tab"]:
                         return
 
                     # If the last keyboard event was a "same line" 
