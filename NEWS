@@ -15,6 +15,9 @@ General:
   character.  Added double low quote and single low quote to the
   character names and punctuation table.
 
+* Fix for bug #567428 - "readonly text" spoken when caret changes
+  line (in evolution)
+
 Firefox/Thunderbird:
 
 * Fix for bug #566954 - ARIA toggle button state not handled correctly
@@ -27,6 +30,9 @@ Firefox/Thunderbird:
 
 * Fix for bug #567864 - Orca stops responding when flat review is used
   in thunderbird message window and message is closed
+
+* Partial fix for bug #567984 -Structural navigation needs to consider
+  text within the document frame.
 
 New and updated translations (THANKS EVERYONE!!!):
 
