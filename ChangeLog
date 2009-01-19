@@ -1,5 +1,10 @@
 2009-01-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/structural_navigation.py:
+          test/keystrokes/firefox/html_struct_nav_bug_567984.py: (new)
+          Partial fix for bug #567984 -Structural navigation needs to
+          consider text within the document frame.
+
         * src/orca/scripts/apps/evolution/script.py:
           Fix for bug #567428 -"readonly text" spoken when caret changes
           line.

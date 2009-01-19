@@ -821,6 +821,14 @@ class StructuralNavigation:
                                                                    arg)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
+            else:
+                # If the document frame itself contains content and that is
+                # our current object, querying the collection interface will
+                # result in our starting at the top when looking for the next
+                # object rather than the current caret offset. See bug 567984.
+                #
+                if next and self._script.isSameObject(obj, document):
+                    criteria = None
 
         if criteria:
             try:
