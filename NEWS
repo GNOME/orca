@@ -1,3 +1,41 @@
+2.25.5 - 19-Jan-2009
+
+General:
+
+* Fix for bug #535221 - Automatic shortcut information spoken
+
+* Fix for bug #562327 - Desktop tutor message order problem
+
+* Fix for bug #563171 - src/orca/flat_review.py:getZonesFromText
+  should clip zones based on what text is visible
+
+* Fix for bug #563200 - Orca not spoken the character code 8222
+  character.  Added double low quote and single low quote to the
+  character names and punctuation table.
+
+Firefox/Thunderbird:
+
+* Fix for bug #566954 - ARIA toggle button state not handled correctly
+
+* Fix for bug #566955 - Need to remove extra whitespace from braille
+  output for Firefox 3.x.
+
+* Fix for bug #567167 - Orca sometimes (re)announces that the document
+  frame has just received focus in Firefox 3.x.
+
+* Fix for bug #567864 - Orca stops responding when flat review is used
+  in thunderbird message window and message is closed
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es       Spanish              Francisco Javier Dorado Martinez and
+                                  Jorge Gonzalez
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    nb       Norwegian Bokmål     Kjartan Maraas
+    pt       Portuguese           Rui Batista and Duarte Loreto
+
+==========
+
 2.25.4 - 05-Jan-2009
 
 General:

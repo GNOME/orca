@@ -1,5 +1,10 @@
 2009-01-19  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README, NEWS:
+          Prep for Orca v2.25.5.
+
+2009-01-19  Willie Walker <william.walker@sun.com>
+
         * src/orca/default.py:
         Fix for bug #567864 - Orca stops responding when flat review is
         used in thunderbird message window and message is closed
