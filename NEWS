@@ -4,6 +4,8 @@ General:
 
 * Fix for bug #535221 - Automatic shortcut information spoken
 
+* Fix for bug #562060 - Speech should speak multi case strings as words
+
 * Fix for bug #562327 - Desktop tutor message order problem
 
 * Fix for bug #563171 - src/orca/flat_review.py:getZonesFromText

@@ -1485,6 +1485,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         self.get_widget("speakBlankLinesCheckButton").set_active(\
             prefs["speakBlankLines"])
+        self.get_widget("speakMultiCaseAsWordsCheckButton").set_active(\
+            prefs["speakMultiCaseStringsAsWords"])
         self.get_widget("speakTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
 
@@ -2477,6 +2479,18 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["speakBlankLines"] = widget.get_active()
+
+    def speakMultiCaseStringsToggled(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakMultiCaseAsWordsCheckButton GtkCheckButton widget. The user has
+           [un]checked the checkbox.
+           Set the 'speakMultiCaseStringsAsWords' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["speakMultiCaseStringsAsWords"] = widget.get_active()
 
     def speakTutorialMessagesToggled(self, widget):
         """Signal handler for the "toggled" signal for the

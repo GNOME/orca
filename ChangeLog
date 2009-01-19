@@ -1,5 +1,21 @@
 2009-01-19  Willie Walker <william.walker@sun.com>
 
+        * NEWS:
+          More prep for Orca v2.25.5 (to include bug #562060)
+
+2009-01-19  Mesar Hameed <via william.walker@sun.com>
+
+	* src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/speechdispatcherfactory.py:
+          src/orca/speech.py:
+          src/orca/gnomespeechfactory.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #562060 - Speech should speak multi case strings as
+	  words
+
+2009-01-19  Willie Walker <william.walker@sun.com>
+
         * configure.in, README, NEWS:
           Prep for Orca v2.25.5.
 

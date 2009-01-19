@@ -29,6 +29,7 @@ __license__   = "LGPL"
 import logging
 log = logging.getLogger("speech")
 
+import re
 import time
 
 import chnames
@@ -44,6 +45,13 @@ from orca_i18n import _           # for gettext support
 # The speech server to use for all speech operations.
 #
 _speechserver = None
+
+# regular expressions for multiCaseStrings
+#
+multiCaseReg1 = re.compile("([a-z]+)([A-Z][a-z]+)")
+multiCaseReg2 = re.compile("([a-z]+)([A-Z]+)")
+multiCaseReg3 = re.compile("([A-Z]{2}[A-Z]+)([a-z]+)")
+multiCaseReg4 = re.compile("([A-Z])([A-Z][a-z]+)")
 
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
@@ -154,6 +162,13 @@ def speak(text, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
+    if settings.speakMultiCaseStringsAsWords:
+        text = _processMultiCaseString(text)
+    if orca_state.activeScript and orca_state.usePronunciationDictionary:
+        text = orca_state.activeScript.adjustForPronunciation(text)
+    if settings.speakMultiCaseStringsAsWords:
+        text = _processMultiCaseString(text)
+
     logLine = "SPEECH OUTPUT: '" + text + "'"
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
@@ -245,8 +260,19 @@ def speakUtterances(utterances, acss=None, interrupt=True):
 
     if settings.silenceSpeech:
         return
-
-    for utterance in utterances:
+    i = 0
+    length = len(utterances)
+    while ( i < length ):
+        utterance = utterances[i]
+        if settings.speakMultiCaseStringsAsWords:
+            utterance = _processMultiCaseString(utterance)
+        if settings.speakMultiCaseStringsAsWords:
+            utterances[i] = _processMultiCaseString(utterance)
+            utterance = utterances[i] 
+        if settings.speakMultiCaseStringsAsWords:
+            utterance = _processMultiCaseString(utterance)
+        i = i + 1
+        
         logLine = "SPEECH OUTPUT: '" + utterance + "'"
         debug.println(debug.LEVEL_INFO, logLine)
         log.info(logLine)
@@ -345,3 +371,14 @@ def test():
                 server.shutdown()
             except:
                 debug.printException(debug.LEVEL_OFF)
+
+def _processMultiCaseString(string):
+    """Helper function, applies the regexes to split multiCaseStrings
+    to multiple words.
+    """
+
+    string = multiCaseReg1.sub('\\1 \\2', string)
+    string = multiCaseReg2.sub('\\1 \\2', string)
+    string = multiCaseReg3.sub('\\1 \\2', string)    
+    string = multiCaseReg4.sub('\\1 \\2', string)
+    return string

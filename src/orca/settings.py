@@ -162,6 +162,7 @@ userCustomizableSettings = [
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
+    "speakMultiCaseStringsAsWords",
     "enabledSpokenTextAttributes",
     "enabledBrailledTextAttributes",
     "textAttributesBrailleIndicator",
@@ -628,6 +629,10 @@ outlineStyle = OUTLINE_BOX
 # If True, speak blank lines.
 #
 speakBlankLines         = True
+
+# if True, process multi case strings as words.
+#
+speakMultiCaseStringsAsWords = False
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.
