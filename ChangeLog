@@ -1,5 +1,12 @@
 2009-01-19  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          Fix for bug #561548 - Orca locks up when closing some Pidgin 
+          conversations.  Also helps with bug #567864.
+
+2009-01-19  Willie Walker <william.walker@sun.com>
+
         * configure.in, README:
           Mark as Orca v2.25.6pre
 

@@ -35,6 +35,7 @@ import braille
 import default
 import debug
 import input_event
+import orca
 import orca_state
 import presentation_manager
 import settings
@@ -543,6 +544,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if state.contains(pyatspi.STATE_DEFUNCT):
                     debug.println(debug.LEVEL_FINEST,
                                   "IGNORING DEFUNCT OBJECT")
+                    if event.type.startswith("window:deactivate"):
+                        if orca_state.activeScript \
+                           and orca_state.activeScript.flatReviewContext:
+                            orca_state.activeScript.drawOutline(-1, 0, 0, 0)
+                            orca_state.activeScript.flatReviewContext = None
+                        orca.setLocusOfFocus(event, None)
+                        orca_state.activeWindow = None
                     return
 
             if (not debug.eventDebugFilter) \
