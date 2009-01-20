@@ -522,10 +522,17 @@ class Script(default.Script):
 
         try:
             obj.queryHypertext()
+            ancestor = obj.parent.parent
         except:
             return False
         else:
-            return obj.getState().contains(pyatspi.STATE_MULTI_LINE)
+            # The accessible text objects in the header at the top
+            # of the message also have STATE_MULTI_LINE. But they
+            # are inside panels which are inside table cells; the
+            # body text is not. See bug #567428.
+            #
+            return (obj.getState().contains(pyatspi.STATE_MULTI_LINE) \
+                    and ancestor.getRole() != pyatspi.ROLE_TABLE_CELL)
 
     def presentMessageLine(self, obj, newLocusOfFocus):
         """Speak/braille the line at the current text caret offset.
