@@ -821,6 +821,14 @@ class StructuralNavigation:
                                                                    arg)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
+            else:
+                # If the document frame itself contains content and that is
+                # our current object, querying the collection interface will
+                # result in our starting at the top when looking for the next
+                # object rather than the current caret offset. See bug 567984.
+                #
+                if next and self._script.isSameObject(obj, document):
+                    criteria = None
 
         if criteria:
             try:
@@ -922,6 +930,16 @@ class StructuralNavigation:
         """
 
         currentObj = currentObj or self.getCurrentObject()
+        document = self._getDocument()
+
+        # If the current object is the document itself, find an actual
+        # object to use as the starting point. Otherwise we're in
+        # danger of skipping over the objects in between our present
+        # location and top of the document.
+        #
+        if self._script.isSameObject(currentObj, document):
+            currentObj = self._findNextObject(currentObj, document)
+
         ancestors = []
         obj = currentObj.parent
         if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]:
@@ -931,7 +949,6 @@ class StructuralNavigation:
                 ancestors.append(obj)
                 obj = obj.parent
 
-        document = self._getDocument()
         match, wrapped = None, False
         results = collection.getMatchesTo(currentObj,
                                           matchRule,
@@ -1054,6 +1071,16 @@ class StructuralNavigation:
         """
 
         currentObj = currentObj or self.getCurrentObject()
+        document = self._getDocument()
+
+        # If the current object is the document itself, find an actual
+        # object to use as the starting point. Otherwise we're in
+        # danger of skipping over the objects in between our present
+        # location and top of the document.
+        #
+        if self._script.isSameObject(currentObj, document):
+            currentObj = self._findNextObject(currentObj, document)
+
         ancestors = []
         nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
         obj = currentObj.parent
@@ -1061,7 +1088,6 @@ class StructuralNavigation:
             ancestors.append(obj)
             obj = obj.parent
 
-        document = self._getDocument()
         obj = self._findPreviousObject(currentObj, document)
         wrapped = obj is None
         match = None

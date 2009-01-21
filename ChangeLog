@@ -1,3 +1,11 @@
+2009-01-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/structural_navigation.py:
+          test/keystrokes/firefox/html_struct_nav_bug_567984.py: (new)
+          test/html/bug-567984.html: (new)
+          Fix for bug #567984 - Structural navigation needs to consider
+          text within the document frame.
+
 2009-01-21  Willie Walker <william.walker@sun.com>
 
         * src/orca/liveregions.py:
