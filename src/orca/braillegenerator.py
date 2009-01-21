@@ -1386,7 +1386,8 @@ class BrailleGenerator:
             image = None
         if (not displayedText or len(displayedText) == 0) and image:
             if image.imageDescription:
-                regions[0].append(image.imageDescription)
+                regions[0].append(braille.Component(obj,
+                                  image.imageDescription))
             [cellRegions, focusRegion] = self._getBrailleRegionsForImage(obj)
             regions[0].extend(cellRegions)
 
