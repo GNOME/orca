@@ -1,3 +1,9 @@
+2009-01-19  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca-setup.glade:
+          Additional fix for bug #562060 - Speech should speak multi case
+          strings as words - add comments for translators.
+
 2009-01-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/structural_navigation.py:
