@@ -1,3 +1,9 @@
+2009-01-21  Willie Walker <william.walker@sun.com>
+
+        * src/orca/braillegenerator.py:
+          Fix for bug #568589 - braillegenerator adding image string
+          versus braille.Component for table cells
+
 2009-01-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca-setup.glade:
