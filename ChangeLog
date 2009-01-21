@@ -1,5 +1,12 @@
 2009-01-21  Willie Walker <william.walker@sun.com>
 
+        * src/orca/liveregions.py:
+          test/keystrokes/firefox/codetalks_button.py:
+          Fix for bug #568467 - aria-describedby text spoken twice via
+          Where Am I
+
+2009-01-21  Willie Walker <william.walker@sun.com>
+
         * src/orca/braillegenerator.py:
           Fix for bug #568589 - braillegenerator adding image string
           versus braille.Component for table cells

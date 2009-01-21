@@ -360,7 +360,14 @@ class LiveRegionManager:
             if relationtype == pyatspi.RELATION_DESCRIBED_BY:
                 targetobj = relation.getTarget(0)
                 try:
-                    utterances.append(targetobj.queryText().getText(0, -1))
+                    # We will add on descriptions if they don't duplicate
+                    # what's already in the object's description.
+                    # See http://bugzilla.gnome.org/show_bug.cgi?id=568467
+                    # for more information.
+                    #
+                    description = targetobj.queryText().getText(0, -1)
+                    if description.strip() != obj.description.strip():
+                        utterances.append(description)
                 except NotImplemented:
                     pass
 
@@ -372,7 +379,7 @@ class LiveRegionManager:
             liveprioritystr = 'none'
 
         # We will only output useful information
-        # TODO: check for repeated descriptions
+        # 
         if utterances or liveprioritystr != 'none':
             # Translators: output the politeness level
             #
