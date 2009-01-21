@@ -2473,7 +2473,7 @@ class Script(script.Script):
         alertAndDialogCount = 0
         app = obj.getApplication()
         window = self.getTopLevel(obj)
-        if window.getRole() != pyatspi.ROLE_ALERT and \
+        if window and window.getRole() != pyatspi.ROLE_ALERT and \
            window.getRole() != pyatspi.ROLE_DIALOG and \
            not self.isFunctionalDialog(window):
             for child in app:

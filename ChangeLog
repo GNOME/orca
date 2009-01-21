@@ -1,6 +1,13 @@
 2009-01-21  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          Fix for bug #561548 - Orca locks up when closing some Pidgin 
+          conversations.  Also helps with bug #567864.
+
+2009-01-21  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
         Fix for bug #567864 - Orca stops responding when flat review is
         used in thunderbird message window and message is closed
 
