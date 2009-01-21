@@ -1,5 +1,9 @@
 2009-01-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/apps/evolution/script.py:
+          Fix for bug #567428 -"readonly text" spoken when caret changes
+          line.
+
         * src/orca/structural_navigation.py:
           test/keystrokes/firefox/html_struct_nav_bug_567984.py: (new)
           test/html/bug-567984.html: (new)
