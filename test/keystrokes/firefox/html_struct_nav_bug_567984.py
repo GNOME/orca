@@ -118,6 +118,29 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás link heading level 3'"]))
 
 ########################################################################
+# Down Arrow to move to some text in the document frame
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "9. Down",
+    ["BRAILLE LINE:  'Megállapodott Putyin és Tyimosenko az orosz-ukrán szerzõdésrõl. Amint lepapírozzák, jön a gáz.'",
+     "     VISIBLE:  'Megállapodott Putyin és Tyimosen', cursor=1",
+     "SPEECH OUTPUT: 'Megállapodott Putyin és Tyimosenko az orosz-ukrán szerzõdésrõl. Amint lepapírozzák, jön a gáz.'"]))
+
+########################################################################
+# Shift+ H to move to the previous heading. It should NOT be the last
+# heading.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>h"))
+sequence.append(utils.AssertPresentationAction(
+    "10. Shift+h",
+    ["BRAILLE LINE:  'Hamarosan újraindul a gázszállítás h3'",
+     "     VISIBLE:  'Hamarosan újraindul a gázszállít', cursor=1",
+     "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás link heading level 3'"]))
+
+########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
 # type "about:blank" and press Return to restore the browser to the
 # conditions at the test's start.
