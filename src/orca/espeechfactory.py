@@ -130,7 +130,7 @@ class SpeechServer(speechserver.SpeechServer):
             from time import sleep
             sleep(1)
         for server in SpeechServer.__activeServers.values():
-            if not server._process or server._process.poll() is not None:
+            if not server.process or server.process.poll() is not None:
                 server.shutdown()
 
         return SpeechServer.__activeServers.values()
@@ -169,8 +169,8 @@ class SpeechServer(speechserver.SpeechServer):
         speechserver.SpeechServer.__init__(self)
 
         self._engine = engine
-        self._process = None
         self._output = None
+        self.process = None
 
         e = __import__(_getcodes(engine),
                        globals(),
@@ -195,7 +195,7 @@ class SpeechServer(speechserver.SpeechServer):
         proc.stderr.close()
         proc.stdout = proc.stderr = None
         self._output = proc.stdin
-        self._process = proc
+        self.process = proc
 
         self._speechChunk = re.compile(self._speechChunkRegexp, re.DOTALL)
         self._settings = {}
@@ -373,15 +373,15 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shuts down the speech engine."""
-        if self._process is None:
+        if self.process is None:
             return
 
-        if self._process.poll() is None:
+        if self.process.poll() is None:
             from signal import SIGKILL
-            os.kill(self._process.pid, SIGKILL)
-            self._process.wait()
+            os.kill(self.process.pid, SIGKILL)
+            self.process.wait()
         self._output.close()
-        self._output = self._process = None
+        self._output = self.process = None
         if self is SpeechServer.__activeServers.get(self._engine, None):
             del SpeechServer.__activeServers[self._engine]
 
