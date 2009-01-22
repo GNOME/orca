@@ -705,7 +705,10 @@ class SpeechServer(speechserver.SpeechServer):
                      used to augment/override the default
                      voice settings.
         """
-        self.speak(chnames.getCharacterName(character), acss)
+        chname = chnames.getCharacterName(character)
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+            chname = orca_state.activeScript.adjustForPronunciation(chname)
+        self.speak(chname, acss)
 
     def speakUtterances(self, utterances, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
