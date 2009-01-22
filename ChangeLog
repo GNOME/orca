@@ -1,3 +1,9 @@
+2009-01-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          Fix for bug #568631 - Orca does not update the position for
+          same-page links which reference objects by name/id in Firefox 3.
+
 2009-01-22  William Walker <william.walker@sun.com>
 
         * src/orca/default.py:

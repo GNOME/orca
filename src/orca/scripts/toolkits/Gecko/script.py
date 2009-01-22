@@ -45,6 +45,7 @@ import gtk
 import pyatspi
 import re
 import time
+import urlparse
 
 import orca.braille as braille
 import orca.debug as debug
@@ -1277,6 +1278,8 @@ class Script(default.Script):
             locusOfFocusState = pyatspi.StateSet()
             locusOfFocusState = locusOfFocusState.raw()
 
+        notifyPresentationManagers = False
+
         # Find out if the caret really moved. Firefox 3.1 gives us caret-moved
         # events when certain focusable objects first get focus. If we haven't
         # really moved, there's no point in updating braille again -- which is
@@ -1315,13 +1318,23 @@ class Script(default.Script):
                 if locusOfFocusRole == pyatspi.ROLE_IMAGE:
                     return
                 elif locusOfFocusRole == pyatspi.ROLE_LINK:
-                    # Be sure it's not a same-page link. We can detect them
-                    # because the anchor being moved to (and issuing the
-                    # event) is also of ROLE_LINK and has no text.
-                    #
-                    if eventSourceRole != pyatspi.ROLE_LINK \
-                       or self.queryNonEmptyText(event.source):
-                        return
+                    # Be sure it's not a same-page link. While such beasts
+                    # typically point to anchors, they can point to other
+                    # objects referencing them by name or ID. Therefore,
+                    # get the URI for the link of interest and parse it.
+                    # parsed URI is returned as a tuple containing six
+                    # components: 
+                    # scheme://netloc/path;parameters?query#fragment.
+                    try:
+                        uri = self.getURI(orca_state.locusOfFocus)
+                        uriInfo = urlparse.urlparse(uri)
+                    except:
+                        pass
+                    else:
+                        if uriInfo and not uriInfo[5]:
+                            return
+                        else:
+                            notifyPresentationManagers = True
                 elif eventSourceRole == pyatspi.ROLE_SECTION:
                     # Google Calendar's Day grid seems to issue these quite
                     # a bit. If we don't ignore them, we'll loop.
@@ -1375,7 +1388,11 @@ class Script(default.Script):
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, event.detail1)
             self.setCaretContext(obj, characterOffset)
-            orca.setLocusOfFocus(event, obj, False)
+            orca.setLocusOfFocus(event, obj, notifyPresentationManagers)
+            if notifyPresentationManagers:
+                # No point in double-brailling the locusOfFocus.
+                #
+                return
 
         # Pass the event along to the default script for processing.
         #
