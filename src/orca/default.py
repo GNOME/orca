@@ -2821,7 +2821,8 @@ class Script(script.Script):
                     newRow = table.getRowAtIndex(index)
                     newCol = table.getColumnAtIndex(index)
 
-                    if (newRow != oldRow) or (oldParent != newParent):
+                    if (newRow >= 0) \
+                       and ((newRow != oldRow) or (oldParent != newParent)):
                         # Get the header information.  In Java Swing, the
                         # information is not exposed via the description
                         # but is instead a header object, so we fall back
@@ -2846,7 +2847,8 @@ class Script(script.Script):
                                         + rolenames.rolenames[\
                                         pyatspi.ROLE_ROW_HEADER].speech
                             utterances.append(text)
-                    if (newCol != oldCol) or (oldParent != newParent):
+                    if (newCol >= 0) \
+                       and ((newCol != oldCol) or (oldParent != newParent)):
                         # Don't speak Thunderbird column headers, since
                         # it's not possible to navigate across a row.
                         topName = self.getTopLevelName(newLocusOfFocus)
