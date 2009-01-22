@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-"""Test of navigation to same page links.
-"""
+"""Test of navigation by same-page links on the Orca wiki."""
 
 from macaroon.playback import *
 import utils
@@ -15,19 +14,20 @@ sequence = MacroSequence()
 sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
-# Load the local blockquote test case.
+# Load the local "wiki" test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 
-sequence.append(TypeAction(utils.htmlURLPrefix + "bug-544771.html"))
+sequence.append(TypeAction(utils.htmlURLPrefix + "orca-wiki.html"))
 sequence.append(KeyComboAction("Return"))
 
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("",
+
+sequence.append(WaitForFocus("Orca - GNOME Live!",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(6000))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -36,48 +36,52 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file", 
-    ["BRAILLE LINE:  'Contents h1'",
-     "     VISIBLE:  'Contents h1', cursor=1",
-     "SPEECH OUTPUT: 'Contents heading level 1'"]))
+    ["BRAILLE LINE:  'Home News Projects Art Support Development Community'",
+     "     VISIBLE:  'Home News Projects Art Support D', cursor=1",
+     "SPEECH OUTPUT: 'Home link News link Projects link Art link Support link Development link Community link'"]))
 
 ########################################################################
-# Press Tab twice to move to the Second link. Then press Return. Down
-# Arrow to verify we've updated our position.
+# Tab to the About link
+#
+for i in range(25):
+    sequence.append(KeyComboAction("Tab"))
+
+# Just a little extra wait to let some events get through.
+#
+sequence.append(PauseAction(5000))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab", 
+    ["BRAILLE LINE:  '2. About",
+     "     VISIBLE:  '2. About', cursor=4",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'About link'"]))
+
+########################################################################
+# Press Return to active the link
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Return", 1000))
 sequence.append(utils.AssertPresentationAction(
-    "1. Tab", 
-    ["BRAILLE LINE:  '• First item'",
-     "     VISIBLE:  '• First item', cursor=3",
+    "Return",
+    ["BRAILLE LINE:  'About h1'",
+     "     VISIBLE:  'About h1', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'First item link'"]))
+     "SPEECH OUTPUT: 'About heading level 1'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "2. Tab", 
-    ["BRAILLE LINE:  '• Second item'",
-     "     VISIBLE:  '• Second item', cursor=3",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Second item link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return"))
-sequence.append(utils.AssertPresentationAction(
-    "3. Return", 
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'link'"]))
-
+########################################################################
+# Press Down Arrow to read the next line (verifying that the caret
+# position was correctly updated).
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "4. Down", 
-    ["BRAILLE LINE:  'Second h2'",
-     "     VISIBLE:  'Second h2', cursor=1",
-     "SPEECH OUTPUT: 'Second heading level 2'"]))
+    "Line Down", 
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful assistive'",
+     "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
+     "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful assistive'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
