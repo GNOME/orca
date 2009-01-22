@@ -1,5 +1,11 @@
 2009-01-22  William Walker <william.walker@sun.com>
 
+        * src/orca/default.py:
+          Fix for bug #568751 - Interaction with the punctuation
+          preferences can cause a hang
+
+2009-01-22  William Walker <william.walker@sun.com>
+
         * src/orca/espeechfactory.py:
           Pylinting.
 
