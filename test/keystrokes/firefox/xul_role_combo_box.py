@@ -21,6 +21,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("",None))
 
+sequence.append(PauseAction(3000))
+
 ########################################################################
 # Press Right Arrow to get to the next list item and Left Arrow to
 # get back. We'll do this because in Firefox 3.1 we are not getting the
