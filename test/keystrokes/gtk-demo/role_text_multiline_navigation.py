@@ -1074,8 +1074,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+KP_1 to flat review end of line",
     ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'l GTK! $l', cursor=6",
-     "SPEECH OUTPUT: 'exclaim'"]))
+     "     VISIBLE:  'l GTK! $l', cursor=3",
+     "SPEECH OUTPUT: 'GTK!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
