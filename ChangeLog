@@ -1,16 +1,22 @@
+2009-01-22  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          Fix for bug #568875 - Pressing "Apply" button in preferences dialog
+          causes autostart option to be checked
+
 2009-01-22  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
           Fix for bug #568631 - Orca does not update the position for
           same-page links which reference objects by name/id in Firefox 3.
 
-2009-01-22  William Walker <william.walker@sun.com>
+2009-01-22  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:
           Fix for bug #568751 - Interaction with the punctuation
           preferences can cause a hang
 
-2009-01-21  William Walker <william.walker@sun.com>
+2009-01-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py:
           Fix for bug #562060 - Speech should speak multi case strings as
@@ -2353,7 +2359,7 @@
           Fix for bug #528507 - Escape doesn't exit "learn mode" if the
           active script changes.
 
-2008-04-24  William Walker <william.walker@sun.com>
+2008-04-24  Willie Walker <william.walker@sun.com>
 
         * src/orca/orca.in:
           Additional fix for bug #525831 - isn't properly handling SIGTERM.
