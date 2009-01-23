@@ -4035,7 +4035,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         try:
             status = settings.setOrcaAutostart(self.enableAutostart)
-            self.get_widget("autostartOrcaCheckbutton").set_active(status)
+            self.get_widget("autostartOrcaCheckbutton").set_active(\
+                settings.isOrcaAutostarted())
         except:
             # If we are pressing Apply or OK from an application preferences
             # dialog (rather than the general Orca preferences), then there

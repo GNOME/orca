@@ -1,5 +1,11 @@
 2009-01-22  Willie Walker <william.walker@sun.com>
 
+        * src/orca/orca_gui_prefs.py:
+          Fix for bug #568875 - Pressing "Apply" button in preferences dialog
+          causes autostart option to be checked
+
+2009-01-22  Willie Walker <william.walker@sun.com>
+
         * src/orca/orca_console_prefs.py:
           Fix for bug #563128 - Text-based setup should offer option to
           automatically launch Orca on login
