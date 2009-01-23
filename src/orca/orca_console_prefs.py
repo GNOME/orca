@@ -464,6 +464,17 @@ def showPreferencesUI(commandLineSettings):
                          speechVoiceChoice)
     prefsDict["enableBrailleMonitor"] = checkYes(answer)
 
+    # Translators: orca can be set up to automatically start when the 
+    # user logs in.
+    #
+    answer = sayAndPrint(_("Automatically start orca when you log in?  " \
+                           "Enter y or n: "),
+                         True,
+                         True,
+                         speechServerChoice,
+                         speechVoiceChoice)
+    settings.setOrcaAutostart(checkYes(answer))
+
     logoutNeeded = orca_prefs.writePreferences(prefsDict)
     if logoutNeeded:
         sayAndPrint(_("Accessibility support for GNOME has just been enabled."),
