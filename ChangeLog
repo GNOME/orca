@@ -1,5 +1,11 @@
 2009-01-22  Willie Walker <william.walker@sun.com>
 
+	* src/orca/speech.py:
+          Fix for bug #562060 - Speech should speak multi case strings as
+	  words.  Make speakUtterances also use pronunciations.
+
+2009-01-22  Willie Walker <william.walker@sun.com>
+
 	* src/orca/speechfactory.py:
           Fix for bug #562060 - Speech should speak multi case strings as
 	  words.  Make speakKeyName also use pronunciations.

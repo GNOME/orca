@@ -263,19 +263,17 @@ def speakUtterances(utterances, acss=None, interrupt=True):
     i = 0
     length = len(utterances)
     while ( i < length ):
-        utterance = utterances[i]
         if settings.speakMultiCaseStringsAsWords:
-            utterance = _processMultiCaseString(utterance)
+            utterances[i] = _processMultiCaseString(utterances[i])
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+            utterances[i] = orca_state.activeScript.adjustForPronunciation(\
+                            utterances[i])
         if settings.speakMultiCaseStringsAsWords:
-            utterances[i] = _processMultiCaseString(utterance)
-            utterance = utterances[i] 
-        if settings.speakMultiCaseStringsAsWords:
-            utterance = _processMultiCaseString(utterance)
-        i = i + 1
-        
-        logLine = "SPEECH OUTPUT: '" + utterance + "'"
+            utterances[i] = _processMultiCaseString(utterances[i])
+        logLine = "SPEECH OUTPUT: '" + utterances[i] + "'"
         debug.println(debug.LEVEL_INFO, logLine)
         log.info(logLine)
+        i = i + 1
 
     if _speechserver:
         _speechserver.speakUtterances(utterances,
