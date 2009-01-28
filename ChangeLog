@@ -12,6 +12,8 @@
           src/orca/where_am_I.py:
           po/*.po:
           Fix for bug #569118 - Use C_() instead of Q_() with context
+          NOTE: you need to install SUNWgnu-gettext and rerun your 
+          autogen.sh to work with this change on OpenSolaris.
 
 2009-01-28  Willie Walker <william.walker@sun.com>
 
