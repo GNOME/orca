@@ -48,10 +48,9 @@ _speechserver = None
 
 # regular expressions for multiCaseStrings
 #
-multiCaseReg1 = re.compile("([a-z]+)([A-Z][a-z]+)")
-multiCaseReg2 = re.compile("([a-z]+)([A-Z]+)")
-multiCaseReg3 = re.compile("([A-Z]{2}[A-Z]+)([a-z]+)")
-multiCaseReg4 = re.compile("([A-Z])([A-Z][a-z]+)")
+multiCaseReg1 = re.compile("([a-z]+)([A-Z])")
+multiCaseReg2 = re.compile("([A-Z][A-Z]+)([A-Z][a-z]+)")
+multiCaseReg3 = re.compile("([A-Z])([A-Z][a-z]+)")
 
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
@@ -378,5 +377,4 @@ def _processMultiCaseString(string):
     string = multiCaseReg1.sub('\\1 \\2', string)
     string = multiCaseReg2.sub('\\1 \\2', string)
     string = multiCaseReg3.sub('\\1 \\2', string)    
-    string = multiCaseReg4.sub('\\1 \\2', string)
     return string
