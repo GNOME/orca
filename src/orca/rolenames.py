@@ -33,7 +33,7 @@ import settings
 import pyatspi
 
 from orca_i18n import _  # for gettext support
-from orca_i18n import Q_ # to provide qualified translatable strings
+from orca_i18n import C_ # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -372,9 +372,7 @@ rolenames[ROLE_DIAL] = Rolename(
     # the translated word for "dial".  It is OK to use an
     # unabbreviated word as long as it is relatively short.
     #
-    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-    #
-    Q_("shortbraille|dial"),
+    C_("shortbraille", "dial"),
     # Translators: long braille for the rolename of a dial.
     #
     _("Dial"),
@@ -473,9 +471,7 @@ rolenames[ROLE_FORM] = Rolename(
     # the translated word for "form".  It is OK to use an
     # unabbreviated word as long as it is relatively short.
     #
-    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-    #
-    Q_("shortbraille|form"),
+    C_("shortbraille", "form"),
     # Translators: long braille for the rolename of a form.
     #
     _("Form"),

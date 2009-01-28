@@ -38,7 +38,7 @@ import orca.speechgenerator as speechgenerator
 
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext # for ngettext support
-from orca.orca_i18n import Q_       # to provide qualified translatable strings
+from orca.orca_i18n import C_       # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -542,16 +542,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            selectionState = Q_("radiobutton|selected")
+            selectionState = C_("radiobutton", "selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            selectionState = Q_("radiobutton|not selected")
+            selectionState = C_("radiobutton", "not selected")
 
         if not already_focused:
             # The label is handled as a context in default.py -- assuming we

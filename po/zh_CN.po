@@ -668,7 +668,8 @@ msgstr "进度条 %d。"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2982
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "未选中"
 
 #. Translators: this object is now selected.
@@ -687,7 +688,8 @@ msgstr "未选中"
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "选中"
 
 #. Translators: this object is now unselected.
@@ -703,7 +705,8 @@ msgstr "选中"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3884 ../src/orca/default.py:7530
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "未选中"
 
 #. Translators: when users are navigating a table, they

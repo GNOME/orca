@@ -36,7 +36,7 @@ import rolenames
 import settings
 
 from orca_i18n import _         # for gettext support
-from orca_i18n import Q_        # to provide qualified translatable strings
+from orca_i18n import C_        # to provide qualified translatable strings
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -376,16 +376,12 @@ class StateZone(Zone):
                     # Translators: this is in reference to a radio button being
                     # selected or not.
                     #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    speechState = Q_("radiobutton|selected")
+                    speechState = C_("radiobutton", "selected")
                 else:
                     # Translators: this is in reference to a radio button being
                     # selected or not.
                     #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    speechState = Q_("radiobutton|not selected")
+                    speechState = C_("radiobutton", "not selected")
                 brailleState = \
                     settings.brailleRadioButtonIndicators[stateCount]
 

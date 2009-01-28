@@ -2238,7 +2238,8 @@ msgstr "trenivå %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2818
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "ikkje vald"
 
 #. Translators: this means the user has selected
@@ -2263,8 +2264,9 @@ msgstr "heile dokumentet vald"
 #: ../src/orca/default.py:6775 ../src/orca/scripts/StarOffice.py:173
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:496
 #: ../src/orca/where_am_I.py:882
-msgid "text|selected"
-msgstr "text|vald"
+msgctxt "text"
+msgid "selected"
+msgstr "vald"
 
 #. Translators: this object is now unselected.
 #. Let the user know this.
@@ -2279,8 +2281,9 @@ msgstr "text|vald"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3600 ../src/orca/default.py:6791
-msgid "text|unselected"
-msgstr "text|ikke vald"
+msgctxt "text"
+msgid "unselected"
+msgstr "ikke vald"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -2537,8 +2540,9 @@ msgstr "ikkje trykket"
 #.
 #: ../src/orca/flat_review.py:377 ../src/orca/Gecko.py:1139
 #: ../src/orca/speechgenerator.py:1065 ../src/orca/where_am_I.py:208
-msgid "radiobutton|selected"
-msgstr "radiobutton|vald"
+msgctxt "radiobutton"
+msgid "selected"
+msgstr "vald"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
@@ -2547,8 +2551,9 @@ msgstr "radiobutton|vald"
 #.
 #: ../src/orca/flat_review.py:384 ../src/orca/Gecko.py:1146
 #: ../src/orca/speechgenerator.py:1072 ../src/orca/where_am_I.py:215
-msgid "radiobutton|not selected"
-msgstr "radiobutton|ikke vald"
+msgctxt "radiobutton"
+msgid "not selected"
+msgstr "ikke vald"
 
 #. Translators: The component orientation is horizontal.
 #.
@@ -3585,16 +3590,18 @@ msgstr "saktere."
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-msgid "listitem|selected"
-msgstr "listitem|vald"
+msgctxt "listitem"
+msgid "selected"
+msgstr "vald"
 
 #. Translators: this represents the state of a node in a tree
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
-msgstr "listitem|ikke vald"
+msgctxt "listitem"
+msgid "unselected"
+msgstr "ikke vald"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
@@ -4691,7 +4698,8 @@ msgstr ""
 #: ../src/orca/orca.py:1319 ../src/orca/orca.py:1332 ../src/orca/orca.py:1453
 #: ../src/orca/orca.py:1494
 #, fuzzy
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "alternativ"
 
 #. Translators: this option is for enabling braille output on
@@ -4702,7 +4710,8 @@ msgstr "alternativ"
 #: ../src/orca/orca.py:1320 ../src/orca/orca.py:1333 ../src/orca/orca.py:1461
 #: ../src/orca/orca.py:1496
 #, fuzzy
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "alternativ"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -4713,7 +4722,8 @@ msgstr "alternativ"
 #: ../src/orca/orca.py:1321 ../src/orca/orca.py:1334 ../src/orca/orca.py:1469
 #: ../src/orca/orca.py:1498
 #, fuzzy
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "Slå på _brailleskjerm"
 
 #. Translators: this option is for enabling screen
@@ -4723,7 +4733,8 @@ msgstr "Slå på _brailleskjerm"
 #.
 #: ../src/orca/orca.py:1322 ../src/orca/orca.py:1335 ../src/orca/orca.py:1477
 #: ../src/orca/orca.py:1500
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "forstørringsglas"
 
 #. Translators: this option is for enabling the display
@@ -4733,7 +4744,8 @@ msgstr "forstørringsglas"
 #.
 #: ../src/orca/orca.py:1323 ../src/orca/orca.py:1336 ../src/orca/orca.py:1485
 #: ../src/orca/orca.py:1502
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr "hovudvindauge"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -5715,7 +5727,8 @@ msgstr "skrivebordsramme"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "skive"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5866,7 +5879,8 @@ msgstr "skriftvelger"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "skjema"
 
 #. Translators: long braille for the rolename of a form.

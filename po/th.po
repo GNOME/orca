@@ -2244,7 +2244,8 @@ msgstr "ต้นไม้ระดับที่ %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2989
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "ไม่ได้เลือก"
 
 #. Translators: this object is now selected.
@@ -2263,7 +2264,8 @@ msgstr "ไม่ได้เลือก"
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:159
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:989
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "เลือกอยู่"
 
 #. Translators: this object is now unselected.
@@ -2279,7 +2281,8 @@ msgstr "เลือกอยู่"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3891 ../src/orca/default.py:7511
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "ไม่ได้เลือก"
 
 #. Translators: when users are navigating a table, they
@@ -2618,7 +2621,8 @@ msgstr "ไม่ได้กด"
 #: ../src/orca/flat_review.py:376
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:547
 #: ../src/orca/speechgenerator.py:1156 ../src/orca/where_am_I.py:226
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "เลือกอยู่"
 
 #. Translators: this is in reference to a radio button being
@@ -2629,7 +2633,8 @@ msgstr "เลือกอยู่"
 #: ../src/orca/flat_review.py:383
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:554
 #: ../src/orca/speechgenerator.py:1163 ../src/orca/where_am_I.py:233
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "ไม่ได้เลือก"
 
 #. Translators: The component orientation is horizontal.
@@ -4954,7 +4959,8 @@ msgstr "กรอบเดสก์ท็อป"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "dial"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5105,7 +5111,8 @@ msgstr "เครื่องมือเลือกแบบอักษร"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "form"
 
 #. Translators: long braille for the rolename of a form.
@@ -7262,7 +7269,8 @@ msgstr "อ่านเอกสารแล้ว %d เปอร์เซ็�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:623
-msgid "text|read only"
+msgctxt "text"
+msgid "read only"
 msgstr "อ่านได้อย่างเดียว"
 
 #. Translators: this is used to indicate the user is in a text
@@ -7272,7 +7280,8 @@ msgstr "อ่านได้อย่างเดียว"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:631
-msgid "text|rdonly"
+msgctxt "text"
+msgid "rdonly"
 msgstr "อ่านเท่านั้น"
 
 #. Translators: the regular expression here represents a string to
@@ -8076,7 +8085,8 @@ msgstr "ไม่มีลิงก์ที่ดูแล้วอีก"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:61
-msgid "textattr|background color"
+msgctxt "textattr"
+msgid "background color"
 msgstr "สีพื้นหลัง"
 
 #. Translators: this attribute specifies whether to make the background
@@ -8087,7 +8097,8 @@ msgstr "สีพื้นหลัง"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:70
-msgid "textattr|background full height"
+msgctxt "textattr"
+msgid "background full height"
 msgstr "ใช้ความสูงพื้นหลังสูงสุด"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8096,7 +8107,8 @@ msgstr "ใช้ความสูงพื้นหลังสูงสุด
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:77
-msgid "textattr|background stipple"
+msgctxt "textattr"
+msgid "background stipple"
 msgstr "ใช้พื้นหลังแบบประจุด"
 
 #. Translators: this attribute specifies the direction of the text.
@@ -8105,7 +8117,8 @@ msgstr "ใช้พื้นหลังแบบประจุด"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:84
-msgid "textattr|direction"
+msgctxt "textattr"
+msgid "direction"
 msgstr "ทิศทางการเขียน"
 
 #. Translators: this attribute specifies whether the text is editable.
@@ -8114,7 +8127,8 @@ msgstr "ทิศทางการเขียน"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:91
-msgid "textattr|editable"
+msgctxt "textattr"
+msgid "editable"
 msgstr "แก้ไขได้"
 
 #. Translators: this attribute specifies the font family name of the text.
@@ -8122,7 +8136,8 @@ msgstr "แก้ไขได้"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:97
-msgid "textattr|family name"
+msgctxt "textattr"
+msgid "family name"
 msgstr "ชื่อตระกูลแบบอักษร"
 
 #. Translators: this attribute specifies the foreground color of the text.
@@ -8131,7 +8146,8 @@ msgstr "ชื่อตระกูลแบบอักษร"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:104
-msgid "textattr|foreground color"
+msgctxt "textattr"
+msgid "foreground color"
 msgstr "สีตัวอักษร"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8140,7 +8156,8 @@ msgstr "สีตัวอักษร"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:111
-msgid "textattr|foreground stipple"
+msgctxt "textattr"
+msgid "foreground stipple"
 msgstr "วาดอักษรแบบประจุด"
 
 #. Translators: this attribute specifies the effect applied to the font
@@ -8150,7 +8167,8 @@ msgstr "วาดอักษรแบบประจุด"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:119
-msgid "textattr|font effect"
+msgctxt "textattr"
+msgid "font effect"
 msgstr "ลูกเล่นแบบอักษร"
 
 #. Translators: this attribute specifies the indentation of the text
@@ -8159,7 +8177,8 @@ msgstr "ลูกเล่นแบบอักษร"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:126
-msgid "textattr|indent"
+msgctxt "textattr"
+msgid "indent"
 msgstr "การร่นย่อหน้า"
 
 #. Translators: this attribute specifies whether the text is invisible.
@@ -8168,7 +8187,8 @@ msgstr "การร่นย่อหน้า"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:133
-msgid "textattr|invisible"
+msgctxt "textattr"
+msgid "invisible"
 msgstr "ไม่แสดง"
 
 #. Translators: this attribute specifies how the justification of the text.
@@ -8177,7 +8197,8 @@ msgstr "ไม่แสดง"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:140
-msgid "textattr|justification"
+msgctxt "textattr"
+msgid "justification"
 msgstr "การเรียงชิดขอบ"
 
 #. Translators: this attribute specifies the language that the text is
@@ -8186,7 +8207,8 @@ msgstr "การเรียงชิดขอบ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:147
-msgid "textattr|language"
+msgctxt "textattr"
+msgid "language"
 msgstr "ภาษา"
 
 #. Translators: this attribute specifies the pixel width of the left margin.
@@ -8194,7 +8216,8 @@ msgstr "ภาษา"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:153
-msgid "textattr|left margin"
+msgctxt "textattr"
+msgid "left margin"
 msgstr "ขอบซ้าย"
 
 #. Translators: this attribute specifies the height of the line of text.
@@ -8203,7 +8226,8 @@ msgstr "ขอบซ้าย"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:160
-msgid "textattr|line height"
+msgctxt "textattr"
+msgid "line height"
 msgstr "ความสูงบรรทัด"
 
 #. Translators: this attribute refers to the named style which is associated
@@ -8215,7 +8239,8 @@ msgstr "ความสูงบรรทัด"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:170
-msgid "textattr|paragraph style"
+msgctxt "textattr"
+msgid "paragraph style"
 msgstr "สไตล์ของย่อหน้า"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8224,7 +8249,8 @@ msgstr "สไตล์ของย่อหน้า"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:177
-msgid "textattr|pixels above lines"
+msgctxt "textattr"
+msgid "pixels above lines"
 msgstr "จำนวนจุดที่เว้นเหนือบรรทัด"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8233,7 +8259,8 @@ msgstr "จำนวนจุดที่เว้นเหนือบรรท
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:184
-msgid "textattr|pixels below lines"
+msgctxt "textattr"
+msgid "pixels below lines"
 msgstr "จำนวนจุดที่เว้นใต้บรรทัด"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8243,7 +8270,8 @@ msgstr "จำนวนจุดที่เว้นใต้บรรทัด
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:192
-msgid "textattr|pixels inside wrap"
+msgctxt "textattr"
+msgid "pixels inside wrap"
 msgstr "จำนวนจุดที่เว้นระหว่างบรรทัดในย่อหน้า"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
@@ -8251,7 +8279,8 @@ msgstr "จำนวนจุดที่เว้นระหว่างบร
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:198
-msgid "textattr|right margin"
+msgctxt "textattr"
+msgid "right margin"
 msgstr "ขอบขวา"
 
 #. Translators: this attribute specifies the number of pixels that the
@@ -8260,7 +8289,8 @@ msgstr "ขอบขวา"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:205
-msgid "textattr|rise"
+msgctxt "textattr"
+msgid "rise"
 msgstr "ระยะยก"
 
 #. Translators: this attribute specifies the scale of the characters. The
@@ -8269,7 +8299,8 @@ msgstr "ระยะยก"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:212
-msgid "textattr|scale"
+msgctxt "textattr"
+msgid "scale"
 msgstr "อัตราขยาย"
 
 #. Translators: this attribute specifies the size of the text.
@@ -8277,7 +8308,8 @@ msgstr "อัตราขยาย"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:218
-msgid "textattr|size"
+msgctxt "textattr"
+msgid "size"
 msgstr "ขนาด"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
@@ -8288,7 +8320,8 @@ msgstr "ขนาด"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:227
-msgid "textattr|stretch"
+msgctxt "textattr"
+msgid "stretch"
 msgstr "การยืด"
 
 #. Translators: this attribute specifies whether the text is strike though
@@ -8298,7 +8331,8 @@ msgstr "การยืด"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:235
-msgid "textattr|strike through"
+msgctxt "textattr"
+msgid "strike through"
 msgstr "ขีดฆ่า"
 
 #. Translators: this attribute specifies the slant style of the text,
@@ -8307,7 +8341,8 @@ msgstr "ขีดฆ่า"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:242
-msgid "textattr|style"
+msgctxt "textattr"
+msgid "style"
 msgstr "สไตล์"
 
 #. Translators: this attribute specifies the decoration of the text.
@@ -8316,7 +8351,8 @@ msgstr "สไตล์"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:249
-msgid "textattr|text decoration"
+msgctxt "textattr"
+msgid "text decoration"
 msgstr "การประดับข้อความ"
 
 #. Translators: this attribute specifies the angle at which the text is
@@ -8327,7 +8363,8 @@ msgstr "การประดับข้อความ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:258
-msgid "textattr|text rotation"
+msgctxt "textattr"
+msgid "text rotation"
 msgstr "การหมุนข้อความ"
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
@@ -8336,7 +8373,8 @@ msgstr "การหมุนข้อความ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:265
-msgid "textattr|text shadow"
+msgctxt "textattr"
+msgid "text shadow"
 msgstr "เงาข้อความ"
 
 #. Translators: this attributes specifies whether the text is underlined.
@@ -8345,7 +8383,8 @@ msgstr "เงาข้อความ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:272
-msgid "textattr|underline"
+msgctxt "textattr"
+msgid "underline"
 msgstr "ขีดเส้นใต้"
 
 #. Translators: this attribute specifies the capitalization variant of
@@ -8354,7 +8393,8 @@ msgstr "ขีดเส้นใต้"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:279
-msgid "textattr|variant"
+msgctxt "textattr"
+msgid "variant"
 msgstr "แบบย่อย"
 
 #. Translators: this attributes specifies what vertical alignment property
@@ -8363,7 +8403,8 @@ msgstr "แบบย่อย"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:286
-msgid "textattr|vertical align"
+msgctxt "textattr"
+msgid "vertical align"
 msgstr "การเรียงชิดขอบแนวดิ่ง"
 
 #. Translators: this attribute specifies the weight of the text.
@@ -8372,7 +8413,8 @@ msgstr "การเรียงชิดขอบแนวดิ่ง"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
 #: ../src/orca/text_attribute_names.py:293
-msgid "textattr|weight"
+msgctxt "textattr"
+msgid "weight"
 msgstr "ความหนา"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
@@ -8381,7 +8423,8 @@ msgstr "ความหนา"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:300
-msgid "textattr|wrap mode"
+msgctxt "textattr"
+msgid "wrap mode"
 msgstr "โหมดการตัดบรรทัด"
 
 #. Translators: this attribute specifies the way the text is written.
@@ -8392,7 +8435,8 @@ msgstr "โหมดการตัดบรรทัด"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:309
-msgid "textattr|writing mode"
+msgctxt "textattr"
+msgid "writing mode"
 msgstr "โหมดการเขียน"
 
 #. The following are the known values of some of these text attributes.
@@ -8408,7 +8452,8 @@ msgstr "โหมดการเขียน"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:325
-msgid "textattr|true"
+msgctxt "textattr"
+msgid "true"
 msgstr "จริง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8418,7 +8463,8 @@ msgstr "จริง"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:333
-msgid "textattr|false"
+msgctxt "textattr"
+msgid "false"
 msgstr "เท็จ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8429,7 +8475,8 @@ msgstr "เท็จ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:342
-msgid "textattr|none"
+msgctxt "textattr"
+msgid "none"
 msgstr "ไม่มี"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8438,7 +8485,8 @@ msgstr "ไม่มี"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:349
-msgid "textattr|engrave"
+msgctxt "textattr"
+msgid "engrave"
 msgstr "สลัก"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8447,7 +8495,8 @@ msgstr "สลัก"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:356
-msgid "textattr|emboss"
+msgctxt "textattr"
+msgid "emboss"
 msgstr "นูน"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8456,7 +8505,8 @@ msgstr "นูน"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:363
-msgid "textattr|outline"
+msgctxt "textattr"
+msgid "outline"
 msgstr "เส้นขอบ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8465,7 +8515,8 @@ msgstr "เส้นขอบ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:370
-msgid "textattr|overline"
+msgctxt "textattr"
+msgid "overline"
 msgstr "ขีดเส้นบน"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8474,7 +8525,8 @@ msgstr "ขีดเส้นบน"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:377
-msgid "textattr|line through"
+msgctxt "textattr"
+msgid "line through"
 msgstr "ขีดทับกลาง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8483,7 +8535,8 @@ msgstr "ขีดทับกลาง"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:384
-msgid "textattr|blink"
+msgctxt "textattr"
+msgid "blink"
 msgstr "กะพริบ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8492,7 +8545,8 @@ msgstr "กะพริบ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:391
-msgid "textattr|black"
+msgctxt "textattr"
+msgid "black"
 msgstr "ดำ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8501,7 +8555,8 @@ msgstr "ดำ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:398
-msgid "textattr|single"
+msgctxt "textattr"
+msgid "single"
 msgstr "เส้นเดี่ยว"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8510,7 +8565,8 @@ msgstr "เส้นเดี่ยว"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:405
-msgid "textattr|double"
+msgctxt "textattr"
+msgid "double"
 msgstr "เส้นคู่"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8519,7 +8575,8 @@ msgstr "เส้นคู่"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:412
-msgid "textattr|low"
+msgctxt "textattr"
+msgid "low"
 msgstr "ต่ำ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8528,7 +8585,8 @@ msgstr "ต่ำ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:419
-msgid "textattr|char"
+msgctxt "textattr"
+msgid "char"
 msgstr "อักขระ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8537,7 +8595,8 @@ msgstr "อักขระ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:426
-msgid "textattr|word"
+msgctxt "textattr"
+msgid "word"
 msgstr "คำ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8546,7 +8605,8 @@ msgstr "คำ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:433
-msgid "textattr|ltr"
+msgctxt "textattr"
+msgid "ltr"
 msgstr "ซ้ายไปขวา"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8555,7 +8615,8 @@ msgstr "ซ้ายไปขวา"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:440
-msgid "textattr|rtl"
+msgctxt "textattr"
+msgid "rtl"
 msgstr "ขวามาซ้าย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8564,7 +8625,8 @@ msgstr "ขวามาซ้าย"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:447
-msgid "textattr|left"
+msgctxt "textattr"
+msgid "left"
 msgstr "ซ้าย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8573,7 +8635,8 @@ msgstr "ซ้าย"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:454
-msgid "textattr|right"
+msgctxt "textattr"
+msgid "right"
 msgstr "ขวา"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8582,7 +8645,8 @@ msgstr "ขวา"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:461
-msgid "textattr|center"
+msgctxt "textattr"
+msgid "center"
 msgstr "ตรงกลาง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8591,7 +8655,8 @@ msgstr "ตรงกลาง"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:468
-msgid "textattr|fill"
+msgctxt "textattr"
+msgid "fill"
 msgstr "เต็ม"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8600,7 +8665,8 @@ msgstr "เต็ม"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:475
-msgid "textattr|ultra condensed"
+msgctxt "textattr"
+msgid "ultra condensed"
 msgstr "บีบที่สุด"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8609,7 +8675,8 @@ msgstr "บีบที่สุด"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:482
-msgid "textattr|extra condensed"
+msgctxt "textattr"
+msgid "extra condensed"
 msgstr "บีบมาก"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8618,7 +8685,8 @@ msgstr "บีบมาก"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:489
-msgid "textattr|condensed"
+msgctxt "textattr"
+msgid "condensed"
 msgstr "บีบ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8627,7 +8695,8 @@ msgstr "บีบ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:496
-msgid "textattr|semi condensed"
+msgctxt "textattr"
+msgid "semi condensed"
 msgstr "กึ่งบีบ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8636,7 +8705,8 @@ msgstr "กึ่งบีบ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:503
-msgid "textattr|normal"
+msgctxt "textattr"
+msgid "normal"
 msgstr "ปกติ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8645,7 +8715,8 @@ msgstr "ปกติ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:510
-msgid "textattr|semi expanded"
+msgctxt "textattr"
+msgid "semi expanded"
 msgstr "กึ่งขยาย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8654,7 +8725,8 @@ msgstr "กึ่งขยาย"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:517
-msgid "textattr|expanded"
+msgctxt "textattr"
+msgid "expanded"
 msgstr "ขยาย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8663,7 +8735,8 @@ msgstr "ขยาย"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:524
-msgid "textattr|extra expanded"
+msgctxt "textattr"
+msgid "extra expanded"
 msgstr "ขยายมาก"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8672,7 +8745,8 @@ msgstr "ขยายมาก"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:531
-msgid "textattr|ultra expanded"
+msgctxt "textattr"
+msgid "ultra expanded"
 msgstr "ขยายที่สุด"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8681,7 +8755,8 @@ msgstr "ขยายที่สุด"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:538
-msgid "textattr|small caps"
+msgctxt "textattr"
+msgid "small caps"
 msgstr "ตัวพิมพ์ใหญ่ตัวเล็ก"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8690,7 +8765,8 @@ msgstr "ตัวพิมพ์ใหญ่ตัวเล็ก"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:545
-msgid "textattr|oblique"
+msgctxt "textattr"
+msgid "oblique"
 msgstr "ตัวเอน"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8699,7 +8775,8 @@ msgstr "ตัวเอน"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:552
-msgid "textattr|italic"
+msgctxt "textattr"
+msgid "italic"
 msgstr "ตัวเอียง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8708,7 +8785,8 @@ msgstr "ตัวเอียง"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:559
-msgid "textattr|Default"
+msgctxt "textattr"
+msgid "Default"
 msgstr "ปริยาย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8717,7 +8795,8 @@ msgstr "ปริยาย"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:566
-msgid "textattr|Text body"
+msgctxt "textattr"
+msgid "Text body"
 msgstr "เนื้อความ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8726,7 +8805,8 @@ msgstr "เนื้อความ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:573
-msgid "textattr|Heading"
+msgctxt "textattr"
+msgid "Heading"
 msgstr "หัวข้อ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8736,7 +8816,8 @@ msgstr "หัวข้อ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:581
-msgid "textattr|baseline"
+msgctxt "textattr"
+msgid "baseline"
 msgstr "เส้นบรรทัด"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8745,7 +8826,8 @@ msgstr "เส้นบรรทัด"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:588
-msgid "textattr|sub"
+msgctxt "textattr"
+msgid "sub"
 msgstr "ตัวห้อย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8754,7 +8836,8 @@ msgstr "ตัวห้อย"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:595
-msgid "textattr|super"
+msgctxt "textattr"
+msgid "super"
 msgstr "ตัวยก"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8763,7 +8846,8 @@ msgstr "ตัวยก"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:602
-msgid "textattr|top"
+msgctxt "textattr"
+msgid "top"
 msgstr "บน"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8772,7 +8856,8 @@ msgstr "บน"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:609
-msgid "textattr|text-top"
+msgctxt "textattr"
+msgid "text-top"
 msgstr "ขอบบนของข้อความ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8781,7 +8866,8 @@ msgstr "ขอบบนของข้อความ"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:616
-msgid "textattr|middle"
+msgctxt "textattr"
+msgid "middle"
 msgstr "กลาง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8790,7 +8876,8 @@ msgstr "กลาง"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:623
-msgid "textattr|bottom"
+msgctxt "textattr"
+msgid "bottom"
 msgstr "ล่าง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8799,7 +8886,8 @@ msgstr "ล่าง"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:630
-msgid "textattr|text-bottom"
+msgctxt "textattr"
+msgid "text-bottom"
 msgstr "ขอบล่างของข้อความ"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8809,7 +8897,8 @@ msgstr "ขอบล่างของข้อความ"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:638
-msgid "textattr|inherit"
+msgctxt "textattr"
+msgid "inherit"
 msgstr "สืบทอด"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8818,7 +8907,8 @@ msgstr "สืบทอด"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:645
-msgid "textattr|lr-tb"
+msgctxt "textattr"
+msgid "lr-tb"
 msgstr "ซ้ายไปขวา-บนลงล่าง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8827,7 +8917,8 @@ msgstr "ซ้ายไปขวา-บนลงล่าง"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:652
-msgid "textattr|rl-tb"
+msgctxt "textattr"
+msgid "rl-tb"
 msgstr "ขวามาซ้าย-บนลงล่าง"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8836,7 +8927,8 @@ msgstr "ขวามาซ้าย-บนลงล่าง"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:659
-msgid "textattr|tb-rl"
+msgctxt "textattr"
+msgid "tb-rl"
 msgstr "บนลงล่าง-ขวามาซ้าย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8845,7 +8937,8 @@ msgstr "บนลงล่าง-ขวามาซ้าย"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:666
-msgid "textattr|tb-lr"
+msgctxt "textattr"
+msgid "tb-lr"
 msgstr "บนลงล่าง-ซ้ายไปขวา"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8854,7 +8947,8 @@ msgstr "บนลงล่าง-ซ้ายไปขวา"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:673
-msgid "textattr|bt-rl"
+msgctxt "textattr"
+msgid "bt-rl"
 msgstr "ล่างขึ้นบน-ขวามาซ้าย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8863,7 +8957,8 @@ msgstr "ล่างขึ้นบน-ขวามาซ้าย"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:680
-msgid "textattr|bt-lr"
+msgctxt "textattr"
+msgid "bt-lr"
 msgstr "ล่างขึ้นบน-ซ้ายไปขวา"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8872,7 +8967,8 @@ msgstr "ล่างขึ้นบน-ซ้ายไปขวา"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:687
-msgid "textattr|lr"
+msgctxt "textattr"
+msgid "lr"
 msgstr "ซ้ายไปขวา"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8881,7 +8977,8 @@ msgstr "ซ้ายไปขวา"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:694
-msgid "textattr|rl"
+msgctxt "textattr"
+msgid "rl"
 msgstr "ขวามาซ้าย"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8890,7 +8987,8 @@ msgstr "ขวามาซ้าย"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:701
-msgid "textattr|tb"
+msgctxt "textattr"
+msgid "tb"
 msgstr "บนลงล่าง"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.

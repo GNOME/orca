@@ -1813,7 +1813,8 @@ msgstr "सम्पूर्ण कागजात चयन गरियो"
 #.
 #: ../src/orca/default.py:3173 ../src/orca/default.py:6041
 #: ../src/orca/scripts/StarOffice.py:142 ../src/orca/where_am_I.py:491
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "चयन गरियो"
 
 #. Translators: when users are navigating a table, they
@@ -1991,7 +1992,8 @@ msgstr "कर्सर स्थितिबाट कागजात चयन
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:6055
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "चयन नगरिएको"
 
 #. Translators: this refers to the speech synthesis services
@@ -2071,7 +2073,8 @@ msgstr "थिचिएको छैन"
 #.
 #: ../src/orca/flat_review.py:330 ../src/orca/Gecko.py:1047
 #: ../src/orca/speechgenerator.py:1031 ../src/orca/where_am_I.py:207
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "चयन गरियो"
 
 #. Translators: this is in reference to a radio button being
@@ -2081,7 +2084,8 @@ msgstr "चयन गरियो"
 #.
 #: ../src/orca/flat_review.py:337 ../src/orca/Gecko.py:1054
 #: ../src/orca/speechgenerator.py:1038 ../src/orca/where_am_I.py:214
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "जाँच गरिएन"
 
 #. Translators: The component orientation is horizontal.
@@ -2980,7 +2984,8 @@ msgstr "भन्दा ढिलो ।"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "चयन गरियो"
 
 #. Translators: this represents the state of a node in a tree
@@ -2988,7 +2993,8 @@ msgstr "चयन गरियो"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr "चयन नगरिएको"
 
 #: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_prefs.py:1610
@@ -4551,7 +4557,8 @@ msgstr "डेस्कटप फ्रेम"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:389
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "डायल"
 
 #. Translators: long braille for the rolename of a dial.
@@ -4702,7 +4709,8 @@ msgstr "फन्ट चयनकर्ता"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:490
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "फारम"
 
 #. Translators: long braille for the rolename of a form.

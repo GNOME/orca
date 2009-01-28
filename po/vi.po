@@ -2256,7 +2256,8 @@ msgstr "cấp cây %d"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "chưa chọn ô bảng"
 
 #: ../src/orca/default.py:3714
@@ -2277,7 +2278,8 @@ msgstr "chưa chọn ô bảng"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "được chọn"
 
 #: ../src/orca/default.py:3722
@@ -2294,7 +2296,8 @@ msgstr "được chọn"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "chưa chọn"
 
 #: ../src/orca/default.py:4109
@@ -2633,7 +2636,8 @@ msgstr "chưa bấm"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "được chọn"
 
 #: ../src/orca/flat_review.py:384
@@ -2645,7 +2649,8 @@ msgstr "được chọn"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "chưa chọn"
 
 #: ../src/orca/flat_review.py:422
@@ -3877,7 +3882,8 @@ msgstr "Dùng thư mục xen kẽ cho tùy thích người dùng"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "thoại"
 
 #: ../src/orca/orca.py:1360
@@ -3889,7 +3895,8 @@ msgstr "thoại"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "chữ nổi"
 
 #: ../src/orca/orca.py:1361
@@ -3901,7 +3908,8 @@ msgstr "chữ nổi"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "bộ theo dõi chữ nổi"
 
 #: ../src/orca/orca.py:1362
@@ -3913,7 +3921,8 @@ msgstr "bộ theo dõi chữ nổi"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "kính lúp"
 
 #: ../src/orca/orca.py:1363
@@ -3925,7 +3934,8 @@ msgstr "kính lúp"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr "cửa sổ chính"
 
 #: ../src/orca/orca.py:1369
@@ -4947,7 +4957,8 @@ msgstr "khung môi trường"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "quay"
 
 #: ../src/orca/rolenames.py:380
@@ -5099,7 +5110,8 @@ msgstr "bộ chọn phông chữ"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "mẫu"
 
 #: ../src/orca/rolenames.py:481
@@ -7814,7 +7826,8 @@ msgstr "%d phần trăm tài liệu đã đọc"
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "được chọn"
 
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge.py:94
@@ -7822,7 +7835,8 @@ msgstr "được chọn"
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr "chưa chọn"
 
 #: ../src/orca/settings.py:891

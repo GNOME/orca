@@ -1,3 +1,8 @@
+2009-01-28  Willie Walker <william.walker@sun.com>
+
+          * po/*.po:
+          Fix for bug #569118 - Use C_() instead of Q_() with context
+
 2009-01-18  Duarte Loreto <happyguy_pt@hotmail.com>
 
 	* pt.po: Updated Portuguese translation by Rui Batista.

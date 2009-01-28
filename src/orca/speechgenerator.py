@@ -37,7 +37,7 @@ import settings
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import Q_        # to provide qualified translatable strings
+from orca_i18n import C_        # to provide qualified translatable strings
 
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
@@ -265,9 +265,7 @@ class SpeechGenerator:
                     # Translators: when the user selects (highlights) text in
                     # a document, Orca lets them know this.
                     #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    utterance = [Q_("text|selected")]
+                    utterance = [C_("text", "selected")]
 
         return utterance
 
@@ -1200,16 +1198,12 @@ class SpeechGenerator:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            selectionState = Q_("radiobutton|selected")
+            selectionState = C_("radiobutton", "selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            selectionState = Q_("radiobutton|not selected")
+            selectionState = C_("radiobutton", "not selected")
 
         # If it's not already focused, say it's name
         #

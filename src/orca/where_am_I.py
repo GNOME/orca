@@ -35,7 +35,7 @@ import urlparse, urllib2
 
 from orca_i18n import _ # for gettext support
 from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import Q_ # to provide qualified translatable strings
+from orca_i18n import C_ # to provide qualified translatable strings
 
 class WhereAmI:
 
@@ -220,16 +220,12 @@ class WhereAmI:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            text = Q_("radiobutton|selected")
+            text = C_("radiobutton", "selected")
         else:
             # Translators: this is in reference to a radio button being
             # selected or not.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            text = Q_("radiobutton|not selected")
+            text = C_("radiobutton", "not selected")
 
         utterances.append(text)
 
@@ -564,9 +560,7 @@ class WhereAmI:
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            text = Q_("text|selected")
+            text = C_("text", "selected")
             utterances.append(text)
 
         text = self._getObjAccelerator(obj)
@@ -985,9 +979,7 @@ class WhereAmI:
                     # Translators: when the user selects (highlights) text in
                     # a document, Orca lets them know this.
                     #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    utterance = [Q_("text|selected")]
+                    utterance = [C_("text", "selected")]
 
         return utterance
 

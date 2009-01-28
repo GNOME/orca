@@ -53,19 +53,10 @@ except:
 #                                                                      #
 ########################################################################
 
-def Q_(s):
-    """Provide qualified translatable strings.  Some strings translate to
-    more than one string in another locale.  We provide a convention to
-    provide contextual information for the string so that translators can
-    do the right thing: we embed a '|' character in the string to be
-    translated.  The string before the '|' provides the context, and the
-    string after the '|' provides the string to translate.  For example:
-    'radiobutton|selected' and 'text|selected' are used to provide context
-    for the word 'selected'.
-
-    We need to handle the case where the string has not been translated,
-    however, and we do so by stripping off the contextual information."""
-
-    s = _(s)
-    s = s[s.find('|')+1:]
-    return s
+def C_(ctx, s):
+    """Provide qualified translatable strings via context."""
+    translated = _('%s\x04%s' % (ctx, s))
+    if '\x04' in translated:
+        # no translation found, return input string
+        return s
+    return translated

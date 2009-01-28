@@ -1820,8 +1820,9 @@ msgstr "pasirinktas visas dokumentas"
 #.
 #: ../src/orca/default.py:3173 ../src/orca/default.py:6041
 #: ../src/orca/scripts/StarOffice.py:142 ../src/orca/where_am_I.py:491
-msgid "text|selected"
-msgstr "tekstas|pažymėtas"
+msgctxt "text"
+msgid "selected"
+msgstr "pažymėtas"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -1999,8 +2000,9 @@ msgstr "dokumentas pasirinktas nuo žymeklio pozicijos"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:6055
-msgid "text|unselected"
-msgstr "tekstas|pažymėjimas nuimtas"
+msgctxt "text"
+msgid "unselected"
+msgstr "pažymėjimas nuimtas"
 
 #. Translators: this refers to the speech synthesis services
 #. provided by the separate emacspeak utility available at
@@ -2079,8 +2081,9 @@ msgstr "nepaspausta"
 #.
 #: ../src/orca/flat_review.py:330 ../src/orca/Gecko.py:1047
 #: ../src/orca/speechgenerator.py:1031 ../src/orca/where_am_I.py:207
-msgid "radiobutton|selected"
-msgstr "akutė|pažymėta"
+msgctxt "radiobutton"
+msgid "selected"
+msgstr "pažymėta"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
@@ -2089,8 +2092,9 @@ msgstr "akutė|pažymėta"
 #.
 #: ../src/orca/flat_review.py:337 ../src/orca/Gecko.py:1054
 #: ../src/orca/speechgenerator.py:1038 ../src/orca/where_am_I.py:214
-msgid "radiobutton|not selected"
-msgstr "akutė|nepasirinkta"
+msgctxt "radiobutton"
+msgid "not selected"
+msgstr "nepasirinkta"
 
 #. Translators: The component orientation is horizontal.
 #.
@@ -2996,16 +3000,18 @@ msgstr "lėčiau."
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-msgid "listitem|selected"
-msgstr "sąrašo elementas|pasirinktas"
+msgctxt "listitem"
+msgid "selected"
+msgstr "pasirinktas"
 
 #. Translators: this represents the state of a node in a tree
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
-msgstr "sąrašo elementas|nepasirinktas"
+msgctxt "listitem"
+msgid "unselected"
+msgstr "nepasirinktas"
 
 #: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_prefs.py:1610
 #: ../src/orca/orca_gui_prefs.py:1702
@@ -4565,7 +4571,8 @@ msgstr "darbastalio rėmelis"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:389
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr ""
 
 #. Translators: long braille for the rolename of a dial.
@@ -4716,7 +4723,8 @@ msgstr "šriftų parinkiklis"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:490
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr ""
 
 #. Translators: long braille for the rolename of a form.

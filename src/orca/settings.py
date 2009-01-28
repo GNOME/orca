@@ -82,7 +82,7 @@ import pyatspi
 import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
-from orca_i18n import Q_          # to provide qualified translatable strings
+from orca_i18n import C_          # to provide qualified translatable strings
 
 # These are the settings that Orca supports the user customizing.
 #
@@ -656,17 +656,13 @@ presentReadOnlyText = True
 # Translators: this is used to indicate the user is in a text
 # area that is not editable.  It is meant to be spoken to the user.
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-speechReadOnlyString = Q_("text|read only")
+speechReadOnlyString = C_("text", "read only")
 
 # Translators: this is used to indicate the user is in a text
 # area that is not editable.  It is meant to be a short abbreviation
 # to be presented on the braille display.
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-brailleReadOnlyString = Q_("text|rdonly")
+brailleReadOnlyString = C_("text", "rdonly")
 
 # The complete list of possible text attributes.
 #

@@ -2158,7 +2158,8 @@ msgstr "επίπεδο δένδρου %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2744
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "αποεπιλεγμένο"
 
 #. Translators: this means the user has selected
@@ -2183,7 +2184,8 @@ msgstr "έχει επιλεγεί ολόκληρο το έγγραφο"
 #: ../src/orca/default.py:6672 ../src/orca/scripts/StarOffice.py:170
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:496
 #: ../src/orca/where_am_I.py:886
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "επιλεγμένο"
 
 #. Translators: this object is now unselected.
@@ -2199,7 +2201,8 @@ msgstr "επιλεγμένο"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3505 ../src/orca/default.py:6688
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "αποεπιλεγμένο"
 
 #. Translators: when users are navigating a table, they
@@ -2458,7 +2461,8 @@ msgstr "μη πατημένο"
 #.
 #: ../src/orca/flat_review.py:377 ../src/orca/Gecko.py:1130
 #: ../src/orca/speechgenerator.py:1065 ../src/orca/where_am_I.py:208
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "επιλεγμένο"
 
 #. Translators: this is in reference to a radio button being
@@ -2468,7 +2472,8 @@ msgstr "επιλεγμένο"
 #.
 #: ../src/orca/flat_review.py:384 ../src/orca/Gecko.py:1137
 #: ../src/orca/speechgenerator.py:1072 ../src/orca/where_am_I.py:215
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "δεν είναι επιλεγμένο"
 
 # #-#-#-#-#  gnome-terminal.HEAD.el.po (el)  #-#-#-#-#
@@ -3504,16 +3509,18 @@ msgstr "πιο αργά."
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-msgid "listitem|selected"
-msgstr "listitem|επιλεγμένο"
+msgctxt "listitem"
+msgid "selected"
+msgstr "επιλεγμένο"
 
 #. Translators: this represents the state of a node in a tree
 #. or list.
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
-msgstr "listitem|αποεπιλεγμένο"
+msgctxt "listitem"
+msgid "unselected"
+msgstr "αποεπιλεγμένο"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
@@ -4608,7 +4615,8 @@ msgstr "Χρήση εναλλακτικού καταλόγου για τις π�
 #.
 #: ../src/orca/orca.py:1302 ../src/orca/orca.py:1315 ../src/orca/orca.py:1436
 #: ../src/orca/orca.py:1477
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "εκφώνηση"
 
 #. Translators: this option is for enabling braille output on
@@ -4618,7 +4626,8 @@ msgstr "εκφώνηση"
 #.
 #: ../src/orca/orca.py:1303 ../src/orca/orca.py:1316 ../src/orca/orca.py:1444
 #: ../src/orca/orca.py:1479
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "μπράιγ"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -4628,7 +4637,8 @@ msgstr "μπράιγ"
 #.
 #: ../src/orca/orca.py:1304 ../src/orca/orca.py:1317 ../src/orca/orca.py:1452
 #: ../src/orca/orca.py:1481
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "οθόνη μπράιγ"
 
 #. Translators: this option is for enabling screen
@@ -4638,7 +4648,8 @@ msgstr "οθόνη μπράιγ"
 #.
 #: ../src/orca/orca.py:1305 ../src/orca/orca.py:1318 ../src/orca/orca.py:1460
 #: ../src/orca/orca.py:1483
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "μεγεθυντής"
 
 #. Translators: this option is for enabling the display
@@ -4648,7 +4659,8 @@ msgstr "μεγεθυντής"
 #.
 #: ../src/orca/orca.py:1306 ../src/orca/orca.py:1319 ../src/orca/orca.py:1468
 #: ../src/orca/orca.py:1485
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr "κύριο παράθυρο"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -5648,7 +5660,8 @@ msgstr "πλαίσιο επιφάνειας εργασίας"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "κλήση"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5799,7 +5812,8 @@ msgstr "επιλογέας γραμματοσειράς"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "μορφή"
 
 #. Translators: long braille for the rolename of a form.

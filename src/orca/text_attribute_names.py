@@ -26,7 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from orca_i18n import Q_        # to provide qualified translatable strings
+from orca_i18n import C_        # to provide qualified translatable strings
 import orca_state
 
 # Translators: this is a structure to assist in the generation of
@@ -59,9 +59,7 @@ _textAttributeTable = {}
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bg-color"] = Q_("textattr|background color")
+_textAttributeTable["bg-color"] = C_("textattr", "background color")
 
 # Translators: this attribute specifies whether to make the background
 # color for each character the height of the highest font used on the
@@ -70,62 +68,48 @@ _textAttributeTable["bg-color"] = Q_("textattr|background color")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bg-full-height"] = Q_("textattr|background full height")
+_textAttributeTable["bg-full-height"] = C_("textattr", "background full height")
 
 # Translators: this attribute specifies whether a GdkBitmap is set for 
 # stippling the background color. It will be a "true" or "false" value.
 # See
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bg-stipple"] = Q_("textattr|background stipple")
+_textAttributeTable["bg-stipple"] = C_("textattr", "background stipple")
 
 # Translators: this attribute specifies the direction of the text.
 # Values are "none", "ltr" or "rtl".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["direction"] = Q_("textattr|direction")
+_textAttributeTable["direction"] = C_("textattr", "direction")
 
 # Translators: this attribute specifies whether the text is editable.
 # It will be a "true" or "false" value.
 # See
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["editable"] = Q_("textattr|editable")
+_textAttributeTable["editable"] = C_("textattr", "editable")
 
 # Translators: this attribute specifies the font family name of the text.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["family-name"] = Q_("textattr|family name")
+_textAttributeTable["family-name"] = C_("textattr", "family name")
 
 # Translators: this attribute specifies the foreground color of the text.
 # The value is an RGB value of the format "u,u,u".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["fg-color"] = Q_("textattr|foreground color")
+_textAttributeTable["fg-color"] = C_("textattr", "foreground color")
 
 # Translators: this attribute specifies whether a GdkBitmap is set for
 # stippling the foreground color. It will be a "true" or "false" value.
 # See
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["fg-stipple"] = Q_("textattr|foreground stipple")
+_textAttributeTable["fg-stipple"] = C_("textattr", "foreground stipple")
 
 # Translators: this attribute specifies the effect applied to the font 
 # used by the text.
@@ -133,70 +117,54 @@ _textAttributeTable["fg-stipple"] = Q_("textattr|foreground stipple")
 # http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["font-effect"] = Q_("textattr|font effect")
+_textAttributeTable["font-effect"] = C_("textattr", "font effect")
 
 # Translators: this attribute specifies the indentation of the text
 # (in pixels).
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["indent"] = Q_("textattr|indent")
+_textAttributeTable["indent"] = C_("textattr", "indent")
 
 # Translators: this attribute specifies there is something "wrong" with
 # the text, such as it being a misspelled word. See:
 # https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["invalid"] = Q_("textattr|invalid")
+_textAttributeTable["invalid"] = C_("textattr", "invalid")
 
 # Translators: this attribute specifies whether the text is invisible.
 # It will be a "true" or "false" value.
 # See
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["invisible"] = Q_("textattr|invisible")
+_textAttributeTable["invisible"] = C_("textattr", "invisible")
 
 # Translators: this attribute specifies how the justification of the text.
 # Values are "left", "right", "center" or "fill".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["justification"] = Q_("textattr|justification")
+_textAttributeTable["justification"] = C_("textattr", "justification")
 
 # Translators: this attribute specifies the language that the text is
 # written in.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["language"] = Q_("textattr|language")
+_textAttributeTable["language"] = C_("textattr", "language")
 
 # Translators: this attribute specifies the pixel width of the left margin.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["left-margin"] = Q_("textattr|left margin")
+_textAttributeTable["left-margin"] = C_("textattr", "left margin")
 
 # Translators: this attribute specifies the height of the line of text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["line-height"] = Q_("textattr|line height")
+_textAttributeTable["line-height"] = C_("textattr", "line height")
 
 # Translators: this attribute refers to the named style which is associated
 # with the entire paragraph and which controls the default formatting 
@@ -206,27 +174,21 @@ _textAttributeTable["line-height"] = Q_("textattr|line height")
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["paragraph-style"] = Q_("textattr|paragraph style")
+_textAttributeTable["paragraph-style"] = C_("textattr", "paragraph style")
 
 # Translators: this attribute specifies the pixels of blank space to 
 # leave above each newline-terminated line.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["pixels-above-lines"] = Q_("textattr|pixels above lines")
+_textAttributeTable["pixels-above-lines"] = C_("textattr", "pixels above lines")
 
 # Translators: this attribute specifies the pixels of blank space to
 # leave below each newline-terminated line.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["pixels-below-lines"] = Q_("textattr|pixels below lines")
+_textAttributeTable["pixels-below-lines"] = C_("textattr", "pixels below lines")
 
 # Translators: this attribute specifies the pixels of blank space to
 # leave between wrapped lines inside the same newline-terminated line
@@ -234,43 +196,33 @@ _textAttributeTable["pixels-below-lines"] = Q_("textattr|pixels below lines")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["pixels-inside-wrap"] = Q_("textattr|pixels inside wrap")
+_textAttributeTable["pixels-inside-wrap"] = C_("textattr", "pixels inside wrap")
 
 # Translators: this attribute specifies the pixel width of the right margin.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["right-margin"] = Q_("textattr|right margin")
+_textAttributeTable["right-margin"] = C_("textattr", "right margin")
 
 # Translators: this attribute specifies the number of pixels that the 
 # text characters are risen above the baseline.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["rise"] = Q_("textattr|rise")
+_textAttributeTable["rise"] = C_("textattr", "rise")
 
 # Translators: this attribute specifies the scale of the characters. The
 # value is a string representation of a double.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["scale"] = Q_("textattr|scale")
+_textAttributeTable["scale"] = C_("textattr", "scale")
 
 # Translators: this attribute specifies the size of the text.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["size"] = Q_("textattr|size")
+_textAttributeTable["size"] = C_("textattr", "size")
 
 # Translators: this attribute specifies the stretch of he text, if set.
 # Values are "ultra_condensed", "extra_condensed", "condensed",
@@ -279,9 +231,7 @@ _textAttributeTable["size"] = Q_("textattr|size")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["stretch"] = Q_("textattr|stretch")
+_textAttributeTable["stretch"] = C_("textattr", "stretch")
 
 # Translators: this attribute specifies whether the text is strike though
 # (in other words, whether there is a line drawn through it). Values are
@@ -289,27 +239,21 @@ _textAttributeTable["stretch"] = Q_("textattr|stretch")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["strikethrough"] = Q_("textattr|strike through")
+_textAttributeTable["strikethrough"] = C_("textattr", "strike through")
 
 # Translators: this attribute specifies the slant style of the text,
 # if set. Values are "normal", "oblique" or "italic".
 # See: 
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["style"] = Q_("textattr|style")
+_textAttributeTable["style"] = C_("textattr", "style")
 
 # Translators: this attribute specifies the decoration of the text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["text-decoration"] = Q_("textattr|text decoration")
+_textAttributeTable["text-decoration"] = C_("textattr", "text decoration")
 
 # Translators: this attribute specifies the angle at which the text is
 # displayed (i.e. rotated from the norm) and is represented in degrees 
@@ -318,63 +262,49 @@ _textAttributeTable["text-decoration"] = Q_("textattr|text decoration")
 # http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["text-rotation"] = Q_("textattr|text rotation")
+_textAttributeTable["text-rotation"] = C_("textattr", "text rotation")
 
 # Translators: this attribute specifies the shadow effects applied to the text.
 # See:
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["text-shadow"] = Q_("textattr|text shadow")
+_textAttributeTable["text-shadow"] = C_("textattr", "text shadow")
 
 # Translators: this attributes specifies whether the text is underlined.
 # Values are "none", "single", "double" or "low".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["underline"] = Q_("textattr|underline")
+_textAttributeTable["underline"] = C_("textattr", "underline")
 
 # Translators: this attribute specifies the capitalization variant of
 # the text, if set. Values are "normal" or "small_caps".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["variant"] = Q_("textattr|variant")
+_textAttributeTable["variant"] = C_("textattr", "variant")
 
 # Translators: this attributes specifies what vertical alignment property
 # has been applied to the text.
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["vertical-align"] = Q_("textattr|vertical align")
+_textAttributeTable["vertical-align"] = C_("textattr", "vertical align")
 
 # Translators: this attribute specifies the weight of the text.
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 # http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["weight"] = Q_("textattr|weight")
+_textAttributeTable["weight"] = C_("textattr", "weight")
 
 # Translators: this attribute specifies the wrap mode of the text, if any.
 # Values are "none", "char" or "word".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["wrap-mode"] = Q_("textattr|wrap mode")
+_textAttributeTable["wrap-mode"] = C_("textattr", "wrap mode")
 
 # Translators: this attribute specifies the way the text is written.
 # Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
@@ -383,9 +313,7 @@ _textAttributeTable["wrap-mode"] = Q_("textattr|wrap mode")
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["writing-mode"] = Q_("textattr|writing mode")
+_textAttributeTable["writing-mode"] = C_("textattr", "writing mode")
 
 
 # The following are the known values of some of these text attributes.
@@ -401,9 +329,7 @@ _textAttributeTable["writing-mode"] = Q_("textattr|writing mode")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["true"] = Q_("textattr|true")
+_textAttributeTable["true"] = C_("textattr", "true")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "invisible", "editable", bg-full-height", "strikethrough",
@@ -411,9 +337,7 @@ _textAttributeTable["true"] = Q_("textattr|true")
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["false"] = Q_("textattr|false")
+_textAttributeTable["false"] = C_("textattr", "false")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
@@ -422,314 +346,244 @@ _textAttributeTable["false"] = Q_("textattr|false")
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["none"] = Q_("textattr|none")
+_textAttributeTable["none"] = C_("textattr", "none")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "font-effect".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["engrave"] = Q_("textattr|engrave")
+_textAttributeTable["engrave"] = C_("textattr", "engrave")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "font-effect".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["emboss"] = Q_("textattr|emboss")
+_textAttributeTable["emboss"] = C_("textattr", "emboss")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "font-effect".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["outline"] = Q_("textattr|outline")
+_textAttributeTable["outline"] = C_("textattr", "outline")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "text-decoration".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["overline"] = Q_("textattr|overline")
+_textAttributeTable["overline"] = C_("textattr", "overline")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "text-decoration".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["line-through"] = Q_("textattr|line through")
+_textAttributeTable["line-through"] = C_("textattr", "line through")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "text-decoration".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["blink"] = Q_("textattr|blink")
+_textAttributeTable["blink"] = C_("textattr", "blink")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "text-shadow".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["black"] = Q_("textattr|black")
+_textAttributeTable["black"] = C_("textattr", "black")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["single"] = Q_("textattr|single")
+_textAttributeTable["single"] = C_("textattr", "single")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["double"] = Q_("textattr|double")
+_textAttributeTable["double"] = C_("textattr", "double")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "underline".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["low"] = Q_("textattr|low")
+_textAttributeTable["low"] = C_("textattr", "low")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "wrap mode".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["char"] = Q_("textattr|char")
+_textAttributeTable["char"] = C_("textattr", "char")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "wrap mode".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["word"] = Q_("textattr|word")
+_textAttributeTable["word"] = C_("textattr", "word")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["ltr"] = Q_("textattr|ltr")
+_textAttributeTable["ltr"] = C_("textattr", "ltr")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["rtl"] = Q_("textattr|rtl")
+_textAttributeTable["rtl"] = C_("textattr", "rtl")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["left"] = Q_("textattr|left")
+_textAttributeTable["left"] = C_("textattr", "left")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["right"] = Q_("textattr|right")
+_textAttributeTable["right"] = C_("textattr", "right")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["center"] = Q_("textattr|center")
+_textAttributeTable["center"] = C_("textattr", "center")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "justification". In Gecko, when no justification has
 # be explicitly set, they report a justification of "start".
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["start"] = Q_("textattr|no justification")
+_textAttributeTable["start"] = C_("textattr", "no justification")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "justification".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["fill"] = Q_("textattr|fill")
+_textAttributeTable["fill"] = C_("textattr", "fill")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["ultra_condensed"] = Q_("textattr|ultra condensed")
+_textAttributeTable["ultra_condensed"] = C_("textattr", "ultra condensed")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["extra_condensed"] = Q_("textattr|extra condensed")
+_textAttributeTable["extra_condensed"] = C_("textattr", "extra condensed")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["condensed"] = Q_("textattr|condensed")
+_textAttributeTable["condensed"] = C_("textattr", "condensed")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["semi_condensed"] = Q_("textattr|semi condensed")
+_textAttributeTable["semi_condensed"] = C_("textattr", "semi condensed")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch" and "variant".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["normal"] = Q_("textattr|normal")
+_textAttributeTable["normal"] = C_("textattr", "normal")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["semi_expanded"] = Q_("textattr|semi expanded")
+_textAttributeTable["semi_expanded"] = C_("textattr", "semi expanded")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["expanded"] = Q_("textattr|expanded")
+_textAttributeTable["expanded"] = C_("textattr", "expanded")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["extra_expanded"] = Q_("textattr|extra expanded")
+_textAttributeTable["extra_expanded"] = C_("textattr", "extra expanded")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "stretch".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["ultra_expanded"] = Q_("textattr|ultra expanded")
+_textAttributeTable["ultra_expanded"] = C_("textattr", "ultra expanded")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "variant".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["small_caps"] = Q_("textattr|small caps")
+_textAttributeTable["small_caps"] = C_("textattr", "small caps")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "style".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["oblique"] = Q_("textattr|oblique")
+_textAttributeTable["oblique"] = C_("textattr", "oblique")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "style".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["italic"] = Q_("textattr|italic")
+_textAttributeTable["italic"] = C_("textattr", "italic")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "paragraph-style".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["Default"] = Q_("textattr|Default")
+_textAttributeTable["Default"] = C_("textattr", "Default")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "paragraph-style".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["Text body"] = Q_("textattr|Text body")
+_textAttributeTable["Text body"] = C_("textattr", "Text body")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "paragraph-style".
 # See:
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["Heading"] = Q_("textattr|Heading")
+_textAttributeTable["Heading"] = C_("textattr", "Heading")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
@@ -737,72 +591,56 @@ _textAttributeTable["Heading"] = Q_("textattr|Heading")
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["baseline"] = Q_("textattr|baseline")
+_textAttributeTable["baseline"] = C_("textattr", "baseline")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["sub"] = Q_("textattr|sub")
+_textAttributeTable["sub"] = C_("textattr", "sub")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["super"] = Q_("textattr|super")
+_textAttributeTable["super"] = C_("textattr", "super")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["top"] = Q_("textattr|top")
+_textAttributeTable["top"] = C_("textattr", "top")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["text-top"] = Q_("textattr|text-top")
+_textAttributeTable["text-top"] = C_("textattr", "text-top")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["middle"] = Q_("textattr|middle")
+_textAttributeTable["middle"] = C_("textattr", "middle")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bottom"] = Q_("textattr|bottom")
+_textAttributeTable["bottom"] = C_("textattr", "bottom")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["text-bottom"] = Q_("textattr|text-bottom")
+_textAttributeTable["text-bottom"] = C_("textattr", "text-bottom")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align" and "writing-mode".
@@ -810,106 +648,82 @@ _textAttributeTable["text-bottom"] = Q_("textattr|text-bottom")
 #http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["inherit"] = Q_("textattr|inherit")
+_textAttributeTable["inherit"] = C_("textattr", "inherit")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["lr-tb"] = Q_("textattr|lr-tb")
+_textAttributeTable["lr-tb"] = C_("textattr", "lr-tb")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["rl-tb"] = Q_("textattr|rl-tb")
+_textAttributeTable["rl-tb"] = C_("textattr", "rl-tb")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["tb-rl"] = Q_("textattr|tb-rl")
+_textAttributeTable["tb-rl"] = C_("textattr", "tb-rl")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["tb-lr"] = Q_("textattr|tb-lr")
+_textAttributeTable["tb-lr"] = C_("textattr", "tb-lr")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bt-rl"] = Q_("textattr|bt-rl")
+_textAttributeTable["bt-rl"] = C_("textattr", "bt-rl")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["bt-lr"] = Q_("textattr|bt-lr")
+_textAttributeTable["bt-lr"] = C_("textattr", "bt-lr")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["lr"] = Q_("textattr|lr")
+_textAttributeTable["lr"] = C_("textattr", "lr")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["rl"] = Q_("textattr|rl")
+_textAttributeTable["rl"] = C_("textattr", "rl")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "writing-mode".
 # See:
 # http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["tb"] = Q_("textattr|tb")
+_textAttributeTable["tb"] = C_("textattr", "tb")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "strikethrough." It refers to the line style.
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["solid"] = Q_("textattr|solid")
+_textAttributeTable["solid"] = C_("textattr", "solid")
 
 # Translators: this is one of the text attribute values for the following
 # text attributes: "invalid". It is an indication that the text is not
 # spelled correctly. See:
 # https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #
-# ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-#
-_textAttributeTable["spelling"] = Q_("textattr|spelling")
+_textAttributeTable["spelling"] = C_("textattr", "spelling")
 
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 

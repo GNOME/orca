@@ -2254,7 +2254,8 @@ msgstr "கிளை நிலை %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2975
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr " தேர்ந்தெடுக்கப்படவில்லை"
 
 #. Translators: this object is now selected.
@@ -2273,7 +2274,8 @@ msgstr " தேர்ந்தெடுக்கப்படவில்லை"
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "தேர்ந்தெடுக்கப்பட்டது"
 
 #. Translators: this object is now unselected.
@@ -2289,7 +2291,8 @@ msgstr "தேர்ந்தெடுக்கப்பட்டது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3877 ../src/orca/default.py:7468
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "தேர்வு நீக்கப்பட்டது"
 
 #. Translators: when users are navigating a table, they
@@ -2631,7 +2634,8 @@ msgstr "அழுத்தாதது"
 #: ../src/orca/flat_review.py:376
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:547
 #: ../src/orca/speechgenerator.py:1156 ../src/orca/where_am_I.py:225
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "தேர்வுசெய்தது"
 
 #. Translators: this is in reference to a radio button being
@@ -2642,7 +2646,8 @@ msgstr "தேர்வுசெய்தது"
 #: ../src/orca/flat_review.py:383
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:554
 #: ../src/orca/speechgenerator.py:1163 ../src/orca/where_am_I.py:232
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "தேர்ந்தெடுக்கப்படவில்லை"
 
 #. Translators: The component orientation is horizontal.
@@ -4967,7 +4972,8 @@ msgstr "பணிமேடை சட்டம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "அழை"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5118,7 +5124,8 @@ msgstr "எழுத்துரு தேர்வாளர்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "படி"
 
 #. Translators: long braille for the rolename of a form.
@@ -7243,7 +7250,8 @@ msgstr "ஆவணத்தில் %d சதவிகிதம் படிக�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:646
-msgid "text|read only"
+msgctxt "text"
+msgid "read only"
 msgstr "படிக்க மட்டும் "
 
 #. Translators: this is used to indicate the user is in a text
@@ -7253,7 +7261,8 @@ msgstr "படிக்க மட்டும் "
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:654
-msgid "text|rdonly"
+msgctxt "text"
+msgid "rdonly"
 msgstr "rdonly"
 
 #. Translators: the regular expression here represents a string to
@@ -8055,7 +8064,8 @@ msgstr "மேலும் முன்னம் பார்த்த தொட
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:63
-msgid "textattr|background color"
+msgctxt "textattr"
+msgid "background color"
 msgstr "பின்னணி நிறம்"
 
 #. Translators: this attribute specifies whether to make the background
@@ -8068,7 +8078,8 @@ msgstr "பின்னணி நிறம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:74
-msgid "textattr|background full height"
+msgctxt "textattr"
+msgid "background full height"
 msgstr "பின்னணி உயரம்"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8079,7 +8090,8 @@ msgstr "பின்னணி உயரம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:83
-msgid "textattr|background stipple"
+msgctxt "textattr"
+msgid "background stipple"
 msgstr "பின்னணி புள்ளிகள்"
 
 #. Translators: this attribute specifies the direction of the text.
@@ -8090,7 +8102,8 @@ msgstr "பின்னணி புள்ளிகள்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:92
-msgid "textattr|direction"
+msgctxt "textattr"
+msgid "direction"
 msgstr "திசை"
 
 #. Translators: this attribute specifies whether the text is editable.
@@ -8101,7 +8114,8 @@ msgstr "திசை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:101
-msgid "textattr|editable"
+msgctxt "textattr"
+msgid "editable"
 msgstr "திருத்தவியலும்"
 
 #. Translators: this attribute specifies the font family name of the text.
@@ -8111,7 +8125,8 @@ msgstr "திருத்தவியலும்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:109
-msgid "textattr|family name"
+msgctxt "textattr"
+msgid "family name"
 msgstr "குடும்ப பெயர்"
 
 #. Translators: this attribute specifies the foreground color of the text.
@@ -8122,7 +8137,8 @@ msgstr "குடும்ப பெயர்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:118
-msgid "textattr|foreground color"
+msgctxt "textattr"
+msgid "foreground color"
 msgstr "முன்னணி நிறம்"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8133,7 +8149,8 @@ msgstr "முன்னணி நிறம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:127
-msgid "textattr|foreground stipple"
+msgctxt "textattr"
+msgid "foreground stipple"
 msgstr "முன்னணி புள்ளிகள்"
 
 #. Translators: this attribute specifies the effect applied to the font
@@ -8145,7 +8162,8 @@ msgstr "முன்னணி புள்ளிகள்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:137
-msgid "textattr|font effect"
+msgctxt "textattr"
+msgid "font effect"
 msgstr "எழுத்துரு தோற்றம்"
 
 #. Translators: this attribute specifies the indentation of the text
@@ -8156,7 +8174,8 @@ msgstr "எழுத்துரு தோற்றம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:146
-msgid "textattr|indent"
+msgctxt "textattr"
+msgid "indent"
 msgstr "தள்ளல்"
 
 #. Translators: this attribute specifies whether the text is invisible.
@@ -8167,7 +8186,8 @@ msgstr "தள்ளல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:155
-msgid "textattr|invisible"
+msgctxt "textattr"
+msgid "invisible"
 msgstr "கண்ணுக்கு தெரியாத"
 
 #. Translators: this attribute specifies how the justification of the text.
@@ -8178,7 +8198,8 @@ msgstr "கண்ணுக்கு தெரியாத"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:164
-msgid "textattr|justification"
+msgctxt "textattr"
+msgid "justification"
 msgstr "சீரமைப்பு"
 
 #. Translators: this attribute specifies the language that the text is
@@ -8189,7 +8210,8 @@ msgstr "சீரமைப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:173
-msgid "textattr|language"
+msgctxt "textattr"
+msgid "language"
 msgstr "மொழி"
 
 #. Translators: this attribute specifies the pixel width of the left margin.
@@ -8199,7 +8221,8 @@ msgstr "மொழி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:181
-msgid "textattr|left margin"
+msgctxt "textattr"
+msgid "left margin"
 msgstr "இடது எல்லை"
 
 #. Translators: this attribute specifies the height of the line of text.
@@ -8210,7 +8233,8 @@ msgstr "இடது எல்லை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:190
-msgid "textattr|line height"
+msgctxt "textattr"
+msgid "line height"
 msgstr "கோடு உயரம்"
 
 #. Translators: this attribute refers to the named style which is associated
@@ -8224,7 +8248,8 @@ msgstr "கோடு உயரம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:202
-msgid "textattr|paragraph style"
+msgctxt "textattr"
+msgid "paragraph style"
 msgstr "பத்தி பாங்கு"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8235,7 +8260,8 @@ msgstr "பத்தி பாங்கு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:211
-msgid "textattr|pixels above lines"
+msgctxt "textattr"
+msgid "pixels above lines"
 msgstr "வரிகள் மேல்  படத் துணுக்குகள்"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8246,7 +8272,8 @@ msgstr "வரிகள் மேல்  படத் துணுக்கு�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:220
-msgid "textattr|pixels below lines"
+msgctxt "textattr"
+msgid "pixels below lines"
 msgstr "வரிகள் கீழ்  படத் துணுக்குகள் "
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8258,7 +8285,8 @@ msgstr "வரிகள் கீழ்  படத் துணுக்கு�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:230
-msgid "textattr|pixels inside wrap"
+msgctxt "textattr"
+msgid "pixels inside wrap"
 msgstr "மடிப்புக்கு உள்  படத் துணுக்குகள்"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
@@ -8268,7 +8296,8 @@ msgstr "மடிப்புக்கு உள்  படத் துணு�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:238
-msgid "textattr|right margin"
+msgctxt "textattr"
+msgid "right margin"
 msgstr "வலது எல்லை"
 
 #. Translators: this attribute specifies the number of pixels that the
@@ -8279,7 +8308,8 @@ msgstr "வலது எல்லை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:247
-msgid "textattr|rise"
+msgctxt "textattr"
+msgid "rise"
 msgstr "மேலெழும்புதல்"
 
 #. Translators: this attribute specifies the scale of the characters. The
@@ -8290,7 +8320,8 @@ msgstr "மேலெழும்புதல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:256
-msgid "textattr|scale"
+msgctxt "textattr"
+msgid "scale"
 msgstr "அளவு கோல்"
 
 #. Translators: this attribute specifies the size of the text.
@@ -8300,7 +8331,8 @@ msgstr "அளவு கோல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:264
-msgid "textattr|size"
+msgctxt "textattr"
+msgid "size"
 msgstr "அளவு"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
@@ -8313,7 +8345,8 @@ msgstr "அளவு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:275
-msgid "textattr|stretch"
+msgctxt "textattr"
+msgid "stretch"
 msgstr "இழுவை"
 
 #. Translators: this attribute specifies whether the text is strike though
@@ -8325,7 +8358,8 @@ msgstr "இழுவை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:285
-msgid "textattr|strike through"
+msgctxt "textattr"
+msgid "strike through"
 msgstr "உரை அடித்தல்"
 
 #. Translators: this attribute specifies the slant style of the text,
@@ -8336,7 +8370,8 @@ msgstr "உரை அடித்தல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:294
-msgid "textattr|style"
+msgctxt "textattr"
+msgid "style"
 msgstr "பாங்கு"
 
 #. Translators: this attribute specifies the decoration of the text.
@@ -8347,7 +8382,8 @@ msgstr "பாங்கு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:303
-msgid "textattr|text decoration"
+msgctxt "textattr"
+msgid "text decoration"
 msgstr "உரை அலங்காரம்"
 
 #. Translators: this attribute specifies the angle at which the text is
@@ -8360,7 +8396,8 @@ msgstr "உரை அலங்காரம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:314
-msgid "textattr|text rotation"
+msgctxt "textattr"
+msgid "text rotation"
 msgstr "உரை திருப்பம்"
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
@@ -8371,7 +8408,8 @@ msgstr "உரை திருப்பம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:323
-msgid "textattr|text shadow"
+msgctxt "textattr"
+msgid "text shadow"
 msgstr "உரை நிழலிடுகை"
 
 #. Translators: this attributes specifies whether the text is underlined.
@@ -8382,7 +8420,8 @@ msgstr "உரை நிழலிடுகை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:332
-msgid "textattr|underline"
+msgctxt "textattr"
+msgid "underline"
 msgstr "அடிக்கோடு"
 
 #. Translators: this attribute specifies the capitalization variant of
@@ -8393,7 +8432,8 @@ msgstr "அடிக்கோடு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:341
-msgid "textattr|variant"
+msgctxt "textattr"
+msgid "variant"
 msgstr "பேதம்"
 
 #. Translators: this attributes specifies what vertical alignment property
@@ -8404,7 +8444,8 @@ msgstr "பேதம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:350
-msgid "textattr|vertical align"
+msgctxt "textattr"
+msgid "vertical align"
 msgstr "செங்குத்து ஒழுங்கீடு "
 
 #. Translators: this attribute specifies the weight of the text.
@@ -8415,7 +8456,8 @@ msgstr "செங்குத்து ஒழுங்கீடு "
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:359
-msgid "textattr|weight"
+msgctxt "textattr"
+msgid "weight"
 msgstr "கனம்"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
@@ -8426,7 +8468,8 @@ msgstr "கனம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:368
-msgid "textattr|wrap mode"
+msgctxt "textattr"
+msgid "wrap mode"
 msgstr "மடிப்பு முறைமை"
 
 #. Translators: this attribute specifies the way the text is written.
@@ -8439,7 +8482,8 @@ msgstr "மடிப்பு முறைமை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:379
-msgid "textattr|writing mode"
+msgctxt "textattr"
+msgid "writing mode"
 msgstr "எழுதும் முறைமை"
 
 #. The following are the known values of some of these text attributes.
@@ -8457,7 +8501,8 @@ msgstr "எழுதும் முறைமை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:397
-msgid "textattr|true"
+msgctxt "textattr"
+msgid "true"
 msgstr "உண்மை"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8469,7 +8514,8 @@ msgstr "உண்மை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:407
-msgid "textattr|false"
+msgctxt "textattr"
+msgid "false"
 msgstr "தவறு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8482,7 +8528,8 @@ msgstr "தவறு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:418
-msgid "textattr|none"
+msgctxt "textattr"
+msgid "none"
 msgstr "எதுவும் இல்லை"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8493,7 +8540,8 @@ msgstr "எதுவும் இல்லை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:427
-msgid "textattr|engrave"
+msgctxt "textattr"
+msgid "engrave"
 msgstr "செதுக்கு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8504,7 +8552,8 @@ msgstr "செதுக்கு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:436
-msgid "textattr|emboss"
+msgctxt "textattr"
+msgid "emboss"
 msgstr "பதி"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8515,7 +8564,8 @@ msgstr "பதி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:445
-msgid "textattr|outline"
+msgctxt "textattr"
+msgid "outline"
 msgstr "உருவரை"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8526,7 +8576,8 @@ msgstr "உருவரை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:454
-msgid "textattr|overline"
+msgctxt "textattr"
+msgid "overline"
 msgstr "மேல்வரி"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8537,7 +8588,8 @@ msgstr "மேல்வரி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:463
-msgid "textattr|line through"
+msgctxt "textattr"
+msgid "line through"
 msgstr "கோடு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8548,7 +8600,8 @@ msgstr "கோடு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:472
-msgid "textattr|blink"
+msgctxt "textattr"
+msgid "blink"
 msgstr "சிமிட்டல்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8559,7 +8612,8 @@ msgstr "சிமிட்டல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:481
-msgid "textattr|black"
+msgctxt "textattr"
+msgid "black"
 msgstr "கருப்பு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8570,7 +8624,8 @@ msgstr "கருப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:490
-msgid "textattr|single"
+msgctxt "textattr"
+msgid "single"
 msgstr "தனி"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8581,7 +8636,8 @@ msgstr "தனி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:499
-msgid "textattr|double"
+msgctxt "textattr"
+msgid "double"
 msgstr "இரட்டிப்பு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8592,7 +8648,8 @@ msgstr "இரட்டிப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:508
-msgid "textattr|low"
+msgctxt "textattr"
+msgid "low"
 msgstr "கீழ்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8603,7 +8660,8 @@ msgstr "கீழ்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:517
-msgid "textattr|char"
+msgctxt "textattr"
+msgid "char"
 msgstr "உரு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8614,7 +8672,8 @@ msgstr "உரு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:526
-msgid "textattr|word"
+msgctxt "textattr"
+msgid "word"
 msgstr "சொல்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8625,7 +8684,8 @@ msgstr "சொல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:535
-msgid "textattr|ltr"
+msgctxt "textattr"
+msgid "ltr"
 msgstr "இடவலம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8636,7 +8696,8 @@ msgstr "இடவலம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:544
-msgid "textattr|rtl"
+msgctxt "textattr"
+msgid "rtl"
 msgstr "வலஇடம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8647,7 +8708,8 @@ msgstr "வலஇடம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:553
-msgid "textattr|left"
+msgctxt "textattr"
+msgid "left"
 msgstr "இடது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8658,7 +8720,8 @@ msgstr "இடது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:562
-msgid "textattr|right"
+msgctxt "textattr"
+msgid "right"
 msgstr "வலது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8669,7 +8732,8 @@ msgstr "வலது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:571
-msgid "textattr|center"
+msgctxt "textattr"
+msgid "center"
 msgstr "நடு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8680,7 +8744,8 @@ msgstr "நடு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:580
-msgid "textattr|fill"
+msgctxt "textattr"
+msgid "fill"
 msgstr "நிரப்பு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8691,7 +8756,8 @@ msgstr "நிரப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:589
-msgid "textattr|ultra condensed"
+msgctxt "textattr"
+msgid "ultra condensed"
 msgstr "ரத்தின சுருக்கம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8702,7 +8768,8 @@ msgstr "ரத்தின சுருக்கம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:598
-msgid "textattr|extra condensed"
+msgctxt "textattr"
+msgid "extra condensed"
 msgstr "மேலும் சுருக்கிய"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8713,7 +8780,8 @@ msgstr "மேலும் சுருக்கிய"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:607
-msgid "textattr|condensed"
+msgctxt "textattr"
+msgid "condensed"
 msgstr "சுருக்கிய"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8724,7 +8792,8 @@ msgstr "சுருக்கிய"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:616
-msgid "textattr|semi condensed"
+msgctxt "textattr"
+msgid "semi condensed"
 msgstr "பகுதி சுருக்கிய"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8735,7 +8804,8 @@ msgstr "பகுதி சுருக்கிய"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:625
-msgid "textattr|normal"
+msgctxt "textattr"
+msgid "normal"
 msgstr "இயல்பான"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8746,7 +8816,8 @@ msgstr "இயல்பான"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:634
-msgid "textattr|semi expanded"
+msgctxt "textattr"
+msgid "semi expanded"
 msgstr "பகுதி விரிவாக்கப்பட்டது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8757,7 +8828,8 @@ msgstr "பகுதி விரிவாக்கப்பட்டது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:643
-msgid "textattr|expanded"
+msgctxt "textattr"
+msgid "expanded"
 msgstr "விரிவாக்கப்பட்டது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8768,7 +8840,8 @@ msgstr "விரிவாக்கப்பட்டது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:652
-msgid "textattr|extra expanded"
+msgctxt "textattr"
+msgid "extra expanded"
 msgstr "மேலும் விரிவாக்கப்பட்டது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8779,7 +8852,8 @@ msgstr "மேலும் விரிவாக்கப்பட்டது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:661
-msgid "textattr|ultra expanded"
+msgctxt "textattr"
+msgid "ultra expanded"
 msgstr "மிக்க விரிவாக்கப்பட்டது"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8790,7 +8864,8 @@ msgstr "மிக்க விரிவாக்கப்பட்டது"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:670
-msgid "textattr|small caps"
+msgctxt "textattr"
+msgid "small caps"
 msgstr "சிறுதலை எழுத்து"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8801,7 +8876,8 @@ msgstr "சிறுதலை எழுத்து"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:679
-msgid "textattr|oblique"
+msgctxt "textattr"
+msgid "oblique"
 msgstr "இடம் சாய்ந்த"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8812,7 +8888,8 @@ msgstr "இடம் சாய்ந்த"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:688
-msgid "textattr|italic"
+msgctxt "textattr"
+msgid "italic"
 msgstr "வலம் சாய்ந்த"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8823,7 +8900,8 @@ msgstr "வலம் சாய்ந்த"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:697
-msgid "textattr|Default"
+msgctxt "textattr"
+msgid "Default"
 msgstr "முன்னிருப்பு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8834,7 +8912,8 @@ msgstr "முன்னிருப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:706
-msgid "textattr|Text body"
+msgctxt "textattr"
+msgid "Text body"
 msgstr "உரை பகுதி"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8845,7 +8924,8 @@ msgstr "உரை பகுதி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:715
-msgid "textattr|Heading"
+msgctxt "textattr"
+msgid "Heading"
 msgstr "தலைப்பு"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8857,7 +8937,8 @@ msgstr "தலைப்பு"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:725
-msgid "textattr|baseline"
+msgctxt "textattr"
+msgid "baseline"
 msgstr "அடி"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8868,7 +8949,8 @@ msgstr "அடி"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:734
-msgid "textattr|sub"
+msgctxt "textattr"
+msgid "sub"
 msgstr "துணை"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8879,7 +8961,8 @@ msgstr "துணை"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:743
-msgid "textattr|super"
+msgctxt "textattr"
+msgid "super"
 msgstr "சூப்பர்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8890,7 +8973,8 @@ msgstr "சூப்பர்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:752
-msgid "textattr|top"
+msgctxt "textattr"
+msgid "top"
 msgstr "மேல்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8901,7 +8985,8 @@ msgstr "மேல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:761
-msgid "textattr|text-top"
+msgctxt "textattr"
+msgid "text-top"
 msgstr "உரை- மேல்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8912,7 +8997,8 @@ msgstr "உரை- மேல்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:770
-msgid "textattr|middle"
+msgctxt "textattr"
+msgid "middle"
 msgstr "மத்திய"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8923,7 +9009,8 @@ msgstr "மத்திய"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:779
-msgid "textattr|bottom"
+msgctxt "textattr"
+msgid "bottom"
 msgstr "கீழ்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8934,7 +9021,8 @@ msgstr "கீழ்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:788
-msgid "textattr|text-bottom"
+msgctxt "textattr"
+msgid "text-bottom"
 msgstr "உரை- கீழ்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8946,7 +9034,8 @@ msgstr "உரை- கீழ்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:798
-msgid "textattr|inherit"
+msgctxt "textattr"
+msgid "inherit"
 msgstr "பெற்ற"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8957,7 +9046,8 @@ msgstr "பெற்ற"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:807
-msgid "textattr|lr-tb"
+msgctxt "textattr"
+msgid "lr-tb"
 msgstr "lr-tb"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8968,7 +9058,8 @@ msgstr "lr-tb"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:816
-msgid "textattr|rl-tb"
+msgctxt "textattr"
+msgid "rl-tb"
 msgstr "rl-tb"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8979,7 +9070,8 @@ msgstr "rl-tb"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:825
-msgid "textattr|tb-rl"
+msgctxt "textattr"
+msgid "tb-rl"
 msgstr "tb-rl"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8990,7 +9082,8 @@ msgstr "tb-rl"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:834
-msgid "textattr|tb-lr"
+msgctxt "textattr"
+msgid "tb-lr"
 msgstr "மேலிருந்துகீழ்-இடவலம் "
 
 #. Translators: this is one of the text attribute values for the following
@@ -9001,7 +9094,8 @@ msgstr "மேலிருந்துகீழ்-இடவலம் "
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:843
-msgid "textattr|bt-rl"
+msgctxt "textattr"
+msgid "bt-rl"
 msgstr "கீழிருந்துமேல்- வலஇடம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9012,7 +9106,8 @@ msgstr "கீழிருந்துமேல்- வலஇடம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:852
-msgid "textattr|bt-lr"
+msgctxt "textattr"
+msgid "bt-lr"
 msgstr "கீழிருந்துமேல்-இடவலம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9023,7 +9118,8 @@ msgstr "கீழிருந்துமேல்-இடவலம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:861
-msgid "textattr|lr"
+msgctxt "textattr"
+msgid "lr"
 msgstr "இடவலம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9034,7 +9130,8 @@ msgstr "இடவலம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:870
-msgid "textattr|rl"
+msgctxt "textattr"
+msgid "rl"
 msgstr "வலஇடம்"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9045,7 +9142,8 @@ msgstr "வலஇடம்"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:879
-msgid "textattr|tb"
+msgctxt "textattr"
+msgid "tb"
 msgstr "மேலிருந்துகீழ்"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.

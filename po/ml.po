@@ -551,7 +551,7 @@ msgstr "ഇടത് ബ്രെയിസ് ({)"
 #.
 #: ../src/orca/chnames.py:167
 msgid "vertical bar"
-msgstr "നേറെയുള്ള ബാര്‍ (| എന്ന ചിഹ്നം)"
+msgstr " എന്ന ചിഹ്നം)"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
@@ -2114,7 +2114,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2744
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്തത്"
 
 #. Translators: this means the user has selected
@@ -2138,7 +2139,8 @@ msgstr ""
 #: ../src/orca/default.py:3490 ../src/orca/default.py:3711
 #: ../src/orca/default.py:6666 ../src/orca/scripts/StarOffice.py:170
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:484
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "തിരഞ്ഞെടുത്തവ "
 
 #. Translators: this object is now unselected.
@@ -2154,7 +2156,8 @@ msgstr "തിരഞ്ഞെടുത്തവ "
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3499 ../src/orca/default.py:6682
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "തിരഞ്ഞെടുക്കാത്തവ "
 
 #. Translators: when users are navigating a table, they
@@ -2410,7 +2413,8 @@ msgstr "അമര്‍ത്താത്തവ"
 #.
 #: ../src/orca/flat_review.py:377 ../src/orca/Gecko.py:1130
 #: ../src/orca/speechgenerator.py:1065 ../src/orca/where_am_I.py:199
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "തിരഞ്ഞെടുത്തവ"
 
 #. Translators: this is in reference to a radio button being
@@ -2420,7 +2424,8 @@ msgstr "തിരഞ്ഞെടുത്തവ"
 #.
 #: ../src/orca/flat_review.py:384 ../src/orca/Gecko.py:1137
 #: ../src/orca/speechgenerator.py:1072 ../src/orca/where_am_I.py:206
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്തത് "
 
 #. Translators: The component orientation is horizontal.
@@ -3451,7 +3456,8 @@ msgstr ""
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "തിരഞ്ഞെടുത്തവ "
 
 #. Translators: this represents the state of a node in a tree
@@ -3459,7 +3465,8 @@ msgstr "തിരഞ്ഞെടുത്തവ "
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr "തിരഞ്ഞെടുക്കാത്തവ"
 
 #. Translators: this is presented in a GUI to represent the
@@ -4541,7 +4548,8 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1302 ../src/orca/orca.py:1315 ../src/orca/orca.py:1436
 #: ../src/orca/orca.py:1477
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr ""
 
 #. Translators: this option is for enabling braille output on
@@ -4551,7 +4559,8 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1303 ../src/orca/orca.py:1316 ../src/orca/orca.py:1444
 #: ../src/orca/orca.py:1479
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "ബ്രെയിലി"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -4561,7 +4570,8 @@ msgstr "ബ്രെയിലി"
 #.
 #: ../src/orca/orca.py:1304 ../src/orca/orca.py:1317 ../src/orca/orca.py:1452
 #: ../src/orca/orca.py:1481
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr ""
 
 #. Translators: this option is for enabling screen
@@ -4571,7 +4581,8 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1305 ../src/orca/orca.py:1318 ../src/orca/orca.py:1460
 #: ../src/orca/orca.py:1483
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr ""
 
 #. Translators: this option is for enabling the display
@@ -4581,7 +4592,8 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1306 ../src/orca/orca.py:1319 ../src/orca/orca.py:1468
 #: ../src/orca/orca.py:1485
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr ""
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -5536,7 +5548,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "ഡയല്‍ ചെയ്യുക"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5687,7 +5700,8 @@ msgstr "ലിപി തിരഞ്ഞെടുക്കുന്നതിന�
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "രീതി"
 
 #. Translators: long braille for the rolename of a form.

@@ -2219,7 +2219,8 @@ msgstr "ಮಟ್ಟ"
 #.
 #: ../src/orca/default.py:2740
 #, fuzzy
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "ಆರಿಸಲಾದ"
 
 #. Translators: this means the user has selected
@@ -2245,7 +2246,8 @@ msgstr "ಆರಿಸಲಾದ"
 #: ../src/orca/default.py:6661 ../src/orca/scripts/StarOffice.py:130
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:484
 #, fuzzy
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "ಆರಿಸಲಾದ"
 
 #. Translators: this object is now unselected.
@@ -2261,7 +2263,8 @@ msgstr "ಆರಿಸಲಾದ"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3495 ../src/orca/default.py:6677
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr ""
 
 #. Translators: when users are navigating a table, they
@@ -2534,7 +2537,8 @@ msgstr ""
 #: ../src/orca/flat_review.py:377 ../src/orca/Gecko.py:1106
 #: ../src/orca/speechgenerator.py:1064 ../src/orca/where_am_I.py:199
 #, fuzzy
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "ಆರಿಸಲಾದ"
 
 #. Translators: this is in reference to a radio button being
@@ -2545,7 +2549,8 @@ msgstr "ಆರಿಸಲಾದ"
 #: ../src/orca/flat_review.py:384 ../src/orca/Gecko.py:1113
 #: ../src/orca/speechgenerator.py:1071 ../src/orca/where_am_I.py:206
 #, fuzzy
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "ಆರಿಸಲಾದ"
 
 #. Translators: The component orientation is horizontal.
@@ -3639,7 +3644,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
 #, fuzzy
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "ಆರಿಸಲಾದ"
 
 #. Translators: this represents the state of a node in a tree
@@ -3647,7 +3653,8 @@ msgstr "ಆರಿಸಲಾದ"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
@@ -4801,7 +4808,8 @@ msgstr "ಗೆ"
 #: ../src/orca/orca.py:1302 ../src/orca/orca.py:1315 ../src/orca/orca.py:1436
 #: ../src/orca/orca.py:1477
 #, fuzzy
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "ಆಯ್ಕೆ"
 
 #. Translators: this option is for enabling braille output on
@@ -4812,7 +4820,8 @@ msgstr "ಆಯ್ಕೆ"
 #: ../src/orca/orca.py:1303 ../src/orca/orca.py:1316 ../src/orca/orca.py:1444
 #: ../src/orca/orca.py:1479
 #, fuzzy
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "ಆಯ್ಕೆ ಬ್ರೈಲ್"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -4823,7 +4832,8 @@ msgstr "ಆಯ್ಕೆ ಬ್ರೈಲ್"
 #: ../src/orca/orca.py:1304 ../src/orca/orca.py:1317 ../src/orca/orca.py:1452
 #: ../src/orca/orca.py:1481
 #, fuzzy
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "ಆಯ್ಕೆ ಬ್ರೈಲ್"
 
 #. Translators: this option is for enabling screen
@@ -4834,7 +4844,8 @@ msgstr "ಆಯ್ಕೆ ಬ್ರೈಲ್"
 #: ../src/orca/orca.py:1305 ../src/orca/orca.py:1318 ../src/orca/orca.py:1460
 #: ../src/orca/orca.py:1483
 #, fuzzy
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "ಆಯ್ಕೆ"
 
 #. Translators: this option is for enabling the display
@@ -4845,7 +4856,8 @@ msgstr "ಆಯ್ಕೆ"
 #: ../src/orca/orca.py:1306 ../src/orca/orca.py:1319 ../src/orca/orca.py:1468
 #: ../src/orca/orca.py:1485
 #, fuzzy
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr "ಆಯ್ಕೆ"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -5873,7 +5885,8 @@ msgstr "ಗಣಕತೆರೆಯ ಚೌಕಟ್ಟು"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr ""
 
 #. Translators: long braille for the rolename of a dial.
@@ -6028,7 +6041,8 @@ msgstr ""
 #.
 #: ../src/orca/rolenames.py:478
 #, fuzzy
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "ಫಾರ್ಮ್"
 
 #. Translators: long braille for the rolename of a form.

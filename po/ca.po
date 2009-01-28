@@ -2262,7 +2262,8 @@ msgstr "nivell de l'arbre %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2975
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "no seleccionada"
 
 #. Translators: this object is now selected.
@@ -2281,7 +2282,8 @@ msgstr "no seleccionada"
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
 #: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "seleccionat"
 
 #. Translators: this object is now unselected.
@@ -2297,7 +2299,8 @@ msgstr "seleccionat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3877 ../src/orca/default.py:7479
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "no seleccionat"
 
 #. Translators: when users are navigating a table, they
@@ -2640,7 +2643,8 @@ msgstr "no premut"
 #: ../src/orca/flat_review.py:376
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:547
 #: ../src/orca/speechgenerator.py:1156 ../src/orca/where_am_I.py:225
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "seleccionat"
 
 #. Translators: this is in reference to a radio button being
@@ -2651,7 +2655,8 @@ msgstr "seleccionat"
 #: ../src/orca/flat_review.py:383
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:554
 #: ../src/orca/speechgenerator.py:1163 ../src/orca/where_am_I.py:232
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "no seleccionat"
 
 #. Translators: The component orientation is horizontal.
@@ -4981,7 +4986,8 @@ msgstr "marc d'escriptori"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "marcar"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5132,7 +5138,8 @@ msgstr "selector de tipus de lletra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "form"
 
 #. Translators: long braille for the rolename of a form.
@@ -7277,7 +7284,8 @@ msgstr "s'ha llegit el %d per cent del document"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:653
-msgid "text|read only"
+msgctxt "text"
+msgid "read only"
 msgstr "només lectura"
 
 #. Translators: this is used to indicate the user is in a text
@@ -7287,7 +7295,8 @@ msgstr "només lectura"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/settings.py:661
-msgid "text|rdonly"
+msgctxt "text"
+msgid "rdonly"
 msgstr "lectura"
 
 #. Translators: the regular expression here represents a string to
@@ -8089,7 +8098,8 @@ msgstr "No hi ha cap més enllaç visitat."
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:63
-msgid "textattr|background color"
+msgctxt "textattr"
+msgid "background color"
 msgstr "color de fons"
 
 #. Translators: this attribute specifies whether to make the background
@@ -8102,7 +8112,8 @@ msgstr "color de fons"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:74
-msgid "textattr|background full height"
+msgctxt "textattr"
+msgid "background full height"
 msgstr "alçada total del fons"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8113,7 +8124,8 @@ msgstr "alçada total del fons"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:83
-msgid "textattr|background stipple"
+msgctxt "textattr"
+msgid "background stipple"
 msgstr "fons puntejat"
 
 #. Translators: this attribute specifies the direction of the text.
@@ -8124,7 +8136,8 @@ msgstr "fons puntejat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:92
-msgid "textattr|direction"
+msgctxt "textattr"
+msgid "direction"
 msgstr "direcció"
 
 #. Translators: this attribute specifies whether the text is editable.
@@ -8135,7 +8148,8 @@ msgstr "direcció"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:101
-msgid "textattr|editable"
+msgctxt "textattr"
+msgid "editable"
 msgstr "editable"
 
 #. Translators: this attribute specifies the font family name of the text.
@@ -8145,7 +8159,8 @@ msgstr "editable"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:109
-msgid "textattr|family name"
+msgctxt "textattr"
+msgid "family name"
 msgstr "nom de família"
 
 #. Translators: this attribute specifies the foreground color of the text.
@@ -8156,7 +8171,8 @@ msgstr "nom de família"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:118
-msgid "textattr|foreground color"
+msgctxt "textattr"
+msgid "foreground color"
 msgstr "color del primer pla"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -8167,7 +8183,8 @@ msgstr "color del primer pla"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:127
-msgid "textattr|foreground stipple"
+msgctxt "textattr"
+msgid "foreground stipple"
 msgstr "primer pla puntejat"
 
 #. Translators: this attribute specifies the effect applied to the font
@@ -8179,7 +8196,8 @@ msgstr "primer pla puntejat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:137
-msgid "textattr|font effect"
+msgctxt "textattr"
+msgid "font effect"
 msgstr "efectes del tipus de lletra"
 
 #. Translators: this attribute specifies the indentation of the text
@@ -8190,7 +8208,8 @@ msgstr "efectes del tipus de lletra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:146
-msgid "textattr|indent"
+msgctxt "textattr"
+msgid "indent"
 msgstr "sagnat"
 
 #. Translators: this attribute specifies whether the text is invisible.
@@ -8201,7 +8220,8 @@ msgstr "sagnat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:155
-msgid "textattr|invisible"
+msgctxt "textattr"
+msgid "invisible"
 msgstr "invisible"
 
 #. Translators: this attribute specifies how the justification of the text.
@@ -8212,7 +8232,8 @@ msgstr "invisible"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:164
-msgid "textattr|justification"
+msgctxt "textattr"
+msgid "justification"
 msgstr "justificació"
 
 #. Translators: this attribute specifies the language that the text is
@@ -8223,7 +8244,8 @@ msgstr "justificació"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:173
-msgid "textattr|language"
+msgctxt "textattr"
+msgid "language"
 msgstr "idioma"
 
 #. Translators: this attribute specifies the pixel width of the left margin.
@@ -8233,7 +8255,8 @@ msgstr "idioma"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:181
-msgid "textattr|left margin"
+msgctxt "textattr"
+msgid "left margin"
 msgstr "marge esquerre"
 
 #. Translators: this attribute specifies the height of the line of text.
@@ -8244,7 +8267,8 @@ msgstr "marge esquerre"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:190
-msgid "textattr|line height"
+msgctxt "textattr"
+msgid "line height"
 msgstr "alçada de línia"
 
 #. Translators: this attribute refers to the named style which is associated
@@ -8258,7 +8282,8 @@ msgstr "alçada de línia"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:202
-msgid "textattr|paragraph style"
+msgctxt "textattr"
+msgid "paragraph style"
 msgstr "estil del paràgraf"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8269,7 +8294,8 @@ msgstr "estil del paràgraf"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:211
-msgid "textattr|pixels above lines"
+msgctxt "textattr"
+msgid "pixels above lines"
 msgstr "píxels per sobre de les línies"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8280,7 +8306,8 @@ msgstr "píxels per sobre de les línies"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:220
-msgid "textattr|pixels below lines"
+msgctxt "textattr"
+msgid "pixels below lines"
 msgstr "píxels per sota de les línies"
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8292,7 +8319,8 @@ msgstr "píxels per sota de les línies"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:230
-msgid "textattr|pixels inside wrap"
+msgctxt "textattr"
+msgid "pixels inside wrap"
 msgstr "píxels dins les línies ajustades"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
@@ -8302,7 +8330,8 @@ msgstr "píxels dins les línies ajustades"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:238
-msgid "textattr|right margin"
+msgctxt "textattr"
+msgid "right margin"
 msgstr "marge dret"
 
 #. Translators: this attribute specifies the number of pixels that the
@@ -8313,7 +8342,8 @@ msgstr "marge dret"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:247
-msgid "textattr|rise"
+msgctxt "textattr"
+msgid "rise"
 msgstr "aixecat"
 
 #. Translators: this attribute specifies the scale of the characters. The
@@ -8324,7 +8354,8 @@ msgstr "aixecat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:256
-msgid "textattr|scale"
+msgctxt "textattr"
+msgid "scale"
 msgstr "escala"
 
 #. Translators: this attribute specifies the size of the text.
@@ -8334,7 +8365,8 @@ msgstr "escala"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:264
-msgid "textattr|size"
+msgctxt "textattr"
+msgid "size"
 msgstr "mida"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
@@ -8347,7 +8379,8 @@ msgstr "mida"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:275
-msgid "textattr|stretch"
+msgctxt "textattr"
+msgid "stretch"
 msgstr "amplada"
 
 #. Translators: this attribute specifies whether the text is strike though
@@ -8359,7 +8392,8 @@ msgstr "amplada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:285
-msgid "textattr|strike through"
+msgctxt "textattr"
+msgid "strike through"
 msgstr "barrat"
 
 #. Translators: this attribute specifies the slant style of the text,
@@ -8370,7 +8404,8 @@ msgstr "barrat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:294
-msgid "textattr|style"
+msgctxt "textattr"
+msgid "style"
 msgstr "estil"
 
 #. Translators: this attribute specifies the decoration of the text.
@@ -8381,7 +8416,8 @@ msgstr "estil"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:303
-msgid "textattr|text decoration"
+msgctxt "textattr"
+msgid "text decoration"
 msgstr "decoració del text"
 
 #. Translators: this attribute specifies the angle at which the text is
@@ -8394,7 +8430,8 @@ msgstr "decoració del text"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:314
-msgid "textattr|text rotation"
+msgctxt "textattr"
+msgid "text rotation"
 msgstr "rotació del text"
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
@@ -8405,7 +8442,8 @@ msgstr "rotació del text"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:323
-msgid "textattr|text shadow"
+msgctxt "textattr"
+msgid "text shadow"
 msgstr "ombra del text"
 
 #. Translators: this attributes specifies whether the text is underlined.
@@ -8416,7 +8454,8 @@ msgstr "ombra del text"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:332
-msgid "textattr|underline"
+msgctxt "textattr"
+msgid "underline"
 msgstr "subratllat"
 
 #. Translators: this attribute specifies the capitalization variant of
@@ -8427,7 +8466,8 @@ msgstr "subratllat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:341
-msgid "textattr|variant"
+msgctxt "textattr"
+msgid "variant"
 msgstr "variant"
 
 #. Translators: this attributes specifies what vertical alignment property
@@ -8438,7 +8478,8 @@ msgstr "variant"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:350
-msgid "textattr|vertical align"
+msgctxt "textattr"
+msgid "vertical align"
 msgstr "alineació vertical"
 
 #. Translators: this attribute specifies the weight of the text.
@@ -8449,7 +8490,8 @@ msgstr "alineació vertical"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:359
-msgid "textattr|weight"
+msgctxt "textattr"
+msgid "weight"
 msgstr "pes"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
@@ -8460,7 +8502,8 @@ msgstr "pes"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:368
-msgid "textattr|wrap mode"
+msgctxt "textattr"
+msgid "wrap mode"
 msgstr "mode d'ajustament"
 
 #. Translators: this attribute specifies the way the text is written.
@@ -8473,7 +8516,8 @@ msgstr "mode d'ajustament"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:379
-msgid "textattr|writing mode"
+msgctxt "textattr"
+msgid "writing mode"
 msgstr "mode d'escriptura"
 
 #. The following are the known values of some of these text attributes.
@@ -8491,7 +8535,8 @@ msgstr "mode d'escriptura"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:397
-msgid "textattr|true"
+msgctxt "textattr"
+msgid "true"
 msgstr "cert"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8503,7 +8548,8 @@ msgstr "cert"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:407
-msgid "textattr|false"
+msgctxt "textattr"
+msgid "false"
 msgstr "fals"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8516,7 +8562,8 @@ msgstr "fals"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:418
-msgid "textattr|none"
+msgctxt "textattr"
+msgid "none"
 msgstr "cap"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8527,7 +8574,8 @@ msgstr "cap"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:427
-msgid "textattr|engrave"
+msgctxt "textattr"
+msgid "engrave"
 msgstr "gravat"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8538,7 +8586,8 @@ msgstr "gravat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:436
-msgid "textattr|emboss"
+msgctxt "textattr"
+msgid "emboss"
 msgstr "relleu"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8549,7 +8598,8 @@ msgstr "relleu"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:445
-msgid "textattr|outline"
+msgctxt "textattr"
+msgid "outline"
 msgstr "contorn"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8560,7 +8610,8 @@ msgstr "contorn"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:454
-msgid "textattr|overline"
+msgctxt "textattr"
+msgid "overline"
 msgstr "línia de sobre"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8571,7 +8622,8 @@ msgstr "línia de sobre"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:463
-msgid "textattr|line through"
+msgctxt "textattr"
+msgid "line through"
 msgstr "barrat"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8582,7 +8634,8 @@ msgstr "barrat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:472
-msgid "textattr|blink"
+msgctxt "textattr"
+msgid "blink"
 msgstr "parpelleig"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8593,7 +8646,8 @@ msgstr "parpelleig"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:481
-msgid "textattr|black"
+msgctxt "textattr"
+msgid "black"
 msgstr "negre"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8604,7 +8658,8 @@ msgstr "negre"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:490
-msgid "textattr|single"
+msgctxt "textattr"
+msgid "single"
 msgstr "únic"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8615,7 +8670,8 @@ msgstr "únic"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:499
-msgid "textattr|double"
+msgctxt "textattr"
+msgid "double"
 msgstr "doble"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8626,7 +8682,8 @@ msgstr "doble"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:508
-msgid "textattr|low"
+msgctxt "textattr"
+msgid "low"
 msgstr "baix"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8637,7 +8694,8 @@ msgstr "baix"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:517
-msgid "textattr|char"
+msgctxt "textattr"
+msgid "char"
 msgstr "caràcter"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8648,7 +8706,8 @@ msgstr "caràcter"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:526
-msgid "textattr|word"
+msgctxt "textattr"
+msgid "word"
 msgstr "paraula"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8659,7 +8718,8 @@ msgstr "paraula"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:535
-msgid "textattr|ltr"
+msgctxt "textattr"
+msgid "ltr"
 msgstr "d'esquerra a dreta"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8670,7 +8730,8 @@ msgstr "d'esquerra a dreta"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:544
-msgid "textattr|rtl"
+msgctxt "textattr"
+msgid "rtl"
 msgstr "de dreta a esquerra"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8681,7 +8742,8 @@ msgstr "de dreta a esquerra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:553
-msgid "textattr|left"
+msgctxt "textattr"
+msgid "left"
 msgstr "esquerra"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8692,7 +8754,8 @@ msgstr "esquerra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:562
-msgid "textattr|right"
+msgctxt "textattr"
+msgid "right"
 msgstr "dreta"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8703,7 +8766,8 @@ msgstr "dreta"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:571
-msgid "textattr|center"
+msgctxt "textattr"
+msgid "center"
 msgstr "centre"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8714,7 +8778,8 @@ msgstr "centre"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:580
-msgid "textattr|fill"
+msgctxt "textattr"
+msgid "fill"
 msgstr "omple"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8725,7 +8790,8 @@ msgstr "omple"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:589
-msgid "textattr|ultra condensed"
+msgctxt "textattr"
+msgid "ultra condensed"
 msgstr "ultra condensada"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8736,7 +8802,8 @@ msgstr "ultra condensada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:598
-msgid "textattr|extra condensed"
+msgctxt "textattr"
+msgid "extra condensed"
 msgstr "extra condensada"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8747,7 +8814,8 @@ msgstr "extra condensada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:607
-msgid "textattr|condensed"
+msgctxt "textattr"
+msgid "condensed"
 msgstr "condensada"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8758,7 +8826,8 @@ msgstr "condensada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:616
-msgid "textattr|semi condensed"
+msgctxt "textattr"
+msgid "semi condensed"
 msgstr "semi condensada"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8769,7 +8838,8 @@ msgstr "semi condensada"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:625
-msgid "textattr|normal"
+msgctxt "textattr"
+msgid "normal"
 msgstr "normal"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8780,7 +8850,8 @@ msgstr "normal"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:634
-msgid "textattr|semi expanded"
+msgctxt "textattr"
+msgid "semi expanded"
 msgstr "semi expandida"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8791,7 +8862,8 @@ msgstr "semi expandida"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:643
-msgid "textattr|expanded"
+msgctxt "textattr"
+msgid "expanded"
 msgstr "expandida"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8802,7 +8874,8 @@ msgstr "expandida"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:652
-msgid "textattr|extra expanded"
+msgctxt "textattr"
+msgid "extra expanded"
 msgstr "extra expandida"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8813,7 +8886,8 @@ msgstr "extra expandida"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:661
-msgid "textattr|ultra expanded"
+msgctxt "textattr"
+msgid "ultra expanded"
 msgstr "ultra expandida"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8824,7 +8898,8 @@ msgstr "ultra expandida"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:670
-msgid "textattr|small caps"
+msgctxt "textattr"
+msgid "small caps"
 msgstr "versaletes"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8835,7 +8910,8 @@ msgstr "versaletes"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:679
-msgid "textattr|oblique"
+msgctxt "textattr"
+msgid "oblique"
 msgstr "obliqua"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8846,7 +8922,8 @@ msgstr "obliqua"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:688
-msgid "textattr|italic"
+msgctxt "textattr"
+msgid "italic"
 msgstr "cursiva"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8857,7 +8934,8 @@ msgstr "cursiva"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:697
-msgid "textattr|Default"
+msgctxt "textattr"
+msgid "Default"
 msgstr "Predeterminat"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8868,7 +8946,8 @@ msgstr "Predeterminat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:706
-msgid "textattr|Text body"
+msgctxt "textattr"
+msgid "Text body"
 msgstr "Cos del text"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8879,7 +8958,8 @@ msgstr "Cos del text"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:715
-msgid "textattr|Heading"
+msgctxt "textattr"
+msgid "Heading"
 msgstr "Encapçalament"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8891,7 +8971,8 @@ msgstr "Encapçalament"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:725
-msgid "textattr|baseline"
+msgctxt "textattr"
+msgid "baseline"
 msgstr "línia base"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8902,7 +8983,8 @@ msgstr "línia base"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:734
-msgid "textattr|sub"
+msgctxt "textattr"
+msgid "sub"
 msgstr "sub"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8913,7 +8995,8 @@ msgstr "sub"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:743
-msgid "textattr|super"
+msgctxt "textattr"
+msgid "super"
 msgstr "súper"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8924,7 +9007,8 @@ msgstr "súper"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:752
-msgid "textattr|top"
+msgctxt "textattr"
+msgid "top"
 msgstr "dalt"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8935,7 +9019,8 @@ msgstr "dalt"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:761
-msgid "textattr|text-top"
+msgctxt "textattr"
+msgid "text-top"
 msgstr "text a dalt"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8946,7 +9031,8 @@ msgstr "text a dalt"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:770
-msgid "textattr|middle"
+msgctxt "textattr"
+msgid "middle"
 msgstr "mig"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8957,7 +9043,8 @@ msgstr "mig"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:779
-msgid "textattr|bottom"
+msgctxt "textattr"
+msgid "bottom"
 msgstr "a baix"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8968,7 +9055,8 @@ msgstr "a baix"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:788
-msgid "textattr|text-bottom"
+msgctxt "textattr"
+msgid "text-bottom"
 msgstr "text a baix"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8980,7 +9068,8 @@ msgstr "text a baix"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:798
-msgid "textattr|inherit"
+msgctxt "textattr"
+msgid "inherit"
 msgstr "heretat"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8991,7 +9080,8 @@ msgstr "heretat"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:807
-msgid "textattr|lr-tb"
+msgctxt "textattr"
+msgid "lr-tb"
 msgstr "d'esquerra a dreta, de dalt a baix"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9002,7 +9092,8 @@ msgstr "d'esquerra a dreta, de dalt a baix"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:816
-msgid "textattr|rl-tb"
+msgctxt "textattr"
+msgid "rl-tb"
 msgstr "de dreta a esquerra, de dalt a baix"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9013,7 +9104,8 @@ msgstr "de dreta a esquerra, de dalt a baix"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:825
-msgid "textattr|tb-rl"
+msgctxt "textattr"
+msgid "tb-rl"
 msgstr "de dalt a baix, de dreta a esquerra"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9024,7 +9116,8 @@ msgstr "de dalt a baix, de dreta a esquerra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:834
-msgid "textattr|tb-lr"
+msgctxt "textattr"
+msgid "tb-lr"
 msgstr "de dalt a baix, d'esquerra a dreta"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9035,7 +9128,8 @@ msgstr "de dalt a baix, d'esquerra a dreta"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:843
-msgid "textattr|bt-rl"
+msgctxt "textattr"
+msgid "bt-rl"
 msgstr "de baix a dalt, de dreta a esquerra"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9046,7 +9140,8 @@ msgstr "de baix a dalt, de dreta a esquerra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:852
-msgid "textattr|bt-lr"
+msgctxt "textattr"
+msgid "bt-lr"
 msgstr "de baix a dalt, d'esquerra a dreta"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9057,7 +9152,8 @@ msgstr "de baix a dalt, d'esquerra a dreta"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:861
-msgid "textattr|lr"
+msgctxt "textattr"
+msgid "lr"
 msgstr "d'esquerra a dreta"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9068,7 +9164,8 @@ msgstr "d'esquerra a dreta"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:870
-msgid "textattr|rl"
+msgctxt "textattr"
+msgid "rl"
 msgstr "de dreta a esquerra"
 
 #. Translators: this is one of the text attribute values for the following
@@ -9079,7 +9176,8 @@ msgstr "de dreta a esquerra"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/text_attribute_names.py:879
-msgid "textattr|tb"
+msgctxt "textattr"
+msgid "tb"
 msgstr "de dalt a baix"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.

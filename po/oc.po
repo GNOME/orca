@@ -2241,7 +2241,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2942
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr ""
 
 #. Translators: this object is now selected.
@@ -2260,7 +2261,8 @@ msgstr ""
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:159
 #: ../src/orca/speechgenerator.py:240 ../src/orca/where_am_I.py:506
 #: ../src/orca/where_am_I.py:878
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr ""
 
 #. Translators: this object is now unselected.
@@ -2276,7 +2278,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3864 ../src/orca/default.py:7352
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr ""
 
 #. Translators: when users are navigating a table, they
@@ -2614,7 +2617,8 @@ msgstr ""
 #: ../src/orca/flat_review.py:377
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:529
 #: ../src/orca/speechgenerator.py:1096 ../src/orca/where_am_I.py:212
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr ""
 
 #. Translators: this is in reference to a radio button being
@@ -2625,7 +2629,8 @@ msgstr ""
 #: ../src/orca/flat_review.py:384
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:536
 #: ../src/orca/speechgenerator.py:1103 ../src/orca/where_am_I.py:219
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr ""
 
 #. Translators: The component orientation is horizontal.
@@ -4781,7 +4786,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr ""
 
 #. Translators: long braille for the rolename of a dial.
@@ -4932,7 +4938,8 @@ msgstr ""
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr ""
 
 #. Translators: long braille for the rolename of a form.
@@ -7884,7 +7891,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:61
-msgid "textattr|background color"
+msgctxt "textattr"
+msgid "background color"
 msgstr ""
 
 #. Translators: this attribute specifies whether to make the background
@@ -7895,7 +7903,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:70
-msgid "textattr|background full height"
+msgctxt "textattr"
+msgid "background full height"
 msgstr ""
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -7904,7 +7913,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:77
-msgid "textattr|background stipple"
+msgctxt "textattr"
+msgid "background stipple"
 msgstr ""
 
 #. Translators: this attribute specifies the direction of the text.
@@ -7913,7 +7923,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:84
-msgid "textattr|direction"
+msgctxt "textattr"
+msgid "direction"
 msgstr ""
 
 #. Translators: this attribute specifies whether the text is editable.
@@ -7922,7 +7933,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:91
-msgid "textattr|editable"
+msgctxt "textattr"
+msgid "editable"
 msgstr ""
 
 #. Translators: this attribute specifies the font family name of the text.
@@ -7930,7 +7942,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:97
-msgid "textattr|family name"
+msgctxt "textattr"
+msgid "family name"
 msgstr ""
 
 #. Translators: this attribute specifies the foreground color of the text.
@@ -7939,7 +7952,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:104
-msgid "textattr|foreground color"
+msgctxt "textattr"
+msgid "foreground color"
 msgstr ""
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
@@ -7948,7 +7962,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:111
-msgid "textattr|foreground stipple"
+msgctxt "textattr"
+msgid "foreground stipple"
 msgstr ""
 
 #. Translators: this attribute specifies the effect applied to the font
@@ -7958,7 +7973,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:119
-msgid "textattr|font effect"
+msgctxt "textattr"
+msgid "font effect"
 msgstr ""
 
 #. Translators: this attribute specifies the indentation of the text
@@ -7967,7 +7983,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:126
-msgid "textattr|indent"
+msgctxt "textattr"
+msgid "indent"
 msgstr ""
 
 #. Translators: this attribute specifies whether the text is invisible.
@@ -7976,7 +7993,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:133
-msgid "textattr|invisible"
+msgctxt "textattr"
+msgid "invisible"
 msgstr ""
 
 #. Translators: this attribute specifies how the justification of the text.
@@ -7985,7 +8003,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:140
-msgid "textattr|justification"
+msgctxt "textattr"
+msgid "justification"
 msgstr ""
 
 #. Translators: this attribute specifies the language that the text is
@@ -7994,7 +8013,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:147
-msgid "textattr|language"
+msgctxt "textattr"
+msgid "language"
 msgstr ""
 
 #. Translators: this attribute specifies the pixel width of the left margin.
@@ -8002,7 +8022,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:153
-msgid "textattr|left margin"
+msgctxt "textattr"
+msgid "left margin"
 msgstr ""
 
 #. Translators: this attribute specifies the height of the line of text.
@@ -8011,7 +8032,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:160
-msgid "textattr|line height"
+msgctxt "textattr"
+msgid "line height"
 msgstr ""
 
 #. Translators: this attribute refers to the named style which is associated
@@ -8023,7 +8045,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:170
-msgid "textattr|paragraph style"
+msgctxt "textattr"
+msgid "paragraph style"
 msgstr ""
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8032,7 +8055,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:177
-msgid "textattr|pixels above lines"
+msgctxt "textattr"
+msgid "pixels above lines"
 msgstr ""
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8041,7 +8065,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:184
-msgid "textattr|pixels below lines"
+msgctxt "textattr"
+msgid "pixels below lines"
 msgstr ""
 
 #. Translators: this attribute specifies the pixels of blank space to
@@ -8051,7 +8076,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:192
-msgid "textattr|pixels inside wrap"
+msgctxt "textattr"
+msgid "pixels inside wrap"
 msgstr ""
 
 #. Translators: this attribute specifies the pixel width of the right margin.
@@ -8059,7 +8085,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:198
-msgid "textattr|right margin"
+msgctxt "textattr"
+msgid "right margin"
 msgstr ""
 
 #. Translators: this attribute specifies the number of pixels that the
@@ -8068,7 +8095,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:205
-msgid "textattr|rise"
+msgctxt "textattr"
+msgid "rise"
 msgstr ""
 
 #. Translators: this attribute specifies the scale of the characters. The
@@ -8077,7 +8105,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:212
-msgid "textattr|scale"
+msgctxt "textattr"
+msgid "scale"
 msgstr ""
 
 #. Translators: this attribute specifies the size of the text.
@@ -8085,7 +8114,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:218
-msgid "textattr|size"
+msgctxt "textattr"
+msgid "size"
 msgstr ""
 
 #. Translators: this attribute specifies the stretch of he text, if set.
@@ -8096,7 +8126,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:227
-msgid "textattr|stretch"
+msgctxt "textattr"
+msgid "stretch"
 msgstr ""
 
 #. Translators: this attribute specifies whether the text is strike though
@@ -8106,7 +8137,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:235
-msgid "textattr|strike through"
+msgctxt "textattr"
+msgid "strike through"
 msgstr ""
 
 #. Translators: this attribute specifies the slant style of the text,
@@ -8115,7 +8147,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:242
-msgid "textattr|style"
+msgctxt "textattr"
+msgid "style"
 msgstr ""
 
 #. Translators: this attribute specifies the decoration of the text.
@@ -8124,7 +8157,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:249
-msgid "textattr|text decoration"
+msgctxt "textattr"
+msgid "text decoration"
 msgstr ""
 
 #. Translators: this attribute specifies the angle at which the text is
@@ -8135,7 +8169,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:258
-msgid "textattr|text rotation"
+msgctxt "textattr"
+msgid "text rotation"
 msgstr ""
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
@@ -8144,7 +8179,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:265
-msgid "textattr|text shadow"
+msgctxt "textattr"
+msgid "text shadow"
 msgstr ""
 
 #. Translators: this attributes specifies whether the text is underlined.
@@ -8153,7 +8189,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:272
-msgid "textattr|underline"
+msgctxt "textattr"
+msgid "underline"
 msgstr ""
 
 #. Translators: this attribute specifies the capitalization variant of
@@ -8162,7 +8199,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:279
-msgid "textattr|variant"
+msgctxt "textattr"
+msgid "variant"
 msgstr ""
 
 #. Translators: this attributes specifies what vertical alignment property
@@ -8171,7 +8209,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:286
-msgid "textattr|vertical align"
+msgctxt "textattr"
+msgid "vertical align"
 msgstr ""
 
 #. Translators: this attribute specifies the weight of the text.
@@ -8180,7 +8219,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
 #: ../src/orca/text_attribute_names.py:293
-msgid "textattr|weight"
+msgctxt "textattr"
+msgid "weight"
 msgstr ""
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
@@ -8189,7 +8229,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:300
-msgid "textattr|wrap mode"
+msgctxt "textattr"
+msgid "wrap mode"
 msgstr ""
 
 #. Translators: this attribute specifies the way the text is written.
@@ -8200,7 +8241,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:309
-msgid "textattr|writing mode"
+msgctxt "textattr"
+msgid "writing mode"
 msgstr ""
 
 #. The following are the known values of some of these text attributes.
@@ -8216,7 +8258,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:325
-msgid "textattr|true"
+msgctxt "textattr"
+msgid "true"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8226,7 +8269,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:333
-msgid "textattr|false"
+msgctxt "textattr"
+msgid "false"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8237,7 +8281,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:342
-msgid "textattr|none"
+msgctxt "textattr"
+msgid "none"
 msgstr ""
 
 #
@@ -8247,7 +8292,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:349
-msgid "textattr|engrave"
+msgctxt "textattr"
+msgid "engrave"
 msgstr ""
 
 #
@@ -8257,7 +8303,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:356
-msgid "textattr|emboss"
+msgctxt "textattr"
+msgid "emboss"
 msgstr ""
 
 #
@@ -8267,7 +8314,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:363
-msgid "textattr|outline"
+msgctxt "textattr"
+msgid "outline"
 msgstr ""
 
 #
@@ -8277,7 +8325,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:370
-msgid "textattr|overline"
+msgctxt "textattr"
+msgid "overline"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8286,7 +8335,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:377
-msgid "textattr|line through"
+msgctxt "textattr"
+msgid "line through"
 msgstr ""
 
 #
@@ -8296,7 +8346,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:384
-msgid "textattr|blink"
+msgctxt "textattr"
+msgid "blink"
 msgstr ""
 
 #
@@ -8306,7 +8357,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:391
-msgid "textattr|black"
+msgctxt "textattr"
+msgid "black"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8315,7 +8367,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:398
-msgid "textattr|single"
+msgctxt "textattr"
+msgid "single"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8324,7 +8377,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:405
-msgid "textattr|double"
+msgctxt "textattr"
+msgid "double"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8333,7 +8387,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:412
-msgid "textattr|low"
+msgctxt "textattr"
+msgid "low"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8342,7 +8397,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:419
-msgid "textattr|char"
+msgctxt "textattr"
+msgid "char"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8351,7 +8407,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:426
-msgid "textattr|word"
+msgctxt "textattr"
+msgid "word"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8360,7 +8417,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:433
-msgid "textattr|ltr"
+msgctxt "textattr"
+msgid "ltr"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8369,7 +8427,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:440
-msgid "textattr|rtl"
+msgctxt "textattr"
+msgid "rtl"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8378,7 +8437,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:447
-msgid "textattr|left"
+msgctxt "textattr"
+msgid "left"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8387,7 +8447,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:454
-msgid "textattr|right"
+msgctxt "textattr"
+msgid "right"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8396,7 +8457,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:461
-msgid "textattr|center"
+msgctxt "textattr"
+msgid "center"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8405,7 +8467,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:468
-msgid "textattr|fill"
+msgctxt "textattr"
+msgid "fill"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8414,7 +8477,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:475
-msgid "textattr|ultra condensed"
+msgctxt "textattr"
+msgid "ultra condensed"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8423,7 +8487,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:482
-msgid "textattr|extra condensed"
+msgctxt "textattr"
+msgid "extra condensed"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8432,7 +8497,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:489
-msgid "textattr|condensed"
+msgctxt "textattr"
+msgid "condensed"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8441,7 +8507,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:496
-msgid "textattr|semi condensed"
+msgctxt "textattr"
+msgid "semi condensed"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8450,7 +8517,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:503
-msgid "textattr|normal"
+msgctxt "textattr"
+msgid "normal"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8459,7 +8527,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:510
-msgid "textattr|semi expanded"
+msgctxt "textattr"
+msgid "semi expanded"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8468,7 +8537,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:517
-msgid "textattr|expanded"
+msgctxt "textattr"
+msgid "expanded"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8477,7 +8547,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:524
-msgid "textattr|extra expanded"
+msgctxt "textattr"
+msgid "extra expanded"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8486,7 +8557,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:531
-msgid "textattr|ultra expanded"
+msgctxt "textattr"
+msgid "ultra expanded"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8495,7 +8567,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:538
-msgid "textattr|small caps"
+msgctxt "textattr"
+msgid "small caps"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8504,7 +8577,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:545
-msgid "textattr|oblique"
+msgctxt "textattr"
+msgid "oblique"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8513,7 +8587,8 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:552
-msgid "textattr|italic"
+msgctxt "textattr"
+msgid "italic"
 msgstr ""
 
 #
@@ -8523,7 +8598,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:559
-msgid "textattr|Default"
+msgctxt "textattr"
+msgid "Default"
 msgstr "Defaut"
 
 #
@@ -8533,7 +8609,8 @@ msgstr "Defaut"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:566
-msgid "textattr|Text body"
+msgctxt "textattr"
+msgid "Text body"
 msgstr ""
 
 #
@@ -8543,7 +8620,8 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:573
-msgid "textattr|Heading"
+msgctxt "textattr"
+msgid "Heading"
 msgstr "Títol"
 
 #. Translators: this is one of the text attribute values for the following
@@ -8553,7 +8631,8 @@ msgstr "Títol"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:581
-msgid "textattr|baseline"
+msgctxt "textattr"
+msgid "baseline"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8562,7 +8641,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:588
-msgid "textattr|sub"
+msgctxt "textattr"
+msgid "sub"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8571,7 +8651,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:595
-msgid "textattr|super"
+msgctxt "textattr"
+msgid "super"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8580,7 +8661,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:602
-msgid "textattr|top"
+msgctxt "textattr"
+msgid "top"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8589,7 +8671,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:609
-msgid "textattr|text-top"
+msgctxt "textattr"
+msgid "text-top"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8598,7 +8681,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:616
-msgid "textattr|middle"
+msgctxt "textattr"
+msgid "middle"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8607,7 +8691,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:623
-msgid "textattr|bottom"
+msgctxt "textattr"
+msgid "bottom"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8616,7 +8701,8 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:630
-msgid "textattr|text-bottom"
+msgctxt "textattr"
+msgid "text-bottom"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8626,7 +8712,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:638
-msgid "textattr|inherit"
+msgctxt "textattr"
+msgid "inherit"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8635,7 +8722,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:645
-msgid "textattr|lr-tb"
+msgctxt "textattr"
+msgid "lr-tb"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8644,7 +8732,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:652
-msgid "textattr|rl-tb"
+msgctxt "textattr"
+msgid "rl-tb"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8653,7 +8742,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:659
-msgid "textattr|tb-rl"
+msgctxt "textattr"
+msgid "tb-rl"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8662,7 +8752,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:666
-msgid "textattr|tb-lr"
+msgctxt "textattr"
+msgid "tb-lr"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8671,7 +8762,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:673
-msgid "textattr|bt-rl"
+msgctxt "textattr"
+msgid "bt-rl"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8680,7 +8772,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:680
-msgid "textattr|bt-lr"
+msgctxt "textattr"
+msgid "bt-lr"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8689,7 +8782,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:687
-msgid "textattr|lr"
+msgctxt "textattr"
+msgid "lr"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8698,7 +8792,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:694
-msgid "textattr|rl"
+msgctxt "textattr"
+msgid "rl"
 msgstr ""
 
 #. Translators: this is one of the text attribute values for the following
@@ -8707,7 +8802,8 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:701
-msgid "textattr|tb"
+msgctxt "textattr"
+msgid "tb"
 msgstr ""
 
 #. Translators: this is the percentage value of a slider.

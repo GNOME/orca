@@ -1887,7 +1887,8 @@ msgstr "전체 문서 선택"
 #: ../src/orca/scripts/StarOffice.py:130 ../src/orca/speechgenerator.py:247
 #: ../src/orca/where_am_I.py:496
 #, fuzzy
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "선택함"
 
 #. Translators: when users are navigating a table, they
@@ -2068,7 +2069,8 @@ msgstr "커서 위치에서 문서 선택"
 #.
 #: ../src/orca/default.py:6147
 #, fuzzy
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "선택 해제함"
 
 #. Translators: this refers to the speech synthesis services
@@ -2160,7 +2162,8 @@ msgstr "안 누름"
 #: ../src/orca/flat_review.py:377 ../src/orca/Gecko.py:1090
 #: ../src/orca/speechgenerator.py:1073 ../src/orca/where_am_I.py:206
 #, fuzzy
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "라디오 단추"
 
 #. Translators: this is in reference to a radio button being
@@ -2171,7 +2174,8 @@ msgstr "라디오 단추"
 #: ../src/orca/flat_review.py:384 ../src/orca/Gecko.py:1097
 #: ../src/orca/speechgenerator.py:1080 ../src/orca/where_am_I.py:213
 #, fuzzy
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "선택 안 함"
 
 #. Translators: The component orientation is horizontal.
@@ -3150,7 +3154,8 @@ msgstr "더 느리게."
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:86
 #, fuzzy
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "선택함"
 
 #. Translators: this represents the state of a node in a tree
@@ -3159,7 +3164,8 @@ msgstr "선택함"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/J2SE-access-bridge.py:94
 #, fuzzy
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr "선택 해제함"
 
 #. Translators: this is presented in a GUI to represent the
@@ -4120,7 +4126,8 @@ msgstr ""
 #: ../src/orca/orca.py:1282 ../src/orca/orca.py:1295 ../src/orca/orca.py:1416
 #: ../src/orca/orca.py:1457
 #, fuzzy
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "옵션 창"
 
 #. Translators: this option is for enabling braille output on
@@ -4131,7 +4138,8 @@ msgstr "옵션 창"
 #: ../src/orca/orca.py:1283 ../src/orca/orca.py:1296 ../src/orca/orca.py:1424
 #: ../src/orca/orca.py:1459
 #, fuzzy
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "옵션 창"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -4142,7 +4150,8 @@ msgstr "옵션 창"
 #: ../src/orca/orca.py:1284 ../src/orca/orca.py:1297 ../src/orca/orca.py:1432
 #: ../src/orca/orca.py:1461
 #, fuzzy
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "점자 상태 정보 사용(_M)"
 
 #. Translators: this option is for enabling screen
@@ -4153,7 +4162,8 @@ msgstr "점자 상태 정보 사용(_M)"
 #: ../src/orca/orca.py:1285 ../src/orca/orca.py:1298 ../src/orca/orca.py:1440
 #: ../src/orca/orca.py:1463
 #, fuzzy
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "옵션 창"
 
 #. Translators: this option is for enabling the display
@@ -4163,7 +4173,8 @@ msgstr "옵션 창"
 #.
 #: ../src/orca/orca.py:1286 ../src/orca/orca.py:1299 ../src/orca/orca.py:1448
 #: ../src/orca/orca.py:1465
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr ""
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -5036,7 +5047,8 @@ msgstr "바탕화면 프레임"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr ""
 
 #. Translators: long braille for the rolename of a dial.
@@ -5187,7 +5199,8 @@ msgstr "글꼴 고르기"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr ""
 
 #. Translators: long braille for the rolename of a form.

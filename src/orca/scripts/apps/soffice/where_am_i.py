@@ -32,7 +32,7 @@ import orca.speech as speech
 import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
-from orca.orca_i18n import Q_     # to provide qualified translatable strings
+from orca.orca_i18n import C_     # to provide qualified translatable strings
 
 class WhereAmI(where_am_I.WhereAmI):
 
@@ -156,9 +156,7 @@ class WhereAmI(where_am_I.WhereAmI):
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            text = Q_("text|selected")
+            text = C_("text", "selected")
             utterances.append(text)
 
         debug.println(self._debugLevel, "editable table cell utterances=%s" % \

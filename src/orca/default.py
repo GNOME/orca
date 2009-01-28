@@ -59,7 +59,7 @@ import text_attribute_names
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import Q_        # to provide qualified translatable strings
+from orca_i18n import C_        # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -2983,9 +2983,7 @@ class Script(script.Script):
                 # Translators: this is in reference to a table cell being
                 # selected or not.
                 #
-                # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                #
-                utterances.append(Q_("tablecell| not selected"))
+                utterances.append(C_("tablecell", " not selected"))
 
             # We might be automatically speaking the unbound labels
             # in a dialog box as the result of the dialog box suddenly
@@ -3877,18 +3875,14 @@ class Script(script.Script):
                         # Translators: this object is now selected.
                         # Let the user know this.
                         #
-                        # ONLY TRANSLATE THE PART AFTER THE PIPE
-                        # CHARACTER |
                         #
-                        speech.speak(Q_("text|selected"), None, False)
+                        speech.speak(C_("text", "selected"), None, False)
                     else:
                         # Translators: this object is now unselected.
                         # Let the user know this.
                         #
-                        # ONLY TRANSLATE THE PART AFTER THE PIPE
-                        # CHARACTER |
                         #
-                        speech.speak(Q_("text|unselected"), None, False)
+                        speech.speak(C_("text", "unselected"), None, False)
                     return
 
         if event.type.startswith("object:state-changed:focused"):
@@ -4225,9 +4219,7 @@ class Script(script.Script):
                     # Translators: when the user selects (highlights) text in
                     # a document, Orca lets them know this.
                     #
-                    # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-                    #
-                    utterances.append(Q_("text|selected"))
+                    utterances.append(C_("text", "selected"))
                     speech.speakUtterances(utterances)
                 self.updateBraille(orca_state.locusOfFocus)
 
@@ -7519,17 +7511,13 @@ class Script(script.Script):
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            speech.speak(Q_("text|selected"), None, False)
+            speech.speak(C_("text", "selected"), None, False)
         elif len(text.getText(startOffset, endOffset)):
             # Translators: when the user unselects
             # (unhighlights) text in a document, Orca lets
             # them know this.
             #
-            # ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
-            #
-            speech.speak(Q_("text|unselected"), None, False)
+            speech.speak(C_("text", "unselected"), None, False)
 
         self._saveLastTextSelections(text)
 

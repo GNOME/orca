@@ -2239,7 +2239,8 @@ msgstr "ниво в дървото %d"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:2828
-msgid "tablecell| not selected"
+msgctxt "tablecell"
+msgid " not selected"
 msgstr "не е избрана"
 
 #. Translators: this object is now selected.
@@ -2258,7 +2259,8 @@ msgstr "не е избрана"
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:159
 #: ../src/orca/speechgenerator.py:238 ../src/orca/where_am_I.py:505
 #: ../src/orca/where_am_I.py:877
-msgid "text|selected"
+msgctxt "text"
+msgid "selected"
 msgstr "избрано"
 
 #. Translators: this object is now unselected.
@@ -2274,7 +2276,8 @@ msgstr "избрано"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/default.py:3722 ../src/orca/default.py:7165
-msgid "text|unselected"
+msgctxt "text"
+msgid "unselected"
 msgstr "неизбрано"
 
 #. Translators: when users are navigating a table, they
@@ -2605,7 +2608,8 @@ msgstr "ненатиснат"
 #: ../src/orca/flat_review.py:377
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:524
 #: ../src/orca/speechgenerator.py:1085 ../src/orca/where_am_I.py:211
-msgid "radiobutton|selected"
+msgctxt "radiobutton"
+msgid "selected"
 msgstr "избран"
 
 #. Translators: this is in reference to a radio button being
@@ -2616,7 +2620,8 @@ msgstr "избран"
 #: ../src/orca/flat_review.py:384
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:531
 #: ../src/orca/speechgenerator.py:1092 ../src/orca/where_am_I.py:218
-msgid "radiobutton|not selected"
+msgctxt "radiobutton"
+msgid "not selected"
 msgstr "неизбран"
 
 #. Translators: The component orientation is horizontal.
@@ -3806,7 +3811,8 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1368 ../src/orca/orca.py:1381 ../src/orca/orca.py:1510
 #: ../src/orca/orca.py:1551
-msgid "option|speech"
+msgctxt "option"
+msgid "speech"
 msgstr "реч"
 
 #. Translators: this option is for enabling braille output on
@@ -3816,7 +3822,8 @@ msgstr "реч"
 #.
 #: ../src/orca/orca.py:1369 ../src/orca/orca.py:1382 ../src/orca/orca.py:1518
 #: ../src/orca/orca.py:1553
-msgid "option|braille"
+msgctxt "option"
+msgid "braille"
 msgstr "брайл"
 
 #. Translators: this option is for enabling a GUI to monitor
@@ -3826,7 +3833,8 @@ msgstr "брайл"
 #.
 #: ../src/orca/orca.py:1370 ../src/orca/orca.py:1383 ../src/orca/orca.py:1526
 #: ../src/orca/orca.py:1555
-msgid "option|braille-monitor"
+msgctxt "option"
+msgid "braille-monitor"
 msgstr "брайлов монитор"
 
 #. Translators: this option is for enabling screen
@@ -3836,7 +3844,8 @@ msgstr "брайлов монитор"
 #.
 #: ../src/orca/orca.py:1371 ../src/orca/orca.py:1384 ../src/orca/orca.py:1534
 #: ../src/orca/orca.py:1557
-msgid "option|magnifier"
+msgctxt "option"
+msgid "magnifier"
 msgstr "лупа"
 
 #. Translators: this option is for enabling the display
@@ -3846,7 +3855,8 @@ msgstr "лупа"
 #.
 #: ../src/orca/orca.py:1372 ../src/orca/orca.py:1385 ../src/orca/orca.py:1542
 #: ../src/orca/orca.py:1559
-msgid "option|main-window"
+msgctxt "option"
+msgid "main-window"
 msgstr "основен прозорец"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
@@ -4865,7 +4875,8 @@ msgstr "рамка на работното място"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:377
-msgid "shortbraille|dial"
+msgctxt "shortbraille"
+msgid "dial"
 msgstr "цфрб"
 
 #. Translators: long braille for the rolename of a dial.
@@ -5016,7 +5027,8 @@ msgstr "избор на шрифт"
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
 #: ../src/orca/rolenames.py:478
-msgid "shortbraille|form"
+msgctxt "shortbraille"
+msgid "form"
 msgstr "фрмл"
 
 #. Translators: long braille for the rolename of a form.
@@ -7745,7 +7757,8 @@ msgstr "%d%% от документа са прочетени"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge.py:86
-msgid "listitem|selected"
+msgctxt "listitem"
+msgid "selected"
 msgstr "избран"
 
 #. Translators: this represents the state of a node in a tree
@@ -7753,7 +7766,8 @@ msgstr "избран"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge.py:94
-msgid "listitem|unselected"
+msgctxt "listitem"
+msgid "unselected"
 msgstr "неизбран"
 
 #. Translators: the regular expression here represents a string to
