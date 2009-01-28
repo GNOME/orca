@@ -991,7 +991,11 @@ class SpeechGenerator:
 
         # No need to say "menu item" because we already know that.
         #
-        utterances.extend(self._getSpeechForObjectName(obj))
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
 
         # OpenOffice check menu items currently have a role of "menu item"
         # rather then "check menu item", so we need to test if one of the
