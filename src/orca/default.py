@@ -6008,6 +6008,14 @@ class Script(script.Script):
         Returns a string representing the value.
         """
 
+        # Use ARIA "valuetext" attribute if present.  See 
+        # http://bugzilla.gnome.org/show_bug.cgi?id=552965
+        #
+        attributes = obj.getAttributes()
+        for attribute in attributes:
+            if attribute.startswith("valuetext"):
+                return attribute[10:]
+
         try:
             value = obj.queryValue()
         except NotImplementedError:
