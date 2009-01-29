@@ -1195,14 +1195,13 @@ class Script(default.Script):
             displayedText = displayedText.strip()
             # Some ARIA widgets (e.g. the list items in the chat box
             # in gmail) implement the accessible text interface but
-            # only contain whitespace. Ultimately we should probably
-            # identify all of these instances, but for now, let's
-            # make gmail work.
+            # only contain whitespace.
             #
             if not displayedText \
-               and obj.getRole() == pyatspi.ROLE_LIST_ITEM \
                and obj.getState().contains(pyatspi.STATE_FOCUSED):
-                displayedText = obj.name
+                label = self.getDisplayedLabel(obj)
+                if not label:
+                    displayedText = obj.name
 
         return displayedText
 

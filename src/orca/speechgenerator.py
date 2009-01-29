@@ -949,9 +949,16 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
+        utterances = []
+
         # No need to say "menu item" because we already know that.
         #
-        utterances = self._getSpeechForObjectName(obj)
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
+
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.extend(self._getSpeechForObjectAvailability(obj))
             utterances.extend(self._getSpeechForObjectAccelerator(obj))
