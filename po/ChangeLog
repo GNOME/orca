@@ -1,3 +1,7 @@
+2009-01-30  Gil Forcada  <gforcada@gnome.org>
+
+	* ca.po: Updated Catalan translation.
+
 2009-01-30  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* hu.po: Translation updated by Attila Hammer.
@@ -8,8 +12,8 @@
 
 2009-01-28  Willie Walker <william.walker@sun.com>
 
-          * po/*.po:
-          Fix for bug #569118 - Use C_() instead of Q_() with context
+	* po/*.po:
+	Fix for bug #569118 - Use C_() instead of Q_() with context
 
 2009-01-18  Duarte Loreto <happyguy_pt@hotmail.com>
 
