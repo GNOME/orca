@@ -1179,6 +1179,28 @@ for sym in dir(pyatspi):
                 pyatspi_role = getattr(pyatspi, sym)
                 rolenames[pyatspi_role] = rolenames[key]
 
+def _adjustRole(obj, role):
+    """Adjust the role to what the role really is.
+    """
+
+    # Return fake "menu" role names.
+    #
+    if (role == pyatspi.ROLE_MENU_ITEM) \
+          and (obj.childCount > 0):
+        role = ROLE_MENU
+
+    # If this is an ARIA button with the "haspopup:true" attribute, then
+    # it's really a menu.
+    #
+    if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_MENU_ITEM]:
+        attributes = obj.getAttributes()
+        for attribute in attributes:
+            if attribute.startswith("haspopup:true"):
+                role = ROLE_MENU
+                break
+
+    return role
+
 def getSpeechForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
@@ -1190,13 +1212,8 @@ def getSpeechForRoleName(obj, role=None):
     Returns a string containing the localized name of the object suitable
     to be spoken.
     """
-    role = role or obj.getRole()
 
-    # Return fake "menu" role names.
-    #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_MENU
+    role = _adjustRole(obj, role or obj.getRole())
 
     # If the enum is not in the dictionary, check by name.
     role_entry = \
@@ -1222,13 +1239,8 @@ def getShortBrailleForRoleName(obj, role=None):
     Returns a short string containing the localized name of the object
     suitable for a Braille display.
     """
-    role = role or obj.getRole()
 
-    # Return fake "menu" role names.
-    #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_MENU
+    role = _adjustRole(obj, role or obj.getRole())
 
     # If the enum is not in the dictionary, check by name.
     role_entry = \
@@ -1254,13 +1266,8 @@ def getLongBrailleForRoleName(obj, role=None):
     Returns a string containing the localized name of the object suitable for
     a Braille display.
     """
-    role = role or obj.getRole()
 
-    # Return fake "menu" role names.
-    #[[[TODO: eitani - Discontinue ]]
-    if (role == pyatspi.ROLE_MENU_ITEM) \
-          and (obj.childCount > 0):
-        role = ROLE_MENU
+    role = _adjustRole(obj, role or obj.getRole())
 
     # If the enum is not in the dictionary, check by name.
     role_entry = \
@@ -1274,9 +1281,6 @@ def getLongBrailleForRoleName(obj, role=None):
             return localizedRoleName
         else:
             return repr(role)
-
-
-
 
 def getBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
