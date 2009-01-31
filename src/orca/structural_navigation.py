@@ -2645,14 +2645,14 @@ class StructuralNavigation:
         # of webpage like banners, main context, search etc.
         #
         prevDesc = _("Goes to previous landmark.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["m", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating to the next ARIA
         # role landmark.  ARIA role landmarks are the W3C defined
         # HTML tag attribute 'role' used to identify important part
         # of webpage like banners, main context, search etc.
         #
         nextDesc = _("Goes to next landmark.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["m", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _landmarkCriteria(self, collection, arg=None):
