@@ -2686,6 +2686,14 @@ class Script(default.Script):
                         else:
                             documentFrame = None
 
+        # Certain add-ons can interfere with the above approach. But we
+        # should have a locusOfFocus. If so look up and try to find the
+        # document frame. See bug 537303.
+        #
+        if not documentFrame:
+            documentFrame = self.getAncestor(orca_state.locusOfFocus,
+                                             [pyatspi.ROLE_DOCUMENT_FRAME],
+                                             [pyatspi.ROLE_FRAME])
         return documentFrame
 
     def getURI(self, obj):
