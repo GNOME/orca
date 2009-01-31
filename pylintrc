@@ -173,7 +173,7 @@ variable-rgx=[a-z_][a-zA-Z0-9_]*$
 inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=i,j,k,ex,Run,_,Q_
+good-names=i,j,k,ex,Run,_,Q_,C_
 
 # Bad variable names which should always be refused, separated by a comma
 bad-names=foo,bar,baz,toto,tutu,tata
