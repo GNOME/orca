@@ -1,5 +1,11 @@
 2009-01-31  Willie Walker <william.walker@sun.com>
 
+        * src/orca/structural_navigation.py:
+          Fix for bug #568550 - Add default keybindings for navigating by
+          landmarks
+
+2009-01-31  Willie Walker <william.walker@sun.com>
+
         * test/keystrokes/firefox/dojo_button.py:
           src/orca/rolenames.py:
           Fix for bug #569835 - Orca should support the ARIA haspopup attribute
