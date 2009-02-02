@@ -1,5 +1,10 @@
 2009-02-02  Willie Walker <william.walker@sun.com>
 
+        * configure.in, README:
+          Mark as Orca v2.25.91pre
+
+2009-02-02  Willie Walker <william.walker@sun.com>
+
         * src/orca/orca_i18n.py.in:
           Use gettext.gettext instead of _ for C_ so as to avoid bad
           distcheck failure.
