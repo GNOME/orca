@@ -1,3 +1,71 @@
+2.25.90 - 02-Feb-2009
+
+General:
+
+* Fix for bug #553678 - orca can act badly at login time
+
+* Fix for bug #561548 - Orca locks up when closing some Pidgin
+  conversations.
+
+* Fix for bug #562060 - Speech should speak multi case strings as
+  words.  Adjust the regexes used.
+
+* Fix for bug #563128 - Text-based setup should offer option to
+  automatically launch Orca on login
+
+* Fix for bug #567428 -"readonly text" spoken when caret changes line.
+
+* Fix for bug #568751 - Interaction with the punctuation preferences
+  can cause a hang
+
+* Fix for bug #568589 - braillegenerator adding image string
+  versus braille.Component for table cells
+
+* Fix for bug #568875 - Pressing "Apply" button in preferences dialog
+  causes autostart option to be checked
+
+* Fix for bug #569118 - Use C_() instead of Q_() with context NOTE:
+  you need to install SUNWgnu-gettext and rerun your autogen.sh to
+  work with this change on OpenSolaris.
+
+Firefox:
+
+* Fix for bug #537303 - Certain FF3 add-ons interfere with Orca's
+  ability to provide access to content.
+
+* Fix for bug #552965 - aria-valuetext ignored
+
+* Fix for bug #567984 - Structural navigation needs to consider text
+  within the document frame.
+
+* Fix for bug #568467 - aria-describedby text spoken twice via 
+  Where Am I
+
+* Fix for bug #568550 - Add default keybindings for navigating by
+  landmarks
+
+* Fix for bug #568631 - Orca does not update the position for
+  same-page links which reference objects by name/id in Firefox 3.
+
+* Fix for bug #569346 - No speech for image-only ARIA buttons and ARIA
+  menu items
+
+* Fix for bug #569835 - Orca should support the ARIA haspopup
+  attribute
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  NOTE - the fix for bug #569118 caused changes in every *.po file.
+
+    ca       Catalan              Gil Forcada
+    es       Spanish              Francisco Javier Dorado Martinez and
+                                  Jorge Gonzalez
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    ko       Korean               Changwoo Ryu
+    sv       Swedish              Daniel Nylander
+  
+==========
+
 2.25.5 - 19-Jan-2009
 
 General:
