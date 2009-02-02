@@ -1,3 +1,9 @@
+2009-02-02  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca_i18n.py.in:
+          Use gettext.gettext instead of _ for C_ so as to avoid bad
+          distcheck failure.
+
 2009-01-31  Willie Walker <william.walker@sun.com>
 
         * src/orca/structural_navigation.py:

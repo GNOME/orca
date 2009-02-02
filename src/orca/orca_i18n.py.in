@@ -55,7 +55,7 @@ except:
 
 def C_(ctx, s):
     """Provide qualified translatable strings via context."""
-    translated = _('%s\x04%s' % (ctx, s))
+    translated = gettext.gettext('%s\x04%s' % (ctx, s))
     if '\x04' in translated:
         # no translation found, return input string
         return s
