@@ -2913,7 +2913,7 @@ class Script(default.Script):
             # is the user supposed to know which he/she happens to be in?)
             #
             elif obj.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_LINK]:
-                return True
+                return obj.parent.getRole() != pyatspi.ROLE_COMBO_BOX
             # All other ARIA widgets
             else:
                 return False
