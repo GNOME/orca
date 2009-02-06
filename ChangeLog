@@ -1,5 +1,8 @@
 2009-02-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/dojo_combo_box.py: (new)
+          new regression test
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/codetalks_alert.py: (new)
           Fix for bug #570532 - (ARIA) Alert text not brailled when 
