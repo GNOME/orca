@@ -1,5 +1,10 @@
 2009-02-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/orca-setup.glade:
+          Partial fix for bug #570387 - Clean up the speech tab of the
+          preferences UI. This causes Page Up and Page Down to work on
+          the hscales.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/codetalks_alert.py: (new)
           Fix for bug #570532 - (ARIA) Alert text not brailled when 
