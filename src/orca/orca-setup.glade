@@ -570,7 +570,7 @@
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">5 0 9 0.10000000149 0 0</property>
+			      <property name="adjustment">5 0 9 0.10000000149 1 0</property>
 			      <accessibility>
 				<atkrelation target="pitchLabel" type="labelled-by"/>
 			      </accessibility>
@@ -1136,7 +1136,7 @@ Hyperlink</property>
 				  <property name="digits">0</property>
 				  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 				  <property name="inverted">False</property>
-				  <property name="adjustment">50 0 99 1 0 0</property>
+				  <property name="adjustment">50 0 99 1 10 0</property>
 				  <accessibility>
 				    <atkrelation target="rateLabel" type="labelled-by"/>
 				  </accessibility>
@@ -1164,7 +1164,7 @@ Hyperlink</property>
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">9 0 9 0.10000000149 0 0</property>
+			      <property name="adjustment">9 0 9 0.10000000149 1 0</property>
 			      <accessibility>
 				<atkrelation target="volumeLabel" type="labelled-by"/>
 			      </accessibility>
