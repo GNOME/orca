@@ -2912,7 +2912,9 @@ class Script(default.Script):
             # escape/exit ARIA entries just like we do HTML entries (How
             # is the user supposed to know which he/she happens to be in?)
             #
-            elif obj.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_LINK]:
+            elif obj.getRole() in [pyatspi.ROLE_ENTRY,
+                                   pyatspi.ROLE_LINK,
+                                   pyatspi.ROLE_ALERT]:
                 return obj.parent.getRole() != pyatspi.ROLE_COMBO_BOX
             # All other ARIA widgets
             else:
