@@ -1262,7 +1262,7 @@ Hyperlink</property>
 			          <child>
 				    <widget class="GtkLabel" id="speakProgressBarLabel">
 				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">every</property>
+				      <property name="label" translatable="yes" comments="Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'.">every</property>
 				      <property name="use_underline">True</property>
 				      <property name="use_markup">False</property>
 				      <property name="justify">GTK_JUSTIFY_LEFT</property>
