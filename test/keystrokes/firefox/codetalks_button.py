@@ -80,9 +80,10 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Popup dialog", 
-    ["BRAILLE LINE:  'Firefox Application The page at http://codetalks.org says: Dialog'",
+    ["KNOWN ISSUE - https://bugzilla.mozilla.org/show_bug.cgi?id=466332"
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog'",
      "     VISIBLE:  'The page at http://codetalks.org', cursor=1",
-     "BRAILLE LINE:  'Firefox Application The page at http://codetalks.org says: Dialog OK Button'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: 'The page at http://codetalks.org says: Button pressed'",
      "SPEECH OUTPUT: ''",
@@ -96,11 +97,11 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Check Now", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Dismiss dialog", 
-    ["BRAILLE LINE:  'Firefox Application ARIA Button - Mozilla Firefox Frame'",
-     "     VISIBLE:  'ARIA Button - Mozilla Firefox Fr', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application ARIA Button - " + utils.firefoxFrameNames + " Frame'",
+     "     VISIBLE:  'ARIA Button - [3.a-zA-Z ]+', cursor=1",
      "BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
      "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
-     "SPEECH OUTPUT: 'ARIA Button - Mozilla Firefox frame'",
+     "SPEECH OUTPUT: 'ARIA Button - " + utils.firefoxFrameNames + " frame'",
      "SPEECH OUTPUT: 'Check Now button Check to see if your order has been shipped. text'"]))
 
 ########################################################################
