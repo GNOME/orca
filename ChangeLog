@@ -1,5 +1,8 @@
 2009-02-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/line_nav_simple_form.py:
+          Updated regression test.
+
         * test/keystrokes/firefox/line_nav_wiki.py:
           Updated regression test.
 
