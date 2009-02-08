@@ -1,5 +1,9 @@
 2009-02-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/bug_568631.py:
+          test/keystrokes/firefox/dojo_combo_box.py:
+          Updated regression tests.
+
         * test/keystrokes/firefox/line_nav_simple_form.py:
           Updated regression test.
 

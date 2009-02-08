@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
 # Tab to the About link
 #
 for i in range(25):
-    sequence.append(KeyComboAction("Tab"))
+    sequence.append(KeyComboAction("Tab", 500))
 
 # Just a little extra wait to let some events get through.
 #
