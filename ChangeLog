@@ -1,3 +1,8 @@
+2009-02-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/line_nav_enter_bug.py:
+          Updated regression test.
+
 2009-02-06  Willie Walker <william.walker@sun.com>
 
         * test/keystrokes/firefox/codetalks_button.py:

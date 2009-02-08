@@ -71,17 +71,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most'",
+    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most frequently'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most link'"]))
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'frequently reported bugs, and please search or browse for the bug.'",
-     "     VISIBLE:  'frequently reported bugs, and pl', cursor=1",
-     "SPEECH OUTPUT: 'frequently reported bugs link , and please search link  or browse link  for the bug.'"]))
+    ["BRAILLE LINE:  'reported bugs, and please search or browse for the bug.'",
+     "     VISIBLE:  'reported bugs, and please search', cursor=1",
+     "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -452,17 +452,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'frequently reported bugs, and please search or browse for the bug.'",
-     "     VISIBLE:  'frequently reported bugs, and pl', cursor=1",
-     "SPEECH OUTPUT: 'frequently reported bugs link , and please search link  or browse link  for the bug.'"]))
+    ["BRAILLE LINE:  'reported bugs, and please search or browse for the bug.'",
+     "     VISIBLE:  'reported bugs, and please search', cursor=1",
+     "SPEECH OUTPUT: 'reported bugs link , and please search link  or browse link  for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most'",
+    ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines, please look at the list of most frequently'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most link'"]))
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
