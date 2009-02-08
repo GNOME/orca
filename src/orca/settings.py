@@ -720,6 +720,30 @@ textAttributesBrailleIndicator = TEXT_ATTR_BRAILLE_NONE
 #
 repeatCharacterLimit = 4
 
+# Tags associated with ARIA landmarks.
+#
+ariaLandmarks = [
+    "application",
+    "article",
+    "banner",
+    "complementary",
+    "contentinfo",
+    "definition",
+    "directory",
+    "document",
+    "grid",
+    "log",
+    "main",
+    "menubar",
+    "navigation",
+    "note",
+    "region",
+    "search",
+    "secondary",
+    "seealso",
+    "status",
+]
+
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
 # scripts and the default script behavior.
