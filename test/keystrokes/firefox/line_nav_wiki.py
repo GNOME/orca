@@ -257,21 +257,29 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'The complete list of work to do,', cursor=1",
      "SPEECH OUTPUT: 'The complete list of work to do, including bugs and feature requests,'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down", 
-    ["BRAILLE LINE:  'along with known problems in other components, is maintained in Bugzilla \(please see our notes on'",
-     "     VISIBLE:  'along with known problems in oth', cursor=1",
-     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in Bugzilla link  \(please see our notes on link'"]))
+# NOTE: In FF 3.0, "Bugzilla (please see our notes on" appears on the same
+# line as "... is maintained in". In FF 3.1, it appears beneath. Let's just
+# accept both cases for now.
+#
+bugzillaStringBraille = "(Bugzilla \(please see our notes on|)"
+bugzillaStringSpeech  = "(Bugzilla link  \(please see our notes on|)"
+bugzillaStringVisible = "(how we use Bugzilla\)\.|Bugzilla \(please see our notes o)"
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'how we use Bugzilla\).'",
-     "     VISIBLE:  'how we use Bugzilla\).', cursor=1",
-     "SPEECH OUTPUT: 'how we use Bugzilla link \).'"]))
+    ["BRAILLE LINE:  'along with known problems in other components, is maintained in" + "( |)" + bugzillaStringBraille + "'",
+     "     VISIBLE:  'along with known problems in oth', cursor=1",
+     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in" + "( |)" + bugzillaStringSpeech + "( link|)'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
+    ["BRAILLE LINE:  '" + bugzillaStringBraille + "( |)" + "how we use Bugzilla\).'",
+     "     VISIBLE:  '" + bugzillaStringVisible + "', cursor=1",
+     "SPEECH OUTPUT: '" + bugzillaStringSpeech + "( |)" + "how we use Bugzilla link \).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1266,17 +1274,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'how we use Bugzilla\).'",
-     "     VISIBLE:  'how we use Bugzilla\).', cursor=1",
-     "SPEECH OUTPUT: 'how we use Bugzilla link \).'"]))
+    ["BRAILLE LINE:  '" + bugzillaStringBraille + "( |)" + "how we use Bugzilla\).'",
+     "     VISIBLE:  '" + bugzillaStringVisible + "', cursor=1",
+     "SPEECH OUTPUT: '" + bugzillaStringSpeech + "( |)" + "how we use Bugzilla link \).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'along with known problems in other components, is maintained in Bugzilla \(please see our notes on'",
+    ["BRAILLE LINE:  'along with known problems in other components, is maintained in" + "( |)" + bugzillaStringBraille + "'",
      "     VISIBLE:  'along with known problems in oth', cursor=1",
-     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in Bugzilla link  \(please see our notes on link'"]))
+     "SPEECH OUTPUT: 'along with known problems in other components, is maintained in" + "( |)" + bugzillaStringSpeech + "( link|)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
