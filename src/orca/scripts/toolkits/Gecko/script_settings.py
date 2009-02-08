@@ -68,6 +68,3 @@ minimumFindLength = 4
 # that may be too verbose so it's configurable.
 #
 onlySpeakChangedLinesDuringFind = False
-
-ARIA_LANDMARKS = ["banner", "contentinfo", "definition", "main", "navigation",
-                  "note", "search", "secondary", "seealso"]

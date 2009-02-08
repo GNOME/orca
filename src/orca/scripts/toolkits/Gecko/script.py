@@ -2816,7 +2816,9 @@ class Script(default.Script):
         attrs = self._getAttrDictionary(orca_state.locusOfFocus)
         try:
             # ARIA landmark widgets
-            if attrs['xml-roles'] in script_settings.ARIA_LANDMARKS:
+            import sets
+            if sets.Set(attrs['xml-roles'].split()).intersection(\
+               sets.Set(settings.ariaLandmarks)):
                 return True
             # ARIA live region
             elif 'container-live' in attrs:
@@ -2891,19 +2893,19 @@ class Script(default.Script):
                 if 'xml-roles' in attrs:
                     # This eliminates all ARIA widgets that are not
                     # considered live
-                    if attrs['xml-roles'] != 'alert' \
-                               and attrs['xml-roles'] != 'tooltip':
+                    attrList = attrs['xml-roles'].split()
+                    if not 'alert' in attrList \
+                       and not 'tooltip' in attrList:
                         return False
                     # Only present tooltips when user wants them presented
-                    elif attrs['xml-roles'] == 'tooltip' \
-                                   and not settings.presentToolTips:
+                    elif 'tooltip' in attrList and not settings.presentToolTips:
                         return False
             else:
                 # Some alerts have been seen without the :system postfix.
                 # We will take care of them separately.
                 attrs = self._getAttrDictionary(event.any_data)
                 if 'xml-roles' in attrs \
-                                      and attrs['xml-roles'] == 'alert':
+                   and 'alert' in attrs['xml-roles'].split():
                     return True
                 else:
                     return False

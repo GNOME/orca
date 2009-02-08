@@ -471,12 +471,6 @@ class StructuralNavigation:
                   pyatspi.ROLE_SPIN_BUTTON,
                   pyatspi.ROLE_TEXT]
 
-    # Tags associated with ARIA landmarks.
-    #
-    ARIA_LANDMARKS = ["banner", "contentinfo", "definition", "main",
-                      "navigation", "note", "search", "secondary",
-                      "seealso"]
-
     # Roles which are recognized as being potential "large objects"
     # or "chunks." Note that this refers to AT-SPI roles.
     #
@@ -2665,8 +2659,18 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
+        # NOTE: there is a limitation in the AT-SPI Collections interface
+        # when it comes to an attribute whose value can be a list.  For
+        # example, the xml-roles attribute can be a space-separate list
+        # of roles.  We'd like to make a match if the xml-roles attribute
+        # has one (or any) of the roles we care about.  Instead, we're
+        # restricted to an exact match.  So, the below will only work in 
+        # the cases where the xml-roles attribute value consists solely of a
+        # single role.  In practice, this seems to be the case that we run
+        # into for the landmark roles.
+        #
         attrs = []
-        for landmark in self.ARIA_LANDMARKS:
+        for landmark in settings.ariaLandmarks:
             attrs.append('xml-roles:' + landmark)
 
         return MatchCriteria(collection, objAttrs=attrs)
@@ -2686,7 +2690,9 @@ class StructuralNavigation:
 
         attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         try:
-            if attrs['xml-roles'] in self.ARIA_LANDMARKS:
+            import sets
+            if sets.Set(attrs['xml-roles']).intersection(\
+                sets.Set(settings.ariaLandmarks)):
                 return True
             else:
                 return False
