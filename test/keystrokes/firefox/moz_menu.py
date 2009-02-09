@@ -192,9 +192,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "leave menu", 
-    ["BRAILLE LINE:  'Entry # Date Expense Amount Merchant Type'",
+    ["BUG? - Focus is being given back to the table, but should we be saying more here?",
+     "BRAILLE LINE:  'Entry # Date Expense Amount Merchant Type'",
      "     VISIBLE:  'Entry # Date Expense Amount Merc', cursor=8",
-     "SPEECH OUTPUT: 'Entry # text Date text Expense text Amount text Merchant text Type column header'"]))
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'table'"]))
 
 ########################################################################
 # Close the demo

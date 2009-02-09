@@ -1,5 +1,12 @@
 2009-02-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          Fix for bug #571058 - (ARIA) Orca's caret navigation is kicking in
+          when it shouldn't be.
+
         * test/keystrokes/firefox/uiuc_grid.py:
           test/keystrokes/firefox/line_nav_simple_form.py:
           test/keystrokes/firefox/xul_role_entry.py:

@@ -34,12 +34,15 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to grid", 
     ["BRAILLE LINE:  'E-mail List Sorted by Date Caption'",
      "     VISIBLE:  'E-mail List Sorted by Date Capti', cursor=1",
-     "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Read message Image Attachment Image Lowest priority Image John Smith Trip to Florida 2007-10-03 2K'",
+     "BRAILLE LINE:  '< > Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
      "     VISIBLE:  '< > Email 0 Selected CheckBox 1 ', cursor=1",
      "BRAILLE LINE:  'Email 0 Selected CheckBox'",
      "     VISIBLE:  'Email 0 Selected CheckBox', cursor=0",
-     "SPEECH OUTPUT: 'E-mail List Sorted by Date caption'",
-     "SPEECH OUTPUT: 'check box not checked 1 Read message image Attachment image Lowest priority image John Smith Trip to Florida 2007-10-03 2K'"]))
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'E-mail List Sorted by Date table'",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Status column header'",
+     "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel'"]))
   
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  

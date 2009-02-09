@@ -1427,7 +1427,13 @@ class Script(default.Script):
                     #
                     return
 
-            elif self.isAriaWidget(event.source):
+            elif self.isAriaWidget(event.source) \
+                 or self.isAriaWidget(event.source.parent):
+                # If it's not focusable, it's bogus.
+                #
+                if not eventSourceState.contains(pyatspi.STATE_FOCUSABLE):
+                    return
+
                 # Sometimes we get extra caret-moved events. See bug #471878
                 # and Mozilla bug #394318. However, we cannot do a blanket
                 # ignore of all caret-moved events.  See bug #539075 as an
@@ -1669,7 +1675,7 @@ class Script(default.Script):
 
         elif eventSourceRole != pyatspi.ROLE_LINK \
              and self.inDocumentContent(event.source) \
-             and not self.isAriaWidget():
+             and not self.isAriaWidget(event.source):
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, 0)
             self.setCaretContext(obj, characterOffset)
