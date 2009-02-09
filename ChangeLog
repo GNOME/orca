@@ -1,3 +1,15 @@
+2009-02-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/line_nav_simple_form.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/sayAll_html_test_page.py: (removed)
+          Updated regression tests. I also removed one sayAll test because
+          it seems to stall the harness for some reason. Given that we have
+          quite a few sayAll tests which examine the same conditions, I'd
+          rather spend my time on Orca bugs rather than harness issues. :-)
+
 2009-02-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * test/keystrokes/firefox/bug_568631.py:

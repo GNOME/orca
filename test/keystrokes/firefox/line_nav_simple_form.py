@@ -214,8 +214,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Up",
-    ["KNOWN ISSUE - In Firefox 3.1 we get a caret-moved event that we're not getting in 3.0.x. These results are for 3.1",
-     "BRAILLE LINE:  '      $l'",
+    ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
      "BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",

@@ -38,7 +38,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the first combo box", 
-    ["BUG? - Too verbose",
+    ["BUG? - Too verbose. This is true for all of the assertions, but I'm only marking it here.",
      "BRAILLE LINE:  'US State test 1 California $l'",
      "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "SPEECH OUTPUT: 'US State test 1 combo box'",
@@ -51,8 +51,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("C"))
 sequence.append(utils.AssertPresentationAction(
     "Replace existing text with a 'C'", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 California $l'",
+    ["BRAILLE LINE:  'US State test 1 California $l'",
      "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -84,8 +83,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 California $l'",
+    ["BRAILLE LINE:  'US State test 1 California $l'",
      "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -103,8 +101,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
+    ["BRAILLE LINE:  'US State test 1 Colorado $l'",
      "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -122,8 +119,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 Connecticut $l'",
+    ["BRAILLE LINE:  'US State test 1 Connecticut $l'",
      "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -138,8 +134,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 Connecticut $l'",
+    ["BRAILLE LINE:  'US State test 1 Connecticut $l'",
      "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -157,8 +152,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
+    ["BRAILLE LINE:  'US State test 1 Colorado $l'",
      "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",
@@ -176,8 +170,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["BUG? - Too verbose",
-     "BRAILLE LINE:  'US State test 1 California $l'",
+    ["BRAILLE LINE:  'US State test 1 California $l'",
      "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "BRAILLE LINE:  'US State test 1 C $l'",
      "     VISIBLE:  'US State test 1 C $l', cursor=0",

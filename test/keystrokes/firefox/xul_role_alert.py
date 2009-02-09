@@ -23,10 +23,11 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(TypeAction("javascript:alert('I am an alert')"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 1000))
+sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
-    ["BRAILLE LINE:  'about:blank HtmlPane'",
+    ["KNOWN ISSUE - There is a Mozilla bug that causes us to not get window activate events, so we're not speaking the alert at the moment",
+     "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "BRAILLE LINE:  'about:blank'",
      "     VISIBLE:  'about:blank', cursor=0",
@@ -55,7 +56,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '" + utils.firefoxFrameNames + " Frame', cursor=1",
      "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '" + utils.firefoxFrameNames + " frame'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'"]))
