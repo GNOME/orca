@@ -1,5 +1,8 @@
 2009-02-09  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/yahoo_tab_view.py: (Add)
+          New regression test.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/moz_menu.py:
           test/keystrokes/firefox/uiuc_grid.py:
