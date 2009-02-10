@@ -4974,6 +4974,36 @@ class Script(default.Script):
 
         return attrs
 
+    def searchForCaretLocation(self, acc):
+        """Attempts to locate the caret on the page independent of our
+        caret context. This functionality is needed when a page loads
+        and the URL is for a fragment (anchor, id, named object) within
+        that page.
+
+        Arguments:
+        - acc: The top-level accessible in which we suspect to find the
+          caret (most likely the document frame).
+
+        Returns the [obj, caretOffset] containing the caret if it can
+        be determined. Otherwise [None, -1] is returned.
+        """
+
+        context = [None, -1]
+        while acc:
+            try:
+                offset = acc.queryText().caretOffset
+            except:
+                acc = None
+            else:
+                context = [acc, offset]
+                childIndex = self.getChildIndex(acc, offset)
+                if childIndex >= 0:
+                    acc = acc[childIndex]
+                else:
+                    break
+
+        return context
+
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
         it returns the first [obj, caretOffset] found by an in order
@@ -4991,9 +5021,14 @@ class Script(default.Script):
         try:
             return self._documentFrameCaretContext[hash(documentFrame)]
         except:
+            # If we don't have a context, we should attempt to see if we
+            # can find the caret first. Failing that, we'll start at the
+            # top.
+            #
+            [obj, caretOffset] = self.searchForCaretLocation(documentFrame)
             self._documentFrameCaretContext[hash(documentFrame)] = \
-                self.findNextCaretInOrder(None,
-                                          -1,
+                self.findNextCaretInOrder(obj,
+                                          max(-1, caretOffset - 1),
                                           includeNonText)
 
         [obj, caretOffset] = \
