@@ -63,8 +63,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BUG? - Should panel be at the end of the line? If not, the braille generator should deal with it.",
-     "BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page Panel'",
+    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page'",
      "     VISIBLE:  'Tab 3 Page Inlined Sub TabContai', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
@@ -75,8 +74,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
-    ["BUG? - Should panel be at the end of the line? If not, the braille generator should deal with it. Note that we don't always see it either.... Very strange....",
-     "BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page Panel'",
+    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page'",
      "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))

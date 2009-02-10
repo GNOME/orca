@@ -37,9 +37,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to continents", 
-    ["BUG? - Should Tree be in the context? If not, the braille generator should deal with it.",
-     "BRAILLE LINE:  'Tree Continents ListItem'",
-     "     VISIBLE:  'Tree Continents ListItem', cursor=6",
+    ["BUG? - The braille in this assertion and several of those that follow begins with an extraneous space.",
+     "BRAILLE LINE:  ' Continents ListItem'",
+     "     VISIBLE:  ' Continents ListItem', cursor=2",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Continents expanded'",
      "SPEECH OUTPUT: 'tree level 1'"]))
@@ -51,9 +51,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Africa", 
-    ["BUG? - Should Panel be in the context? If not, the braille generator should deal with it.",
-     "BRAILLE LINE:  'Panel Africa ListItem'",
-     "     VISIBLE:  'Panel Africa ListItem', cursor=7",
+    ["BRAILLE LINE:  ' Africa ListItem'",
+     "     VISIBLE:  ' Africa ListItem', cursor=2",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Africa collapsed'",
      "SPEECH OUTPUT: 'tree level 2'"]))
@@ -66,8 +65,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Panel Africa ListItem'",
-     "     VISIBLE:  'Panel Africa ListItem', cursor=7",
+    ["BRAILLE LINE:  ' Africa ListItem'",
+     "     VISIBLE:  ' Africa ListItem', cursor=2",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Africa'",
      "SPEECH OUTPUT: ''",
@@ -81,8 +80,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "expand Africa", 
-    ["BRAILLE LINE:  'Panel Africa ListItem'",
-     "     VISIBLE:  'Panel Africa ListItem', cursor=7",
+    ["BRAILLE LINE:  ' Africa ListItem'",
+     "     VISIBLE:  ' Africa ListItem', cursor=2",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,8 +89,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Egypt", acc_role=pyatspi.ROLE_LIST_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Egypt", 
-    ["BRAILLE LINE:  'Panel Egypt ListItem'",
-     "     VISIBLE:  'Panel Egypt ListItem', cursor=7",
+    ["BRAILLE LINE:  ' Egypt ListItem'",
+     "     VISIBLE:  ' Egypt ListItem', cursor=2",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Egypt'",
      "SPEECH OUTPUT: 'tree level 3'"]))
@@ -153,8 +152,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to China", 
-    ["BRAILLE LINE:  'Panel China ListItem'",
-     "     VISIBLE:  'Panel China ListItem', cursor=7",
+    ["BRAILLE LINE:  ' China ListItem'",
+     "     VISIBLE:  ' China ListItem', cursor=2",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'China'",
      "SPEECH OUTPUT: 'tree level 3'"]))

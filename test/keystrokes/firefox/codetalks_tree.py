@@ -23,6 +23,8 @@ sequence.append(TypeAction("http://codetalks.org/source/widgets/tree/tree3.html"
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 
+sequence.append(PauseAction(5000))
+
 ########################################################################
 # Navigate to the first item in the tree
 #
@@ -33,10 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to the tree",
-    ["BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
-     "BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
+    ["BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
+     "BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
      "SPEECH OUTPUT: ''",
@@ -50,10 +52,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to collapse fruits", 
-    ["BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
-     "BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
+    ["BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
+     "BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################
@@ -64,8 +66,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
+    ["BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
      "SPEECH OUTPUT: 'Fruits'",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Fruits'",
@@ -80,10 +82,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to expand fruits", 
-    ["BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
-     "BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
+    ["BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
+     "BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################
@@ -94,8 +96,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  ' Fruits $l'",
-     "     VISIBLE:  ' Fruits $l', cursor=1",
+    ["BRAILLE LINE:  ' Fruits'",
+     "     VISIBLE:  ' Fruits', cursor=1",
      "SPEECH OUTPUT: 'Fruits'",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Fruits'",

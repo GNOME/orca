@@ -102,7 +102,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move right on second row 3", 
-    ["BRAILLE LINE:  'New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
+    ["BRAILLE LINE:  '< > Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
      "     VISIBLE:  'New message Image Attachment Ima', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New message'"]))
@@ -114,8 +114,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move down to third row", 
-    ["BRAILLE LINE:  'New message Image None Image Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
-     "     VISIBLE:  'New message Image None Image Ima', cursor=1",
+    ["BRAILLE LINE:  '< > Email 2 Selected CheckBox 3 Cell New message Image None Image Jane Johnson Cell Proposal for you to review Cell 2007-16-03 Cell 12K Cell'",
+     "     VISIBLE:  'New message Image None Image Jan', cursor=1",
      "SPEECH OUTPUT: '3 New message None From Jane Johnson Subject Proposal for you to review panel'",
      "SPEECH OUTPUT: 'New message'"]))
 

@@ -2924,9 +2924,11 @@ class Script(default.Script):
                                    pyatspi.ROLE_LINK,
                                    pyatspi.ROLE_ALERT]:
                 return obj.parent.getRole() != pyatspi.ROLE_COMBO_BOX
-            # All other ARIA widgets
+            # All other ARIA widgets we will assume are navigable if
+            # they are not focusable.
+            #
             else:
-                return False
+                return not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
         except (KeyError, TypeError):
             return True
 
