@@ -1,3 +1,10 @@
+2009-02-11  Willie Walker <william.walker@sun.com>
+
+        * test/keystrokes/firefox/page_summary.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          Fix for bug #561660 - For example with firefox 3.0, heading
+          levels incorrect sayed for hungarian grammatical
+
 2009-02-10  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

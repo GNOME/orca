@@ -51,7 +51,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'heading'",
+     "SPEECH OUTPUT: 'heading level 6'",
      "SPEECH OUTPUT: 'This is a Heading 6.'",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '14 headings'",

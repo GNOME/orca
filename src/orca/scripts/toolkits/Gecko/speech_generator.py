@@ -79,14 +79,32 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
         if role or not obj.getRole() in doNotSpeak:
-            utterances.append(rolenames.getSpeechForRoleName(obj, role))
             if obj.getRole() == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
                 if level:
-                    # Translators: this is in reference to a heading level
-                    # in HTML (e.g., For <h3>, the level is 3).
+                    # Translators: the %d is in reference to a heading
+                    # level in HTML (e.g., For <h3>, the level is 3)
+                    # and the %s is in reference to a previously
+                    # translated rolename for the heading.  If you
+                    # change the order of the %s and %d in the string
+                    # (as needed for Hungarian, for example), Orca will
+                    # detect it and do the right thing.
                     #
-                    utterances.append(_("level %d") % level)
+                    headingString = _("%s level %d")
+                    if headingString.index("%s") < headingString.index("%d"):
+                        utterances.append(
+                            headingString \
+                            % (rolenames.getSpeechForRoleName(obj, role),
+                               level))
+                    else:
+                        utterances.append(
+                            headingString \
+                            % (level,
+                               rolenames.getSpeechForRoleName(obj, role)))
+                else:
+                    utterances.append(rolenames.getSpeechForRoleName(obj, role))
+            else:
+                utterances.append(rolenames.getSpeechForRoleName(obj, role))
 
         return utterances
 
