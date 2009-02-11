@@ -11,12 +11,12 @@ sequence = MacroSequence()
 
 ########################################################################
 # We wait for the focus to be on the Firefox window as well as for focus
-# to move to the "Dojo Spinner Widget Test" frame.
+# to move to the "Editor Test" frame.
 #
 sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
-# Load the dojo spinner demo.
+# Load the editor test demo.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
