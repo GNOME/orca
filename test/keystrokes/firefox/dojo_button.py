@@ -89,7 +89,7 @@ sequence.append(WaitForFocus("Create", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Create",
-    ["BRAILLE LINE:  'Create Button View Button Create Button   Menu $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
+    ["BRAILLE LINE:  'Create Button View Button Create Button   Menu $l Edit!    $l Color   Save Button   Menu Disabled Button'",
      "     VISIBLE:  'Create Button View Button Create', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Create button'",
@@ -103,7 +103,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create", 
-    ["BRAILLE LINE:  'Create Button View Button Create Button   Menu $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
+    ["BRAILLE LINE:  'Create Button View Button Create Button   Menu $l Edit!    $l Color   Save Button   Menu Disabled Button'",
      "     VISIBLE:  'Create Button View Button Create', cursor=1",
      "SPEECH OUTPUT: 'Create'",
      "SPEECH OUTPUT: 'button'",
@@ -125,8 +125,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "Tab to drop down menu on Create", 
-    ["BRAILLE LINE:  'Create Button   Menu $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
-     "     VISIBLE:  '  Menu $l Edit! $l   $l $l Color', cursor=1",
+    ["BRAILLE LINE:  'Create Button   Menu $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '  Menu $l Edit!    $l Color   Sa', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '  menu'"]))
 
@@ -138,12 +138,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on drop down menu on Create", 
-    ["BRAILLE LINE:  'Create Button   Menu $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
-     "     VISIBLE:  '  Menu $l Edit! $l   $l $l Color', cursor=1",
+    ["BRAILLE LINE:  'Create Button   Menu $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '  Menu $l Edit!    $l Color   Sa', cursor=1",
      "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'save options'"]))
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Open the drop down menu.
@@ -201,8 +200,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Edit!", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Go to Edit!", 
-    ["BRAILLE LINE:  ' $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
-     "     VISIBLE:  ' $l Edit! $l   $l $l Color $l   ', cursor=0",
+    ["BUG? - Cursor position is wrong",
+     "BRAILLE LINE:  '<button> Button <input type='button'> Button Create Button View Button Create Button   Menu  $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit! menu'"]))
 
@@ -347,10 +347,11 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Edit!", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Close the Edit! menu", 
-    ["BRAILLE LINE:  'tooltip on buttonMenu Menu Menu Menu'",
+    ["BUG? - Cursor position is wrong",
+     "BRAILLE LINE:  'tooltip on buttonMenu Menu Menu Menu'",
      "     VISIBLE:  'Menu', cursor=1",
-     "BRAILLE LINE:  ' $l Edit! $l   $l $l Color $l   $lSave Button   Menu Disabled Button'",
-     "     VISIBLE:  ' $l Edit! $l   $l $l Color $l   ', cursor=0",
+     "BRAILLE LINE:  '<button> Button <input type='button'> Button Create Button View Button Create Button   Menu  $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
@@ -364,8 +365,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Color", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the Color button", 
-    ["BRAILLE LINE:  ' $l Color $l   $lSave Button   Menu Disabled Button'",
-     "     VISIBLE:  ' $l Color $l   $lSave Button   M', cursor=0",
+    ["BUG? - Cursor position is wrong",
+     "BRAILLE LINE:  '<button> Button <input type='button'> Button Create Button View Button Create Button   Menu  $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))
 
@@ -386,7 +388,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("lime", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Go to lime", 
-    ["BRAILLE LINE:  'lime Image green Image blue Image'",
+    ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'lime Image green Image blue Imag', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'lime'"]))
@@ -396,7 +398,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("green", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Go to green", 
-    ["BRAILLE LINE:  'green Image blue Image'",
+    ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'green Image blue Image', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'green'"]))
@@ -406,7 +408,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("blue", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Go to blue", 
-    ["BRAILLE LINE:  'blue Image'",
+    ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'blue Image', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blue'"]))
@@ -417,7 +419,7 @@ sequence.append(WaitForFocus("navy", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Go to navy", 
     ["BUG? - speaks 'not selected' apparently due to Down into a table cell",
-     "BRAILLE LINE:  'navy Image'",
+     "BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'navy Image', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'navy'",
@@ -429,7 +431,7 @@ sequence.append(WaitForFocus("fuchsia", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Goto fuchsia", 
     ["BUG? - speaks fuchsia twice when we left arrow to it due to focus and caret-moved",
-     "BRAILLE LINE:  'fuchsia Image navy Image'",
+     "BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'fuchsia Image navy Image', cursor=1",
      "BRAILLE LINE:  'fuchsia Image'",
      "     VISIBLE:  'fuchsia Image', cursor=0",
@@ -443,7 +445,7 @@ sequence.append(WaitForFocus("yellow", acc_role=pyatspi.ROLE_TABLE_CELL))
 sequence.append(utils.AssertPresentationAction(
     "Goto yellow", 
     ["BUG? - speaks yellow twice when we left arrow to it due to focus and caret-moved",
-     "BRAILLE LINE:  'yellow Image fuchsia Image navy Image'",
+     "BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'yellow Image fuchsia Image navy ', cursor=1",
      "BRAILLE LINE:  'yellow Image'",
      "     VISIBLE:  'yellow Image', cursor=0",
@@ -456,9 +458,11 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Color", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Close the Color menu", 
-    ["BRAILLE LINE:  '<button> <input type='button'> Button       Create    $l Edit!    $l Color   Save     '",
-     "     VISIBLE:  ' $l Color   Save     ', cursor=1",
-     "SPEECH OUTPUT: '<button> button <input type='button'> button Create button   menu Edit!   Color   Save button   menu'"]))
+    ["BUG? - Cursor position is wrong",
+     "BRAILLE LINE:  '<button> Button <input type='button'> Button Create Button View Button Create Button   Menu  $l Edit!    $l Color   Save Button   Menu Disabled Button'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=0",
+     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Color menu'"]))
 
 ########################################################################
 # Go to the unlabelled buttons
@@ -473,8 +477,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Rich Text Test!", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the first unlabelled button ('+')", 
-    ["BRAILLE LINE:  'Rich Text Test! Button $l   $lSave Button   Menu'",
-     "     VISIBLE:  'Rich Text Test! Button $l   $lSa', cursor=1",
+    ["BRAILLE LINE:  'Rich Text Test! Button $l   Save Button   Menu'",
+     "     VISIBLE:  'Rich Text Test! Button $l   Save', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Rich Text Test! button'"]))
 
@@ -483,8 +487,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Color", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the second unlabelled button ('Color')", 
-    ["BRAILLE LINE:  ' $l   $lSave Button   Menu'",
-     "     VISIBLE:  ' $l   $lSave Button   Menu', cursor=0",
+    ["BRAILLE LINE:  'Button  $l   Save Button   Menu'",
+     "     VISIBLE:  'Button  $l   Save Button   Menu', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))
 
@@ -493,8 +497,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the third unlabelled button ('Save')", 
-    ["BRAILLE LINE:  ' $l   $lSave Button   Menu'",
-     "     VISIBLE:  ' $l   $lSave Button   Menu', cursor=9",
+    ["BRAILLE LINE:  'Save Button   Menu'",
+     "     VISIBLE:  'Save Button   Menu', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Save button'"]))
 
@@ -503,8 +507,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("  ▼", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the down arrow button", 
-    ["BRAILLE LINE:  ' $l   $lSave Button   Menu'",
-     "     VISIBLE:  ' $l   $lSave Button   Menu', cursor=21",
+    ["BRAILLE LINE:  'Save Button   Menu'",
+     "     VISIBLE:  'Save Button   Menu', cursor=13",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '  menu'"]))
 

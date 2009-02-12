@@ -1,5 +1,8 @@
 2009-02-11  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * test/keystrokes/firefox/dojo_button.py:
+          Updated regression test.
+
         * src/orca/scripts/toolkits/Gecko/script.py:
           More work on bug #571058 - (ARIA) Orca's caret navigation is
           kicking in when it shouldn't be.
