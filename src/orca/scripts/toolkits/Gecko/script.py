@@ -1439,12 +1439,12 @@ class Script(default.Script):
                 # ignore of all caret-moved events.  See bug #539075 as an
                 # example.
                 #
-                orca.setLocusOfFocus(event, event.source, False)
                 if event.detail1 == 0 and not string in ["Left", "Home"] \
                    or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
                                           pyatspi.ROLE_LIST_ITEM,
                                           pyatspi.ROLE_MENU_ITEM,
-                                          pyatspi.ROLE_PUSH_BUTTON]:
+                                          pyatspi.ROLE_PUSH_BUTTON,
+                                          pyatspi.ROLE_TOGGLE_BUTTON]:
                     # A focus:/object:state-changed:focused event should
                     # pick up this case.
                     #
@@ -1456,6 +1456,12 @@ class Script(default.Script):
                     return
                 else:
                     self.setCaretContext(event.source, event.detail1)
+                    orca.setLocusOfFocus(event, event.source, False)
+
+            elif self.isAriaWidget(orca_state.locusOfFocus) \
+                 and self.isSameObject(event.source,
+                                       orca_state.locusOfFocus.parent):
+                return
 
             elif eventSourceInDocument and not self.inDocumentContent() \
                  and orca_state.locusOfFocus:
@@ -1476,7 +1482,7 @@ class Script(default.Script):
         # context and set the locusOfFocus so that the default script's
         # onCaretMoved will handle.
         #
-        if eventSourceInDocument and not self.isAriaWidget():
+        if eventSourceInDocument and not self.isAriaWidget(event.source):
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, event.detail1)
             self.setCaretContext(obj, characterOffset)
