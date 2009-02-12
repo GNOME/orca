@@ -2912,7 +2912,7 @@ class Script(default.Script):
         if obj and not obj.getState().contains(pyatspi.STATE_SHOWING):
             return True
 
-        attrs = self._getAttrDictionary(orca_state.locusOfFocus)
+        attrs = self._getAttrDictionary(obj)
         try:
             # ARIA landmark widgets
             import sets
