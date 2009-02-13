@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca TRUNK\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=general\n"
-"POT-Creation-Date: 2009-02-06 04:32+0000\n"
-"PO-Revision-Date: 2009-02-09 23:03+0930\n"
+"POT-Creation-Date: 2009-02-11 19:56+0000\n"
+"PO-Revision-Date: 2009-02-13 21:54+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -380,7 +380,6 @@ msgstr "Dòng dưới"
 #. When pressing the button, it instructs the braille display to freeze.
 #.
 #: ../src/orca/braille.py:196
-#| msgid "Tree"
 msgid "Freeze"
 msgstr "Đông đặc"
 
@@ -1235,7 +1234,6 @@ msgstr "dấu trích dẫn đơn phải"
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: ../src/orca/chnames.py:581
-#| msgid "left single quote"
 msgid "single low quote"
 msgstr "dấu trích dẫn dưới đơn"
 
@@ -1254,7 +1252,6 @@ msgstr "dấu trích dẫn đôi phải"
 #. Translators: this is the spoken word for the character '„' (U+201e)
 #.
 #: ../src/orca/chnames.py:593
-#| msgid "left double quote"
 msgid "double low quote"
 msgstr "dấu trích dẫn dưới đôi"
 
@@ -2222,8 +2219,8 @@ msgstr "Gửi lệnh kế tiếp cho ứng dụng hiện thời."
 #: ../src/orca/scripts/apps/soffice/script.py:1236
 #: ../src/orca/scripts/apps/soffice/script.py:2077
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5386
-#: ../src/orca/structural_navigation.py:3309
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5431
+#: ../src/orca/structural_navigation.py:3315
 #: ../src/orca/where_am_I.py:1617
 msgid "blank"
 msgstr "trắng"
@@ -2383,7 +2380,6 @@ msgstr "liên kết"
 #. interception of it.
 #.
 #: ../src/orca/default.py:4524
-#| msgid "Speech enabled."
 msgid "Bypass mode enabled."
 msgstr "Chế độ đi vòng đã bật."
 
@@ -2452,8 +2448,6 @@ msgstr "Ngữ cảnh là %s"
 #.
 #: ../src/orca/default.py:6345
 #, python-format
-#| msgid "%d %s character"
-#| msgid_plural "%d %s characters"
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "%(count)d %(repeatChar)s ký tự"
@@ -2608,7 +2602,7 @@ msgstr "Cuộn đến đỉnh"
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:352
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:600
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:618
 #: ../src/orca/speechgenerator.py:451
 #: ../src/orca/where_am_I.py:417
 #: ../src/orca/where_am_I.py:1381
@@ -2622,7 +2616,7 @@ msgstr "chọn một phần"
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:356
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:604
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:622
 #: ../src/orca/speechgenerator.py:455
 #: ../src/orca/speechgenerator.py:1009
 #: ../src/orca/where_am_I.py:421
@@ -2633,7 +2627,7 @@ msgstr "đã kiểm tra"
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:360
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:608
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:626
 #: ../src/orca/speechgenerator.py:459
 #: ../src/orca/where_am_I.py:425
 #: ../src/orca/where_am_I.py:1389
@@ -2664,7 +2658,7 @@ msgstr "chưa bấm"
 #. selected or not.
 #.
 #: ../src/orca/flat_review.py:379
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:544
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:562
 #: ../src/orca/speechgenerator.py:1201
 #: ../src/orca/where_am_I.py:223
 msgctxt "radiobutton"
@@ -2675,7 +2669,7 @@ msgstr "được chọn"
 #. selected or not.
 #.
 #: ../src/orca/flat_review.py:384
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:549
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:567
 #: ../src/orca/speechgenerator.py:1206
 #: ../src/orca/where_am_I.py:228
 msgctxt "radiobutton"
@@ -2930,7 +2924,6 @@ msgstr "xuống dòng"
 #. Translators: this is how someone would speak the name of the enter key
 #.
 #: ../src/orca/keynames.py:145
-#| msgid "Centered"
 msgid "enter"
 msgstr "enter"
 
@@ -2945,7 +2938,6 @@ msgstr "lên"
 #.
 #: ../src/orca/keynames.py:157
 #: ../src/orca/keynames.py:161
-#| msgid "on"
 msgid "down"
 msgstr "xuống"
 
@@ -2953,7 +2945,6 @@ msgstr "xuống"
 #.
 #: ../src/orca/keynames.py:165
 #: ../src/orca/keynames.py:169
-#| msgid "left alt"
 msgid "left"
 msgstr "trái"
 
@@ -2961,21 +2952,18 @@ msgstr "trái"
 #.
 #: ../src/orca/keynames.py:173
 #: ../src/orca/keynames.py:177
-#| msgid "copyright"
 msgid "right"
 msgstr "phải"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
 #: ../src/orca/keynames.py:181
-#| msgid "left paren"
 msgid "left super"
 msgstr "super trái"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
 #: ../src/orca/keynames.py:185
-#| msgid "right paren"
 msgid "right super"
 msgstr "super phải"
 
@@ -2997,7 +2985,6 @@ msgstr "chuyển ISO cấp 3"
 #. Translators: this is how someone would speak the name of the help key
 #.
 #: ../src/orca/keynames.py:197
-#| msgid "yelp"
 msgid "help"
 msgstr "trợ giúp"
 
@@ -3010,14 +2997,12 @@ msgstr "đa"
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
 #: ../src/orca/keynames.py:205
-#| msgid "same site"
 msgid "mode switch"
 msgstr "chuyển đổi chế độ"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: ../src/orca/keynames.py:209
-#| msgid "scpn"
 msgid "escape"
 msgstr "escape"
 
@@ -3025,7 +3010,6 @@ msgstr "escape"
 #.
 #: ../src/orca/keynames.py:213
 #: ../src/orca/keynames.py:217
-#| msgid "seprtr"
 msgid "insert"
 msgstr "chèn"
 
@@ -3033,7 +3017,6 @@ msgstr "chèn"
 #.
 #: ../src/orca/keynames.py:221
 #: ../src/orca/keynames.py:225
-#| msgid "_Delete"
 msgid "delete"
 msgstr "xoá"
 
@@ -3041,7 +3024,6 @@ msgstr "xoá"
 #.
 #: ../src/orca/keynames.py:229
 #: ../src/orca/keynames.py:233
-#| msgid "So_me"
 msgid "home"
 msgstr "home"
 
@@ -3049,7 +3031,6 @@ msgstr "home"
 #.
 #: ../src/orca/keynames.py:237
 #: ../src/orca/keynames.py:241
-#| msgid "and"
 msgid "end"
 msgstr "end"
 
@@ -3403,7 +3384,6 @@ msgstr "Bật bộ trình bày chữ nổi không? Nhập y (có) hay n (không)
 #. user logs in.
 #.
 #: ../src/orca/orca_console_prefs.py:470
-#| msgid "Do you want to logout now?  Enter y or n: "
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr "Tự động khởi chạy Orca khi bạn đăng nhập không? Gõ y hoặc n: "
 
@@ -4372,7 +4352,6 @@ msgid "Enable cross-hair cl_ip"
 msgstr "Bật trích chữ thậ_p"
 
 #: ../src/orca/orca-setup.glade.h:70
-#| msgid "Enable echo by _word"
 msgid "Enable echo by _sentence"
 msgstr "Bật phản hồi theo câ_u"
 
@@ -4550,7 +4529,6 @@ msgid "Show Orca _main window"
 msgstr "Hiện _cửa sổ Orca chính"
 
 #: ../src/orca/orca-setup.glade.h:127
-#| msgid "Speak object under mo_use"
 msgid "Spea_k object mnemonics"
 msgstr "Nói phím gọi nhớ _về đối tượng"
 
@@ -4572,7 +4550,6 @@ msgstr "Nói _hàng hiện có"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.glade.h:134
-#| msgid "Speak results during _find"
 msgid "Speak multicase strings as wor_ds"
 msgstr "Nói chuỗi đa từ th_eo từ"
 
@@ -4585,7 +4562,6 @@ msgid "Speak progress bar _updates"
 msgstr "Nói sự _cập nhật thanh tiến hành"
 
 #: ../src/orca/orca-setup.glade.h:137
-#| msgid "Speak messages from"
 msgid "Speak tutorial messages"
 msgstr "Nói thông điệp trợ lý"
 
@@ -4735,15 +4711,16 @@ msgstr "_Trên:"
 msgid "_Voice settings:"
 msgstr "Thiết lập giọng _nói:"
 
-#: ../src/orca/orca-setup.glade.h:177
+#. Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'.
+#: ../src/orca/orca-setup.glade.h:178
 msgid "every"
 msgstr "mọi"
 
-#: ../src/orca/orca-setup.glade.h:178
+#: ../src/orca/orca-setup.glade.h:179
 msgid "pixels"
 msgstr "điểm ảnh"
 
-#: ../src/orca/orca-setup.glade.h:179
+#: ../src/orca/orca-setup.glade.h:180
 msgid "seconds"
 msgstr "giây"
 
@@ -7184,20 +7161,20 @@ msgstr "Tùy chọn tìm"
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1802
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1808
 msgid "Loading.  Please wait."
 msgstr "Đang nạp. Vui lòng chờ."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1807
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1813
 #, python-format
 msgid "Finished loading %s."
 msgstr "Hoàn tất nạp %s."
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1813
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1819
 msgid "Finished loading."
 msgstr "Hoàn tất nạp."
 
@@ -7208,14 +7185,14 @@ msgstr "Hoàn tất nạp."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2275
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2281
 #, python-format
 msgid "h%d"
 msgstr "h%d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5933
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5978
 msgid "open"
 msgstr "mở"
 
@@ -7225,8 +7202,8 @@ msgstr "mở"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6006
-#: ../src/orca/structural_navigation.py:889
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6051
+#: ../src/orca/structural_navigation.py:883
 msgid "Wrapping to bottom."
 msgstr "Cuộn đến đáy."
 
@@ -7236,17 +7213,17 @@ msgstr "Cuộn đến đáy."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6074
-#: ../src/orca/structural_navigation.py:897
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6119
+#: ../src/orca/structural_navigation.py:891
 msgid "Wrapping to top."
 msgstr "Cuộn đến đỉnh."
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6100
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6124
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6134
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6145
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6169
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6179
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Hỗ trợ vùng động bị tắt"
@@ -7254,11 +7231,11 @@ msgstr "Hỗ trợ vùng động bị tắt"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6108
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6153
 msgid "Live regions monitoring on"
 msgstr "Theo dõi vùng động đã bật"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6115
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6160
 msgid "Live regions monitoring off"
 msgstr "Theo dõi vùng động bị tắt"
 
@@ -7269,7 +7246,7 @@ msgstr "Theo dõi vùng động bị tắt"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6150
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6195
 msgid "Gecko is controlling the caret."
 msgstr "Gecko đang điều khiển dấu mũ."
 
@@ -7280,29 +7257,35 @@ msgstr "Gecko đang điều khiển dấu mũ."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6162
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6207
 msgid "Orca is controlling the caret."
 msgstr "Orca đang điều khiển dấu mũ."
 
-#. Translators: this is in reference to a heading level
-#. in HTML (e.g., For <h3>, the level is 3).
+#. Translators: the %d is in reference to a heading
+#. level in HTML (e.g., For <h3>, the level is 3)
+#. and the %s is in reference to a previously
+#. translated rolename for the heading.  If you
+#. change the order of the %s and %d in the string
+#. (as needed for Hungarian, for example), Orca will
+#. detect it and do the right thing.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:89
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:93
 #, python-format
-msgid "level %d"
-msgstr "cấp %d"
+#| msgid "level %d"
+msgid "%s level %d"
+msgstr "%s cấp %d"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:371
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:389
 msgid "multi-select"
 msgstr "đa chọn"
 
 #. Translators: this represents a list in HTML.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:375
-#: ../src/orca/structural_navigation.py:2797
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:393
+#: ../src/orca/structural_navigation.py:2803
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -7387,7 +7370,6 @@ msgstr "chỉ đọc"
 #. to be presented on the braille display.
 #.
 #: ../src/orca/settings.py:665
-#| msgid "ordinal"
 msgctxt "text"
 msgid "rdonly"
 msgstr "chỉ_đọc"
@@ -7401,28 +7383,28 @@ msgstr "chỉ_đọc"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:975
+#: ../src/orca/settings.py:999
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:980
+#: ../src/orca/settings.py:1004
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:985
+#: ../src/orca/settings.py:1009
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:990
+#: ../src/orca/settings.py:1014
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
@@ -7430,7 +7412,7 @@ msgstr "[Ee]volution"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:996
+#: ../src/orca/settings.py:1020
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7438,7 +7420,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1002
+#: ../src/orca/settings.py:1026
 msgid "Bon Echo"
 msgstr "Phản hồi Bon"
 
@@ -7446,7 +7428,7 @@ msgstr "Phản hồi Bon"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1008
+#: ../src/orca/settings.py:1032
 msgid "Minefield"
 msgstr "Minefield"
 
@@ -7455,36 +7437,35 @@ msgstr "Minefield"
 #. version of Thunderbird, which chooses to now call itself by a different
 #. name.
 #.
-#: ../src/orca/settings.py:1028
-#| msgid "header"
+#: ../src/orca/settings.py:1052
 msgid "Shredder"
 msgstr "Shredder"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1033
+#: ../src/orca/settings.py:1057
 msgid "Mail/News"
 msgstr "Thư/Tin tức"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1038
+#: ../src/orca/settings.py:1062
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1043
+#: ../src/orca/settings.py:1067
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1048
+#: ../src/orca/settings.py:1072
 msgid "gaim"
 msgstr "gaim"
 
@@ -7494,9 +7475,8 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1193
-#: ../src/orca/settings.py:1201
-#| msgid "registered"
+#: ../src/orca/settings.py:1217
+#: ../src/orca/settings.py:1225
 msgid "required"
 msgstr "yêu cầu"
 
@@ -7555,7 +7535,7 @@ msgstr "tách rời"
 #. This feature needs to be toggle-able so that it does not
 #. interfere with normal writing functions.
 #.
-#: ../src/orca/structural_navigation.py:595
+#: ../src/orca/structural_navigation.py:589
 msgid "Toggles structural navigation keys."
 msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 
@@ -7569,7 +7549,7 @@ msgstr "Bật/tắt các phím duyệt qua kiểu cấu trúc."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:649
+#: ../src/orca/structural_navigation.py:643
 msgid "Structural navigation keys on."
 msgstr "Các phím duyệt qua kiểu cấu trúc đã bật."
 
@@ -7583,7 +7563,7 @@ msgstr "Các phím duyệt qua kiểu cấu trúc đã bật."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:661
+#: ../src/orca/structural_navigation.py:655
 msgid "Structural navigation keys off."
 msgstr "Các phím duyệt qua kiểu cấu trúc bị tắt."
 
@@ -7592,7 +7572,7 @@ msgstr "Các phím duyệt qua kiểu cấu trúc bị tắt."
 #. table navigation command but is not in a table, Orca speaks
 #. this message.
 #.
-#: ../src/orca/structural_navigation.py:701
+#: ../src/orca/structural_navigation.py:695
 msgid "Not in a table."
 msgstr "Không phải trong bảng."
 
@@ -7602,7 +7582,7 @@ msgstr "Không phải trong bảng."
 #. to move to the left of the current cell and is
 #. already in the first column.
 #.
-#: ../src/orca/structural_navigation.py:721
+#: ../src/orca/structural_navigation.py:715
 msgid "Beginning of row."
 msgstr "Đầu hàng."
 
@@ -7612,7 +7592,7 @@ msgstr "Đầu hàng."
 #. to move to the right of the current cell and is
 #. already in the last column.
 #.
-#: ../src/orca/structural_navigation.py:730
+#: ../src/orca/structural_navigation.py:724
 msgid "End of row."
 msgstr "Cuối hàng."
 
@@ -7622,7 +7602,7 @@ msgstr "Cuối hàng."
 #. to move to the cell above the current cell and is
 #. already in the first row.
 #.
-#: ../src/orca/structural_navigation.py:739
+#: ../src/orca/structural_navigation.py:733
 msgid "Top of column."
 msgstr "Đầu cột."
 
@@ -7632,7 +7612,7 @@ msgstr "Đầu cột."
 #. to move to the cell below the current cell and is
 #. already in the last row.
 #.
-#: ../src/orca/structural_navigation.py:748
+#: ../src/orca/structural_navigation.py:742
 msgid "Bottom of column."
 msgstr "Cuối cột."
 
@@ -7641,13 +7621,13 @@ msgstr "Cuối cột."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1332
+#: ../src/orca/structural_navigation.py:1326
 msgid "Non-uniform"
 msgstr "Không đều"
 
 #. Translators: this represents the number of rows in a table.
 #.
-#: ../src/orca/structural_navigation.py:1339
+#: ../src/orca/structural_navigation.py:1333
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -7655,7 +7635,7 @@ msgstr[0] "Bảng %d hàng"
 
 #. Translators: this represents the number of cols in a table.
 #.
-#: ../src/orca/structural_navigation.py:1344
+#: ../src/orca/structural_navigation.py:1338
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -7665,7 +7645,7 @@ msgstr[0] "%d cột"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1492
+#: ../src/orca/structural_navigation.py:1486
 #, python-format
 msgid "Cell spans %d rows and %d columns"
 msgstr "Ô theo %d hàng và %d cột"
@@ -7674,7 +7654,7 @@ msgstr "Ô theo %d hàng và %d cột"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1499
+#: ../src/orca/structural_navigation.py:1493
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Ô theo %d cột"
@@ -7683,7 +7663,7 @@ msgstr "Ô theo %d cột"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1505
+#: ../src/orca/structural_navigation.py:1499
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Ô theo %d hàng"
@@ -7691,16 +7671,14 @@ msgstr "Ô theo %d hàng"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1854
-#| msgid "Goes to previous word."
+#: ../src/orca/structural_navigation.py:1848
 msgid "Goes to previous anchor."
 msgstr "Nhảy về neo trước."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1859
-#| msgid "Goes to next word."
+#: ../src/orca/structural_navigation.py:1853
 msgid "Goes to next anchor."
 msgstr "Nhảy tới neo tiếp."
 
@@ -7709,22 +7687,21 @@ msgstr "Nhảy tới neo tiếp."
 #. that one can jump to. This stirng is what orca will say
 #. if there are no more anchors found.
 #.
-#: ../src/orca/structural_navigation.py:1916
-#| msgid "No more headings."
+#: ../src/orca/structural_navigation.py:1910
 msgid "No more anchors."
 msgstr "Không còn neo nào nữa."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1933
+#: ../src/orca/structural_navigation.py:1927
 msgid "Goes to previous blockquote."
 msgstr "Đi về khối trích dẫn trước."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1938
+#: ../src/orca/structural_navigation.py:1932
 msgid "Goes to next blockquote."
 msgstr "Đi tới khối trích dẫn kế tiếp."
 
@@ -7732,23 +7709,21 @@ msgstr "Đi tới khối trích dẫn kế tiếp."
 #. moving from blockquote to blockquote. This string is what
 #. Orca will say if there are no more blockquotes found.
 #.
-#: ../src/orca/structural_navigation.py:1998
+#: ../src/orca/structural_navigation.py:1992
 msgid "No more blockquotes."
 msgstr "Không còn khối trích dẫn nào nữa."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2015
-#| msgid "Goes to previous word."
+#: ../src/orca/structural_navigation.py:2009
 msgid "Goes to previous button."
 msgstr "Nhảy về nút trước."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2020
-#| msgid "Goes to next word."
+#: ../src/orca/structural_navigation.py:2014
 msgid "Goes to next button."
 msgstr "Nhảy tới nút tiếp."
 
@@ -7757,24 +7732,21 @@ msgstr "Nhảy tới nút tiếp."
 #. string is what Orca will say if there are no more buttons
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2077
-#| msgid "No more lists."
+#: ../src/orca/structural_navigation.py:2071
 msgid "No more buttons."
 msgstr "Không còn nút nào nữa."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2094
-#| msgid "Goes to previous character."
+#: ../src/orca/structural_navigation.py:2088
 msgid "Goes to previous check box."
 msgstr "Nhảy về hộp chọn trước."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2099
-#| msgid "Goes to next character."
+#: ../src/orca/structural_navigation.py:2093
 msgid "Goes to next check box."
 msgstr "Nhảy tới hộp chọn tiếp."
 
@@ -7783,8 +7755,7 @@ msgstr "Nhảy tới hộp chọn tiếp."
 #. string is what Orca will say if there are no more check
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2156
-#| msgid "No more blockquotes."
+#: ../src/orca/structural_navigation.py:2150
 msgid "No more check boxes."
 msgstr "Không còn hộp chọn nào nữa."
 
@@ -7792,7 +7763,7 @@ msgstr "Không còn hộp chọn nào nữa."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2174
+#: ../src/orca/structural_navigation.py:2168
 msgid "Goes to previous large object."
 msgstr "Đi về đối tượng lớn trước."
 
@@ -7800,7 +7771,7 @@ msgstr "Đi về đối tượng lớn trước."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2180
+#: ../src/orca/structural_navigation.py:2174
 msgid "Goes to next large object."
 msgstr "Đi tới đối tượng lớn kế tiếp."
 
@@ -7810,23 +7781,21 @@ msgstr "Đi tới đối tượng lớn kế tiếp."
 #. a list, a table, etc. This string is what Orca will say
 #. if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:2249
+#: ../src/orca/structural_navigation.py:2243
 msgid "No more large objects."
 msgstr "Không còn đối tượng lớn nào nữa."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2266
-#| msgid "Goes to previous word."
+#: ../src/orca/structural_navigation.py:2260
 msgid "Goes to previous combo box."
 msgstr "Nhảy về hộp tổ hợp trước."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2271
-#| msgid "Goes to next word."
+#: ../src/orca/structural_navigation.py:2265
 msgid "Goes to next combo box."
 msgstr "Nhảy tới hộp tổ hợp tiếp."
 
@@ -7835,24 +7804,21 @@ msgstr "Nhảy tới hộp tổ hợp tiếp."
 #. string is what Orca will say if there are no more combo
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2328
-#| msgid "No more blockquotes."
+#: ../src/orca/structural_navigation.py:2322
 msgid "No more combo boxes."
 msgstr "Không còn hộp tổ hợp nào nữa."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2345
-#| msgid "Goes to previous word."
+#: ../src/orca/structural_navigation.py:2339
 msgid "Goes to previous entry."
 msgstr "Nhảy về mục nhập trước."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2350
-#| msgid "Goes to next word."
+#: ../src/orca/structural_navigation.py:2344
 msgid "Goes to next entry."
 msgstr "Nhảy tới mục nhập tiếp."
 
@@ -7861,22 +7827,21 @@ msgstr "Nhảy tới mục nhập tiếp."
 #. string is what Orca will say if there are no more entries
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2416
-#| msgid "No more tables."
+#: ../src/orca/structural_navigation.py:2410
 msgid "No more entries."
 msgstr "Không còn mục nhập nào nữa."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2433
+#: ../src/orca/structural_navigation.py:2427
 msgid "Goes to previous form field."
 msgstr "Đi về trường mẫu trước."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2440
+#: ../src/orca/structural_navigation.py:2434
 msgid "Goes to next form field."
 msgstr "Đi tới trường mẫu kế tiếp."
 
@@ -7884,39 +7849,37 @@ msgstr "Đi tới trường mẫu kế tiếp."
 #. by moving from form field to form field. This string is
 #. what Orca will say if there are no more form fields found.
 #.
-#: ../src/orca/structural_navigation.py:2510
+#: ../src/orca/structural_navigation.py:2504
 msgid "No more form fields."
 msgstr "Không còn trường mẫu nào nữa."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2527
+#: ../src/orca/structural_navigation.py:2521
 msgid "Goes to previous heading."
 msgstr "Đi về tiêu đề trước đó."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2532
+#: ../src/orca/structural_navigation.py:2526
 msgid "Goes to next heading."
 msgstr "Đi tới tiêu đề kế tiếp."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2542
+#: ../src/orca/structural_navigation.py:2536
 #, python-format
-#| msgid "Goes to previous heading at level 1."
 msgid "Goes to previous heading at level %d."
 msgstr "Nhảy về tiêu đề trước ở cấp %d."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2549
+#: ../src/orca/structural_navigation.py:2543
 #, python-format
-#| msgid "Goes to next heading at level 1."
 msgid "Goes to next heading at level %d."
 msgstr "Nhảy tới tiêu đề tiếp ở cấp %d."
 
@@ -7925,7 +7888,7 @@ msgstr "Nhảy tới tiêu đề tiếp ở cấp %d."
 #. This string is what Orca will say if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2621
+#: ../src/orca/structural_navigation.py:2615
 msgid "No more headings."
 msgstr "Không còn tiêu đề nào nữa."
 
@@ -7934,7 +7897,7 @@ msgstr "Không còn tiêu đề nào nữa."
 #. (i.e. only <h1> or only <h2>, etc.) This string is
 #. what Orca will say if there are no more headings found.
 #.
-#: ../src/orca/structural_navigation.py:2628
+#: ../src/orca/structural_navigation.py:2622
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Không còn tiêu đầu nào nữa ở cấp %d."
@@ -7944,7 +7907,7 @@ msgstr "Không còn tiêu đầu nào nữa ở cấp %d."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2647
+#: ../src/orca/structural_navigation.py:2641
 msgid "Goes to previous landmark."
 msgstr "Đi về mốc trước đó."
 
@@ -7953,7 +7916,7 @@ msgstr "Đi về mốc trước đó."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2654
+#: ../src/orca/structural_navigation.py:2648
 msgid "Goes to next landmark."
 msgstr "Đi tới mốc kế tiếp."
 
@@ -7963,21 +7926,21 @@ msgstr "Đi tới mốc kế tiếp."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2716
+#: ../src/orca/structural_navigation.py:2722
 msgid "No landmark found."
 msgstr "Không tìm thấy."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2733
+#: ../src/orca/structural_navigation.py:2739
 msgid "Goes to previous list."
 msgstr "Đi về danh sách trước."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2738
+#: ../src/orca/structural_navigation.py:2744
 msgid "Goes to next list."
 msgstr "Đi tới danh sách kế tiếp."
 
@@ -7986,7 +7949,7 @@ msgstr "Đi tới danh sách kế tiếp."
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/structural_navigation.py:2812
+#: ../src/orca/structural_navigation.py:2818
 #, python-format
 msgid "Nesting level %d"
 msgstr "Cấp lồng nhau %d"
@@ -7995,21 +7958,21 @@ msgstr "Cấp lồng nhau %d"
 #. from bulleted/numbered list to bulleted/numbered list. This
 #. string is what Orca will say if there are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2821
+#: ../src/orca/structural_navigation.py:2827
 msgid "No more lists."
 msgstr "Không còn danh sách nào nữa."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2838
+#: ../src/orca/structural_navigation.py:2844
 msgid "Goes to previous list item."
 msgstr "Đi về mục danh sách trước."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2843
+#: ../src/orca/structural_navigation.py:2849
 msgid "Goes to next list item."
 msgstr "Đi tới mục danh sách kế tiếp."
 
@@ -8018,26 +7981,26 @@ msgstr "Đi tới mục danh sách kế tiếp."
 #. numbered list item.  This string is what Orca will say
 #. if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:2906
+#: ../src/orca/structural_navigation.py:2912
 msgid "No more list items."
 msgstr "Không còn mục danh sách nào nữa."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2922
+#: ../src/orca/structural_navigation.py:2928
 msgid "Goes to previous live region."
 msgstr "Đi về vùng động trước đó."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2926
+#: ../src/orca/structural_navigation.py:2932
 msgid "Goes to next live region."
 msgstr "Đi tới vùng động kế tiếp."
 
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
-#: ../src/orca/structural_navigation.py:2931
+#: ../src/orca/structural_navigation.py:2937
 msgid "Goes to last live region."
 msgstr "Đi tới vùng động cuối cùng."
 
@@ -8045,21 +8008,19 @@ msgstr "Đi tới vùng động cuối cùng."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:2980
+#: ../src/orca/structural_navigation.py:2986
 msgid "No more live regions."
 msgstr "Không có vùng động nào nữa."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:2996
-#| msgid "Goes to previous character."
+#: ../src/orca/structural_navigation.py:3002
 msgid "Goes to previous paragraph."
 msgstr "Nhảy về đoạn văn trước."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3000
-#| msgid "Goes to next character."
+#: ../src/orca/structural_navigation.py:3006
 msgid "Goes to next paragraph."
 msgstr "Nhảy tới đoạn văn tiếp."
 
@@ -8067,24 +8028,21 @@ msgstr "Nhảy tới đoạn văn tiếp."
 #. moving from paragraph to paragraph. This string is what
 #. Orca will say if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:3060
-#| msgid "No more headings."
+#: ../src/orca/structural_navigation.py:3066
 msgid "No more paragraphs."
 msgstr "Không còn đoạn văn nào nữa."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3077
-#| msgid "Goes to previous heading."
+#: ../src/orca/structural_navigation.py:3083
 msgid "Goes to previous radio button."
 msgstr "Nhảy về nút chọn một trước."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3082
-#| msgid "Goes to next heading."
+#: ../src/orca/structural_navigation.py:3088
 msgid "Goes to next radio button."
 msgstr "Nhảy tới nút chọn một tiếp."
 
@@ -8093,20 +8051,19 @@ msgstr "Nhảy tới nút chọn một tiếp."
 #. This string is what Orca will say if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3139
-#| msgid "No more headings."
+#: ../src/orca/structural_navigation.py:3145
 msgid "No more radio buttons."
 msgstr "Không còn nút chọn một nào nữa."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3155
+#: ../src/orca/structural_navigation.py:3161
 msgid "Goes to previous table."
 msgstr "Đi về bảng trước."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3159
+#: ../src/orca/structural_navigation.py:3165
 msgid "Goes to next table."
 msgstr "Đi tới bảng kế tiếp."
 
@@ -8114,50 +8071,50 @@ msgstr "Đi tới bảng kế tiếp."
 #. from table to table.  This string is what Orca will say if there
 #. are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3218
+#: ../src/orca/structural_navigation.py:3224
 msgid "No more tables."
 msgstr "Không còn bảng nào nữa."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3234
+#: ../src/orca/structural_navigation.py:3240
 msgid "Goes left one cell."
 msgstr "Chuyển bên trái theo một ô"
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3238
+#: ../src/orca/structural_navigation.py:3244
 msgid "Goes right one cell."
 msgstr "Chuyển bên phải theo một ô"
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3242
+#: ../src/orca/structural_navigation.py:3248
 msgid "Goes up one cell."
 msgstr "Chuyển bên trên theo một ô"
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3246
+#: ../src/orca/structural_navigation.py:3252
 msgid "Goes down one cell."
 msgstr "Chuyển bên dưới theo một ô"
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3250
+#: ../src/orca/structural_navigation.py:3256
 msgid "Goes to the first cell in a table."
 msgstr "Đi về ô đầu của bảng."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3254
+#: ../src/orca/structural_navigation.py:3260
 msgid "Goes to the last cell in a table."
 msgstr "Đi tới ô cuối của bảng."
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
-#: ../src/orca/structural_navigation.py:3316
+#: ../src/orca/structural_navigation.py:3322
 #, python-format
 msgid "Row %d, column %d."
 msgstr "Hàng %d, cột %d."
@@ -8165,14 +8122,14 @@ msgstr "Hàng %d, cột %d."
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3337
+#: ../src/orca/structural_navigation.py:3343
 msgid "Goes to previous unvisited link."
 msgstr "Đi về liên kết chưa thăm trước."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3342
+#: ../src/orca/structural_navigation.py:3348
 msgid "Goes to next unvisited link."
 msgstr "Đi tới liên kết chưa thăm kế tiếp."
 
@@ -8181,21 +8138,21 @@ msgstr "Đi tới liên kết chưa thăm kế tiếp."
 #. is what Orca will say if there are no more unvisited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3401
+#: ../src/orca/structural_navigation.py:3407
 msgid "No more unvisited links."
 msgstr "Không còn liên kết chưa thăm nào nữa."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3418
+#: ../src/orca/structural_navigation.py:3424
 msgid "Goes to previous visited link."
 msgstr "Đi về liên kết đã thăm trước."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3423
+#: ../src/orca/structural_navigation.py:3429
 msgid "Goes to next visited link."
 msgstr "Đi tới liên kết đã tham kế tiếp."
 
@@ -8204,7 +8161,7 @@ msgstr "Đi tới liên kết đã tham kế tiếp."
 #. what Orca will say if there are no more visited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3481
+#: ../src/orca/structural_navigation.py:3487
 msgid "No more visited links."
 msgstr "Không còn liên kết đã thăm nào nữa."
 
@@ -8246,7 +8203,6 @@ msgstr "chấm lên nền"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:85
-#| msgid "section"
 msgctxt "textattr"
 msgid "direction"
 msgstr "hướng"
@@ -8257,7 +8213,6 @@ msgstr "hướng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:92
-#| msgid "table"
 msgctxt "textattr"
 msgid "editable"
 msgstr "sửa được"
@@ -8277,7 +8232,6 @@ msgstr "họ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:105
-#| msgid "Border color:"
 msgctxt "textattr"
 msgid "foreground color"
 msgstr "màu cảnh gần"
@@ -8299,7 +8253,6 @@ msgstr "chấm lên cảnh gần"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:120
-#| msgid "not selected"
 msgctxt "textattr"
 msgid "font effect"
 msgstr "hiệu ứng phông chữ"
@@ -8310,7 +8263,6 @@ msgstr "hiệu ứng phông chữ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:127
-#| msgid "Find"
 msgctxt "textattr"
 msgid "indent"
 msgstr "thụt lề"
@@ -8320,7 +8272,6 @@ msgstr "thụt lề"
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
 #: ../src/orca/text_attribute_names.py:133
-#| msgid "invalid"
 msgctxt "textattr"
 msgid "invalid"
 msgstr "không hợp lệ"
@@ -8331,7 +8282,6 @@ msgstr "không hợp lệ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:140
-#| msgid "inaccessible"
 msgctxt "textattr"
 msgid "invisible"
 msgstr "vô hình"
@@ -8342,7 +8292,6 @@ msgstr "vô hình"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:147
-#| msgid "Notification %s"
 msgctxt "textattr"
 msgid "justification"
 msgstr "sắp thẳng"
@@ -8353,7 +8302,6 @@ msgstr "sắp thẳng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:154
-#| msgid "Flagged"
 msgctxt "textattr"
 msgid "language"
 msgstr "ngôn ngữ"
@@ -8363,7 +8311,6 @@ msgstr "ngôn ngữ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:160
-#| msgid "left paren"
 msgctxt "textattr"
 msgid "left margin"
 msgstr "lề bên trái"
@@ -8374,7 +8321,6 @@ msgstr "lề bên trái"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:167
-#| msgid "Line Right"
 msgctxt "textattr"
 msgid "line height"
 msgstr "bề cao dòng"
@@ -8388,7 +8334,6 @@ msgstr "bề cao dòng"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:177
-#| msgid "paragraph"
 msgctxt "textattr"
 msgid "paragraph style"
 msgstr "kiểu dáng đoạn văn"
@@ -8409,7 +8354,6 @@ msgstr "điểm ảnh bên trên dòng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:191
-#| msgid "Speak blank lines"
 msgctxt "textattr"
 msgid "pixels below lines"
 msgstr "điểm ảnh dưới dòng"
@@ -8430,7 +8374,6 @@ msgstr "điểm ảnh bên trong dòng cuộn"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:205
-#| msgid "right paren"
 msgctxt "textattr"
 msgid "right margin"
 msgstr "lề bên phải"
@@ -8441,7 +8384,6 @@ msgstr "lề bên phải"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:212
-#| msgid "prime"
 msgctxt "textattr"
 msgid "rise"
 msgstr "nâng"
@@ -8452,7 +8394,6 @@ msgstr "nâng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:219
-#| msgid "cale"
 msgctxt "textattr"
 msgid "scale"
 msgstr "tỷ lệ"
@@ -8462,7 +8403,6 @@ msgstr "tỷ lệ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:225
-#| msgid "slider"
 msgctxt "textattr"
 msgid "size"
 msgstr "kích cỡ"
@@ -8475,8 +8415,6 @@ msgstr "kích cỡ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:234
-#| msgctxt "option"
-#| msgid "speech"
 msgctxt "textattr"
 msgid "stretch"
 msgstr "giãn"
@@ -8498,7 +8436,6 @@ msgstr "gạch đè"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:249
-#| msgid "tilde"
 msgctxt "textattr"
 msgid "style"
 msgstr "kiểu dáng"
@@ -8521,7 +8458,6 @@ msgstr "trang trí chữ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:265
-#| msgid "C_urrent location"
 msgctxt "textattr"
 msgid "text rotation"
 msgstr "xoay chữ"
@@ -8542,7 +8478,6 @@ msgstr "bóng chữ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:279
-#| msgid "underline"
 msgctxt "textattr"
 msgid "underline"
 msgstr "gạch dưới"
@@ -8553,7 +8488,6 @@ msgstr "gạch dưới"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:286
-#| msgid "a ring"
 msgctxt "textattr"
 msgid "variant"
 msgstr "biến thể"
@@ -8564,7 +8498,6 @@ msgstr "biến thể"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:293
-#| msgid "vertical bar"
 msgctxt "textattr"
 msgid "vertical align"
 msgstr "canh lề thẳng đứng"
@@ -8575,7 +8508,6 @@ msgstr "canh lề thẳng đứng"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
 #: ../src/orca/text_attribute_names.py:300
-#| msgid "Line Right"
 msgctxt "textattr"
 msgid "weight"
 msgstr "độ đậm"
@@ -8598,7 +8530,6 @@ msgstr "chế độ cuộn"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:316
-#| msgid "Exiting learn mode."
 msgctxt "textattr"
 msgid "writing mode"
 msgstr "chế độ viết"
@@ -8616,7 +8547,6 @@ msgstr "chế độ viết"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:332
-#| msgid "tre"
 msgctxt "textattr"
 msgid "true"
 msgstr "đúng"
@@ -8628,7 +8558,6 @@ msgstr "đúng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:340
-#| msgid "faster."
 msgctxt "textattr"
 msgid "false"
 msgstr "sai"
@@ -8641,7 +8570,6 @@ msgstr "sai"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:349
-#| msgid "None"
 msgctxt "textattr"
 msgid "none"
 msgstr "không có"
@@ -8652,7 +8580,6 @@ msgstr "không có"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:356
-#| msgid "e grave"
 msgctxt "textattr"
 msgid "engrave"
 msgstr "khắc"
@@ -8663,7 +8590,6 @@ msgstr "khắc"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:363
-#| msgid "emb"
 msgctxt "textattr"
 msgid "emboss"
 msgstr "chạm nổi"
@@ -8674,7 +8600,6 @@ msgstr "chạm nổi"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:370
-#| msgid "underline"
 msgctxt "textattr"
 msgid "outline"
 msgstr "nét ngoài"
@@ -8685,7 +8610,6 @@ msgstr "nét ngoài"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:377
-#| msgid "underline"
 msgctxt "textattr"
 msgid "overline"
 msgstr "gạch trên"
@@ -8706,7 +8630,6 @@ msgstr "gạch qua"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:391
-#| msgid "link"
 msgctxt "textattr"
 msgid "blink"
 msgstr "nháy"
@@ -8717,7 +8640,6 @@ msgstr "nháy"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:398
-#| msgid "blank"
 msgctxt "textattr"
 msgid "black"
 msgstr "đen"
@@ -8728,7 +8650,6 @@ msgstr "đen"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:405
-#| msgid "Line"
 msgctxt "textattr"
 msgid "single"
 msgstr "đơn"
@@ -8739,7 +8660,6 @@ msgstr "đơn"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:412
-#| msgid "double prime"
 msgctxt "textattr"
 msgid "double"
 msgstr "đôi"
@@ -8750,7 +8670,6 @@ msgstr "đôi"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:419
-#| msgid "lower."
 msgctxt "textattr"
 msgid "low"
 msgstr "thấp"
@@ -8761,7 +8680,6 @@ msgstr "thấp"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:426
-#| msgid "caret"
 msgctxt "textattr"
 msgid "char"
 msgstr "ký tự"
@@ -8772,7 +8690,6 @@ msgstr "ký tự"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:433
-#| msgid "Password"
 msgctxt "textattr"
 msgid "word"
 msgstr "từ"
@@ -8783,7 +8700,6 @@ msgstr "từ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:440
-#| msgid "flr"
 msgctxt "textattr"
 msgid "ltr"
 msgstr "ltr"
@@ -8794,7 +8710,6 @@ msgstr "ltr"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:447
-#| msgid "trtbl"
 msgctxt "textattr"
 msgid "rtl"
 msgstr "rtl"
@@ -8805,7 +8720,6 @@ msgstr "rtl"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:454
-#| msgid "left alt"
 msgctxt "textattr"
 msgid "left"
 msgstr "trái"
@@ -8816,7 +8730,6 @@ msgstr "trái"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:461
-#| msgid "copyright"
 msgctxt "textattr"
 msgid "right"
 msgstr "phải"
@@ -8827,7 +8740,6 @@ msgstr "phải"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:468
-#| msgid "cents"
 msgctxt "textattr"
 msgid "center"
 msgstr "giữa"
@@ -8837,7 +8749,6 @@ msgstr "giữa"
 #. be explicitly set, they report a justification of "start".
 #.
 #: ../src/orca/text_attribute_names.py:474
-#| msgid "Notification %s"
 msgctxt "textattr"
 msgid "no justification"
 msgstr "không sắp thẳng"
@@ -8848,7 +8759,6 @@ msgstr "không sắp thẳng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:481
-#| msgid "filler"
 msgctxt "textattr"
 msgid "fill"
 msgstr "tô đầy"
@@ -8869,7 +8779,6 @@ msgstr "rất hẹp"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:495
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "extra condensed"
 msgstr "rất hẹp"
@@ -8880,7 +8789,6 @@ msgstr "rất hẹp"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:502
-#| msgid "seconds"
 msgctxt "textattr"
 msgid "condensed"
 msgstr "hẹp"
@@ -8891,7 +8799,6 @@ msgstr "hẹp"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:509
-#| msgid "seconds"
 msgctxt "textattr"
 msgid "semi condensed"
 msgstr "bán hẹp"
@@ -8902,7 +8809,6 @@ msgstr "bán hẹp"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:516
-#| msgid "ordinal"
 msgctxt "textattr"
 msgid "normal"
 msgstr "chuẩn"
@@ -8913,7 +8819,6 @@ msgstr "chuẩn"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:523
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "semi expanded"
 msgstr "bán mở rộng"
@@ -8924,7 +8829,6 @@ msgstr "bán mở rộng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:530
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "expanded"
 msgstr "mở rộng"
@@ -8935,7 +8839,6 @@ msgstr "mở rộng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:537
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "extra expanded"
 msgstr "rất mở rộng"
@@ -8946,7 +8849,6 @@ msgstr "rất mở rộng"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:544
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "ultra expanded"
 msgstr "cực mở rộng"
@@ -8977,7 +8879,6 @@ msgstr "xiên"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:565
-#| msgid "invalid"
 msgctxt "textattr"
 msgid "italic"
 msgstr "nghiêng"
@@ -8988,7 +8889,6 @@ msgstr "nghiêng"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:572
-#| msgid "Default"
 msgctxt "textattr"
 msgid "Default"
 msgstr "Mặc định"
@@ -8999,7 +8899,6 @@ msgstr "Mặc định"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:579
-#| msgid "Text"
 msgctxt "textattr"
 msgid "Text body"
 msgstr "Thân văn bản"
@@ -9010,7 +8909,6 @@ msgstr "Thân văn bản"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:586
-#| msgid "Heading"
 msgctxt "textattr"
 msgid "Heading"
 msgstr "Tiêu đề"
@@ -9022,7 +8920,6 @@ msgstr "Tiêu đề"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:594
-#| msgid "newline"
 msgctxt "textattr"
 msgid "baseline"
 msgstr "đường cơ bản"
@@ -9043,7 +8940,6 @@ msgstr "dưới"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:608
-#| msgid "Super"
 msgctxt "textattr"
 msgid "super"
 msgstr "siêu"
@@ -9054,7 +8950,6 @@ msgstr "siêu"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:615
-#| msgid "Stop"
 msgctxt "textattr"
 msgid "top"
 msgstr "trên"
@@ -9065,7 +8960,6 @@ msgstr "trên"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:622
-#| msgid "text"
 msgctxt "textattr"
 msgid "text-top"
 msgstr "trên văn bản"
@@ -9076,7 +8970,6 @@ msgstr "trên văn bản"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:629
-#| msgid "middle dot"
 msgctxt "textattr"
 msgid "middle"
 msgstr "giữa"
@@ -9087,7 +8980,6 @@ msgstr "giữa"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:636
-#| msgid "_Bottom:"
 msgctxt "textattr"
 msgid "bottom"
 msgstr "dưới"
@@ -9098,7 +8990,6 @@ msgstr "dưới"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:643
-#| msgid "Move to _bottom"
 msgctxt "textattr"
 msgid "text-bottom"
 msgstr "dưới văn bản"
@@ -9120,7 +9011,6 @@ msgstr "kế thừa"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:658
-#| msgid "alrt"
 msgctxt "textattr"
 msgid "lr-tb"
 msgstr "lr-tb"
@@ -9131,7 +9021,6 @@ msgstr "lr-tb"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:665
-#| msgid "trtbl"
 msgctxt "textattr"
 msgid "rl-tb"
 msgstr "rl-tb"
@@ -9142,7 +9031,6 @@ msgstr "rl-tb"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:672
-#| msgid "tbl"
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "tb-rl"
@@ -9153,7 +9041,6 @@ msgstr "tb-rl"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:679
-#| msgid "tbl"
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "tb-lr"
@@ -9164,7 +9051,6 @@ msgstr "tb-lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:686
-#| msgid "Ctrl"
 msgctxt "textattr"
 msgid "bt-rl"
 msgstr "bt-rl"
@@ -9185,7 +9071,6 @@ msgstr "bt-lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:700
-#| msgid "flr"
 msgctxt "textattr"
 msgid "lr"
 msgstr "lr"
@@ -9196,7 +9081,6 @@ msgstr "lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:707
-#| msgid "Ctrl"
 msgctxt "textattr"
 msgid "rl"
 msgstr "rl"
@@ -9207,7 +9091,6 @@ msgstr "rl"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:714
-#| msgid "tab"
 msgctxt "textattr"
 msgid "tb"
 msgstr "tb"
@@ -9216,7 +9099,6 @@ msgstr "tb"
 #. text attributes: "strikethrough." It refers to the line style.
 #.
 #: ../src/orca/text_attribute_names.py:719
-#| msgid "slider"
 msgctxt "textattr"
 msgid "solid"
 msgstr "đặc"
@@ -9227,7 +9109,6 @@ msgstr "đặc"
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
 #: ../src/orca/text_attribute_names.py:726
-#| msgid "spin"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "chính tả"
