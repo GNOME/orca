@@ -1340,18 +1340,24 @@ class Script(default.Script):
                     #
                     return
 
-            elif self.isAriaWidget(event.source):
+            elif self.isAriaWidget(event.source) \
+                 or self.isAriaWidget(event.source.parent):
+                # If it's not focusable, it's bogus.
+                #
+                if not eventSourceState.contains(pyatspi.STATE_FOCUSABLE):
+                    return
+
                 # Sometimes we get extra caret-moved events. See bug #471878
                 # and Mozilla bug #394318. However, we cannot do a blanket
                 # ignore of all caret-moved events.  See bug #539075 as an
                 # example.
                 #
-                orca.setLocusOfFocus(event, event.source, False)
                 if event.detail1 == 0 and not string in ["Left", "Home"] \
                    or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
                                           pyatspi.ROLE_LIST_ITEM,
                                           pyatspi.ROLE_MENU_ITEM,
-                                          pyatspi.ROLE_PUSH_BUTTON]:
+                                          pyatspi.ROLE_PUSH_BUTTON,
+                                          pyatspi.ROLE_TOGGLE_BUTTON]:
                     # A focus:/object:state-changed:focused event should
                     # pick up this case.
                     #
@@ -1363,6 +1369,12 @@ class Script(default.Script):
                     return
                 else:
                     self.setCaretContext(event.source, event.detail1)
+                    orca.setLocusOfFocus(event, event.source, False)
+
+            elif self.isAriaWidget(orca_state.locusOfFocus) \
+                 and self.isSameObject(event.source,
+                                       orca_state.locusOfFocus.parent):
+                return
 
             elif eventSourceInDocument and not self.inDocumentContent() \
                  and orca_state.locusOfFocus:
@@ -1383,7 +1395,7 @@ class Script(default.Script):
         # context and set the locusOfFocus so that the default script's
         # onCaretMoved will handle.
         #
-        if eventSourceInDocument and not self.isAriaWidget():
+        if eventSourceInDocument and not self.isAriaWidget(event.source):
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, event.detail1)
             self.setCaretContext(obj, characterOffset)
@@ -1582,7 +1594,7 @@ class Script(default.Script):
 
         elif eventSourceRole != pyatspi.ROLE_LINK \
              and self.inDocumentContent(event.source) \
-             and not self.isAriaWidget():
+             and not self.isAriaWidget(event.source):
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, 0)
             self.setCaretContext(obj, characterOffset)
@@ -2824,7 +2836,7 @@ class Script(default.Script):
         if obj and not obj.getState().contains(pyatspi.STATE_SHOWING):
             return True
 
-        attrs = self._getAttrDictionary(orca_state.locusOfFocus)
+        attrs = self._getAttrDictionary(obj)
         try:
             # ARIA landmark widgets
             import sets
@@ -2842,9 +2854,11 @@ class Script(default.Script):
                                    pyatspi.ROLE_LINK,
                                    pyatspi.ROLE_ALERT]:
                 return obj.parent.getRole() != pyatspi.ROLE_COMBO_BOX
-            # All other ARIA widgets
+            # All other ARIA widgets we will assume are navigable if
+            # they are not focusable.
+            #
             else:
-                return False
+                return not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
         except (KeyError, TypeError):
             return True
 

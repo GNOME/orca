@@ -1,6 +1,10 @@
 2009-02-13  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
+          Work on bug #571058 - (ARIA) Orca's caret navigation is kicking
+          in when it shouldn't be.
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/bug_568768.py: (new)
           test/keystrokes/firefox/bug_552887a.py:
           Fix for bug #568768 - Orca starts at the top of a newly-loaded
