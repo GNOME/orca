@@ -31,9 +31,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  ''",
+    ["BUG? - In this test, the text is extremely small and probably appears to be on the same line, so we're speaking more than we should be",
+     "BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: '",
+     " Line 1",
+     "'"]))
 
 ########################################################################
 # Down Arrow to the bottom.
