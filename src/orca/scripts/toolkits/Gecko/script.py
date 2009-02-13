@@ -1589,7 +1589,18 @@ class Script(default.Script):
             if not self.isSameObject(event.source, obj):
                 if not self.isSameObject(obj, orca_state.locusOfFocus):
                     orca.setLocusOfFocus(event, obj, False)
-                    self.presentLine(obj, characterOffset)
+                    # If an alert got focus, let's do the best we can to 
+                    # try to automatically speak its contents while also
+                    # making sure the locus of focus and caret context
+                    # are in the right spot for braille and caret navigation.
+                    # http://bugzilla.gnome.org/show_bug.cgi?id=570551
+                    #
+                    if eventSourceRole == pyatspi.ROLE_ALERT:
+                        speech.speakUtterances(\
+                            self.speechGenerator.getSpeech(event.source, False))
+                        self.updateBraille(obj)
+                    else:
+                        self.presentLine(obj, characterOffset)
                 return
 
         default.Script.onFocus(self, event)

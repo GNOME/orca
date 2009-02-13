@@ -90,6 +90,27 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+    def _getSpeechForAlert(self, obj, already_focused):
+        """Gets the speech for an alert.  What we do here is first try
+        to see if the alert contains text via embedded object characters.
+        If it does, we speak that text.  If it doesn't, we defer to the
+        super class.  The prototype alert we're shooting for is the one
+        from http://bugzilla.gnome.org/show_bug.cgi?id=570551
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        text = self._script.expandEOCs(obj)
+        if text:
+            return [text]
+        else:
+            return speechgenerator.SpeechGenerator.\
+                       _getSpeechForAlert(self, obj, already_focused)
+
     def _getSpeechForDocumentFrame(self, obj, already_focused):
         """Gets the speech for a document frame.
 
