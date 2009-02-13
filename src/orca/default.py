@@ -2201,29 +2201,35 @@ class Script(script.Script):
 
         spaceCount = 0
         tabCount = 0
-        for offset in range(0, len(line)):
-            if line[offset] == ' ':
-                spaceCount += 1
-            elif line[offset] == '\t':
-                tabCount += 1
-            else:
-                break
-
         utterance = ""
-        if spaceCount:
-            # Translators: this is the number of space characters on a line
-            # of text.
-            #
-            utterance += ngettext("%d space",
-                                  "%d spaces",
-                                  spaceCount) % spaceCount + " "
-        if tabCount:
-            # Translators: this is the number of tab characters on a line
-            # of text.
-            #
-            utterance += ngettext("%d tab",
-                                  "%d tabs",
-                                  tabCount) % tabCount + " "
+        offset = 0
+        while True:
+            while line[offset] == ' ':
+                spaceCount += 1
+                offset += 1
+            if spaceCount:
+                # Translators: this is the number of space characters on a line
+                # of text.
+                #
+                utterance += ngettext("%d space",
+                                      "%d spaces",
+                                      spaceCount) % spaceCount + " "
+
+            while line[offset] == '\t':
+                tabCount += 1
+                offset += 1
+
+            if tabCount:
+                # Translators: this is the number of tab characters on a line
+                # of text.
+                #
+                utterance += ngettext("%d tab",
+                                      "%d tabs",
+                                      tabCount) % tabCount + " "
+            if not (spaceCount  or tabCount):
+                break
+            spaceCount  = tabCount = 0
+
         if len(utterance):
             speech.speak(utterance)
 
