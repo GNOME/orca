@@ -19,7 +19,6 @@
 
 
 from orca.orca_i18n import _           # for gettext support
-from orca.orca_i18n import Q_          # to provide qualified translatable strings
 
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
