@@ -214,8 +214,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move to button", 
-    ["BRAILLE LINE:  'Disable previous slider Button'",
-     "     VISIBLE:  'Disable previous slider Button', cursor=1",
+    ["BRAILLE LINE:  'Disable previous slider Button Enable previous slider Button'",
+     "     VISIBLE:  'Disable previous slider Button E', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Disable previous slider button'"]))
      

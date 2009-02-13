@@ -60,8 +60,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to View", 
-    ["BRAILLE LINE:  'Edit View'",
-     "     VISIBLE:  'Edit View', cursor=6",
+    ["BRAILLE LINE:  'View'",
+     "     VISIBLE:  'View', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View'"]))
     
@@ -84,10 +84,10 @@ sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
-    ["BRAILLE LINE:  'Basic Grey'",
-     "     VISIBLE:  'Basic Grey', cursor=(0|1)",
-     "BRAILLE LINE:  'Basic Grey'",
-     "     VISIBLE:  'Basic Grey', cursor=1",
+    ["BRAILLE LINE:  'Themes          >'",
+     "     VISIBLE:  'Themes          >', cursor=(0|1)",
+     "BRAILLE LINE:  'Themes          > Basic Grey'",
+     "     VISIBLE:  'Themes          > Basic Grey', cursor=19",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
@@ -170,10 +170,11 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
-    ["BRAILLE LINE:  'one'",
-     "     VISIBLE:  'one', cursor=(0|1)",
-     "BRAILLE LINE:  'one'",
-     "     VISIBLE:  'one', cursor=1",
+    ["KNOWN ISSUE - Depenind on timing, we sometimes just display one rather than More",
+     "BRAILLE LINE:  'More                >'",
+     "     VISIBLE:  'More                >', cursor=(0|1)",
+     "BRAILLE LINE:  'More                > one'",
+     "     VISIBLE:  'More                > one', cursor=23",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
@@ -193,8 +194,8 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "leave menu", 
     ["BUG? - Focus is being given back to the table, but should we be saying more here?",
-     "BRAILLE LINE:  'Entry # Date Expense Amount Merchant Type'",
-     "     VISIBLE:  'Entry # Date Expense Amount Merc', cursor=8",
+     "BRAILLE LINE:  'Entry # ColumnHeader Date ColumnHeader Expense ColumnHeader Amount ColumnHeader Merchant ColumnHeader Type ColumnHeader'",
+     "     VISIBLE:  'Entry # ColumnHeader Date Column', cursor=0",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'"]))
 

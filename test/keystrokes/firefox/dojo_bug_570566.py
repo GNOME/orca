@@ -60,14 +60,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
-    ["BRAILLE LINE:  'Created from div h2'",
-     "     VISIBLE:  'Created from div h2', cursor=1",
-     "SPEECH OUTPUT: 'Created from div heading level 2'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "3. Up Arrow", 
     ["BRAILLE LINE:  'Editor + Plugins Test h1'",
      "     VISIBLE:  'Editor + Plugins Test h1', cursor=1",
      "SPEECH OUTPUT: 'Editor + Plugins Test heading level 1'"]))
@@ -75,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "4. Up Arrow", 
+    "3. Up Arrow", 
     ["BUG? - The braille is not ideal, nor does it jive with the speech.",
      "BRAILLE LINE:  '<x> CheckBox<x> CheckBox<x> CheckBox<x> CheckBox<x> CheckBox'",
      "     VISIBLE:  '', cursor=1",
@@ -84,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Up Arrow", 
+    "4. Up Arrow", 
     ["BRAILLE LINE:  'Focus:<x> CheckBox Value:<x> CheckBox Change:<x> CheckBox Blur:<x> CheckBox Disabled:<x> CheckBox'",
      "     VISIBLE:  'Focus:<x> CheckBox Value:<x> Che', cursor=1",
      "SPEECH OUTPUT: 'Focus: check box checked grayed  Value: check box checked grayed  Change: check box checked grayed  Blur: check box checked grayed  Disabled: check box checked grayed  ",
@@ -93,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Up Arrow", 
+    "5. Up Arrow", 
     ["BRAILLE LINE:  'Automated Test - all check boxes should be checked'",
      "     VISIBLE:  'Automated Test - all check boxes', cursor=1",
      "SPEECH OUTPUT: 'Automated Test - all check boxes should be checked'"]))

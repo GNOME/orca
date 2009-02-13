@@ -29,9 +29,13 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(WaitForFocus("First tab"))
 sequence.append(utils.AssertPresentationAction(
     "Space to press the Show TabContainer Dialog", 
-    ["BUG? - A dialog has appeared. Shouldn't we say something?"]))
+    ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
+     "     VISIBLE:  'First tab Page Image Second tab ', cursor=1",
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
+     "SPEECH OUTPUT: 'First tab page'"]))
 
 ########################################################################
 # Right Arrow to the Second tab page
@@ -65,6 +69,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
+    ["BUG? - We're quiet here."]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "2. Down Arrow", 
     ["BRAILLE LINE:  'Make it overflow. ipsum dolor sit amet, consectetuer adipiscing elit.'",
      "     VISIBLE:  'Make it overflow. ipsum dolor si', cursor=1",
      "SPEECH OUTPUT: 'Make it overflow. ipsum dolor sit amet link , consectetuer adipiscing elit.'"]))
@@ -72,7 +82,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "2. Down Arrow", 
+    "3. Down Arrow", 
     ["BRAILLE LINE:  'Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'",
      "     VISIBLE:  'Aenean semper sagittis velit. Cr', cursor=1",
      "SPEECH OUTPUT: 'Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'"]))
@@ -80,7 +90,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "3. Down Arrow", 
+    "4. Down Arrow", 
     ["BRAILLE LINE:  'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'",
      "     VISIBLE:  'ligula. Proin porta rutrum lacus', cursor=1",
      "SPEECH OUTPUT: 'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'"]))
@@ -88,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "4. Down Arrow", 
+    "5. Down Arrow", 
     ["BRAILLE LINE:  'quam. Nulla facilisi. Maecenas luctus venenatis nulla. In sit amet'",
      "     VISIBLE:  'quam. Nulla facilisi. Maecenas l', cursor=1",
      "SPEECH OUTPUT: 'quam. Nulla facilisi. Maecenas luctus venenatis nulla. In sit amet'"]))
@@ -96,7 +106,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Down Arrow", 
+    "6. Down Arrow", 
     ["BRAILLE LINE:  'dui non mi semper iaculis. Sed molestie tortor at ipsum. Morbi'",
      "     VISIBLE:  'dui non mi semper iaculis. Sed m', cursor=1",
      "SPEECH OUTPUT: 'dui non mi semper iaculis. Sed molestie tortor at ipsum. Morbi'"]))

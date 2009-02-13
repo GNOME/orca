@@ -29,7 +29,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
-    ["BUG? - Not presenting the first line in the panel"]))
+    ["BUG? - Not presenting anything for the initial arrow"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -158,17 +158,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Up Arrow", 
-    ["BRAILLE LINE:  'Panel 0'",
-     "     VISIBLE:  'Panel 0', cursor=1",
-     "SPEECH OUTPUT: 'Panel 0 scroll pane'"]))
+    ["BRAILLE LINE:  'Tab Zero Page'",
+     "     VISIBLE:  'Tab Zero Page', cursor=1",
+     "SPEECH OUTPUT: 'Tab Zero scroll pane'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Up Arrow", 
-    ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
-     "     VISIBLE:  'Tab Zero Page Tab One Page Tab T', cursor=1",
-     "SPEECH OUTPUT: 'Tab Zero page Tab One page Tab Two page Tab Three page Tab Four page'"]))
+    ["BUG? - Not presenting anything for the final arrow"]))
 
 ########################################################################
 # Close the demo

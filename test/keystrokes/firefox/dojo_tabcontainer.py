@@ -63,7 +63,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
-    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Tab 3 Page'",
+    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Tab 3 Page Inlined Sub TabContai', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
@@ -74,7 +74,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
-    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page Inlined Sub TabContainer Page'",
+    ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))

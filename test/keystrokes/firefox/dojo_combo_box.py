@@ -38,9 +38,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the first combo box", 
-    ["BUG? - Too verbose. This is true for all of the assertions, but I'm only marking it here.",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
+    ["BRAILLE LINE:  '  US State test 1 California $l'",
+     "     VISIBLE:  '  US State test 1 California $l', cursor=0",
      "SPEECH OUTPUT: 'US State test 1 combo box'",
      "SPEECH OUTPUT: 'US State test 1 text California selected'"]))
 
@@ -51,12 +50,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("C"))
 sequence.append(utils.AssertPresentationAction(
     "Replace existing text with a 'C'", 
-    ["BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
+    ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes.",
+     "BRAILLE LINE:  '  US State test 1 California $l'",
+     "     VISIBLE:  '  US State test 1 California $l', cursor=0",
+     "BRAILLE LINE:  '  US State test 1 C $l'",
+     "     VISIBLE:  '  US State test 1 C $l', cursor=0",
      "SPEECH OUTPUT: '• California• Colorado• Connecticut'"]))
 
 ########################################################################
@@ -67,64 +65,39 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
-    ["BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
+    ["BRAILLE LINE:  '  US State test 1 C $l'",
+     "     VISIBLE:  '  US State test 1 C $l', cursor=0",
      "BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '• California'",
-     "SPEECH OUTPUT: 'California'"]))
+     "SPEECH OUTPUT: '• California'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
-    ["BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
-     "BRAILLE LINE:  '• Colorado'",
+    ["BRAILLE LINE:  '• Colorado'",
      "     VISIBLE:  '• Colorado', cursor=1",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '• Colorado'",
-     "SPEECH OUTPUT: 'Colorado'"]))
+     "SPEECH OUTPUT: '• Colorado'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow", 
-    ["BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 (200% Courier font):   US State test 1 Connecticut $l'",
-     "     VISIBLE:  'US State test 1 Connecticut $l', cursor=28",
-     "BRAILLE LINE:  '• Connecticut'",
+    ["BRAILLE LINE:  '• Connecticut'",
      "     VISIBLE:  '• Connecticut', cursor=1",
-     "BRAILLE LINE:  'US State test 1 Connecticut $l'",
-     "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '• Connecticut'",
-     "SPEECH OUTPUT: 'Connecticut'"]))
+     "SPEECH OUTPUT: '• Connecticut'"]))
 
+# Note that not saying anything here is correct because we're already at
+# the end of the expanded combo box thus pressing Down doesn't move us.
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow", 
-    ["BRAILLE LINE:  'US State test 1 Connecticut $l'",
-     "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 Connecticut $l'",
-     "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0"]))
+    [""]))
 
 ########################################################################
 # Up Arrow amongst the newly-displayed items. One should not be able
@@ -134,73 +107,27 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
-    ["BRAILLE LINE:  'US State test 1 Connecticut $l'",
-     "     VISIBLE:  'US State test 1 Connecticut $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
-     "BRAILLE LINE:  '• Colorado'",
+    ["BRAILLE LINE:  '• Colorado'",
      "     VISIBLE:  '• Colorado', cursor=1",
-     "BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '• Colorado'",
-     "SPEECH OUTPUT: 'Colorado'"]))
+     "SPEECH OUTPUT: '• Colorado'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
-    ["BRAILLE LINE:  'US State test 1 Colorado $l'",
-     "     VISIBLE:  'US State test 1 Colorado $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 (200% Courier font):   US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=27",
-     "BRAILLE LINE:  '• California'",
+    ["BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '• California'",
-     "SPEECH OUTPUT: 'California'"]))
+     "SPEECH OUTPUT: '• California'"]))
 
+# Note that not saying anything here is correct because we're already at
+# the top of the expanded combo box thus pressing Up doesn't move us.
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 C $l'",
-     "     VISIBLE:  'US State test 1 C $l', cursor=0",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Basic Where Am I - Combo box expanded", 
-    ["BUG? - No indication that this is a combo box",
-     "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
-     "SPEECH OUTPUT: 'US State test 1'",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'alifornia'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''"]))
-
-########################################################################
-# Escape to collapse the combo box.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Escape"))
-sequence.append(utils.AssertPresentationAction(
-    "Escape", 
     [""]))
 
 ########################################################################
@@ -210,10 +137,35 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Basic Where Am I - Combo box collapsed", 
-    ["BUG? - Should we indicate that we're in a combo box now that it is collapsed?",
-    "BRAILLE LINE:  'US State test 1 California $l'",
-     "     VISIBLE:  'US State test 1 California $l', cursor=0",
+    "Basic Where Am I - Combo box expanded", 
+    ["BRAILLE LINE:  '• California'",
+     "     VISIBLE:  '• California', cursor=1",
+     "SPEECH OUTPUT: 'list item'",
+     "SPEECH OUTPUT: '• California'",
+     "SPEECH OUTPUT: 'item 1 of 3'"]))
+
+########################################################################
+# Escape to collapse the combo box.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Escape"))
+sequence.append(utils.AssertPresentationAction(
+    "Escape", 
+    ["BRAILLE LINE:  '  US State test 1 California $l'",
+     "     VISIBLE:  '  US State test 1 California $l', cursor=0",
+     "SPEECH OUTPUT: 'US State test 1 combo box'",
+     "SPEECH OUTPUT: 'US State test 1 text California selected'"]))
+
+########################################################################
+# Do a basic "Where Am I" via KP_Enter.  
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "Basic Where Am I - Combo box collapsed back into an entry", 
+    ["BRAILLE LINE:  '  US State test 1 California $l'",
+     "     VISIBLE:  '  US State test 1 California $l', cursor=0",
      "SPEECH OUTPUT: 'US State test 1'",
      "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'alifornia'",

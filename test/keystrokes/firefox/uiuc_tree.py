@@ -197,9 +197,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "collapse vegetables", 
-    ["BUG? - If Panel shouldn't be in the context, perhaps a braille generator should be preventing it??",
-     "BRAILLE LINE:  'Vegetables ListItem Panel'",
-     "     VISIBLE:  'Vegetables ListItem Panel', cursor=1",
+    ["BRAILLE LINE:  'Vegetables ListItem'",
+     "     VISIBLE:  'Vegetables ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################

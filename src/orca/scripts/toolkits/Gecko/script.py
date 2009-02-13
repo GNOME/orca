@@ -1427,36 +1427,9 @@ class Script(default.Script):
                     #
                     return
 
-            elif self.isAriaWidget(event.source) \
-                 or self.isAriaWidget(event.source.parent):
-                # If it's not focusable, it's bogus.
-                #
-                if not eventSourceState.contains(pyatspi.STATE_FOCUSABLE):
+            elif not self.isNavigableAria(event.source):
+                if script_settings.controlCaretNavigation:
                     return
-
-                # Sometimes we get extra caret-moved events. See bug #471878
-                # and Mozilla bug #394318. However, we cannot do a blanket
-                # ignore of all caret-moved events.  See bug #539075 as an
-                # example.
-                #
-                if event.detail1 == 0 and not string in ["Left", "Home"] \
-                   or eventSourceRole in [pyatspi.ROLE_PAGE_TAB,
-                                          pyatspi.ROLE_LIST_ITEM,
-                                          pyatspi.ROLE_MENU_ITEM,
-                                          pyatspi.ROLE_PUSH_BUTTON,
-                                          pyatspi.ROLE_TOGGLE_BUTTON]:
-                    # A focus:/object:state-changed:focused event should
-                    # pick up this case.
-                    #
-                    return
-                elif eventSourceRole == pyatspi.ROLE_SPIN_BUTTON \
-                    and string in ["Up", "Down"]:
-                    # Ignore this bogus event.
-                    #
-                    return
-                else:
-                    self.setCaretContext(event.source, event.detail1)
-                    orca.setLocusOfFocus(event, event.source, False)
 
             elif self.isAriaWidget(orca_state.locusOfFocus) \
                  and self.isSameObject(event.source,
@@ -2249,7 +2222,6 @@ class Script(default.Script):
 
             role = obj.getRole()
             if not len(string) \
-               or not self.isNavigableAria(obj) \
                or role in [pyatspi.ROLE_ENTRY,
                            pyatspi.ROLE_PASSWORD_TEXT,
                            pyatspi.ROLE_LINK]:
@@ -2923,7 +2895,14 @@ class Script(default.Script):
         if obj and not obj.getState().contains(pyatspi.STATE_SHOWING):
             return True
 
+        # Sometimes the child of an ARIA widget claims focus. It may lack
+        # the attributes we're looking for. Therefore, if obj is not an
+        # ARIA widget, we'll also consider the parent's attributes.
+        #
         attrs = self._getAttrDictionary(obj)
+        if obj and not self.isAriaWidget(obj):
+            attrs.update(self._getAttrDictionary(obj.parent))
+
         try:
             # ARIA landmark widgets
             import sets
@@ -2939,10 +2918,13 @@ class Script(default.Script):
             #
             elif obj.getRole() in [pyatspi.ROLE_ENTRY,
                                    pyatspi.ROLE_LINK,
-                                   pyatspi.ROLE_ALERT]:
-                return obj.parent.getRole() != pyatspi.ROLE_COMBO_BOX
+                                   pyatspi.ROLE_ALERT,
+                                   pyatspi.ROLE_PARAGRAPH,
+                                   pyatspi.ROLE_SECTION]:
+                return obj.parent.getRole() not in [pyatspi.ROLE_COMBO_BOX,
+                                                    pyatspi.ROLE_PAGE_TAB]
             # All other ARIA widgets we will assume are navigable if
-            # they are not focusable.
+            # they are not focused.
             #
             else:
                 return not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
@@ -5128,6 +5110,35 @@ class Script(default.Script):
 
         if not obj:
             return []
+        
+        # If it's an ARIA widget, we want the default generators to give
+        # us all the details.
+        #
+        if not self.isNavigableAria(obj):
+            if not self.isAriaWidget(obj):
+                obj = obj.parent
+
+            objects = [[obj, 0, 1, ""]]
+            ext = obj.queryComponent().getExtents(0)
+            extents = [ext.x, ext.y, ext.width, ext.height]
+            for i in range(obj.getIndexInParent() + 1, obj.parent.childCount):
+                newObj = obj.parent[i]
+                ext = newObj.queryComponent().getExtents(0)
+                newExtents = [ext.x, ext.y, ext.width, ext.height]
+                if self.onSameLine(extents, newExtents):
+                    objects.append([newObj, 0, 1, ""])
+                else:
+                    break
+            for i in range(obj.getIndexInParent() - 1, -1, -1):
+                newObj = obj.parent[i]
+                ext = newObj.queryComponent().getExtents(0)
+                newExtents = [ext.x, ext.y, ext.width, ext.height]
+                if self.onSameLine(extents, newExtents):
+                    objects[0:0] = [[newObj, 0, 1, ""]]
+                else:
+                    break
+
+            return objects
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
@@ -5197,15 +5208,7 @@ class Script(default.Script):
         done = False
         while not done:
             [firstObj, start, end, string] = objects[0]
-            isAria = not self.isNavigableAria(firstObj)
-            if isAria:
-                documentFrame = self.getDocumentFrame()
-                prevObj = self.findPreviousObject(firstObj, documentFrame)
-                pOffset = 0
-            else:
-                [prevObj, pOffset] = \
-                    self.findPreviousCaretInOrder(firstObj, start)
-
+            [prevObj, pOffset] = self.findPreviousCaretInOrder(firstObj, start)
             if not prevObj or self.isSameObject(prevObj, firstObj):
                 break
 
@@ -5245,15 +5248,7 @@ class Script(default.Script):
         done = False
         while not done:
             [lastObj, start, end, string] = objects[-1]
-            isAria = not self.isNavigableAria(lastObj)
-
-            if isAria:
-                documentFrame = self.getDocumentFrame()
-                nextObj = self.findNextObject(lastObj, documentFrame)
-                nOffset = 0
-            else:
-                [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
-
+            [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
             if not nextObj or self.isSameObject(nextObj, lastObj):
                 break
 
@@ -5272,7 +5267,7 @@ class Script(default.Script):
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
                                         pyatspi.ROLE_TABLE_CELL] \
-                  and not isAria and self.isUselessObject(nextObj)):
+                  and self.isUselessObject(nextObj)):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 done = True
                 for item in toAdd:

@@ -125,9 +125,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Collapse Colors", 
-    ["BUG? We should not see main colors Panel in the braille. We're also updating braille too much here and elsewhere in these tests",
-     "BRAILLE LINE:  '-Colors ListItem main colors Panel'",
-     "     VISIBLE:  '-Colors ListItem main colors Pan', cursor=1",
+    ["BRAILLE LINE:  '-Colors ListItem'",
+     "     VISIBLE:  '-Colors ListItem', cursor=1",
      "BRAILLE LINE:  '+Colors ListItem'",
      "     VISIBLE:  '+Colors ListItem', cursor=1",
      "BRAILLE LINE:  '+Colors ListItem'",
