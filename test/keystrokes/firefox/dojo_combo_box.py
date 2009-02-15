@@ -48,6 +48,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("C"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Replace existing text with a 'C'", 
     ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes.",
