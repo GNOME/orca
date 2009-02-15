@@ -62,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down arrow past message", 
     ["BUG? - This is not ideal",
      "BRAILLE LINE:  'Alert Box Alert Box Alert'",
-     "     VISIBLE:  'Alert Box Alert Box Alert', cursor=0",
+     "     VISIBLE:  'Alert Box Alert Box Alert', cursor=1",
      "SPEECH OUTPUT: 'Alert Box12 is not between 1 and 10'"]))
 
 sequence.append(utils.StartRecordingAction())

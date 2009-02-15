@@ -30,17 +30,13 @@ sequence.append(PauseAction(5000))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(2000))
 sequence.append(utils.AssertPresentationAction(
     "Tab to grid", 
     ["BRAILLE LINE:  'E-mail List Sorted by Date Caption'",
      "     VISIBLE:  'E-mail List Sorted by Date Capti', cursor=1",
-     "BRAILLE LINE:  'Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
-     "     VISIBLE:  'Email 0 Selected CheckBox 1 Cell', cursor=0",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'E-mail List Sorted by Date table'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Status column header'",
-     "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel'"]))
+     "SPEECH OUTPUT: 'E-mail List Sorted by Date table'"]))
   
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -51,7 +47,7 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
-     "     VISIBLE:  'Email 0 Selected CheckBox 1 Cell', cursor=0",
+     "     VISIBLE:  'Email 0 Selected CheckBox 1 Cell', cursor=1",
      "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida'",
      "SPEECH OUTPUT: 'panel'",
      "SPEECH OUTPUT: '1 Read message Attachment Lowest priority John Smith Trip to Florida'"]))
@@ -64,7 +60,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Move down grid", 
     ["BRAILLE LINE:  'Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
-     "     VISIBLE:  'Email 1 Selected CheckBox 2 Cell', cursor=0",
+     "     VISIBLE:  'Email 1 Selected CheckBox 2 Cell', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Att column header'",
      "SPEECH OUTPUT: '2 New message Attachment Low priority From Fred Jones Subject Lunch on Friday panel'"]))
@@ -77,7 +73,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move right on second row 1", 
     ["BRAILLE LINE:  'Email 1 Selected CheckBox 2 Cell New message Image Attachment Image Low priority Image Fred Jones Cell Lunch on Friday Cell 2007-12-03 Cell 1K Cell'",
-     "     VISIBLE:  'Email 1 Selected CheckBox 2 Cell', cursor=0",
+     "     VISIBLE:  'Email 1 Selected CheckBox 2 Cell', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Email 1 Selected'"]))
      
