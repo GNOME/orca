@@ -19,7 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
-
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("p"))
 sequence.append(PauseAction(3000))
 

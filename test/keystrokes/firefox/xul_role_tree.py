@@ -18,6 +18,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 # Open the "Bookmarks" menu, Down Arrow to Show All Bookmarks, then 
 # press Return.
 #
+sequence.append(PauseAction(3000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
 sequence.append(utils.AssertPresentationAction(
@@ -31,6 +32,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
+sequence.append(PauseAction(3000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
