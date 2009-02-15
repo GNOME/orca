@@ -19,6 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 # press Return.
 #
 sequence.append(KeyComboAction("<Alt>b"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("", None))
