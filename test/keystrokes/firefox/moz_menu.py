@@ -170,7 +170,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
-    ["KNOWN ISSUE - Depenind on timing, we sometimes just display one rather than More",
+    ["KNOWN ISSUE - Depending on timing, we sometimes just display one rather than More",
      "BRAILLE LINE:  'More                >'",
      "     VISIBLE:  'More                >', cursor=(0|1)",
      "BRAILLE LINE:  'More                > one'",
@@ -195,7 +195,7 @@ sequence.append(utils.AssertPresentationAction(
     "leave menu", 
     ["BUG? - Focus is being given back to the table, but should we be saying more here?",
      "BRAILLE LINE:  'Entry # ColumnHeader Date ColumnHeader Expense ColumnHeader Amount ColumnHeader Merchant ColumnHeader Type ColumnHeader'",
-     "     VISIBLE:  'Entry # ColumnHeader Date Column', cursor=0",
+     "     VISIBLE:  'Entry # ColumnHeader Date Column', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'"]))
 
