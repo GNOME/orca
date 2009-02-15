@@ -54,7 +54,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
+    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image'",
      "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
      "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
 
@@ -1648,7 +1648,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "93. Line Up",
-    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image $l'",
+    ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image'",
      "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
      "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
 

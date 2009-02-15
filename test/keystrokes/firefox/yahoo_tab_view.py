@@ -37,8 +37,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to the tab view",
     ["BUG? - Ultimately we get around to announcing the page tab, but should we be speaking all of that additional information?",
-     "BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=1",
+     "BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Opera Page Firefox Page Explorer', cursor=1",
      "SPEECH OUTPUT: 'Browser NewsPress the space bar or enter key to load the content of each tab. Browser News Press the space bar or enter key to load the content of each tab. tab list'",
      "SPEECH OUTPUT: 'Opera page'"]))
     
@@ -49,8 +49,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=7",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Firefox Page Explorer Page Safar', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Firefox page'"]))
 
@@ -61,8 +61,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=15",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Explorer Page Safari Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Explorer page'"]))
 
@@ -73,8 +73,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=24",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Safari Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Safari page'"]))
 
@@ -86,8 +86,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=24",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Safari Page', cursor=1",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'Safari page'",
      "SPEECH OUTPUT: 'item 4 of 4'",
@@ -100,8 +100,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=15",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Explorer Page Safari Page', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Explorer page'"]))
 
@@ -112,8 +112,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=7",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Firefox Page Explorer Page Safar', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Firefox page'"]))
 
@@ -124,8 +124,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
-    ["BRAILLE LINE:  'Opera Firefox Explorer Safari'",
-     "     VISIBLE:  'Opera Firefox Explorer Safari', cursor=1",
+    ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
+     "     VISIBLE:  'Opera Page Firefox Page Explorer', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Opera page'"]))
 

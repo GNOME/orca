@@ -2196,6 +2196,25 @@ class Script(default.Script):
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
                 needToRefresh = True
 
+        if not self.isNavigableAria(focusedObj):
+            # Sometimes looking for the first caret context means that we
+            # are on a child within a non-navigable object (such as the
+            # text within a page tab). If so, set the focusedObj to the
+            # parent widget.
+            #
+            if not self.isAriaWidget(focusedObj):
+                focusedObj, focusedCharacterOffset = focusedObj.parent, 0
+                lineContentsOffset = 0
+
+        # Sometimes we just want to present the current object rather
+        # than the full line. For instance, if we're on a slider we
+        # should just present that slider. We'll assume we want the
+        # full line, however.
+        #
+        presentOnlyFocusedObj = False
+        if focusedObj.getRole() == pyatspi.ROLE_SLIDER:
+            presentOnlyFocusedObj = True
+
         contents = self.currentLineContents
         index = self.findObjectOnLine(focusedObj,
                                       max(0, lineContentsOffset),
@@ -2219,9 +2238,11 @@ class Script(default.Script):
             [obj, startOffset, endOffset, string] = content
             if not obj:
                 continue
+            elif presentOnlyFocusedObj and not isFocusedObj:
+                continue
 
             role = obj.getRole()
-            if not len(string) \
+            if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
                or role in [pyatspi.ROLE_ENTRY,
                            pyatspi.ROLE_PASSWORD_TEXT,
                            pyatspi.ROLE_LINK]:
