@@ -17,6 +17,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 # Open the "Edit" menu and Up Arrow to Preferences, then press Return.
 #
 sequence.append(KeyComboAction("<Alt>e"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForWindowActivate("",None))
