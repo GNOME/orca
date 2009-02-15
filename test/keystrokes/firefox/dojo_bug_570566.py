@@ -50,6 +50,7 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_PUSH_BUTTON))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
+sequence.append(PauseAction(2000))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
     ["BRAILLE LINE:  'Created from div h2'",

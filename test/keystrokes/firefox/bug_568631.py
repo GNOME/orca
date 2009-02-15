@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
 # Tab to the About link
 #
 for i in range(25):
-    sequence.append(KeyComboAction("Tab", 500))
+    sequence.append(KeyComboAction("Tab", 1000))
 
 # Just a little extra wait to let some events get through.
 #
@@ -52,6 +52,8 @@ sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
+sequence.append(WaitForFocus("About", acc_role=pyatspi.ROLE_LINK))
+sequence.append(PauseAction(2000))
 sequence.append(utils.AssertPresentationAction(
     "Tab", 
     ["BRAILLE LINE:  '2. About",
@@ -63,7 +65,8 @@ sequence.append(utils.AssertPresentationAction(
 # Press Return to active the link
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 1000))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Return",
     ["BRAILLE LINE:  'About h1'",
@@ -77,6 +80,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful assistive'",
