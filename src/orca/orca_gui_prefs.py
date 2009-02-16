@@ -144,6 +144,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.uppercaseVoice = None
         self.window = None
         self.workingFactories = None
+        self.savedGain = None
+        self.savedPitch = None
+        self.savedRate = None
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current
@@ -151,6 +154,26 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         support and populate the combo box lists on the Speech Tab pane
         accordingly.
         """
+
+        # Restore the default rate/pitch/gain,
+        # in case the user played with the sliders.
+        #        
+        try:
+            defaultVoice = settings.voices[settings.DEFAULT_VOICE]
+        except KeyError:
+            defaultVoice = {}
+        try:
+            self.savedGain = defaultVoice[acss.ACSS.GAIN]
+        except KeyError:
+            self.savedGain = 10.0
+        try:
+            self.savedPitch = defaultVoice[acss.ACSS.AVERAGE_PITCH]
+        except KeyError:
+            self.savedPitch = 5.0
+        try:
+            self.savedRate = defaultVoice[acss.ACSS.RATE]
+        except KeyError:
+            self.savedRate = 50.0
 
         # ***** Key Bindings treeview initialization *****
 
@@ -633,15 +656,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self._setSpeechFamiliesChoice(familyName)
 
         rate = self._getRateForVoiceType(voiceType)
-        if rate:
+        if rate != None:
             self.get_widget("rateScale").set_value(rate)
 
         pitch = self._getPitchForVoiceType(voiceType)
-        if pitch:
+        if pitch != None:
             self.get_widget("pitchScale").set_value(pitch)
 
         volume = self._getVolumeForVoiceType(voiceType)
-        if volume:
+        if volume != None:
             self.get_widget("volumeScale").set_value(volume)
 
     def _setSpeechFamiliesChoice(self, familyName):
@@ -2426,6 +2449,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         rate = widget.get_value()
         voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setRateForVoiceType(voiceType, rate)
+        settings.voices[settings.DEFAULT_VOICE][acss.ACSS.RATE] = rate
 
     def pitchValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the pitchScale
@@ -2440,6 +2464,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         pitch = widget.get_value()
         voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setPitchForVoiceType(voiceType, pitch)
+        settings.voices[settings.DEFAULT_VOICE][acss.ACSS.AVERAGE_PITCH] = pitch
 
     def volumeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the voiceScale
@@ -2454,6 +2479,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         volume = widget.get_value()
         voiceType = self.get_widget("voiceTypes").get_active_text()
         self._setVolumeForVoiceType(voiceType, volume)
+        settings.voices[settings.DEFAULT_VOICE][acss.ACSS.GAIN] = volume
 
     def speechIndentationChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -3999,6 +4025,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
 
         orca.helpForOrca()
 
+    def restoreSettings(self):
+        """Restore the settings we saved away when opening the preferences
+           dialog."""
+        # Restore the default rate/pitch/gain,
+        # in case the user played with the sliders.
+        #
+        defaultVoice = settings.voices[settings.DEFAULT_VOICE]
+        defaultVoice[acss.ACSS.GAIN] = self.savedGain
+        defaultVoice[acss.ACSS.AVERAGE_PITCH] = self.savedPitch
+        defaultVoice[acss.ACSS.RATE] =  self.savedRate
+
     def applyButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the applyButton
            GtkButton widget. The user has clicked the Apply button.
@@ -4012,6 +4049,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         Arguments:
         - widget: the component that generated the signal.
         """
+
+        self.restoreSettings()
 
         enable = self.get_widget("speechSupportCheckbutton").get_active()
         self.prefsDict["enableSpeech"] = enable
@@ -4062,8 +4101,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        mag.finishLiveUpdating()
-        self._cleanupSpeechServers()
+        self.windowClosed(widget)
         self.get_widget("orcaSetupWindow").destroy()
 
     def okButtonClicked(self, widget):
@@ -4082,6 +4120,19 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.applyButtonClicked(widget)
         self._cleanupSpeechServers()
         self.get_widget("orcaSetupWindow").destroy()
+
+    def windowClosed(self, widget):
+        """Signal handler for the "closed" signal for the orcaSetupWindow
+           GtkWindow widget. This is effectively the same as pressing the
+           cancel button, except the window is destroyed for us.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.restoreSettings()
+        mag.finishLiveUpdating()
+        self._cleanupSpeechServers()
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow

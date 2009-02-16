@@ -111,7 +111,7 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
     all calls to the 'real' gnome speech speaker.
     """
 
-    def __init__(self, gnome_speaker):
+    def __init__(self, gnome_speaker, voice):
 
         # We know what we are doing here, so tell pylint not to flag
         # the self._this() method call as an error.  The disable-msg is
@@ -123,6 +123,7 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
         if settings.enableSpeechCallbacks:
             gnome_speaker.registerSpeechCallback(self._this())
         self.__callbacks = []
+        self.voiceInfo = [voice.name, voice.language, voice.gender]
 
     def registerCallback(self, callback):
         self.__callbacks.append(callback)
@@ -504,7 +505,7 @@ class SpeechServer(speechserver.SpeechServer):
         #
         # pylint: disable-msg=W0212
 
-        speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
+        speaker = _Speaker(s._narrow(GNOME.Speech.Speaker), voice)
 
         # Turn off punctuation.  We do this because we want to handle
         # spoken punctuation on our own.  Only do so if "punctuation mode"
@@ -521,17 +522,34 @@ class SpeechServer(speechserver.SpeechServer):
 
         speaker.registerCallback(self)
 
-        parameters = speaker.getSupportedParameters()
-        for parameter in parameters:
-            if parameter.name == "rate":
-                self.__rateInfo[speaker] = \
-                    [parameter.min, parameter.current, parameter.max]
-            elif parameter.name == "pitch":
-                self.__pitchInfo[speaker] = \
-                    [parameter.min, parameter.current, parameter.max]
-            elif parameter.name == "volume":
-                self.__volumeInfo[speaker] = \
-                    [parameter.min, parameter.current, parameter.max]
+        # Hack - see if we have created a new speaker for a new voice
+        # for the engine.  If so, save away the min/current/max parameters.
+        # Otherwise, use the ones we saved away.  The problem is that
+        # each time we get the parameters, the current one reflects the
+        # current value.  We only want to save the value the first time
+        # because at that time, the current value is the default value.
+        #
+        saveParameters = True
+        for existingSpeaker in self.__speakers.values():
+            if existingSpeaker.voiceInfo == speaker.voiceInfo:
+                self.__rateInfo[speaker] = self.__rateInfo[existingSpeaker]
+                self.__pitchInfo[speaker] = self.__pitchInfo[existingSpeaker]
+                self.__volumeInfo[speaker] = self.__volumeInfo[existingSpeaker]
+                saveParameters = False
+                break
+
+        if saveParameters:
+            parameters = speaker.getSupportedParameters()
+            for parameter in parameters:
+                if parameter.name == "rate":
+                    self.__rateInfo[speaker] = \
+                        [parameter.min, parameter.current, parameter.max]
+                elif parameter.name == "pitch":
+                    self.__pitchInfo[speaker] = \
+                        [parameter.min, parameter.current, parameter.max]
+                elif parameter.name == "volume":
+                    self.__volumeInfo[speaker] = \
+                        [parameter.min, parameter.current, parameter.max]
 
         if ACSS.RATE in acss:
             self.__setRate(speaker, acss[ACSS.RATE])

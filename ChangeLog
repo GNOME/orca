@@ -1,3 +1,14 @@
+2009-02-16  William Walker and Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/acss.py:
+          src/orca/orca_console_prefs.py:
+          src/orca/orca-setup.glade:
+          src/orca/gnomespeechfactory.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #419123 - Modified speech settings do not change
+          immediately in preferences dialog.  Many thanks also to
+          Hammer Attila for his testing and feedback.
+
 2009-02-16  William Walker <william.walker@sun.com>
 
         * keystrokes/gtk-demo/spoken_indentation.settings:
