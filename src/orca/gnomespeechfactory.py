@@ -532,9 +532,21 @@ class SpeechServer(speechserver.SpeechServer):
         saveParameters = True
         for existingSpeaker in self.__speakers.values():
             if existingSpeaker.voiceInfo == speaker.voiceInfo:
-                self.__rateInfo[speaker] = self.__rateInfo[existingSpeaker]
-                self.__pitchInfo[speaker] = self.__pitchInfo[existingSpeaker]
-                self.__volumeInfo[speaker] = self.__volumeInfo[existingSpeaker]
+                try:
+                    self.__rateInfo[speaker] = \
+                        self.__rateInfo[existingSpeaker]
+                except:
+                    pass
+                try:
+                    self.__pitchInfo[speaker] = \
+                        self.__pitchInfo[existingSpeaker]
+                except:
+                    pass
+                try:
+                    self.__volumeInfo[speaker] = \
+                        self.__volumeInfo[existingSpeaker]
+                except:
+                    pass
                 saveParameters = False
                 break
 
