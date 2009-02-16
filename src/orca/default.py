@@ -2204,7 +2204,7 @@ class Script(script.Script):
         utterance = ""
         offset = 0
         while True:
-            while line[offset] == ' ':
+            while (offset < len(line)) and line[offset] == ' ':
                 spaceCount += 1
                 offset += 1
             if spaceCount:
@@ -2215,10 +2215,9 @@ class Script(script.Script):
                                       "%d spaces",
                                       spaceCount) % spaceCount + " "
 
-            while line[offset] == '\t':
+            while (offset < len(line)) and line[offset] == '\t':
                 tabCount += 1
                 offset += 1
-
             if tabCount:
                 # Translators: this is the number of tab characters on a line
                 # of text.
@@ -2226,6 +2225,7 @@ class Script(script.Script):
                 utterance += ngettext("%d tab",
                                       "%d tabs",
                                       tabCount) % tabCount + " "
+
             if not (spaceCount  or tabCount):
                 break
             spaceCount  = tabCount = 0
