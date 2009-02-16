@@ -1,3 +1,61 @@
+2.25.91 - 16-Feb-2009
+
+General:
+
+* Fix for bug #419123 - Modified speech settings do not change
+  immediately in preferences dialog.  Many thanks to Hammer Attila for
+  his testing and feedback.
+
+* Additional fix for bug #569118 - Use C_() instead of Q_() with
+  context
+
+* Fix for bug #569343 - Speaking of indentation is misleading
+
+* Fix for bug #570387 - Clean up the speech tab of the preferences UI.
+
+Firefox:
+
+* Fix for bug #555540 - Add support for additional landmark roles
+
+* Fix for bug #561660 - For example with firefox 3.0, heading levels
+  incorrect sayed for hungarian grammatical
+
+* Fix for bug #568768 - Orca starts at the top of a newly-loaded page
+  rather than the specified fragment.
+
+* Fix for bug #570524 - (ARIA) Issues with Dojo combo box interaction.
+
+* Fix for bug #570532 - (ARIA) Alert text not brailled when navigating
+  it.
+
+* Fix for bug #570551 - (ARIA) UIUC Number Guessing Game Alert Dialog
+  not presented when it appears.
+
+* Work on bug #571058 - (ARIA) Orca's caret navigation is kicking in
+  when it shouldn't be.
+
+* Work on (and possibly fix for) bug #571799 - (ARIA) Need to clean up
+  braille presentation of certain widgets.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ca       Catalan              Gil Forcada
+    da 	     Danish		  Kenneth Nielsen
+    es       Spanish              Francisco Javier Dorado Martinez and
+                                  Jorge Gonzalez
+    he       Hebrew               Mark Krapivner
+    pt_BR    Brazilian Portuguese Jonh Wendell and Andre Gondim
+    sv       Swedish              Daniel Nylander
+    th       Thai                 Theppitak Karoonboonyanan
+    vi       Vietnamese           Clytie Siddall
+    zh_HK    Traditional Chinese  Chao-Hsiung Liao
+    zh_TW    Traditional Chinese  Chao-Hsiung Liao
+
+==========
+
 2.25.90 - 02-Feb-2009
 
 General:
