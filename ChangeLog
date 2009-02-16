@@ -1,5 +1,11 @@
 2009-02-16  William Walker <william.walker@sun.com>
 
+        * keystrokes/gtk-demo/spoken_indentation.settings:
+          keystrokes/gtk-demo/spoken_indentation.py:
+          Regression test for spoken indentation
+
+2009-02-16  William Walker <william.walker@sun.com>
+
         * src/orca/default.py:
           Additional fix for bug #569343 - Speaking of indentation is misleading
 
