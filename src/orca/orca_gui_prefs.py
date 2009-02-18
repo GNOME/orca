@@ -65,6 +65,10 @@ from orca_i18n import _  # for gettext support
 
 (ACTUAL, REPLACEMENT) = range(2)
 
+# Must match the order of voice types in the glade file.
+#
+(DEFAULT, UPPERCASE, HYPERLINK) = range(3)
+
 class OrcaSetupGUI(orca_glade.GladeWrapper):
 
     # Translators: this is an algorithm for tracking an object
@@ -440,30 +444,17 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Return the ACSS value for the the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink",
-        where the string is localized).
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
 
         Returns the voice dictionary for the given voice type.
         """
 
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use most of the time.
-        #
-        if voiceType == _("Default"):
+        if voiceType == DEFAULT:
             voiceACSS = self.defaultVoice
-
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use to speak capitalized words and letters.
-        #
-        elif voiceType == _("Uppercase"):
+        elif voiceType == UPPERCASE:
             voiceACSS = self.uppercaseVoice
-
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use to speak text associated with hyperlinks in HTML content.
-        #
-        elif voiceType == _("Hyperlink"):
+        elif voiceType == HYPERLINK:
             voiceACSS = self.hyperlinkVoice
-
         else:
             voiceACSS = self.defaultVoice
 
@@ -486,7 +477,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
            for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         - key: the key to look for in the voice dictionary.
         - useDefault: if True, and the key isn't found for the given voice
                       type, the look for it in the default voice dictionary
@@ -495,26 +486,15 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         Returns the value of the given key, or None if it's not set.
         """
 
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use most of the time.
-        #
-        if voiceType == _("Default"):
+        if voiceType == DEFAULT:
             voice = self.defaultVoice
-
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use to speak capitalized words and letters.
-        #
-        elif voiceType == _("Uppercase"):
+        elif voiceType == UPPERCASE:
             voice = self.uppercaseVoice
             if key not in voice:
                 if not useDefault:
                     return None
                 voice = self.defaultVoice
-
-        # Translators: this refers to the speech synthesis voice that Orca
-        # will use to speak text associated with hyperlinks in HTML content.
-        #
-        elif voiceType == _("Hyperlink"):
+        elif voiceType == HYPERLINK:
             voice = self.hyperlinkVoice
             if key not in voice:
                 if not useDefault:
@@ -532,7 +512,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Gets the name of the voice family for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
 
         Returns the name of the voice family for the given voice type,
         or None if not set.
@@ -550,7 +530,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Sets the name of the voice family for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         - name: the name of the voice family to set.
         - language: the locale of the voice family to set.
         """
@@ -575,7 +555,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Gets the speaking rate value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
 
         Returns the rate value for the given voice type, or None if
         not set.
@@ -587,7 +567,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Sets the speaking rate value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         - value: the rate value to set.
         """
 
@@ -599,7 +579,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Gets the pitch value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
 
         Returns the pitch value for the given voice type, or None if
         not set.
@@ -612,7 +592,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Sets the pitch value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         - value: the pitch value to set.
         """
 
@@ -624,7 +604,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Gets the volume (gain) value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
 
         Returns the volume (gain) value for the given voice type, or
         None if not set.
@@ -636,7 +616,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Sets the volume (gain) value for the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         - value: the volume (gain) value to set.
         """
 
@@ -649,7 +629,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         on the given voice type.
 
         Arguments:
-        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
         """
 
         familyName = self._getFamilyNameForVoiceType(voiceType)
@@ -731,8 +711,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # voice type.  Whenever the families change, we'll reset the
         # voice type selection to the first one ("Default").
         #
-        self.get_widget("voiceTypes").set_active(0)
-        voiceType = self.get_widget("voiceTypes").get_active_text()
+        self.get_widget("voiceTypes").set_active(DEFAULT)
+        voiceType = self.get_widget("voiceTypes").get_active()
         self._setVoiceSettingsForVoiceType(voiceType)
 
     def _setSpeechServersChoice(self, serverInfo):
@@ -2421,7 +2401,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
             language = family[speechserver.VoiceFamily.LOCALE]
-            voiceType = self.get_widget("voiceTypes").get_active_text()
+            voiceType = self.get_widget("voiceTypes").get_active()
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -2439,7 +2419,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         if self.initializingSpeech:
             return
 
-        voiceType = widget.get_active_text()
+        voiceType = widget.get_active()
         self._setVoiceSettingsForVoiceType(voiceType)
 
     def rateValueChanged(self, widget):
@@ -2453,7 +2433,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         rate = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active()
         self._setRateForVoiceType(voiceType, rate)
         settings.voices[settings.DEFAULT_VOICE][acss.ACSS.RATE] = rate
 
@@ -2468,7 +2448,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         pitch = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active()
         self._setPitchForVoiceType(voiceType, pitch)
         settings.voices[settings.DEFAULT_VOICE][acss.ACSS.AVERAGE_PITCH] = pitch
 
@@ -2483,7 +2463,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         volume = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active_text()
+        voiceType = self.get_widget("voiceTypes").get_active()
         self._setVolumeForVoiceType(voiceType, volume)
         settings.voices[settings.DEFAULT_VOICE][acss.ACSS.GAIN] = volume
 

@@ -1,3 +1,10 @@
+2009-02-18  William Walker and Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          More fixing for bug #419123 - Modified speech settings do not change
+          immediately in preferences dialog.  Make this more insensitive to
+          incomplete or unmatching translations.
+
 2009-02-17  William Walker and Mesar Hameed <via william.walker@sun.com>
 
         * src/orca/acss.py:
