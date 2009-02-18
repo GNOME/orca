@@ -1,5 +1,9 @@
 2009-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/default.py:
+          Fix for bug #572294 - Need a sanity check in the default script's
+          locusOfFocusChanged.
+
         * src/orca/scripts/apps/evolution/script.py:
           Fix for bug #570390 - Spellcheck in evolution is badly broken.
 

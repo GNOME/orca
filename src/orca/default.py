@@ -2892,7 +2892,8 @@ class Script(script.Script):
             # in a context, with the label for the group being the
             # name of the context.
             #
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            if newLocusOfFocus \
+               and newLocusOfFocus.getRole() == pyatspi.ROLE_RADIO_BUTTON:
                 radioGroupLabel = None
                 inSameGroup = False
                 relations = newLocusOfFocus.getRelationSet()
@@ -2952,12 +2953,12 @@ class Script(script.Script):
             # selected, let the user know. See bug #486908 for more details.
             #
             checkIfSelected = False
-            objRole = newLocusOfFocus.getRole()
-            if newLocusOfFocus.parent:
-                parentRole = newLocusOfFocus.parent.getRole()
-            else:
-                parentRole = None
-            state = newLocusOfFocus.getState()
+            objRole, parentRole, state = None, None, None
+            if newLocusOfFocus:
+                objRole = newLocusOfFocus.getRole()
+                state = newLocusOfFocus.getState()
+                if newLocusOfFocus.parent:
+                    parentRole = newLocusOfFocus.parent.getRole()
 
             if objRole == pyatspi.ROLE_TABLE_CELL and \
                (parentRole == pyatspi.ROLE_TREE_TABLE or \
@@ -2978,7 +2979,8 @@ class Script(script.Script):
                 parentRole == pyatspi.ROLE_LAYERED_PANE:
                 checkIfSelected = True
 
-            if checkIfSelected and not state.contains(pyatspi.STATE_SELECTED):
+            if checkIfSelected and state \
+               and not state.contains(pyatspi.STATE_SELECTED):
                 # Translators: this is in reference to a table cell being
                 # selected or not.
                 #
@@ -2996,7 +2998,7 @@ class Script(script.Script):
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
 
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
+            if objRole == pyatspi.ROLE_LINK:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -3007,7 +3009,7 @@ class Script(script.Script):
             # information in the table cell's table, so that we can use
             # it the next time.
             #
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+            if objRole == pyatspi.ROLE_TABLE_CELL:
                 try:
                     table = newParent.queryTable()
                 except:
