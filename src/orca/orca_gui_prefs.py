@@ -658,14 +658,20 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         rate = self._getRateForVoiceType(voiceType)
         if rate != None:
             self.get_widget("rateScale").set_value(rate)
-
+        else:
+            self.get_widget("rateScale").set_value(50.0)
+            
         pitch = self._getPitchForVoiceType(voiceType)
         if pitch != None:
             self.get_widget("pitchScale").set_value(pitch)
+        else:
+            self.get_widget("pitchScale").set_value(5.0)
 
         volume = self._getVolumeForVoiceType(voiceType)
         if volume != None:
             self.get_widget("volumeScale").set_value(volume)
+        else:
+            self.get_widget("volumeScale").set_value(10.0)
 
     def _setSpeechFamiliesChoice(self, familyName):
         """Sets the active item in the families ("Person:") combo box
@@ -4063,7 +4069,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             self.prefsDict["speechServerInfo"] = \
                 self.speechServersChoice.getInfo()
 
-        if self.defaultVoice:
+        if self.defaultVoice != None:
             self.prefsDict["voices"] = {
                 settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
                 settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),

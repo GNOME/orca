@@ -51,7 +51,7 @@ class ACSS(dict):
     settings = {
         FAMILY :        None,
         RATE :          50,
-        GAIN :          100,
+        GAIN :          10,
         AVERAGE_PITCH : 5,
         PITCH_RANGE :   5,
         STRESS :        5,

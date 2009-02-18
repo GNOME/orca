@@ -1,3 +1,11 @@
+2009-02-17  William Walker and Mesar Hameed <via william.walker@sun.com>
+
+        * src/orca/acss.py:
+          src/orca/orca_gui_prefs.py:
+          More fixing for bug #419123 - Modified speech settings do not change
+          immediately in preferences dialog.  There was an issue with setting
+          the uppercase and/or hyperlink voice settings the first time.
+
 2009-02-16  Willie Walker <william.walker@sun.com>
 
         * configure.in, README:
