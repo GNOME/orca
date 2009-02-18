@@ -69,6 +69,10 @@ class Script(default.Script):
 
         self.message_panel = None
 
+        # A handle to the Spellcheck dialog.
+        #
+        self.spellCheckDialog = None
+
         # Dictionary of Setup Assistant panels already handled.
         #
         self.setupPanels = {}
@@ -512,6 +516,81 @@ class Script(default.Script):
                 else:
                     if text.getNSelections():
                         text.removeSelection(0)
+
+    def isSpellingSuggestionsList(self, obj):
+        """Returns True if obj is the list of spelling suggestions
+        in the spellcheck dialog.
+
+        Arguments:
+        - obj: the Accessible object of interest.
+        """
+
+        # The list of spelling suggestions is a table whose parent is
+        # a scroll pane. This in and of itself is not sufficiently
+        # unique. What makes the spell check dialog unique is the
+        # quantity of push buttons found. If we find this combination,
+        # we'll assume its the spelling dialog.
+        #
+        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            obj = obj.parent
+
+        if not obj \
+           or obj.getRole() != pyatspi.ROLE_TABLE \
+           or obj.parent.getRole() != pyatspi.ROLE_SCROLL_PANE:
+            return False
+
+        topLevel = self.getTopLevel(obj.parent)
+        if not self.isSameObject(topLevel, self.spellCheckDialog):
+            # The group of buttons is found in a filler which is a
+            # sibling of the scroll pane.
+            #
+            for sibling in obj.parent.parent:
+                if sibling.getRole() == pyatspi.ROLE_FILLER:
+                    buttonCount = 0
+                    for child in sibling:
+                        if child.getRole() == pyatspi.ROLE_PUSH_BUTTON:
+                            buttonCount += 1
+                    if buttonCount >= 5:
+                        self.spellCheckDialog = topLevel
+                        return True
+        else:
+            return True
+
+        return False
+
+    def getMisspelledWordAndBody(self, suggestionsList, messagePanel):
+        """Gets the misspelled word from the spelling dialog and the 
+        list of words from the message body.
+
+        Arguments:
+        - suggestionsList: the list of spelling suggestions from the
+          spellcheck dialog
+        - messagePanel: the panel containing the message being checked
+          for spelling
+
+        Returns [mispelledWord, messageBody]
+        """
+
+        misspelledWord, messageBody = "", []
+
+        # Look for the "Suggestions for "xxxxx" label in the spell
+        # checker dialog panel. Extract out the xxxxx. This will be
+        # the misspelled word.
+        #
+        text = self.getDisplayedLabel(suggestionsList) or ""
+        words = text.split()
+        for word in words:
+            if word[0] in ["'", '"']:
+                misspelledWord = word[1:len(word) - 1]
+                break
+
+        if messagePanel != None:
+            allTextObjects = self.findByRole(messagePanel, pyatspi.ROLE_TEXT)
+            for obj in allTextObjects:
+                for word in self.getText(obj, 0, -1).split():
+                    messageBody.append(word)
+
+        return [misspelledWord, messageBody]
 
     def isMessageBodyText(self, obj):
         """Returns True if obj is in the body of an email message.
@@ -1226,15 +1305,8 @@ class Script(default.Script):
         # caret currently is, and use this to speak a selection of the
         # surrounding text, to give the user context for the current misspelt
         # word.
-
-        self.rolesList = [pyatspi.ROLE_TABLE, \
-                         pyatspi.ROLE_SCROLL_PANE, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_FILLER, \
-                         pyatspi.ROLE_DIALOG]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.isSpellingSuggestionsList(event.source) \
+           or self.isSpellingSuggestionsList(newLocusOfFocus):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - spell checking dialog.")
 
@@ -1242,42 +1314,11 @@ class Script(default.Script):
             #
             self.updateBraille(orca_state.locusOfFocus)
 
-            # Look for the "Suggestions for 'xxxxx' label in the spell
-            # checker dialog panel. Extract out the xxxxx. This will be the
-            # misspelt word.
-            #
-            panel = event.source.parent.parent
-            allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
-            found = False
-            for label in allLabels:
-                if not found:
-                    text = self.getDisplayedText(label)
-                    if text:
-                        tokens = text.split()
-                    else:
-                        tokens = []
-                    for token in tokens:
-                        if token.startswith("'"):
-                            badWord = token
-                            badWord = badWord[1:len(badWord)-1]
-                            found = True
-                            break
-
-            # If we have a handle to the HTML message panel, then extract out
-            # all the text objects, and create a list of all the words found
-            # in them.
-            #
-            if self.message_panel != None:
-                allTokens = []
-                panel = self.message_panel
-                allText = self.findByRole(panel, pyatspi.ROLE_TEXT)
-                for i in range(0, len(allText)):
-                    text = self.getText(allText[i], 0, -1)
-                    tokens = text.split()
-                    allTokens += tokens
-
+            if not self.pointOfReference.get('activeDescendantInfo'):
+                [badWord, allTokens] = \
+                    self.getMisspelledWordAndBody(event.source, 
+                                                  self.message_panel)
                 self.speakMisspeltWord(allTokens, badWord)
-                return
 
         # 10) Mail view: message area - attachments.
         #
@@ -1448,8 +1489,8 @@ class Script(default.Script):
         # prior to speaking the actual message that gets focus.
         # See bug #347964.
         #
-        if isinstance(orca_state.lastInputEvent,
-                      input_event.KeyboardEvent):
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
             string = orca_state.lastNonModifierKeyEvent.event_string
             if string == "Delete":
                 rolesList = [pyatspi.ROLE_TABLE_CELL, \
@@ -1473,6 +1514,74 @@ class Script(default.Script):
         # to be handled in the default way.
         #
         default.Script.onFocus(self, event)
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # The default script's onActiveDescendantChanged method is cutting
+        # off speech with a speech.stop. If we're in the spellcheck dialog,
+        # this interrupts the presentation of the context.
+        #
+        if self.isSpellingSuggestionsList(event.source):
+            orca.setLocusOfFocus(event, event.any_data)
+
+            # We'll tuck away the activeDescendant information for future
+            # reference since the AT-SPI gives us little help in finding
+            # this.
+            #
+            if orca_state.locusOfFocus \
+               and (orca_state.locusOfFocus != event.source):
+                self.pointOfReference['activeDescendantInfo'] = \
+                    [orca_state.locusOfFocus.parent,
+                     orca_state.locusOfFocus.getIndexInParent()]
+            return
+
+        default.Script.onActiveDescendantChanged(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # When the active descendant in the list of misspelled words
+        # changes, we typically get an object:active-descendant-changed
+        # event. Unfortunately, we don't seem to get this event (or a
+        # focus: event) when the user presses a button without moving
+        # focus there explicitly. (e.g. pressing Alt+R) The label which
+        # is associated with the spelling list gets new text. So we'll
+        # try to look for that instead.
+        #
+        if event.source.getRole() == pyatspi.ROLE_LABEL:
+            relations = event.source.getRelationSet()
+            for relation in relations:
+                if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
+                    target = relation.getTarget(0)
+                    if self.isSpellingSuggestionsList(target):
+                        [badWord, allTokens] = \
+                            self.getMisspelledWordAndBody(target,
+                                                          self.message_panel)
+                        self.speakMisspeltWord(allTokens, badWord)
+
+                        try:
+                            selection = target.querySelection()
+                        except NotImplementedError:
+                            selection = None
+                        if selection and selection.nSelectedChildren > 0:
+                            newFocus = selection.getSelectedChild(0)
+                            orca.setLocusOfFocus(event, newFocus)
+                            self.pointOfReference['activeDescendantInfo'] = \
+                                [target, newFocus.getIndexInParent()]
+
+                        return
+
+        default.Script.onTextInserted(self, event)
 
 # Values used to construct a time string for calendar appointments.
 #

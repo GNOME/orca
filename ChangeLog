@@ -1,3 +1,8 @@
+2009-02-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/evolution/script.py:
+          Fix for bug #570390 - Spellcheck in evolution is badly broken.
+
 2009-02-16  William Walker <william.walker@sun.com>
 
         * src/orca/default.py:
