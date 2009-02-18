@@ -1,3 +1,99 @@
+2.24.4 - 18-Feb-2008
+
+General:
+
+* Fix for bug #553678 - orca can act badly at login time.  This was a
+  bad one where pressing Ctrl+s to invoked Orca in speech mode after
+  pressing Ctrl+m to invoke Orca with the magnifier would cause the
+  magnifier to freeze in one spot.
+
+* Fix for bug #561548 - Orca locks up when closing some Pidgin
+  conversations.  Also helps with bug #567864.  This was a very bad
+  hang that several people reported on the Orca list.
+
+* Fix for bug #568589 - braillegenerator adding image string versus
+  braille.Component for table cells.  This was exposed after the
+  OpenSolaris packagemanager made changes to add accessible names for
+  images in the package list.  Prior to the fix for bug #568589, Orca
+  would go silent in the revised packagemanager list.
+
+* Fix for bug #568751 - Interaction with the punctuation preferences
+  can cause a hang.  This was another bad hang reported on the Orca
+  list.
+
+* Fix for bug #568875 - Pressing "Apply" button in preferences dialog
+  causes autostart option to be checked.  This caused some users much
+  confusion.
+
+* Fix for bug #569343 - Speaking of indentation is misleading.  Users
+  deemed this to be misleading enough that they wanted this fixed for
+  2.24.4 (i.e., they didn't want to wait for 2.26.0).
+
+* Part of fix for bug #570387 - Clean up the speech tab of the
+  preferences UI. This causes Page Up and Page Down to work on the
+  hscales.  Before this, only the arrow keys worked, which could
+  require users to arrow 1 unit at a time across a 100 unit scale.
+
+* Fix for bug #572294 - Need a sanity check in the default script's
+  locusOfFocusChanged.  This would cause Thunderbird to go quiet and
+  also cause Orca to consume normal typing keys that it should not
+  consume.
+
+Evolution:
+
+* Fix for bug #567428 -"readonly text" spoken when caret changes line.
+  This was a big usability issue.
+
+* Fix for bug #570390 - Spellcheck in evolution is badly broken.
+
+Firefox/Thunderbird:
+
+* Fix for bug #537303 - Certain FF3 add-ons interfere with Orca's
+  ability to provide access to content.
+
+* Fix for bug #567864 - Orca stops responding when flat review is used
+  in thunderbird message window and message is closed.  This was a 
+  very bad hang reported by several users on the Orca list.
+
+* Fix for bug #567984 - Structural navigation needs to consider text
+  within the document frame.
+
+* Fix for bug #568631 - Orca does not update the position for
+  same-page links which reference objects by name/id in Firefox 3.
+
+* Fix for bug #568768 - Orca starts at the top of a newly-loaded page
+  rather than the specified fragment.  This was a very bad usability
+  problem when navigating across web pages.
+
+* Fix for bug #552965 - (ARIA) aria-valuetext ignored
+
+* Fix for bug #555540 - (ARIA) Add support for additional landmark roles.
+
+* Fix for bug #568467 - (ARIA) aria-describedby text spoken twice via
+  Where Am I
+
+* Fix for bug #568550 - (ARIA) Add default keybindings for navigating by
+  landmarks
+
+* Fix for bug #569346 - (ARIA) No speech for image-only ARIA buttons
+  and ARIA menu items
+
+* Fix for bug #569835 - (ARIA) Orca should support the ARIA haspopup
+  attribute
+
+* Fix for bug #570551 - (ARIA) UIUC Number Guessing Game Alert Dialog
+  not presented when it appears.
+
+* Fix for bug #570524 - (ARIA) Issues with Dojo combo box interaction.
+
+* Fix for bug #570532 - (ARIA) Alert text not brailled when navigating
+  it.
+
+* Work on bug #571058 - (ARIA) Orca's caret navigation is kicking in
+  when it shouldn't be.
+
+==========
+
 2.24.3 - 12-Jan-2008
 
 General:
