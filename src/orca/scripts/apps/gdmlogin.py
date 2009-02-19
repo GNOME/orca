@@ -28,7 +28,6 @@ __license__   = "LGPL"
 
 import orca.default as default
 import orca.orca as orca
-import orca.settings as settings
 
 ########################################################################
 #                                                                      #
