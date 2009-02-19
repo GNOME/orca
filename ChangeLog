@@ -1,6 +1,15 @@
 2009-02-19  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/apps/Makefile.am:
+          src/orca/scripts/apps/gdmlogin.py (re-add):
+          Fix for bug #517387 - Orca should not read password out in
+          gdm login window.  I was too aggressive.  I deleted the whole
+          script instead of just a minor addition that was done as a
+          workaround.
+
+2009-02-19  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/apps/Makefile.am:
           src/orca/scripts/apps/gdmlogin.py (delete):
           Fix for bug #517387 - Orca should not read password out in
           gdm login window
