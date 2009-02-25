@@ -28,6 +28,7 @@ orca_python_PYTHON = \
 	Mozilla.py \
 	nautilus.py \
 	notification-daemon.py \
+	notify-osd.py \
 	yelp.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts/apps

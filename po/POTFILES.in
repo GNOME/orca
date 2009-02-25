@@ -45,6 +45,7 @@ src/orca/scripts/apps/gnome_segv2.py
 src/orca/scripts/apps/liferea.py
 src/orca/scripts/apps/metacity.py
 src/orca/scripts/apps/notification-daemon.py
+src/orca/scripts/apps/notify-osd.py
 src/orca/scripts/apps/pidgin/script.py
 src/orca/scripts/apps/pidgin/speech_generator.py
 src/orca/scripts/apps/pidgin/where_am_i.py
