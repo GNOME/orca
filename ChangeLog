@@ -1,3 +1,9 @@
+2009-02-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #571812 - Orca does not read the next message in
+          thunderbird when deleting if first column does not change.
+
 2009-02-19  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/apps/Makefile.am:

@@ -238,7 +238,16 @@ class Script(Gecko.Script):
             row = table.getRowAtIndex(self.getCellIndex(obj))
             for i in range(0, table.nColumns):
                 acc = table.getAccessibleAt(row, i)
-                if acc.name:                
+                if acc.name:
+                    # For some reason orca.py's check to see if the
+                    # object we're setting the locusOfFocus to is the
+                    # same as the current locusOfFocus is returning
+                    # True when it's not actually True. Therefore,
+                    # we'll set the current locusOfFocus to None as
+                    # a precaution.
+                    #
+                    if event.type.startswith("focus:"):
+                        orca_state.locusOfFocus = None
                     orca.setLocusOfFocus(event, acc)
                     consume = True
                     break
