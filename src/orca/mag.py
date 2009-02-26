@@ -470,15 +470,14 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     # Depends upon new functionality in gnome-mag, so just catch the 
     # exception if this functionality isn't there.
     #
-    try:
-        hideCursor = restore.get('magHideCursor', settings.magHideCursor)
-        if hideCursor and \
-           _fullScreenCapable and \
-           _magnifier.SourceDisplay == _magnifier.TargetDisplay and \
-           position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
-            _magnifier.hideCursor()
-    except:
-        pass
+    hideCursor = restore.get('magHideCursor', settings.magHideCursor)
+    if hideCursor \
+       and _fullScreenCapable \
+       and _magnifier.SourceDisplay == _magnifier.TargetDisplay \
+       and position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+        hideSystemPointer(True)
+    else:
+        hideSystemPointer(False)
 
     _magnifierPBag = _magnifier.getProperties()
     sdb = _magnifierPBag.getValue("source-display-bounds").value()
@@ -1004,6 +1003,7 @@ def shutdown():
     # See http://bugzilla.gnome.org/show_bug.cgi?id=375396.
     #
     try:
+        hideSystemPointer(False)
         _magnifier.clearAllZoomRegions()
         _magnifier.dispose()
     except:
@@ -1392,18 +1392,12 @@ def setZoomerColorFilter(colorFilter, updateScreen=True):
     if updateScreen:
         _zoomer.markDirty(_roi)
 
-def setSystemPointer(hidePointer):
+def hideSystemPointer(hidePointer):
     """Hide or show the system pointer.
 
     Arguments:
     -hidePointer: If True, hide the system pointer, otherwise show it.
     """
-
-    global _magnifier
-
-    if not _initialized:
-        _magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
-                                       "GNOME/Magnifier/Magnifier")
 
     # Depends upon new functionality in gnome-mag, so just catch the
     # exception if this functionality isn't there.
@@ -1414,7 +1408,7 @@ def setSystemPointer(hidePointer):
         else:
             _magnifier.showCursor()
     except:
-        pass
+        debug.printException(debug.LEVEL_FINEST)
 
 def isFullScreenCapable():
     """Returns True if we are capable of doing full screen (i.e. whether

@@ -1,3 +1,9 @@
+2009-02-26  Willie Walker <william.walker@sun.com>
+
+        * src/orca/mag.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #572215 - Opening preferences launches magnifier.
+
 2009-02-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
