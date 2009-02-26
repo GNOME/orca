@@ -687,6 +687,15 @@ class Script(default.Script):
         if self.isBuddyListEvent(event):
             return
 
+        # Handle non-chat text areas (e.g., adding a new account)
+        # the default way.
+        #
+        state = event.source.getState()
+        if state.contains(pyatspi.STATE_EDITABLE) \
+           and state.contains(pyatspi.STATE_SINGLE_LINE):
+            default.Script.onTextInserted(self, event)
+            return
+
         chatRoomTab = self.getChatRoomTab(event.source)
         if not chatRoomTab:
             default.Script.onTextInserted(self, event)
