@@ -83,7 +83,7 @@ sequence.append(utils.AssertPresentationAction(
 # Move back to tab 3
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move back to tab 3", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",

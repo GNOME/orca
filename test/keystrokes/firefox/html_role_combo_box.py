@@ -273,7 +273,7 @@ sequence.append(utils.AssertPresentationAction(
 # Press Shift Tab once to return to the Version combo box.  
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab to Version", 
     ["BRAILLE LINE:  'Version 2.16 Combo'",

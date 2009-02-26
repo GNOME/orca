@@ -207,7 +207,7 @@ sequence.append(utils.AssertPresentationAction(
 # Press Shift+Tab to move back to the Main list item.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to list item",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",

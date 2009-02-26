@@ -72,7 +72,7 @@ sequence.append(WaitForWindowActivate("Library", None))
 # Press Shift+Tab to move to the tree of bookmarks on the left.  
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>ISO_Left_Tab", 1000))
+sequence.append(KeyComboAction("<Shift>Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
     ["BUG? - We are no longer speaking the Level",
