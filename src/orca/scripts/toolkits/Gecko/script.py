@@ -3599,7 +3599,7 @@ class Script(default.Script):
                 # seems to be guilty of this.
                 #
                 #print "getNodeLevel - obj is defunct", obj
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printStack(debug.LEVEL_WARNING)
                 return -1
 
         attrs = obj.getAttributes()
@@ -3791,7 +3791,7 @@ class Script(default.Script):
                 # table of contents thing (see #3 above).
                 #
                 #print "getObjectsFromEOCs - in Table, missing an accessible"
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printStack(debug.LEVEL_WARNING)
                 return []
 
         objects = []
@@ -5066,7 +5066,7 @@ class Script(default.Script):
         else:
             if state.contains(pyatspi.STATE_DEFUNCT):
                 #print "getCaretContext: defunct object", obj
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printStack(debug.LEVEL_WARNING)
                 [obj, caretOffset] = [None, -1]
 
         return [obj, caretOffset]
