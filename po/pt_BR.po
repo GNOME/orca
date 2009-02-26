@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-23 09:15-0500\n"
-"PO-Revision-Date: 2009-02-13 22:01-0300\n"
+"POT-Creation-Date: 2009-02-25 22:44-0500\n"
+"PO-Revision-Date: 2009-02-26 00:32-0300\n"
 "Last-Translator: Andre Gondim <andregondim@ubuntu.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6402,8 +6402,8 @@ msgstr "Pressione Tab e Enter para encerrar."
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:475
 #: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:284
-#: ../src/orca/scripts/apps/Thunderbird/script.py:503
+#: ../src/orca/scripts/apps/Thunderbird/script.py:293
+#: ../src/orca/scripts/apps/Thunderbird/script.py:512
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:81
 msgid "Check Spelling"
 msgstr "Verificação ortográfica"
@@ -6502,6 +6502,7 @@ msgstr "inacessível"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notification-daemon.py:64
+#: ../src/orca/scripts/apps/notify-osd.py:84
 #, python-format
 msgid "Notification %s"
 msgstr "Notificação %s"
@@ -6843,8 +6844,8 @@ msgstr "linha %d"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:541
-#: ../src/orca/scripts/apps/Thunderbird/script.py:558
+#: ../src/orca/scripts/apps/Thunderbird/script.py:550
+#: ../src/orca/scripts/apps/Thunderbird/script.py:567
 #, python-format
 msgid "%s panel"
 msgstr "%s painel"
@@ -7209,10 +7210,9 @@ msgstr "Orca está controlando o cursor."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:90
-#, fuzzy, python-format
-#| msgid "%s level %d"
+#, python-format
 msgid "%(role)s level %(level)d"
-msgstr "%s nível %d"
+msgstr "%(role)s nível %(level)d"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
