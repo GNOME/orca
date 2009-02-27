@@ -2084,7 +2084,7 @@ class Script(script.Script):
 
         phrase = self.getText(obj, startOffset, endOffset)
 
-        if len(phrase):
+        if len(phrase) and phrase != "\n":
             if phrase.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
@@ -2092,6 +2092,10 @@ class Script(script.Script):
 
             phrase = self.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
+        else:
+            # Speak blank line if appropriate.
+            #
+            self.sayCharacter(obj)
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
@@ -2112,7 +2116,7 @@ class Script(script.Script):
             "caret=%d, speakBlankLines=%s" % \
             (caretOffset, settings.speakBlankLines))
 
-        if len(line):
+        if len(line) and line != "\n":
             if line.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
@@ -2123,25 +2127,10 @@ class Script(script.Script):
             line = self.adjustForLinks(obj, line, startOffset)
             line = self.adjustForRepeats(line)
             speech.speak(line, voice)
-
         else:
-            # Speak blank line if appropriate. It's necessary to
-            # test whether the first character is a newline, because
-            # StarOffice blank lines are empty, and so StarOffice.py
-            # handles speaking blank lines.
-            text = obj.queryText()
-            char = text.getTextAtOffset(caretOffset,
-                pyatspi.TEXT_BOUNDARY_CHAR)
-            debug.println(debug.LEVEL_FINEST,
-                "sayLine: character=<%s>, start=%d, end=%d" % \
-                (char[0], char[1], char[2]))
-
-            if char[0] == "\n" and startOffset == caretOffset \
-                   and settings.speakBlankLines:
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+            # Speak blank line if appropriate.
+            #
+            self.sayCharacter(obj)
 
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
@@ -2394,8 +2383,7 @@ class Script(script.Script):
         speech.speak(word, voice)
 
     def sayCharacter(self, obj):
-        """Speak the character under the caret.  [[[TODO: WDW - isn't the
-        caret between characters?]]]
+        """Speak the character at the caret.
 
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
@@ -2409,18 +2397,22 @@ class Script(script.Script):
         # right, then speak the character to the left of where the text
         # caret is (i.e. the selected character).
         #
-        mods = orca_state.lastInputEvent.modifiers
+        try:
+            mods = orca_state.lastInputEvent.modifiers
+            eventString = orca_state.lastInputEvent.event_string
+        except:
+            mods = 0
+            eventString = ""
+
         if (mods & settings.SHIFT_MODIFIER_MASK) \
-            and orca_state.lastNonModifierKeyEvent.event_string == "Right":
-            startOffset = offset-1
-            endOffset = offset
-        else:
-            startOffset = offset
-            endOffset = offset+1
-        if endOffset > text.characterCount:
+           and eventString in ["Right", "Down"]:
+            offset -= 1
+
+        character, startOffset, endOffset = \
+            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        if not character:
             character = "\n"
-        else:
-            character = self.getText(obj, startOffset, endOffset)
+
         if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.decode("UTF-8").isupper():
@@ -2428,31 +2420,17 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        prevChar = self.getText(obj, startOffset-1, endOffset-1)
-
         debug.println(debug.LEVEL_FINEST, \
-            "sayCharacter: prev=<%s>, char=<%s>, startOffset=%d, " % \
-            (prevChar, character, startOffset))
+            "sayCharacter: char=<%s>, startOffset=%d, " % \
+            (character, startOffset))
         debug.println(debug.LEVEL_FINEST, \
             "caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
             (offset, endOffset, settings.speakBlankLines))
 
-        # Handle speaking newlines when the right-arrow key is pressed.
-        if orca_state.lastNonModifierKeyEvent.event_string == "Right":
-            if prevChar == "\n":
-                # The cursor is at the beginning of a line.
-                # Speak a newline.
-                speech.speakCharacter("\n", voice)
-
-        # Handle speaking newlines when the left-arrow key is pressed.
-        elif orca_state.lastNonModifierKeyEvent.event_string == "Left":
-            if character == "\n":
-                # The cursor is at the end of a line.
-                # Speak a newline.
-                speech.speakCharacter("\n", voice)
-
         if character == "\n":
-            if prevChar == "\n":
+            line = text.getTextAtOffset(max(0, offset),
+                                        pyatspi.TEXT_BOUNDARY_LINE_START)
+            if not line[0] or line[0] == "\n":
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
                 if settings.speakBlankLines:
@@ -2460,9 +2438,9 @@ class Script(script.Script):
                     # user has navigated to an empty line.
                     #
                     speech.speak(_("blank"), voice, False)
-        else:
-            speech.speakCharacter(character, voice)
+                return
 
+        speech.speakCharacter(character, voice)
 
     def isFunctionalDialog(self, obj):
         """Returns true if the window is a functioning as a dialog.
@@ -4035,29 +4013,58 @@ class Script(script.Script):
         startOffset, endOffset = spokenRange
 
         if not obj.getState().contains(pyatspi.STATE_FOCUSED):
-            # If we are selecting text across object boundaries with
-            # Shift+Down and doing so from the very beginning of the
-            # line, we will get an event telling us that the selection
-            # has changed for the line we just left.  Because nothing
-            # is selected on the line which contains the caret, we won't
-            # speak "selected."  So check to see if the event is for the
-            # object we just left and be sure that we don't have a spoken
-            # range (otherwise, we'll say selected twice when we are
-            # selecting across boundaries from the middle of the line).
+            # We're selecting across paragraph (or other text object)
+            # boundaries. If we're here, the selection has changed in
+            # an object which does not have the caret. We need to try
+            # to sort this out.
             #
             lastPos = self.pointOfReference.get("lastCursorPosition")
-            if not lastPos or spokenRange != [0, 0]:
+            if not lastPos:
+                # We have no point of reference. Bail.
+                #
+                return
+            elif endOffset - startOffset > 1:
+                # We're coming at the line from below. And didn't just
+                # land on a blank/empty line. We have other methods for
+                # dealing with this situation.
+                #
                 return
 
-            prevObj = None
+            # We must be approaching from the top, left, or right. Or
+            # from below but we've found a blank line. Our stored point
+            # of reference tells us our caret location. Figure out how
+            # we got here by looking at our position with respect to
+            # the event under consideration.
+            #
+            relationType = None
             for relation in lastPos[0].getRelationSet():
-                if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
-                    prevObj = relation.getTarget(0)
+                if relation.getRelationType() in [pyatspi.RELATION_FLOWS_FROM,
+                                                  pyatspi.RELATION_FLOWS_TO] \
+                   and self.isSameObject(obj, relation.getTarget(0)):
+                    relationType = relation.getRelationType()
+                    break
 
-            if not self.isSameObject(prevObj, obj):
-                return
+            # If there's a completely blank line in between our previous
+            # and current locations, where we came from will lack any
+            # offically-selectable characters. As a result, we won't 
+            # indicate when a blank line has been selected. Under these
+            # conditions, we'll try to backtrack further.
+            #
+            endOffset = 0
+            while obj and not endOffset:
+                try:
+                    endOffset = obj.queryText().characterCount
+                    startOffset = max(0, endOffset - 1)
+                except:
+                    pass
 
-            endOffset = obj.queryText().characterCount
+                if not endOffset:
+                    for relation in obj.getRelationSet():
+                        if relation.getRelationType() == relationType:
+                            obj = relation.getTarget(0)
+                            break
+                    else:
+                        break
 
         self.speakTextSelectionState(obj, startOffset, endOffset)    
             

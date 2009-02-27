@@ -181,7 +181,8 @@ sequence.append(WaitAction("object:text-caret-moved",
 sequence.append(utils.AssertPresentationAction(
     "Page down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1"]))
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 ########################################################################
 # Test #9 - Shift+Page_Up to select text.
@@ -214,6 +215,7 @@ sequence.append(utils.AssertPresentationAction(
     "Shift+Page_Down to deselect text",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'page unselected from cursor position'"]))
 
 ########################################################################

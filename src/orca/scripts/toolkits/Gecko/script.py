@@ -1507,6 +1507,19 @@ class Script(default.Script):
 
         default.Script.onTextInserted(self, event)
 
+    def onTextSelectionChanged(self, event):
+        """Called when an object's text selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if not self.inDocumentContent(orca_state.locusOfFocus) \
+           and self.inDocumentContent(event.source):
+            return
+
+        default.Script.onTextSelectionChanged(self, event)
+
     def onChildrenChanged(self, event):
         """Called when a child node has changed.  In particular, we are looking
         for addition events often associated with Javascipt insertion.  One such

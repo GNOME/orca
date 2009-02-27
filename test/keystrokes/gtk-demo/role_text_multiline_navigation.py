@@ -177,7 +177,8 @@ sequence.append(WaitAction("object:text-caret-moved",
 sequence.append(utils.AssertPresentationAction(
     "End to end of line",
     ["BRAILLE LINE:  'time in the lab and not enough time $l'",
-     "     VISIBLE:  ' in the lab and not enough time ', cursor=32"]))
+     "     VISIBLE:  ' in the lab and not enough time ', cursor=32",
+     "SPEECH OUTPUT: 'newline'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -320,7 +321,8 @@ sequence.append(WaitAction("object:text-caret-moved",
 sequence.append(utils.AssertPresentationAction(
     "End of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=21"]))
+     "     VISIBLE:  'This is only a test. $l', cursor=21",
+     "SPEECH OUTPUT: 'newline'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -333,7 +335,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right to blank line",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -347,7 +348,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right to beginning of 'PLEASE'",
     ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'P'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -483,7 +483,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left to blank line",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -497,7 +496,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right to beginning of 'PLEASE' again",
     ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'P'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -625,7 +623,8 @@ sequence.append(WaitAction("object:text-caret-moved",
 sequence.append(utils.AssertPresentationAction(
     "End of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=21"]))
+     "     VISIBLE:  'This is only a test. $l', cursor=21",
+     "SPEECH OUTPUT: 'newline'"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
 # the regression tests use, the BackSpace will not give the same output

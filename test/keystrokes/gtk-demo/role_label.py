@@ -51,7 +51,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'number of times: $l', cursor=17",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times: label'"]))
+     "number of times: label'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

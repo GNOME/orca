@@ -2069,13 +2069,6 @@ class Script(default.Script):
             braille.displayRegions( \
                 self.brailleGenerator.getBrailleRegions(event.source))
         else:
-            # Speak a blank line, if appropriate.
-            if self.speakBlankLine(event.source):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"), None, False)
-
             default.Script.onCaretMoved(self, event)
 
         # If we're still here, we must be convinced that this paragraph
