@@ -3064,7 +3064,8 @@ class Script(default.Script):
                    or not stateset.contains(pyatspi.STATE_VISIBLE):
                 return False
             attrs = self._getAttrDictionary(event.source)
-            return 'container-live' in attrs
+            return 'container-live' in attrs \
+                   or event.source.getRole() == pyatspi.ROLE_ALERT 
         else:
             return False
 
