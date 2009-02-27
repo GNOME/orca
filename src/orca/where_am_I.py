@@ -820,6 +820,23 @@ class WhereAmI:
         # Translators: this is the protocol of a link eg. http, mailto.
         #
         linkoutput = _('%s link') %link_uri_info[0]
+        text = self._script.getDisplayedText(obj)
+        if text:
+            linkoutput += " " + text
+        else:
+            # If there's no text for the link, expose part of the
+            # URI to the user.
+            #
+            basename = self._script.getLinkBasename(obj)
+            if basename:
+                linkoutput += " " + basename
+
+        # If the link has a child which is an image, we want
+        # to indicate that.
+        #
+        if obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+            linkoutput += " " + self._getSpeechForRoleName(obj[0])
+
         domainoutput = ''
         sizeoutput = ''
       
