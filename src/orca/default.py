@@ -4417,6 +4417,12 @@ class Script(script.Script):
                                             "%s %s pixels",
                                             float(value[0])) % \
                                             (localizedKey, value[0])
+                    elif key == "family-name":
+                        # In Gecko, we get a huge list and we just want the
+                        # first one.  See:
+                        # http://www.w3.org/TR/CSS2/fonts.html#font-family-prop
+                        #
+                        line = attribute.split(",")[0].strip().strip('"')
 
                     line = line or (localizedKey + " " + localizedValue)
                     speech.speak(line)
