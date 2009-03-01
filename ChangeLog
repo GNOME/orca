@@ -1,3 +1,10 @@
+2009-03-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/line_nav_bug_570757.py: (new)
+          Fix for bug #570757 - Orca can get stuck when browsing pages
+          with embedded panels in FF 3.x.
+
 2009-02-27  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:

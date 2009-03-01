@@ -5223,7 +5223,8 @@ class Script(default.Script):
                             cOffset = childText.characterCount - 1
                             [cLine, cStart, cEnd] = \
                                 childText.getTextAtOffset(cOffset, boundary)
-                            if cStart == 0:
+                            if cStart == 0 \
+                               and obj.getRole() != pyatspi.ROLE_PANEL:
                                 # It starts on this line.
                                 #
                                 obj = child
