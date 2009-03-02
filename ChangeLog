@@ -1,3 +1,17 @@
+2009-03-01  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca_glade.py:
+          src/orca/orca_quit.py:
+          src/orca/orca_gui_find.py:
+          src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #573535 - Orca should use the 16x16 pixels application
+          icon for Main and Preferences windows.  This keeps the icon at the
+          48x48 size that has been used to date, but makes sure it is used
+          on all the windows shown by Orca.  If we decide to go from 48x48
+          to 16x16, we can change the new set_orca_icon method in 
+          orca_glade.py.
+
 2009-03-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

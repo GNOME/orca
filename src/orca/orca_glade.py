@@ -50,6 +50,18 @@ class GladeWrapper:
             instance_attributes[attribute] = getattr(self, attribute)
         self.widgets.signal_autoconnect(instance_attributes)
 
+    def set_orca_icon(self, window):
+        """Set the "orca.png" icon as the icon for the Orca configuration
+        window."""
+
+        icon_theme = gtk.icon_theme_get_default()
+        try:
+            icon = icon_theme.load_icon("orca", 48, 0)
+        except:
+            return
+        else:
+            window.set_icon(icon)
+
     def get_widget(self, attribute):
         """Return the requested widget. This routine has been introduced
         (and calls to it made by the Orca Glade sub-classes), to prevent

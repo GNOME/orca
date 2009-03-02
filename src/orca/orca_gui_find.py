@@ -79,6 +79,7 @@ class OrcaFindGUI(orca_glade.GladeWrapper):
         """
 
         findDialog = self.get_widget("findDialog")
+        self.set_orca_icon(findDialog)
 
         # Set the current time on the Find GUI dialog so that it'll
         # get focus. set_user_time is a new call in pygtk 2.9.2 or later.

@@ -50,6 +50,7 @@ class OrcaQuitGUI(orca_glade.GladeWrapper):
         """
 
         quitDialog = self.get_widget("quitDialog")
+        self.set_orca_icon(quitDialog)
 
         # Set the current time on the quit GUI dialog so that it'll
         # get focus. set_user_time is a new call in pygtk 2.9.2 or later.

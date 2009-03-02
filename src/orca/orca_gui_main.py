@@ -41,24 +41,14 @@ class OrcaMainGUI(orca_glade.GladeWrapper):
     def init(self):
         pass
 
-    def _setMainWindowIcon(self):
-        """Set the "orca.png" icon as the icon for the Orca main window."""
-
-        icon_theme = gtk.icon_theme_get_default()
-        try:
-            icon = icon_theme.load_icon("orca", 48, 0)
-        except:
-            return
-
-        self.get_widget("mainWindow").set_icon(icon)
-
     def showGUI(self):
         """Show the Orca main window GUI. This assumes that the GUI has 
         already been created.
         """
 
-        self._setMainWindowIcon()
-        self.get_widget("mainWindow").show()
+        mainWindow = self.get_widget("mainWindow")
+        self.set_orca_icon(mainWindow)
+        mainWindow.show()
 
     def hideGUI(self):
         """Hide the Orca main window GUI. This assumes that the GUI has

@@ -1943,6 +1943,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         orcaSetupWindow = self.get_widget("orcaSetupWindow")
+        self.set_orca_icon(orcaSetupWindow)
 
         # We want the Orca preferences window to have focus when it is
         # shown. First try using the present() call. If this isn't present
