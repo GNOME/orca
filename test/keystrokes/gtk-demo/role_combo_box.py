@@ -201,7 +201,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box with selected text",
@@ -241,14 +241,10 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box menu",
     ["BRAILLE LINE:  'gtk-demo Application Window'",
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
-     "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: 'window'",
      "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'One'"]))
 
 ########################################################################
@@ -279,13 +275,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Editable panel'",
      "SPEECH OUTPUT: 'Two combo box'"]))
 
-sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Two text selected",

@@ -4422,7 +4422,8 @@ class Script(script.Script):
                         # first one.  See:
                         # http://www.w3.org/TR/CSS2/fonts.html#font-family-prop
                         #
-                        line = attribute.split(",")[0].strip().strip('"')
+                        localizedValue = \
+                            attribute.split(",")[0].strip().strip('"')
 
                     line = line or (localizedKey + " " + localizedValue)
                     speech.speak(line)
