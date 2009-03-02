@@ -1,3 +1,88 @@
+2.25.92 - 02-Mar-2009
+
+General:
+
+* Fix for bug #387556 - Arrowing past last character at end of line in
+  Orca results in no speech
+
+* More fixing for bug #419123 - Modified speech settings do not change
+  immediately in preferences dialog.  There was an issue with setting
+  the uppercase and/or hyperlink voice settings the first time.
+
+* Fix for bug #517387 - Orca should not read password out in gdm login
+  window
+
+* Fix for bug #570390 - Spellcheck in evolution is badly broken
+
+* Fix for bug #572215 - Opening preferences launches magnifier
+
+* Fix for bug #572218 - Order of variables not changeable
+
+* Fix for bug #572294 - Need a sanity check in the default script's
+  locusOfFocusChanged
+
+* Fix for bug #573156 - Add a notify-osd script
+
+* Fix for bug #573535 - Orca should use the 16x16 pixels application
+  icon for Main and Preferences windows.  This keeps the icon at the
+  48x48 size that has been used to date, but makes sure it is used on
+  all the windows shown by Orca.  If we decide to go from 48x48 to
+  16x16, we can change the new set_orca_icon method in orca_glade.py.
+
+Pidgin:
+
+* Fix for bug #572303 - Double-speaking of characters entered into
+  pidgin account creation
+
+Thunderbird:
+
+* Fix for bug #571812 - Orca does not read the next message in
+  thunderbird when deleting if first column does not change
+
+Firefox:
+
+* Fix for bug #570550 - (ARIA) UIUC Number Guessing Game Alert not
+  presented when it changes
+
+* Fix for bug #570567 - Where am I for link does not speak the link
+  text
+
+* Fix for bug #570757 - Orca can get stuck when browsing pages with
+  embedded panels in FF 3.x
+
+* Fix for bug #573174 - Gecko script.py calls debug.printException
+  when there isn't an exception
+
+* Work on bug #573303 - Support text attribute and spelling error
+  notification in FF.  Limit the speaking of font names to just the
+  first family listed
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ca      Catalan              Gil Forcada
+    en_GB   British English      Philip Withnall
+    es      Spanish              Francisco Javier Dorado Martinez and 
+                                 Jorge Gonzalez
+    eu      Basque               Inaki Larranaga Murgoitio
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Claude Paroz
+    hu      Hungarian            Gabor Keleman
+    ja      Japanese             Takeshi Aihana
+    nl      Dutch                Wouter Bolsterlee
+    pl      Polish               Tomasz Dominikowski
+    pt      Portuguese           Rui Batista and Duarte Loreto
+    pt_BR   Brazilian Portuguese Tiago Melo Casal, Og Maciel, and
+    ro      Romanian             Adi Roiban, Lucian Adrian Grijincu and
+                                 Jani Monoses
+    sv      Swedish              Daniel Nylander
+    th      Thai                 Theppitak Karoonboonyanan
+    tr      Turkish              Baris Cicek
+
+===========
+
 2.25.91 - 16-Feb-2009
 
 General:
