@@ -4484,8 +4484,7 @@ class Script(default.Script):
                                              pyatspi.ROLE_LIST]
 
         text = self.queryNonEmptyText(obj)
-        if text and not (self.isAriaWidget(obj) \
-                         and obj.getRole() == pyatspi.ROLE_LIST):
+        if text:
             unicodeText = self.getUnicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,
@@ -4591,8 +4590,7 @@ class Script(default.Script):
                                              pyatspi.ROLE_LIST]
 
         text = self.queryNonEmptyText(obj)
-        if text and not (self.isAriaWidget(obj) \
-                         and obj.getRole() == pyatspi.ROLE_LIST):
+        if text:
             unicodeText = self.getUnicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,

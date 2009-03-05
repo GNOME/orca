@@ -1,3 +1,9 @@
+2009-03-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/codetalks_list.py: (new)
+          Fix for bug #570557 - (ARIA) List items not presented.
+
 2009-03-02  Willie Walker <william.walker@sun.com>
 
         * configure.in, README, NEWS:
