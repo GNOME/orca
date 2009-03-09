@@ -1,8 +1,9 @@
 # Italian translation for Orca
 # Copyright (C) 2005 Sun Microsystems Inc.
+# Copyright (C) 2009 Free Softwaer Foundation, Inc.
 # This file is distributed under the same license as the Orca package.
 # Aldo "Xoen" Giambelluca <xoen@email.it>, 2005.
-# Luca Ferretti <elle.uca@libero.it>, 2006-2008.
+# Luca Ferretti <elle.uca@libero.it>, 2006-2009.
 #
 #
 # magnify vs zoom
@@ -19,8 +20,8 @@ msgstr ""
 "Project-Id-Version: Orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2009-03-05 17:44+0000\n"
-"PO-Revision-Date: 2009-03-06 21:49+0100\n"
+"POT-Creation-Date: 2009-03-08 15:06+0000\n"
+"PO-Revision-Date: 2009-03-09 21:11+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -8933,6 +8934,8 @@ msgctxt "textattr"
 msgid "outline"
 msgstr "contorno"
 
+# Nella UI c'è solo sottolineato e barrato
+# metto sovralineato per la proprietà transitiva delle traduzioni :)
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
 #. See:
@@ -8941,7 +8944,7 @@ msgstr "contorno"
 #: ../src/orca/text_attribute_names.py:377
 msgctxt "textattr"
 msgid "overline"
-msgstr ""
+msgstr "sovralineato"
 
 # GNOME-2-26
 # Milo
@@ -8967,8 +8970,10 @@ msgctxt "textattr"
 msgid "blink"
 msgstr "lampeggiante"
 
-# GNOME-2-24
-# FIXME da controllare su oo.o
+# La proprietà "text-shadow" prevede due valori:
+#   * none
+#   * black
+# Nella UI appare come ombreggiato, uso tale termine
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-shadow".
 #. See:
@@ -8977,7 +8982,7 @@ msgstr "lampeggiante"
 #: ../src/orca/text_attribute_names.py:398
 msgctxt "textattr"
 msgid "black"
-msgstr ""
+msgstr "ombreggiato"
 
 # GNOME-2-24
 # da controllare su oo.o
@@ -9045,7 +9050,7 @@ msgstr "parola"
 #: ../src/orca/text_attribute_names.py:440
 msgctxt "textattr"
 msgid "ltr"
-msgstr ""
+msgstr "sin-des"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -9055,7 +9060,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:447
 msgctxt "textattr"
 msgid "rtl"
-msgstr ""
+msgstr "des-sin"
 
 # GNOME-2-24
 # allineamento
@@ -9291,7 +9296,7 @@ msgstr "Intestazione"
 #: ../src/orca/text_attribute_names.py:594
 msgctxt "textattr"
 msgid "baseline"
-msgstr ""
+msgstr "linea di base"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9301,7 +9306,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:601
 msgctxt "textattr"
 msgid "sub"
-msgstr ""
+msgstr "sotto"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9311,7 +9316,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:608
 msgctxt "textattr"
 msgid "super"
-msgstr ""
+msgstr "sopra"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9321,7 +9326,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:615
 msgctxt "textattr"
 msgid "top"
-msgstr ""
+msgstr "alto"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9331,7 +9336,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:622
 msgctxt "textattr"
 msgid "text-top"
-msgstr ""
+msgstr "testo-alto"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9341,7 +9346,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:629
 msgctxt "textattr"
 msgid "middle"
-msgstr ""
+msgstr "medio"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9351,7 +9356,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:636
 msgctxt "textattr"
 msgid "bottom"
-msgstr ""
+msgstr "basso"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9361,7 +9366,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:643
 msgctxt "textattr"
 msgid "text-bottom"
-msgstr ""
+msgstr "teasto-basso"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align" and "writing-mode".
@@ -9372,8 +9377,9 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:651
 msgctxt "textattr"
 msgid "inherit"
-msgstr ""
+msgstr "ereditato"
 
+# uso le iniziali di sinistra, destra, alto, basso
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
 #. See:
@@ -9382,7 +9388,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:658
 msgctxt "textattr"
 msgid "lr-tb"
-msgstr ""
+msgstr "sd-ab"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9392,7 +9398,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:665
 msgctxt "textattr"
 msgid "rl-tb"
-msgstr ""
+msgstr "ds-ab"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9402,7 +9408,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:672
 msgctxt "textattr"
 msgid "tb-rl"
-msgstr ""
+msgstr "ab-ds"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9412,7 +9418,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:679
 msgctxt "textattr"
 msgid "tb-lr"
-msgstr ""
+msgstr "ab-sb"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9422,7 +9428,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:686
 msgctxt "textattr"
 msgid "bt-rl"
-msgstr ""
+msgstr "ba-ds"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9432,7 +9438,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:693
 msgctxt "textattr"
 msgid "bt-lr"
-msgstr ""
+msgstr "ba-sd"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9442,7 +9448,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:700
 msgctxt "textattr"
 msgid "lr"
-msgstr ""
+msgstr "sd"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9452,7 +9458,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:707
 msgctxt "textattr"
 msgid "rl"
-msgstr ""
+msgstr "ds"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9462,7 +9468,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:714
 msgctxt "textattr"
 msgid "tb"
-msgstr ""
+msgstr "ab"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "strikethrough." It refers to the line style.
