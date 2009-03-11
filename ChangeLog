@@ -1,3 +1,12 @@
+2009-03-11  Willie Walker <william.walker@sun.com>
+
+        * test/harness/utils.py:
+          test/keystrokes/firefox/xul_role_push_button.py:
+          Update to work with Firefox 3.1 Beta 3 on OpenSolaris 2008.11 b108.
+          Note - this requires a new xmodmap command that can be found
+          on http://live.gnome.org/Orca/RegressionTesting.  The main purpose
+          is to add ISO_Left_Shift to the keymap.
+
 2009-03-05  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:

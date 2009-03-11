@@ -26,7 +26,7 @@ sequence.append(PauseAction(3000))
 # In the Print dialog, shift+tab to move to the push button.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to button",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Cancel Button'",
