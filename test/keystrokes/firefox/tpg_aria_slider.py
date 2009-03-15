@@ -1256,9 +1256,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Vertical Slider", 
-    ["BRAILLE LINE:  '0 $l'",
-     "     VISIBLE:  '0 $l', cursor=0",
-     "BRAILLE LINE:  'Minimum Filesize 0 units Slider'",
+    ["BRAILLE LINE:  'Minimum Filesize 0 units Slider'",
      "     VISIBLE:  'Minimum Filesize 0 units Slider', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Minimum Filesize slider 0 units'"]))

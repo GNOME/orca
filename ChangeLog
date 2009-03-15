@@ -1,3 +1,20 @@
+2009-03-14  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
+          test/keystrokes/firefox/dojo_button.py:
+          test/keystrokes/firefox/tpg_aria_slider.py:
+          test/keystrokes/firefox/uiuc_alert.py:
+          test/keystrokes/firefox/codetalks_button.py:
+          test/keystrokes/firefox/dojo_bug_570566.py:
+          test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/line_nav_slash_test.py:
+          test/keystrokes/firefox/line_nav_enter_bug.py:
+          Updated regression tests.
+
 2009-03-11  Willie Walker <william.walker@sun.com>
 
         * test/harness/utils.py:

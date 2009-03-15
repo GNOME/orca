@@ -26,8 +26,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
-    ["KNOWN ISSUE - There is a Mozilla bug that causes us to not get window activate events, so we're not speaking the alert at the moment",
-     "BRAILLE LINE:  'about:blank HtmlPane'",
+    ["BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "BRAILLE LINE:  'about:blank'",
      "     VISIBLE:  'about:blank', cursor=0",

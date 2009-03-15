@@ -80,8 +80,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Popup dialog", 
-    ["KNOWN ISSUE - https://bugzilla.mozilla.org/show_bug.cgi?id=466332",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog'",
      "     VISIBLE:  'The page at http://codetalks.org', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",

@@ -261,14 +261,14 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "Open Submenu", 
     ["KNOWN ISSUE -- http://bugzilla.gnome.org/show_bug.cgi?id=569345",
-     "BRAILLE LINE:  'Submenu Item One'",
-     "     VISIBLE:  'Submenu Item One', cursor=1",
      "BRAILLE LINE:  'Menu'",
      "     VISIBLE:  'Menu', cursor=1",
+     "BRAILLE LINE:  'Submenu Item One'",
+     "     VISIBLE:  'Submenu Item One', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Submenu Item One'",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'Submenu Item One'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -296,14 +296,14 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "Right to open Deeper Submenu", 
     ["KNOWN ISSUE -- http://bugzilla.gnome.org/show_bug.cgi?id=569345",
-     "BRAILLE LINE:  'Sub-sub-menu Item One'",
-     "     VISIBLE:  'Sub-sub-menu Item One', cursor=1",
      "BRAILLE LINE:  'Menu'",
      "     VISIBLE:  'Menu', cursor=1",
+     "BRAILLE LINE:  'Sub-sub-menu Item One'",
+     "     VISIBLE:  'Sub-sub-menu Item One', cursor=1",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Sub-sub-menu Item One'",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'Sub-sub-menu Item One'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

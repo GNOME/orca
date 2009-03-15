@@ -43,12 +43,12 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Edit Menu'",
      "     VISIBLE:  'Edit Menu', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Undo grayed\(Control Z\)'",
-     "     VISIBLE:  'Undo grayed(Control Z)', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Undo( grayed|)\(Control Z\)'",
+     "     VISIBLE:  'Undo( grayed|)\(Control Z\)', cursor=1",
      "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
      "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Undo grayed Control Z'"]))
+     "SPEECH OUTPUT: 'Undo( grayed|) Control Z'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -99,8 +99,8 @@ sequence.append(utils.AssertPresentationAction(
 # This seems to vary depending on whether or not something is in the
 # clipboard. Therefore, we'll check for either.
 #
-menuItem = "(Paste|Select All)"
-itemShortcut = "(V|A)"
+menuItem = "(Paste|Select All|Undo)"
+itemShortcut = "(V|A|Z)"
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

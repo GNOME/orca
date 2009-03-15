@@ -69,17 +69,21 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  'Recent Tags h4'",
+    ["BUG? - We're speaking the object which just gave up focus",
+     "BRAILLE LINE:  'Recent Tags h4'",
      "     VISIBLE:  'Recent Tags h4', cursor=1",
-     "SPEECH OUTPUT: 'Recent Tags link heading level 4'"]))
+     "SPEECH OUTPUT: 'Recent Tags link heading level 4'",
+     "SPEECH OUTPUT: 'Science'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'Slashdot Login h4'",
+    ["BUG? - We're speaking the object which just gave up focus",
+     "BRAILLE LINE:  'Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
-     "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
+     "SPEECH OUTPUT: 'Slashdot Login heading level 4'",
+     "SPEECH OUTPUT: 'Recent Tags'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -178,18 +182,21 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BRAILLE LINE:  'Science h4'",
+    ["BUG? - We're speaking the object which just gave up focus",
+     "BRAILLE LINE:  'Science h4'",
      "     VISIBLE:  'Science h4', cursor=1",
-     "SPEECH OUTPUT: 'Science link heading level 4'"]))
+     "SPEECH OUTPUT: 'Science link heading level 4'",
+     "SPEECH OUTPUT: 'Recent Tags'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
-    ["BUG? - We're picking up Science in the braille",
-     "BRAILLE LINE:  'Services h4 Science h4'",
-     "     VISIBLE:  'Services h4 Science h4', cursor=1",
-     "SPEECH OUTPUT: 'Services heading level 4'"]))
+    ["BUG? - We're speaking the object which just gave up focus",
+     "BRAILLE LINE:  'Services h4'",
+     "     VISIBLE:  'Services h4', cursor=1",
+     "SPEECH OUTPUT: 'Services heading level 4'",
+     "SPEECH OUTPUT: 'Science'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
