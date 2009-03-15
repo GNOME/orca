@@ -4328,7 +4328,7 @@ msgstr "Nagyító"
 
 #: ../src/orca/orca-setup.glade.h:90
 msgid "Mouse poi_nter:"
-msgstr "Egér _mutató:"
+msgstr "Egér_mutató:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.glade.h:92
