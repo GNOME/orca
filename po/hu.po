@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-19 13:37+0100\n"
-"PO-Revision-Date: 2009-02-17 23:58+0100\n"
+"PO-Revision-Date: 2009-03-15 03:58+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -4466,7 +4466,7 @@ msgstr "Az e_gér alatti objektum felolvasása"
 
 #: ../src/orca/orca-setup.glade.h:136
 msgid "Speak progress bar _updates"
-msgstr "_Felolvasás folyamatjelzőjének frissítése"
+msgstr "Folyamatjelző frissítésének _felolvasása"
 
 #: ../src/orca/orca-setup.glade.h:137
 msgid "Speak tutorial messages"
