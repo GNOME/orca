@@ -4,20 +4,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Ani Peter <apeter@redhat.com>, 2006, 2008.
+# Hari|ഹരി  Vishnu | വിഷ്ണു <harivishnu@gmail.com>, 2009
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.ml\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=general\n"
-"POT-Creation-Date: 2009-02-18 16:22+0000\n"
-"PO-Revision-Date: 2009-03-13 22:01+0530\n"
-"Last-Translator: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
+"POT-Creation-Date: 2009-03-13 20:19+0000\n"
+"PO-Revision-Date: 2009-03-16 02:34+0730\n"
+"Last-Translator: Hari|ഹരി  Vishnu | വിഷ്ണു <harivishnu@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -171,15 +171,18 @@ msgstr "ബെല്‍ജിയം ഡച്ച് ഗ്രേഡ് 1"
 msgid "Orca Preferences for %s"
 msgstr "%s-നുള്ള ഓര്‍ക്കാ മുന്‍ഗണനകള്‍"
 
-#: ../src/orca/app_gui_prefs.py:210 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2147 ../src/orca/orca_gui_prefs.py:2252
+#: ../src/orca/app_gui_prefs.py:210
+#: ../src/orca/keybindings.py:157
+#: ../src/orca/orca_gui_prefs.py:2136
+#: ../src/orca/orca_gui_prefs.py:2241
 msgid "Orca"
 msgstr "ഓര്‍ക്കാ"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:215 ../src/orca/orca_gui_prefs.py:2258
+#: ../src/orca/app_gui_prefs.py:215
+#: ../src/orca/orca_gui_prefs.py:2247
 msgid "Unbound"
 msgstr "അണ്‍ബൌണ്ട്"
 
@@ -192,10 +195,10 @@ msgstr "ഒരു പ്രയോഗത്തിനും ഫോക്കസ് 
 #. Orca for the application that currently has focus.
 #.
 #: ../src/orca/app_gui_prefs.py:326
-#, fuzzy, python-format
+#, python-format
 #| msgid "Orca Preferences for %s"
 msgid "Starting Orca Preferences for %s."
-msgstr "%s-നുള്ള ഓര്‍ക്കാ മുന്‍ഗണനകള്‍"
+msgstr "%s-നുള്ള ഓര്‍ക്കാ മുന്‍ഗണനകള്‍ "
 
 #. Translators: this announces that a bookmark has been entered.
 #. Orca allows users to tell it to remember a particular spot in an
@@ -229,7 +232,7 @@ msgstr ""
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:132
 #, python-format
 msgid "shared ancestor %s"
-msgstr ""
+msgstr "പങ്കുവെക്കുന്ന മുന്‍ഗാമി %s"
 
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
@@ -237,7 +240,7 @@ msgstr ""
 #: ../src/orca/bookmarks.py:133
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:139
 msgid "comparison unknown"
-msgstr ""
+msgstr "തുലനം അറിയില്ല"
 
 #. Translators: this announces that a bookmark has been saved to
 #. disk
@@ -258,49 +261,56 @@ msgstr "ഓര്‍മ്മക്കുറിപ്പുകള്‍ സൂ�
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:195 ../src/orca/speechgenerator.py:220
+#: ../src/orca/braillegenerator.py:195
+#: ../src/orca/speechgenerator.py:220
 msgid "grayed"
-msgstr ""
+msgstr "ഗ്രേ ആക്കിയിരിക്കുന്നത്"
 
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows plus the total number of
 #. windows that this application has.
 #.
 #: ../src/orca/braillegenerator.py:620
-#, fuzzy, python-format
+#, python-format
 #| msgid "dialog"
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
-msgstr[0] "ഡയലോഗ്"
-msgstr[1] "ഡയലോഗ്"
+msgstr[0] "(%d ഡയലോഗ്)"
+msgstr[1] "(%d ഡയലോഗുകള്‍)"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:757 ../src/orca/braillegenerator.py:1404
+#: ../src/orca/braillegenerator.py:757
+#: ../src/orca/braillegenerator.py:1404
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:91
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:144
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py:70
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:70
-#: ../src/orca/speechgenerator.py:913 ../src/orca/speechgenerator.py:1528
-#: ../src/orca/where_am_I.py:668 ../src/orca/where_am_I.py:733
+#: ../src/orca/speechgenerator.py:913
+#: ../src/orca/speechgenerator.py:1528
+#: ../src/orca/where_am_I.py:668
+#: ../src/orca/where_am_I.py:733
 msgid "expanded"
-msgstr ""
+msgstr "നീട്ടം കൂട്ടിയത്‌"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:763 ../src/orca/braillegenerator.py:1410
+#: ../src/orca/braillegenerator.py:763
+#: ../src/orca/braillegenerator.py:1410
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:110
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:150
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py:76
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:77
-#: ../src/orca/speechgenerator.py:919 ../src/orca/speechgenerator.py:1547
-#: ../src/orca/where_am_I.py:674 ../src/orca/where_am_I.py:739
+#: ../src/orca/speechgenerator.py:919
+#: ../src/orca/speechgenerator.py:1547
+#: ../src/orca/where_am_I.py:674
+#: ../src/orca/where_am_I.py:739
 msgid "collapsed"
-msgstr ""
+msgstr "കുറച്ചു കാണിക്കുക"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -314,18 +324,21 @@ msgstr "ലെവല്‍ %d"
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/braillegenerator.py:1299 ../src/orca/braillegenerator.py:1340
+#: ../src/orca/braillegenerator.py:1299
+#: ../src/orca/braillegenerator.py:1340
 #: ../src/orca/flat_review.py:1071
-#: ../src/orca/scripts/apps/evolution/script.py:829
+#: ../src/orca/scripts/apps/evolution/script.py:908
 #: ../src/orca/scripts/apps/evolution/where_am_i.py:61
-#: ../src/orca/speechgenerator.py:1452 ../src/orca/speechgenerator.py:1492
-#: ../src/orca/speechgenerator.py:1626 ../src/orca/tutorialgenerator.py:521
-#: ../src/orca/tutorialgenerator.py:561 ../src/orca/where_am_I.py:1341
-#: ../src/orca/where_am_I.py:1371
-#, fuzzy
+#: ../src/orca/speechgenerator.py:1452
+#: ../src/orca/speechgenerator.py:1492
+#: ../src/orca/speechgenerator.py:1626
+#: ../src/orca/tutorialgenerator.py:521
+#: ../src/orca/tutorialgenerator.py:561
+#: ../src/orca/where_am_I.py:1358
+#: ../src/orca/where_am_I.py:1388
 #| msgid "toggle button"
 msgid "toggle"
-msgstr "ടൊഗിള്‍ ബട്ടണ്‍"
+msgstr "ടൊഗിള്‍ "
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -373,10 +386,9 @@ msgstr "താഴേക്കുള്ള വരി"
 #. When pressing the button, it instructs the braille display to freeze.
 #.
 #: ../src/orca/braille.py:196
-#, fuzzy
 #| msgid "Tree"
 msgid "Freeze"
-msgstr "Tree"
+msgstr "നിര്‍ത്തി വെക്കുക"
 
 #. Translators: this is a command for a button on a refreshable braille
 #. display (an external hardware device used by people who are blind).
@@ -407,8 +419,10 @@ msgstr "കര്‍സറിന്റെ സ്ഥാനം"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6870
-#: ../src/orca/default.py:6877 ../src/orca/keynames.py:133
+#: ../src/orca/chnames.py:39
+#: ../src/orca/default.py:6886
+#: ../src/orca/default.py:6893
+#: ../src/orca/keynames.py:133
 msgid "space"
 msgstr "space"
 
@@ -422,7 +436,8 @@ msgstr "ന്യൂലൈന്‍"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:117
+#: ../src/orca/chnames.py:47
+#: ../src/orca/keynames.py:117
 msgid "tab"
 msgstr "ടാബ്"
 
@@ -658,7 +673,8 @@ msgstr "വിടവുള്ള ബാര്‍ (¦ എന്ന ചിഹ്�
 #.
 #. Translators: spoken words for the rolename of a section (e.g., in html).
 #.
-#: ../src/orca/chnames.py:203 ../src/orca/rolenames.py:840
+#: ../src/orca/chnames.py:203
+#: ../src/orca/rolenames.py:840
 msgid "section"
 msgstr "വിഭാഗം"
 
@@ -678,25 +694,25 @@ msgstr "പകര്‍പ്പവകാശം"
 #.
 #: ../src/orca/chnames.py:215
 msgid "superscript a"
-msgstr ""
+msgstr "സൂപര്‍സ്ക്രിപ്ട് a  ('ª' (U+00aa) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
 #: ../src/orca/chnames.py:219
 msgid "left double angle bracket"
-msgstr ""
+msgstr "ഇടത് ഡബിള്‍ ആങ്കിള്‍ ബ്രാക്കെറ്റ് (<< (U+00ab) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
 #: ../src/orca/chnames.py:223
 msgid "logical not"
-msgstr ""
+msgstr "ലോജിക്കല്‍ നോട്ട് ('¬' (U+00ac) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '­' (U+00ad)
 #.
 #: ../src/orca/chnames.py:227
 msgid "soft hyphen"
-msgstr ""
+msgstr "സോഫ്ട് ഹൈഫെന്‍ ('­'  (U+00ad) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
@@ -738,7 +754,7 @@ msgstr "സൂപ്പര്‍സ്ക്രിപ്റ്റ് 3"
 #.
 #: ../src/orca/chnames.py:255
 msgid "acute accent"
-msgstr ""
+msgstr "അക്യൂട്ട് ആക്സെന്റ് ('´' (U+00b4) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
@@ -780,7 +796,7 @@ msgstr "ഓര്‍ഡിനല്‍ "
 #.
 #: ../src/orca/chnames.py:283
 msgid "right double angle bracket"
-msgstr ""
+msgstr "വലത് ഡബിള്‍ ആങ്കിള്‍ ബ്രാക്കെറ്റ് (>> (U+00bb) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
@@ -804,7 +820,7 @@ msgstr "മൂന്നില്‍ ഒന്നു്"
 #.
 #: ../src/orca/chnames.py:299
 msgid "inverted question mark"
-msgstr ""
+msgstr "ഇന്‍ വര്‍ട്ടഡ് പ്രശ്ന ചിഹ്നം ('¿' (U+00bf) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
@@ -1232,13 +1248,13 @@ msgstr ","
 #.
 #: ../src/orca/chnames.py:585
 msgid "left double quote"
-msgstr ""
+msgstr "ഇടത് ഡബിള്‍ ക്വോട്ട് ( '“' (U+201c) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:589
 msgid "right double quote"
-msgstr ""
+msgstr "വലത് ഡബിള്‍ ക്വോട്ട് ( '”' (U+201d) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '„' (U+201e)
 #.
@@ -1268,13 +1284,13 @@ msgstr "•"
 #.
 #: ../src/orca/chnames.py:609
 msgid "triangular bullet"
-msgstr ""
+msgstr "ത്രികോണ ബുള്ളറ്റ് ('‣' (U+2023) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:613
 msgid "per mille"
-msgstr ""
+msgstr "പെര്‍ മില്ലി ( '‰' (U+2030) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
@@ -1286,67 +1302,67 @@ msgstr "പ്രൈം (′)"
 #.
 #: ../src/orca/chnames.py:621
 msgid "double prime"
-msgstr ""
+msgstr "ഡബിള്‍ പ്രൈം ( '″' (U+2033) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:625
 msgid "hyphen bullet"
-msgstr ""
+msgstr "ഹൈഫെന്‍ ബുള്ളെറ്റ് ( '⁃' (U+2043) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
 #: ../src/orca/chnames.py:629
 msgid "euro"
-msgstr ""
+msgstr " യൂറോ (  '€' (U+20ac) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
 #: ../src/orca/chnames.py:633
 msgid "trademark"
-msgstr ""
+msgstr "ട്രേഡ്മാര്‍ക്ക് ( '™' (U+2122) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '≈' (U+2248)
 #.
 #: ../src/orca/chnames.py:637
 msgid "almost equal to"
-msgstr ""
+msgstr "ശരാശരി സമം  ( '≈' (U+2248) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
 #: ../src/orca/chnames.py:641
 msgid "not equal to"
-msgstr ""
+msgstr "നോട്ട് ഐക്വല്‍ ടു ( '≠' (U+2260) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
 #: ../src/orca/chnames.py:645
 msgid "less than or equal to"
-msgstr ""
+msgstr "ലെസ് ദാന്‍ ഓര്‍ ഐക്വല്‍ ടു ( '≤' (U+2264)എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '≥' (U+2265)
 #.
 #: ../src/orca/chnames.py:649
 msgid "greater than or equal to"
-msgstr ""
+msgstr "ഗ്രേറ്റര്‍ ദാന്‍ ഓര്‍ ഐക്വല്‍ ടു ( '≥' (U+2265)എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '√' (U+221a)
 #.
 #: ../src/orca/chnames.py:653
 msgid "square root"
-msgstr ""
+msgstr "സ്ക്വേര്‍ റൂട്ട് ( '√' (U+221a) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '∛' (U+221b)
 #.
 #: ../src/orca/chnames.py:657
 msgid "cube root"
-msgstr ""
+msgstr "ക്യൂബ് റൂട്ട് ('∛' (U+221b) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '∞' (U+221e)
 #.
 #: ../src/orca/chnames.py:661
 msgid "infinity"
-msgstr ""
+msgstr " ( '∞' (U+221e) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '■' (U+25a0)
 #. It can be used as a bullet in a list.
@@ -1355,16 +1371,17 @@ msgstr ""
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:666 ../src/orca/chnames.py:729
+#: ../src/orca/chnames.py:666
+#: ../src/orca/chnames.py:729
 msgid "black square"
-msgstr ""
+msgstr "കറുത്ത സമചതുരം ( '■' (U+25a0) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:671
 msgid "white square"
-msgstr ""
+msgstr " വെളുത്ത സമചതുരം ( '□' (U+25a1) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '◆' (U+25c6)
 #. It can be used as a bullet in a list.
@@ -1373,29 +1390,30 @@ msgstr ""
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:676 ../src/orca/chnames.py:735
+#: ../src/orca/chnames.py:676
+#: ../src/orca/chnames.py:735
 msgid "black diamond"
-msgstr ""
+msgstr "കറുത്ത ഡയമണ്ഡ് ( '◆' (U+25c6) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:681
 msgid "white circle"
-msgstr ""
+msgstr "വെളുത്ത വൃത്തം ('○' (U+25cb) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:686
 msgid "black circle"
-msgstr ""
+msgstr " കറുത്ത വൃത്തം ( '●' (U+25cf) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:690
 msgid "white bullet"
-msgstr ""
+msgstr "വെളുത്ത ബുള്ളെറ്റ് ( '◦' (U+25e6) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
@@ -1409,7 +1427,7 @@ msgstr "ചെക്ക് മാര്‍ക്ക് (✓)"
 #.
 #: ../src/orca/chnames.py:700
 msgid "heavy check mark"
-msgstr ""
+msgstr " ('✔' (U+2714) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1420,7 +1438,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:709
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "x-രീതിയിലുള്ള ബുള്ളെറ്റ് ( 'x' (U+2717) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '➔' (U+2794)
 #. This symbol is included here because it can be used as a bullet in
@@ -1429,7 +1447,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:716
 msgid "right-pointing arrow"
-msgstr ""
+msgstr " വലത് ആരോ ( '➔' (U+2794) എന്ന അക്ഷരം)"
 
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
@@ -1438,7 +1456,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:723
 msgid "right-pointing arrowhead"
-msgstr ""
+msgstr "വലത് ആരോഹെഡ് ( '➢' (U+27a2) എന്ന അക്ഷരം)"
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1476,11 +1494,12 @@ msgstr ""
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:167 ../src/orca/scripts/apps/acroread.py:114
-#: ../src/orca/scripts/apps/evolution/script.py:155
+#: ../src/orca/default.py:167
+#: ../src/orca/scripts/apps/acroread.py:114
+#: ../src/orca/scripts/apps/evolution/script.py:159
 #: ../src/orca/scripts/toolkits/Gecko/script.py:522
 msgid "Speaks entire document."
-msgstr ""
+msgstr "മുഴുവന്‍ രേഖ സംസാരിക്കുന്നു"
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -1509,14 +1528,14 @@ msgstr ""
 #.
 #: ../src/orca/default.py:199
 msgid "Speaks the title bar."
-msgstr ""
+msgstr "ടൈറ്റില്‍ ബാര്‍ സംസാരിക്കുന്നു"
 
 #. Translators: This command will cause the window's
 #. status bar contents to be spoken.
 #.
 #: ../src/orca/default.py:207
 msgid "Speaks the status bar."
-msgstr ""
+msgstr "സ്ഥിതി ബാര്‍ സംസാരിക്കുന്നു"
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1525,7 +1544,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:217
 msgid "Opens the Orca Find dialog."
-msgstr ""
+msgstr "ഓര്‍ക്ക തിരയല്‍ ഡയലോഗ് തുറക്കുന്നു."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1535,7 +1554,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:228
 msgid "Searches for the next instance of a string."
-msgstr ""
+msgstr "ഒരു സ്റ്റ്രിങ്ങിന്റെ അടുത്ത ഇന്‍സ്റ്റെന്‍സിനു തിരയുന്നു."
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -1545,7 +1564,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:239
 msgid "Searches for the previous instance of a string."
-msgstr ""
+msgstr "ഒരു സ്റ്റ്രിങ്ങിന്റെ പ്രീവിയസ് ഇന്‍സ്റ്റെന്‍സിനു തിരയുന്നു."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine that
@@ -2021,9 +2040,7 @@ msgstr ""
 #. running on the desktop, to stdout.
 #.
 #: ../src/orca/default.py:759
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
 msgstr ""
 
 #. Translators: this is a debug message that Orca users
@@ -2041,9 +2058,7 @@ msgstr ""
 #. for the application that is currently running (has focus).
 #.
 #: ../src/orca/default.py:780
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
+msgid "Prints debug information about the currently active application to the console where Orca is running."
 msgstr ""
 
 #. Translators: this is a debug message that Orca users
@@ -2090,21 +2105,21 @@ msgstr ""
 #.
 #: ../src/orca/default.py:833
 msgid "Go to bookmark."
-msgstr ""
+msgstr "ഓര്‍മക്കുറിപ്പിലേക്ക് പോവുക."
 
 #. Translators: this event handler binds an in-page accessible
 #. object location to the given input key command.
 #.
 #: ../src/orca/default.py:841
 msgid "Add bookmark."
-msgstr ""
+msgstr "ഓര്‍മക്കുറിപ്പ് ചേര്‍ക്കുക"
 
 #. Translators: this event handler saves all bookmarks for the
 #. current application to disk.
 #.
 #: ../src/orca/default.py:849
 msgid "Save bookmarks."
-msgstr ""
+msgstr "ഓര്‍മക്കുറിപ്പ് സംരക്ഷിക്കുക."
 
 #. Translators: this event handler cycles through the registered
 #. bookmarks and takes the user to the next bookmark location.
@@ -2190,6 +2205,26 @@ msgstr ""
 msgid "Passes the next command on to the current application."
 msgstr ""
 
+#. Translators: this is the number of space characters on a line
+#. of text.
+#.
+#: ../src/orca/default.py:2210
+#, python-format
+msgid "%d space"
+msgid_plural "%d spaces"
+msgstr[0] "%d ശുന്യസ്ഥാനം"
+msgstr[1] "%d ശുന്യസ്ഥാനം"
+
+#. Translators: this is the number of tab characters on a line
+#. of text.
+#.
+#: ../src/orca/default.py:2221
+#, python-format
+msgid "%d tab"
+msgid_plural "%d tabs"
+msgstr[0] "%d ടാബ്"
+msgstr[1] "%d ടാബ്"
+
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
@@ -2199,45 +2234,27 @@ msgstr ""
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:2144 ../src/orca/default.py:2462
-#: ../src/orca/default.py:4991 ../src/orca/default.py:5146
-#: ../src/orca/default.py:5154 ../src/orca/default.py:5262
-#: ../src/orca/default.py:5270
-#: ../src/orca/scripts/apps/evolution/script.py:551
+#: ../src/orca/default.py:2440
+#: ../src/orca/default.py:5007
+#: ../src/orca/default.py:5162
+#: ../src/orca/default.py:5170
+#: ../src/orca/default.py:5278
+#: ../src/orca/default.py:5286
+#: ../src/orca/scripts/apps/evolution/script.py:630
 #: ../src/orca/scripts/apps/soffice/script.py:731
 #: ../src/orca/scripts/apps/soffice/script.py:1236
-#: ../src/orca/scripts/apps/soffice/script.py:2077
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5464
-#: ../src/orca/structural_navigation.py:3315 ../src/orca/where_am_I.py:1617
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5477
+#: ../src/orca/structural_navigation.py:3315
+#: ../src/orca/where_am_I.py:1634
 msgid "blank"
-msgstr ""
-
-#. Translators: this is the number of space characters on a line
-#. of text.
-#.
-#: ../src/orca/default.py:2221
-#, python-format
-msgid "%d space"
-msgid_plural "%d spaces"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Translators: this is the number of tab characters on a line
-#. of text.
-#.
-#: ../src/orca/default.py:2232
-#, python-format
-msgid "%d tab"
-msgid_plural "%d tabs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr "ശുന്യം"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:2696
+#: ../src/orca/default.py:2674
 #, python-format
 msgid "Progress bar %d."
 msgstr ""
@@ -2251,18 +2268,20 @@ msgstr ""
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2704 ../src/orca/flat_review.py:444
+#: ../src/orca/default.py:2682
+#: ../src/orca/flat_review.py:444
 #: ../src/orca/speechgenerator.py:1143
 #, python-format
 msgid "%d percent."
-msgstr ""
+msgstr "%d ശതമാനം"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
 #.
-#: ../src/orca/default.py:2955
+#: ../src/orca/default.py:2934
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:158
-#: ../src/orca/where_am_I.py:682 ../src/orca/where_am_I.py:747
+#: ../src/orca/where_am_I.py:682
+#: ../src/orca/where_am_I.py:747
 #, python-format
 msgid "tree level %d"
 msgstr ""
@@ -2270,7 +2289,7 @@ msgstr ""
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/default.py:2992
+#: ../src/orca/default.py:2972
 msgctxt "tablecell"
 msgid " not selected"
 msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്തത്"
@@ -2282,11 +2301,13 @@ msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്ത
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/default.py:3885 ../src/orca/default.py:4228
-#: ../src/orca/default.py:7528
+#: ../src/orca/default.py:3865
+#: ../src/orca/default.py:4237
+#: ../src/orca/default.py:7544
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:159
-#: ../src/orca/speechgenerator.py:268 ../src/orca/where_am_I.py:563
-#: ../src/orca/where_am_I.py:982
+#: ../src/orca/speechgenerator.py:268
+#: ../src/orca/where_am_I.py:563
+#: ../src/orca/where_am_I.py:999
 msgctxt "text"
 msgid "selected"
 msgstr "തിരഞ്ഞെടുത്തവ "
@@ -2299,7 +2320,8 @@ msgstr "തിരഞ്ഞെടുത്തവ "
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:3891 ../src/orca/default.py:7534
+#: ../src/orca/default.py:3871
+#: ../src/orca/default.py:7550
 msgctxt "text"
 msgid "unselected"
 msgstr "തിരഞ്ഞെടുക്കാത്തവ "
@@ -2308,7 +2330,7 @@ msgstr "തിരഞ്ഞെടുക്കാത്തവ "
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:4285
+#: ../src/orca/default.py:4294
 msgid "Speak row"
 msgstr ""
 
@@ -2316,13 +2338,14 @@ msgstr ""
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/default.py:4291
+#: ../src/orca/default.py:4300
 msgid "Speak cell"
 msgstr ""
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4379 ../src/orca/where_am_I.py:1674
+#: ../src/orca/default.py:4388
+#: ../src/orca/where_am_I.py:1691
 msgid "bold"
 msgstr "ബോള്‍ഡാക്കുക"
 
@@ -2333,7 +2356,8 @@ msgstr "ബോള്‍ഡാക്കുക"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:4396 ../src/orca/default.py:4407
+#: ../src/orca/default.py:4405
+#: ../src/orca/default.py:4416
 #, python-format
 msgid "%s %s pixel"
 msgid_plural "%s %s pixels"
@@ -2348,10 +2372,11 @@ msgstr[1] ""
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:4483 ../src/orca/default.py:6399
+#: ../src/orca/default.py:4499
+#: ../src/orca/default.py:6415
 #: ../src/orca/rolenames.py:600
 #: ../src/orca/scripts/apps/soffice/script.py:1117
-#: ../src/orca/where_am_I.py:1696
+#: ../src/orca/where_am_I.py:1713
 msgid "link"
 msgstr "ലിങ്ക്"
 
@@ -2362,7 +2387,7 @@ msgstr "ലിങ്ക്"
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/default.py:4530
+#: ../src/orca/default.py:4546
 msgid "Bypass mode enabled."
 msgstr ""
 
@@ -2374,10 +2399,8 @@ msgstr ""
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/default.py:4553
-msgid ""
-"Entering learn mode.  Press any key to hear its function.  To exit learn "
-"mode, press the escape key."
+#: ../src/orca/default.py:4569
+msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
 msgstr ""
 
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -2389,16 +2412,17 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/default.py:4565
+#: ../src/orca/default.py:4581
 msgid "Learn mode.  Press escape to exit."
 msgstr ""
 
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:4996 ../src/orca/default.py:5159
+#: ../src/orca/default.py:5012
+#: ../src/orca/default.py:5175
 msgid "white space"
-msgstr ""
+msgstr "ശുന്യസ്ഥാനം"
 
 #. Translators: the Orca "Find" dialog allows a user to
 #. search for text in a window and then move focus to
@@ -2406,21 +2430,21 @@ msgstr ""
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:5391
+#: ../src/orca/default.py:5407
 msgid "string not found"
-msgstr ""
+msgstr "സ്റ്റ്രിങ്ങ് കണ്ടെത്താനായില്ല"
 
 #. Translators: Orca will provide more compelling output of
 #. the spell checking dialog in some applications.  The first
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:6205
+#: ../src/orca/default.py:6221
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "അക്ഷരത്തെറ്റുളള വാക്ക്: %s"
 
-#: ../src/orca/default.py:6213
+#: ../src/orca/default.py:6229
 #, python-format
 msgid "Context is %s"
 msgstr ""
@@ -2430,7 +2454,7 @@ msgstr ""
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/default.py:6351
+#: ../src/orca/default.py:6367
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -2441,128 +2465,120 @@ msgstr[1] ""
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7374
-#, fuzzy
+#: ../src/orca/default.py:7390
 #| msgid "line selected down from cursor position"
 msgid "line selected to end from previous cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും താഴേക്ക തിരഞ്ഞെടുത്ത വരി"
+msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും അവസാനം വരെ തിരഞ്ഞെടുത്ത വരി"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7382
-#, fuzzy
+#: ../src/orca/default.py:7398
 #| msgid "line selected up from cursor position"
 msgid "line selected from start to previous cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും മുകളിലേക്ക് തിരഞ്ഞെടുത്ത വരി"
+msgstr "തുടക്കം മുതല്‍ മുമ്പുള്ള കര്‍സറിന്‍റെ സൂചിക വരെ തിരഞ്ഞെടുത്ത വരി"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7391
+#: ../src/orca/default.py:7407
 msgid "page selected from cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുത്ത വരി"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7396
-#, fuzzy
+#: ../src/orca/default.py:7412
 #| msgid "page selected from cursor position"
 msgid "page unselected from cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുത്ത വരി"
+msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുക്കാത്ത താളിന്റെ ഭഗം"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7405
+#: ../src/orca/default.py:7421
 msgid "page selected to cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുത്ത പേജ്"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7410
-#, fuzzy
+#: ../src/orca/default.py:7426
 #| msgid "page selected to cursor position"
 msgid "page unselected to cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുത്ത പേജ്"
+msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുക്കാത്ത താളിന്റെ ഭഗം"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7419
+#: ../src/orca/default.py:7435
 msgid "line selected down from cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും താഴേക്ക തിരഞ്ഞെടുത്ത വരി"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7424
-#, fuzzy
+#: ../src/orca/default.py:7440
 #| msgid "line selected down from cursor position"
 msgid "line unselected down from cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും താഴേക്ക തിരഞ്ഞെടുത്ത വരി"
+msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും താഴേക്ക തിരഞ്ഞെടുക്കാത്ത വരി"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7433
+#: ../src/orca/default.py:7449
 msgid "line selected up from cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും മുകളിലേക്ക് തിരഞ്ഞെടുത്ത വരി"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7438
-#, fuzzy
+#: ../src/orca/default.py:7454
 #| msgid "line selected up from cursor position"
 msgid "line unselected up from cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും മുകളിലേക്ക് തിരഞ്ഞെടുത്ത വരി"
+msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും മുകളിലേക്ക് തിരഞ്ഞെടുക്കാത്ത വരി"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7447
+#: ../src/orca/default.py:7463
 msgid "document selected to cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുത്ത രേഖ"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7452
-#, fuzzy
+#: ../src/orca/default.py:7468
 #| msgid "document selected to cursor position"
 msgid "document unselected to cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുത്ത രേഖ"
+msgstr "കര്‍സറിന്‍റെ സൂചികയിലേക്ക് തിരഞ്ഞെടുക്കാത്ത രേഖ"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:7461
+#: ../src/orca/default.py:7477
 msgid "document selected from cursor position"
 msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുത്ത രേഖ"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:7466
-#, fuzzy
+#: ../src/orca/default.py:7482
 #| msgid "document selected from cursor position"
 msgid "document unselected from cursor position"
-msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുത്ത രേഖ"
+msgstr "കര്‍സറിന്‍റെ സൂചികയില്‍ നിന്നും തിരഞ്ഞെടുക്കാത്ത രേഖ"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:7483
+#: ../src/orca/default.py:7499
 msgid "entire document selected"
 msgstr ""
 
@@ -2604,8 +2620,9 @@ msgstr ""
 #.
 #: ../src/orca/flat_review.py:352
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:628
-#: ../src/orca/speechgenerator.py:451 ../src/orca/where_am_I.py:417
-#: ../src/orca/where_am_I.py:1381
+#: ../src/orca/speechgenerator.py:451
+#: ../src/orca/where_am_I.py:417
+#: ../src/orca/where_am_I.py:1398
 msgid "partially checked"
 msgstr "പകുതി പരിശോധിച്ചവ"
 
@@ -2617,8 +2634,10 @@ msgstr "പകുതി പരിശോധിച്ചവ"
 #.
 #: ../src/orca/flat_review.py:356
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:632
-#: ../src/orca/speechgenerator.py:455 ../src/orca/speechgenerator.py:1009
-#: ../src/orca/where_am_I.py:421 ../src/orca/where_am_I.py:1385
+#: ../src/orca/speechgenerator.py:455
+#: ../src/orca/speechgenerator.py:1009
+#: ../src/orca/where_am_I.py:421
+#: ../src/orca/where_am_I.py:1402
 msgid "checked"
 msgstr "തിരഞ്ഞെടുത്തവ"
 
@@ -2626,8 +2645,9 @@ msgstr "തിരഞ്ഞെടുത്തവ"
 #.
 #: ../src/orca/flat_review.py:360
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:636
-#: ../src/orca/speechgenerator.py:459 ../src/orca/where_am_I.py:425
-#: ../src/orca/where_am_I.py:1389
+#: ../src/orca/speechgenerator.py:459
+#: ../src/orca/where_am_I.py:425
+#: ../src/orca/where_am_I.py:1406
 msgid "not checked"
 msgstr "തിരഞ്ഞെടുക്കാത്തവ"
 
@@ -2636,7 +2656,8 @@ msgstr "തിരഞ്ഞെടുക്കാത്തവ"
 #: ../src/orca/flat_review.py:367
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 #: ../src/orca/scripts/apps/planner/speech_generator.py:71
-#: ../src/orca/speechgenerator.py:1755 ../src/orca/where_am_I.py:880
+#: ../src/orca/speechgenerator.py:1755
+#: ../src/orca/where_am_I.py:897
 msgid "pressed"
 msgstr "അമര്‍ത്തിയവ"
 
@@ -2645,7 +2666,8 @@ msgstr "അമര്‍ത്തിയവ"
 #: ../src/orca/flat_review.py:371
 #: ../src/orca/scripts/apps/planner/speech_generator.py:65
 #: ../src/orca/scripts/apps/planner/speech_generator.py:73
-#: ../src/orca/speechgenerator.py:1759 ../src/orca/where_am_I.py:884
+#: ../src/orca/speechgenerator.py:1759
+#: ../src/orca/where_am_I.py:901
 msgid "not pressed"
 msgstr "അമര്‍ത്താത്തവ"
 
@@ -2654,7 +2676,8 @@ msgstr "അമര്‍ത്താത്തവ"
 #.
 #: ../src/orca/flat_review.py:379
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:572
-#: ../src/orca/speechgenerator.py:1201 ../src/orca/where_am_I.py:223
+#: ../src/orca/speechgenerator.py:1201
+#: ../src/orca/where_am_I.py:223
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "തിരഞ്ഞെടുത്തവ"
@@ -2664,7 +2687,8 @@ msgstr "തിരഞ്ഞെടുത്തവ"
 #.
 #: ../src/orca/flat_review.py:384
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:577
-#: ../src/orca/speechgenerator.py:1206 ../src/orca/where_am_I.py:228
+#: ../src/orca/speechgenerator.py:1206
+#: ../src/orca/where_am_I.py:228
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്തത് "
@@ -2699,7 +2723,8 @@ msgstr ""
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/gnomespeechfactory.py:802 ../src/orca/gnomespeechfactory.py:803
+#: ../src/orca/gnomespeechfactory.py:802
+#: ../src/orca/gnomespeechfactory.py:803
 msgid " dot dot dot"
 msgstr ""
 
@@ -2720,7 +2745,7 @@ msgstr "മൈനസ് (-)"
 #: ../src/orca/gnomespeechfactory.py:1029
 #: ../src/orca/speechdispatcherfactory.py:297
 msgid "higher."
-msgstr ""
+msgstr "കൂടുതല്‍ മുകളിലേക്ക്"
 
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a lower pitch.
@@ -2729,7 +2754,7 @@ msgstr ""
 #: ../src/orca/gnomespeechfactory.py:1060
 #: ../src/orca/speechdispatcherfactory.py:297
 msgid "lower."
-msgstr ""
+msgstr "കൂടുതല്‍  താഴേക്ക്"
 
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking at a faster rate (words
@@ -2738,7 +2763,7 @@ msgstr ""
 #: ../src/orca/gnomespeechfactory.py:1089
 #: ../src/orca/speechdispatcherfactory.py:287
 msgid "faster."
-msgstr ""
+msgstr "കൂടുതല്‍ എളുപത്തില്‍"
 
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking at a slower rate (words
@@ -2748,7 +2773,7 @@ msgstr ""
 #: ../src/orca/gnomespeechfactory.py:1123
 #: ../src/orca/speechdispatcherfactory.py:287
 msgid "slower."
-msgstr ""
+msgstr "കൂടുതല്‍ പതുക്കെ"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
@@ -2762,7 +2787,7 @@ msgstr "Alt_R"
 #.
 #: ../src/orca/keybindings.py:169
 msgid "Super"
-msgstr ""
+msgstr "സൂപ്പര്‍"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
@@ -2797,55 +2822,55 @@ msgstr "Caps_Lock"
 #.
 #: ../src/orca/keybindings.py:196
 msgid "Shift"
-msgstr ""
+msgstr "ഷിഫ്ട്"
 
 #. Translators: this is how someone would speak the name of the left shift key
 #.
 #: ../src/orca/keynames.py:41
 msgid "left shift"
-msgstr ""
+msgstr "ഇടത് ഷിഫ്ട്"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
 #: ../src/orca/keynames.py:45
 msgid "left alt"
-msgstr ""
+msgstr "ഇടത് ആള്‍ട്ട്"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
 #: ../src/orca/keynames.py:49
 msgid "left control"
-msgstr ""
+msgstr "ഇടത് കണ്‍ട്രോള്‍"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
 #: ../src/orca/keynames.py:53
 msgid "right shift"
-msgstr ""
+msgstr "വലത് ഷിഫ്ട്"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
 #: ../src/orca/keynames.py:57
 msgid "right alt"
-msgstr ""
+msgstr "വലത് ആള്‍ട്ട്"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
 #: ../src/orca/keynames.py:61
 msgid "right control"
-msgstr ""
+msgstr "വലത് കണ്‍ട്രോള്‍"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
 #: ../src/orca/keynames.py:65
 msgid "left meta"
-msgstr ""
+msgstr "ഇടത് മെറ്റാ"
 
 #. Translators: this is how someone would speak the name of the right meta key
 #.
 #: ../src/orca/keynames.py:69
 msgid "right meta"
-msgstr ""
+msgstr "വലത് മെറ്റാ"
 
 #. Translators: this is how someone would speak the name of the num lock key
 #.
@@ -2867,15 +2892,19 @@ msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:85 ../src/orca/keynames.py:89
-#: ../src/orca/keynames.py:93 ../src/orca/keynames.py:97
+#: ../src/orca/keynames.py:85
+#: ../src/orca/keynames.py:89
+#: ../src/orca/keynames.py:93
+#: ../src/orca/keynames.py:97
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:101 ../src/orca/keynames.py:105
-#: ../src/orca/keynames.py:109 ../src/orca/keynames.py:113
+#: ../src/orca/keynames.py:101
+#: ../src/orca/keynames.py:105
+#: ../src/orca/keynames.py:109
+#: ../src/orca/keynames.py:113
 msgid "page down"
 msgstr "page down"
 
@@ -2883,7 +2912,7 @@ msgstr "page down"
 #.
 #: ../src/orca/keynames.py:121
 msgid "left tab"
-msgstr ""
+msgstr "ഇടത് ടാബ്"
 
 #. Translators: this is how someone would speak the name of the F11 key
 #.
@@ -2900,72 +2929,69 @@ msgstr "F 12"
 #. Translators: this is how someone would speak the name of the backspace key
 #.
 #: ../src/orca/keynames.py:137
-#| msgid "space"
 msgid "backspace"
 msgstr "backspace"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: ../src/orca/keynames.py:141
-#| msgid "greater"
 msgid "return"
 msgstr "return"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
 #: ../src/orca/keynames.py:145
-#| msgid "Centered"
 msgid "enter"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:149 ../src/orca/keynames.py:153
+#: ../src/orca/keynames.py:149
+#: ../src/orca/keynames.py:153
 msgid "up"
-msgstr ""
+msgstr "മുകളില്‍"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:157 ../src/orca/keynames.py:161
-#| msgid "on"
+#: ../src/orca/keynames.py:157
+#: ../src/orca/keynames.py:161
 msgid "down"
 msgstr "down"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:165 ../src/orca/keynames.py:169
-#| msgid "Alert"
+#: ../src/orca/keynames.py:165
+#: ../src/orca/keynames.py:169
 msgid "left"
 msgstr "ഇടത്ത്"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:173 ../src/orca/keynames.py:177
-#| msgid "copyright"
+#: ../src/orca/keynames.py:173
+#: ../src/orca/keynames.py:177
 msgid "right"
 msgstr "വലത്ത്"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
 #: ../src/orca/keynames.py:181
-#, fuzzy
 #| msgid "left paren"
 msgid "left super"
-msgstr "ഇടത് പരാന്‍ഥെസിസ് ('(')"
+msgstr "ഇടത് സൂപ്പര്‍"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
 #: ../src/orca/keynames.py:185
-#, fuzzy
 #| msgid "right paren"
 msgid "right super"
-msgstr "വലത് പരാന്‍ഥെസിസ് (')')"
+msgstr "വലത് സൂപ്പര്‍"
 
 #. Translators: this is how someone would speak the name of the menu key
 #.
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/keynames.py:189 ../src/orca/rolenames.py:636
+#: ../src/orca/keynames.py:189
+#: ../src/orca/rolenames.py:636
 msgid "menu"
 msgstr "മെനു"
 
@@ -2978,7 +3004,6 @@ msgstr ""
 #. Translators: this is how someone would speak the name of the help key
 #.
 #: ../src/orca/keynames.py:197
-#| msgid "yelp"
 msgid "help"
 msgstr "സഹായം"
 
@@ -2991,43 +3016,41 @@ msgstr ""
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
 #: ../src/orca/keynames.py:205
-#, fuzzy
 #| msgid "same site"
 msgid "mode switch"
-msgstr "ഒരേ സൈറ്റ്"
+msgstr "മോഡ് സ്വിച്ച്"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: ../src/orca/keynames.py:209
-#| msgid "scpn"
 msgid "escape"
 msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:213 ../src/orca/keynames.py:217
-#| msgid "seprtr"
+#: ../src/orca/keynames.py:213
+#: ../src/orca/keynames.py:217
 msgid "insert"
 msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:221 ../src/orca/keynames.py:225
-#| msgid "_Delete"
+#: ../src/orca/keynames.py:221
+#: ../src/orca/keynames.py:225
 msgid "delete"
 msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:229 ../src/orca/keynames.py:233
-#| msgid "So_me"
+#: ../src/orca/keynames.py:229
+#: ../src/orca/keynames.py:233
 msgid "home"
 msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:237 ../src/orca/keynames.py:241
-#| msgid "and"
+#: ../src/orca/keynames.py:237
+#: ../src/orca/keynames.py:241
 msgid "end"
 msgstr "end"
 
@@ -3091,7 +3114,7 @@ msgstr ""
 #. make to the appearance of the screen to make things easier
 #. to see, such as inverting the colors or applying a tint.
 #.
-#: ../src/orca/mag.py:1562
+#: ../src/orca/mag.py:1556
 msgid "Color enhancements disabled."
 msgstr ""
 
@@ -3099,7 +3122,7 @@ msgstr ""
 #. make to the appearance of the screen to make things easier
 #. to see, such as inverting the colors or applying a tint.
 #.
-#: ../src/orca/mag.py:1570
+#: ../src/orca/mag.py:1564
 msgid "Color enhancements enabled."
 msgstr ""
 
@@ -3108,7 +3131,7 @@ msgstr ""
 #. easier to see, such as increasing its size, changing its
 #. color, and surrounding it with crosshairs.
 #.
-#: ../src/orca/mag.py:1592
+#: ../src/orca/mag.py:1586
 msgid "Mouse enhancements disabled."
 msgstr ""
 
@@ -3117,7 +3140,7 @@ msgstr ""
 #. easier to see, such as increasing its size, changing its
 #. color, and surrounding it with crosshairs.
 #.
-#: ../src/orca/mag.py:1625
+#: ../src/orca/mag.py:1619
 msgid "Mouse enhancements enabled."
 msgstr ""
 
@@ -3125,7 +3148,7 @@ msgstr ""
 #. magnifier.  In addition to screen magnification, the user's
 #. preferred colors and mouse customizations are loaded.
 #.
-#: ../src/orca/mag.py:1690
+#: ../src/orca/mag.py:1684
 msgid "Magnifier enabled."
 msgstr ""
 
@@ -3133,7 +3156,7 @@ msgstr ""
 #. magnifier, restoring the screen contents to their normal colors
 #. and sizes.
 #.
-#: ../src/orca/mag.py:1697
+#: ../src/orca/mag.py:1691
 msgid "Magnifier disabled."
 msgstr ""
 
@@ -3142,7 +3165,8 @@ msgstr ""
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1749
+#: ../src/orca/mag.py:1746
+#: ../src/orca/orca_gui_prefs.py:1749
 #: ../src/orca/orca_gui_prefs.py:1775
 msgid "Full Screen"
 msgstr "പൂര്‍ണ്ണമായി സ്ക്രീനില്‍ കാണുക"
@@ -3150,38 +3174,43 @@ msgstr "പൂര്‍ണ്ണമായി സ്ക്രീനില്‍ �
 #. Translators: the user attempted to switch to full screen
 #. magnification, but his/her system doesn't support it.
 #.
-#: ../src/orca/mag.py:1757
+#: ../src/orca/mag.py:1751
 msgid "Full Screen mode unavailable"
 msgstr "പൂര്‍ണ്ണമായി സ്ക്രീനില്‍ കാണുന്ന മോഡ് ലഭ്യമല്ല"
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1753
+#: ../src/orca/mag.py:1755
+#: ../src/orca/orca_gui_prefs.py:1753
 msgid "Top Half"
 msgstr ""
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1757
+#: ../src/orca/mag.py:1759
+#: ../src/orca/orca_gui_prefs.py:1757
 msgid "Bottom Half"
 msgstr "താഴെയുള്ള പകുതി"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1761
+#: ../src/orca/mag.py:1763
+#: ../src/orca/orca_gui_prefs.py:1761
 msgid "Left Half"
 msgstr ""
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1765
+#: ../src/orca/mag.py:1767
+#: ../src/orca/orca_gui_prefs.py:1765
 msgid "Right Half"
 msgstr ""
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1770
+#: ../src/orca/mag.py:1772
+#: ../src/orca/orca_gui_prefs.py:1770
 msgid "Custom"
 msgstr "യഥേഷ്ടം സജ്ജമാക്കുക"
 
@@ -3208,7 +3237,8 @@ msgstr "^[Yy1]"
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
 #.
-#: ../src/orca/orca_console_prefs.py:136 ../src/orca/orca_console_prefs.py:155
+#: ../src/orca/orca_console_prefs.py:136
+#: ../src/orca/orca_console_prefs.py:155
 msgid "Speech is unavailable."
 msgstr "സംഭാഷണം ലഭ്യമല്ല."
 
@@ -3228,15 +3258,19 @@ msgstr ""
 
 #. Translators: this is prompting for a numerical choice.
 #.
-#: ../src/orca/orca_console_prefs.py:175 ../src/orca/orca_console_prefs.py:207
-#: ../src/orca/orca_console_prefs.py:254 ../src/orca/orca_console_prefs.py:403
+#: ../src/orca/orca_console_prefs.py:175
+#: ../src/orca/orca_console_prefs.py:207
+#: ../src/orca/orca_console_prefs.py:254
+#: ../src/orca/orca_console_prefs.py:403
 msgid "Enter choice: "
 msgstr "നിങ്ങള്‍ക്ക് ഇഷ്ടമുളളത് എന്‍റര്‍ ചെയ്യുക: "
 
 #. Translators: this means speech synthesis will not be used.
 #.
-#: ../src/orca/orca_console_prefs.py:179 ../src/orca/orca_console_prefs.py:190
-#: ../src/orca/orca_console_prefs.py:211 ../src/orca/orca_console_prefs.py:227
+#: ../src/orca/orca_console_prefs.py:179
+#: ../src/orca/orca_console_prefs.py:190
+#: ../src/orca/orca_console_prefs.py:211
+#: ../src/orca/orca_console_prefs.py:227
 #: ../src/orca/orca_console_prefs.py:261
 msgid "Speech will not be used.\n"
 msgstr "സംഭാഷണം ഉപയോഗിക്കുന്നതല്ല.\n"
@@ -3373,15 +3407,15 @@ msgstr "Braille മോണിറ്റര്‍ സജ്ജമാക്കണമ
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr ""
 
-#: ../src/orca/orca_console_prefs.py:480 ../src/orca/orca_gui_prefs.py:470
+#: ../src/orca/orca_console_prefs.py:480
+#: ../src/orca/orca_gui_prefs.py:470
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "GNOME-നുളള ആക്സസ്സബിളിറ്റി പിന്തുണ ഇപ്പോള്‍ പ്രവര്‍ത്തനസജ്ജമാണ്."
 
-#: ../src/orca/orca_console_prefs.py:486 ../src/orca/orca_gui_prefs.py:472
+#: ../src/orca/orca_console_prefs.py:486
+#: ../src/orca/orca_gui_prefs.py:472
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"വരുത്തിയ മാറ്റങ്ങള്‍ കംപ്യൂട്ടര്‍ അംഗീകരിക്കണമെങ്കില്‍ നിങ്ങള്‍ ലോഗ് ഔട്ട് ചെയ്ത് വീണ്ടും ലോഗിന്‍ "
-"ചെയ്യേണ്ടതാകുന്നു."
+msgstr "വരുത്തിയ മാറ്റങ്ങള്‍ കംപ്യൂട്ടര്‍ അംഗീകരിക്കണമെങ്കില്‍ നിങ്ങള്‍ ലോഗ് ഔട്ട് ചെയ്ത് വീണ്ടും ലോഗിന്‍ ചെയ്യേണ്ടതാകുന്നു."
 
 #: ../src/orca/orca_console_prefs.py:494
 msgid "Do you want to logout now?  Enter y or n: "
@@ -3393,15 +3427,14 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:514
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
-"സജ്ജീകരണം പൂര്‍ത്തിയാക്കിയിരിക്കുന്നു.  മുന്പോട്ട് പോകുന്നതിനായി തിരിച്ച് പോവുക എന്ന ബട്ടണ്‍ ക്ളിക്ക് "
-"ചെയ്യുക."
+msgstr "സജ്ജീകരണം പൂര്‍ത്തിയാക്കിയിരിക്കുന്നു.  മുന്പോട്ട് പോകുന്നതിനായി തിരിച്ച് പോവുക എന്ന ബട്ടണ്‍ ക്ളിക്ക് ചെയ്യുക."
 
 #: ../src/orca/orca-find.glade.h:1
 msgid "<b>Start from:</b>"
 msgstr ""
 
-#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:147
+#: ../src/orca/orca-find.glade.h:2
+#: ../src/orca/orca_gui_find.py:148
 msgid "C_urrent location"
 msgstr ""
 
@@ -3483,9 +3516,12 @@ msgstr "മദ്ധ്യത്തില്‍"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:85 ../src/orca/orca_gui_prefs.py:4277
-#: ../src/orca/orca_gui_prefs.py:4306 ../src/orca/orca_gui_prefs.py:4479
-#: ../src/orca/orca_gui_prefs.py:4546 ../src/orca/orca_gui_prefs.py:4569
+#: ../src/orca/orca_gui_prefs.py:85
+#: ../src/orca/orca_gui_prefs.py:4266
+#: ../src/orca/orca_gui_prefs.py:4295
+#: ../src/orca/orca_gui_prefs.py:4468
+#: ../src/orca/orca_gui_prefs.py:4535
+#: ../src/orca/orca_gui_prefs.py:4558
 msgid "None"
 msgstr "ഒന്നുമില്ല"
 
@@ -3624,7 +3660,7 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2085
+#: ../src/orca/orca_gui_prefs.py:2074
 msgid "(double click)"
 msgstr ""
 
@@ -3632,7 +3668,7 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2091
+#: ../src/orca/orca_gui_prefs.py:2080
 msgid "(triple click)"
 msgstr ""
 
@@ -3641,7 +3677,8 @@ msgstr ""
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2195 ../src/orca/orca_gui_prefs.py:2293
+#: ../src/orca/orca_gui_prefs.py:2184
+#: ../src/orca/orca_gui_prefs.py:2282
 msgid "Braille Bindings"
 msgstr ""
 
@@ -3650,8 +3687,10 @@ msgstr ""
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2683 ../src/orca/orca_gui_prefs.py:2724
-#: ../src/orca/orca_gui_prefs.py:2764 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:2672
+#: ../src/orca/orca_gui_prefs.py:2713
+#: ../src/orca/orca_gui_prefs.py:2753
+#: ../src/orca/orca-setup.glade.h:52
 msgid "Dot _7"
 msgstr ""
 
@@ -3659,8 +3698,10 @@ msgstr ""
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2690 ../src/orca/orca_gui_prefs.py:2731
-#: ../src/orca/orca_gui_prefs.py:2771 ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca_gui_prefs.py:2679
+#: ../src/orca/orca_gui_prefs.py:2720
+#: ../src/orca/orca_gui_prefs.py:2760
+#: ../src/orca/orca-setup.glade.h:53
 msgid "Dot _8"
 msgstr ""
 
@@ -3668,15 +3709,18 @@ msgstr ""
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2697 ../src/orca/orca_gui_prefs.py:2738
-#: ../src/orca/orca_gui_prefs.py:2778 ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca_gui_prefs.py:2686
+#: ../src/orca/orca_gui_prefs.py:2727
+#: ../src/orca/orca_gui_prefs.py:2767
+#: ../src/orca/orca-setup.glade.h:54
 msgid "Dots 7 an_d 8"
 msgstr ""
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2801 ../src/orca/orca-setup.glade.h:165
+#: ../src/orca/orca_gui_prefs.py:2790
+#: ../src/orca/orca-setup.glade.h:165
 msgid "_None"
 msgstr "ഒന്നുമില്ല (_N)"
 
@@ -3685,7 +3729,8 @@ msgstr "ഒന്നുമില്ല (_N)"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2809 ../src/orca/orca-setup.glade.h:126
+#: ../src/orca/orca_gui_prefs.py:2798
+#: ../src/orca/orca-setup.glade.h:126
 msgid "So_me"
 msgstr "ചിലത് (_m)"
 
@@ -3693,7 +3738,8 @@ msgstr "ചിലത് (_m)"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2816 ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca_gui_prefs.py:2805
+#: ../src/orca/orca-setup.glade.h:88
 msgid "M_ost"
 msgstr ""
 
@@ -3701,7 +3747,7 @@ msgstr ""
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:2837
+#: ../src/orca/orca_gui_prefs.py:2826
 msgid "Line"
 msgstr "വരി"
 
@@ -3709,7 +3755,7 @@ msgstr "വരി"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:2843
+#: ../src/orca/orca_gui_prefs.py:2832
 msgid "Sentence"
 msgstr "വാചകം"
 
@@ -3717,7 +3763,8 @@ msgstr "വാചകം"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2863 ../src/orca/orca_gui_prefs.py:2993
+#: ../src/orca/orca_gui_prefs.py:2852
+#: ../src/orca/orca_gui_prefs.py:2982
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brie_f"
 msgstr ""
@@ -3726,7 +3773,8 @@ msgstr ""
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2887 ../src/orca/orca-setup.glade.h:131
+#: ../src/orca/orca_gui_prefs.py:2876
+#: ../src/orca/orca-setup.glade.h:131
 msgid "Speak current _cell"
 msgstr ""
 
@@ -3734,7 +3782,7 @@ msgstr ""
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3640
+#: ../src/orca/orca_gui_prefs.py:3629
 msgid "enter new key"
 msgstr "പുതിയ കീ നല്‍കുക"
 
@@ -3742,7 +3790,7 @@ msgstr "പുതിയ കീ നല്‍കുക"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3669
+#: ../src/orca/orca_gui_prefs.py:3658
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "കീ ബൈന്‍ഡിങ് നീക്കം ചെയ്തിരിക്കുന്നു. ഉറപ്പ് വരുത്തുന്നതിനായി enter അമര്‍ത്തുക."
 
@@ -3750,7 +3798,7 @@ msgstr "കീ ബൈന്‍ഡിങ് നീക്കം ചെയ്തി
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3693
+#: ../src/orca/orca_gui_prefs.py:3682
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr ""
@@ -3759,7 +3807,7 @@ msgstr ""
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3700
+#: ../src/orca/orca_gui_prefs.py:3689
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "കീ ലഭ്യമാക്കിയിരിക്കുന്നു: %s. ഉറപ്പ് വരുത്തുന്നതിനായി enter അമര്‍ത്തുക."
@@ -3768,7 +3816,7 @@ msgstr "കീ ലഭ്യമാക്കിയിരിക്കുന്ന�
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3739
+#: ../src/orca/orca_gui_prefs.py:3728
 #, python-format
 msgid "The new key is: %s"
 msgstr "പുതിയ കീ: %s"
@@ -3777,22 +3825,24 @@ msgstr "പുതിയ കീ: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3747
+#: ../src/orca/orca_gui_prefs.py:3736
 msgid "The keybinding has been removed."
 msgstr ""
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3825 ../src/orca/orca-setup.glade.h:158
+#: ../src/orca/orca_gui_prefs.py:3814
+#: ../src/orca/orca-setup.glade.h:158
 msgid "_Desktop"
 msgstr "_ഡസ്ക്ടോപ്പ്"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:4271 ../src/orca/orca_gui_prefs.py:4282
-#: ../src/orca/orca_gui_prefs.py:4304
+#: ../src/orca/orca_gui_prefs.py:4260
+#: ../src/orca/orca_gui_prefs.py:4271
+#: ../src/orca/orca_gui_prefs.py:4293
 msgid "Bilinear"
 msgstr "Bilinear"
 
@@ -3801,7 +3851,8 @@ msgstr "Bilinear"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4487 ../src/orca/orca_gui_prefs.py:4577
+#: ../src/orca/orca_gui_prefs.py:4476
+#: ../src/orca/orca_gui_prefs.py:4566
 msgid "Saturate red"
 msgstr ""
 
@@ -3810,7 +3861,8 @@ msgstr ""
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4495 ../src/orca/orca_gui_prefs.py:4585
+#: ../src/orca/orca_gui_prefs.py:4484
+#: ../src/orca/orca_gui_prefs.py:4574
 msgid "Saturate green"
 msgstr ""
 
@@ -3819,7 +3871,8 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:4503 ../src/orca/orca_gui_prefs.py:4593
+#: ../src/orca/orca_gui_prefs.py:4492
+#: ../src/orca/orca_gui_prefs.py:4582
 msgid "Saturate blue"
 msgstr ""
 
@@ -3828,7 +3881,8 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4511 ../src/orca/orca_gui_prefs.py:4601
+#: ../src/orca/orca_gui_prefs.py:4500
+#: ../src/orca/orca_gui_prefs.py:4590
 msgid "Desaturate red"
 msgstr ""
 
@@ -3837,7 +3891,8 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4519 ../src/orca/orca_gui_prefs.py:4609
+#: ../src/orca/orca_gui_prefs.py:4508
+#: ../src/orca/orca_gui_prefs.py:4598
 msgid "Desaturate green"
 msgstr ""
 
@@ -3846,7 +3901,8 @@ msgstr ""
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4527 ../src/orca/orca_gui_prefs.py:4617
+#: ../src/orca/orca_gui_prefs.py:4516
+#: ../src/orca/orca_gui_prefs.py:4606
 msgid "Desaturate blue"
 msgstr ""
 
@@ -3855,7 +3911,8 @@ msgstr ""
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4535 ../src/orca/orca_gui_prefs.py:4625
+#: ../src/orca/orca_gui_prefs.py:4524
+#: ../src/orca/orca_gui_prefs.py:4614
 msgid "Positive hue shift"
 msgstr ""
 
@@ -3864,14 +3921,14 @@ msgstr ""
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4543 ../src/orca/orca_gui_prefs.py:4633
+#: ../src/orca/orca_gui_prefs.py:4532
+#: ../src/orca/orca_gui_prefs.py:4622
 msgid "Negative hue shift"
 msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4870
-#| msgid "Orca Preferences"
+#: ../src/orca/orca_gui_prefs.py:4859
 msgid "Starting Orca Preferences."
 msgstr ""
 
@@ -3881,7 +3938,9 @@ msgstr ""
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:281 ../src/orca/orca.py:1268 ../src/orca/orca.py:1269
+#: ../src/orca/orca.py:281
+#: ../src/orca/orca.py:1268
+#: ../src/orca/orca.py:1269
 msgid "Goodbye."
 msgstr "നന്ദി നമസ്കാരം."
 
@@ -4642,16 +4701,8 @@ msgstr "സെക്കന്‍ഡുകള്‍"
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
 #: ../src/orca/phonnames.py:53
-msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgstr "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4818,7 +4869,8 @@ msgstr "തലക്കെട്ട്"
 #.
 #. Translators: short braille for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:276 ../src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:276
+#: ../src/orca/rolenames.py:288
 msgid "chk"
 msgstr "chk"
 
@@ -4868,7 +4920,8 @@ msgstr ""
 #.
 #. Translators: short braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:312 ../src/orca/rolenames.py:930
+#: ../src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:930
 msgid "colhdr"
 msgstr "colhdr"
 
@@ -4876,7 +4929,8 @@ msgstr "colhdr"
 #.
 #. Translators: long braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:315 ../src/orca/rolenames.py:933
+#: ../src/orca/rolenames.py:315
+#: ../src/orca/rolenames.py:933
 msgid "ColumnHeader"
 msgstr "ColumnHeader"
 
@@ -4884,7 +4938,8 @@ msgstr "ColumnHeader"
 #.
 #. Translators: spoken words for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:318 ../src/orca/rolenames.py:936
+#: ../src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:936
 msgid "column header"
 msgstr ""
 
@@ -4928,7 +4983,8 @@ msgstr ""
 #.
 #. Translators: short braille for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:348 ../src/orca/rolenames.py:534
+#: ../src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:534
 msgid "icn"
 msgstr "icn"
 
@@ -4948,7 +5004,8 @@ msgstr ""
 #.
 #. Translators: short braille for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:360 ../src/orca/rolenames.py:486
+#: ../src/orca/rolenames.py:360
+#: ../src/orca/rolenames.py:486
 msgid "frm"
 msgstr "frm"
 
@@ -5026,7 +5083,8 @@ msgstr ""
 #.
 #. Translators: short braille for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:411 ../src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:411
+#: ../src/orca/rolenames.py:522
 msgid "html"
 msgstr "html"
 
@@ -5578,7 +5636,8 @@ msgstr "റൂട്ട് പെയിന്‍"
 #.
 #. Translators: short braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:798 ../src/orca/rolenames.py:942
+#: ../src/orca/rolenames.py:798
+#: ../src/orca/rolenames.py:942
 msgid "rwhdr"
 msgstr "rwhdr"
 
@@ -5586,7 +5645,8 @@ msgstr "rwhdr"
 #.
 #. Translators: long braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:801 ../src/orca/rolenames.py:945
+#: ../src/orca/rolenames.py:801
+#: ../src/orca/rolenames.py:945
 msgid "RowHeader"
 msgstr "RowHeader"
 
@@ -5594,7 +5654,8 @@ msgstr "RowHeader"
 #.
 #. Translators: spoken words for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:804 ../src/orca/rolenames.py:948
+#: ../src/orca/rolenames.py:804
+#: ../src/orca/rolenames.py:948
 msgid "row header"
 msgstr "row header"
 
@@ -6153,37 +6214,37 @@ msgstr "നിര %d"
 
 #. Translators: short braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:110
+#: ../src/orca/scripts/apps/evolution/script.py:114
 msgid "calv"
 msgstr "calv"
 
 #. Translators: long braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:113
+#: ../src/orca/scripts/apps/evolution/script.py:117
 msgid "CalendarView"
 msgstr "CalendarView"
 
 #. Translators: spoken words for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:116
+#: ../src/orca/scripts/apps/evolution/script.py:120
 msgid "calendar view"
 msgstr ""
 
 #. Translators: short braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:124
+#: ../src/orca/scripts/apps/evolution/script.py:128
 msgid "cale"
 msgstr "cale"
 
 #. Translators: long braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:127
+#: ../src/orca/scripts/apps/evolution/script.py:131
 msgid "CalendarEvent"
 msgstr "CalendarEvent"
 
 #. Translators: spoken words for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:130
+#: ../src/orca/scripts/apps/evolution/script.py:134
 msgid "calendar event"
 msgstr "കലണ്ടര്‍ ഇവന്റ്"
 
@@ -6191,7 +6252,7 @@ msgstr "കലണ്ടര്‍ ഇവന്റ്"
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:164
+#: ../src/orca/scripts/apps/evolution/script.py:168
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr ""
 
@@ -6199,7 +6260,7 @@ msgstr ""
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:209
+#: ../src/orca/scripts/apps/evolution/script.py:213
 msgid "present new mail if this script is not active."
 msgstr ""
 
@@ -6207,14 +6268,14 @@ msgstr ""
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:216
+#: ../src/orca/scripts/apps/evolution/script.py:220
 msgid "do not present new mail if this script is not active."
 msgstr ""
 
 #. Translators: this is the name of a setup
 #. assistant window/screen in Evolution.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:268
+#: ../src/orca/scripts/apps/evolution/script.py:272
 #, python-format
 msgid "%s screen"
 msgstr "%s സ്ക്രീന്‍"
@@ -6229,15 +6290,15 @@ msgstr "%s സ്ക്രീന്‍"
 #. translated string here has to match what the translated
 #. string is for Evolution.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:304
+#: ../src/orca/scripts/apps/evolution/script.py:308
 msgid "Please"
 msgstr "ദയവായി"
 
-#: ../src/orca/scripts/apps/evolution/script.py:305
+#: ../src/orca/scripts/apps/evolution/script.py:309
 msgid "Welcome"
 msgstr "സ്വാഗതം"
 
-#: ../src/orca/scripts/apps/evolution/script.py:306
+#: ../src/orca/scripts/apps/evolution/script.py:310
 msgid "Congratulations"
 msgstr "അഭിനന്ദനങ്ങള്‍"
 
@@ -6246,8 +6307,8 @@ msgstr "അഭിനന്ദനങ്ങള്‍"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:839
-#: ../src/orca/scripts/apps/evolution/script.py:901
+#: ../src/orca/scripts/apps/evolution/script.py:918
+#: ../src/orca/scripts/apps/evolution/script.py:980
 msgid "Status"
 msgstr "അവസ്ഥ"
 
@@ -6256,8 +6317,8 @@ msgstr "അവസ്ഥ"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:848
-#: ../src/orca/scripts/apps/evolution/script.py:926
+#: ../src/orca/scripts/apps/evolution/script.py:927
+#: ../src/orca/scripts/apps/evolution/script.py:1005
 msgid "Flagged"
 msgstr "അടയാളപ്പെടുത്തിയവ"
 
@@ -6265,7 +6326,7 @@ msgstr "അടയാളപ്പെടുത്തിയവ"
 #. indicate that an email message has not been
 #. marked as having been read.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:906
+#: ../src/orca/scripts/apps/evolution/script.py:985
 msgid "unread"
 msgstr "വായിക്കാത്തവ"
 
@@ -6274,14 +6335,14 @@ msgstr "വായിക്കാത്തവ"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:915
+#: ../src/orca/scripts/apps/evolution/script.py:994
 msgid "Attachment"
 msgstr "അറ്റാച്മെന്റ്"
 
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1089
+#: ../src/orca/scripts/apps/evolution/script.py:1168
 msgid "No appointments"
 msgstr "അപ്പോയിന്‍റ്മന്‍റുകള്‍ ഇല്ല"
 
@@ -6289,7 +6350,7 @@ msgstr "അപ്പോയിന്‍റ്മന്‍റുകള്‍ ഇ�
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1166
+#: ../src/orca/scripts/apps/evolution/script.py:1245
 msgid "Directories button"
 msgstr "ഡയറക്ടറികളുടെ ബട്ടണ്‍"
 
@@ -6299,10 +6360,10 @@ msgstr "ഡയറക്ടറികളുടെ ബട്ടണ്‍"
 #. keying off stuff like this, but we're forced to do
 #. so in this case.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1337
-#: ../src/orca/scripts/apps/evolution/script.py:1338
-#: ../src/orca/scripts/apps/evolution/script.py:1409
-#: ../src/orca/scripts/apps/evolution/script.py:1410
+#: ../src/orca/scripts/apps/evolution/script.py:1378
+#: ../src/orca/scripts/apps/evolution/script.py:1379
+#: ../src/orca/scripts/apps/evolution/script.py:1450
+#: ../src/orca/scripts/apps/evolution/script.py:1451
 msgid "Assistant"
 msgstr "അസ്സിസ്റ്റന്‍റ്"
 
@@ -6367,8 +6428,8 @@ msgstr "അവസാനിപ്പിക്കുന്നതിനായി �
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:475
 #: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:284
-#: ../src/orca/scripts/apps/Thunderbird/script.py:503
+#: ../src/orca/scripts/apps/Thunderbird/script.py:293
+#: ../src/orca/scripts/apps/Thunderbird/script.py:512
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:81
 msgid "Check Spelling"
 msgstr "അക്ഷരത്തെറ്റ് പരിശോധന"
@@ -6467,6 +6528,7 @@ msgstr "ലഭ്യമാകാത്തത്"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notification-daemon.py:64
+#: ../src/orca/scripts/apps/notify-osd.py:84
 #, python-format
 msgid "Notification %s"
 msgstr "അറിയിപ്പ് %s"
@@ -6761,7 +6823,8 @@ msgstr "സെല്‍ %s"
 #. or table.
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:128
-#: ../src/orca/speechgenerator.py:859 ../src/orca/speechgenerator.py:1415
+#: ../src/orca/speechgenerator.py:859
+#: ../src/orca/speechgenerator.py:1415
 msgid "0 items"
 msgstr "0 വസ്തുക്കള്‍"
 
@@ -6772,7 +6835,8 @@ msgstr "0 വസ്തുക്കള്‍"
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:372
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:402
-#: ../src/orca/speechserver.py:213 ../src/orca/speech.py:202
+#: ../src/orca/speechserver.py:213
+#: ../src/orca/speech.py:202
 msgid "on"
 msgstr "ഓണ്‍ ചെയ്തിരിക്കുന്നു"
 
@@ -6783,7 +6847,8 @@ msgstr "ഓണ്‍ ചെയ്തിരിക്കുന്നു"
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:376
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:406
-#: ../src/orca/speechserver.py:218 ../src/orca/speech.py:207
+#: ../src/orca/speechserver.py:218
+#: ../src/orca/speech.py:207
 msgid "off"
 msgstr "ഓഫ് ചെയ്തിരിക്കുന്നു"
 
@@ -6794,8 +6859,8 @@ msgstr "വരി %d"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:541
-#: ../src/orca/scripts/apps/Thunderbird/script.py:558
+#: ../src/orca/scripts/apps/Thunderbird/script.py:550
+#: ../src/orca/scripts/apps/Thunderbird/script.py:567
 #, python-format
 msgid "%s panel"
 msgstr "%s പാനല്‍"
@@ -7051,20 +7116,20 @@ msgstr ""
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1798
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1811
 msgid "Loading.  Please wait."
 msgstr ""
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1803
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1816
 #, python-format
 msgid "Finished loading %s."
 msgstr ""
 
 #. Translators: this is in reference to loading a web page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1809
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1822
 msgid "Finished loading."
 msgstr ""
 
@@ -7075,15 +7140,14 @@ msgstr ""
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2291
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2304
 #, python-format
 msgid "h%d"
 msgstr "h%d"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6011
-#| msgid "on"
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6024
 msgid "open"
 msgstr "തുറക്കുക"
 
@@ -7093,7 +7157,7 @@ msgstr "തുറക്കുക"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6084
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6097
 #: ../src/orca/structural_navigation.py:883
 msgid "Wrapping to bottom."
 msgstr ""
@@ -7104,7 +7168,7 @@ msgstr ""
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6152
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6165
 #: ../src/orca/structural_navigation.py:891
 msgid "Wrapping to top."
 msgstr ""
@@ -7112,9 +7176,9 @@ msgstr ""
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6178
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6202
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6191
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6215
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6225
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr ""
@@ -7122,11 +7186,11 @@ msgstr ""
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6186
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6199
 msgid "Live regions monitoring on"
 msgstr ""
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6193
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6206
 msgid "Live regions monitoring off"
 msgstr ""
 
@@ -7137,7 +7201,7 @@ msgstr ""
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6228
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6241
 msgid "Gecko is controlling the caret."
 msgstr ""
 
@@ -7148,7 +7212,7 @@ msgstr ""
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6240
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6253
 msgid "Orca is controlling the caret."
 msgstr ""
 
@@ -7263,7 +7327,6 @@ msgstr ""
 #. to be presented on the braille display.
 #.
 #: ../src/orca/settings.py:665
-#| msgid "ordinal"
 msgctxt "text"
 msgid "rdonly"
 msgstr "rdonly"
@@ -7331,10 +7394,9 @@ msgstr "മൈന്‍ഫീള്‍ഡ്"
 #. name.
 #.
 #: ../src/orca/settings.py:1052
-#, fuzzy
 #| msgid "header"
 msgid "Shredder"
-msgstr "തലക്കെട്ട്"
+msgstr "ഷ്രെഡ്ഡര്‍"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
@@ -7361,7 +7423,6 @@ msgstr "vte"
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
 #: ../src/orca/settings.py:1072
-#| msgid "anim"
 msgid "gaim"
 msgstr "gaim"
 
@@ -7371,11 +7432,11 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1217 ../src/orca/settings.py:1225
-#, fuzzy
+#: ../src/orca/settings.py:1217
+#: ../src/orca/settings.py:1225
 #| msgid "registered"
 msgid "required"
-msgstr "രജിസ്ടേര്‍ഡ് (® എന്ന ചിഹ്നം)"
+msgstr "ആവശ്യമാണു്‌"
 
 #. Translators: "Default Synthesizer" will appear in the list of available
 #. speech engines as a special item.  It refers to the default engine
@@ -7411,7 +7472,8 @@ msgstr "%s സ്വതവേയുള്ള ശബ്ദം"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speechgenerator.py:714 ../src/orca/where_am_I.py:1755
+#: ../src/orca/speechgenerator.py:714
+#: ../src/orca/where_am_I.py:1772
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7587,10 +7649,9 @@ msgstr ""
 #. if there are no more anchors found.
 #.
 #: ../src/orca/structural_navigation.py:1910
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more anchors."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ആങ്കറുകളില്ല"
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -7618,19 +7679,17 @@ msgstr ""
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2009
-#, fuzzy
 #| msgid "Directories button"
 msgid "Goes to previous button."
-msgstr "ഡയറക്ടറികളുടെ ബട്ടണ്‍"
+msgstr "മുന്‍പുള്ള ബട്ടനിലേക്ക് പോകുന്നു"
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2014
-#, fuzzy
 #| msgid "toggle button"
 msgid "Goes to next button."
-msgstr "ടൊഗിള്‍ ബട്ടണ്‍"
+msgstr "അടുത്ത ബട്ടനിലേക്ക് പോകുന്നു"
 
 #. Translators: this is for navigating in document content
 #. by moving from push button to push button in a form. This
@@ -7638,10 +7697,9 @@ msgstr "ടൊഗിള്‍ ബട്ടണ്‍"
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:2071
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more buttons."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ഇനി ബട്ടനുകളില്ല"
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
@@ -7663,10 +7721,9 @@ msgstr ""
 #. boxes found.
 #.
 #: ../src/orca/structural_navigation.py:2150
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more check boxes."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ഇനി ചെക്-ബോക്സുകളില്ല."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
@@ -7714,10 +7771,9 @@ msgstr ""
 #. boxes found.
 #.
 #: ../src/orca/structural_navigation.py:2322
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more combo boxes."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ഇനി കോംബൊ-ബോക്സുകളില്ല."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
@@ -7739,10 +7795,9 @@ msgstr ""
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:2410
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more entries."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ഇനി എന്‍ട്രികളില്ല."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
@@ -7942,10 +7997,9 @@ msgstr ""
 #. Orca will say if there are no more large objects found.
 #.
 #: ../src/orca/structural_navigation.py:3066
-#, fuzzy
 #| msgid "No more tables."
 msgid "No more paragraphs."
-msgstr "ഇനി ടേബിളുകളില്ല."
+msgstr "ഇനി പാരഗ്രാഫുകളില്ല."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
@@ -7958,10 +8012,9 @@ msgstr ""
 #. form within a document.
 #.
 #: ../src/orca/structural_navigation.py:3088
-#, fuzzy
 #| msgid "radio button"
 msgid "Goes to next radio button."
-msgstr "റേഡിയോ ബട്ടണ്‍"
+msgstr "അടുത്ത റേഡിയോ ബട്ടനിലേക്ക് പോകുന്നു"
 
 #. Translators: this is for navigating in document content
 #. by moving from radio button to radio button in a form.
@@ -7969,10 +8022,9 @@ msgstr "റേഡിയോ ബട്ടണ്‍"
 #. radio buttons found.
 #.
 #: ../src/orca/structural_navigation.py:3145
-#, fuzzy
 #| msgid "radio button"
 msgid "No more radio buttons."
-msgstr "റേഡിയോ ബട്ടണ്‍"
+msgstr "ഇനി റേഡിയോ ബട്ടനുകളില്ല"
 
 #. Translators: this is for navigating among tables in a document.
 #.
@@ -8122,7 +8174,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:85
-#| msgid "section"
 msgctxt "textattr"
 msgid "direction"
 msgstr ""
@@ -8133,11 +8184,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:92
-#, fuzzy
 #| msgid "table"
 msgctxt "textattr"
 msgid "editable"
-msgstr "ടേബിള്‍"
+msgstr "മാറ്റാവുന്നത്"
 
 #. Translators: this attribute specifies the font family name of the text.
 #. See:
@@ -8175,11 +8225,10 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:120
-#, fuzzy
 #| msgid "not selected"
 msgctxt "textattr"
 msgid "font effect"
-msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്തത്"
+msgstr "ലിപി പ്രതീതി "
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -8187,22 +8236,20 @@ msgstr "തിരഞ്ഞെടുത്തിട്ടില്ലാത്ത
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:127
-#, fuzzy
 #| msgid "Find"
 msgctxt "textattr"
 msgid "indent"
-msgstr "കണ്ടുപിടിക്കുക"
+msgstr "ഇണ്ടെന്റ്"
 
 #. Translators: this attribute specifies there is something "wrong" with
 #. the text, such as it being a misspelled word. See:
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
 #: ../src/orca/text_attribute_names.py:133
-#, fuzzy
 #| msgid "invalid"
 msgctxt "textattr"
 msgid "invalid"
-msgstr "അസാധുവായ"
+msgstr "അസാധുവായ "
 
 #. Translators: this attribute specifies whether the text is invisible.
 #. It will be a "true" or "false" value.
@@ -8210,11 +8257,10 @@ msgstr "അസാധുവായ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:140
-#, fuzzy
 #| msgid "inaccessible"
 msgctxt "textattr"
 msgid "invisible"
-msgstr "ലഭ്യമാകാത്തത്"
+msgstr "കാണാനാവാത്തത്"
 
 #. Translators: this attribute specifies how the justification of the text.
 #. Values are "left", "right", "center" or "fill".
@@ -8222,11 +8268,10 @@ msgstr "ലഭ്യമാകാത്തത്"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:147
-#, fuzzy
 #| msgid "Notification %s"
 msgctxt "textattr"
 msgid "justification"
-msgstr "അറിയിപ്പ് %s"
+msgstr "ജസ്റ്റിഫിക്കേഷന്‍"
 
 #. Translators: this attribute specifies the language that the text is
 #. written in.
@@ -8234,7 +8279,6 @@ msgstr "അറിയിപ്പ് %s"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:154
-#| msgid "Flagged"
 msgctxt "textattr"
 msgid "language"
 msgstr "ഭാഷ"
@@ -8244,11 +8288,10 @@ msgstr "ഭാഷ"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:160
-#, fuzzy
 #| msgid "left paren"
 msgctxt "textattr"
 msgid "left margin"
-msgstr "ഇടത് പരാന്‍ഥെസിസ് ('(')"
+msgstr "ഇടത് മാര്‍ജിന്‍"
 
 #. Translators: this attribute specifies the height of the line of text.
 #. See:
@@ -8256,11 +8299,10 @@ msgstr "ഇടത് പരാന്‍ഥെസിസ് ('(')"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:167
-#, fuzzy
 #| msgid "Line Right"
 msgctxt "textattr"
 msgid "line height"
-msgstr "വലത്തേക്കുള്ള വരി"
+msgstr "വരിയുടെ ഉയരം"
 
 #. Translators: this attribute refers to the named style which is associated
 #. with the entire paragraph and which controls the default formatting
@@ -8271,11 +8313,10 @@ msgstr "വലത്തേക്കുള്ള വരി"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:177
-#, fuzzy
 #| msgid "paragraph"
 msgctxt "textattr"
 msgid "paragraph style"
-msgstr "ഖണ്ഡിക"
+msgstr "പാരഗ്രാഫ് രീതി"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave above each newline-terminated line.
@@ -8313,11 +8354,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:205
-#, fuzzy
 #| msgid "right paren"
 msgctxt "textattr"
 msgid "right margin"
-msgstr "വലത് പരാന്‍ഥെസിസ് (')')"
+msgstr "വലത് മാര്‍ജിന്‍"
 
 #. Translators: this attribute specifies the number of pixels that the
 #. text characters are risen above the baseline.
@@ -8325,11 +8365,10 @@ msgstr "വലത് പരാന്‍ഥെസിസ് (')')"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:212
-#, fuzzy
 #| msgid "prime"
 msgctxt "textattr"
 msgid "rise"
-msgstr "പ്രൈം (′)"
+msgstr "താഴ്-വരിയില്‍ നിന്നുള്ള ഉയരം"
 
 #. Translators: this attribute specifies the scale of the characters. The
 #. value is a string representation of a double.
@@ -8337,22 +8376,20 @@ msgstr "പ്രൈം (′)"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:219
-#, fuzzy
 #| msgid "cale"
 msgctxt "textattr"
 msgid "scale"
-msgstr "cale"
+msgstr "അക്ഷരങ്ങളുടെ സ്കേല്‍"
 
 #. Translators: this attribute specifies the size of the text.
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:225
-#, fuzzy
 #| msgid "slider"
 msgctxt "textattr"
 msgid "size"
-msgstr "സ്ളൈടര്‍"
+msgstr "പദാവലി  വലിപ്പം"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
 #. Values are "ultra_condensed", "extra_condensed", "condensed",
@@ -8362,11 +8399,10 @@ msgstr "സ്ളൈടര്‍"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:234
-#, fuzzy
 #| msgid "tre"
 msgctxt "textattr"
 msgid "stretch"
-msgstr "tre"
+msgstr "നീട്ടി വലിക്കല്‍"
 
 #. Translators: this attribute specifies whether the text is strike though
 #. (in other words, whether there is a line drawn through it). Values are
@@ -8385,11 +8421,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:249
-#, fuzzy
 #| msgid "tilde"
 msgctxt "textattr"
 msgid "style"
-msgstr "ടിള്‍ഡ് (~)"
+msgstr "രീതി"
 
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
@@ -8429,11 +8464,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:279
-#, fuzzy
 #| msgid "underline"
 msgctxt "textattr"
 msgid "underline"
-msgstr "അടിവര (_)"
+msgstr "അടിവര"
 
 #. Translators: this attribute specifies the capitalization variant of
 #. the text, if set. Values are "normal" or "small_caps".
@@ -8451,11 +8485,10 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:293
-#, fuzzy
 #| msgid "vertical bar"
 msgctxt "textattr"
 msgid "vertical align"
-msgstr " എന്ന ചിഹ്നം)"
+msgstr "തിരസ്ചീനമായി നിര്‍ത്തുക"
 
 #. Translators: this attribute specifies the weight of the text.
 #. See:
@@ -8463,11 +8496,10 @@ msgstr " എന്ന ചിഹ്നം)"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
 #: ../src/orca/text_attribute_names.py:300
-#, fuzzy
 #| msgid "Line Right"
 msgctxt "textattr"
 msgid "weight"
-msgstr "വലത്തേക്കുള്ള വരി"
+msgstr "തൂക്കം"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
 #. Values are "none", "char" or "word".
@@ -8504,7 +8536,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:332
-#| msgid "tre"
 msgctxt "textattr"
 msgid "true"
 msgstr "true"
@@ -8516,7 +8547,6 @@ msgstr "true"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:340
-#| msgid "cale"
 msgctxt "textattr"
 msgid "false"
 msgstr "false"
@@ -8529,11 +8559,10 @@ msgstr "false"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:349
-#, fuzzy
 #| msgid "None"
 msgctxt "textattr"
 msgid "none"
-msgstr "ഒന്നുമില്ല"
+msgstr "ഒന്നുമില്ല "
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8541,11 +8570,10 @@ msgstr "ഒന്നുമില്ല"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:356
-#, fuzzy
 #| msgid "grave"
 msgctxt "textattr"
 msgid "engrave"
-msgstr "ഗ്രേവ്(`എന്ന ചിഹ്നം)"
+msgstr "എന്‍ഗ്രേവ്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8553,11 +8581,10 @@ msgstr "ഗ്രേവ്(`എന്ന ചിഹ്നം)"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:363
-#, fuzzy
 #| msgid "emb"
 msgctxt "textattr"
 msgid "emboss"
-msgstr "emb"
+msgstr "എംബോസ്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8565,11 +8592,10 @@ msgstr "emb"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:370
-#, fuzzy
 #| msgid "underline"
 msgctxt "textattr"
 msgid "outline"
-msgstr "അടിവര (_)"
+msgstr "പുറംവര"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8577,11 +8603,10 @@ msgstr "അടിവര (_)"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:377
-#, fuzzy
 #| msgid "underline"
 msgctxt "textattr"
 msgid "overline"
-msgstr "അടിവര (_)"
+msgstr "മുകള്‍വര"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8599,11 +8624,10 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:391
-#, fuzzy
 #| msgid "link"
 msgctxt "textattr"
 msgid "blink"
-msgstr "ലിങ്ക്"
+msgstr "ബ്ലിങ്ക്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-shadow".
@@ -8621,11 +8645,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:405
-#, fuzzy
 #| msgid "Line"
 msgctxt "textattr"
 msgid "single"
-msgstr "വരി"
+msgstr "ഒറ്റ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
@@ -8653,11 +8676,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:426
-#, fuzzy
 #| msgid "caret"
 msgctxt "textattr"
 msgid "char"
-msgstr "കാരറ്റ് (^)"
+msgstr "അക്ഷരം"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
@@ -8665,11 +8687,10 @@ msgstr "കാരറ്റ് (^)"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:433
-#, fuzzy
 #| msgid "Password"
 msgctxt "textattr"
 msgid "word"
-msgstr "പാസ്‍വേര്‍ഡ്"
+msgstr "വാക്ക്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -8677,7 +8698,6 @@ msgstr "പാസ്‍വേര്‍ഡ്"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:440
-#| msgid "flr"
 msgctxt "textattr"
 msgid "ltr"
 msgstr "ltr"
@@ -8688,7 +8708,6 @@ msgstr "ltr"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:447
-#| msgid "trtbl"
 msgctxt "textattr"
 msgid "rtl"
 msgstr "rtl"
@@ -8699,11 +8718,10 @@ msgstr "rtl"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:454
-#, fuzzy
 #| msgid "Alert"
 msgctxt "textattr"
 msgid "left"
-msgstr "അറിയിപ്പ്"
+msgstr "ഇടത്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -8711,11 +8729,10 @@ msgstr "അറിയിപ്പ്"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:461
-#, fuzzy
 #| msgid "copyright"
 msgctxt "textattr"
 msgid "right"
-msgstr "പകര്‍പ്പവകാശം"
+msgstr "വലത്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -8723,22 +8740,20 @@ msgstr "പകര്‍പ്പവകാശം"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:468
-#, fuzzy
 #| msgid "cents"
 msgctxt "textattr"
 msgid "center"
-msgstr "സെന്റ്സ് (¢)"
+msgstr "നടുക്ക്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification". In Gecko, when no justification has
 #. be explicitly set, they report a justification of "start".
 #.
 #: ../src/orca/text_attribute_names.py:474
-#, fuzzy
 #| msgid "Notification %s"
 msgctxt "textattr"
 msgid "no justification"
-msgstr "അറിയിപ്പ് %s"
+msgstr "ജസ്റ്റിഫിക്കേഷനില്ല"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -8746,11 +8761,10 @@ msgstr "അറിയിപ്പ് %s"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:481
-#, fuzzy
 #| msgid "filler"
 msgctxt "textattr"
 msgid "fill"
-msgstr "ഫില്ലര്‍"
+msgstr "ഫില്‍"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8778,11 +8792,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:502
-#, fuzzy
 #| msgid "seconds"
 msgctxt "textattr"
 msgid "condensed"
-msgstr "സെക്കന്‍ഡുകള്‍"
+msgstr "നീട്ടം കുറച്ച്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8790,11 +8803,10 @@ msgstr "സെക്കന്‍ഡുകള്‍"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:509
-#, fuzzy
 #| msgid "seconds"
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr "സെക്കന്‍ഡുകള്‍"
+msgstr "നീട്ടം പകുതി കുറച്ച്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -8802,11 +8814,10 @@ msgstr "സെക്കന്‍ഡുകള്‍"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:516
-#, fuzzy
 #| msgid "ordinal"
 msgctxt "textattr"
 msgid "normal"
-msgstr "ഓര്‍ഡിനല്‍ (º)"
+msgstr "സാധാരണ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8814,11 +8825,10 @@ msgstr "ഓര്‍ഡിനല്‍ (º)"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:523
-#, fuzzy
 #| msgid "split pane"
 msgctxt "textattr"
 msgid "semi expanded"
-msgstr "സ്പ്ലിറ്റ് പെയിന്‍"
+msgstr "നീട്ടം പകുതി കൂട്ടി"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8826,11 +8836,10 @@ msgstr "സ്പ്ലിറ്റ് പെയിന്‍"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:530
-#, fuzzy
 #| msgid "panel"
 msgctxt "textattr"
 msgid "expanded"
-msgstr "പാനല്‍"
+msgstr "നീട്ടം കൂട്ടി"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8878,11 +8887,10 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:565
-#, fuzzy
 #| msgid "invalid"
 msgctxt "textattr"
 msgid "italic"
-msgstr "അസാധുവായ"
+msgstr "ഇറ്റാലിക്ക് (ചരിഞ്ഞു്‌)"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -8890,11 +8898,10 @@ msgstr "അസാധുവായ"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:572
-#, fuzzy
 #| msgid "Default"
 msgctxt "textattr"
 msgid "Default"
-msgstr "ഡീഫോള്‍ഡ്"
+msgstr "സാധാരണ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -8902,11 +8909,10 @@ msgstr "ഡീഫോള്‍ഡ്"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:579
-#, fuzzy
 #| msgid "Text"
 msgctxt "textattr"
 msgid "Text body"
-msgstr "ടെക്സ്റ്റ്"
+msgstr "ടെക്സ്റ്റ് ഭാഗം"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -8914,11 +8920,10 @@ msgstr "ടെക്സ്റ്റ്"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:586
-#, fuzzy
 #| msgid "Heading"
 msgctxt "textattr"
 msgid "Heading"
-msgstr "തലക്കെട്ട്"
+msgstr "തലക്കെട്ട് "
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8927,11 +8932,10 @@ msgstr "തലക്കെട്ട്"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:594
-#, fuzzy
 #| msgid "newline"
 msgctxt "textattr"
 msgid "baseline"
-msgstr "ന്യൂലൈന്‍"
+msgstr "അടിസ്ഥാന വരി"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8949,11 +8953,10 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:608
-#, fuzzy
 #| msgid "space"
 msgctxt "textattr"
 msgid "super"
-msgstr "space"
+msgstr "സൂപ്പര്‍"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8961,11 +8964,10 @@ msgstr "space"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:615
-#, fuzzy
 #| msgid "Stop"
 msgctxt "textattr"
 msgid "top"
-msgstr "നിര്‍ത്തുക"
+msgstr "മുകള്‍"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8973,11 +8975,10 @@ msgstr "നിര്‍ത്തുക"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:622
-#, fuzzy
 #| msgid "text"
 msgctxt "textattr"
 msgid "text-top"
-msgstr "ടെക്സ്റ്റ്"
+msgstr "ടെക്സ്റ്റ് - മുകള്‍"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8995,11 +8996,10 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:636
-#, fuzzy
 #| msgid "_Bottom:"
 msgctxt "textattr"
 msgid "bottom"
-msgstr "താഴെ: (_B)"
+msgstr "താഴെ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9007,11 +9007,10 @@ msgstr "താഴെ: (_B)"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #: ../src/orca/text_attribute_names.py:643
-#, fuzzy
 #| msgid "Move to _bottom"
 msgctxt "textattr"
 msgid "text-bottom"
-msgstr "_താഴേക്ക് നീങ്ങുക"
+msgstr "ടെക്സ്റ്റ് -താഴെ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align" and "writing-mode".
@@ -9030,7 +9029,6 @@ msgstr "inherit"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:658
-#| msgid "alrt"
 msgctxt "textattr"
 msgid "lr-tb"
 msgstr "lr-tb"
@@ -9041,7 +9039,6 @@ msgstr "lr-tb"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:665
-#| msgid "trtbl"
 msgctxt "textattr"
 msgid "rl-tb"
 msgstr "rl-tb"
@@ -9052,7 +9049,6 @@ msgstr "rl-tb"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:672
-#| msgid "tbl"
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "tb-rl"
@@ -9063,7 +9059,6 @@ msgstr "tb-rl"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:679
-#| msgid "tbl"
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "tb-lr"
@@ -9074,7 +9069,6 @@ msgstr "tb-lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:686
-#| msgid "Ctrl"
 msgctxt "textattr"
 msgid "bt-rl"
 msgstr "bt-rl"
@@ -9095,7 +9089,6 @@ msgstr "bt-lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:700
-#| msgid "flr"
 msgctxt "textattr"
 msgid "lr"
 msgstr "lr"
@@ -9106,7 +9099,6 @@ msgstr "lr"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:707
-#| msgid "Ctrl"
 msgctxt "textattr"
 msgid "rl"
 msgstr "rl"
@@ -9117,7 +9109,6 @@ msgstr "rl"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #: ../src/orca/text_attribute_names.py:714
-#| msgid "tab"
 msgctxt "textattr"
 msgid "tb"
 msgstr "tb"
@@ -9126,11 +9117,10 @@ msgstr "tb"
 #. text attributes: "strikethrough." It refers to the line style.
 #.
 #: ../src/orca/text_attribute_names.py:719
-#, fuzzy
 #| msgid "slider"
 msgctxt "textattr"
 msgid "solid"
-msgstr "സ്ളൈടര്‍"
+msgstr "സോളിഡ്"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invalid". It is an indication that the text is not
@@ -9138,11 +9128,10 @@ msgstr "സ്ളൈടര്‍"
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
 #: ../src/orca/text_attribute_names.py:726
-#, fuzzy
 #| msgid "spin"
 msgctxt "textattr"
 msgid "spelling"
-msgstr "സ്പിന്‍"
+msgstr "അക്ഷരതെറ്റ്"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:158
@@ -9182,7 +9171,8 @@ msgstr ""
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:344 ../src/orca/tutorialgenerator.py:492
+#: ../src/orca/tutorialgenerator.py:344
+#: ../src/orca/tutorialgenerator.py:492
 msgid "To collapse, press shift plus left."
 msgstr ""
 
@@ -9190,7 +9180,8 @@ msgstr ""
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:498
+#: ../src/orca/tutorialgenerator.py:350
+#: ../src/orca/tutorialgenerator.py:498
 msgid "To expand, press shift plus right."
 msgstr ""
 
@@ -9225,9 +9216,7 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:673
-msgid ""
-"To navigate, press left or right arrow. To move through items press up or "
-"down arrow."
+msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
 msgstr ""
 
 #. Translators: this is a tip for the user, how to
@@ -9239,9 +9228,7 @@ msgstr ""
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:710
-msgid ""
-"To decrease press left arrow, to increase press right arrow. To go to "
-"minimum press home, and for maximum press end."
+msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 msgstr ""
 
 #. Translators: this is the percentage value of a slider.
@@ -9275,10 +9262,10 @@ msgstr "%s പേജ്"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/where_am_I.py:642
-#, fuzzy, python-format
+#, python-format
 #| msgid "column %d"
 msgid "column %d of %d"
-msgstr "നിര %d"
+msgstr "നിര %d, %d-ഇല്‍ നിന്നും"
 
 #: ../src/orca/where_am_I.py:777
 msgid "Icon panel"
@@ -9293,22 +9280,23 @@ msgstr "പ്രതിരൂപത്തിനുള്ള പാനല്‍"
 msgid "%s link"
 msgstr "%s ലിങ്ക്"
 
-#: ../src/orca/where_am_I.py:832
+#: ../src/orca/where_am_I.py:849
 #, python-format
 msgid "%s link to %s"
 msgstr "%s എന്ന ലിങ്ക് %s-ലേക്ക് നയിക്കുന്നു"
 
 #. Translators: this is the domain relationship of a given
 #. link to the current page.  eg. same page, same site.
-#: ../src/orca/where_am_I.py:842
+#: ../src/orca/where_am_I.py:859
 msgid "same page"
 msgstr "ഒരേ താള്‍"
 
-#: ../src/orca/where_am_I.py:844 ../src/orca/where_am_I.py:852
+#: ../src/orca/where_am_I.py:861
+#: ../src/orca/where_am_I.py:869
 msgid "same site"
 msgstr "ഒരേ സൈറ്റ്"
 
-#: ../src/orca/where_am_I.py:854
+#: ../src/orca/where_am_I.py:871
 msgid "different site"
 msgstr "മറ്റൊരു സൈറ്റ്"
 
@@ -9316,7 +9304,7 @@ msgstr "മറ്റൊരു സൈറ്റ്"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:1013
+#: ../src/orca/where_am_I.py:1030
 #, python-format
 msgid "%d of %d item selected"
 msgid_plural "%d of %d items selected"
@@ -9327,14 +9315,14 @@ msgstr[1] "%d വസ്തുക്കള്‍ തിരഞ്ഞെടുത�
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/where_am_I.py:1023
+#: ../src/orca/where_am_I.py:1040
 #, python-format
 msgid "on item %d of %d"
 msgstr ""
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/where_am_I.py:1056
+#: ../src/orca/where_am_I.py:1073
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -9343,21 +9331,22 @@ msgstr[1] "%d ബൈറ്റുകള്‍"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/where_am_I.py:1060
+#: ../src/orca/where_am_I.py:1077
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f കിലോബൈറ്റുകള്‍"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/where_am_I.py:1064
+#: ../src/orca/where_am_I.py:1081
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f മെഗാബൈറ്റുകള്‍"
 
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:1197 ../src/orca/where_am_I.py:1241
+#: ../src/orca/where_am_I.py:1214
+#: ../src/orca/where_am_I.py:1258
 #, python-format
 msgid "item %d of %d"
 msgstr "%d വസ്തു, മൊത്തം %d"
@@ -9366,7 +9355,7 @@ msgstr "%d വസ്തു, മൊത്തം %d"
 #. that gets activated when Enter is pressed anywhere within that
 #. dialog box.
 #.
-#: ../src/orca/where_am_I.py:1897
+#: ../src/orca/where_am_I.py:1914
 #, python-format
 msgid "Default button is %s"
 msgstr "സ്വതവേയുള്ള ബട്ടണ്‍ %s ആകുന്നു"
